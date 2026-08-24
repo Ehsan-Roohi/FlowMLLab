@@ -3,6 +3,7 @@ name: Bootstrap standalone FlowMLLab
 on:
   push:
     branches: [main]
+    paths: [".github/workflows/bootstrap-zenodo.yml"]
   workflow_dispatch:
 
 permissions:
@@ -31,7 +32,6 @@ jobs:
         env:
           GITIGNORE_B64: "X19weWNhY2hlX18vCioucHlbY29kXQoqLmVnZy1pbmZvLwoucHl0ZXN0X2NhY2hlLwouY292ZXJhZ2UKLnZlbnYvCnZlbnYvCi5pcHluYl9jaGVja3BvaW50cy8KYnVpbGQvCmRpc3QvCioubG9nCi5EU19TdG9yZQo="
           ZENODO_B64: "ewogICJ0aXRsZSI6ICJGbG93TUxMYWI6IEFuIE9wZW4tU291cmNlIEZyYW1ld29yayBmb3IgUmVwcm9kdWNpYmxlIENGRC10by1TY2llbnRpZmljLU1hY2hpbmUtTGVhcm5pbmcgRXhwZXJpbWVudHMiLAogICJkZXNjcmlwdGlvbiI6ICJWZXJzaW9uIDEuMC4wIG9mIEZsb3dNTExhYiwgYW4gaW5zdGFsbGFibGUgYW5kIHZhbGlkYXRpb24tb3JpZW50ZWQgZnJhbWV3b3JrIGNvbm5lY3RpbmcgY29udGludXVtIENGRCwgRFNNQywgY2FzZS13aXNlIHNjaWVudGlmaWMtbWFjaGluZS1sZWFybmluZyBleHBlcmltZW50cywgcGh5c2ljYWwgZGlhZ25vc3RpY3MsIHR1dG9yaWFsIG5vdGVib29rcywgYW5kIGFydGljbGUtZmlndXJlIHJlcHJvZHVjdGlvbi4iLAogICJjcmVhdG9ycyI6IFsKICAgIHsKICAgICAgIm5hbWUiOiAiUm9vaGksIEVoc2FuIiwKICAgICAgIm9yY2lkIjogIjAwMDAtMDAwMS01NzM5LTMyMTAiLAogICAgICAiYWZmaWxpYXRpb24iOiAiVW5pdmVyc2l0eSBvZiBNYXNzYWNodXNldHRzIEFtaGVyc3QiCiAgICB9CiAgXSwKICAibGljZW5zZSI6ICJNSVQiLAogICJhY2Nlc3NfcmlnaHQiOiAib3BlbiIsCiAgImtleXdvcmRzIjogWwogICAgImNvbXB1dGF0aW9uYWwgZmx1aWQgZHluYW1pY3MiLAogICAgInNjaWVudGlmaWMgbWFjaGluZSBsZWFybmluZyIsCiAgICAibmV1cmFsIG9wZXJhdG9ycyIsCiAgICAiRFNNQyIsCiAgICAicmVwcm9kdWNpYmxlIHNvZnR3YXJlIgogIF0sCiAgInJlbGF0ZWRfaWRlbnRpZmllcnMiOiBbCiAgICB7CiAgICAgICJpZGVudGlmaWVyIjogImh0dHBzOi8vZ2l0aHViLmNvbS9FaHNhbi1Sb29oaS9GbG93TUxMYWIiLAogICAgICAicmVsYXRpb24iOiAiaXNTdXBwbGVtZW50VG8iLAogICAgICAic2NoZW1lIjogInVybCIKICAgIH0KICBdLAogICJ1cGxvYWRfdHlwZSI6ICJzb2Z0d2FyZSIKfQo="
-          CI_B64: "bmFtZTogRmxvd01MTGFiIENJCgpvbjoKICBwdXNoOgogICAgYnJhbmNoZXM6IFttYWluXQogIHB1bGxfcmVxdWVzdDoKICB3b3JrZmxvd19kaXNwYXRjaDoKCnBlcm1pc3Npb25zOgogIGNvbnRlbnRzOiByZWFkCgpqb2JzOgogIHRlc3Q6CiAgICBydW5zLW9uOiB1YnVudHUtbGF0ZXN0CiAgICBzdHJhdGVneToKICAgICAgZmFpbC1mYXN0OiBmYWxzZQogICAgICBtYXRyaXg6CiAgICAgICAgcHl0aG9uLXZlcnNpb246IFsiMy4xMCIsICIzLjExIiwgIjMuMTIiXQogICAgc3RlcHM6CiAgICAgIC0gdXNlczogYWN0aW9ucy9jaGVja291dEB2NAogICAgICAtIHVzZXM6IGFjdGlvbnMvc2V0dXAtcHl0aG9uQHY1CiAgICAgICAgd2l0aDoKICAgICAgICAgIHB5dGhvbi12ZXJzaW9uOiAke3sgbWF0cml4LnB5dGhvbi12ZXJzaW9uIH19CiAgICAgICAgICBjYWNoZTogcGlwCiAgICAgICAgICBjYWNoZS1kZXBlbmRlbmN5LXBhdGg6IHB5cHJvamVjdC50b21sCiAgICAgIC0gbmFtZTogSW5zdGFsbCBzeXN0ZW0gUUEgZGVwZW5kZW5jeQogICAgICAgIHJ1bjogc3VkbyBhcHQtZ2V0IHVwZGF0ZSAmJiBzdWRvIGFwdC1nZXQgaW5zdGFsbCAteSBwb3BwbGVyLXV0aWxzCiAgICAgIC0gbmFtZTogSW5zdGFsbCBGbG93TUxMYWIKICAgICAgICBydW46IHB5dGhvbiAtbSBwaXAgaW5zdGFsbCAtLXVwZ3JhZGUgcGlwICYmIHB5dGhvbiAtbSBwaXAgaW5zdGFsbCAtZSAiLlt0ZXN0XSIKICAgICAgLSBuYW1lOiBQYWNrYWdlIHRlc3RzCiAgICAgICAgcnVuOiBweXRob24gLW0gdW5pdHRlc3QgZGlzY292ZXIgLXMgdGVzdHMgLXYKICAgICAgLSBuYW1lOiBDb3JlIHNjaWVudGlmaWMgc21va2UgdGVzdAogICAgICAgIHJ1bjogZmxvd21sbGFiIHNtb2tlIC0tcm9vdCAuCiAgICAgIC0gbmFtZTogRnVsbCByZWxlYXNlIFFBCiAgICAgICAgcnVuOiBmbG93bWxsYWIgcWEgLS1yb290IC4K"
         run: |
           python - <<'PY'
           from pathlib import Path
@@ -80,9 +80,6 @@ jobs:
           PY
           printf '%s' "$GITIGNORE_B64" | base64 -d > .gitignore
           printf '%s' "$ZENODO_B64" | base64 -d > .zenodo.json
-          mkdir -p .github/workflows
-          find .github/workflows -maxdepth 1 -name 'bootstrap*.yml' -delete
-          printf '%s' "$CI_B64" | base64 -d > .github/workflows/ci.yml
       - name: Commit standalone source tree
         run: |
           git config user.name "github-actions[bot]"
