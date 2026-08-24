@@ -1,6 +1,6 @@
 {
   "title": "FlowMLLab: An Open-Source Framework for Reproducible CFD-to-Scientific-Machine-Learning Experiments",
-  "description": "Version 1.0.1 of FlowMLLab, an installable and validation-oriented framework connecting continuum CFD, DSMC, case-wise scientific-machine-learning experiments, physical diagnostics, tutorial notebooks, and article-figure reproduction.",
+  "description": "Version 1.0.2 of FlowMLLab, an installable and validation-oriented framework connecting continuum CFD, DSMC, case-wise scientific-machine-learning experiments, physical diagnostics, tutorial notebooks, and article-figure reproduction.",
   "creators": [
     {
       "name": "Roohi, Ehsan",
