@@ -113,10 +113,7 @@ The SoftwareX manuscript documents the software architecture, numerical and ML w
 
 Use [CITATION.cff](CITATION.cff) when citing the release.
 
-The immutable software archive for version 1.0.0 is identified in
-[CITATION.cff](CITATION.cff). The GitHub release and archival record contain
-only FlowMLLab. They do not include materials from any separate research
-repository.
+The immutable software archive for version 1.0.0 is identified in [CITATION.cff](CITATION.cff). The GitHub release and archival record contain only FlowMLLab. They do not include materials from any separate research repository.
 
 Ehsan Roohi  
 Department of Mechanical and Industrial Engineering  

@@ -1,0 +1,12 @@
+project_pack_version=W5W6-v1.3
+compatibility_target=Google Colab
+python_target=3.12
+tensorflow_target=2.21.0
+keras_target=3.15.0
+w4utils_version=6.3
+w5_common_version=1.2
+mini_dsmc_version=1.2
+mini_dsmc_default_steps=3200
+mini_dsmc_default_sample_start=2400
+dataset_sha256=09b96b744ee4d18126d8dcc92feb60e128774a1b4d41bb3d8c90a63ccfbabc36
+note=The dataset SHA-256 is the primary reference-data reproducibility anchor. Local Python patch versions may differ.

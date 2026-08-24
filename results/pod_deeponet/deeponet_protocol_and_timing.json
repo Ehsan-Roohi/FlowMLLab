@@ -1,0 +1,35 @@
+{
+  "POD_DeepONet_ensemble_inference_ms": 0.8041250580063206,
+  "CFD_Re275_seconds": 8.453087774003507,
+  "speedup": 10512.15565270578,
+  "CFD_steps": 23250,
+  "CFD_final_residual": 8.947483085431851e-07,
+  "training_seconds_by_seed": {
+    "690": 0.26434566000534687,
+    "691": 0.16844149400276365,
+    "692": 0.16213901199807879
+  },
+  "selected_rank": 3,
+  "selected_hidden": [
+    32,
+    32
+  ],
+  "trunk_energy_fraction": 0.9998808241576681,
+  "development_Re": [
+    100.0,
+    150.0,
+    200.0,
+    225.0,
+    250.0,
+    300.0,
+    350.0,
+    400.0
+  ],
+  "validation_Re_for_selection": 225,
+  "blind_Re": [
+    175.0,
+    275.0,
+    375.0
+  ],
+  "boundary_output_transform": true
+}

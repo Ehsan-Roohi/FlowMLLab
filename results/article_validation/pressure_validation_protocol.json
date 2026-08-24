@@ -1,0 +1,33 @@
+{
+  "purpose": "Independent literature validation of least-squares pressure recovery from the streamfunction-vorticity solver",
+  "benchmark": {
+    "Re": 1000,
+    "gauge": "p(0.5,0.5)=0",
+    "primary_reference": "Botella and Peyret, Computers & Fluids 27 (1998) 421-433, doi:10.1016/S0045-7930(98)00002-4",
+    "tabulated_cross_check": "Tran et al., Computers, Materials & Continua 70 (2022) 4905-4921, doi:10.32604/cmc.2022.020889",
+    "lid_direction_mapping": "Botella-Peyret horizontal pressure is reflected about x/L=0.5 to match the positive-lid convention used by the course solver"
+  },
+  "executed_runs": [
+    {
+      "grid": "65x65",
+      "dt": 0.001,
+      "steps": 40000,
+      "converged_flag": false,
+      "final_relative_vorticity_change": 3.1594447597154535e-7,
+      "vertical_centerline_relative_L2": 0.18517,
+      "horizontal_centerline_relative_L2": 0.20770
+    },
+    {
+      "grid": "129x129",
+      "dt": 0.00075,
+      "steps": 54000,
+      "converged_flag": true,
+      "final_relative_vorticity_change": 1.2250679738579942e-7,
+      "vertical_centerline_relative_L2": 0.055376,
+      "horizontal_centerline_relative_L2": 0.065750,
+      "pressure_gradient_relative_mismatch_global": 0.6415317638996046,
+      "pressure_gradient_relative_mismatch_excluding_four_grid_layers": 0.06621
+    }
+  ],
+  "interpretation": "The refined centerlines agree with the literature benchmark while the global derivative diagnostic remains corner dominated; both facts are reported."
+}

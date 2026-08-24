@@ -1,0 +1,28 @@
+{
+  "title": "FlowMLLab: An Open-Source Framework for Reproducible CFD-to-Scientific-Machine-Learning Experiments",
+  "description": "Version 1.0.0 of FlowMLLab, an installable and validation-oriented framework connecting continuum CFD, DSMC, case-wise scientific-machine-learning experiments, physical diagnostics, tutorial notebooks, and article-figure reproduction.",
+  "creators": [
+    {
+      "name": "Roohi, Ehsan",
+      "orcid": "0000-0001-5739-3210",
+      "affiliation": "University of Massachusetts Amherst"
+    }
+  ],
+  "license": "MIT",
+  "access_right": "open",
+  "keywords": [
+    "computational fluid dynamics",
+    "scientific machine learning",
+    "neural operators",
+    "DSMC",
+    "reproducible software"
+  ],
+  "related_identifiers": [
+    {
+      "identifier": "https://github.com/Ehsan-Roohi/FlowMLLab",
+      "relation": "isSupplementTo",
+      "scheme": "url"
+    }
+  ],
+  "upload_type": "software"
+}

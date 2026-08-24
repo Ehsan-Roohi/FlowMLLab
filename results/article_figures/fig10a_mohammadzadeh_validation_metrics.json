@@ -1,0 +1,12 @@
+{
+  "relative_l2": 0.007722916373203787,
+  "rmse_over_p0": 0.007800660763950902,
+  "max_abs_over_p0": 0.015575073240164938,
+  "grid_change_40_to_60": 0.008695591228402248,
+  "fine_run": "ref_n60_seed07",
+  "coarse_runs": [
+    "ref_n40_seed07",
+    "ref_n40_seed19",
+    "ref_n40_seed31"
+  ]
+}

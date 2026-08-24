@@ -1,0 +1,59 @@
+[build-system]
+requires = ["setuptools>=75", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "flowmllab"
+version = "1.0.0"
+description = "Reproducible CFD-to-scientific-machine-learning experiments"
+readme = "README.md"
+requires-python = ">=3.10,<3.13"
+license = { file = "LICENSE" }
+authors = [
+  { name = "Ehsan Roohi", email = "roohie@umass.edu" },
+]
+keywords = [
+  "computational-fluid-dynamics",
+  "scientific-machine-learning",
+  "neural-operators",
+  "DSMC",
+  "reproducibility",
+]
+classifiers = [
+  "Development Status :: 5 - Production/Stable",
+  "Intended Audience :: Education",
+  "Intended Audience :: Science/Research",
+  "License :: OSI Approved :: MIT License",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Topic :: Scientific/Engineering :: Physics",
+]
+dependencies = [
+  "numpy==2.2.6",
+  "pandas==2.2.3",
+  "scipy==1.15.3",
+  "matplotlib==3.10.3",
+  "scikit-learn==1.6.1",
+]
+
+[project.optional-dependencies]
+ml = [
+  "tensorflow==2.21.0",
+  "keras==3.15.0",
+]
+test = []
+
+[project.scripts]
+flowmllab = "flowmllab.cli:main"
+
+[project.urls]
+Homepage = "https://github.com/Ehsan-Roohi/FlowMLLab"
+Repository = "https://github.com/Ehsan-Roohi/FlowMLLab"
+Documentation = "https://github.com/Ehsan-Roohi/FlowMLLab/blob/main/START_HERE.md"
+Issues = "https://github.com/Ehsan-Roohi/FlowMLLab/issues"
+
+[tool.setuptools.packages.find]
+include = ["flowmllab*"]
+
