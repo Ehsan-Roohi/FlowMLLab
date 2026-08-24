@@ -1,0 +1,145 @@
+name: Bootstrap standalone FlowMLLab
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  bootstrap:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Import only the validated FlowMLLab subtree
+        run: |
+          python - <<'PY'
+          import urllib.request
+          urllib.request.urlretrieve(
+              "https://zenodo.org/api/records/22073498/files/Ehsan-Roohi/Machine_Learning-v1.0.0.zip/content",
+              "/tmp/flowmllab.zip",
+          )
+          PY
+          mkdir -p /tmp/flowmllab-archive
+          unzip -q /tmp/flowmllab.zip -d /tmp/flowmllab-archive
+          src="$(find /tmp/flowmllab-archive -type d -path '*/MIE690A_AI_in_Fluid_Mechanics' -print -quit)"
+          test -n "$src"
+          cp -a "$src"/. .
+      - name: Establish standalone repository metadata
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          root = Path(".")
+          readme = root.joinpath("README.md").read_text()
+          readme = readme.replace(
+              "https://github.com/Ehsan-Roohi/Machine_Learning/actions/workflows/flowmllab-ci.yml",
+              "https://github.com/Ehsan-Roohi/FlowMLLab/actions/workflows/ci.yml",
+          )
+          readme = readme.replace(
+              "Use [CITATION.cff](CITATION.cff) when citing the release.\n",
+              "Use [CITATION.cff](CITATION.cff) when citing the release.\n\n"
+              "The immutable software archive for version 1.0.0 is identified in "
+              "[CITATION.cff](CITATION.cff). The GitHub release and archival record "
+              "contain only FlowMLLab. They do not include materials from any "
+              "separate research repository.\n",
+          )
+          root.joinpath("README.md").write_text(readme)
+          pyproject = root.joinpath("pyproject.toml").read_text()
+          pyproject = pyproject.replace(
+              'Homepage = "https://github.com/Ehsan-Roohi/Machine_Learning/tree/main/MIE690A_AI_in_Fluid_Mechanics"',
+              'Homepage = "https://github.com/Ehsan-Roohi/FlowMLLab"',
+          ).replace(
+              'Repository = "https://github.com/Ehsan-Roohi/Machine_Learning"',
+              'Repository = "https://github.com/Ehsan-Roohi/FlowMLLab"',
+          ).replace(
+              'Documentation = "https://github.com/Ehsan-Roohi/Machine_Learning/blob/main/MIE690A_AI_in_Fluid_Mechanics/START_HERE.md"',
+              'Documentation = "https://github.com/Ehsan-Roohi/FlowMLLab/blob/main/START_HERE.md"',
+          ).replace(
+              'Issues = "https://github.com/Ehsan-Roohi/Machine_Learning/issues"',
+              'Issues = "https://github.com/Ehsan-Roohi/FlowMLLab/issues"',
+          )
+          root.joinpath("pyproject.toml").write_text(pyproject)
+          citation = root.joinpath("CITATION.cff").read_text()
+          citation = citation.replace(
+              'repository-code: "https://github.com/Ehsan-Roohi/Machine_Learning/tree/main/MIE690A_AI_in_Fluid_Mechanics"',
+              'repository-code: "https://github.com/Ehsan-Roohi/FlowMLLab"',
+          ).replace(
+              'url: "https://github.com/Ehsan-Roohi/Machine_Learning/releases/tag/v1.0.0"',
+              'url: "https://github.com/Ehsan-Roohi/FlowMLLab/releases/tag/v1.0.0"',
+          )
+          root.joinpath("CITATION.cff").write_text(citation)
+          old_notes = root / "RELEASE_NOTES_V3.md"
+          if old_notes.exists():
+              old_notes.unlink()
+          root.joinpath(".gitignore").write_text("""__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.coverage
+.venv/
+venv/
+.ipynb_checkpoints/
+build/
+dist/
+*.log
+.DS_Store
+""")
+          root.joinpath(".zenodo.json").write_text("""{
+  "title": "FlowMLLab: An Open-Source Framework for Reproducible CFD-to-Scientific-Machine-Learning Experiments",
+  "description": "Version 1.0.0 of FlowMLLab, an installable and validation-oriented framework connecting continuum CFD, DSMC, case-wise scientific-machine-learning experiments, physical diagnostics, tutorial notebooks, and article-figure reproduction.",
+  "creators": [{"name": "Roohi, Ehsan", "orcid": "0000-0001-5739-3210", "affiliation": "University of Massachusetts Amherst"}],
+  "license": "MIT",
+  "access_right": "open",
+  "keywords": ["computational fluid dynamics", "scientific machine learning", "neural operators", "DSMC", "reproducible software"],
+  "related_identifiers": [{"identifier": "https://github.com/Ehsan-Roohi/FlowMLLab", "relation": "isSupplementTo", "scheme": "url"}],
+  "upload_type": "software"
+}
+""")
+          workflow_dir = root / ".github" / "workflows"
+          workflow_dir.mkdir(parents=True, exist_ok=True)
+          for path in workflow_dir.glob("bootstrap*.yml"):
+              path.unlink()
+          workflow_dir.joinpath("ci.yml").write_text("""name: FlowMLLab CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.10", "3.11", "3.12"]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+          cache: pip
+          cache-dependency-path: pyproject.toml
+      - name: Install system QA dependency
+        run: sudo apt-get update && sudo apt-get install -y poppler-utils
+      - name: Install FlowMLLab
+        run: python -m pip install --upgrade pip && python -m pip install -e ".[test]"
+      - name: Package tests
+        run: python -m unittest discover -s tests -v
+      - name: Core scientific smoke test
+        run: flowmllab smoke --root .
+      - name: Full release QA
+        run: flowmllab qa --root .
+""")
+          PY
+      - name: Commit standalone source tree
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -m "Release FlowMLLab v1.0.0"
+          git push
