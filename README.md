@@ -19,6 +19,19 @@ The course treats scientific machine learning as a controlled computational-phys
 
 Start with [START_HERE.md](START_HERE.md). It gives the installation check, recommended order, expected runtimes, and a first 20-minute validation exercise.
 
+## Workshops, support, and consulting
+
+FlowMLLab remains free and open source. Optional professional services are available for universities, research laboratories, instructors, and engineering teams:
+
+- **Live workshops:** a two-hour introduction, a one-day intensive, or a multi-session program covering validated CFD, scientific machine learning, POD--DeepONet, and DSMC.
+- **Technical onboarding and support:** environment setup, benchmark reproduction, dataset qualification, notebook adaptation, and troubleshooting.
+- **Research consulting:** design and review of CFD-to-SciML workflows, physical validation strategies, neural-operator studies, and rarefied-flow applications.
+- **Custom extensions:** integration of new physical cases, institutional datasets, validation targets, or research-lab workflows.
+
+For workshop, support, or consulting inquiries, contact [Ehsan Roohi](mailto:roohie@umass.edu?subject=FlowMLLab%20workshop%2C%20support%2C%20or%20consulting). These services are optional and do not affect access to the MIT-licensed software or educational materials.
+
+If FlowMLLab supports your teaching or research, you can also support its continued open-source maintenance through the **Sponsor** button at the top of this repository.
+
 ## What is included
 
 | Resource | Contents |
