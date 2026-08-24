@@ -16,3 +16,5 @@ CFD-to-scientific-machine-learning framework.
 - MIT license and updated citation metadata.
 
 The immutable Git tag for this release is `v1.0.0`.
+The version-specific software archive is identified by DOI
+`10.5281/zenodo.22073935`.
