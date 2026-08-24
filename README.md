@@ -2,6 +2,7 @@
 
 [![FlowMLLab CI](https://github.com/Ehsan-Roohi/FlowMLLab/actions/workflows/ci.yml/badge.svg)](https://github.com/Ehsan-Roohi/FlowMLLab/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.22073935.svg)](https://doi.org/10.5281/zenodo.22073935)
 
 **FlowMLLab** is an open-source framework for reproducible CFD-to-scientific-machine-learning experiments. It integrates transparent continuum and particle solvers, case-wise data partitions, non-neural baselines, coordinate networks, POD-DeepONet models, physical diagnostics, machine-readable evidence, and release checks.
 
@@ -113,7 +114,11 @@ The SoftwareX manuscript documents the software architecture, numerical and ML w
 
 Use [CITATION.cff](CITATION.cff) when citing the release.
 
-The immutable software archive for version 1.0.0 is identified in [CITATION.cff](CITATION.cff). The GitHub release and archival record contain only FlowMLLab. They do not include materials from any separate research repository.
+The immutable software archive for version 1.0.0 is identified by DOI
+[10.5281/zenodo.22073935](https://doi.org/10.5281/zenodo.22073935) and recorded
+in [CITATION.cff](CITATION.cff). The GitHub release and archival record contain
+only FlowMLLab. They do not include materials from any separate research
+repository.
 
 Ehsan Roohi  
 Department of Mechanical and Industrial Engineering  
