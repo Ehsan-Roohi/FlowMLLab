@@ -8,6 +8,10 @@ authors:
     orcid: "https://orcid.org/0000-0001-5739-3210"
 repository-code: "https://github.com/Ehsan-Roohi/FlowMLLab"
 url: "https://github.com/Ehsan-Roohi/FlowMLLab/releases/tag/v1.0.0"
+identifiers:
+  - type: doi
+    value: "10.5281/zenodo.22073935"
+    description: "Archived FlowMLLab v1.0.0 software release"
 license: MIT
 abstract: >-
   FlowMLLab integrates transparent continuum and particle solvers, case-wise
