@@ -2,7 +2,7 @@
 
 [![FlowMLLab CI](https://github.com/Ehsan-Roohi/FlowMLLab/actions/workflows/ci.yml/badge.svg)](https://github.com/Ehsan-Roohi/FlowMLLab/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.22074237.svg)](https://doi.org/10.5281/zenodo.22074237)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.22126785.svg)](https://doi.org/10.5281/zenodo.22126785)
 
 **FlowMLLab** is an open-source framework for reproducible CFD-to-scientific-machine-learning experiments. It integrates transparent continuum and particle solvers, case-wise data partitions, non-neural baselines, coordinate networks, POD-DeepONet models, physical diagnostics, machine-readable evidence, and release checks.
 
@@ -153,9 +153,10 @@ applications, classical reduced-order-model baselines, limitations, and reuse pa
 Use [CITATION.cff](CITATION.cff) when citing the release.
 
 Version 1.1.0 is the current citable release. Its version-specific Zenodo DOI is
-recorded in [CITATION.cff](CITATION.cff) and here after the archival record is
-published. The GitHub release and archival record contain only FlowMLLab. They do
-not include materials from any separate research repository.
+[10.5281/zenodo.22126785](https://doi.org/10.5281/zenodo.22126785) and is also
+recorded in [CITATION.cff](CITATION.cff). The GitHub release and archival record
+contain only FlowMLLab. They do not include materials from any separate research
+repository.
 
 Ehsan Roohi  
 Department of Mechanical and Industrial Engineering  
