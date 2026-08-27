@@ -1,0 +1,37 @@
+{
+  "protocol_version": "cavity-rom-1.0",
+  "module_version": "0.1.0",
+  "problem": "two-dimensional nondimensional square lid-driven cavity",
+  "state": "interior vorticity with streamfunction recovered by DST Poisson solve",
+  "integrator": "forward Euler, matched to the existing Week-4 FOM",
+  "spatial_scheme": "second-order centered differences with Thom wall vorticity",
+  "training_Re": [
+    100,
+    150,
+    200,
+    225,
+    250,
+    350,
+    400
+  ],
+  "selection_Re": 300,
+  "blind_Re": [
+    175,
+    275,
+    375
+  ],
+  "grid_N": 33,
+  "dt": 0.002,
+  "steps": 2500,
+  "final_time": 5.0,
+  "snapshot_stride": 25,
+  "candidate_ranks": [
+    4,
+    8,
+    12,
+    16
+  ],
+  "selection_rule": "minimum rank with POD-Galerkin and POD-DEIM max-time relative L2 velocity error below 1%",
+  "core_dataset_sha256": "09b96b744ee4d18126d8dcc92feb60e128774a1b4d41bb3d8c90a63ccfbabc36",
+  "copyright_note": "implemented independently for FlowMLLab; no mini-rom source code copied"
+}

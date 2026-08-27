@@ -1,5 +1,5 @@
 cff-version: 1.2.0
-message: "If you use FlowMLLab, please cite the archived v1.0.2 software release and the associated SoftwareX article."
+message: "If you use FlowMLLab, please cite the archived v1.1.0 software release and the associated article."
 title: "FlowMLLab: An Open-Source Framework for Reproducible CFD-to-Scientific-Machine-Learning Experiments"
 type: software
 authors:
@@ -7,11 +7,7 @@ authors:
     given-names: Ehsan
     orcid: "https://orcid.org/0000-0001-5739-3210"
 repository-code: "https://github.com/Ehsan-Roohi/FlowMLLab"
-url: "https://github.com/Ehsan-Roohi/FlowMLLab/releases/tag/v1.0.2"
-identifiers:
-  - type: doi
-    value: "10.5281/zenodo.22074237"
-    description: "Archived FlowMLLab v1.0.2 software release"
+url: "https://github.com/Ehsan-Roohi/FlowMLLab/releases/tag/v1.1.0"
 license: MIT
 abstract: >-
   FlowMLLab integrates transparent continuum and particle solvers, case-wise
@@ -23,7 +19,9 @@ keywords:
   - computational fluid dynamics
   - scientific machine learning
   - neural operators
+  - proper orthogonal decomposition
+  - discrete empirical interpolation method
   - direct simulation Monte Carlo
   - reproducibility
-version: "1.0.2"
-date-released: "2026-08-24"
+version: "1.1.0"
+date-released: "2026-08-27"

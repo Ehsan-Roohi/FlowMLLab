@@ -6,7 +6,7 @@ from pathlib import Path
 import unittest
 
 import flowmllab
-from flowmllab.cli import main
+from flowmllab.cli import build_parser, main
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -14,7 +14,7 @@ ROOT = Path(__file__).resolve().parents[1]
 
 class FlowMLLabCoreTests(unittest.TestCase):
     def test_version(self) -> None:
-        self.assertEqual(flowmllab.__version__, "1.0.2")
+        self.assertEqual(flowmllab.__version__, "1.1.0")
 
     def test_core_asset_contract(self) -> None:
         report = flowmllab.validate_core_assets(ROOT)
@@ -30,6 +30,11 @@ class FlowMLLabCoreTests(unittest.TestCase):
             status = main(["smoke", "--root", str(ROOT)])
         self.assertEqual(status, 0)
         self.assertIn('"status": "pass"', captured.getvalue())
+
+    def test_cavity_rom_cli_is_exposed(self) -> None:
+        args = build_parser().parse_args(["rom", "--root", str(ROOT)])
+        self.assertEqual(args.command, "rom")
+        self.assertEqual(args.root, ROOT)
 
 
 if __name__ == "__main__":

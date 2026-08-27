@@ -1,0 +1,18 @@
+{
+  "status": "pass",
+  "selected_rank": 16,
+  "selected_deim_dimension": 16,
+  "selection_Re": 300,
+  "blind_Re": [
+    175,
+    275,
+    375
+  ],
+  "maximum_blind_velocity_error": 0.006338191825871811,
+  "maximum_blind_final_vorticity_error": 0.0055823535205248714,
+  "maximum_blind_divergence_l2": 1.4303127396935946e-16,
+  "maximum_blind_wall_rms_error": 0.0,
+  "POD_Galerkin_speedup": 0.9299234753893787,
+  "POD_DEIM_speedup": 9.241426812113115,
+  "break_even_query_count": 7.841897570463188
+}
