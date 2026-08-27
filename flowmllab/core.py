@@ -125,7 +125,20 @@ def generate_validation_figures(target: str = "all", root: str | Path | None = N
     return int(completed.returncode)
 
 
+def generate_cavity_rom_validation(root: str | Path | None = None) -> int:
+    """Regenerate the validated Week-4.1 POD--Galerkin/POD--DEIM evidence."""
+    repository = discover_repository_root(root)
+    completed = subprocess.run(
+        [
+            sys.executable,
+            str(repository / "qa" / "run_cavity_rom_validation.py"),
+        ],
+        cwd=repository,
+        check=False,
+    )
+    return int(completed.returncode)
+
+
 def format_report(report: dict[str, Any]) -> str:
     """Return deterministic JSON for CLI and CI logs."""
     return json.dumps(report, indent=2, sort_keys=True)
-

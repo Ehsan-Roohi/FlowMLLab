@@ -7,6 +7,14 @@
 - `week03/`: Maxwellian sampling/noise and a mini DSMC cavity.
 - `week04/`: CFD data production, scalar/field surrogates, and a 27-cell POD-DeepONet laboratory with development-only selection, a visible blind-test gate, three-seed uncertainty, Ghia checks, physical diagnostics, and timing.
 
+The additive `week04/W4_1_Classical_ROM_Cavity.ipynb` lab comes after the
+original Week-4 sequence without modifying it.  It implements dynamic centered
+POD--Galerkin and POD--DEIM for the same lid-driven cavity, validates the added
+snapshot FOM against the fixed 65x65 archive and Ghia centerlines, performs grid
+and time-step refinement, freezes rank on `Re=300`, opens `Re=175,275,375` once,
+and reports offline/online timing plus break-even query count.  Its executed
+machine-readable evidence is in `../results/cavity_rom/`.
+
 The executed Week-4 operator result is stored in `../results/pod_deeponet/`. Start with `week04/W4_Lab3_DeepONet_Cavity_Student.ipynb`; set its regeneration switches only after reading the frozen protocol. The notebook distinguishes the valid advantage—fast repeated full-field inference with retained benchmark fidelity—from the invalid claim that a neural surrogate makes Ghia data more accurate.
 
 The Week-1 cavity notebook first reproduces the manuscript's Ghia velocity and Botella--Peyret pressure validations. The Week-3 DSMC notebook first validates the executed HS--NTC solver directly against Mohammadzadeh wall-pressure data; the earlier empty digitization exercise has been removed. Both store paper-ready PNG/PDF files and metric JSON under `../results/article_figures/`. See [`../ARTICLE_FIGURE_MAP.md`](../ARTICLE_FIGURE_MAP.md) for every notebook-to-figure contract.

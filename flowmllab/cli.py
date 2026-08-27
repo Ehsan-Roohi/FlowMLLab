@@ -9,6 +9,7 @@ from . import __version__
 from .core import (
     ValidationError,
     format_report,
+    generate_cavity_rom_validation,
     generate_validation_figures,
     run_repository_qa,
     validate_core_assets,
@@ -32,6 +33,11 @@ def build_parser() -> argparse.ArgumentParser:
     figures = subparsers.add_parser("figures", help="generate manuscript validation figures")
     figures.add_argument("target", choices=("ghia", "pressure", "dsmc", "all"), nargs="?", default="all")
     figures.add_argument("--root", type=Path, help="FlowMLLab checkout root")
+
+    rom = subparsers.add_parser(
+        "rom", help="regenerate the validated Week-4.1 cavity ROM evidence"
+    )
+    rom.add_argument("--root", type=Path, help="FlowMLLab checkout root")
     return parser
 
 
@@ -45,6 +51,8 @@ def main(argv: list[str] | None = None) -> int:
             return run_repository_qa(args.root)
         if args.command == "figures":
             return generate_validation_figures(args.target, args.root)
+        if args.command == "rom":
+            return generate_cavity_rom_validation(args.root)
     except ValidationError as error:
         print(f"FlowMLLab validation failed: {error}")
         return 2
@@ -53,4 +61,3 @@ def main(argv: list[str] | None = None) -> int:
 
 if __name__ == "__main__":
     raise SystemExit(main())
-

@@ -63,6 +63,7 @@ Typical student runtimes are approximate:
 | Week 3 Maxwellian lab | CPU | 20–40 min |
 | Week 3 mini DSMC | CPU/GPU | 30–120 min depending on grid and particle budget |
 | Week 4 surrogate labs | CPU or Colab | 20–90 min each |
+| Optional Week 4.1 cavity ROM | CPU | <5 min with frozen evidence; about 1 min to regenerate validation |
 | Project Tracks 1–4 | Colab recommended | 1–4 h including controlled sweeps |
 | Project Track 5 | CPU/GPU | several hours for all stochastic cases |
 | Project Track 6 | CUDA GPU | smoke test first; final study is substantially longer |

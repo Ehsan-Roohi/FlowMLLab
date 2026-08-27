@@ -29,7 +29,11 @@ REQUIRED = [
     "flowmllab/__init__.py",
     "flowmllab/cli.py",
     "flowmllab/core.py",
+    "flowmllab/cavity_rom.py",
     "tests/test_core.py",
+    "tests/test_cavity_rom.py",
+    "qa/build_week04_1_rom_notebook.py",
+    "qa/run_cavity_rom_validation.py",
     "data/cavity_data.npz",
     "data/case_quality.csv",
     "common/w4utils.py",
@@ -40,6 +44,7 @@ REQUIRED = [
     "common/run_cavity_pressure_validation.py",
     "ARTICLE_FIGURE_MAP.md",
     "notebooks/week04/W4_Lab3_DeepONet_Cavity_Student.ipynb",
+    "notebooks/week04/W4_1_Classical_ROM_Cavity.ipynb",
     "notebooks/P0_Project_Setup.ipynb",
     "notebooks/P1_Re_Generalization.ipynb",
     "notebooks/P2_Physics_Guided_DNN.ipynb",
@@ -61,6 +66,15 @@ REQUIRED = [
     "results/pod_deeponet/deeponet_protocol_and_timing.json",
     "results/pod_deeponet/deeponet_predictions.csv",
     "results/pod_deeponet/pod_deeponet_ghia_validation.svg",
+    "results/cavity_rom/fom_validation.csv",
+    "results/cavity_rom/convergence.csv",
+    "results/cavity_rom/selection.csv",
+    "results/cavity_rom/blind_metrics.csv",
+    "results/cavity_rom/timing.json",
+    "results/cavity_rom/validation_protocol.json",
+    "results/cavity_rom/validation_summary.json",
+    "results/cavity_rom/cavity_rom_model.npz",
+    "results/cavity_rom/cavity_rom_validation.png",
     "results/article_validation/re1000_n65.npz",
     "results/article_validation/re1000_n129.npz",
     "results/article_validation/botella_pressure_reference.csv",
@@ -130,7 +144,7 @@ def validate_notebooks() -> tuple[int, int]:
                 for cell in cells
             ), f"missing learner-edition marker: {path}"
         count += 1
-    assert count == 16, f"expected 16 notebooks, found {count}"
+    assert count == 17, f"expected 17 notebooks, found {count}"
     return count, code_cells
 
 
@@ -233,6 +247,71 @@ def validate_pod_deeponet_results() -> dict[str, float]:
     }
 
 
+def validate_cavity_rom_results() -> dict[str, float]:
+    result_dir = ROOT / "results" / "cavity_rom"
+    summary = json.loads((result_dir / "validation_summary.json").read_text())
+    assert summary["status"] == "pass"
+    assert summary["selected_rank"] == 16
+    assert summary["selected_deim_dimension"] == 16
+    assert summary["blind_Re"] == [175, 275, 375]
+    assert float(summary["maximum_blind_velocity_error"]) < 0.01
+    assert float(summary["maximum_blind_final_vorticity_error"]) < 0.01
+    assert float(summary["maximum_blind_divergence_l2"]) < 1.0e-12
+    assert float(summary["maximum_blind_wall_rms_error"]) == 0.0
+
+    fom = pd.read_csv(result_dir / "fom_validation.csv")
+    assert fom["Re"].astype(int).tolist() == [100, 400]
+    assert float(fom["archive_relative_L2_u_v_omega"].max()) < 5.0e-13
+    assert float(fom[["Ghia_relative_L2_u", "Ghia_relative_L2_v"]].max().max()) < 0.20
+
+    convergence = pd.read_csv(result_dir / "convergence.csv")
+    for study in ("grid", "time_step"):
+        errors = convergence.loc[
+            convergence["study"] == study, "relative_L2_uv"
+        ].to_numpy()
+        assert len(errors) == 3 and np.all(np.diff(errors) < 0.0), (study, errors)
+
+    selection = pd.read_csv(result_dir / "selection.csv")
+    assert selection["rank"].astype(int).tolist() == [4, 8, 12, 16]
+    accepted = selection[selection["passes_one_percent_gate"]]
+    assert accepted["rank"].astype(int).tolist() == [16]
+
+    blind = pd.read_csv(result_dir / "blind_metrics.csv")
+    assert sorted(blind["Re"].astype(int).unique().tolist()) == [175, 275, 375]
+    assert sorted(blind["method"].unique().tolist()) == ["POD-DEIM", "POD-Galerkin"]
+    assert float(blind["max_time_relative_L2_uv"].max()) < 0.01
+    assert float(blind["final_relative_L2_omega"].max()) < 0.01
+    assert float(blind["wall_rms_error"].max()) == 0.0
+    assert float(blind["divergence_l2"].max()) < 1.0e-12
+
+    timing = json.loads((result_dir / "timing.json").read_text())
+    assert float(timing["POD_Galerkin_speedup"]) < 1.0
+    assert float(timing["POD_DEIM_speedup"]) > 2.0
+    assert float(timing["break_even_query_count"]) > 1.0
+
+    with np.load(result_dir / "cavity_rom_model.npz", allow_pickle=False) as archive:
+        assert int(archive["n"]) == 33
+        assert archive["pod_modes"].shape == (31 * 31, 16)
+        assert archive["nonlinear_basis"].shape == (31 * 31, 16)
+        assert archive["deim_indices"].shape == (16,)
+
+    notebook = json.loads(
+        (ROOT / "notebooks" / "week04" / "W4_1_Classical_ROM_Cavity.ipynb").read_text()
+    )
+    source = "\n".join("".join(cell.get("source", [])) for cell in notebook["cells"])
+    assert "load_deim_model" in source and "simulate_pod_deim" in source
+    assert "Stop: blind-test gate" in source
+    return {
+        "max_blind_relative_L2_uv": float(blind["max_time_relative_L2_uv"].max()),
+        "max_blind_final_relative_L2_omega": float(
+            blind["final_relative_L2_omega"].max()
+        ),
+        "POD_Galerkin_speedup": float(timing["POD_Galerkin_speedup"]),
+        "POD_DEIM_speedup": float(timing["POD_DEIM_speedup"]),
+        "break_even_query_count": float(timing["break_even_query_count"]),
+    }
+
+
 def validate_pdfs() -> int:
     pdfs = sorted((ROOT / "lectures").glob("*.pdf"))
     assert len(pdfs) == 5
@@ -252,6 +331,7 @@ def main() -> None:
     notebooks, code_cells = validate_notebooks()
     metrics = smoke_common_baseline()
     deeponet_metrics = validate_pod_deeponet_results()
+    cavity_rom_metrics = validate_cavity_rom_results()
     article_metrics = validate_article_alignment()
     pdfs = validate_pdfs()
     python_files = sorted(ROOT.rglob("*.py"))
@@ -265,6 +345,7 @@ def main() -> None:
     print("dataset SHA-256:", actual)
     print("Re=275 interpolation metrics:", json.dumps(metrics, sort_keys=True))
     print("POD-DeepONet release metrics:", json.dumps(deeponet_metrics, sort_keys=True))
+    print("Cavity ROM release metrics:", json.dumps(cavity_rom_metrics, sort_keys=True))
     print("Article-aligned validation metrics:", json.dumps(article_metrics, sort_keys=True))
 
 

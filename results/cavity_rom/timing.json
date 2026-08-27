@@ -1,0 +1,17 @@
+{
+  "timing_scope": "complete t=0-to-5 query plus one final full-field reconstruction",
+  "repeats": 7,
+  "statistic": "median wall time after one warm-up",
+  "platform": "Linux-6.18.35-x86_64-with-glibc2.39",
+  "processor": "x86_64",
+  "python": "3.12.13",
+  "numpy": "2.3.5",
+  "scipy": "1.17.0",
+  "offline_training_seconds": 2.3423572150059044,
+  "FOM_query_seconds": 0.3349412090028636,
+  "POD_Galerkin_query_seconds": 0.3601814749999903,
+  "POD_DEIM_query_seconds": 0.03624345199204981,
+  "POD_Galerkin_speedup": 0.9299234753893787,
+  "POD_DEIM_speedup": 9.241426812113115,
+  "break_even_query_count": 7.841897570463188
+}

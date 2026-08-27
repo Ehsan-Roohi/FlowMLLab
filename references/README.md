@@ -29,6 +29,7 @@ The list below is a learning route, not a requirement to read every source befor
 - **Sirovich (1987).** Method of snapshots and coherent structures.
 - **Berkooz, Holmes & Lumley (1993).** Classical review of POD in turbulent flows. [DOI](https://doi.org/10.1146/annurev.fl.25.010193.002543)
 - **Rowley, Colonius & Murray (2004).** POD/Galerkin model reduction for compressible flows. [DOI](https://doi.org/10.1016/j.physd.2003.03.001)
+- **Chaturantabut & Sorensen (2010).** Discrete empirical interpolation for reducing the online cost of nonlinear POD models. [DOI](https://doi.org/10.1137/090766498)
 - **Taira et al. (2017).** Broad overview of modal analysis and the physical meaning of modes. [DOI](https://doi.org/10.2514/1.J056060)
 - **Hesthaven & Ubbiali (2018).** Non-intrusive neural prediction of reduced coefficients. [DOI](https://doi.org/10.1016/j.jcp.2018.02.037)
 
