@@ -8,13 +8,18 @@ authors:
     orcid: "https://orcid.org/0000-0001-5739-3210"
 repository-code: "https://github.com/Ehsan-Roohi/FlowMLLab"
 url: "https://github.com/Ehsan-Roohi/FlowMLLab/releases/tag/v1.1.0"
+doi: "10.5281/zenodo.22126785"
+identifiers:
+  - type: doi
+    value: "10.5281/zenodo.22126785"
+    description: "Version-specific archive for FlowMLLab v1.1.0"
 license: MIT
 abstract: >-
   FlowMLLab integrates transparent continuum and particle solvers, case-wise
-  data partitions, non-neural baselines, coordinate networks, POD-DeepONet
-  models, physical diagnostics, machine-readable validation evidence, and
-  release-quality assurance for reproducible scientific machine learning in
-  fluid mechanics.
+  data partitions, non-neural baselines, coordinate networks, POD-DeepONet,
+  centered POD-Galerkin and POD-DEIM models, physical diagnostics,
+  machine-readable validation evidence, and release-quality assurance for
+  reproducible scientific machine learning in fluid mechanics.
 keywords:
   - computational fluid dynamics
   - scientific machine learning
