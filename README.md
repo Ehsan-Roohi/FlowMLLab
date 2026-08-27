@@ -148,6 +148,10 @@ The manuscript prepared for *AI Thermal Fluids* documents the software architect
 numerical and ML workflow, validation contract, representative continuum and kinetic
 applications, classical reduced-order-model baselines, limitations, and reuse pathway.
 
+[Read the public FlowMLLab v1.1.0 original-software manuscript (PDF)](manuscript/FlowMLLab_v1.1.0_Original_Software_Article.pdf).
+This is an author manuscript and is not a journal version of record. Cite the software
+using the version-specific Zenodo DOI below.
+
 ## Citation and contact
 
 Use [CITATION.cff](CITATION.cff) when citing the release.
