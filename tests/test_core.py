@@ -14,7 +14,7 @@ ROOT = Path(__file__).resolve().parents[1]
 
 class FlowMLLabCoreTests(unittest.TestCase):
     def test_version(self) -> None:
-        self.assertEqual(flowmllab.__version__, "1.0.2")
+        self.assertEqual(flowmllab.__version__, "1.1.0")
 
     def test_core_asset_contract(self) -> None:
         report = flowmllab.validate_core_assets(ROOT)

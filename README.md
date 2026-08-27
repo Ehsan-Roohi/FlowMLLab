@@ -142,19 +142,20 @@ This repository contains instructor-developed teaching materials, common numeric
 
 ## Associated manuscript
 
-**FlowMLLab: An Open-Source Framework for Reproducible CFD-to-Scientific-Machine-Learning Experiments**
+**FlowMLLab: An open-source framework for reproducible computational-fluid-dynamics and scientific-machine-learning experiments**
 
-The SoftwareX manuscript documents the software architecture, numerical and ML workflow, validation contract, representative continuum and kinetic applications, limitations, and reuse pathway.
+The manuscript prepared for *AI Thermal Fluids* documents the software architecture,
+numerical and ML workflow, validation contract, representative continuum and kinetic
+applications, classical reduced-order-model baselines, limitations, and reuse pathway.
 
 ## Citation and contact
 
 Use [CITATION.cff](CITATION.cff) when citing the release.
 
-The immutable software archive for version 1.0.2 is identified by DOI
-[10.5281/zenodo.22074237](https://doi.org/10.5281/zenodo.22074237) and recorded
-in [CITATION.cff](CITATION.cff). The GitHub release and archival record contain
-only FlowMLLab. They do not include materials from any separate research
-repository.
+Version 1.1.0 is the current citable release. Its version-specific Zenodo DOI is
+recorded in [CITATION.cff](CITATION.cff) and here after the archival record is
+published. The GitHub release and archival record contain only FlowMLLab. They do
+not include materials from any separate research repository.
 
 Ehsan Roohi  
 Department of Mechanical and Industrial Engineering  
