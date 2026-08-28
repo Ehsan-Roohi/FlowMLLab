@@ -1,0 +1,53 @@
+name: Reproducibility report
+description: Report a numerical, physical, timing, or evidence mismatch
+title: "[Reproducibility]: "
+body:
+  - type: input
+    id: artifact
+    attributes:
+      label: Command, notebook, or figure
+      placeholder: flowmllab qa --root . or notebooks/week04/...
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: FlowMLLab version or commit
+      placeholder: v1.1.0 or a full commit SHA
+    validations:
+      required: true
+  - type: textarea
+    id: case
+    attributes:
+      label: Physical case and protocol
+      description: Include case parameters, grid or particle budget, split, seed, and dataset SHA-256 when relevant.
+    validations:
+      required: true
+  - type: textarea
+    id: comparison
+    attributes:
+      label: Expected and observed evidence
+      description: State both values, units, tolerance, and the evidence file used for comparison.
+    validations:
+      required: true
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment and timing method
+      description: Include OS, Python, CPU/GPU, dependency versions, and warm-up/batch details for timing reports.
+    validations:
+      required: true
+  - type: textarea
+    id: logs
+    attributes:
+      label: Logs or compact output
+      render: shell
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Checks
+      options:
+        - label: I ran the released command without changing the declared blind protocol.
+          required: true
+        - label: I did not include private student work, credentials, or restricted data.
+          required: true

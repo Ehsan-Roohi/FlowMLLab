@@ -1,0 +1,61 @@
+name: Software bug
+description: Report a reproducible package, CLI, or notebook failure
+title: "[Bug]: "
+body:
+  - type: dropdown
+    id: area
+    attributes:
+      label: Affected area
+      options:
+        - Installation or CLI
+        - Weekly notebook
+        - Project notebook
+        - CFD or DSMC solver
+        - Surrogate or ROM workflow
+        - Release QA or figures
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: FlowMLLab version or commit
+      placeholder: v1.1.0 or a full commit SHA
+    validations:
+      required: true
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment
+      description: Include OS, Python version, CPU/GPU, and installation command.
+    validations:
+      required: true
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: Minimal reproduction
+      description: Give the exact command or notebook cells and inputs needed to reproduce the failure.
+    validations:
+      required: true
+  - type: textarea
+    id: observed
+    attributes:
+      label: Observed output
+      description: Paste the complete traceback or concise incorrect output; remove secrets and private data.
+      render: shell
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior
+    validations:
+      required: true
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Checks
+      options:
+        - label: I searched existing issues and used a clean environment or fresh Colab runtime.
+          required: true
+        - label: I did not include private student work, credentials, or restricted data.
+          required: true

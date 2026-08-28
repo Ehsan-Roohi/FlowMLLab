@@ -33,6 +33,7 @@ REQUIRED = [
     "tests/test_core.py",
     "tests/test_cavity_rom.py",
     "qa/build_week04_1_rom_notebook.py",
+    "qa/add_colab_entrypoints.py",
     "qa/run_cavity_rom_validation.py",
     "data/cavity_data.npz",
     "data/case_quality.csv",
@@ -122,6 +123,15 @@ def validate_notebooks() -> tuple[int, int]:
         cells = notebook.get("cells", [])
         assert cells, f"empty notebook: {path}"
         full_source = "\n".join("".join(cell.get("source", [])) for cell in cells)
+        relative = path.relative_to(ROOT).as_posix()
+        colab_url = (
+            "https://colab.research.google.com/github/"
+            f"Ehsan-Roohi/FlowMLLab/blob/main/{relative}"
+        )
+        assert colab_url in full_source, f"missing direct Colab launcher: {path}"
+        assert "FLOWMLLAB_COLAB_BOOTSTRAP_V1" in full_source, (
+            f"missing Colab repository bootstrap: {path}"
+        )
         assert "MIE690A article-aligned validation v3" in full_source, (
             f"missing article-alignment marker: {path}"
         )
