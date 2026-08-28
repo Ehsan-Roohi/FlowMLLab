@@ -4,6 +4,14 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.22126785.svg)](https://doi.org/10.5281/zenodo.22126785)
 
+<p align="center">
+  <a href="results/pod_deeponet/pod_deeponet_ghia_validation.png">
+    <img src="results/pod_deeponet/pod_deeponet_ghia_validation.png" alt="FlowMLLab POD-DeepONet validation against CFD and Ghia data" width="100%">
+  </a>
+</p>
+
+<p align="center"><em>Validated CFD fields, blind POD-DeepONet prediction, physical diagnostics, and measured inference cost.</em></p>
+
 **FlowMLLab** is an open-source framework for reproducible CFD-to-scientific-machine-learning experiments. It integrates transparent continuum and particle solvers, case-wise data partitions, non-neural baselines, coordinate networks, POD-DeepONet models, physical diagnostics, machine-readable evidence, and release checks.
 
 The repository also contains the complete tutorial and lecture layer developed for the six-week graduate course **MIE 690A: AI in Fluid Mechanics**, University of Massachusetts Amherst, Summer 2026. The reusable modules, datasets, validators, and figure builders are the software core; the notebooks are documented examples of that framework.
@@ -84,7 +92,10 @@ The exact core and ML dependency versions are recorded in `pyproject.toml` and
 `requirements.txt`. The `flowmllab` commands are the supported programmatic
 entry points; notebooks are tutorials that call the same shared modules.
 
-For Google Colab, upload the notebook and the files named in its **Required files** section. Project notebooks also contain a repository bootstrap cell, so they can be launched from this checkout without manually copying `common/` or `data/` files.
+Every public notebook now has an **Open in Colab** badge and a first-code-cell
+bootstrap that clones this repository and installs the tested package automatically.
+Use the [one-click notebook launcher](notebooks/README.md); no manual upload of
+`common/`, `data/`, or package files is required.
 
 TensorFlow is needed for the neural-network training cells. The numerical audit, interpolation, POD, data checks, and notebook syntax validation can be run without a GPU. Track 6 requires a CUDA-capable runtime for its final closed-loop run; its fast-mode configuration is only a smoke test, not research-resolution evidence.
 

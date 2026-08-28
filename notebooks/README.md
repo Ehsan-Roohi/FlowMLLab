@@ -1,5 +1,31 @@
 # Notebook guide
 
+Each notebook opens directly from GitHub, clones the complete FlowMLLab release,
+and installs the tested package in its first code cell. Choose a Colab GPU runtime
+only for notebooks that explicitly require CUDA.
+
+## One-click Colab launcher
+
+| Module | Notebook | Launch |
+| --- | --- | --- |
+| Week 1 | Python for CFD and AI | [Open in Colab](https://colab.research.google.com/github/Ehsan-Roohi/FlowMLLab/blob/main/notebooks/week01/01_python_for_cfd_ai_fluids.ipynb) |
+| Week 1 | TensorFlow for AI in fluids | [Open in Colab](https://colab.research.google.com/github/Ehsan-Roohi/FlowMLLab/blob/main/notebooks/week01/02_tensorflow_for_ai_fluids.ipynb) |
+| Week 1 | Cavity CFD and Ghia validation | [Open in Colab](https://colab.research.google.com/github/Ehsan-Roohi/FlowMLLab/blob/main/notebooks/week01/03_cavity_ghia.ipynb) |
+| Week 2 | Supervised learning and rarefaction | [Open in Colab](https://colab.research.google.com/github/Ehsan-Roohi/FlowMLLab/blob/main/notebooks/week02/AI_in_Fluids_Week2_Colab_Expanded.ipynb) |
+| Week 3 | Maxwellian noise and ML | [Open in Colab](https://colab.research.google.com/github/Ehsan-Roohi/FlowMLLab/blob/main/notebooks/week03/AI_in_Fluids_Week3_Lab1_Maxwellian_Noise_ML_Student.ipynb) |
+| Week 3 | Mini DSMC cavity | [Open in Colab](https://colab.research.google.com/github/Ehsan-Roohi/FlowMLLab/blob/main/notebooks/week03/AI_in_Fluids_Week3_Lab2_Mini_DSMC_Cavity_Revised_Student.ipynb) |
+| Week 4 | CFD data production | [Open in Colab](https://colab.research.google.com/github/Ehsan-Roohi/FlowMLLab/blob/main/notebooks/week04/W4_Lab1_CFD_Data_Production_Student.ipynb) |
+| Week 4 | Scalar and field surrogates | [Open in Colab](https://colab.research.google.com/github/Ehsan-Roohi/FlowMLLab/blob/main/notebooks/week04/W4_Lab2_Scalar_and_Field_Surrogates_Student.ipynb) |
+| Week 4 | POD-DeepONet cavity | [Open in Colab](https://colab.research.google.com/github/Ehsan-Roohi/FlowMLLab/blob/main/notebooks/week04/W4_Lab3_DeepONet_Cavity_Student.ipynb) |
+| Week 4.1 | Classical POD-Galerkin/POD-DEIM | [Open in Colab](https://colab.research.google.com/github/Ehsan-Roohi/FlowMLLab/blob/main/notebooks/week04/W4_1_Classical_ROM_Cavity.ipynb) |
+| Project | P0 setup and data audit | [Open in Colab](https://colab.research.google.com/github/Ehsan-Roohi/FlowMLLab/blob/main/notebooks/P0_Project_Setup.ipynb) |
+| Project | P1 Reynolds-number generalization | [Open in Colab](https://colab.research.google.com/github/Ehsan-Roohi/FlowMLLab/blob/main/notebooks/P1_Re_Generalization.ipynb) |
+| Project | P2 physics-guided DNN | [Open in Colab](https://colab.research.google.com/github/Ehsan-Roohi/FlowMLLab/blob/main/notebooks/P2_Physics_Guided_DNN.ipynb) |
+| Project | P3 POD study | [Open in Colab](https://colab.research.google.com/github/Ehsan-Roohi/FlowMLLab/blob/main/notebooks/P3_POD_Study.ipynb) |
+| Project | P4 uncertainty and data sufficiency | [Open in Colab](https://colab.research.google.com/github/Ehsan-Roohi/FlowMLLab/blob/main/notebooks/P4_Uncertainty_Study.ipynb) |
+| Project | P5 rarefied cavity | [Open in Colab](https://colab.research.google.com/github/Ehsan-Roohi/FlowMLLab/blob/main/notebooks/P5_Rarefied_Cavity.ipynb) |
+| Project | P6 Fokker-Planck closure | [Open in Colab](https://colab.research.google.com/github/Ehsan-Roohi/FlowMLLab/blob/main/notebooks/P6_FP_Cavity_Closure.ipynb) |
+
 ## Weekly laboratories
 
 - `week01/`: Python, TensorFlow, and validated continuum cavity CFD.

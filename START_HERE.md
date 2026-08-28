@@ -4,14 +4,18 @@ This page is the shortest reliable path from a fresh checkout to a meaningful sc
 
 ## 1. Choose your mode
 
-| Mode | Use it when | First notebook |
-| --- | --- | --- |
-| Complete beginner | You know fluid mechanics but have limited Python experience | `notebooks/week01/01_python_for_cfd_ai_fluids.ipynb` |
-| Python-ready | You can use NumPy and Matplotlib | `notebooks/week01/03_cavity_ghia.ipynb` |
-| Scientific-ML ready | You already understand CFD validation and supervised learning | `notebooks/P0_Project_Setup.ipynb` |
+| Mode | Use it when | First notebook | One-click run |
+| --- | --- | --- | --- |
+| Complete beginner | You know fluid mechanics but have limited Python experience | `notebooks/week01/01_python_for_cfd_ai_fluids.ipynb` | [Open in Colab](https://colab.research.google.com/github/Ehsan-Roohi/FlowMLLab/blob/main/notebooks/week01/01_python_for_cfd_ai_fluids.ipynb) |
+| Python-ready | You can use NumPy and Matplotlib | `notebooks/week01/03_cavity_ghia.ipynb` | [Open in Colab](https://colab.research.google.com/github/Ehsan-Roohi/FlowMLLab/blob/main/notebooks/week01/03_cavity_ghia.ipynb) |
+| Scientific-ML ready | You already understand CFD validation and supervised learning | `notebooks/P0_Project_Setup.ipynb` | [Open in Colab](https://colab.research.google.com/github/Ehsan-Roohi/FlowMLLab/blob/main/notebooks/P0_Project_Setup.ipynb) |
 | Instructor adoption | You are planning a course or workshop | `COURSE_MAP.md`, then `lectures/` |
 
 Do not begin with Track 6 unless you already understand case-wise splitting, scaling, offline versus closed-loop validation, and GPU troubleshooting.
+
+The complete [notebook launcher](notebooks/README.md) links directly to all 17
+Colab notebooks. Their first code cells obtain the repository and package, so a
+fresh Colab runtime does not require manual file uploads.
 
 ## 2. Create an environment
 

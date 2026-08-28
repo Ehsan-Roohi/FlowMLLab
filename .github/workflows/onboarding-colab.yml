@@ -1,0 +1,31 @@
+name: Prepare one-click Colab notebooks
+
+on:
+  push:
+    branches:
+      - onboarding/one-click-colab
+
+permissions:
+  contents: write
+
+jobs:
+  apply-entrypoints:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Add Colab launchers and bootstraps
+        run: python qa/add_colab_entrypoints.py
+      - name: Commit generated notebook entrypoints
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git diff --name-only -- notebooks | while IFS= read -r file; do git add -- "$file"; done
+          git diff --cached --check
+          git commit -m 'Add one-click Colab entrypoints to notebooks'
+          git push origin "HEAD:${{ github.ref_name }}"
