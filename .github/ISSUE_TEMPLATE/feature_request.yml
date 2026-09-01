@@ -1,0 +1,52 @@
+name: Scoped extension proposal
+description: Propose a tested documentation, platform, teaching, or scientific extension
+title: "[Proposal]: "
+body:
+  - type: dropdown
+    id: area
+    attributes:
+      label: Proposed area
+      options:
+        - Documentation or accessibility
+        - Platform compatibility
+        - Teaching or course adoption
+        - Interactive demo
+        - New physical benchmark
+        - Surrogate, ROM, or diagnostic method
+    validations:
+      required: true
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem and intended user
+      description: Describe the concrete obstacle and who encounters it.
+    validations:
+      required: true
+  - type: textarea
+    id: change
+    attributes:
+      label: Smallest useful change
+      description: Explain the proposed scope and what will remain unchanged.
+    validations:
+      required: true
+  - type: textarea
+    id: validation
+    attributes:
+      label: Validation and acceptance criterion
+      description: For scientific work, include reference data, complete-case split, baseline, physics diagnostics, and budget.
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Relevant evidence or prior implementation
+      description: Add links, citations, logs, or a compact example when available.
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Checks
+      options:
+        - label: I searched existing issues and the roadmap for related work.
+          required: true
+        - label: I will not include private student work, credentials, or restricted data.
+          required: true

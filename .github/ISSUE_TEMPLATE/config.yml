@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: FlowMLLab roadmap
+    url: https://github.com/Ehsan-Roohi/FlowMLLab/blob/main/ROADMAP.md
+    about: Review planned work and good first contributions before opening a proposal.
+  - name: Questions and show-and-tell
+    url: https://github.com/Ehsan-Roohi/FlowMLLab/discussions
+    about: Ask a usage question or show how you used FlowMLLab after Discussions is enabled.

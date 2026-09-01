@@ -1,11 +1,14 @@
 #!/usr/bin/env python3
-"""Execute the Week-4 POD-DeepONet cavity project on CPU.
+"""Execute the Week-4 multi-output POD-DeepONet cavity project on CPU.
 
-The operator is written in explicit branch--trunk form.  A development-only
-POD supplies an interpretable spatial trunk and a tanh branch network maps
-Reynolds number to modal coefficients.  Rank and branch width are selected on
-one complete development case; three untouched Reynolds cases are opened only
-after the protocol is frozen.
+The operator uses separate POD trunks for the divergence-free velocity state
+``[u, v]`` and the zero-mean pressure field ``p``.  Two small branch heads map
+Reynolds number to their modal coefficients.  Keeping the trunks separate
+prevents pressure scaling from changing the velocity modes while making
+pressure a direct learned output rather than a post-processed reconstruction.
+Rank, branch width, and the declared scalar input transform are selected on one
+complete development case; the retained test Reynolds cases are not used by
+the selection rule.
 """
 
 from __future__ import annotations
@@ -37,8 +40,11 @@ plt.rcParams["svg.fonttype"] = "none"
 
 SEEDS = (690, 691, 692)
 VALIDATION_RE = 225
-RANKS = (3, 4)
-HIDDEN_CANDIDATES = ((16, 16), (32, 32), (64, 64))
+VELOCITY_RANKS = (3, 4)
+VELOCITY_HIDDEN_CANDIDATES = ((16, 16), (32, 32), (64, 64))
+PRESSURE_RANKS = (2, 3, 4)
+PRESSURE_HIDDEN_CANDIDATES = ((4,), (8,), (8, 8), (16, 16), (32, 32))
+PRESSURE_INPUT_TRANSFORMS = ("linear", "log")
 
 
 def load_data() -> dict[str, np.ndarray]:
@@ -50,20 +56,35 @@ def case_index(data: dict[str, np.ndarray], re_value: float) -> int:
     return int(np.where(np.isclose(data["Re"], re_value))[0][0])
 
 
-def state_matrix(data: dict[str, np.ndarray], indices: np.ndarray) -> np.ndarray:
-    return np.hstack(
-        (
-            data["u"][indices].reshape(len(indices), -1),
-            data["v"][indices].reshape(len(indices), -1),
+def state_matrix(
+    data: dict[str, np.ndarray], indices: np.ndarray, field: str = "velocity"
+) -> np.ndarray:
+    """Return complete-case states for one POD trunk."""
+    if field == "velocity":
+        return np.hstack(
+            (
+                data["u"][indices].reshape(len(indices), -1),
+                data["v"][indices].reshape(len(indices), -1),
+            )
         )
-    )
+    if field == "pressure":
+        pressure = data["p"][indices].reshape(len(indices), -1).copy()
+        pressure -= np.mean(pressure, axis=1, keepdims=True)
+        return pressure
+    raise ValueError(f"Unknown field {field!r}; choose 'velocity' or 'pressure'")
 
 
-def make_trunk(data: dict[str, np.ndarray], indices: np.ndarray, rank: int) -> dict[str, np.ndarray]:
-    states = state_matrix(data, indices)
+def make_trunk(
+    data: dict[str, np.ndarray],
+    indices: np.ndarray,
+    rank: int,
+    field: str = "velocity",
+) -> dict[str, np.ndarray | str]:
+    states = state_matrix(data, indices, field)
     mean = np.mean(states, axis=0)
     _, singular_values, modes = np.linalg.svd(states - mean, full_matrices=False)
     return {
+        "field": field,
         "mean": mean,
         "modes": modes[:rank],
         "singular_values": singular_values,
@@ -74,21 +95,38 @@ def make_trunk(data: dict[str, np.ndarray], indices: np.ndarray, rank: int) -> d
 
 
 def coefficients(
-    data: dict[str, np.ndarray], indices: np.ndarray, trunk: dict[str, np.ndarray]
+    data: dict[str, np.ndarray],
+    indices: np.ndarray,
+    trunk: dict[str, np.ndarray | str],
 ) -> np.ndarray:
-    return (state_matrix(data, indices) - trunk["mean"]) @ trunk["modes"].T
+    states = state_matrix(data, indices, str(trunk["field"]))
+    return (states - trunk["mean"]) @ trunk["modes"].T
+
+
+def branch_features(re_values: np.ndarray, transform: str) -> np.ndarray:
+    """Apply a declared scalar feature transform before standardization."""
+    values = np.asarray(re_values, dtype=float).reshape(-1, 1)
+    if transform == "linear":
+        return values
+    if transform == "log":
+        if np.any(values <= 0.0):
+            raise ValueError("The logarithmic Reynolds feature requires Re > 0")
+        return np.log(values)
+    raise ValueError(f"Unknown input transform {transform!r}")
 
 
 def fit_branch(
     data: dict[str, np.ndarray],
     indices: np.ndarray,
-    trunk: dict[str, np.ndarray],
+    trunk: dict[str, np.ndarray | str],
     hidden: tuple[int, ...],
     seed: int,
+    input_transform: str = "linear",
 ) -> dict[str, object]:
-    re_values = data["Re"][indices, None]
+    re_values = data["Re"][indices]
     coeff = coefficients(data, indices, trunk)
-    x_scaler = StandardScaler().fit(re_values)
+    features = branch_features(re_values, input_transform)
+    x_scaler = StandardScaler().fit(features)
     y_scaler = StandardScaler().fit(coeff)
     model = MLPRegressor(
         hidden_layer_sizes=hidden,
@@ -103,12 +141,14 @@ def fit_branch(
     started = time.perf_counter()
     with warnings.catch_warnings():
         warnings.simplefilter("ignore", ConvergenceWarning)
-        model.fit(x_scaler.transform(re_values), y_scaler.transform(coeff))
+        model.fit(x_scaler.transform(features), y_scaler.transform(coeff))
     return {
         "model": model,
         "x_scaler": x_scaler,
         "y_scaler": y_scaler,
         "trunk": trunk,
+        "field": str(trunk["field"]),
+        "input_transform": input_transform,
         "hidden": hidden,
         "seed": seed,
         "iterations": int(model.n_iter_),
@@ -116,14 +156,22 @@ def fit_branch(
     }
 
 
-def predict(
+def predict_head(
     bundle: dict[str, object], re_value: float, shape: tuple[int, int]
-) -> tuple[np.ndarray, np.ndarray]:
+) -> tuple[np.ndarray, np.ndarray] | np.ndarray:
+    features = branch_features(
+        np.asarray([re_value]), str(bundle["input_transform"])
+    )
     scaled = bundle["model"].predict(
-        bundle["x_scaler"].transform(np.asarray([[re_value]]))
+        bundle["x_scaler"].transform(features)
     ).reshape(1, -1)
     coeff = bundle["y_scaler"].inverse_transform(scaled)[0]
     state = bundle["trunk"]["mean"] + coeff @ bundle["trunk"]["modes"]
+    if bundle["field"] == "pressure":
+        pressure = state.reshape(shape).copy()
+        pressure -= np.mean(pressure)
+        return pressure
+
     count = int(np.prod(shape))
     u = state[:count].reshape(shape).copy()
     v = state[count:].reshape(shape).copy()
@@ -138,57 +186,149 @@ def predict(
     return u, v
 
 
+def fit_operator(
+    data: dict[str, np.ndarray],
+    indices: np.ndarray,
+    trunks: dict[str, dict[str, np.ndarray | str]],
+    selected: dict[str, dict[str, object]],
+    seed: int,
+) -> dict[str, object]:
+    """Fit the two branch heads of one multi-output POD-DeepONet member."""
+    return {
+        "seed": seed,
+        "velocity": fit_branch(
+            data,
+            indices,
+            trunks["velocity"],
+            tuple(selected["velocity"]["hidden"]),
+            seed,
+            str(selected["velocity"]["input_transform"]),
+        ),
+        "pressure": fit_branch(
+            data,
+            indices,
+            trunks["pressure"],
+            tuple(selected["pressure"]["hidden"]),
+            seed,
+            str(selected["pressure"]["input_transform"]),
+        ),
+    }
+
+
+def predict(
+    bundle: dict[str, object], re_value: float, shape: tuple[int, int]
+) -> tuple[np.ndarray, np.ndarray, np.ndarray]:
+    """Predict velocity and direct zero-mean pressure from one operator member."""
+    velocity = predict_head(bundle["velocity"], re_value, shape)
+    pressure = predict_head(bundle["pressure"], re_value, shape)
+    assert isinstance(velocity, tuple) and isinstance(pressure, np.ndarray)
+    return velocity[0], velocity[1], pressure
+
+
 def ensemble_predict(
     bundles: list[dict[str, object]], re_value: float, shape: tuple[int, int]
-) -> tuple[np.ndarray, np.ndarray]:
+) -> tuple[np.ndarray, np.ndarray, np.ndarray]:
     fields = [predict(bundle, re_value, shape) for bundle in bundles]
-    return (
-        np.mean(np.stack([field[0] for field in fields]), axis=0),
-        np.mean(np.stack([field[1] for field in fields]), axis=0),
+    return tuple(
+        np.mean(np.stack([field[component] for field in fields]), axis=0)
+        for component in range(3)
     )
 
 
 def field_report(
-    data: dict[str, np.ndarray], re_value: float, prediction: tuple[np.ndarray, np.ndarray]
+    data: dict[str, np.ndarray],
+    re_value: float,
+    prediction: tuple[np.ndarray, np.ndarray, np.ndarray],
 ) -> dict[str, float]:
     idx = case_index(data, re_value)
     return w4utils.field_validation_report(
         data["x"], data["y"], data["u"][idx], data["v"][idx],
-        prediction[0], prediction[1]
+        prediction[0], prediction[1], data["p"][idx], prediction[2]
     )
 
 
-def select_model(data: dict[str, np.ndarray]) -> tuple[int, tuple[int, ...], pd.DataFrame]:
+def _head_validation_error(
+    data: dict[str, np.ndarray],
+    re_value: float,
+    field: str,
+    prediction: tuple[np.ndarray, np.ndarray] | np.ndarray,
+) -> float:
+    idx = case_index(data, re_value)
+    if field == "pressure":
+        report = w4utils.pressure_errors(data["p"][idx], prediction)
+        return float(report["relative_L2_p"])
+    report = w4utils.field_validation_report(
+        data["x"], data["y"], data["u"][idx], data["v"][idx],
+        prediction[0], prediction[1]
+    )
+    return float(report["relative_L2_uv"])
+
+
+def select_model(
+    data: dict[str, np.ndarray],
+) -> tuple[dict[str, dict[str, object]], pd.DataFrame]:
+    """Select velocity and pressure heads using only the complete Re=225 case."""
     development = np.where(data["split"] == "train")[0]
     validation_idx = case_index(data, VALIDATION_RE)
     selection_train = development[development != validation_idx]
     rows = []
-    for rank in RANKS:
-        trunk = make_trunk(data, selection_train, rank)
-        for hidden in HIDDEN_CANDIDATES:
-            seed_errors = []
-            iterations = []
-            for seed in SEEDS:
-                bundle = fit_branch(data, selection_train, trunk, hidden, seed)
-                prediction = predict(bundle, VALIDATION_RE, data["u"].shape[1:])
-                report = field_report(data, VALIDATION_RE, prediction)
-                seed_errors.append(float(report["relative_L2_uv"]))
-                iterations.append(int(bundle["iterations"]))
-            rows.append(
-                {
-                    "rank": rank,
-                    "hidden": "x".join(map(str, hidden)),
-                    "trunk_energy_fraction": float(trunk["energy_fraction"]),
-                    "mean_validation_relative_L2_uv": float(np.mean(seed_errors)),
-                    "min_validation_relative_L2_uv": float(np.min(seed_errors)),
-                    "max_validation_relative_L2_uv": float(np.max(seed_errors)),
-                    "mean_iterations": float(np.mean(iterations)),
-                }
-            )
-    selection = pd.DataFrame(rows).sort_values("mean_validation_relative_L2_uv")
-    best = selection.iloc[0]
-    hidden = tuple(int(value) for value in str(best["hidden"]).split("x"))
-    return int(best["rank"]), hidden, selection
+    candidate_sets = {
+        "velocity": (
+            VELOCITY_RANKS,
+            VELOCITY_HIDDEN_CANDIDATES,
+            ("linear",),
+        ),
+        "pressure": (
+            PRESSURE_RANKS,
+            PRESSURE_HIDDEN_CANDIDATES,
+            PRESSURE_INPUT_TRANSFORMS,
+        ),
+    }
+    for field, (ranks, hidden_candidates, transforms) in candidate_sets.items():
+        for rank in ranks:
+            trunk = make_trunk(data, selection_train, rank, field)
+            for hidden in hidden_candidates:
+                for transform in transforms:
+                    seed_errors = []
+                    iterations = []
+                    for seed in SEEDS:
+                        bundle = fit_branch(
+                            data, selection_train, trunk, hidden, seed, transform
+                        )
+                        prediction = predict_head(
+                            bundle, VALIDATION_RE, data["u"].shape[1:]
+                        )
+                        seed_errors.append(
+                            _head_validation_error(
+                                data, VALIDATION_RE, field, prediction
+                            )
+                        )
+                        iterations.append(int(bundle["iterations"]))
+                    rows.append(
+                        {
+                            "head": field,
+                            "rank": rank,
+                            "hidden": "x".join(map(str, hidden)),
+                            "input_transform": transform,
+                            "trunk_energy_fraction": float(trunk["energy_fraction"]),
+                            "mean_validation_relative_L2": float(np.mean(seed_errors)),
+                            "min_validation_relative_L2": float(np.min(seed_errors)),
+                            "max_validation_relative_L2": float(np.max(seed_errors)),
+                            "mean_iterations": float(np.mean(iterations)),
+                        }
+                    )
+    selection = pd.DataFrame(rows).sort_values(
+        ["head", "mean_validation_relative_L2"]
+    )
+    selected: dict[str, dict[str, object]] = {}
+    for field in ("velocity", "pressure"):
+        best = selection[selection["head"] == field].iloc[0]
+        selected[field] = {
+            "rank": int(best["rank"]),
+            "hidden": tuple(int(value) for value in str(best["hidden"]).split("x")),
+            "input_transform": str(best["input_transform"]),
+        }
+    return selected, selection
 
 
 def ghia_error(
@@ -216,8 +356,8 @@ def result_figure(
     pred400 = ensemble_predict(bundles, 400, data["u"].shape[1:])
     pred275 = ensemble_predict(bundles, 275, data["u"].shape[1:])
     idx275 = case_index(data, 275)
-    speed400 = np.hypot(*pred400)
-    speed275 = np.hypot(*pred275)
+    speed400 = np.hypot(pred400[0], pred400[1])
+    speed275 = np.hypot(pred275[0], pred275[1])
     truth275 = np.hypot(data["u"][idx275], data["v"][idx275])
     error275 = np.hypot(pred275[0] - data["u"][idx275], pred275[1] - data["v"][idx275])
     reference = w4utils.GHIA[400]
@@ -274,11 +414,16 @@ def result_figure(
 def main() -> None:
     FIGURES.mkdir(parents=True, exist_ok=True)
     data = load_data()
-    rank, hidden, selection = select_model(data)
+    selected, selection = select_model(data)
     selection.to_csv(FIGURES / "deeponet_selection.csv", index=False)
     development = np.where(data["split"] == "train")[0]
-    trunk = make_trunk(data, development, rank)
-    bundles = [fit_branch(data, development, trunk, hidden, seed) for seed in SEEDS]
+    trunks = {
+        field: make_trunk(data, development, int(config["rank"]), field)
+        for field, config in selected.items()
+    }
+    bundles = [
+        fit_operator(data, development, trunks, selected, seed) for seed in SEEDS
+    ]
     blind_indices = np.where(data["split"] == "test")[0]
     rows = []
     for bundle in bundles:
@@ -313,16 +458,29 @@ def main() -> None:
         ghia_rows.append({"Re": re_value, "CFD_Ghia_Eu": cfd_eu, "CFD_Ghia_Ev": cfd_ev, "POD_DeepONet_Ghia_Eu": deep_eu, "POD_DeepONet_Ghia_Ev": deep_ev})
     ghia = pd.DataFrame(ghia_rows)
     ghia.to_csv(FIGURES / "deeponet_ghia_metrics.csv", index=False)
+    training_seconds = {
+        str(bundle["seed"]): {
+            field: float(bundle[field]["training_seconds"])
+            for field in ("velocity", "pressure")
+        }
+        for bundle in bundles
+    }
     timing = {
         "POD_DeepONet_ensemble_inference_ms": inference_ms,
         "CFD_Re275_seconds": cfd_seconds,
         "speedup": cfd_seconds / (inference_ms / 1000.0),
         "CFD_steps": int(cfd_result["steps"]),
         "CFD_final_residual": float(cfd_result["final_residual"]),
-        "training_seconds_by_seed": {str(bundle["seed"]): bundle["training_seconds"] for bundle in bundles},
-        "selected_rank": rank,
-        "selected_hidden": list(hidden),
-        "trunk_energy_fraction": float(trunk["energy_fraction"]),
+        "training_seconds_by_seed_and_head": training_seconds,
+        "selected_heads": {
+            field: {
+                "rank": int(config["rank"]),
+                "hidden": list(config["hidden"]),
+                "input_transform": str(config["input_transform"]),
+                "trunk_energy_fraction": float(trunks[field]["energy_fraction"]),
+            }
+            for field, config in selected.items()
+        },
         "development_Re": data["Re"][development].tolist(),
         "validation_Re_for_selection": VALIDATION_RE,
         "blind_Re": data["Re"][blind_indices].tolist(),
@@ -334,7 +492,12 @@ def main() -> None:
         Re=data["Re"][blind_indices],
         u=np.stack([predictions[float(data["Re"][idx])][0] for idx in blind_indices]),
         v=np.stack([predictions[float(data["Re"][idx])][1] for idx in blind_indices]),
-        seeds=np.asarray(SEEDS), rank=np.asarray(rank), hidden=np.asarray(hidden),
+        p=np.stack([predictions[float(data["Re"][idx])][2] for idx in blind_indices]),
+        seeds=np.asarray(SEEDS),
+        velocity_rank=np.asarray(selected["velocity"]["rank"]),
+        velocity_hidden=np.asarray(selected["velocity"]["hidden"]),
+        pressure_rank=np.asarray(selected["pressure"]["rank"]),
+        pressure_hidden=np.asarray(selected["pressure"]["hidden"]),
     )
     iy, ix = np.indices(data["u"].shape[1:])
     prediction_table = {
@@ -343,17 +506,27 @@ def main() -> None:
         "x": data["x"][ix.ravel()],
         "y": data["y"][iy.ravel()],
     }
-    for re_value, (u_pred, v_pred) in predictions.items():
+    for re_value, (u_pred, v_pred, p_pred) in predictions.items():
         label = str(int(re_value))
         prediction_table[f"u_Re{label}"] = u_pred.ravel()
         prediction_table[f"v_Re{label}"] = v_pred.ravel()
+        prediction_table[f"p_Re{label}"] = p_pred.ravel()
     pd.DataFrame(prediction_table).to_csv(
         FIGURES / "deeponet_predictions.csv", index=False, float_format="%.9g"
     )
     blind275 = float(metrics[(metrics["method"].str.startswith("three-seed")) & np.isclose(metrics["Re"], 275)]["relative_L2_uv"].iloc[0])
     result_figure(data, bundles, inference_ms, cfd_seconds, blind275)
     print("selection\n", selection.to_string(index=False), flush=True)
-    print("blind metrics\n", metrics[["method", "seed", "Re", "relative_L2_uv", "div_l2_pred", "wall_rms_error"]].to_string(index=False), flush=True)
+    print(
+        "blind metrics\n",
+        metrics[
+            [
+                "method", "seed", "Re", "relative_L2_uv", "relative_L2_p",
+                "div_l2_pred", "wall_rms_error",
+            ]
+        ].to_string(index=False),
+        flush=True,
+    )
     print("Ghia\n", ghia.to_string(index=False), flush=True)
     print(json.dumps(timing, indent=2), flush=True)
 

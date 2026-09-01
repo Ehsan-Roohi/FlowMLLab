@@ -213,6 +213,7 @@ def validate_pod_deeponet_results() -> dict[str, float]:
     ensemble = metrics[metrics["method"] == "three-seed POD-DeepONet ensemble"].copy()
     assert sorted(ensemble["Re"].astype(int).tolist()) == [175, 275, 375]
     assert float(ensemble["relative_L2_uv"].max()) < 0.005
+    assert float(ensemble["relative_L2_p"].max()) < 0.005
     assert float(ensemble["div_l2_pred"].max()) < 1.0e-12
     assert float(ensemble["wall_rms_error"].max()) == 0.0
 
@@ -229,14 +230,20 @@ def validate_pod_deeponet_results() -> dict[str, float]:
     timing = json.loads(
         (result_dir / "deeponet_protocol_and_timing.json").read_text(encoding="utf-8")
     )
-    assert timing["selected_rank"] == 3
-    assert timing["selected_hidden"] == [32, 32]
+    assert timing["selected_heads"]["velocity"]["rank"] == 3
+    assert timing["selected_heads"]["velocity"]["hidden"] == [32, 32]
+    assert timing["selected_heads"]["velocity"]["input_transform"] == "linear"
+    assert timing["selected_heads"]["pressure"]["rank"] == 3
+    assert timing["selected_heads"]["pressure"]["hidden"] == [8]
+    assert timing["selected_heads"]["pressure"]["input_transform"] == "log"
     assert float(timing["speedup"]) > 100.0
     assert float(timing["CFD_final_residual"]) < 1.0e-6
 
     predictions = pd.read_csv(result_dir / "deeponet_predictions.csv")
     field_columns = [
-        "u_Re175", "v_Re175", "u_Re275", "v_Re275", "u_Re375", "v_Re375"
+        "u_Re175", "v_Re175", "p_Re175",
+        "u_Re275", "v_Re275", "p_Re275",
+        "u_Re375", "v_Re375", "p_Re375",
     ]
     assert len(predictions) == 65 * 65
     assert predictions[["iy", "ix"]].drop_duplicates().shape[0] == 65 * 65
@@ -247,10 +254,13 @@ def validate_pod_deeponet_results() -> dict[str, float]:
         with np.load(binary_predictions, allow_pickle=False) as archive:
             assert archive["u"].shape == (3, 65, 65)
             assert archive["v"].shape == (3, 65, 65)
+            assert archive["p"].shape == (3, 65, 65)
+            assert np.max(np.abs(np.mean(archive["p"], axis=(1, 2)))) < 1.0e-14
             assert archive["seeds"].tolist() == [690, 691, 692]
 
     return {
         "max_blind_relative_L2_uv": float(ensemble["relative_L2_uv"].max()),
+        "max_blind_relative_L2_p": float(ensemble["relative_L2_p"].max()),
         "max_divergence_L2": float(ensemble["div_l2_pred"].max()),
         "max_Ghia_error_change": float(ghia_delta),
         "measured_speedup": float(timing["speedup"]),

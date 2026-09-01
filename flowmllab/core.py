@@ -51,8 +51,19 @@ def discover_repository_root(start: str | Path | None = None) -> Path:
 
 def validate_core_assets(root: str | Path | None = None) -> dict[str, Any]:
     """Validate the fixed cavity archive, dimensional contract, and wall conditions."""
-    repository = discover_repository_root(root)
-    archive_path = repository / "data" / "cavity_data.npz"
+    try:
+        repository = discover_repository_root(root)
+        archive_path = repository / "data" / "cavity_data.npz"
+        asset_origin = str(repository)
+    except ValidationError:
+        if root is not None:
+            raise
+        archive_path = Path(__file__).resolve().parent / "assets" / "cavity_data.npz"
+        if not archive_path.is_file():
+            raise ValidationError(
+                "Could not locate the fixed cavity dataset in a checkout or installed package."
+            )
+        asset_origin = str(archive_path.parent)
     actual_hash = _digest(archive_path)
     if actual_hash != EXPECTED_DATA_SHA256:
         raise ValidationError(f"Dataset SHA-256 mismatch: {actual_hash}")
@@ -87,7 +98,7 @@ def validate_core_assets(root: str | Path | None = None) -> dict[str, Any]:
 
     return {
         "status": "pass",
-        "root": str(repository),
+        "root": asset_origin,
         "dataset_sha256": actual_hash,
         "cases": int(len(re_values)),
         "grid": [int(len(y)), int(len(x))],
