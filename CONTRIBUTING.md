@@ -5,6 +5,11 @@ software fixes, and well-scoped extensions to the existing CFD-to-SciML
 workflows. Please do not post private student work or unpublished restricted
 datasets in a public issue.
 
+For a first contribution, start with the scoped entries in
+[ROADMAP.md](ROADMAP.md). Usage questions and examples belong in GitHub
+Discussions once enabled; reproducible faults and bounded extension proposals
+belong in the matching issue form.
+
 ## Before opening an issue
 
 Use the matching issue form and include the FlowMLLab version or commit, Python

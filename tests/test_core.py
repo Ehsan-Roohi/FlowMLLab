@@ -4,9 +4,11 @@ from contextlib import redirect_stdout
 import io
 from pathlib import Path
 import unittest
+from unittest import mock
 
 import flowmllab
 from flowmllab.cli import build_parser, main
+from flowmllab.core import EXPECTED_DATA_SHA256, ValidationError
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -23,6 +25,16 @@ class FlowMLLabCoreTests(unittest.TestCase):
         self.assertEqual(report["grid"], [65, 65])
         self.assertEqual(report["reynolds_numbers"][0], 100.0)
         self.assertEqual(report["reynolds_numbers"][-1], 400.0)
+
+    def test_packaged_asset_fallback_matches_release_hash(self) -> None:
+        with mock.patch(
+            "flowmllab.core.discover_repository_root",
+            side_effect=ValidationError("no checkout"),
+        ):
+            report = flowmllab.validate_core_assets()
+        self.assertEqual(report["status"], "pass")
+        self.assertEqual(report["dataset_sha256"], EXPECTED_DATA_SHA256)
+        self.assertTrue(report["root"].endswith("flowmllab/assets"))
 
     def test_cli_smoke(self) -> None:
         captured = io.StringIO()

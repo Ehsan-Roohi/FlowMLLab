@@ -4,13 +4,42 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.22126785.svg)](https://doi.org/10.5281/zenodo.22126785)
 
+## Validated CFD to scientific ML—from first Colab to reproducible benchmark
+
+Audit a CFD dataset, recover a withheld Reynolds-number case, and verify the
+evidence chain in about **20 minutes**. Continue to a physics-checked
+POD--DeepONet benchmark when ready.
+
 <p align="center">
-  <a href="results/pod_deeponet/pod_deeponet_ghia_validation.png">
-    <img src="results/pod_deeponet/pod_deeponet_ghia_validation.png" alt="FlowMLLab POD-DeepONet validation against CFD and Ghia data" width="100%">
+  <a href="https://colab.research.google.com/github/Ehsan-Roohi/FlowMLLab/blob/main/notebooks/P0_Project_Setup.ipynb"><img src="https://img.shields.io/badge/Run-20--minute_Colab-F9AB00?logo=googlecolab&logoColor=white" alt="Run the 20-minute FlowMLLab Colab"></a>
+  <a href="demo/README.md"><img src="https://img.shields.io/badge/Explore-blind--case_demo-146C94" alt="Explore the validated blind-case demo"></a>
+  <a href="notebooks/README.md"><img src="https://img.shields.io/badge/Open-all_17_notebooks-315A7D" alt="Open all 17 FlowMLLab notebooks"></a>
+</p>
+
+<p align="center">
+  <a href="demo/README.md">
+    <img src="assets/flowmllab_blind_demo.gif" alt="Animated comparison of retained FlowMLLab blind POD-DeepONet predictions and validated CFD fields" width="100%">
   </a>
 </p>
 
-<p align="center"><em>Validated CFD fields, blind POD-DeepONet prediction, physical diagnostics, and measured inference cost.</em></p>
+<p align="center"><em>Three retained test cases from the versioned evidence. Velocity and zero-mean pressure are direct outputs of separate POD--DeepONet heads.</em></p>
+
+| Verified result | Retained v1.1.0 evidence |
+| --- | ---: |
+| Three-seed velocity error on retained cavity cases | **0.0727%–0.4455%** relative $L_2$ |
+| Direct zero-mean pressure prediction | **0.1073%–0.2506%** relative $L_2$ |
+| Repeated three-field evaluation versus a fresh recorded CPU CFD solve | **approximately $5.3\times10^3\times$ faster** |
+| Reproducible learning and research entry points | **17 Colab notebooks + 5 lecture PDFs** |
+
+### Choose a starting point
+
+| Your goal | Start here |
+| --- | --- |
+| See a result immediately | [Explore the retained blind-case demo](demo/README.md) |
+| Complete the first evidence chain | [Run the 20-minute Colab](https://colab.research.google.com/github/Ehsan-Roohi/FlowMLLab/blob/main/notebooks/P0_Project_Setup.ipynb) |
+| Reproduce the software release | Follow [START_HERE.md](START_HERE.md), then run `flowmllab qa --root .` |
+| Adopt material in a course or workshop | Use [COURSE_MAP.md](COURSE_MAP.md) and the [notebook launcher](notebooks/README.md) |
+| Contribute a bounded improvement | Review [ROADMAP.md](ROADMAP.md) and [CONTRIBUTING.md](CONTRIBUTING.md) |
 
 **FlowMLLab** is an open-source framework for reproducible CFD-to-scientific-machine-learning experiments. It integrates transparent continuum and particle solvers, case-wise data partitions, non-neural baselines, coordinate networks, POD-DeepONet models, physical diagnostics, machine-readable evidence, and release checks.
 
@@ -27,24 +56,12 @@ The course treats scientific machine learning as a controlled computational-phys
 
 Start with [START_HERE.md](START_HERE.md). It gives the installation check, recommended order, expected runtimes, and a first 20-minute validation exercise.
 
-## Workshops, support, and consulting
-
-FlowMLLab remains free and open source. Optional professional services are available for universities, research laboratories, instructors, and engineering teams:
-
-- **Live workshops:** a two-hour introduction, a one-day intensive, or a multi-session program covering validated CFD, scientific machine learning, POD--DeepONet, and DSMC.
-- **Technical onboarding and support:** environment setup, benchmark reproduction, dataset qualification, notebook adaptation, and troubleshooting.
-- **Research consulting:** design and review of CFD-to-SciML workflows, physical validation strategies, neural-operator studies, and rarefied-flow applications.
-- **Custom extensions:** integration of new physical cases, institutional datasets, validation targets, or research-lab workflows.
-
-For workshop, support, or consulting inquiries, contact [Ehsan Roohi](mailto:roohie@umass.edu?subject=FlowMLLab%20workshop%2C%20support%2C%20or%20consulting). These services are optional and do not affect access to the MIT-licensed software or educational materials.
-
-If FlowMLLab supports your teaching or research, you can also support its continued open-source maintenance through the **Sponsor** button at the top of this repository.
-
 ## What is included
 
 | Resource | Contents |
 | --- | --- |
 | `flowmllab/` | Installable Python package, scientific asset checks, repository QA, and figure-generation CLI |
+| `demo/` | Read-only Streamlit explorer for the retained POD--DeepONet blind cases |
 | `pyproject.toml` | Versioned package metadata, locked core dependencies, optional ML/test environments, and `flowmllab` entry point |
 | `lectures/` | Five lecture/guide PDFs covering Weeks 1–6, plus editable LaTeX/PPTX sources where available |
 | `notebooks/week01`–`week04` | Ten guided laboratories: Python, TensorFlow, validated cavity CFD, supervised learning, rarefaction, Maxwellian sampling, DSMC, scalar/field surrogates, POD-DeepONet, and an additive classical cavity-ROM study |
@@ -133,9 +150,17 @@ Exact values and environment metadata are in `results/cavity_rom/`.
 
 ## POD-DeepONet validation result
 
-Run `python common/run_pod_deeponet_validation.py` to reproduce the CPU study. The development-only rule selects a rank-3 POD trunk and a `(32,32)` tanh branch. The untouched `Re = 175, 275, 375` fields have three-seed ensemble velocity errors of **0.4525%**, **0.0718%**, and **0.0928%**. Wall error is exactly zero by the declared output transform and the discrete divergence norm remains at round-off because the trunk is built from divergence-free CFD snapshots.
+Run `python common/run_pod_deeponet_validation.py` to reproduce the CPU study. The multi-output model uses separately scaled POD trunks so pressure cannot distort the divergence-free velocity basis. The development-only rule selects a rank-3 velocity trunk with a `(32,32)` tanh branch and a rank-3 pressure trunk with an 8-neuron branch acting on `log(Re)`. At `Re = 175, 275, 375`, three-seed ensemble velocity errors are **0.4455%**, **0.0727%**, and **0.0947%**, while direct zero-mean pressure errors are **0.2506%**, **0.1245%**, and **0.1073%**. Wall error is exactly zero and discrete divergence remains at round-off.
 
-This result does **not** claim that the network improves the Ghia benchmark. At `Re = 100` and `400`, POD-DeepONet preserves the centerline fidelity of the educational CFD solver. Its demonstrated advantage is amortized field evaluation after training: approximately 0.8 ms for the three-seed ensemble versus approximately 8 s for a fresh CPU CFD solve in the recorded run. Exact machine-readable values, protocol, seeds, fields, and the comparison figure are in `results/pod_deeponet/`.
+This result does **not** claim that the network improves the Ghia benchmark or independently validates the pressure-recovery method used to create the labels. At `Re = 100` and `400`, POD-DeepONet preserves the centerline fidelity of the educational CFD solver. Its demonstrated advantage is amortized three-field evaluation after training: approximately 1.0 ms for the three-seed ensemble versus approximately 5.3 s for a fresh CPU CFD solve in the recorded run. Exact machine-readable values, protocol, seeds, fields, and the comparison figure are in `results/pod_deeponet/`.
+
+<p align="center">
+  <a href="results/pod_deeponet/pod_deeponet_ghia_validation.png">
+    <img src="results/pod_deeponet/pod_deeponet_ghia_validation.png" alt="FlowMLLab POD-DeepONet validation against CFD and Ghia data" width="100%">
+  </a>
+</p>
+
+<p align="center"><em>Complete scientific validation figure: Ghia centerlines, blind fields, physical diagnostics, and measured cost.</em></p>
 
 ## Rules that apply to every project
 
@@ -162,6 +187,19 @@ applications, classical reduced-order-model baselines, limitations, and reuse pa
 [Read the public FlowMLLab v1.1.0 original-software manuscript (PDF)](manuscript/FlowMLLab_v1.1.0_Original_Software_Article.pdf).
 This is an author manuscript and is not a journal version of record. Cite the software
 using the version-specific Zenodo DOI below.
+
+## Workshops, support, and consulting
+
+FlowMLLab remains free and open source. Optional professional services are available for universities, research laboratories, instructors, and engineering teams:
+
+- **Live workshops:** a two-hour introduction, a one-day intensive, or a multi-session program covering validated CFD, scientific machine learning, POD--DeepONet, and DSMC.
+- **Technical onboarding and support:** environment setup, benchmark reproduction, dataset qualification, notebook adaptation, and troubleshooting.
+- **Research consulting:** design and review of CFD-to-SciML workflows, physical validation strategies, neural-operator studies, and rarefied-flow applications.
+- **Custom extensions:** integration of new physical cases, institutional datasets, validation targets, or research-lab workflows.
+
+For workshop, support, or consulting inquiries, contact [Ehsan Roohi](mailto:roohie@umass.edu?subject=FlowMLLab%20workshop%2C%20support%2C%20or%20consulting). These services are optional and do not affect access to the MIT-licensed software or educational materials.
+
+If FlowMLLab supports your teaching or research, you can also support its continued open-source maintenance through the **Sponsor** button at the top of this repository.
 
 ## Citation and contact
 
