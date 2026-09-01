@@ -455,7 +455,7 @@ def main() -> None:
         prediction = ensemble_predict(bundles, re_value, data["u"].shape[1:])
         deep_eu, deep_ev = ghia_error(re_value, prediction[0], prediction[1], data["x"], data["y"])
         cfd_eu, cfd_ev = ghia_error(re_value, data["u"][idx], data["v"][idx], data["x"], data["y"])
-        ghia_rows.append({"Re": re_value, "CFD_Ghia_Eu": cfµ¨¥Â¸­yêë¢°k¢G§¦*^d_eu, "CFD_Ghia_Ev": cfd_ev, "POD_DeepONet_Ghia_Eu": deep_eu, "POD_DeepONet_Ghia_Ev": deep_ev})
+        ghia_rows.append({"Re": re_value, "CFD_Ghia_Eu": cfd_eu, "CFD_Ghia_Ev": cfd_ev, "POD_DeepONet_Ghia_Eu": deep_eu, "POD_DeepONet_Ghia_Ev": deep_ev})
     ghia = pd.DataFrame(ghia_rows)
     ghia.to_csv(FIGURES / "deeponet_ghia_metrics.csv", index=False)
     training_seconds = {
