@@ -1,0 +1,269 @@
+{
+  "blind": {
+    "lbm_strouhal": 0.18388667082137589,
+    "models": {
+      "persistence": {
+        "divergence_rms": 0.028188285285316344,
+        "mean_station_enstrophy_relative_error": 0.004842359405368479,
+        "mean_station_profile_relative_l2": 0.16924097677223354,
+        "mean_station_psd_relative_l2": 0.0005857206701436993,
+        "p_relative_l2": 0.06464031771270079,
+        "solid_speed_max": 0.0,
+        "stationwise": [
+          {
+            "enstrophy_ratio": 1.0020166382522513,
+            "enstrophy_relative_error": 0.0020166382522512905,
+            "grid_column": 84.0,
+            "normalized_psd_relative_l2": 0.0013468595752384929,
+            "vorticity_profile_relative_l2": 0.10425961253112533,
+            "x_over_d": 2.0
+          },
+          {
+            "enstrophy_ratio": 1.0024706133981067,
+            "enstrophy_relative_error": 0.0024706133981067246,
+            "grid_column": 108.0,
+            "normalized_psd_relative_l2": 0.0006582603778088583,
+            "vorticity_profile_relative_l2": 0.1858731798478777,
+            "x_over_d": 4.0
+          },
+          {
+            "enstrophy_ratio": 1.0101023174444341,
+            "enstrophy_relative_error": 0.010102317444434128,
+            "grid_column": 132.0,
+            "normalized_psd_relative_l2": 0.00016073342812547136,
+            "vorticity_profile_relative_l2": 0.20002457276483598,
+            "x_over_d": 6.0
+          },
+          {
+            "enstrophy_ratio": 1.0047798685266818,
+            "enstrophy_relative_error": 0.004779868526681774,
+            "grid_column": 156.0,
+            "normalized_psd_relative_l2": 0.00017702929940197477,
+            "vorticity_profile_relative_l2": 0.18680654194509516,
+            "x_over_d": 8.0
+          }
+        ],
+        "u_relative_l2": 0.011265566553201455,
+        "v_relative_l2": 0.12618947557774665,
+        "vorticity_relative_l2": 0.11008982792454075
+      },
+      "prediction": {
+        "divergence_rms": 0.027870377051909076,
+        "mean_station_enstrophy_relative_error": 0.0028529953663808394,
+        "mean_station_profile_relative_l2": 0.00803762204871599,
+        "mean_station_psd_relative_l2": 0.0015922090830996593,
+        "p_relative_l2": 0.023886799288315025,
+        "solid_speed_max": 0.0,
+        "stationwise": [
+          {
+            "enstrophy_ratio": 1.0035379275161367,
+            "enstrophy_relative_error": 0.003537927516136685,
+            "grid_column": 84.0,
+            "normalized_psd_relative_l2": 0.001041528923521965,
+            "vorticity_profile_relative_l2": 0.007982518344614435,
+            "x_over_d": 2.0
+          },
+          {
+            "enstrophy_ratio": 0.9993188500256422,
+            "enstrophy_relative_error": 0.0006811499743577532,
+            "grid_column": 108.0,
+            "normalized_psd_relative_l2": 0.0033294434102126014,
+            "vorticity_profile_relative_l2": 0.008174825094213673,
+            "x_over_d": 4.0
+          },
+          {
+            "enstrophy_ratio": 1.0037127618389494,
+            "enstrophy_relative_error": 0.003712761838949419,
+            "grid_column": 132.0,
+            "normalized_psd_relative_l2": 0.0012855748032568383,
+            "vorticity_profile_relative_l2": 0.008005566494433637,
+            "x_over_d": 6.0
+          },
+          {
+            "enstrophy_ratio": 1.0034801421360795,
+            "enstrophy_relative_error": 0.0034801421360795004,
+            "grid_column": 156.0,
+            "normalized_psd_relative_l2": 0.0007122891954072328,
+            "vorticity_profile_relative_l2": 0.007987578261602213,
+            "x_over_d": 8.0
+          }
+        ],
+        "u_relative_l2": 0.0008055371927157572,
+        "v_relative_l2": 0.004928653293052769,
+        "vorticity_relative_l2": 0.008149077804868406
+      }
+    },
+    "reynolds": 105,
+    "snapshot_count": 277
+  },
+  "generated_utc": "2026-09-02T18:37:08.571830+00:00",
+  "grid": {
+    "center": [
+      60.0,
+      47.5
+    ],
+    "collision_model": "trt",
+    "cylinder_boundary": "bouzidi",
+    "diameter": 12.0,
+    "history_stride": 4,
+    "inflow_velocity": 0.05,
+    "nx": 240,
+    "ny": 96,
+    "perturbation": 0.01,
+    "seed": 690,
+    "snapshot_start": 15000,
+    "snapshot_stride": 25,
+    "steps": 22000
+  },
+  "historical_pod_failure": {
+    "artifact": "../cylinder_ml/blind_re100_lbm_vs_neural.mp4",
+    "status": "retained baseline/failure example; Re=100 is now validation, not blind",
+    "vorticity_relative_l2": 0.1670338626686869
+  },
+  "model": {
+    "epochs_completed": 32,
+    "field_scales": [
+      0.20193098485469818,
+      0.17320527136325836,
+      0.11117880046367645
+    ],
+    "filters": 24,
+    "loss_weights": {
+      "divergence": 0.05,
+      "gradient": 0.2,
+      "vorticity": 0.2
+    },
+    "name": "cylinder_multiscale_cnn",
+    "optimizer": "Adam(lr=5e-4, clipnorm=1)",
+    "parameters": 83091,
+    "patch_size": 64,
+    "seed": 690,
+    "training_seconds": 138.24744028200075,
+    "vorticity_scale": 0.5415998846051274,
+    "weights_reused": true
+  },
+  "protocol": {
+    "blind_reynolds": 105,
+    "casewise_split": true,
+    "claim_scope": "educational one-step Reynolds-generalization; not autonomous rollout or grid-converged DNS",
+    "development_reynolds": [
+      60,
+      80,
+      90,
+      110,
+      120,
+      140
+    ],
+    "dimensionless_snapshot_spacing": 0.10416666666666667,
+    "history_frames": 4,
+    "prediction_horizon_frames": 1,
+    "snapshot_stride_lattice_steps": 25,
+    "teacher_forced_one_step": true,
+    "validation_reynolds": 100
+  },
+  "validation": {
+    "lbm_strouhal": 0.18181364276005288,
+    "models": {
+      "persistence": {
+        "divergence_rms": 0.02721178015242857,
+        "mean_station_enstrophy_relative_error": 0.005164167414946574,
+        "mean_station_profile_relative_l2": 0.1620635343707925,
+        "mean_station_psd_relative_l2": 0.0005613267801514574,
+        "p_relative_l2": 0.06439593114682762,
+        "solid_speed_max": 0.0,
+        "stationwise": [
+          {
+            "enstrophy_ratio": 0.9991671043695263,
+            "enstrophy_relative_error": 0.0008328956304737289,
+            "grid_column": 84.0,
+            "normalized_psd_relative_l2": 0.0010469375409563626,
+            "vorticity_profile_relative_l2": 0.09514731211794247,
+            "x_over_d": 2.0
+          },
+          {
+            "enstrophy_ratio": 0.9932526916373872,
+            "enstrophy_relative_error": 0.006747308362612836,
+            "grid_column": 108.0,
+            "normalized_psd_relative_l2": 0.0010081146552100532,
+            "vorticity_profile_relative_l2": 0.17656050433543352,
+            "x_over_d": 4.0
+          },
+          {
+            "enstrophy_ratio": 1.0004327417831766,
+            "enstrophy_relative_error": 0.0004327417831766489,
+            "grid_column": 132.0,
+            "normalized_psd_relative_l2": 6.61374908219554e-05,
+            "vorticity_profile_relative_l2": 0.19420232482783542,
+            "x_over_d": 6.0
+          },
+          {
+            "enstrophy_ratio": 1.012643723883523,
+            "enstrophy_relative_error": 0.012643723883523084,
+            "grid_column": 156.0,
+            "normalized_psd_relative_l2": 0.0001241174336174586,
+            "vorticity_profile_relative_l2": 0.1823439962019585,
+            "x_over_d": 8.0
+          }
+        ],
+        "u_relative_l2": 0.010945483222540475,
+        "v_relative_l2": 0.12431776925244477,
+        "vorticity_relative_l2": 0.10637532684898504
+      },
+      "prediction": {
+        "divergence_rms": 0.02693199321332273,
+        "mean_station_enstrophy_relative_error": 0.0026298507378016145,
+        "mean_station_profile_relative_l2": 0.007280466755650557,
+        "mean_station_psd_relative_l2": 0.0016630407814746029,
+        "p_relative_l2": 0.023585065228996845,
+        "solid_speed_max": 0.0,
+        "stationwise": [
+          {
+            "enstrophy_ratio": 1.0028886134805641,
+            "enstrophy_relative_error": 0.0028886134805641284,
+            "grid_column": 84.0,
+            "normalized_psd_relative_l2": 0.0010144152478291284,
+            "vorticity_profile_relative_l2": 0.00686860820530387,
+            "x_over_d": 2.0
+          },
+          {
+            "enstrophy_ratio": 0.9993678857810248,
+            "enstrophy_relative_error": 0.0006321142189752438,
+            "grid_column": 108.0,
+            "normalized_psd_relative_l2": 0.003417383215480392,
+            "vorticity_profile_relative_l2": 0.007552624982688833,
+            "x_over_d": 4.0
+          },
+          {
+            "enstrophy_ratio": 1.0036118856476899,
+            "enstrophy_relative_error": 0.003611885647689883,
+            "grid_column": 132.0,
+            "normalized_psd_relative_l2": 0.0014430984695528997,
+            "vorticity_profile_relative_l2": 0.007224686463372073,
+            "x_over_d": 6.0
+          },
+          {
+            "enstrophy_ratio": 1.0033867896039772,
+            "enstrophy_relative_error": 0.0033867896039772027,
+            "grid_column": 156.0,
+            "normalized_psd_relative_l2": 0.0007772661930359915,
+            "vorticity_profile_relative_l2": 0.007475947371237452,
+            "x_over_d": 8.0
+          }
+        ],
+        "u_relative_l2": 0.0007864755038468856,
+        "v_relative_l2": 0.004818762835673491,
+        "vorticity_relative_l2": 0.007709604955603017
+      }
+    },
+    "reynolds": 100,
+    "snapshot_count": 277
+  },
+  "validation_gates": {
+    "cnn_downstream_profile_beats_persistence": true,
+    "cnn_vorticity_beats_persistence": true,
+    "every_station_enstrophy_ratio_between_0p75_and_1p25": true,
+    "exact_no_slip": true,
+    "mean_downstream_enstrophy_error_below_15_percent": true
+  },
+  "validation_pass": true
+}

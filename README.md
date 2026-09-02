@@ -73,7 +73,8 @@ Start with [START_HERE.md](START_HERE.md). It gives the installation check, reco
 | `results/article_figures/` | Paper-ready PNG/PDF validation figures and machine-readable error summaries |
 | `results/pod_deeponet/` | Model-selection, blind-case, Ghia-centerline, timing, and full-field POD-DeepONet evidence |
 | `results/cavity_rom/` | FOM reproduction and refinement, leakage-free POD/DEIM selection, blind trajectories, portable model, timing, break-even count, and summary figure |
-| `results/cylinder_ml/` | 1080p complete-Re blind LBM-versus-neural shedding video, poster, baseline comparison, metrics, and regeneration script |
+| `results/cylinder_ml/` | archived Re=100 phase/POD failure baseline and its diagnostics |
+| `results/cylinder_cnn/` | four-frame multi-scale CNN validation/blind video, downstream metrics, frozen weights, and regeneration script |
 | `advanced/fp_closure/` | Bounded educational workflow for exact and learned Fokker–Planck closure testing |
 | `references/` | Annotated reading guide and BibTeX database |
 | `qa/` | Release validator for notebook syntax, required assets, and reproducibility anchors |
@@ -87,7 +88,7 @@ The recommended path is cumulative:
 - **Week 3 — Particle and kinetic descriptions:** Maxwellian sampling, macroscopic moments, sampling-error scaling, DSMC algorithmic structure, noisy labels, and averaging.
 - **Week 4 — Surrogates and operator learning:** audited CFD fields, scalar baselines, coordinate DNNs, and a restricted POD-DeepONet with complete-case selection, three-seed blind tests, Ghia validation, physical diagnostics, and measured inference cost.
 - **Week 4.1 — Classical and hyper-reduced ROM:** an additive notebook for the same cavity, with dynamic centered POD-Galerkin, nonlinear-cost diagnosis, POD-DEIM, convergence checks, frozen blind tests, and offline/online break-even accounting.
-- **Week 5 — Cylinder wakes with LBM:** derive D2Q9 BGK/TRT, distinguish attached, steady-recirculating, and vortex-shedding regimes, validate forces and Strouhal number, then compare a harmonic POD baseline with a small neural POD surrogate on a completely withheld Reynolds number.
+- **Week 5 — Cylinder wakes with LBM:** derive D2Q9 BGK/TRT, distinguish attached, steady-recirculating, and vortex-shedding regimes, validate forces and Strouhal number, diagnose downstream diffusion in a POD baseline, then test a four-frame multi-scale CNN on a complete unseen Reynolds case.
 - **Week 6 — Controlled research project:** select one track—including POD, physics-guided learning, uncertainty, rarefied flow, or learned closure—freeze the protocol, open blind cases once, document a failure/tradeoff, and produce a reproducible research summary.
 
 The full module-to-evidence mapping is in [COURSE_MAP.md](COURSE_MAP.md).
@@ -162,23 +163,31 @@ retained quick sweep covers `Re = 5, 20, 40, 100, 180`, so students see attached
 flow, a steady symmetric wake, and periodic vortex shedding before using ML.
 
 Open `notebooks/week05/W5_Lattice_Boltzmann_Cylinder_Student.ipynb` for the full
-lesson.  It keeps complete Reynolds cases together, withholds `Re=100`, and
-compares a non-neural Reynolds/phase POD baseline with a two-layer neural POD
-regressor.  The design follows the predictive-question discipline of Lee & You
-(JFM 2019) without reproducing their research-scale GAN/CNN study.
+lesson. It keeps complete Reynolds cases together. The original phase/POD
+surrogate is retained as a failure baseline because its downstream vortices
+diffuse. The corrected path uses four consecutive LBM fields, a three-scale
+fully convolutional residual predictor, and field/gradient/vorticity/divergence
+losses. The design follows the predictive structure of Lee & You (JFM 2019)
+without claiming a reproduction of their research-scale study.
 
-The retained 1080p comparison below uses the saturated periodic window.  The
-entire `Re=100` trajectory is blind; training uses only
-`Re=60,80,90,110,120,140`.  The neural POD model has 4.27% combined `u,v,p`
-error and 16.70% vorticity error on the blind case.  The harmonic POD baseline
-is slightly better on the combined fields (3.99%) while the neural model is
-better on vorticity (16.70% versus 20.74%); both results are retained rather
-than selecting only the favorable metric.
+The archived POD comparison used `Re=60,80,90,110,120,140` and withheld
+`Re=100` from fitting. Once its diffuse wake was inspected to redesign the
+method, `Re=100` correctly became validation rather than blind. Its 16.70%
+vorticity error is retained rather than hidden.
 
-[![Blind Re=100 LBM versus neural POD vortex-shedding comparison](results/cylinder_ml/blind_re100_lbm_vs_neural_poster.png)](results/cylinder_ml/blind_re100_lbm_vs_neural.mp4)
+[![Archived Re=100 POD failure comparison](results/cylinder_ml/blind_re100_lbm_vs_neural_poster.png)](results/cylinder_ml/blind_re100_lbm_vs_neural.mp4)
 
-The model is phase-conditioned: phase comes from the blind LBM lift signal.
-It reconstructs an unseen Reynolds case but is not an autonomous time rollout.
+The corrected CNN is selected only with complete-case `Re=100` validation and
+then tested once on untouched `Re=105`. With dimensionless frame spacing
+`dt*=0.1042`, its blind vorticity error is **0.815%**, versus **11.01%** for
+matched persistence. Mean downstream vorticity-profile error at
+`2D,4D,6D,8D` is **0.804%**, and station enstrophy ratios remain within
+`0.9993–1.0037`.
+
+[![Blind Re=105 LBM versus four-frame multi-scale CNN](results/cylinder_cnn/re105_lbm_vs_multiscale_cnn_poster.png)](results/cylinder_cnn/re105_lbm_vs_multiscale_cnn.mp4)
+
+This is a teacher-forced one-step prediction from four previous true LBM
+frames, not an autonomous rollout.
 
 The committed `quick` evidence is a classroom regime check, not a
 grid-converged external-cylinder DNS result.  Its finite circle resolution and

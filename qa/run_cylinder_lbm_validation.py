@@ -276,6 +276,42 @@ def verify(output: Path) -> dict[str, Any]:
     return summary
 
 
+def verify_cnn(output: Path) -> dict[str, Any]:
+    """Verify frozen four-frame CNN evidence without importing TensorFlow."""
+    metrics_path = output / "multiscale_cnn_metrics.json"
+    video_path = output / "re105_lbm_vs_multiscale_cnn.mp4"
+    if not metrics_path.is_file() or not video_path.is_file():
+        raise FileNotFoundError("retained cylinder CNN evidence is incomplete")
+    report = json.loads(metrics_path.read_text())
+    protocol = report["protocol"]
+    if protocol["development_reynolds"] != [60, 80, 90, 110, 120, 140]:
+        raise AssertionError("CNN development split changed")
+    if protocol["validation_reynolds"] != 100 or protocol["blind_reynolds"] != 105:
+        raise AssertionError("CNN validation/blind split changed")
+    if not report["validation_pass"] or not all(report["validation_gates"].values()):
+        raise AssertionError("CNN validation gates failed")
+    blind = report["blind"]["models"]
+    if not (
+        blind["prediction"]["vorticity_relative_l2"]
+        < blind["persistence"]["vorticity_relative_l2"]
+    ):
+        raise AssertionError("blind CNN does not beat persistence on vorticity")
+    if video_path.stat().st_size <= 1_000_000:
+        raise AssertionError("blind CNN video is unexpectedly small")
+    return {
+        "status": "pass",
+        "validation_reynolds": 100,
+        "blind_reynolds": 105,
+        "blind_vorticity_relative_l2": float(
+            blind["prediction"]["vorticity_relative_l2"]
+        ),
+        "persistence_vorticity_relative_l2": float(
+            blind["persistence"]["vorticity_relative_l2"]
+        ),
+        "video_sha256": _digest(video_path),
+    }
+
+
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--root", type=Path, default=ROOT)
@@ -285,6 +321,9 @@ def main(argv: list[str] | None = None) -> int:
     args = parser.parse_args(argv)
     output = args.root.resolve() / "results" / "cylinder_lbm"
     report = regenerate(output, args.fidelity, max(1, args.workers)) if args.regenerate else verify(output)
+    report["four_frame_cnn"] = verify_cnn(
+        args.root.resolve() / "results" / "cylinder_cnn"
+    )
     print(json.dumps(report, indent=2, sort_keys=True))
     return 0
 
