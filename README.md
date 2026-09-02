@@ -6,15 +6,32 @@
 
 ## Validated CFD to scientific ML—from first Colab to reproducible benchmark
 
-Audit a CFD dataset, recover a withheld Reynolds-number case, and verify the
-evidence chain in about **20 minutes**. Continue to a physics-checked
-POD--DeepONet benchmark when ready.
+Start with a validated circular-cylinder wake, compare LBM with a blind neural
+prediction, and verify the evidence chain. Continue through the 20-minute cavity
+exercise to physics-checked POD--DeepONet benchmarks when ready.
 
 <p align="center">
   <a href="https://colab.research.google.com/github/Ehsan-Roohi/FlowMLLab/blob/main/notebooks/P0_Project_Setup.ipynb"><img src="https://img.shields.io/badge/Run-20--minute_Colab-F9AB00?logo=googlecolab&logoColor=white" alt="Run the 20-minute FlowMLLab Colab"></a>
   <a href="demo/README.md"><img src="https://img.shields.io/badge/Explore-blind--case_demo-146C94" alt="Explore the validated blind-case demo"></a>
   <a href="notebooks/README.md"><img src="https://img.shields.io/badge/Open-all_18_notebooks-315A7D" alt="Open all 18 FlowMLLab notebooks"></a>
 </p>
+
+## Featured: circular-cylinder vortex shedding
+
+The Week 5 capstone advances from the steady cavity to an unsteady circular-cylinder
+wake. A D2Q9 lattice-Boltzmann solver generates the reference fields, and a
+four-frame multi-scale CNN predicts the completely unseen `Re=105` case without
+the downstream vortex diffusion observed in the archived POD baseline.
+
+<p align="center">
+  <a href="results/cylinder_cnn/re105_lbm_vs_multiscale_cnn.mp4">
+    <img src="results/cylinder_cnn/re105_lbm_vs_multiscale_cnn_poster.png" alt="Blind Re=105 comparison of circular-cylinder LBM vorticity and the four-frame multi-scale CNN prediction" width="100%">
+  </a>
+</p>
+
+<p align="center"><em>Click the comparison to play the full LBM-versus-CNN video. Blind vorticity relative L2 error: 0.815%; mean downstream profile error at 2D, 4D, 6D, and 8D: 0.804%.</em></p>
+
+### Cavity benchmark
 
 <p align="center">
   <a href="demo/README.md">
@@ -24,8 +41,10 @@ POD--DeepONet benchmark when ready.
 
 <p align="center"><em>Three retained test cases from the versioned evidence. Velocity and zero-mean pressure are direct outputs of separate POD--DeepONet heads.</em></p>
 
-| Verified result | Retained v1.1.0 evidence |
+| Verified result | Retained evidence |
 | --- | ---: |
+| Blind `Re=105` cylinder vorticity error | **0.815%** relative $L_2$ |
+| Mean cylinder-wake profile error at `2D,4D,6D,8D` | **0.804%** relative $L_2$ |
 | Three-seed velocity error on retained cavity cases | **0.0727%–0.4455%** relative $L_2$ |
 | Direct zero-mean pressure prediction | **0.1073%–0.2506%** relative $L_2$ |
 | Repeated three-field evaluation versus a fresh recorded CPU CFD solve | **approximately $5.3\times10^3\times$ faster** |
@@ -35,7 +54,7 @@ POD--DeepONet benchmark when ready.
 
 | Your goal | Start here |
 | --- | --- |
-| See a result immediately | [Explore the retained blind-case demo](demo/README.md) |
+| See the featured result immediately | [Play the blind `Re=105` cylinder video](results/cylinder_cnn/re105_lbm_vs_multiscale_cnn.mp4) |
 | Complete the first evidence chain | [Run the 20-minute Colab](https://colab.research.google.com/github/Ehsan-Roohi/FlowMLLab/blob/main/notebooks/P0_Project_Setup.ipynb) |
 | Reproduce the software release | Follow [START_HERE.md](START_HERE.md), then run `flowmllab qa --root .` |
 | Adopt material in a course or workshop | Use [COURSE_MAP.md](COURSE_MAP.md) and the [notebook launcher](notebooks/README.md) |
@@ -73,6 +92,8 @@ Start with [START_HERE.md](START_HERE.md). It gives the installation check, reco
 | `results/article_figures/` | Paper-ready PNG/PDF validation figures and machine-readable error summaries |
 | `results/pod_deeponet/` | Model-selection, blind-case, Ghia-centerline, timing, and full-field POD-DeepONet evidence |
 | `results/cavity_rom/` | FOM reproduction and refinement, leakage-free POD/DEIM selection, blind trajectories, portable model, timing, break-even count, and summary figure |
+| `results/cylinder_ml/` | archived Re=100 phase/POD failure baseline and its diagnostics |
+| `results/cylinder_cnn/` | four-frame multi-scale CNN validation/blind video, downstream metrics, frozen weights, and regeneration script |
 | `advanced/fp_closure/` | Bounded educational workflow for exact and learned Fokker–Planck closure testing |
 | `references/` | Annotated reading guide and BibTeX database |
 | `qa/` | Release validator for notebook syntax, required assets, and reproducibility anchors |
@@ -86,7 +107,7 @@ The recommended path is cumulative:
 - **Week 3 — Particle and kinetic descriptions:** Maxwellian sampling, macroscopic moments, sampling-error scaling, DSMC algorithmic structure, noisy labels, and averaging.
 - **Week 4 — Surrogates and operator learning:** audited CFD fields, scalar baselines, coordinate DNNs, and a restricted POD-DeepONet with complete-case selection, three-seed blind tests, Ghia validation, physical diagnostics, and measured inference cost.
 - **Week 4.1 — Classical and hyper-reduced ROM:** an additive notebook for the same cavity, with dynamic centered POD-Galerkin, nonlinear-cost diagnosis, POD-DEIM, convergence checks, frozen blind tests, and offline/online break-even accounting.
-- **Week 5 — Cylinder wakes with LBM:** derive D2Q9 BGK/TRT, distinguish attached, steady-recirculating, and vortex-shedding regimes, validate forces and Strouhal number, then compare a harmonic POD baseline with a small neural POD surrogate on a completely withheld Reynolds number.
+- **Week 5 — Cylinder wakes with LBM:** derive D2Q9 BGK/TRT, distinguish attached, steady-recirculating, and vortex-shedding regimes, validate forces and Strouhal number, diagnose downstream diffusion in a POD baseline, then test a four-frame multi-scale CNN on a complete unseen Reynolds case.
 - **Week 6 — Controlled research project:** select one track—including POD, physics-guided learning, uncertainty, rarefied flow, or learned closure—freeze the protocol, open blind cases once, document a failure/tradeoff, and produce a reproducible research summary.
 
 The full module-to-evidence mapping is in [COURSE_MAP.md](COURSE_MAP.md).
@@ -154,19 +175,41 @@ Exact values and environment metadata are in `results/cavity_rom/`.
 
 Week 5 adds an installable D2Q9 cylinder solver with transparent BGK theory and
 a more robust TRT default, Zou--He inflow, a convective outlet, periodic
-transverse boundaries, halfway bounce-back, momentum-exchange forces, gauge
+transverse boundaries, Bouzidi interpolated bounce-back on an analytical
+circular wall, momentum-exchange forces, gauge
 pressure, vorticity, recirculation length, and Strouhal diagnostics.  The
 retained quick sweep covers `Re = 5, 20, 40, 100, 180`, so students see attached
 flow, a steady symmetric wake, and periodic vortex shedding before using ML.
 
 Open `notebooks/week05/W5_Lattice_Boltzmann_Cylinder_Student.ipynb` for the full
-lesson.  It keeps complete Reynolds cases together, withholds `Re=100`, and
-compares a non-neural Reynolds/phase POD baseline with a two-layer neural POD
-regressor.  The design follows the predictive-question discipline of Lee & You
-(JFM 2019) without reproducing their research-scale GAN/CNN study.
+lesson. It keeps complete Reynolds cases together. The original phase/POD
+surrogate is retained as a failure baseline because its downstream vortices
+diffuse. The corrected path uses four consecutive LBM fields, a three-scale
+fully convolutional residual predictor, and field/gradient/vorticity/divergence
+losses. The design follows the predictive structure of Lee & You (JFM 2019)
+without claiming a reproduction of their research-scale study.
+
+The archived POD comparison used `Re=60,80,90,110,120,140` and withheld
+`Re=100` from fitting. Once its diffuse wake was inspected to redesign the
+method, `Re=100` correctly became validation rather than blind. Its 16.70%
+vorticity error is retained rather than hidden.
+
+[![Archived Re=100 POD failure comparison](results/cylinder_ml/blind_re100_lbm_vs_neural_poster.png)](results/cylinder_ml/blind_re100_lbm_vs_neural.mp4)
+
+The corrected CNN is selected only with complete-case `Re=100` validation and
+then tested once on untouched `Re=105`. With dimensionless frame spacing
+`dt*=0.1042`, its blind vorticity error is **0.815%**, versus **11.01%** for
+matched persistence. Mean downstream vorticity-profile error at
+`2D,4D,6D,8D` is **0.804%**, and station enstrophy ratios remain within
+`0.9993–1.0037`.
+
+[Play the full blind `Re=105` LBM-versus-CNN video](results/cylinder_cnn/re105_lbm_vs_multiscale_cnn.mp4).
+
+This is a teacher-forced one-step prediction from four previous true LBM
+frames, not an autonomous rollout.
 
 The committed `quick` evidence is a classroom regime check, not a
-grid-converged external-cylinder DNS result.  Its coarse stair-step boundary and
+grid-converged external-cylinder DNS result.  Its finite circle resolution and
 periodic transverse domain intentionally expose numerical error; quantitative
 reference bands and an expensive refinement profile are supplied so students
 can qualify a result rather than judging contours by appearance.  Run

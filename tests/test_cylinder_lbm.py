@@ -64,8 +64,35 @@ class CylinderLBMTests(unittest.TestCase):
         self.assertTrue(np.all(first["v"][solid] == 0.0))
         self.assertEqual(first["snapshots"]["u"].shape, (2, 32, 64))
         self.assertEqual(first["metadata"]["transverse_boundary"], "periodic")
-        self.assertEqual(first["metadata"]["cylinder_boundary"], "halfway link bounce-back")
+        self.assertIn("analytical circle", first["metadata"]["cylinder_boundary"])
         self.assertLess(np.max(np.abs(first["mean_density_ratio"] - 1.0)), 0.02)
+
+    def test_bouzidi_links_follow_the_analytical_circle(self) -> None:
+        center = (18.0, 15.5)
+        diameter = 8.0
+        solid = cylinder_lbm.cylinder_mask(64, 32, diameter, center)
+        fractions = cylinder_lbm.curved_link_fractions(solid, center, diameter)
+        finite = np.concatenate(
+            [values[np.isfinite(values)] for values in fractions[1:]]
+        )
+        self.assertGreater(finite.size, 20)
+        self.assertTrue(np.all((finite > 0.0) & (finite <= 1.0)))
+        self.assertTrue(np.any(np.abs(finite - 0.5) > 0.1))
+
+        result = cylinder_lbm.simulate_cylinder(
+            40,
+            nx=64,
+            ny=32,
+            diameter=diameter,
+            center=center,
+            inflow_velocity=0.04,
+            steps=80,
+            history_stride=5,
+            seed=17,
+            cylinder_boundary="bouzidi",
+        )
+        self.assertTrue(np.isfinite(result["rho"]).all())
+        self.assertIn("analytical circle", result["metadata"]["cylinder_boundary"])
 
     def test_low_mach_and_relaxation_stability_gates(self) -> None:
         with self.assertRaisesRegex(ValueError, "low-Mach"):

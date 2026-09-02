@@ -6,7 +6,8 @@ retaining the safeguards needed for a reproducible teaching benchmark:
 * D2Q9 equilibrium with stable two-relaxation-time (TRT) collision by default,
   plus BGK as an explicit comparison option;
 * a low-Mach Zou--He velocity inlet and a non-reflecting-style convective outlet;
-* halfway link bounce-back on the cylinder, with momentum-exchange forces; and
+* Bouzidi interpolated bounce-back on the analytical circular cylinder, with
+  halfway bounce-back retained as an explicit comparison option; and
 * a periodic transverse boundary, representing an array with a deliberately
   small blockage ratio (rather than adding artificial channel-wall layers).
 
@@ -23,7 +24,7 @@ from typing import Any
 import numpy as np
 
 
-CYLINDER_LBM_VERSION = "0.1.0"
+CYLINDER_LBM_VERSION = "0.2.0"
 CS2 = 1.0 / 3.0
 
 # Direction order: rest, E, N, W, S, NE, NW, SW, SE.
@@ -68,6 +69,7 @@ class CylinderLBMConfig:
     outlet_boundary: str = "convective"
     outlet_speed: float | None = None
     collision_model: str = "trt"
+    cylinder_boundary: str = "bouzidi"
     trt_magic_parameter: float = 3.0 / 16.0
 
     @property
@@ -119,6 +121,8 @@ def _validate_config(config: CylinderLBMConfig) -> None:
         raise ValueError("this educational solver supports only the convective outlet")
     if config.collision_model not in {"trt", "bgk"}:
         raise ValueError("collision_model must be 'trt' or 'bgk'")
+    if config.cylinder_boundary not in {"halfway", "bouzidi"}:
+        raise ValueError("cylinder_boundary must be 'halfway' or 'bouzidi'")
     if config.trt_magic_parameter <= 0:
         raise ValueError("trt_magic_parameter must be positive")
     if config.relaxation_time <= 0.5005:
@@ -151,6 +155,52 @@ def cylinder_mask(
     y = np.arange(ny, dtype=float)[:, None]
     cx, cy = center
     return (x - cx) ** 2 + (y - cy) ** 2 <= (0.5 * diameter) ** 2
+
+
+def curved_link_fractions(
+    solid: np.ndarray,
+    center: tuple[float, float],
+    diameter: float,
+) -> tuple[np.ndarray, ...]:
+    """Return exact circle-intersection fractions for fluid-to-solid links.
+
+    Each returned array has the same shape as ``solid``.  For lattice direction
+    ``i``, finite entries identify a fluid node whose neighbor in direction
+    ``i`` is solid.  The stored value ``q`` is the fraction of that lattice
+    link between the fluid-node center and the analytical circular wall.  It
+    lies in ``(0, 1]`` and is used by Bouzidi interpolated bounce-back.
+    """
+    mask = np.asarray(solid, dtype=bool)
+    if mask.ndim != 2 or not mask.any() or mask.all():
+        raise ValueError("solid must be a two-dimensional partial-domain mask")
+    if diameter <= 0:
+        raise ValueError("diameter must be positive")
+    cx0, cy0 = map(float, center)
+    yy, xx = np.indices(mask.shape, dtype=float)
+    x0 = xx - cx0
+    y0 = yy - cy0
+    radius2 = (0.5 * float(diameter)) ** 2
+    fluid = ~mask
+    fractions: list[np.ndarray] = []
+    for direction, (cx, cy) in enumerate(LATTICE_VELOCITIES):
+        values = np.full(mask.shape, np.nan, dtype=float)
+        if direction:
+            neighbor_solid = np.roll(
+                np.roll(mask, -int(cy), axis=0), -int(cx), axis=1
+            )
+            link = fluid & neighbor_solid
+            a = float(cx * cx + cy * cy)
+            b = 2.0 * (x0 * float(cx) + y0 * float(cy))
+            discriminant = b * b - 4.0 * a * (x0 * x0 + y0 * y0 - radius2)
+            root = (-b - np.sqrt(np.maximum(discriminant, 0.0))) / (2.0 * a)
+            valid = link & (discriminant >= -1.0e-12) & (root > 0.0) & (root <= 1.0 + 1.0e-12)
+            if not np.array_equal(valid, link):
+                raise FloatingPointError(
+                    "failed to locate an analytical circle intersection on a boundary link"
+                )
+            values[link] = np.clip(root[link], np.finfo(float).eps, 1.0)
+        fractions.append(values)
+    return tuple(fractions)
 
 
 def equilibrium(rho: np.ndarray, u: np.ndarray, v: np.ndarray) -> np.ndarray:
@@ -302,9 +352,11 @@ def _apply_velocity_inlet(f: np.ndarray, speed: float) -> None:
 
 
 def _stream_and_bounce(
-    post_collision: np.ndarray, solid: np.ndarray
+    post_collision: np.ndarray,
+    solid: np.ndarray,
+    curved_fractions: tuple[np.ndarray, ...] | None = None,
 ) -> tuple[np.ndarray, float, float]:
-    """Stream populations and apply halfway cylinder bounce-back."""
+    """Stream populations and apply halfway or Bouzidi bounce-back."""
     streamed = np.empty_like(post_collision)
     fluid = ~solid
     force_x = 0.0
@@ -325,7 +377,39 @@ def _stream_and_bounce(
             force_y += 2.0 * float(cy) * float(outgoing.sum())
     for q in range(1, 9):
         link = link_masks[q]
-        streamed[..., int(OPPOSITE[q])][link] = post_collision[..., q][link]
+        outgoing = post_collision[..., q]
+        if curved_fractions is None:
+            reflected = outgoing[link]
+        else:
+            fraction = curved_fractions[q]
+            if fraction.shape != solid.shape or not np.array_equal(np.isfinite(fraction), link):
+                raise ValueError("curved boundary fractions do not match fluid-solid links")
+            q_link = fraction[link]
+            reflected = np.empty_like(q_link)
+            near = q_link < 0.5
+            if np.any(near):
+                cx, cy = LATTICE_VELOCITIES[q]
+                behind = np.roll(
+                    np.roll(outgoing, int(cy), axis=0), int(cx), axis=1
+                )[link]
+                reflected[near] = (
+                    2.0 * q_link[near] * outgoing[link][near]
+                    + (1.0 - 2.0 * q_link[near]) * behind[near]
+                )
+            if np.any(~near):
+                opposite = post_collision[..., int(OPPOSITE[q])][link]
+                reflected[~near] = (
+                    outgoing[link][~near] / (2.0 * q_link[~near])
+                    + (2.0 * q_link[~near] - 1.0)
+                    * opposite[~near]
+                    / (2.0 * q_link[~near])
+                )
+        streamed[..., int(OPPOSITE[q])][link] = reflected
+        if curved_fractions is not None:
+            cx, cy = LATTICE_VELOCITIES[q]
+            # Momentum exchange equals outgoing plus reflected link momentum.
+            force_x += float(cx) * float((reflected - outgoing[link]).sum())
+            force_y += float(cy) * float((reflected - outgoing[link]).sum())
     return streamed, force_x, force_y
 
 
@@ -431,6 +515,7 @@ def simulate_cylinder(
     perturbation: float = 1.0e-3,
     seed: int = 0,
     collision_model: str = "trt",
+    cylinder_boundary: str = "bouzidi",
 ) -> dict[str, Any]:
     """Run deterministic low-Mach flow past a cylinder using D2Q9 TRT or BGK.
 
@@ -448,10 +533,16 @@ def simulate_cylinder(
         snapshot_stride=snapshot_stride, snapshot_start=int(snapshot_start),
         perturbation=float(perturbation), seed=int(seed),
         collision_model=str(collision_model).lower(),
+        cylinder_boundary=str(cylinder_boundary).lower(),
     )
     _validate_config(config)
     center_xy = config.cylinder_center
     solid = cylinder_mask(config.nx, config.ny, config.diameter, center_xy)
+    curved_fractions = (
+        curved_link_fractions(solid, center_xy, config.diameter)
+        if config.cylinder_boundary == "bouzidi"
+        else None
+    )
 
     x = np.arange(config.nx, dtype=float)[None, :]
     y = np.arange(config.ny, dtype=float)[:, None]
@@ -495,7 +586,9 @@ def simulate_cylinder(
             f, feq, config.relaxation_time, config.collision_model,
             config.trt_magic_parameter,
         )
-        streamed, force_x, force_y = _stream_and_bounce(post, solid)
+        streamed, force_x, force_y = _stream_and_bounce(
+            post, solid, curved_fractions
+        )
         force_x_accumulator += force_x
         force_y_accumulator += force_y
         force_samples += 1
@@ -571,7 +664,11 @@ def simulate_cylinder(
             if config.collision_model == "trt"
             else "single-relaxation-time BGK"
         ),
-        "cylinder_boundary": "halfway link bounce-back",
+        "cylinder_boundary": (
+            "Bouzidi interpolated bounce-back on the analytical circle"
+            if config.cylinder_boundary == "bouzidi"
+            else "halfway link bounce-back"
+        ),
         "inlet_boundary": "Zou-He uniform velocity",
         "outlet_boundary": "first-order convective distributions",
         "transverse_boundary": "periodic",
@@ -629,6 +726,7 @@ __all__ = [
     "LATTICE_WEIGHTS",
     "OPPOSITE",
     "compute_vorticity",
+    "curved_link_fractions",
     "cylinder_mask",
     "equilibrium",
     "estimate_strouhal",

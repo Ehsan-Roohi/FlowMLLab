@@ -70,7 +70,8 @@ By the end, you should be able to:
 3. extract (C_D), (C_L), recirculation length, and Strouhal number from an LBM run;
 4. separate a fast demonstration from a numerically qualified result;
 5. split time-resolved data by **complete Reynolds case**, never random snapshots; and
-6. compare a POD harmonic baseline with a small neural POD-coefficient surrogate.
+6. diagnose why a global POD surrogate diffuses advecting vortices; and
+7. validate a four-frame multi-scale CNN with downstream enstrophy and spectra.
 """),
     md(r"""
 ## Concept map and scope
@@ -80,8 +81,9 @@ By the end, you should be able to:
 \rightarrow (\rho,u,v,p)
 \rightarrow \{C_D,C_L,St,L_r\}
 \rightarrow \text{Reynolds sweep}
-\rightarrow \text{POD coefficients}
-\rightarrow \text{blind-Re field reconstruction}.
+\rightarrow \text{POD failure baseline}
+\rightarrow \text{four-frame CNN}
+\rightarrow \text{validation then blind-Re forecast}.
 \]
 
 For an effectively unconfined two-dimensional cylinder, the classical sequence is approximately
@@ -102,8 +104,9 @@ The precise onset is sensitive to blockage, domain length, boundary treatment, c
 - `PROFILE="qualification"` uses a larger domain, more cylinder nodes, and a longer observation window. It is still an educational NumPy TRT code, not a substitute for a research DNS.
 - The inlet perturbation is small, deterministic, and transient. It seeds the Hopf mode; it does not force shedding continuously.
 - The transverse boundary is periodic. Thus the numerical problem is formally a weakly interacting cylinder array; keep (D/L_y) small and report it.
-- The blind ML case is fixed before training. All phases from one Reynolds number remain on one side of the split.
-- Never tune the model after opening the blind field errors. A changed architecture requires a new untouched Reynolds case.
+- Complete Reynolds cases remain on one side of each split. Random temporal-frame splitting is prohibited.
+- The archived POD result at (Re=100) is now a **validation/failure case** because its field was inspected to design the CNN.
+- CNN architecture, loss, normalization, and stopping are selected only with (Re=100); the new untouched blind case is (Re=105).
 """),
     code(r"""
 # FLOWMLLAB_COLAB_BOOTSTRAP_V1
@@ -131,7 +134,8 @@ import json, platform, time
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
-from IPython.display import display
+from matplotlib.patches import Circle
+from IPython.display import display, Video
 from scipy.signal import hilbert
 from sklearn.neural_network import MLPRegressor
 from sklearn.preprocessing import StandardScaler
@@ -184,7 +188,7 @@ assert np.allclose((LATTICE_WEIGHTS[:, None] * LATTICE_VELOCITIES).sum(axis=0), 
     md(r"""
 ### Boundary and force models
 
-- **Cylinder:** halfway link bounce-back; momentum exchanged across fluid–solid links gives lift and drag.
+- **Cylinder:** Bouzidi interpolated bounce-back locates the analytical circular wall along every fluid–solid link; halfway bounce-back remains an optional comparison. Momentum exchange gives lift and drag.
 - **Inlet:** uniform low-Mach Zou–He velocity.
 - **Outlet:** first-order convective population boundary.
 - **Transverse far field:** periodic.
@@ -199,11 +203,11 @@ profiles = {
     "quick": dict(nx=240, ny=96, diameter=12, inflow_velocity=0.05,
                   steps=4500, history_stride=5, snapshot_start=2500,
                   snapshot_stride=125, perturbation=1e-3, seed=690,
-                  collision_model="trt"),
+                  collision_model="trt", cylinder_boundary="bouzidi"),
     "qualification": dict(nx=480, ny=240, diameter=24, inflow_velocity=0.05,
                            steps=16000, history_stride=5, snapshot_start=8000,
                            snapshot_stride=200, perturbation=1e-3, seed=690,
-                           collision_model="trt"),
+                           collision_model="trt", cylinder_boundary="bouzidi"),
 }
 cfg = profiles[PROFILE]
 SWEEP_RE = [5, 20, 40, 60, 80, 100, 120, 180]
@@ -253,14 +257,18 @@ def plot_case(case, title):
     levels = np.linspace(-0.22, 0.22, 45)
     im = ax[0, 0].contourf(xD, yD, case["vorticity"], levels=levels,
                            cmap="RdBu_r", extend="both")
+    ax[0, 0].add_patch(Circle((0, 0), 0.5, facecolor="#F7F7F7",
+                              edgecolor="black", linewidth=1.2, zorder=5))
     fig.colorbar(im, ax=ax[0, 0], label=r"$\omega_z$ (lattice units)")
     ax[0, 0].set(title="Vorticity", xlabel=r"$(x-x_c)/D$", ylabel=r"$(y-y_c)/D$")
+    ax[0, 0].set_aspect("equal", adjustable="box")
 
     pmax = np.nanpercentile(np.abs(case["p"]), 99)
     im = ax[0, 1].imshow(case["p"], origin="lower", extent=extent,
                          cmap="coolwarm", vmin=-pmax, vmax=pmax, aspect="auto")
     fig.colorbar(im, ax=ax[0, 1], label=r"$p-p_0$")
     ax[0, 1].set(title="Gauge pressure", xlabel=r"$(x-x_c)/D$", ylabel=r"$(y-y_c)/D$")
+    ax[0, 1].set_aspect("equal", adjustable="box")
 
     ax[1, 0].plot(tstar, case["lift_coefficient"], lw=1.3, label=r"$C_L$")
     ax[1, 0].axhline(0, color="0.35", lw=0.8)
@@ -407,11 +415,11 @@ if RUN_REFINEMENT:
     display(refinement)
 """),
     md(r"""
-## 5. Educational field surrogate: complete-Re holdout
+## 5. POD baseline: a useful failure, not the final model
 
 Lee & You (JFM, 2019) motivate the educational question: can a data-driven model reconstruct unsteady cylinder-wake fields across Reynolds number? We borrow that **problem framing**, not their architecture or a claim of reproducing their results.
 
-This small exercise uses phase-conditioned POD coefficients:
+The original small exercise used phase-conditioned POD coefficients:
 
 \[
 (Re,\sin\phi,\cos\phi)\longmapsto (a_1,\ldots,a_r)
@@ -423,7 +431,7 @@ We compare:
 - a non-neural ridge/harmonic POD baseline; and
 - a fixed two-layer `tanh` MLP branch with the same training snapshots and POD trunk.
 
-The full (Re=100) trajectory is declared blind. Random snapshot splitting would leak almost identical neighbouring phases into both sets and is prohibited.
+It captured the near wake but visibly diffused translating downstream vortices. Its retained (Re=100) result is therefore a **failure baseline**. Because that result was inspected and used to redesign the model, (Re=100) is no longer called blind. Random snapshot splitting would still leak nearly identical neighbouring phases and remains prohibited.
 """),
     code(r"""
 ML_RE = [60, 80, 100, 120]
@@ -512,7 +520,7 @@ blind_vectors = cylinder_ml.reconstruct_pod(baseline.pod, blind_coeff)
 mlp_prediction = cylinder_ml.unpack_fields(blind_vectors, baseline.layout)
 """),
     md(r"""
-# Stop: blind-test gate
+# Diagnostic gate: explain the POD failure
 
 Before running the next cell, record:
 
@@ -522,7 +530,7 @@ Before running the next cell, record:
 - the primary metric: combined relative (L_2) over all blind snapshots; and
 - the physical checks: divergence, solid speed, pressure gauge, and qualitative wake structure.
 
-Run this cell once. If the result is poor, diagnose it; do not silently edit the model and reuse the same blind case.
+This archived exercise deliberately shows why low global field error and high cumulative POD energy do not certify vorticity fidelity. Do not tune this model and continue calling (Re=100) blind.
 """),
     code(r"""
 mlp_metrics = cylinder_ml.reconstruction_diagnostics(test_fields, mlp_prediction)
@@ -561,6 +569,10 @@ for axis, field, title in zip(ax.flat[:3], [truth, pred_b, pred_n],
     im = axis.imshow(field, origin="lower", cmap="RdBu_r", vmin=-limit, vmax=limit, aspect="auto")
     axis.set_title(title)
     axis.set(xlabel="x lattice node", ylabel="y lattice node")
+    axis.set_aspect("equal", adjustable="box")
+    axis.add_patch(Circle(cases[BLIND_RE[0]]["metadata"]["cylinder_center"],
+                          cfg["diameter"] / 2, facecolor="#F7F7F7",
+                          edgecolor="black", linewidth=1.2, zorder=5))
 fig.colorbar(im, ax=ax.flat[:3].tolist(), label=r"$v/U$")
 imerr = ax[1, 1].imshow(pred_n-truth, origin="lower", cmap="coolwarm",
                         vmin=-err_limit, vmax=err_limit, aspect="auto")
@@ -571,13 +583,120 @@ fig.savefig(OUTPUT / "blind_re100_field_comparison.png", dpi=180)
 plt.show()
 """),
     md(r"""
+### Archived high-resolution POD failure animation
+
+The release also contains an executed 1920x1080 vortex-shedding comparison.
+It uses a longer saturated periodic window than the quick live cells above.
+The complete `Re=100` trajectory was withheld from that fit; the video model was trained on
+`Re=60,80,90,110,120,140`.  Its left, middle, and right panels show the blind
+LBM vorticity, neural POD prediction, and signed error.  The lift-history
+marker identifies the displayed LBM snapshot.
+
+[Open or download the retained MP4](../../results/cylinder_ml/blind_re100_lbm_vs_neural.mp4).
+
+The visual downstream diffusion is retained rather than hidden. This is a
+phase-conditioned interpolation: phase is extracted from the LBM lift signal.
+It is not an autonomous time rollout, and the quick LBM target is not described
+as grid-converged DNS.
+"""),
+    code(r"""
+video_path = Path("../../results/cylinder_ml/blind_re100_lbm_vs_neural.mp4")
+if video_path.is_file():
+    display(Video(str(video_path), embed=False, html_attributes="controls loop"))
+else:
+    print("Retained video not found. Run qa/run_cylinder_blind_video.py from the repository root.")
+"""),
+    md(r"""
+## 6. Four-frame multi-scale CNN: the corrected model
+
+Following the predictive structure of Lee & You (JFM, 2019), the corrected
+model receives four consecutive fields and predicts the next field:
+
+\[
+\{u,v,p\}_{n-3:n},\ Re,\ \chi_f
+\longmapsto \{u,v,p\}_{n+1}.
+\]
+
+It uses fine, half-resolution, and quarter-resolution convolution branches and
+learns an increment from the latest frame. The last convolution is initialized
+to zero, so training starts from the matched persistence baseline. The fluid
+mask enforces exact no-slip velocity inside the analytical cylinder.
+
+The dense snapshot interval is 25 lattice steps,
+
+\[
+\Delta t^*=25\,U_\infty/D=0.1042,
+\]
+
+rather than the old (0.521). Development cases are
+`60,80,90,110,120,140`; the complete `Re=100` trajectory selects stopping;
+the complete `Re=105` trajectory is opened only after every validation gate
+passes.
+
+The composite objective is
+
+\[
+\mathcal L=\mathcal L_{field}
++0.20\mathcal L_{gradient}
++0.20\mathcal L_{\omega}
++0.05\mathcal L_{\nabla\cdot u}.
+\]
+
+This is a teacher-forced one-step forecast from four true previous LBM frames.
+It is not an autonomous rollout.
+"""),
+    code(r"""
+cnn_metrics_path = Path("../../results/cylinder_cnn/multiscale_cnn_metrics.json")
+cnn_metrics = json.loads(cnn_metrics_path.read_text())
+assert cnn_metrics["validation_pass"]
+
+rows = []
+for split_name in ("validation", "blind"):
+    split_metrics = cnn_metrics[split_name]
+    for model_name, values in split_metrics["models"].items():
+        rows.append({
+            "split": split_name,
+            "Re": split_metrics["reynolds"],
+            "model": "multi-scale CNN" if model_name == "prediction" else model_name,
+            "vorticity relative L2": values["vorticity_relative_l2"],
+            "mean station profile L2": values["mean_station_profile_relative_l2"],
+            "mean enstrophy error": values["mean_station_enstrophy_relative_error"],
+            "mean normalized PSD L2": values["mean_station_psd_relative_l2"],
+        })
+display(pd.DataFrame(rows))
+display(cnn_metrics["validation_gates"])
+"""),
+    code(r"""
+from IPython.display import Image
+display(Image(filename="../../results/cylinder_cnn/re105_blind_downstream.png"))
+display(Video("../../results/cylinder_cnn/re105_lbm_vs_multiscale_cnn.mp4",
+              embed=False, html_attributes="controls loop"))
+"""),
+    md(r"""
+### Reproduce the frozen experiment
+
+Install the optional ML dependencies and run the development/validation stage.
+The blind flag refuses to open (Re=105) unless every (Re=100) gate passes.
+
+```bash
+python -m pip install -e '.[ml]'
+python qa/run_cylinder_multiscale_cnn.py --workers 4
+python qa/run_cylinder_multiscale_cnn.py --reuse-weights --run-blind
+```
+
+Acceptance is spatial, not merely global: compare vorticity profiles,
+enstrophy amplitude, and transverse PSD at
+((x-x_c)/D=2,4,6,8), plus exact no-slip and the matched persistence baseline.
+"""),
+    md(r"""
 ## Interpretation: what this exercise does and does not show
 
-- It shows how a fixed-geometry, scalar-parameter/phase surrogate can reconstruct a family of LBM fields.
+- The POD result shows how a global low-rank representation can smear translated structures despite attractive aggregate errors.
+- The CNN result shows one-step field forecasting across a complete unseen Reynolds case using four previous fields.
 - It does **not** establish a general neural operator for arbitrary inlet functions or geometries.
 - It does **not** identify the Hopf point: training is restricted to already unsteady cases and phase is supplied.
 - A low field error does not guarantee correct force, frequency, or long-time phase. Those require direct tests.
-- The MLP is useful only if it improves on the non-neural baseline, retains physical diagnostics, and provides a meaningful repeated-query speed benefit.
+- The CNN is useful only if it beats persistence and retains downstream amplitude, profile, spectrum, and physical diagnostics.
 
 For a research extension, use longer phase-aligned trajectories, train/validation/test Reynolds bands, multiple seeds, force consistency, 20–50-cycle phase drift, and independent high-fidelity DNS. None of those claims belongs in this classroom release unless executed.
 """),
@@ -589,8 +708,10 @@ For a research extension, use longer phase-aligned trajectories, train/validatio
 3. The complete sweep table containing density drift, (overline C_D), (C_{L,\mathrm{rms}}), (St), and (L_r/D).
 4. Evidence for attached/no-bubble, steady-recirculating, and periodic-shedding regimes; explain any mismatch.
 5. One resolution or blockage comparison at (Re=100).
-6. The declared complete-Re split, fixed POD/MLP specification, both blind-error rows, and physical diagnostics.
-7. A short paragraph distinguishing an educational demonstration from quantitative DNS validation.
+6. The archived POD failure, including why (Re=100) is now validation rather than blind.
+7. The frozen CNN specification, persistence comparison, validation gates, and untouched (Re=105) result.
+8. Enstrophy/profile/PSD evidence at (2D,4D,6D,8D) and a paragraph distinguishing one-step forecasting from rollout.
+9. A short paragraph distinguishing an educational demonstration from quantitative DNS validation.
 
 ### Exercises
 

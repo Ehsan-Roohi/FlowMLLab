@@ -32,14 +32,18 @@ REQUIRED = [
     "flowmllab/cavity_rom.py",
     "flowmllab/cylinder_lbm.py",
     "flowmllab/cylinder_ml.py",
+    "flowmllab/cylinder_cnn.py",
     "tests/test_core.py",
     "tests/test_cavity_rom.py",
     "tests/test_cylinder_lbm.py",
     "tests/test_cylinder_ml.py",
+    "tests/test_cylinder_cnn.py",
     "qa/build_week04_1_rom_notebook.py",
     "qa/add_colab_entrypoints.py",
     "qa/run_cavity_rom_validation.py",
     "qa/run_cylinder_lbm_validation.py",
+    "qa/run_cylinder_blind_video.py",
+    "qa/run_cylinder_multiscale_cnn.py",
     "data/cavity_data.npz",
     "data/case_quality.csv",
     "common/w4utils.py",
@@ -88,6 +92,19 @@ REQUIRED = [
     "results/cylinder_lbm/reference_ranges.csv",
     "results/cylinder_lbm/validation_protocol.json",
     "results/cylinder_lbm/validation_summary.json",
+    "results/cylinder_ml/README.md",
+    "results/cylinder_ml/blind_re100_lbm_vs_neural.mp4",
+    "results/cylinder_ml/blind_re100_lbm_vs_neural_poster.png",
+    "results/cylinder_ml/blind_re100_metrics.json",
+    "results/cylinder_ml/blind_re100_model_comparison.csv",
+    "results/cylinder_cnn/README.md",
+    "results/cylinder_cnn/multiscale_cnn.weights.h5",
+    "results/cylinder_cnn/multiscale_cnn_metrics.json",
+    "results/cylinder_cnn/training_history.csv",
+    "results/cylinder_cnn/re100_validation_downstream.png",
+    "results/cylinder_cnn/re105_blind_downstream.png",
+    "results/cylinder_cnn/re105_lbm_vs_multiscale_cnn.mp4",
+    "results/cylinder_cnn/re105_lbm_vs_multiscale_cnn_poster.png",
     "results/cylinder_lbm/cylinder_lbm_regimes.png",
     "results/cylinder_lbm/cylinder_lbm_regimes.pdf",
     "results/cylinder_lbm/re5_teaching_case.npz",
@@ -377,21 +394,71 @@ def validate_cylinder_lbm_results() -> dict[str, float]:
             solid = case["solid"].astype(bool)
             assert np.all(case["u"][solid] == 0.0)
             assert np.all(case["v"][solid] == 0.0)
+            metadata = json.loads(str(case["metadata"]))
+            assert "analytical circle" in metadata["cylinder_boundary"]
 
     protocol = json.loads((result_dir / "validation_protocol.json").read_text())
     assert protocol["profile"] == "quick"
+    assert protocol["boundaries"]["cylinder"] == "Bouzidi interpolated circular wall"
     assert "not grid-converged" in " ".join(protocol["limitations"])
     notebook = json.loads(
         (ROOT / "notebooks" / "week05" / "W5_Lattice_Boltzmann_Cylinder_Student.ipynb").read_text()
     )
     source = "\n".join("".join(cell.get("source", [])) for cell in notebook["cells"])
-    assert "Stop: blind-test gate" in source
+    assert "Diagnostic gate: explain the POD failure" in source
     assert "test_reynolds=BLIND_RE" in source
     assert "MLPRegressor" in source and "harmonic-ridge POD" in source
+    assert "blind_re100_lbm_vs_neural.mp4" in source
+    assert "Four-frame multi-scale CNN" in source
+    assert "re105_lbm_vs_multiscale_cnn.mp4" in source
+
+    blind_metrics = json.loads(
+        (ROOT / "results" / "cylinder_ml" / "blind_re100_metrics.json").read_text()
+    )
+    assert blind_metrics["split"]["blind_reynolds"] == 100
+    assert blind_metrics["split"]["training_reynolds"] == [60, 80, 90, 110, 120, 140]
+    assert "not autonomous rollout" in blind_metrics["claim_scope"]
+    neural = blind_metrics["neural_blind_metrics"]
+    baseline = blind_metrics["harmonic_pod_baseline_metrics"]
+    assert neural["combined_relative_l2"] < 0.10
+    assert neural["vorticity_relative_l2"] < baseline["vorticity_relative_l2"]
+    assert neural["solid_speed_rms_normalized"] == 0.0
+    assert (ROOT / "results" / "cylinder_ml" / "blind_re100_lbm_vs_neural.mp4").stat().st_size > 1_000_000
+
+    cnn_metrics = json.loads(
+        (ROOT / "results" / "cylinder_cnn" / "multiscale_cnn_metrics.json").read_text()
+    )
+    protocol = cnn_metrics["protocol"]
+    assert protocol["development_reynolds"] == [60, 80, 90, 110, 120, 140]
+    assert protocol["validation_reynolds"] == 100
+    assert protocol["blind_reynolds"] == 105
+    assert protocol["history_frames"] == 4
+    assert abs(protocol["dimensionless_snapshot_spacing"] - 0.1041666667) < 1.0e-8
+    assert protocol["teacher_forced_one_step"]
+    assert cnn_metrics["validation_pass"]
+    assert all(cnn_metrics["validation_gates"].values())
+    for split_name in ("validation", "blind"):
+        split_metrics = cnn_metrics[split_name]["models"]
+        cnn = split_metrics["prediction"]
+        persistence = split_metrics["persistence"]
+        assert cnn["vorticity_relative_l2"] < persistence["vorticity_relative_l2"]
+        assert cnn["mean_station_profile_relative_l2"] < persistence["mean_station_profile_relative_l2"]
+        assert cnn["solid_speed_max"] == 0.0
+        assert len(cnn["stationwise"]) == 4
+        assert [row["x_over_d"] for row in cnn["stationwise"]] == [2.0, 4.0, 6.0, 8.0]
+        assert all(0.75 <= row["enstrophy_ratio"] <= 1.25 for row in cnn["stationwise"])
+    assert cnn_metrics["blind"]["reynolds"] == 105
+    assert cnn_metrics["blind"]["models"]["prediction"]["vorticity_relative_l2"] < 0.02
+    assert (ROOT / "results" / "cylinder_cnn" / "re105_lbm_vs_multiscale_cnn.mp4").stat().st_size > 1_000_000
     return {
         "max_density_drift": float(metrics["density_drift"].max()),
         "Re100_St": float(metrics.loc[metrics["Re"] == 100, "St"].iloc[0]),
         "Re180_St": float(metrics.loc[metrics["Re"] == 180, "St"].iloc[0]),
+        "blind_Re100_neural_uvp_error": float(neural["combined_relative_l2"]),
+        "blind_Re100_neural_vorticity_error": float(neural["vorticity_relative_l2"]),
+        "blind_Re105_CNN_vorticity_error": float(
+            cnn_metrics["blind"]["models"]["prediction"]["vorticity_relative_l2"]
+        ),
     }
 
 

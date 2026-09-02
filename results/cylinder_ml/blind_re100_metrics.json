@@ -1,0 +1,85 @@
+{
+  "status": "complete",
+  "generated_utc": "2026-09-02T17:09:04.009197+00:00",
+  "split": {
+    "training_reynolds": [
+      60,
+      80,
+      90,
+      110,
+      120,
+      140
+    ],
+    "blind_reynolds": 100
+  },
+  "conditioning": "Re, sin(phase), cos(phase); phase is measured from LBM lift",
+  "claim_scope": "educational phase-conditioned interpolation; not autonomous rollout; quick LBM target is not grid-converged DNS",
+  "model": {
+    "fields": [
+      "u/U",
+      "v/U",
+      "p/U^2"
+    ],
+    "pod_rank": 16,
+    "pod_training_energy": 0.995190896703545,
+    "hidden_layers": [
+      64,
+      64
+    ],
+    "activation": "tanh",
+    "solver": "lbfgs",
+    "alpha": 0.01,
+    "seed": 690,
+    "iterations": 1498
+  },
+  "neural_blind_metrics": {
+    "u_relative_l2": 0.018502454291395392,
+    "u_rmse": 0.01885194648612921,
+    "v_relative_l2": 0.18805354295294366,
+    "v_rmse": 0.03392664201629881,
+    "p_relative_l2": 0.1637687000855722,
+    "p_rmse": 0.021801992786992228,
+    "combined_relative_l2": 0.04267053098948117,
+    "vorticity_relative_l2": 0.1670338626686869,
+    "vorticity_frame_median_relative_l2": 0.1139067620981417,
+    "vorticity_frame_max_relative_l2": 0.8017881604047434,
+    "divergence_rms_normalized": 0.0026191862525371586,
+    "solid_speed_rms_normalized": 0.0,
+    "mean_pressure_gauge_normalized": -0.08552232340963542
+  },
+  "harmonic_pod_baseline_metrics": {
+    "u_relative_l2": 0.016619401395656756,
+    "u_rmse": 0.01693332467185864,
+    "v_relative_l2": 0.19404465280099378,
+    "v_rmse": 0.03500749503243145,
+    "p_relative_l2": 0.11142352271663779,
+    "p_rmse": 0.014833450087227114,
+    "combined_relative_l2": 0.03989472351099131,
+    "vorticity_relative_l2": 0.20744653463210555
+  },
+  "blind_lbm_diagnostics": {
+    "cylinder_boundary": "Bouzidi interpolated bounce-back on the analytical circle",
+    "strouhal": 0.18181364276005288,
+    "mean_drag_coefficient": 1.5722539875953576,
+    "lift_rms": 0.247122808416428,
+    "max_mean_density_drift": 0.0007631230998785821,
+    "lattice_mach": 0.08660254037844388,
+    "relaxation_time": 0.518,
+    "blockage_ratio": 0.125,
+    "snapshots": 57
+  },
+  "runtime": {
+    "60": 219.89136036499985,
+    "80": 216.36567286399804,
+    "90": 219.29680259299857,
+    "100": 221.90943695600072,
+    "110": 217.67030191899903,
+    "120": 220.86501197100006,
+    "140": 223.92381346399998
+  },
+  "environment": {
+    "python": "3.12.13",
+    "numpy": "2.3.5",
+    "platform": "Linux-6.18.35-x86_64-with-glibc2.39"
+  }
+}

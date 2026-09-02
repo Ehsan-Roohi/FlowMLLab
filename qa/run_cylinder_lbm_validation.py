@@ -21,6 +21,7 @@ import time
 from typing import Any
 
 import matplotlib.pyplot as plt
+from matplotlib.patches import Circle
 import numpy as np
 import pandas as pd
 
@@ -165,11 +166,12 @@ def _plot_regimes(results: list[dict[str, Any]], output: Path) -> None:
                   (result["y"][0] - cy) / diameter, (result["y"][-1] - cy) / diameter)
         image = axis.imshow(result["vorticity"], origin="lower", extent=extent, aspect="auto",
                             cmap="RdBu_r", vmin=-maximum, vmax=maximum)
-        axis.contour((result["x"] - cx) / diameter, (result["y"] - cy) / diameter,
-                     result["solid"], levels=[0.5], colors="black", linewidths=1.0)
+        axis.add_patch(Circle((0.0, 0.0), 0.5, facecolor="#F7F7F7",
+                              edgecolor="black", linewidth=1.2, zorder=5))
         axis.set_title(f"Re = {int(meta['reynolds'])}")
         axis.set_xlabel(r"$(x-x_c)/D$")
         axis.set_ylabel(r"$(y-y_c)/D$")
+        axis.set_aspect("equal", adjustable="box")
     fig.colorbar(image, ax=list(field_axes), shrink=0.82, label=r"lattice vorticity $\omega_z$")
 
     signal_axis = axes.flat[5]
@@ -218,7 +220,8 @@ def regenerate(output: Path, fidelity: str, workers: int) -> dict[str, Any]:
         "cases": list(CASES),
         "collision": "TRT D2Q9; BGK remains an explicit teaching comparison",
         "boundaries": {"inlet": "Zou-He velocity", "outlet": "convective",
-                       "cylinder": "halfway bounce-back", "transverse": "periodic"},
+                       "cylinder": "Bouzidi interpolated circular wall",
+                       "transverse": "periodic"},
         "regime_gate": "mandatory for quick and validation profiles",
         "reference_gate": "reported but not enforced for quick; mandatory only after grid/domain/time refinement",
         "reference_sources": {
@@ -230,7 +233,7 @@ def regenerate(output: Path, fidelity: str, workers: int) -> dict[str, Any]:
         "limitations": [
             "The retained quick profile is qualitative and is not grid-converged DNS evidence.",
             "Periodic transverse boundaries represent a weakly interacting cylinder array.",
-            "Stair-step halfway bounce-back biases drag and the effective diameter on coarse grids.",
+            "A coarsely resolved interpolated circular wall still requires diameter refinement.",
             "Re=180 is a two-dimensional teaching solution and does not model Mode A or B.",
         ],
     }
@@ -273,6 +276,42 @@ def verify(output: Path) -> dict[str, Any]:
     return summary
 
 
+def verify_cnn(output: Path) -> dict[str, Any]:
+    """Verify frozen four-frame CNN evidence without importing TensorFlow."""
+    metrics_path = output / "multiscale_cnn_metrics.json"
+    video_path = output / "re105_lbm_vs_multiscale_cnn.mp4"
+    if not metrics_path.is_file() or not video_path.is_file():
+        raise FileNotFoundError("retained cylinder CNN evidence is incomplete")
+    report = json.loads(metrics_path.read_text())
+    protocol = report["protocol"]
+    if protocol["development_reynolds"] != [60, 80, 90, 110, 120, 140]:
+        raise AssertionError("CNN development split changed")
+    if protocol["validation_reynolds"] != 100 or protocol["blind_reynolds"] != 105:
+        raise AssertionError("CNN validation/blind split changed")
+    if not report["validation_pass"] or not all(report["validation_gates"].values()):
+        raise AssertionError("CNN validation gates failed")
+    blind = report["blind"]["models"]
+    if not (
+        blind["prediction"]["vorticity_relative_l2"]
+        < blind["persistence"]["vorticity_relative_l2"]
+    ):
+        raise AssertionError("blind CNN does not beat persistence on vorticity")
+    if video_path.stat().st_size <= 1_000_000:
+        raise AssertionError("blind CNN video is unexpectedly small")
+    return {
+        "status": "pass",
+        "validation_reynolds": 100,
+        "blind_reynolds": 105,
+        "blind_vorticity_relative_l2": float(
+            blind["prediction"]["vorticity_relative_l2"]
+        ),
+        "persistence_vorticity_relative_l2": float(
+            blind["persistence"]["vorticity_relative_l2"]
+        ),
+        "video_sha256": _digest(video_path),
+    }
+
+
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--root", type=Path, default=ROOT)
@@ -282,6 +321,9 @@ def main(argv: list[str] | None = None) -> int:
     args = parser.parse_args(argv)
     output = args.root.resolve() / "results" / "cylinder_lbm"
     report = regenerate(output, args.fidelity, max(1, args.workers)) if args.regenerate else verify(output)
+    report["four_frame_cnn"] = verify_cnn(
+        args.root.resolve() / "results" / "cylinder_cnn"
+    )
     print(json.dumps(report, indent=2, sort_keys=True))
     return 0
 
