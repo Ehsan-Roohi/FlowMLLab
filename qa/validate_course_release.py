@@ -40,6 +40,7 @@ REQUIRED = [
     "qa/add_colab_entrypoints.py",
     "qa/run_cavity_rom_validation.py",
     "qa/run_cylinder_lbm_validation.py",
+    "qa/run_cylinder_blind_video.py",
     "data/cavity_data.npz",
     "data/case_quality.csv",
     "common/w4utils.py",
@@ -88,6 +89,11 @@ REQUIRED = [
     "results/cylinder_lbm/reference_ranges.csv",
     "results/cylinder_lbm/validation_protocol.json",
     "results/cylinder_lbm/validation_summary.json",
+    "results/cylinder_ml/README.md",
+    "results/cylinder_ml/blind_re100_lbm_vs_neural.mp4",
+    "results/cylinder_ml/blind_re100_lbm_vs_neural_poster.png",
+    "results/cylinder_ml/blind_re100_metrics.json",
+    "results/cylinder_ml/blind_re100_model_comparison.csv",
     "results/cylinder_lbm/cylinder_lbm_regimes.png",
     "results/cylinder_lbm/cylinder_lbm_regimes.pdf",
     "results/cylinder_lbm/re5_teaching_case.npz",
@@ -377,9 +383,12 @@ def validate_cylinder_lbm_results() -> dict[str, float]:
             solid = case["solid"].astype(bool)
             assert np.all(case["u"][solid] == 0.0)
             assert np.all(case["v"][solid] == 0.0)
+            metadata = json.loads(str(case["metadata"]))
+            assert "analytical circle" in metadata["cylinder_boundary"]
 
     protocol = json.loads((result_dir / "validation_protocol.json").read_text())
     assert protocol["profile"] == "quick"
+    assert protocol["boundaries"]["cylinder"] == "Bouzidi interpolated circular wall"
     assert "not grid-converged" in " ".join(protocol["limitations"])
     notebook = json.loads(
         (ROOT / "notebooks" / "week05" / "W5_Lattice_Boltzmann_Cylinder_Student.ipynb").read_text()
@@ -388,10 +397,26 @@ def validate_cylinder_lbm_results() -> dict[str, float]:
     assert "Stop: blind-test gate" in source
     assert "test_reynolds=BLIND_RE" in source
     assert "MLPRegressor" in source and "harmonic-ridge POD" in source
+    assert "blind_re100_lbm_vs_neural.mp4" in source
+
+    blind_metrics = json.loads(
+        (ROOT / "results" / "cylinder_ml" / "blind_re100_metrics.json").read_text()
+    )
+    assert blind_metrics["split"]["blind_reynolds"] == 100
+    assert blind_metrics["split"]["training_reynolds"] == [60, 80, 90, 110, 120, 140]
+    assert "not autonomous rollout" in blind_metrics["claim_scope"]
+    neural = blind_metrics["neural_blind_metrics"]
+    baseline = blind_metrics["harmonic_pod_baseline_metrics"]
+    assert neural["combined_relative_l2"] < 0.10
+    assert neural["vorticity_relative_l2"] < baseline["vorticity_relative_l2"]
+    assert neural["solid_speed_rms_normalized"] == 0.0
+    assert (ROOT / "results" / "cylinder_ml" / "blind_re100_lbm_vs_neural.mp4").stat().st_size > 1_000_000
     return {
         "max_density_drift": float(metrics["density_drift"].max()),
         "Re100_St": float(metrics.loc[metrics["Re"] == 100, "St"].iloc[0]),
         "Re180_St": float(metrics.loc[metrics["Re"] == 180, "St"].iloc[0]),
+        "blind_Re100_neural_uvp_error": float(neural["combined_relative_l2"]),
+        "blind_Re100_neural_vorticity_error": float(neural["vorticity_relative_l2"]),
     }
 
 

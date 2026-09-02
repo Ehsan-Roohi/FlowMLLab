@@ -39,6 +39,8 @@ The Week-5 notebook labels the retained low-cost run as qualitative.  It links
 every field plot to force, density, Mach-number, relaxation-time, blockage, and
 reference diagnostics, and provides a separate qualification/refinement path.
 Machine-readable retained evidence is in `../results/cylinder_lbm/`.
+The executed 1080p complete-Re blind animation and its field-error/baseline
+evidence are in `../results/cylinder_ml/`.
 
 The additive `week04/W4_1_Classical_ROM_Cavity.ipynb` lab comes after the
 original Week-4 sequence without modifying it.  It implements dynamic centered

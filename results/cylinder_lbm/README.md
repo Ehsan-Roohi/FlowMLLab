@@ -17,9 +17,9 @@ flowmllab cylinder --root .
 density drift, force statistics, Strouhal number, recirculation length, and both
 qualitative-regime and literature-reference flags.  The quick profile passes
 the stability and regime gates; it intentionally does **not** claim quantitative
-force or recirculation agreement.  Its coarse stair-step boundary, 1/6
-blockage, finite observation time, and periodic transverse images explain the
-failed reference flags.
+force or recirculation agreement.  Its coarsely resolved Bouzidi-interpolated
+circular wall, 1/6 blockage, finite observation time, and periodic transverse
+images explain the failed reference flags.
 
 `reference_ranges.csv` records the educational comparison bands from Gautier,
 Biau & Lamballais (2013) and Qu et al. (2013).  To enforce those bands, rerun the

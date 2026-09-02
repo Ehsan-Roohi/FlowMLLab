@@ -131,7 +131,8 @@ import json, platform, time
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
-from IPython.display import display
+from matplotlib.patches import Circle
+from IPython.display import display, Video
 from scipy.signal import hilbert
 from sklearn.neural_network import MLPRegressor
 from sklearn.preprocessing import StandardScaler
@@ -184,7 +185,7 @@ assert np.allclose((LATTICE_WEIGHTS[:, None] * LATTICE_VELOCITIES).sum(axis=0), 
     md(r"""
 ### Boundary and force models
 
-- **Cylinder:** halfway link bounce-back; momentum exchanged across fluid–solid links gives lift and drag.
+- **Cylinder:** Bouzidi interpolated bounce-back locates the analytical circular wall along every fluid–solid link; halfway bounce-back remains an optional comparison. Momentum exchange gives lift and drag.
 - **Inlet:** uniform low-Mach Zou–He velocity.
 - **Outlet:** first-order convective population boundary.
 - **Transverse far field:** periodic.
@@ -199,11 +200,11 @@ profiles = {
     "quick": dict(nx=240, ny=96, diameter=12, inflow_velocity=0.05,
                   steps=4500, history_stride=5, snapshot_start=2500,
                   snapshot_stride=125, perturbation=1e-3, seed=690,
-                  collision_model="trt"),
+                  collision_model="trt", cylinder_boundary="bouzidi"),
     "qualification": dict(nx=480, ny=240, diameter=24, inflow_velocity=0.05,
                            steps=16000, history_stride=5, snapshot_start=8000,
                            snapshot_stride=200, perturbation=1e-3, seed=690,
-                           collision_model="trt"),
+                           collision_model="trt", cylinder_boundary="bouzidi"),
 }
 cfg = profiles[PROFILE]
 SWEEP_RE = [5, 20, 40, 60, 80, 100, 120, 180]
@@ -253,14 +254,18 @@ def plot_case(case, title):
     levels = np.linspace(-0.22, 0.22, 45)
     im = ax[0, 0].contourf(xD, yD, case["vorticity"], levels=levels,
                            cmap="RdBu_r", extend="both")
+    ax[0, 0].add_patch(Circle((0, 0), 0.5, facecolor="#F7F7F7",
+                              edgecolor="black", linewidth=1.2, zorder=5))
     fig.colorbar(im, ax=ax[0, 0], label=r"$\omega_z$ (lattice units)")
     ax[0, 0].set(title="Vorticity", xlabel=r"$(x-x_c)/D$", ylabel=r"$(y-y_c)/D$")
+    ax[0, 0].set_aspect("equal", adjustable="box")
 
     pmax = np.nanpercentile(np.abs(case["p"]), 99)
     im = ax[0, 1].imshow(case["p"], origin="lower", extent=extent,
                          cmap="coolwarm", vmin=-pmax, vmax=pmax, aspect="auto")
     fig.colorbar(im, ax=ax[0, 1], label=r"$p-p_0$")
     ax[0, 1].set(title="Gauge pressure", xlabel=r"$(x-x_c)/D$", ylabel=r"$(y-y_c)/D$")
+    ax[0, 1].set_aspect("equal", adjustable="box")
 
     ax[1, 0].plot(tstar, case["lift_coefficient"], lw=1.3, label=r"$C_L$")
     ax[1, 0].axhline(0, color="0.35", lw=0.8)
@@ -561,6 +566,10 @@ for axis, field, title in zip(ax.flat[:3], [truth, pred_b, pred_n],
     im = axis.imshow(field, origin="lower", cmap="RdBu_r", vmin=-limit, vmax=limit, aspect="auto")
     axis.set_title(title)
     axis.set(xlabel="x lattice node", ylabel="y lattice node")
+    axis.set_aspect("equal", adjustable="box")
+    axis.add_patch(Circle(cases[BLIND_RE[0]]["metadata"]["cylinder_center"],
+                          cfg["diameter"] / 2, facecolor="#F7F7F7",
+                          edgecolor="black", linewidth=1.2, zorder=5))
 fig.colorbar(im, ax=ax.flat[:3].tolist(), label=r"$v/U$")
 imerr = ax[1, 1].imshow(pred_n-truth, origin="lower", cmap="coolwarm",
                         vmin=-err_limit, vmax=err_limit, aspect="auto")
@@ -569,6 +578,29 @@ fig.colorbar(imerr, ax=ax[1, 1], label=r"error in $v/U$")
 fig.suptitle("Complete-Re blind field: Re=100")
 fig.savefig(OUTPUT / "blind_re100_field_comparison.png", dpi=180)
 plt.show()
+"""),
+    md(r"""
+### Retained high-resolution blind animation
+
+The release also contains an executed 1920x1080 vortex-shedding comparison.
+It uses a longer saturated periodic window than the quick live cells above.
+The complete `Re=100` trajectory is withheld; the video model is trained on
+`Re=60,80,90,110,120,140`.  Its left, middle, and right panels show the blind
+LBM vorticity, neural POD prediction, and signed error.  The lift-history
+marker identifies the displayed LBM snapshot.
+
+[Open or download the retained MP4](../../results/cylinder_ml/blind_re100_lbm_vs_neural.mp4).
+
+This is a phase-conditioned interpolation: phase is extracted from the blind
+LBM lift signal.  It is not an autonomous time rollout, and the quick LBM
+target is not described as grid-converged DNS.
+"""),
+    code(r"""
+video_path = Path("../../results/cylinder_ml/blind_re100_lbm_vs_neural.mp4")
+if video_path.is_file():
+    display(Video(str(video_path), embed=False, html_attributes="controls loop"))
+else:
+    print("Retained video not found. Run qa/run_cylinder_blind_video.py from the repository root.")
 """),
     md(r"""
 ## Interpretation: what this exercise does and does not show

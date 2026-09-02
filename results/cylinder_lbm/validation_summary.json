@@ -11,7 +11,7 @@
   "all_stability_gates_pass": true,
   "all_regime_gates_pass": true,
   "quantitative_reference_gate_enforced": false,
-  "max_density_drift": 0.0022721460311725,
-  "figure_sha256": "3841f5aaed7d1735240cda33f8f4da547e77bec0903ae7572c1f4c801715cd34",
-  "regeneration_elapsed_seconds": 297.0267684429964
+  "max_density_drift": 0.0025097305204019,
+  "figure_sha256": "e7872b4da3a7861190e485d8d633dd6963100a9ff6009f4764e55c9287b3cb22",
+  "regeneration_elapsed_seconds": 356.3769776819936
 }

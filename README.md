@@ -73,6 +73,7 @@ Start with [START_HERE.md](START_HERE.md). It gives the installation check, reco
 | `results/article_figures/` | Paper-ready PNG/PDF validation figures and machine-readable error summaries |
 | `results/pod_deeponet/` | Model-selection, blind-case, Ghia-centerline, timing, and full-field POD-DeepONet evidence |
 | `results/cavity_rom/` | FOM reproduction and refinement, leakage-free POD/DEIM selection, blind trajectories, portable model, timing, break-even count, and summary figure |
+| `results/cylinder_ml/` | 1080p complete-Re blind LBM-versus-neural shedding video, poster, baseline comparison, metrics, and regeneration script |
 | `advanced/fp_closure/` | Bounded educational workflow for exact and learned Fokker–Planck closure testing |
 | `references/` | Annotated reading guide and BibTeX database |
 | `qa/` | Release validator for notebook syntax, required assets, and reproducibility anchors |
@@ -154,7 +155,8 @@ Exact values and environment metadata are in `results/cavity_rom/`.
 
 Week 5 adds an installable D2Q9 cylinder solver with transparent BGK theory and
 a more robust TRT default, Zou--He inflow, a convective outlet, periodic
-transverse boundaries, halfway bounce-back, momentum-exchange forces, gauge
+transverse boundaries, Bouzidi interpolated bounce-back on an analytical
+circular wall, momentum-exchange forces, gauge
 pressure, vorticity, recirculation length, and Strouhal diagnostics.  The
 retained quick sweep covers `Re = 5, 20, 40, 100, 180`, so students see attached
 flow, a steady symmetric wake, and periodic vortex shedding before using ML.
@@ -165,8 +167,21 @@ compares a non-neural Reynolds/phase POD baseline with a two-layer neural POD
 regressor.  The design follows the predictive-question discipline of Lee & You
 (JFM 2019) without reproducing their research-scale GAN/CNN study.
 
+The retained 1080p comparison below uses the saturated periodic window.  The
+entire `Re=100` trajectory is blind; training uses only
+`Re=60,80,90,110,120,140`.  The neural POD model has 4.27% combined `u,v,p`
+error and 16.70% vorticity error on the blind case.  The harmonic POD baseline
+is slightly better on the combined fields (3.99%) while the neural model is
+better on vorticity (16.70% versus 20.74%); both results are retained rather
+than selecting only the favorable metric.
+
+[![Blind Re=100 LBM versus neural POD vortex-shedding comparison](results/cylinder_ml/blind_re100_lbm_vs_neural_poster.png)](results/cylinder_ml/blind_re100_lbm_vs_neural.mp4)
+
+The model is phase-conditioned: phase comes from the blind LBM lift signal.
+It reconstructs an unseen Reynolds case but is not an autonomous time rollout.
+
 The committed `quick` evidence is a classroom regime check, not a
-grid-converged external-cylinder DNS result.  Its coarse stair-step boundary and
+grid-converged external-cylinder DNS result.  Its finite circle resolution and
 periodic transverse domain intentionally expose numerical error; quantitative
 reference bands and an expensive refinement profile are supplied so students
 can qualify a result rather than judging contours by appearance.  Run
