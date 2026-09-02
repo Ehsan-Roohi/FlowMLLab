@@ -173,10 +173,10 @@ FIGURE_OWNER = {
     "week03/AI_in_Fluids_Week3_Lab2_Mini_DSMC_Cavity_Revised_Student.ipynb": "Figure 10a: direct wall-pressure validation of our DSMC solver.",
     "week04/W4_Lab2_Scalar_and_Field_Surrogates_Student.ipynb": "Figure 9: CFD/MLP blind-case fields and centerlines.",
     "week04/W4_Lab3_DeepONet_Cavity_Student.ipynb": "Figure 13: POD-DeepONet blind and Ghia validation outputs.",
-    "P1_Re_Generalization.ipynb": "Figure 9 and neural summary: controlled Reynolds-number generalization.",
-    "P3_POD_Study.ipynb": "POD/DeepONet evidence and physical centerline validation.",
-    "P5_Rarefied_Cavity.ipynb": "Figures 10--12: standard DSMC versus hybrid neural--DSMC evidence.",
-    "P6_FP_Cavity_Closure.ipynb": "Fokker--Planck closure fields and profile comparison.",
+    "week05_06/P1_Re_Generalization.ipynb": "Figure 9 and neural summary: controlled Reynolds-number generalization.",
+    "week05_06/P3_POD_Study.ipynb": "POD/DeepONet evidence and physical centerline validation.",
+    "week05_06/P5_Rarefied_Cavity.ipynb": "Figures 10--12: standard DSMC versus hybrid neural--DSMC evidence.",
+    "week05_06/P6_FP_Cavity_Closure.ipynb": "Fokker--Planck closure fields and profile comparison.",
 }
 
 

@@ -8,7 +8,7 @@ This page is the shortest reliable path from a fresh checkout to a meaningful sc
 | --- | --- | --- | --- |
 | Complete beginner | You know fluid mechanics but have limited Python experience | `notebooks/week01/01_python_for_cfd_ai_fluids.ipynb` | [Open in Colab](https://colab.research.google.com/github/Ehsan-Roohi/FlowMLLab/blob/main/notebooks/week01/01_python_for_cfd_ai_fluids.ipynb) |
 | Python-ready | You can use NumPy and Matplotlib | `notebooks/week01/03_cavity_ghia.ipynb` | [Open in Colab](https://colab.research.google.com/github/Ehsan-Roohi/FlowMLLab/blob/main/notebooks/week01/03_cavity_ghia.ipynb) |
-| Scientific-ML ready | You already understand CFD validation and supervised learning | `notebooks/P0_Project_Setup.ipynb` | [Open in Colab](https://colab.research.google.com/github/Ehsan-Roohi/FlowMLLab/blob/main/notebooks/P0_Project_Setup.ipynb) |
+| Scientific-ML ready | You already understand CFD validation and supervised learning | `notebooks/week05_06/P0_Project_Setup.ipynb` | [Open in Colab](https://colab.research.google.com/github/Ehsan-Roohi/FlowMLLab/blob/main/notebooks/week05_06/P0_Project_Setup.ipynb) |
 | Instructor adoption | You are planning a course or workshop | `COURSE_MAP.md`, then `lectures/` |
 
 Do not begin with Track 6 unless you already understand case-wise splitting, scaling, offline versus closed-loop validation, and GPU troubleshooting.
@@ -37,7 +37,7 @@ TensorFlow-specific cells.
 
 ## 3. Run the 20-minute evidence chain
 
-Open `notebooks/P0_Project_Setup.ipynb` and run it top to bottom.
+Open `notebooks/week05_06/P0_Project_Setup.ipynb` and run it top to bottom.
 
 You should be able to answer all five questions before selecting a project:
 
@@ -68,10 +68,10 @@ Typical student runtimes are approximate:
 | Week 3 mini DSMC | CPU/GPU | 30–120 min depending on grid and particle budget |
 | Week 4 surrogate labs | CPU or Colab | 20–90 min each |
 | Optional Week 4.1 cavity ROM | CPU | <5 min with frozen evidence; about 1 min to regenerate validation |
-| Week 7 cylinder LBM | CPU | 15–45 min for the quick five-regime path; longer for qualification/refinement |
 | Project Tracks 1–4 | Colab recommended | 1–4 h including controlled sweeps |
 | Project Track 5 | CPU/GPU | several hours for all stochastic cases |
 | Project Track 6 | CUDA GPU | smoke test first; final study is substantially longer |
+| Week 7 cylinder LBM | CPU | 15–45 min for the quick five-regime path; longer for qualification/refinement |
 
 ## 5. Keep blind cases blind
 

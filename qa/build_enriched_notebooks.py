@@ -9,7 +9,7 @@ from pathlib import Path
 
 
 ROOT = Path(__file__).resolve().parents[1]
-NOTEBOOK_DIR = ROOT / "notebooks"
+NOTEBOOK_DIR = ROOT / "notebooks" / "week05_06"
 MARKER = "<!-- MIE690A enriched learner edition v2 -->"
 
 

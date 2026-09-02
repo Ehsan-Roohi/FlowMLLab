@@ -150,7 +150,7 @@ with st.expander("Protocol and interpretation"):
 
 st.markdown(
     "[Open the 20-minute Colab](https://colab.research.google.com/github/"
-    "Ehsan-Roohi/FlowMLLab/blob/main/notebooks/P0_Project_Setup.ipynb) · "
+    "Ehsan-Roohi/FlowMLLab/blob/main/notebooks/week05_06/P0_Project_Setup.ipynb) · "
     "[Inspect the evidence](https://github.com/Ehsan-Roohi/FlowMLLab/tree/main/"
     "results/pod_deeponet) · "
     "[Read the full notebook guide](https://github.com/Ehsan-Roohi/FlowMLLab/"

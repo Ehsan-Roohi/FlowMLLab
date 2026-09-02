@@ -57,13 +57,14 @@ REQUIRED = [
     "notebooks/week04/W4_1_Classical_ROM_Cavity.ipynb",
     "notebooks/week07/W7_Lattice_Boltzmann_Cylinder_Student.ipynb",
     "notebooks/week07/make_week7_notebook.py",
-    "notebooks/P0_Project_Setup.ipynb",
-    "notebooks/P1_Re_Generalization.ipynb",
-    "notebooks/P2_Physics_Guided_DNN.ipynb",
-    "notebooks/P3_POD_Study.ipynb",
-    "notebooks/P4_Uncertainty_Study.ipynb",
-    "notebooks/P5_Rarefied_Cavity.ipynb",
-    "notebooks/P6_FP_Cavity_Closure.ipynb",
+    "notebooks/week05_06/P0_Project_Setup.ipynb",
+    "notebooks/week05_06/P1_Re_Generalization.ipynb",
+    "notebooks/week05_06/P2_Physics_Guided_DNN.ipynb",
+    "notebooks/week05_06/P3_POD_Study.ipynb",
+    "notebooks/week05_06/P4_Uncertainty_Study.ipynb",
+    "notebooks/week05_06/P5_Rarefied_Cavity.ipynb",
+    "notebooks/week05_06/P6_FP_Cavity_Closure.ipynb",
+    "notebooks/week05_06/README.md",
     "lectures/week01_numerical_foundations.pdf",
     "lectures/week02_supervised_learning_rarefaction.pdf",
     "lectures/week03_kinetic_dsmc.pdf",
@@ -179,7 +180,7 @@ def validate_notebooks() -> tuple[int, int]:
             if cell.get("cell_type") == "code":
                 code_cells += 1
                 parse_notebook_code("".join(cell.get("source", [])), f"{path}:{index}")
-        if path.parent == ROOT / "notebooks" and path.name.startswith("P"):
+        if path.parent == ROOT / "notebooks" / "week05_06" and path.name.startswith("P"):
             words = sum(
                 len("".join(cell.get("source", [])).split())
                 for cell in cells

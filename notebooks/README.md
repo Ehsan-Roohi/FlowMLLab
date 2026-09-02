@@ -18,14 +18,14 @@ only for notebooks that explicitly require CUDA.
 | Week 4 | Scalar and field surrogates | [Open in Colab](https://colab.research.google.com/github/Ehsan-Roohi/FlowMLLab/blob/main/notebooks/week04/W4_Lab2_Scalar_and_Field_Surrogates_Student.ipynb) |
 | Week 4 | POD-DeepONet cavity | [Open in Colab](https://colab.research.google.com/github/Ehsan-Roohi/FlowMLLab/blob/main/notebooks/week04/W4_Lab3_DeepONet_Cavity_Student.ipynb) |
 | Week 4.1 | Classical POD-Galerkin/POD-DEIM | [Open in Colab](https://colab.research.google.com/github/Ehsan-Roohi/FlowMLLab/blob/main/notebooks/week04/W4_1_Classical_ROM_Cavity.ipynb) |
+| Weeks 5–6 | P0 setup and data audit | [Open in Colab](https://colab.research.google.com/github/Ehsan-Roohi/FlowMLLab/blob/main/notebooks/week05_06/P0_Project_Setup.ipynb) |
+| Weeks 5–6 | P1 Reynolds-number generalization | [Open in Colab](https://colab.research.google.com/github/Ehsan-Roohi/FlowMLLab/blob/main/notebooks/week05_06/P1_Re_Generalization.ipynb) |
+| Weeks 5–6 | P2 physics-guided DNN/PINN objectives | [Open in Colab](https://colab.research.google.com/github/Ehsan-Roohi/FlowMLLab/blob/main/notebooks/week05_06/P2_Physics_Guided_DNN.ipynb) |
+| Weeks 5–6 | P3 POD study | [Open in Colab](https://colab.research.google.com/github/Ehsan-Roohi/FlowMLLab/blob/main/notebooks/week05_06/P3_POD_Study.ipynb) |
+| Weeks 5–6 | P4 uncertainty and data sufficiency | [Open in Colab](https://colab.research.google.com/github/Ehsan-Roohi/FlowMLLab/blob/main/notebooks/week05_06/P4_Uncertainty_Study.ipynb) |
+| Weeks 5–6 | P5 rarefied cavity | [Open in Colab](https://colab.research.google.com/github/Ehsan-Roohi/FlowMLLab/blob/main/notebooks/week05_06/P5_Rarefied_Cavity.ipynb) |
+| Weeks 5–6 | P6 Fokker-Planck closure | [Open in Colab](https://colab.research.google.com/github/Ehsan-Roohi/FlowMLLab/blob/main/notebooks/week05_06/P6_FP_Cavity_Closure.ipynb) |
 | Week 7 | Lattice-Boltzmann cylinder wakes | [Open in Colab](https://colab.research.google.com/github/Ehsan-Roohi/FlowMLLab/blob/main/notebooks/week07/W7_Lattice_Boltzmann_Cylinder_Student.ipynb) |
-| Project | P0 setup and data audit | [Open in Colab](https://colab.research.google.com/github/Ehsan-Roohi/FlowMLLab/blob/main/notebooks/P0_Project_Setup.ipynb) |
-| Project | P1 Reynolds-number generalization | [Open in Colab](https://colab.research.google.com/github/Ehsan-Roohi/FlowMLLab/blob/main/notebooks/P1_Re_Generalization.ipynb) |
-| Project | P2 physics-guided DNN | [Open in Colab](https://colab.research.google.com/github/Ehsan-Roohi/FlowMLLab/blob/main/notebooks/P2_Physics_Guided_DNN.ipynb) |
-| Project | P3 POD study | [Open in Colab](https://colab.research.google.com/github/Ehsan-Roohi/FlowMLLab/blob/main/notebooks/P3_POD_Study.ipynb) |
-| Project | P4 uncertainty and data sufficiency | [Open in Colab](https://colab.research.google.com/github/Ehsan-Roohi/FlowMLLab/blob/main/notebooks/P4_Uncertainty_Study.ipynb) |
-| Project | P5 rarefied cavity | [Open in Colab](https://colab.research.google.com/github/Ehsan-Roohi/FlowMLLab/blob/main/notebooks/P5_Rarefied_Cavity.ipynb) |
-| Project | P6 Fokker-Planck closure | [Open in Colab](https://colab.research.google.com/github/Ehsan-Roohi/FlowMLLab/blob/main/notebooks/P6_FP_Cavity_Closure.ipynb) |
 
 ## Weekly laboratories
 
@@ -33,6 +33,7 @@ only for notebooks that explicitly require CUDA.
 - `week02/`: supervised-learning foundations and a rarefied-flow surrogate.
 - `week03/`: Maxwellian sampling/noise and a mini DSMC cavity.
 - `week04/`: CFD data production, scalar/field surrogates, and a 27-cell POD-DeepONet laboratory with development-only selection, a visible blind-test gate, three-seed uncertainty, Ghia checks, physical diagnostics, and timing.
+- `week05_06/`: the original combined two-week guided-project pack. Week 5 establishes the setup, baseline, controlled modification, and checkpoint; Week 6 completes the same selected track, physical validation, reproducibility package, and final report.
 - `week07/`: D2Q9 BGK/TRT cylinder flow, force and Strouhal validation, Reynolds-regime classification, and a complete unseen-Reynolds comparison between a POD baseline and a four-frame multi-scale CNN.
 
 The Week-7 notebook labels the retained low-cost run as qualitative.  It links
@@ -56,13 +57,13 @@ The Week-1 cavity notebook first reproduces the manuscript's Ghia velocity and B
 
 ## Research-project notebooks
 
-- `P0_Project_Setup.ipynb`: environment, dataset audit, baseline recovery, and project card.
-- `P1_Re_Generalization.ipynb`: Reynolds interpolation/extrapolation and failure localization.
-- `P2_Physics_Guided_DNN.ipynb`: wall-weighted or divergence-penalized learning.
-- `P3_POD_Study.ipynb`: POD rank, basis choice, and coefficient learnability.
-- `P4_Uncertainty_Study.ipynb`: seed variability, data sufficiency, and error indicators.
-- `P5_Rarefied_Cavity.ipynb`: noisy particle labels and Knudsen generalization.
-- `P6_FP_Cavity_Closure.ipynb`: offline and closed-loop Fokker–Planck closure evaluation.
+- `week05_06/P0_Project_Setup.ipynb`: environment, dataset audit, baseline recovery, and project card.
+- `week05_06/P1_Re_Generalization.ipynb`: Reynolds interpolation/extrapolation and failure localization.
+- `week05_06/P2_Physics_Guided_DNN.ipynb`: wall-weighted or divergence-penalized learning.
+- `week05_06/P3_POD_Study.ipynb`: POD rank, basis choice, and coefficient learnability.
+- `week05_06/P4_Uncertainty_Study.ipynb`: seed variability, data sufficiency, and error indicators.
+- `week05_06/P5_Rarefied_Cavity.ipynb`: noisy particle labels and Knudsen generalization.
+- `week05_06/P6_FP_Cavity_Closure.ipynb`: offline and closed-loop Fokker–Planck closure evaluation.
 
 Each project notebook now includes:
 

@@ -26,7 +26,12 @@ import mini_dsmc
 
 
 def find_notebook(name: str) -> Path:
-    candidates = [ROOT / "Student_Notebooks" / name, ROOT / name, HERE / name]
+    candidates = [
+        ROOT / "notebooks" / "week05_06" / name,
+        ROOT / "Student_Notebooks" / name,
+        ROOT / name,
+        HERE / name,
+    ]
     for p in candidates:
         if p.exists():
             return p
