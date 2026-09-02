@@ -16,7 +16,7 @@ The list below is a learning route, not a requirement to read every source befor
 - **Sandve et al. (2013).** Ten concise rules for preserving the evidence chain of a computational study. [DOI](https://doi.org/10.1371/journal.pcbi.1003285)
 - **Kluyver et al. (2016).** Jupyter as a reproducible computational narrative rather than a collection of disconnected cells. [DOI](https://doi.org/10.3233/978-1-61499-649-1-87)
 
-### Week 5: lattice Boltzmann and cylinder wakes
+### Week 7: lattice Boltzmann and cylinder wakes
 
 - **He & Luo (1997).** Incompressible lattice-Boltzmann formulation and the hydrodynamic limit used to interpret D2Q9. [DOI](https://doi.org/10.1023/B:JOSS.0000015179.12689.e4)
 - **Bouzidi, Firdaouss & Lallemand (2001).** Interpolated bounce-back for curved boundaries; the refinement target beyond the stair-step classroom boundary. [DOI](https://doi.org/10.1063/1.1399290)
@@ -24,7 +24,7 @@ The list below is a learning route, not a requirement to read every source befor
 - **Gautier, Biau & Lamballais (2013).** High-accuracy steady-cylinder reference at `Re=40`, including domain-sensitivity evidence. [Preprint](https://arxiv.org/abs/1310.6641)
 - **Qu et al. (2013).** Two-dimensional cylinder force, Strouhal, and recirculation data across the laminar shedding regime. [DOI](https://doi.org/10.1016/j.jfluidstructs.2013.02.007)
 - **Barkley & Henderson (1996).** Three-dimensional Mode-A threshold, used here to explain why the 2-D lesson stops at `Re=180`. [DOI](https://doi.org/10.1017/S0022112096004317)
-- **Lee & You (2019).** Multi-frame prediction, Reynolds-case holdout, physical losses, and recursive-rollout diagnostics that motivate—but are not reproduced by—the compact Week-5 neural exercise. [DOI](https://doi.org/10.1017/jfm.2019.700)
+- **Lee & You (2019).** Multi-frame prediction, Reynolds-case holdout, physical losses, and recursive-rollout diagnostics that motivate—but are not reproduced by—the compact Week-7 neural exercise. [DOI](https://doi.org/10.1017/jfm.2019.700)
 
 ## Physics-informed and operator learning
 

@@ -41,7 +41,7 @@ def build_parser() -> argparse.ArgumentParser:
     rom.add_argument("--root", type=Path, help="FlowMLLab checkout root")
 
     cylinder = subparsers.add_parser(
-        "cylinder", help="verify retained Week-5 LBM and four-frame CNN evidence"
+        "cylinder", help="verify retained Week-7 LBM and four-frame CNN evidence"
     )
     cylinder.add_argument("--root", type=Path, help="FlowMLLab checkout root")
     return parser

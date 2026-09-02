@@ -18,7 +18,7 @@ exercise to physics-checked POD--DeepONet benchmarks when ready.
 
 ## Featured: circular-cylinder vortex shedding
 
-The Week 5 capstone advances from the steady cavity to an unsteady circular-cylinder
+The optional Week 7 extension advances from the steady cavity to an unsteady circular-cylinder
 wake. A D2Q9 lattice-Boltzmann solver generates the reference fields, and a
 four-frame multi-scale CNN predicts the completely unseen `Re=105` case without
 the downstream vortex diffusion observed in the archived POD baseline.
@@ -46,7 +46,7 @@ the downstream vortex diffusion observed in the archived POD baseline.
 | Three-seed velocity error on retained cavity cases | **0.0727%–0.4455%** relative $L_2$ |
 | Direct zero-mean pressure prediction | **0.1073%–0.2506%** relative $L_2$ |
 | Repeated three-field evaluation versus a fresh recorded CPU CFD solve | **approximately $5.3\times10^3\times$ faster** |
-| Reproducible learning and research entry points | **18 Colab notebooks + 5 lecture PDFs** |
+| Reproducible learning and research entry points | **18 Colab notebooks + 6 lecture PDFs** |
 
 ### Choose a starting point
 
@@ -80,8 +80,8 @@ Start with [START_HERE.md](START_HERE.md). It gives the installation check, reco
 | `flowmllab/` | Installable Python package, scientific asset checks, repository QA, and figure-generation CLI |
 | `demo/` | Read-only Streamlit explorer for the retained POD--DeepONet blind cases |
 | `pyproject.toml` | Versioned package metadata, locked core dependencies, optional ML/test environments, and `flowmllab` entry point |
-| `lectures/` | Five lecture/guide PDFs covering Weeks 1–6, plus editable LaTeX/PPTX sources where available |
-| `notebooks/week01`–`week05` | Eleven guided laboratories: Python, TensorFlow, validated cavity CFD, supervised learning, rarefaction, Maxwellian sampling, DSMC, scalar/field surrogates, POD-DeepONet, a classical cavity ROM, and cylinder-wake LBM |
+| `lectures/` | Five lecture/guide PDFs covering the original Weeks 1–6, plus a separate Week-7 cylinder lecture and editable sources |
+| `notebooks/week01`–`week04`, `notebooks/week07` | Eleven guided laboratories: the original six-week course sequence plus a Week-7 cylinder-wake LBM extension |
 | `notebooks/P0`–`P6` | Seven expanded research-project notebooks with conceptual notes, frozen decision gates, physical diagnostics, troubleshooting, deliverables, and further reading |
 | `common/` | Shared CFD, surrogate, POD, kinetic, and QA utilities |
 | `data/` | Fixed 11-case cavity reference dataset and numerical-quality table |
@@ -105,8 +105,8 @@ The recommended path is cumulative:
 - **Week 3 — Particle and kinetic descriptions:** Maxwellian sampling, macroscopic moments, sampling-error scaling, DSMC algorithmic structure, noisy labels, and averaging.
 - **Week 4 — Surrogates and operator learning:** audited CFD fields, scalar baselines, coordinate DNNs, and a restricted POD-DeepONet with complete-case selection, three-seed blind tests, Ghia validation, physical diagnostics, and measured inference cost.
 - **Week 4.1 — Classical and hyper-reduced ROM:** an additive notebook for the same cavity, with dynamic centered POD-Galerkin, nonlinear-cost diagnosis, POD-DEIM, convergence checks, frozen blind tests, and offline/online break-even accounting.
-- **Week 5 — Cylinder wakes with LBM:** derive D2Q9 BGK/TRT, distinguish attached, steady-recirculating, and vortex-shedding regimes, validate forces and Strouhal number, diagnose downstream diffusion in a POD baseline, then test a four-frame multi-scale CNN on a complete unseen Reynolds case.
-- **Week 6 — Controlled research project:** select one track—including POD, physics-guided learning, uncertainty, rarefied flow, or learned closure—freeze the protocol, open blind cases once, document a failure/tradeoff, and produce a reproducible research summary.
+- **Weeks 5–6 — Controlled research project:** select one track—including POD, physics-guided learning, uncertainty, rarefied flow, or learned closure—freeze the protocol, open blind cases once, document a failure/tradeoff, and produce a reproducible research summary.
+- **Week 7 — Cylinder wakes with LBM and neural prediction:** derive D2Q9 BGK/TRT, distinguish attached, steady-recirculating, and vortex-shedding regimes, validate forces and Strouhal number, diagnose downstream diffusion in a POD baseline, then test a four-frame multi-scale CNN on a complete unseen Reynolds case.
 
 The full module-to-evidence mapping is in [COURSE_MAP.md](COURSE_MAP.md).
 The exact manuscript-figure ownership and reproduction commands are in [ARTICLE_FIGURE_MAP.md](ARTICLE_FIGURE_MAP.md).
@@ -122,7 +122,7 @@ flowmllab smoke --root .
 flowmllab qa --root .
 flowmllab figures all --root .
 flowmllab rom --root .               # optional Week-4.1 full regeneration
-flowmllab cylinder --root .          # verify retained Week-5 LBM evidence
+flowmllab cylinder --root .          # verify retained Week-7 LBM evidence
 ```
 
 Install the neural-network stack with `python -m pip install -e ".[ml,test]"`.
@@ -171,7 +171,7 @@ Exact values and environment metadata are in `results/cavity_rom/`.
 
 ## Cylinder LBM teaching module
 
-Week 5 adds an installable D2Q9 cylinder solver with transparent BGK theory and
+Week 7 adds an installable D2Q9 cylinder solver with transparent BGK theory and
 a more robust TRT default, Zou--He inflow, a convective outlet, periodic
 transverse boundaries, Bouzidi interpolated bounce-back on an analytical
 circular wall, momentum-exchange forces, gauge
@@ -179,7 +179,7 @@ pressure, vorticity, recirculation length, and Strouhal diagnostics.  The
 retained quick sweep covers `Re = 5, 20, 40, 100, 180`, so students see attached
 flow, a steady symmetric wake, and periodic vortex shedding before using ML.
 
-Open `notebooks/week05/W5_Lattice_Boltzmann_Cylinder_Student.ipynb` for the full
+Open `notebooks/week07/W7_Lattice_Boltzmann_Cylinder_Student.ipynb` for the full
 lesson. It keeps complete Reynolds cases together. The original phase/POD
 surrogate is retained as a failure baseline because its downstream vortices
 diffuse. The corrected path uses four consecutive LBM fields, a three-scale

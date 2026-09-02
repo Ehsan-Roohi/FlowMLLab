@@ -12,7 +12,7 @@ validation take priority over increasing the number of methods.
 - add contributor-reported notebook runtimes without changing the frozen results;
 - collect course and laboratory adoptions with permission; and
 - keep Python 3.10--3.12 CI, repository QA, and scientific evidence gates green.
-- add the Week-5 D2Q9 cylinder module, retained regime evidence, and a
+- add the post-course Week-7 D2Q9 cylinder module, retained regime evidence, and a
   leakage-safe educational POD/neural comparison.
 
 ## Next release

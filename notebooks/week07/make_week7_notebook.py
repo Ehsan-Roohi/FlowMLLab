@@ -1,4 +1,4 @@
-"""Build the Week-5 student notebook from small, reviewable cells."""
+"""Build the Week-7 student notebook from small, reviewable cells."""
 
 from __future__ import annotations
 
@@ -38,7 +38,7 @@ except ModuleNotFoundError:  # keep release generation dependency-free
 
 
 HERE = Path(__file__).resolve().parent
-TARGET = HERE / "W5_Lattice_Boltzmann_Cylinder_Student.ipynb"
+TARGET = HERE / "W7_Lattice_Boltzmann_Cylinder_Student.ipynb"
 
 
 def md(text: str):
@@ -51,12 +51,12 @@ def code(text: str):
 
 cells = [
     md(r"""
-# Week 5 — From a steady wake to vortex shedding with D2Q9 LBM
+# Week 7 — From a steady wake to vortex shedding with D2Q9 LBM
 
 <!-- MIE690A article-aligned validation v3 -->
 
 <!-- FLOWMLLAB_COLAB_LAUNCH_V1 -->
-[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/Ehsan-Roohi/FlowMLLab/blob/main/notebooks/week05/W5_Lattice_Boltzmann_Cylinder_Student.ipynb)
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/Ehsan-Roohi/FlowMLLab/blob/main/notebooks/week07/W7_Lattice_Boltzmann_Cylinder_Student.ipynb)
 
 **Runtime:** CPU. **Quick track:** about 8–15 min. **Qualification track:** substantially longer.<br>
 This is an **educational** cylinder-wake laboratory. It is deliberately separate from the cavity article and does not claim a new bifurcation result.
@@ -127,7 +127,7 @@ if "google.colab" in _flowmllab_sys.modules or _flowmllab_os.environ.get("COLAB_
         [_flowmllab_sys.executable, "-m", "pip", "install", "-q", "-e", str(_flowmllab_root)],
         check=True,
     )
-    _flowmllab_os.chdir(_flowmllab_root / "notebooks/week05")
+    _flowmllab_os.chdir(_flowmllab_root / "notebooks/week07")
 
 from pathlib import Path
 import json, platform, time
@@ -146,7 +146,7 @@ from flowmllab.cylinder_lbm import (
 from flowmllab import cylinder_ml
 
 plt.rcParams.update({"font.size": 12, "axes.labelsize": 13, "legend.fontsize": 10})
-OUTPUT = Path("week05_outputs")
+OUTPUT = Path("week07_outputs")
 OUTPUT.mkdir(exist_ok=True)
 print("Python:", platform.python_version())
 """),
@@ -744,7 +744,7 @@ notebook = nbf.v4.new_notebook(
         "language_info": {"name": "python", "version": "3"},
         "course": {
             "title": "MIE 690A AI in Fluid Mechanics",
-            "lab": "Week 5 LBM cylinder wake",
+            "lab": "Week 7 LBM cylinder wake",
             "protocol_version": "2026.09",
         },
     },

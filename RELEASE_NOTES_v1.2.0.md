@@ -14,7 +14,7 @@ mechanics to Reynolds-dependent cylinder wakes and leakage-safe field learning.
 - adds quick classroom and expensive qualification parameter profiles;
 - retains executed `Re=5,20,40,100,180` regime evidence, reference ranges,
   metadata, and publication-quality PNG/PDF figures;
-- adds `W5_Lattice_Boltzmann_Cylinder_Student.ipynb`, including D2Q9/TRT
+- adds the post-course `W7_Lattice_Boltzmann_Cylinder_Student.ipynb`, including D2Q9/TRT
   derivations, regime classification, validation ladders, and refinement tasks;
 - adds `flowmllab.cylinder_ml`: centered multi-field POD, complete-Re splits,
   a deterministic Reynolds/phase baseline, reconstruction metrics, and physical
@@ -24,7 +24,7 @@ mechanics to Reynolds-dependent cylinder wakes and leakage-safe field learning.
 - retains a 1080p LBM-versus-neural vorticity animation for a completely
   withheld `Re=100` trajectory, with training Reynolds cases, phase
   conditioning, errors, the non-neural baseline, and claim limits recorded;
-- adds `flowmllab cylinder --root .` to verify retained Week-5 evidence.
+- adds `flowmllab cylinder --root .` to verify retained Week-7 evidence.
 
 ## Validation contract
 

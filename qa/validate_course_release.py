@@ -55,8 +55,8 @@ REQUIRED = [
     "ARTICLE_FIGURE_MAP.md",
     "notebooks/week04/W4_Lab3_DeepONet_Cavity_Student.ipynb",
     "notebooks/week04/W4_1_Classical_ROM_Cavity.ipynb",
-    "notebooks/week05/W5_Lattice_Boltzmann_Cylinder_Student.ipynb",
-    "notebooks/week05/make_week5_notebook.py",
+    "notebooks/week07/W7_Lattice_Boltzmann_Cylinder_Student.ipynb",
+    "notebooks/week07/make_week7_notebook.py",
     "notebooks/P0_Project_Setup.ipynb",
     "notebooks/P1_Re_Generalization.ipynb",
     "notebooks/P2_Physics_Guided_DNN.ipynb",
@@ -69,6 +69,8 @@ REQUIRED = [
     "lectures/week03_kinetic_dsmc.pdf",
     "lectures/week04_cavity_surrogates_deeponet.pdf",
     "lectures/weeks05_06_project_guide.pdf",
+    "lectures/week07_cylinder_lbm_neural_surrogate.pdf",
+    "lectures/source/week07_cylinder_lbm_neural_surrogate.tex",
     "references/README.md",
     "references/course_references.bib",
     "results/pod_deeponet/deeponet_selection.csv",
@@ -369,7 +371,7 @@ def validate_cavity_rom_results() -> dict[str, float]:
 
 
 def validate_cylinder_lbm_results() -> dict[str, float]:
-    """Recompute the retained Week-5 stability and regime evidence gates."""
+    """Recompute the retained Week-7 stability and regime evidence gates."""
     result_dir = ROOT / "results" / "cylinder_lbm"
     metrics = pd.read_csv(result_dir / "regime_metrics.csv")
     assert metrics["Re"].astype(int).tolist() == [5, 20, 40, 100, 180]
@@ -402,7 +404,7 @@ def validate_cylinder_lbm_results() -> dict[str, float]:
     assert protocol["boundaries"]["cylinder"] == "Bouzidi interpolated circular wall"
     assert "not grid-converged" in " ".join(protocol["limitations"])
     notebook = json.loads(
-        (ROOT / "notebooks" / "week05" / "W5_Lattice_Boltzmann_Cylinder_Student.ipynb").read_text()
+        (ROOT / "notebooks" / "week07" / "W7_Lattice_Boltzmann_Cylinder_Student.ipynb").read_text()
     )
     source = "\n".join("".join(cell.get("source", [])) for cell in notebook["cells"])
     assert "Diagnostic gate: explain the POD failure" in source
@@ -464,7 +466,7 @@ def validate_cylinder_lbm_results() -> dict[str, float]:
 
 def validate_pdfs() -> int:
     pdfs = sorted((ROOT / "lectures").glob("*.pdf"))
-    assert len(pdfs) == 5
+    assert len(pdfs) == 6
     for path in pdfs:
         result = subprocess.run(
             ["pdfinfo", str(path)], check=True, capture_output=True, text=True

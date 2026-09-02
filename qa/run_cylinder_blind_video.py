@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Generate the Week-5 complete-Re blind cylinder-wake comparison video.
+"""Generate the Week-7 complete-Re blind cylinder-wake comparison video.
 
 The full Re=100 trajectory is excluded from training.  A phase-conditioned
 POD--MLP is fit only to Re=60, 80, 90, 110, 120, and 140 LBM snapshots, then
@@ -420,7 +420,7 @@ def _make_video(
     )
     clock = fig.text(0.5, 0.907, "", ha="center", va="top", fontsize=13)
     fig.suptitle(
-        "FlowMLLab Week 5 — Vortex shedding in an unseen Reynolds case",
+        "FlowMLLab Week 7 — Vortex shedding in an unseen Reynolds case",
         fontsize=20,
         y=0.975,
     )

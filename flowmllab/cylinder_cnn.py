@@ -2,7 +2,7 @@
 
 The TensorFlow dependency is optional.  Pure NumPy helpers remain importable in
 the base FlowMLLab installation, while :func:`build_multiscale_predictor` and
-:func:`composite_flow_loss` provide the Week-5 CNN when ``flowmllab[ml]`` is
+:func:`composite_flow_loss` provide the Week-7 CNN when ``flowmllab[ml]`` is
 installed.
 """
 

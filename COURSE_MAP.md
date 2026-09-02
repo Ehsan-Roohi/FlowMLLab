@@ -15,12 +15,12 @@
 | 4B | Scalar and coordinate surrogates | `(Re,x,y) → (u,v,p)` with case-wise holdout | Blind errors plus wall, divergence, pressure, and centerline checks |
 | 4C | Operator learning with an interpretable trunk | Executed scalar-branch POD-DeepONet for the parametric cavity | Development-only selection; all three blind fields and seeds; wall/divergence checks; Ghia-fidelity table; measured CFD/inference cost; explicit scalar-branch limitation |
 | 4.1 | Classical dynamical ROM and nonlinear cost | Centered POD--Galerkin and POD--DEIM for the same transient cavity | Exact recovery of accepted FOM fields; grid/time refinement; validation-only rank freeze; all blind trajectories; wall/divergence/vortex checks; offline, online, and break-even cost |
-| 5A | Lattice-Boltzmann mechanics | Derive D2Q9 equilibrium; compare transparent BGK with robust TRT; identify every boundary operation | Mass/density stability, `Ma`, `tau`, no-slip mask, and reproducible configuration |
-| 5B | Cylinder-wake regimes and validation | Run `Re=5,20,40,100,180`; extract vorticity, `C_D`, `C_L`, `St`, and recirculation length | Correct attached/steady/shedding classification; literature bands; explicit grid/domain/time limitations |
-| 5C | Educational unsteady field learning | Reynolds/phase POD baseline and small neural POD branch with complete `Re=100` holdout | Case-wise split, POD representation error, blind field error, divergence/no-slip checks, and baseline comparison |
 | 6A | Fokker–Planck closure | Exact coefficient generation and neural surrogate | Offline coefficient errors by physical block |
 | 6B | A-posteriori testing | Deploy learned closure inside solver | Stability, high-order moments, fields, centerlines, and runtime |
 | 6C | Reproducibility and communication | Restart/run-all, save metrics, make one-slide summary | Complete evidence bundle and explicit limitation |
+| 7A | Lattice-Boltzmann mechanics | Derive D2Q9 equilibrium; compare transparent BGK with robust TRT; identify every boundary operation | Mass/density stability, `Ma`, `tau`, no-slip mask, and reproducible configuration |
+| 7B | Cylinder-wake regimes and validation | Run `Re=5,20,40,100,180`; extract vorticity, `C_D`, `C_L`, `St`, and recirculation length | Correct attached/steady/shedding classification; literature bands; explicit grid/domain/time limitations |
+| 7C | Educational unsteady field learning | Reynolds/phase POD baseline and four-frame multi-scale CNN with a complete unseen-Reynolds test | Case-wise split, blind field error, spectra, downstream enstrophy, divergence/no-slip checks, and baseline comparison |
 
 ## Suggested adoption modes
 
@@ -31,6 +31,7 @@ Use Modules 1C, 2A, 2C, and a short version of 4B. The learning objective is to 
 ### Six-week intensive course
 
 Use all modules in order. Assign one controlled project modification in Weeks 5–6. Advanced Track 6 remains instructor-approved.
+Use Week 7 only after the original six-week sequence; it is an extension on unsteady external flow, not a replacement for the Weeks 5–6 project.
 
 ### Full semester
 

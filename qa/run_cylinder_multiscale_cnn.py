@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Train and validate the Week-5 four-frame multi-scale cylinder CNN.
+"""Train and validate the Week-7 four-frame multi-scale cylinder CNN.
 
 Protocol
 --------

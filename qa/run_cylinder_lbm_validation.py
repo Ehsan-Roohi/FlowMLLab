@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Generate or verify the retained Week-5 cylinder LBM teaching evidence.
+"""Generate or verify the retained Week-7 cylinder LBM teaching evidence.
 
 The default command is cheap: it verifies the committed evidence.  Passing
 ``--regenerate`` performs the Reynolds-number sweep.  The retained ``quick``
@@ -189,7 +189,7 @@ def _plot_regimes(results: list[dict[str, Any]], output: Path) -> None:
     signal_axis.legend(
         loc="upper center", bbox_to_anchor=(0.5, -0.20), frameon=True, ncol=3
     )
-    fig.suptitle("FlowMLLab Week 5: D2Q9 cylinder regimes (quick teaching profile)", fontsize=16)
+    fig.suptitle("FlowMLLab Week 7: D2Q9 cylinder regimes (quick teaching profile)", fontsize=16)
     fig.savefig(output / "cylinder_lbm_regimes.png", dpi=200)
     fig.savefig(output / "cylinder_lbm_regimes.pdf")
     plt.close(fig)

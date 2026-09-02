@@ -151,7 +151,7 @@ def generate_cavity_rom_validation(root: str | Path | None = None) -> int:
 
 
 def verify_cylinder_lbm_validation(root: str | Path | None = None) -> int:
-    """Verify the retained Week-5 cylinder LBM evidence without rerunning it."""
+    """Verify the retained Week-7 cylinder LBM evidence without rerunning it."""
     repository = discover_repository_root(root)
     completed = subprocess.run(
         [sys.executable, str(repository / "qa" / "run_cylinder_lbm_validation.py"),
