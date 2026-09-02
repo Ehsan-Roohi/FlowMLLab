@@ -6,15 +6,32 @@
 
 ## Validated CFD to scientific ML—from first Colab to reproducible benchmark
 
-Audit a CFD dataset, recover a withheld Reynolds-number case, and verify the
-evidence chain in about **20 minutes**. Continue to a physics-checked
-POD--DeepONet benchmark when ready.
+Start with a validated circular-cylinder wake, compare LBM with a blind neural
+prediction, and verify the evidence chain. Continue through the 20-minute cavity
+exercise to physics-checked POD--DeepONet benchmarks when ready.
 
 <p align="center">
   <a href="https://colab.research.google.com/github/Ehsan-Roohi/FlowMLLab/blob/main/notebooks/P0_Project_Setup.ipynb"><img src="https://img.shields.io/badge/Run-20--minute_Colab-F9AB00?logo=googlecolab&logoColor=white" alt="Run the 20-minute FlowMLLab Colab"></a>
   <a href="demo/README.md"><img src="https://img.shields.io/badge/Explore-blind--case_demo-146C94" alt="Explore the validated blind-case demo"></a>
   <a href="notebooks/README.md"><img src="https://img.shields.io/badge/Open-all_18_notebooks-315A7D" alt="Open all 18 FlowMLLab notebooks"></a>
 </p>
+
+## Featured: circular-cylinder vortex shedding
+
+The Week 5 capstone advances from the steady cavity to an unsteady circular-cylinder
+wake. A D2Q9 lattice-Boltzmann solver generates the reference fields, and a
+four-frame multi-scale CNN predicts the completely unseen `Re=105` case without
+the downstream vortex diffusion observed in the archived POD baseline.
+
+<p align="center">
+  <a href="results/cylinder_cnn/re105_lbm_vs_multiscale_cnn.mp4">
+    <img src="results/cylinder_cnn/re105_lbm_vs_multiscale_cnn_poster.png" alt="Blind Re=105 comparison of circular-cylinder LBM vorticity and the four-frame multi-scale CNN prediction" width="100%">
+  </a>
+</p>
+
+<p align="center"><em>Click the comparison to play the full LBM-versus-CNN video. Blind vorticity relative L2 error: 0.815%; mean downstream profile error at 2D, 4D, 6D, and 8D: 0.804%.</em></p>
+
+### Cavity benchmark
 
 <p align="center">
   <a href="demo/README.md">
@@ -24,8 +41,10 @@ POD--DeepONet benchmark when ready.
 
 <p align="center"><em>Three retained test cases from the versioned evidence. Velocity and zero-mean pressure are direct outputs of separate POD--DeepONet heads.</em></p>
 
-| Verified result | Retained v1.1.0 evidence |
+| Verified result | Retained evidence |
 | --- | ---: |
+| Blind `Re=105` cylinder vorticity error | **0.815%** relative $L_2$ |
+| Mean cylinder-wake profile error at `2D,4D,6D,8D` | **0.804%** relative $L_2$ |
 | Three-seed velocity error on retained cavity cases | **0.0727%–0.4455%** relative $L_2$ |
 | Direct zero-mean pressure prediction | **0.1073%–0.2506%** relative $L_2$ |
 | Repeated three-field evaluation versus a fresh recorded CPU CFD solve | **approximately $5.3\times10^3\times$ faster** |
@@ -35,7 +54,7 @@ POD--DeepONet benchmark when ready.
 
 | Your goal | Start here |
 | --- | --- |
-| See a result immediately | [Explore the retained blind-case demo](demo/README.md) |
+| See the featured result immediately | [Play the blind `Re=105` cylinder video](results/cylinder_cnn/re105_lbm_vs_multiscale_cnn.mp4) |
 | Complete the first evidence chain | [Run the 20-minute Colab](https://colab.research.google.com/github/Ehsan-Roohi/FlowMLLab/blob/main/notebooks/P0_Project_Setup.ipynb) |
 | Reproduce the software release | Follow [START_HERE.md](START_HERE.md), then run `flowmllab qa --root .` |
 | Adopt material in a course or workshop | Use [COURSE_MAP.md](COURSE_MAP.md) and the [notebook launcher](notebooks/README.md) |
@@ -184,7 +203,7 @@ matched persistence. Mean downstream vorticity-profile error at
 `2D,4D,6D,8D` is **0.804%**, and station enstrophy ratios remain within
 `0.9993–1.0037`.
 
-[![Blind Re=105 LBM versus four-frame multi-scale CNN](results/cylinder_cnn/re105_lbm_vs_multiscale_cnn_poster.png)](results/cylinder_cnn/re105_lbm_vs_multiscale_cnn.mp4)
+[Play the full blind `Re=105` LBM-versus-CNN video](results/cylinder_cnn/re105_lbm_vs_multiscale_cnn.mp4).
 
 This is a teacher-forced one-step prediction from four previous true LBM
 frames, not an autonomous rollout.
