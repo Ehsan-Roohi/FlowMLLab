@@ -16,7 +16,7 @@ ROOT = Path(__file__).resolve().parents[1]
 
 class FlowMLLabCoreTests(unittest.TestCase):
     def test_version(self) -> None:
-        self.assertEqual(flowmllab.__version__, "1.1.0")
+        self.assertEqual(flowmllab.__version__, "1.2.0")
 
     def test_core_asset_contract(self) -> None:
         report = flowmllab.validate_core_assets(ROOT)
@@ -46,6 +46,11 @@ class FlowMLLabCoreTests(unittest.TestCase):
     def test_cavity_rom_cli_is_exposed(self) -> None:
         args = build_parser().parse_args(["rom", "--root", str(ROOT)])
         self.assertEqual(args.command, "rom")
+        self.assertEqual(args.root, ROOT)
+
+    def test_cylinder_cli_is_exposed(self) -> None:
+        args = build_parser().parse_args(["cylinder", "--root", str(ROOT)])
+        self.assertEqual(args.command, "cylinder")
         self.assertEqual(args.root, ROOT)
 
 
