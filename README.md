@@ -13,7 +13,7 @@ POD--DeepONet benchmark when ready.
 <p align="center">
   <a href="https://colab.research.google.com/github/Ehsan-Roohi/FlowMLLab/blob/main/notebooks/P0_Project_Setup.ipynb"><img src="https://img.shields.io/badge/Run-20--minute_Colab-F9AB00?logo=googlecolab&logoColor=white" alt="Run the 20-minute FlowMLLab Colab"></a>
   <a href="demo/README.md"><img src="https://img.shields.io/badge/Explore-blind--case_demo-146C94" alt="Explore the validated blind-case demo"></a>
-  <a href="notebooks/README.md"><img src="https://img.shields.io/badge/Open-all_17_notebooks-315A7D" alt="Open all 17 FlowMLLab notebooks"></a>
+  <a href="notebooks/README.md"><img src="https://img.shields.io/badge/Open-all_18_notebooks-315A7D" alt="Open all 18 FlowMLLab notebooks"></a>
 </p>
 
 <p align="center">
@@ -29,7 +29,7 @@ POD--DeepONet benchmark when ready.
 | Three-seed velocity error on retained cavity cases | **0.0727%–0.4455%** relative $L_2$ |
 | Direct zero-mean pressure prediction | **0.1073%–0.2506%** relative $L_2$ |
 | Repeated three-field evaluation versus a fresh recorded CPU CFD solve | **approximately $5.3\times10^3\times$ faster** |
-| Reproducible learning and research entry points | **17 Colab notebooks + 5 lecture PDFs** |
+| Reproducible learning and research entry points | **18 Colab notebooks + 5 lecture PDFs** |
 
 ### Choose a starting point
 
@@ -64,7 +64,7 @@ Start with [START_HERE.md](START_HERE.md). It gives the installation check, reco
 | `demo/` | Read-only Streamlit explorer for the retained POD--DeepONet blind cases |
 | `pyproject.toml` | Versioned package metadata, locked core dependencies, optional ML/test environments, and `flowmllab` entry point |
 | `lectures/` | Five lecture/guide PDFs covering Weeks 1–6, plus editable LaTeX/PPTX sources where available |
-| `notebooks/week01`–`week04` | Ten guided laboratories: Python, TensorFlow, validated cavity CFD, supervised learning, rarefaction, Maxwellian sampling, DSMC, scalar/field surrogates, POD-DeepONet, and an additive classical cavity-ROM study |
+| `notebooks/week01`–`week05` | Eleven guided laboratories: Python, TensorFlow, validated cavity CFD, supervised learning, rarefaction, Maxwellian sampling, DSMC, scalar/field surrogates, POD-DeepONet, a classical cavity ROM, and cylinder-wake LBM |
 | `notebooks/P0`–`P6` | Seven expanded research-project notebooks with conceptual notes, frozen decision gates, physical diagnostics, troubleshooting, deliverables, and further reading |
 | `common/` | Shared CFD, surrogate, POD, kinetic, and QA utilities |
 | `data/` | Fixed 11-case cavity reference dataset and numerical-quality table |
@@ -86,7 +86,8 @@ The recommended path is cumulative:
 - **Week 3 — Particle and kinetic descriptions:** Maxwellian sampling, macroscopic moments, sampling-error scaling, DSMC algorithmic structure, noisy labels, and averaging.
 - **Week 4 — Surrogates and operator learning:** audited CFD fields, scalar baselines, coordinate DNNs, and a restricted POD-DeepONet with complete-case selection, three-seed blind tests, Ghia validation, physical diagnostics, and measured inference cost.
 - **Week 4.1 — Classical and hyper-reduced ROM:** an additive notebook for the same cavity, with dynamic centered POD-Galerkin, nonlinear-cost diagnosis, POD-DEIM, convergence checks, frozen blind tests, and offline/online break-even accounting.
-- **Weeks 5–6 — Controlled research project:** select one track—including POD, physics-guided learning, uncertainty, rarefied flow, or learned closure—freeze the protocol, open blind cases once, document a failure/tradeoff, and produce a reproducible research summary.
+- **Week 5 — Cylinder wakes with LBM:** derive D2Q9 BGK/TRT, distinguish attached, steady-recirculating, and vortex-shedding regimes, validate forces and Strouhal number, then compare a harmonic POD baseline with a small neural POD surrogate on a completely withheld Reynolds number.
+- **Week 6 — Controlled research project:** select one track—including POD, physics-guided learning, uncertainty, rarefied flow, or learned closure—freeze the protocol, open blind cases once, document a failure/tradeoff, and produce a reproducible research summary.
 
 The full module-to-evidence mapping is in [COURSE_MAP.md](COURSE_MAP.md).
 The exact manuscript-figure ownership and reproduction commands are in [ARTICLE_FIGURE_MAP.md](ARTICLE_FIGURE_MAP.md).
@@ -102,6 +103,7 @@ flowmllab smoke --root .
 flowmllab qa --root .
 flowmllab figures all --root .
 flowmllab rom --root .               # optional Week-4.1 full regeneration
+flowmllab cylinder --root .          # verify retained Week-5 LBM evidence
 ```
 
 Install the neural-network stack with `python -m pip install -e ".[ml,test]"`.
@@ -147,6 +149,29 @@ evaluates the full nonlinear field, whereas POD--DEIM is about **9.2x** faster.
 Including offline snapshot and basis cost gives a recorded break-even near
 **8 queries**.
 Exact values and environment metadata are in `results/cavity_rom/`.
+
+## Cylinder LBM teaching module
+
+Week 5 adds an installable D2Q9 cylinder solver with transparent BGK theory and
+a more robust TRT default, Zou--He inflow, a convective outlet, periodic
+transverse boundaries, halfway bounce-back, momentum-exchange forces, gauge
+pressure, vorticity, recirculation length, and Strouhal diagnostics.  The
+retained quick sweep covers `Re = 5, 20, 40, 100, 180`, so students see attached
+flow, a steady symmetric wake, and periodic vortex shedding before using ML.
+
+Open `notebooks/week05/W5_Lattice_Boltzmann_Cylinder_Student.ipynb` for the full
+lesson.  It keeps complete Reynolds cases together, withholds `Re=100`, and
+compares a non-neural Reynolds/phase POD baseline with a two-layer neural POD
+regressor.  The design follows the predictive-question discipline of Lee & You
+(JFM 2019) without reproducing their research-scale GAN/CNN study.
+
+The committed `quick` evidence is a classroom regime check, not a
+grid-converged external-cylinder DNS result.  Its coarse stair-step boundary and
+periodic transverse domain intentionally expose numerical error; quantitative
+reference bands and an expensive refinement profile are supplied so students
+can qualify a result rather than judging contours by appearance.  Run
+`python qa/run_cylinder_lbm_validation.py --regenerate --workers 5` to regenerate
+the teaching evidence, or `flowmllab cylinder --root .` to verify it.
 
 ## POD-DeepONet validation result
 
@@ -205,7 +230,8 @@ If FlowMLLab supports your teaching or research, you can also support its contin
 
 Use [CITATION.cff](CITATION.cff) when citing the release.
 
-Version 1.1.0 is the current citable release. Its version-specific Zenodo DOI is
+Version 1.2.0 is the current source release. The latest archived release remains
+v1.1.0 until a new Zenodo record is minted; its version-specific DOI is
 [10.5281/zenodo.22126785](https://doi.org/10.5281/zenodo.22126785) and is also
 recorded in [CITATION.cff](CITATION.cff). The GitHub release and archival record
 contain only FlowMLLab. They do not include materials from any separate research

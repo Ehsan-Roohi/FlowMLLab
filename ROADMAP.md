@@ -4,7 +4,7 @@ FlowMLLab grows through small, testable changes that preserve the released
 scientific protocols. New examples are welcome, but reproducibility and physical
 validation take priority over increasing the number of methods.
 
-## Next release: v1.2
+## Released in v1.2
 
 - deploy the read-only blind-case explorer and link it directly from the README;
 - make a clean package distribution pass an isolated wheel/sdist check;
@@ -12,6 +12,15 @@ validation take priority over increasing the number of methods.
 - add contributor-reported notebook runtimes without changing the frozen results;
 - collect course and laboratory adoptions with permission; and
 - keep Python 3.10--3.12 CI, repository QA, and scientific evidence gates green.
+- add the Week-5 D2Q9 cylinder module, retained regime evidence, and a
+  leakage-safe educational POD/neural comparison.
+
+## Next release
+
+- add a faster optional backend for the qualification-resolution LBM sweep;
+- add interpolated curved-wall bounce-back and domain/grid refinement evidence;
+- add a compact four-frame one-step/rollout exercise after the Reynolds/phase
+  surrogate, while retaining the POD and persistence baselines.
 
 ## Good first contributions
 

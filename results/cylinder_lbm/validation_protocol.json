@@ -1,0 +1,36 @@
+{
+  "generated_utc": "2026-09-02T15:47:07.242400+00:00",
+  "solver_version": "0.1.0",
+  "profile": "quick",
+  "cases": [
+    5,
+    20,
+    40,
+    100,
+    180
+  ],
+  "collision": "TRT D2Q9; BGK remains an explicit teaching comparison",
+  "boundaries": {
+    "inlet": "Zou-He velocity",
+    "outlet": "convective",
+    "cylinder": "halfway bounce-back",
+    "transverse": "periodic"
+  },
+  "regime_gate": "mandatory for quick and validation profiles",
+  "reference_gate": "reported but not enforced for quick; mandatory only after grid/domain/time refinement",
+  "reference_sources": {
+    "Re20_40": "Gautier, Biau & Lamballais, Computers & Fluids 75 (2013)",
+    "Re50_180": "Qu et al., Journal of Fluids and Structures 39 (2013)"
+  },
+  "environment": {
+    "python": "3.12.13",
+    "numpy": "2.3.5",
+    "platform": "Linux-6.18.35-x86_64-with-glibc2.39"
+  },
+  "limitations": [
+    "The retained quick profile is qualitative and is not grid-converged DNS evidence.",
+    "Periodic transverse boundaries represent a weakly interacting cylinder array.",
+    "Stair-step halfway bounce-back biases drag and the effective diameter on coarse grids.",
+    "Re=180 is a two-dimensional teaching solution and does not model Mode A or B."
+  ]
+}

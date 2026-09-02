@@ -30,11 +30,16 @@ REQUIRED = [
     "flowmllab/cli.py",
     "flowmllab/core.py",
     "flowmllab/cavity_rom.py",
+    "flowmllab/cylinder_lbm.py",
+    "flowmllab/cylinder_ml.py",
     "tests/test_core.py",
     "tests/test_cavity_rom.py",
+    "tests/test_cylinder_lbm.py",
+    "tests/test_cylinder_ml.py",
     "qa/build_week04_1_rom_notebook.py",
     "qa/add_colab_entrypoints.py",
     "qa/run_cavity_rom_validation.py",
+    "qa/run_cylinder_lbm_validation.py",
     "data/cavity_data.npz",
     "data/case_quality.csv",
     "common/w4utils.py",
@@ -46,6 +51,8 @@ REQUIRED = [
     "ARTICLE_FIGURE_MAP.md",
     "notebooks/week04/W4_Lab3_DeepONet_Cavity_Student.ipynb",
     "notebooks/week04/W4_1_Classical_ROM_Cavity.ipynb",
+    "notebooks/week05/W5_Lattice_Boltzmann_Cylinder_Student.ipynb",
+    "notebooks/week05/make_week5_notebook.py",
     "notebooks/P0_Project_Setup.ipynb",
     "notebooks/P1_Re_Generalization.ipynb",
     "notebooks/P2_Physics_Guided_DNN.ipynb",
@@ -76,6 +83,18 @@ REQUIRED = [
     "results/cavity_rom/validation_summary.json",
     "results/cavity_rom/cavity_rom_model.npz",
     "results/cavity_rom/cavity_rom_validation.png",
+    "results/cylinder_lbm/regime_metrics.csv",
+    "results/cylinder_lbm/README.md",
+    "results/cylinder_lbm/reference_ranges.csv",
+    "results/cylinder_lbm/validation_protocol.json",
+    "results/cylinder_lbm/validation_summary.json",
+    "results/cylinder_lbm/cylinder_lbm_regimes.png",
+    "results/cylinder_lbm/cylinder_lbm_regimes.pdf",
+    "results/cylinder_lbm/re5_teaching_case.npz",
+    "results/cylinder_lbm/re20_teaching_case.npz",
+    "results/cylinder_lbm/re40_teaching_case.npz",
+    "results/cylinder_lbm/re100_teaching_case.npz",
+    "results/cylinder_lbm/re180_teaching_case.npz",
     "results/article_validation/re1000_n65.npz",
     "results/article_validation/re1000_n129.npz",
     "results/article_validation/botella_pressure_reference.csv",
@@ -154,7 +173,7 @@ def validate_notebooks() -> tuple[int, int]:
                 for cell in cells
             ), f"missing learner-edition marker: {path}"
         count += 1
-    assert count == 17, f"expected 17 notebooks, found {count}"
+    assert count == 18, f"expected 18 notebooks, found {count}"
     return count, code_cells
 
 
@@ -332,6 +351,50 @@ def validate_cavity_rom_results() -> dict[str, float]:
     }
 
 
+def validate_cylinder_lbm_results() -> dict[str, float]:
+    """Recompute the retained Week-5 stability and regime evidence gates."""
+    result_dir = ROOT / "results" / "cylinder_lbm"
+    metrics = pd.read_csv(result_dir / "regime_metrics.csv")
+    assert metrics["Re"].astype(int).tolist() == [5, 20, 40, 100, 180]
+    assert metrics["fidelity"].eq("quick").all()
+    assert metrics["stability_pass"].astype(bool).all()
+    assert metrics["regime_pass"].astype(bool).all()
+    assert float(metrics["Mach"].max()) < 0.1
+    assert float(metrics["density_drift"].max()) < 0.01
+
+    steady = metrics[metrics["Re"].isin([5, 20, 40])]
+    shedding = metrics[metrics["Re"].isin([100, 180])]
+    assert steady["observed_regime"].tolist() == [
+        "attached", "steady recirculating", "steady recirculating"
+    ]
+    assert shedding["observed_regime"].eq("periodic shedding").all()
+    assert shedding["St"].between(0.14, 0.22).all()
+
+    for reynolds in metrics["Re"].astype(int):
+        with np.load(result_dir / f"re{reynolds}_teaching_case.npz", allow_pickle=False) as case:
+            for field in ("rho", "u", "v", "p", "vorticity"):
+                assert np.isfinite(case[field]).all(), (reynolds, field)
+            solid = case["solid"].astype(bool)
+            assert np.all(case["u"][solid] == 0.0)
+            assert np.all(case["v"][solid] == 0.0)
+
+    protocol = json.loads((result_dir / "validation_protocol.json").read_text())
+    assert protocol["profile"] == "quick"
+    assert "not grid-converged" in " ".join(protocol["limitations"])
+    notebook = json.loads(
+        (ROOT / "notebooks" / "week05" / "W5_Lattice_Boltzmann_Cylinder_Student.ipynb").read_text()
+    )
+    source = "\n".join("".join(cell.get("source", [])) for cell in notebook["cells"])
+    assert "Stop: blind-test gate" in source
+    assert "test_reynolds=BLIND_RE" in source
+    assert "MLPRegressor" in source and "harmonic-ridge POD" in source
+    return {
+        "max_density_drift": float(metrics["density_drift"].max()),
+        "Re100_St": float(metrics.loc[metrics["Re"] == 100, "St"].iloc[0]),
+        "Re180_St": float(metrics.loc[metrics["Re"] == 180, "St"].iloc[0]),
+    }
+
+
 def validate_pdfs() -> int:
     pdfs = sorted((ROOT / "lectures").glob("*.pdf"))
     assert len(pdfs) == 5
@@ -352,6 +415,7 @@ def main() -> None:
     metrics = smoke_common_baseline()
     deeponet_metrics = validate_pod_deeponet_results()
     cavity_rom_metrics = validate_cavity_rom_results()
+    cylinder_metrics = validate_cylinder_lbm_results()
     article_metrics = validate_article_alignment()
     pdfs = validate_pdfs()
     python_files = sorted(ROOT.rglob("*.py"))
@@ -366,6 +430,7 @@ def main() -> None:
     print("Re=275 interpolation metrics:", json.dumps(metrics, sort_keys=True))
     print("POD-DeepONet release metrics:", json.dumps(deeponet_metrics, sort_keys=True))
     print("Cavity ROM release metrics:", json.dumps(cavity_rom_metrics, sort_keys=True))
+    print("Cylinder LBM release metrics:", json.dumps(cylinder_metrics, sort_keys=True))
     print("Article-aligned validation metrics:", json.dumps(article_metrics, sort_keys=True))
 
 

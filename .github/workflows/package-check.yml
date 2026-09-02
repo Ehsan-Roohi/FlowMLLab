@@ -5,7 +5,12 @@ on:
   pull_request:
     paths:
       - "flowmllab/**"
+      - "tests/**"
+      - "qa/**"
+      - "notebooks/**"
+      - "results/cylinder_lbm/**"
       - "pyproject.toml"
+      - "CITATION.cff"
       - "README.md"
       - ".github/workflows/package-check.yml"
 

@@ -13,6 +13,7 @@ from .core import (
     generate_validation_figures,
     run_repository_qa,
     validate_core_assets,
+    verify_cylinder_lbm_validation,
 )
 
 
@@ -38,6 +39,11 @@ def build_parser() -> argparse.ArgumentParser:
         "rom", help="regenerate the validated Week-4.1 cavity ROM evidence"
     )
     rom.add_argument("--root", type=Path, help="FlowMLLab checkout root")
+
+    cylinder = subparsers.add_parser(
+        "cylinder", help="verify retained Week-5 cylinder LBM regime evidence"
+    )
+    cylinder.add_argument("--root", type=Path, help="FlowMLLab checkout root")
     return parser
 
 
@@ -53,6 +59,8 @@ def main(argv: list[str] | None = None) -> int:
             return generate_validation_figures(args.target, args.root)
         if args.command == "rom":
             return generate_cavity_rom_validation(args.root)
+        if args.command == "cylinder":
+            return verify_cylinder_lbm_validation(args.root)
     except ValidationError as error:
         print(f"FlowMLLab validation failed: {error}")
         return 2

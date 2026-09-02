@@ -18,6 +18,7 @@ only for notebooks that explicitly require CUDA.
 | Week 4 | Scalar and field surrogates | [Open in Colab](https://colab.research.google.com/github/Ehsan-Roohi/FlowMLLab/blob/main/notebooks/week04/W4_Lab2_Scalar_and_Field_Surrogates_Student.ipynb) |
 | Week 4 | POD-DeepONet cavity | [Open in Colab](https://colab.research.google.com/github/Ehsan-Roohi/FlowMLLab/blob/main/notebooks/week04/W4_Lab3_DeepONet_Cavity_Student.ipynb) |
 | Week 4.1 | Classical POD-Galerkin/POD-DEIM | [Open in Colab](https://colab.research.google.com/github/Ehsan-Roohi/FlowMLLab/blob/main/notebooks/week04/W4_1_Classical_ROM_Cavity.ipynb) |
+| Week 5 | Lattice-Boltzmann cylinder wakes | [Open in Colab](https://colab.research.google.com/github/Ehsan-Roohi/FlowMLLab/blob/main/notebooks/week05/W5_Lattice_Boltzmann_Cylinder_Student.ipynb) |
 | Project | P0 setup and data audit | [Open in Colab](https://colab.research.google.com/github/Ehsan-Roohi/FlowMLLab/blob/main/notebooks/P0_Project_Setup.ipynb) |
 | Project | P1 Reynolds-number generalization | [Open in Colab](https://colab.research.google.com/github/Ehsan-Roohi/FlowMLLab/blob/main/notebooks/P1_Re_Generalization.ipynb) |
 | Project | P2 physics-guided DNN | [Open in Colab](https://colab.research.google.com/github/Ehsan-Roohi/FlowMLLab/blob/main/notebooks/P2_Physics_Guided_DNN.ipynb) |
@@ -32,6 +33,12 @@ only for notebooks that explicitly require CUDA.
 - `week02/`: supervised-learning foundations and a rarefied-flow surrogate.
 - `week03/`: Maxwellian sampling/noise and a mini DSMC cavity.
 - `week04/`: CFD data production, scalar/field surrogates, and a 27-cell POD-DeepONet laboratory with development-only selection, a visible blind-test gate, three-seed uncertainty, Ghia checks, physical diagnostics, and timing.
+- `week05/`: D2Q9 BGK/TRT cylinder flow, force and Strouhal validation, Reynolds-regime classification, and a complete-Re holdout comparison between harmonic POD and a small neural POD model.
+
+The Week-5 notebook labels the retained low-cost run as qualitative.  It links
+every field plot to force, density, Mach-number, relaxation-time, blockage, and
+reference diagnostics, and provides a separate qualification/refinement path.
+Machine-readable retained evidence is in `../results/cylinder_lbm/`.
 
 The additive `week04/W4_1_Classical_ROM_Cavity.ipynb` lab comes after the
 original Week-4 sequence without modifying it.  It implements dynamic centered
