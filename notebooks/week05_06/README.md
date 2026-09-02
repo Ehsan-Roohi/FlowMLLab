@@ -19,4 +19,4 @@ The available track notebooks are:
 - `P6_FP_Cavity_Closure.ipynb`
 
 The authoritative lecture and project map is
-`../../lectures/weeks05_06_project_guide.pdf`.
+`../../lectures/week05_06_project_guide.pdf`.

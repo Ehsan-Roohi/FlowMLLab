@@ -69,7 +69,7 @@ REQUIRED = [
     "lectures/week02_supervised_learning_rarefaction.pdf",
     "lectures/week03_kinetic_dsmc.pdf",
     "lectures/week04_cavity_surrogates_deeponet.pdf",
-    "lectures/weeks05_06_project_guide.pdf",
+    "lectures/week05_06_project_guide.pdf",
     "lectures/week07_cylinder_lbm_neural_surrogate.pdf",
     "lectures/source/week07_cylinder_lbm_neural_surrogate.tex",
     "references/README.md",
