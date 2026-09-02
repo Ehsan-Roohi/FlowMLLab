@@ -24,12 +24,10 @@ four-frame multi-scale CNN predicts the completely unseen `Re=105` case without
 the downstream vortex diffusion observed in the archived POD baseline.
 
 <p align="center">
-  <a href="results/cylinder_cnn/re105_lbm_vs_multiscale_cnn.mp4">
-    <img src="results/cylinder_cnn/re105_lbm_vs_multiscale_cnn_poster.png" alt="Blind Re=105 comparison of circular-cylinder LBM vorticity and the four-frame multi-scale CNN prediction" width="100%">
-  </a>
+  <img src="results/cylinder_cnn/re105_lbm_vs_multiscale_cnn.webp" alt="Animated blind Re=105 comparison of circular-cylinder LBM vorticity and the four-frame multi-scale CNN prediction" width="100%">
 </p>
 
-<p align="center"><em>Click the comparison to play the full LBM-versus-CNN video. Blind vorticity relative L2 error: 0.815%; mean downstream profile error at 2D, 4D, 6D, and 8D: 0.804%.</em></p>
+<p align="center"><em>The comparison plays automatically and loops. Blind vorticity relative L2 error: 0.815%; mean downstream profile error at 2D, 4D, 6D, and 8D: 0.804%.</em><br><a href="results/cylinder_cnn/re105_lbm_vs_multiscale_cnn.mp4">Open the full-resolution MP4</a></p>
 
 ### Cavity benchmark
 

@@ -37,6 +37,10 @@ The video is a teacher-forced one-step forecast: each target uses four previous
 true LBM fields. It is not an autonomous rollout, and the teaching-grid LBM is
 not claimed to be grid-converged DNS.
 
+`re105_lbm_vs_multiscale_cnn.webp` is the looping, README-safe preview of the
+retained full-resolution MP4. It is generated at 14 frames per second and
+1400-pixel width so the repository front page animates without a click.
+
 ## Reproduce
 
 ```bash
