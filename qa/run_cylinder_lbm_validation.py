@@ -135,11 +135,18 @@ def _save_case(result: dict[str, Any], directory: Path) -> None:
     reynolds = int(result["metadata"]["reynolds"])
     np.savez_compressed(
         directory / f"re{reynolds}_teaching_case.npz",
-        x=result["x"], y=result["y"], solid=result["solid"], rho=result["rho"],
-        u=result["u"], v=result["v"], p=result["p"], vorticity=result["vorticity"],
-        time=result["time"], drag_coefficient=result["drag_coefficient"],
-        lift_coefficient=result["lift_coefficient"],
-        mean_density_ratio=result["mean_density_ratio"],
+        x=np.asarray(result["x"], dtype=np.float32),
+        y=np.asarray(result["y"], dtype=np.float32),
+        solid=np.asarray(result["solid"], dtype=bool),
+        rho=np.asarray(result["rho"], dtype=np.float32),
+        u=np.asarray(result["u"], dtype=np.float32),
+        v=np.asarray(result["v"], dtype=np.float32),
+        p=np.asarray(result["p"], dtype=np.float32),
+        vorticity=np.asarray(result["vorticity"], dtype=np.float32),
+        time=np.asarray(result["time"], dtype=np.float32),
+        drag_coefficient=np.asarray(result["drag_coefficient"], dtype=np.float32),
+        lift_coefficient=np.asarray(result["lift_coefficient"], dtype=np.float32),
+        mean_density_ratio=np.asarray(result["mean_density_ratio"], dtype=np.float32),
         metadata=json.dumps(result["metadata"], sort_keys=True),
     )
 
