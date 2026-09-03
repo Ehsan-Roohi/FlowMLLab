@@ -441,6 +441,10 @@ def validate_cylinder_lbm_results() -> dict[str, float]:
     assert "re105_lbm_vs_multiscale_cnn.mp4" in source
     assert "cubic temporal extrapolation" in source
     assert "50-step recursive audit" in source
+    assert "Phase-stable correction: 277 autonomous future fields" in source
+    assert "fresh_test_reynolds" in source
+    assert "selected_harmonics" in source
+    assert "re095_phase_stable_lbm_vs_decoder.mp4" in source
 
     blind_metrics = json.loads(
         (ROOT / "results" / "cylinder_ml" / "blind_re100_metrics.json").read_text()
@@ -507,6 +511,7 @@ def validate_cylinder_lbm_results() -> dict[str, float]:
     assert phase_protocol["retained_test_reynolds"] == 105
     assert phase_protocol["initial_true_frames"] == 4
     assert phase_protocol["future_cfd_inputs"] == 0
+    assert phase_metrics["selected_harmonics"] == 6
     assert phase_metrics["all_gates_pass"]
     for split_name in ("validation", "fresh_test", "retained_test"):
         split = phase_metrics[split_name]
