@@ -18,6 +18,11 @@ class FlowMLLabCoreTests(unittest.TestCase):
     def test_version(self) -> None:
         self.assertEqual(flowmllab.__version__, "1.2.0")
 
+    def test_package_metadata_supports_colab_python_313(self) -> None:
+        metadata = (ROOT / "pyproject.toml").read_text(encoding="utf-8")
+        self.assertIn('requires-python = ">=3.10,<3.14"', metadata)
+        self.assertIn('"Programming Language :: Python :: 3.13"', metadata)
+
     def test_core_asset_contract(self) -> None:
         report = flowmllab.validate_core_assets(ROOT)
         self.assertEqual(report["status"], "pass")

@@ -219,6 +219,13 @@ def digest(path: Path) -> str:
     return h.hexdigest()
 
 
+def validate_package_metadata() -> None:
+    """Keep the editable Colab install compatible with the active runtime."""
+    metadata = (ROOT / "pyproject.toml").read_text(encoding="utf-8")
+    assert 'requires-python = ">=3.10,<3.14"' in metadata
+    assert '"Programming Language :: Python :: 3.13"' in metadata
+
+
 def parse_notebook_code(source: str, label: str) -> None:
     kept = []
     for line in source.splitlines():
@@ -843,6 +850,7 @@ def validate_pdfs() -> int:
 def main() -> None:
     missing = [name for name in REQUIRED if not (ROOT / name).is_file()]
     assert not missing, "missing release files: " + ", ".join(missing)
+    validate_package_metadata()
     actual = digest(ROOT / "data" / "cavity_data.npz")
     assert actual == EXPECTED_DATA_SHA256, (actual, EXPECTED_DATA_SHA256)
     notebooks, code_cells = validate_notebooks()

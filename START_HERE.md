@@ -22,7 +22,8 @@ fresh Colab runtime does not require manual file uploads.
 
 ## 2. Create an environment
 
-Python 3.12 is the compatibility target used for the release.
+Python 3.12 is the reference reproducibility target. The package and Colab
+entry points support Python 3.10 through 3.13.
 
 ```bash
 python -m venv .venv
