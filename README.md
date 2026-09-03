@@ -6,8 +6,8 @@
 
 ## Validated CFD to scientific ML—from first Colab to reproducible benchmark
 
-Start with a physics-checked circular-cylinder teaching wake, compare LBM with a
-retained held-out neural prediction, and verify the evidence chain. Continue through the 20-minute cavity
+Start with a physics-checked circular-cylinder teaching wake, compare LBM with an
+autonomous phase-stable surrogate on a fresh unseen Reynolds case, and verify the evidence chain. Continue through the 20-minute cavity
 exercise to physics-checked POD--DeepONet benchmarks when ready.
 
 <p align="center">
@@ -19,15 +19,15 @@ exercise to physics-checked POD--DeepONet benchmarks when ready.
 ## Featured: circular-cylinder vortex shedding
 
 The optional Week 7 extension advances from the steady cavity to an unsteady circular-cylinder
-wake. A D2Q9 lattice-Boltzmann solver generates the reference fields, and a
-four-frame multi-scale CNN predicts the retained held-out `Re=105` interpolation case without
-the downstream vortex diffusion observed in the archived POD baseline.
+wake. A D2Q9 lattice-Boltzmann solver generates the reference fields. A phase-stable
+learned decoder is initialized from four true fields and then predicts all 277 future
+fields of the fresh unseen `Re=95` case with no future CFD input.
 
 <p align="center">
-  <img src="results/cylinder_cnn/re105_lbm_vs_multiscale_cnn.webp" alt="Animated retained Re=105 comparison of circular-cylinder LBM vorticity and the four-frame multi-scale CNN one-step prediction" width="100%">
+  <img src="results/cylinder_phase/re095_phase_stable_lbm_vs_decoder.webp" alt="Animated fresh Re=95 comparison of circular-cylinder LBM vorticity and an autonomous phase-stable learned decoder" width="100%">
 </p>
 
-<p align="center"><em>The comparison plays automatically and loops. One-step vorticity relative L2 error: 0.815% versus 1.053% for matched cubic extrapolation; mean downstream profile error: 0.804% versus 1.581%.</em><br><a href="results/cylinder_cnn/re105_lbm_vs_multiscale_cnn.mp4">Open the full-resolution MP4</a></p>
+<p align="center"><em>The comparison plays automatically and loops. Across 277 autonomous future frames: 4.281% global vorticity relative L2 error, 5.194% worst-frame error, and 0.264% Strouhal error.</em><br><a href="results/cylinder_phase/re095_phase_stable_lbm_vs_decoder.mp4">Open the full-resolution MP4</a> · <a href="results/cylinder_phase/phase_stable_validation.png">Inspect validation and spectra</a></p>
 
 ### Cavity benchmark
 
@@ -41,6 +41,8 @@ the downstream vortex diffusion observed in the archived POD baseline.
 
 | Verified result | Retained evidence |
 | --- | ---: |
+| Fresh unseen `Re=95`, 277-frame autonomous vorticity error | **4.281%** global; **5.194%** worst frame |
+| Fresh unseen `Re=95` Strouhal error | **0.264%** |
 | Retained `Re=105` one-step cylinder vorticity error | **0.815%** relative $L_2$; cubic baseline **1.053%** |
 | Mean cylinder-wake profile error at `2D,4D,6D,8D` | **0.804%** relative $L_2$ |
 | Three-seed velocity error on retained cavity cases | **0.0727%–0.4455%** relative $L_2$ |
@@ -52,7 +54,7 @@ the downstream vortex diffusion observed in the archived POD baseline.
 
 | Your goal | Start here |
 | --- | --- |
-| See the featured result immediately | [Play the retained `Re=105` one-step cylinder video](results/cylinder_cnn/re105_lbm_vs_multiscale_cnn.mp4) |
+| See the featured result immediately | [Play the fresh `Re=95` autonomous cylinder video](results/cylinder_phase/re095_phase_stable_lbm_vs_decoder.mp4) |
 | Complete the first evidence chain | [Run the 20-minute Colab](https://colab.research.google.com/github/Ehsan-Roohi/FlowMLLab/blob/main/notebooks/week05_06/P0_Project_Setup.ipynb) |
 | Reproduce the software release | Follow [START_HERE.md](START_HERE.md), then run `flowmllab qa --root .` |
 | Adopt material in a course or workshop | Use [COURSE_MAP.md](COURSE_MAP.md) and the [notebook launcher](notebooks/README.md) |
@@ -85,7 +87,7 @@ Start with [START_HERE.md](START_HERE.md). It gives the installation check, reco
 | `notebooks/week05_06` | The original combined Weeks 5–6 project pack: seven expanded notebooks (`P0`–`P6`) with PINNs/physics-guided learning, POD, uncertainty, rarefied flow, FP closure, frozen decision gates, and final-project evidence |
 | `notebooks/week07` | The Week-7 cylinder-wake LBM and neural-surrogate extension |
 | `common/` | Shared CFD, surrogate, POD, kinetic, and QA utilities |
-| `data/` | Fixed 11-case cavity reference dataset and numerical-quality table |
+| `data/` | Fixed cavity reference data plus the documented, checksummed cylinder-CFD release contract |
 | `results/article_validation/` | Re=1000 pressure-recovery solutions and independent Botella--Peyret reference data |
 | `results/dsmc_validation/` | Four HS--NTC wall-pressure solutions and Mohammadzadeh Fig. 3 DSMC markers |
 | `results/article_figures/` | Paper-ready PNG/PDF validation figures and machine-readable error summaries |
@@ -93,6 +95,7 @@ Start with [START_HERE.md](START_HERE.md). It gives the installation check, reco
 | `results/cavity_rom/` | FOM reproduction and refinement, leakage-free POD/DEIM selection, blind trajectories, portable model, timing, break-even count, and summary figure |
 | `results/cylinder_ml/` | archived Re=100 phase/POD failure baseline and its diagnostics |
 | `results/cylinder_cnn/` | four-frame CNN validation/retained-interpolation video, strong polynomial baselines, one-step and rollout audits, frozen weights, and regeneration script |
+| `results/cylinder_phase/` | autonomous phase-stable validation, fresh-test metrics, Strouhal spectra, and LBM comparison video |
 | `advanced/fp_closure/` | Bounded educational workflow for exact and learned Fokker–Planck closure testing |
 | `references/` | Annotated reading guide and BibTeX database |
 | `qa/` | Release validator for notebook syntax, required assets, and reproducibility anchors |
@@ -212,9 +215,23 @@ frames, not an autonomous rollout. A separate recursive audit is retained: the
 CNN mean vorticity error is **8.814%** at 10 steps, crosses the declared 15%
 gate at 20 steps (**20.222%**), and reaches **90.724%** at 50 steps. The
 one-step result is therefore claimed as low-error; long autonomous rollout is
-explicitly a failed gate and an open research task.
+explicitly a failed gate for that architecture.
 
 [Inspect the retained rollout audit](results/cylinder_cnn/re105_retained_rollout.png).
+
+The long-horizon correction is a separate phase-stable learned decoder, not a
+renaming of the one-step CNN. Harmonic order is selected only on complete-case
+`Re=100` validation. After freezing that choice, `Re=95` is opened once as the
+fresh test and `Re=105` remains a retained historical test. Starting from four
+true fields, the decoder produces 277 future fields with zero future CFD inputs.
+All declared gates pass: global/worst-frame vorticity errors are **6.037%/7.959%**
+on validation, **4.281%/5.194%** on the fresh test, and **4.625%/6.240%** on the
+retained test; Strouhal errors are **0.343%**, **0.264%**, and **0.253%**.
+
+[Inspect the phase-stable validation figure](results/cylinder_phase/phase_stable_validation.png),
+[play the fresh-test comparison](results/cylinder_phase/re095_phase_stable_lbm_vs_decoder.mp4),
+or download the checksummed CFD inputs from the
+[versioned `cylinder-cfd-v1` release](https://github.com/Ehsan-Roohi/FlowMLLab/releases/tag/cylinder-cfd-v1).
 
 The committed `quick` evidence is a classroom regime check, not a
 grid-converged external-cylinder DNS result.  Its finite circle resolution and
