@@ -33,17 +33,20 @@ REQUIRED = [
     "flowmllab/cylinder_lbm.py",
     "flowmllab/cylinder_ml.py",
     "flowmllab/cylinder_cnn.py",
+    "flowmllab/cylinder_phase.py",
     "tests/test_core.py",
     "tests/test_cavity_rom.py",
     "tests/test_cylinder_lbm.py",
     "tests/test_cylinder_ml.py",
     "tests/test_cylinder_cnn.py",
+    "tests/test_cylinder_phase.py",
     "qa/build_week04_1_rom_notebook.py",
     "qa/add_colab_entrypoints.py",
     "qa/run_cavity_rom_validation.py",
     "qa/run_cylinder_lbm_validation.py",
     "qa/run_cylinder_blind_video.py",
     "qa/run_cylinder_multiscale_cnn.py",
+    "qa/run_cylinder_phase_stable.py",
     "data/cavity_data.npz",
     "data/case_quality.csv",
     "common/w4utils.py",
@@ -110,6 +113,12 @@ REQUIRED = [
     "results/cylinder_cnn/re105_retained_rollout.png",
     "results/cylinder_cnn/re105_lbm_vs_multiscale_cnn.mp4",
     "results/cylinder_cnn/re105_lbm_vs_multiscale_cnn_poster.png",
+    "results/cylinder_phase/README.md",
+    "results/cylinder_phase/phase_stable_metrics.json",
+    "results/cylinder_phase/phase_stable_validation.png",
+    "results/cylinder_phase/re095_phase_stable_lbm_vs_decoder.mp4",
+    "results/cylinder_phase/re095_phase_stable_lbm_vs_decoder.webp",
+    "results/cylinder_phase/re095_phase_stable_poster.png",
     "results/cylinder_lbm/cylinder_lbm_regimes.png",
     "results/cylinder_lbm/cylinder_lbm_regimes.pdf",
     "results/cylinder_lbm/re5_teaching_case.npz",
@@ -488,6 +497,25 @@ def validate_cylinder_lbm_results() -> dict[str, float]:
     assert cnn_metrics["blind"]["reynolds"] == 105
     assert cnn_metrics["blind"]["models"]["prediction"]["vorticity_relative_l2"] < 0.02
     assert (ROOT / "results" / "cylinder_cnn" / "re105_lbm_vs_multiscale_cnn.mp4").stat().st_size > 1_000_000
+    phase_metrics = json.loads(
+        (ROOT / "results" / "cylinder_phase" / "phase_stable_metrics.json").read_text()
+    )
+    phase_protocol = phase_metrics["protocol"]
+    assert phase_protocol["development_reynolds"] == [90, 110, 120, 140]
+    assert phase_protocol["validation_reynolds"] == 100
+    assert phase_protocol["fresh_test_reynolds"] == 95
+    assert phase_protocol["retained_test_reynolds"] == 105
+    assert phase_protocol["initial_true_frames"] == 4
+    assert phase_protocol["future_cfd_inputs"] == 0
+    assert phase_metrics["all_gates_pass"]
+    for split_name in ("validation", "fresh_test", "retained_test"):
+        split = phase_metrics[split_name]
+        assert split["future_frames"] == 277
+        assert split["vorticity_global_relative_l2"] < 0.15
+        assert split["vorticity_max_frame_relative_l2"] < 0.15
+        assert split["strouhal_relative_error"] < 0.02
+        assert split["passes"]
+    assert (ROOT / "results" / "cylinder_phase" / "re095_phase_stable_lbm_vs_decoder.mp4").stat().st_size > 1_000_000
     return {
         "max_density_drift": float(metrics["density_drift"].max()),
         "Re100_St": float(metrics.loc[metrics["Re"] == 100, "St"].iloc[0]),
@@ -496,6 +524,12 @@ def validate_cylinder_lbm_results() -> dict[str, float]:
         "blind_Re100_neural_vorticity_error": float(neural["vorticity_relative_l2"]),
         "retained_Re105_CNN_vorticity_error": float(
             cnn_metrics["blind"]["models"]["prediction"]["vorticity_relative_l2"]
+        ),
+        "fresh_Re95_phase_vorticity_error": float(
+            phase_metrics["fresh_test"]["vorticity_global_relative_l2"]
+        ),
+        "fresh_Re95_phase_strouhal_error": float(
+            phase_metrics["fresh_test"]["strouhal_relative_error"]
         ),
     }
 
