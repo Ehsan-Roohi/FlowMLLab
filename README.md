@@ -46,7 +46,7 @@ positive-order asymptotic/GCI sequence.
 
 | Audited result | Retained evidence / decision |
 | --- | ---: |
-| Independent `Re=100` LBM grid study | `D/dx=12,18,27`; all statistical gates **PASS**; formal asymptotic/GCI gate **FAIL** |
+| ML-independent `Re=100` LBM grid study | `D/dx=12,18,27`; all statistical gates **PASS**; formal asymptotic/GCI gate **FAIL** |
 | Fine-pair CFD sensitivity, `D/dx=18→27` | $\overline C_D$: **2.142%**; $St$: **0.512%**; $L_r/D$: **1.361%** — all declared practical limits pass |
 | Finest CFD versus independent 2-D reference bands | $\overline C_D$ **10.335% above** the upper bound; $St$ **6.908% above** the upper bound; $L_r/D$ **inside** its band |
 | Fresh unseen `Re=95`, 277-frame autonomous vorticity error versus educational LBM labels | **4.281%** global; **5.194%** worst frame |
