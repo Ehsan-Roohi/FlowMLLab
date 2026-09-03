@@ -35,6 +35,7 @@ REQUIRED = [
     "flowmllab/cylinder_cnn.py",
     "flowmllab/cylinder_phase.py",
     "flowmllab/gas_dynamics.py",
+    "flowmllab/mahdavi_deeponet.py",
     "tests/test_core.py",
     "tests/test_cavity_rom.py",
     "tests/test_cylinder_lbm.py",
@@ -42,6 +43,7 @@ REQUIRED = [
     "tests/test_cylinder_cnn.py",
     "tests/test_cylinder_phase.py",
     "tests/test_gas_dynamics.py",
+    "tests/test_mahdavi_deeponet.py",
     "qa/build_week04_1_rom_notebook.py",
     "qa/add_colab_entrypoints.py",
     "qa/run_cavity_rom_validation.py",
@@ -51,7 +53,9 @@ REQUIRED = [
     "qa/run_cylinder_multiscale_cnn.py",
     "qa/run_cylinder_phase_stable.py",
     "qa/build_week8_gas_dynamics_figures.py",
+    "qa/build_week9_mahdavi_deeponet_data.py",
     ".github/workflows/week8-materials.yml",
+    ".github/workflows/week9-materials.yml",
     "data/cavity_data.npz",
     "data/case_quality.csv",
     "common/w4utils.py",
@@ -69,6 +73,10 @@ REQUIRED = [
     "notebooks/week08/W8_Lab2_Gas_Dynamics_SciML_Evidence_Student.ipynb",
     "notebooks/week08/make_week8_notebooks.py",
     "notebooks/week08/README.md",
+    "notebooks/week09/W9_Lab1_Microstep_Zonal_DeepONet_Student.ipynb",
+    "notebooks/week09/W9_Lab2_Shock_Aligned_Nozzle_DeepONet_Student.ipynb",
+    "notebooks/week09/make_week9_notebooks.py",
+    "notebooks/week09/README.md",
     "notebooks/week05_06/P0_Project_Setup.ipynb",
     "notebooks/week05_06/P1_Re_Generalization.ipynb",
     "notebooks/week05_06/P2_Physics_Guided_DNN.ipynb",
@@ -159,6 +167,14 @@ REQUIRED = [
     "results/gas_dynamics_week8/week8_exact_physics.pdf",
     "results/gas_dynamics_week8/week8_model_evidence.png",
     "results/gas_dynamics_week8/week8_model_evidence.pdf",
+    "results/mahdavi_deeponet/README.md",
+    "results/mahdavi_deeponet/DATA_LICENSE.md",
+    "results/mahdavi_deeponet/provenance.json",
+    "results/mahdavi_deeponet/nozzle_centerline_15cases.npz",
+    "results/mahdavi_deeponet/step_paper_evidence.csv",
+    "results/mahdavi_deeponet/nozzle_paper_field_errors.csv",
+    "results/mahdavi_deeponet/nozzle_hard_case_baselines.csv",
+    "results/mahdavi_deeponet/nozzle_pod_reference.csv",
     "results/article_validation/re1000_n65.npz",
     "results/article_validation/re1000_n129.npz",
     "results/article_validation/botella_pressure_reference.csv",
@@ -243,7 +259,7 @@ def validate_notebooks() -> tuple[int, int]:
                 for cell in cells
             ), f"missing learner-edition marker: {path}"
         count += 1
-    assert count == 20, f"expected 20 notebooks, found {count}"
+    assert count == 22, f"expected 22 notebooks, found {count}"
     return count, code_cells
 
 
@@ -671,6 +687,60 @@ def validate_week8_gas_dynamics_results() -> dict[str, object]:
     return report
 
 
+def validate_week9_mahdavi_deeponet_results() -> dict[str, object]:
+    """Verify the public DSMC derivative, paper tables, and claim boundaries."""
+    sys.path.insert(0, str(ROOT))
+    from flowmllab.mahdavi_deeponet import validate_week9_evidence  # noqa: PLC0415
+
+    report = validate_week9_evidence(ROOT)
+    result_dir = ROOT / "results" / "mahdavi_deeponet"
+
+    step = pd.read_csv(result_dir / "step_paper_evidence.csv")
+    step_values = step.pivot(
+        index="objective", columns="scope", values="reported_error_percent"
+    )
+    assert abs(float(step_values.loc["MSE", "full_domain"]) - 2.1739) < 1e-10
+    assert abs(float(step_values.loc["MSE", "recirculation_zone"]) - 14.6135) < 1e-10
+    assert abs(float(step_values.loc["Zonal", "full_domain"]) - 2.2254) < 1e-10
+    assert abs(float(step_values.loc["Zonal", "recirculation_zone"]) - 11.9413) < 1e-10
+
+    field_errors = pd.read_csv(result_dir / "nozzle_paper_field_errors.csv")
+    assert sorted(field_errors["held_out_pressure_kpa"].unique().tolist()) == [16, 25, 30]
+    assert sorted(field_errors["field"].unique().tolist()) == [
+        "Mach", "U", "V", "density", "pressure", "temperature"
+    ]
+    assert len(field_errors) == 18
+
+    baselines = pd.read_csv(result_dir / "nozzle_hard_case_baselines.csv")
+    aligned = baselines[baselines["model"] == "Shock-aligned Fusion-DeepONet"].iloc[0]
+    assert float(aligned["shock_window_error_percent"]) == 4.51
+    assert float(aligned["shock_location_error_um"]) == 0.0
+    assert baselines["evidence_status"].eq("retained article evidence").all()
+
+    provenance = json.loads((result_dir / "provenance.json").read_text())
+    assert provenance["source_commit"] == "e1b234ba499408d3b6224633972f939f3b2301d6"
+    assert len(provenance["source_files_sha256"]) == 15
+    assert "not the article's DSMC" in provenance["claim_boundary"]["microstep_teaching_demo"]
+    assert "not the paper's trained full" in provenance["claim_boundary"]["micro_nozzle_teaching_model"]
+
+    lab1 = json.loads(
+        (ROOT / "notebooks/week09/W9_Lab1_Microstep_Zonal_DeepONet_Student.ipynb").read_text()
+    )
+    lab2 = json.loads(
+        (ROOT / "notebooks/week09/W9_Lab2_Shock_Aligned_Nozzle_DeepONet_Student.ipynb").read_text()
+    )
+    lab1_source = "\n".join("".join(cell.get("source", [])) for cell in lab1["cells"])
+    lab2_source = "\n".join("".join(cell.get("source", [])) for cell in lab2["cells"])
+    assert "manufactured" in lab1_source and "not DSMC" in lab1_source
+    assert "Freeze the split and selection rule" in lab1_source
+    assert "Stop: teaching-test gate" in lab1_source
+    assert "all 15 real public DSMC snapshots" in lab2_source
+    assert "leave-one-case-out" in lab2_source
+    assert "Stop: held-out pressure gate" in lab2_source
+    assert "article's trained full-domain" in lab2_source and "six-field" in lab2_source
+    return report
+
+
 def validate_pdfs() -> int:
     pdfs = sorted((ROOT / "lectures").glob("*.pdf"))
     assert len(pdfs) == 7
@@ -694,6 +764,7 @@ def main() -> None:
     cylinder_metrics = validate_cylinder_lbm_results()
     cylinder_grid_metrics = validate_cylinder_grid_results()
     week8_metrics = validate_week8_gas_dynamics_results()
+    week9_metrics = validate_week9_mahdavi_deeponet_results()
     article_metrics = validate_article_alignment()
     pdfs = validate_pdfs()
     python_files = sorted(ROOT.rglob("*.py"))
@@ -711,6 +782,7 @@ def main() -> None:
     print("Cylinder LBM release metrics:", json.dumps(cylinder_metrics, sort_keys=True))
     print("Cylinder grid-verification metrics:", json.dumps(cylinder_grid_metrics, sort_keys=True))
     print("Week-8 gas-dynamics metrics:", json.dumps(week8_metrics, sort_keys=True))
+    print("Week-9 Roohi--Mahdavi metrics:", json.dumps(week9_metrics, sort_keys=True))
     print("Article-aligned validation metrics:", json.dumps(article_metrics, sort_keys=True))
 
 

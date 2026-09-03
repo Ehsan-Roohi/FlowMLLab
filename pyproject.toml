@@ -21,6 +21,8 @@ keywords = [
   "cylinder-wake",
   "gas-dynamics",
   "compressible-flow",
+  "rarefied-flow",
+  "deeponet",
   "DSMC",
   "reproducibility",
 ]

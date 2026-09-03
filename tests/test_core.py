@@ -58,6 +58,11 @@ class FlowMLLabCoreTests(unittest.TestCase):
         self.assertEqual(args.command, "gasdynamics")
         self.assertEqual(args.root, ROOT)
 
+    def test_mahdavi_cli_is_exposed(self) -> None:
+        args = build_parser().parse_args(["mahdavi", "--root", str(ROOT)])
+        self.assertEqual(args.command, "mahdavi")
+        self.assertEqual(args.root, ROOT)
+
 
 if __name__ == "__main__":
     unittest.main()

@@ -1,0 +1,7 @@
+objective,scope,reported_error_percent,interpretation,source
+MSE,full_domain,2.1739,lowest reported global error,Table 2 / arXiv 2509.17254
+MSE,recirculation_zone,14.6135,global loss under-resolves the small reverse-flow region,Table 2 / arXiv 2509.17254
+GMSE,full_domain,2.2070,small global penalty relative to MSE,Table 2 / arXiv 2509.17254
+GMSE,recirculation_zone,17.4516,worst reported zonal result in the ablation,Table 2 / arXiv 2509.17254
+Zonal,full_domain,2.2254,slight global penalty accepted by the zonal objective,Table 2 / arXiv 2509.17254
+Zonal,recirculation_zone,11.9413,best reported recirculation-zone result,Table 2 / arXiv 2509.17254

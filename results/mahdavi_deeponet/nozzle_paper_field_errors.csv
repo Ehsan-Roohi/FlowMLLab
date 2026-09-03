@@ -1,0 +1,19 @@
+held_out_pressure_kpa,field,reported_relative_l2_percent,source_scope
+16,density,4.8,full two-dimensional held-out article result
+16,U,11.2,full two-dimensional held-out article result
+16,V,14.8,full two-dimensional held-out article result
+16,temperature,4.3,full two-dimensional held-out article result
+16,Mach,13.2,full two-dimensional held-out article result
+16,pressure,6.8,full two-dimensional held-out article result
+25,density,3.3,full two-dimensional held-out article result
+25,U,7.5,full two-dimensional held-out article result
+25,V,7.6,full two-dimensional held-out article result
+25,temperature,2.0,full two-dimensional held-out article result
+25,Mach,8.7,full two-dimensional held-out article result
+25,pressure,3.8,full two-dimensional held-out article result
+30,density,3.3,full two-dimensional held-out article result
+30,U,8.9,full two-dimensional held-out article result
+30,V,5.3,full two-dimensional held-out article result
+30,temperature,1.9,full two-dimensional held-out article result
+30,Mach,10.0,full two-dimensional held-out article result
+30,pressure,3.8,full two-dimensional held-out article result

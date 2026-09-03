@@ -8,6 +8,7 @@ from .cylinder_lbm import (
     simulate_cylinder,
 )
 from .gas_dynamics import validate_week8_evidence
+from .mahdavi_deeponet import validate_week9_evidence
 
 __all__ = [
     "CylinderLBMConfig",
@@ -18,5 +19,6 @@ __all__ = [
     "simulate_cylinder",
     "validate_core_assets",
     "validate_week8_evidence",
+    "validate_week9_evidence",
 ]
 __version__ = "1.2.0"

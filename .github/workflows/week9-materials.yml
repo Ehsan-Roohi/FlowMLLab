@@ -1,0 +1,56 @@
+name: Rebuild and verify Week 9 materials
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - ".github/workflows/week9-materials.yml"
+      - "flowmllab/mahdavi_deeponet.py"
+      - "notebooks/week09/make_week9_notebooks.py"
+      - "qa/build_week9_mahdavi_deeponet_data.py"
+      - "results/mahdavi_deeponet/**"
+      - "tests/test_mahdavi_deeponet.py"
+
+permissions:
+  contents: write
+
+jobs:
+  rebuild:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+
+      - name: Install package
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -e .
+
+      - name: Rebuild student notebooks
+        run: python notebooks/week09/make_week9_notebooks.py
+
+      - name: Run software and release gates
+        run: |
+          python -m unittest discover -s tests -v
+          flowmllab mahdavi --root .
+          python qa/validate_course_release.py
+
+      - name: Commit generated notebooks
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add notebooks/week09/W9_Lab1_Microstep_Zonal_DeepONet_Student.ipynb
+          git add notebooks/week09/W9_Lab2_Shock_Aligned_Nozzle_DeepONet_Student.ipynb
+          if git diff --cached --quiet; then
+            echo "Week 9 notebooks are already current."
+          else
+            git commit -m "Rebuild Week 9 notebook artifacts [skip ci]"
+            git push origin HEAD:main
+          fi

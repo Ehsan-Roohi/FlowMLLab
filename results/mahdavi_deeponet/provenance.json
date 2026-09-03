@@ -1,0 +1,53 @@
+{
+  "builder_pod_audit": {
+    "physical": {
+      "E123_percent": 93.7617868849599,
+      "E12_percent": 88.4667706667226,
+      "E1_percent": 78.9221278034391,
+      "N99": 8
+    },
+    "shock_centered": {
+      "E123_percent": 99.86473811309618,
+      "E12_percent": 99.18230342280253,
+      "E1_percent": 97.98647751141955,
+      "N99": 2
+    }
+  },
+  "claim_boundary": {
+    "micro_nozzle_data": "The compact archive is a deterministic centerline derivative of all 15 public DSMC snapshots at the pinned source commit.",
+    "micro_nozzle_teaching_model": "The notebook's compact centerline POD/branch model is not the paper's trained full two-dimensional six-output Fusion-DeepONet checkpoint.",
+    "microstep_retained_evidence": "Reported article metrics are transcribed as immutable evidence and are never presented as notebook-generated results.",
+    "microstep_teaching_demo": "The generated backward-facing-step fields are manufactured teaching fields, not the article's DSMC snapshots or a reproduction of its checkpoint."
+  },
+  "derivation": "First Tecplot POINT zone (101x31); max-y half-domain symmetry centerline; seven physical fields retained; density-shock diagnostics recomputed with FlowMLLab's documented detector.",
+  "derived_files": {
+    "nozzle_centerline_15cases.npz": "7e644751574f4a58c1a6c6974a89ec063f73a6a65fd373e5abeaa35827bf611e"
+  },
+  "paper_sources": {
+    "micro_nozzle_arxiv": "https://arxiv.org/abs/2605.12723",
+    "micro_nozzle_data": "https://github.com/Ehsan-Roohi/roohi-nozzle-pod-reproducibility",
+    "microstep_arxiv": "https://arxiv.org/abs/2509.17254",
+    "microstep_doi": "https://doi.org/10.1007/s10404-026-02899-8"
+  },
+  "schema_version": 1,
+  "source_commit": "e1b234ba499408d3b6224633972f939f3b2301d6",
+  "source_files_sha256": {
+    "P=15.dat": "78fdecef839450dfb6e733c006cfeff93d45680a79d544ec8836dea4a4402322",
+    "P=16.dat": "f34a3317dc8da2735588c582c7c01ff7b52789e66b7ee3798b5cbc293163aa97",
+    "P=18.dat": "1c5135b203d87604c068c7ca2d39c83f6a516665802637443f6eccf4c28b5d9c",
+    "P=19.dat": "9d02926e6d58196b952a565abdecf26a20f100ade0e111f6d848fdc2226c5edc",
+    "P=20.dat": "b141eda8c36f844f15747f6f44128c37cf439c22dd51354e95cde9deddeaa45d",
+    "P=22.dat": "2c366f7a6bc5cdfa2fcc67132f207f64eeb6ae9cd679c347fa34a0eabc4b1fe3",
+    "P=23.dat": "019263618facd4d4f7408b3109e500b6654063eea95693bb54151539122309fa",
+    "P=24.dat": "952523cf12c5fe9c03b618a1cb56fa938abb277f58eb11f3fd39aaf91b62473a",
+    "P=25.dat": "faf3ca08c6134d1f9405dcffdeff5aa2cd67bf648a788bbe46406c082abd383b",
+    "P=26.dat": "179dec614c29b4d7b9911abac7862a605a4f37c6707c313a75823e277f9060c2",
+    "P=27.dat": "5a4f0af14b4e702c61dc9452d703c68620772221022768909c1be14a063fbd8e",
+    "P=28.dat": "7fab74c64f6168c385882469d9a01f0d12fa72e99f1e1a954df2120bc701b904",
+    "P=29.dat": "897ef74fecbf6c48e42b42b8c8ce2535739dea04d211c412f52b1482c4633c64",
+    "P=30.dat": "0460a7ccedbeaf49e413b25b3ebac59b81a0797ef0224a77b0dfaf7e0207e22a",
+    "P=33.dat": "d098af4585b163477e45dd90008043d7dfcf361a8ee093aa5f3a7f7207cad9aa"
+  },
+  "source_license": "CC BY 4.0 for DSMC data and reference outputs",
+  "source_repository": "https://github.com/Ehsan-Roohi/roohi-nozzle-pod-reproducibility"
+}

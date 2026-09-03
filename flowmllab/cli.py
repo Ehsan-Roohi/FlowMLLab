@@ -15,6 +15,7 @@ from .core import (
     validate_core_assets,
     verify_cylinder_lbm_validation,
     verify_gas_dynamics_week8,
+    verify_mahdavi_deeponet_week9,
 )
 
 
@@ -52,6 +53,12 @@ def build_parser() -> argparse.ArgumentParser:
         help="verify retained Week-8 exact and learned gas-dynamics evidence",
     )
     gasdynamics.add_argument("--root", type=Path, help="FlowMLLab checkout root")
+
+    mahdavi = subparsers.add_parser(
+        "mahdavi",
+        help="verify Week-9 micro-step evidence and public micro-nozzle DSMC derivative",
+    )
+    mahdavi.add_argument("--root", type=Path, help="FlowMLLab checkout root")
     return parser
 
 
@@ -71,6 +78,8 @@ def main(argv: list[str] | None = None) -> int:
             return verify_cylinder_lbm_validation(args.root)
         if args.command == "gasdynamics":
             return verify_gas_dynamics_week8(args.root)
+        if args.command == "mahdavi":
+            return verify_mahdavi_deeponet_week9(args.root)
     except ValidationError as error:
         print(f"FlowMLLab validation failed: {error}")
         return 2

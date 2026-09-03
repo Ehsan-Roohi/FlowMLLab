@@ -13,7 +13,7 @@ exercise to physics-checked POD--DeepONet benchmarks when ready.
 <p align="center">
   <a href="https://colab.research.google.com/github/Ehsan-Roohi/FlowMLLab/blob/main/notebooks/week05_06/P0_Project_Setup.ipynb"><img src="https://img.shields.io/badge/Run-20--minute_Colab-F9AB00?logo=googlecolab&logoColor=white" alt="Run the 20-minute FlowMLLab Colab"></a>
   <a href="demo/README.md"><img src="https://img.shields.io/badge/Explore-blind--case_demo-146C94" alt="Explore the validated blind-case demo"></a>
-  <a href="notebooks/README.md"><img src="https://img.shields.io/badge/Open-all_20_notebooks-315A7D" alt="Open all 20 FlowMLLab notebooks"></a>
+  <a href="notebooks/README.md"><img src="https://img.shields.io/badge/Open-all_22_notebooks-315A7D" alt="Open all 22 FlowMLLab notebooks"></a>
   <a href="lectures/README.md"><img src="https://img.shields.io/badge/Open-all_8_lectures-6B4C9A" alt="Open all 8 FlowMLLab lectures"></a>
 </p>
 
@@ -60,7 +60,9 @@ positive-order asymptotic/GCI sequence.
 | Week-8 branch-aware gas-dynamics inverse benchmarks | Five blind relative-$L_2$ errors below **0.35%**, with **100%** physical coverage |
 | Matched-budget five-input shock-tube audit | Interpolation: **4.885%**; bounded MLP: **0.177%** relative $L_2$ |
 | Prescribed 100,000-state shock-tube workload | **16.53x faster** than one bracketed Brent root per state; **0.0915%** relative $L_2$ |
-| Reproducible learning and research entry points | **20 Colab notebooks + 8 lectures** (7 PDFs; Weeks 5–6 share one guide) |
+| Public 15-case micro-nozzle DSMC density POD | Physical coordinates: **8 modes** for 99%; shock-centered coordinates: **2 modes** |
+| Micro-step zonal-loss article evidence | Recirculation error: **14.6135% → 11.9413%**; full-domain error: **2.1739% → 2.2254%** |
+| Reproducible learning and research entry points | **22 Colab notebooks + 8 lectures** (7 PDFs; Weeks 5–6 share one guide) |
 
 ### Choose a starting point
 
@@ -74,7 +76,7 @@ positive-order asymptotic/GCI sequence.
 
 **FlowMLLab** is an open-source framework for reproducible CFD-to-scientific-machine-learning experiments. It integrates transparent continuum and particle solvers, case-wise data partitions, non-neural baselines, coordinate networks, POD-DeepONet models, physical diagnostics, machine-readable evidence, and release checks.
 
-The repository contains an eight-lecture learning path: the complete tutorial and lecture layer developed for the original six-week graduate course **MIE 690A: AI in Fluid Mechanics**, University of Massachusetts Amherst, Summer 2026, plus the Week-7 cylinder and Week-8 gas-dynamics extensions. The reusable modules, datasets, validators, and figure builders are the software core; the notebooks are documented examples of that framework.
+The repository contains an eight-lecture learning path: the complete tutorial and lecture layer developed for the original six-week graduate course **MIE 690A: AI in Fluid Mechanics**, University of Massachusetts Amherst, Summer 2026, plus the Week-7 cylinder and Week-8 gas-dynamics extensions. Two optional Week-9 research-to-classroom notebooks add the Roohi--Mahdavi rarefied micro-step and micro-nozzle DeepONet cases without increasing the lecture count. The reusable modules, datasets, validators, and figure builders are the software core; the notebooks are documented examples of that framework.
 
 The course treats scientific machine learning as a controlled computational-physics experiment:
 
@@ -99,6 +101,7 @@ Start with [START_HERE.md](START_HERE.md). It gives the installation check, reco
 | `notebooks/week05_06` | The original combined Weeks 5–6 project pack: seven expanded notebooks (`P0`–`P6`) with PINNs/physics-guided learning, POD, uncertainty, rarefied flow, FP closure, frozen decision gates, and final-project evidence |
 | `notebooks/week07` | The Week-7 cylinder-wake LBM and neural-surrogate extension |
 | `notebooks/week08` | Two CPU/Colab labs: exact branch-aware gas dynamics, then matched interpolation/MLP evidence and dimensional scaling |
+| `notebooks/week09` | Two CPU/Colab research-to-classroom labs: micro-step zonal-loss discipline and shock-aligned micro-nozzle POD/DeepONet using real public DSMC centerlines |
 | `common/` | Shared CFD, surrogate, POD, kinetic, and QA utilities |
 | `data/` | Fixed cavity reference data plus the documented, checksummed cylinder-CFD release contract |
 | `results/article_validation/` | Re=1000 pressure-recovery solutions and independent Botella--Peyret reference data |
@@ -111,6 +114,7 @@ Start with [START_HERE.md](START_HERE.md). It gives the installation check, reco
 | `results/cylinder_phase/` | autonomous phase-stable validation, fresh-test metrics, Strouhal spectra, and LBM comparison video |
 | `results/cylinder_grid_convergence/` | three-grid Re=100 CFD fields, histories, statistical gates, retained formal grid-independence failure, protocol, and convergence figure |
 | `results/gas_dynamics_week8/` | Checksummed evidence snapshot, exact-physics maps, matched baselines, edge holdouts, high-dimensional scaling, timing, and source provenance |
+| `results/mahdavi_deeponet/` | Compact CC BY 4.0 derivative of 15 public nozzle DSMC snapshots, source hashes, POD audit, article metric transcriptions, licenses, and explicit claim boundaries |
 | `advanced/fp_closure/` | Bounded educational workflow for exact and learned Fokker–Planck closure testing |
 | `references/` | Annotated reading guide and BibTeX database |
 | `qa/` | Release validator for notebook syntax, required assets, and reproducibility anchors |
@@ -127,6 +131,7 @@ The recommended path is cumulative:
 - **Weeks 5–6 — Combined guided-project pack:** Week 5 covers POD, physics-guided objectives/PINNs, neural-operator extensions, project selection, and the frozen checkpoint. Week 6 continues the same selected track through Fokker–Planck/hybrid methods where assigned, a-posteriori testing, uncertainty, reproducibility, and the final report.
 - **Week 7 — Cylinder wakes with LBM and learned prediction:** derive the D2Q9 collide--stream--boundary loop, distinguish wake regimes, run a controlled `Re=100` three-grid study and retain its formal asymptotic failure, validate forces and gated Strouhal estimates, retain POD/CNN failure evidence, and audit a phase-stable decoder over 277 autonomous future fields on a fresh Reynolds test.
 - **Week 8 — Gas dynamics before scientific ML:** derive and solve Rayleigh, Fanno, oblique-shock, nozzle-shock, and shock-tube relations; expose branch-hidden regression failure; compare exact roots, interpolation, and bounded MLPs; separate ordinary blind accuracy from edge generalization; and use the SU2 diamond-airfoil work only as a clearly qualified bridge to multidimensional CFD.
+- **Week 9 — Roohi--Mahdavi DeepONet case studies (optional notebook extension):** use the micro-step study to learn complete-geometry splitting and zonal-loss selection; then reproduce shock-centered density POD from 15 public DSMC nozzle cases and test a leakage-controlled POD-trunk/neural-branch teaching model on pressures 16, 25, and 30 kPa.
 
 The full module-to-evidence mapping is in [COURSE_MAP.md](COURSE_MAP.md).
 The exact manuscript-figure ownership and reproduction commands are in [ARTICLE_FIGURE_MAP.md](ARTICLE_FIGURE_MAP.md).
@@ -144,6 +149,7 @@ flowmllab figures all --root .
 flowmllab rom --root .               # optional Week-4.1 full regeneration
 flowmllab cylinder --root .          # verify Week-7 regimes, grid study, and learned evidence
 flowmllab gasdynamics --root .       # verify Week-8 exact/ML evidence and provenance
+flowmllab mahdavi --root .           # verify Week-9 article/DSMC evidence and POD audit
 ```
 
 Install the neural-network stack with `python -m pip install -e ".[ml,test]"`.
@@ -300,6 +306,26 @@ source commit, only its sharp-wall `euler_alpha0` case is a qualified teaching
 reference; the other eight distributed cases remain unverified. Run
 `flowmllab gasdynamics --root .` to verify the retained evidence and source
 commits without retraining the research models.
+
+## Week 9 Roohi--Mahdavi DeepONet case studies
+
+Week 9 is an optional notebook extension built from two 2026 research cases.
+[Lab 1](https://colab.research.google.com/github/Ehsan-Roohi/FlowMLLab/blob/main/notebooks/week09/W9_Lab1_Microstep_Zonal_DeepONet_Student.ipynb)
+uses the published micro-step ablation to teach why a global loss can hide a
+small reverse-flow zone. Because the article DSMC fields and trained checkpoint
+are not public, its executable velocity fields are visibly labelled
+manufactured; reported article values stay in a separate evidence table.
+
+[Lab 2](https://colab.research.google.com/github/Ehsan-Roohi/FlowMLLab/blob/main/notebooks/week09/W9_Lab2_Shock_Aligned_Nozzle_DeepONet_Student.ipynb)
+uses a compact, checksummed derivative of all 15 public micro-nozzle DSMC
+snapshots. It directly reproduces the density-POD compression from 8 physical
+coordinate modes to 2 shock-centered modes at 99% energy. Pressures 16, 25,
+and 30 kPa remain held out until leave-one-case-out rank selection is frozen.
+The classroom predictor is a normalized centerline POD trunk with a neural
+branch, not the paper's full two-dimensional six-output Fusion--DeepONet.
+
+Run `flowmllab mahdavi --root .` to validate the archive hash, pressure split,
+POD spectrum, article tables, and claim boundaries without retraining.
 
 ## POD-DeepONet validation result
 

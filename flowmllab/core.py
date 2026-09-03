@@ -187,6 +187,19 @@ def verify_gas_dynamics_week8(root: str | Path | None = None) -> int:
     return 0
 
 
+def verify_mahdavi_deeponet_week9(root: str | Path | None = None) -> int:
+    """Verify Week-9 article evidence and the compact public DSMC derivative."""
+    from .mahdavi_deeponet import validate_week9_evidence  # noqa: PLC0415
+
+    repository = discover_repository_root(root)
+    try:
+        report = validate_week9_evidence(repository)
+    except (OSError, ValueError, KeyError) as error:
+        raise ValidationError(f"Week-9 Roohi--Mahdavi evidence failed: {error}") from error
+    print(format_report(report))
+    return 0
+
+
 def format_report(report: dict[str, Any]) -> str:
     """Return deterministic JSON for CLI and CI logs."""
     return json.dumps(report, indent=2, sort_keys=True)

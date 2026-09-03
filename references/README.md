@@ -53,6 +53,7 @@ The list below is a learning route, not a requirement to read every source befor
 
 - **Roohi et al. (2026), Neural networks for rarefied gas dynamics.** Physics-enforced learning from relaxation to hypersonic flow. [DOI](https://doi.org/10.1063/5.0334590)
 - **Roohi & Mahdavi (2026), Physics-guided DeepONet for a rarefied micro-step.** A zonal-loss example relevant to Track 2. [DOI](https://doi.org/10.1007/s10404-026-02899-8)
+- **Roohi & Mahdavi (2026), Shock-centered rarefied micro-nozzle modeling.** Basis for the Week-9 moving-shock POD and neural-operator lab. [DOI](https://doi.org/10.1063/5.0343101) · [Public DSMC/POD data](https://github.com/Ehsan-Roohi/roohi-nozzle-pod-reproducibility)
 - **Roohi et al. (2026), Physics-constrained neural collision operators.** Learned stochastic collision modeling with physical constraints. [DOI](https://doi.org/10.1063/5.0328463)
 - **Roohi (2026), GPU-native neural surrogate for Fokker–Planck closure.** Research basis for Track 6 and its closed-loop validation requirement. [DOI](https://doi.org/10.1016/j.jcp.2026.115261)
 
