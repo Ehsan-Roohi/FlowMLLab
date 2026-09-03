@@ -73,11 +73,13 @@ def run_case(reynolds: int, output: str) -> dict[str, object]:
         strouhal=np.asarray(float(result["strouhal"])),
         metadata_json=np.asarray(json.dumps(result["metadata"], sort_keys=True)),
     )
+    strouhal = float(result["strouhal"])
     return {
         "reynolds": reynolds, "split": SPLIT[reynolds], "file": destination.name,
         "bytes": destination.stat().st_size, "sha256": sha256(destination),
         "snapshots": int(result["snapshots"]["u"].shape[0]),
-        "strouhal": float(result["strouhal"]),
+        "strouhal": strouhal if np.isfinite(strouhal) else None,
+        "strouhal_resolved": bool(np.isfinite(strouhal)),
         "elapsed_seconds": time.perf_counter() - started,
     }
 
