@@ -5,7 +5,7 @@
 \usetikzlibrary{arrows.meta,positioning}
 \usepackage[most]{tcolorbox}
 \usepackage{enumitem,fancyhdr,hyperref,microtype}
-\graphicspath{{../../results/cylinder_lbm/}{../../results/cylinder_cnn/}{../../results/cylinder_ml/}}
+\graphicspath{{../../results/cylinder_lbm/}{../../results/cylinder_cnn/}{../../results/cylinder_ml/}{../../results/cylinder_phase/}}
 \definecolor{navy}{HTML}{17365D}
 \definecolor{blue}{HTML}{2F75B5}
 \definecolor{cyan}{HTML}{2A9D8F}
@@ -30,14 +30,14 @@
 \begin{titlepage}
 \centering\vspace*{1.0cm}
 {\color{navy}\rule{\textwidth}{2pt}}\\[0.5cm]
-{\Huge\bfseries Circular-Cylinder Wakes\\[0.18cm]with Lattice Boltzmann and Neural Prediction\par}
+{\Huge\bfseries Circular-Cylinder Wakes\\[0.18cm]with Lattice Boltzmann and Learned Prediction\par}
 \vspace{0.35cm}{\Large Week 7 Extension Lecture Notes\par}
 \vspace{0.5cm}{\color{navy}\rule{\textwidth}{2pt}}\\[0.9cm]
 {\Large M\&I-ENG 690A -- AI in Fluid Mechanics\par}
 \vspace{0.25cm}{\large Summer 2026\par}
 \vfill
 \begin{tcolorbox}[colback=lightblue,colframe=blue,width=0.92\textwidth]
-\textbf{Central question.} Can a neural model preserve the convection, phase, strength, and shedding frequency of a held-out cylinder wake, rather than merely produce a visually smooth field?
+\textbf{Central question.} Which learned representation preserves convection, phase, strength, and shedding frequency on a held-out cylinder wake, rather than merely producing a visually smooth field?
 \end{tcolorbox}
 \vfill{\large Instructor: Ehsan Roohi\par}
 \end{titlepage}
@@ -58,12 +58,12 @@ By the end of Week 7, a student should be able to:
 \item connect $\Rey$, viscosity, relaxation time, and low-Mach restrictions;
 \item measure drag, lift, recirculation length, and Strouhal number;
 \item design a complete-case Reynolds holdout without snapshot leakage; and
-\item distinguish a low-error one-step forecast from a stable autonomous rollout, and diagnose phase or amplitude failure.
+\item distinguish a low-error one-step forecast from a stable autonomous rollout, diagnose phase or amplitude failure, and explain when an explicit phase model is justified.
 \end{enumerate}
 \end{learningbox}
 
 \subsection{What is already executed}
-The release separates three claims that are often mixed together:
+The release separates four claims that are often mixed together:
 \begin{center}
 \begin{tabular}{p{0.23\textwidth}p{0.31\textwidth}p{0.34\textwidth}}
 \toprule
@@ -72,6 +72,7 @@ Claim & Evidence & Permitted wording \\
 Wake regimes & five complete LBM cases with force histories and quality-gated frequency & physics-checked teaching evidence \\
 One-step neural forecast & four true prior fields, a complete historically held-out Reynolds case, and non-neural extrapolation baselines & low-error one-step interpolation \\
 Autonomous rollout & recursive feedback for 50 steps with phase/amplitude diagnostics & audited limitation; not a passed claim \\
+Phase-stable rollout & four true initial fields followed by 277 predictions with no future CFD input & passed only for the saturated, bracketed periodic regime \\
 \bottomrule
 \end{tabular}
 \end{center}
@@ -372,6 +373,85 @@ $90.724\%$ at 50 steps. It therefore crosses the predeclared $15\%$ gate
 between 10 and 20 steps. A visually accurate next-frame movie is not evidence
 of long-horizon stability.
 
+\newpage
+\section{Phase-Stable Long-Horizon Correction}
+The failed CNN rollout does not imply that long-horizon prediction is
+impossible; it identifies recursive field feedback as the weak link. In the
+saturated low-Reynolds regime, the cylinder wake is approximately periodic.
+FlowMLLab therefore adds a separate phase-stable learned Fourier decoder,
+\begin{equation}
+\widehat{\bm q}(\bm{x},\phi;\Rey)=\bm a_0(\bm{x};\Rey)+
+\sum_{k=1}^{K}\left[
+\bm a_k^s(\bm{x};\Rey)\sin(k\phi)+
+\bm a_k^c(\bm{x};\Rey)\cos(k\phi)\right],
+\qquad \bm q=(u,v,p).
+\end{equation}
+The spatial coefficient fields are fitted by least squares to complete
+development trajectories and interpolated between the two development
+Reynolds cases that bracket the target. Time evolution is explicit,
+\begin{equation}
+\phi_n=\phi_0+2\pi\St(\Rey)n\Delta t^*.
+\end{equation}
+Four initial true fields determine $\phi_0$ by minimum reconstruction error.
+Every later field is decoded from the advancing phase, with no future CFD
+input and no recursive reuse of a predicted field.
+
+\begin{warningbox}
+This is a learned reduced-order Fourier decoder, not a neural network. The CNN
+remains the strongest demonstrated one-step model. The phase decoder is the
+long-horizon correction for a saturated, nearly periodic wake; it does not
+cover arbitrary transients, new geometries, or unbracketed extrapolation.
+\end{warningbox}
+
+\subsection{Frozen split and gates}
+Only $\Rey=90,110,120,140$ are used to fit coefficient fields. Harmonic orders
+$K=2,\ldots,6$ are compared on complete-case $\Rey=100$ validation, which
+selects $K=6$. That choice is frozen before opening the fresh $\Rey=95$ test.
+The former $\Rey=105$ case remains a retained historical test. The predeclared
+long-horizon gates are
+\begin{equation}
+\epsilon_{\omega,\mathrm{global}}<15\%,\qquad
+\max_n\epsilon_\omega(n)<15\%,\qquad
+\frac{|\widehat{\St}-\St_{\mathrm{CFD}}|}{\St_{\mathrm{CFD}}}<2\%.
+\end{equation}
+
+\begin{center}
+\begin{tabular}{lrrrr}
+\toprule
+Split & $\Rey$ & global $\omega$ error & worst frame & $\St$ error \\
+\midrule
+Validation & 100 & 6.037\% & 7.959\% & 0.343\% \\
+Fresh test & 95 & 4.281\% & 5.194\% & 0.264\% \\
+Retained test & 105 & 4.625\% & 6.240\% & 0.253\% \\
+\bottomrule
+\end{tabular}
+\end{center}
+All entries cover 277 future frames after four true initial fields, and all
+three gates pass on every split.
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=\textwidth]{phase_stable_validation.png}
+\caption{Leakage-controlled long-horizon evidence. Left: global vorticity
+error against the predeclared gate. Centre: LBM and decoder Strouhal numbers.
+Right: overlapping fresh-test wake spectra at $\Rey=95$.}
+\end{figure}
+
+\newpage
+\begin{figure}[ht]
+\centering
+\includegraphics[width=\textwidth]{re095_phase_stable_poster.png}
+\caption{Fresh unseen $\Rey=95$ field comparison after autonomous evolution.
+The axes use equal physical scale, so the analytical cylinder is displayed as
+a circle. The error panel has its own colour scale.}
+\end{figure}
+
+At $\Rey=95$, $\St_{\mathrm{CFD}}=0.179428$ and
+$\widehat{\St}=0.178955$. The $0.264\%$ frequency error and the field-error
+history are evaluated from the same 277-frame window. This is stronger than a
+single visually selected frame, but it remains validation against the
+educational LBM labels rather than independent high-fidelity DNS.
+
 \section{Connection to the 2019 JFM Study}
 \begin{paperbox}
 Lee and You (2019) developed a deep-learning framework for unsteady
@@ -391,8 +471,8 @@ The most important comparison is methodological:
 Question & Lee \& You (2019) & FlowMLLab Week 7 \\
 \midrule
 Temporal input & Consecutive flow information & Four consecutive $u,v,p$ fields \\
-Prediction test & Future-field and recursive behavior & Qualified one-step result plus a separate failed recursive audit \\
-Generalization & Study-specific trained/tested conditions & Complete withheld-Reynolds interpolation \\
+Prediction test & Future-field and recursive behavior & Qualified one-step result, failed CNN recursion, and a separate phase-stable rollout \\
+Generalization & Study-specific trained/tested conditions & Complete-case validation plus fresh bracketed $\Rey=95$ test \\
 Physical assessment & Flow evolution beyond visual similarity & $L_2$, spectra, phase, divergence/no-slip, downstream enstrophy \\
 Purpose & Research framework & Auditable educational extension \\
 \bottomrule
@@ -413,8 +493,10 @@ The companion notebook follows this order:
 \item establish a POD/phase baseline and observe diffusion failure;
 \item freeze the four-frame multi-scale CNN using development cases;
 \item compare persistence, linear, quadratic, and cubic extrapolation;
-\item open the complete withheld-Reynolds interpolation case; and
-\item report one-step and autonomous-rollout evidence separately.
+\item retain the complete $\Rey=105$ interpolation case and failed CNN rollout;
+\item select the phase decoder only on $\Rey=100$ validation;
+\item open fresh $\Rey=95$ once and run 277 future fields; and
+\item report one-step CNN and long-horizon phase-decoder evidence separately.
 \end{enumerate}
 
 \begin{evidencebox}
@@ -425,6 +507,11 @@ autonomous rollout. If rollout fails, retain that result and restrict the claim;
 do not describe the one-step animation as rollout.
 \end{evidencebox}
 
+For the phase decoder, pass the long-horizon claim only when global error,
+worst-frame error, and Strouhal error all satisfy their frozen gates. Keep the
+wording restricted to saturated periodic wakes inside the development
+Reynolds bracket.
+
 \section{Questions for Discussion}
 \begin{enumerate}
 \item Why can a lower global MSE coexist with a visibly worse vortex street?
@@ -432,6 +519,10 @@ do not describe the one-step animation as rollout.
 \item How would a vorticity-gradient, spectral, or transport-aware loss change the bias?
 \item Why is an unseen Reynolds case stronger evidence than randomly held-out snapshots?
 \item Which LBM error could be learned faithfully by the CNN yet remain physically wrong?
+\item Why does explicit phase advancement prevent recursive numerical
+diffusion but still remain sensitive to a small Strouhal bias?
+\item What additional tests would be required before applying this decoder to
+startup transients, irregular wakes, or a new geometry?
 \end{enumerate}
 
 \section{References}
