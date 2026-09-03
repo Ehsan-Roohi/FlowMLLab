@@ -14,6 +14,7 @@ exercise to physics-checked POD--DeepONet benchmarks when ready.
   <a href="https://colab.research.google.com/github/Ehsan-Roohi/FlowMLLab/blob/main/notebooks/week05_06/P0_Project_Setup.ipynb"><img src="https://img.shields.io/badge/Run-20--minute_Colab-F9AB00?logo=googlecolab&logoColor=white" alt="Run the 20-minute FlowMLLab Colab"></a>
   <a href="demo/README.md"><img src="https://img.shields.io/badge/Explore-blind--case_demo-146C94" alt="Explore the validated blind-case demo"></a>
   <a href="notebooks/README.md"><img src="https://img.shields.io/badge/Open-all_18_notebooks-315A7D" alt="Open all 18 FlowMLLab notebooks"></a>
+  <a href="lectures/README.md"><img src="https://img.shields.io/badge/Open-all_7_lectures-6B4C9A" alt="Open all 7 FlowMLLab lectures"></a>
 </p>
 
 ## Featured: circular-cylinder vortex shedding
@@ -56,7 +57,7 @@ positive-order asymptotic/GCI sequence.
 | Three-seed velocity error on retained cavity cases | **0.0727%–0.4455%** relative $L_2$ |
 | Direct zero-mean pressure prediction | **0.1073%–0.2506%** relative $L_2$ |
 | Repeated three-field evaluation versus a fresh recorded CPU CFD solve | **approximately $5.3\times10^3\times$ faster** |
-| Reproducible learning and research entry points | **18 Colab notebooks + 6 lecture PDFs** |
+| Reproducible learning and research entry points | **18 Colab notebooks + 7 lectures** (6 PDFs; Weeks 5–6 share one guide) |
 
 ### Choose a starting point
 
@@ -70,7 +71,7 @@ positive-order asymptotic/GCI sequence.
 
 **FlowMLLab** is an open-source framework for reproducible CFD-to-scientific-machine-learning experiments. It integrates transparent continuum and particle solvers, case-wise data partitions, non-neural baselines, coordinate networks, POD-DeepONet models, physical diagnostics, machine-readable evidence, and release checks.
 
-The repository also contains the complete tutorial and lecture layer developed for the six-week graduate course **MIE 690A: AI in Fluid Mechanics**, University of Massachusetts Amherst, Summer 2026. The reusable modules, datasets, validators, and figure builders are the software core; the notebooks are documented examples of that framework.
+The repository contains a seven-lecture learning path: the complete tutorial and lecture layer developed for the original six-week graduate course **MIE 690A: AI in Fluid Mechanics**, University of Massachusetts Amherst, Summer 2026, plus the Week-7 cylinder extension. The reusable modules, datasets, validators, and figure builders are the software core; the notebooks are documented examples of that framework.
 
 The course treats scientific machine learning as a controlled computational-physics experiment:
 
@@ -90,7 +91,7 @@ Start with [START_HERE.md](START_HERE.md). It gives the installation check, reco
 | `flowmllab/` | Installable Python package, scientific asset checks, repository QA, and figure-generation CLI |
 | `demo/` | Read-only Streamlit explorer for the retained POD--DeepONet blind cases |
 | `pyproject.toml` | Versioned package metadata, bounded compatible dependencies, optional ML/test environments, and `flowmllab` entry point |
-| `lectures/` | Five lecture/guide PDFs covering the original Weeks 1–6, plus a separate Week-7 cylinder lecture and editable sources |
+| `lectures/` | Seven lectures delivered in six PDFs: Weeks 1–4, a shared Weeks 5–6 project guide, and the separate Week-7 cylinder lecture, with editable sources where available |
 | `notebooks/week01`–`week04` | Ten guided laboratories for Weeks 1–4, including the additive Week-4.1 classical ROM lab |
 | `notebooks/week05_06` | The original combined Weeks 5–6 project pack: seven expanded notebooks (`P0`–`P6`) with PINNs/physics-guided learning, POD, uncertainty, rarefied flow, FP closure, frozen decision gates, and final-project evidence |
 | `notebooks/week07` | The Week-7 cylinder-wake LBM and neural-surrogate extension |
