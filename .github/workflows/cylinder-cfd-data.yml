@@ -5,6 +5,8 @@ on:
   push:
     paths:
       - '.github/workflows/cylinder-cfd-data.yml'
+      - 'qa/generate_cylinder_cfd_dataset.py'
+      - 'qa/validate_cylinder_cfd_dataset.py'
 
 permissions:
   contents: write
