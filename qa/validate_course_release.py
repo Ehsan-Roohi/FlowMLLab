@@ -19,9 +19,12 @@ EXPECTED_DATA_SHA256 = "09b96b744ee4d18126d8dcc92feb60e128774a1b4d41bb3d8c90a63c
 
 
 REQUIRED = [
+    ".gitattributes",
     "README.md",
     "START_HERE.md",
     "COURSE_MAP.md",
+    "THEORY_SOURCE_POLICY.md",
+    "THEORY_GAP_MATRIX.md",
     "requirements.txt",
     "CITATION.cff",
     "LICENSE",
@@ -36,6 +39,7 @@ REQUIRED = [
     "flowmllab/cylinder_phase.py",
     "flowmllab/gas_dynamics.py",
     "flowmllab/mahdavi_deeponet.py",
+    "flowmllab/probabilistic_uq.py",
     "tests/test_core.py",
     "tests/test_cavity_rom.py",
     "tests/test_cylinder_lbm.py",
@@ -44,6 +48,7 @@ REQUIRED = [
     "tests/test_cylinder_phase.py",
     "tests/test_gas_dynamics.py",
     "tests/test_mahdavi_deeponet.py",
+    "tests/test_probabilistic_uq.py",
     "qa/build_week04_1_rom_notebook.py",
     "qa/add_colab_entrypoints.py",
     "qa/run_cavity_rom_validation.py",
@@ -54,6 +59,8 @@ REQUIRED = [
     "qa/run_cylinder_phase_stable.py",
     "qa/build_week8_gas_dynamics_figures.py",
     "qa/build_week9_mahdavi_deeponet_data.py",
+    "qa/build_probabilistic_uq_notebook.py",
+    "qa/run_probabilistic_uq_validation.py",
     ".github/workflows/week8-materials.yml",
     ".github/workflows/week9-materials.yml",
     "data/cavity_data.npz",
@@ -85,8 +92,13 @@ REQUIRED = [
     "notebooks/week05_06/P5_Rarefied_Cavity.ipynb",
     "notebooks/week05_06/P6_FP_Cavity_Closure.ipynb",
     "notebooks/week05_06/README.md",
+    "notebooks/week02_1/README.md",
+    "notebooks/week02_1/Probabilistic_UQ_CFD.ipynb",
     "lectures/week01_numerical_foundations.pdf",
     "lectures/week02_supervised_learning_rarefaction.pdf",
+    "lectures/week02_1_probabilistic_uq.pdf",
+    "lectures/source/week02_1_probabilistic_uq.pptx",
+    "lectures/source/build_week02_1_probabilistic_uq.mjs",
     "lectures/week03_kinetic_dsmc.pdf",
     "lectures/week04_cavity_surrogates_deeponet.pdf",
     "lectures/week05_06_project_guide.pdf",
@@ -175,6 +187,12 @@ REQUIRED = [
     "results/mahdavi_deeponet/nozzle_paper_field_errors.csv",
     "results/mahdavi_deeponet/nozzle_hard_case_baselines.csv",
     "results/mahdavi_deeponet/nozzle_pod_reference.csv",
+    "results/probabilistic_uq/README.md",
+    "results/probabilistic_uq/protocol.json",
+    "results/probabilistic_uq/summary.json",
+    "results/probabilistic_uq/blind_metrics.csv",
+    "results/probabilistic_uq/calibration.csv",
+    "results/probabilistic_uq/probabilistic_uq_validation.png",
     "results/article_validation/re1000_n65.npz",
     "results/article_validation/re1000_n129.npz",
     "results/article_validation/botella_pressure_reference.csv",
@@ -259,15 +277,23 @@ def validate_notebooks() -> tuple[int, int]:
                 for cell in cells
             ), f"missing learner-edition marker: {path}"
         count += 1
-    assert count == 22, f"expected 22 notebooks, found {count}"
+    assert count == 23, f"expected 23 notebooks, found {count}"
     return count, code_cells
 
 
 def validate_article_alignment() -> dict[str, float]:
     result_dir = ROOT / "results" / "article_figures"
-    ghia = json.loads((result_dir / "fig02_cavity_benchmark_metrics.json").read_text())
-    pressure = json.loads((result_dir / "fig08_pressure_recovery_metrics.json").read_text())
-    dsmc = json.loads((result_dir / "fig10a_mohammadzadeh_validation_metrics.json").read_text())
+    ghia = json.loads(
+        (result_dir / "fig02_cavity_benchmark_metrics.json").read_text(encoding="utf-8")
+    )
+    pressure = json.loads(
+        (result_dir / "fig08_pressure_recovery_metrics.json").read_text(encoding="utf-8")
+    )
+    dsmc = json.loads(
+        (result_dir / "fig10a_mohammadzadeh_validation_metrics.json").read_text(
+            encoding="utf-8"
+        )
+    )
     assert float(ghia["u_centerline_relative_l2"]) < 0.20
     assert float(ghia["v_centerline_relative_l2"]) < 0.20
     assert float(pressure["vertical_relative_l2_n129"]) < float(pressure["vertical_relative_l2_n65"])
@@ -278,10 +304,14 @@ def validate_article_alignment() -> dict[str, float]:
     assert float(dsmc["grid_change_40_to_60"]) < 0.015
 
     ghia_notebook = json.loads(
-        (ROOT / "notebooks" / "week01" / "03_cavity_ghia.ipynb").read_text()
+        (ROOT / "notebooks" / "week01" / "03_cavity_ghia.ipynb").read_text(
+            encoding="utf-8"
+        )
     )
     dsmc_notebook = json.loads(
-        (ROOT / "notebooks" / "week03" / "AI_in_Fluids_Week3_Lab2_Mini_DSMC_Cavity_Revised_Student.ipynb").read_text()
+        (ROOT / "notebooks" / "week03" / "AI_in_Fluids_Week3_Lab2_Mini_DSMC_Cavity_Revised_Student.ipynb").read_text(
+            encoding="utf-8"
+        )
     )
     ghia_opening = "\n".join("".join(cell.get("source", [])) for cell in ghia_notebook["cells"][:6])
     dsmc_opening = "\n".join("".join(cell.get("source", [])) for cell in dsmc_notebook["cells"][:6])
@@ -374,7 +404,9 @@ def validate_pod_deeponet_results() -> dict[str, float]:
 
 def validate_cavity_rom_results() -> dict[str, float]:
     result_dir = ROOT / "results" / "cavity_rom"
-    summary = json.loads((result_dir / "validation_summary.json").read_text())
+    summary = json.loads(
+        (result_dir / "validation_summary.json").read_text(encoding="utf-8")
+    )
     assert summary["status"] == "pass"
     assert summary["selected_rank"] == 16
     assert summary["selected_deim_dimension"] == 16
@@ -409,7 +441,7 @@ def validate_cavity_rom_results() -> dict[str, float]:
     assert float(blind["wall_rms_error"].max()) == 0.0
     assert float(blind["divergence_l2"].max()) < 1.0e-12
 
-    timing = json.loads((result_dir / "timing.json").read_text())
+    timing = json.loads((result_dir / "timing.json").read_text(encoding="utf-8"))
     assert float(timing["POD_Galerkin_speedup"]) < 1.0
     assert float(timing["POD_DEIM_speedup"]) > 2.0
     assert float(timing["break_even_query_count"]) > 1.0
@@ -421,7 +453,9 @@ def validate_cavity_rom_results() -> dict[str, float]:
         assert archive["deim_indices"].shape == (16,)
 
     notebook = json.loads(
-        (ROOT / "notebooks" / "week04" / "W4_1_Classical_ROM_Cavity.ipynb").read_text()
+        (ROOT / "notebooks" / "week04" / "W4_1_Classical_ROM_Cavity.ipynb").read_text(
+            encoding="utf-8"
+        )
     )
     source = "\n".join("".join(cell.get("source", [])) for cell in notebook["cells"])
     assert "load_deim_model" in source and "simulate_pod_deim" in source
@@ -480,12 +514,16 @@ def validate_cylinder_lbm_results() -> dict[str, float]:
                 )
                 assert int(case["restart_completed_steps"]) == expected_steps
 
-    protocol = json.loads((result_dir / "validation_protocol.json").read_text())
+    protocol = json.loads(
+        (result_dir / "validation_protocol.json").read_text(encoding="utf-8")
+    )
     assert protocol["profile"] == "quick"
     assert protocol["boundaries"]["cylinder"] == "Bouzidi interpolated circular wall"
     assert "not grid-converged" in " ".join(protocol["limitations"])
     notebook = json.loads(
-        (ROOT / "notebooks" / "week07" / "W7_Lattice_Boltzmann_Cylinder_Student.ipynb").read_text()
+        (ROOT / "notebooks" / "week07" / "W7_Lattice_Boltzmann_Cylinder_Student.ipynb").read_text(
+            encoding="utf-8"
+        )
     )
     source = "\n".join("".join(cell.get("source", [])) for cell in notebook["cells"])
     assert "Diagnostic gate: explain the POD failure" in source
@@ -502,7 +540,9 @@ def validate_cylinder_lbm_results() -> dict[str, float]:
     assert "re095_phase_stable_lbm_vs_decoder.mp4" in source
 
     blind_metrics = json.loads(
-        (ROOT / "results" / "cylinder_ml" / "blind_re100_metrics.json").read_text()
+        (ROOT / "results" / "cylinder_ml" / "blind_re100_metrics.json").read_text(
+            encoding="utf-8"
+        )
     )
     assert blind_metrics["split"]["blind_reynolds"] == 100
     assert blind_metrics["split"]["training_reynolds"] == [60, 80, 90, 110, 120, 140]
@@ -515,7 +555,9 @@ def validate_cylinder_lbm_results() -> dict[str, float]:
     assert (ROOT / "results" / "cylinder_ml" / "blind_re100_lbm_vs_neural.mp4").stat().st_size > 1_000_000
 
     cnn_metrics = json.loads(
-        (ROOT / "results" / "cylinder_cnn" / "multiscale_cnn_metrics.json").read_text()
+        (ROOT / "results" / "cylinder_cnn" / "multiscale_cnn_metrics.json").read_text(
+            encoding="utf-8"
+        )
     )
     protocol = cnn_metrics["protocol"]
     assert protocol["development_reynolds"] == [60, 80, 90, 110, 120, 140]
@@ -557,7 +599,9 @@ def validate_cylinder_lbm_results() -> dict[str, float]:
     assert cnn_metrics["blind"]["models"]["prediction"]["vorticity_relative_l2"] < 0.02
     assert (ROOT / "results" / "cylinder_cnn" / "re105_lbm_vs_multiscale_cnn.mp4").stat().st_size > 1_000_000
     phase_metrics = json.loads(
-        (ROOT / "results" / "cylinder_phase" / "phase_stable_metrics.json").read_text()
+        (ROOT / "results" / "cylinder_phase" / "phase_stable_metrics.json").read_text(
+            encoding="utf-8"
+        )
     )
     phase_protocol = phase_metrics["protocol"]
     assert phase_protocol["development_reynolds"] == [90, 110, 120, 140]
@@ -599,8 +643,10 @@ def validate_cylinder_grid_results() -> dict[str, float | bool]:
     result_dir = ROOT / "results" / "cylinder_grid_convergence"
     metrics = pd.read_csv(result_dir / "grid_metrics.csv")
     convergence = pd.read_csv(result_dir / "grid_convergence.csv")
-    summary = json.loads((result_dir / "grid_summary.json").read_text())
-    protocol = json.loads((result_dir / "grid_protocol.json").read_text())
+    summary = json.loads((result_dir / "grid_summary.json").read_text(encoding="utf-8"))
+    protocol = json.loads(
+        (result_dir / "grid_protocol.json").read_text(encoding="utf-8")
+    )
 
     assert metrics["nodes_per_diameter"].astype(int).tolist() == [12, 18, 27]
     assert metrics["Re"].astype(int).eq(100).all()
@@ -635,7 +681,9 @@ def validate_cylinder_grid_results() -> dict[str, float | bool]:
             assert metadata["config"]["ny"] == 8 * resolution
 
     notebook = json.loads(
-        (ROOT / "notebooks/week07/W7_Lattice_Boltzmann_Cylinder_Student.ipynb").read_text()
+        (ROOT / "notebooks/week07/W7_Lattice_Boltzmann_Cylinder_Student.ipynb").read_text(
+            encoding="utf-8"
+        )
     )
     source = "\n".join("".join(cell.get("source", [])) for cell in notebook["cells"])
     assert "LBM algorithm: one time step in seven operations" in source
@@ -661,19 +709,23 @@ def validate_week8_gas_dynamics_results() -> dict[str, object]:
 
     report = validate_week8_evidence(ROOT)
     result_dir = ROOT / "results" / "gas_dynamics_week8"
-    provenance = json.loads((result_dir / "provenance.json").read_text())
-    for filename, expected in provenance["copied_files"].items():
-        assert digest(result_dir / filename) == expected, filename
+    provenance = json.loads(
+        (result_dir / "provenance.json").read_text(encoding="utf-8")
+    )
     assert "not_permitted" in provenance["claim_boundary"]
     assert "other eight distributed cases remain unverified" in provenance[
         "claim_boundary"
     ]["su2_status"]
 
     lab1 = json.loads(
-        (ROOT / "notebooks/week08/W8_Lab1_Exact_Gas_Dynamics_Student.ipynb").read_text()
+        (ROOT / "notebooks/week08/W8_Lab1_Exact_Gas_Dynamics_Student.ipynb").read_text(
+            encoding="utf-8"
+        )
     )
     lab2 = json.loads(
-        (ROOT / "notebooks/week08/W8_Lab2_Gas_Dynamics_SciML_Evidence_Student.ipynb").read_text()
+        (ROOT / "notebooks/week08/W8_Lab2_Gas_Dynamics_SciML_Evidence_Student.ipynb").read_text(
+            encoding="utf-8"
+        )
     )
     lab1_source = "\n".join("".join(cell.get("source", [])) for cell in lab1["cells"])
     lab2_source = "\n".join("".join(cell.get("source", [])) for cell in lab2["cells"])
@@ -723,17 +775,23 @@ def validate_week9_mahdavi_deeponet_results() -> dict[str, object]:
         "retained final-article Table XIII evidence"
     ).all()
 
-    provenance = json.loads((result_dir / "provenance.json").read_text())
+    provenance = json.loads(
+        (result_dir / "provenance.json").read_text(encoding="utf-8")
+    )
     assert provenance["source_commit"] == "e1b234ba499408d3b6224633972f939f3b2301d6"
     assert len(provenance["source_files_sha256"]) == 15
     assert "not the article's DSMC" in provenance["claim_boundary"]["microstep_teaching_demo"]
     assert "not the paper's trained full" in provenance["claim_boundary"]["micro_nozzle_teaching_model"]
 
     lab1 = json.loads(
-        (ROOT / "notebooks/week09/W9_Lab1_Microstep_Zonal_DeepONet_Student.ipynb").read_text()
+        (
+            ROOT / "notebooks/week09/W9_Lab1_Microstep_Zonal_DeepONet_Student.ipynb"
+        ).read_text(encoding="utf-8")
     )
     lab2 = json.loads(
-        (ROOT / "notebooks/week09/W9_Lab2_Shock_Aligned_Nozzle_DeepONet_Student.ipynb").read_text()
+        (
+            ROOT / "notebooks/week09/W9_Lab2_Shock_Aligned_Nozzle_DeepONet_Student.ipynb"
+        ).read_text(encoding="utf-8")
     )
     lab1_source = "\n".join("".join(cell.get("source", [])) for cell in lab1["cells"])
     lab2_source = "\n".join("".join(cell.get("source", [])) for cell in lab2["cells"])
@@ -747,9 +805,33 @@ def validate_week9_mahdavi_deeponet_results() -> dict[str, object]:
     return report
 
 
+def validate_probabilistic_uq_results() -> dict[str, object]:
+    """Verify the Week-2.1 UQ evidence, blind split, and originality boundary."""
+    sys.path.insert(0, str(ROOT))
+    from flowmllab.probabilistic_uq import (  # noqa: PLC0415
+        validate_probabilistic_uq_evidence,
+    )
+
+    report = validate_probabilistic_uq_evidence(ROOT)
+    notebook = json.loads(
+        (
+            ROOT / "notebooks/week02_1/Probabilistic_UQ_CFD.ipynb"
+        ).read_text(encoding="utf-8")
+    )
+    source = "\n".join("".join(cell.get("source", [])) for cell in notebook["cells"])
+    assert "Observation model before loss function" in source
+    assert "Blind gate" in source
+    assert "coverage over correlated CFD nodes is descriptive" in source
+    assert "No restricted course handout" in source
+    policy = (ROOT / "THEORY_SOURCE_POLICY.md").read_text(encoding="utf-8")
+    assert "Homework, solution sets" in policy
+    assert "Independent-authoring workflow" in policy
+    return report
+
+
 def validate_pdfs() -> int:
     pdfs = sorted((ROOT / "lectures").glob("*.pdf"))
-    assert len(pdfs) == 7
+    assert len(pdfs) == 8
     for path in pdfs:
         result = subprocess.run(
             ["pdfinfo", str(path)], check=True, capture_output=True, text=True
@@ -771,6 +853,7 @@ def main() -> None:
     cylinder_grid_metrics = validate_cylinder_grid_results()
     week8_metrics = validate_week8_gas_dynamics_results()
     week9_metrics = validate_week9_mahdavi_deeponet_results()
+    uq_metrics = validate_probabilistic_uq_results()
     article_metrics = validate_article_alignment()
     pdfs = validate_pdfs()
     python_files = sorted(ROOT.rglob("*.py"))
@@ -789,6 +872,7 @@ def main() -> None:
     print("Cylinder grid-verification metrics:", json.dumps(cylinder_grid_metrics, sort_keys=True))
     print("Week-8 gas-dynamics metrics:", json.dumps(week8_metrics, sort_keys=True))
     print("Week-9 Roohi--Mahdavi metrics:", json.dumps(week9_metrics, sort_keys=True))
+    print("Probabilistic-UQ metrics:", json.dumps(uq_metrics, sort_keys=True))
     print("Article-aligned validation metrics:", json.dumps(article_metrics, sort_keys=True))
 
 

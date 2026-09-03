@@ -17,6 +17,11 @@ validation take priority over increasing the number of methods.
 
 ## Next release
 
+- retain the Week-2.1 probabilistic-UQ increment: exact Bayesian regression,
+  POD--GP cavity fields, proper scores, validation-only interval scaling, and
+  the blind under-coverage result;
+- enforce the public theory-source policy and originality record;
+- keep checksummed text evidence and release QA stable on Windows;
 - add a faster optional backend for the qualification-resolution LBM sweep;
 - add interpolated curved-wall bounce-back and domain/grid refinement evidence;
 - add a compact four-frame one-step/rollout exercise after the Reynolds/phase

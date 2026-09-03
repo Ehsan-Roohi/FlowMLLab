@@ -1,0 +1,25 @@
+* text=auto
+
+# Keep checksummed and generated text evidence byte-stable across platforms.
+*.cff text eol=lf
+*.csv text eol=lf
+*.json text eol=lf
+*.ipynb text eol=lf
+*.md text eol=lf
+*.py text eol=lf
+*.toml text eol=lf
+*.tex text eol=lf
+*.bib text eol=lf
+*.yml text eol=lf
+*.yaml text eol=lf
+
+# Scientific and publication assets must never receive newline conversion.
+*.gif binary
+*.npz binary
+*.npy binary
+*.pdf binary
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.pptx binary
+*.zip binary

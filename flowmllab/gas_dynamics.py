@@ -9,6 +9,7 @@ checkout.  GasDynamicsSciML remains the authoritative research implementation.
 from __future__ import annotations
 
 from functools import lru_cache
+import hashlib
 import json
 import math
 from pathlib import Path
@@ -388,6 +389,12 @@ def load_week8_evidence(root: str | Path) -> dict[str, Any]:
     }
 
 
+def _canonical_text_digest(path: Path) -> str:
+    """Hash UTF-8 evidence after canonicalizing platform newlines to LF."""
+    payload = path.read_bytes().replace(b"\r\n", b"\n").replace(b"\r", b"\n")
+    return hashlib.sha256(payload).hexdigest()
+
+
 def validate_week8_evidence(root: str | Path) -> dict[str, Any]:
     """Fail closed if the frozen Week-8 evidence or its interpretation drifts."""
     evidence = load_week8_evidence(root)
@@ -397,6 +404,12 @@ def validate_week8_evidence(root: str | Path) -> dict[str, Any]:
     application = evidence["application"]
     physical = evidence["physical"]
     provenance = evidence["provenance"]
+    result_dir = Path(root) / "results" / "gas_dynamics_week8"
+
+    for filename, expected in provenance.get("copied_files", {}).items():
+        path = result_dir / filename
+        if not path.is_file() or _canonical_text_digest(path) != expected:
+            raise ValueError(f"Week-8 retained evidence hash mismatch: {filename}")
 
     expected_problems = {
         "Rayleigh inverse",

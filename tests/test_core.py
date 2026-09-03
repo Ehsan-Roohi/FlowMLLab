@@ -34,7 +34,9 @@ class FlowMLLabCoreTests(unittest.TestCase):
             report = flowmllab.validate_core_assets()
         self.assertEqual(report["status"], "pass")
         self.assertEqual(report["dataset_sha256"], EXPECTED_DATA_SHA256)
-        self.assertTrue(report["root"].endswith("flowmllab/assets"))
+        asset_root = Path(report["root"])
+        self.assertEqual(asset_root.name, "assets")
+        self.assertEqual(asset_root.parent.name, "flowmllab")
 
     def test_cli_smoke(self) -> None:
         captured = io.StringIO()
@@ -61,6 +63,11 @@ class FlowMLLabCoreTests(unittest.TestCase):
     def test_mahdavi_cli_is_exposed(self) -> None:
         args = build_parser().parse_args(["mahdavi", "--root", str(ROOT)])
         self.assertEqual(args.command, "mahdavi")
+        self.assertEqual(args.root, ROOT)
+
+    def test_probabilistic_uq_cli_is_exposed(self) -> None:
+        args = build_parser().parse_args(["uq", "--root", str(ROOT)])
+        self.assertEqual(args.command, "uq")
         self.assertEqual(args.root, ROOT)
 
 

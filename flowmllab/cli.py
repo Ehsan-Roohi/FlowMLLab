@@ -8,6 +8,7 @@ from pathlib import Path
 from . import __version__
 from .core import (
     ValidationError,
+    discover_repository_root,
     format_report,
     generate_cavity_rom_validation,
     generate_validation_figures,
@@ -17,6 +18,7 @@ from .core import (
     verify_gas_dynamics_week8,
     verify_mahdavi_deeponet_week9,
 )
+from .probabilistic_uq import validate_probabilistic_uq_evidence
 
 
 def build_parser() -> argparse.ArgumentParser:
@@ -53,12 +55,15 @@ def build_parser() -> argparse.ArgumentParser:
         help="verify retained Week-8 exact and learned gas-dynamics evidence",
     )
     gasdynamics.add_argument("--root", type=Path, help="FlowMLLab checkout root")
-
     mahdavi = subparsers.add_parser(
         "mahdavi",
         help="verify Week-9 micro-step evidence and public micro-nozzle DSMC derivative",
     )
     mahdavi.add_argument("--root", type=Path, help="FlowMLLab checkout root")
+    uq = subparsers.add_parser(
+        "uq", help="verify retained probabilistic-UQ cavity evidence"
+    )
+    uq.add_argument("--root", type=Path, help="FlowMLLab checkout root")
     return parser
 
 
@@ -80,6 +85,16 @@ def main(argv: list[str] | None = None) -> int:
             return verify_gas_dynamics_week8(args.root)
         if args.command == "mahdavi":
             return verify_mahdavi_deeponet_week9(args.root)
+        if args.command == "uq":
+            root = discover_repository_root(args.root)
+            try:
+                report = validate_probabilistic_uq_evidence(root)
+            except (OSError, ValueError, KeyError) as error:
+                raise ValidationError(
+                    f"Probabilistic-UQ evidence failed: {error}"
+                ) from error
+            print(format_report(report))
+            return 0
     except ValidationError as error:
         print(f"FlowMLLab validation failed: {error}")
         return 2

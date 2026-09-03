@@ -4,13 +4,14 @@
 | --- | --- | --- |
 | `week01_numerical_foundations.pdf` | Python, TensorFlow, CFD fields, finite differences, convergence, Ghia validation | `notebooks/week01/` |
 | `week02_supervised_learning_rarefaction.pdf` | Neurons, MLPs, losses, optimization, scaling, case-wise splits, rarefaction | `notebooks/week02/` |
+| `week02_1_probabilistic_uq.pdf` | Observation models, exact Bayesian regression, POD--Gaussian-process fields, proper scores, leakage-free calibration, retained blind under-coverage | `notebooks/week02_1/Probabilistic_UQ_CFD.ipynb` |
 | `week03_kinetic_dsmc.pdf` | Distribution functions, Maxwellian moments, sampling error, DSMC | `notebooks/week03/` |
 | `week04_cavity_surrogates_deeponet.pdf` | Data qualification, scalar/field surrogates, DeepONet, physical metrics | `notebooks/week04/` |
 | `week05_06_project_guide.pdf` | Six project tracks, frozen protocols, POD, uncertainty, rarefied cavity, FP closure | `notebooks/week05_06/P0_Project_Setup.ipynb` through `P6_FP_Cavity_Closure.ipynb` |
 | `week07_cylinder_lbm_neural_surrogate.pdf` | Circular-cylinder physics; concise D2Q9 BGK/TRT algorithm; curved-wall boundaries; force and gated Strouhal diagnostics; executed three-grid study with retained formal asymptotic/GCI failure; POD/CNN failure analysis; and leakage-controlled 277-frame phase-stable validation | `notebooks/week07/W7_Lattice_Boltzmann_Cylinder_Student.ipynb` |
 | `week08_gas_dynamics_sciml.pdf` | Exact Rayleigh, Fanno, oblique-shock, nozzle-shock, and shock-tube physics; branch-aware inversion; exact/interpolation/MLP decision rules; edge generalization; dimensional scaling; and a qualified SU2 CFD bridge | `notebooks/week08/W8_Lab1_Exact_Gas_Dynamics_Student.ipynb` and `W8_Lab2_Gas_Dynamics_SciML_Evidence_Student.ipynb` |
 
-Editable sources are included in `source/` where they were available. The PDF is the authoritative rendered lecture for this release.
+Editable sources are included in `source/` where they were available. The PDF is the authoritative rendered lecture for this release; Week 2.1 also includes an editable PPTX and its deterministic JavaScript builder.
 
 Recommended teaching pattern for each meeting:
 

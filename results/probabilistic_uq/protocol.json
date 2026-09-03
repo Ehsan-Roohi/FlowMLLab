@@ -1,0 +1,40 @@
+{
+  "module": "Week 2.1 \u2014 Probabilistic UQ for CFD surrogates",
+  "dataset": "data/cavity_data.npz",
+  "dataset_sha256": "09b96b744ee4d18126d8dcc92feb60e128774a1b4d41bb3d8c90a63ccfbabc36",
+  "split_unit": "complete Reynolds-number case",
+  "training_cases": [
+    100.0,
+    150.0,
+    200.0,
+    225.0,
+    250.0,
+    350.0,
+    400.0
+  ],
+  "validation_case": 300.0,
+  "blind_cases": [
+    175.0,
+    275.0,
+    375.0
+  ],
+  "frozen_model": {
+    "representation": "velocity-only centered POD",
+    "rank": 4,
+    "coefficient_model": "independent fixed-hyperparameter Gaussian processes",
+    "kernel": "1.0 * RBF(length_scale=0.75) + WhiteKernel(1e-8)"
+  },
+  "calibration": {
+    "method": "single multiplicative standard-deviation scale",
+    "fit_case": 300.0,
+    "target_level": 0.9,
+    "claim_boundary": "Validation-only descriptive rescaling; no finite-sample guarantee is claimed for correlated grid nodes or shifted physical regimes."
+  },
+  "baseline": "piecewise-linear complete-case interpolation",
+  "public_sources": [
+    "https://gaussianprocess.org/gpml/",
+    "https://doi.org/10.1198/016214506000001437",
+    "https://doi.org/10.1111/1467-9868.00294"
+  ],
+  "originality_declaration": "All prose, equations, code, figures, and exercises in this Week-2.1 module were created for FlowMLLab from public sources and FlowMLLab-owned data. No restricted course handout, solution, figure, or code was incorporated."
+}

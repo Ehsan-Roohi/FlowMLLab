@@ -11,11 +11,12 @@ This page is the shortest reliable path from a fresh checkout to a meaningful sc
 | Scientific-ML ready | You already understand CFD validation and supervised learning | `notebooks/week05_06/P0_Project_Setup.ipynb` | [Open in Colab](https://colab.research.google.com/github/Ehsan-Roohi/FlowMLLab/blob/main/notebooks/week05_06/P0_Project_Setup.ipynb) |
 | Gas-dynamics ready | You know Mach number and perfect-gas relations and want exact-to-ML comparisons | `notebooks/week08/W8_Lab1_Exact_Gas_Dynamics_Student.ipynb` | [Open in Colab](https://colab.research.google.com/github/Ehsan-Roohi/FlowMLLab/blob/main/notebooks/week08/W8_Lab1_Exact_Gas_Dynamics_Student.ipynb) |
 | Neural-operator ready | You want geometry-aware and shock-aligned rarefied-flow case studies | `notebooks/week09/W9_Lab1_Microstep_Zonal_DeepONet_Student.ipynb` | [Open in Colab](https://colab.research.google.com/github/Ehsan-Roohi/FlowMLLab/blob/main/notebooks/week09/W9_Lab1_Microstep_Zonal_DeepONet_Student.ipynb) |
+| Week 2.1 probabilistic ML | You want posterior prediction, proper scores, and CFD uncertainty calibration | `notebooks/week02_1/Probabilistic_UQ_CFD.ipynb` | [Open in Colab](https://colab.research.google.com/github/Ehsan-Roohi/FlowMLLab/blob/main/notebooks/week02_1/Probabilistic_UQ_CFD.ipynb) |
 | Instructor adoption | You are planning a course or workshop | `COURSE_MAP.md`, then `lectures/` |
 
 Do not begin with Track 6 unless you already understand case-wise splitting, scaling, offline versus closed-loop validation, and GPU troubleshooting.
 
-The complete [notebook launcher](notebooks/README.md) links directly to all 22
+The complete [notebook launcher](notebooks/README.md) links directly to all 23
 Colab notebooks. Their first code cells obtain the repository and package, so a
 fresh Colab runtime does not require manual file uploads.
 
@@ -76,6 +77,7 @@ Typical student runtimes are approximate:
 | Week 7 cylinder LBM | CPU | <2 min with retained evidence; the complete three-grid regeneration is intentionally an instructor/assignment run |
 | Week 8 exact gas dynamics and SciML evidence | CPU | <7 min for both labs; full five-problem model regeneration remains optional |
 | Week 9 micro-step and micro-nozzle DeepONet cases | CPU | <6 min for both labs; full 2-D research-model retraining is not included |
+| Week 2.1 probabilistic UQ | CPU | <1 min with retained evidence; no TensorFlow required |
 
 ## 5. Keep blind cases blind
 

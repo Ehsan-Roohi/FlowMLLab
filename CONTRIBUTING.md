@@ -5,6 +5,11 @@ software fixes, and well-scoped extensions to the existing CFD-to-SciML
 workflows. Please do not post private student work or unpublished restricted
 datasets in a public issue.
 
+Theory and teaching contributions must also follow
+[`THEORY_SOURCE_POLICY.md`](THEORY_SOURCE_POLICY.md). Topic-level inspiration is
+not permission to reuse restricted slides, handouts, solutions, figures, code,
+or student work.
+
 For a first contribution, start with the scoped entries in
 [ROADMAP.md](ROADMAP.md). Usage questions and examples belong in GitHub
 Discussions once enabled; reproducible faults and bounded extension proposals

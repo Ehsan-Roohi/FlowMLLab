@@ -24,6 +24,8 @@ keywords = [
   "rarefied-flow",
   "deeponet",
   "DSMC",
+  "uncertainty-quantification",
+  "gaussian-processes",
   "reproducibility",
 ]
 classifiers = [

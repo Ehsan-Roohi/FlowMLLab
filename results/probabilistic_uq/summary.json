@@ -1,0 +1,29 @@
+{
+  "status": "pass",
+  "training_cases": [
+    100.0,
+    150.0,
+    200.0,
+    225.0,
+    250.0,
+    350.0,
+    400.0
+  ],
+  "validation_case": 300.0,
+  "blind_cases": [
+    175.0,
+    275.0,
+    375.0
+  ],
+  "pod_rank": 4,
+  "length_scale_normalized_Re": 0.75,
+  "gp_noise_level": 1e-08,
+  "validation_scale_factor": 1.0567231271479207,
+  "mean_pod_gp_relative_L2_uv": 0.003330456635813814,
+  "mean_interpolation_relative_L2_uv": 0.0041384719577137056,
+  "aggregate_raw_90_coverage": 0.6145964558662972,
+  "aggregate_calibrated_90_coverage": 0.6522633744855967,
+  "max_wall_error": 1.6674585965034185e-15,
+  "max_divergence_L2": 1.1814808177345442e-15,
+  "coverage_interpretation": "Descriptive pointwise coverage; spatial CFD errors are correlated, so this is not an independent-sample coverage guarantee."
+}

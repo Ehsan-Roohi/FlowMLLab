@@ -1,7 +1,5 @@
 from __future__ import annotations
 
-import hashlib
-import json
 from pathlib import Path
 import unittest
 
@@ -25,12 +23,6 @@ from flowmllab.gas_dynamics import (
 
 ROOT = Path(__file__).resolve().parents[1]
 RESULTS = ROOT / "results" / "gas_dynamics_week8"
-
-
-def digest(path: Path) -> str:
-    result = hashlib.sha256()
-    result.update(path.read_bytes())
-    return result.hexdigest()
 
 
 class GasDynamicsWeek8Tests(unittest.TestCase):
@@ -86,9 +78,6 @@ class GasDynamicsWeek8Tests(unittest.TestCase):
         self.assertEqual(report["problems"], 5)
         self.assertLess(report["max_primary_relative_l2"], 3.5e-3)
         self.assertEqual(report["shock_tube_queries"], 100_000)
-        provenance = json.loads((RESULTS / "provenance.json").read_text())
-        for filename, expected in provenance["copied_files"].items():
-            self.assertEqual(digest(RESULTS / filename), expected)
 
 
 if __name__ == "__main__":

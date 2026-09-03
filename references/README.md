@@ -9,6 +9,18 @@ The list below is a learning route, not a requirement to read every source befor
 3. **Goodfellow, Bengio & Courville (2016), Deep Learning.** Background on optimization, regularization, and neural networks. The online edition is useful for terminology and derivations.
 4. **Brunton, Noack & Koumoutsakos (2020), Machine Learning for Fluid Mechanics.** A compact map of ML tasks in fluid mechanics and the role of physical structure. [DOI](https://doi.org/10.1146/annurev-fluid-010719-060214)
 
+## Probabilistic prediction and calibration
+
+- **Rasmussen & Williams (2006), Gaussian Processes for Machine Learning.** Canonical treatment of GP regression, predictive distributions, kernels, and decision theory. [Open book site](https://gaussianprocess.org/gpml/)
+- **Gneiting & Raftery (2007), Strictly Proper Scoring Rules, Prediction, and Estimation.** Foundation for evaluating full predictive distributions with scores such as the logarithmic score and CRPS. [DOI](https://doi.org/10.1198/016214506000001437)
+- **Kennedy & O'Hagan (2001), Bayesian Calibration of Computer Models.** Separates uncertain model inputs from discrepancy between a simulator and physical observations. [DOI](https://doi.org/10.1111/1467-9868.00294)
+- **Lakshminarayanan, Pritzel & Blundell (2017), Simple and Scalable Predictive Uncertainty Estimation Using Deep Ensembles.** Practical ensemble approach and probabilistic evaluation; useful for understanding what FlowMLLab's repeated-seed spread does and does not measure. [NeurIPS paper](https://proceedings.neurips.cc/paper/2017/hash/9ef2ed4b7fd2c810847fffa5a85bce38-Abstract.html)
+
+The incremental Week-2.1 probabilistic-UQ notebook uses these public sources and
+FlowMLLab-owned data. Its single-field interval rescaling is retained as a
+descriptive calibration experiment, not a coverage guarantee for correlated
+spatial nodes or shifted physical regimes.
+
 ## Numerical benchmark and validation
 
 - **Ghia, Ghia & Shin (1982).** Classical centerline data for the lid-driven cavity; used to distinguish solver convergence from validation. [DOI](https://doi.org/10.1016/0021-9991(82)90058-4)

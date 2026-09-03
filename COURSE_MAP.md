@@ -8,6 +8,7 @@
 | 2A | Features, targets, scaling, and losses | Build a rarefied-flow regression dataset | Explicit feature/target table and split definition |
 | 2B | Knudsen number and model validity | Classify continuum, slip, transition, and free-molecular regimes | Explain why nondimensional inputs encode physical validity |
 | 2C | Baseline before neural model | Polynomial/interpolation versus DNN | Interpolation/extrapolation comparison and limitation statement |
+| 2.1 | Observation models, Bayesian prediction, proper scores, and calibration | Exact Bayesian velocity-profile update; POD--GP cavity fields; validation-only interval scaling | Complete-case split; interpolation baseline; NLL/CRPS; blind coverage and width; retained under-coverage; physical diagnostics |
 | 3A | Maxwellian distributions and macroscopic moments | Sample molecular velocities and recover mean/T | Error-versus-sample-size plot and expected sampling slope |
 | 3B | DSMC logic | Move, index, collide, reflect, sample | Map every algorithmic step to its physical role |
 | 3C | Noisy field estimation | Mini particle cavity and averaging | Mean fields, uncertainty discussion, and transient/noise distinction |
@@ -44,7 +45,7 @@ Use Weeks 7 and 8 only after the original six-week sequence. Week 7 extends to u
 
 ### Full semester
 
-Expand each row into a lecture/lab pair. Add grid/time-step studies, multi-parameter or geometry-varying data, a dedicated neural-operator unit, uncertainty calibration, and a research-resolution final project.
+Expand each row into a lecture/lab pair. Add grid/time-step studies, multi-parameter or geometry-varying data, a dedicated neural-operator unit, the Week-2.1 probabilistic-UQ increment, and a research-resolution final project.
 
 ## Assessment philosophy
 
