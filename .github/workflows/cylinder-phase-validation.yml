@@ -1,0 +1,64 @@
+name: Cylinder phase-stable validation
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - ".github/workflows/cylinder-phase-validation.yml"
+
+permissions:
+  contents: write
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+
+      - name: Install package and rendering dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y ffmpeg
+          python -m pip install --upgrade pip
+          python -m pip install -e ".[test]"
+          python -m pip install pillow
+
+      - name: Download checksummed CFD release inputs
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          mkdir -p data/cylinder_cfd
+          gh release download cylinder-cfd-v1 --pattern manifest.json --dir data/cylinder_cfd
+          for re in 090 095 100 105 110 120 140; do
+            gh release download cylinder-cfd-v1 --pattern "cylinder_cfd_re${re}.npz" --dir data/cylinder_cfd
+          done
+
+      - name: Verify decoder tests
+        run: python -m pytest tests/test_cylinder_phase.py -q
+
+      - name: Regenerate validation, spectra, and autoplay demo
+        run: python qa/run_cylinder_phase_stable.py
+
+      - name: Commit reproducible evidence
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -f results/cylinder_phase/phase_stable_metrics.json
+          git add -f results/cylinder_phase/phase_stable_validation.png
+          git add -f results/cylinder_phase/re095_phase_stable_lbm_vs_decoder.mp4
+          git add -f results/cylinder_phase/re095_phase_stable_lbm_vs_decoder.webp
+          git add -f results/cylinder_phase/re095_phase_stable_poster.png
+          if git diff --cached --quiet; then
+            echo "Evidence is already current."
+          else
+            git commit -m "Add autonomous cylinder validation evidence [skip ci]"
+            git push origin HEAD:main
+          fi
