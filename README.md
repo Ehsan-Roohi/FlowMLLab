@@ -19,15 +19,20 @@ exercise to physics-checked POD--DeepONet benchmarks when ready.
 ## Featured: circular-cylinder vortex shedding
 
 The optional Week 7 extension advances from the steady cavity to an unsteady circular-cylinder
-wake. A D2Q9 lattice-Boltzmann solver generates the reference fields. A phase-stable
+wake. A D2Q9 lattice-Boltzmann solver generates the educational CFD labels. A phase-stable
 learned decoder is initialized from four true fields and then predicts all 277 future
 fields of the fresh unseen `Re=95` case with no future CFD input.
+
+The learned cylinder models are evaluated against the retained educational
+`D/dx=12` LBM labels. A separate `Re=100` three-grid study audits the CFD itself;
+it passes statistical and practical fine-pair gates but does **not** establish a
+positive-order asymptotic/GCI sequence.
 
 <p align="center">
   <img src="results/cylinder_phase/re095_phase_stable_lbm_vs_decoder.webp" alt="Animated fresh Re=95 comparison of circular-cylinder LBM vorticity and an autonomous phase-stable learned decoder" width="100%">
 </p>
 
-<p align="center"><em>The comparison plays automatically and loops. Across 277 autonomous future frames: 4.281% global vorticity relative L2 error, 5.194% worst-frame error, and 0.264% Strouhal error.</em><br><a href="results/cylinder_phase/re095_phase_stable_lbm_vs_decoder.mp4">Open the full-resolution MP4</a> · <a href="results/cylinder_phase/phase_stable_validation.png">Inspect validation and spectra</a></p>
+<p align="center"><em>The comparison plays automatically and loops. Relative to the educational LBM labels, the 277 autonomous future frames have 4.281% global vorticity relative L2 error, 5.194% worst-frame error, and 0.264% Strouhal error.</em><br><a href="results/cylinder_phase/re095_phase_stable_lbm_vs_decoder.mp4">Open the full-resolution MP4</a> · <a href="results/cylinder_phase/phase_stable_validation.png">Inspect validation and spectra</a></p>
 
 ### Cavity benchmark
 
@@ -39,12 +44,15 @@ fields of the fresh unseen `Re=95` case with no future CFD input.
 
 <p align="center"><em>Three retained test cases from the versioned evidence. Velocity and zero-mean pressure are direct outputs of separate POD--DeepONet heads.</em></p>
 
-| Verified result | Retained evidence |
+| Audited result | Retained evidence / decision |
 | --- | ---: |
-| Fresh unseen `Re=95`, 277-frame autonomous vorticity error | **4.281%** global; **5.194%** worst frame |
-| Fresh unseen `Re=95` Strouhal error | **0.264%** |
-| Retained `Re=105` one-step cylinder vorticity error | **0.815%** relative $L_2$; cubic baseline **1.053%** |
-| Mean cylinder-wake profile error at `2D,4D,6D,8D` | **0.804%** relative $L_2$ |
+| Independent `Re=100` LBM grid study | `D/dx=12,18,27`; all statistical gates **PASS**; formal asymptotic/GCI gate **FAIL** |
+| Fine-pair CFD sensitivity, `D/dx=18→27` | $\overline C_D$: **2.142%**; $St$: **0.512%**; $L_r/D$: **1.361%** — all declared practical limits pass |
+| Finest CFD versus independent 2-D reference bands | $\overline C_D$ **10.335% above** the upper bound; $St$ **6.908% above** the upper bound; $L_r/D$ **inside** its band |
+| Fresh unseen `Re=95`, 277-frame autonomous vorticity error versus educational LBM labels | **4.281%** global; **5.194%** worst frame |
+| Fresh unseen `Re=95` Strouhal error versus educational LBM labels | **0.264%** |
+| Retained `Re=105` one-step cylinder vorticity error versus educational LBM labels | **0.815%** relative $L_2$; cubic baseline **1.053%** |
+| Mean cylinder-wake profile error versus educational LBM labels at `2D,4D,6D,8D` | **0.804%** relative $L_2$ |
 | Three-seed velocity error on retained cavity cases | **0.0727%–0.4455%** relative $L_2$ |
 | Direct zero-mean pressure prediction | **0.1073%–0.2506%** relative $L_2$ |
 | Repeated three-field evaluation versus a fresh recorded CPU CFD solve | **approximately $5.3\times10^3\times$ faster** |
