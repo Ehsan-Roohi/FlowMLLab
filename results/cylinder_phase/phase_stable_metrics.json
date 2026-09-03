@@ -1,0 +1,55 @@
+{
+  "protocol": {
+    "development_reynolds": [
+      90,
+      110,
+      120,
+      140
+    ],
+    "validation_reynolds": 100,
+    "fresh_test_reynolds": 95,
+    "retained_test_reynolds": 105,
+    "initial_true_frames": 4,
+    "future_cfd_inputs": 0,
+    "selection": "harmonic order minimizes validation global vorticity error"
+  },
+  "validation_scores": {
+    "2": 0.17978140711784363,
+    "3": 0.08745641261339188,
+    "4": 0.0664522722363472,
+    "5": 0.0617026649415493,
+    "6": 0.06037329509854317
+  },
+  "selected_harmonics": 6,
+  "validation": {
+    "future_frames": 277,
+    "vorticity_global_relative_l2": 0.06037329509854317,
+    "vorticity_max_frame_relative_l2": 0.07958615571260452,
+    "vorticity_last_frame_relative_l2": 0.07958615571260452,
+    "cfd_strouhal": 0.18181314259001635,
+    "predicted_strouhal": 0.18118867537936398,
+    "strouhal_relative_error": 0.0034346648529173193,
+    "passes": true
+  },
+  "fresh_test": {
+    "future_frames": 277,
+    "vorticity_global_relative_l2": 0.04281364753842354,
+    "vorticity_max_frame_relative_l2": 0.05193507298827171,
+    "vorticity_last_frame_relative_l2": 0.05193507298827171,
+    "cfd_strouhal": 0.17942809209737237,
+    "predicted_strouhal": 0.17895510335023576,
+    "strouhal_relative_error": 0.0026360908239492827,
+    "passes": true
+  },
+  "retained_test": {
+    "future_frames": 277,
+    "vorticity_global_relative_l2": 0.046254441142082214,
+    "vorticity_max_frame_relative_l2": 0.062401190400123596,
+    "vorticity_last_frame_relative_l2": 0.061545729637145996,
+    "cfd_strouhal": 0.18388670656123726,
+    "predicted_strouhal": 0.1834222474084922,
+    "strouhal_relative_error": 0.0025257897181947438,
+    "passes": true
+  },
+  "all_gates_pass": true
+}
