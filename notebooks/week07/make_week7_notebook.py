@@ -70,9 +70,10 @@ By the end, you should be able to:
 3. extract $C_D$, $C_L$, recirculation length, and Strouhal number from an LBM run;
 4. separate a fast demonstration from a numerically qualified result;
 5. split time-resolved data by **complete Reynolds case**, never random snapshots; and
-6. diagnose why a global POD surrogate diffuses advecting vortices; and
+6. diagnose why a global POD surrogate diffuses advecting vortices;
 7. validate a four-frame multi-scale CNN with downstream enstrophy and spectra,
-   while separating low-error one-step prediction from recursive rollout.
+   while separating low-error one-step prediction from recursive rollout; and
+8. construct and audit a phase-stable learned decoder for autonomous long-horizon prediction.
 """),
     md(r"""
 ## Concept map and scope
@@ -83,8 +84,9 @@ By the end, you should be able to:
 \rightarrow \{C_D,C_L,St,L_r\}
 \rightarrow \text{Reynolds sweep}
 \rightarrow \text{POD failure baseline}
-\rightarrow \text{four-frame CNN}
-\rightarrow \text{validation then retained held-out forecast}.
+\rightarrow \text{four-frame CNN audit}
+\rightarrow \text{phase-stable decoder}
+\rightarrow \text{validation then fresh test}.
 \]
 
 For an effectively unconfined two-dimensional cylinder, the classical sequence is approximately
@@ -107,7 +109,8 @@ The precise onset is sensitive to blockage, domain length, boundary treatment, c
 - The transverse boundary is periodic. Thus the numerical problem is formally a cylinder array of pitch $L_y$; keep $D/L_y$ small and report it.
 - Complete Reynolds cases remain on one side of each split. Random temporal-frame splitting is prohibited.
 - The archived POD result at $Re=100$ is now a **validation/failure case** because its field was inspected to design the CNN.
-- CNN architecture, loss, normalization, and stopping were selected only with $Re=100$; $Re=105$ is the retained withheld interpolation test for this release.
+- CNN architecture, loss, normalization, and stopping were selected only with $Re=100$; $Re=105$ is the retained withheld interpolation test for that experiment.
+- For the long-horizon decoder, `Re=90,110,120,140` are development, `Re=100` is validation, `Re=95` is a fresh test opened once after harmonic-order selection, and `Re=105` is retained historical evidence.
 """),
     code(r"""
 # FLOWMLLAB_COLAB_BOOTSTRAP_V1
@@ -597,6 +600,108 @@ $(x-x_c)/D=2,4,6,8$, plus exact no-slip and all four non-neural baselines.
 The autonomous-rollout gate is separate from the one-step gate.
 """),
     md(r"""
+## 7. Phase-stable correction: 277 autonomous future fields
+
+The recursive CNN failure identifies a specific mechanism: every predicted
+field becomes part of the next input, so small transport, amplitude, and phase
+errors accumulate. For a saturated low-Reynolds cylinder wake, the dominant
+dynamics are approximately periodic. We therefore introduce a separate,
+transparent **phase-stable learned Fourier decoder**:
+
+\[
+\widehat{\boldsymbol q}(x,y,\phi;Re)
+=\boldsymbol a_0(x,y;Re)
++\sum_{k=1}^{K}\left[
+\boldsymbol a_k^{s}(x,y;Re)\sin(k\phi)
++\boldsymbol a_k^{c}(x,y;Re)\cos(k\phi)\right],
+\]
+
+where \(\boldsymbol q=(u,v,p)\). Spatial coefficients are least-squares fits
+to complete development trajectories and are interpolated between bracketing
+development Reynolds cases. At a target Reynolds number,
+
+\[
+\phi_n=\phi_0+2\pi St(Re)\,n\Delta t^*.
+\]
+
+Only four true initial fields are used to align \(\phi_0\). After alignment,
+all 277 future fields use **zero future CFD inputs**. Because the phase is
+advanced explicitly instead of recursively inferred from predicted fields,
+the representation cannot numerically diffuse merely through repeated
+one-step feedback.
+
+This decoder is a learned reduced-order surrogate, not a neural network. The
+distinction is intentional: the CNN remains the low-error one-step model, while
+the Fourier decoder is the passed long-horizon correction for the saturated,
+nearly periodic regime.
+"""),
+    code(r"""
+phase_dir = REPO_ROOT / "results/cylinder_phase"
+phase_metrics = json.loads((phase_dir / "phase_stable_metrics.json").read_text())
+protocol = phase_metrics["protocol"]
+
+assert protocol["development_reynolds"] == [90, 110, 120, 140]
+assert protocol["validation_reynolds"] == 100
+assert protocol["fresh_test_reynolds"] == 95
+assert protocol["retained_test_reynolds"] == 105
+assert protocol["initial_true_frames"] == 4
+assert protocol["future_cfd_inputs"] == 0
+assert phase_metrics["selected_harmonics"] == 6
+assert phase_metrics["all_gates_pass"]
+
+phase_rows = []
+for split_name, label in (("validation", "Validation"),
+                          ("fresh_test", "Fresh test"),
+                          ("retained_test", "Retained test")):
+    values = phase_metrics[split_name]
+    phase_rows.append({
+        "split": label,
+        "Re": {"validation": 100, "fresh_test": 95, "retained_test": 105}[split_name],
+        "future frames": values["future_frames"],
+        "global vorticity error (%)": 100 * values["vorticity_global_relative_l2"],
+        "worst-frame error (%)": 100 * values["vorticity_max_frame_relative_l2"],
+        "last-frame error (%)": 100 * values["vorticity_last_frame_relative_l2"],
+        "CFD St": values["cfd_strouhal"],
+        "decoder St": values["predicted_strouhal"],
+        "St error (%)": 100 * values["strouhal_relative_error"],
+        "pass": values["passes"],
+    })
+phase_table = pd.DataFrame(phase_rows)
+display(phase_table.round(3))
+"""),
+    code(r"""
+display(Image(filename=str(phase_dir / "phase_stable_validation.png")))
+display(Image(filename=str(phase_dir / "re095_phase_stable_poster.png")))
+
+preview_url = "https://raw.githubusercontent.com/Ehsan-Roohi/FlowMLLab/main/results/cylinder_phase/re095_phase_stable_lbm_vs_decoder.webp"
+display(Image(url=preview_url))
+video_url = "https://raw.githubusercontent.com/Ehsan-Roohi/FlowMLLab/main/results/cylinder_phase/re095_phase_stable_lbm_vs_decoder.mp4"
+display(HTML(f'<video src="{video_url}" controls loop muted style="width:100%"></video>'))
+"""),
+    md(r"""
+### Frozen long-horizon gates and reproduction
+
+Harmonic order \(K\in\{2,3,4,5,6\}\) is selected only by global vorticity
+error on complete-case `Re=100` validation; \(K=6\) is then frozen. The fresh
+`Re=95` test is opened once. Every reported split must satisfy:
+
+- global vorticity relative \(L_2<15\%\);
+- worst-frame vorticity relative \(L_2<15\%\); and
+- relative Strouhal error \(<2\%\).
+
+The checksummed inputs are published in the `cylinder-cfd-v1` GitHub release.
+After downloading them into `data/cylinder_cfd/`, reproduce the full evidence:
+
+```bash
+python qa/validate_cylinder_cfd_dataset.py
+python qa/run_cylinder_phase_stable.py
+```
+
+The release workflow runs unit tests, downloads the versioned CFD inputs,
+regenerates the metrics/spectra/video, and commits evidence only after all
+gates pass.
+"""),
+    md(r"""
 ## Interpretation: what this exercise does and does not show
 
 - The POD result shows how a global low-rank representation can smear translated structures despite attractive aggregate errors.
@@ -605,6 +710,7 @@ The autonomous-rollout gate is separate from the one-step gate.
 - It does **not** identify the Hopf point: training is restricted to already unsteady cases and phase is supplied.
 - A low one-step field error does not guarantee correct force, frequency, or long-time phase; the retained recursive audit demonstrates that distinction.
 - The CNN one-step claim is useful only if it beats the best polynomial baseline and retains downstream amplitude, profile, complex spectrum, and physical diagnostics.
+- The phase-stable decoder passes a 277-frame autonomous test for saturated periodic wakes within the bracketed Reynolds interval; it does **not** establish arbitrary-transient, geometry, or extrapolation generality.
 
 For a research extension, use longer phase-aligned trajectories, train/validation/test Reynolds bands, multiple seeds, force consistency, 20–50-cycle phase drift, and independent high-fidelity DNS. None of those claims belongs in this classroom release unless executed.
 """),
@@ -619,7 +725,8 @@ For a research extension, use longer phase-aligned trajectories, train/validatio
 6. The archived POD failure, including why $Re=100$ is now validation rather than blind.
 7. The frozen CNN specification, polynomial-baseline comparison, validation gates, and retained $Re=105$ result.
 8. Enstrophy/profile/complex-spectral evidence at $2D,4D,6D,8D$ and the retained 50-step rollout audit.
-9. A short paragraph distinguishing an educational demonstration from quantitative DNS validation.
+9. The phase-decoder split, selected harmonic order, 277-frame errors, and LBM-versus-decoder Strouhal comparison.
+10. A short paragraph distinguishing an educational demonstration from quantitative DNS validation.
 
 ### Exercises
 
@@ -629,6 +736,7 @@ For a research extension, use longer phase-aligned trajectories, train/validatio
 4. Replace random snapshot splitting with complete-Re splitting and compare the two reported errors. Explain the leakage.
 5. Remove phase from both models. What failure is visible even if the mean field remains plausible?
 6. Hold out an edge case rather than an interpolated case. Why is extrapolation harder?
+7. Perturb the decoder Strouhal number by 1%. Predict and measure the accumulated phase error after 20 shedding cycles.
 """),
     md(r"""
 ## References
