@@ -94,12 +94,17 @@ def make_summary(output, products):
 def make_video(output, case, prediction):
     truth=np.stack([case[name] for name in ("u","v","p")],-1); a=omega(truth); b=omega(prediction); e=b-a
     extent=[0, truth.shape[2]/D, 0, truth.shape[1]/D]; frames=range(0,len(a),2)
-    fig,axes=plt.subplots(1,3,figsize=(16,5.3),constrained_layout=True)
+    # Keep one display unit equal to one diameter in both directions.  Using
+    # imshow's default fill behavior makes the physical circle look elliptical.
+    fig,axes=plt.subplots(1,3,figsize=(16,3.8),constrained_layout=True)
     lim=np.percentile(abs(a[:,~np.asarray(case['solid'],bool)]),99.5); elim=np.percentile(abs(e[:,~np.asarray(case['solid'],bool)]),99)
     images=[]
     for ax,z,title,v,cmap in zip(axes,(a[0],b[0],e[0]),("LBM CFD","Phase-stable learned decoder","Error"),(lim,lim,elim),("RdBu_r","RdBu_r","magma")):
         im=ax.imshow(z,origin="lower",extent=extent,aspect="auto",cmap=cmap,vmin=-v if cmap=="RdBu_r" else 0,vmax=v)
-        ax.add_patch(Circle((5,47.5/D),.5,color="white",ec="black")); ax.set(title=title,xlabel="x/D"); images.append(im)
+        ax.add_patch(Circle((5,47.5/D),.5,color="white",ec="black"))
+        ax.set(title=title,xlabel="x/D",xlim=(3.5,20.0),ylim=(0.7,7.3))
+        ax.set_aspect("equal",adjustable="box")
+        images.append(im)
     axes[0].set_ylabel("y/D"); title=fig.suptitle("")
     def update(i):
         for im,z in zip(images,(a[i],b[i],abs(e[i]))): im.set_data(z)
