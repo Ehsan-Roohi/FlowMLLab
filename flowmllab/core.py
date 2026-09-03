@@ -151,7 +151,7 @@ def generate_cavity_rom_validation(root: str | Path | None = None) -> int:
 
 
 def verify_cylinder_lbm_validation(root: str | Path | None = None) -> int:
-    """Verify the retained Week-7 cylinder LBM evidence without rerunning it."""
+    """Verify retained Week-7 regime, grid, and learned-model evidence."""
     repository = discover_repository_root(root)
     completed = subprocess.run(
         [sys.executable, str(repository / "qa" / "run_cylinder_lbm_validation.py"),
@@ -159,7 +159,19 @@ def verify_cylinder_lbm_validation(root: str | Path | None = None) -> int:
         cwd=repository,
         check=False,
     )
-    return int(completed.returncode)
+    if completed.returncode:
+        return int(completed.returncode)
+    grid = subprocess.run(
+        [
+            sys.executable,
+            str(repository / "qa" / "run_cylinder_grid_independence.py"),
+            "--root",
+            str(repository),
+        ],
+        cwd=repository,
+        check=False,
+    )
+    return int(grid.returncode)
 
 
 def format_report(report: dict[str, Any]) -> str:

@@ -9,6 +9,7 @@ on:
       - "qa/**"
       - "notebooks/**"
       - "results/cylinder_lbm/**"
+      - "results/cylinder_grid_convergence/**"
       - "pyproject.toml"
       - "CITATION.cff"
       - "README.md"

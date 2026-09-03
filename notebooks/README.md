@@ -34,11 +34,14 @@ only for notebooks that explicitly require CUDA.
 - `week03/`: Maxwellian sampling/noise and a mini DSMC cavity.
 - `week04/`: CFD data production, scalar/field surrogates, and a 27-cell POD-DeepONet laboratory with development-only selection, a visible blind-test gate, three-seed uncertainty, Ghia checks, physical diagnostics, and timing.
 - `week05_06/`: the original combined two-week guided-project pack. Week 5 establishes the setup, baseline, controlled modification, and checkpoint; Week 6 completes the same selected track, physical validation, reproducibility package, and final report.
-- `week07/`: D2Q9 BGK/TRT cylinder flow, physically gated force and Strouhal diagnostics, Reynolds-regime classification, strong temporal baselines, and separate one-step/recursive audits of a four-frame multi-scale CNN on a retained held-out interpolation case.
+- `week07/`: D2Q9 BGK/TRT cylinder flow, a concise collide--stream--boundary algorithm walkthrough, physically gated force and Strouhal diagnostics, an executed three-grid study with a retained formal asymptotic/GCI failure, Reynolds-regime classification, strong temporal baselines, and separate one-step/recursive audits of a four-frame multi-scale CNN on a retained held-out interpolation case.
 
 The Week-7 notebook labels the retained low-cost run as qualitative.  It links
 every field plot to force, density, Mach-number, relaxation-time, blockage, and
-reference diagnostics, and provides a separate qualification/refinement path.
+reference diagnostics. Before ML, students audit a retained `Re=100`
+three-grid sequence (`D/dx=12,18,27`) with fixed nondimensional physics and
+statistical convergence. Fine-pair tolerances pass, but the formal
+asymptotic/GCI gate fails and is retained; `D/dx=40` is the next declared run.
 Machine-readable retained evidence is in `../results/cylinder_lbm/`.
 The executed 1080p complete-Re blind animation and its field-error/baseline
 evidence are in `../results/cylinder_ml/`.

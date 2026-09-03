@@ -40,3 +40,11 @@ wake instead of cold-starting a misleading short run. The neural
 exercise in the Week-7 notebook uses solver snapshots with a complete Reynolds
 holdout and compares against non-neural POD and matched polynomial temporal
 baselines.
+
+The executed solution-verification step is separate and retained in
+`../cylinder_grid_convergence/`. It refines the Re=100 cylinder through
+`D/dx=12,18,27` at fixed nondimensional physics, retains the failed formal
+asymptotic/GCI check, reports statistical and fine-pair sensitivity gates, and
+preserves the direct LBM
+fields and histories on every grid. A grid pass must not be confused with the
+still-separate domain/blockage and external-reference validation gates.

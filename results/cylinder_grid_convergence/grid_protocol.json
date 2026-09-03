@@ -1,0 +1,82 @@
+{
+  "generated_utc": "2026-09-03T19:35:28.930465+00:00",
+  "solver_version": "0.4.0",
+  "purpose": "solution verification by three-grid refinement",
+  "frozen_parameters": {
+    "Re": 100,
+    "lattice_Mach": 0.08660254037844388,
+    "domain_D": [
+      20,
+      8
+    ],
+    "cylinder_center_D": [
+      5,
+      0.0
+    ],
+    "observation_time_D_over_U": 100,
+    "statistics_start_D_over_U": 45,
+    "collision": "TRT, magic parameter 3/16",
+    "cylinder_boundary": "Bouzidi interpolated analytical circle",
+    "inlet": "Zou-He velocity with half-cosine startup",
+    "outlet": "first-order convective distributions",
+    "transverse": "periodic",
+    "perturbation": 0.01,
+    "seed": 690
+  },
+  "changed_parameter": "nodes per cylinder diameter",
+  "dependent_parameter_note": "Under constant-Mach acoustic scaling, tau=0.5+3*U*D/Re is recomputed on each grid to preserve Re. Tau is reported on every row and is not an independently tuned parameter.",
+  "nodes_per_diameter": [
+    12,
+    18,
+    27
+  ],
+  "refinement_ratio": 1.5,
+  "next_required_resolution": 40,
+  "continuation_rule": "The 12/18/27 sequence passed all fine-pair tolerances but failed to establish positive-order asymptotic convergence. Gates were not relaxed; D=40 is the next declared continuation.",
+  "acceptance_gates": {
+    "Cd_mean": {
+      "fine_pair_percent": 3.0,
+      "gci_percent": 5.0
+    },
+    "St": {
+      "fine_pair_percent": 2.0,
+      "gci_percent": 3.0
+    },
+    "Lr_over_D": {
+      "fine_pair_percent": 5.0,
+      "gci_percent": 8.0
+    }
+  },
+  "statistical_gates": {
+    "density_drift_percent_max": 1.0,
+    "Cd_tail_half_change_percent_max": 2.0,
+    "minimum_retained_shedding_cycles": 8.0,
+    "lift_rms_relative_change_max": 0.25
+  },
+  "reference_bands_not_used_to_tune_grid_gate": {
+    "Cd_mean": {
+      "low": 1.27,
+      "high": 1.38
+    },
+    "St": {
+      "low": 0.158,
+      "high": 0.171
+    },
+    "Lr_over_D": {
+      "low": 1.3,
+      "high": 1.55
+    }
+  },
+  "reference_sources": {
+    "cylinder_outputs": "Qu et al., Journal of Fluids and Structures 39 (2013), 347-370",
+    "gci_procedure": "Celik et al., Journal of Fluids Engineering 130 (2008), 078001"
+  },
+  "coarse_run_reused": true,
+  "coarse_reuse_note": "When enabled, prior rows are byte-verified retained Re=100 runs with the identical numerical kernel and frozen settings. Only GCI/reporting utilities changed in solver version 0.4.0. The public GitHub workflow regenerates all three grids from zero.",
+  "environment": {
+    "python": "3.12.13",
+    "numpy": "2.3.5",
+    "platform": "Linux-6.18.35-x86_64-with-glibc2.39"
+  },
+  "scope_warning": "A passing grid gate establishes only the declared integral-output insensitivity at fixed domain and boundary conditions. Domain, Mach, sampling, and external-reference validation remain distinct tests."
+}

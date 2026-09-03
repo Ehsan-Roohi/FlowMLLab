@@ -1,0 +1,28 @@
+{
+  "status": "fail",
+  "grid_independent": false,
+  "all_statistical_gates_pass": true,
+  "quantity_gates": {
+    "Cd_mean": false,
+    "St": false,
+    "Lr_over_D": false
+  },
+  "finest_nodes_per_diameter": 27,
+  "finest_metrics": {
+    "Cd_mean": 1.522622496061201,
+    "St": 0.1828121982693925,
+    "Lr_over_D": 1.437260807574659
+  },
+  "external_reference_band_pass_not_part_of_grid_gate": {
+    "Cd_mean": false,
+    "St": false,
+    "Lr_over_D": true
+  },
+  "figure_sha256": "e42b5d790be21485897c6234a6d149b9ddd3621d4a6c5f1fcc6b01671a6147e0",
+  "archives_sha256": {
+    "D12": "8ad363e6b6994f4cf3fda7d004ede7b9e188d07756e67e5909f34546c5324482",
+    "D18": "d6a0899d02abe37943afb51e3b4f359655ebeaa9d7919ee98cadf406b5098bf5",
+    "D27": "a9f854931d8e8b637100f84a6f788c56b7c5f9df4126c336c66430248e81d986"
+  },
+  "regeneration_elapsed_seconds": 3448.095074568999
+}

@@ -96,6 +96,7 @@ Start with [START_HERE.md](START_HERE.md). It gives the installation check, reco
 | `results/cylinder_ml/` | archived Re=100 phase/POD failure baseline and its diagnostics |
 | `results/cylinder_cnn/` | four-frame CNN validation/retained-interpolation video, strong polynomial baselines, one-step and rollout audits, frozen weights, and regeneration script |
 | `results/cylinder_phase/` | autonomous phase-stable validation, fresh-test metrics, Strouhal spectra, and LBM comparison video |
+| `results/cylinder_grid_convergence/` | three-grid Re=100 CFD fields, histories, statistical gates, retained formal grid-independence failure, protocol, and convergence figure |
 | `advanced/fp_closure/` | Bounded educational workflow for exact and learned Fokker–Planck closure testing |
 | `references/` | Annotated reading guide and BibTeX database |
 | `qa/` | Release validator for notebook syntax, required assets, and reproducibility anchors |
@@ -110,7 +111,7 @@ The recommended path is cumulative:
 - **Week 4 — Surrogates and operator learning:** audited CFD fields, scalar baselines, coordinate DNNs, and a restricted POD-DeepONet with complete-case selection, three-seed blind tests, Ghia validation, physical diagnostics, and measured inference cost.
 - **Week 4.1 — Classical and hyper-reduced ROM:** an additive notebook for the same cavity, with dynamic centered POD-Galerkin, nonlinear-cost diagnosis, POD-DEIM, convergence checks, frozen blind tests, and offline/online break-even accounting.
 - **Weeks 5–6 — Combined guided-project pack:** Week 5 covers POD, physics-guided objectives/PINNs, neural-operator extensions, project selection, and the frozen checkpoint. Week 6 continues the same selected track through Fokker–Planck/hybrid methods where assigned, a-posteriori testing, uncertainty, reproducibility, and the final report.
-- **Week 7 — Cylinder wakes with LBM and learned prediction:** derive D2Q9 BGK/TRT, distinguish attached, steady-recirculating, and vortex-shedding regimes, validate forces and gated Strouhal estimates, retain POD/CNN failure evidence, and audit a phase-stable decoder over 277 autonomous future fields on a fresh Reynolds test.
+- **Week 7 — Cylinder wakes with LBM and learned prediction:** derive the D2Q9 collide--stream--boundary loop, distinguish wake regimes, run a controlled `Re=100` three-grid study and retain its formal asymptotic failure, validate forces and gated Strouhal estimates, retain POD/CNN failure evidence, and audit a phase-stable decoder over 277 autonomous future fields on a fresh Reynolds test.
 
 The full module-to-evidence mapping is in [COURSE_MAP.md](COURSE_MAP.md).
 The exact manuscript-figure ownership and reproduction commands are in [ARTICLE_FIGURE_MAP.md](ARTICLE_FIGURE_MAP.md).
@@ -126,7 +127,7 @@ flowmllab smoke --root .
 flowmllab qa --root .
 flowmllab figures all --root .
 flowmllab rom --root .               # optional Week-4.1 full regeneration
-flowmllab cylinder --root .          # verify retained Week-7 LBM evidence
+flowmllab cylinder --root .          # verify Week-7 regimes, grid study, and learned evidence
 ```
 
 Install the neural-network stack with `python -m pip install -e ".[ml,test]"`.
@@ -234,12 +235,24 @@ or download the checksummed CFD inputs from the
 [versioned `cylinder-cfd-v1` release](https://github.com/Ehsan-Roohi/FlowMLLab/releases/tag/cylinder-cfd-v1).
 
 The committed `quick` evidence is a classroom regime check, not a
-grid-converged external-cylinder DNS result.  Its finite circle resolution and
-periodic transverse domain intentionally expose numerical error; quantitative
-reference bands and an expensive refinement profile are supplied so students
-can qualify a result rather than judging contours by appearance.  Run
-`python qa/run_cylinder_lbm_validation.py --regenerate --workers 5` to regenerate
-the teaching evidence, or `flowmllab cylinder --root .` to verify it.
+grid-converged external-cylinder DNS result.  Week 7 now places a separately
+executed grid-verification study before the ML interpretation.
+It fixes `Re=100`, lattice Mach number, nondimensional domain, boundaries,
+startup, and sampling while refining the analytical cylinder through
+`D/dx = 12, 18, 27`. The fine-pair sensitivity limits pass, but the sequence
+does not establish a positive asymptotic order; the formal GCI/grid-independence
+gate therefore remains FAIL. The report includes statistical gates,
+medium-to-fine changes, and the failed order/GCI decision for mean drag,
+Strouhal number, and recirculation length. The declared next resolution is
+`D/dx=40`. A future pass would establish
+only grid insensitivity for those outputs at the fixed domain; blockage/domain
+and external-reference validation remain separate gates.
+
+Run `python qa/run_cylinder_grid_independence.py --regenerate --workers 3` to
+regenerate the full study. Run `flowmllab cylinder --root .` to verify both the
+retained CFD evidence and learned-model evidence without repeating expensive
+solves. The existing neural models still target the low-cost 12-node CFD
+dataset and are therefore labelled educational rather than high-fidelity DNS.
 
 ## POD-DeepONet validation result
 

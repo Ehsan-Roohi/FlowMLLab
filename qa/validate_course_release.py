@@ -44,6 +44,7 @@ REQUIRED = [
     "qa/add_colab_entrypoints.py",
     "qa/run_cavity_rom_validation.py",
     "qa/run_cylinder_lbm_validation.py",
+    "qa/run_cylinder_grid_independence.py",
     "qa/run_cylinder_blind_video.py",
     "qa/run_cylinder_multiscale_cnn.py",
     "qa/run_cylinder_phase_stable.py",
@@ -98,6 +99,16 @@ REQUIRED = [
     "results/cylinder_lbm/reference_ranges.csv",
     "results/cylinder_lbm/validation_protocol.json",
     "results/cylinder_lbm/validation_summary.json",
+    "results/cylinder_grid_convergence/README.md",
+    "results/cylinder_grid_convergence/grid_metrics.csv",
+    "results/cylinder_grid_convergence/grid_convergence.csv",
+    "results/cylinder_grid_convergence/grid_protocol.json",
+    "results/cylinder_grid_convergence/grid_summary.json",
+    "results/cylinder_grid_convergence/cylinder_grid_independence.png",
+    "results/cylinder_grid_convergence/cylinder_grid_independence.pdf",
+    "results/cylinder_grid_convergence/re100_D012.npz",
+    "results/cylinder_grid_convergence/re100_D018.npz",
+    "results/cylinder_grid_convergence/re100_D027.npz",
     "results/cylinder_ml/README.md",
     "results/cylinder_ml/blind_re100_lbm_vs_neural.mp4",
     "results/cylinder_ml/blind_re100_lbm_vs_neural_poster.png",
@@ -182,7 +193,13 @@ def validate_notebooks() -> tuple[int, int]:
         assert "FLOWMLLAB_COLAB_BOOTSTRAP_V1" in full_source, (
             f"missing Colab repository bootstrap: {path}"
         )
-        assert "MIE690A article-aligned validation v3" in full_source, (
+        assert any(
+            marker in full_source
+            for marker in (
+                "MIE690A article-aligned validation v3",
+                "MIE690A article-aligned validation v4",
+            )
+        ), (
             f"missing article-alignment marker: {path}"
         )
         ids = [cell.get("id") for cell in cells if cell.get("id")]
@@ -539,6 +556,66 @@ def validate_cylinder_lbm_results() -> dict[str, float]:
     }
 
 
+def validate_cylinder_grid_results() -> dict[str, float | bool]:
+    """Verify the retained, deliberately failed three-grid formal gate."""
+    result_dir = ROOT / "results" / "cylinder_grid_convergence"
+    metrics = pd.read_csv(result_dir / "grid_metrics.csv")
+    convergence = pd.read_csv(result_dir / "grid_convergence.csv")
+    summary = json.loads((result_dir / "grid_summary.json").read_text())
+    protocol = json.loads((result_dir / "grid_protocol.json").read_text())
+
+    assert metrics["nodes_per_diameter"].astype(int).tolist() == [12, 18, 27]
+    assert metrics["Re"].astype(int).eq(100).all()
+    assert np.allclose(metrics["Mach"], metrics["Mach"].iloc[0])
+    assert np.allclose(metrics["blockage"], 0.125)
+    assert metrics["observation_time_D_over_U"].eq(100).all()
+    assert metrics["statistics_start_D_over_U"].eq(45).all()
+    assert metrics["statistical_convergence_pass"].astype(bool).all()
+    assert convergence["quantity"].tolist() == ["Cd_mean", "St", "Lr_over_D"]
+    assert not convergence["valid_asymptotic_sequence"].astype(bool).any()
+    assert not convergence["pass"].astype(bool).any()
+    assert not summary["grid_independent"] and summary["status"] == "fail"
+    for _, row in convergence.iterrows():
+        assert row["fine_pair_relative_change_percent"] <= row["fine_pair_gate_percent"]
+    assert protocol["changed_parameter"] == "nodes per cylinder diameter"
+    assert protocol["nodes_per_diameter"] == [12, 18, 27]
+    assert protocol["refinement_ratio"] == 1.5
+    assert protocol["next_required_resolution"] == 40
+    assert "Gates were not relaxed" in protocol["continuation_rule"]
+
+    for resolution in (12, 18, 27):
+        path = result_dir / f"re100_D{resolution:03d}.npz"
+        with np.load(path, allow_pickle=False) as case:
+            solid = case["solid"].astype(bool)
+            for field in ("rho", "u", "v", "p", "vorticity", "time_mean_u"):
+                assert np.isfinite(case[field]).all(), (resolution, field)
+            assert np.all(case["u"][solid] == 0.0)
+            assert np.all(case["v"][solid] == 0.0)
+            metadata = json.loads(str(case["metadata"]))
+            assert int(metadata["config"]["diameter"]) == resolution
+            assert metadata["config"]["nx"] == 20 * resolution
+            assert metadata["config"]["ny"] == 8 * resolution
+
+    notebook = json.loads(
+        (ROOT / "notebooks/week07/W7_Lattice_Boltzmann_Cylinder_Student.ipynb").read_text()
+    )
+    source = "\n".join("".join(cell.get("source", [])) for cell in notebook["cells"])
+    assert "LBM algorithm: one time step in seven operations" in source
+    assert "Executed grid study: retain failure, then refine" in source
+    assert "richardson" in source.lower() and "GCI" in source
+    assert "ML-versus-LBM error cannot repair" in source
+
+    return {
+        "finest_nodes_per_diameter": float(metrics["nodes_per_diameter"].iloc[-1]),
+        "finest_Cd": float(metrics["Cd_mean"].iloc[-1]),
+        "finest_St": float(metrics["St"].iloc[-1]),
+        "max_fine_pair_change_percent": float(
+            convergence["fine_pair_relative_change_percent"].max()
+        ),
+        "formal_grid_independent": False,
+    }
+
+
 def validate_pdfs() -> int:
     pdfs = sorted((ROOT / "lectures").glob("*.pdf"))
     assert len(pdfs) == 6
@@ -560,6 +637,7 @@ def main() -> None:
     deeponet_metrics = validate_pod_deeponet_results()
     cavity_rom_metrics = validate_cavity_rom_results()
     cylinder_metrics = validate_cylinder_lbm_results()
+    cylinder_grid_metrics = validate_cylinder_grid_results()
     article_metrics = validate_article_alignment()
     pdfs = validate_pdfs()
     python_files = sorted(ROOT.rglob("*.py"))
@@ -575,6 +653,7 @@ def main() -> None:
     print("POD-DeepONet release metrics:", json.dumps(deeponet_metrics, sort_keys=True))
     print("Cavity ROM release metrics:", json.dumps(cavity_rom_metrics, sort_keys=True))
     print("Cylinder LBM release metrics:", json.dumps(cylinder_metrics, sort_keys=True))
+    print("Cylinder grid-verification metrics:", json.dumps(cylinder_grid_metrics, sort_keys=True))
     print("Article-aligned validation metrics:", json.dumps(article_metrics, sort_keys=True))
 
 

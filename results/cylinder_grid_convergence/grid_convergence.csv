@@ -1,0 +1,4 @@
+quantity,valid_asymptotic_sequence,reason,refinement_ratio,refinement_ratios,constant_refinement_ratio,observed_order,richardson_extrapolated,fine_pair_relative_change_percent,fine_grid_gci_percent,safety_factor,fine_pair_gate_percent,gci_gate_percent,pass
+Cd_mean,False,non_positive_observed_order,1.5,"[1.5, 1.5]",True,,,2.1422517936382293,,1.25,3.0,5.0,False
+St,False,non_positive_observed_order,1.5,"[1.5, 1.5]",True,,,0.5121840642295868,,1.25,2.0,3.0,False
+Lr_over_D,False,non_monotone_or_roundoff_limited,1.5,"[1.5, 1.5]",True,,,1.3609235214716489,,1.25,5.0,8.0,False

@@ -10,6 +10,7 @@ retaining the safeguards needed for a reproducible teaching benchmark:
   halfway bounce-back retained as an explicit comparison option; and
 * a periodic transverse boundary, representing an array with a deliberately
   small blockage ratio (rather than adding artificial channel-wall layers).
+* a three-grid Richardson/GCI diagnostic that refuses non-monotone sequences.
 
 All lengths and times are in lattice units.  With cylinder diameter ``D`` and
 inlet speed ``U``, ``nu = U*D/Re`` and ``tau = 1/2 + 3*nu``.  Pressure is the
@@ -19,12 +20,12 @@ weakly-compressible LBM gauge pressure ``c_s**2 * (rho-rho0)``.
 from __future__ import annotations
 
 from dataclasses import asdict, dataclass
-from typing import Any, Mapping
+from typing import Any, Mapping, Sequence
 
 import numpy as np
 
 
-CYLINDER_LBM_VERSION = "0.3.0"
+CYLINDER_LBM_VERSION = "0.4.0"
 CS2 = 1.0 / 3.0
 
 # Direction order: rest, E, N, W, S, NE, NW, SW, SE.
@@ -568,13 +569,121 @@ def _snapshot_fields(
     return rho, u, v, pressure, omega
 
 
+def grid_convergence_diagnostics(
+    nodes_per_diameter: Sequence[float],
+    values: Sequence[float],
+    *,
+    safety_factor: float = 1.25,
+    ratio_tolerance: float = 1.0e-6,
+) -> dict[str, Any]:
+    """Return a three-grid Richardson/GCI solution-verification diagnostic.
+
+    ``nodes_per_diameter`` must be ordered from coarse to fine.  The calculation
+    follows the generalized asymptotic three-grid form with
+    ``h/D = 1 / nodes_per_diameter`` and supports unequal refinement ratios.
+    A non-monotone sequence, or a sequence inconsistent with positive-order
+    convergence, is reported explicitly and does not receive a fabricated
+    order or GCI value.
+
+    The Grid Convergence Index is a discretization-uncertainty estimate, not a
+    comparison with physical truth.  Statistical convergence, domain
+    sensitivity, and validation against independent reference data remain
+    separate requirements.
+    """
+    resolution = np.asarray(nodes_per_diameter, dtype=float).reshape(-1)
+    quantity = np.asarray(values, dtype=float).reshape(-1)
+    if resolution.size != 3 or quantity.size != 3:
+        raise ValueError("three coarse-to-fine resolutions and values are required")
+    if (
+        not np.isfinite(resolution).all()
+        or not np.isfinite(quantity).all()
+        or np.any(resolution <= 0)
+        or np.any(np.diff(resolution) <= 0)
+    ):
+        raise ValueError("resolutions and values must be finite and resolutions increasing")
+    if safety_factor <= 1.0:
+        raise ValueError("GCI safety_factor must exceed one")
+
+    ratios = resolution[1:] / resolution[:-1]
+    refinement_ratio = float(ratios[-1])
+    constant_ratio = bool(
+        np.allclose(ratios, ratios[0], rtol=ratio_tolerance, atol=0.0)
+    )
+
+    coarse, medium, fine = map(float, quantity)
+    coarse_to_medium = coarse - medium
+    medium_to_fine = medium - fine
+    scale = max(abs(coarse), abs(medium), abs(fine), np.finfo(float).eps)
+    monotone = bool(
+        coarse_to_medium * medium_to_fine > 0.0
+        and abs(coarse_to_medium) > 100.0 * np.finfo(float).eps * scale
+        and abs(medium_to_fine) > 100.0 * np.finfo(float).eps * scale
+    )
+    fine_pair_change = 100.0 * abs(fine - medium) / max(abs(fine), np.finfo(float).eps)
+    diagnostic: dict[str, Any] = {
+        "valid_asymptotic_sequence": False,
+        "reason": "non_monotone_or_roundoff_limited",
+        "refinement_ratio": refinement_ratio,
+        "refinement_ratios": ratios.tolist(),
+        "constant_refinement_ratio": constant_ratio,
+        "observed_order": float("nan"),
+        "richardson_extrapolated": float("nan"),
+        "fine_pair_relative_change_percent": float(fine_pair_change),
+        "fine_grid_gci_percent": float("nan"),
+        "safety_factor": float(safety_factor),
+    }
+    if not monotone:
+        return diagnostic
+
+    spacing = 1.0 / resolution
+    target_ratio = abs(coarse_to_medium / medium_to_fine)
+
+    def residual(order: float) -> float:
+        numerator = spacing[0] ** order - spacing[1] ** order
+        denominator_local = spacing[1] ** order - spacing[2] ** order
+        return numerator / denominator_local - target_ratio
+
+    lower_order, upper_order = 1.0e-3, 12.0
+    lower_value, upper_value = residual(lower_order), residual(upper_order)
+    if (
+        not np.isfinite(lower_value)
+        or not np.isfinite(upper_value)
+        or lower_value * upper_value > 0.0
+    ):
+        diagnostic["reason"] = "non_positive_observed_order"
+        return diagnostic
+    for _ in range(100):
+        midpoint = 0.5 * (lower_order + upper_order)
+        midpoint_value = residual(midpoint)
+        if lower_value * midpoint_value <= 0.0:
+            upper_order, upper_value = midpoint, midpoint_value
+        else:
+            lower_order, lower_value = midpoint, midpoint_value
+    observed_order = float(0.5 * (lower_order + upper_order))
+    denominator = refinement_ratio**observed_order - 1.0
+    if denominator <= np.finfo(float).eps:
+        diagnostic["reason"] = "ill_conditioned_richardson_extrapolation"
+        return diagnostic
+    extrapolated = fine + (fine - medium) / denominator
+    gci = safety_factor * abs((fine - medium) / fine) / denominator * 100.0
+    diagnostic.update(
+        valid_asymptotic_sequence=True,
+        reason="accepted",
+        observed_order=observed_order,
+        richardson_extrapolated=float(extrapolated),
+        fine_grid_gci_percent=float(gci),
+    )
+    return diagnostic
+
+
 def recommended_parameters(reynolds: float, fidelity: str = "quick") -> dict[str, Any]:
     """Return transparent parameters for a qualitative or validation-grade run.
 
     ``quick`` is intended for notebook exploration and regime visualization; it
     is *not* a grid-converged external-cylinder reference.  ``validation`` uses
-    at least 24 nodes per diameter, ``tau >= 0.53``, five upstream diameters,
-    twenty-two downstream diameters, blockage at most 0.05, and roughly 150
+    at least 24 nodes per diameter, ``tau >= 0.53``, a cylinder centre eight
+    diameters from the inlet, twenty-two centre-to-outlet diameters, blockage
+    at most 0.05, and roughly 150
     convective time units.  Those conservative settings are intentionally
     expensive and should still be accompanied by grid/domain/time refinement.
     """
@@ -839,17 +948,17 @@ def simulate_cylinder(
     )
     strouhal = float(frequency_diagnostics["strouhal"])
     cx, _ = center_xy
-    upstream_d = (cx - 0.5 * config.diameter) / config.diameter
-    downstream_d = (config.nx - 1 - cx - 0.5 * config.diameter) / config.diameter
+    upstream_center_d = cx / config.diameter
+    downstream_center_d = (config.nx - cx) / config.diameter
     convective_time = config.steps * config.inflow_velocity / config.diameter
     validation_criteria = {
         "lattice_mach_below_0.1": config.mach < 0.1,
         "relaxation_time_at_least_0.53": config.relaxation_time >= 0.53,
         "nodes_per_diameter_at_least_24": config.diameter >= 24,
-        "blockage_ratio_at_most_0.15": config.blockage_ratio <= 0.15,
-        "upstream_extent_at_least_5D": upstream_d >= 5.0,
-        "downstream_extent_at_least_12D": downstream_d >= 12.0,
-        "simulated_time_at_least_80D_over_U": convective_time >= 80.0,
+        "blockage_ratio_at_most_0.05": config.blockage_ratio <= 0.05,
+        "inlet_to_center_at_least_8D": upstream_center_d >= 8.0,
+        "center_to_outlet_at_least_22D": downstream_center_d >= 22.0,
+        "simulated_time_at_least_150D_over_U": convective_time >= 150.0,
     }
     validation_candidate = all(validation_criteria.values())
     metadata = {
@@ -942,6 +1051,7 @@ __all__ = [
     "cylinder_mask",
     "equilibrium",
     "estimate_strouhal",
+    "grid_convergence_diagnostics",
     "macroscopic",
     "recirculation_length",
     "recommended_parameters",

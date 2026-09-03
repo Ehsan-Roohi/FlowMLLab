@@ -53,7 +53,7 @@ cells = [
     md(r"""
 # Week 7 — From a steady wake to vortex shedding with D2Q9 LBM
 
-<!-- MIE690A article-aligned validation v3 -->
+<!-- MIE690A article-aligned validation v4 -->
 
 <!-- FLOWMLLAB_COLAB_LAUNCH_V1 -->
 [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/Ehsan-Roohi/FlowMLLab/blob/main/notebooks/week07/W7_Lattice_Boltzmann_Cylinder_Student.ipynb)
@@ -68,12 +68,15 @@ By the end, you should be able to:
 1. derive D2Q9 BGK/TRT collision and connect Reynolds number, viscosity, and relaxation time;
 2. distinguish attached, steady-recirculating, and periodically shedding wakes;
 3. extract $C_D$, $C_L$, recirculation length, and Strouhal number from an LBM run;
-4. separate a fast demonstration from a numerically qualified result;
-5. split time-resolved data by **complete Reynolds case**, never random snapshots; and
-6. diagnose why a global POD surrogate diffuses advecting vortices;
-7. validate a four-frame multi-scale CNN with downstream enstrophy and spectra,
+4. separate code verification, statistical convergence, grid convergence,
+   domain sensitivity, and external validation;
+5. diagnose a failed three-grid asymptotic/GCI check and specify the next
+   refinement without deleting a result or relaxing a gate;
+6. split time-resolved data by **complete Reynolds case**, never random snapshots;
+7. diagnose why a global POD surrogate diffuses advecting vortices;
+8. validate a four-frame multi-scale CNN with downstream enstrophy and spectra,
    while separating low-error one-step prediction from recursive rollout; and
-8. construct and audit a phase-stable learned decoder for autonomous long-horizon prediction.
+9. construct and audit a phase-stable learned decoder for autonomous long-horizon prediction.
 """),
     md(r"""
 ## Concept map and scope
@@ -83,6 +86,7 @@ By the end, you should be able to:
 \rightarrow (\rho,u,v,p)
 \rightarrow \{C_D,C_L,St,L_r\}
 \rightarrow \text{Reynolds sweep}
+\rightarrow \text{three-grid verification}
 \rightarrow \text{POD failure baseline}
 \rightarrow \text{four-frame CNN audit}
 \rightarrow \text{phase-stable decoder}
@@ -104,7 +108,7 @@ The precise onset is sensitive to blockage, domain length, boundary treatment, c
 ## Reproducibility contract
 
 - `PROFILE="quick"` is for learning and debugging; its flow values are **qualitative**.
-- `PROFILE="qualification"` uses a larger domain, more cylinder nodes, and a longer observation window. It is still an educational NumPy TRT code, not a substitute for a research DNS.
+- `PROFILE="validation"` uses a larger domain, more cylinder nodes, and a longer observation window. It is still an educational NumPy TRT code, not a substitute for a research DNS.
 - The localized wake perturbation is small, deterministic, and transient. It seeds the Hopf mode; it is not an inlet disturbance and does not force shedding continuously.
 - The transverse boundary is periodic. Thus the numerical problem is formally a cylinder array of pitch $L_y$; keep $D/L_y$ small and report it.
 - Complete Reynolds cases remain on one side of each split. Random temporal-frame splitting is prohibited.
@@ -143,7 +147,7 @@ from IPython.display import HTML, Image, Video, display
 
 from flowmllab.cylinder_lbm import (
     CS2, LATTICE_VELOCITIES, LATTICE_WEIGHTS, simulate_cylinder,
-    strouhal_diagnostics,
+    grid_convergence_diagnostics, strouhal_diagnostics,
 )
 
 plt.rcParams.update({"font.size": 12, "axes.labelsize": 13, "legend.fontsize": 10})
@@ -180,6 +184,21 @@ For D2Q9, $c_s^2=1/3$, so
 Macroscopic variables follow from density and momentum moments of the populations, and the weakly compressible gauge pressure is `p = cs² (rho-rho0)`. Low lattice Mach number and viscous relaxation time safely above 0.5 are numerical requirements, not optional reporting details.
 
 The displayed equation is the one-relaxation-time **BGK** form. The runs below use **TRT** by default: symmetric non-equilibrium populations relax with the viscous time, while antisymmetric populations use the conventional magic parameter 3/16. TRT preserves the same Navier–Stokes viscosity but is more robust for bounce-back at the small viscosities in this lesson. Set `collision_model="bgk"` only as a controlled comparison and keep its relaxation time at least 0.53.
+"""),
+    md(r"""
+### LBM algorithm: one time step in seven operations
+
+| Order | Operation | What happens |
+|---:|---|---|
+| 1 | moments | recover $\rho=\sum_i f_i$ and $\rho\mathbf{u}=\sum_i f_i\mathbf{c}_i$ |
+| 2 | equilibrium | compute $f_i^{eq}(\rho,\mathbf{u})$ |
+| 3 | collision | relax non-equilibrium populations with BGK or TRT |
+| 4 | streaming | move $f_i^*$ to the neighbour in direction $\mathbf{c}_i$ |
+| 5 | cylinder wall | apply Bouzidi reflection on analytical-circle links and accumulate momentum exchange |
+| 6 | outer boundaries | impose the Zou–He inlet and update the convective outlet |
+| 7 | diagnostics | record mass, $C_D$, $C_L$, fields, and restart state |
+
+Initialize with equilibrium populations and a half-cosine acceleration, then repeat these seven operations. LBM advances the nine populations—not $u$, $v$, and $p$ directly. Therefore a valid restart stores all nine $f_i$ populations and the outlet memory.
 """),
     code(r"""
 lattice = pd.DataFrame({
@@ -369,7 +388,7 @@ Use a ladder rather than a single reassuring plot.
 | subcritical wake | $Re=40$: no sustained tail oscillation | avoids false shedding |
 | supercritical wake | $Re=100$: sustained $C_L$ and alternating vorticity | correct qualitative regime |
 | frequency quality | $0.05<St<0.5$, at least 8 cycles, stationary amplitude | rejects acoustic/startup peaks |
-| literature sanity check | $Re=100$: $St\approx0.164{-}0.166$, $\overline C_D\approx1.32{-}1.34$ in well-resolved 2-D references | quantitative target, **qualification profile only** |
+| literature sanity check | $Re=100$: retained comparison bands $0.158\le St\le0.171$ and $1.27\le\overline C_D\le1.38$; central well-resolved values are often near $St=0.164{-}0.166$ and $\overline C_D=1.32{-}1.34$ | quantitative target, **validation profile only** |
 
 The last row is not a gate for the quick profile. If it fails, report the deviation and test grid, blockage, outlet distance, and observation time; do not tune a correction factor.
 """),
@@ -386,31 +405,108 @@ assert validation[["Mach_pass", "tau_pass", "blockage_pass", "density_pass"]].al
 print("Retained quick profile: quantitative literature agreement is reported, not enforced.")
 """),
     md(r"""
-## 4. Optional numerical-sensitivity checkpoint
+### CFD-to-ML firewall: qualify the labels first
 
-Change one numerical choice at a time. A convincing result uses at least three cylinder resolutions and checks domain/blockage separately. The disabled cell below is intentionally expensive: every resolution receives the same $100D/U$ observation time, smooth startup, transient removal, and frequency gate. A qualification report should then add a separate domain/blockage study with matched $Ma$.
+The CFD workflow is deliberately executable without importing, training, or evaluating a learned model:
+
+1. Freeze the physical case, geometry, boundaries, solver options, observables, and pass/fail gates.
+2. Check implementation invariants, mass, no-slip, force signs, restart consistency, and post-transient stationarity.
+3. Change grid spacing, domain/blockage, Mach/time step, and sampling window one factor at a time.
+4. Compare the qualified CFD outputs with independent CFD/DNS and retain provenance, discrepancies, and hashes.
+5. Freeze a versioned CFD dataset; only then define complete-Re development, validation, and test splits.
+6. Measure ML-to-CFD error separately. A CFD change creates a new dataset version and requires retraining; CFD parameters are never tuned against neural predictions.
+
+This release has not passed its formal spatial-grid gate. Therefore the existing $D/\Delta x=12$ neural labels remain classroom evidence rather than a grid- and domain-qualified reference solution.
+"""),
+    md(r"""
+## 4. Executed grid study: retain failure, then refine
+
+Grid refinement changes only $\Delta x/D$. The frozen sequence is
+
+\[
+D/\Delta x = 12,18,27,\qquad r=1.5.
+\]
+
+while keeping $Re=100$, $Ma=0.0866$, the $20D\times8D$ domain, boundary models, perturbation, $100D/U$ observation time, and $45D/U$ transient removal fixed. Changing the grid and domain together would make the source of any improvement unknowable.
+
+Under this constant-Mach acoustic scaling, $\tau=1/2+3U(D/\Delta x)/Re$ changes algebraically with resolution to preserve $Re$. It is reported for every grid and is not tuned to improve an output.
+
+All three medium-to-fine changes satisfy the declared practical tolerances,
+but the changes did not decrease consistently, so the sequence did not yield a
+positive asymptotic order. That is a **failed formal grid gate**, not a reason
+to delete a point or relax the criterion. The next declared continuation is
+$D/\Delta x=40$ with the same physics, but it has not been completed in this
+retained evidence.
+
+For a scalar output $\phi$ ordered coarse, medium, fine,
+
+\[
+p=\frac{\log| (\phi_1-\phi_2)/(\phi_2-\phi_3)|}{\log r},\qquad
+\phi_{h\to0}=\phi_3+\frac{\phi_3-\phi_2}{r^p-1},
+\]
+
+\[
+GCI_{fine}=1.25\frac{|\phi_3-\phi_2|/|\phi_3|}{r^p-1}\times100\%.
+\]
+
+The code reports no order or GCI for a non-monotone sequence. Before examining the results, the declared fine-pair/GCI limits are 3%/5% for $\overline C_D$, 2%/3% for $St$, and 5%/8% for $L_r/D$. Each run must also pass mass, tail-drag, cycle-count, and lift-stationarity gates.
+
+**Prediction checkpoint—write before running the next cell:** Which quantity will converge slowest? Do you expect the finest drag and Strouhal values to move toward or away from the published bands? State PASS or FAIL for each quantity before opening the retained table.
 """),
     code(r"""
-RUN_REFINEMENT = False
-if RUN_REFINEMENT:
-    checks = []
-    for D in (12, 18, 24):
-        ny, nx = 8 * D, 20 * D
-        steps = 2000 * D
-        check = simulate_cylinder(
-            100, nx=nx, ny=ny, diameter=D,
-            center=(5 * D, 0.5 * (ny - 1)), inflow_velocity=0.05,
-            steps=steps, history_stride=max(2, D // 3),
-            statistics_start=int(0.45 * steps), startup_ramp_steps=25 * D,
-            perturbation=1e-2, seed=690, collision_model="trt",
-        )
-        first = np.searchsorted(check["time"], 0.45 * steps)
-        tail = slice(first, None)
-        checks.append({"D": D, "ny": ny, "nx": nx,
-                       "St": check["strouhal"],
-                       "Cd_mean": check["drag_coefficient"][tail].mean()})
-    refinement = pd.DataFrame(checks)
-    display(refinement)
+GRID_EVIDENCE = REPO_ROOT / "results/cylinder_grid_convergence"
+grid_metrics = pd.read_csv(GRID_EVIDENCE / "grid_metrics.csv")
+grid_gci = pd.read_csv(GRID_EVIDENCE / "grid_convergence.csv")
+grid_summary = json.loads((GRID_EVIDENCE / "grid_summary.json").read_text())
+
+recomputed = []
+for quantity in ("Cd_mean", "St", "Lr_over_D"):
+    diagnostic = grid_convergence_diagnostics(
+        grid_metrics["nodes_per_diameter"], grid_metrics[quantity]
+    )
+    recomputed.append({"quantity": quantity, **diagnostic})
+recomputed = pd.DataFrame(recomputed)
+for quantity in recomputed.quantity:
+    stored = grid_gci.loc[grid_gci.quantity == quantity].iloc[0]
+    current = recomputed.loc[recomputed.quantity == quantity].iloc[0]
+    assert np.isclose(current.observed_order, stored.observed_order, equal_nan=True)
+    assert np.isclose(current.fine_grid_gci_percent, stored.fine_grid_gci_percent,
+                      equal_nan=True)
+
+display(grid_metrics[[
+    "nodes_per_diameter", "tau", "Mach", "blockage", "density_drift",
+    "Cd_mean", "Cd_tail_half_change_percent", "St", "St_cycles",
+    "lift_relative_rms_change", "Lr_over_D", "statistical_convergence_pass",
+]])
+display(grid_gci[[
+    "quantity", "observed_order", "richardson_extrapolated",
+    "fine_pair_relative_change_percent", "fine_grid_gci_percent",
+    "fine_pair_gate_percent", "gci_gate_percent", "pass",
+]])
+assert grid_metrics.nodes_per_diameter.astype(int).tolist() == [12, 18, 27]
+print("grid-independence gate:", grid_summary["status"].upper())
+display(Image(filename=str(GRID_EVIDENCE / "cylinder_grid_independence.png")))
+"""),
+    md(r"""
+### Interpret the result correctly
+
+- **Statistical convergence:** did each trajectory reach a stationary sampled wake?
+- **Grid convergence:** do the declared outputs stop changing as $\Delta x/D\to0$?
+- **Domain sensitivity:** do transverse pitch and outlet distance still bias those outputs?
+- **External validation:** do the grid/domain-qualified outputs agree with independent CFD/DNS?
+- **ML error:** after all of the above, how closely does the surrogate reproduce the CFD labels?
+
+A small ML-versus-LBM error cannot repair a biased LBM solution. The archived neural models in this release were trained on the low-cost $D/\Delta x=12$ dataset. The retained three-grid study does not establish formal asymptotic independence, so those ML claims remain explicitly educational.
+"""),
+    code(r"""
+RUN_FULL_GRID_REGENERATION = False
+if RUN_FULL_GRID_REGENERATION:
+    import subprocess, sys
+    subprocess.run([
+        sys.executable,
+        str(REPO_ROOT / "qa/run_cylinder_grid_independence.py"),
+        "--root", str(REPO_ROOT), "--regenerate", "--workers", "3",
+    ], check=True)
 """),
     md(r"""
 ## 5. POD baseline: a useful failure, not the final model
@@ -721,12 +817,15 @@ For a research extension, use longer phase-aligned trajectories, train/validatio
 2. A four-panel $Re=100$ field/force figure with readable axes and unobstructed legends.
 3. The complete sweep table containing density drift, $\overline C_D$, $C_{L,\mathrm{rms}}$, $St$, and $L_r/D$.
 4. Evidence for attached/no-bubble, steady-recirculating, and periodic-shedding regimes; explain any mismatch.
-5. One resolution or blockage comparison at $Re=100$.
+5. The complete $D/\Delta x=12,18,27$ grid table, statistical gates,
+   fine-pair changes, the retained asymptotic/GCI failure, and a justified next
+   refinement without changing the thresholds.
 6. The archived POD failure, including why $Re=100$ is now validation rather than blind.
 7. The frozen CNN specification, polynomial-baseline comparison, validation gates, and retained $Re=105$ result.
 8. Enstrophy/profile/complex-spectral evidence at $2D,4D,6D,8D$ and the retained 50-step rollout audit.
 9. The phase-decoder split, selected harmonic order, 277-frame errors, and LBM-versus-decoder Strouhal comparison.
-10. A short paragraph distinguishing an educational demonstration from quantitative DNS validation.
+10. A short paragraph distinguishing grid independence, domain independence,
+    external CFD validation, and ML-to-CFD agreement.
 
 ### Exercises
 
@@ -745,6 +844,7 @@ For a research extension, use longer phase-aligned trajectories, train/validatio
 - Q. Zou & X. He (1997), “On pressure and velocity boundary conditions for the lattice Boltzmann BGK model,” *Physics of Fluids* 9, 1591–1598.
 - C. H. K. Williamson (1996), “Vortex dynamics in the cylinder wake,” *Annual Review of Fluid Mechanics* 28, 477–539. [doi:10.1146/annurev.fl.28.010196.002401](https://doi.org/10.1146/annurev.fl.28.010196.002401)
 - C. P. Jackson (1987), “A finite-element study of the onset of vortex shedding in flow past variously shaped bodies,” *Journal of Fluid Mechanics* 182, 23–45.
+- I. B. Celik et al. (2008), “Procedure for estimation and reporting of uncertainty due to discretization in CFD applications,” *Journal of Fluids Engineering* 130, 078001. [doi:10.1115/1.2960953](https://doi.org/10.1115/1.2960953)
 - D. Barkley & R. D. Henderson (1996), “Three-dimensional Floquet stability analysis of the wake of a circular cylinder,” *Journal of Fluid Mechanics* 322, 215–241.
 - S. Lee & D. You (2019), “Data-driven prediction of unsteady flow fields over a circular cylinder using deep learning,” *Journal of Fluid Mechanics* 879, 217–254. [doi:10.1017/jfm.2019.700](https://doi.org/10.1017/jfm.2019.700)
 

@@ -71,7 +71,7 @@ Typical student runtimes are approximate:
 | Project Tracks 1–4 | Colab recommended | 1–4 h including controlled sweeps |
 | Project Track 5 | CPU/GPU | several hours for all stochastic cases |
 | Project Track 6 | CUDA GPU | smoke test first; final study is substantially longer |
-| Week 7 cylinder LBM | CPU | 15–45 min for the quick five-regime path; longer for qualification/refinement |
+| Week 7 cylinder LBM | CPU | <2 min with retained evidence; the complete three-grid regeneration is intentionally an instructor/assignment run |
 
 ## 5. Keep blind cases blind
 

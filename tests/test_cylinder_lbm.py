@@ -216,6 +216,43 @@ class CylinderLBMTests(unittest.TestCase):
             expected = amplitude * np.exp(-2.0 * viscosity * wave_number**2 * steps)
             self.assertAlmostEqual(recovered / expected, 1.0, delta=0.035)
 
+    def test_three_grid_gci_recovers_second_order_sequence(self) -> None:
+        resolution = np.asarray([12.0, 18.0, 27.0])
+        exact = 1.3
+        values = exact + 8.0 / resolution**2
+        diagnostic = cylinder_lbm.grid_convergence_diagnostics(
+            resolution, values
+        )
+        self.assertTrue(diagnostic["valid_asymptotic_sequence"])
+        self.assertAlmostEqual(diagnostic["observed_order"], 2.0, places=12)
+        self.assertAlmostEqual(
+            diagnostic["richardson_extrapolated"], exact, places=12
+        )
+        self.assertGreater(diagnostic["fine_grid_gci_percent"], 0.0)
+
+    def test_three_grid_gci_rejects_nonmonotone_values(self) -> None:
+        diagnostic = cylinder_lbm.grid_convergence_diagnostics(
+            [12, 18, 27], [1.4, 1.3, 1.35]
+        )
+        self.assertFalse(diagnostic["valid_asymptotic_sequence"])
+        self.assertEqual(
+            diagnostic["reason"], "non_monotone_or_roundoff_limited"
+        )
+
+    def test_three_grid_gci_supports_unequal_refinement_ratios(self) -> None:
+        resolution = np.asarray([18.0, 27.0, 40.0])
+        exact = 0.18
+        values = exact + 2.5 / resolution**2
+        diagnostic = cylinder_lbm.grid_convergence_diagnostics(
+            resolution, values
+        )
+        self.assertTrue(diagnostic["valid_asymptotic_sequence"])
+        self.assertFalse(diagnostic["constant_refinement_ratio"])
+        self.assertAlmostEqual(diagnostic["observed_order"], 2.0, places=10)
+        self.assertAlmostEqual(
+            diagnostic["richardson_extrapolated"], exact, places=12
+        )
+
 
 if __name__ == "__main__":
     unittest.main()

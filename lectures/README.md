@@ -7,7 +7,7 @@
 | `week03_kinetic_dsmc.pdf` | Distribution functions, Maxwellian moments, sampling error, DSMC | `notebooks/week03/` |
 | `week04_cavity_surrogates_deeponet.pdf` | Data qualification, scalar/field surrogates, DeepONet, physical metrics | `notebooks/week04/` |
 | `week05_06_project_guide.pdf` | Six project tracks, frozen protocols, POD, uncertainty, rarefied cavity, FP closure | `notebooks/week05_06/P0_Project_Setup.ipynb` through `P6_FP_Cavity_Closure.ipynb` |
-| `week07_cylinder_lbm_neural_surrogate.pdf` | Circular-cylinder physics; D2Q9 BGK/TRT and curved-wall boundaries; force and gated Strouhal diagnostics; POD/CNN failure analysis; and leakage-controlled 277-frame phase-stable validation | `notebooks/week07/W7_Lattice_Boltzmann_Cylinder_Student.ipynb` |
+| `week07_cylinder_lbm_neural_surrogate.pdf` | Circular-cylinder physics; concise D2Q9 BGK/TRT algorithm; curved-wall boundaries; force and gated Strouhal diagnostics; executed three-grid study with retained formal asymptotic/GCI failure; POD/CNN failure analysis; and leakage-controlled 277-frame phase-stable validation | `notebooks/week07/W7_Lattice_Boltzmann_Cylinder_Student.ipynb` |
 
 Editable sources are included in `source/` where they were available. The PDF is the authoritative rendered lecture for this release.
 

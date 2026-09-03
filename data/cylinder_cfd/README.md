@@ -16,3 +16,10 @@ validate with `python qa/validate_cylinder_cfd_dataset.py data/cylinder_cfd`.
 Every NPZ contains normalized `u`, `v`, and pressure snapshots, the solid mask,
 coordinates, force histories, Strouhal number, and solver provenance.  The
 generated `manifest.json` records byte sizes and SHA-256 checksums.
+
+This `v1` dataset uses 12 lattice nodes per cylinder diameter and is retained
+for the reproducible educational ML comparisons. It is not silently promoted
+to grid-independent CFD. The separate `Re=100` three-grid solution study and
+its direct LBM fields are stored in `results/cylinder_grid_convergence/`.
+Students must distinguish ML-to-v1-label error from CFD discretization,
+domain/blockage, and external-reference errors.
