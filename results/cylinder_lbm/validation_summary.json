@@ -10,8 +10,9 @@
   ],
   "all_stability_gates_pass": true,
   "all_regime_gates_pass": true,
+  "all_shedding_frequency_gates_pass": true,
   "quantitative_reference_gate_enforced": false,
-  "max_density_drift": 0.0025097305204019,
-  "figure_sha256": "e7872b4da3a7861190e485d8d633dd6963100a9ff6009f4764e55c9287b3cb22",
-  "regeneration_elapsed_seconds": 356.3769776819936
+  "max_density_drift": 0.0020867101480647,
+  "figure_sha256": "8228fabf902520716651b2e2204b6c4dc5dd297739098f2f681bbcf0e9744de4",
+  "regeneration_elapsed_seconds": 867.8178491900035
 }

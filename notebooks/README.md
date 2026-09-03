@@ -34,7 +34,7 @@ only for notebooks that explicitly require CUDA.
 - `week03/`: Maxwellian sampling/noise and a mini DSMC cavity.
 - `week04/`: CFD data production, scalar/field surrogates, and a 27-cell POD-DeepONet laboratory with development-only selection, a visible blind-test gate, three-seed uncertainty, Ghia checks, physical diagnostics, and timing.
 - `week05_06/`: the original combined two-week guided-project pack. Week 5 establishes the setup, baseline, controlled modification, and checkpoint; Week 6 completes the same selected track, physical validation, reproducibility package, and final report.
-- `week07/`: D2Q9 BGK/TRT cylinder flow, force and Strouhal validation, Reynolds-regime classification, and a complete unseen-Reynolds comparison between a POD baseline and a four-frame multi-scale CNN.
+- `week07/`: D2Q9 BGK/TRT cylinder flow, physically gated force and Strouhal diagnostics, Reynolds-regime classification, strong temporal baselines, and separate one-step/recursive audits of a four-frame multi-scale CNN on a retained held-out interpolation case.
 
 The Week-7 notebook labels the retained low-cost run as qualitative.  It links
 every field plot to force, density, Mach-number, relaxation-time, blockage, and
@@ -42,6 +42,9 @@ reference diagnostics, and provides a separate qualification/refinement path.
 Machine-readable retained evidence is in `../results/cylinder_lbm/`.
 The executed 1080p complete-Re blind animation and its field-error/baseline
 evidence are in `../results/cylinder_ml/`.
+The corrected one-step CNN, cubic-extrapolation comparison, downstream
+diagnostics, and failed 50-step recursive audit are retained separately in
+`../results/cylinder_cnn/`.
 
 The additive `week04/W4_1_Classical_ROM_Cavity.ipynb` lab comes after the
 original Week-4 sequence without modifying it.  It implements dynamic centered

@@ -24,6 +24,14 @@ class CylinderCNNTests(unittest.TestCase):
         np.testing.assert_array_equal(stacked[..., 0], fields["u"][0])
         np.testing.assert_array_equal(stacked[..., 4], fields["v"][2])
 
+    def test_polynomial_forecast_uses_the_same_four_history_frames(self) -> None:
+        time = np.arange(4.0)[:, None, None]
+        quadratic = 2.0 + 0.5 * time + 3.0 * time**2
+        predicted = cylinder_cnn.polynomial_forecast(
+            quadratic, horizon=2, degree=2
+        )
+        np.testing.assert_allclose(predicted, 2.0 + 0.5 * 5.0 + 3.0 * 5.0**2)
+
     def test_vorticity_and_divergence_for_linear_field(self) -> None:
         y, x = np.mgrid[:7, :9]
         u = -2.0 * y + 0.5 * x
@@ -46,6 +54,7 @@ class CylinderCNNTests(unittest.TestCase):
         for row in rows:
             self.assertAlmostEqual(row["enstrophy_ratio"], 0.64, places=12)
             self.assertLess(row["normalized_psd_relative_l2"], 1.0e-12)
+            self.assertAlmostEqual(row["complex_spectral_coherence"], 1.0, places=12)
 
     def test_multiscale_model_preserves_shape_and_initial_persistence(self) -> None:
         try:
@@ -58,7 +67,6 @@ class CylinderCNNTests(unittest.TestCase):
         prediction = np.asarray(model(values, training=False))
         self.assertEqual(prediction.shape, (2, 16, 20, 3))
         np.testing.assert_allclose(prediction, values[..., 9:12], atol=1.0e-7)
-
 
 if __name__ == "__main__":
     unittest.main()

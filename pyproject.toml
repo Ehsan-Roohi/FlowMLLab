@@ -33,17 +33,17 @@ classifiers = [
   "Topic :: Scientific/Engineering :: Physics",
 ]
 dependencies = [
-  "numpy==2.2.6",
-  "pandas==2.2.3",
-  "scipy==1.15.3",
-  "matplotlib==3.10.3",
-  "scikit-learn==1.6.1",
+  "numpy>=2.0,<2.3",
+  "pandas>=2.2,<2.4",
+  "scipy>=1.13,<1.16",
+  "matplotlib>=3.8,<3.11",
+  "scikit-learn>=1.4,<1.7",
 ]
 
 [project.optional-dependencies]
 ml = [
-  "tensorflow==2.21.0",
-  "keras==3.15.0",
+  "tensorflow>=2.16,<2.22",
+  "keras>=3.3,<3.16",
 ]
 test = []
 demo = [

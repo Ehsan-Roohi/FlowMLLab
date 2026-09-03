@@ -22,8 +22,8 @@
 | 6B | A-posteriori testing | Deploy learned closure inside solver | Stability, high-order moments, fields, centerlines, and runtime |
 | 6C | Reproducibility and communication | Restart/run-all, save metrics, make one-slide summary | Complete evidence bundle and explicit limitation |
 | 7A | Lattice-Boltzmann mechanics | Derive D2Q9 equilibrium; compare transparent BGK with robust TRT; identify every boundary operation | Mass/density stability, `Ma`, `tau`, no-slip mask, and reproducible configuration |
-| 7B | Cylinder-wake regimes and validation | Run `Re=5,20,40,100,180`; extract vorticity, `C_D`, `C_L`, `St`, and recirculation length | Correct attached/steady/shedding classification; literature bands; explicit grid/domain/time limitations |
-| 7C | Educational unsteady field learning | Reynolds/phase POD baseline and four-frame multi-scale CNN with a complete unseen-Reynolds test | Case-wise split, blind field error, spectra, downstream enstrophy, divergence/no-slip checks, and baseline comparison |
+| 7B | Cylinder-wake regimes and validation | Run `Re=5,20,40,100,180`; extract vorticity, `C_D`, `C_L`, quality-gated `St`, and time-mean recirculation length | Correct attached/steady/shedding classification; acoustic-mode rejection; literature bands; explicit grid/domain/time limitations |
+| 7C | Educational unsteady field learning | Reynolds/phase POD failure baseline and four-frame multi-scale CNN on a retained held-out interpolation case | Case-wise split, persistence/linear/quadratic/cubic baselines, one-step field/spectral/downstream checks, exact no-slip, and a separately gated recursive rollout |
 
 ## Suggested adoption modes
 

@@ -1,9 +1,119 @@
 {
   "blind": {
+    "best_non_neural_baseline": "cubic",
     "lbm_strouhal": 0.18388667082137589,
     "models": {
+      "cubic": {
+        "divergence_rms": 0.028207973782178646,
+        "mean_station_complex_spectral_incoherence": 0.0001273130830648228,
+        "mean_station_enstrophy_relative_error": 0.0037017974802296405,
+        "mean_station_profile_relative_l2": 0.015805939697861496,
+        "mean_station_psd_relative_l2": 0.0011691499088597418,
+        "p_relative_l2": 0.05804215954051377,
+        "solid_speed_max": 0.0,
+        "stationwise": [
+          {
+            "complex_spectral_coherence": 0.9999691087277435,
+            "complex_spectral_incoherence": 3.089127225652799e-05,
+            "enstrophy_ratio": 0.999258901052119,
+            "enstrophy_relative_error": 0.0007410989478809915,
+            "grid_column": 84.0,
+            "normalized_psd_relative_l2": 0.0005217420348330176,
+            "vorticity_profile_relative_l2": 0.006054391262052135,
+            "x_over_d": 2.0
+          },
+          {
+            "complex_spectral_coherence": 0.9998347334969826,
+            "complex_spectral_incoherence": 0.00016526650301740275,
+            "enstrophy_ratio": 0.9958719743799702,
+            "enstrophy_relative_error": 0.004128025620029785,
+            "grid_column": 108.0,
+            "normalized_psd_relative_l2": 0.002441380729550137,
+            "vorticity_profile_relative_l2": 0.018927011426505463,
+            "x_over_d": 4.0
+          },
+          {
+            "complex_spectral_coherence": 0.9998328885819563,
+            "complex_spectral_incoherence": 0.00016711141804370833,
+            "enstrophy_ratio": 0.9940292921506606,
+            "enstrophy_relative_error": 0.005970707849339396,
+            "grid_column": 132.0,
+            "normalized_psd_relative_l2": 0.0014733977099882496,
+            "vorticity_profile_relative_l2": 0.01976894835053181,
+            "x_over_d": 6.0
+          },
+          {
+            "complex_spectral_coherence": 0.9998540168610583,
+            "complex_spectral_incoherence": 0.00014598313894165216,
+            "enstrophy_ratio": 0.9960326424963316,
+            "enstrophy_relative_error": 0.0039673575036683895,
+            "grid_column": 156.0,
+            "normalized_psd_relative_l2": 0.00024007916106756248,
+            "vorticity_profile_relative_l2": 0.018473407752356577,
+            "x_over_d": 8.0
+          }
+        ],
+        "u_relative_l2": 0.00035272228229691634,
+        "v_relative_l2": 0.005321819565017904,
+        "vorticity_relative_l2": 0.010526976770496747
+      },
+      "linear": {
+        "divergence_rms": 0.02821938758388979,
+        "mean_station_complex_spectral_incoherence": 0.005535360843208548,
+        "mean_station_enstrophy_relative_error": 0.1418156105280201,
+        "mean_station_profile_relative_l2": 0.12632820379601084,
+        "mean_station_psd_relative_l2": 0.027298640997534773,
+        "p_relative_l2": 0.09559609913779218,
+        "solid_speed_max": 0.0,
+        "stationwise": [
+          {
+            "complex_spectral_coherence": 0.9983618647320578,
+            "complex_spectral_incoherence": 0.001638135267942209,
+            "enstrophy_ratio": 1.052924514504731,
+            "enstrophy_relative_error": 0.05292451450473101,
+            "grid_column": 84.0,
+            "normalized_psd_relative_l2": 0.018387903691175708,
+            "vorticity_profile_relative_l2": 0.056664836189886304,
+            "x_over_d": 2.0
+          },
+          {
+            "complex_spectral_coherence": 0.993716136080101,
+            "complex_spectral_incoherence": 0.006283863919898991,
+            "enstrophy_ratio": 1.1633868403354986,
+            "enstrophy_relative_error": 0.16338684033549855,
+            "grid_column": 108.0,
+            "normalized_psd_relative_l2": 0.05268936729344419,
+            "vorticity_profile_relative_l2": 0.1436796668702408,
+            "x_over_d": 4.0
+          },
+          {
+            "complex_spectral_coherence": 0.9921277433872191,
+            "complex_spectral_incoherence": 0.007872256612780903,
+            "enstrophy_ratio": 1.1932947970702068,
+            "enstrophy_relative_error": 0.1932947970702068,
+            "grid_column": 132.0,
+            "normalized_psd_relative_l2": 0.029450354849533813,
+            "vorticity_profile_relative_l2": 0.1638534169223806,
+            "x_over_d": 6.0
+          },
+          {
+            "complex_spectral_coherence": 0.9936528124277879,
+            "complex_spectral_incoherence": 0.006347187572212087,
+            "enstrophy_ratio": 1.157656290201644,
+            "enstrophy_relative_error": 0.15765629020164407,
+            "grid_column": 156.0,
+            "normalized_psd_relative_l2": 0.008666938155985373,
+            "vorticity_profile_relative_l2": 0.1411148952015356,
+            "x_over_d": 8.0
+          }
+        ],
+        "u_relative_l2": 0.004925580712360116,
+        "v_relative_l2": 0.057454020206141494,
+        "vorticity_relative_l2": 0.07881178255165995
+      },
       "persistence": {
         "divergence_rms": 0.028188285285316344,
+        "mean_station_complex_spectral_incoherence": 0.01603734325298556,
         "mean_station_enstrophy_relative_error": 0.004842359405368479,
         "mean_station_profile_relative_l2": 0.16924097677223354,
         "mean_station_psd_relative_l2": 0.0005857206701436993,
@@ -11,6 +121,8 @@
         "solid_speed_max": 0.0,
         "stationwise": [
           {
+            "complex_spectral_coherence": 0.9902650815930527,
+            "complex_spectral_incoherence": 0.00973491840694729,
             "enstrophy_ratio": 1.0020166382522513,
             "enstrophy_relative_error": 0.0020166382522512905,
             "grid_column": 84.0,
@@ -19,6 +131,8 @@
             "x_over_d": 2.0
           },
           {
+            "complex_spectral_coherence": 0.982706811889677,
+            "complex_spectral_incoherence": 0.017293188110322988,
             "enstrophy_ratio": 1.0024706133981067,
             "enstrophy_relative_error": 0.0024706133981067246,
             "grid_column": 108.0,
@@ -27,6 +141,8 @@
             "x_over_d": 4.0
           },
           {
+            "complex_spectral_coherence": 0.9805450747766409,
+            "complex_spectral_incoherence": 0.01945492522335912,
             "enstrophy_ratio": 1.0101023174444341,
             "enstrophy_relative_error": 0.010102317444434128,
             "grid_column": 132.0,
@@ -35,6 +151,8 @@
             "x_over_d": 6.0
           },
           {
+            "complex_spectral_coherence": 0.9823336587286872,
+            "complex_spectral_incoherence": 0.017666341271312835,
             "enstrophy_ratio": 1.0047798685266818,
             "enstrophy_relative_error": 0.004779868526681774,
             "grid_column": 156.0,
@@ -49,6 +167,7 @@
       },
       "prediction": {
         "divergence_rms": 0.027870377051909076,
+        "mean_station_complex_spectral_incoherence": 3.130242967619434e-05,
         "mean_station_enstrophy_relative_error": 0.0028529953663808394,
         "mean_station_profile_relative_l2": 0.00803762204871599,
         "mean_station_psd_relative_l2": 0.0015922090830996593,
@@ -56,6 +175,8 @@
         "solid_speed_max": 0.0,
         "stationwise": [
           {
+            "complex_spectral_coherence": 0.9999525937189613,
+            "complex_spectral_incoherence": 4.740628103871991e-05,
             "enstrophy_ratio": 1.0035379275161367,
             "enstrophy_relative_error": 0.003537927516136685,
             "grid_column": 84.0,
@@ -64,6 +185,8 @@
             "x_over_d": 2.0
           },
           {
+            "complex_spectral_coherence": 0.9999695324576523,
+            "complex_spectral_incoherence": 3.046754234770077e-05,
             "enstrophy_ratio": 0.9993188500256422,
             "enstrophy_relative_error": 0.0006811499743577532,
             "grid_column": 108.0,
@@ -72,6 +195,8 @@
             "x_over_d": 4.0
           },
           {
+            "complex_spectral_coherence": 0.9999756224170139,
+            "complex_spectral_incoherence": 2.437758298612369e-05,
             "enstrophy_ratio": 1.0037127618389494,
             "enstrophy_relative_error": 0.003712761838949419,
             "grid_column": 132.0,
@@ -80,6 +205,8 @@
             "x_over_d": 6.0
           },
           {
+            "complex_spectral_coherence": 0.9999770416876678,
+            "complex_spectral_incoherence": 2.2958312332233e-05,
             "enstrophy_ratio": 1.0034801421360795,
             "enstrophy_relative_error": 0.0034801421360795004,
             "grid_column": 156.0,
@@ -91,12 +218,249 @@
         "u_relative_l2": 0.0008055371927157572,
         "v_relative_l2": 0.004928653293052769,
         "vorticity_relative_l2": 0.008149077804868406
+      },
+      "quadratic": {
+        "divergence_rms": 0.028218842505777556,
+        "mean_station_complex_spectral_incoherence": 0.0008764472085101283,
+        "mean_station_enstrophy_relative_error": 0.01994665339199969,
+        "mean_station_profile_relative_l2": 0.04194743906086224,
+        "mean_station_psd_relative_l2": 0.007877394756409207,
+        "p_relative_l2": 0.07480704470683924,
+        "solid_speed_max": 0.0,
+        "stationwise": [
+          {
+            "complex_spectral_coherence": 0.9997577913281214,
+            "complex_spectral_incoherence": 0.00024220867187862982,
+            "enstrophy_ratio": 1.0038134143718562,
+            "enstrophy_relative_error": 0.0038134143718562274,
+            "grid_column": 84.0,
+            "normalized_psd_relative_l2": 0.0031598190059490415,
+            "vorticity_profile_relative_l2": 0.01709068887542755,
+            "x_over_d": 2.0
+          },
+          {
+            "complex_spectral_coherence": 0.9989394000494987,
+            "complex_spectral_incoherence": 0.0010605999505013397,
+            "enstrophy_ratio": 1.0243695049933033,
+            "enstrophy_relative_error": 0.02436950499330326,
+            "grid_column": 108.0,
+            "normalized_psd_relative_l2": 0.01585053653114184,
+            "vorticity_profile_relative_l2": 0.049216703076691765,
+            "x_over_d": 4.0
+          },
+          {
+            "complex_spectral_coherence": 0.9987517782195615,
+            "complex_spectral_incoherence": 0.0012482217804384854,
+            "enstrophy_ratio": 1.0299847392008008,
+            "enstrophy_relative_error": 0.029984739200800803,
+            "grid_column": 132.0,
+            "normalized_psd_relative_l2": 0.009067867475245727,
+            "vorticity_profile_relative_l2": 0.054655405251213394,
+            "x_over_d": 6.0
+          },
+          {
+            "complex_spectral_coherence": 0.9990452415687779,
+            "complex_spectral_incoherence": 0.0009547584312220581,
+            "enstrophy_ratio": 1.0216189550020385,
+            "enstrophy_relative_error": 0.021618955002038476,
+            "grid_column": 156.0,
+            "normalized_psd_relative_l2": 0.003431356013300219,
+            "vorticity_profile_relative_l2": 0.04682695904011624,
+            "x_over_d": 8.0
+          }
+        ],
+        "u_relative_l2": 0.001100974867140525,
+        "v_relative_l2": 0.014086866156509347,
+        "vorticity_relative_l2": 0.026502631174085974
       }
     },
     "reynolds": 105,
     "snapshot_count": 277
   },
-  "generated_utc": "2026-09-02T18:37:08.571830+00:00",
+  "blind_rollout": {
+    "declared_gate": "mean vorticity relative L2 below 15% through 50 recursive steps",
+    "maximum_horizon_frames": 50,
+    "rows": [
+      {
+        "horizon_dimensionless_time": 0.10416666666666667,
+        "horizon_frames": 1,
+        "max_vorticity_relative_l2": 0.11087778419252706,
+        "mean_vorticity_norm_ratio": 0.9999135006175166,
+        "mean_vorticity_relative_l2": 0.11004287780840578,
+        "model": "persistence"
+      },
+      {
+        "horizon_dimensionless_time": 0.10416666666666667,
+        "horizon_frames": 1,
+        "max_vorticity_relative_l2": 0.011639559078753896,
+        "mean_vorticity_norm_ratio": 0.9994341827425789,
+        "mean_vorticity_relative_l2": 0.010754107635420883,
+        "model": "cubic_open_loop"
+      },
+      {
+        "horizon_dimensionless_time": 0.10416666666666667,
+        "horizon_frames": 1,
+        "max_vorticity_relative_l2": 0.008686878583847328,
+        "mean_vorticity_norm_ratio": 0.9997041998717568,
+        "mean_vorticity_relative_l2": 0.008259451628652515,
+        "model": "cnn_autoregressive"
+      },
+      {
+        "horizon_dimensionless_time": 0.5208333333333334,
+        "horizon_frames": 5,
+        "max_vorticity_relative_l2": 0.5083942350948758,
+        "mean_vorticity_norm_ratio": 0.9994718053124295,
+        "mean_vorticity_relative_l2": 0.5037122346130585,
+        "model": "persistence"
+      },
+      {
+        "horizon_dimensionless_time": 0.5208333333333334,
+        "horizon_frames": 5,
+        "max_vorticity_relative_l2": 0.5666328300902571,
+        "mean_vorticity_norm_ratio": 1.1625676247171401,
+        "mean_vorticity_relative_l2": 0.5509924828157989,
+        "model": "cubic_open_loop"
+      },
+      {
+        "horizon_dimensionless_time": 0.5208333333333334,
+        "horizon_frames": 5,
+        "max_vorticity_relative_l2": 0.044171589109236874,
+        "mean_vorticity_norm_ratio": 1.0005326741565803,
+        "mean_vorticity_relative_l2": 0.042251201504797053,
+        "model": "cnn_autoregressive"
+      },
+      {
+        "horizon_dimensionless_time": 1.0416666666666667,
+        "horizon_frames": 10,
+        "max_vorticity_relative_l2": 0.8289736800259676,
+        "mean_vorticity_norm_ratio": 0.9987619681443963,
+        "mean_vorticity_relative_l2": 0.8213128543846114,
+        "model": "persistence"
+      },
+      {
+        "horizon_dimensionless_time": 1.0416666666666667,
+        "horizon_frames": 10,
+        "max_vorticity_relative_l2": 3.8180820991055615,
+        "mean_vorticity_norm_ratio": 3.954675482970272,
+        "mean_vorticity_relative_l2": 3.757699595981776,
+        "model": "cubic_open_loop"
+      },
+      {
+        "horizon_dimensionless_time": 1.0416666666666667,
+        "horizon_frames": 10,
+        "max_vorticity_relative_l2": 0.09178346922434676,
+        "mean_vorticity_norm_ratio": 1.0057198961264857,
+        "mean_vorticity_relative_l2": 0.08814188124659451,
+        "model": "cnn_autoregressive"
+      },
+      {
+        "horizon_dimensionless_time": 2.0833333333333335,
+        "horizon_frames": 20,
+        "max_vorticity_relative_l2": 1.1378246293868788,
+        "mean_vorticity_norm_ratio": 0.9994722238282949,
+        "mean_vorticity_relative_l2": 1.129578387223092,
+        "model": "persistence"
+      },
+      {
+        "horizon_dimensionless_time": 2.0833333333333335,
+        "horizon_frames": 20,
+        "max_vorticity_relative_l2": 26.71743873718094,
+        "mean_vorticity_norm_ratio": 26.185291567305654,
+        "mean_vorticity_relative_l2": 26.20041321114974,
+        "model": "cubic_open_loop"
+      },
+      {
+        "horizon_dimensionless_time": 2.0833333333333335,
+        "horizon_frames": 20,
+        "max_vorticity_relative_l2": 0.21349626759693652,
+        "mean_vorticity_norm_ratio": 1.0271824684607205,
+        "mean_vorticity_relative_l2": 0.2022152469551889,
+        "model": "cnn_autoregressive"
+      },
+      {
+        "horizon_dimensionless_time": 3.125,
+        "horizon_frames": 30,
+        "max_vorticity_relative_l2": 1.18148567831046,
+        "mean_vorticity_norm_ratio": 0.9996009354527322,
+        "mean_vorticity_relative_l2": 1.175908987724034,
+        "model": "persistence"
+      },
+      {
+        "horizon_dimensionless_time": 3.125,
+        "horizon_frames": 30,
+        "max_vorticity_relative_l2": 84.28454563621612,
+        "mean_vorticity_norm_ratio": 83.06617330520679,
+        "mean_vorticity_relative_l2": 83.00816847263802,
+        "model": "cubic_open_loop"
+      },
+      {
+        "horizon_dimensionless_time": 3.125,
+        "horizon_frames": 30,
+        "max_vorticity_relative_l2": 0.3749108406215107,
+        "mean_vorticity_norm_ratio": 1.0678008750055128,
+        "mean_vorticity_relative_l2": 0.3536935929985425,
+        "model": "cnn_autoregressive"
+      },
+      {
+        "horizon_dimensionless_time": 4.166666666666667,
+        "horizon_frames": 40,
+        "max_vorticity_relative_l2": 0.9166643810876988,
+        "mean_vorticity_norm_ratio": 0.9986865584368698,
+        "mean_vorticity_relative_l2": 0.9141483291095648,
+        "model": "persistence"
+      },
+      {
+        "horizon_dimensionless_time": 4.166666666666667,
+        "horizon_frames": 40,
+        "max_vorticity_relative_l2": 193.46940573204165,
+        "mean_vorticity_norm_ratio": 190.39602139501505,
+        "mean_vorticity_relative_l2": 190.40730835668924,
+        "model": "cubic_open_loop"
+      },
+      {
+        "horizon_dimensionless_time": 4.166666666666667,
+        "horizon_frames": 40,
+        "max_vorticity_relative_l2": 0.6089892085460917,
+        "mean_vorticity_norm_ratio": 1.1530767113619431,
+        "mean_vorticity_relative_l2": 0.5732784048934335,
+        "model": "cnn_autoregressive"
+      },
+      {
+        "horizon_dimensionless_time": 5.208333333333333,
+        "horizon_frames": 50,
+        "max_vorticity_relative_l2": 0.24962488419551826,
+        "mean_vorticity_norm_ratio": 0.9999365358784131,
+        "mean_vorticity_relative_l2": 0.2448507529583789,
+        "model": "persistence"
+      },
+      {
+        "horizon_dimensionless_time": 5.208333333333333,
+        "horizon_frames": 50,
+        "max_vorticity_relative_l2": 371.53357637304157,
+        "mean_vorticity_norm_ratio": 364.9115614462462,
+        "mean_vorticity_relative_l2": 364.8995579879195,
+        "model": "cubic_open_loop"
+      },
+      {
+        "horizon_dimensionless_time": 5.208333333333333,
+        "horizon_frames": 50,
+        "max_vorticity_relative_l2": 1.0192551317004488,
+        "mean_vorticity_norm_ratio": 1.3387098136797881,
+        "mean_vorticity_relative_l2": 0.9072420215742397,
+        "model": "cnn_autoregressive"
+      }
+    ],
+    "starts": [
+      0,
+      45,
+      90,
+      136,
+      181,
+      227
+    ],
+    "status": "fails_declared_rollout_gate"
+  },
+  "generated_utc": "2026-09-03T00:10:07.681280+00:00",
   "grid": {
     "center": [
       60.0,
@@ -144,6 +508,7 @@
   },
   "protocol": {
     "blind_reynolds": 105,
+    "blind_status": "historical frozen test; retained after opening, not a fresh test for future tuning",
     "casewise_split": true,
     "claim_scope": "educational one-step Reynolds-generalization; not autonomous rollout or grid-converged DNS",
     "development_reynolds": [
@@ -162,10 +527,120 @@
     "validation_reynolds": 100
   },
   "validation": {
-    "lbm_strouhal": 0.18181364276005288,
+    "best_non_neural_baseline": "cubic",
+    "lbm_strouhal": 0.18181314259001635,
     "models": {
+      "cubic": {
+        "divergence_rms": 0.027229386620301787,
+        "mean_station_complex_spectral_incoherence": 9.572992179718298e-05,
+        "mean_station_enstrophy_relative_error": 0.0033429864702405887,
+        "mean_station_profile_relative_l2": 0.013565587097115424,
+        "mean_station_psd_relative_l2": 0.0010507742252175484,
+        "p_relative_l2": 0.057189240495370074,
+        "solid_speed_max": 0.0,
+        "stationwise": [
+          {
+            "complex_spectral_coherence": 0.9999829143838249,
+            "complex_spectral_incoherence": 1.7085616175083196e-05,
+            "enstrophy_ratio": 0.9994699473570096,
+            "enstrophy_relative_error": 0.0005300526429904417,
+            "grid_column": 84.0,
+            "normalized_psd_relative_l2": 0.0003744612022602543,
+            "vorticity_profile_relative_l2": 0.004368417973403875,
+            "x_over_d": 2.0
+          },
+          {
+            "complex_spectral_coherence": 0.9998698658818499,
+            "complex_spectral_incoherence": 0.00013013411815010478,
+            "enstrophy_ratio": 0.9967375533077835,
+            "enstrophy_relative_error": 0.0032624466922165363,
+            "grid_column": 108.0,
+            "normalized_psd_relative_l2": 0.002009486833128339,
+            "vorticity_profile_relative_l2": 0.016718187074903832,
+            "x_over_d": 4.0
+          },
+          {
+            "complex_spectral_coherence": 0.9998781771808727,
+            "complex_spectral_incoherence": 0.00012182281912731519,
+            "enstrophy_ratio": 0.99489573837694,
+            "enstrophy_relative_error": 0.005104261623059991,
+            "grid_column": 132.0,
+            "normalized_psd_relative_l2": 0.0014810538484106303,
+            "vorticity_profile_relative_l2": 0.016820599476607308,
+            "x_over_d": 6.0
+          },
+          {
+            "complex_spectral_coherence": 0.9998861228662638,
+            "complex_spectral_incoherence": 0.00011387713373622876,
+            "enstrophy_ratio": 0.9955248150773046,
+            "enstrophy_relative_error": 0.0044751849226953855,
+            "grid_column": 156.0,
+            "normalized_psd_relative_l2": 0.0003380950170709694,
+            "vorticity_profile_relative_l2": 0.016355143863546685,
+            "x_over_d": 8.0
+          }
+        ],
+        "u_relative_l2": 0.00031600614596235377,
+        "v_relative_l2": 0.004963742970652981,
+        "vorticity_relative_l2": 0.009232593574081212
+      },
+      "linear": {
+        "divergence_rms": 0.027238871678025776,
+        "mean_station_complex_spectral_incoherence": 0.004823862916609911,
+        "mean_station_enstrophy_relative_error": 0.13260918221619622,
+        "mean_station_profile_relative_l2": 0.1176510072446921,
+        "mean_station_psd_relative_l2": 0.026092067638056562,
+        "p_relative_l2": 0.09518347575510208,
+        "solid_speed_max": 0.0,
+        "stationwise": [
+          {
+            "complex_spectral_coherence": 0.9988159066282342,
+            "complex_spectral_incoherence": 0.0011840933717658375,
+            "enstrophy_ratio": 1.0447962638915695,
+            "enstrophy_relative_error": 0.04479626389156954,
+            "grid_column": 84.0,
+            "normalized_psd_relative_l2": 0.015876840162281778,
+            "vorticity_profile_relative_l2": 0.04824501391500997,
+            "x_over_d": 2.0
+          },
+          {
+            "complex_spectral_coherence": 0.9946385023891002,
+            "complex_spectral_incoherence": 0.005361497610899768,
+            "enstrophy_ratio": 1.145403955677357,
+            "enstrophy_relative_error": 0.14540395567735698,
+            "grid_column": 108.0,
+            "normalized_psd_relative_l2": 0.04726243275668315,
+            "vorticity_profile_relative_l2": 0.13130584224342357,
+            "x_over_d": 4.0
+          },
+          {
+            "complex_spectral_coherence": 0.9930616662147661,
+            "complex_spectral_incoherence": 0.006938333785233897,
+            "enstrophy_ratio": 1.1782221847859546,
+            "enstrophy_relative_error": 0.17822218478595464,
+            "grid_column": 132.0,
+            "normalized_psd_relative_l2": 0.03108677915348088,
+            "vorticity_profile_relative_l2": 0.15301533071422624,
+            "x_over_d": 6.0
+          },
+          {
+            "complex_spectral_coherence": 0.9941884731014599,
+            "complex_spectral_incoherence": 0.0058115268985401425,
+            "enstrophy_ratio": 1.1620143245099037,
+            "enstrophy_relative_error": 0.16201432450990372,
+            "grid_column": 156.0,
+            "normalized_psd_relative_l2": 0.01014221847978044,
+            "vorticity_profile_relative_l2": 0.13803784210610862,
+            "x_over_d": 8.0
+          }
+        ],
+        "u_relative_l2": 0.004712449513071288,
+        "v_relative_l2": 0.05559751309586926,
+        "vorticity_relative_l2": 0.0743200158310219
+      },
       "persistence": {
         "divergence_rms": 0.02721178015242857,
+        "mean_station_complex_spectral_incoherence": 0.014909552849155627,
         "mean_station_enstrophy_relative_error": 0.005164167414946574,
         "mean_station_profile_relative_l2": 0.1620635343707925,
         "mean_station_psd_relative_l2": 0.0005613267801514574,
@@ -173,6 +648,8 @@
         "solid_speed_max": 0.0,
         "stationwise": [
           {
+            "complex_spectral_coherence": 0.9913024251024523,
+            "complex_spectral_incoherence": 0.008697574897547744,
             "enstrophy_ratio": 0.9991671043695263,
             "enstrophy_relative_error": 0.0008328956304737289,
             "grid_column": 84.0,
@@ -181,6 +658,8 @@
             "x_over_d": 2.0
           },
           {
+            "complex_spectral_coherence": 0.9841913572642796,
+            "complex_spectral_incoherence": 0.015808642735720357,
             "enstrophy_ratio": 0.9932526916373872,
             "enstrophy_relative_error": 0.006747308362612836,
             "grid_column": 108.0,
@@ -189,6 +668,8 @@
             "x_over_d": 4.0
           },
           {
+            "complex_spectral_coherence": 0.9815771926708035,
+            "complex_spectral_incoherence": 0.018422807329196544,
             "enstrophy_ratio": 1.0004327417831766,
             "enstrophy_relative_error": 0.0004327417831766489,
             "grid_column": 132.0,
@@ -197,6 +678,8 @@
             "x_over_d": 6.0
           },
           {
+            "complex_spectral_coherence": 0.9832908135658421,
+            "complex_spectral_incoherence": 0.016709186434157863,
             "enstrophy_ratio": 1.012643723883523,
             "enstrophy_relative_error": 0.012643723883523084,
             "grid_column": 156.0,
@@ -211,6 +694,7 @@
       },
       "prediction": {
         "divergence_rms": 0.02693199321332273,
+        "mean_station_complex_spectral_incoherence": 2.571756590144525e-05,
         "mean_station_enstrophy_relative_error": 0.0026298507378016145,
         "mean_station_profile_relative_l2": 0.007280466755650557,
         "mean_station_psd_relative_l2": 0.0016630407814746029,
@@ -218,6 +702,8 @@
         "solid_speed_max": 0.0,
         "stationwise": [
           {
+            "complex_spectral_coherence": 0.9999631989743402,
+            "complex_spectral_incoherence": 3.680102565983834e-05,
             "enstrophy_ratio": 1.0028886134805641,
             "enstrophy_relative_error": 0.0028886134805641284,
             "grid_column": 84.0,
@@ -226,6 +712,8 @@
             "x_over_d": 2.0
           },
           {
+            "complex_spectral_coherence": 0.9999737280753571,
+            "complex_spectral_incoherence": 2.6271924642884414e-05,
             "enstrophy_ratio": 0.9993678857810248,
             "enstrophy_relative_error": 0.0006321142189752438,
             "grid_column": 108.0,
@@ -234,6 +722,8 @@
             "x_over_d": 4.0
           },
           {
+            "complex_spectral_coherence": 0.9999801457033463,
+            "complex_spectral_incoherence": 1.9854296653742942e-05,
             "enstrophy_ratio": 1.0036118856476899,
             "enstrophy_relative_error": 0.003611885647689883,
             "grid_column": 132.0,
@@ -242,6 +732,8 @@
             "x_over_d": 6.0
           },
           {
+            "complex_spectral_coherence": 0.9999800569833507,
+            "complex_spectral_incoherence": 1.9943016649315304e-05,
             "enstrophy_ratio": 1.0033867896039772,
             "enstrophy_relative_error": 0.0033867896039772027,
             "grid_column": 156.0,
@@ -253,17 +745,256 @@
         "u_relative_l2": 0.0007864755038468856,
         "v_relative_l2": 0.004818762835673491,
         "vorticity_relative_l2": 0.007709604955603017
+      },
+      "quadratic": {
+        "divergence_rms": 0.027239288801628386,
+        "mean_station_complex_spectral_incoherence": 0.0007133573445874952,
+        "mean_station_enstrophy_relative_error": 0.017799073312659175,
+        "mean_station_profile_relative_l2": 0.03751069571088129,
+        "mean_station_psd_relative_l2": 0.0070009776118995165,
+        "p_relative_l2": 0.07434661065486824,
+        "solid_speed_max": 0.0,
+        "stationwise": [
+          {
+            "complex_spectral_coherence": 0.9998443675750891,
+            "complex_spectral_incoherence": 0.0001556324249109009,
+            "enstrophy_ratio": 1.002761717514871,
+            "enstrophy_relative_error": 0.002761717514871087,
+            "grid_column": 84.0,
+            "normalized_psd_relative_l2": 0.0021055606015576165,
+            "vorticity_profile_relative_l2": 0.0132622112129351,
+            "x_over_d": 2.0
+          },
+          {
+            "complex_spectral_coherence": 0.9991451111938834,
+            "complex_spectral_incoherence": 0.000854888806116616,
+            "enstrophy_ratio": 1.02118995607336,
+            "enstrophy_relative_error": 0.02118995607335994,
+            "grid_column": 108.0,
+            "normalized_psd_relative_l2": 0.013404257454170128,
+            "vorticity_profile_relative_l2": 0.04394884738455173,
+            "x_over_d": 4.0
+          },
+          {
+            "complex_spectral_coherence": 0.9989912839995329,
+            "complex_spectral_incoherence": 0.001008716000467147,
+            "enstrophy_ratio": 1.0278276400061437,
+            "enstrophy_relative_error": 0.027827640006143683,
+            "grid_column": 132.0,
+            "normalized_psd_relative_l2": 0.009218221758658603,
+            "vorticity_profile_relative_l2": 0.04918652430796475,
+            "x_over_d": 6.0
+          },
+          {
+            "complex_spectral_coherence": 0.9991658078531447,
+            "complex_spectral_incoherence": 0.0008341921468553171,
+            "enstrophy_ratio": 1.019416979656262,
+            "enstrophy_relative_error": 0.01941697965626199,
+            "grid_column": 156.0,
+            "normalized_psd_relative_l2": 0.0032758706332117193,
+            "vorticity_profile_relative_l2": 0.04364519993807355,
+            "x_over_d": 8.0
+          }
+        ],
+        "u_relative_l2": 0.0010200280006691363,
+        "v_relative_l2": 0.013293073030991899,
+        "vorticity_relative_l2": 0.02413683435502161
       }
     },
     "reynolds": 100,
     "snapshot_count": 277
   },
   "validation_gates": {
-    "cnn_downstream_profile_beats_persistence": true,
-    "cnn_vorticity_beats_persistence": true,
+    "cnn_downstream_profile_beats_best_polynomial_baseline": true,
+    "cnn_vorticity_beats_best_polynomial_baseline": true,
+    "cnn_vorticity_error_below_2_percent": true,
     "every_station_enstrophy_ratio_between_0p75_and_1p25": true,
     "exact_no_slip": true,
+    "mean_complex_spectral_incoherence_below_1_percent": true,
     "mean_downstream_enstrophy_error_below_15_percent": true
   },
-  "validation_pass": true
+  "validation_pass": true,
+  "validation_rollout": {
+    "declared_gate": "mean vorticity relative L2 below 15% through 50 recursive steps",
+    "maximum_horizon_frames": 50,
+    "rows": [
+      {
+        "horizon_dimensionless_time": 0.10416666666666667,
+        "horizon_frames": 1,
+        "max_vorticity_relative_l2": 0.10736586970748868,
+        "mean_vorticity_norm_ratio": 1.0000588304556899,
+        "mean_vorticity_relative_l2": 0.10645794775267113,
+        "model": "persistence"
+      },
+      {
+        "horizon_dimensionless_time": 0.10416666666666667,
+        "horizon_frames": 1,
+        "max_vorticity_relative_l2": 0.010153302646395081,
+        "mean_vorticity_norm_ratio": 0.9994744296956571,
+        "mean_vorticity_relative_l2": 0.009385989841751067,
+        "model": "cubic_open_loop"
+      },
+      {
+        "horizon_dimensionless_time": 0.10416666666666667,
+        "horizon_frames": 1,
+        "max_vorticity_relative_l2": 0.008133136018300563,
+        "mean_vorticity_norm_ratio": 0.9997206728636255,
+        "mean_vorticity_relative_l2": 0.007755926799601586,
+        "model": "cnn_autoregressive"
+      },
+      {
+        "horizon_dimensionless_time": 0.5208333333333334,
+        "horizon_frames": 5,
+        "max_vorticity_relative_l2": 0.49434740030155877,
+        "mean_vorticity_norm_ratio": 1.00026739906591,
+        "mean_vorticity_relative_l2": 0.49008576591667885,
+        "model": "persistence"
+      },
+      {
+        "horizon_dimensionless_time": 0.5208333333333334,
+        "horizon_frames": 5,
+        "max_vorticity_relative_l2": 0.5002826015593611,
+        "mean_vorticity_norm_ratio": 1.129862075881366,
+        "mean_vorticity_relative_l2": 0.4865695790523354,
+        "model": "cubic_open_loop"
+      },
+      {
+        "horizon_dimensionless_time": 0.5208333333333334,
+        "horizon_frames": 5,
+        "max_vorticity_relative_l2": 0.040946714167189084,
+        "mean_vorticity_norm_ratio": 1.0005770380426482,
+        "mean_vorticity_relative_l2": 0.03988951362654387,
+        "model": "cnn_autoregressive"
+      },
+      {
+        "horizon_dimensionless_time": 1.0416666666666667,
+        "horizon_frames": 10,
+        "max_vorticity_relative_l2": 0.8138123793763528,
+        "mean_vorticity_norm_ratio": 0.9997695502727182,
+        "mean_vorticity_relative_l2": 0.8043661997137986,
+        "model": "persistence"
+      },
+      {
+        "horizon_dimensionless_time": 1.0416666666666667,
+        "horizon_frames": 10,
+        "max_vorticity_relative_l2": 3.424591174293426,
+        "mean_vorticity_norm_ratio": 3.580114546151792,
+        "mean_vorticity_relative_l2": 3.3665779550828447,
+        "model": "cubic_open_loop"
+      },
+      {
+        "horizon_dimensionless_time": 1.0416666666666667,
+        "horizon_frames": 10,
+        "max_vorticity_relative_l2": 0.08914760006859719,
+        "mean_vorticity_norm_ratio": 1.0054370684011398,
+        "mean_vorticity_relative_l2": 0.0841662838925651,
+        "model": "cnn_autoregressive"
+      },
+      {
+        "horizon_dimensionless_time": 2.0833333333333335,
+        "horizon_frames": 20,
+        "max_vorticity_relative_l2": 1.1173429261542984,
+        "mean_vorticity_norm_ratio": 0.9994032153188863,
+        "mean_vorticity_relative_l2": 1.1044000964435712,
+        "model": "persistence"
+      },
+      {
+        "horizon_dimensionless_time": 2.0833333333333335,
+        "horizon_frames": 20,
+        "max_vorticity_relative_l2": 24.130106945017502,
+        "mean_vorticity_norm_ratio": 23.57332281729565,
+        "mean_vorticity_relative_l2": 23.586635423901186,
+        "model": "cubic_open_loop"
+      },
+      {
+        "horizon_dimensionless_time": 2.0833333333333335,
+        "horizon_frames": 20,
+        "max_vorticity_relative_l2": 0.2097036605353357,
+        "mean_vorticity_norm_ratio": 1.0262118670722482,
+        "mean_vorticity_relative_l2": 0.19899597612806932,
+        "model": "cnn_autoregressive"
+      },
+      {
+        "horizon_dimensionless_time": 3.125,
+        "horizon_frames": 30,
+        "max_vorticity_relative_l2": 1.169952584038383,
+        "mean_vorticity_norm_ratio": 1.0002274292373727,
+        "mean_vorticity_relative_l2": 1.1595331027595777,
+        "model": "persistence"
+      },
+      {
+        "horizon_dimensionless_time": 3.125,
+        "horizon_frames": 30,
+        "max_vorticity_relative_l2": 76.11667019941234,
+        "mean_vorticity_norm_ratio": 74.85867584991698,
+        "mean_vorticity_relative_l2": 74.7973627056401,
+        "model": "cubic_open_loop"
+      },
+      {
+        "horizon_dimensionless_time": 3.125,
+        "horizon_frames": 30,
+        "max_vorticity_relative_l2": 0.3713999967104522,
+        "mean_vorticity_norm_ratio": 1.0657957157493148,
+        "mean_vorticity_relative_l2": 0.3510142908135711,
+        "model": "cnn_autoregressive"
+      },
+      {
+        "horizon_dimensionless_time": 4.166666666666667,
+        "horizon_frames": 40,
+        "max_vorticity_relative_l2": 0.92301945108591,
+        "mean_vorticity_norm_ratio": 0.9993635821742007,
+        "mean_vorticity_relative_l2": 0.9170615216411099,
+        "model": "persistence"
+      },
+      {
+        "horizon_dimensionless_time": 4.166666666666667,
+        "horizon_frames": 40,
+        "max_vorticity_relative_l2": 174.92441134850074,
+        "mean_vorticity_norm_ratio": 171.6234407191163,
+        "mean_vorticity_relative_l2": 171.6402532963631,
+        "model": "cubic_open_loop"
+      },
+      {
+        "horizon_dimensionless_time": 4.166666666666667,
+        "horizon_frames": 40,
+        "max_vorticity_relative_l2": 0.5930030038036216,
+        "mean_vorticity_norm_ratio": 1.155900811056511,
+        "mean_vorticity_relative_l2": 0.5681410044748364,
+        "model": "cnn_autoregressive"
+      },
+      {
+        "horizon_dimensionless_time": 5.208333333333333,
+        "horizon_frames": 50,
+        "max_vorticity_relative_l2": 0.30739875257102783,
+        "mean_vorticity_norm_ratio": 0.9996798789977986,
+        "mean_vorticity_relative_l2": 0.299053800361588,
+        "model": "persistence"
+      },
+      {
+        "horizon_dimensionless_time": 5.208333333333333,
+        "horizon_frames": 50,
+        "max_vorticity_relative_l2": 335.7570288474355,
+        "mean_vorticity_norm_ratio": 328.6458326210383,
+        "mean_vorticity_relative_l2": 328.5978642840126,
+        "model": "cubic_open_loop"
+      },
+      {
+        "horizon_dimensionless_time": 5.208333333333333,
+        "horizon_frames": 50,
+        "max_vorticity_relative_l2": 1.0026352061290846,
+        "mean_vorticity_norm_ratio": 1.3469198334552777,
+        "mean_vorticity_relative_l2": 0.9148528210182006,
+        "model": "cnn_autoregressive"
+      }
+    ],
+    "starts": [
+      0,
+      45,
+      90,
+      136,
+      181,
+      227
+    ],
+    "status": "fails_declared_rollout_gate"
+  }
 }

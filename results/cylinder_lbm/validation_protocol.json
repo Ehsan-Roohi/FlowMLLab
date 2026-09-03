@@ -1,6 +1,6 @@
 {
-  "generated_utc": "2026-09-02T17:03:34.910493+00:00",
-  "solver_version": "0.2.0",
+  "generated_utc": "2026-09-03T00:09:31.423923+00:00",
+  "solver_version": "0.3.0",
   "profile": "quick",
   "cases": [
     5,
@@ -17,9 +17,12 @@
     "transverse": "periodic"
   },
   "regime_gate": "mandatory for quick and validation profiles",
+  "frequency_gate": "0.05 < St < 0.5, at least eight retained cycles, stationary lift RMS, distinct peak",
+  "recirculation_definition": "first centerline zero of the post-transient time-mean streamwise velocity",
   "reference_gate": "reported but not enforced for quick; mandatory only after grid/domain/time refinement",
   "reference_sources": {
-    "Re20_40": "Gautier, Biau & Lamballais, Computers & Fluids 75 (2013)",
+    "Re20": "Dennis & Chang, JFM 42 (1970); Sen, Mittal & Biswas, JFM 620 (2009)",
+    "Re40": "Gautier, Biau & Lamballais, Computers & Fluids 75 (2013)",
     "Re50_180": "Qu et al., Journal of Fluids and Structures 39 (2013)"
   },
   "environment": {
@@ -29,7 +32,7 @@
   },
   "limitations": [
     "The retained quick profile is qualitative and is not grid-converged DNS evidence.",
-    "Periodic transverse boundaries represent a weakly interacting cylinder array.",
+    "Periodic transverse boundaries represent a cylinder array with pitch Ly.",
     "A coarsely resolved interpolated circular wall still requires diameter refinement.",
     "Re=180 is a two-dimensional teaching solution and does not model Mode A or B."
   ]

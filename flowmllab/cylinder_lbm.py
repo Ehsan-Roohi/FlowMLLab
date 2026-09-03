@@ -19,12 +19,12 @@ weakly-compressible LBM gauge pressure ``c_s**2 * (rho-rho0)``.
 from __future__ import annotations
 
 from dataclasses import asdict, dataclass
-from typing import Any
+from typing import Any, Mapping
 
 import numpy as np
 
 
-CYLINDER_LBM_VERSION = "0.2.0"
+CYLINDER_LBM_VERSION = "0.3.0"
 CS2 = 1.0 / 3.0
 
 # Direction order: rest, E, N, W, S, NE, NW, SW, SE.
@@ -63,8 +63,10 @@ class CylinderLBMConfig:
     history_stride: int = 5
     snapshot_stride: int | None = None
     snapshot_start: int = 0
+    statistics_start: int | None = None
     perturbation: float = 1.0e-3
     seed: int = 0
+    startup_ramp_steps: int = 0
     transverse_boundary: str = "periodic"
     outlet_boundary: str = "convective"
     outlet_speed: float | None = None
@@ -113,8 +115,12 @@ def _validate_config(config: CylinderLBMConfig) -> None:
         raise ValueError("snapshot_stride must be positive or None")
     if not 0 <= config.snapshot_start <= config.steps:
         raise ValueError("snapshot_start must lie between zero and steps")
+    if config.statistics_start is not None and not 0 <= config.statistics_start <= config.steps:
+        raise ValueError("statistics_start must lie between zero and steps")
     if config.perturbation < 0:
         raise ValueError("perturbation must be nonnegative")
+    if config.startup_ramp_steps < 0 or config.startup_ramp_steps > config.steps:
+        raise ValueError("startup_ramp_steps must lie between zero and steps")
     if config.transverse_boundary != "periodic":
         raise ValueError("this educational solver supports only periodic transverse BC")
     if config.outlet_boundary != "convective":
@@ -253,18 +259,25 @@ def compute_vorticity(u: np.ndarray, v: np.ndarray, solid: np.ndarray | None = N
     return omega
 
 
-def estimate_strouhal(
+def strouhal_diagnostics(
     time: np.ndarray,
     lift_coefficient: np.ndarray,
     diameter: float,
     inflow_velocity: float,
     transient_fraction: float = 0.5,
-) -> float:
-    """Estimate ``St=fD/U`` from the dominant post-transient lift frequency.
+    strouhal_band: tuple[float, float] = (0.05, 0.5),
+    minimum_cycles: float = 8.0,
+    maximum_rms_change: float = 0.25,
+    minimum_peak_to_median: float = 5.0,
+    minimum_band_power_fraction: float = 0.01,
+) -> dict[str, Any]:
+    """Diagnose a physically admissible post-transient shedding frequency.
 
-    ``nan`` is returned when there are too few uniformly sampled observations or
-    the lift signal is essentially constant.  A Hann window reduces leakage and
-    a three-bin parabolic correction reduces FFT bin bias.
+    The dominant peak is searched only inside ``strouhal_band``.  A result is
+    accepted only when the retained interval spans ``minimum_cycles``, the lift
+    RMS is stationary between its two halves, and the spectral peak is distinct
+    from the band background.  Invalid signals return ``strouhal=nan`` and a
+    machine-readable reason instead of reporting an acoustic or startup mode.
     """
     time = np.asarray(time, dtype=float).reshape(-1)
     lift = np.asarray(lift_coefficient, dtype=float).reshape(-1)
@@ -274,21 +287,68 @@ def estimate_strouhal(
         raise ValueError("diameter and inflow_velocity must be positive")
     if not 0 <= transient_fraction < 1:
         raise ValueError("transient_fraction must be in [0, 1)")
+    lower_st, upper_st = map(float, strouhal_band)
+    if not 0 < lower_st < upper_st:
+        raise ValueError("strouhal_band must contain two increasing positive values")
+    if (
+        minimum_cycles <= 0
+        or maximum_rms_change < 0
+        or minimum_peak_to_median <= 1
+        or not 0 < minimum_band_power_fraction <= 1
+    ):
+        raise ValueError("invalid Strouhal quality-gate settings")
+    diagnostics: dict[str, Any] = {
+        "valid": False,
+        "reason": "insufficient_samples",
+        "strouhal": float("nan"),
+        "band": [lower_st, upper_st],
+        "minimum_cycles": float(minimum_cycles),
+        "cycle_count": 0.0,
+        "rms_first_half": float("nan"),
+        "rms_second_half": float("nan"),
+        "relative_rms_change": float("nan"),
+        "peak_to_median": float("nan"),
+        "band_power_fraction": float("nan"),
+    }
     start = int(np.floor(transient_fraction * time.size))
     t = time[start:]
     signal = lift[start:]
     if t.size < 16 or not np.isfinite(t).all() or not np.isfinite(signal).all():
-        return float("nan")
+        return diagnostics
     dt = np.diff(t)
     if np.any(dt <= 0) or not np.allclose(dt, dt.mean(), rtol=1.0e-5, atol=1.0e-12):
         raise ValueError("time must be strictly increasing and uniformly sampled")
     signal = signal - signal.mean()
-    if np.sqrt(np.mean(signal**2)) < 1.0e-10:
-        return float("nan")
+    split = signal.size // 2
+    rms_first = float(np.sqrt(np.mean((signal[:split] - signal[:split].mean()) ** 2)))
+    rms_second = float(np.sqrt(np.mean((signal[split:] - signal[split:].mean()) ** 2)))
+    mean_rms = 0.5 * (rms_first + rms_second)
+    relative_rms_change = abs(rms_second - rms_first) / max(
+        mean_rms, np.finfo(float).eps
+    )
+    diagnostics.update(
+        rms_first_half=rms_first,
+        rms_second_half=rms_second,
+        relative_rms_change=float(relative_rms_change),
+    )
+    if mean_rms < 1.0e-10:
+        diagnostics["reason"] = "lift_signal_is_constant"
+        return diagnostics
+    # Remove residual linear drift before the FFT. Amplitude growth remains
+    # visible to the independent RMS stationarity gate above.
+    coordinate = np.linspace(-1.0, 1.0, signal.size)
+    slope = float(np.dot(coordinate, signal) / np.dot(coordinate, coordinate))
+    signal = signal - slope * coordinate
     spectrum = np.abs(np.fft.rfft(signal * np.hanning(signal.size))) ** 2
     frequencies = np.fft.rfftfreq(signal.size, d=float(dt.mean()))
-    spectrum[0] = 0.0
-    peak = int(np.argmax(spectrum))
+    strouhal_values = frequencies * float(diameter) / float(inflow_velocity)
+    admissible = (strouhal_values >= lower_st) & (strouhal_values <= upper_st)
+    admissible[0] = False
+    if not np.any(admissible):
+        diagnostics["reason"] = "no_fft_bin_inside_physical_band"
+        return diagnostics
+    indices = np.flatnonzero(admissible)
+    peak = int(indices[np.argmax(spectrum[indices])])
     frequency = float(frequencies[peak])
     if 0 < peak < spectrum.size - 1:
         left, middle, right = np.log(np.maximum(spectrum[peak - 1:peak + 2], 1.0e-300))
@@ -296,7 +356,60 @@ def estimate_strouhal(
         if denominator != 0.0:
             offset = 0.5 * (left - right) / denominator
             frequency += float(np.clip(offset, -0.5, 0.5)) * (frequencies[1] - frequencies[0])
-    return frequency * float(diameter) / float(inflow_velocity)
+    estimate = frequency * float(diameter) / float(inflow_velocity)
+    duration = float(t[-1] - t[0])
+    cycle_count = frequency * duration
+    background = float(np.median(spectrum[indices]))
+    peak_to_median = float(
+        spectrum[peak] / max(background, np.finfo(float).tiny)
+    )
+    band_power_fraction = float(
+        spectrum[indices].sum() / max(float(spectrum[1:].sum()), np.finfo(float).tiny)
+    )
+    diagnostics.update(
+        raw_peak_strouhal=float(estimate),
+        cycle_count=float(cycle_count),
+        peak_to_median=peak_to_median,
+        band_power_fraction=band_power_fraction,
+        retained_duration=duration,
+        retained_dimensionless_duration=float(
+            duration * float(inflow_velocity) / float(diameter)
+        ),
+    )
+    if band_power_fraction < minimum_band_power_fraction:
+        diagnostics["reason"] = "dominant_energy_outside_physical_band"
+    elif cycle_count < minimum_cycles:
+        diagnostics["reason"] = "fewer_than_minimum_cycles"
+    elif relative_rms_change > maximum_rms_change:
+        diagnostics["reason"] = "lift_amplitude_not_stationary"
+    elif peak_to_median < minimum_peak_to_median:
+        diagnostics["reason"] = "spectral_peak_not_distinct"
+    else:
+        diagnostics.update(valid=True, reason="accepted", strouhal=float(estimate))
+    return diagnostics
+
+
+def estimate_strouhal(
+    time: np.ndarray,
+    lift_coefficient: np.ndarray,
+    diameter: float,
+    inflow_velocity: float,
+    transient_fraction: float = 0.5,
+    strouhal_band: tuple[float, float] = (0.05, 0.5),
+    minimum_cycles: float = 8.0,
+) -> float:
+    """Return a quality-gated ``St=fD/U`` estimate or ``nan``."""
+    return float(
+        strouhal_diagnostics(
+            time,
+            lift_coefficient,
+            diameter,
+            inflow_velocity,
+            transient_fraction=transient_fraction,
+            strouhal_band=strouhal_band,
+            minimum_cycles=minimum_cycles,
+        )["strouhal"]
+    )
 
 
 def recirculation_length(
@@ -471,15 +584,16 @@ def recommended_parameters(reynolds: float, fidelity: str = "quick") -> dict[str
     fidelity = str(fidelity).lower()
     if fidelity == "quick":
         diameter = max(12, int(np.ceil(reynolds / 12.0)))
-        ny = 6 * diameter
-        nx = 16 * diameter
+        ny = 8 * diameter
+        nx = 20 * diameter
         return {
             "nx": nx,
             "ny": ny,
             "diameter": float(diameter),
-            "center": (4.0 * diameter, 0.5 * (ny - 1)),
+            "center": (5.0 * diameter, 0.5 * (ny - 1)),
             "inflow_velocity": 0.05,
-            "steps": 600 * diameter,
+            "startup_ramp_steps": 25 * diameter,
+            "steps": (2000 if reynolds >= 60 else 800) * diameter,
             "history_stride": max(2, diameter // 3),
         }
     if fidelity == "validation":
@@ -493,6 +607,7 @@ def recommended_parameters(reynolds: float, fidelity: str = "quick") -> dict[str
             "diameter": float(diameter),
             "center": (8.0 * diameter, 0.5 * (ny - 1)),
             "inflow_velocity": 0.05,
+            "startup_ramp_steps": 25 * diameter,
             "steps": 3000 * diameter,
             "history_stride": max(2, diameter // 3),
         }
@@ -512,18 +627,26 @@ def simulate_cylinder(
     history_stride: int = 5,
     snapshot_stride: int | None = None,
     snapshot_start: int = 0,
+    statistics_start: int | None = None,
     perturbation: float = 1.0e-3,
     seed: int = 0,
+    startup_ramp_steps: int = 0,
     collision_model: str = "trt",
     cylinder_boundary: str = "bouzidi",
+    restart_state: Mapping[str, Any] | None = None,
+    return_restart_state: bool = False,
 ) -> dict[str, Any]:
     """Run deterministic low-Mach flow past a cylinder using D2Q9 TRT or BGK.
 
     Parameters are in lattice units.  Setting ``snapshot_stride`` retains
     time-resolved ``u``, ``v``, ``p``, and ``vorticity`` arrays for ROM/ML
     exercises; otherwise only the final fields and inexpensive force history are
-    returned.  ``seed`` controls a tiny, zero-mean initial wake perturbation that
+    returned.  ``seed`` controls a tiny localized initial wake perturbation that
     lets the supercritical Hopf mode grow without forcing it continuously.
+    ``startup_ramp_steps`` applies a half-cosine, density-preserving far-field
+    acceleration together with the inlet and outlet memory.
+    ``restart_state`` continues from saved populations and outlet memory; set
+    ``return_restart_state`` to retain those arrays for a later quick run.
     """
     center_x, center_y = (None, None) if center is None else center
     config = CylinderLBMConfig(
@@ -531,7 +654,9 @@ def simulate_cylinder(
         center_x=center_x, center_y=center_y, inflow_velocity=float(inflow_velocity),
         rho0=float(rho0), steps=int(steps), history_stride=int(history_stride),
         snapshot_stride=snapshot_stride, snapshot_start=int(snapshot_start),
+        statistics_start=(None if statistics_start is None else int(statistics_start)),
         perturbation=float(perturbation), seed=int(seed),
+        startup_ramp_steps=int(startup_ramp_steps),
         collision_model=str(collision_model).lower(),
         cylinder_boundary=str(cylinder_boundary).lower(),
     )
@@ -544,24 +669,41 @@ def simulate_cylinder(
         else None
     )
 
-    x = np.arange(config.nx, dtype=float)[None, :]
-    y = np.arange(config.ny, dtype=float)[:, None]
-    rho = np.full((config.ny, config.nx), config.rho0, dtype=float)
-    u = np.full_like(rho, config.inflow_velocity)
-    v = np.zeros_like(rho)
-    if config.perturbation:
-        rng = np.random.default_rng(config.seed)
-        # Smooth localized disturbance, with a seeded sign, avoids grid-scale noise.
-        sign = -1.0 if rng.integers(0, 2) == 0 else 1.0
-        cx, cy = center_xy
-        v += sign * config.perturbation * config.inflow_velocity * np.exp(
-            -((x - (cx + 2.0 * config.diameter)) / (1.5 * config.diameter)) ** 2
-            -((y - cy) / config.diameter) ** 2
-        )
-    u[solid] = 0.0
-    v[solid] = 0.0
-    f = equilibrium(rho, u, v)
-    outlet_previous = f[:, -1, :].copy()
+    completed_steps = 0
+    if restart_state is not None:
+        if config.startup_ramp_steps:
+            raise ValueError("startup_ramp_steps cannot be used with restart_state")
+        f = np.asarray(restart_state["populations"], dtype=float).copy()
+        outlet_previous = np.asarray(
+            restart_state["outlet_previous"], dtype=float
+        ).copy()
+        completed_steps = int(restart_state.get("completed_steps", 0))
+        if f.shape != (config.ny, config.nx, 9):
+            raise ValueError("restart populations do not match the requested grid")
+        if outlet_previous.shape != (config.ny, 9):
+            raise ValueError("restart outlet_previous does not match the requested grid")
+        if not np.isfinite(f).all() or not np.isfinite(outlet_previous).all():
+            raise ValueError("restart state contains non-finite values")
+    else:
+        x = np.arange(config.nx, dtype=float)[None, :]
+        y = np.arange(config.ny, dtype=float)[:, None]
+        rho = np.full((config.ny, config.nx), config.rho0, dtype=float)
+        initial_speed = 0.0 if config.startup_ramp_steps else config.inflow_velocity
+        u = np.full_like(rho, initial_speed)
+        v = np.zeros_like(rho)
+        if config.perturbation:
+            rng = np.random.default_rng(config.seed)
+            # A smooth localized wake disturbance avoids grid-scale noise.
+            sign = -1.0 if rng.integers(0, 2) == 0 else 1.0
+            cx, cy = center_xy
+            v += sign * config.perturbation * config.inflow_velocity * np.exp(
+                -((x - (cx + 2.0 * config.diameter)) / (1.5 * config.diameter)) ** 2
+                -((y - cy) / config.diameter) ** 2
+            )
+        u[solid] = 0.0
+        v[solid] = 0.0
+        f = equilibrium(rho, u, v)
+        outlet_previous = f[:, -1, :].copy()
 
     times: list[float] = []
     drag: list[float] = []
@@ -576,11 +718,40 @@ def simulate_cylinder(
     force_x_accumulator = 0.0
     force_y_accumulator = 0.0
     force_samples = 0
+    statistics_start_local = (
+        config.steps // 2 if config.statistics_start is None else config.statistics_start
+    )
+    mean_u_accumulator = np.zeros((config.ny, config.nx), dtype=float)
+    mean_v_accumulator = np.zeros_like(mean_u_accumulator)
+    mean_sample_count = 0
+    previous_ramp_fraction = 0.0
 
-    for step in range(1, config.steps + 1):
+    for local_step in range(1, config.steps + 1):
+        step = completed_steps + local_step
+        ramp_fraction = 1.0
+        if config.startup_ramp_steps and local_step <= config.startup_ramp_steps:
+            phase = np.pi * local_step / config.startup_ramp_steps
+            ramp_fraction = 0.5 * (1.0 - np.cos(phase))
+
         rho, u, v = macroscopic(f)
         u[solid] = 0.0
         v[solid] = 0.0
+        if config.startup_ramp_steps and local_step <= config.startup_ramp_steps:
+            # Smoothly accelerate the complete far field together with the
+            # inlet.  Adding an equilibrium difference changes momentum but
+            # preserves density exactly, avoiding the mass accumulation that a
+            # rest-filled domain develops with a convective outlet.
+            accelerated_u = u.copy()
+            accelerated_u[~solid] += config.inflow_velocity * (
+                ramp_fraction - previous_ramp_fraction
+            )
+            equilibrium_shift = equilibrium(rho, accelerated_u, v) - equilibrium(
+                rho, u, v
+            )
+            f += equilibrium_shift
+            outlet_previous += equilibrium_shift[:, -1, :]
+            u = accelerated_u
+            previous_ramp_fraction = ramp_fraction
         feq = equilibrium(rho, u, v)
         post = _collide(
             f, feq, config.relaxation_time, config.collision_model,
@@ -596,10 +767,14 @@ def simulate_cylinder(
         # First-order convective outlet: df/dt + c_out*df/dx = 0.  The implicit
         # update below is notably calmer than direct distribution copying.
         interior = streamed[:, -2, :]
-        new_outlet = (outlet_previous + outlet_speed * interior) / (1.0 + outlet_speed)
+        local_outlet_speed = outlet_speed * ramp_fraction
+        new_outlet = (
+            outlet_previous + local_outlet_speed * interior
+        ) / (1.0 + local_outlet_speed)
         streamed[:, -1, :] = new_outlet
         outlet_previous = new_outlet.copy()
-        _apply_velocity_inlet(streamed, config.inflow_velocity)
+        inlet_speed = config.inflow_velocity * ramp_fraction
+        _apply_velocity_inlet(streamed, inlet_speed)
         f = streamed
 
         if not np.isfinite(f).all() or np.min(f.sum(axis=-1)) <= 0:
@@ -608,20 +783,27 @@ def simulate_cylinder(
                 "or lower Reynolds/inflow speed"
             )
 
-        if step % config.history_stride == 0 or step == config.steps:
+        if local_step % config.history_stride == 0 or local_step == config.steps:
             times.append(float(step))
             # Block averaging removes harmless one-lattice-step momentum-exchange
             # jitter without filtering the much slower physical shedding signal.
             drag.append(force_x_accumulator / (force_samples * q_scale))
             lift.append(force_y_accumulator / (force_samples * q_scale))
             mass.append(float(f.sum(axis=-1)[~solid].mean() / config.rho0))
+            if local_step >= statistics_start_local:
+                # ``u`` and ``v`` are the state entering this update; the
+                # one-step sampling offset is negligible and avoids a second
+                # full macroscopic reconstruction at every history sample.
+                mean_u_accumulator += u
+                mean_v_accumulator += v
+                mean_sample_count += 1
             force_x_accumulator = 0.0
             force_y_accumulator = 0.0
             force_samples = 0
         if (
             config.snapshot_stride is not None
-            and step >= config.snapshot_start
-            and (step - config.snapshot_start) % config.snapshot_stride == 0
+            and local_step >= config.snapshot_start
+            and (local_step - config.snapshot_start) % config.snapshot_stride == 0
         ):
             _, su, sv, sp, sw = _snapshot_fields(f, solid, config.rho0)
             snapshot_times.append(float(step))
@@ -636,12 +818,26 @@ def simulate_cylinder(
     history_time = np.asarray(times)
     drag_array = np.asarray(drag)
     lift_array = np.asarray(lift)
-    recirc, recirc_over_d = recirculation_length(
+    instantaneous_recirc, instantaneous_recirc_over_d = recirculation_length(
         final_u, solid, center_xy, config.diameter
     )
-    strouhal = estimate_strouhal(
-        history_time, lift_array, config.diameter, config.inflow_velocity
+    mean_u = (
+        mean_u_accumulator / mean_sample_count if mean_sample_count else final_u.copy()
     )
+    mean_v = (
+        mean_v_accumulator / mean_sample_count if mean_sample_count else final_v.copy()
+    )
+    recirc, recirc_over_d = recirculation_length(
+        mean_u, solid, center_xy, config.diameter
+    )
+    frequency_diagnostics = strouhal_diagnostics(
+        history_time,
+        lift_array,
+        config.diameter,
+        config.inflow_velocity,
+        transient_fraction=statistics_start_local / config.steps,
+    )
+    strouhal = float(frequency_diagnostics["strouhal"])
     cx, _ = center_xy
     upstream_d = (cx - 0.5 * config.diameter) / config.diameter
     downstream_d = (config.nx - 1 - cx - 0.5 * config.diameter) / config.diameter
@@ -681,6 +877,9 @@ def simulate_cylinder(
         "blockage_ratio": config.blockage_ratio,
         "cylinder_center": center_xy,
         "deterministic_seed": config.seed,
+        "completed_steps_before_restart": completed_steps,
+        "statistics_start_step": completed_steps + statistics_start_local,
+        "time_mean_sample_count": mean_sample_count,
         "fidelity_classification": (
             "validation_candidate" if validation_candidate else "quick_qualitative"
         ),
@@ -705,8 +904,15 @@ def simulate_cylinder(
         "lift_coefficient": lift_array,
         "mean_density_ratio": np.asarray(mass),
         "strouhal": float(strouhal),
+        "strouhal_diagnostics": frequency_diagnostics,
         "recirculation_length": float(recirc),
         "recirculation_length_over_diameter": float(recirc_over_d),
+        "instantaneous_recirculation_length": float(instantaneous_recirc),
+        "instantaneous_recirculation_length_over_diameter": float(
+            instantaneous_recirc_over_d
+        ),
+        "time_mean_u": mean_u,
+        "time_mean_v": mean_v,
         "metadata": metadata,
     }
     if config.snapshot_stride is not None:
@@ -714,6 +920,12 @@ def simulate_cylinder(
         result["snapshots"] = {
             key: np.stack(values) if values else np.empty((0, config.ny, config.nx))
             for key, values in snapshots.items()
+        }
+    if return_restart_state:
+        result["restart_state"] = {
+            "populations": f.copy(),
+            "outlet_previous": outlet_previous.copy(),
+            "completed_steps": completed_steps + config.steps,
         }
     return result
 
@@ -734,4 +946,5 @@ __all__ = [
     "recirculation_length",
     "recommended_parameters",
     "simulate_cylinder",
+    "strouhal_diagnostics",
 ]

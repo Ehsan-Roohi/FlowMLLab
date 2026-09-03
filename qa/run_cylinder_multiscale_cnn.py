@@ -5,9 +5,11 @@ Protocol
 --------
 * development Reynolds cases: 60, 80, 90, 110, 120, 140;
 * model selection and stopping: complete Re=100 validation trajectory;
-* final blind case: Re=105, opened only after the validation gates pass;
+* retained withheld interpolation case: Re=105, originally opened only after
+  the validation gates passed and now preserved as historical evidence;
 * temporal spacing: dt* = snapshot_stride * U / D ~= 0.1;
-* matched next-frame baseline: persistence of the latest input frame.
+* matched next-frame baselines: persistence plus linear, quadratic, and cubic
+  temporal extrapolation from the same four frames.
 
 The older phase-conditioned POD--MLP remains a documented failure baseline.  It
 is not silently relabelled as the new CNN result.
@@ -262,12 +264,22 @@ def _predict_case(model: Any, case: dict[str, Any], reynolds: int) -> dict[str, 
             np.asarray(model.predict_on_batch(inputs[start : start + 4]), dtype=np.float32)
         )
     prediction = np.concatenate(prediction_parts)
-    return {
+    products = {
         "truth": truth,
         "prediction": prediction,
         "persistence": persistence,
         "times": np.asarray([case["snapshot_time"][window.target] for window in windows]),
     }
+    for degree, name in ((1, "linear"), (2, "quadratic"), (3, "cubic")):
+        baseline = np.empty_like(truth)
+        for index, window in enumerate(windows):
+            for field_index, field in enumerate(FIELD_NAMES):
+                baseline[index, ..., field_index] = cylinder_cnn.polynomial_forecast(
+                    case[field][window.history], horizon=1, degree=degree
+                )
+        baseline[..., :2] *= (~case["solid"])[None, ..., None]
+        products[name] = baseline
+    return products
 
 
 def _case_metrics(
@@ -285,7 +297,7 @@ def _case_metrics(
         "lbm_strouhal": float(case["strouhal"]),
         "models": {},
     }
-    for name in ("persistence", "prediction"):
+    for name in ("persistence", "linear", "quadratic", "cubic", "prediction"):
         estimate = products[name]
         omega = cylinder_cnn.vorticity(
             estimate[..., 0], estimate[..., 1], diameter=float(GRID["diameter"])
@@ -324,21 +336,206 @@ def _case_metrics(
             "mean_station_psd_relative_l2": float(
                 np.mean([row["normalized_psd_relative_l2"] for row in stations])
             ),
+            "mean_station_complex_spectral_incoherence": float(
+                np.mean([row["complex_spectral_incoherence"] for row in stations])
+            ),
         }
+    baselines = ("persistence", "linear", "quadratic", "cubic")
+    output["best_non_neural_baseline"] = min(
+        baselines,
+        key=lambda name: output["models"][name]["vorticity_relative_l2"],
+    )
     return output
+
+
+def _rollout_audit(
+    model: Any,
+    case: dict[str, Any],
+    reynolds: int,
+    *,
+    maximum_horizon: int = 50,
+    start_count: int = 6,
+) -> dict[str, Any]:
+    """Audit an autonomous rollout from four true initial frames.
+
+    The CNN is fed back recursively. Persistence and an open-loop cubic
+    extrapolation use exactly the same four initial frames. This audit is
+    descriptive and is never folded into the one-step headline metric.
+    """
+    count = int(case["u"].shape[0])
+    starts = np.linspace(
+        0, count - HISTORY - maximum_horizon, start_count, dtype=int
+    )
+    histories = np.stack(
+        [
+            np.stack(
+                [
+                    np.stack([case[name][start + offset] for name in FIELD_NAMES], axis=-1)
+                    for offset in range(HISTORY)
+                ],
+                axis=0,
+            )
+            for start in starts
+        ],
+        axis=0,
+    ).astype(np.float32)
+    initial_histories = histories.copy()
+    ny, nx = case["solid"].shape
+    fluid = ~case["solid"]
+    re_center = 0.5 * (min(DEVELOPMENT_RE) + max(DEVELOPMENT_RE))
+    re_scale = 0.5 * (max(DEVELOPMENT_RE) - min(DEVELOPMENT_RE))
+    re_channel = np.full(
+        (start_count, ny, nx, 1),
+        (float(reynolds) - re_center) / re_scale,
+        dtype=np.float32,
+    )
+    fluid_channel = np.broadcast_to(
+        fluid.astype(np.float32)[None, ..., None], (start_count, ny, nx, 1)
+    )
+    retained_horizons = {1, 5, 10, 20, 30, 40, 50}
+    rows: list[dict[str, Any]] = []
+    for horizon in range(1, maximum_horizon + 1):
+        flow = np.concatenate([histories[:, offset] for offset in range(HISTORY)], axis=-1)
+        inputs = np.concatenate((flow, re_channel, fluid_channel), axis=-1)
+        prediction = np.asarray(model.predict_on_batch(inputs), dtype=np.float32)
+        histories = np.concatenate((histories[:, 1:], prediction[:, None]), axis=1)
+        if horizon not in retained_horizons:
+            continue
+        truth = np.stack(
+            [
+                np.stack(
+                    [case[name][start + HISTORY - 1 + horizon] for name in FIELD_NAMES],
+                    axis=-1,
+                )
+                for start in starts
+            ]
+        )
+        persistence = initial_histories[:, -1]
+        cubic = np.stack(
+            [
+                np.stack(
+                    [
+                        cylinder_cnn.polynomial_forecast(
+                            initial_histories[index, ..., field_index],
+                            horizon=horizon,
+                            degree=3,
+                        )
+                        for field_index in range(3)
+                    ],
+                    axis=-1,
+                )
+                for index in range(start_count)
+            ]
+        )
+        cubic[..., :2] *= fluid_channel
+        truth_omega = cylinder_cnn.vorticity(
+            truth[..., 0], truth[..., 1], diameter=float(GRID["diameter"])
+        )
+        for name, estimate in (
+            ("persistence", persistence),
+            ("cubic_open_loop", cubic),
+            ("cnn_autoregressive", prediction),
+        ):
+            estimate_omega = cylinder_cnn.vorticity(
+                estimate[..., 0], estimate[..., 1], diameter=float(GRID["diameter"])
+            )
+            errors = [
+                cylinder_cnn.relative_l2(truth_omega[index][fluid], estimate_omega[index][fluid])
+                for index in range(start_count)
+            ]
+            norm_ratios = [
+                np.linalg.norm(estimate_omega[index][fluid])
+                / max(np.linalg.norm(truth_omega[index][fluid]), np.finfo(float).eps)
+                for index in range(start_count)
+            ]
+            rows.append(
+                {
+                    "model": name,
+                    "horizon_frames": int(horizon),
+                    "horizon_dimensionless_time": float(
+                        horizon * SNAPSHOT_STRIDE * GRID["inflow_velocity"] / GRID["diameter"]
+                    ),
+                    "mean_vorticity_relative_l2": float(np.mean(errors)),
+                    "max_vorticity_relative_l2": float(np.max(errors)),
+                    "mean_vorticity_norm_ratio": float(np.mean(norm_ratios)),
+                }
+            )
+    cnn_rows = [row for row in rows if row["model"] == "cnn_autoregressive"]
+    return {
+        "starts": starts.tolist(),
+        "maximum_horizon_frames": int(maximum_horizon),
+        "rows": rows,
+        "status": (
+            "passes_declared_rollout_gate"
+            if max(row["mean_vorticity_relative_l2"] for row in cnn_rows) < 0.15
+            else "fails_declared_rollout_gate"
+        ),
+        "declared_gate": "mean vorticity relative L2 below 15% through 50 recursive steps",
+    }
+
+
+def _write_rollout_figure(audit: dict[str, Any], destination: Path, title: str) -> None:
+    fig, axes = plt.subplots(1, 2, figsize=(11.8, 4.3), constrained_layout=True)
+    styles = {
+        "persistence": ("persistence", "#777777", "s"),
+        "cubic_open_loop": ("cubic extrapolation", "#D55E00", "^"),
+        "cnn_autoregressive": ("CNN autoregressive", "#0072B2", "o"),
+    }
+    for name, (label, color, marker) in styles.items():
+        rows = [row for row in audit["rows"] if row["model"] == name]
+        x = [row["horizon_dimensionless_time"] for row in rows]
+        axes[0].plot(
+            x, [100 * row["mean_vorticity_relative_l2"] for row in rows],
+            color=color, marker=marker, label=label,
+        )
+    axes[0].axhline(15, color="#009E73", linestyle="--", linewidth=1, label="declared 15% gate")
+    axes[0].set_yscale("log")
+    axes[0].set(ylabel="mean vorticity relative L2 (%)")
+
+    cnn_rows = [row for row in audit["rows"] if row["model"] == "cnn_autoregressive"]
+    x = [row["horizon_dimensionless_time"] for row in cnn_rows]
+    axes[1].plot(
+        x,
+        [100 * row["mean_vorticity_relative_l2"] for row in cnn_rows],
+        color="#0072B2", marker="o", label="CNN error",
+    )
+    axes[1].axhline(15, color="#009E73", linestyle="--", linewidth=1, label="declared 15% gate")
+    axes[1].set(ylabel="CNN mean vorticity relative L2 (%)")
+    norm_axis = axes[1].twinx()
+    norm_axis.plot(
+        x,
+        [row["mean_vorticity_norm_ratio"] for row in cnn_rows],
+        color="#CC79A7", marker="D", linestyle=":", label="CNN / LBM norm",
+    )
+    norm_axis.axhline(1, color="black", linewidth=0.8)
+    norm_axis.set_ylabel("CNN / LBM vorticity norm", color="#8B3F75")
+    lines, labels = axes[1].get_legend_handles_labels()
+    norm_lines, norm_labels = norm_axis.get_legend_handles_labels()
+    axes[1].legend(lines + norm_lines, labels + norm_labels, frameon=False, fontsize=9)
+    for axis in axes:
+        axis.set_xlabel(r"forecast horizon $\Delta t U_\infty/D$")
+        axis.grid(alpha=0.25)
+    axes[0].legend(frameon=False, fontsize=9)
+    fig.suptitle(title)
+    fig.savefig(destination, dpi=220)
+    plt.close(fig)
 
 
 def _validation_gates(metrics: dict[str, Any]) -> dict[str, bool]:
     cnn = metrics["models"]["prediction"]
-    persistence = metrics["models"]["persistence"]
+    baseline = metrics["models"][metrics["best_non_neural_baseline"]]
     ratios = [row["enstrophy_ratio"] for row in cnn["stationwise"]]
     return {
-        "cnn_vorticity_beats_persistence": (
-            cnn["vorticity_relative_l2"] < persistence["vorticity_relative_l2"]
+        "cnn_vorticity_beats_best_polynomial_baseline": (
+            cnn["vorticity_relative_l2"] < baseline["vorticity_relative_l2"]
         ),
-        "cnn_downstream_profile_beats_persistence": (
+        "cnn_downstream_profile_beats_best_polynomial_baseline": (
             cnn["mean_station_profile_relative_l2"]
-            < persistence["mean_station_profile_relative_l2"]
+            < baseline["mean_station_profile_relative_l2"]
+        ),
+        "cnn_vorticity_error_below_2_percent": cnn["vorticity_relative_l2"] < 0.02,
+        "mean_complex_spectral_incoherence_below_1_percent": (
+            cnn["mean_station_complex_spectral_incoherence"] < 0.01
         ),
         "mean_downstream_enstrophy_error_below_15_percent": (
             cnn["mean_station_enstrophy_relative_error"] < 0.15
@@ -355,19 +552,25 @@ def _write_station_figure(
 ) -> None:
     fig, axes = plt.subplots(1, 3, figsize=(15, 4.2), constrained_layout=True)
     for model_name, label, color, marker in (
-        ("persistence", "persistence", "#737373", "s"),
+        ("persistence", "persistence", "#777777", "s"),
+        ("cubic", "cubic extrapolation", "#D55E00", "^"),
         ("prediction", "multi-scale CNN", "#0072B2", "o"),
     ):
         rows = metrics["models"][model_name]["stationwise"]
         x = [row["x_over_d"] for row in rows]
-        axes[0].plot(x, [row["enstrophy_ratio"] for row in rows], marker=marker, color=color, label=label)
-        axes[1].plot(x, [row["vorticity_profile_relative_l2"] for row in rows], marker=marker, color=color, label=label)
-        axes[2].plot(x, [row["normalized_psd_relative_l2"] for row in rows], marker=marker, color=color, label=label)
-    axes[0].axhline(1.0, color="black", linewidth=1)
-    axes[0].fill_between([2, 8], 0.75, 1.25, color="#009E73", alpha=0.12)
-    axes[0].set(ylabel="predicted / LBM enstrophy", ylim=(0, None))
-    axes[1].set(ylabel="vorticity-profile relative L2")
-    axes[2].set(ylabel="normalized transverse-PSD relative L2")
+        axes[0].plot(x, [100 * (row["enstrophy_ratio"] - 1.0) for row in rows], marker=marker, color=color, label=label)
+        axes[1].plot(x, [100 * row["vorticity_profile_relative_l2"] for row in rows], marker=marker, color=color, label=label)
+        axes[2].plot(x, [100 * row["complex_spectral_incoherence"] for row in rows], marker=marker, color=color, label=label)
+    axes[0].axhline(0.0, color="black", linewidth=1)
+    axes[0].set_ylim(-2.5, 2.5)
+    axes[0].text(
+        0.02, 0.96, "declared gate: |deviation| < 15% (all pass)",
+        transform=axes[0].transAxes, ha="left", va="top", fontsize=8, color="#006D54",
+    )
+    axes[0].set(ylabel="enstrophy deviation from LBM (%)")
+    axes[1].set(ylabel="vorticity-profile relative L2 (%)")
+    axes[2].set(ylabel="space-time spectral incoherence (%)")
+    axes[2].set_yscale("log")
     for axis in axes:
         axis.set_xlabel(r"$(x-x_c)/D$")
         axis.grid(alpha=0.25)
@@ -421,7 +624,7 @@ def _write_video(
     fig.colorbar(images[2], ax=axes[2], shrink=0.78, label=r"vorticity error")
     cnn = metrics["models"]["prediction"]
     title = fig.suptitle(
-        f"Unseen Re={metrics['reynolds']} | one-step dt*={SNAPSHOT_STRIDE*GRID['inflow_velocity']/GRID['diameter']:.3f} | "
+        f"Retained held-out interpolation Re={metrics['reynolds']} | one-step dt*={SNAPSHOT_STRIDE*GRID['inflow_velocity']/GRID['diameter']:.3f} | "
         f"E_omega={100*cnn['vorticity_relative_l2']:.2f}%"
     )
 
@@ -430,7 +633,7 @@ def _write_video(
         for image, values in zip(images, (truth, prediction, error)):
             image.set_data(values[index])
         title.set_text(
-            f"Unseen Re={metrics['reynolds']} | tU/D={products['times'][index]*GRID['inflow_velocity']/GRID['diameter']:.2f} | "
+            f"Retained held-out interpolation Re={metrics['reynolds']} | tU/D={products['times'][index]*GRID['inflow_velocity']/GRID['diameter']:.2f} | "
             f"four previous LBM frames -> next frame"
         )
         return images + [title]
@@ -440,7 +643,7 @@ def _write_video(
     animation = FuncAnimation(fig, update, frames=len(display), interval=50, blit=False)
     animation.save(
         destination,
-        writer=FFMpegWriter(fps=20, bitrate=5000, metadata={"title": "FlowMLLab cylinder CNN blind comparison"}),
+        writer=FFMpegWriter(fps=20, bitrate=5000, metadata={"title": "FlowMLLab cylinder CNN withheld-case comparison"}),
         dpi=100,
     )
     plt.close(fig)
@@ -544,6 +747,14 @@ def main() -> None:
         args.output / "re100_validation_downstream.png",
         "Re=100 validation: downstream preservation",
     )
+    validation_rollout = _rollout_audit(
+        model, cases[VALIDATION_RE], VALIDATION_RE
+    )
+    _write_rollout_figure(
+        validation_rollout,
+        args.output / "re100_validation_rollout.png",
+        "Re=100 validation: autonomous-rollout audit",
+    )
 
     report: dict[str, Any] = {
         "generated_utc": datetime.now(timezone.utc).isoformat(),
@@ -551,6 +762,7 @@ def main() -> None:
             "development_reynolds": list(DEVELOPMENT_RE),
             "validation_reynolds": VALIDATION_RE,
             "blind_reynolds": BLIND_RE,
+            "blind_status": "historical frozen test; retained after opening, not a fresh test for future tuning",
             "history_frames": HISTORY,
             "prediction_horizon_frames": 1,
             "snapshot_stride_lattice_steps": SNAPSHOT_STRIDE,
@@ -577,6 +789,7 @@ def main() -> None:
         "validation": validation_metrics,
         "validation_gates": gates,
         "validation_pass": bool(all(gates.values())),
+        "validation_rollout": validation_rollout,
         "historical_pod_failure": {
             "artifact": "../cylinder_ml/blind_re100_lbm_vs_neural.mp4",
             "vorticity_relative_l2": 0.1670338626686869,
@@ -587,16 +800,19 @@ def main() -> None:
     if args.run_blind:
         if not report["validation_pass"]:
             raise RuntimeError(
-                "Re=100 validation gates failed; the untouched Re=105 blind case was not opened"
+                "Re=100 validation gates failed; the retained Re=105 case was not evaluated"
             )
         blind_cases = _ensure_cases((BLIND_RE,), cache_dir, args.workers)
         blind_products = _predict_case(model, blind_cases[BLIND_RE], BLIND_RE)
         blind_metrics = _case_metrics(blind_products, blind_cases[BLIND_RE], BLIND_RE)
         report["blind"] = blind_metrics
+        report["blind_rollout"] = _rollout_audit(
+            model, blind_cases[BLIND_RE], BLIND_RE
+        )
         _write_station_figure(
             blind_metrics,
             args.output / "re105_blind_downstream.png",
-            "Re=105 blind test: downstream preservation",
+            "Re=105 retained interpolation: downstream preservation",
         )
         _write_video(
             blind_products,
@@ -604,6 +820,11 @@ def main() -> None:
             blind_metrics,
             args.output / "re105_lbm_vs_multiscale_cnn.mp4",
             args.output / "re105_lbm_vs_multiscale_cnn_poster.png",
+        )
+        _write_rollout_figure(
+            report["blind_rollout"],
+            args.output / "re105_retained_rollout.png",
+            "Re=105 retained interpolation: autonomous-rollout audit",
         )
 
     report_path.write_text(

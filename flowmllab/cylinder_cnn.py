@@ -77,6 +77,35 @@ def stack_history(
     )
 
 
+def polynomial_forecast(
+    history_fields: np.ndarray,
+    *,
+    horizon: int = 1,
+    degree: int = 1,
+) -> np.ndarray:
+    """Forecast a field with a transparent temporal polynomial baseline.
+
+    ``history_fields`` has time on its first axis.  The polynomial is evaluated
+    ``horizon`` samples after the latest input, using the same information as a
+    neural forecast.  Degrees one through three are useful Week-7 baselines.
+    """
+    values = np.asarray(history_fields)
+    if values.ndim < 2 or values.shape[0] < 2:
+        raise ValueError("history_fields must contain at least two time samples")
+    if int(horizon) != horizon or int(horizon) < 1:
+        raise ValueError("horizon must be a positive integer")
+    if int(degree) != degree or not 0 <= int(degree) < values.shape[0]:
+        raise ValueError("degree must be nonnegative and smaller than history length")
+    coordinate = np.arange(values.shape[0], dtype=float)
+    design = np.vander(coordinate, N=int(degree) + 1, increasing=True)
+    weights = np.vander(
+        np.asarray([coordinate[-1] + int(horizon)]),
+        N=int(degree) + 1,
+        increasing=True,
+    )[0] @ np.linalg.pinv(design)
+    return np.tensordot(weights.astype(values.dtype), values, axes=(0, 0))
+
+
 def vorticity(u: np.ndarray, v: np.ndarray, *, diameter: float = 1.0) -> np.ndarray:
     """Dimensionless spanwise vorticity ``omega D/U`` on a unit lattice."""
     u_values = np.asarray(u, dtype=float)
@@ -120,8 +149,9 @@ def stationwise_wake_metrics(
     """Compare vorticity amplitude and cross-wake spectra downstream.
 
     Enstrophy is integrated over time and the transverse direction.  The PSD is
-    the transverse spatial spectrum, averaged over time; a normalized PSD error
-    separates spectral-shape loss from simple amplitude loss.
+    the transverse spatial spectrum, averaged over time.  Complex space-time
+    spectral coherence retains phase information that normalized PSD alone
+    discards.
     """
     truth = np.asarray(truth_omega, dtype=float)
     prediction = np.asarray(prediction_omega, dtype=float)
@@ -149,6 +179,14 @@ def stationwise_wake_metrics(
         estimate_psd_norm = estimate_psd / max(
             float(estimate_psd.sum()), np.finfo(float).eps
         )
+        exact_fluctuation = exact - exact.mean(axis=0, keepdims=True)
+        estimate_fluctuation = estimate - estimate.mean(axis=0, keepdims=True)
+        exact_spectrum = np.fft.rfft2(exact_fluctuation)
+        estimate_spectrum = np.fft.rfft2(estimate_fluctuation)
+        coherence = abs(np.vdot(exact_spectrum, estimate_spectrum)) / max(
+            float(np.linalg.norm(exact_spectrum) * np.linalg.norm(estimate_spectrum)),
+            np.finfo(float).eps,
+        )
         rows.append(
             {
                 "x_over_d": float(station),
@@ -158,6 +196,10 @@ def stationwise_wake_metrics(
                 "enstrophy_relative_error": float(abs(enstrophy_ratio - 1.0)),
                 "normalized_psd_relative_l2": relative_l2(
                     exact_psd_norm, estimate_psd_norm
+                ),
+                "complex_spectral_coherence": float(np.clip(coherence, 0.0, 1.0)),
+                "complex_spectral_incoherence": float(
+                    1.0 - np.clip(coherence, 0.0, 1.0)
                 ),
             }
         )
@@ -192,7 +234,10 @@ def build_multiscale_predictor(
     tf = _tensorflow()
     keras = tf.keras
     flow_channels = int(history) * int(fields_per_frame)
-    inputs = keras.Input(shape=(None, None, flow_channels + 2), name="history_re_mask")
+    inputs = keras.Input(
+        shape=(None, None, flow_channels + 2),
+        name="history_reynolds_mask",
+    )
 
     def conv_block(values: Any, width: int, kernel: int, name: str) -> Any:
         values = keras.layers.Conv2D(
@@ -303,6 +348,7 @@ __all__ = [
     "build_multiscale_predictor",
     "composite_flow_loss",
     "divergence",
+    "polynomial_forecast",
     "relative_l2",
     "stack_history",
     "stationwise_wake_metrics",

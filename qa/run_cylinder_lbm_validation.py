@@ -64,8 +64,10 @@ def _one_case(job: tuple[int, str]) -> dict[str, Any]:
     # A finite deterministic seed exposes the antisymmetric mode without
     # continuously forcing the wake.  Longer runs are used for shedding cases.
     settings.update(perturbation=1.0e-2, seed=690, collision_model="trt")
-    if fidelity == "quick" and reynolds >= 100:
-        settings["steps"] = max(settings["steps"], 15000)
+    settings["statistics_start"] = int(
+        settings["steps"] * (0.45 if reynolds >= 60 else 0.50)
+    )
+    settings["return_restart_state"] = bool(fidelity == "quick" and reynolds == 100)
     started = time.perf_counter()
     result = simulate_cylinder(reynolds, **settings)
     result["elapsed_seconds"] = time.perf_counter() - started
@@ -73,12 +75,14 @@ def _one_case(job: tuple[int, str]) -> dict[str, Any]:
 
 
 def _metrics(result: dict[str, Any], fidelity: str) -> dict[str, Any]:
-    n = len(result["time"])
-    tail = slice(n // 2, None)
+    statistics_start = float(result["metadata"]["statistics_start_step"])
+    first = int(np.searchsorted(result["time"], statistics_start, side="left"))
+    tail = slice(first, None)
     cl = result["lift_coefficient"][tail]
     cd = result["drag_coefficient"][tail]
     cl_rms = float(np.std(cl))
     st = float(result["strouhal"])
+    st_diagnostic = result["strouhal_diagnostics"]
     reynolds = int(result["metadata"]["reynolds"])
     expected = (
         "attached"
@@ -89,7 +93,7 @@ def _metrics(result: dict[str, Any], fidelity: str) -> dict[str, Any]:
     )
     observed = (
         "periodic shedding"
-        if np.isfinite(st) and 0.08 < st < 0.30 and cl_rms > 4.0e-3
+        if st_diagnostic["valid"] and 0.08 < st < 0.30 and cl_rms > 4.0e-3
         else "steady recirculating"
         if np.isfinite(result["recirculation_length_over_diameter"])
         else "attached"
@@ -114,6 +118,10 @@ def _metrics(result: dict[str, Any], fidelity: str) -> dict[str, Any]:
         "Cd_mean": float(np.mean(cd)),
         "Cl_rms": cl_rms,
         "St": st if observed == "periodic shedding" else np.nan,
+        "St_valid": bool(st_diagnostic["valid"]),
+        "St_reason": str(st_diagnostic["reason"]),
+        "St_cycles": float(st_diagnostic["cycle_count"]),
+        "lift_relative_rms_change": float(st_diagnostic["relative_rms_change"]),
         "Lr_over_D": float(result["recirculation_length_over_diameter"]),
         "elapsed_seconds": float(result["elapsed_seconds"]),
         "stability_pass": bool(density_drift < 0.01 and result["metadata"]["lattice_mach"] < 0.1),
@@ -148,8 +156,22 @@ def _save_case(result: dict[str, Any], directory: Path) -> None:
         drag_coefficient=np.asarray(result["drag_coefficient"], dtype=np.float32),
         lift_coefficient=np.asarray(result["lift_coefficient"], dtype=np.float32),
         mean_density_ratio=np.asarray(result["mean_density_ratio"], dtype=np.float32),
+        time_mean_u=np.asarray(result["time_mean_u"], dtype=np.float32),
+        time_mean_v=np.asarray(result["time_mean_v"], dtype=np.float32),
+        strouhal_diagnostics=json.dumps(result["strouhal_diagnostics"], sort_keys=True),
         metadata=json.dumps(result["metadata"], sort_keys=True),
     )
+    if "restart_state" in result:
+        state = result["restart_state"]
+        with np.load(directory / f"re{reynolds}_teaching_case.npz", allow_pickle=False) as archive:
+            retained = {key: archive[key] for key in archive.files}
+        np.savez_compressed(
+            directory / f"re{reynolds}_teaching_case.npz",
+            **retained,
+            restart_populations=np.asarray(state["populations"], dtype=np.float32),
+            restart_outlet_previous=np.asarray(state["outlet_previous"], dtype=np.float32),
+            restart_completed_steps=np.asarray(int(state["completed_steps"])),
+        )
 
 
 def _plot_regimes(results: list[dict[str, Any]], output: Path) -> None:
@@ -168,7 +190,20 @@ def _plot_regimes(results: list[dict[str, Any]], output: Path) -> None:
                             cmap="RdBu_r", vmin=-maximum, vmax=maximum)
         axis.add_patch(Circle((0.0, 0.0), 0.5, facecolor="#F7F7F7",
                               edgecolor="black", linewidth=1.2, zorder=5))
-        axis.set_title(f"Re = {int(meta['reynolds'])}")
+        diagnostic = result["strouhal_diagnostics"]
+        recirculation = float(result["recirculation_length_over_diameter"])
+        recirculation_label = (
+            f"Lr/D={recirculation:.2f}" if np.isfinite(recirculation) else "no closed bubble"
+        )
+        frequency_label = (
+            f"St={diagnostic['strouhal']:.3f}; {diagnostic['cycle_count']:.1f} cycles"
+            if diagnostic["valid"]
+            else "St gate: not accepted"
+        )
+        axis.set_title(
+            f"Re = {int(meta['reynolds'])} | {recirculation_label}\n{frequency_label}",
+            fontsize=11,
+        )
         axis.set_xlabel(r"$(x-x_c)/D$")
         axis.set_ylabel(r"$(y-y_c)/D$")
         axis.set_aspect("equal", adjustable="box")
@@ -189,7 +224,7 @@ def _plot_regimes(results: list[dict[str, Any]], output: Path) -> None:
     signal_axis.legend(
         loc="upper center", bbox_to_anchor=(0.5, -0.20), frameon=True, ncol=3
     )
-    fig.suptitle("FlowMLLab Week 7: D2Q9 cylinder regimes (quick teaching profile)", fontsize=16)
+    fig.suptitle("FlowMLLab Week 7: physically gated D2Q9 cylinder regimes", fontsize=16)
     fig.savefig(output / "cylinder_lbm_regimes.png", dpi=200)
     fig.savefig(output / "cylinder_lbm_regimes.pdf")
     plt.close(fig)
@@ -223,16 +258,19 @@ def regenerate(output: Path, fidelity: str, workers: int) -> dict[str, Any]:
                        "cylinder": "Bouzidi interpolated circular wall",
                        "transverse": "periodic"},
         "regime_gate": "mandatory for quick and validation profiles",
+        "frequency_gate": "0.05 < St < 0.5, at least eight retained cycles, stationary lift RMS, distinct peak",
+        "recirculation_definition": "first centerline zero of the post-transient time-mean streamwise velocity",
         "reference_gate": "reported but not enforced for quick; mandatory only after grid/domain/time refinement",
         "reference_sources": {
-            "Re20_40": "Gautier, Biau & Lamballais, Computers & Fluids 75 (2013)",
+            "Re20": "Dennis & Chang, JFM 42 (1970); Sen, Mittal & Biswas, JFM 620 (2009)",
+            "Re40": "Gautier, Biau & Lamballais, Computers & Fluids 75 (2013)",
             "Re50_180": "Qu et al., Journal of Fluids and Structures 39 (2013)",
         },
         "environment": {"python": platform.python_version(), "numpy": np.__version__,
                         "platform": platform.platform()},
         "limitations": [
             "The retained quick profile is qualitative and is not grid-converged DNS evidence.",
-            "Periodic transverse boundaries represent a weakly interacting cylinder array.",
+            "Periodic transverse boundaries represent a cylinder array with pitch Ly.",
             "A coarsely resolved interpolated circular wall still requires diameter refinement.",
             "Re=180 is a two-dimensional teaching solution and does not model Mode A or B.",
         ],
@@ -258,12 +296,19 @@ def verify(output: Path) -> dict[str, Any]:
     if not metrics["regime_pass"].astype(bool).all():
         failed = metrics.loc[~metrics["regime_pass"].astype(bool), "Re"].tolist()
         raise AssertionError(f"cylinder regime gate failed at Re={failed}")
+    shedding = metrics[metrics["Re"].astype(int) >= 100]
+    if not shedding["St_valid"].astype(bool).all():
+        reasons = shedding[["Re", "St_reason"]].to_dict("records")
+        raise AssertionError(f"shedding frequency gate failed: {reasons}")
+    if (shedding["St_cycles"] < 8.0).any():
+        raise AssertionError("a shedding case contains fewer than eight retained cycles")
     summary = {
         "status": "pass",
         "profile": str(metrics["fidelity"].iloc[0]),
         "cases": metrics["Re"].astype(int).tolist(),
         "all_stability_gates_pass": True,
         "all_regime_gates_pass": True,
+        "all_shedding_frequency_gates_pass": True,
         "quantitative_reference_gate_enforced": str(metrics["fidelity"].iloc[0]) == "validation",
         "max_density_drift": float(metrics["density_drift"].max()),
         "figure_sha256": _digest(figure_path),
@@ -287,26 +332,36 @@ def verify_cnn(output: Path) -> dict[str, Any]:
     if protocol["development_reynolds"] != [60, 80, 90, 110, 120, 140]:
         raise AssertionError("CNN development split changed")
     if protocol["validation_reynolds"] != 100 or protocol["blind_reynolds"] != 105:
-        raise AssertionError("CNN validation/blind split changed")
+        raise AssertionError("CNN validation/retained-test split changed")
+    if "not a fresh test" not in protocol["blind_status"]:
+        raise AssertionError("Re=105 historical test status is not disclosed")
+    if "not autonomous rollout" not in protocol["claim_scope"]:
+        raise AssertionError("CNN one-step claim scope is missing")
     if not report["validation_pass"] or not all(report["validation_gates"].values()):
         raise AssertionError("CNN validation gates failed")
-    blind = report["blind"]["models"]
+    retained = report["blind"]
+    if retained["best_non_neural_baseline"] != "cubic":
+        raise AssertionError("strongest retained non-neural baseline is not cubic")
+    blind = retained["models"]
     if not (
         blind["prediction"]["vorticity_relative_l2"]
-        < blind["persistence"]["vorticity_relative_l2"]
+        < blind["cubic"]["vorticity_relative_l2"]
     ):
-        raise AssertionError("blind CNN does not beat persistence on vorticity")
+        raise AssertionError("retained CNN does not beat cubic extrapolation on vorticity")
+    rollout = report["blind_rollout"]
+    if rollout["status"] != "fails_declared_rollout_gate":
+        raise AssertionError("retained rollout limitation is missing or changed")
     if video_path.stat().st_size <= 1_000_000:
         raise AssertionError("blind CNN video is unexpectedly small")
     return {
         "status": "pass",
         "validation_reynolds": 100,
-        "blind_reynolds": 105,
-        "blind_vorticity_relative_l2": float(
+        "retained_reynolds": 105,
+        "retained_vorticity_relative_l2": float(
             blind["prediction"]["vorticity_relative_l2"]
         ),
-        "persistence_vorticity_relative_l2": float(
-            blind["persistence"]["vorticity_relative_l2"]
+        "cubic_vorticity_relative_l2": float(
+            blind["cubic"]["vorticity_relative_l2"]
         ),
         "video_sha256": _digest(video_path),
     }

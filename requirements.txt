@@ -1,4 +1,5 @@
-# Compatibility target for Google Colab / Python 3.12.
+# Exact reproducibility lock used by CI and evidence regeneration.
+# Package and Colab installs use the bounded compatible ranges in pyproject.toml.
 numpy==2.2.6
 pandas==2.2.3
 scipy==1.15.3
