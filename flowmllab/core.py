@@ -174,6 +174,19 @@ def verify_cylinder_lbm_validation(root: str | Path | None = None) -> int:
     return int(grid.returncode)
 
 
+def verify_gas_dynamics_week8(root: str | Path | None = None) -> int:
+    """Verify retained Week-8 gas-dynamics evidence without retraining models."""
+    from .gas_dynamics import validate_week8_evidence  # noqa: PLC0415
+
+    repository = discover_repository_root(root)
+    try:
+        report = validate_week8_evidence(repository)
+    except (OSError, ValueError, KeyError) as error:
+        raise ValidationError(f"Week-8 gas-dynamics evidence failed: {error}") from error
+    print(format_report(report))
+    return 0
+
+
 def format_report(report: dict[str, Any]) -> str:
     """Return deterministic JSON for CLI and CI logs."""
     return json.dumps(report, indent=2, sort_keys=True)

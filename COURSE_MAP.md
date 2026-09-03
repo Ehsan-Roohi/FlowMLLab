@@ -24,6 +24,9 @@
 | 7A | Lattice-Boltzmann mechanics | Derive D2Q9 equilibrium; compare transparent BGK with robust TRT; identify every boundary operation | Mass/density stability, `Ma`, `tau`, no-slip mask, and reproducible configuration |
 | 7B | Cylinder-wake regimes and CFD verification | Run `Re=5,20,40,100,180`; then perform the fixed-physics `D/dx=12,18,27` study at `Re=100` | Correct regime classification; statistical gates; acoustic-mode rejection; retained formal asymptotic/GCI failure; declared next refinement; literature bands; and separate grid/domain/validation decisions |
 | 7C | Educational unsteady field learning | Reynolds/phase POD failure baseline, four-frame multi-scale CNN, and a phase-stable learned decoder | Case-wise split; one-step field/spectral/downstream checks; retained failed CNN recursion; validation-only harmonic selection; fresh `Re=95` 277-frame rollout; and separately gated vorticity/Strouhal evidence |
+| 8A | Exact compressible-flow references | Rayleigh, Fanno, oblique-shock, nozzle-shock, shock-tube, shock-polar, interacting-wave, and Taylor--Maccoll computations | Declared domain and branch; exact/bracketed/ODE reference; forward-substitution residual; limiting behavior |
+| 8B | Branch-aware gas-dynamics SciML | Expose hidden-branch regression failure; compare bounded MLPs with interpolation across five inverse tasks | Frozen blind errors; matched coverage; physical bounds and residuals; edge-holdout test; explicit exact/interpolation/MLP decision |
+| 8C | Dimensional scaling and CFD bridge | Generalized two-to-five-input shock tube; 100,000-state workload; qualified SU2 diamond-airfoil workflow | Matched offline budget; storage and timing protocol; source hashes; no unverified SU2 case promoted to a training label |
 
 ## Suggested adoption modes
 
@@ -34,7 +37,7 @@ Use Modules 1C, 2A, 2C, and a short version of 4B. The learning objective is to 
 ### Six-week intensive course
 
 Use all modules in order. Weeks 5–6 form one combined guided-project pack: Week 5 establishes the controlled modification and checkpoint; Week 6 completes the selected track and final evidence. Advanced Track 6 remains instructor-approved.
-Use Week 7 only after the original six-week sequence; it is an extension on unsteady external flow, not a replacement for the Weeks 5–6 project.
+Use Weeks 7 and 8 only after the original six-week sequence. Week 7 extends to unsteady external flow; Week 8 extends to compressible-flow branches, exact-to-ML comparisons, and a qualified multidimensional-CFD bridge. Neither replaces the Weeks 5–6 project.
 
 ### Full semester
 

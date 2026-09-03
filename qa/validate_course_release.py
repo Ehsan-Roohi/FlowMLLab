@@ -34,12 +34,14 @@ REQUIRED = [
     "flowmllab/cylinder_ml.py",
     "flowmllab/cylinder_cnn.py",
     "flowmllab/cylinder_phase.py",
+    "flowmllab/gas_dynamics.py",
     "tests/test_core.py",
     "tests/test_cavity_rom.py",
     "tests/test_cylinder_lbm.py",
     "tests/test_cylinder_ml.py",
     "tests/test_cylinder_cnn.py",
     "tests/test_cylinder_phase.py",
+    "tests/test_gas_dynamics.py",
     "qa/build_week04_1_rom_notebook.py",
     "qa/add_colab_entrypoints.py",
     "qa/run_cavity_rom_validation.py",
@@ -48,6 +50,8 @@ REQUIRED = [
     "qa/run_cylinder_blind_video.py",
     "qa/run_cylinder_multiscale_cnn.py",
     "qa/run_cylinder_phase_stable.py",
+    "qa/build_week8_gas_dynamics_figures.py",
+    ".github/workflows/week8-materials.yml",
     "data/cavity_data.npz",
     "data/case_quality.csv",
     "common/w4utils.py",
@@ -61,6 +65,10 @@ REQUIRED = [
     "notebooks/week04/W4_1_Classical_ROM_Cavity.ipynb",
     "notebooks/week07/W7_Lattice_Boltzmann_Cylinder_Student.ipynb",
     "notebooks/week07/make_week7_notebook.py",
+    "notebooks/week08/W8_Lab1_Exact_Gas_Dynamics_Student.ipynb",
+    "notebooks/week08/W8_Lab2_Gas_Dynamics_SciML_Evidence_Student.ipynb",
+    "notebooks/week08/make_week8_notebooks.py",
+    "notebooks/week08/README.md",
     "notebooks/week05_06/P0_Project_Setup.ipynb",
     "notebooks/week05_06/P1_Re_Generalization.ipynb",
     "notebooks/week05_06/P2_Physics_Guided_DNN.ipynb",
@@ -76,6 +84,8 @@ REQUIRED = [
     "lectures/week05_06_project_guide.pdf",
     "lectures/week07_cylinder_lbm_neural_surrogate.pdf",
     "lectures/source/week07_cylinder_lbm_neural_surrogate.tex",
+    "lectures/week08_gas_dynamics_sciml.pdf",
+    "lectures/source/week08_gas_dynamics_sciml.tex",
     "references/README.md",
     "references/course_references.bib",
     "results/pod_deeponet/deeponet_selection.csv",
@@ -137,6 +147,18 @@ REQUIRED = [
     "results/cylinder_lbm/re40_teaching_case.npz",
     "results/cylinder_lbm/re100_teaching_case.npz",
     "results/cylinder_lbm/re180_teaching_case.npz",
+    "results/gas_dynamics_week8/README.md",
+    "results/gas_dynamics_week8/provenance.json",
+    "results/gas_dynamics_week8/primary_metrics.csv",
+    "results/gas_dynamics_week8/baseline_comparison.csv",
+    "results/gas_dynamics_week8/range_generalization.csv",
+    "results/gas_dynamics_week8/high_dimensional_scaling.csv",
+    "results/gas_dynamics_week8/physical_diagnostics.csv",
+    "results/gas_dynamics_week8/application_audit_summary.json",
+    "results/gas_dynamics_week8/week8_exact_physics.png",
+    "results/gas_dynamics_week8/week8_exact_physics.pdf",
+    "results/gas_dynamics_week8/week8_model_evidence.png",
+    "results/gas_dynamics_week8/week8_model_evidence.pdf",
     "results/article_validation/re1000_n65.npz",
     "results/article_validation/re1000_n129.npz",
     "results/article_validation/botella_pressure_reference.csv",
@@ -221,7 +243,7 @@ def validate_notebooks() -> tuple[int, int]:
                 for cell in cells
             ), f"missing learner-edition marker: {path}"
         count += 1
-    assert count == 18, f"expected 18 notebooks, found {count}"
+    assert count == 20, f"expected 20 notebooks, found {count}"
     return count, code_cells
 
 
@@ -616,9 +638,42 @@ def validate_cylinder_grid_results() -> dict[str, float | bool]:
     }
 
 
+def validate_week8_gas_dynamics_results() -> dict[str, object]:
+    """Verify the pinned evidence, notebook pedagogy, and source boundaries."""
+    sys.path.insert(0, str(ROOT))
+    from flowmllab.gas_dynamics import validate_week8_evidence  # noqa: PLC0415
+
+    report = validate_week8_evidence(ROOT)
+    result_dir = ROOT / "results" / "gas_dynamics_week8"
+    provenance = json.loads((result_dir / "provenance.json").read_text())
+    for filename, expected in provenance["copied_files"].items():
+        assert digest(result_dir / filename) == expected, filename
+    assert "not_permitted" in provenance["claim_boundary"]
+    assert "other eight distributed cases remain unverified" in provenance[
+        "claim_boundary"
+    ]["su2_status"]
+
+    lab1 = json.loads(
+        (ROOT / "notebooks/week08/W8_Lab1_Exact_Gas_Dynamics_Student.ipynb").read_text()
+    )
+    lab2 = json.loads(
+        (ROOT / "notebooks/week08/W8_Lab2_Gas_Dynamics_SciML_Evidence_Student.ipynb").read_text()
+    )
+    lab1_source = "\n".join("".join(cell.get("source", [])) for cell in lab1["cells"])
+    lab2_source = "\n".join("".join(cell.get("source", [])) for cell in lab2["cells"])
+    assert "Exact gas dynamics before machine learning" in lab1_source
+    assert "nine classical chapter notebooks" in lab1_source
+    assert "other eight distributed cases remain" in lab1_source
+    assert "deliberately ill-posed inverse" in lab2_source
+    assert "The baseline can win" in lab2_source
+    assert "Ordinary blind accuracy is not edge generalization" in lab2_source
+    assert "Dimensional scaling under a matched offline budget" in lab2_source
+    return report
+
+
 def validate_pdfs() -> int:
     pdfs = sorted((ROOT / "lectures").glob("*.pdf"))
-    assert len(pdfs) == 6
+    assert len(pdfs) == 7
     for path in pdfs:
         result = subprocess.run(
             ["pdfinfo", str(path)], check=True, capture_output=True, text=True
@@ -638,6 +693,7 @@ def main() -> None:
     cavity_rom_metrics = validate_cavity_rom_results()
     cylinder_metrics = validate_cylinder_lbm_results()
     cylinder_grid_metrics = validate_cylinder_grid_results()
+    week8_metrics = validate_week8_gas_dynamics_results()
     article_metrics = validate_article_alignment()
     pdfs = validate_pdfs()
     python_files = sorted(ROOT.rglob("*.py"))
@@ -654,6 +710,7 @@ def main() -> None:
     print("Cavity ROM release metrics:", json.dumps(cavity_rom_metrics, sort_keys=True))
     print("Cylinder LBM release metrics:", json.dumps(cylinder_metrics, sort_keys=True))
     print("Cylinder grid-verification metrics:", json.dumps(cylinder_grid_metrics, sort_keys=True))
+    print("Week-8 gas-dynamics metrics:", json.dumps(week8_metrics, sort_keys=True))
     print("Article-aligned validation metrics:", json.dumps(article_metrics, sort_keys=True))
 
 

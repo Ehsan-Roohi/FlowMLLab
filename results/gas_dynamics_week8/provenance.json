@@ -1,0 +1,45 @@
+{
+  "module": "FlowMLLab Week 8 - Gas Dynamics and Scientific Machine Learning",
+  "frozen_utc_date": "2026-09-03",
+  "sources": {
+    "GasDynamicsSciML": {
+      "url": "https://github.com/Ehsan-Roohi/GasDynamicsSciML",
+      "commit": "374431a1033138f56e2752bf8bbf9b75a454d80c",
+      "role": "authoritative five-problem SciML implementation and retained evidence",
+      "ci": "https://github.com/Ehsan-Roohi/GasDynamicsSciML/actions/runs/33122715290"
+    },
+    "Introduction-to-Compressible-Flows": {
+      "url": "https://github.com/Ehsan-Roohi/Introduction-to-Compressible-Flows",
+      "commit": "fc14721ae80f48da63e55955c1caf096d8448f7b",
+      "role": "nine classical chapter-aligned teaching notebooks",
+      "ci": "https://github.com/Ehsan-Roohi/Introduction-to-Compressible-Flows/actions/runs/33260824774"
+    },
+    "SU2-Diamond-Airfoil-Verification": {
+      "url": "https://github.com/Ehsan-Roohi/SU2-Diamond-Airfoil-Verification",
+      "commit": "cd36c78f027a6c096c62839063e5e91c930e0c7c",
+      "role": "multidimensional CFD bridge; only euler_alpha0 is a qualified teaching reference",
+      "ci": "https://github.com/Ehsan-Roohi/SU2-Diamond-Airfoil-Verification/actions/runs/33549691554"
+    }
+  },
+  "article_alignment": {
+    "title": "Physics-Guided Neural Surrogates for Canonical Compressible Thermal-Fluid Relations",
+    "manuscript_identifier": "AITF-D-26-00044R1",
+    "status": "author-supplied revised manuscript; FlowMLLab does not infer editorial acceptance",
+    "pdf_sha256": "d7038a5e114555814b6ab30e26e98b3d3142e1fffbb9cef524c995084a0c36c7",
+    "overleaf_zip_sha256": "c8cb42b49fd0339cfb6556197452ced3fa7554c1d00e831c8ea35055f9ada976",
+    "role": "article-level motivation, terminology, training contract, diagnostics, limitations, and interpretation"
+  },
+  "copied_files": {
+    "primary_metrics.csv": "6dfcccee418a5a7ae4b6de91fb5e6658db861ce832c7861e25899a7c475047d2",
+    "baseline_comparison.csv": "da6670fa918fb47975977a5d98dfd66c436a309dad4e9ce17982c81905a8fe01",
+    "range_generalization.csv": "79978475023269d4dab598f9bc9108742323ebd7ee6844b0a91d0705791692c2",
+    "high_dimensional_scaling.csv": "84d9bc2de8b4faf01975cda11841340ad90db0cb0f6201026eebc96e1b1c6a26",
+    "application_audit_summary.json": "828c2e7102a65b3d45e16988e9ae51f4592aece9cb88079b9efef882c37a0855",
+    "physical_diagnostics.csv": "4b1b3dee28130ab8ee874eb0a901e3c6a06ab9b395faa25e6b69f7bfd5ff38b0"
+  },
+  "claim_boundary": {
+    "permitted": "branch-aware inverse surrogates reproduce the retained analytical benchmark within their declared domains",
+    "not_permitted": "neural networks replace exact relations, interpolation, high-fidelity CFD, reacting-gas models, or unrestricted extrapolation",
+    "su2_status": "the alpha-zero sharp-wall Euler case is qualified teaching evidence; the other eight distributed cases remain unverified"
+  }
+}

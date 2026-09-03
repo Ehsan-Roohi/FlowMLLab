@@ -14,6 +14,7 @@ from .core import (
     run_repository_qa,
     validate_core_assets,
     verify_cylinder_lbm_validation,
+    verify_gas_dynamics_week8,
 )
 
 
@@ -45,6 +46,12 @@ def build_parser() -> argparse.ArgumentParser:
         help="verify retained Week-7 LBM grid study and learned-model evidence",
     )
     cylinder.add_argument("--root", type=Path, help="FlowMLLab checkout root")
+
+    gasdynamics = subparsers.add_parser(
+        "gasdynamics",
+        help="verify retained Week-8 exact and learned gas-dynamics evidence",
+    )
+    gasdynamics.add_argument("--root", type=Path, help="FlowMLLab checkout root")
     return parser
 
 
@@ -62,6 +69,8 @@ def main(argv: list[str] | None = None) -> int:
             return generate_cavity_rom_validation(args.root)
         if args.command == "cylinder":
             return verify_cylinder_lbm_validation(args.root)
+        if args.command == "gasdynamics":
+            return verify_gas_dynamics_week8(args.root)
     except ValidationError as error:
         print(f"FlowMLLab validation failed: {error}")
         return 2

@@ -26,6 +26,8 @@ only for notebooks that explicitly require CUDA.
 | Weeks 5–6 | P5 rarefied cavity | [Open in Colab](https://colab.research.google.com/github/Ehsan-Roohi/FlowMLLab/blob/main/notebooks/week05_06/P5_Rarefied_Cavity.ipynb) |
 | Weeks 5–6 | P6 Fokker-Planck closure | [Open in Colab](https://colab.research.google.com/github/Ehsan-Roohi/FlowMLLab/blob/main/notebooks/week05_06/P6_FP_Cavity_Closure.ipynb) |
 | Week 7 | Lattice-Boltzmann cylinder wakes | [Open in Colab](https://colab.research.google.com/github/Ehsan-Roohi/FlowMLLab/blob/main/notebooks/week07/W7_Lattice_Boltzmann_Cylinder_Student.ipynb) |
+| Week 8 | Exact gas dynamics before ML | [Open in Colab](https://colab.research.google.com/github/Ehsan-Roohi/FlowMLLab/blob/main/notebooks/week08/W8_Lab1_Exact_Gas_Dynamics_Student.ipynb) |
+| Week 8 | Gas-dynamics SciML evidence | [Open in Colab](https://colab.research.google.com/github/Ehsan-Roohi/FlowMLLab/blob/main/notebooks/week08/W8_Lab2_Gas_Dynamics_SciML_Evidence_Student.ipynb) |
 
 ## Weekly laboratories
 
@@ -35,6 +37,15 @@ only for notebooks that explicitly require CUDA.
 - `week04/`: CFD data production, scalar/field surrogates, and a 27-cell POD-DeepONet laboratory with development-only selection, a visible blind-test gate, three-seed uncertainty, Ghia checks, physical diagnostics, and timing.
 - `week05_06/`: the original combined two-week guided-project pack. Week 5 establishes the setup, baseline, controlled modification, and checkpoint; Week 6 completes the same selected track, physical validation, reproducibility package, and final report.
 - `week07/`: D2Q9 BGK/TRT cylinder flow, a concise collide--stream--boundary algorithm walkthrough, physically gated force and Strouhal diagnostics, an executed three-grid study with a retained formal asymptotic/GCI failure, Reynolds-regime classification, strong temporal baselines, and separate one-step/recursive audits of a four-frame multi-scale CNN on a retained held-out interpolation case.
+- `week08/`: two CPU labs that start from exact branch-aware gas dynamics, then compare bracketed roots, interpolation, and physics-guided MLP evidence across five inverse problems, edge holdouts, dimensional scaling, and application workloads.
+
+The Week-8 labs are synchronized to checksummed evidence from the author's
+`GasDynamicsSciML` repository. Lab 1 links to all nine detailed classical
+notebooks in `Introduction-to-Compressible-Flows`; Lab 2 keeps the full model
+retraining optional and uses immutable CSV evidence for the classroom path.
+The SU2 diamond-airfoil work is a clearly labelled multidimensional-CFD bridge,
+not an accepted nine-case dataset: only the sharp-wall alpha-zero Euler case is
+a qualified teaching reference at the frozen source commit.
 
 The Week-7 notebook labels the retained low-cost run as qualitative.  It links
 every field plot to force, density, Mach-number, relaxation-time, blockage, and

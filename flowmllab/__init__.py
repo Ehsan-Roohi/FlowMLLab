@@ -7,6 +7,7 @@ from .cylinder_lbm import (
     recommended_parameters,
     simulate_cylinder,
 )
+from .gas_dynamics import validate_week8_evidence
 
 __all__ = [
     "CylinderLBMConfig",
@@ -16,5 +17,6 @@ __all__ = [
     "recommended_parameters",
     "simulate_cylinder",
     "validate_core_assets",
+    "validate_week8_evidence",
 ]
 __version__ = "1.2.0"

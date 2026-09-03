@@ -1,0 +1,22 @@
+{
+  "nozzle_cases": 9,
+  "nozzle_max_iterations": 6,
+  "nozzle_max_shock_target_abs_error": 1.9183996613492127e-09,
+  "nozzle_max_back_pressure_abs_error": 0.002978334945448191,
+  "nozzle_max_gradient_relative_difference": 1.3692670573837641e-09,
+  "shock_tube_queries": 100000,
+  "shock_tube_rel_l2": 0.0009147663015406522,
+  "shock_tube_speedup": 16.531350479074522,
+  "timing_root_speedup_min": 18.062087064541466,
+  "timing_root_speedup_max": 809.403177964253,
+  "timing_session": {
+    "python": "3.12.13",
+    "platform": "Linux-6.18.35-x86_64-with-glibc2.39",
+    "processor": "x86_64",
+    "repeats": 7,
+    "omp_num_threads": "1",
+    "openblas_num_threads": "1",
+    "mkl_num_threads": "1",
+    "protocol": "shared models and process; warm-up; median and IQR wall-clock CPU timing"
+  }
+}

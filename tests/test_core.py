@@ -53,6 +53,11 @@ class FlowMLLabCoreTests(unittest.TestCase):
         self.assertEqual(args.command, "cylinder")
         self.assertEqual(args.root, ROOT)
 
+    def test_gas_dynamics_cli_is_exposed(self) -> None:
+        args = build_parser().parse_args(["gasdynamics", "--root", str(ROOT)])
+        self.assertEqual(args.command, "gasdynamics")
+        self.assertEqual(args.root, ROOT)
+
 
 if __name__ == "__main__":
     unittest.main()

@@ -13,8 +13,8 @@ exercise to physics-checked POD--DeepONet benchmarks when ready.
 <p align="center">
   <a href="https://colab.research.google.com/github/Ehsan-Roohi/FlowMLLab/blob/main/notebooks/week05_06/P0_Project_Setup.ipynb"><img src="https://img.shields.io/badge/Run-20--minute_Colab-F9AB00?logo=googlecolab&logoColor=white" alt="Run the 20-minute FlowMLLab Colab"></a>
   <a href="demo/README.md"><img src="https://img.shields.io/badge/Explore-blind--case_demo-146C94" alt="Explore the validated blind-case demo"></a>
-  <a href="notebooks/README.md"><img src="https://img.shields.io/badge/Open-all_18_notebooks-315A7D" alt="Open all 18 FlowMLLab notebooks"></a>
-  <a href="lectures/README.md"><img src="https://img.shields.io/badge/Open-all_7_lectures-6B4C9A" alt="Open all 7 FlowMLLab lectures"></a>
+  <a href="notebooks/README.md"><img src="https://img.shields.io/badge/Open-all_20_notebooks-315A7D" alt="Open all 20 FlowMLLab notebooks"></a>
+  <a href="lectures/README.md"><img src="https://img.shields.io/badge/Open-all_8_lectures-6B4C9A" alt="Open all 8 FlowMLLab lectures"></a>
 </p>
 
 ## Featured: circular-cylinder vortex shedding
@@ -57,7 +57,10 @@ positive-order asymptotic/GCI sequence.
 | Three-seed velocity error on retained cavity cases | **0.0727%–0.4455%** relative $L_2$ |
 | Direct zero-mean pressure prediction | **0.1073%–0.2506%** relative $L_2$ |
 | Repeated three-field evaluation versus a fresh recorded CPU CFD solve | **approximately $5.3\times10^3\times$ faster** |
-| Reproducible learning and research entry points | **18 Colab notebooks + 7 lectures** (6 PDFs; Weeks 5–6 share one guide) |
+| Week-8 branch-aware gas-dynamics inverse benchmarks | Five blind relative-$L_2$ errors below **0.35%**, with **100%** physical coverage |
+| Matched-budget five-input shock-tube audit | Interpolation: **4.885%**; bounded MLP: **0.177%** relative $L_2$ |
+| Prescribed 100,000-state shock-tube workload | **16.53x faster** than one bracketed Brent root per state; **0.0915%** relative $L_2$ |
+| Reproducible learning and research entry points | **20 Colab notebooks + 8 lectures** (7 PDFs; Weeks 5–6 share one guide) |
 
 ### Choose a starting point
 
@@ -71,7 +74,7 @@ positive-order asymptotic/GCI sequence.
 
 **FlowMLLab** is an open-source framework for reproducible CFD-to-scientific-machine-learning experiments. It integrates transparent continuum and particle solvers, case-wise data partitions, non-neural baselines, coordinate networks, POD-DeepONet models, physical diagnostics, machine-readable evidence, and release checks.
 
-The repository contains a seven-lecture learning path: the complete tutorial and lecture layer developed for the original six-week graduate course **MIE 690A: AI in Fluid Mechanics**, University of Massachusetts Amherst, Summer 2026, plus the Week-7 cylinder extension. The reusable modules, datasets, validators, and figure builders are the software core; the notebooks are documented examples of that framework.
+The repository contains an eight-lecture learning path: the complete tutorial and lecture layer developed for the original six-week graduate course **MIE 690A: AI in Fluid Mechanics**, University of Massachusetts Amherst, Summer 2026, plus the Week-7 cylinder and Week-8 gas-dynamics extensions. The reusable modules, datasets, validators, and figure builders are the software core; the notebooks are documented examples of that framework.
 
 The course treats scientific machine learning as a controlled computational-physics experiment:
 
@@ -88,13 +91,14 @@ Start with [START_HERE.md](START_HERE.md). It gives the installation check, reco
 
 | Resource | Contents |
 | --- | --- |
-| `flowmllab/` | Installable Python package, scientific asset checks, repository QA, and figure-generation CLI |
+| `flowmllab/` | Installable Python package, including cavity, cylinder LBM, learned-wake, and exact gas-dynamics modules plus scientific asset checks and CLI |
 | `demo/` | Read-only Streamlit explorer for the retained POD--DeepONet blind cases |
 | `pyproject.toml` | Versioned package metadata, bounded compatible dependencies, optional ML/test environments, and `flowmllab` entry point |
-| `lectures/` | Seven lectures delivered in six PDFs: Weeks 1–4, a shared Weeks 5–6 project guide, and the separate Week-7 cylinder lecture, with editable sources where available |
+| `lectures/` | Eight lectures delivered in seven PDFs: Weeks 1–4, a shared Weeks 5–6 project guide, and separate Week-7 cylinder and Week-8 gas-dynamics lectures |
 | `notebooks/week01`–`week04` | Ten guided laboratories for Weeks 1–4, including the additive Week-4.1 classical ROM lab |
 | `notebooks/week05_06` | The original combined Weeks 5–6 project pack: seven expanded notebooks (`P0`–`P6`) with PINNs/physics-guided learning, POD, uncertainty, rarefied flow, FP closure, frozen decision gates, and final-project evidence |
 | `notebooks/week07` | The Week-7 cylinder-wake LBM and neural-surrogate extension |
+| `notebooks/week08` | Two CPU/Colab labs: exact branch-aware gas dynamics, then matched interpolation/MLP evidence and dimensional scaling |
 | `common/` | Shared CFD, surrogate, POD, kinetic, and QA utilities |
 | `data/` | Fixed cavity reference data plus the documented, checksummed cylinder-CFD release contract |
 | `results/article_validation/` | Re=1000 pressure-recovery solutions and independent Botella--Peyret reference data |
@@ -106,6 +110,7 @@ Start with [START_HERE.md](START_HERE.md). It gives the installation check, reco
 | `results/cylinder_cnn/` | four-frame CNN validation/retained-interpolation video, strong polynomial baselines, one-step and rollout audits, frozen weights, and regeneration script |
 | `results/cylinder_phase/` | autonomous phase-stable validation, fresh-test metrics, Strouhal spectra, and LBM comparison video |
 | `results/cylinder_grid_convergence/` | three-grid Re=100 CFD fields, histories, statistical gates, retained formal grid-independence failure, protocol, and convergence figure |
+| `results/gas_dynamics_week8/` | Checksummed evidence snapshot, exact-physics maps, matched baselines, edge holdouts, high-dimensional scaling, timing, and source provenance |
 | `advanced/fp_closure/` | Bounded educational workflow for exact and learned Fokker–Planck closure testing |
 | `references/` | Annotated reading guide and BibTeX database |
 | `qa/` | Release validator for notebook syntax, required assets, and reproducibility anchors |
@@ -121,6 +126,7 @@ The recommended path is cumulative:
 - **Week 4.1 — Classical and hyper-reduced ROM:** an additive notebook for the same cavity, with dynamic centered POD-Galerkin, nonlinear-cost diagnosis, POD-DEIM, convergence checks, frozen blind tests, and offline/online break-even accounting.
 - **Weeks 5–6 — Combined guided-project pack:** Week 5 covers POD, physics-guided objectives/PINNs, neural-operator extensions, project selection, and the frozen checkpoint. Week 6 continues the same selected track through Fokker–Planck/hybrid methods where assigned, a-posteriori testing, uncertainty, reproducibility, and the final report.
 - **Week 7 — Cylinder wakes with LBM and learned prediction:** derive the D2Q9 collide--stream--boundary loop, distinguish wake regimes, run a controlled `Re=100` three-grid study and retain its formal asymptotic failure, validate forces and gated Strouhal estimates, retain POD/CNN failure evidence, and audit a phase-stable decoder over 277 autonomous future fields on a fresh Reynolds test.
+- **Week 8 — Gas dynamics before scientific ML:** derive and solve Rayleigh, Fanno, oblique-shock, nozzle-shock, and shock-tube relations; expose branch-hidden regression failure; compare exact roots, interpolation, and bounded MLPs; separate ordinary blind accuracy from edge generalization; and use the SU2 diamond-airfoil work only as a clearly qualified bridge to multidimensional CFD.
 
 The full module-to-evidence mapping is in [COURSE_MAP.md](COURSE_MAP.md).
 The exact manuscript-figure ownership and reproduction commands are in [ARTICLE_FIGURE_MAP.md](ARTICLE_FIGURE_MAP.md).
@@ -137,6 +143,7 @@ flowmllab qa --root .
 flowmllab figures all --root .
 flowmllab rom --root .               # optional Week-4.1 full regeneration
 flowmllab cylinder --root .          # verify Week-7 regimes, grid study, and learned evidence
+flowmllab gasdynamics --root .       # verify Week-8 exact/ML evidence and provenance
 ```
 
 Install the neural-network stack with `python -m pip install -e ".[ml,test]"`.
@@ -262,6 +269,37 @@ regenerate the full study. Run `flowmllab cylinder --root .` to verify both the
 retained CFD evidence and learned-model evidence without repeating expensive
 solves. The existing neural models still target the low-cost 12-node CFD
 dataset and are therefore labelled educational rather than high-fidelity DNS.
+
+## Week 8 gas-dynamics teaching module
+
+Week 8 connects the author's
+[`Introduction-to-Compressible-Flows`](https://github.com/Ehsan-Roohi/Introduction-to-Compressible-Flows)
+and [`GasDynamicsSciML`](https://github.com/Ehsan-Roohi/GasDynamicsSciML)
+repositories to the FlowMLLab evidence workflow. Lab 1 starts from exact
+Rayleigh, Fanno, oblique-shock, nozzle-shock, and shock-tube relations, preserves
+every physical branch, and links to all nine detailed classical chapter
+notebooks. Lab 2 demonstrates the failure of a branch-hidden inverse, then uses
+checksummed retained CSV evidence to compare interpolation and physics-guided
+MLPs, omitted-edge tests, dimensional scaling, physical diagnostics, and a
+100,000-state workload.
+
+[Open the Week-8 lecture PDF](lectures/week08_gas_dynamics_sciml.pdf),
+[run Lab 1 in Colab](https://colab.research.google.com/github/Ehsan-Roohi/FlowMLLab/blob/main/notebooks/week08/W8_Lab1_Exact_Gas_Dynamics_Student.ipynb), or
+[run Lab 2 in Colab](https://colab.research.google.com/github/Ehsan-Roohi/FlowMLLab/blob/main/notebooks/week08/W8_Lab2_Gas_Dynamics_SciML_Evidence_Student.ipynb).
+
+<p align="center">
+  <a href="results/gas_dynamics_week8/week8_model_evidence.png">
+    <img src="results/gas_dynamics_week8/week8_model_evidence.png" alt="Week-8 retained gas-dynamics evidence: blind errors, interpolation baselines, edge holdouts, and matched-budget dimensional scaling" width="100%">
+  </a>
+</p>
+
+The separate
+[`SU2-Diamond-Airfoil-Verification`](https://github.com/Ehsan-Roohi/SU2-Diamond-Airfoil-Verification)
+repository is not silently promoted into training data. At the frozen Week-8
+source commit, only its sharp-wall `euler_alpha0` case is a qualified teaching
+reference; the other eight distributed cases remain unverified. Run
+`flowmllab gasdynamics --root .` to verify the retained evidence and source
+commits without retraining the research models.
 
 ## POD-DeepONet validation result
 

@@ -11,3 +11,10 @@ dist/
 *.log
 .DS_Store
 results/cylinder_cnn/cache/
+lectures/source/*.aux
+lectures/source/*.fdb_latexmk
+lectures/source/*.fls
+lectures/source/*.out
+lectures/source/*.pdf
+lectures/source/*.toc
+tmp/

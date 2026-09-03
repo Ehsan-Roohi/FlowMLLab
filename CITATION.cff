@@ -13,7 +13,8 @@ abstract: >-
   FlowMLLab integrates transparent continuum and particle solvers, case-wise
   data partitions, non-neural baselines, coordinate networks, POD-DeepONet,
   centered POD-Galerkin and POD-DEIM models, a D2Q9 lattice-Boltzmann
-  cylinder-wake module, physical diagnostics,
+  cylinder-wake module, exact and learned gas-dynamics inverse benchmarks,
+  physical diagnostics,
   machine-readable validation evidence, and release-quality assurance for
   reproducible scientific machine learning in fluid mechanics.
 keywords:
@@ -24,6 +25,8 @@ keywords:
   - discrete empirical interpolation method
   - lattice Boltzmann method
   - cylinder wake
+  - gas dynamics
+  - compressible flow
   - direct simulation Monte Carlo
   - reproducibility
 version: "1.2.0"

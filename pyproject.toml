@@ -19,6 +19,8 @@ keywords = [
   "neural-operators",
   "lattice-boltzmann",
   "cylinder-wake",
+  "gas-dynamics",
+  "compressible-flow",
   "DSMC",
   "reproducibility",
 ]

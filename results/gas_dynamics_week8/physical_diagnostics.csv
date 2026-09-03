@@ -1,0 +1,11 @@
+problem,diagnostic,value
+Rayleigh,entropy_linf,0.02053268477672887
+Rayleigh,entropy_peak_mach_error,0.0
+Fanno,entropy_linf,0.017456221012801088
+Fanno,nonnegative_rate,1.0
+Oblique,anchor_linf,0.0
+Oblique,valid_branch_rate,1.0
+Nozzle,back_pressure_residual_linf,0.004491024837220525
+Nozzle,valid_location_rate,1.0
+Shock tube,equation_residual_linf,0.04381836676001401
+Shock tube,valid_pressure_rate,1.0

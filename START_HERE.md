@@ -9,11 +9,12 @@ This page is the shortest reliable path from a fresh checkout to a meaningful sc
 | Complete beginner | You know fluid mechanics but have limited Python experience | `notebooks/week01/01_python_for_cfd_ai_fluids.ipynb` | [Open in Colab](https://colab.research.google.com/github/Ehsan-Roohi/FlowMLLab/blob/main/notebooks/week01/01_python_for_cfd_ai_fluids.ipynb) |
 | Python-ready | You can use NumPy and Matplotlib | `notebooks/week01/03_cavity_ghia.ipynb` | [Open in Colab](https://colab.research.google.com/github/Ehsan-Roohi/FlowMLLab/blob/main/notebooks/week01/03_cavity_ghia.ipynb) |
 | Scientific-ML ready | You already understand CFD validation and supervised learning | `notebooks/week05_06/P0_Project_Setup.ipynb` | [Open in Colab](https://colab.research.google.com/github/Ehsan-Roohi/FlowMLLab/blob/main/notebooks/week05_06/P0_Project_Setup.ipynb) |
+| Gas-dynamics ready | You know Mach number and perfect-gas relations and want exact-to-ML comparisons | `notebooks/week08/W8_Lab1_Exact_Gas_Dynamics_Student.ipynb` | [Open in Colab](https://colab.research.google.com/github/Ehsan-Roohi/FlowMLLab/blob/main/notebooks/week08/W8_Lab1_Exact_Gas_Dynamics_Student.ipynb) |
 | Instructor adoption | You are planning a course or workshop | `COURSE_MAP.md`, then `lectures/` |
 
 Do not begin with Track 6 unless you already understand case-wise splitting, scaling, offline versus closed-loop validation, and GPU troubleshooting.
 
-The complete [notebook launcher](notebooks/README.md) links directly to all 18
+The complete [notebook launcher](notebooks/README.md) links directly to all 20
 Colab notebooks. Their first code cells obtain the repository and package, so a
 fresh Colab runtime does not require manual file uploads.
 
@@ -72,6 +73,7 @@ Typical student runtimes are approximate:
 | Project Track 5 | CPU/GPU | several hours for all stochastic cases |
 | Project Track 6 | CUDA GPU | smoke test first; final study is substantially longer |
 | Week 7 cylinder LBM | CPU | <2 min with retained evidence; the complete three-grid regeneration is intentionally an instructor/assignment run |
+| Week 8 exact gas dynamics and SciML evidence | CPU | <7 min for both labs; full five-problem model regeneration remains optional |
 
 ## 5. Keep blind cases blind
 
