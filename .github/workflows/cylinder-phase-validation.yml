@@ -5,6 +5,7 @@ on:
   push:
     paths:
       - ".github/workflows/cylinder-phase-validation.yml"
+      - "qa/run_cylinder_phase_stable.py"
 
 permissions:
   contents: write
