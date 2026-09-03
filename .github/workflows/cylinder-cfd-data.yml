@@ -1,0 +1,45 @@
+name: Cylinder CFD dataset
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - '.github/workflows/cylinder-cfd-data.yml'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: cylinder-cfd-release-v1
+  cancel-in-progress: false
+
+jobs:
+  generate-validate-release:
+    runs-on: ubuntu-latest
+    timeout-minutes: 360
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: pip
+      - name: Install
+        run: python -m pip install -e .
+      - name: Generate nine CFD cases
+        run: python qa/generate_cylinder_cfd_dataset.py --workers 3
+      - name: Validate checksums, arrays, and split
+        run: python qa/validate_cylinder_cfd_dataset.py data/cylinder_cfd
+      - name: Publish durable GitHub release assets
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          tag=cylinder-cfd-v1
+          gh release view "$tag" >/dev/null 2>&1 || \
+            gh release create "$tag" --title "Cylinder CFD dataset v1" \
+              --notes "Nine reproducible D2Q9-TRT cylinder cases. Development: Re 60,80,90,110,120,140; validation: Re 100; fresh test: Re 95; retained test: Re 105. Checksums and provenance are in manifest.json."
+          gh release upload "$tag" data/cylinder_cfd/* --clobber
+      - uses: actions/upload-artifact@v4
+        with:
+          name: cylinder-cfd-v1
+          path: data/cylinder_cfd/
+          retention-days: 90
