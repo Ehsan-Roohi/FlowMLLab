@@ -29,7 +29,7 @@ jobs:
           sudo apt-get install -y ffmpeg
           python -m pip install --upgrade pip
           python -m pip install -e ".[test]"
-          python -m pip install pillow
+          python -m pip install pillow pytest
 
       - name: Download checksummed CFD release inputs
         env:
