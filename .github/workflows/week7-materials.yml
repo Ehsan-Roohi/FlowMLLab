@@ -1,0 +1,61 @@
+name: Rebuild Week 7 materials
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - ".github/workflows/week7-materials.yml"
+      - "notebooks/week07/make_week7_notebook.py"
+      - "lectures/source/week07_cylinder_lbm_neural_surrogate.tex"
+      - "results/cylinder_phase/**"
+
+permissions:
+  contents: write
+
+jobs:
+  rebuild:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+
+      - name: Install Python and LaTeX dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y latexmk poppler-utils texlive-latex-extra texlive-fonts-recommended
+          python -m pip install --upgrade pip
+          python -m pip install -e .
+
+      - name: Rebuild notebook from its reviewable source
+        run: python notebooks/week07/make_week7_notebook.py
+
+      - name: Rebuild Week 7 lecture PDF
+        working-directory: lectures/source
+        run: |
+          latexmk -pdf -interaction=nonstopmode -halt-on-error week07_cylinder_lbm_neural_surrogate.tex
+          cp week07_cylinder_lbm_neural_surrogate.pdf ../week07_cylinder_lbm_neural_surrogate.pdf
+
+      - name: Run software and release gates
+        run: |
+          python -m unittest discover -s tests -v
+          python qa/validate_course_release.py
+
+      - name: Commit generated teaching artifacts
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add notebooks/week07/W7_Lattice_Boltzmann_Cylinder_Student.ipynb
+          git add lectures/week07_cylinder_lbm_neural_surrogate.pdf
+          if git diff --cached --quiet; then
+            echo "Week 7 artifacts are already current."
+          else
+            git commit -m "Rebuild Week 7 notebook and lecture [skip ci]"
+            git push origin HEAD:main
+          fi
