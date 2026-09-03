@@ -27,7 +27,7 @@ This directory supports the two Week-9 research-to-classroom notebooks.
   are displayed as paper evidence, not recomputed by the compact notebook.
 - The nozzle notebook recomputes the real DSMC centerline POD and fits a small
   centerline POD/branch teaching model. It is not the article's trained full
-  two-dimensional six-output Fusion--DeepONet.
+  two-dimensional six-output shock-aligned surrogate.
 
 Every source file hash, derivation rule, article link, and claim boundary is in
 `provenance.json`. Rebuild the compact archive from a checkout of the source

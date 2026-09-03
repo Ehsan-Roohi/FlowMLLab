@@ -712,10 +712,16 @@ def validate_week9_mahdavi_deeponet_results() -> dict[str, object]:
     assert len(field_errors) == 18
 
     baselines = pd.read_csv(result_dir / "nozzle_hard_case_baselines.csv")
-    aligned = baselines[baselines["model"] == "Shock-aligned Fusion-DeepONet"].iloc[0]
-    assert float(aligned["shock_window_error_percent"]) == 4.51
-    assert float(aligned["shock_location_error_um"]) == 0.0
-    assert baselines["evidence_status"].eq("retained article evidence").all()
+    aligned = baselines[baselines["model"] == "Shock-aligned reduced d"].iloc[0]
+    cartesian = baselines[
+        baselines["model"] == "Cartesian Hadamard branch/trunk"
+    ].iloc[0]
+    assert float(aligned["shock_window_mean_percent"]) == 9.12
+    assert float(aligned["shock_window_std_percent"]) == 1.01
+    assert float(cartesian["shock_window_mean_percent"]) == 34.95
+    assert baselines["evidence_status"].eq(
+        "retained final-article Table XIII evidence"
+    ).all()
 
     provenance = json.loads((result_dir / "provenance.json").read_text())
     assert provenance["source_commit"] == "e1b234ba499408d3b6224633972f939f3b2301d6"

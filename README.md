@@ -322,7 +322,7 @@ snapshots. It directly reproduces the density-POD compression from 8 physical
 coordinate modes to 2 shock-centered modes at 99% energy. Pressures 16, 25,
 and 30 kPa remain held out until leave-one-case-out rank selection is frozen.
 The classroom predictor is a normalized centerline POD trunk with a neural
-branch, not the paper's full two-dimensional six-output Fusion--DeepONet.
+branch, not the paper's full two-dimensional six-output shock-aligned surrogate.
 
 Run `flowmllab mahdavi --root .` to validate the archive hash, pressure split,
 POD spectrum, article tables, and claim boundaries without retraining.

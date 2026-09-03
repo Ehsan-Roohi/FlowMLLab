@@ -144,6 +144,7 @@ def main() -> None:
             "microstep_arxiv": "https://arxiv.org/abs/2509.17254",
             "micro_nozzle_arxiv": "https://arxiv.org/abs/2605.12723",
             "micro_nozzle_data": SOURCE_URL,
+            "micro_nozzle_doi": "https://doi.org/10.1063/5.0343101",
         },
         "claim_boundary": {
             "microstep_teaching_demo": (
@@ -160,7 +161,7 @@ def main() -> None:
             ),
             "micro_nozzle_teaching_model": (
                 "The notebook's compact centerline POD/branch model is not the paper's "
-                "trained full two-dimensional six-output Fusion-DeepONet checkpoint."
+                "trained full two-dimensional six-output shock-aligned surrogate."
             ),
         },
         "builder_pod_audit": pod_reference,

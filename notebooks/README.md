@@ -47,7 +47,7 @@ DSMC fields or checkpoint were found, so Lab 1 teaches the zonal-loss mechanism
 with manufactured fields and reads the article table separately. Lab 2 uses
 real public nozzle DSMC centerlines under CC BY 4.0, reproduces the 15-case POD
 audit, and labels its compact predictor as a teaching analog rather than the
-full research Fusion--DeepONet.
+full research shock-aligned six-output surrogate.
 
 The Week-8 labs are synchronized to checksummed evidence from the author's
 `GasDynamicsSciML` repository. Lab 1 links to all nine detailed classical

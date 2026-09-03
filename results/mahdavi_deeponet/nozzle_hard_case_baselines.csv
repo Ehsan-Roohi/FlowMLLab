@@ -1,5 +1,7 @@
-model,pressure_kpa,global_error_percent,shock_window_error_percent,gradient_weighted_error_percent,U_shock_window_error_percent,shock_location_error_um,evidence_status
-Vanilla MLP,16,4.86,9.75,7.34,8.79,2.05,retained article evidence
-Vanilla DeepONet,16,6.66,22.27,8.34,21.19,2.05,retained article evidence
-FNO,16,5.61,17.52,5.99,17.65,2.05,retained article evidence
-Shock-aligned Fusion-DeepONet,16,3.15,4.51,3.53,3.45,0.00,retained article evidence
+model,features,pressure_kpa,parameters,seeds,global_mean_percent,global_std_percent,shock_window_mean_percent,shock_window_std_percent,gradient_weighted_mean_percent,gradient_weighted_std_percent,evidence_status
+Cartesian Hadamard branch/trunk,xy,16,132102,3,10.64,5.12,34.95,20.06,11.69,5.51,retained final-article Table XIII evidence
+Strong Cartesian MLP concat,xy,16,148486,3,5.09,0.88,8.86,1.26,5.40,0.90,retained final-article Table XIII evidence
+Strong MLP concat plus d,d,16,148614,3,5.14,0.86,9.50,2.43,5.50,0.98,retained final-article Table XIII evidence
+Shock-aligned reduced d,d,16,132230,3,5.47,1.28,9.12,1.01,5.71,1.21,retained final-article Table XIII evidence
+Shock-aligned reduced no abs/d2,no abs/d2,16,132742,3,6.40,3.16,16.09,9.53,7.13,3.60,retained final-article Table XIII evidence
+Full candidate feature set,full,16,132998,3,6.32,2.34,13.41,5.05,6.98,2.69,retained final-article Table XIII evidence

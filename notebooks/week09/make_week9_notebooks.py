@@ -396,8 +396,10 @@ def lab2_cells():
 POD/SVD, case-wise validation, and DeepONet branch--trunk notation.
 
 This lab uses a compact derivative of **all 15 real public DSMC snapshots**
-from the Roohi--Mahdavi micro-nozzle study. It asks why a moving shock is
-high-rank in laboratory coordinates and low-rank in shock-centered coordinates.
+from the Roohi--Mahdavi article *Shock-centered low-rank structure and
+shock-aligned surrogate modeling of rarefied micro-nozzle flows* (Physics of
+Fluids 38, 082008, 2026; DOI `10.1063/5.0343101`). It asks why a moving shock
+is high-rank in laboratory coordinates and low-rank in shock-centered coordinates.
 
 ### Learning outcomes
 
@@ -407,7 +409,7 @@ high-rank in laboratory coordinates and low-rank in shock-centered coordinates.
 4. select POD rank by leave-one-case-out development error;
 5. open pressures 16, 25, and 30 kPa only after freezing the model; and
 6. distinguish a compact centerline teaching model from the article's full 2-D
-   six-output Fusion--DeepONet.
+   six-output shock-aligned surrogate.
 """),
         md(r"""
 ## Evidence and claim contract
@@ -418,7 +420,7 @@ high-rank in laboratory coordinates and low-rank in shock-centered coordinates.
 - The POD spectrum is directly reproducible from those data.
 - The small model in this notebook predicts **jump-normalized centerline
   density profiles**. It is a POD trunk plus a neural branch and is not the
-  article's trained full-domain, six-field Fusion--DeepONet checkpoint.
+  article's trained full-domain, six-field shock-aligned surrogate.
 - The article metric tables are immutable retained evidence with a different
   output domain and must not be merged numerically with notebook errors.
 - Shock centering uses target-derived locations in the structural POD and
@@ -715,15 +717,19 @@ display(paper_fields.pivot(
 display(paper_baselines)
 """),
         md(r"""
-The retained hard-case table shows why global error alone is insufficient:
-vanilla models can look less poor globally while missing the shock window. The
-shock-aligned Fusion--DeepONet is evaluated with global, shock-window,
-gradient-weighted, velocity-window, and shock-location metrics.
+The retained hard-case table shows why global error alone is insufficient. In
+the final article's three-seed comparison, the Cartesian Hadamard branch/trunk
+model has $34.95\pm20.06\%$ shock-window error. Adding the reduced signed
+distance lowers it to $9.12\pm1.01\%$, comparable to the strong Cartesian MLP's
+$8.86\pm1.26\%$. The defensible claim is therefore not universal superiority.
+The signed-distance representation removes a major translation burden for the
+branch/trunk model; the final article explicitly does not claim a new fusion
+architecture.
 
-The method is physics-guided through representation, localized weighting,
-Gaussian region envelopes, and a two-stage curriculum. It does **not** thereby
-become a PDE-constrained model: the reported formulation does not explicitly
-enforce a PDE residual, Rankine--Hugoniot jump, or global conservation law.
+The method is physics-guided through representation, localized weighting, and
+shock-envelope features. It does **not** thereby become a PDE-constrained
+model: the reported formulation does not explicitly enforce a PDE residual,
+Rankine--Hugoniot jump, or global conservation law.
 
 ### Required submission
 

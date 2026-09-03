@@ -15,7 +15,7 @@
   },
   "claim_boundary": {
     "micro_nozzle_data": "The compact archive is a deterministic centerline derivative of all 15 public DSMC snapshots at the pinned source commit.",
-    "micro_nozzle_teaching_model": "The notebook's compact centerline POD/branch model is not the paper's trained full two-dimensional six-output Fusion-DeepONet checkpoint.",
+    "micro_nozzle_teaching_model": "The notebook's compact centerline POD/branch model is not the paper's trained full two-dimensional six-output shock-aligned surrogate.",
     "microstep_retained_evidence": "Reported article metrics are transcribed as immutable evidence and are never presented as notebook-generated results.",
     "microstep_teaching_demo": "The generated backward-facing-step fields are manufactured teaching fields, not the article's DSMC snapshots or a reproduction of its checkpoint."
   },
@@ -26,6 +26,7 @@
   "paper_sources": {
     "micro_nozzle_arxiv": "https://arxiv.org/abs/2605.12723",
     "micro_nozzle_data": "https://github.com/Ehsan-Roohi/roohi-nozzle-pod-reproducibility",
+    "micro_nozzle_doi": "https://doi.org/10.1063/5.0343101",
     "microstep_arxiv": "https://arxiv.org/abs/2509.17254",
     "microstep_doi": "https://doi.org/10.1007/s10404-026-02899-8"
   },
