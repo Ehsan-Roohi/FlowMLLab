@@ -344,6 +344,33 @@ and
   </a>
 </p>
 
+### Experimental SDF/SIREN Geom-DeepONet
+
+[`flowmllab/step_geom_deeponet.py`](flowmllab/step_geom_deeponet.py) implements
+a two-dimensional adaptation of He et al.'s Geom-DeepONet for this same step
+dataset. Its branch receives only `h/H`; its point trunk receives normalized
+`(x,y)` and an analytic signed distance to the step boundary. Initial
+branch/trunk features are fused, pooled, passed through a SIREN trunk, and
+contracted to predict `(U,V)`. The input builder has no flow-field argument, and
+tests prove that changing target `U,V` cannot change sampled locations or model
+inputs.
+
+Run the complete 5/2/2 development protocol after installing the optional ML
+dependencies:
+
+```bash
+python -m pip install -e ".[ml]"
+python qa/run_step_geom_deeponet.py --root . --epochs 500
+```
+
+The runner selects the zonal-loss weight using H33/H58, refits on all seven
+learning cases, and opens the separate H44/H67 archive only afterward. It is a
+development benchmark until multi-seed accuracy and physics gates are retained;
+it does not replace the checked-in coordinate-MLP evidence. This implementation
+supports variable point counts, but the available data vary only `h/H` at fixed
+`Kn=0.01`, so they do not establish arbitrary-shape or joint `(Kn,h/H)`
+generalization.
+
 [Lab 2](https://colab.research.google.com/github/Ehsan-Roohi/FlowMLLab/blob/main/notebooks/week09/W9_Lab2_Shock_Aligned_Nozzle_DeepONet_Student.ipynb)
 uses a compact, checksummed derivative of all 15 public micro-nozzle DSMC
 snapshots. It directly reproduces the density-POD compression from 8 physical

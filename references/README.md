@@ -43,6 +43,7 @@ spatial nodes or shifted physical regimes.
 - **Raissi, Perdikaris & Karniadakis (2019), PINNs.** Foundational formulation for incorporating PDE residuals into neural training. [DOI](https://doi.org/10.1016/j.jcp.2018.10.045)
 - **Karniadakis et al. (2021), Physics-informed machine learning.** Review of data–physics integration, uncertainty, and hybrid modeling. [DOI](https://doi.org/10.1038/s42254-021-00314-5)
 - **Lu et al. (2021), DeepONet.** Branch/trunk operator-learning formulation used in Week 4. [DOI](https://doi.org/10.1038/s42256-021-00302-5)
+- **He et al. (2024), Geom-DeepONet.** Parameterized-geometry branch, coordinate/SDF trunk, SIREN encoding, and intermediate fusion adapted by the experimental Week-9 micro-step implementation. [DOI](https://doi.org/10.1016/j.cma.2024.117130) · [Code](https://github.com/ncsa/GeomDeepONet)
 - **Li et al. (2021), Fourier Neural Operator.** Spectral operator-learning alternative and useful comparison with coordinate networks. [Paper](https://openreview.net/forum?id=c8P9NQVtmnO)
 - **Cai et al. (2021), PINNs for fluid mechanics.** Fluid-specific review and examples. [DOI](https://doi.org/10.1007/s10409-021-01148-1)
 

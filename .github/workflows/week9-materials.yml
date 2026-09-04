@@ -6,14 +6,17 @@ on:
     paths:
       - ".github/workflows/week9-materials.yml"
       - "flowmllab/mahdavi_deeponet.py"
+      - "flowmllab/step_geom_deeponet.py"
       - "notebooks/week09/make_week9_notebooks.py"
       - "qa/build_step_height_archive.py"
       - "qa/build_step_article_contours.py"
       - "qa/build_step_leakage_free_contours.py"
       - "qa/run_step_height_teaching_validation.py"
+      - "qa/run_step_geom_deeponet.py"
       - "qa/build_week9_mahdavi_deeponet_data.py"
       - "results/mahdavi_deeponet/**"
       - "tests/test_mahdavi_deeponet.py"
+      - "tests/test_step_geom_deeponet.py"
 
 permissions:
   contents: write
