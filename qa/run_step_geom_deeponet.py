@@ -79,6 +79,11 @@ def main() -> None:
     if any(not 0.0 < alpha < 1.0 for alpha in args.alphas):
         raise ValueError("every --alphas value must lie strictly between zero and one")
 
+    output: Path | None = None
+    if args.output_dir is not None:
+        output = args.output_dir.expanduser().resolve()
+        output.mkdir(parents=True, exist_ok=True)
+
     import tensorflow as tf
 
     def clear_finished_model() -> None:
@@ -87,6 +92,54 @@ def main() -> None:
 
     root = args.root.resolve()
     start = time.perf_counter()
+    selection_rule = (
+        "Minimize mean validation vortex relative L2 among candidates whose "
+        f"mean validation global relative L2 is at most {args.global_guard_percent:g} "
+        "percentage points above the unweighted baseline."
+    )
+
+    def persist_selection_checkpoint(
+        status: str,
+        rows: list[dict[str, Any]],
+    ) -> None:
+        checkpoint = {
+            "status": status,
+            "source_commit": STEP_SOURCE_COMMIT,
+            "reference_doi": GEOM_DEEPONET_DOI,
+            "split": {
+                "development_percent": STEP_HEIGHT_DEVELOPMENT_PERCENT.tolist(),
+                "validation_percent": STEP_HEIGHT_VALIDATION_PERCENT.tolist(),
+                "held_out_test_percent": STEP_HEIGHT_HELD_OUT_PERCENT.tolist(),
+            },
+            "file_level_test_isolation": True,
+            "test_archive_opened": False,
+            "test_used_for_selection": False,
+            "configuration": {
+                "epochs": args.epochs,
+                "points_per_case": args.points_per_case,
+                "width": args.width,
+                "omega_0": args.omega_0,
+                "learning_rate": args.learning_rate,
+                "batch_size": args.batch_size,
+                "seed": args.seed,
+                "alphas": [float(alpha) for alpha in args.alphas],
+                "global_guard_percent": args.global_guard_percent,
+            },
+            "selection_rule": selection_rule,
+            "selection": rows,
+            "software": {"numpy": np.__version__, "tensorflow": tf.__version__},
+            "elapsed_seconds": time.perf_counter() - start,
+        }
+        print(f"SELECTION_STATUS={status}", flush=True)
+        if output is not None:
+            selection_path = output / "step_geom_deeponet_selection.json"
+            temporary_path = selection_path.with_suffix(".json.tmp")
+            temporary_path.write_text(
+                json.dumps(checkpoint, indent=2, sort_keys=True) + "\n",
+                encoding="utf-8",
+            )
+            temporary_path.replace(selection_path)
+            print(f"selection: {selection_path}", flush=True)
 
     # Selection phase: the separate H44/H67 archive is not touched here.
     learning_cases = load_step_height_archive(root, split="learning")
@@ -126,8 +179,16 @@ def main() -> None:
             ),
             "eligible_global_guard": True,
             "selected": False,
+            "final_training_loss": float(baseline.history["loss"][-1]),
+            "minimum_training_loss": float(min(baseline.history["loss"])),
+            "validation_by_geometry": serializable_rows(baseline_validation),
         }
     ]
+    print(
+        "VALIDATION_SELECTION=" + json.dumps(selection[-1], sort_keys=True),
+        flush=True,
+    )
+    persist_selection_checkpoint("selection_in_progress", selection)
     del baseline
     clear_finished_model()
 
@@ -155,8 +216,16 @@ def main() -> None:
                 "eligible_global_guard": global_error
                 <= baseline_global + args.global_guard_percent,
                 "selected": False,
+                "final_training_loss": float(fitted.history["loss"][-1]),
+                "minimum_training_loss": float(min(fitted.history["loss"])),
+                "validation_by_geometry": serializable_rows(rows),
             }
         )
+        print(
+            "VALIDATION_SELECTION=" + json.dumps(selection[-1], sort_keys=True),
+            flush=True,
+        )
+        persist_selection_checkpoint("selection_in_progress", selection)
         del fitted
         clear_finished_model()
 
@@ -164,6 +233,8 @@ def main() -> None:
         row for row in selection[1:] if bool(row["eligible_global_guard"])
     ]
     if not eligible:
+        persist_selection_checkpoint("no_eligible_zonal_candidate", selection)
+        print("NO_ELIGIBLE_ZONAL_CANDIDATE", flush=True)
         raise RuntimeError("no zonal model satisfies the predeclared global-error guard")
     winner = min(
         eligible,
@@ -171,6 +242,7 @@ def main() -> None:
     )
     selected_alpha = float(winner["alpha"])
     winner["selected"] = True
+    persist_selection_checkpoint("selection_complete", selection)
 
     # Freeze architecture, optimization budget, and alpha; refit on all seven cases.
     final_heights = np.concatenate(
@@ -239,11 +311,7 @@ def main() -> None:
             "output_fields": ["U", "V"],
             **final_zonal.configuration,
         },
-        "selection_rule": (
-            "Minimize mean validation vortex relative L2 among candidates whose "
-            f"mean validation global relative L2 is at most {args.global_guard_percent:g} "
-            "percentage points above the unweighted baseline."
-        ),
+        "selection_rule": selection_rule,
         "selection": selection,
         "selected_alpha": selected_alpha,
         "test_metrics": test_metrics,
@@ -251,9 +319,7 @@ def main() -> None:
         "elapsed_seconds": time.perf_counter() - start,
     }
     rendered = json.dumps(report, indent=2, sort_keys=True) + "\n"
-    if args.output_dir is not None:
-        output = args.output_dir.expanduser().resolve()
-        output.mkdir(parents=True, exist_ok=True)
+    if output is not None:
         report_path = output / "step_geom_deeponet_report.json"
         weights_path = output / "step_geom_deeponet_zonal.weights.h5"
         report_path.write_text(rendered, encoding="utf-8")
