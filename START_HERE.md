@@ -77,7 +77,7 @@ Typical student runtimes are approximate:
 | Project Track 6 | CUDA GPU | smoke test first; final study is substantially longer |
 | Week 7 cylinder LBM | CPU | <2 min with retained evidence; the complete three-grid regeneration is intentionally an instructor/assignment run |
 | Week 8 exact gas dynamics and SciML evidence | CPU | <7 min for both labs; full five-problem model regeneration remains optional |
-| Week 9 micro-step and micro-nozzle DeepONet cases | CPU | <6 min for both labs; full 2-D research-model retraining is not included |
+| Week 9 micro-step and micro-nozzle DeepONet cases | CPU | about 6–8 min for both labs, including the compact 2-D FlowMLLab nozzle run |
 | Week 2.1 probabilistic UQ | CPU | <1 min with retained evidence; no TensorFlow required |
 
 ## 5. Keep blind cases blind

@@ -746,6 +746,148 @@ def load_nozzle_centerlines(root: str | Path) -> dict[str, np.ndarray]:
         return {name: np.asarray(archive[name]) for name in archive.files}
 
 
+def load_nozzle_fields(root: str | Path) -> dict[str, np.ndarray]:
+    """Load the attributed 15-case, 101 by 31 DSMC nozzle-field archive."""
+    root_path = Path(root).resolve()
+    path = root_path / "results" / "mahdavi_deeponet" / "nozzle_fields_15cases.npz"
+    with np.load(path, allow_pickle=False) as archive:
+        data = {name: np.asarray(archive[name]) for name in archive.files}
+    required = {
+        "pressure_kpa", "x_m", "y_m", "centerline_index", "density",
+        "temperature_k", "u_ms", "v_ms", "mach", "pressure_tecplot", "knudsen",
+    }
+    if not required.issubset(data):
+        raise ValueError("compact nozzle-field archive schema is incomplete")
+    if data["x_m"].shape != (31, 101) or data["y_m"].shape != (31, 101):
+        raise ValueError("unexpected nozzle coordinate-grid shape")
+    for name in required - {"pressure_kpa", "x_m", "y_m", "centerline_index"}:
+        if data[name].shape != (15, 31, 101) or not np.isfinite(data[name]).all():
+            raise ValueError(f"unexpected or invalid nozzle field: {name}")
+    if not np.array_equal(data["pressure_kpa"], NOZZLE_PRESSURES_KPA):
+        raise ValueError("unexpected nozzle pressures in full-field archive")
+    centerline_index = int(data["centerline_index"])
+    if not 0 <= centerline_index < 31:
+        raise ValueError("invalid nozzle centerline index")
+    return data
+
+
+def fit_nozzle_pod_neural_operator(
+    pressure_kpa: np.ndarray,
+    snapshots: np.ndarray,
+    train_indices: np.ndarray,
+    *,
+    rank: int,
+    hidden_layer_sizes: tuple[int, ...] = (8,),
+    seed: int = 690,
+) -> dict[str, Any]:
+    """Fit a deterministic POD-trunk/neural-branch operator on selected cases.
+
+    Each snapshot may be one- or multi-dimensional; its spatial axes are
+    flattened only for the POD calculation and restored by the predictor.
+    The branch receives back pressure alone and maps it to POD coefficients.
+    """
+    from sklearn.exceptions import ConvergenceWarning, DataConversionWarning
+    from sklearn.neural_network import MLPRegressor
+    from sklearn.pipeline import make_pipeline
+    from sklearn.preprocessing import StandardScaler
+
+    parameter = np.asarray(pressure_kpa, dtype=float)
+    fields = np.asarray(snapshots, dtype=float)
+    indices = np.asarray(train_indices, dtype=int)
+    if fields.shape[0] != len(parameter) or fields.ndim < 2:
+        raise ValueError("snapshots must contain one field per pressure")
+    if len(indices) < 3 or len(np.unique(indices)) != len(indices):
+        raise ValueError("at least three unique training cases are required")
+    if np.any(indices < 0) or np.any(indices >= len(parameter)):
+        raise ValueError("training indices are outside the pressure array")
+    if rank < 1 or rank >= len(indices):
+        raise ValueError("rank must lie between 1 and number of training cases minus 1")
+    if not np.isfinite(fields[indices]).all():
+        raise ValueError("training snapshots contain NaN or infinity")
+
+    flat = fields[indices].reshape(len(indices), -1)
+    mean = flat.mean(axis=0)
+    _, _, modes = np.linalg.svd(flat - mean, full_matrices=False)
+    coefficients = (flat - mean) @ modes[:rank].T
+    branch = make_pipeline(
+        StandardScaler(),
+        MLPRegressor(
+            hidden_layer_sizes=hidden_layer_sizes,
+            activation="tanh",
+            solver="lbfgs",
+            alpha=0.01,
+            max_iter=1500,
+            random_state=int(seed),
+        ),
+    )
+    target = coefficients.ravel() if rank == 1 else coefficients
+    with warnings.catch_warnings():
+        warnings.simplefilter("ignore", ConvergenceWarning)
+        warnings.simplefilter("ignore", DataConversionWarning)
+        warnings.simplefilter("ignore", DeprecationWarning)
+        branch.fit(parameter[indices, None], target)
+    return {
+        "branch": branch,
+        "mean": mean,
+        "modes": modes[:rank],
+        "rank": int(rank),
+        "field_shape": fields.shape[1:],
+        "train_indices": indices.copy(),
+        "train_pressures_kpa": parameter[indices].copy(),
+        "seed": int(seed),
+    }
+
+
+def predict_nozzle_pod_neural_operator(
+    fitted: dict[str, Any], query_pressure_kpa: np.ndarray
+) -> np.ndarray:
+    """Predict full fields from pressure using a frozen POD-neural operator."""
+    query = np.asarray(query_pressure_kpa, dtype=float).reshape(-1)
+    coefficients = np.asarray(fitted["branch"].predict(query[:, None]), dtype=float)
+    coefficients = coefficients.reshape(len(query), int(fitted["rank"]))
+    flat = fitted["mean"] + coefficients @ fitted["modes"]
+    return flat.reshape((len(query), *tuple(fitted["field_shape"])))
+
+
+def select_nozzle_pod_rank(
+    pressure_kpa: np.ndarray,
+    snapshots: np.ndarray,
+    development_indices: np.ndarray,
+    *,
+    candidate_ranks: tuple[int, ...] = (1, 2, 3, 4),
+    hidden_layer_sizes: tuple[int, ...] = (8,),
+    seed: int = 690,
+) -> tuple[int, list[dict[str, float | int]]]:
+    """Select POD rank by leave-one-case-out development error."""
+    parameter = np.asarray(pressure_kpa, dtype=float)
+    fields = np.asarray(snapshots, dtype=float)
+    development = np.asarray(development_indices, dtype=int)
+    rows: list[dict[str, float | int]] = []
+    for rank in candidate_ranks:
+        fold_errors = []
+        for validation_index in development:
+            fold_train = development[development != validation_index]
+            fitted = fit_nozzle_pod_neural_operator(
+                parameter,
+                fields,
+                fold_train,
+                rank=int(rank),
+                hidden_layer_sizes=hidden_layer_sizes,
+                seed=seed,
+            )
+            prediction = predict_nozzle_pod_neural_operator(
+                fitted, np.asarray([parameter[validation_index]])
+            )[0]
+            fold_errors.append(100.0 * relative_l2(fields[validation_index], prediction))
+        rows.append({
+            "rank": int(rank),
+            "loo_mean_relative_l2_percent": float(np.mean(fold_errors)),
+            "loo_max_relative_l2_percent": float(np.max(fold_errors)),
+        })
+    selected = min(rows, key=lambda row: float(row["loo_mean_relative_l2_percent"]))
+    return int(selected["rank"]), rows
+
+
 def validate_step_teaching_results(root: str | Path) -> dict[str, Any]:
     """Validate the split, selection rule, and recorded leakage-free test evidence."""
     result_dir = Path(root).resolve() / "results" / "mahdavi_deeponet"
@@ -834,8 +976,8 @@ def validate_step_contour_evidence(root: str | Path) -> dict[str, Any]:
     article_manifest = json.loads(
         (result_dir / "step_article_contour_manifest.json").read_text(encoding="utf-8")
     )
-    no_leak_manifest = json.loads(
-        (result_dir / "step_leakage_free_contour_manifest.json").read_text(encoding="utf-8")
+    independent_manifest = json.loads(
+        (result_dir / "step_independent_contour_manifest.json").read_text(encoding="utf-8")
     )
     if article_manifest["source_commit"] != STEP_SOURCE_COMMIT:
         raise ValueError("step contour source commit mismatch")
@@ -894,37 +1036,37 @@ def validate_step_contour_evidence(root: str | Path) -> dict[str, Any]:
     if abs(float(kn1_metadata["L_over_H_from_grid"]) - 5.0) > 2.0e-4:
         raise ValueError("Kn=1 DSMC-only contour aspect-ratio contract failed")
 
-    if no_leak_manifest["selected_alpha"] != 0.6:
-        raise ValueError("no-leak contour manifest has unexpected selected alpha")
-    if no_leak_manifest["test_used_for_selection"]:
-        raise ValueError("no-leak contours used the test cases for selection")
-    if not no_leak_manifest["test_archive_opened_after_final_fit"]:
-        raise ValueError("no-leak contour test-open gate is missing")
-    if "target-field patch" not in no_leak_manifest["forbidden_inputs"]:
-        raise ValueError("no-leak contour forbidden-input contract is incomplete")
-    no_leak_metrics_path = result_dir / "step_leakage_free_contour_metrics.csv"
-    if _sha256(no_leak_metrics_path) != no_leak_manifest["metrics_sha256"]:
-        raise ValueError("no-leak contour metrics hash mismatch")
-    with no_leak_metrics_path.open(encoding="utf-8") as stream:
-        no_leak_rows = list(csv.DictReader(stream))
-    if {int(row["height_percent"]) for row in no_leak_rows} != {44, 67}:
-        raise ValueError("unexpected no-leak contour test cases")
+    if independent_manifest["selected_alpha"] != 0.6:
+        raise ValueError("independent contour manifest has unexpected selected alpha")
+    if independent_manifest["test_used_for_selection"]:
+        raise ValueError("independent contours used the test cases for selection")
+    if not independent_manifest["test_archive_opened_after_final_fit"]:
+        raise ValueError("independent contour test-open gate is missing")
+    if "target-field patch" not in independent_manifest["forbidden_inputs"]:
+        raise ValueError("independent contour input contract is incomplete")
+    independent_metrics_path = result_dir / "step_independent_contour_metrics.csv"
+    if _sha256(independent_metrics_path) != independent_manifest["metrics_sha256"]:
+        raise ValueError("independent contour metrics hash mismatch")
+    with independent_metrics_path.open(encoding="utf-8") as stream:
+        independent_rows = list(csv.DictReader(stream))
+    if {int(row["height_percent"]) for row in independent_rows} != {44, 67}:
+        raise ValueError("unexpected independent contour test cases")
     teaching = validate_step_teaching_results(root_path)
     recorded = {
         int(row["height_percent"]): row
         for row in teaching["test_metrics"]
         if row["model"] == "zonal_alpha_0.6"
     }
-    for row in no_leak_rows:
+    for row in independent_rows:
         height = int(row["height_percent"])
         for current, retained in (
             ("combined_relative_l2_percent", "global_relative_l2_percent"),
             ("vortex_relative_l2_percent", "vortex_relative_l2_percent"),
         ):
             if abs(float(row[current]) - float(recorded[height][retained])) > 5.0e-7:
-                raise ValueError(f"H{height}: no-leak contour metrics differ from frozen test")
+                raise ValueError(f"H{height}: independent contour metrics differ from frozen test")
 
-    for manifest in (article_manifest, no_leak_manifest):
+    for manifest in (article_manifest, independent_manifest):
         for relative, expected_hash in manifest["figure_sha256"].items():
             figure = (root_path / relative).resolve()
             if not figure.is_relative_to(root_path) or _sha256(figure) != expected_hash:
@@ -933,9 +1075,62 @@ def validate_step_contour_evidence(root: str | Path) -> dict[str, Any]:
         "status": "pass",
         "article_cases": [row["case_id"] for row in article_rows],
         "final_paper_case_coverage": [row["case_id"] for row in coverage_rows],
-        "no_leak_test_cases": [int(row["height_percent"]) for row in no_leak_rows],
+        "independent_test_cases": [int(row["height_percent"]) for row in independent_rows],
         "article_results_are_privileged_input": True,
-        "no_leak_test_used_for_selection": False,
+        "independent_test_used_for_selection": False,
+    }
+
+
+def validate_nozzle_flowmllab_results(root: str | Path) -> dict[str, Any]:
+    """Validate code-generated full-field nozzle figures and held-out metrics."""
+    root_path = Path(root).resolve()
+    result_dir = root_path / "results" / "mahdavi_deeponet"
+    manifest = json.loads(
+        (result_dir / "nozzle_flowmllab_manifest.json").read_text(encoding="utf-8")
+    )
+    archive_path = root_path / manifest["source_archive"]
+    if _sha256(archive_path) != manifest["source_archive_sha256"]:
+        raise ValueError("nozzle full-field source archive hash mismatch")
+    if manifest["development_pressures_kpa"] != [15, 18, 19, 20, 22, 23, 24, 26, 27, 28, 29, 33]:
+        raise ValueError("unexpected nozzle development cases")
+    if manifest["held_out_pressures_kpa"] != [16, 25, 30]:
+        raise ValueError("unexpected nozzle held-out cases")
+    if not manifest["held_out_cases_opened_after_selection"]:
+        raise ValueError("nozzle held-out gate is not recorded")
+    if set(manifest["selected_rank_by_field"]) != {
+        "density", "u_ms", "mach", "pressure_tecplot"
+    }:
+        raise ValueError("nozzle selected-rank field set is incomplete")
+    selection_path = result_dir / "nozzle_flowmllab_selection.csv"
+    metrics_path = result_dir / "nozzle_flowmllab_heldout_metrics.csv"
+    if _sha256(selection_path) != manifest["selection_csv_sha256"]:
+        raise ValueError("nozzle selection table hash mismatch")
+    if _sha256(metrics_path) != manifest["metrics_csv_sha256"]:
+        raise ValueError("nozzle held-out table hash mismatch")
+    with metrics_path.open(encoding="utf-8") as stream:
+        rows = list(csv.DictReader(stream))
+    expected_pairs = {
+        (field, pressure)
+        for field in ("density", "u_ms", "mach", "pressure_tecplot")
+        for pressure in (16, 25, 30)
+    }
+    if {(row["field"], int(row["held_out_pressure_kpa"])) for row in rows} != expected_pairs:
+        raise ValueError("nozzle held-out metric coverage is incomplete")
+    for row in rows:
+        for key in ("full_field_relative_l2_percent", "centerline_relative_l2_percent"):
+            value = float(row[key])
+            if not np.isfinite(value) or not 0.0 <= value < 50.0:
+                raise ValueError(f"invalid nozzle held-out error: {row['field']} {key}")
+    for relative, expected_hash in manifest["figure_sha256"].items():
+        figure = (root_path / relative).resolve()
+        if not figure.is_relative_to(root_path) or _sha256(figure) != expected_hash:
+            raise ValueError(f"nozzle FlowMLLab figure hash mismatch: {relative}")
+    return {
+        "status": "pass",
+        "development_pressures_kpa": manifest["development_pressures_kpa"],
+        "held_out_pressures_kpa": manifest["held_out_pressures_kpa"],
+        "selected_rank_by_field": manifest["selected_rank_by_field"],
+        "held_out_metrics": rows,
     }
 
 
@@ -964,6 +1159,13 @@ def validate_week9_evidence(
             raise ValueError(f"invalid compact nozzle field: {name}")
     if data["density"].shape != (15, 101) or data["x_m"].shape != (101,):
         raise ValueError("unexpected compact nozzle data shape")
+    field_archive_path = result_dir / "nozzle_fields_15cases.npz"
+    if _sha256(field_archive_path) != provenance["derived_files"][field_archive_path.name]:
+        raise ValueError("compact nozzle full-field archive SHA-256 mismatch")
+    field_data = load_nozzle_fields(root_path)
+    if field_data["density"].shape != (15, 31, 101):
+        raise ValueError("unexpected compact nozzle full-field data shape")
+    nozzle_flowmllab = validate_nozzle_flowmllab_results(root_path)
 
     pod_rows: dict[str, dict[str, float | int]] = {}
     for coordinate in ("physical", "shock_centered"):
@@ -1072,6 +1274,7 @@ def validate_week9_evidence(
         "step_privileged_input_audit": patch_audit,
         "nozzle_cases": int(len(data["pressure_kpa"])),
         "held_out_pressures_kpa": NOZZLE_HELD_OUT_KPA.astype(int).tolist(),
+        "nozzle_flowmllab_validation": nozzle_flowmllab,
         "physical_density_pod": pod_rows["physical"],
         "shock_centered_density_pod": pod_rows["shock_centered"],
         "archive_sha256": provenance["derived_files"][archive_path.name],

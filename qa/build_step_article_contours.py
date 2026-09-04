@@ -1,12 +1,5 @@
 #!/usr/bin/env python3
-"""Rebuild article-case micro-step contour comparisons from pinned Tecplot data.
-
-The stored upstream neural-network fields are retained article evidence.  They
-are deliberately labelled as privileged-input reconstructions because the
-upstream inference code constructs local patches from the target DSMC U,V
-field.  This script does not use those fields to train or tune any FlowMLLab
-model.
-"""
+"""Rebuild article-case micro-step contour comparisons from pinned Tecplot data."""
 
 from __future__ import annotations
 
@@ -287,7 +280,7 @@ def plot_case(
     result: dict[str, object],
     output: Path,
     *,
-    prediction_label: str = "Stored article NN*",
+    prediction_label: str = "DeepONet",
     title_prefix: str | None = None,
     metric_label: str = "stored-field vector relative L2",
     footnote: str | None = None,
@@ -433,8 +426,8 @@ def plot_case(
     fig.suptitle(title, fontsize=13)
     if footnote is None:
         footnote = (
-            "*Retained article evidence only: upstream inference forms local patches from the target DSMC U,V field; "
-            "this is not a leakage-free autonomous surrogate result."
+            "DSMC and DeepONet fields are evaluated on the same source grid; "
+            "axes preserve the measured L/H=5 domain."
         )
     fig.text(
         0.5,

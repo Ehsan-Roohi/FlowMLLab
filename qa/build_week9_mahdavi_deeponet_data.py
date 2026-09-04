@@ -41,8 +41,8 @@ def digest(path: Path) -> str:
     return value.hexdigest()
 
 
-def parse_main_zone(path: Path) -> dict[str, np.ndarray]:
-    """Read the first POINT-packed Tecplot zone and return its max-y centerline."""
+def parse_main_zone_grid(path: Path) -> dict[str, np.ndarray]:
+    """Read the first 101 by 31 POINT-packed Tecplot zone as 2-D arrays."""
     lines = path.read_text(encoding="utf-8", errors="ignore").splitlines()
     zone_start = next(i for i, line in enumerate(lines) if line.strip().upper().startswith("ZONE"))
     header = " ".join(lines[zone_start:zone_start + 5])
@@ -69,10 +69,18 @@ def parse_main_zone(path: Path) -> dict[str, np.ndarray]:
     if len(values) < expected:
         raise ValueError(f"{path.name}: expected {expected} values, found {len(values)}")
     block = np.asarray(values[:expected], dtype=float).reshape(nj, ni, len(VARIABLES))
-    centerline_index = int(np.argmax(np.median(block[:, :, 1], axis=1)))
-    centerline = block[centerline_index]
-    order = np.argsort(centerline[:, 0])
-    return {name: centerline[order, index] for index, name in enumerate(VARIABLES)}
+    return {name: block[:, :, index] for index, name in enumerate(VARIABLES)}
+
+
+def parse_main_zone(path: Path) -> dict[str, np.ndarray]:
+    """Read the first Tecplot zone and return its max-y symmetry centerline."""
+    grid = parse_main_zone_grid(path)
+    centerline_index = int(np.argmax(np.median(grid["y_m"], axis=1)))
+    order = np.argsort(grid["x_m"][centerline_index])
+    return {
+        name: values[centerline_index, order]
+        for name, values in grid.items()
+    }
 
 
 def main() -> None:
@@ -90,12 +98,20 @@ def main() -> None:
     output_dir.mkdir(parents=True, exist_ok=True)
 
     rows = []
+    grid_rows = []
     source_hashes: dict[str, str] = {}
     for pressure in NOZZLE_PRESSURES_KPA.astype(int):
         path = source / "data" / f"P={pressure}.dat"
         if not path.is_file():
             raise FileNotFoundError(path)
-        rows.append(parse_main_zone(path))
+        grid = parse_main_zone_grid(path)
+        grid_rows.append(grid)
+        centerline_index = int(np.argmax(np.median(grid["y_m"], axis=1)))
+        order = np.argsort(grid["x_m"][centerline_index])
+        rows.append({
+            name: values[centerline_index, order]
+            for name, values in grid.items()
+        })
         source_hashes[path.name] = digest(path)
     x_m = rows[0]["x_m"]
     if not all(np.allclose(row["x_m"], x_m, rtol=0.0, atol=1.0e-12) for row in rows):
@@ -115,6 +131,29 @@ def main() -> None:
     archive_path = output_dir / "nozzle_centerline_15cases.npz"
     np.savez_compressed(archive_path, **archive)
 
+    x_grid = grid_rows[0]["x_m"]
+    y_grid = grid_rows[0]["y_m"]
+    for case in grid_rows[1:]:
+        if not np.allclose(case["x_m"], x_grid, rtol=0.0, atol=1.0e-12):
+            raise ValueError("the 15 full-field x grids are not identical")
+        if not np.allclose(case["y_m"], y_grid, rtol=0.0, atol=1.0e-12):
+            raise ValueError("the 15 full-field y grids are not identical")
+    field_archive: dict[str, np.ndarray] = {
+        "pressure_kpa": NOZZLE_PRESSURES_KPA,
+        "x_m": x_grid,
+        "y_m": y_grid,
+        "centerline_index": np.asarray(
+            int(np.argmax(np.median(y_grid, axis=1))), dtype=int
+        ),
+    }
+    for name in (
+        "density", "temperature_k", "u_ms", "v_ms", "mach",
+        "pressure_tecplot", "knudsen",
+    ):
+        field_archive[name] = np.stack([case[name] for case in grid_rows])
+    field_archive_path = output_dir / "nozzle_fields_15cases.npz"
+    np.savez_compressed(field_archive_path, **field_archive)
+
     pod_reference = {}
     for coordinate in ("physical", "shock_centered"):
         _, matrix = density_snapshot_matrix(
@@ -130,18 +169,20 @@ def main() -> None:
         }
 
     provenance = {
-        "schema_version": 2,
+        "schema_version": 3,
         "source_repository": SOURCE_URL,
         "source_commit": SOURCE_COMMIT,
         "source_license": "CC BY 4.0 for DSMC data and reference outputs",
         "source_files_sha256": source_hashes,
         "derivation": (
-            "First Tecplot POINT zone (101x31); max-y half-domain symmetry "
-            "centerline; seven physical fields retained; density-shock diagnostics "
-            "recomputed with FlowMLLab's documented detector."
+            "First Tecplot POINT zone (101x31); seven full physical fields retained "
+            "on the original common grid; max-y half-domain symmetry centerline "
+            "extracted separately; density-shock diagnostics recomputed with "
+            "FlowMLLab's documented detector."
         ),
         "derived_files": {
             archive_path.name: digest(archive_path),
+            field_archive_path.name: digest(field_archive_path),
             **STEP_HEIGHT_ARCHIVE_SHA256,
             **STEP_TEACHING_RESULT_SHA256,
         },
@@ -177,8 +218,8 @@ def main() -> None:
                 "sampling/replicate uncertainty, or wall accommodation metadata."
             ),
             "micro_nozzle_data": (
-                "The compact archive is a deterministic centerline derivative of all 15 "
-                "public DSMC snapshots at the pinned source commit."
+                "The compact archives are deterministic full-field and centerline "
+                "derivatives of all 15 public DSMC snapshots at the pinned source commit."
             ),
             "micro_nozzle_teaching_model": (
                 "The notebook's compact centerline POD/branch model is not the paper's "
@@ -190,7 +231,13 @@ def main() -> None:
     (output_dir / "provenance.json").write_text(
         json.dumps(provenance, indent=2, sort_keys=True) + "\n", encoding="utf-8"
     )
-    print(json.dumps({"archive": str(archive_path), "sha256": digest(archive_path), "pod": pod_reference}, indent=2))
+    print(json.dumps({
+        "centerline_archive": str(archive_path),
+        "centerline_sha256": digest(archive_path),
+        "field_archive": str(field_archive_path),
+        "field_sha256": digest(field_archive_path),
+        "pod": pod_reference,
+    }, indent=2))
 
 
 if __name__ == "__main__":

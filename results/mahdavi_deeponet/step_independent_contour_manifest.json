@@ -44,11 +44,11 @@
     "target-field patch"
   ],
   "protocol_sha256": "f7e933aa86373662d7ce27baf93a0e73f55b52b277bf5b3f8e0d993c5ef8b833",
-  "metrics_file": "results/mahdavi_deeponet/step_leakage_free_contour_metrics.csv",
-  "metrics_sha256": "54a02d8d0bd3f67ceca8b5410ac2f68dad042d0d22f44e9f3fd8fbcfd8d71873",
+  "metrics_file": "results/mahdavi_deeponet/step_independent_contour_metrics.csv",
+  "metrics_sha256": "9147b8413aa3c58b3693ec23462de20e33845469bb1c72dbe33d2a9d4825a246",
   "figure_sha256": {
-    "results/mahdavi_deeponet/step_leakage_free_contours/held_out_H44_no_leak.png": "fcc7369ca1fdf3b161523dc597d894f02fd27b41e37ea19bdaea83be47ef7a92",
-    "results/mahdavi_deeponet/step_leakage_free_contours/held_out_H67_no_leak.png": "fccc6a9d92e9b324f447e7bdc1430c9852cb87c120d4c01cf49d79fecf2c0060"
+    "results/mahdavi_deeponet/step_independent_contours/held_out_H44_independent.png": "7b02bbe0176aa489301c4a1eb8bba08659901f60837d1bb849027c015eb92d64",
+    "results/mahdavi_deeponet/step_independent_contours/held_out_H67_independent.png": "830bd6ded0e10812127543d3446b3c751fbdb8bd17357eff7e6943d60780a256"
   },
   "cases": [
     {
@@ -62,7 +62,7 @@
       "vortex_relative_l2_percent": 19.863441859124997,
       "negative_u_iou_percent": 93.27217125382263,
       "dsmc_reattachment_length_over_L": 0.11988325169765199,
-      "no_leak_reattachment_length_over_L": 0.11377133385603891,
+      "independent_reattachment_length_over_L": 0.11377133385603891,
       "abs_u_error_p99": 30.925334153402627,
       "abs_u_error_max": 83.35388058702476,
       "abs_v_error_p99": 7.28059436292515,
@@ -82,7 +82,7 @@
       "vortex_relative_l2_percent": 33.25675150183457,
       "negative_u_iou_percent": 80.48780487804879,
       "dsmc_reattachment_length_over_L": 0.1042081853511247,
-      "no_leak_reattachment_length_over_L": 0.11486195510243204,
+      "independent_reattachment_length_over_L": 0.11486195510243204,
       "abs_u_error_p99": 19.360464784036527,
       "abs_u_error_max": 53.29335394344639,
       "abs_v_error_p99": 5.741074916053956,

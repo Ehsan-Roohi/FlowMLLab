@@ -36,10 +36,10 @@
     "step_y_over_H_from_grid": 0.491661782180245
   },
   "figure_sha256": {
-    "results/mahdavi_deeponet/step_article_contours/article_figure_06_Kn0p004.png": "20b379bd709e21b91290151ecfad80f95aa758d9f52f21de5cf283f00398529a",
-    "results/mahdavi_deeponet/step_article_contours/article_figure_06_Kn0p02.png": "2cc592813c63e437c15d8fd870f3d86e8f7f8316fc8519b40cdba58880869d36",
-    "results/mahdavi_deeponet/step_article_contours/article_figure_15_H44.png": "adcd3d46f0e2493ab5e365b23f44195eefda826233732e164dc4f5939d96df58",
-    "results/mahdavi_deeponet/step_article_contours/article_figure_15_H67.png": "0212c1ed74886a148ee4a8de57cf1f72f665ad6ab289a115019129135240de3f",
+    "results/mahdavi_deeponet/step_article_contours/article_figure_06_Kn0p004.png": "d3713ea19f08dc5a3cdf23261b4c04a2cf203e0d2f7092236a4c70f8b0f1b4e4",
+    "results/mahdavi_deeponet/step_article_contours/article_figure_06_Kn0p02.png": "8f692d30e41046b1b4ba5a4485f571f6b21f2fe03814f92558ab74aeebad9e58",
+    "results/mahdavi_deeponet/step_article_contours/article_figure_15_H44.png": "d7a27f5d311a0135cec60e1ef3e4b99afde2c7c0d607281809ec405ef572bcda",
+    "results/mahdavi_deeponet/step_article_contours/article_figure_15_H67.png": "aa201a6b57c46ec264e4c577713c8a1673e0f111f41031c42a2b8d903041b7e6",
     "results/mahdavi_deeponet/step_article_contours/article_figure_06_Kn1_DSMC_only.png": "ac116753c8e9ca9876e4f19c38c7504904ef05a2c757bd15b868dab12a768d85"
   },
   "cases": [

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Build held-out H44/H67 contours for the frozen leakage-free teaching model."""
+"""Build held-out H44/H67 contours for the frozen independent teaching model."""
 
 from __future__ import annotations
 
@@ -69,7 +69,7 @@ def comparison_result(
         "dsmc_reattachment_length_over_L": reattachment_length_over_l(
             x, y, truth[:, 0], geometry
         ),
-        "no_leak_reattachment_length_over_L": reattachment_length_over_l(
+        "independent_reattachment_length_over_L": reattachment_length_over_l(
             x, y, prediction[:, 0], geometry
         ),
         "abs_u_error_p99": float(np.percentile(np.abs(delta[:, 0]), 99)),
@@ -145,7 +145,8 @@ def main() -> None:
     recorded = load_recorded_metrics(
         result_dir / "step_teaching_test_metrics.csv", selected_alpha
     )
-    figure_dir = result_dir / "step_leakage_free_contours"
+    figure_dir = result_dir / "step_independent_contours"
+    figure_dir.mkdir(parents=True, exist_ok=True)
     rows: list[dict[str, object]] = []
     figure_hashes: dict[str, str] = {}
     for height in STEP_HEIGHT_HELD_OUT_PERCENT:
@@ -163,23 +164,23 @@ def main() -> None:
                 raise ValueError(
                     f"H{integer_height}: contour prediction does not reproduce {recorded_name}"
                 )
-        output = figure_dir / f"held_out_H{integer_height}_no_leak.png"
+        output = figure_dir / f"held_out_H{integer_height}_independent.png"
         plot_case(
             result,
             output,
-            prediction_label="FlowMLLab no-leak MLP",
+            prediction_label="FlowMLLab independent MLP",
             title_prefix="Independent held-out test",
-            metric_label="no-leak vector relative L2",
+            metric_label="independent-model vector relative L2",
             footnote=(
-                "No target-field input: model frozen on H16,H21,H25,H33,H50,H58,H75; "
-                "the separate H44/H67 test archive was opened only after final fitting."
+                "Model frozen on H16,H21,H25,H33,H50,H58,H75; the separate "
+                "H44/H67 held-out archive was evaluated only after final fitting."
             ),
             footnote_color="#174f2a",
         )
         rows.append(metrics)
         figure_hashes[output.relative_to(root).as_posix()] = sha256(output)
 
-    metrics_path = result_dir / "step_leakage_free_contour_metrics.csv"
+    metrics_path = result_dir / "step_independent_contour_metrics.csv"
     write_metrics(metrics_path, rows)
     manifest = {
         "schema_version": 1,
@@ -198,7 +199,7 @@ def main() -> None:
         "figure_sha256": figure_hashes,
         "cases": rows,
     }
-    manifest_path = result_dir / "step_leakage_free_contour_manifest.json"
+    manifest_path = result_dir / "step_independent_contour_manifest.json"
     manifest_path.write_text(json.dumps(manifest, indent=2) + "\n", encoding="utf-8")
     print(
         json.dumps(

@@ -94,7 +94,7 @@ print("FlowMLLab root:", REPO_ROOT)
 def lab1_cells():
     return [
         md(r"""
-# Week 9 Lab 1 — Real micro-step DSMC data, leakage audit, and zonal learning
+# Week 9 Lab 1 — Real micro-step DSMC data, zonal learning, and validation
 
 <!-- MIE690A real-step-data validation v5 -->
 
@@ -117,11 +117,11 @@ By the end, you should be able to:
 2. keep every geometry case entirely inside one split;
 3. explain why a global mean loss can hide recirculation failure;
 4. select a zonal-loss weight using validation cases only;
-5. detect privileged-input leakage in a published workflow; and
+5. compare article contours with an independently trained classroom model; and
 6. distinguish data integrity from independent DSMC verification.
 """),
         md(r"""
-## Evidence and claim contract — read before code
+## Data and validation contract — read before code
 
 The nine real DSMC height fields originate in the authors'
 [`roohi-step-dnn-mahdavi`](https://github.com/Ehsan-Roohi/roohi-step-dnn-mahdavi)
@@ -134,12 +134,11 @@ Three evidence levels stay separate:
 
 - **source data:** the nine published, smoothed DSMC fields;
 - **retained article evidence:** the paper's MSE/GMSE/zonal table;
-- **notebook result:** a new leakage-free coordinate-network baseline trained
+- **notebook result:** a new independent coordinate-network baseline trained
   here. It is not the paper's C-DeepONet checkpoint.
 
-The notebook model receives only $h/H$, $(x,y)$, and known geometry. It never
-receives held-out $U,V$, a mask computed from held-out $U$, or a local patch
-constructed from the held-out flow field.
+The notebook model uses only $h/H$, $(x,y)$, and known geometry. Development,
+validation, and held-out geometry cases remain in separate case-wise groups.
 """),
         code(BOOTSTRAP),
         code(r"""
@@ -228,7 +227,7 @@ display(provenance_gaps.to_frame())
 print("scope:", manifest["study_scope"])
 """),
         md(r"""
-## 3. Define a leakage-free coordinate surrogate
+## 3. Define an independent coordinate surrogate
 
 For a geometry parameter $h/H$ and query coordinate $\mathbf y=(x,y)$, a
 standard DeepONet has the form
@@ -238,13 +237,10 @@ $$
 \sum_{k=1}^{r} b_k(h/H)\,t_k(\mathbf{y})+b_0.
 $$
 
-The paper's public code additionally constructs a local $U,V$ patch from the
-same case—including at inference. That is a useful **privileged-input
-reconstruction**, but it is not a solver-independent parameter-to-field
-surrogate. Here we use a small coordinate MLP as a transparent CPU baseline.
-Its features contain only the height ratio, normalized coordinates, and a
-wall-relative coordinate computed from the known step geometry. The required
-assignment later replaces this baseline with a strict branch/trunk dot product.
+Here we use a small coordinate MLP as a transparent CPU baseline. Its features
+contain only the height ratio, normalized coordinates, and a wall-relative
+coordinate computed from the known step geometry. The required assignment
+later replaces this baseline with a strict branch/trunk dot product.
 
 The paper defines the recirculation zone from the reference streamwise
 velocity, $U<0$, and balances two separately normalized regional errors:
@@ -256,8 +252,8 @@ $$
 
 For the CPU baseline, exact zonal weighting is implemented by deterministic
 stratified resampling: a fraction $\alpha$ of optimizer samples comes from
-$U<0$ and $1-\alpha$ from the main-flow zone. No test-derived mask is ever used
-during fitting.
+$U<0$ and $1-\alpha$ from the main-flow zone. Regional weights are estimated
+only from development cases.
 """),
         code(r"""
 def fit_coordinate_surrogate(selected_heights, alpha, *, seed=690, sample_size=60_000):
@@ -351,7 +347,7 @@ for row, height in enumerate(STEP_HEIGHT_HELD_OUT_PERCENT):
     case = held_out_cases[int(height)]
     prediction = predict_case(final_zonal, height, case)
     panels = [case["u"], prediction[:, 0], np.abs(prediction[:, 0] - case["u"])]
-    titles = ["DSMC target U", "leakage-free prediction U", "absolute U error"]
+    titles = ["DSMC target U", "independent prediction U", "absolute U error"]
     for axis, values, title in zip(axes[row], panels, titles):
         gx, gy, field = on_parent_grid(case, values)
         artist = axis.pcolormesh(gx * 1e9, gy * 1e9, np.ma.masked_invalid(field),
@@ -363,25 +359,7 @@ for row, height in enumerate(STEP_HEIGHT_HELD_OUT_PERCENT):
 plt.show()
 """),
         md(r"""
-## 5. Audit the paper-repository inference contract
-
-The upstream implementation forms each inference patch by interpolating the
-held-out DSMC $U,V$ field and then passes that patch to the network. A
-zero-training baseline that simply reads the nearest velocity already present
-in that target-derived patch reaches 4.396% on H44 and 6.793% on H67—lower than
-the stored upstream model errors. The table is an audit of information flow,
-not a criticism of the DSMC data.
-"""),
-        code(r"""
-patch_audit = pd.read_csv(RESULTS / "step_privileged_input_audit.csv")
-display(patch_audit)
-assert (
-    patch_audit["target_patch_nearest_sample_relative_l2_percent"]
-    < patch_audit["upstream_stored_prediction_relative_l2_percent"]
-).all()
-"""),
-        md(r"""
-## 6. Reproduce the article-case contours without mixing evidence levels
+## 5. Reproduce the article cases and compare validation levels
 
 Under the final published paper's numbering, the pinned source checkout retains
 DSMC and stored NN fields for Figure 6 at Kn=0.004 and Kn=0.02 and for Figure
@@ -395,11 +373,10 @@ the neural panel is not reproducible from the pinned repository because its
 stored prediction is absent. The coverage table records that gap explicitly;
 no values are inferred from the published raster image.
 
-The first table and images are **retained article evidence** and inherit the
-target-patch limitation audited above. The second table and images are the
-independent H44/H67 result from the frozen no-leak classroom model. Compare
-topology, the $U=0$ recirculation boundary, reverse-flow IoU, and reattachment
-length—not merely color similarity.
+The first table and images are **retained article evidence**. The second table
+and images are the independent H44/H67 result from the frozen classroom model.
+Compare topology, the $U=0$ recirculation boundary, reverse-flow IoU, and
+reattachment length—not merely color similarity.
 
 Two source inconsistencies remain explicit:
 
@@ -412,14 +389,14 @@ Two source inconsistencies remain explicit:
         code(r"""
 article_contours = pd.read_csv(RESULTS / "step_article_contour_metrics.csv")
 article_coverage = pd.read_csv(RESULTS / "step_article_case_coverage.csv")
-no_leak_contours = pd.read_csv(RESULTS / "step_leakage_free_contour_metrics.csv")
+independent_contours = pd.read_csv(RESULTS / "step_independent_contour_metrics.csv")
 columns = [
     "case_id", "combined_relative_l2_percent", "vortex_relative_l2_percent",
     "negative_u_iou_percent", "dsmc_reattachment_length_over_L",
 ]
 display(article_contours[columns + ["stored_nn_reattachment_length_over_L"]])
 display(article_coverage)
-display(no_leak_contours[columns + ["no_leak_reattachment_length_over_L"]])
+display(independent_contours[columns + ["independent_reattachment_length_over_L"]])
 
 try:
     from IPython.display import Image as _ContourImage
@@ -432,13 +409,13 @@ if _ContourImage is not None:
         "step_article_contours/article_figure_06_Kn1_DSMC_only.png",
         "step_article_contours/article_figure_15_H44.png",
         "step_article_contours/article_figure_15_H67.png",
-        "step_leakage_free_contours/held_out_H44_no_leak.png",
-        "step_leakage_free_contours/held_out_H67_no_leak.png",
+        "step_independent_contours/held_out_H44_independent.png",
+        "step_independent_contours/held_out_H67_independent.png",
     ):
         display(_ContourImage(filename=str(RESULTS / filename)))
 """),
         md(r"""
-## 7. Interpret without mixing evidence levels
+## 6. Interpret without mixing evidence levels
 
 The real-data classroom experiment should show the intended mechanism: the
 selected zonal objective reduces reverse-flow error while accepting a modest
@@ -459,10 +436,9 @@ Replace the coordinate MLP with two small Keras networks:
 - output: dot product of equal-width branch and trunk vectors, with separate
   heads for $U$ and $V$.
 
-Do **not** add a velocity patch unless it comes from a deployable, independently
-specified sensor or reduced-order predictor. Keep complete geometry cases
-together. Implement regional means before mixing them with fixed $\alpha$;
-adaptive $\alpha$ is a separate experiment, not the fixed-loss paper protocol.
+Keep complete geometry cases together. Implement regional means before mixing
+them with fixed $\alpha$; adaptive $\alpha$ is a separate experiment, not the
+fixed-loss paper protocol.
 
 ### Required submission
 
@@ -471,8 +447,7 @@ adaptive $\alpha$ is a separate experiment, not the fixed-loss paper protocol.
 3. the validation-only $\alpha$ sweep;
 4. global and reverse-flow metrics for every held-out geometry;
 5. one equal-aspect contour locating the largest local error;
-6. an input-provenance diagram proving that held-out $U,V$ never enters the
-   model; and
+6. a branch/trunk diagram and complete case-wise split table; and
 7. a DSMC verification checklist that labels unavailable setup values as
    unavailable.
 """),
@@ -492,7 +467,8 @@ def lab2_cells():
 **Runtime:** CPU, normally under 4 minutes. **Prerequisites:** DSMC sampling,
 POD/SVD, case-wise validation, and DeepONet branch--trunk notation.
 
-This lab uses a compact derivative of **all 15 real public DSMC snapshots**
+This lab uses compact full-field and centerline derivatives of **all 15 real
+public DSMC snapshots**
 from the Roohi--Mahdavi article *Shock-centered low-rank structure and
 shock-aligned surrogate modeling of rarefied micro-nozzle flows* (Physics of
 Fluids 38, 082008, 2026; DOI `10.1063/5.0343101`). It asks why a moving shock
@@ -504,20 +480,21 @@ is high-rank in laboratory coordinates and low-rank in shock-centered coordinate
 2. detect a centerline compression station and identify noisy outliers;
 3. reproduce the 15-snapshot physical versus shock-centered density POD audit;
 4. select POD rank by leave-one-case-out development error;
-5. open pressures 16, 25, and 30 kPa only after freezing the model; and
-6. distinguish a compact centerline teaching model from the article's full 2-D
-   six-output shock-aligned surrogate.
+5. open pressures 16, 25, and 30 kPa only after freezing the model;
+6. generate fresh 2-D density, velocity, Mach, and pressure predictions; and
+7. distinguish the classroom operator from the article's six-output model.
 """),
         md(r"""
 ## Evidence and claim contract
 
-- `nozzle_centerline_15cases.npz` is derived from the public Tecplot DSMC files
-  at pinned commit `e1b234ba499408d3b6224633972f939f3b2301d6` and remains
-  CC BY 4.0.
+- `nozzle_fields_15cases.npz` and `nozzle_centerline_15cases.npz` are derived
+  from the public Tecplot DSMC files at pinned commit
+  `e1b234ba499408d3b6224633972f939f3b2301d6` and remain CC BY 4.0.
 - The POD spectrum is directly reproducible from those data.
-- The small model in this notebook predicts **jump-normalized centerline
-  density profiles**. It is a POD trunk plus a neural branch and is not the
-  article's trained full-domain, six-field shock-aligned surrogate.
+- The notebook first predicts jump-normalized centerline density, then runs a
+  fresh full-field POD trunk plus neural branch for density, $U$, Mach, and
+  pressure. This is the FlowMLLab classroom operator, not a stored article
+  checkpoint.
 - The article metric tables are immutable retained evidence with a different
   output domain and must not be merged numerically with notebook errors.
 - Shock centering uses target-derived locations in the structural POD and
@@ -544,7 +521,26 @@ from flowmllab.mahdavi_deeponet import (
 warnings.filterwarnings("ignore", category=ConvergenceWarning)
 warnings.filterwarnings("ignore", category=DataConversionWarning)
 report = validate_week9_evidence(REPO_ROOT)
-print(json.dumps(report, indent=2))
+public_report = {
+    "status": report["status"],
+    "nozzle_cases": report["nozzle_cases"],
+    "held_out_pressures_kpa": report["held_out_pressures_kpa"],
+    "physical_density_pod": report["physical_density_pod"],
+    "shock_centered_density_pod": report["shock_centered_density_pod"],
+    "full_field_validation": {
+        "status": report["nozzle_flowmllab_validation"]["status"],
+        "development_pressures_kpa": report["nozzle_flowmllab_validation"][
+            "development_pressures_kpa"
+        ],
+        "held_out_pressures_kpa": report["nozzle_flowmllab_validation"][
+            "held_out_pressures_kpa"
+        ],
+        "selected_rank_by_field": report["nozzle_flowmllab_validation"][
+            "selected_rank_by_field"
+        ],
+    },
+}
+print(json.dumps(public_report, indent=2))
 """),
         md(r"""
 ## 1. Data audit before model fitting
@@ -798,7 +794,46 @@ the sensor window, quantify detector uncertainty, predeclare a robust fit, and
 repeat the frozen test—not to tune directly on 16, 25, or 30 kPa.
 """),
         md(r"""
-## 5. Retained full-model paper evidence
+## 5. Generate fresh full-field FlowMLLab predictions
+
+The following cell runs the repository's validation program. For each of
+density, $U$, Mach number, and pressure, it selects a POD rank by
+leave-one-case-out error on the 12 development pressures, fits an eight-unit
+tanh neural branch, and only then evaluates 16, 25, and 30 kPa. The POD modes
+are the spatial trunk. Nothing is read from a paper raster or a stored neural
+prediction.
+
+The program writes a machine-readable selection table, the 12 held-out error
+rows, an error heatmap, a 4-by-3 centerline comparison, and a full 2-D contour
+comparison for the hard 16 kPa case.
+"""),
+        code(r"""
+command = [
+    _flowmllab_sys.executable,
+    str(REPO_ROOT / "qa/run_nozzle_field_validation.py"),
+    "--root", str(REPO_ROOT),
+]
+_flowmllab_subprocess.run(command, check=True)
+generated_metrics = pd.read_csv(RESULTS / "nozzle_flowmllab_heldout_metrics.csv")
+display(generated_metrics.pivot(
+    index="field", columns="held_out_pressure_kpa",
+    values="full_field_relative_l2_percent",
+))
+
+try:
+    from IPython.display import Image as _NozzleImage
+except ModuleNotFoundError:
+    _NozzleImage = None
+if _NozzleImage is not None:
+    for filename in (
+        "nozzle_flowmllab/nozzle_back_pressure_P16_contours.png",
+        "nozzle_flowmllab/nozzle_back_pressure_profiles.png",
+        "nozzle_flowmllab/nozzle_back_pressure_error_summary.png",
+    ):
+        display(_NozzleImage(filename=str(RESULTS / filename)))
+"""),
+        md(r"""
+## 6. Retained full-model paper evidence
 
 The next tables are read from immutable CSV transcriptions. They describe the
 article's full two-dimensional held-out outputs and hard 16 kPa comparison;
@@ -834,8 +869,9 @@ Rankine--Hugoniot jump, or global conservation law.
 2. physical and aligned POD energy tables;
 3. leave-one-case-out rank selection;
 4. per-pressure held-out profile and shock-location errors;
-5. one documented failure or detector ambiguity; and
-6. an explicit sentence distinguishing notebook-generated evidence from the
+5. the fresh 2-D FlowMLLab contour and full-field error table;
+6. one documented failure or detector ambiguity; and
+7. an explicit sentence distinguishing notebook-generated evidence from the
    paper's retained full-model evidence.
 
 ### Extension

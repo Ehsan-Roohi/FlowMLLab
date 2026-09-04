@@ -1,0 +1,48 @@
+{
+  "branch_input": "back pressure in kPa",
+  "candidate_ranks": [
+    1,
+    2,
+    3,
+    4
+  ],
+  "development_pressures_kpa": [
+    15,
+    18,
+    19,
+    20,
+    22,
+    23,
+    24,
+    26,
+    27,
+    28,
+    29,
+    33
+  ],
+  "figure_sha256": {
+    "results/mahdavi_deeponet/nozzle_flowmllab/nozzle_back_pressure_P16_contours.png": "0284ea24fbab383834435b08fc7755afd81952d472680fc90a6051d4ada99e5e",
+    "results/mahdavi_deeponet/nozzle_flowmllab/nozzle_back_pressure_error_summary.png": "208105d734e8b597c36cf1ea0a0abd8cfb0455d3b8776a8ed3435dd5a69c009b",
+    "results/mahdavi_deeponet/nozzle_flowmllab/nozzle_back_pressure_profiles.png": "28e3b8099802cf4ab8a29fe3a3047b57096eb3669ddbe1b34906dfec5790ece8"
+  },
+  "generator": "qa/run_nozzle_field_validation.py",
+  "held_out_cases_opened_after_selection": true,
+  "held_out_pressures_kpa": [
+    16,
+    25,
+    30
+  ],
+  "metrics_csv_sha256": "2ec655bf952c8469a701e0d5771eeef341b0ee742e5a6a6ba1454e9303071a0b",
+  "model": "POD trunk with an 8-unit tanh neural branch",
+  "rank_selection": "minimum leave-one-case-out mean relative L2 on development cases",
+  "schema_version": 1,
+  "selected_rank_by_field": {
+    "density": 4,
+    "mach": 4,
+    "pressure_tecplot": 4,
+    "u_ms": 4
+  },
+  "selection_csv_sha256": "aa1d1261965fc720fe62a451ac39c11872319f1f8277ac1cbd768c72c20f3c2a",
+  "source_archive": "results/mahdavi_deeponet/nozzle_fields_15cases.npz",
+  "source_archive_sha256": "688e88c1460f13f1151c009d11ac6acc684dea65adfa45bf79c91f929460d0f9"
+}

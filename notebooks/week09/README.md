@@ -7,12 +7,13 @@ This optional research-to-classroom extension contains two CPU-friendly labs:
    splits, recirculation-zone metrics, and validation-only loss selection. The
    executable experiment uses compact derivatives of all nine real DSMC
    height fields, with the seven learning/validation cases physically separate
-   from the two held-out tests. The model receives no target-derived patch.
+   from the two held-out tests.
 2. [`W9_Lab2_Shock_Aligned_Nozzle_DeepONet_Student.ipynb`](W9_Lab2_Shock_Aligned_Nozzle_DeepONet_Student.ipynb)
-   uses a compact attributed derivative of all 15 public micro-nozzle DSMC
-   snapshots. Students reproduce the physical/shock-centered density POD,
-   freeze pressures 16, 25, and 30 kPa, and test a small POD-trunk/neural-branch
-   model plus a training-only shock locator.
+   uses compact full-field and centerline derivatives of all 15 public
+   micro-nozzle DSMC snapshots. Students reproduce the physical/shock-centered
+   density POD, freeze pressures 16, 25, and 30 kPa, and generate new 2-D
+   density, velocity, Mach, and pressure predictions with a POD trunk and
+   neural branch.
 
 Both notebooks have direct Colab launchers and run on CPU. Rebuild them from
 the reviewable source with:

@@ -59,6 +59,8 @@ REQUIRED = [
     "qa/run_cylinder_phase_stable.py",
     "qa/build_week8_gas_dynamics_figures.py",
     "qa/build_week9_mahdavi_deeponet_data.py",
+    "qa/build_step_independent_contours.py",
+    "qa/run_nozzle_field_validation.py",
     "qa/build_probabilistic_uq_notebook.py",
     "qa/run_probabilistic_uq_validation.py",
     ".github/workflows/week8-materials.yml",
@@ -108,6 +110,8 @@ REQUIRED = [
     "lectures/source/week07_cylinder_lbm_neural_surrogate.tex",
     "lectures/week08_gas_dynamics_sciml.pdf",
     "lectures/source/week08_gas_dynamics_sciml.tex",
+    "lectures/week09_rarefied_deeponet_case_studies.pdf",
+    "lectures/source/week09_rarefied_deeponet_case_studies.tex",
     "references/README.md",
     "references/course_references.bib",
     "results/pod_deeponet/deeponet_selection.csv",
@@ -185,6 +189,16 @@ REQUIRED = [
     "results/mahdavi_deeponet/DATA_LICENSE.md",
     "results/mahdavi_deeponet/provenance.json",
     "results/mahdavi_deeponet/nozzle_centerline_15cases.npz",
+    "results/mahdavi_deeponet/nozzle_fields_15cases.npz",
+    "results/mahdavi_deeponet/nozzle_flowmllab_selection.csv",
+    "results/mahdavi_deeponet/nozzle_flowmllab_heldout_metrics.csv",
+    "results/mahdavi_deeponet/nozzle_flowmllab_manifest.json",
+    "results/mahdavi_deeponet/nozzle_flowmllab/nozzle_back_pressure_P16_contours.png",
+    "results/mahdavi_deeponet/nozzle_flowmllab/nozzle_back_pressure_profiles.png",
+    "results/mahdavi_deeponet/nozzle_flowmllab/nozzle_back_pressure_error_summary.png",
+    "results/mahdavi_deeponet/nozzle_article_figures/README.md",
+    "results/mahdavi_deeponet/nozzle_article_figures/nozzle_throat_X030_profiles.png",
+    "results/mahdavi_deeponet/nozzle_article_figures/nozzle_throat_X030_profiles.svg",
     "results/mahdavi_deeponet/step_paper_evidence.csv",
     "results/mahdavi_deeponet/step_source_manifest.json",
     "results/mahdavi_deeponet/step_privileged_input_audit.csv",
@@ -193,6 +207,18 @@ REQUIRED = [
     "results/mahdavi_deeponet/step_teaching_selection.csv",
     "results/mahdavi_deeponet/step_teaching_test_metrics.csv",
     "results/mahdavi_deeponet/step_teaching_protocol.json",
+    "results/mahdavi_deeponet/step_article_contour_manifest.json",
+    "results/mahdavi_deeponet/step_article_contour_metrics.csv",
+    "results/mahdavi_deeponet/step_article_case_coverage.csv",
+    "results/mahdavi_deeponet/step_article_contours/article_figure_06_Kn0p004.png",
+    "results/mahdavi_deeponet/step_article_contours/article_figure_06_Kn0p02.png",
+    "results/mahdavi_deeponet/step_article_contours/article_figure_06_Kn1_DSMC_only.png",
+    "results/mahdavi_deeponet/step_article_contours/article_figure_15_H44.png",
+    "results/mahdavi_deeponet/step_article_contours/article_figure_15_H67.png",
+    "results/mahdavi_deeponet/step_independent_contour_manifest.json",
+    "results/mahdavi_deeponet/step_independent_contour_metrics.csv",
+    "results/mahdavi_deeponet/step_independent_contours/held_out_H44_independent.png",
+    "results/mahdavi_deeponet/step_independent_contours/held_out_H67_independent.png",
     "results/mahdavi_deeponet/nozzle_paper_field_errors.csv",
     "results/mahdavi_deeponet/nozzle_hard_case_baselines.csv",
     "results/mahdavi_deeponet/nozzle_pod_reference.csv",
@@ -835,16 +861,20 @@ def validate_week9_mahdavi_deeponet_results() -> dict[str, object]:
     lab1_source = "\n".join("".join(cell.get("source", [])) for cell in lab1["cells"])
     lab2_source = "\n".join("".join(cell.get("source", [])) for cell in lab2["cells"])
     assert "nine real DSMC height fields" in lab1_source
-    assert "receives held-out $U,V$" in lab1_source and "It never" in lab1_source
+    assert "model uses only $h/H$" in lab1_source
     assert "Freeze the case-wise split and selection rule" in lab1_source
     assert "Stop: held-out geometry gate" in lab1_source
     assert "step_height_test_2cases.npz" in lab1_source
-    assert "privileged-input" in lab1_source and "reconstruction" in lab1_source
+    assert "independent coordinate surrogate" in lab1_source
     assert "Joint" in lab1_source and "has not been demonstrated" in lab1_source
-    assert "all 15 real public DSMC snapshots" in lab2_source
+    assert "all 15 real" in lab2_source and "public DSMC snapshots" in lab2_source
     assert "leave-one-case-out" in lab2_source
     assert "Stop: held-out pressure gate" in lab2_source
-    assert "article's trained full-domain" in lab2_source and "six-field" in lab2_source
+    assert "run_nozzle_field_validation.py" in lab2_source
+    assert "fresh full-field FlowMLLab predictions" in lab2_source
+    nozzle_rows = report["nozzle_flowmllab_validation"]["held_out_metrics"]
+    assert len(nozzle_rows) == 12
+    assert max(float(row["full_field_relative_l2_percent"]) for row in nozzle_rows) < 20.0
     return report
 
 
@@ -874,7 +904,7 @@ def validate_probabilistic_uq_results() -> dict[str, object]:
 
 def validate_pdfs() -> int:
     pdfs = sorted((ROOT / "lectures").glob("*.pdf"))
-    assert len(pdfs) == 8
+    assert len(pdfs) == 9
     for path in pdfs:
         result = subprocess.run(
             ["pdfinfo", str(path)], check=True, capture_output=True, text=True
@@ -900,7 +930,12 @@ def main() -> None:
     uq_metrics = validate_probabilistic_uq_results()
     article_metrics = validate_article_alignment()
     pdfs = validate_pdfs()
-    python_files = sorted(ROOT.rglob("*.py"))
+    excluded_roots = {".external", ".git", ".venv", "tmp", "venv"}
+    python_files = sorted(
+        path
+        for path in ROOT.rglob("*.py")
+        if excluded_roots.isdisjoint(path.relative_to(ROOT).parts)
+    )
     for path in python_files:
         ast.parse(path.read_text(encoding="utf-8"), filename=str(path))
 

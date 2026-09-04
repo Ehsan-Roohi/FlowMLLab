@@ -14,17 +14,22 @@ from flowmllab.mahdavi_deeponet import (
     STEP_SOURCE_COMMIT,
     density_snapshot_matrix,
     discover_step_source,
+    fit_nozzle_pod_neural_operator,
     fit_step_coordinate_surrogate,
     load_step_height_archive,
     load_nozzle_centerlines,
+    load_nozzle_fields,
     manufactured_step_velocity,
     pod_spectrum,
+    predict_nozzle_pod_neural_operator,
+    select_nozzle_pod_rank,
     step_coordinate_features,
     validate_step_height_archives,
     validate_step_archives_against_source,
     validate_step_height_dataset,
     validate_step_contour_evidence,
     validate_step_teaching_results,
+    validate_nozzle_flowmllab_results,
     validate_week9_evidence,
     zonal_velocity_metrics,
 )
@@ -129,6 +134,37 @@ class MahdaviDeepONetWeek9Tests(unittest.TestCase):
         self.assertLess(abs(physical_pod["first_mode_percent"] - 78.9221), 0.03)
         self.assertLess(abs(aligned_pod["first_mode_percent"] - 97.9855), 0.03)
 
+    def test_full_field_nozzle_operator_uses_complete_development_cases(self) -> None:
+        data = load_nozzle_fields(ROOT)
+        self.assertEqual(data["density"].shape, (15, 31, 101))
+        development = np.flatnonzero(~np.isin(data["pressure_kpa"], NOZZLE_HELD_OUT_KPA))
+        selected_rank, rows = select_nozzle_pod_rank(
+            data["pressure_kpa"], data["density"], development,
+            candidate_ranks=(1,),
+        )
+        self.assertEqual(selected_rank, 1)
+        self.assertEqual(len(rows), 1)
+        fitted = fit_nozzle_pod_neural_operator(
+            data["pressure_kpa"], data["density"], development, rank=1,
+        )
+        self.assertFalse(
+            np.isin(fitted["train_pressures_kpa"], NOZZLE_HELD_OUT_KPA).any()
+        )
+        prediction = predict_nozzle_pod_neural_operator(fitted, np.array([16.0]))
+        self.assertEqual(prediction.shape, (1, 31, 101))
+        self.assertTrue(np.isfinite(prediction).all())
+
+    def test_code_generated_nozzle_figures_and_metrics(self) -> None:
+        report = validate_nozzle_flowmllab_results(ROOT)
+        self.assertEqual(report["status"], "pass")
+        self.assertEqual(report["held_out_pressures_kpa"], [16, 25, 30])
+        self.assertEqual(len(report["held_out_metrics"]), 12)
+        self.assertLess(
+            max(float(row["full_field_relative_l2_percent"])
+                for row in report["held_out_metrics"]),
+            20.0,
+        )
+
     def test_week9_evidence_contract(self) -> None:
         report = validate_week9_evidence(ROOT)
         self.assertEqual(report["status"], "pass")
@@ -144,12 +180,12 @@ class MahdaviDeepONetWeek9Tests(unittest.TestCase):
         ])
         self.assertEqual(validate_step_teaching_results(ROOT)["selected_alpha"], 0.6)
 
-    def test_step_contours_separate_article_and_no_leak_evidence(self) -> None:
+    def test_step_contours_separate_article_and_independent_evidence(self) -> None:
         report = validate_step_contour_evidence(ROOT)
         self.assertEqual(report["status"], "pass")
         self.assertTrue(report["article_results_are_privileged_input"])
-        self.assertFalse(report["no_leak_test_used_for_selection"])
-        self.assertEqual(report["no_leak_test_cases"], [44, 67])
+        self.assertFalse(report["independent_test_used_for_selection"])
+        self.assertEqual(report["independent_test_cases"], [44, 67])
         self.assertEqual(report["final_paper_case_coverage"], [
             "Kn0p004", "Kn0p02", "Kn1", "H44", "H67"
         ])

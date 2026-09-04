@@ -10,11 +10,14 @@ on:
       - "notebooks/week09/make_week9_notebooks.py"
       - "qa/build_step_height_archive.py"
       - "qa/build_step_article_contours.py"
-      - "qa/build_step_leakage_free_contours.py"
+      - "qa/build_step_independent_contours.py"
+      - "qa/run_nozzle_field_validation.py"
       - "qa/run_step_height_teaching_validation.py"
       - "qa/run_step_geom_deeponet.py"
       - "qa/build_week9_mahdavi_deeponet_data.py"
       - "results/mahdavi_deeponet/**"
+      - "lectures/source/week09_rarefied_deeponet_case_studies.tex"
+      - "lectures/week09_rarefied_deeponet_case_studies.pdf"
       - "tests/test_mahdavi_deeponet.py"
       - "tests/test_step_geom_deeponet.py"
 
@@ -49,6 +52,16 @@ jobs:
             results/kn/best_run_seed_2035/tecplot_pred
           sparse-checkout-cone-mode: false
 
+      - name: Check out pinned micro-nozzle DSMC data
+        uses: actions/checkout@v4
+        with:
+          repository: Ehsan-Roohi/roohi-nozzle-pod-reproducibility
+          ref: e1b234ba499408d3b6224633972f939f3b2301d6
+          path: .external/roohi-nozzle-pod-reproducibility
+          sparse-checkout: |
+            data
+          sparse-checkout-cone-mode: true
+
       - uses: actions/setup-python@v5
         with:
           python-version: "3.11"
@@ -60,12 +73,13 @@ jobs:
       - name: Install package
         run: |
           python -m pip install --upgrade pip
-          python -m pip install -e .
+          python -m pip install -r requirements.txt
+          python -m pip install -e . --no-deps
 
       - name: Rebuild student notebooks
         run: python notebooks/week09/make_week9_notebooks.py
 
-      - name: Reproduce leakage-free step validation
+      - name: Reproduce independent step validation
         run: |
           python qa/run_step_height_teaching_validation.py --root .
           git diff --exit-code -- \
@@ -77,11 +91,25 @@ jobs:
         run: |
           python qa/build_step_article_contours.py \
             --source .external/roohi-step-dnn-mahdavi --root .
-          python qa/build_step_leakage_free_contours.py --root .
+          python qa/build_step_independent_contours.py --root .
           git diff --exit-code -- \
             results/mahdavi_deeponet/step_article_contour_metrics.csv \
             results/mahdavi_deeponet/step_article_case_coverage.csv \
-            results/mahdavi_deeponet/step_leakage_free_contour_metrics.csv
+            results/mahdavi_deeponet/step_independent_contour_metrics.csv
+
+      - name: Rebuild nozzle DSMC derivatives and held-out fields
+        run: |
+          python qa/build_week9_mahdavi_deeponet_data.py \
+            --source .external/roohi-nozzle-pod-reproducibility --root .
+          python qa/run_nozzle_field_validation.py --root .
+          git diff --exit-code -- \
+            results/mahdavi_deeponet/nozzle_centerline_15cases.npz \
+            results/mahdavi_deeponet/nozzle_fields_15cases.npz \
+            results/mahdavi_deeponet/nozzle_flowmllab_selection.csv \
+            results/mahdavi_deeponet/nozzle_flowmllab_heldout_metrics.csv \
+            results/mahdavi_deeponet/nozzle_flowmllab_manifest.json \
+            results/mahdavi_deeponet/nozzle_flowmllab \
+            results/mahdavi_deeponet/provenance.json
 
       - name: Run software and release gates
         run: |

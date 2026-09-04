@@ -30,7 +30,7 @@
 | 8C | Dimensional scaling and CFD bridge | Generalized two-to-five-input shock tube; 100,000-state workload; qualified SU2 diamond-airfoil workflow | Matched offline budget; storage and timing protocol; source hashes; no unverified SU2 case promoted to a training label |
 | 9A | Geometry-dependent operator learning | Map real DSMC micro-step height and coordinates to velocity through a branch--trunk representation | File-separated 5/2/2 geometry split; validation-only loss selection; no held-out flow patches; retained paper evidence kept separate |
 | 9B | Physics-guided zonal objectives | Balance reverse-flow and main-flow errors with separately normalized regional losses | Validation-only loss-weight selection; global/local tradeoff; untouched 44% and 67% teaching tests |
-| 9C | Shock-aligned rarefied-flow operators | Audit 15 public DSMC nozzle cases; compare physical and shock-centered POD; fit a compact POD trunk and neural branch | Source hashes and CC BY attribution; 8-to-2 mode POD audit; frozen 16/25/30 kPa tests; shock-location error; no full-model reproduction claim |
+| 9C | Shock-aligned rarefied-flow operators | Audit 15 public DSMC nozzle cases; compare physical and shock-centered POD; fit full-field POD trunks and neural branches | Source hashes and CC BY attribution; 8-to-2 mode POD audit; frozen 16/25/30 kPa tests; 2-D density/$U$/Mach/pressure errors; shock-location error |
 
 ## Suggested adoption modes
 
@@ -41,7 +41,7 @@ Use Modules 1C, 2A, 2C, and a short version of 4B. The learning objective is to 
 ### Six-week intensive course
 
 Use all modules in order. Weeks 5–6 form one combined guided-project pack: Week 5 establishes the controlled modification and checkpoint; Week 6 completes the selected track and final evidence. Advanced Track 6 remains instructor-approved.
-Use Weeks 7 and 8 only after the original six-week sequence. Week 7 extends to unsteady external flow; Week 8 extends to compressible-flow branches, exact-to-ML comparisons, and a qualified multidimensional-CFD bridge. Week 9 is an optional two-notebook research-to-classroom extension for geometry-dependent and shock-aligned rarefied-flow operators. None replaces the Weeks 5–6 project.
+Use Weeks 7--9 only after the original six-week sequence. Week 7 extends to unsteady external flow; Week 8 extends to compressible-flow branches, exact-to-ML comparisons, and a qualified multidimensional-CFD bridge. Week 9 provides one lecture and two labs for geometry-dependent and shock-aligned rarefied-flow operators. None replaces the Weeks 5–6 project.
 
 ### Full semester
 

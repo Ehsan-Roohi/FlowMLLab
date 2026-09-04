@@ -14,7 +14,7 @@
     }
   },
   "claim_boundary": {
-    "micro_nozzle_data": "The compact archive is a deterministic centerline derivative of all 15 public DSMC snapshots at the pinned source commit.",
+    "micro_nozzle_data": "The compact archives are deterministic full-field and centerline derivatives of all 15 public DSMC snapshots at the pinned source commit.",
     "micro_nozzle_teaching_model": "The notebook's compact centerline POD/branch model is not the paper's trained full two-dimensional six-output shock-aligned surrogate.",
     "microstep_data": "The lesson uses two compact derivatives of nine real DSMC height fields at a pinned source commit, published in FlowMLLab with the corresponding author's explicit permission; no general upstream-data license is implied.",
     "microstep_dsmc_validation": "The public fields do not establish cell-size, time-step, particles-per-cell, sampling/replicate uncertainty, or wall accommodation metadata.",
@@ -22,14 +22,15 @@
     "microstep_scope": "Kn and h/H generalization are demonstrated separately, not jointly; the height study is at fixed Kn=0.01.",
     "microstep_teaching_model": "The leakage-free coordinate surrogate receives only h/H, x, y, and known geometry; it does not receive U, V, pressure, target masks, or target-field patches."
   },
-  "derivation": "First Tecplot POINT zone (101x31); max-y half-domain symmetry centerline; seven physical fields retained; density-shock diagnostics recomputed with FlowMLLab's documented detector.",
+  "derivation": "First Tecplot POINT zone (101x31); seven full physical fields retained on the original common grid; max-y half-domain symmetry centerline extracted separately; density-shock diagnostics recomputed with FlowMLLab's documented detector.",
   "derived_files": {
     "nozzle_centerline_15cases.npz": "7e644751574f4a58c1a6c6974a89ec063f73a6a65fd373e5abeaa35827bf611e",
+    "nozzle_fields_15cases.npz": "688e88c1460f13f1151c009d11ac6acc684dea65adfa45bf79c91f929460d0f9",
     "step_height_learning_7cases.npz": "410907d46a040d53cbbd19fd8d44eeb7b41c05150f953fd4d9c6bb479da3479d",
     "step_height_test_2cases.npz": "f833ea965511eb690bfef094afd8f9fde660eafb24fa889ce3ec1582551b382c",
+    "step_teaching_protocol.json": "f7e933aa86373662d7ce27baf93a0e73f55b52b277bf5b3f8e0d993c5ef8b833",
     "step_teaching_selection.csv": "10f48f88c7e848ec6dbbc808dee630984b80ca18f65c8e0bf4ec64b0d1364d9f",
-    "step_teaching_test_metrics.csv": "638bb802ff15f0535607537491a07c8fd0221f75f101624021255f79d6c43f69",
-    "step_teaching_protocol.json": "f7e933aa86373662d7ce27baf93a0e73f55b52b277bf5b3f8e0d993c5ef8b833"
+    "step_teaching_test_metrics.csv": "638bb802ff15f0535607537491a07c8fd0221f75f101624021255f79d6c43f69"
   },
   "paper_sources": {
     "micro_nozzle_arxiv": "https://arxiv.org/abs/2605.12723",
@@ -40,7 +41,7 @@
     "microstep_data_commit": "c3f211376b42b8dc30daad380eaef5e0ab800b5c",
     "microstep_doi": "https://doi.org/10.1007/s10404-026-02899-8"
   },
-  "schema_version": 2,
+  "schema_version": 3,
   "source_commit": "e1b234ba499408d3b6224633972f939f3b2301d6",
   "source_files_sha256": {
     "P=15.dat": "78fdecef839450dfb6e733c006cfeff93d45680a79d544ec8836dea4a4402322",

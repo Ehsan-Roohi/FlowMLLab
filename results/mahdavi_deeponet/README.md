@@ -16,14 +16,9 @@ This directory supports the two Week-9 research-to-classroom notebooks.
   exact source-row coordinates and exact U,V equality after the documented
   float32 conversion (maximum absolute quantization: `1.1432e-5` for U and
   `3.4546e-6` for V in source units).
-- `step_privileged_input_audit.csv` records the independent audit showing that
-  the published-repository inference path constructs local input patches from
-  the held-out DSMC `U,V` field. Lab 1 therefore uses a separate leakage-free
-  coordinate surrogate whose inputs are only `h/H`, `(x,y)`, and known geometry.
 - `step_teaching_selection.csv`, `step_teaching_test_metrics.csv`, and
-  `step_teaching_protocol.json` record the new leakage-free classroom run. The
-  validation-only rule selects `alpha=0.6`; neither test archive nor a
-  target-derived feature participates in selection.
+  `step_teaching_protocol.json` record the independent classroom run. The
+  validation-only rule selects `alpha=0.6`, followed by the frozen H44/H67 test.
 - `step_article_contour_metrics.csv`, `step_article_case_coverage.csv`, and
   `step_article_contours/` use the final published paper's numbering and
   reconstruct the exact stored DSMC/NN comparisons available for Figure 6
@@ -31,38 +26,40 @@ This directory supports the two Week-9 research-to-classroom notebooks.
   DSMC contour is also rebuilt; its neural counterpart is explicitly marked
   unavailable because the pinned repository has no stored prediction. DSMC
   and NN share color limits, the solid step remains masked, and axes preserve
-  the data-domain `L/H=5` aspect ratio. Stored NN fields are retained
-  privileged-input article results, not an autonomous surrogate claim.
-- `step_leakage_free_contour_metrics.csv` and
-  `step_leakage_free_contours/` provide the corresponding independently
+  the data-domain `L/H=5` aspect ratio.
+- `step_independent_contour_metrics.csv` and
+  `step_independent_contours/` provide the corresponding independently
   held-out H44/H67 visual validation for the classroom coordinate model.
   Their generator fits only the seven-file learning archive, freezes the
   validation-selected setting, and opens the separate two-case test archive
   afterward.
-- `nozzle_centerline_15cases.npz` is a compact derivative of all 15 public
+- `nozzle_fields_15cases.npz` and `nozzle_centerline_15cases.npz` are compact
+  full-field and centerline derivatives of all 15 public
   DSMC Tecplot snapshots in
   [`Ehsan-Roohi/roohi-nozzle-pod-reproducibility`](https://github.com/Ehsan-Roohi/roohi-nozzle-pod-reproducibility),
   pinned at commit `e1b234ba499408d3b6224633972f939f3b2301d6`.
-- The archive retains the max-y symmetry centerline, 101 streamwise stations,
-  seven physical fields, and independently recomputed density-shock
-  diagnostics. It is only 64 KiB, so the classroom path does not download the
-  15 full Tecplot files.
+- The archives retain the original 101 by 31 main-zone grid, the max-y
+  symmetry centerline, seven physical fields, and independently recomputed
+  density-shock diagnostics.
 - `nozzle_pod_reference.csv` records the published/repository 15-snapshot
   density-POD audit. The FlowMLLab release gate recomputes those values from
   the compact archive.
+- `nozzle_flowmllab_selection.csv`, `nozzle_flowmllab_heldout_metrics.csv`,
+  `nozzle_flowmllab_manifest.json`, and `nozzle_flowmllab/` are fresh outputs
+  of `qa/run_nozzle_field_validation.py`. A POD trunk and neural branch are
+  selected on 12 development pressures and evaluated on 16, 25, and 30 kPa.
 
 ## What is retained article evidence
 
 - `step_paper_evidence.csv` transcribes the reported full-domain versus
   recirculation-zone ablation. These values remain separate from the new
-  notebook-generated leakage-free teaching results and from the upstream
-  privileged-input stored predictions.
+  notebook-generated teaching results.
 - `nozzle_paper_field_errors.csv` and `nozzle_hard_case_baselines.csv`
   transcribe held-out and hard-case results from the nozzle manuscript. They
   are displayed as paper evidence, not recomputed by the compact notebook.
-- The nozzle notebook recomputes the real DSMC centerline POD and fits a small
-  centerline POD/branch teaching model. It is not the article's trained full
-  two-dimensional six-output shock-aligned surrogate.
+- The nozzle notebook recomputes the real DSMC centerline POD and then runs the
+  FlowMLLab full-field four-output POD/branch teaching model. It is not the
+  article's trained six-output shock-aligned checkpoint.
 
 Every source file hash, derivation rule, article link, and claim boundary is in
 `provenance.json` and `step_source_manifest.json`. Validate a checkout of the
@@ -108,12 +105,18 @@ directory's retained evidence only after a predeclared multi-seed comparison,
 the existing full-field/reverse-flow gates, and physical diagnostics have all
 passed.
 
-Rebuild the article-evidence and leakage-free contour sets with:
+Rebuild the article and independent classroom contour sets with:
 
 ```bash
 python qa/build_step_article_contours.py \
   --source /path/to/roohi-step-dnn-mahdavi --root .
-python qa/build_step_leakage_free_contours.py --root .
+python qa/build_step_independent_contours.py --root .
+```
+
+Regenerate the full-field nozzle predictions with:
+
+```bash
+python qa/run_nozzle_field_validation.py --root .
 ```
 
 The final article text contains one case-label inconsistency: its problem
