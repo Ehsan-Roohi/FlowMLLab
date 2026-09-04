@@ -920,7 +920,7 @@ def write_notebook(filename: str, cells) -> None:
     for index, cell in enumerate(notebook["cells"]):
         cell["id"] = f"{stem}-{index:03d}"
     (HERE / filename).write_text(
-        json.dumps(notebook, indent=1, ensure_ascii=False) + "\n",
+        json.dumps(notebook, indent=1, ensure_ascii=False, sort_keys=True) + "\n",
         encoding="utf-8",
     )
 

@@ -870,7 +870,7 @@ notebook = nbf.v4.new_notebook(
 for index, cell in enumerate(notebook["cells"]):
     cell["id"] = f"w7-{index:03d}"
 TARGET.write_text(
-    json.dumps(notebook, indent=1, ensure_ascii=False) + "\n",
+    json.dumps(notebook, indent=1, ensure_ascii=False, sort_keys=True) + "\n",
     encoding="utf-8",
 )
 print(TARGET)

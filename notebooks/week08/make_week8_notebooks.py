@@ -817,7 +817,7 @@ def main() -> None:
     ]
     for target, generated in outputs:
         target.write_text(
-            json.dumps(generated, indent=1, ensure_ascii=False) + "\n",
+            json.dumps(generated, indent=1, ensure_ascii=False, sort_keys=True) + "\n",
             encoding="utf-8",
         )
         print("Wrote", target)
