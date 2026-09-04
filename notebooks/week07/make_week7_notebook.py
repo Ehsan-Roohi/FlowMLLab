@@ -867,5 +867,10 @@ notebook = nbf.v4.new_notebook(
         },
     },
 )
-nbf.write(notebook, TARGET)
+for index, cell in enumerate(notebook["cells"]):
+    cell["id"] = f"w7-{index:03d}"
+TARGET.write_text(
+    json.dumps(notebook, indent=1, ensure_ascii=False) + "\n",
+    encoding="utf-8",
+)
 print(TARGET)

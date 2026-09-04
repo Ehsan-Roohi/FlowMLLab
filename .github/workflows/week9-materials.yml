@@ -22,7 +22,7 @@ on:
       - "tests/test_step_geom_deeponet.py"
 
 permissions:
-  contents: write
+  contents: read
 
 jobs:
   rebuild:
@@ -122,22 +122,11 @@ jobs:
             --require-step-data
           python qa/validate_course_release.py
 
-      - name: Commit generated notebooks
+      - name: Verify generated teaching artifacts
         run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add notebooks/week09/W9_Lab1_Microstep_Zonal_DeepONet_Student.ipynb
-          git add notebooks/week09/W9_Lab2_Shock_Aligned_Nozzle_DeepONet_Student.ipynb
-          git add lectures/week09_rarefied_deeponet_case_studies.pdf
-          git add results/mahdavi_deeponet/nozzle_flowmllab_selection.csv
-          git add results/mahdavi_deeponet/nozzle_flowmllab_heldout_metrics.csv
-          git add results/mahdavi_deeponet/nozzle_flowmllab_manifest.json
-          git add results/mahdavi_deeponet/nozzle_flowmllab/
-          git add results/mahdavi_deeponet/step_article_contours/
-          git add results/mahdavi_deeponet/step_article_contour_manifest.json
-          if git diff --cached --quiet; then
-            echo "Week 9 notebooks are already current."
-          else
-            git commit -m "Rebuild Week 9 notebook artifacts [skip ci]"
-            git push origin HEAD:main
-          fi
+          git diff --exit-code -- \
+            notebooks/week09/W9_Lab1_Microstep_Zonal_DeepONet_Student.ipynb \
+            notebooks/week09/W9_Lab2_Shock_Aligned_Nozzle_DeepONet_Student.ipynb
+          test -s lectures/week09_rarefied_deeponet_case_studies.pdf
+          test -s results/mahdavi_deeponet/nozzle_flowmllab/nozzle_back_pressure_profiles.png
+          pdfinfo lectures/week09_rarefied_deeponet_case_studies.pdf

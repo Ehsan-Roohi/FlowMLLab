@@ -816,7 +816,10 @@ def main() -> None:
         ),
     ]
     for target, generated in outputs:
-        nbf.write(generated, target)
+        target.write_text(
+            json.dumps(generated, indent=1, ensure_ascii=False) + "\n",
+            encoding="utf-8",
+        )
         print("Wrote", target)
 
 

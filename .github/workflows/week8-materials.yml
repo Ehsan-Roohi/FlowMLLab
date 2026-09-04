@@ -14,7 +14,7 @@ on:
       - "results/gas_dynamics_week8/*.json"
 
 permissions:
-  contents: write
+  contents: read
 
 jobs:
   rebuild:
@@ -54,21 +54,13 @@ jobs:
           python -m unittest discover -s tests -v
           python qa/validate_course_release.py
 
-      - name: Commit generated teaching artifacts
+      - name: Verify generated teaching artifacts
         run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add notebooks/week08/W8_Lab1_Exact_Gas_Dynamics_Student.ipynb
-          git add notebooks/week08/W8_Lab2_Gas_Dynamics_SciML_Evidence_Student.ipynb
-          git add lectures/week08_gas_dynamics_sciml.pdf
-          git add results/gas_dynamics_week8/week8_exact_physics.png
-          git add results/gas_dynamics_week8/week8_exact_physics.pdf
-          git add results/gas_dynamics_week8/week8_model_evidence.png
-          git add results/gas_dynamics_week8/week8_model_evidence.pdf
-          git add results/gas_dynamics_week8/scattered_baseline.csv
-          if git diff --cached --quiet; then
-            echo "Week 8 artifacts are already current."
-          else
-            git commit -m "Rebuild Week 8 notebook and lecture artifacts [skip ci]"
-            git push origin HEAD:main
-          fi
+          git diff --exit-code -- \
+            notebooks/week08/W8_Lab1_Exact_Gas_Dynamics_Student.ipynb \
+            notebooks/week08/W8_Lab2_Gas_Dynamics_SciML_Evidence_Student.ipynb \
+            results/gas_dynamics_week8/scattered_baseline.csv
+          test -s lectures/week08_gas_dynamics_sciml.pdf
+          test -s results/gas_dynamics_week8/week8_exact_physics.pdf
+          test -s results/gas_dynamics_week8/week8_model_evidence.pdf
+          pdfinfo lectures/week08_gas_dynamics_sciml.pdf

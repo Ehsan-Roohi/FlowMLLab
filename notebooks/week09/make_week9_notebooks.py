@@ -919,7 +919,10 @@ def write_notebook(filename: str, cells) -> None:
     stem = "w9l1" if "Lab1" in filename else "w9l2"
     for index, cell in enumerate(notebook["cells"]):
         cell["id"] = f"{stem}-{index:03d}"
-    nbf.write(notebook, HERE / filename)
+    (HERE / filename).write_text(
+        json.dumps(notebook, indent=1, ensure_ascii=False) + "\n",
+        encoding="utf-8",
+    )
 
 
 def main() -> None:

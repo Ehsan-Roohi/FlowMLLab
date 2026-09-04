@@ -11,7 +11,7 @@ on:
       - "results/cylinder_phase/**"
 
 permissions:
-  contents: write
+  contents: read
 
 jobs:
   rebuild:
@@ -48,15 +48,8 @@ jobs:
           python -m unittest discover -s tests -v
           python qa/validate_course_release.py
 
-      - name: Commit generated teaching artifacts
+      - name: Verify generated teaching artifacts
         run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add notebooks/week07/W7_Lattice_Boltzmann_Cylinder_Student.ipynb
-          git add lectures/week07_cylinder_lbm_neural_surrogate.pdf
-          if git diff --cached --quiet; then
-            echo "Week 7 artifacts are already current."
-          else
-            git commit -m "Rebuild Week 7 notebook and lecture [skip ci]"
-            git push origin HEAD:main
-          fi
+          git diff --exit-code -- notebooks/week07/W7_Lattice_Boltzmann_Cylinder_Student.ipynb
+          test -s lectures/week07_cylinder_lbm_neural_surrogate.pdf
+          pdfinfo lectures/week07_cylinder_lbm_neural_surrogate.pdf
