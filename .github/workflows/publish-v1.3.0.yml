@@ -2,14 +2,6 @@ name: Publish FlowMLLab v1.3.0
 
 on:
   workflow_dispatch:
-  push:
-    branches: [main]
-    paths:
-      - RELEASE_NOTES_v1.3.0.md
-      - .github/workflows/publish-v1.3.0.yml
-      - .github/workflows/week9-materials.yml
-      - .github/workflows/week10-materials.yml
-      - qa/run_nozzle_field_validation.py
 
 permissions:
   contents: write
@@ -27,13 +19,7 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: |
           if gh release view v1.3.0 >/dev/null 2>&1; then
-            gh api \
-              --method PATCH \
-              "repos/${GITHUB_REPOSITORY}/git/refs/tags/v1.3.0" \
-              -f sha="${GITHUB_SHA}" \
-              -F force=true
-            gh release edit v1.3.0 --target "${GITHUB_SHA}"
-            echo "Release v1.3.0 now targets ${GITHUB_SHA}."
+            echo "Release v1.3.0 already exists; leaving its tag unchanged."
           else
             gh release create v1.3.0 \
               --target "${GITHUB_SHA}" \
