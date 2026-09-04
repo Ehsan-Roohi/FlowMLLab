@@ -7,10 +7,23 @@ import numpy as np
 
 from flowmllab.mahdavi_deeponet import (
     NOZZLE_HELD_OUT_KPA,
+    STEP_HEIGHT_ARCHIVE_SHA256,
+    STEP_HEIGHT_FILE_SHA256,
+    STEP_HEIGHT_HELD_OUT_PERCENT,
+    STEP_HEIGHT_PERCENT,
+    STEP_SOURCE_COMMIT,
     density_snapshot_matrix,
+    discover_step_source,
+    fit_step_coordinate_surrogate,
+    load_step_height_archive,
     load_nozzle_centerlines,
     manufactured_step_velocity,
     pod_spectrum,
+    step_coordinate_features,
+    validate_step_height_archives,
+    validate_step_archives_against_source,
+    validate_step_height_dataset,
+    validate_step_teaching_results,
     validate_week9_evidence,
     zonal_velocity_metrics,
 )
@@ -20,6 +33,59 @@ ROOT = Path(__file__).resolve().parents[1]
 
 
 class MahdaviDeepONetWeek9Tests(unittest.TestCase):
+    def test_real_step_source_contract(self) -> None:
+        self.assertEqual(STEP_SOURCE_COMMIT, "c3f211376b42b8dc30daad380eaef5e0ab800b5c")
+        self.assertEqual(STEP_HEIGHT_PERCENT.tolist(), [16, 21, 25, 33, 44, 50, 58, 67, 75])
+        self.assertEqual(STEP_HEIGHT_HELD_OUT_PERCENT.tolist(), [44, 67])
+        self.assertEqual(len(STEP_HEIGHT_FILE_SHA256), 9)
+
+    def test_compact_step_archives_are_file_separated_and_complete(self) -> None:
+        report = validate_step_height_archives(ROOT)
+        self.assertEqual(report["status"], "pass")
+        self.assertEqual(report["archive_sha256"], STEP_HEIGHT_ARCHIVE_SHA256)
+        self.assertTrue(report["file_level_test_isolation"])
+        learning = load_step_height_archive(ROOT, split="learning")
+        test = load_step_height_archive(ROOT, split="test")
+        self.assertFalse(set(learning).intersection(test))
+        self.assertEqual(sorted(test), [44, 67])
+        self.assertEqual(len(test[44]["u"]), 21180)
+
+    def test_training_store_cannot_supply_a_sealed_case(self) -> None:
+        learning = load_step_height_archive(ROOT, split="learning")
+        first = learning[16]
+        bounds = (
+            float(first["x"].min()), float(first["x"].max()),
+            float(first["y"].min()), float(first["y"].max()),
+        )
+        with self.assertRaises(KeyError):
+            fit_step_coordinate_surrogate(
+                learning, [44], None, bounds_m=bounds, sample_size=10, max_iter=1
+            )
+
+    def test_step_coordinate_features_have_no_flow_input(self) -> None:
+        x = np.array([0.0, 25.0e-9, 80.0e-9])
+        y = np.array([12.0e-9, 4.0e-9, 8.0e-9])
+        features = step_coordinate_features(
+            0.44,
+            x,
+            y,
+            bounds_m=(0.0, 85.0e-9, 0.0, 17.0e-9),
+        )
+        self.assertEqual(features.shape, (3, 8))
+        self.assertTrue(np.isfinite(features).all())
+        self.assertTrue(np.all(features[:, 0] == 0.44))
+
+    def test_real_step_dataset_when_checkout_is_available(self) -> None:
+        source = discover_step_source(ROOT)
+        if source is None:
+            self.skipTest("pinned upstream step checkout/cache not available")
+        report = validate_step_height_dataset(source)
+        self.assertEqual(report["status"], "pass")
+        self.assertEqual(report["held_out_percent"], [44, 67])
+        self.assertEqual(report["row_counts"]["44"], 21180)
+        match = validate_step_archives_against_source(ROOT, source)
+        self.assertEqual(match["status"], "pass")
+
     def test_manufactured_step_has_solid_and_recirculation_regions(self) -> None:
         x = np.linspace(0.0, 5.0, 80)
         y = np.linspace(0.0, 1.0, 36)
@@ -67,6 +133,9 @@ class MahdaviDeepONetWeek9Tests(unittest.TestCase):
         self.assertEqual(report["status"], "pass")
         self.assertEqual(report["nozzle_cases"], 15)
         self.assertEqual(report["held_out_pressures_kpa"], [16, 25, 30])
+        self.assertEqual(report["step_dataset"]["status"], "pass")
+        self.assertFalse(report["step_teaching_validation"]["test_used_for_selection"])
+        self.assertEqual(validate_step_teaching_results(ROOT)["selected_alpha"], 0.6)
 
 
 if __name__ == "__main__":

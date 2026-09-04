@@ -1,0 +1,6 @@
+model,alpha,validation_global_relative_l2_percent,validation_vortex_relative_l2_percent,eligible_global_guard,selected
+unweighted,,5.445122169,87.963854380,True,False
+zonal,0.5,6.571976074,35.046585807,True,False
+zonal,0.6,7.320898032,33.811286542,True,True
+zonal,0.7,7.934615088,36.453742389,False,False
+zonal,0.8,11.238226186,32.372398682,False,False

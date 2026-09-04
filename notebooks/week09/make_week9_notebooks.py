@@ -94,15 +94,15 @@ print("FlowMLLab root:", REPO_ROOT)
 def lab1_cells():
     return [
         md(r"""
-# Week 9 Lab 1 — Micro-step DeepONet and physics-guided zonal loss
+# Week 9 Lab 1 — Real micro-step DSMC data, leakage audit, and zonal learning
 
-<!-- MIE690A article-aligned validation v4 -->
+<!-- MIE690A real-step-data validation v5 -->
 
 <!-- FLOWMLLAB_COLAB_LAUNCH_V1 -->
 [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/Ehsan-Roohi/FlowMLLab/blob/main/notebooks/week09/W9_Lab1_Microstep_Zonal_DeepONet_Student.ipynb)
 
-**Runtime:** CPU, normally under 2 minutes. **Prerequisites:** case-wise data
-splits, relative error, and the basic idea of a neural operator.
+**Runtime:** CPU, normally 1–3 minutes with the included compact data.
+**Prerequisites:** case-wise splits, relative error, and neural operators.
 
 This lab turns the Roohi--Mahdavi article *Analysis of the rarefied flow at
 micro-step using a DeepONet surrogate model with a physics-guided zonal loss
@@ -116,51 +116,135 @@ By the end, you should be able to:
 1. distinguish a parameter-to-field operator from pointwise regression;
 2. keep every geometry case entirely inside one split;
 3. explain why a global mean loss can hide recirculation failure;
-4. select a zonal-loss weight using validation cases only; and
-5. separate retained article evidence from a manufactured method demonstration.
+4. select a zonal-loss weight using validation cases only;
+5. detect privileged-input leakage in a published workflow; and
+6. distinguish data integrity from independent DSMC verification.
 """),
         md(r"""
 ## Evidence and claim contract — read before code
 
-The paper's DSMC micro-step fields and trained checkpoint are not in the public
-repositories audited for this lesson. Therefore:
+The nine real DSMC height fields originate in the authors'
+[`roohi-step-dnn-mahdavi`](https://github.com/Ehsan-Roohi/roohi-step-dnn-mahdavi)
+repository at commit `c3f211376b42b8dc30daad380eaef5e0ab800b5c`. With the
+corresponding author's explicit permission, FlowMLLab includes two compact
+derivatives whose hashes trace back to all nine source files. The seven
+development/validation cases and two held-out tests live in different files.
 
-- the table loaded below is **retained paper evidence**;
-- the velocity fields generated in this notebook are **manufactured teaching
-  fields**, not DSMC and not a reproduction of the paper;
-- the fitted model below is a linearized branch--trunk operator used to expose
-  the loss tradeoff, not the paper's neural checkpoint; and
-- the held-out ratios 44% and 67% mirror reported article tests, but the
-  notebook numbers must never be quoted as article accuracy.
+Three evidence levels stay separate:
 
-The useful scientific question remains real: when the reverse-flow region is
-small, can a globally good operator still be locally unacceptable?
+- **source data:** the nine published, smoothed DSMC fields;
+- **retained article evidence:** the paper's MSE/GMSE/zonal table;
+- **notebook result:** a new leakage-free coordinate-network baseline trained
+  here. It is not the paper's C-DeepONet checkpoint.
+
+The notebook model receives only $h/H$, $(x,y)$, and known geometry. It never
+receives held-out $U,V$, a mask computed from held-out $U$, or a local patch
+constructed from the held-out flow field.
 """),
         code(BOOTSTRAP),
         code(r"""
 from flowmllab.mahdavi_deeponet import (
-    manufactured_step_velocity,
-    zonal_velocity_metrics,
+    STEP_HEIGHT_DEVELOPMENT_PERCENT,
+    STEP_HEIGHT_HELD_OUT_PERCENT,
+    STEP_HEIGHT_VALIDATION_PERCENT,
+    STEP_SOURCE_COMMIT,
+    evaluate_step_coordinate_surrogate,
+    fit_step_coordinate_surrogate,
+    load_step_height_archive,
+    predict_step_coordinate_surrogate,
 )
 
 paper = pd.read_csv(RESULTS / "step_paper_evidence.csv")
 display(paper.pivot(index="objective", columns="scope", values="reported_error_percent"))
+
+manifest = json.loads((RESULTS / "step_source_manifest.json").read_text())
+learning_heights = np.concatenate([
+    STEP_HEIGHT_DEVELOPMENT_PERCENT,
+    STEP_HEIGHT_VALIDATION_PERCENT,
+])
+learning_cases = load_step_height_archive(REPO_ROOT, split="learning")
+first_case = learning_cases[int(STEP_HEIGHT_DEVELOPMENT_PERCENT[0])]
+bounds_m = (
+    float(first_case["x"].min()), float(first_case["x"].max()),
+    float(first_case["y"].min()), float(first_case["y"].max()),
+)
+print("source commit:", STEP_SOURCE_COMMIT)
+print("opened archive: step_height_learning_7cases.npz only")
+print("development:", STEP_HEIGHT_DEVELOPMENT_PERCENT.tolist())
+print("validation:", STEP_HEIGHT_VALIDATION_PERCENT.tolist())
+print("sealed test:", STEP_HEIGHT_HELD_OUT_PERCENT.tolist())
 """),
         md(r"""
-## 1. DeepONet as a parameter-to-field map
+## 1. Start with the real flow and its geometry
 
-For a geometry parameter $h/H$ and query coordinate $\mathbf{y}=(x,y)$, a
-DeepONet has the separable form
+The parent grid has 200 streamwise by 120 transverse locations. Points inside
+the solid step are absent, so the number of fluid points changes with $h/H$.
+The plot below uses equal physical axis scaling: the step is not stretched to
+make the recirculation region look larger.
+"""),
+        code(r"""
+def on_parent_grid(case, values):
+    xs, ys = np.unique(case["x"]), np.unique(case["y"])
+    field = np.full((len(ys), len(xs)), np.nan)
+    ix = np.searchsorted(xs, case["x"])
+    iy = np.searchsorted(ys, case["y"])
+    field[iy, ix] = values
+    return xs, ys, field
+
+example = learning_cases[50]
+xs, ys, u_grid = on_parent_grid(example, example["u"])
+fig, ax = plt.subplots(figsize=(11.0, 3.1), constrained_layout=True)
+image = ax.pcolormesh(xs * 1e9, ys * 1e9, np.ma.masked_invalid(u_grid),
+                      shading="nearest", cmap="coolwarm")
+ax.contour(xs * 1e9, ys * 1e9, np.ma.masked_invalid(u_grid),
+           levels=[0.0], colors="black", linewidths=1.0)
+ax.set(xlabel="x (nm)", ylabel="y (nm)", title=r"Real smoothed DSMC field, $h/H=0.50$")
+ax.set_aspect("equal", adjustable="box")
+fig.colorbar(image, ax=ax, label="U (source units)")
+plt.show()
+"""),
+        md(r"""
+## 2. What is—and is not—validated about the DSMC labels
+
+SHA-256, finite values, row counts, and grid topology establish **data
+integrity**. They do not independently establish DSMC convergence. The public
+repository does not yet document the following items at a level that this
+course can independently reproduce:
+
+1. cell size relative to local mean free path;
+2. time step relative to local collision time;
+3. particles per cell;
+4. sampling duration, independent seeds, and confidence intervals;
+5. statistical uncertainty near separation/reattachment; and
+6. wall reflection model and accommodation coefficients.
+
+Students must report these as provenance gaps—not silently invent values. Also,
+the two studies vary Kn at fixed geometry and $h/H$ at fixed Kn=0.01. Joint
+$(Kn,h/H)$ generalization has not been demonstrated.
+"""),
+        code(r"""
+provenance_gaps = pd.Series(manifest["dsmc_provenance_status"], name="status")
+display(provenance_gaps.to_frame())
+print("scope:", manifest["study_scope"])
+"""),
+        md(r"""
+## 3. Define a leakage-free coordinate surrogate
+
+For a geometry parameter $h/H$ and query coordinate $\mathbf y=(x,y)$, a
+standard DeepONet has the form
 
 $$
 \widehat{G}(h/H)(\mathbf{y})=
 \sum_{k=1}^{r} b_k(h/H)\,t_k(\mathbf{y})+b_0.
 $$
 
-The **branch** network encodes the input case; the **trunk** network encodes the
-query coordinate. All points from one height are correlated parts of a single
-operator sample. Randomly splitting points would put the same geometry in both
-training and test sets and produce leakage.
+The paper's public code additionally constructs a local $U,V$ patch from the
+same case—including at inference. That is a useful **privileged-input
+reconstruction**, but it is not a solver-independent parameter-to-field
+surrogate. Here we use a small coordinate MLP as a transparent CPU baseline.
+Its features contain only the height ratio, normalized coordinates, and a
+wall-relative coordinate computed from the known step geometry. The required
+assignment later replaces this baseline with a strict branch/trunk dot product.
 
 The paper defines the recirculation zone from the reference streamwise
 velocity, $U<0$, and balances two separately normalized regional errors:
@@ -170,125 +254,56 @@ $$
 (1-\alpha)\mathcal L_{U\ge 0}.
 $$
 
-Predict before running: as $\alpha$ increases, which error should decrease,
-and what global tradeoff might appear?
+For the CPU baseline, exact zonal weighting is implemented by deterministic
+stratified resampling: a fraction $\alpha$ of optimizer samples comes from
+$U<0$ and $1-\alpha$ from the main-flow zone. No test-derived mask is ever used
+during fitting.
 """),
         code(r"""
-x = np.linspace(0.0, 5.0, 72)
-y = np.linspace(0.0, 1.0, 32)
-xx, yy = np.meshgrid(x, y)
-u_demo, v_demo, solid_demo = manufactured_step_velocity(xx, yy, 0.44)
+def fit_coordinate_surrogate(selected_heights, alpha, *, seed=690, sample_size=60_000):
+    return fit_step_coordinate_surrogate(
+        learning_cases, selected_heights, alpha, bounds_m=bounds_m,
+        seed=seed, sample_size=sample_size,
+    )
 
-masked_u = np.ma.array(u_demo, mask=solid_demo)
-fig, ax = plt.subplots(figsize=(10.5, 3.0), constrained_layout=True)
-levels = np.linspace(-0.7, 1.55, 24)
-contour = ax.contourf(xx, yy, masked_u, levels=levels, cmap="coolwarm", extend="both")
-ax.contour(xx, yy, masked_u, levels=[0.0], colors="black", linewidths=1.1)
-ax.fill_between([0, 1], 0, 0.44, color="0.2", label="solid step")
-ax.set(xlabel=r"$x/H$", ylabel=r"$y/H$", title="Manufactured teaching field, $h/H=0.44$")
-ax.set_aspect("equal", adjustable="box")
-fig.colorbar(contour, ax=ax, label=r"$U/U_0$")
-plt.show()
 
-print("This plot is pedagogical, not article DSMC data.")
+def predict_case(fitted, height, case):
+    return predict_step_coordinate_surrogate(fitted, int(height), case)
+
+
+def evaluate_model(fitted, selected_heights, case_store):
+    return pd.DataFrame(evaluate_step_coordinate_surrogate(
+        fitted, case_store, selected_heights,
+    ))
 """),
         md(r"""
-## 2. A reviewable linear branch--trunk operator
+## 4. Freeze the case-wise split and selection rule
 
-To isolate the effect of the objective, we use polynomial branch features of
-$h/H$ and a fixed, low-rank spatial trunk. Their outer products form a
-separable operator basis. Weighted least squares then changes only the loss,
-not the data, basis, optimizer tolerance, or split.
+The source dataset contains exactly nine heights. We reserve H44 and H67 for
+the final test, use H33 and H58 for validation, and fit candidate settings only
+on H16, H21, H25, H50, and H75. Every point from a geometry remains in one
+split. This is stricter than randomly splitting points from the same cases.
 
-This is the linear limit of the branch--trunk idea. An assignment extension at
-the end replaces both feature maps with small neural networks while preserving
-the same split and metrics.
-"""),
-        code(r"""
-def operator_design(height_ratio):
-    xn = xx / x.max()
-    local = [
-        np.exp(-((xx - xc) / sx) ** 2 - (yy / sy) ** 2)
-        for xc, sx, sy in ((1.25, .45, .16), (1.70, .65, .22), (2.20, .90, .28))
-    ]
-    trunk = np.stack([
-        np.ones_like(xx), xn, yy, xn**2, yy**2, xn * yy,
-        np.sin(np.pi * yy), np.cos(np.pi * yy), *local,
-        xx * local[1], yy * local[1],
-    ], axis=-1)
-    branch = np.array([1.0, height_ratio, height_ratio**2, height_ratio**3])
-    return (trunk[..., None, :] * branch[None, None, :, None]).reshape(*xx.shape, -1)
-
-
-def fit_operator(case_heights, alpha=None):
-    designs, u_targets, v_targets, vortex_flags = [], [], [], []
-    for height in case_heights:
-        u, v, solid = manufactured_step_velocity(xx, yy, height)
-        valid = ~solid
-        designs.append(operator_design(height)[valid])
-        u_targets.append(u[valid])
-        v_targets.append(v[valid])
-        vortex_flags.append(u[valid] < 0.0)
-    design = np.vstack(designs)
-    u_target = np.concatenate(u_targets)
-    v_target = np.concatenate(v_targets)
-    vortex = np.concatenate(vortex_flags)
-    if alpha is None:
-        weight = np.full(len(u_target), 1.0 / len(u_target))
-    else:
-        weight = np.where(
-            vortex, alpha / vortex.sum(), (1.0 - alpha) / (~vortex).sum()
-        )
-    normal = design.T @ (weight[:, None] * design) + 1e-7 * np.eye(design.shape[1])
-    coef_u = np.linalg.solve(normal, design.T @ (weight * u_target))
-    coef_v = np.linalg.solve(normal, design.T @ (weight * v_target))
-    return coef_u, coef_v
-
-
-def evaluate_operator(coefficients, case_heights):
-    coef_u, coef_v = coefficients
-    rows = []
-    for height in case_heights:
-        u, v, solid = manufactured_step_velocity(xx, yy, height)
-        design = operator_design(height)
-        metrics = zonal_velocity_metrics(
-            u, v, design @ coef_u, design @ coef_v,
-            alpha=0.7, valid_mask=~solid,
-        )
-        rows.append({"h_over_H": height, **metrics})
-    return pd.DataFrame(rows)
-"""),
-        md(r"""
-## 3. Freeze the split and selection rule
-
-We reserve 44% and 67% for the final teaching test. Heights 40% and 60% are
-validation cases. The remaining six cases fit the operator. No spatial point
-from a reserved geometry enters fitting.
-
-**Predeclared rule:** among $\alpha\in\{0.3,0.5,0.6,0.7,0.8\}$, choose the
+**Predeclared rule:** among $\alpha\in\{0.5,0.6,0.7,0.8\}$, choose the
 largest vortex improvement whose validation global relative error is no more
 than two percentage points worse than the unweighted fit. This prevents a
 zonal win purchased by an unlimited global failure.
 """),
         code(r"""
-all_heights = np.array([.25, .30, .35, .40, .44, .50, .55, .60, .67, .72])
-test_heights = np.array([.44, .67])
-validation_heights = np.array([.40, .60])
-development_heights = np.array([
-    value for value in all_heights
-    if value not in set(test_heights) | set(validation_heights)
-])
-print("development:", development_heights)
-print("validation:", validation_heights)
-print("unopened teaching test:", test_heights)
-
-baseline_validation = evaluate_operator(
-    fit_operator(development_heights, alpha=None), validation_heights
+baseline_fit = fit_coordinate_surrogate(STEP_HEIGHT_DEVELOPMENT_PERCENT, None)
+baseline_validation = evaluate_model(
+    baseline_fit, STEP_HEIGHT_VALIDATION_PERCENT, learning_cases,
 )
 baseline_global = 100 * baseline_validation["full_relative_l2"].mean()
 selection_rows = []
-for alpha in (.3, .5, .6, .7, .8):
-    metrics = evaluate_operator(fit_operator(development_heights, alpha), validation_heights)
+candidate_models = {}
+for alpha in (.5, .6, .7, .8):
+    candidate_models[alpha] = fit_coordinate_surrogate(
+        STEP_HEIGHT_DEVELOPMENT_PERCENT, alpha,
+    )
+    metrics = evaluate_model(
+        candidate_models[alpha], STEP_HEIGHT_VALIDATION_PERCENT, learning_cases,
+    )
     selection_rows.append({
         "alpha": alpha,
         "validation_global_percent": 100 * metrics["full_relative_l2"].mean(),
@@ -302,82 +317,107 @@ selected_alpha = float(eligible.sort_values("validation_vortex_percent").iloc[0]
 display(selection)
 print(f"unweighted validation global error: {baseline_global:.3f}%")
 print("selected alpha:", selected_alpha)
-assert selected_alpha == 0.6
+if selected_alpha != 0.6:
+    print("Version-sensitive teaching result: the article used alpha=0.6;",
+          "this run selected", selected_alpha)
 """),
         md(r"""
-## Stop: teaching-test gate
+## Stop: held-out geometry gate
 
-At this point the split, basis, regularization, candidate weights, and selection
-rule are frozen. Write your prediction for the two reserved heights. Only then
-run the next cell. If you change a choice after viewing the result, these cases
-become development data and must no longer be called held out.
+At this point the split, architecture, optimizer, sample budget, seed, candidate
+weights, and selection rule are frozen. Write your expected global and vortex
+errors for H44 and H67. Only then run the next cell. If any choice changes after
+viewing these fields, they are no longer held out.
 """),
         code(r"""
-fit_heights = np.concatenate([development_heights, validation_heights])
-global_test = evaluate_operator(fit_operator(fit_heights, None), test_heights)
-zonal_test = evaluate_operator(fit_operator(fit_heights, selected_alpha), test_heights)
+final_unweighted = fit_coordinate_surrogate(learning_heights, None)
+final_zonal = fit_coordinate_surrogate(learning_heights, selected_alpha)
+held_out_cases = load_step_height_archive(REPO_ROOT, split="test")
+print("opened archive after freeze: step_height_test_2cases.npz")
+unweighted_test = evaluate_model(
+    final_unweighted, STEP_HEIGHT_HELD_OUT_PERCENT, held_out_cases,
+)
+zonal_test = evaluate_model(
+    final_zonal, STEP_HEIGHT_HELD_OUT_PERCENT, held_out_cases,
+)
+comparison = pd.concat([
+    unweighted_test.assign(model="unweighted"),
+    zonal_test.assign(model=f"zonal alpha={selected_alpha:.1f}"),
+], ignore_index=True)
+display(comparison[["model", "height_percent", "full_relative_l2", "vortex_relative_l2"]])
 
-comparison = pd.DataFrame({
-    "model": ["unweighted", "zonal"],
-    "mean_global_percent": [
-        100 * global_test["full_relative_l2"].mean(),
-        100 * zonal_test["full_relative_l2"].mean(),
-    ],
-    "mean_vortex_percent": [
-        100 * global_test["vortex_relative_l2"].mean(),
-        100 * zonal_test["vortex_relative_l2"].mean(),
-    ],
-})
-display(comparison)
-
-fig, ax = plt.subplots(figsize=(7.4, 4.1), constrained_layout=True)
-locations = np.arange(2)
-width = 0.34
-ax.bar(locations - width / 2, comparison["mean_global_percent"], width, label="global")
-ax.bar(locations + width / 2, comparison["mean_vortex_percent"], width, label="recirculation")
-ax.set_xticks(locations, comparison["model"])
-ax.set(ylabel="mean relative L2 error (%)", title="Manufactured held-out cases: objective tradeoff")
-ax.legend(frameon=False)
-ax.grid(axis="y", alpha=.25)
+fig, axes = plt.subplots(2, 3, figsize=(13.2, 4.7), constrained_layout=True)
+for row, height in enumerate(STEP_HEIGHT_HELD_OUT_PERCENT):
+    case = held_out_cases[int(height)]
+    prediction = predict_case(final_zonal, height, case)
+    panels = [case["u"], prediction[:, 0], np.abs(prediction[:, 0] - case["u"])]
+    titles = ["DSMC target U", "leakage-free prediction U", "absolute U error"]
+    for axis, values, title in zip(axes[row], panels, titles):
+        gx, gy, field = on_parent_grid(case, values)
+        artist = axis.pcolormesh(gx * 1e9, gy * 1e9, np.ma.masked_invalid(field),
+                                 shading="nearest", cmap="coolwarm" if "error" not in title else "magma")
+        axis.set_title(f"H{int(height)} — {title}")
+        axis.set(xlabel="x (nm)", ylabel="y (nm)")
+        axis.set_aspect("equal", adjustable="box")
+        fig.colorbar(artist, ax=axis, shrink=.78)
 plt.show()
 """),
         md(r"""
-## 4. Interpret without mixing evidence levels
+## 5. Audit the paper-repository inference contract
 
-The manufactured experiment should show the intended mechanism: the selected
-zonal objective reduces reverse-flow error while accepting a modest increase
-in whole-field error. The paper reports the same qualitative tradeoff on its
-research data: zonal loss changes the reported recirculation-zone error from
+The upstream implementation forms each inference patch by interpolating the
+held-out DSMC $U,V$ field and then passes that patch to the network. A
+zero-training baseline that simply reads the nearest velocity already present
+in that target-derived patch reaches 4.396% on H44 and 6.793% on H67—lower than
+the stored upstream model errors. The table is an audit of information flow,
+not a criticism of the DSMC data.
+"""),
+        code(r"""
+patch_audit = pd.read_csv(RESULTS / "step_privileged_input_audit.csv")
+display(patch_audit)
+assert (
+    patch_audit["target_patch_nearest_sample_relative_l2_percent"]
+    < patch_audit["upstream_stored_prediction_relative_l2_percent"]
+).all()
+"""),
+        md(r"""
+## 6. Interpret without mixing evidence levels
+
+The real-data classroom experiment should show the intended mechanism: the
+selected zonal objective reduces reverse-flow error while accepting a modest
+increase in whole-field error. The paper reports the same qualitative tradeoff:
+zonal loss changes the reported recirculation-zone error from
 14.6135% (MSE) to 11.9413%, while the full-domain value changes from 2.1739%
 to 2.2254%.
 
-Those percentages came from the article table, not the bars above. The
-notebook's role is to let you inspect *why* the tradeoff occurs and *how* to
-select a weight without opening the final cases.
+Those four percentages come from the article table. They are not the notebook
+MLP errors and are not the upstream SWAG stored-prediction errors.
 
 ### DeepONet implementation exercise
 
-Replace `operator_design` with two small Keras networks:
+Replace the coordinate MLP with two small Keras networks:
 
 - branch input: one scalar, $h/H$;
 - trunk input: two scalars, $(x/H,y/H)$;
 - output: dot product of equal-width branch and trunk vectors, with separate
   heads for $U$ and $V$.
 
-Keep complete geometry cases together. Implement the regional means before
-mixing them with $\alpha$; a pointwise weight without regional normalization is
-not the same objective. Compare a standard DeepONet with a larger fusion model
-under the same sparse case budget—the paper reports that additional capacity
-can overfit when only seven cases are available.
+Do **not** add a velocity patch unless it comes from a deployable, independently
+specified sensor or reduced-order predictor. Keep complete geometry cases
+together. Implement regional means before mixing them with fixed $\alpha$;
+adaptive $\alpha$ is a separate experiment, not the fixed-loss paper protocol.
 
 ### Required submission
 
-1. a signed split table;
-2. the validation-only $\alpha$ sweep;
-3. global and reverse-flow metrics for every held-out geometry;
-4. one contour locating the largest local error; and
-5. one paragraph stating which outputs are manufactured and which are retained
-   article evidence.
+1. the source commit and nine verified hashes;
+2. a signed, case-wise split table;
+3. the validation-only $\alpha$ sweep;
+4. global and reverse-flow metrics for every held-out geometry;
+5. one equal-aspect contour locating the largest local error;
+6. an input-provenance diagram proving that held-out $U,V$ never enters the
+   model; and
+7. a DSMC verification checklist that labels unavailable setup values as
+   unavailable.
 """),
     ]
 

@@ -66,9 +66,14 @@ class FlowMLLabCoreTests(unittest.TestCase):
         self.assertEqual(args.root, ROOT)
 
     def test_mahdavi_cli_is_exposed(self) -> None:
-        args = build_parser().parse_args(["mahdavi", "--root", str(ROOT)])
+        args = build_parser().parse_args([
+            "mahdavi", "--root", str(ROOT), "--step-source", str(ROOT),
+            "--require-step-data",
+        ])
         self.assertEqual(args.command, "mahdavi")
         self.assertEqual(args.root, ROOT)
+        self.assertEqual(args.step_source, ROOT)
+        self.assertTrue(args.require_step_data)
 
     def test_probabilistic_uq_cli_is_exposed(self) -> None:
         args = build_parser().parse_args(["uq", "--root", str(ROOT)])

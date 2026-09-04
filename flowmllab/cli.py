@@ -57,9 +57,19 @@ def build_parser() -> argparse.ArgumentParser:
     gasdynamics.add_argument("--root", type=Path, help="FlowMLLab checkout root")
     mahdavi = subparsers.add_parser(
         "mahdavi",
-        help="verify Week-9 micro-step evidence and public micro-nozzle DSMC derivative",
+        help="verify Week-9 micro-step and micro-nozzle DSMC evidence",
     )
     mahdavi.add_argument("--root", type=Path, help="FlowMLLab checkout root")
+    mahdavi.add_argument(
+        "--step-source",
+        type=Path,
+        help="checkout/cache of Ehsan-Roohi/roohi-step-dnn-mahdavi",
+    )
+    mahdavi.add_argument(
+        "--require-step-data",
+        action="store_true",
+        help="require a hash-checked upstream checkout in addition to included archives",
+    )
     uq = subparsers.add_parser(
         "uq", help="verify retained probabilistic-UQ cavity evidence"
     )
@@ -84,7 +94,11 @@ def main(argv: list[str] | None = None) -> int:
         if args.command == "gasdynamics":
             return verify_gas_dynamics_week8(args.root)
         if args.command == "mahdavi":
-            return verify_mahdavi_deeponet_week9(args.root)
+            return verify_mahdavi_deeponet_week9(
+                args.root,
+                args.step_source,
+                args.require_step_data,
+            )
         if args.command == "uq":
             root = discover_repository_root(args.root)
             try:

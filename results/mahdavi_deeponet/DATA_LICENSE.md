@@ -1,5 +1,22 @@
 # Data attribution and license
 
+## Micro-step source fields
+
+The nine step-height fields used by Lab 1 originate in the separate
+[`roohi-step-dnn-mahdavi`](https://github.com/Ehsan-Roohi/roohi-step-dnn-mahdavi)
+repository, pinned here at commit
+`c3f211376b42b8dc30daad380eaef5e0ab800b5c`. At that revision the source
+repository states that no general license has been assigned. The corresponding
+author explicitly authorized publication of the compact teaching derivatives
+`step_height_learning_7cases.npz` and `step_height_test_2cases.npz` in
+FlowMLLab on 2026-09-04. That permission does not relicense the upstream
+Tecplot files or grant broader reuse rights. The two archives preserve the
+complete source point rows (including repeated zone-boundary coordinates),
+store `U,V` as float32, and separate the seven learning/validation cases from
+the two sealed tests.
+
+## Micro-nozzle derivative
+
 `nozzle_centerline_15cases.npz` is an adapted, reduced centerline derivative of
 the 15 DSMC snapshots published in **Shock-Centered Micro-Nozzle POD
 Reproducibility** by Ehsan Roohi and Amirmehran Mahdavi:

@@ -18,3 +18,4 @@ lectures/source/*.out
 lectures/source/*.pdf
 lectures/source/*.toc
 tmp/
+.external/

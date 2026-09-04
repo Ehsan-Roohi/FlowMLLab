@@ -17,6 +17,8 @@ sys.path.insert(0, str(ROOT))
 
 from flowmllab.mahdavi_deeponet import (  # noqa: E402
     NOZZLE_PRESSURES_KPA,
+    STEP_HEIGHT_ARCHIVE_SHA256,
+    STEP_TEACHING_RESULT_SHA256,
     detect_density_shock,
     density_snapshot_matrix,
     pod_spectrum,
@@ -128,7 +130,7 @@ def main() -> None:
         }
 
     provenance = {
-        "schema_version": 1,
+        "schema_version": 2,
         "source_repository": SOURCE_URL,
         "source_commit": SOURCE_COMMIT,
         "source_license": "CC BY 4.0 for DSMC data and reference outputs",
@@ -138,22 +140,41 @@ def main() -> None:
             "centerline; seven physical fields retained; density-shock diagnostics "
             "recomputed with FlowMLLab's documented detector."
         ),
-        "derived_files": {archive_path.name: digest(archive_path)},
+        "derived_files": {
+            archive_path.name: digest(archive_path),
+            **STEP_HEIGHT_ARCHIVE_SHA256,
+            **STEP_TEACHING_RESULT_SHA256,
+        },
         "paper_sources": {
             "microstep_doi": "https://doi.org/10.1007/s10404-026-02899-8",
             "microstep_arxiv": "https://arxiv.org/abs/2509.17254",
+            "microstep_data": "https://github.com/Ehsan-Roohi/roohi-step-dnn-mahdavi",
+            "microstep_data_commit": "c3f211376b42b8dc30daad380eaef5e0ab800b5c",
             "micro_nozzle_arxiv": "https://arxiv.org/abs/2605.12723",
             "micro_nozzle_data": SOURCE_URL,
             "micro_nozzle_doi": "https://doi.org/10.1063/5.0343101",
         },
         "claim_boundary": {
-            "microstep_teaching_demo": (
-                "The generated backward-facing-step fields are manufactured teaching "
-                "fields, not the article's DSMC snapshots or a reproduction of its checkpoint."
+            "microstep_data": (
+                "The lesson uses two compact derivatives of nine real DSMC height fields "
+                "at a pinned source commit, published in FlowMLLab with the corresponding "
+                "author's explicit permission; no general upstream-data license is implied."
             ),
-            "microstep_retained_evidence": (
-                "Reported article metrics are transcribed as immutable evidence and are "
-                "never presented as notebook-generated results."
+            "microstep_teaching_model": (
+                "The leakage-free coordinate surrogate receives only h/H, x, y, and known "
+                "geometry; it does not receive U, V, pressure, target masks, or target-field patches."
+            ),
+            "microstep_published_model": (
+                "The published-repository C-DeepONet is retained as a privileged-input "
+                "reconstruction because its inference patches come from the held-out DSMC U,V field."
+            ),
+            "microstep_scope": (
+                "Kn and h/H generalization are demonstrated separately, not jointly; "
+                "the height study is at fixed Kn=0.01."
+            ),
+            "microstep_dsmc_validation": (
+                "The public fields do not establish cell-size, time-step, particles-per-cell, "
+                "sampling/replicate uncertainty, or wall accommodation metadata."
             ),
             "micro_nozzle_data": (
                 "The compact archive is a deterministic centerline derivative of all 15 "

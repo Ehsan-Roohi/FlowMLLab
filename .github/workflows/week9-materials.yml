@@ -7,6 +7,8 @@ on:
       - ".github/workflows/week9-materials.yml"
       - "flowmllab/mahdavi_deeponet.py"
       - "notebooks/week09/make_week9_notebooks.py"
+      - "qa/build_step_height_archive.py"
+      - "qa/run_step_height_teaching_validation.py"
       - "qa/build_week9_mahdavi_deeponet_data.py"
       - "results/mahdavi_deeponet/**"
       - "tests/test_mahdavi_deeponet.py"
@@ -18,10 +20,23 @@ jobs:
   rebuild:
     runs-on: ubuntu-latest
     timeout-minutes: 20
+    env:
+      OMP_NUM_THREADS: "1"
+      OPENBLAS_NUM_THREADS: "1"
+      MKL_NUM_THREADS: "1"
     steps:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
+
+      - name: Check out pinned micro-step source data
+        uses: actions/checkout@v4
+        with:
+          repository: Ehsan-Roohi/roohi-step-dnn-mahdavi
+          ref: c3f211376b42b8dc30daad380eaef5e0ab800b5c
+          path: .external/roohi-step-dnn-mahdavi
+          sparse-checkout: data/height/smoothed
+          sparse-checkout-cone-mode: false
 
       - uses: actions/setup-python@v5
         with:
@@ -36,10 +51,20 @@ jobs:
       - name: Rebuild student notebooks
         run: python notebooks/week09/make_week9_notebooks.py
 
+      - name: Reproduce leakage-free step validation
+        run: |
+          python qa/run_step_height_teaching_validation.py --root .
+          git diff --exit-code -- \
+            results/mahdavi_deeponet/step_teaching_selection.csv \
+            results/mahdavi_deeponet/step_teaching_test_metrics.csv \
+            results/mahdavi_deeponet/step_teaching_protocol.json
+
       - name: Run software and release gates
         run: |
           python -m unittest discover -s tests -v
-          flowmllab mahdavi --root .
+          flowmllab mahdavi --root . \
+            --step-source .external/roohi-step-dnn-mahdavi \
+            --require-step-data
           python qa/validate_course_release.py
 
       - name: Commit generated notebooks

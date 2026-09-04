@@ -187,13 +187,21 @@ def verify_gas_dynamics_week8(root: str | Path | None = None) -> int:
     return 0
 
 
-def verify_mahdavi_deeponet_week9(root: str | Path | None = None) -> int:
-    """Verify Week-9 article evidence and the compact public DSMC derivative."""
+def verify_mahdavi_deeponet_week9(
+    root: str | Path | None = None,
+    step_source: str | Path | None = None,
+    require_step_source: bool = False,
+) -> int:
+    """Verify Week-9 article evidence and public DSMC data contracts."""
     from .mahdavi_deeponet import validate_week9_evidence  # noqa: PLC0415
 
     repository = discover_repository_root(root)
     try:
-        report = validate_week9_evidence(repository)
+        report = validate_week9_evidence(
+            repository,
+            step_source=step_source,
+            require_step_source=require_step_source,
+        )
     except (OSError, ValueError, KeyError) as error:
         raise ValidationError(f"Week-9 Roohi--Mahdavi evidence failed: {error}") from error
     print(format_report(report))

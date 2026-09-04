@@ -5,8 +5,9 @@ This optional research-to-classroom extension contains two CPU-friendly labs:
 1. [`W9_Lab1_Microstep_Zonal_DeepONet_Student.ipynb`](W9_Lab1_Microstep_Zonal_DeepONet_Student.ipynb)
    turns the May 2026 micro-step paper into a lesson on complete-geometry
    splits, recirculation-zone metrics, and validation-only loss selection. The
-   paper's DSMC fields are not public, so the executable field experiment is
-   explicitly manufactured and kept separate from retained article metrics.
+   executable experiment uses compact derivatives of all nine real DSMC
+   height fields, with the seven learning/validation cases physically separate
+   from the two held-out tests. The model receives no target-derived patch.
 2. [`W9_Lab2_Shock_Aligned_Nozzle_DeepONet_Student.ipynb`](W9_Lab2_Shock_Aligned_Nozzle_DeepONet_Student.ipynb)
    uses a compact attributed derivative of all 15 public micro-nozzle DSMC
    snapshots. Students reproduce the physical/shock-centered density POD,

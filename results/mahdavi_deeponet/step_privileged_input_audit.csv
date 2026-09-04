@@ -1,0 +1,3 @@
+height_percent,upstream_stored_prediction_relative_l2_percent,target_patch_nearest_sample_relative_l2_percent,interpretation,source_commit
+44,4.924930,4.396176,target-derived patch baseline is lower than stored model error,c3f211376b42b8dc30daad380eaef5e0ab800b5c
+67,8.232316,6.793364,target-derived patch baseline is lower than stored model error,c3f211376b42b8dc30daad380eaef5e0ab800b5c

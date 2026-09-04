@@ -42,14 +42,14 @@ only for notebooks that explicitly require CUDA.
 - `week05_06/`: the original combined two-week guided-project pack. Week 5 establishes the setup, baseline, controlled modification, and checkpoint; Week 6 completes the same selected track, physical validation, reproducibility package, and final report.
 - `week07/`: D2Q9 BGK/TRT cylinder flow, a concise collide--stream--boundary algorithm walkthrough, physically gated force and Strouhal diagnostics, an executed three-grid study with a retained formal asymptotic/GCI failure, Reynolds-regime classification, strong temporal baselines, and separate one-step/recursive audits of a four-frame multi-scale CNN on a retained held-out interpolation case.
 - `week08/`: two CPU labs that start from exact branch-aware gas dynamics, then compare bracketed roots, interpolation, and physics-guided MLP evidence across five inverse problems, edge holdouts, dimensional scaling, and application workloads.
-- `week09/`: two CPU research-to-classroom labs based on the Roohi--Mahdavi micro-step and micro-nozzle studies. The first keeps manufactured loss-method data separate from article evidence; the second reproduces shock-centered POD from a checksummed derivative of 15 public DSMC snapshots before opening three held-out pressures.
+- `week09/`: two CPU research-to-classroom labs based on the Roohi--Mahdavi micro-step and micro-nozzle studies. The first uses two author-permitted, checksummed derivatives of nine real DSMC height fields with file-level test isolation; the second reproduces shock-centered POD from a checksummed derivative of 15 public DSMC snapshots before opening three held-out pressures.
 
-The Week-9 evidence contract is intentionally asymmetric. No public micro-step
-DSMC fields or checkpoint were found, so Lab 1 teaches the zonal-loss mechanism
-with manufactured fields and reads the article table separately. Lab 2 uses
-real public nozzle DSMC centerlines under CC BY 4.0, reproduces the 15-case POD
-audit, and labels its compact predictor as a teaching analog rather than the
-full research shock-aligned six-output surrogate.
+The Week-9 evidence contract is intentionally asymmetric. Lab 1 uses real
+micro-step DSMC fields under a specific author publication permission, but its
+coordinate MLP is a new leakage-free teaching baseline—not the article
+checkpoint. Lab 2 uses real public nozzle DSMC centerlines under CC BY 4.0,
+reproduces the 15-case POD audit, and labels its compact predictor as a teaching
+analog rather than the full research shock-aligned six-output surrogate.
 
 The Week-8 labs are synchronized to checksummed evidence from the author's
 `GasDynamicsSciML` repository. Lab 1 links to all nine detailed classical

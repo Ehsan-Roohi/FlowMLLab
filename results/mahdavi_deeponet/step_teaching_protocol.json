@@ -1,0 +1,67 @@
+{
+  "archive_sha256": {
+    "step_height_learning_7cases.npz": "410907d46a040d53cbbd19fd8d44eeb7b41c05150f953fd4d9c6bb479da3479d",
+    "step_height_test_2cases.npz": "f833ea965511eb690bfef094afd8f9fde660eafb24fa889ce3ec1582551b382c"
+  },
+  "candidate_alpha": [
+    0.5,
+    0.6,
+    0.7,
+    0.8
+  ],
+  "features": [
+    "h/H",
+    "normalized x",
+    "normalized y",
+    "step-relative x",
+    "geometry-derived wall coordinate",
+    "h*x",
+    "h*y",
+    "x*y"
+  ],
+  "file_level_test_isolation": true,
+  "forbidden_inputs": [
+    "held-out U",
+    "held-out V",
+    "target-derived mask",
+    "target-field patch"
+  ],
+  "model": {
+    "activation": "tanh",
+    "hidden_layers": [
+      48,
+      48
+    ],
+    "kind": "coordinate MLP teaching baseline",
+    "max_iter": 90,
+    "optimizer_sample_size": 60000,
+    "seed": 690
+  },
+  "schema_version": 1,
+  "selected_alpha": 0.6,
+  "selection_rule": "Minimize mean validation vortex relative L2 among candidates whose mean validation global relative L2 is no more than 2 percentage points above the unweighted baseline.",
+  "software": {
+    "numpy": "2.2.6",
+    "scikit_learn": "1.6.1"
+  },
+  "source_commit": "c3f211376b42b8dc30daad380eaef5e0ab800b5c",
+  "split": {
+    "development_percent": [
+      16,
+      21,
+      25,
+      50,
+      75
+    ],
+    "held_out_test_percent": [
+      44,
+      67
+    ],
+    "validation_percent": [
+      33,
+      58
+    ]
+  },
+  "test_archive_opened_only_after_model_selection_and_final_fit": true,
+  "test_used_for_selection": false
+}

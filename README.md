@@ -315,10 +315,13 @@ commits without retraining the research models.
 
 Week 9 is an optional notebook extension built from two 2026 research cases.
 [Lab 1](https://colab.research.google.com/github/Ehsan-Roohi/FlowMLLab/blob/main/notebooks/week09/W9_Lab1_Microstep_Zonal_DeepONet_Student.ipynb)
-uses the published micro-step ablation to teach why a global loss can hide a
-small reverse-flow zone. Because the article DSMC fields and trained checkpoint
-are not public, its executable velocity fields are visibly labelled
-manufactured; reported article values stay in a separate evidence table.
+uses all nine real DSMC step-height fields through two author-permitted,
+checksummed teaching archives. Five geometries develop the model, H33/H58
+select the zonal weight, and the physically separate H44/H67 file is opened
+only after the architecture and selection rule are frozen. The classroom MLP
+uses only geometry and coordinates; the upstream target-patch workflow is
+explicitly labelled privileged-input reconstruction rather than a pure
+solver-independent surrogate.
 
 [Lab 2](https://colab.research.google.com/github/Ehsan-Roohi/FlowMLLab/blob/main/notebooks/week09/W9_Lab2_Shock_Aligned_Nozzle_DeepONet_Student.ipynb)
 uses a compact, checksummed derivative of all 15 public micro-nozzle DSMC
@@ -328,8 +331,9 @@ and 30 kPa remain held out until leave-one-case-out rank selection is frozen.
 The classroom predictor is a normalized centerline POD trunk with a neural
 branch, not the paper's full two-dimensional six-output shock-aligned surrogate.
 
-Run `flowmllab mahdavi --root .` to validate the archive hash, pressure split,
-POD spectrum, article tables, and claim boundaries without retraining.
+Run `flowmllab mahdavi --root .` to validate both step archive hashes, the
+file-level 5/2/2 split, the recorded leakage-free selection/test results, the
+nozzle POD spectrum, article tables, and claim boundaries without retraining.
 
 ## POD-DeepONet validation result
 

@@ -4,6 +4,26 @@ This directory supports the two Week-9 research-to-classroom notebooks.
 
 ## What is directly reproducible here
 
+- `step_source_manifest.json` pins the micro-step source repository at
+  commit `c3f211376b42b8dc30daad380eaef5e0ab800b5c`, records SHA-256 and row-count
+  contracts for all nine smoothed height cases, freezes the 5/2/2
+  development/validation/test split, and records the still-missing DSMC setup
+  metadata.
+- `step_height_learning_7cases.npz` and `step_height_test_2cases.npz` are
+  compact full-parent-grid derivatives published with the corresponding
+  author's permission. File-level separation prevents the notebook from
+  opening H44/H67 before the final held-out gate. The QA cross-check proves
+  exact source-row coordinates and exact U,V equality after the documented
+  float32 conversion (maximum absolute quantization: `1.1432e-5` for U and
+  `3.4546e-6` for V in source units).
+- `step_privileged_input_audit.csv` records the independent audit showing that
+  the published-repository inference path constructs local input patches from
+  the held-out DSMC `U,V` field. Lab 1 therefore uses a separate leakage-free
+  coordinate surrogate whose inputs are only `h/H`, `(x,y)`, and known geometry.
+- `step_teaching_selection.csv`, `step_teaching_test_metrics.csv`, and
+  `step_teaching_protocol.json` record the new leakage-free classroom run. The
+  validation-only rule selects `alpha=0.6`; neither test archive nor a
+  target-derived feature participates in selection.
 - `nozzle_centerline_15cases.npz` is a compact derivative of all 15 public
   DSMC Tecplot snapshots in
   [`Ehsan-Roohi/roohi-nozzle-pod-reproducibility`](https://github.com/Ehsan-Roohi/roohi-nozzle-pod-reproducibility),
@@ -19,9 +39,9 @@ This directory supports the two Week-9 research-to-classroom notebooks.
 ## What is retained article evidence
 
 - `step_paper_evidence.csv` transcribes the reported full-domain versus
-  recirculation-zone ablation. The source micro-step DSMC fields and trained
-  checkpoint are not public; the accompanying notebook's flow fields are
-  explicitly manufactured for teaching.
+  recirculation-zone ablation. These values remain separate from the new
+  notebook-generated leakage-free teaching results and from the upstream
+  privileged-input stored predictions.
 - `nozzle_paper_field_errors.csv` and `nozzle_hard_case_baselines.csv`
   transcribe held-out and hard-case results from the nozzle manuscript. They
   are displayed as paper evidence, not recomputed by the compact notebook.
@@ -30,12 +50,41 @@ This directory supports the two Week-9 research-to-classroom notebooks.
   two-dimensional six-output shock-aligned surrogate.
 
 Every source file hash, derivation rule, article link, and claim boundary is in
-`provenance.json`. Rebuild the compact archive from a checkout of the source
-repository with:
+`provenance.json` and `step_source_manifest.json`. Validate a checkout of the
+step repository with:
+
+```bash
+flowmllab mahdavi --root . \
+  --step-source /path/to/roohi-step-dnn-mahdavi \
+  --require-step-data
+```
+
+Rebuild the compact nozzle archive from a checkout of its source repository
+with:
 
 ```bash
 python qa/build_week9_mahdavi_deeponet_data.py \
   --source /path/to/roohi-nozzle-pod-reproducibility --root .
 ```
 
-The derived DSMC data remain CC BY 4.0; see `DATA_LICENSE.md`.
+Rebuild the compact step archives from the pinned source checkout with:
+
+```bash
+python qa/build_step_height_archive.py \
+  --source /path/to/roohi-step-dnn-mahdavi --root .
+```
+
+Reproduce the teaching selection and held-out metrics with:
+
+```bash
+python qa/run_step_height_teaching_validation.py --root .
+```
+
+The recorded test result is deliberately reported as a tradeoff, not a single
+accuracy claim: the selected zonal model lowers vortex relative L2 from
+50.745% to 19.863% at H44 and from 83.038% to 33.257% at H67, while global
+relative L2 rises from 7.228% to 9.594% and from 5.934% to 11.267%,
+respectively.
+
+The nozzle derivative remains CC BY 4.0. The step derivatives have a separate,
+author-specific publication permission; see `DATA_LICENSE.md`.

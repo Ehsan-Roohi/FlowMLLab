@@ -84,6 +84,8 @@ REQUIRED = [
     "notebooks/week09/W9_Lab2_Shock_Aligned_Nozzle_DeepONet_Student.ipynb",
     "notebooks/week09/make_week9_notebooks.py",
     "notebooks/week09/README.md",
+    "qa/build_step_height_archive.py",
+    "qa/run_step_height_teaching_validation.py",
     "notebooks/week05_06/P0_Project_Setup.ipynb",
     "notebooks/week05_06/P1_Re_Generalization.ipynb",
     "notebooks/week05_06/P2_Physics_Guided_DNN.ipynb",
@@ -184,6 +186,13 @@ REQUIRED = [
     "results/mahdavi_deeponet/provenance.json",
     "results/mahdavi_deeponet/nozzle_centerline_15cases.npz",
     "results/mahdavi_deeponet/step_paper_evidence.csv",
+    "results/mahdavi_deeponet/step_source_manifest.json",
+    "results/mahdavi_deeponet/step_privileged_input_audit.csv",
+    "results/mahdavi_deeponet/step_height_learning_7cases.npz",
+    "results/mahdavi_deeponet/step_height_test_2cases.npz",
+    "results/mahdavi_deeponet/step_teaching_selection.csv",
+    "results/mahdavi_deeponet/step_teaching_test_metrics.csv",
+    "results/mahdavi_deeponet/step_teaching_protocol.json",
     "results/mahdavi_deeponet/nozzle_paper_field_errors.csv",
     "results/mahdavi_deeponet/nozzle_hard_case_baselines.csv",
     "results/mahdavi_deeponet/nozzle_pod_reference.csv",
@@ -261,6 +270,7 @@ def validate_notebooks() -> tuple[int, int]:
             for marker in (
                 "MIE690A article-aligned validation v3",
                 "MIE690A article-aligned validation v4",
+                "MIE690A real-step-data validation v5",
             )
         ), (
             f"missing article-alignment marker: {path}"
@@ -787,8 +797,30 @@ def validate_week9_mahdavi_deeponet_results() -> dict[str, object]:
     )
     assert provenance["source_commit"] == "e1b234ba499408d3b6224633972f939f3b2301d6"
     assert len(provenance["source_files_sha256"]) == 15
-    assert "not the article's DSMC" in provenance["claim_boundary"]["microstep_teaching_demo"]
+    assert "real DSMC" in provenance["claim_boundary"]["microstep_data"]
+    assert "does not receive" in provenance["claim_boundary"]["microstep_teaching_model"]
+    assert "privileged-input" in provenance["claim_boundary"]["microstep_published_model"]
     assert "not the paper's trained full" in provenance["claim_boundary"]["micro_nozzle_teaching_model"]
+
+    step_manifest = json.loads(
+        (result_dir / "step_source_manifest.json").read_text(encoding="utf-8")
+    )
+    assert step_manifest["source_commit"] == "c3f211376b42b8dc30daad380eaef5e0ab800b5c"
+    assert step_manifest["height_percent"] == [16, 21, 25, 33, 44, 50, 58, 67, 75]
+    assert step_manifest["split"]["held_out_test_percent"] == [44, 67]
+    assert len(step_manifest["smoothed_files"]) == 9
+    assert step_manifest["study_scope"]["joint_generalization"] == "not demonstrated"
+    assert step_manifest["derived_archives_sha256"] == report["step_dataset"]["archive_sha256"]
+    assert report["step_dataset"]["file_level_test_isolation"] is True
+    assert report["step_teaching_validation"]["test_used_for_selection"] is False
+    assert report["step_teaching_validation"]["selected_alpha"] == 0.6
+
+    patch_audit = pd.read_csv(result_dir / "step_privileged_input_audit.csv")
+    assert patch_audit["height_percent"].tolist() == [44, 67]
+    assert (
+        patch_audit["target_patch_nearest_sample_relative_l2_percent"]
+        < patch_audit["upstream_stored_prediction_relative_l2_percent"]
+    ).all()
 
     lab1 = json.loads(
         (
@@ -802,9 +834,13 @@ def validate_week9_mahdavi_deeponet_results() -> dict[str, object]:
     )
     lab1_source = "\n".join("".join(cell.get("source", [])) for cell in lab1["cells"])
     lab2_source = "\n".join("".join(cell.get("source", [])) for cell in lab2["cells"])
-    assert "manufactured" in lab1_source and "not DSMC" in lab1_source
-    assert "Freeze the split and selection rule" in lab1_source
-    assert "Stop: teaching-test gate" in lab1_source
+    assert "nine real DSMC height fields" in lab1_source
+    assert "receives held-out $U,V$" in lab1_source and "It never" in lab1_source
+    assert "Freeze the case-wise split and selection rule" in lab1_source
+    assert "Stop: held-out geometry gate" in lab1_source
+    assert "step_height_test_2cases.npz" in lab1_source
+    assert "privileged-input" in lab1_source and "reconstruction" in lab1_source
+    assert "Joint" in lab1_source and "has not been demonstrated" in lab1_source
     assert "all 15 real public DSMC snapshots" in lab2_source
     assert "leave-one-case-out" in lab2_source
     assert "Stop: held-out pressure gate" in lab2_source

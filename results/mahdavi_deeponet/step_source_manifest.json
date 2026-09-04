@@ -1,0 +1,50 @@
+{
+  "schema_version": 1,
+  "source_repository": "https://github.com/Ehsan-Roohi/roohi-step-dnn-mahdavi",
+  "source_commit": "c3f211376b42b8dc30daad380eaef5e0ab800b5c",
+  "source_license_at_commit": "No general reuse license assigned at the pinned commit.",
+  "flowmllab_distribution_permission": "The corresponding author explicitly authorized publication of the compact teaching derivatives in FlowMLLab on 2026-09-04; this permission is not a general license for the upstream Tecplot files.",
+  "study_scope": {
+    "height_study": "h/H varies at fixed Kn=0.01",
+    "knudsen_study": "Kn varies at fixed geometry",
+    "joint_generalization": "not demonstrated"
+  },
+  "height_percent": [16, 21, 25, 33, 44, 50, 58, 67, 75],
+  "split": {
+    "development_percent": [16, 21, 25, 50, 75],
+    "validation_percent": [33, 58],
+    "held_out_test_percent": [44, 67]
+  },
+  "derived_archives_sha256": {
+    "step_height_learning_7cases.npz": "410907d46a040d53cbbd19fd8d44eeb7b41c05150f953fd4d9c6bb479da3479d",
+    "step_height_test_2cases.npz": "f833ea965511eb690bfef094afd8f9fde660eafb24fa889ce3ec1582551b382c"
+  },
+  "derivation": "Every source point row is retained, including repeated zone-boundary coordinates; x,y remain float64 and U,V are stored as float32. Development plus validation and held-out test cases are in separate files so the test archive remains unopened before the final gate.",
+  "verified_max_absolute_float32_quantization": {
+    "U": 1.1431640643877472e-05,
+    "V": 3.4545898444093837e-06
+  },
+  "smoothed_files": {
+    "H16_smoothed.dat": {"rows": 22980, "sha256": "3be4aa40a2308007437a69f8cf7498afec8808db593d48f07c1aa44aa9538a84"},
+    "H21_smoothed.dat": {"rows": 22680, "sha256": "5a6da8c4f2e7f615407265a4ca4bc342904806e3b41510daacd7afa0e164fc6a"},
+    "H25_smoothed.dat": {"rows": 22380, "sha256": "b040556b5d463f4df86a16e542fced4f5200a94f7d5d3e7be49600c356d0614c"},
+    "H33_smoothed.dat": {"rows": 21780, "sha256": "bc642868fae5422978110dc23ffef417bc185fc96dd26c2ce8c1746908c1445e"},
+    "H44_smoothed.dat": {"rows": 21180, "sha256": "eeb1002e4697466609cac8485a041e8c591b4374ad895230cef560f85dadea74"},
+    "H50_smoothed.dat": {"rows": 20580, "sha256": "d52f3564ec0a0055387848d274b0c8e90bfc8d9f4b9b60c055bbec69b25d18bd"},
+    "H58_smoothed.dat": {"rows": 19980, "sha256": "7505219574928a7891ba65f9789553ddd1df3b80c5b3260fcf9c200a203b8059"},
+    "H67_smoothed.dat": {"rows": 19380, "sha256": "79166f5a00982165f1c39daf174a94a9745a42cbced05b554d20d111e25a8b84"},
+    "H75_smoothed.dat": {"rows": 18780, "sha256": "7b1885f595de55703046652cea79f56f6f57826e851700d61b33c261102cd147"}
+  },
+  "dsmc_provenance_status": {
+    "cell_size_relative_to_mean_free_path": "not established by the public data repository",
+    "time_step_relative_to_collision_time": "not established by the public data repository",
+    "particles_per_cell": "not established by the public data repository",
+    "sampling_duration_and_replicates": "not established by the public data repository",
+    "separation_region_statistical_uncertainty": "not established by the public data repository",
+    "wall_reflection_and_accommodation": "not established by the public data repository"
+  },
+  "inference_contract": {
+    "published_repository_workflow": "data-assisted privileged-input reconstruction because each inference patch is constructed from the held-out DSMC U,V field",
+    "flowmllab_teaching_workflow": "leakage-free coordinate surrogate; inputs contain h/H, x, y, and known geometry only"
+  }
+}
