@@ -23,6 +23,7 @@ from flowmllab.mahdavi_deeponet import (
     validate_step_height_archives,
     validate_step_archives_against_source,
     validate_step_height_dataset,
+    validate_step_contour_evidence,
     validate_step_teaching_results,
     validate_week9_evidence,
     zonal_velocity_metrics,
@@ -135,7 +136,23 @@ class MahdaviDeepONetWeek9Tests(unittest.TestCase):
         self.assertEqual(report["held_out_pressures_kpa"], [16, 25, 30])
         self.assertEqual(report["step_dataset"]["status"], "pass")
         self.assertFalse(report["step_teaching_validation"]["test_used_for_selection"])
+        self.assertEqual(report["step_contour_evidence"]["article_cases"], [
+            "Kn0p004", "Kn0p02", "H44", "H67"
+        ])
+        self.assertEqual(report["step_contour_evidence"]["final_paper_case_coverage"], [
+            "Kn0p004", "Kn0p02", "Kn1", "H44", "H67"
+        ])
         self.assertEqual(validate_step_teaching_results(ROOT)["selected_alpha"], 0.6)
+
+    def test_step_contours_separate_article_and_no_leak_evidence(self) -> None:
+        report = validate_step_contour_evidence(ROOT)
+        self.assertEqual(report["status"], "pass")
+        self.assertTrue(report["article_results_are_privileged_input"])
+        self.assertFalse(report["no_leak_test_used_for_selection"])
+        self.assertEqual(report["no_leak_test_cases"], [44, 67])
+        self.assertEqual(report["final_paper_case_coverage"], [
+            "Kn0p004", "Kn0p02", "Kn1", "H44", "H67"
+        ])
 
 
 if __name__ == "__main__":

@@ -24,6 +24,21 @@ This directory supports the two Week-9 research-to-classroom notebooks.
   `step_teaching_protocol.json` record the new leakage-free classroom run. The
   validation-only rule selects `alpha=0.6`; neither test archive nor a
   target-derived feature participates in selection.
+- `step_article_contour_metrics.csv`, `step_article_case_coverage.csv`, and
+  `step_article_contours/` use the final published paper's numbering and
+  reconstruct the exact stored DSMC/NN comparisons available for Figure 6
+  (`Kn=0.004`, `Kn=0.02`) and Figure 15 (H44, H67). The exact Figure-6 `Kn=1`
+  DSMC contour is also rebuilt; its neural counterpart is explicitly marked
+  unavailable because the pinned repository has no stored prediction. DSMC
+  and NN share color limits, the solid step remains masked, and axes preserve
+  the data-domain `L/H=5` aspect ratio. Stored NN fields are retained
+  privileged-input article results, not an autonomous surrogate claim.
+- `step_leakage_free_contour_metrics.csv` and
+  `step_leakage_free_contours/` provide the corresponding independently
+  held-out H44/H67 visual validation for the classroom coordinate model.
+  Their generator fits only the seven-file learning archive, freezes the
+  validation-selected setting, and opens the separate two-case test archive
+  afterward.
 - `nozzle_centerline_15cases.npz` is a compact derivative of all 15 public
   DSMC Tecplot snapshots in
   [`Ehsan-Roohi/roohi-nozzle-pod-reproducibility`](https://github.com/Ehsan-Roohi/roohi-nozzle-pod-reproducibility),
@@ -79,6 +94,21 @@ Reproduce the teaching selection and held-out metrics with:
 ```bash
 python qa/run_step_height_teaching_validation.py --root .
 ```
+
+Rebuild the article-evidence and leakage-free contour sets with:
+
+```bash
+python qa/build_step_article_contours.py \
+  --source /path/to/roohi-step-dnn-mahdavi --root .
+python qa/build_step_leakage_free_contours.py --root .
+```
+
+The final article text contains one case-label inconsistency: its problem
+statement lists `Kn=0.2`, while Figure 6, the figure discussion, the pinned
+source code, and the stored prediction use `Kn=0.02`. The contour
+reconstruction follows the figure and repository artifact. Figure 6 also shows
+`Kn=1`; the exact DSMC field is rebuilt, but no NN field is fabricated because
+the pinned repository does not contain the corresponding stored prediction.
 
 The recorded test result is deliberately reported as a tradeoff, not a single
 accuracy claim: the selected zonal model lowers vortex relative L2 from

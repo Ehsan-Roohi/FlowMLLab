@@ -827,6 +827,118 @@ def validate_step_teaching_results(root: str | Path) -> dict[str, Any]:
     }
 
 
+def validate_step_contour_evidence(root: str | Path) -> dict[str, Any]:
+    """Validate exact-case article contours and independent held-out contours."""
+    root_path = Path(root).resolve()
+    result_dir = root_path / "results" / "mahdavi_deeponet"
+    article_manifest = json.loads(
+        (result_dir / "step_article_contour_manifest.json").read_text(encoding="utf-8")
+    )
+    no_leak_manifest = json.loads(
+        (result_dir / "step_leakage_free_contour_manifest.json").read_text(encoding="utf-8")
+    )
+    if article_manifest["source_commit"] != STEP_SOURCE_COMMIT:
+        raise ValueError("step contour source commit mismatch")
+    if article_manifest["schema_version"] != 2:
+        raise ValueError("unexpected final-paper contour manifest schema")
+    if article_manifest["article"]["final_paper_sha256"] != (
+        "47d130cb4fae08608cef2578460665bebdf20a938b489eb5efc914302afcb980"
+    ):
+        raise ValueError("final-paper identity mismatch")
+    if article_manifest["article"]["final_supplement_sha256"] != (
+        "5fda3881c60bb77c5c6a7572e269822628e6e844cc438bf165c396f218ab4133"
+    ):
+        raise ValueError("final-supplement identity mismatch")
+    if "privileged-input" not in article_manifest["evidence_boundary"]:
+        raise ValueError("article contour evidence boundary is missing")
+    if not any("Kn=1" in note for note in article_manifest["article_repository_inconsistencies"]):
+        raise ValueError("missing stored Kn=1 prediction is not documented")
+
+    article_metrics_path = result_dir / "step_article_contour_metrics.csv"
+    if _sha256(article_metrics_path) != article_manifest["metrics_sha256"]:
+        raise ValueError("step article-contour metrics hash mismatch")
+    with article_metrics_path.open(encoding="utf-8") as stream:
+        article_rows = list(csv.DictReader(stream))
+    expected_article = {
+        "Kn0p004": (6, 2.4738467759),
+        "Kn0p02": (6, 2.2986139762),
+        "H44": (15, 4.9249304594),
+        "H67": (15, 8.2323163941),
+    }
+    if set(expected_article) != {row["case_id"] for row in article_rows}:
+        raise ValueError("unexpected exact article contour cases")
+    for row in article_rows:
+        figure, expected_error = expected_article[row["case_id"]]
+        if int(row["article_figure"]) != figure:
+            raise ValueError(f"{row['case_id']}: article figure mismatch")
+        if abs(float(row["combined_relative_l2_percent"]) - expected_error) > 1.0e-8:
+            raise ValueError(f"{row['case_id']}: stored-field error mismatch")
+        if abs(float(row["L_over_H_from_grid"]) - 5.0) > 2.0e-4:
+            raise ValueError(f"{row['case_id']}: contour aspect-ratio contract failed")
+        if float(row["max_coordinate_delta"]) > 1.0e-15:
+            raise ValueError(f"{row['case_id']}: reference/prediction coordinates differ")
+
+    coverage_path = result_dir / "step_article_case_coverage.csv"
+    if _sha256(coverage_path) != article_manifest["case_coverage_sha256"]:
+        raise ValueError("step article-case coverage hash mismatch")
+    with coverage_path.open(encoding="utf-8") as stream:
+        coverage_rows = list(csv.DictReader(stream))
+    if {row["case_id"] for row in coverage_rows} != {
+        "Kn0p004", "Kn0p02", "Kn1", "H44", "H67"
+    }:
+        raise ValueError("final-paper contour case coverage is incomplete")
+    kn1 = next(row for row in coverage_rows if row["case_id"] == "Kn1")
+    if kn1["stored_nn_field"] != "missing from pinned repository":
+        raise ValueError("Kn=1 missing-prediction boundary is not explicit")
+    kn1_metadata = article_manifest["kn1_reference_only"]
+    if abs(float(kn1_metadata["L_over_H_from_grid"]) - 5.0) > 2.0e-4:
+        raise ValueError("Kn=1 DSMC-only contour aspect-ratio contract failed")
+
+    if no_leak_manifest["selected_alpha"] != 0.6:
+        raise ValueError("no-leak contour manifest has unexpected selected alpha")
+    if no_leak_manifest["test_used_for_selection"]:
+        raise ValueError("no-leak contours used the test cases for selection")
+    if not no_leak_manifest["test_archive_opened_after_final_fit"]:
+        raise ValueError("no-leak contour test-open gate is missing")
+    if "target-field patch" not in no_leak_manifest["forbidden_inputs"]:
+        raise ValueError("no-leak contour forbidden-input contract is incomplete")
+    no_leak_metrics_path = result_dir / "step_leakage_free_contour_metrics.csv"
+    if _sha256(no_leak_metrics_path) != no_leak_manifest["metrics_sha256"]:
+        raise ValueError("no-leak contour metrics hash mismatch")
+    with no_leak_metrics_path.open(encoding="utf-8") as stream:
+        no_leak_rows = list(csv.DictReader(stream))
+    if {int(row["height_percent"]) for row in no_leak_rows} != {44, 67}:
+        raise ValueError("unexpected no-leak contour test cases")
+    teaching = validate_step_teaching_results(root_path)
+    recorded = {
+        int(row["height_percent"]): row
+        for row in teaching["test_metrics"]
+        if row["model"] == "zonal_alpha_0.6"
+    }
+    for row in no_leak_rows:
+        height = int(row["height_percent"])
+        for current, retained in (
+            ("combined_relative_l2_percent", "global_relative_l2_percent"),
+            ("vortex_relative_l2_percent", "vortex_relative_l2_percent"),
+        ):
+            if abs(float(row[current]) - float(recorded[height][retained])) > 5.0e-7:
+                raise ValueError(f"H{height}: no-leak contour metrics differ from frozen test")
+
+    for manifest in (article_manifest, no_leak_manifest):
+        for relative, expected_hash in manifest["figure_sha256"].items():
+            figure = (root_path / relative).resolve()
+            if not figure.is_relative_to(root_path) or _sha256(figure) != expected_hash:
+                raise ValueError(f"step contour figure hash mismatch: {relative}")
+    return {
+        "status": "pass",
+        "article_cases": [row["case_id"] for row in article_rows],
+        "final_paper_case_coverage": [row["case_id"] for row in coverage_rows],
+        "no_leak_test_cases": [int(row["height_percent"]) for row in no_leak_rows],
+        "article_results_are_privileged_input": True,
+        "no_leak_test_used_for_selection": False,
+    }
+
+
 def validate_week9_evidence(
     root: str | Path,
     *,
@@ -904,6 +1016,7 @@ def validate_week9_evidence(
         raise ValueError("micro-step DSMC provenance gaps are not explicit")
     step_report = validate_step_height_archives(root_path)
     teaching_report = validate_step_teaching_results(root_path)
+    contour_report = validate_step_contour_evidence(root_path)
     if step_manifest["derived_archives_sha256"] != STEP_HEIGHT_ARCHIVE_SHA256:
         raise ValueError("micro-step archive hashes do not match the software contract")
     for filename, expected_hash in STEP_HEIGHT_ARCHIVE_SHA256.items():
@@ -955,6 +1068,7 @@ def validate_week9_evidence(
         "step_dataset": step_report,
         "step_source_crosscheck": source_crosscheck,
         "step_teaching_validation": teaching_report,
+        "step_contour_evidence": contour_report,
         "step_privileged_input_audit": patch_audit,
         "nozzle_cases": int(len(data["pressure_kpa"])),
         "held_out_pressures_kpa": NOZZLE_HELD_OUT_KPA.astype(int).tolist(),

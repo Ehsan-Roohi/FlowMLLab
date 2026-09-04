@@ -381,7 +381,64 @@ assert (
 ).all()
 """),
         md(r"""
-## 6. Interpret without mixing evidence levels
+## 6. Reproduce the article-case contours without mixing evidence levels
+
+Under the final published paper's numbering, the pinned source checkout retains
+DSMC and stored NN fields for Figure 6 at Kn=0.004 and Kn=0.02 and for Figure
+15 at H44 and H67. Each reconstruction uses the same coordinates, equal
+$x/H$--$y/H$ scaling, a masked solid step, and one color range shared by DSMC
+and NN for each velocity component. Error panels are clipped only for display
+at their 99th percentile; the CSV retains the maximum error.
+
+Figure 6 also contains Kn=1. The exact DSMC source field is included below, but
+the neural panel is not reproducible from the pinned repository because its
+stored prediction is absent. The coverage table records that gap explicitly;
+no values are inferred from the published raster image.
+
+The first table and images are **retained article evidence** and inherit the
+target-patch limitation audited above. The second table and images are the
+independent H44/H67 result from the frozen no-leak classroom model. Compare
+topology, the $U=0$ recirculation boundary, reverse-flow IoU, and reattachment
+length—not merely color similarity.
+
+Two source inconsistencies remain explicit:
+
+- the article problem statement lists Kn=0.2, while Figure 6, its discussion,
+  the source code, and the stored output use Kn=0.02;
+- Figure 6 shows Kn=1, but the pinned repository contains no stored Kn=1
+  prediction, so this lesson rebuilds only its DSMC contour and does not
+  fabricate the neural comparison.
+"""),
+        code(r"""
+article_contours = pd.read_csv(RESULTS / "step_article_contour_metrics.csv")
+article_coverage = pd.read_csv(RESULTS / "step_article_case_coverage.csv")
+no_leak_contours = pd.read_csv(RESULTS / "step_leakage_free_contour_metrics.csv")
+columns = [
+    "case_id", "combined_relative_l2_percent", "vortex_relative_l2_percent",
+    "negative_u_iou_percent", "dsmc_reattachment_length_over_L",
+]
+display(article_contours[columns + ["stored_nn_reattachment_length_over_L"]])
+display(article_coverage)
+display(no_leak_contours[columns + ["no_leak_reattachment_length_over_L"]])
+
+try:
+    from IPython.display import Image as _ContourImage
+except ModuleNotFoundError:
+    _ContourImage = None
+if _ContourImage is not None:
+    for filename in (
+        "step_article_contours/article_figure_06_Kn0p004.png",
+        "step_article_contours/article_figure_06_Kn0p02.png",
+        "step_article_contours/article_figure_06_Kn1_DSMC_only.png",
+        "step_article_contours/article_figure_15_H44.png",
+        "step_article_contours/article_figure_15_H67.png",
+        "step_leakage_free_contours/held_out_H44_no_leak.png",
+        "step_leakage_free_contours/held_out_H67_no_leak.png",
+    ):
+        display(_ContourImage(filename=str(RESULTS / filename)))
+"""),
+        md(r"""
+## 7. Interpret without mixing evidence levels
 
 The real-data classroom experiment should show the intended mechanism: the
 selected zonal objective reduces reverse-flow error while accepting a modest

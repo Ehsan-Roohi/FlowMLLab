@@ -1,0 +1,6 @@
+article_figure,case_id,nominal_parameter,reference_field,stored_nn_field,reproduction_status
+6,Kn0p004,Kn=0.004,available,available,DSMC-NN-error comparison rebuilt
+6,Kn0p02,Kn=0.02,available,available,DSMC-NN-error comparison rebuilt
+6,Kn1,Kn=1,available,missing from pinned repository,DSMC-only contour rebuilt; NN comparison not fabricated
+15,H44,h/H=0.44,available,available,DSMC-NN-error comparison rebuilt
+15,H67,h/H=0.67,available,available,DSMC-NN-error comparison rebuilt

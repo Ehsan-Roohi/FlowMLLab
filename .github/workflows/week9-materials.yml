@@ -8,6 +8,8 @@ on:
       - "flowmllab/mahdavi_deeponet.py"
       - "notebooks/week09/make_week9_notebooks.py"
       - "qa/build_step_height_archive.py"
+      - "qa/build_step_article_contours.py"
+      - "qa/build_step_leakage_free_contours.py"
       - "qa/run_step_height_teaching_validation.py"
       - "qa/build_week9_mahdavi_deeponet_data.py"
       - "results/mahdavi_deeponet/**"
@@ -35,7 +37,13 @@ jobs:
           repository: Ehsan-Roohi/roohi-step-dnn-mahdavi
           ref: c3f211376b42b8dc30daad380eaef5e0ab800b5c
           path: .external/roohi-step-dnn-mahdavi
-          sparse-checkout: data/height/smoothed
+          sparse-checkout: |
+            data/height/smoothed
+            data/kn/smoothed/Kn=0-004_smoothed.dat
+            data/kn/smoothed/Kn=0-02_smoothed.dat
+            data/kn/smoothed/Kn=1_smoothed.dat
+            results/height/full_data/tecplot_pred
+            results/kn/best_run_seed_2035/tecplot_pred
           sparse-checkout-cone-mode: false
 
       - uses: actions/setup-python@v5
@@ -61,6 +69,16 @@ jobs:
             results/mahdavi_deeponet/step_teaching_selection.csv \
             results/mahdavi_deeponet/step_teaching_test_metrics.csv \
             results/mahdavi_deeponet/step_teaching_protocol.json
+
+      - name: Rebuild exact article-case contours
+        run: |
+          python qa/build_step_article_contours.py \
+            --source .external/roohi-step-dnn-mahdavi --root .
+          python qa/build_step_leakage_free_contours.py --root .
+          git diff --exit-code -- \
+            results/mahdavi_deeponet/step_article_contour_metrics.csv \
+            results/mahdavi_deeponet/step_article_case_coverage.csv \
+            results/mahdavi_deeponet/step_leakage_free_contour_metrics.csv
 
       - name: Run software and release gates
         run: |

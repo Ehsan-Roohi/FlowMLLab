@@ -323,6 +323,27 @@ uses only geometry and coordinates; the upstream target-patch workflow is
 explicitly labelled privileged-input reconstruction rather than a pure
 solver-independent surrogate.
 
+Using the final published paper's numbering, the exact stored contour artifacts
+available for article Figure 6 (`Kn=0.004`, `Kn=0.02`) and Figure 15 (H44,
+H67) are rebuilt with a shared DSMC/NN color scale and an undistorted `L/H=5`
+geometry. Figure 6 also contains `Kn=1`: its exact DSMC field is rebuilt, but
+the neural panel is marked unavailable because the pinned article repository
+does not contain that prediction. No field is inferred from the paper image.
+The stored NN contours remain labelled privileged-input evidence. A second
+contour set independently evaluates the frozen no-leak classroom model on
+H44/H67; its vector relative errors are
+**9.594%** and **11.267%**, while reverse-flow IoU is **93.27%** and
+**80.49%**, respectively. See
+[`results/mahdavi_deeponet/step_article_contours/`](results/mahdavi_deeponet/step_article_contours/)
+and
+[`step_leakage_free_contours/`](results/mahdavi_deeponet/step_leakage_free_contours/).
+
+<p align="center">
+  <a href="results/mahdavi_deeponet/step_leakage_free_contours/held_out_H44_no_leak.png">
+    <img src="results/mahdavi_deeponet/step_leakage_free_contours/held_out_H44_no_leak.png" alt="Held-out H44 DSMC versus leakage-free FlowMLLab velocity contours and errors" width="100%">
+  </a>
+</p>
+
 [Lab 2](https://colab.research.google.com/github/Ehsan-Roohi/FlowMLLab/blob/main/notebooks/week09/W9_Lab2_Shock_Aligned_Nozzle_DeepONet_Student.ipynb)
 uses a compact, checksummed derivative of all 15 public micro-nozzle DSMC
 snapshots. It directly reproduces the density-POD compression from 8 physical
