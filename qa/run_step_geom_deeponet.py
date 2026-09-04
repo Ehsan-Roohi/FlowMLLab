@@ -67,6 +67,21 @@ def main() -> None:
     parser.add_argument("--seed", type=int, default=690)
     parser.add_argument("--alphas", type=float, nargs="+", default=[0.5, 0.6, 0.7, 0.8])
     parser.add_argument("--global-guard-percent", type=float, default=2.0)
+    parser.add_argument(
+        "--require-vortex-improvement",
+        action="store_true",
+        help="reject zonal candidates that do not beat unweighted validation vortex error",
+    )
+    parser.add_argument(
+        "--selection-only",
+        action="store_true",
+        help="stop after validation selection without opening the sealed test archive",
+    )
+    parser.add_argument("--reduce-lr-patience", type=int, default=0)
+    parser.add_argument("--reduce-lr-factor", type=float, default=0.5)
+    parser.add_argument("--min-learning-rate", type=float, default=1.0e-6)
+    parser.add_argument("--early-stopping-patience", type=int, default=0)
+    parser.add_argument("--early-stopping-min-delta", type=float, default=0.0)
     parser.add_argument("--verbose", type=int, choices=(0, 1, 2), default=1)
     parser.add_argument(
         "--output-dir",
@@ -78,6 +93,16 @@ def main() -> None:
         raise ValueError("--alphas must be unique")
     if any(not 0.0 < alpha < 1.0 for alpha in args.alphas):
         raise ValueError("every --alphas value must lie strictly between zero and one")
+    if args.reduce_lr_patience < 0 or args.early_stopping_patience < 0:
+        raise ValueError("callback patience values must be non-negative")
+    if not 0.0 < args.reduce_lr_factor < 1.0:
+        raise ValueError("--reduce-lr-factor must lie strictly between zero and one")
+    if not 0.0 < args.min_learning_rate <= args.learning_rate:
+        raise ValueError(
+            "--min-learning-rate must be positive and no larger than the initial rate"
+        )
+    if args.early_stopping_min_delta < 0.0:
+        raise ValueError("--early-stopping-min-delta must be non-negative")
 
     output: Path | None = None
     if args.output_dir is not None:
@@ -90,13 +115,43 @@ def main() -> None:
         tf.keras.backend.clear_session()
         gc.collect()
 
+    def training_callbacks() -> list[Any]:
+        callbacks: list[Any] = []
+        callback_verbose = 1 if args.verbose else 0
+        if args.reduce_lr_patience > 0:
+            callbacks.append(
+                tf.keras.callbacks.ReduceLROnPlateau(
+                    monitor="loss",
+                    factor=args.reduce_lr_factor,
+                    patience=args.reduce_lr_patience,
+                    min_lr=args.min_learning_rate,
+                    verbose=callback_verbose,
+                )
+            )
+        if args.early_stopping_patience > 0:
+            callbacks.append(
+                tf.keras.callbacks.EarlyStopping(
+                    monitor="loss",
+                    min_delta=args.early_stopping_min_delta,
+                    patience=args.early_stopping_patience,
+                    restore_best_weights=True,
+                    verbose=callback_verbose,
+                )
+            )
+        return callbacks
+
     root = args.root.resolve()
     start = time.perf_counter()
     selection_rule = (
-        "Minimize mean validation vortex relative L2 among candidates whose "
+        "Minimize mean validation vortex relative L2 among zonal candidates whose "
         f"mean validation global relative L2 is at most {args.global_guard_percent:g} "
         "percentage points above the unweighted baseline."
     )
+    if args.require_vortex_improvement:
+        selection_rule += (
+            " The selected zonal candidate must also improve validation vortex "
+            "relative L2 over the unweighted baseline."
+        )
 
     def persist_selection_checkpoint(
         status: str,
@@ -124,6 +179,13 @@ def main() -> None:
                 "seed": args.seed,
                 "alphas": [float(alpha) for alpha in args.alphas],
                 "global_guard_percent": args.global_guard_percent,
+                "require_vortex_improvement": args.require_vortex_improvement,
+                "selection_only": args.selection_only,
+                "reduce_lr_patience": args.reduce_lr_patience,
+                "reduce_lr_factor": args.reduce_lr_factor,
+                "min_learning_rate": args.min_learning_rate,
+                "early_stopping_patience": args.early_stopping_patience,
+                "early_stopping_min_delta": args.early_stopping_min_delta,
             },
             "selection_rule": selection_rule,
             "selection": rows,
@@ -161,6 +223,7 @@ def main() -> None:
         learning_cases,
         STEP_HEIGHT_DEVELOPMENT_PERCENT,
         alpha=None,
+        callbacks=training_callbacks(),
         **fit_options,
     )
     baseline_validation = evaluate_step_geom_deeponet(
@@ -169,16 +232,18 @@ def main() -> None:
         STEP_HEIGHT_VALIDATION_PERCENT,
     )
     baseline_global = mean_percent(baseline_validation, "full_relative_l2")
+    baseline_vortex = mean_percent(baseline_validation, "vortex_relative_l2")
     selection: list[dict[str, Any]] = [
         {
             "model": "unweighted",
             "alpha": None,
             "validation_global_relative_l2_percent": baseline_global,
-            "validation_vortex_relative_l2_percent": mean_percent(
-                baseline_validation, "vortex_relative_l2"
-            ),
+            "validation_vortex_relative_l2_percent": baseline_vortex,
             "eligible_global_guard": True,
+            "improves_unweighted_vortex": None,
+            "eligible_selection": False,
             "selected": False,
+            "epochs_completed": len(baseline.history["loss"]),
             "final_training_loss": float(baseline.history["loss"][-1]),
             "minimum_training_loss": float(min(baseline.history["loss"])),
             "validation_by_geometry": serializable_rows(baseline_validation),
@@ -197,6 +262,7 @@ def main() -> None:
             learning_cases,
             STEP_HEIGHT_DEVELOPMENT_PERCENT,
             alpha=float(alpha),
+            callbacks=training_callbacks(),
             **fit_options,
         )
         rows = evaluate_step_geom_deeponet(
@@ -205,17 +271,25 @@ def main() -> None:
             STEP_HEIGHT_VALIDATION_PERCENT,
         )
         global_error = mean_percent(rows, "full_relative_l2")
+        vortex_error = mean_percent(rows, "vortex_relative_l2")
+        passes_global_guard = (
+            global_error <= baseline_global + args.global_guard_percent
+        )
+        improves_unweighted_vortex = vortex_error < baseline_vortex
+        eligible_selection = passes_global_guard and (
+            not args.require_vortex_improvement or improves_unweighted_vortex
+        )
         selection.append(
             {
                 "model": "zonal",
                 "alpha": float(alpha),
                 "validation_global_relative_l2_percent": global_error,
-                "validation_vortex_relative_l2_percent": mean_percent(
-                    rows, "vortex_relative_l2"
-                ),
-                "eligible_global_guard": global_error
-                <= baseline_global + args.global_guard_percent,
+                "validation_vortex_relative_l2_percent": vortex_error,
+                "eligible_global_guard": passes_global_guard,
+                "improves_unweighted_vortex": improves_unweighted_vortex,
+                "eligible_selection": eligible_selection,
                 "selected": False,
+                "epochs_completed": len(fitted.history["loss"]),
                 "final_training_loss": float(fitted.history["loss"][-1]),
                 "minimum_training_loss": float(min(fitted.history["loss"])),
                 "validation_by_geometry": serializable_rows(rows),
@@ -230,12 +304,15 @@ def main() -> None:
         clear_finished_model()
 
     eligible = [
-        row for row in selection[1:] if bool(row["eligible_global_guard"])
+        row for row in selection[1:] if bool(row["eligible_selection"])
     ]
     if not eligible:
         persist_selection_checkpoint("no_eligible_zonal_candidate", selection)
         print("NO_ELIGIBLE_ZONAL_CANDIDATE", flush=True)
-        raise RuntimeError("no zonal model satisfies the predeclared global-error guard")
+        if args.selection_only:
+            print("SELECTION_ONLY_COMPLETE", flush=True)
+            return
+        raise RuntimeError("no zonal model satisfies the declared validation gates")
     winner = min(
         eligible,
         key=lambda row: float(row["validation_vortex_relative_l2_percent"]),
@@ -243,6 +320,9 @@ def main() -> None:
     selected_alpha = float(winner["alpha"])
     winner["selected"] = True
     persist_selection_checkpoint("selection_complete", selection)
+    if args.selection_only:
+        print("SELECTION_ONLY_COMPLETE", flush=True)
+        return
 
     # Freeze architecture, optimization budget, and alpha; refit on all seven cases.
     final_heights = np.concatenate(
@@ -253,12 +333,14 @@ def main() -> None:
         learning_cases,
         final_heights,
         alpha=None,
+        callbacks=training_callbacks(),
         **fit_options,
     )
     final_zonal = fit_step_geom_deeponet(
         learning_cases,
         final_heights,
         alpha=selected_alpha,
+        callbacks=training_callbacks(),
         **fit_options,
     )
 
@@ -312,6 +394,13 @@ def main() -> None:
             **final_zonal.configuration,
         },
         "selection_rule": selection_rule,
+        "optimization_controls": {
+            "reduce_lr_patience": args.reduce_lr_patience,
+            "reduce_lr_factor": args.reduce_lr_factor,
+            "min_learning_rate": args.min_learning_rate,
+            "early_stopping_patience": args.early_stopping_patience,
+            "early_stopping_min_delta": args.early_stopping_min_delta,
+        },
         "selection": selection,
         "selected_alpha": selected_alpha,
         "test_metrics": test_metrics,
