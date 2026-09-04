@@ -38,6 +38,14 @@ FIELDS = {
 CANDIDATE_RANKS = (1, 2, 3, 4)
 DEVELOPMENT_PRESSURES_KPA = (15, 18, 19, 20, 22, 23, 24, 26, 27, 28, 29, 33)
 LOCAL_GAP_LIMIT_KPA = 3.0
+FROZEN_WIDE_METHOD_BY_FIELD = {
+    "density": "local_field_interpolation",
+    "u_ms": "pod_neural",
+    "v_ms": "local_field_interpolation",
+    "temperature_k": "local_field_interpolation",
+    "mach": "local_field_interpolation",
+    "pressure_tecplot": "local_field_interpolation",
+}
 
 
 def sha256(path: Path) -> str:
@@ -258,9 +266,12 @@ def main() -> None:
             pressure, data[field], development_indices, candidate_ranks=CANDIDATE_RANKS,
         )
         selected_ranks[field] = selected_rank
-        wide_method, wide_evidence = select_wide_bracket_method(
+        _, wide_evidence = select_wide_bracket_method(
             pressure, data[field], development_indices, selected_rank
         )
+        # Freeze the route selected from the development study so that LAPACK/
+        # BLAS-level coefficient differences cannot change deployment behavior.
+        wide_method = FROZEN_WIDE_METHOD_BY_FIELD[field]
         wide_method_by_field[field] = wide_method
         for row in rows:
             selection_rows.append({

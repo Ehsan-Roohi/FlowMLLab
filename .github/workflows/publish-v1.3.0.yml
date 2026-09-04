@@ -9,6 +9,7 @@ on:
       - .github/workflows/publish-v1.3.0.yml
       - .github/workflows/week9-materials.yml
       - .github/workflows/week10-materials.yml
+      - qa/run_nozzle_field_validation.py
 
 permissions:
   contents: write
