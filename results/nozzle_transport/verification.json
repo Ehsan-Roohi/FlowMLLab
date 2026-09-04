@@ -1,0 +1,81 @@
+{
+  "base_commit": "c7ce243436f2d0aa0d0a6041c9b198a2bb7400c7",
+  "environment": {
+    "python": "3.12.13",
+    "numpy": "2.2.6",
+    "scipy": "1.15.3",
+    "scikit_learn": "1.6.1",
+    "matplotlib": "3.10.9"
+  },
+  "unit_tests": {
+    "ran": 91,
+    "passed": 88,
+    "skipped": 3,
+    "skip_reasons": [
+      "two optional TensorFlow tests; dependency absent",
+      "pinned upstream micro-step checkout/cache absent"
+    ]
+  },
+  "smoke": "pass",
+  "repository_qa": "pass",
+  "notebook_execution": [
+    {
+      "notebook": "notebooks/week02_1/Probabilistic_UQ_CFD.ipynb",
+      "execution_mode": "IPython in process; Jupyter socket transport unavailable",
+      "status": "pass",
+      "seconds": 0.91,
+      "cells": 20
+    },
+    {
+      "notebook": "notebooks/week07/W7_Lattice_Boltzmann_Cylinder_Student.ipynb",
+      "execution_mode": "IPython in process; Jupyter socket transport unavailable",
+      "status": "pass",
+      "seconds": 11.46,
+      "cells": 44
+    },
+    {
+      "notebook": "notebooks/week08/W8_Lab1_Exact_Gas_Dynamics_Student.ipynb",
+      "execution_mode": "IPython in process; Jupyter socket transport unavailable",
+      "status": "pass",
+      "seconds": 0.11,
+      "cells": 17
+    },
+    {
+      "notebook": "notebooks/week08/W8_Lab2_Gas_Dynamics_SciML_Evidence_Student.ipynb",
+      "execution_mode": "IPython in process; Jupyter socket transport unavailable",
+      "status": "pass",
+      "seconds": 0.29,
+      "cells": 24
+    },
+    {
+      "notebook": "notebooks/week09/W9_Lab1_Microstep_Zonal_DeepONet_Student.ipynb",
+      "execution_mode": "IPython in process; Jupyter socket transport unavailable",
+      "status": "pass",
+      "seconds": 40.12,
+      "cells": 17
+    },
+    {
+      "notebook": "notebooks/week09/W9_Lab2_Shock_Aligned_Nozzle_DeepONet_Student.ipynb",
+      "execution_mode": "IPython in process; Jupyter socket transport unavailable",
+      "status": "pass",
+      "seconds": 11.26,
+      "cells": 25
+    },
+    {
+      "notebook": "notebooks/week10/W10_DSMC_Data_Driven_Surrogates_Student.ipynb",
+      "execution_mode": "IPython in process; Jupyter socket transport unavailable",
+      "status": "pass",
+      "seconds": 3.98,
+      "cells": 19
+    }
+  ],
+  "notebook_scope": "Every code cell executed through IPython in process; normal Jupyter TCP and IPC kernels were unavailable because socket creation is restricted. Notebook structure validated with nbformat. Browser/Colab transport not tested.",
+  "lecture_pdf_build": "Week 7 and Week 9 latexmk builds pass; changed text and new pages rendered and visually inspected",
+  "physical_validation": "FAIL: raw DSMC symmetry boundary export has nonzero V; separate prediction projection is tested but does not repair source data",
+  "unresolved_scientific_goals": [
+    "Recover exact DSMC run/export and repair boundary reconstruction",
+    "Recover article checkpoint and identical evaluation contract",
+    "Improve and assess the 30 kPa failure on independent new cases",
+    "Build and record an actual PhysicsNeMo/PyTorch GPU recipe before proposing integration"
+  ]
+}

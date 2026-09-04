@@ -73,7 +73,7 @@ def parse_main_zone_grid(path: Path) -> dict[str, np.ndarray]:
 
 
 def parse_main_zone(path: Path) -> dict[str, np.ndarray]:
-    """Read the first Tecplot zone and return its max-y symmetry centerline."""
+    """Return the exported max-y row; raw V there is not symmetry-consistent."""
     grid = parse_main_zone_grid(path)
     centerline_index = int(np.argmax(np.median(grid["y_m"], axis=1)))
     order = np.argsort(grid["x_m"][centerline_index])
@@ -176,10 +176,11 @@ def main() -> None:
         "source_files_sha256": source_hashes,
         "derivation": (
             "First Tecplot POINT zone (101x31); seven full physical fields retained "
-            "on the original common grid; max-y half-domain symmetry centerline "
+            "on the original common grid; max-y exported boundary row "
             "extracted separately; density-shock diagnostics recomputed with "
             "FlowMLLab's documented detector."
         ),
+        "boundary_caveat": "The max-y row is at the stated symmetry plane, but exported V is nonzero. Original labels are preserved; this is not a boundary-condition validation dataset.",
         "derived_files": {
             archive_path.name: digest(archive_path),
             field_archive_path.name: digest(field_archive_path),

@@ -92,6 +92,9 @@ def draw_profiles(
                 color="#2166AC" if selected_method[field] == "shock_aligned" else "#D1495B",
             )
             axis.grid(alpha=0.22)
+            if field == "v_ms":
+                axis.axhline(0, color="#B42318", linewidth=1)
+                axis.set_title("Exported boundary V violates symmetry", fontsize=9, color="#B42318")
     axes[0, 0].legend(frameon=False, fontsize=8)
     fig.suptitle(
         "Held-out nozzle profiles: physical versus shock-aligned baselines",
