@@ -17,5 +17,8 @@ lectures/source/*.fls
 lectures/source/*.out
 lectures/source/*.pdf
 lectures/source/*.toc
+lectures/*.aux
+lectures/*.out
+lectures/*.toc
 tmp/
 .external/

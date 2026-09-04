@@ -221,14 +221,15 @@ held-out geometries report the result; they do not select $\alpha$.
 \section{Micro-Nozzle Back Pressure: New FlowMLLab Fields}
 The public nozzle dataset contains 15 complete DSMC snapshots on a common
 101-by-31 curvilinear grid. FlowMLLab preserves density, temperature, $U$, $V$,
-Mach number, pressure, and Knudsen number. For each plotted output, the POD
-rank is selected on 12 development pressures; an eight-unit tanh branch maps
-back pressure to modal coefficients.
+Mach number, pressure, and Knudsen number. For each of the six article outputs,
+POD rank and the wide-gap route are selected on 12 development pressures. The
+operator uses complete-field interpolation when nearby pressure cases bracket
+the query, and an eight-unit POD branch when internal wide-gap folds favor it.
 
 \begin{figure}[ht]
 \centering
 \includegraphics[width=\textwidth]{nozzle_flowmllab/nozzle_back_pressure_P16_contours.png}
-\caption{Fresh FlowMLLab result at held-out $P_b=16$ kPa. The DSMC and predicted density and $U$ fields share color scales; error panels use absolute error. The physical axes preserve the nozzle geometry.}
+\caption{Improved FlowMLLab result at held-out $P_b=16$ kPa. The DSMC and predicted density and $U$ fields share color scales; error panels use absolute error. The physical axes preserve the nozzle geometry.}
 \label{fig:nozzle-contour}
 \end{figure}
 
@@ -258,10 +259,12 @@ larger global velocity or Mach error.
 \toprule
 Field & 16 kPa & 25 kPa & 30 kPa \\
 \midrule
-Density & 4.528\% & 5.504\% & 2.638\% \\
-$U$ & 19.874\% & 11.815\% & 9.714\% \\
-Mach number & 12.681\% & 17.143\% & 8.727\% \\
-Pressure & 5.402\% & 6.070\% & 4.345\% \\
+Density & 3.596\% & 4.595\% & 4.559\% \\
+$U$ & 7.452\% & 11.960\% & 9.982\% \\
+$V$ & 10.813\% & 13.409\% & 12.593\% \\
+Temperature & 3.910\% & 3.860\% & 2.931\% \\
+Mach number & 8.751\% & 14.368\% & 14.438\% \\
+Pressure & 4.331\% & 5.375\% & 5.199\% \\
 \bottomrule
 \end{tabular}
 \end{center}
@@ -368,7 +371,7 @@ Reproducibility & restart-and-run notebook plus machine-readable metrics and fig
 \item Complete physical cases, not shuffled spatial points, define the experimental split.
 \item Zonal metrics expose micro-step recirculation behavior hidden by a domain average.
 \item Shock alignment compresses the nozzle snapshot family from eight to two density modes at 99\% energy.
-\item The new FlowMLLab full-field back-pressure run is accurate for density and pressure but shows larger $U$ and Mach errors near moving compression regions.
+\item The improved six-field FlowMLLab back-pressure run keeps every held-out full-field error below 15\%; the largest errors remain near moving compression regions.
 \item A cited article plot and a code-regenerated result are different evidence and must remain labelled accordingly.
 \end{enumerate}
 

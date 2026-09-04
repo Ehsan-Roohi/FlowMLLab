@@ -1,6 +1,7 @@
 """Public Python interface for FlowMLLab."""
 
 from .core import ValidationError, discover_repository_root, validate_core_assets
+from .aescte_dsmc import validate_aescte_evidence
 from .cylinder_lbm import (
     CylinderLBMConfig,
     grid_convergence_diagnostics,
@@ -37,8 +38,9 @@ __all__ = [
     "step_geom_deeponet_inputs",
     "step_signed_distance",
     "validate_core_assets",
+    "validate_aescte_evidence",
     "validate_probabilistic_uq_evidence",
     "validate_week8_evidence",
     "validate_week9_evidence",
 ]
-__version__ = "1.2.0"
+__version__ = "1.3.0"

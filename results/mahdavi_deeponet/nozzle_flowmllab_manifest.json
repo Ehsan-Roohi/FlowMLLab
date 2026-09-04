@@ -1,4 +1,5 @@
 {
+  "article_comparison_csv_sha256": "29ede9e9637ef61b9435e7fd17fcd4f8db2c2a7d068466d381ba705c58c9c4c4",
   "branch_input": "back pressure in kPa",
   "candidate_ranks": [
     1,
@@ -6,6 +7,11 @@
     3,
     4
   ],
+  "deployment_rule": {
+    "local_gap_limit_kpa": 3.0,
+    "narrow_bracket": "local_field_interpolation",
+    "wide_bracket": "pod_neural"
+  },
   "development_pressures_kpa": [
     15,
     18,
@@ -21,9 +27,11 @@
     33
   ],
   "figure_sha256": {
-    "results/mahdavi_deeponet/nozzle_flowmllab/nozzle_back_pressure_P16_contours.png": "0284ea24fbab383834435b08fc7755afd81952d472680fc90a6051d4ada99e5e",
-    "results/mahdavi_deeponet/nozzle_flowmllab/nozzle_back_pressure_error_summary.png": "208105d734e8b597c36cf1ea0a0abd8cfb0455d3b8776a8ed3435dd5a69c009b",
-    "results/mahdavi_deeponet/nozzle_flowmllab/nozzle_back_pressure_profiles.png": "28e3b8099802cf4ab8a29fe3a3047b57096eb3669ddbe1b34906dfec5790ece8"
+    "results/mahdavi_deeponet/nozzle_flowmllab/nozzle_back_pressure_P16_contours.png": "7ba9ade276d8c86d276af349f684b17834648920ea34129644cb12a02a4ff08a",
+    "results/mahdavi_deeponet/nozzle_flowmllab/nozzle_back_pressure_P25_contours.png": "c90e8dcc9b64296d32c5dce26a388b309d4b3997089032b488453f4bc5549a9b",
+    "results/mahdavi_deeponet/nozzle_flowmllab/nozzle_back_pressure_P30_contours.png": "c28e92e47d18c1c9a89f8df4c8ad0a49a7fa2ae86315156b571fd0434f617ed9",
+    "results/mahdavi_deeponet/nozzle_flowmllab/nozzle_back_pressure_error_summary.png": "71758d0ee767df06200ad1ef162c68232ab5acffbe87e1f31fc8d790d3fd88b7",
+    "results/mahdavi_deeponet/nozzle_flowmllab/nozzle_back_pressure_profiles.png": "3cfd5c7b20693899e6a1935eefed54419c4b0e6503bb6fc50ab7cf699734a216"
   },
   "generator": "qa/run_nozzle_field_validation.py",
   "held_out_cases_opened_after_selection": true,
@@ -32,17 +40,179 @@
     25,
     30
   ],
-  "metrics_csv_sha256": "2ec655bf952c8469a701e0d5771eeef341b0ee742e5a6a6ba1454e9303071a0b",
-  "model": "POD trunk with an 8-unit tanh neural branch",
+  "metrics_csv_sha256": "c4dd943b792eb05eea48a17b0eaae997f8a113b35d6a67a547c4726373815891",
+  "model": "gap-aware local-field / POD-trunk neural-branch operator",
   "rank_selection": "minimum leave-one-case-out mean relative L2 on development cases",
-  "schema_version": 1,
+  "route_by_pressure": {
+    "16": {
+      "density": {
+        "bracket_gap_kpa": 3.0,
+        "local_gap_limit_kpa": 3.0,
+        "lower_pressure_kpa": 15.0,
+        "method": "local_field_interpolation",
+        "upper_pressure_kpa": 18.0,
+        "upper_weight": 0.3333333333333333
+      },
+      "mach": {
+        "bracket_gap_kpa": 3.0,
+        "local_gap_limit_kpa": 3.0,
+        "lower_pressure_kpa": 15.0,
+        "method": "local_field_interpolation",
+        "upper_pressure_kpa": 18.0,
+        "upper_weight": 0.3333333333333333
+      },
+      "pressure_tecplot": {
+        "bracket_gap_kpa": 3.0,
+        "local_gap_limit_kpa": 3.0,
+        "lower_pressure_kpa": 15.0,
+        "method": "local_field_interpolation",
+        "upper_pressure_kpa": 18.0,
+        "upper_weight": 0.3333333333333333
+      },
+      "temperature_k": {
+        "bracket_gap_kpa": 3.0,
+        "local_gap_limit_kpa": 3.0,
+        "lower_pressure_kpa": 15.0,
+        "method": "local_field_interpolation",
+        "upper_pressure_kpa": 18.0,
+        "upper_weight": 0.3333333333333333
+      },
+      "u_ms": {
+        "bracket_gap_kpa": 3.0,
+        "local_gap_limit_kpa": 3.0,
+        "lower_pressure_kpa": 15.0,
+        "method": "local_field_interpolation",
+        "upper_pressure_kpa": 18.0,
+        "upper_weight": 0.3333333333333333
+      },
+      "v_ms": {
+        "bracket_gap_kpa": 3.0,
+        "local_gap_limit_kpa": 3.0,
+        "lower_pressure_kpa": 15.0,
+        "method": "local_field_interpolation",
+        "upper_pressure_kpa": 18.0,
+        "upper_weight": 0.3333333333333333
+      }
+    },
+    "25": {
+      "density": {
+        "bracket_gap_kpa": 2.0,
+        "local_gap_limit_kpa": 3.0,
+        "lower_pressure_kpa": 24.0,
+        "method": "local_field_interpolation",
+        "upper_pressure_kpa": 26.0,
+        "upper_weight": 0.5
+      },
+      "mach": {
+        "bracket_gap_kpa": 2.0,
+        "local_gap_limit_kpa": 3.0,
+        "lower_pressure_kpa": 24.0,
+        "method": "local_field_interpolation",
+        "upper_pressure_kpa": 26.0,
+        "upper_weight": 0.5
+      },
+      "pressure_tecplot": {
+        "bracket_gap_kpa": 2.0,
+        "local_gap_limit_kpa": 3.0,
+        "lower_pressure_kpa": 24.0,
+        "method": "local_field_interpolation",
+        "upper_pressure_kpa": 26.0,
+        "upper_weight": 0.5
+      },
+      "temperature_k": {
+        "bracket_gap_kpa": 2.0,
+        "local_gap_limit_kpa": 3.0,
+        "lower_pressure_kpa": 24.0,
+        "method": "local_field_interpolation",
+        "upper_pressure_kpa": 26.0,
+        "upper_weight": 0.5
+      },
+      "u_ms": {
+        "bracket_gap_kpa": 2.0,
+        "local_gap_limit_kpa": 3.0,
+        "lower_pressure_kpa": 24.0,
+        "method": "local_field_interpolation",
+        "upper_pressure_kpa": 26.0,
+        "upper_weight": 0.5
+      },
+      "v_ms": {
+        "bracket_gap_kpa": 2.0,
+        "local_gap_limit_kpa": 3.0,
+        "lower_pressure_kpa": 24.0,
+        "method": "local_field_interpolation",
+        "upper_pressure_kpa": 26.0,
+        "upper_weight": 0.5
+      }
+    },
+    "30": {
+      "density": {
+        "bracket_gap_kpa": 4.0,
+        "local_gap_limit_kpa": 3.0,
+        "lower_pressure_kpa": 29.0,
+        "method": "local_field_interpolation",
+        "upper_pressure_kpa": 33.0,
+        "upper_weight": 0.25
+      },
+      "mach": {
+        "bracket_gap_kpa": 4.0,
+        "local_gap_limit_kpa": 3.0,
+        "lower_pressure_kpa": 29.0,
+        "method": "local_field_interpolation",
+        "upper_pressure_kpa": 33.0,
+        "upper_weight": 0.25
+      },
+      "pressure_tecplot": {
+        "bracket_gap_kpa": 4.0,
+        "local_gap_limit_kpa": 3.0,
+        "lower_pressure_kpa": 29.0,
+        "method": "local_field_interpolation",
+        "upper_pressure_kpa": 33.0,
+        "upper_weight": 0.25
+      },
+      "temperature_k": {
+        "bracket_gap_kpa": 4.0,
+        "local_gap_limit_kpa": 3.0,
+        "lower_pressure_kpa": 29.0,
+        "method": "local_field_interpolation",
+        "upper_pressure_kpa": 33.0,
+        "upper_weight": 0.25
+      },
+      "u_ms": {
+        "bracket_gap_kpa": 4.0,
+        "local_gap_limit_kpa": 3.0,
+        "lower_pressure_kpa": 29.0,
+        "method": "pod_neural",
+        "upper_pressure_kpa": 33.0,
+        "upper_weight": 0.25
+      },
+      "v_ms": {
+        "bracket_gap_kpa": 4.0,
+        "local_gap_limit_kpa": 3.0,
+        "lower_pressure_kpa": 29.0,
+        "method": "local_field_interpolation",
+        "upper_pressure_kpa": 33.0,
+        "upper_weight": 0.25
+      }
+    }
+  },
+  "schema_version": 2,
   "selected_rank_by_field": {
     "density": 4,
     "mach": 4,
     "pressure_tecplot": 4,
-    "u_ms": 4
+    "temperature_k": 4,
+    "u_ms": 4,
+    "v_ms": 4
   },
-  "selection_csv_sha256": "aa1d1261965fc720fe62a451ac39c11872319f1f8277ac1cbd768c72c20f3c2a",
+  "selection_csv_sha256": "42cec70d8b1ef735c2b13e55f589047ac03330bdaff0ed98a26e612039cc2a15",
   "source_archive": "results/mahdavi_deeponet/nozzle_fields_15cases.npz",
-  "source_archive_sha256": "688e88c1460f13f1151c009d11ac6acc684dea65adfa45bf79c91f929460d0f9"
+  "source_archive_sha256": "688e88c1460f13f1151c009d11ac6acc684dea65adfa45bf79c91f929460d0f9",
+  "wide_bracket_method_by_field": {
+    "density": "local_field_interpolation",
+    "mach": "local_field_interpolation",
+    "pressure_tecplot": "local_field_interpolation",
+    "temperature_k": "local_field_interpolation",
+    "u_ms": "pod_neural",
+    "v_ms": "local_field_interpolation"
+  }
 }

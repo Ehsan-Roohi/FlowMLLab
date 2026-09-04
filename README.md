@@ -13,8 +13,8 @@ exercise to physics-checked POD--DeepONet benchmarks when ready.
 <p align="center">
   <a href="https://colab.research.google.com/github/Ehsan-Roohi/FlowMLLab/blob/main/notebooks/week05_06/P0_Project_Setup.ipynb"><img src="https://img.shields.io/badge/Run-20--minute_Colab-F9AB00?logo=googlecolab&logoColor=white" alt="Run the 20-minute FlowMLLab Colab"></a>
   <a href="demo/README.md"><img src="https://img.shields.io/badge/Explore-blind--case_demo-146C94" alt="Explore the validated blind-case demo"></a>
-  <a href="notebooks/README.md"><img src="https://img.shields.io/badge/Open-all_23_notebooks-315A7D" alt="Open all 23 FlowMLLab notebooks"></a>
-  <a href="lectures/README.md"><img src="https://img.shields.io/badge/Open-all_10_lectures-6B4C9A" alt="Open all 10 FlowMLLab lectures"></a>
+  <a href="notebooks/README.md"><img src="https://img.shields.io/badge/Open-all_24_notebooks-315A7D" alt="Open all 24 FlowMLLab notebooks"></a>
+  <a href="lectures/README.md"><img src="https://img.shields.io/badge/Open-all_11_lectures-6B4C9A" alt="Open all 11 FlowMLLab lectures"></a>
 </p>
 
 ## Featured: circular-cylinder vortex shedding
@@ -45,6 +45,21 @@ positive-order asymptotic/GCI sequence.
 
 <p align="center"><em>Three retained test cases from the versioned evidence. Velocity and zero-mean pressure are direct outputs of separate POD--DeepONet heads.</em></p>
 
+### New: DSMC cavity and mono/diatomic shock reproduction
+
+Week 10 turns the article data into a complete teaching experiment: students
+audit the particle-solver contract, parse 85 checksummed numerical files,
+reproduce unseen rarefied-cavity fields, preserve translational--rotational
+nonequilibrium through a shock, and regenerate every retained metric.
+
+<p align="center">
+  <a href="results/aescte_dsmc/week10_dsmc_reproduction_summary.png">
+    <img src="results/aescte_dsmc/week10_dsmc_reproduction_summary.png" alt="Reproduced DSMC rarefied-cavity, diatomic-shock, monatomic-shock, and Maxwell-distribution evidence" width="86%">
+  </a>
+</p>
+
+<p align="center"><em>From the committed numerical tables: 1.281% maximum primary cavity NRMSE and 1.018% maximum shock-profile relative L2 error.</em><br><a href="lectures/week10_dsmc_data_driven_surrogates.pdf">Open the Week 10 lecture</a> · <a href="https://colab.research.google.com/github/Ehsan-Roohi/FlowMLLab/blob/main/notebooks/week10/W10_DSMC_Data_Driven_Surrogates_Student.ipynb">Run the complete notebook</a> · <a href="data/aescte_dsmc/README.md">Inspect the data contract</a></p>
+
 ### Rarefied DSMC–DeepONet case gallery
 
 The micro-step panels are rebuilt from the pinned article repository. The
@@ -72,13 +87,13 @@ the three cases at 16, 25, and 30 kPa are evaluated afterward.
 
 <p align="center">
   <a href="results/mahdavi_deeponet/nozzle_flowmllab/nozzle_back_pressure_P16_contours.png">
-    <img src="results/mahdavi_deeponet/nozzle_flowmllab/nozzle_back_pressure_P16_contours.png" alt="Fresh FlowMLLab comparison of DSMC and POD-neural-operator density and velocity fields at held-out back pressure 16 kPa" width="100%">
+    <img src="results/mahdavi_deeponet/nozzle_flowmllab/nozzle_back_pressure_P16_contours.png" alt="Fresh FlowMLLab comparison of DSMC and hybrid-operator density and velocity fields at held-out back pressure 16 kPa" width="100%">
   </a>
 </p>
 
 <p align="center">
   <a href="results/mahdavi_deeponet/nozzle_flowmllab/nozzle_back_pressure_profiles.png">
-    <img src="results/mahdavi_deeponet/nozzle_flowmllab/nozzle_back_pressure_profiles.png" alt="Fresh FlowMLLab DSMC and POD-neural-operator centerline profiles at held-out back pressures 16, 25, and 30 kPa" width="100%">
+    <img src="results/mahdavi_deeponet/nozzle_flowmllab/nozzle_back_pressure_profiles.png" alt="Fresh FlowMLLab DSMC and hybrid-operator centerline profiles at held-out back pressures 16, 25, and 30 kPa" width="100%">
   </a>
 </p>
 
@@ -100,9 +115,10 @@ the three cases at 16, 25, and 30 kPa are evaluated afterward.
 | Matched-budget five-input shock-tube audit | Interpolation: **4.885%**; bounded MLP: **0.177%** relative $L_2$ |
 | Prescribed 100,000-state shock-tube workload | **16.53x faster** than one bracketed Brent root per state; **0.0915%** relative $L_2$ |
 | Public 15-case micro-nozzle DSMC density POD | Physical coordinates: **8 modes** for 99%; shock-centered coordinates: **2 modes** |
-| Fresh FlowMLLab full-field nozzle tests at 16/25/30 kPa | Density: **2.638%–5.504%**; pressure: **4.345%–6.070%**; $U$: **9.714%–19.874%**; Mach: **8.727%–17.143%** relative $L_2$ |
+| Improved FlowMLLab full-field nozzle tests at 16/25/30 kPa | all six article fields evaluated; maximum full-field relative $L_2$: **14.44%**; density **3.60%–4.60%**; $U$ **7.45%–11.96%** |
 | Micro-step zonal-loss article evidence | Recirculation error: **14.6135% → 11.9413%**; full-domain error: **2.1739% → 2.2254%** |
-| Reproducible learning and research entry points | **23 Colab notebooks + 10 lectures** (9 PDFs; Weeks 5–6 share one guide) |
+| Week-10 DSMC article reproduction | primary cavity maximum/mean NRMSE: **1.281% / 0.672%**; shock maximum/mean relative $L_2$: **1.018% / 0.424%** |
+| Reproducible learning and research entry points | **24 Colab notebooks + 11 lectures** (10 PDFs; Weeks 5–6 share one guide) |
 
 ### Choose a starting point
 
@@ -116,7 +132,7 @@ the three cases at 16, 25, and 30 kPa are evaluated afterward.
 
 **FlowMLLab** is an open-source framework for reproducible CFD-to-scientific-machine-learning experiments. It integrates transparent continuum and particle solvers, case-wise data partitions, non-neural baselines, coordinate networks, POD-DeepONet models, physical diagnostics, machine-readable evidence, and release checks.
 
-The repository contains a ten-lecture learning path: the complete tutorial and lecture layer developed for the original six-week graduate course **MIE 690A: AI in Fluid Mechanics**, University of Massachusetts Amherst, Summer 2026, plus the Week-2.1 probabilistic-UQ, Week-7 cylinder, Week-8 gas-dynamics, and Week-9 rarefied DeepONet increments. The reusable modules, datasets, validators, and figure builders are the software core; the notebooks are documented examples of that framework.
+The repository contains an eleven-lecture learning path: the complete tutorial and lecture layer developed for the original six-week graduate course **MIE 690A: AI in Fluid Mechanics**, University of Massachusetts Amherst, Summer 2026, plus the Week-2.1 probabilistic-UQ, Week-7 cylinder, Week-8 gas-dynamics, Week-9 rarefied DeepONet, and Week-10 DSMC article-reproduction increments. The reusable modules, datasets, validators, and figure builders are the software core; the notebooks are documented examples of that framework.
 
 The course treats scientific machine learning as a controlled computational-physics experiment:
 
@@ -136,15 +152,17 @@ Start with [START_HERE.md](START_HERE.md). It gives the installation check, reco
 | `flowmllab/` | Installable Python package, including cavity, cylinder LBM, learned-wake, exact gas-dynamics, and probabilistic-UQ modules plus scientific asset checks and CLI |
 | `demo/` | Read-only Streamlit explorer for the retained POD--DeepONet blind cases |
 | `pyproject.toml` | Versioned package metadata, bounded compatible dependencies, optional ML/test environments, and `flowmllab` entry point |
-| `lectures/` | Ten lectures delivered in nine PDFs: Weeks 1–4, an incremental Week-2.1 UQ lecture, a shared Weeks 5–6 project guide, and separate Week-7 cylinder, Week-8 gas-dynamics, and Week-9 rarefied DeepONet lectures |
+| `lectures/` | Eleven lectures delivered in ten PDFs: Weeks 1–4, incremental Week-2.1, shared Weeks 5–6 guide, and Week-7 through Week-10 extensions |
 | `notebooks/week01`–`week04` | Eleven guided laboratories for Weeks 1–4, including the incremental Week-2.1 probabilistic-UQ and Week-4.1 classical-ROM labs |
 | `notebooks/week05_06` | The original combined Weeks 5–6 project pack: seven expanded notebooks (`P0`–`P6`) with PINNs/physics-guided learning, POD, uncertainty, rarefied flow, FP closure, frozen decision gates, and final-project evidence |
 | `notebooks/week07` | The Week-7 cylinder-wake LBM and neural-surrogate extension |
 | `notebooks/week08` | Two CPU/Colab labs: exact branch-aware gas dynamics, then matched interpolation/MLP evidence and dimensional scaling |
 | `notebooks/week09` | Two CPU/Colab labs: micro-step zonal-loss validation and full-field/shock-aligned micro-nozzle POD--DeepONet using real public DSMC fields |
+| `notebooks/week10` | Complete CPU/Colab article-reproduction lab for rarefied cavity, monatomic shock, diatomic shock, and Maxwell equilibrium checks |
 | `notebooks/week02_1` | Incremental probabilistic-UQ lab: exact Bayesian regression, POD--Gaussian-process CFD uncertainty, proper scores, and blind calibration evidence |
 | `common/` | Shared CFD, surrogate, POD, kinetic, and QA utilities |
-| `data/` | Fixed cavity reference data plus the documented, checksummed cylinder-CFD release contract |
+| `data/` | Fixed cavity and cylinder contracts plus 85 source DSMC files for cavity, mono/diatomic shocks, SPARTA inputs, and relaxation |
+| `results/aescte_dsmc/` | Compact DSMC archives, SHA-256 manifest, field/profile metrics, and regenerated Week-10 figures |
 | `results/article_validation/` | Re=1000 pressure-recovery solutions and independent Botella--Peyret reference data |
 | `results/dsmc_validation/` | Four HS--NTC wall-pressure solutions and Mohammadzadeh Fig. 3 DSMC markers |
 | `results/article_figures/` | Paper-ready PNG/PDF validation figures and machine-readable error summaries |
@@ -175,6 +193,7 @@ The recommended path is cumulative:
 - **Week 7 — Cylinder wakes with LBM and learned prediction:** derive the D2Q9 collide--stream--boundary loop, distinguish wake regimes, run a controlled `Re=100` three-grid study and retain its formal asymptotic failure, validate forces and gated Strouhal estimates, retain POD/CNN failure evidence, and audit a phase-stable decoder over 277 autonomous future fields on a fresh Reynolds test.
 - **Week 8 — Gas dynamics before scientific ML:** derive and solve Rayleigh, Fanno, oblique-shock, nozzle-shock, and shock-tube relations; expose branch-hidden regression failure; compare exact roots, interpolation, and bounded MLPs; separate ordinary blind accuracy from edge generalization; and use the SU2 diamond-airfoil work only as a clearly qualified bridge to multidimensional CFD.
 - **Week 9 — Roohi--Mahdavi rarefied DeepONet case studies:** verify DSMC evidence independently, learn complete-geometry splitting and zonal-loss selection on the micro-step, reproduce shock-centered density POD from 15 public nozzle cases, and generate new full-field POD-trunk/neural-branch predictions at 16, 25, and 30 kPa.
+- **Week 10 — DSMC data-driven article reproduction:** qualify particle-solver fields, reproduce log-Knudsen cavity synthesis, build POD-branch shock operators, preserve diatomic relaxation physics, compare interpolation and extrapolation, and regenerate every result from checksummed raw tables.
 
 The full module-to-evidence mapping is in [COURSE_MAP.md](COURSE_MAP.md).
 The exact manuscript-figure ownership and reproduction commands are in [ARTICLE_FIGURE_MAP.md](ARTICLE_FIGURE_MAP.md).
@@ -194,6 +213,9 @@ flowmllab cylinder --root .          # verify Week-7 regimes, grid study, and le
 flowmllab gasdynamics --root .       # verify Week-8 exact/ML evidence and provenance
 flowmllab mahdavi --root .           # verify Week-9 article/DSMC evidence and POD audit
 flowmllab uq --root .                # verify probabilistic-UQ split, evidence, and claim boundary
+flowmllab aescte --root .            # verify Week-10 article-backed DSMC evidence
+python qa/build_week10_aescte_dsmc_data.py
+python qa/run_week10_aescte_validation.py
 ```
 
 Install the neural-network stack with `python -m pip install -e ".[ml,test]"`.
@@ -414,8 +436,8 @@ generalization.
 uses compact, checksummed full-field and centerline derivatives of all 15
 public micro-nozzle DSMC snapshots. It reproduces the density-POD compression
 from 8 physical-coordinate modes to 2 shock-centered modes at 99% energy. The
-FlowMLLab code then selects four full-field POD/neural operators on 12
-development pressures and produces new density, velocity, Mach, and pressure
+FlowMLLab code then selects six full-field gap-aware operators on 12 development
+pressures and produces new density, $U$, $V$, temperature, Mach, and pressure
 predictions for 16, 25, and 30 kPa. The full-field errors are reported in the
 front-page gallery and machine-readable CSV.
 
@@ -486,7 +508,7 @@ If FlowMLLab supports your teaching or research, you can also support its contin
 
 Use [CITATION.cff](CITATION.cff) when citing the release.
 
-Version 1.2.0 is the current source release. The latest archived release remains
+Version 1.3.0 is the current source release. The latest archived release remains
 v1.1.0 until a new Zenodo record is minted; its version-specific DOI is
 [10.5281/zenodo.22126785](https://doi.org/10.5281/zenodo.22126785) and is also
 recorded in [CITATION.cff](CITATION.cff). The GitHub release and archival record

@@ -31,6 +31,9 @@
 | 9A | Geometry-dependent operator learning | Map real DSMC micro-step height and coordinates to velocity through a branch--trunk representation | File-separated 5/2/2 geometry split; validation-only loss selection; no held-out flow patches; retained paper evidence kept separate |
 | 9B | Physics-guided zonal objectives | Balance reverse-flow and main-flow errors with separately normalized regional losses | Validation-only loss-weight selection; global/local tradeoff; untouched 44% and 67% teaching tests |
 | 9C | Shock-aligned rarefied-flow operators | Audit 15 public DSMC nozzle cases; compare physical and shock-centered POD; fit full-field POD trunks and neural branches | Source hashes and CC BY attribution; 8-to-2 mode POD audit; frozen 16/25/30 kPa tests; 2-D density/$U$/Mach/pressure errors; shock-location error |
+| 10A | DSMC solver qualification and provenance | Audit cavity/shock tables, run metadata, hashes, shapes, and molecular models | Mesh/time/particle/sample checklist; exact case inventory; machine-readable manifest |
+| 10B | Rarefied-cavity parameter synthesis | Reproduce complete held-out fields at $Kn=0.05$ and $0.5$ for two lid speeds | Shared contour scales, normalized RMSE denominators, profiles, and higher-moment diagnosis |
+| 10C | Mono/diatomic shock operators | Fit POD trunks and Mach branches; compare interpolation and one-sided extrapolation | Density/velocity/temperature profiles; translational overshoot; rotational lag; fixed error gates |
 
 ## Suggested adoption modes
 
@@ -41,7 +44,7 @@ Use Modules 1C, 2A, 2C, and a short version of 4B. The learning objective is to 
 ### Six-week intensive course
 
 Use all modules in order. Weeks 5–6 form one combined guided-project pack: Week 5 establishes the controlled modification and checkpoint; Week 6 completes the selected track and final evidence. Advanced Track 6 remains instructor-approved.
-Use Weeks 7--9 only after the original six-week sequence. Week 7 extends to unsteady external flow; Week 8 extends to compressible-flow branches, exact-to-ML comparisons, and a qualified multidimensional-CFD bridge. Week 9 provides one lecture and two labs for geometry-dependent and shock-aligned rarefied-flow operators. None replaces the Weeks 5–6 project.
+Use Weeks 7--10 only after the original six-week sequence. Week 7 extends to unsteady external flow; Week 8 extends to compressible-flow branches, exact-to-ML comparisons, and a qualified multidimensional-CFD bridge. Week 9 provides geometry-dependent and shock-aligned rarefied-flow operators. Week 10 closes the sequence with an end-to-end DSMC article-reproduction experiment. None replaces the Weeks 5–6 project.
 
 ### Full semester
 

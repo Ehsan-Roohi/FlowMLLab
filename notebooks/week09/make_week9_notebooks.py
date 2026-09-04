@@ -481,8 +481,8 @@ is high-rank in laboratory coordinates and low-rank in shock-centered coordinate
 3. reproduce the 15-snapshot physical versus shock-centered density POD audit;
 4. select POD rank by leave-one-case-out development error;
 5. open pressures 16, 25, and 30 kPa only after freezing the model;
-6. generate fresh 2-D density, velocity, Mach, and pressure predictions; and
-7. distinguish the classroom operator from the article's six-output model.
+6. generate fresh 2-D predictions for all six article outputs; and
+7. compare the classroom operator directly with the article error table.
 """),
         md(r"""
 ## Evidence and claim contract
@@ -492,9 +492,9 @@ is high-rank in laboratory coordinates and low-rank in shock-centered coordinate
   `e1b234ba499408d3b6224633972f939f3b2301d6` and remain CC BY 4.0.
 - The POD spectrum is directly reproducible from those data.
 - The notebook first predicts jump-normalized centerline density, then runs a
-  fresh full-field POD trunk plus neural branch for density, $U$, Mach, and
-  pressure. This is the FlowMLLab classroom operator, not a stored article
-  checkpoint.
+  fresh gap-aware full-field operator for density, $U$, $V$, temperature, Mach,
+  and pressure. Closely bracketed pressures use complete-field interpolation;
+  wider gaps use a POD branch or interpolation selected on development folds.
 - The article metric tables are immutable retained evidence with a different
   output domain and must not be merged numerically with notebook errors.
 - Shock centering uses target-derived locations in the structural POD and
@@ -796,16 +796,16 @@ repeat the frozen test—not to tune directly on 16, 25, or 30 kPa.
         md(r"""
 ## 5. Generate fresh full-field FlowMLLab predictions
 
-The following cell runs the repository's validation program. For each of
-density, $U$, Mach number, and pressure, it selects a POD rank by
-leave-one-case-out error on the 12 development pressures, fits an eight-unit
-tanh neural branch, and only then evaluates 16, 25, and 30 kPa. The POD modes
-are the spatial trunk. Nothing is read from a paper raster or a stored neural
-prediction.
+The following cell runs the repository's validation program. For each of the
+six fields it selects a POD rank by leave-one-case-out error on the 12
+development pressures. A fixed gap rule uses local complete-field interpolation
+for closely bracketed pressures; internal wide-gap folds choose between that
+baseline and the eight-unit tanh POD branch. It then evaluates 16, 25, and
+30 kPa.
 
-The program writes a machine-readable selection table, the 12 held-out error
-rows, an error heatmap, a 4-by-3 centerline comparison, and a full 2-D contour
-comparison for the hard 16 kPa case.
+The program writes a machine-readable selection table, 18 held-out error rows,
+an article-comparison table, an error heatmap, a 6-by-3 centerline comparison,
+and full 2-D contour comparisons for all three pressures.
 """),
         code(r"""
 command = [
@@ -827,6 +827,8 @@ except ModuleNotFoundError:
 if _NozzleImage is not None:
     for filename in (
         "nozzle_flowmllab/nozzle_back_pressure_P16_contours.png",
+        "nozzle_flowmllab/nozzle_back_pressure_P25_contours.png",
+        "nozzle_flowmllab/nozzle_back_pressure_P30_contours.png",
         "nozzle_flowmllab/nozzle_back_pressure_profiles.png",
         "nozzle_flowmllab/nozzle_back_pressure_error_summary.png",
     ):
@@ -876,10 +878,10 @@ Rankine--Hugoniot jump, or global conservation law.
 
 ### Extension
 
-Use the full public Tecplot snapshots to build a two-dimensional trunk and add
-$U,V,T,M, P$ outputs. Freeze a spatial shock window and conservation diagnostics
-before opening test cases. A larger network is not automatically stronger when
-the number of independent CFD cases remains small.
+Add a shock-coordinate transform to the present six-output operator. Freeze a
+spatial shock window and conservation diagnostics before evaluating new cases.
+A larger network is not automatically stronger when the number of independent
+CFD cases remains small.
 """),
     ]
 

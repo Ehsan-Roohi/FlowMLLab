@@ -23,3 +23,6 @@
 *.jpeg binary
 *.pptx binary
 *.zip binary
+
+# Preserve author-supplied DSMC tables byte-for-byte, including legacy line endings.
+data/aescte_dsmc/raw/** -text -whitespace

@@ -1,0 +1,19 @@
+{
+  "cavity_100_ms_target_available": false,
+  "cavity_primary_max_nrmse_percent": 1.281102073265541,
+  "cavity_primary_mean_nrmse_percent": 0.6723640110176382,
+  "data_manifest_sha256": "455991685839806877a5456b2e0af3abf6340d568fa6fd79c668273e02e681ab",
+  "diatomic_mach_2_target_available": false,
+  "figures_sha256": {
+    "cavity_kn005_reproduction.png": "b45ec20069651f002a625b1591f309f92e052d74b9682b903d9b9e8f3fc454cb",
+    "cavity_validation_profiles.png": "40ed49ece4d0f90224922322c62d952a9babec1a6252d9153dc83bd75b016dc3",
+    "diatomic_shock_reproduction.png": "097b53101df9d02b42cbd613742f22b59774be47eb3b313db40f014cc9df075b",
+    "monatomic_relaxation_reproduction.png": "4c0dc208af094e2120e76bb00ca530acec77b0640ad3084f394da2e20c467d8b",
+    "week10_dsmc_reproduction_summary.png": "1fe31e31f7b725550f891dbe2af5aa6ed6a9c010beb0b00e9ace5458980bee51"
+  },
+  "metrics_sha256": "4c2afa54aba6d31c3dbf24cf7a1a1f664622307e757c4887fa908d64446cba05",
+  "schema_version": 1,
+  "shock_max_relative_l2_percent": 1.0184247943783042,
+  "shock_mean_relative_l2_percent": 0.4235029972000711,
+  "status": "pass"
+}

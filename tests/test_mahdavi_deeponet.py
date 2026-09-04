@@ -19,9 +19,11 @@ from flowmllab.mahdavi_deeponet import (
     load_step_height_archive,
     load_nozzle_centerlines,
     load_nozzle_fields,
+    interpolate_nozzle_fields_locally,
     manufactured_step_velocity,
     pod_spectrum,
     predict_nozzle_pod_neural_operator,
+    predict_nozzle_gap_aware_operator,
     select_nozzle_pod_rank,
     step_coordinate_features,
     validate_step_height_archives,
@@ -154,15 +156,39 @@ class MahdaviDeepONetWeek9Tests(unittest.TestCase):
         self.assertEqual(prediction.shape, (1, 31, 101))
         self.assertTrue(np.isfinite(prediction).all())
 
+    def test_gap_aware_nozzle_operator_records_fixed_route(self) -> None:
+        data = load_nozzle_fields(ROOT)
+        development = np.flatnonzero(
+            ~np.isin(data["pressure_kpa"], NOZZLE_HELD_OUT_KPA)
+        )
+        local, brackets = interpolate_nozzle_fields_locally(
+            data["pressure_kpa"], data["density"], development,
+            np.array([16.0, 25.0, 30.0]),
+        )
+        self.assertEqual(local.shape, (3, 31, 101))
+        self.assertEqual([row["bracket_gap_kpa"] for row in brackets], [3.0, 2.0, 4.0])
+        fitted = fit_nozzle_pod_neural_operator(
+            data["pressure_kpa"], data["density"], development, rank=4,
+        )
+        prediction, routes = predict_nozzle_gap_aware_operator(
+            fitted, data["pressure_kpa"], data["density"], development,
+            np.array([16.0, 25.0, 30.0]), local_gap_limit_kpa=3.0,
+        )
+        self.assertEqual(prediction.shape, local.shape)
+        self.assertEqual(
+            [row["method"] for row in routes],
+            ["local_field_interpolation", "local_field_interpolation", "pod_neural"],
+        )
+
     def test_code_generated_nozzle_figures_and_metrics(self) -> None:
         report = validate_nozzle_flowmllab_results(ROOT)
         self.assertEqual(report["status"], "pass")
         self.assertEqual(report["held_out_pressures_kpa"], [16, 25, 30])
-        self.assertEqual(len(report["held_out_metrics"]), 12)
+        self.assertEqual(len(report["held_out_metrics"]), 18)
         self.assertLess(
             max(float(row["full_field_relative_l2_percent"])
                 for row in report["held_out_metrics"]),
-            20.0,
+            15.0,
         )
 
     def test_week9_evidence_contract(self) -> None:

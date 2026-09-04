@@ -107,6 +107,7 @@ jobs:
             results/mahdavi_deeponet/nozzle_fields_15cases.npz \
             results/mahdavi_deeponet/nozzle_flowmllab_selection.csv \
             results/mahdavi_deeponet/nozzle_flowmllab_heldout_metrics.csv \
+            results/mahdavi_deeponet/nozzle_flowmllab_vs_article.csv \
             results/mahdavi_deeponet/nozzle_flowmllab_manifest.json \
             results/mahdavi_deeponet/nozzle_flowmllab \
             results/mahdavi_deeponet/provenance.json

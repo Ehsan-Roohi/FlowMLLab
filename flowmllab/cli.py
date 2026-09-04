@@ -19,6 +19,7 @@ from .core import (
     verify_mahdavi_deeponet_week9,
 )
 from .probabilistic_uq import validate_probabilistic_uq_evidence
+from .aescte_dsmc import validate_aescte_evidence
 
 
 def build_parser() -> argparse.ArgumentParser:
@@ -74,6 +75,10 @@ def build_parser() -> argparse.ArgumentParser:
         "uq", help="verify retained probabilistic-UQ cavity evidence"
     )
     uq.add_argument("--root", type=Path, help="FlowMLLab checkout root")
+    aescte = subparsers.add_parser(
+        "aescte", help="verify Week-10 article-backed DSMC evidence"
+    )
+    aescte.add_argument("--root", type=Path, help="FlowMLLab checkout root")
     return parser
 
 
@@ -106,6 +111,16 @@ def main(argv: list[str] | None = None) -> int:
             except (OSError, ValueError, KeyError) as error:
                 raise ValidationError(
                     f"Probabilistic-UQ evidence failed: {error}"
+                ) from error
+            print(format_report(report))
+            return 0
+        if args.command == "aescte":
+            root = discover_repository_root(args.root)
+            try:
+                report = validate_aescte_evidence(root)
+            except (OSError, ValueError, KeyError) as error:
+                raise ValidationError(
+                    f"Week-10 DSMC evidence failed: {error}"
                 ) from error
             print(format_report(report))
             return 0

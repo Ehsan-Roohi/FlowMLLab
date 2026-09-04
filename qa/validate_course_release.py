@@ -39,6 +39,7 @@ REQUIRED = [
     "flowmllab/cylinder_phase.py",
     "flowmllab/gas_dynamics.py",
     "flowmllab/mahdavi_deeponet.py",
+    "flowmllab/aescte_dsmc.py",
     "flowmllab/probabilistic_uq.py",
     "tests/test_core.py",
     "tests/test_cavity_rom.py",
@@ -48,6 +49,7 @@ REQUIRED = [
     "tests/test_cylinder_phase.py",
     "tests/test_gas_dynamics.py",
     "tests/test_mahdavi_deeponet.py",
+    "tests/test_aescte_dsmc.py",
     "tests/test_probabilistic_uq.py",
     "qa/build_week04_1_rom_notebook.py",
     "qa/add_colab_entrypoints.py",
@@ -61,10 +63,13 @@ REQUIRED = [
     "qa/build_week9_mahdavi_deeponet_data.py",
     "qa/build_step_independent_contours.py",
     "qa/run_nozzle_field_validation.py",
+    "qa/build_week10_aescte_dsmc_data.py",
+    "qa/run_week10_aescte_validation.py",
     "qa/build_probabilistic_uq_notebook.py",
     "qa/run_probabilistic_uq_validation.py",
     ".github/workflows/week8-materials.yml",
     ".github/workflows/week9-materials.yml",
+    ".github/workflows/week10-materials.yml",
     "data/cavity_data.npz",
     "data/case_quality.csv",
     "common/w4utils.py",
@@ -86,6 +91,9 @@ REQUIRED = [
     "notebooks/week09/W9_Lab2_Shock_Aligned_Nozzle_DeepONet_Student.ipynb",
     "notebooks/week09/make_week9_notebooks.py",
     "notebooks/week09/README.md",
+    "notebooks/week10/W10_DSMC_Data_Driven_Surrogates_Student.ipynb",
+    "notebooks/week10/make_week10_notebook.py",
+    "notebooks/week10/README.md",
     "qa/build_step_height_archive.py",
     "qa/run_step_height_teaching_validation.py",
     "notebooks/week05_06/P0_Project_Setup.ipynb",
@@ -112,6 +120,8 @@ REQUIRED = [
     "lectures/source/week08_gas_dynamics_sciml.tex",
     "lectures/week09_rarefied_deeponet_case_studies.pdf",
     "lectures/source/week09_rarefied_deeponet_case_studies.tex",
+    "lectures/week10_dsmc_data_driven_surrogates.pdf",
+    "lectures/source/week10_dsmc_data_driven_surrogates.tex",
     "references/README.md",
     "references/course_references.bib",
     "results/pod_deeponet/deeponet_selection.csv",
@@ -222,6 +232,16 @@ REQUIRED = [
     "results/mahdavi_deeponet/nozzle_paper_field_errors.csv",
     "results/mahdavi_deeponet/nozzle_hard_case_baselines.csv",
     "results/mahdavi_deeponet/nozzle_pod_reference.csv",
+    "data/aescte_dsmc/README.md",
+    "data/aescte_dsmc/DATA_LICENSE.md",
+    "results/aescte_dsmc/README.md",
+    "results/aescte_dsmc/data_manifest.json",
+    "results/aescte_dsmc/validation_summary.json",
+    "results/aescte_dsmc/week10_validation_metrics.csv",
+    "results/aescte_dsmc/cavity_fields_14cases.npz",
+    "results/aescte_dsmc/diatomic_shock_6cases.npz",
+    "results/aescte_dsmc/monatomic_shock_7cases.npz",
+    "results/aescte_dsmc/week10_dsmc_reproduction_summary.png",
     "results/probabilistic_uq/README.md",
     "results/probabilistic_uq/protocol.json",
     "results/probabilistic_uq/summary.json",
@@ -320,7 +340,7 @@ def validate_notebooks() -> tuple[int, int]:
                 for cell in cells
             ), f"missing learner-edition marker: {path}"
         count += 1
-    assert count == 23, f"expected 23 notebooks, found {count}"
+    assert count == 24, f"expected 24 notebooks, found {count}"
     return count, code_cells
 
 
@@ -873,8 +893,8 @@ def validate_week9_mahdavi_deeponet_results() -> dict[str, object]:
     assert "run_nozzle_field_validation.py" in lab2_source
     assert "fresh full-field FlowMLLab predictions" in lab2_source
     nozzle_rows = report["nozzle_flowmllab_validation"]["held_out_metrics"]
-    assert len(nozzle_rows) == 12
-    assert max(float(row["full_field_relative_l2_percent"]) for row in nozzle_rows) < 20.0
+    assert len(nozzle_rows) == 18
+    assert max(float(row["full_field_relative_l2_percent"]) for row in nozzle_rows) < 15.0
     return report
 
 
@@ -902,9 +922,32 @@ def validate_probabilistic_uq_results() -> dict[str, object]:
     return report
 
 
+def validate_week10_aescte_results() -> dict[str, object]:
+    """Verify the article-backed DSMC data and retained numerical gates."""
+    result_dir = ROOT / "results" / "aescte_dsmc"
+    manifest = json.loads((result_dir / "data_manifest.json").read_text(encoding="utf-8"))
+    summary = json.loads((result_dir / "validation_summary.json").read_text(encoding="utf-8"))
+    assert manifest["article"]["doi"] == "10.1016/j.ast.2025.110785"
+    assert len(manifest["source_file_sha256"]) == 85
+    for relative, expected in manifest["source_file_sha256"].items():
+        assert digest(ROOT / relative) == expected, f"Week-10 source hash mismatch: {relative}"
+    for relative, expected in manifest["derived_file_sha256"].items():
+        assert digest(ROOT / relative) == expected, f"Week-10 archive hash mismatch: {relative}"
+    metrics = pd.read_csv(result_dir / "week10_validation_metrics.csv")
+    assert len(metrics) == 34
+    assert summary["status"] == "pass"
+    assert summary["cavity_primary_max_nrmse_percent"] < 2.0
+    assert summary["shock_max_relative_l2_percent"] < 1.5
+    assert summary["cavity_100_ms_target_available"] is False
+    assert summary["diatomic_mach_2_target_available"] is False
+    for filename, expected in summary["figures_sha256"].items():
+        assert digest(result_dir / filename) == expected
+    return summary
+
+
 def validate_pdfs() -> int:
     pdfs = sorted((ROOT / "lectures").glob("*.pdf"))
-    assert len(pdfs) == 9
+    assert len(pdfs) == 10
     for path in pdfs:
         result = subprocess.run(
             ["pdfinfo", str(path)], check=True, capture_output=True, text=True
@@ -927,6 +970,7 @@ def main() -> None:
     cylinder_grid_metrics = validate_cylinder_grid_results()
     week8_metrics = validate_week8_gas_dynamics_results()
     week9_metrics = validate_week9_mahdavi_deeponet_results()
+    week10_metrics = validate_week10_aescte_results()
     uq_metrics = validate_probabilistic_uq_results()
     article_metrics = validate_article_alignment()
     pdfs = validate_pdfs()
@@ -951,6 +995,7 @@ def main() -> None:
     print("Cylinder grid-verification metrics:", json.dumps(cylinder_grid_metrics, sort_keys=True))
     print("Week-8 gas-dynamics metrics:", json.dumps(week8_metrics, sort_keys=True))
     print("Week-9 Roohi--Mahdavi metrics:", json.dumps(week9_metrics, sort_keys=True))
+    print("Week-10 DSMC reproduction metrics:", json.dumps(week10_metrics, sort_keys=True))
     print("Probabilistic-UQ metrics:", json.dumps(uq_metrics, sort_keys=True))
     print("Article-aligned validation metrics:", json.dumps(article_metrics, sort_keys=True))
 

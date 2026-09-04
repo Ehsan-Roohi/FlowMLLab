@@ -1,17 +1,25 @@
-field,rank,loo_mean_relative_l2_percent,loo_max_relative_l2_percent,selected
-density,1,9.204778328150349,16.598882753175655,False
-density,2,8.919310906016355,16.539141614363174,False
-density,3,8.585349400546443,16.45366015944028,False
-density,4,7.935028677336259,17.362326772118564,True
-u_ms,1,22.280508415122004,43.051980795006166,False
-u_ms,2,22.523640587480642,36.86554591536206,False
-u_ms,3,23.84228706494015,47.18786594186876,False
-u_ms,4,20.208750875414704,37.98082812253209,True
-mach,1,26.264452173279093,39.899291458972606,False
-mach,2,24.520323726616542,40.498692775789905,False
-mach,3,23.70937443721213,41.55709246795439,False
-mach,4,22.31007995141307,43.21141795951499,True
-pressure_tecplot,1,10.92012769498674,20.162017834393385,False
-pressure_tecplot,2,11.030862421036773,20.50924030088146,False
-pressure_tecplot,3,10.32717224347999,19.20306598718691,False
-pressure_tecplot,4,9.371175046085677,19.24542848785195,True
+field,rank,loo_mean_relative_l2_percent,loo_max_relative_l2_percent,selected,wide_bracket_method,wide_fold_count,wide_local_mean_relative_l2_percent,wide_pod_mean_relative_l2_percent,deployment_rule
+density,1,9.204778328150349,16.598882753175655,False,local_field_interpolation,2,5.270522264078094,5.51478396211599,local field interpolation for bracket gap <= 3 kPa; otherwise selected POD-neural operator
+density,2,8.929264572061648,16.52173329656649,False,local_field_interpolation,2,5.270522264078094,5.51478396211599,local field interpolation for bracket gap <= 3 kPa; otherwise selected POD-neural operator
+density,3,8.537985813323658,16.19469733749155,False,local_field_interpolation,2,5.270522264078094,5.51478396211599,local field interpolation for bracket gap <= 3 kPa; otherwise selected POD-neural operator
+density,4,8.008950432994881,17.362326786839596,True,local_field_interpolation,2,5.270522264078094,5.51478396211599,local field interpolation for bracket gap <= 3 kPa; otherwise selected POD-neural operator
+u_ms,1,22.280508415122004,43.051980795006166,False,pod_neural,2,13.351583874461017,12.305309320663362,local field interpolation for bracket gap <= 3 kPa; otherwise selected POD-neural operator
+u_ms,2,21.946575562862705,30.437117742756204,False,pod_neural,2,13.351583874461017,12.305309320663362,local field interpolation for bracket gap <= 3 kPa; otherwise selected POD-neural operator
+u_ms,3,21.28954471344668,38.52065283887574,False,pod_neural,2,13.351583874461017,12.305309320663362,local field interpolation for bracket gap <= 3 kPa; otherwise selected POD-neural operator
+u_ms,4,20.626537092054967,38.583545626588275,True,pod_neural,2,13.351583874461017,12.305309320663362,local field interpolation for bracket gap <= 3 kPa; otherwise selected POD-neural operator
+v_ms,1,23.571006491772835,38.31642363850647,False,local_field_interpolation,2,17.53424197893299,20.029682496612033,local field interpolation for bracket gap <= 3 kPa; otherwise selected POD-neural operator
+v_ms,2,22.771416892399767,36.63539476179308,False,local_field_interpolation,2,17.53424197893299,20.029682496612033,local field interpolation for bracket gap <= 3 kPa; otherwise selected POD-neural operator
+v_ms,3,24.121092258284246,40.19144536033271,False,local_field_interpolation,2,17.53424197893299,20.029682496612033,local field interpolation for bracket gap <= 3 kPa; otherwise selected POD-neural operator
+v_ms,4,22.035588908292834,36.535469673564435,True,local_field_interpolation,2,17.53424197893299,20.029682496612033,local field interpolation for bracket gap <= 3 kPa; otherwise selected POD-neural operator
+temperature_k,1,7.755767534889582,17.387501596164316,False,local_field_interpolation,2,4.767114085535147,5.521748609161878,local field interpolation for bracket gap <= 3 kPa; otherwise selected POD-neural operator
+temperature_k,2,7.607480791629136,17.17194068238478,False,local_field_interpolation,2,4.767114085535147,5.521748609161878,local field interpolation for bracket gap <= 3 kPa; otherwise selected POD-neural operator
+temperature_k,3,7.828813969114275,17.054532222028374,False,local_field_interpolation,2,4.767114085535147,5.521748609161878,local field interpolation for bracket gap <= 3 kPa; otherwise selected POD-neural operator
+temperature_k,4,6.104012892551917,16.445549882306153,True,local_field_interpolation,2,4.767114085535147,5.521748609161878,local field interpolation for bracket gap <= 3 kPa; otherwise selected POD-neural operator
+mach,1,26.264452173279093,39.899291458972606,False,local_field_interpolation,2,15.537744074356027,16.65252888098553,local field interpolation for bracket gap <= 3 kPa; otherwise selected POD-neural operator
+mach,2,24.70927107755567,44.27460542924671,False,local_field_interpolation,2,15.537744074356027,16.65252888098553,local field interpolation for bracket gap <= 3 kPa; otherwise selected POD-neural operator
+mach,3,23.497788832136596,41.57370126069465,False,local_field_interpolation,2,15.537744074356027,16.65252888098553,local field interpolation for bracket gap <= 3 kPa; otherwise selected POD-neural operator
+mach,4,22.364990859777024,42.8648786385016,True,local_field_interpolation,2,15.537744074356027,16.65252888098553,local field interpolation for bracket gap <= 3 kPa; otherwise selected POD-neural operator
+pressure_tecplot,1,10.92012769498674,20.162017834393385,False,local_field_interpolation,2,6.208675974482276,6.515597677938075,local field interpolation for bracket gap <= 3 kPa; otherwise selected POD-neural operator
+pressure_tecplot,2,11.039018292644384,20.53309138158846,False,local_field_interpolation,2,6.208675974482276,6.515597677938075,local field interpolation for bracket gap <= 3 kPa; otherwise selected POD-neural operator
+pressure_tecplot,3,10.26787569286369,19.072014392349807,False,local_field_interpolation,2,6.208675974482276,6.515597677938075,local field interpolation for bracket gap <= 3 kPa; otherwise selected POD-neural operator
+pressure_tecplot,4,9.37921989786348,19.24542848421705,True,local_field_interpolation,2,6.208675974482276,6.515597677938075,local field interpolation for bracket gap <= 3 kPa; otherwise selected POD-neural operator

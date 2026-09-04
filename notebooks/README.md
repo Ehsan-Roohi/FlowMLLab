@@ -31,6 +31,7 @@ only for notebooks that explicitly require CUDA.
 | Week 8 | Gas-dynamics SciML evidence | [Open in Colab](https://colab.research.google.com/github/Ehsan-Roohi/FlowMLLab/blob/main/notebooks/week08/W8_Lab2_Gas_Dynamics_SciML_Evidence_Student.ipynb) |
 | Week 9 | Micro-step zonal-loss DeepONet | [Open in Colab](https://colab.research.google.com/github/Ehsan-Roohi/FlowMLLab/blob/main/notebooks/week09/W9_Lab1_Microstep_Zonal_DeepONet_Student.ipynb) |
 | Week 9 | Shock-aligned micro-nozzle DeepONet | [Open in Colab](https://colab.research.google.com/github/Ehsan-Roohi/FlowMLLab/blob/main/notebooks/week09/W9_Lab2_Shock_Aligned_Nozzle_DeepONet_Student.ipynb) |
+| Week 10 | DSMC cavity and mono/diatomic shock reproduction | [Open in Colab](https://colab.research.google.com/github/Ehsan-Roohi/FlowMLLab/blob/main/notebooks/week10/W10_DSMC_Data_Driven_Surrogates_Student.ipynb) |
 
 ## Weekly laboratories
 
@@ -43,12 +44,13 @@ only for notebooks that explicitly require CUDA.
 - `week07/`: D2Q9 BGK/TRT cylinder flow, a concise collide--stream--boundary algorithm walkthrough, physically gated force and Strouhal diagnostics, an executed three-grid study with a retained formal asymptotic/GCI failure, Reynolds-regime classification, strong temporal baselines, and separate one-step/recursive audits of a four-frame multi-scale CNN on a retained held-out interpolation case.
 - `week08/`: two CPU labs that start from exact branch-aware gas dynamics, then compare bracketed roots, interpolation, and physics-guided MLP evidence across five inverse problems, edge holdouts, dimensional scaling, and application workloads.
 - `week09/`: two CPU research-to-classroom labs based on the Roohi--Mahdavi micro-step and micro-nozzle studies. The first uses two author-permitted, checksummed derivatives of nine real DSMC height fields with file-level case separation; the second reproduces shock-centered POD and fresh full-field predictions from checksummed derivatives of 15 public DSMC snapshots before evaluating three held-out pressures.
+- `week10/`: one complete CPU article-reproduction lab with 14 rarefied-cavity fields, mono/diatomic shock profiles, the DSMC algorithm, full provenance audit, log-Knudsen synthesis, POD-branch operators, physical interpretation, and retained numerical gates.
 
 The Week-9 evidence contract is intentionally asymmetric. Lab 1 uses real
 micro-step DSMC fields under a specific author publication permission, and its
 coordinate MLP is a new independently trained teaching baseline. Lab 2 uses
 real public nozzle DSMC full fields and centerlines under CC BY 4.0, reproduces
-the 15-case POD audit, and generates a fresh four-output full-field result.
+the 15-case POD audit, and generates a fresh six-output full-field result.
 
 The Week-8 labs are synchronized to checksummed evidence from the author's
 `GasDynamicsSciML` repository. Lab 1 links to all nine detailed classical

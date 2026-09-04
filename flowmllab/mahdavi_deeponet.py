@@ -849,6 +849,95 @@ def predict_nozzle_pod_neural_operator(
     return flat.reshape((len(query), *tuple(fitted["field_shape"])))
 
 
+def interpolate_nozzle_fields_locally(
+    pressure_kpa: np.ndarray,
+    snapshots: np.ndarray,
+    train_indices: np.ndarray,
+    query_pressure_kpa: np.ndarray,
+) -> tuple[np.ndarray, list[dict[str, float]]]:
+    """Interpolate complete fields between the two nearest pressure cases.
+
+    The operation is local in parameter space but global in the spatial field:
+    every grid point uses the same pressure weight.  Queries must be bracketed
+    by two supplied training cases so that this routine never silently turns
+    into an extrapolator.
+    """
+    parameter = np.asarray(pressure_kpa, dtype=float)
+    fields = np.asarray(snapshots, dtype=float)
+    indices = np.asarray(train_indices, dtype=int)
+    query = np.asarray(query_pressure_kpa, dtype=float).reshape(-1)
+    if fields.shape[0] != len(parameter) or fields.ndim < 2:
+        raise ValueError("snapshots must contain one field per pressure")
+    if len(indices) < 2 or len(np.unique(indices)) != len(indices):
+        raise ValueError("at least two unique training cases are required")
+    predictions: list[np.ndarray] = []
+    brackets: list[dict[str, float]] = []
+    for value in query:
+        lower = indices[parameter[indices] < value]
+        upper = indices[parameter[indices] > value]
+        if not len(lower) or not len(upper):
+            raise ValueError(f"query pressure {value:g} kPa is not bracketed")
+        lower_index = int(lower[np.argmax(parameter[lower])])
+        upper_index = int(upper[np.argmin(parameter[upper])])
+        lower_pressure = float(parameter[lower_index])
+        upper_pressure = float(parameter[upper_index])
+        weight = (float(value) - lower_pressure) / (
+            upper_pressure - lower_pressure
+        )
+        predictions.append(
+            (1.0 - weight) * fields[lower_index] + weight * fields[upper_index]
+        )
+        brackets.append({
+            "lower_pressure_kpa": lower_pressure,
+            "upper_pressure_kpa": upper_pressure,
+            "bracket_gap_kpa": upper_pressure - lower_pressure,
+            "upper_weight": float(weight),
+        })
+    return np.stack(predictions), brackets
+
+
+def predict_nozzle_gap_aware_operator(
+    fitted_pod: dict[str, Any],
+    pressure_kpa: np.ndarray,
+    snapshots: np.ndarray,
+    train_indices: np.ndarray,
+    query_pressure_kpa: np.ndarray,
+    *,
+    local_gap_limit_kpa: float = 3.0,
+    wide_bracket_method: str = "pod_neural",
+) -> tuple[np.ndarray, list[dict[str, float | str]]]:
+    """Combine local field interpolation with the POD-neural branch.
+
+    Closely bracketed pressures use direct two-case field interpolation.  A
+    wider bracket uses the globally fitted POD-neural operator, which is less
+    tied to the two end fields.  The fixed 3 kPa routing threshold is recorded
+    with every prediction and can be audited without opening its target field.
+    """
+    if local_gap_limit_kpa <= 0:
+        raise ValueError("local gap limit must be positive")
+    if wide_bracket_method not in {"pod_neural", "local_field_interpolation"}:
+        raise ValueError("wide bracket method must be pod_neural or local_field_interpolation")
+    query = np.asarray(query_pressure_kpa, dtype=float).reshape(-1)
+    local, brackets = interpolate_nozzle_fields_locally(
+        pressure_kpa, snapshots, train_indices, query
+    )
+    pod = predict_nozzle_pod_neural_operator(fitted_pod, query)
+    output = np.empty_like(local)
+    records: list[dict[str, float | str]] = []
+    for index, bracket in enumerate(brackets):
+        use_local = (
+            bracket["bracket_gap_kpa"] <= local_gap_limit_kpa
+            or wide_bracket_method == "local_field_interpolation"
+        )
+        output[index] = local[index] if use_local else pod[index]
+        records.append({
+            **bracket,
+            "method": "local_field_interpolation" if use_local else "pod_neural",
+            "local_gap_limit_kpa": float(local_gap_limit_kpa),
+        })
+    return output, records
+
+
 def select_nozzle_pod_rank(
     pressure_kpa: np.ndarray,
     snapshots: np.ndarray,
@@ -1097,30 +1186,42 @@ def validate_nozzle_flowmllab_results(root: str | Path) -> dict[str, Any]:
         raise ValueError("unexpected nozzle held-out cases")
     if not manifest["held_out_cases_opened_after_selection"]:
         raise ValueError("nozzle held-out gate is not recorded")
-    if set(manifest["selected_rank_by_field"]) != {
-        "density", "u_ms", "mach", "pressure_tecplot"
-    }:
+    expected_fields = {
+        "density", "temperature_k", "u_ms", "v_ms", "mach",
+        "pressure_tecplot",
+    }
+    if set(manifest["selected_rank_by_field"]) != expected_fields:
         raise ValueError("nozzle selected-rank field set is incomplete")
+    rule = manifest.get("deployment_rule", {})
+    if rule.get("local_gap_limit_kpa") != 3.0:
+        raise ValueError("unexpected nozzle deployment routing threshold")
+    if manifest.get("route_by_pressure", {}).keys() != {"16", "25", "30"}:
+        raise ValueError("nozzle pressure routes are incomplete")
     selection_path = result_dir / "nozzle_flowmllab_selection.csv"
     metrics_path = result_dir / "nozzle_flowmllab_heldout_metrics.csv"
     if _sha256(selection_path) != manifest["selection_csv_sha256"]:
         raise ValueError("nozzle selection table hash mismatch")
     if _sha256(metrics_path) != manifest["metrics_csv_sha256"]:
         raise ValueError("nozzle held-out table hash mismatch")
+    comparison_path = result_dir / "nozzle_flowmllab_vs_article.csv"
+    if _sha256(comparison_path) != manifest["article_comparison_csv_sha256"]:
+        raise ValueError("nozzle article-comparison table hash mismatch")
     with metrics_path.open(encoding="utf-8") as stream:
         rows = list(csv.DictReader(stream))
     expected_pairs = {
         (field, pressure)
-        for field in ("density", "u_ms", "mach", "pressure_tecplot")
+        for field in expected_fields
         for pressure in (16, 25, 30)
     }
     if {(row["field"], int(row["held_out_pressure_kpa"])) for row in rows} != expected_pairs:
         raise ValueError("nozzle held-out metric coverage is incomplete")
     for row in rows:
-        for key in ("full_field_relative_l2_percent", "centerline_relative_l2_percent"):
-            value = float(row[key])
-            if not np.isfinite(value) or not 0.0 <= value < 50.0:
-                raise ValueError(f"invalid nozzle held-out error: {row['field']} {key}")
+        full_value = float(row["full_field_relative_l2_percent"])
+        centerline_value = float(row["centerline_relative_l2_percent"])
+        if not np.isfinite(full_value) or not 0.0 <= full_value < 15.0:
+            raise ValueError(f"invalid nozzle held-out field error: {row['field']}")
+        if not np.isfinite(centerline_value) or not 0.0 <= centerline_value < 30.0:
+            raise ValueError(f"invalid nozzle held-out centerline error: {row['field']}")
     for relative, expected_hash in manifest["figure_sha256"].items():
         figure = (root_path / relative).resolve()
         if not figure.is_relative_to(root_path) or _sha256(figure) != expected_hash:

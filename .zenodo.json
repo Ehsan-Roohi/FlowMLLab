@@ -1,6 +1,6 @@
 {
   "title": "FlowMLLab: An Open-Source Framework for Reproducible CFD-to-Scientific-Machine-Learning Experiments",
-  "description": "Version 1.2.0 of FlowMLLab, an installable and validation-oriented framework connecting continuum CFD, a D2Q9 cylinder-wake lattice-Boltzmann module, centered POD and neural field surrogates, cavity POD-Galerkin and POD-DEIM models, DSMC, physical diagnostics, tutorial notebooks, and reproducible evidence.",
+  "description": "Version 1.3.0 of FlowMLLab adds checksummed rarefied-cavity, monatomic-shock, and diatomic-shock DSMC data; a complete article-reproduction lecture and notebook; and an improved six-field micro-nozzle validation workflow to the installable CFD-to-scientific-ML framework.",
   "creators": [
     {
       "name": "Roohi, Ehsan",
@@ -19,6 +19,8 @@
     "lattice Boltzmann method",
     "cylinder wake",
     "DSMC",
+    "diatomic shock",
+    "rarefied cavity",
     "reproducible software"
   ],
   "related_identifiers": [

@@ -16,7 +16,7 @@ ROOT = Path(__file__).resolve().parents[1]
 
 class FlowMLLabCoreTests(unittest.TestCase):
     def test_version(self) -> None:
-        self.assertEqual(flowmllab.__version__, "1.2.0")
+        self.assertEqual(flowmllab.__version__, "1.3.0")
 
     def test_package_metadata_supports_colab_python_313(self) -> None:
         metadata = (ROOT / "pyproject.toml").read_text(encoding="utf-8")
@@ -78,6 +78,11 @@ class FlowMLLabCoreTests(unittest.TestCase):
     def test_probabilistic_uq_cli_is_exposed(self) -> None:
         args = build_parser().parse_args(["uq", "--root", str(ROOT)])
         self.assertEqual(args.command, "uq")
+        self.assertEqual(args.root, ROOT)
+
+    def test_aescte_cli_is_exposed(self) -> None:
+        args = build_parser().parse_args(["aescte", "--root", str(ROOT)])
+        self.assertEqual(args.command, "aescte")
         self.assertEqual(args.root, ROOT)
 
 

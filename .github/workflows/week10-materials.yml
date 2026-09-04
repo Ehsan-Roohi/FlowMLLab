@@ -1,0 +1,48 @@
+name: Rebuild and verify Week 10 materials
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - ".github/workflows/week10-materials.yml"
+      - "flowmllab/aescte_dsmc.py"
+      - "data/aescte_dsmc/**"
+      - "notebooks/week10/**"
+      - "qa/build_week10_aescte_dsmc_data.py"
+      - "qa/run_week10_aescte_validation.py"
+      - "results/aescte_dsmc/**"
+      - "lectures/source/week10_dsmc_data_driven_surrogates.tex"
+      - "lectures/week10_dsmc_data_driven_surrogates.pdf"
+      - "tests/test_aescte_dsmc.py"
+
+permissions:
+  contents: read
+
+jobs:
+  rebuild:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - name: Install package and PDF inspector
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y poppler-utils
+          python -m pip install --upgrade pip
+          python -m pip install -e .
+      - name: Rebuild notebook and numerical evidence
+        run: |
+          python notebooks/week10/make_week10_notebook.py
+          python qa/build_week10_aescte_dsmc_data.py
+          python qa/run_week10_aescte_validation.py
+      - name: Verify deterministic artifacts
+        run: |
+          git diff --exit-code -- \
+            notebooks/week10/W10_DSMC_Data_Driven_Surrogates_Student.ipynb \
+            results/aescte_dsmc
+          python -m unittest tests.test_aescte_dsmc -v
+          pdfinfo lectures/week10_dsmc_data_driven_surrogates.pdf
