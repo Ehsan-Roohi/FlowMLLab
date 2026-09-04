@@ -1,0 +1,98 @@
+<div id="hex-light" dir="rtl">
+  <div class="viz-controls">
+    <label class="form-label">سرعت چرخش <span id="hl-w-val" dir="ltr">0.70 rad/s</span><input id="hl-w" type="range" class="form-range" min="-3" max="3" step="0.05" value="0.7"></label>
+    <label class="form-label">گرانش <span id="hl-g-val" dir="ltr">9.81 m/s²</span><input id="hl-g" type="range" class="form-range" min="0" max="20" step="0.01" value="9.81"></label>
+    <label class="form-label">ضریب بازگشت <span id="hl-e-val">0.85</span><input id="hl-e" type="range" class="form-range" min="0" max="1" step="0.01" value="0.85"></label>
+  </div>
+  <div class="viz-row"><button id="hl-play" class="btn" type="button">توقف</button><button id="hl-reset" class="btn" type="button">شروع مجدد</button><span id="hl-time" dir="ltr" class="tabular-nums">0.0 s</span><span class="text-small">شعاع: ۱ متر · دیوارهٔ بدون اصطکاک</span></div>
+  <svg id="hl-view" viewBox="-1.15 -1.15 2.3 2.3" role="img" aria-label="شبیه‌سازی توپ و برخورد با شش‌ضلعی چرخان">
+    <g transform="scale(1,-1)">
+      <polygon id="hl-wall" fill="none" stroke="var(--foreground)" stroke-width="0.012"></polygon>
+      <polyline id="hl-trail" fill="none" stroke="var(--viz-series-1)" stroke-width="0.007" opacity="0.35"></polyline>
+      <circle id="hl-mark" r="0.023" fill="var(--foreground)"></circle>
+      <circle id="hl-ball" r="0.065" fill="var(--viz-series-1)"></circle>
+    </g>
+  </svg>
+  <div class="viz-row text-small tabular-nums"><span>نفوذ فعلی: <span id="hl-now">0</span> mm</span><span>بیشترین نفوذ پیش از اصلاح: <span id="hl-peak">0</span> mm</span><span>خطای قانون برخورد: <span id="hl-error">0</span> m/s</span></div>
+  <div id="hl-last" dir="ltr" class="text-small tabular-nums">uₙ: — → — m/s</div>
+  <span id="hl-status" class="sr-only" aria-live="polite"></span>
+</div>
+<style>
+  #hex-light {color:var(--foreground)}
+  #hl-view {display:block;width:100%;max-height:440px;margin:8px auto}
+  #hl-last {text-align:center;margin-top:8px}
+</style>
+<script id="hl-physics">
+window.hexLightPhysics=function(parameters={}){
+  const config={omega:0.7,gravity:9.81,restitution:0.85,...parameters};
+  const radius=0.065,limit=Math.sqrt(3)/2-radius;
+  const state={x:0.08,y:0.36,vx:0.72,vy:0.1,time:0,peak:0,error:0,last:null};
+  function normals(){return Array.from({length:6},(_,i)=>{const a=0.12+config.omega*state.time+(i+.5)*Math.PI/3;return [Math.cos(a),Math.sin(a)];});}
+  function collide(nx,ny){
+    const qx=state.x+radius*nx,qy=state.y+radius*ny;
+    const wallX=-config.omega*qy,wallY=config.omega*qx;
+    const incoming=(state.vx-wallX)*nx+(state.vy-wallY)*ny;
+    if(incoming<=0)return;
+    const impulse=(1+config.restitution)*incoming;
+    state.vx-=impulse*nx;state.vy-=impulse*ny;
+    const outgoing=(state.vx-wallX)*nx+(state.vy-wallY)*ny;
+    state.error=Math.max(state.error,Math.abs(outgoing+config.restitution*incoming));
+    state.last={incoming,outgoing};
+  }
+  function penetration(){return Math.max(0,...normals().map(([nx,ny])=>nx*state.x+ny*state.y-limit));}
+  function advance(duration){
+    while(duration>1e-12){
+      const speed=Math.hypot(state.vx,state.vy)+Math.abs(config.omega);
+      const dt=Math.min(duration,1/2000,0.0005/Math.max(speed,1));
+      state.x+=state.vx*dt;state.y+=state.vy*dt-.5*config.gravity*dt*dt;
+      state.vy-=config.gravity*dt;state.time+=dt;duration-=dt;
+      const ns=normals();
+      for(const [nx,ny] of ns)state.peak=Math.max(state.peak,nx*state.x+ny*state.y-limit);
+      for(let pass=0;pass<24;pass++){
+        let changed=false;
+        for(const [nx,ny] of ns){
+          const depth=nx*state.x+ny*state.y-limit;
+          if(depth>0){state.x-=(depth+1e-12)*nx;state.y-=(depth+1e-12)*ny;collide(nx,ny);changed=true;}
+        }
+        if(!changed)break;
+      }
+    }
+  }
+  return {state,config,advance,penetration,collide,normals,radius,limit};
+};
+</script>
+<script>
+(()=>{
+  const root=document.getElementById('hex-light'),el=id=>root.querySelector('#hl-'+id);
+  let simulation,trail=[],lastFrame=null,lastReadout=-1;
+  let running=!matchMedia('(prefers-reduced-motion: reduce)').matches;
+  function render(){
+    const s=simulation.state,a=.12+simulation.config.omega*s.time;
+    const vertices=Array.from({length:6},(_,i)=>[Math.cos(a+i*Math.PI/3),Math.sin(a+i*Math.PI/3)]);
+    el('wall').setAttribute('points',vertices.map(p=>p.join(',')).join(' '));
+    el('mark').setAttribute('cx',vertices[0][0]);el('mark').setAttribute('cy',vertices[0][1]);
+    el('ball').setAttribute('cx',s.x);el('ball').setAttribute('cy',s.y);
+    el('trail').setAttribute('points',trail.map(p=>p.join(',')).join(' '));
+    if(lastReadout<0||s.time-lastReadout>=.1){
+      el('time').textContent=s.time.toFixed(1)+' s';el('now').textContent=(simulation.penetration()*1000).toFixed(6);
+      el('peak').textContent=(s.peak*1000).toFixed(4);el('error').textContent=s.error.toExponential(1);
+      el('last').textContent=s.last?`uₙ: ${s.last.incoming.toFixed(3)} → ${s.last.outgoing.toFixed(3)} m/s`:'uₙ: — → — m/s';lastReadout=s.time;
+    }
+  }
+  function reset(){
+    simulation=window.hexLightPhysics({omega:+el('w').value,gravity:+el('g').value,restitution:+el('e').value});
+    el('w-val').textContent=simulation.config.omega.toFixed(2)+' rad/s';el('g-val').textContent=simulation.config.gravity.toFixed(2)+' m/s²';el('e-val').textContent=simulation.config.restitution.toFixed(2);
+    trail=[];lastFrame=null;lastReadout=-1;render();
+  }
+  function status(){el('play').textContent=running?'توقف':'ادامه';el('play').setAttribute('aria-pressed',String(running));el('status').textContent=running?'شبیه‌سازی در حال اجراست':'شبیه‌سازی متوقف است';}
+  el('play').addEventListener('click',()=>{running=!running;lastFrame=null;status();});
+  el('reset').addEventListener('click',reset);
+  ['w','g','e'].forEach(id=>el(id).addEventListener('input',reset));
+  function frame(now){
+    if(!root.isConnected)return;
+    if(running&&lastFrame!==null){simulation.advance(Math.min((now-lastFrame)/1000,.04));trail.push([simulation.state.x,simulation.state.y]);if(trail.length>120)trail.shift();render();}
+    lastFrame=now;requestAnimationFrame(frame);
+  }
+  reset();status();requestAnimationFrame(frame);
+})();
+</script>
