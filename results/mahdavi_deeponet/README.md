@@ -95,6 +95,19 @@ Reproduce the teaching selection and held-out metrics with:
 python qa/run_step_height_teaching_validation.py --root .
 ```
 
+An experimental SDF/SIREN Geom-DeepONet is available separately from the
+retained coordinate-MLP evidence. Install `.[ml]` and run:
+
+```bash
+python qa/run_step_geom_deeponet.py --root . --epochs 500 \
+  --output-dir /path/to/development-run
+```
+
+The output is intentionally labelled development evidence. Promote it to this
+directory's retained evidence only after a predeclared multi-seed comparison,
+the existing full-field/reverse-flow gates, and physical diagnostics have all
+passed.
+
 Rebuild the article-evidence and leakage-free contour sets with:
 
 ```bash
