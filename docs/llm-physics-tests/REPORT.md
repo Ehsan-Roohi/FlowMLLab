@@ -54,3 +54,7 @@ The Light specimen has a measurable analytic collision timing/position error and
 - Resting corners involve multiple contact constraints and numerical stabilization; the isolated collision tests cover a single wall away from a corner.
 - A common external step interval can affect a solver's trajectory and cost. No time-step convergence claim is made.
 - Values in `results/audit.json` are authoritative for this run. The live page is a demonstration using the same extracted solvers and independent geometric/conservation readouts; it does not regenerate the stored audit.
+
+## Visual replay
+
+The page opens with the complete static-elastic conservation graph and the 60 s snapshots. `node tests/build-replay.cjs` records positions and running maximum absolute energy error at 30 frames per simulated second, while retaining the same 1/2400 s solver calls. The script verifies that all three final peak errors match `results/audit.json` to within 1e-12 J. The 5x replay therefore takes 12 seconds of active playback for 60 simulated seconds. The graph has one shared, labeled linear percentage scale, so the two near-zero curves overlap. No solver is changed, no differences are magnified without labeling, and no trajectory is presented as an exact reference solution.
