@@ -77,6 +77,14 @@ class GasDynamicsWeek8Tests(unittest.TestCase):
         self.assertEqual(report["status"], "pass")
         self.assertEqual(report["problems"], 5)
         self.assertLess(report["max_primary_relative_l2"], 3.5e-3)
+        self.assertLess(
+            report["five_dimensional_mlp_relative_l2"],
+            report["five_dimensional_scattered_relative_l2"],
+        )
+        self.assertLess(
+            report["five_dimensional_scattered_relative_l2"],
+            report["five_dimensional_interpolation_relative_l2"],
+        )
         self.assertEqual(report["shock_tube_queries"], 100_000)
 
 

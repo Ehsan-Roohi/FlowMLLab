@@ -241,6 +241,15 @@ An impulsive start excites weakly compressible acoustic modes. FlowMLLab
 supports a half-cosine startup from rest: the far-field populations are
 accelerated with a density-preserving equilibrium difference while inlet speed
 and convective-outlet memory follow the same ramp.
+The ramp reduces the initial pulse but does not absorb a transverse standing
+wave supported by the periodic top/bottom boundaries. A diagnostic sweep with
+0, 300, and 1500 startup steps retained approximately the same high-frequency
+$C_L$ jitter (about 0.015 RMS) and an 83-step period, consistent with
+$L_y/(2c_s)$. Thus ``use a longer ramp'' is not a boundary treatment.
+For force presentation, an explicitly labelled 83-step moving average is well
+separated from the roughly 1300-step shedding period; the raw signal must still
+be retained. A sponge layer or a different far-field boundary is the numerical
+remedy to test if removal of the box mode is required.
 For the short classroom path, the more reliable solution is a retained
 population checkpoint: all nine $f_i$ fields and the convective-outlet memory
 are restored, and the student continues an already saturated wake. Restarting
@@ -324,6 +333,14 @@ p&=\frac{\ln\left| (\phi_1-\phi_2)/(\phi_2-\phi_3)\right|}{\ln r},\\
 \mathrm{GCI}_{\mathrm{fine}}&=
 1.25\frac{|\phi_3-\phi_2|/|\phi_3|}{r^p-1}\times100\%.
 \end{align}
+A second limitation is scale separation. Constant-$\Ma$ refinement keeps the
+weak-compressibility floor at $O(\Ma^2)\simeq0.75\%$, while the observed
+grid-to-grid changes are only about 1--2% and the half-window drag statistic
+changes by roughly 1%. Those effects are comparable, so a non-positive
+observed order is plausible even without a coding defect. A formal asymptotic
+study should repeat the sequence with diffusive scaling
+$U_\infty\propto\Delta x$ (or a lower fixed Mach number) and average at least
+30 shedding cycles per grid before interpreting Richardson order.
 A GCI is reported only for a monotone asymptotic sequence. The predeclared
 course gates require medium-to-fine changes below $3\%$, $2\%$, and $5\%$ for
 $\overline C_D$, $\St$, and $L_r/D$, respectively; corresponding fine-grid

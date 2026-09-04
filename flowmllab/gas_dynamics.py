@@ -379,6 +379,7 @@ def load_week8_evidence(root: str | Path) -> dict[str, Any]:
         "baselines": pd.read_csv(result_dir / "baseline_comparison.csv"),
         "range_generalization": pd.read_csv(result_dir / "range_generalization.csv"),
         "high_dimensional": pd.read_csv(result_dir / "high_dimensional_scaling.csv"),
+        "scattered_baseline": pd.read_csv(result_dir / "scattered_baseline.csv"),
         "physical": pd.read_csv(result_dir / "physical_diagnostics.csv"),
         "application": json.loads(
             (result_dir / "application_audit_summary.json").read_text(encoding="utf-8")
@@ -401,6 +402,7 @@ def validate_week8_evidence(root: str | Path) -> dict[str, Any]:
     primary = evidence["primary"]
     baselines = evidence["baselines"]
     high_dimensional = evidence["high_dimensional"]
+    scattered = evidence["scattered_baseline"]
     application = evidence["application"]
     physical = evidence["physical"]
     provenance = evidence["provenance"]
@@ -429,6 +431,10 @@ def validate_week8_evidence(root: str | Path) -> dict[str, Any]:
         raise ValueError("The retained MLP coverage gate failed.")
     if high_dimensional["dimension"].astype(int).tolist() != [2, 3, 4, 5]:
         raise ValueError("High-dimensional audit must contain dimensions 2 through 5.")
+    if scattered["dimension"].astype(int).tolist() != [2, 3, 4, 5]:
+        raise ValueError("Scattered-data audit must contain dimensions 2 through 5.")
+    if not np.all(scattered["training_states"].astype(int) == 4096):
+        raise ValueError("Scattered-data audit does not use the matched 4096-state budget.")
     five_dimensional = high_dimensional.loc[
         high_dimensional["dimension"] == 5
     ].iloc[0]
@@ -436,6 +442,13 @@ def validate_week8_evidence(root: str | Path) -> dict[str, Any]:
         five_dimensional["interpolation_rel_l2"]
     ):
         raise ValueError("The declared five-dimensional matched-budget result failed.")
+    five_scattered = scattered.loc[scattered["dimension"] == 5].iloc[0]
+    if not (
+        float(five_dimensional["mlp_rel_l2"])
+        < float(five_scattered["relative_l2"])
+        < float(five_dimensional["interpolation_rel_l2"])
+    ):
+        raise ValueError("The fair five-dimensional scattered baseline ordering failed.")
     if int(application["shock_tube_queries"]) != 100_000:
         raise ValueError("The application workload must retain 100,000 shock-tube states.")
     if float(application["shock_tube_speedup"]) <= 10.0:
@@ -465,6 +478,7 @@ def validate_week8_evidence(root: str | Path) -> dict[str, Any]:
             five_dimensional["interpolation_rel_l2"]
         ),
         "five_dimensional_mlp_relative_l2": float(five_dimensional["mlp_rel_l2"]),
+        "five_dimensional_scattered_relative_l2": float(five_scattered["relative_l2"]),
         "shock_tube_queries": int(application["shock_tube_queries"]),
         "shock_tube_speedup": float(application["shock_tube_speedup"]),
         "source_commit": GASDYNAMICS_SCIML_COMMIT,

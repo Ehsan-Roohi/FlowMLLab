@@ -60,6 +60,7 @@ REQUIRED = [
     "qa/run_cylinder_multiscale_cnn.py",
     "qa/run_cylinder_phase_stable.py",
     "qa/build_week8_gas_dynamics_figures.py",
+    "qa/run_week8_scattered_baseline.py",
     "qa/build_week9_mahdavi_deeponet_data.py",
     "qa/build_step_independent_contours.py",
     "qa/run_nozzle_field_validation.py",
@@ -189,6 +190,7 @@ REQUIRED = [
     "results/gas_dynamics_week8/baseline_comparison.csv",
     "results/gas_dynamics_week8/range_generalization.csv",
     "results/gas_dynamics_week8/high_dimensional_scaling.csv",
+    "results/gas_dynamics_week8/scattered_baseline.csv",
     "results/gas_dynamics_week8/physical_diagnostics.csv",
     "results/gas_dynamics_week8/application_audit_summary.json",
     "results/gas_dynamics_week8/week8_exact_physics.png",
@@ -323,6 +325,11 @@ def validate_notebooks() -> tuple[int, int]:
         )
         ids = [cell.get("id") for cell in cells if cell.get("id")]
         assert len(ids) == len(set(ids)), f"duplicate cell id: {path}"
+        if relative.startswith((
+            "notebooks/week02_1/", "notebooks/week08/",
+            "notebooks/week09/", "notebooks/week10/",
+        )):
+            assert len(ids) == len(cells), f"missing cell id in current teaching notebook: {path}"
         for index, cell in enumerate(cells):
             if cell.get("cell_type") == "code":
                 code_cells += 1
@@ -846,7 +853,7 @@ def validate_week9_mahdavi_deeponet_results() -> dict[str, object]:
     assert "real DSMC" in provenance["claim_boundary"]["microstep_data"]
     assert "does not receive" in provenance["claim_boundary"]["microstep_teaching_model"]
     assert "privileged-input" in provenance["claim_boundary"]["microstep_published_model"]
-    assert "not the paper's trained full" in provenance["claim_boundary"]["micro_nozzle_teaching_model"]
+    assert "not the paper's trained six-output DeepONet" in provenance["claim_boundary"]["micro_nozzle_teaching_model"]
 
     step_manifest = json.loads(
         (result_dir / "step_source_manifest.json").read_text(encoding="utf-8")
@@ -891,10 +898,10 @@ def validate_week9_mahdavi_deeponet_results() -> dict[str, object]:
     assert "leave-one-case-out" in lab2_source
     assert "Stop: held-out pressure gate" in lab2_source
     assert "run_nozzle_field_validation.py" in lab2_source
-    assert "fresh full-field FlowMLLab predictions" in lab2_source
+    assert "physical-coordinate and shock-aligned interpolation baselines" in lab2_source
     nozzle_rows = report["nozzle_flowmllab_validation"]["held_out_metrics"]
     assert len(nozzle_rows) == 18
-    assert max(float(row["full_field_relative_l2_percent"]) for row in nozzle_rows) < 15.0
+    assert max(float(row["selected_global_relative_l2_percent"]) for row in nozzle_rows) < 15.0
     return report
 
 

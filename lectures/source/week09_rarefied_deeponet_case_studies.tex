@@ -5,7 +5,7 @@
 \usetikzlibrary{arrows.meta,positioning,shapes.geometric}
 \usepackage[most]{tcolorbox}
 \usepackage{enumitem,fancyhdr,hyperref,microtype}
-\graphicspath{{results/mahdavi_deeponet/}}
+\graphicspath{{../../results/mahdavi_deeponet/}}
 \definecolor{navy}{HTML}{17365D}
 \definecolor{blue}{HTML}{2F75B5}
 \definecolor{teal}{HTML}{2A9D8F}
@@ -148,9 +148,12 @@ For the nozzle back-pressure study, FlowMLLab uses
 \mathcal D_{\rm dev}&=\{15,18,19,20,22,23,24,26,27,28,29,33\}\ \mathrm{kPa},\\
 \mathcal D_{\rm test}&=\{16,25,30\}\ \mathrm{kPa}.
 \end{align}
-Rank is selected by leave-one-case-out error inside $\mathcal D_{\rm dev}$.
-The full 101-by-31 fields at the three held-out pressures are evaluated after
-the rank, branch architecture, seed, and metrics are fixed.
+Two full-field baselines are compared inside $\mathcal D_{\rm dev}$:
+physical-coordinate interpolation and interpolation after aligning row-wise
+density-compression surfaces. Alignment is selected per output only when it
+reduces mean shock-window error and increases mean global error by at most two
+percentage points. The held-out fields are evaluated after that rule and all
+metric definitions are fixed.
 
 For a reference field $q$ and prediction $\widehat q$,
 \begin{equation}
@@ -159,6 +162,11 @@ For a reference field $q$ and prediction $\widehat q$,
 \end{equation}
 This metric must be supplemented by localized error, shock position, reverse-
 flow topology, conservation, and uncertainty of the DSMC reference.
+FlowMLLab therefore also reports a row-wise window within $\pm3\delta_j$ of the
+reference shock and a density-gradient-weighted norm with
+$w=1+4|\partial\rho/\partial x|/\max|\partial\rho/\partial x|$. The reference
+shock is used only to score a completed prediction; the predicted aligned
+coordinate comes solely from bracketing development fields.
 
 \begin{warningbox}
 Model error relative to DSMC is not DSMC error relative to the physical flow.
@@ -182,10 +190,18 @@ H44/H67 for the held-out classroom evaluation. The validation rule selects
 $\alpha=0.6$. The article and classroom figures use equal $x/H$--$y/H$
 scaling; the measured data domain has $L/H\simeq5$.
 
+The pinned article-repository inference path constructs each local input patch
+from the same DSMC $U,V$ field that it reconstructs. Its stored C-DeepONet
+panels are therefore target-assisted reconstruction evidence, not an
+independently deployable held-out map. A nearest-sample baseline on that patch
+gives 4.40\% at H44 and 6.79\% at H67, lower than the stored model's 4.92\%
+and 8.23\%. The classroom model instead receives only height, coordinates, and
+known geometry.
+
 \begin{figure}[ht]
 \centering
 \includegraphics[width=\textwidth]{step_article_contours/article_figure_06_Kn0p004.png}
-\caption{Micro-step rarefaction case at $\Kn=0.004$: DSMC, DeepONet, and absolute velocity error, rebuilt from the pinned source fields. The solid step remains masked and the DSMC/DeepONet color limits are shared.}
+\caption{Micro-step rarefaction case at $\Kn=0.004$: DSMC, stored target-assisted article-model output, and absolute velocity error. The solid step remains masked and the field color limits are shared.}
 \label{fig:step-kn}
 \end{figure}
 
@@ -210,6 +226,10 @@ H67 & 11.267\% & 33.257\% & 80.49\% & 0.1042 / 0.1149 \\
 \bottomrule
 \end{tabular}
 \end{center}
+The local improvement is purchased with a substantial global tradeoff:
+unweighted-to-zonal error changes from 7.228\% to 9.594\% at H44 and from
+5.934\% to 11.267\% at H67. The latter is almost a factor of two; describing
+it as a modest increase would contradict the held-out table.
 
 \begin{decisionbox}
 The zonal model is accepted only if validation shows the planned reverse-flow
@@ -222,14 +242,16 @@ held-out geometries report the result; they do not select $\alpha$.
 The public nozzle dataset contains 15 complete DSMC snapshots on a common
 101-by-31 curvilinear grid. FlowMLLab preserves density, temperature, $U$, $V$,
 Mach number, pressure, and Knudsen number. For each of the six article outputs,
-POD rank and the wide-gap route are selected on 12 development pressures. The
-operator uses complete-field interpolation when nearby pressure cases bracket
-the query, and an eight-unit POD branch when internal wide-gap folds favor it.
+physical-coordinate and shock-aligned interpolation are compared on 12
+development pressures. The aligned route detects the downstream density
+compression in each source-field row, interpolates its location in pressure,
+translates both source rows to that predicted surface, and only then blends
+them. It does not inspect the held-out target field.
 
 \begin{figure}[ht]
 \centering
 \includegraphics[width=\textwidth]{nozzle_flowmllab/nozzle_back_pressure_P16_contours.png}
-\caption{Improved FlowMLLab result at held-out $P_b=16$ kPa. The DSMC and predicted density and $U$ fields share color scales; error panels use absolute error. The physical axes preserve the nozzle geometry.}
+\caption{Held-out $P_b=16$ kPa comparison of DSMC, physical-coordinate interpolation, and shock-aligned interpolation. Shared field and error scales expose how alignment removes most translated-shock smear in $U$ while preserving the nozzle aspect.}
 \label{fig:nozzle-contour}
 \end{figure}
 
@@ -241,8 +263,8 @@ larger global velocity or Mach error.
 \section{Back-Pressure Profiles and Error Matrix}
 \begin{figure}[ht]
 \centering
-\includegraphics[width=0.96\textwidth]{nozzle_flowmllab/nozzle_back_pressure_profiles.png}
-\caption{Centerline slices extracted from the new full-field FlowMLLab predictions for all three held-out back pressures. These curves are regenerated by \texttt{qa/run\_nozzle\_field\_validation.py}.}
+\includegraphics[width=0.78\textwidth]{nozzle_flowmllab/nozzle_back_pressure_profiles.png}
+\caption{Centerline slices for both interpolation baselines at all three held-out back pressures. The selected route is frozen by development-only folds. These curves are regenerated by \texttt{qa/run\_nozzle\_field\_validation.py}.}
 \label{fig:nozzle-profiles}
 \end{figure}
 
@@ -250,7 +272,7 @@ larger global velocity or Mach error.
 \begin{figure}[ht]
 \centering
 \includegraphics[width=0.68\textwidth]{nozzle_flowmllab/nozzle_back_pressure_error_summary.png}
-\caption{Full-field relative $L_2$ errors from the same fresh run. A single average would hide both the output dependence and the harder operating cases.}
+\caption{Development-selected full-field relative $L_2$ errors. Each cell marks physical (P) or aligned (A); a single average would hide output dependence and the harder 30 kPa case.}
 \label{fig:nozzle-errors}
 \end{figure}
 
@@ -259,12 +281,12 @@ larger global velocity or Mach error.
 \toprule
 Field & 16 kPa & 25 kPa & 30 kPa \\
 \midrule
-Density & 3.596\% & 4.595\% & 4.559\% \\
-$U$ & 7.452\% & 11.960\% & 9.982\% \\
+Density & 4.366\% & 4.130\% & 4.734\% \\
+$U$ & 3.107\% & 5.586\% & 12.038\% \\
 $V$ & 10.813\% & 13.409\% & 12.593\% \\
-Temperature & 3.910\% & 3.860\% & 2.931\% \\
-Mach number & 8.751\% & 14.368\% & 14.438\% \\
-Pressure & 4.331\% & 5.375\% & 5.199\% \\
+Temperature & 1.751\% & 1.572\% & 2.893\% \\
+Mach number & 3.574\% & 5.984\% & 14.200\% \\
+Pressure & 5.020\% & 4.539\% & 5.406\% \\
 \bottomrule
 \end{tabular}
 \end{center}
@@ -282,7 +304,6 @@ Across all 15 DSMC centerlines, FlowMLLab reproduces the retained POD audit:
 \begin{tabular}{lrrrr}
 \toprule
 Coordinate & Mode 1 energy & Modes 1--2 & Modes 1--3 & Modes for 99\% \\
-\midrule
 Physical $x$ & 78.922\% & 88.467\% & 93.762\% & 8 \\
 Shock-centered $\xi_j$ & 97.986\% & 99.182\% & 99.865\% & 2 \\
 \bottomrule
@@ -342,9 +363,9 @@ requires publication of those geometry-indexed fields.
 \begin{enumerate}
 \item verify the 15 public DSMC files and their full-field derivative;
 \item detect $x_s$, reproduce physical versus aligned density POD, and inspect 22 kPa;
-\item freeze the 12/3 pressure split and rank candidates;
+\item freeze the 12/3 pressure split, two baselines, local metrics, and global guardrail;
 \item run \texttt{qa/run\_nozzle\_field\_validation.py};
-\item interpret every row of the 4-by-3 error matrix and the 16 kPa contour; and
+\item interpret every row of the 6-by-3 error matrix and the 16 kPa contour; and
 \item propose the additional data package required for the throat study.
 \end{enumerate}
 
@@ -371,7 +392,7 @@ Reproducibility & restart-and-run notebook plus machine-readable metrics and fig
 \item Complete physical cases, not shuffled spatial points, define the experimental split.
 \item Zonal metrics expose micro-step recirculation behavior hidden by a domain average.
 \item Shock alignment compresses the nozzle snapshot family from eight to two density modes at 99\% energy.
-\item The improved six-field FlowMLLab back-pressure run keeps every held-out full-field error below 15\%; the largest errors remain near moving compression regions.
+\item The selected interpolation baseline keeps every held-out full-field error below 14.21\%, but this is baseline evidence, not a regenerated DeepONet claim.
 \item A cited article plot and a code-regenerated result are different evidence and must remain labelled accordingly.
 \end{enumerate}
 

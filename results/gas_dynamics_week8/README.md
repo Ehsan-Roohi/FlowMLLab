@@ -25,6 +25,10 @@ identifier.
   one-dimensional tables when it is both faster and more accurate.
 - At a matched roughly 4096-state budget, the five-input shock-tube audit has
   `4.88496%` interpolation relative-L2 error versus `0.177106%` for the MLP.
+- A FlowMLLab-only fairness audit trains a local thin-plate RBF on the same
+  4096 Latin-hypercube states as the MLP. Its five-input error is `0.94873%`:
+  much better than the sparse regular grid, but still above the MLP. The exact
+  reproduction command is `python qa/run_week8_scattered_baseline.py`.
 - The 100,000-state shock-tube application audit records `16.53x` speedup over
   one bracketed root solve per state with `0.09148%` relative-L2 error.
 - These results do not validate reacting flow, variable heat capacity,

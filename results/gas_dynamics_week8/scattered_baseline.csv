@@ -1,0 +1,5 @@
+dimension,physical_inputs,training_states,blind_test_states,training_seed,blind_seed,method,neighbors,smoothing,relative_l2,relative_linf,same_random_training_budget_as_mlp
+2,log_p4_p1;log_t4_t1,4096,2048,61,143,local_thin_plate_RBF,128,1e-08,0.00012958960317504352,0.0013593794717513608,True
+3,log_p4_p1;log_t4_t1;gamma,4096,2048,71,144,local_thin_plate_RBF,128,1e-08,0.0011199640585645078,0.005798439357806331,True
+4,log_p4_p1;log_t4_t1;gamma1;gamma4,4096,2048,81,145,local_thin_plate_RBF,128,1e-08,0.004260081986745233,0.022880566871437632,True
+5,log_p4_p1;log_t4_t1;gamma1;gamma4;log_r4_r1,4096,2048,91,146,local_thin_plate_RBF,128,1e-08,0.009487302775220407,0.028599578796407683,True

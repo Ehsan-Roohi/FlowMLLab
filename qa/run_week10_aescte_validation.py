@@ -186,7 +186,7 @@ def draw_diatomic(data, prediction_17, prediction_14, output):
         x = data["x_over_lambda"][index]
         for column, (field, label) in enumerate(zip(fields, labels)):
             axes[row, column].plot(x, data[field][index], color=PALETTE["dsmc"], lw=2.3, label="DSMC")
-            axes[row, column].plot(x, prediction[field], color=PALETTE["model"], lw=1.8, ls="--", label="POD branch-trunk")
+            axes[row, column].plot(x, prediction[field], color=PALETTE["model"], lw=1.8, ls="--", label="POD-polynomial surrogate")
             axes[row, column].set(title=f"Mach {mach:g} {subtitle}: {label}", xlabel=r"$x/\lambda$")
             axes[row, column].grid(alpha=0.25)
     axes[0, 0].set_ylabel("normalized value")
@@ -203,7 +203,7 @@ def draw_monatomic_relaxation(data, prediction, output):
     x = data["x_over_lambda"][target]
     for ax, field, label in zip(axes[:3], ["density", "velocity", "temperature"], ["density", "velocity", "temperature"]):
         ax.plot(x, data[field][target], color=PALETTE["dsmc"], lw=2.2, label="DSMC")
-        ax.plot(x, prediction[field], color=PALETTE["model"], lw=1.7, ls="--", label="operator")
+        ax.plot(x, prediction[field], color=PALETTE["model"], lw=1.7, ls="--", label="POD-polynomial surrogate")
         ax.set(title=f"held-out Mach 1.7: {label}", xlabel=r"$x/\lambda$")
         ax.grid(alpha=0.25)
     speed = np.linspace(0, 1250, 500)

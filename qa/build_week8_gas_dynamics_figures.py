@@ -131,6 +131,7 @@ def build_evidence_overview() -> None:
     baselines = pd.read_csv(RESULTS / "baseline_comparison.csv")
     edges = pd.read_csv(RESULTS / "range_generalization.csv")
     dimensions = pd.read_csv(RESULTS / "high_dimensional_scaling.csv")
+    scattered = pd.read_csv(RESULTS / "scattered_baseline.csv")
     application = json.loads((RESULTS / "application_audit_summary.json").read_text())
 
     names = [name.replace(" inverse", "").replace(" implicit", "") for name in primary["problem"]]
@@ -169,6 +170,8 @@ def build_evidence_overview() -> None:
                     "o-", color=GOLD, lw=2.2, label="regular-grid interpolation")
     axes[1, 1].plot(dimensions["dimension"], 100.0 * dimensions["mlp_rel_l2"],
                     "o-", color=TEAL, lw=2.2, label="bounded MLP")
+    axes[1, 1].plot(scattered["dimension"], 100.0 * scattered["relative_l2"],
+                    "s--", color=BLUE, lw=2.0, label="scattered local RBF")
     axes[1, 1].set_yscale("log")
     axes[1, 1].set_xticks([2, 3, 4, 5])
     axes[1, 1].legend(frameon=False, fontsize=8)

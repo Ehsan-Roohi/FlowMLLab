@@ -84,6 +84,8 @@ REPO_ROOT = next(
     candidate for candidate in (Path.cwd(), *Path.cwd().parents)
     if (candidate / "results/mahdavi_deeponet").is_dir()
 )
+if str(REPO_ROOT) not in _flowmllab_sys.path:
+    _flowmllab_sys.path.insert(0, str(REPO_ROOT))
 RESULTS = REPO_ROOT / "results/mahdavi_deeponet"
 plt.rcParams.update({"font.size": 11, "axes.labelsize": 12, "legend.fontsize": 9})
 print("Python:", platform.python_version())
@@ -136,6 +138,14 @@ Three evidence levels stay separate:
 - **retained article evidence:** the paper's MSE/GMSE/zonal table;
 - **notebook result:** a new independent coordinate-network baseline trained
   here. It is not the paper's C-DeepONet checkpoint.
+
+The stored C-DeepONet outputs in the pinned article repository were generated
+with a local input patch constructed from the same DSMC target field being
+reconstructed. They are therefore data-assisted reconstruction evidence, not
+an independently deployable held-out prediction. A nearest-sample baseline on
+that target-derived patch reaches 4.40% at H44 and 6.79% at H67, below the
+stored model's 4.92% and 8.23%. The independent classroom model below never
+receives that patch.
 
 The notebook model uses only $h/H$, $(x,y)$, and known geometry. Development,
 validation, and held-out geometry cases remain in separate case-wise groups.
@@ -378,6 +388,10 @@ and images are the independent H44/H67 result from the frozen classroom model.
 Compare topology, the $U=0$ recirculation boundary, reverse-flow IoU, and
 reattachment length—not merely color similarity.
 
+In the retained panels, “stored NN” means the article-repository output that
+uses the target-derived input patch described above. It must not be read as a
+fresh prediction from geometry and Knudsen number alone.
+
 Two source inconsistencies remain explicit:
 
 - the article problem statement lists Kn=0.2, while Figure 6, its discussion,
@@ -417,9 +431,11 @@ if _ContourImage is not None:
         md(r"""
 ## 6. Interpret without mixing evidence levels
 
-The real-data classroom experiment should show the intended mechanism: the
-selected zonal objective reduces reverse-flow error while accepting a modest
-increase in whole-field error. The paper reports the same qualitative tradeoff:
+The real-data classroom experiment shows a real tradeoff: the selected zonal
+objective reduces reverse-flow error, but held-out whole-field error rises from
+7.228% to 9.594% at H44 and from 5.934% to 11.267% at H67. The second increase
+is nearly a factor of two, not a modest change. The article table reports a
+different, retained comparison:
 zonal loss changes the reported recirculation-zone error from
 14.6135% (MSE) to 11.9413%, while the full-domain value changes from 2.1739%
 to 2.2254%.
@@ -482,7 +498,7 @@ is high-rank in laboratory coordinates and low-rank in shock-centered coordinate
 4. select POD rank by leave-one-case-out development error;
 5. open pressures 16, 25, and 30 kPa only after freezing the model;
 6. generate fresh 2-D predictions for all six article outputs; and
-7. compare the classroom operator directly with the article error table.
+7. compare classroom baselines and article tables as separate evidence levels.
 """),
         md(r"""
 ## Evidence and claim contract
@@ -491,10 +507,10 @@ is high-rank in laboratory coordinates and low-rank in shock-centered coordinate
   from the public Tecplot DSMC files at pinned commit
   `e1b234ba499408d3b6224633972f939f3b2301d6` and remain CC BY 4.0.
 - The POD spectrum is directly reproducible from those data.
-- The notebook first predicts jump-normalized centerline density, then runs a
-  fresh gap-aware full-field operator for density, $U$, $V$, temperature, Mach,
-  and pressure. Closely bracketed pressures use complete-field interpolation;
-  wider gaps use a POD branch or interpolation selected on development folds.
+- The notebook first predicts jump-normalized centerline density, then compares
+  physical-coordinate and shock-aligned interpolation baselines for density,
+  $U$, $V$, temperature, Mach, and pressure. Both use the same 12 development
+  fields; the shock surface for a query is interpolated only from source fields.
 - The article metric tables are immutable retained evidence with a different
   output domain and must not be merged numerically with notebook errors.
 - Shock centering uses target-derived locations in the structural POD and
@@ -535,8 +551,8 @@ public_report = {
         "held_out_pressures_kpa": report["nozzle_flowmllab_validation"][
             "held_out_pressures_kpa"
         ],
-        "selected_rank_by_field": report["nozzle_flowmllab_validation"][
-            "selected_rank_by_field"
+        "selected_method_by_field": report["nozzle_flowmllab_validation"][
+            "selected_method_by_field"
         ],
     },
 }
@@ -794,18 +810,20 @@ the sensor window, quantify detector uncertainty, predeclare a robust fit, and
 repeat the frozen test—not to tune directly on 16, 25, or 30 kPa.
 """),
         md(r"""
-## 5. Generate fresh full-field FlowMLLab predictions
+## 5. Generate full-field interpolation baselines from FlowMLLab code
 
-The following cell runs the repository's validation program. For each of the
-six fields it selects a POD rank by leave-one-case-out error on the 12
-development pressures. A fixed gap rule uses local complete-field interpolation
-for closely bracketed pressures; internal wide-gap folds choose between that
-baseline and the eight-unit tanh POD branch. It then evaluates 16, 25, and
-30 kPa.
+The following cell runs the repository's validation program. It compares plain
+physical-coordinate interpolation with row-wise shock-aligned interpolation.
+For each field, development-only LOO folds select alignment when it lowers
+shock-window error and increases global error by no more than two percentage
+points. The rule is frozen before evaluating 16, 25, and 30 kPa. These are
+interpolation baselines, not a newly trained DeepONet.
 
-The program writes a machine-readable selection table, 18 held-out error rows,
-an article-comparison table, an error heatmap, a 6-by-3 centerline comparison,
-and full 2-D contour comparisons for all three pressures.
+The program writes a machine-readable selection table, 18 held-out rows with
+global, shock-window, and density-gradient-weighted metrics for both methods,
+an error heatmap, a 6-by-3 centerline comparison, and full 2-D comparisons.
+Article numbers remain in their own immutable CSV; no difference column is
+computed between non-commensurate evidence levels.
 """),
         code(r"""
 command = [
@@ -817,7 +835,11 @@ _flowmllab_subprocess.run(command, check=True)
 generated_metrics = pd.read_csv(RESULTS / "nozzle_flowmllab_heldout_metrics.csv")
 display(generated_metrics.pivot(
     index="field", columns="held_out_pressure_kpa",
-    values="full_field_relative_l2_percent",
+    values="selected_global_relative_l2_percent",
+))
+display(generated_metrics.pivot(
+    index="field", columns="held_out_pressure_kpa",
+    values="selected_shock_window_relative_l2_percent",
 ))
 
 try:
@@ -878,10 +900,10 @@ Rankine--Hugoniot jump, or global conservation law.
 
 ### Extension
 
-Add a shock-coordinate transform to the present six-output operator. Freeze a
-spatial shock window and conservation diagnostics before evaluating new cases.
-A larger network is not automatically stronger when the number of independent
-CFD cases remains small.
+Add conservation and mass-flux diagnostics to the two baselines, then implement
+a genuinely trained six-output operator using the same frozen split. A larger
+network is not automatically stronger when the number of independent CFD cases
+remains small.
 """),
     ]
 
@@ -894,6 +916,9 @@ def write_notebook(filename: str, cells) -> None:
             "language_info": {"name": "python", "version": "3.12"},
         },
     )
+    stem = "w9l1" if "Lab1" in filename else "w9l2"
+    for index, cell in enumerate(notebook["cells"]):
+        cell["id"] = f"{stem}-{index:03d}"
     nbf.write(notebook, HERE / filename)
 
 

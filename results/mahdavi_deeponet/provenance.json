@@ -15,7 +15,7 @@
   },
   "claim_boundary": {
     "micro_nozzle_data": "The compact archives are deterministic full-field and centerline derivatives of all 15 public DSMC snapshots at the pinned source commit.",
-    "micro_nozzle_teaching_model": "The notebook's compact centerline POD/branch model is not the paper's trained full two-dimensional six-output shock-aligned surrogate.",
+    "micro_nozzle_teaching_model": "The notebook audits shock-centered POD compression and evaluates physical-coordinate and source-only shock-aligned interpolation baselines. These are not the paper's trained six-output DeepONet.",
     "microstep_data": "The lesson uses two compact derivatives of nine real DSMC height fields at a pinned source commit, published in FlowMLLab with the corresponding author's explicit permission; no general upstream-data license is implied.",
     "microstep_dsmc_validation": "The public fields do not establish cell-size, time-step, particles-per-cell, sampling/replicate uncertainty, or wall accommodation metadata.",
     "microstep_published_model": "The published-repository C-DeepONet is retained as a privileged-input reconstruction because its inference patches come from the held-out DSMC U,V field.",

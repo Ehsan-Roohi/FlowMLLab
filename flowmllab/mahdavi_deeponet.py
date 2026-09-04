@@ -896,6 +896,186 @@ def interpolate_nozzle_fields_locally(
     return np.stack(predictions), brackets
 
 
+def detect_density_shock_surface(
+    x_m: np.ndarray,
+    density: np.ndarray,
+    *,
+    smooth_sigma: float = 0.7,
+    downstream_fraction: float = 0.42,
+) -> dict[str, np.ndarray]:
+    """Detect a row-wise nozzle compression surface and jump thickness.
+
+    The upstream expansion produces a strong density gradient that is not the
+    back-pressure shock.  Restricting the detector to the downstream 58% of
+    the domain separates those two features on the public 101-by-31 grid.
+    This sensor is used on source fields when constructing a prediction and
+    may be used on a reference field only when evaluating an already-frozen
+    prediction.
+    """
+    x = np.asarray(x_m, dtype=float)
+    rho = np.asarray(density, dtype=float)
+    if x.ndim != 1 or rho.ndim != 2 or rho.shape[1] != len(x):
+        raise ValueError("density must have shape (rows, len(x_m))")
+    if len(x) < 15 or not np.all(np.diff(x) > 0.0):
+        raise ValueError("x_m must be a strictly increasing 1-D grid")
+    if not 0.0 < downstream_fraction < 0.9:
+        raise ValueError("downstream_fraction must lie in (0, 0.9)")
+    smoothed = gaussian_filter1d(rho, smooth_sigma, axis=-1, mode="nearest")
+    gradient = np.gradient(smoothed, x, axis=-1, edge_order=2)
+    cutoff = float(x[0] + downstream_fraction * np.ptp(x))
+    candidates = np.flatnonzero(x >= cutoff)
+    local_indices = np.argmax(np.abs(gradient[:, candidates]), axis=1)
+    indices = candidates[local_indices]
+    rows = np.arange(rho.shape[0])
+    locations = x[indices]
+    dx = float(np.median(np.diff(x)))
+    widths = np.empty(rho.shape[0], dtype=float)
+    for row, (index, location) in enumerate(zip(indices, locations, strict=True)):
+        left = (x >= location - 12 * dx) & (x <= location - 3 * dx)
+        right = (x >= location + 3 * dx) & (x <= location + 12 * dx)
+        rho_left = float(np.mean(rho[row, left])) if np.any(left) else float(rho[row, 0])
+        rho_right = float(np.mean(rho[row, right])) if np.any(right) else float(rho[row, -1])
+        peak = float(abs(gradient[row, index]))
+        width = abs(rho_left - rho_right) / peak if peak > 0.0 else 5.0 * dx
+        widths[row] = width if np.isfinite(width) and width > 0.0 else 5.0 * dx
+    return {
+        "shock_x_m": locations,
+        "delta_jump_m": widths,
+        "peak_abs_gradient": np.abs(gradient[rows, indices]),
+    }
+
+
+def interpolate_nozzle_fields_shock_aligned(
+    pressure_kpa: np.ndarray,
+    snapshots: np.ndarray,
+    density_snapshots: np.ndarray,
+    x_m: np.ndarray,
+    train_indices: np.ndarray,
+    query_pressure_kpa: np.ndarray,
+) -> tuple[np.ndarray, list[dict[str, float | str]]]:
+    """Interpolate fields after aligning source compression surfaces.
+
+    For a bracketed query, the target shock surface is predicted by linear
+    interpolation of the two *source* density sensors.  Each source row is
+    translated to that predicted surface before the two complete fields are
+    mixed.  No query density, velocity, target-derived patch, or target shock
+    location enters the prediction.
+    """
+    parameter = np.asarray(pressure_kpa, dtype=float)
+    fields = np.asarray(snapshots, dtype=float)
+    density = np.asarray(density_snapshots, dtype=float)
+    indices = np.asarray(train_indices, dtype=int)
+    query = np.asarray(query_pressure_kpa, dtype=float).reshape(-1)
+    x = np.asarray(x_m, dtype=float)
+    if x.ndim == 2:
+        if not np.allclose(x, x[0], rtol=0.0, atol=1.0e-15):
+            raise ValueError("shock-aligned interpolation requires shared x rows")
+        x = x[0]
+    if fields.shape != density.shape or fields.ndim != 3:
+        raise ValueError("snapshots and density_snapshots must share (cases, rows, x)")
+    if fields.shape[0] != len(parameter) or fields.shape[-1] != len(x):
+        raise ValueError("field, pressure, and coordinate shapes are inconsistent")
+    if len(indices) < 2 or len(np.unique(indices)) != len(indices):
+        raise ValueError("at least two unique training cases are required")
+
+    source_surfaces = {
+        int(index): detect_density_shock_surface(x, density[index])["shock_x_m"]
+        for index in indices
+    }
+    predictions: list[np.ndarray] = []
+    records: list[dict[str, float | str]] = []
+    for value in query:
+        lower = indices[parameter[indices] < value]
+        upper = indices[parameter[indices] > value]
+        if not len(lower) or not len(upper):
+            raise ValueError(f"query pressure {value:g} kPa is not bracketed")
+        lower_index = int(lower[np.argmax(parameter[lower])])
+        upper_index = int(upper[np.argmin(parameter[upper])])
+        lower_pressure = float(parameter[lower_index])
+        upper_pressure = float(parameter[upper_index])
+        weight = (float(value) - lower_pressure) / (upper_pressure - lower_pressure)
+        lower_surface = source_surfaces[lower_index]
+        upper_surface = source_surfaces[upper_index]
+        predicted_surface = (1.0 - weight) * lower_surface + weight * upper_surface
+        aligned_lower = np.empty_like(fields[lower_index])
+        aligned_upper = np.empty_like(fields[upper_index])
+        for row in range(fields.shape[1]):
+            lower_query = x - predicted_surface[row] + lower_surface[row]
+            upper_query = x - predicted_surface[row] + upper_surface[row]
+            aligned_lower[row] = np.interp(
+                lower_query, x, fields[lower_index, row],
+                left=float(fields[lower_index, row, 0]),
+                right=float(fields[lower_index, row, -1]),
+            )
+            aligned_upper[row] = np.interp(
+                upper_query, x, fields[upper_index, row],
+                left=float(fields[upper_index, row, 0]),
+                right=float(fields[upper_index, row, -1]),
+            )
+        predictions.append((1.0 - weight) * aligned_lower + weight * aligned_upper)
+        records.append({
+            "lower_pressure_kpa": lower_pressure,
+            "upper_pressure_kpa": upper_pressure,
+            "bracket_gap_kpa": upper_pressure - lower_pressure,
+            "upper_weight": float(weight),
+            "method": "shock_aligned_field_interpolation",
+            "predicted_centerline_shock_x_m": float(predicted_surface[-1]),
+            "lower_centerline_shock_x_m": float(lower_surface[-1]),
+            "upper_centerline_shock_x_m": float(upper_surface[-1]),
+        })
+    return np.stack(predictions), records
+
+
+def nozzle_field_error_metrics(
+    reference: np.ndarray,
+    prediction: np.ndarray,
+    density_reference: np.ndarray,
+    x_m: np.ndarray,
+    *,
+    shock_half_widths: float = 3.0,
+    gradient_weight: float = 4.0,
+) -> dict[str, float]:
+    """Return global, shock-local, and density-gradient-weighted errors.
+
+    The shock window follows the row-wise reference compression surface and
+    spans ``+- shock_half_widths * delta_jump``.  Reference shock information
+    is used only to score a completed prediction.  The weighted norm uses
+    ``1 + gradient_weight * |d rho/dx| / max|d rho/dx|`` and therefore reports
+    a transparent FlowMLLab diagnostic rather than silently equating it with a
+    differently normalized article table.
+    """
+    ref = np.asarray(reference, dtype=float)
+    pred = np.asarray(prediction, dtype=float)
+    density = np.asarray(density_reference, dtype=float)
+    x = np.asarray(x_m, dtype=float)
+    if x.ndim == 2:
+        x = x[0]
+    if ref.shape != pred.shape or ref.shape != density.shape or ref.ndim != 2:
+        raise ValueError("reference, prediction, and density must share (rows, x)")
+    shock = detect_density_shock_surface(x, density)
+    distance = np.abs(x[None, :] - shock["shock_x_m"][:, None])
+    window = distance <= shock_half_widths * shock["delta_jump_m"][:, None]
+    if not np.any(window):
+        raise ValueError("the shock window contains no grid points")
+    denominator = np.linalg.norm(ref[window])
+    shock_error = np.linalg.norm((pred - ref)[window]) / max(
+        denominator, np.finfo(float).eps
+    )
+    density_gradient = np.abs(np.gradient(density, x, axis=-1, edge_order=2))
+    scale = float(np.max(density_gradient))
+    normalized_gradient = density_gradient / scale if scale > 0.0 else density_gradient
+    weights = 1.0 + gradient_weight * normalized_gradient
+    weighted_error = np.sqrt(np.sum(weights * (pred - ref) ** 2))
+    weighted_norm = np.sqrt(np.sum(weights * ref**2))
+    return {
+        "global_relative_l2_percent": 100.0 * relative_l2(ref, pred),
+        "shock_window_relative_l2_percent": 100.0 * shock_error,
+        "gradient_weighted_relative_l2_percent": 100.0 * weighted_error / max(
+            weighted_norm, np.finfo(float).eps
+        ),
+    }
+
+
 def predict_nozzle_gap_aware_operator(
     fitted_pod: dict[str, Any],
     pressure_kpa: np.ndarray,
@@ -1177,6 +1357,8 @@ def validate_nozzle_flowmllab_results(root: str | Path) -> dict[str, Any]:
     manifest = json.loads(
         (result_dir / "nozzle_flowmllab_manifest.json").read_text(encoding="utf-8")
     )
+    if manifest.get("schema_version") != 3:
+        raise ValueError("unexpected nozzle FlowMLLab manifest schema")
     archive_path = root_path / manifest["source_archive"]
     if _sha256(archive_path) != manifest["source_archive_sha256"]:
         raise ValueError("nozzle full-field source archive hash mismatch")
@@ -1190,11 +1372,14 @@ def validate_nozzle_flowmllab_results(root: str | Path) -> dict[str, Any]:
         "density", "temperature_k", "u_ms", "v_ms", "mach",
         "pressure_tecplot",
     }
-    if set(manifest["selected_rank_by_field"]) != expected_fields:
-        raise ValueError("nozzle selected-rank field set is incomplete")
-    rule = manifest.get("deployment_rule", {})
-    if rule.get("local_gap_limit_kpa") != 3.0:
-        raise ValueError("unexpected nozzle deployment routing threshold")
+    if set(manifest["selected_method_by_field"]) != expected_fields:
+        raise ValueError("nozzle selected-method field set is incomplete")
+    if set(manifest.get("candidate_methods", [])) != {
+        "physical_coordinate", "shock_aligned"
+    }:
+        raise ValueError("nozzle interpolation candidates are incomplete")
+    if manifest.get("shock_alignment", {}).get("target_field_used_for_prediction") is not False:
+        raise ValueError("nozzle shock alignment does not record target isolation")
     if manifest.get("route_by_pressure", {}).keys() != {"16", "25", "30"}:
         raise ValueError("nozzle pressure routes are incomplete")
     selection_path = result_dir / "nozzle_flowmllab_selection.csv"
@@ -1203,9 +1388,9 @@ def validate_nozzle_flowmllab_results(root: str | Path) -> dict[str, Any]:
         raise ValueError("nozzle selection table hash mismatch")
     if _sha256(metrics_path) != manifest["metrics_csv_sha256"]:
         raise ValueError("nozzle held-out table hash mismatch")
-    comparison_path = result_dir / "nozzle_flowmllab_vs_article.csv"
-    if _sha256(comparison_path) != manifest["article_comparison_csv_sha256"]:
-        raise ValueError("nozzle article-comparison table hash mismatch")
+    article_path = root_path / manifest["retained_article_evidence_csv"]
+    if _sha256(article_path) != manifest["retained_article_evidence_csv_sha256"]:
+        raise ValueError("nozzle retained article table hash mismatch")
     with metrics_path.open(encoding="utf-8") as stream:
         rows = list(csv.DictReader(stream))
     expected_pairs = {
@@ -1216,12 +1401,26 @@ def validate_nozzle_flowmllab_results(root: str | Path) -> dict[str, Any]:
     if {(row["field"], int(row["held_out_pressure_kpa"])) for row in rows} != expected_pairs:
         raise ValueError("nozzle held-out metric coverage is incomplete")
     for row in rows:
-        full_value = float(row["full_field_relative_l2_percent"])
-        centerline_value = float(row["centerline_relative_l2_percent"])
+        selected_method = row["selected_method"]
+        if selected_method not in {"physical_coordinate", "shock_aligned"}:
+            raise ValueError("unknown nozzle selected interpolation method")
+        full_value = float(row["selected_global_relative_l2_percent"])
+        centerline_value = float(
+            row[f"{'aligned' if selected_method == 'shock_aligned' else 'physical'}_centerline_relative_l2_percent"]
+        )
         if not np.isfinite(full_value) or not 0.0 <= full_value < 15.0:
             raise ValueError(f"invalid nozzle held-out field error: {row['field']}")
         if not np.isfinite(centerline_value) or not 0.0 <= centerline_value < 30.0:
             raise ValueError(f"invalid nozzle held-out centerline error: {row['field']}")
+        for prefix in ("physical", "aligned", "selected"):
+            for metric in (
+                "global_relative_l2_percent",
+                "shock_window_relative_l2_percent",
+                "gradient_weighted_relative_l2_percent",
+            ):
+                value = float(row[f"{prefix}_{metric}"])
+                if not np.isfinite(value) or not 0.0 <= value < 100.0:
+                    raise ValueError(f"invalid nozzle {prefix} {metric}: {row['field']}")
     for relative, expected_hash in manifest["figure_sha256"].items():
         figure = (root_path / relative).resolve()
         if not figure.is_relative_to(root_path) or _sha256(figure) != expected_hash:
@@ -1230,7 +1429,7 @@ def validate_nozzle_flowmllab_results(root: str | Path) -> dict[str, Any]:
         "status": "pass",
         "development_pressures_kpa": manifest["development_pressures_kpa"],
         "held_out_pressures_kpa": manifest["held_out_pressures_kpa"],
-        "selected_rank_by_field": manifest["selected_rank_by_field"],
+        "selected_method_by_field": manifest["selected_method_by_field"],
         "held_out_metrics": rows,
     }
 

@@ -31,7 +31,7 @@ jobs:
       - name: Install package and PDF inspector
         run: |
           sudo apt-get update
-          sudo apt-get install -y poppler-utils
+          sudo apt-get install -y latexmk poppler-utils texlive-latex-extra texlive-fonts-recommended
           python -m pip install --upgrade pip
           python -m pip install -e .
       - name: Rebuild notebook and numerical evidence
@@ -39,6 +39,9 @@ jobs:
           python notebooks/week10/make_week10_notebook.py
           python qa/build_week10_aescte_dsmc_data.py
           python qa/run_week10_aescte_validation.py
+          cd lectures/source
+          latexmk -pdf -interaction=nonstopmode -halt-on-error week10_dsmc_data_driven_surrogates.tex
+          cp week10_dsmc_data_driven_surrogates.pdf ../week10_dsmc_data_driven_surrogates.pdf
       - name: Verify deterministic artifacts
         run: |
           git diff --exit-code -- \
@@ -47,5 +50,6 @@ jobs:
             results/aescte_dsmc/diatomic_shock_6cases.npz \
             results/aescte_dsmc/monatomic_shock_7cases.npz \
             results/aescte_dsmc/data_manifest.json
+          git diff --exit-code -- lectures/week10_dsmc_data_driven_surrogates.pdf
           python -m unittest tests.test_aescte_dsmc -v
           pdfinfo lectures/week10_dsmc_data_driven_surrogates.pdf

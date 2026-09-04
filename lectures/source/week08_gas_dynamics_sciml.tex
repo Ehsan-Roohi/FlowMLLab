@@ -339,6 +339,16 @@ but only 5 per axis in five dimensions. At five inputs, interpolation has
 interpolation remains slightly faster; the demonstrated advantage is compact
 accuracy under sparse high-dimensional sampling.
 
+That regular-grid comparison alone is not a sufficient baseline because the
+MLP receives 4096 Latin-hypercube states while the grid receives only five
+locations per coordinate. FlowMLLab therefore adds a local thin-plate RBF using
+the same 4096 scattered training states and the same 2048 blind states. Its
+errors for two through five inputs are 0.0130\%, 0.1120\%, 0.4260\%, and
+0.9487\%. Thus the fairer scattered baseline closes most of the apparent gap;
+the five-input MLP remains more accurate, but by a factor of about 5.4 rather
+than the factor of 27.6 suggested by the regular grid alone. This added audit
+is FlowMLLab teaching evidence, not a value transcribed from the manuscript.
+
 \subsection{Application-scale timing and derivatives}
 For 100,000 generalized shock-tube states in one single-thread process, the MLP
 is 16.53 times faster than one Brent solve per state with 0.09148\% relative-$L_2$

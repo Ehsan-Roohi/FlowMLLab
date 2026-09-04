@@ -9,6 +9,7 @@ on:
       - "notebooks/week08/make_week8_notebooks.py"
       - "lectures/source/week08_gas_dynamics_sciml.tex"
       - "qa/build_week8_gas_dynamics_figures.py"
+      - "qa/run_week8_scattered_baseline.py"
       - "results/gas_dynamics_week8/*.csv"
       - "results/gas_dynamics_week8/*.json"
 
@@ -38,6 +39,7 @@ jobs:
 
       - name: Rebuild figures and student notebooks
         run: |
+          python qa/run_week8_scattered_baseline.py
           python qa/build_week8_gas_dynamics_figures.py
           python notebooks/week08/make_week8_notebooks.py
 
@@ -63,6 +65,7 @@ jobs:
           git add results/gas_dynamics_week8/week8_exact_physics.pdf
           git add results/gas_dynamics_week8/week8_model_evidence.png
           git add results/gas_dynamics_week8/week8_model_evidence.pdf
+          git add results/gas_dynamics_week8/scattered_baseline.csv
           if git diff --cached --quiet; then
             echo "Week 8 artifacts are already current."
           else

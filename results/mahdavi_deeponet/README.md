@@ -27,6 +27,9 @@ This directory supports the two Week-9 research-to-classroom notebooks.
   unavailable because the pinned repository has no stored prediction. DSMC
   and NN share color limits, the solid step remains masked, and axes preserve
   the data-domain `L/H=5` aspect ratio.
+  The stored article-model output uses a target-derived local DSMC patch in the
+  pinned inference path. It is therefore retained as target-assisted
+  reconstruction evidence; the figures label it accordingly.
 - `step_independent_contour_metrics.csv` and
   `step_independent_contours/` provide the corresponding independently
   held-out H44/H67 visual validation for the classroom coordinate model.
@@ -46,8 +49,10 @@ This directory supports the two Week-9 research-to-classroom notebooks.
   the compact archive.
 - `nozzle_flowmllab_selection.csv`, `nozzle_flowmllab_heldout_metrics.csv`,
   `nozzle_flowmllab_manifest.json`, and `nozzle_flowmllab/` are fresh outputs
-  of `qa/run_nozzle_field_validation.py`. A POD trunk and neural branch are
-  selected on 12 development pressures and evaluated on 16, 25, and 30 kPa.
+  of `qa/run_nozzle_field_validation.py`. Physical-coordinate and row-wise
+  shock-aligned interpolation are compared on 12 development pressures. The
+  development-only rule prioritizes shock-window improvement with a two-point
+  global-error guardrail before evaluating 16, 25, and 30 kPa.
 
 ## What is retained article evidence
 
@@ -57,9 +62,9 @@ This directory supports the two Week-9 research-to-classroom notebooks.
 - `nozzle_paper_field_errors.csv` and `nozzle_hard_case_baselines.csv`
   transcribe held-out and hard-case results from the nozzle manuscript. They
   are displayed as paper evidence, not recomputed by the compact notebook.
-- The nozzle notebook recomputes the real DSMC centerline POD and then runs the
-  FlowMLLab full-field four-output POD/branch teaching model. It is not the
-  article's trained six-output shock-aligned checkpoint.
+- The nozzle notebook recomputes the real DSMC centerline POD and then runs two
+  six-field interpolation baselines. Neither baseline is the article's trained
+  six-output shock-aligned checkpoint.
 
 Every source file hash, derivation rule, article link, and claim boundary is in
 `provenance.json` and `step_source_manifest.json`. Validate a checkout of the

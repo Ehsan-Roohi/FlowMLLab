@@ -217,7 +217,7 @@ assert np.allclose((LATTICE_WEIGHTS[:, None] * LATTICE_VELOCITIES).sum(axis=0), 
 - **Outlet:** first-order convective population boundary.
 - **Transverse far field:** periodic.
 
-These choices make the algorithm compact enough to inspect. They also create discretization, blockage, and outlet errors. The notebook exposes those limitations instead of hiding them.
+These choices make the algorithm compact enough to inspect. They also create discretization, blockage, and outlet errors. A longer startup ramp reduces the initial pulse but does not absorb the transverse standing wave supported by periodic boundaries: ramp lengths 0, 300, and 1500 steps retain about 0.015 RMS high-frequency lift jitter with an 83-step period, consistent with $L_y/(2c_s)$. An explicitly labelled 83-step moving average may be used for force presentation because the shedding period is about 1300 steps, but raw force remains the audit signal. A sponge or changed far-field boundary—not a longer ramp—is the numerical remedy to test.
 """),
     code(r"""
 PROFILE = "retained_quick"
@@ -430,6 +430,8 @@ D/\Delta x = 12,18,27,\qquad r=1.5.
 while keeping $Re=100$, $Ma=0.0866$, the $20D\times8D$ domain, boundary models, perturbation, $100D/U$ observation time, and $45D/U$ transient removal fixed. Changing the grid and domain together would make the source of any improvement unknowable.
 
 Under this constant-Mach acoustic scaling, $\tau=1/2+3U(D/\Delta x)/Re$ changes algebraically with resolution to preserve $Re$. It is reported for every grid and is not tuned to improve an output.
+
+Constant-$Ma$ refinement also retains an $O(Ma^2)\approx0.75\%$ weak-compressibility floor. That is comparable with the 1–2% grid differences and roughly 1% half-window drag variation, so a non-positive observed order is plausible. A formal asymptotic continuation should use diffusive scaling $U\propto\Delta x$ (or lower Mach) and average at least 30 shedding cycles per grid.
 
 All three medium-to-fine changes satisfy the declared practical tolerances,
 but the changes did not decrease consistently, so the sequence did not yield a

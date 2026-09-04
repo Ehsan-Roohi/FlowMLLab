@@ -13,6 +13,7 @@ from flowmllab.mahdavi_deeponet import (
     STEP_HEIGHT_PERCENT,
     STEP_SOURCE_COMMIT,
     density_snapshot_matrix,
+    detect_density_shock_surface,
     discover_step_source,
     fit_nozzle_pod_neural_operator,
     fit_step_coordinate_surrogate,
@@ -20,10 +21,12 @@ from flowmllab.mahdavi_deeponet import (
     load_nozzle_centerlines,
     load_nozzle_fields,
     interpolate_nozzle_fields_locally,
+    interpolate_nozzle_fields_shock_aligned,
     manufactured_step_velocity,
     pod_spectrum,
     predict_nozzle_pod_neural_operator,
     predict_nozzle_gap_aware_operator,
+    nozzle_field_error_metrics,
     select_nozzle_pod_rank,
     step_coordinate_features,
     validate_step_height_archives,
@@ -180,13 +183,41 @@ class MahdaviDeepONetWeek9Tests(unittest.TestCase):
             ["local_field_interpolation", "local_field_interpolation", "pod_neural"],
         )
 
+    def test_shock_aligned_interpolation_uses_source_surfaces_only(self) -> None:
+        data = load_nozzle_fields(ROOT)
+        development = np.flatnonzero(
+            ~np.isin(data["pressure_kpa"], NOZZLE_HELD_OUT_KPA)
+        )
+        sensor = detect_density_shock_surface(
+            data["x_m"][0], data["density"][development[0]]
+        )
+        self.assertEqual(sensor["shock_x_m"].shape, (31,))
+        prediction, routes = interpolate_nozzle_fields_shock_aligned(
+            data["pressure_kpa"], data["u_ms"], data["density"], data["x_m"],
+            development, np.array([16.0, 25.0, 30.0]),
+        )
+        self.assertEqual(prediction.shape, (3, 31, 101))
+        self.assertTrue(np.isfinite(prediction).all())
+        self.assertTrue(all(
+            route["method"] == "shock_aligned_field_interpolation" for route in routes
+        ))
+        target = int(np.flatnonzero(data["pressure_kpa"] == 16.0)[0])
+        metrics = nozzle_field_error_metrics(
+            data["u_ms"][target], prediction[0],
+            data["density"][target], data["x_m"],
+        )
+        self.assertLess(metrics["shock_window_relative_l2_percent"], 5.0)
+
     def test_code_generated_nozzle_figures_and_metrics(self) -> None:
         report = validate_nozzle_flowmllab_results(ROOT)
         self.assertEqual(report["status"], "pass")
         self.assertEqual(report["held_out_pressures_kpa"], [16, 25, 30])
         self.assertEqual(len(report["held_out_metrics"]), 18)
+        self.assertEqual(
+            report["selected_method_by_field"]["v_ms"], "physical_coordinate"
+        )
         self.assertLess(
-            max(float(row["full_field_relative_l2_percent"])
+            max(float(row["selected_global_relative_l2_percent"])
                 for row in report["held_out_metrics"]),
             15.0,
         )

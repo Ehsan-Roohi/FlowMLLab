@@ -35,8 +35,8 @@ This lab rebuilds numerical results from Roohi and Shoja-Sani, *Data-driven surr
 
 1. explain the DSMC move-collide-sample cycle and its resolution checks;
 2. audit complete raw numerical tables and their checksums;
-3. reproduce rarefied-cavity predictions at unseen Knudsen numbers;
-4. build a branch-trunk operator for monatomic and diatomic shocks;
+3. test log-Knudsen parametric synthesis between supplied cavity fields;
+4. build a POD-polynomial profile surrogate for monatomic and diatomic shocks;
 5. distinguish interpolation from extrapolation and representation error from field error; and
 6. report unavailable targets instead of replacing them with a plotted image.
 
@@ -97,16 +97,18 @@ print("tracked raw files:", len(manifest["source_file_sha256"]))
 print("manifest SHA-256:", sha256(RESULTS / "data_manifest.json"))"""),
     markdown(r"""## 2. Rarefied cavity: the family-of-specialists construction
 
-Specialist solutions are available at
+Reference solutions are available at
 
-\[Kn=10^{-3},10^{-2},10^{-1},1,10.\]
+$$Kn=10^{-3},10^{-2},10^{-1},1,10.$$
 
-For a held-out value bracketed by \(Kn_l\) and \(Kn_u\), the article uses
+For a held-out value bracketed by $Kn_l$ and $Kn_u$, the article uses
 
-\[w=\frac{\log_{10}Kn_* - \log_{10}Kn_l}{\log_{10}Kn_u-\log_{10}Kn_l},\qquad
-\widehat q_*=(1-w)q_l+wq_u.\]
+$$w=\frac{\log_{10}Kn_* - \log_{10}Kn_l}{\log_{10}Kn_u-\log_{10}Kn_l},\qquad
+\widehat q_*=(1-w)q_l+wq_u.$$
 
-Here the fixed-Kn spatial specialists are represented by their complete converged DSMC fields. This isolates and exactly tests the parametric synthesis step."""),
+Here the bracketing states are the complete supplied DSMC fields. Thus the
+reported sub-2% result measures log-Kn field interpolation, not the accuracy of
+a separately trained spatial specialist."""),
     code("""cavity = load_cavity_archive(RESULTS / "cavity_fields_14cases.npz")
 print("temperature tensor:", cavity["temperature_k"].shape)
 print("lid speeds:", np.unique(cavity["lid_speed_ms"]))
@@ -131,16 +133,17 @@ assert cavity_metrics.NRMSE_percent.max() < 2.0"""),
 display(Image(filename=str(RESULTS / "cavity_validation_profiles.png")))"""),
     markdown(r"""### Interpret the metric
 
-Velocity RMSE is normalized by lid speed and temperature RMSE by the 50 K wall-temperature difference. Component-wise relative \(L_2\) can look large for \(V\) because its reference norm is small. Always state the denominator.
+Velocity RMSE is normalized by lid speed and temperature RMSE by the 50 K wall-temperature difference. Component-wise relative $L_2$ can look large for $V$ because its reference norm is small. Always state the denominator.
 
 The retained primary-variable gate is below 2% for every supplied held-out cavity case. Heat flux and stress are also reported in the machine-readable CSV, but are harder because DSMC moment noise grows with moment order."""),
     markdown(r"""## 3. Diatomic nitrogen shock: delayed internal relaxation
 
 The six source profiles correspond to Mach 1.4--1.9. The original filenames (`M14.5` ... `M19.5`) are preserved; the trailing `.5` is a DSMC internal-setting suffix, not Mach 14.5.
 
-The teaching operator uses POD modes as a trunk \(t_k(x)\) and a polynomial Mach branch \(b_k(M)\):
+The teaching profile surrogate uses POD modes $t_k(x)$ and polynomial Mach
+coefficients $b_k(M)$:
 
-\[\widehat q(M,x)=\bar q(x)+\sum_{k=1}^{r} b_k(M)t_k(x).\]
+$$\widehat q(M,x)=\bar q(x)+\sum_{k=1}^{r} b_k(M)t_k(x).$$
 
 Mach 1.7 is removed for interpolation. Mach 1.4 is then removed and predicted from Mach 1.5--1.9 to demonstrate one-sided extrapolation."""),
     code("""diatomic = load_shock_archive(RESULTS / "diatomic_shock_6cases.npz")
@@ -169,7 +172,7 @@ assert shock_metrics.relative_L2_percent.max() < 1.1"""),
     code("""display(Image(filename=str(RESULTS / "diatomic_shock_reproduction.png")))"""),
     markdown(r"""The translational-temperature overshoot is the key nonequilibrium feature: translational energy rises rapidly at the shock and then relaxes into the rotational mode. Matching only upstream and downstream plateaus would miss this physics.
 
-The result is strongest for interpolation. Mach-1.4 extrapolation remains below 1.1% profile-relative \(L_2\), but the Mach-2 article case is marked unavailable because the target table is absent."""),
+The result is strongest for interpolation. Mach-1.4 extrapolation remains below 1.1% profile-relative $L_2$, but the Mach-2 article case is marked unavailable because the target table is absent."""),
     markdown("""## 4. Monatomic shock and Maxwell equilibrium checks
 
 The second shock archive covers Mach 1.4--2.0. We remove Mach 1.7 and predict density, velocity, and temperature. Separately, the Maxwell speed PDF must integrate to one before it is used as an equilibrium target."""),
@@ -193,7 +196,7 @@ assert abs(integral - 1.0) < 1e-10"""),
     code("""display(Image(filename=str(RESULTS / "monatomic_relaxation_reproduction.png")))"""),
     markdown(r"""## 5. One-command reproduction and retained evidence
 
-The following program rebuilds every metric and figure shown in this notebook. It stops if any primary cavity NRMSE exceeds 2% or any retained shock-profile relative \(L_2\) exceeds 1.5%."""),
+The following program rebuilds every metric and figure shown in this notebook. It stops if any primary cavity NRMSE exceeds 2% or any retained shock-profile relative $L_2$ exceeds 1.5%."""),
     code("""command = [_sys.executable, str(REPO_ROOT / "qa/run_week10_aescte_validation.py")]
 _subprocess.run(command, check=True)
 summary = json.loads((RESULTS / "validation_summary.json").read_text())
@@ -219,6 +222,8 @@ notebook = {
     "nbformat": 4,
     "nbformat_minor": 5,
 }
+for index, cell in enumerate(notebook["cells"]):
+    cell["id"] = f"w10-{index:03d}"
 OUTPUT.parent.mkdir(parents=True, exist_ok=True)
 OUTPUT.write_text(json.dumps(notebook, indent=1) + "\n", encoding="utf-8")
 print(OUTPUT)

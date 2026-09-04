@@ -24,6 +24,12 @@ Cold starts use a half-cosine ramp over 25 cylinder diameters in lattice steps.
 The far field is accelerated with a density-preserving equilibrium difference,
 while inlet speed and convective-outlet memory follow the same ramp; this
 reduces the impulsive acoustic pulse without accumulating mass.
+It does not absorb the transverse standing mode supported by the periodic
+top/bottom boundaries. Ramp lengths 0, 300, and 1500 steps retain roughly
+0.015 RMS high-frequency lift jitter with an 83-step period. Use an explicitly
+labelled 83-step moving average only as a presentation diagnostic, retain raw
+forces, and test a sponge or different far-field boundary if the box mode must
+be removed.
 
 `reference_ranges.csv` records educational comparison bands. Re=20 is associated
 with Dennis & Chang (1970) and Sen, Mittal & Biswas (2009); Gautier, Biau &
@@ -45,6 +51,9 @@ The executed solution-verification step is separate and retained in
 `../cylinder_grid_convergence/`. It refines the Re=100 cylinder through
 `D/dx=12,18,27` at fixed nondimensional physics, retains the failed formal
 asymptotic/GCI check, reports statistical and fine-pair sensitivity gates, and
-preserves the direct LBM
-fields and histories on every grid. A grid pass must not be confused with the
-still-separate domain/blockage and external-reference validation gates.
+preserves the direct LBM fields and histories on every grid. A grid pass must
+not be confused with the still-separate domain/blockage and external-reference
+validation gates. At fixed `Ma=0.0866`, the weak-compressibility floor `O(Ma^2)` and finite-window
+force uncertainty are comparable with the 1--2% grid differences. A formal
+asymptotic continuation should use diffusive scaling or lower Mach and average
+at least 30 shedding cycles per grid.

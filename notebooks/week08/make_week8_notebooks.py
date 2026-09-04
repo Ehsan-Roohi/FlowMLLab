@@ -92,6 +92,8 @@ REPO_ROOT = next(
     candidate for candidate in (Path.cwd(), *Path.cwd().parents)
     if (candidate / "results/gas_dynamics_week8").is_dir()
 )
+if str(REPO_ROOT) not in _flowmllab_sys.path:
+    _flowmllab_sys.path.insert(0, str(REPO_ROOT))
 RESULTS = REPO_ROOT / "results/gas_dynamics_week8"
 plt.rcParams.update({"font.size": 11, "axes.labelsize": 12, "legend.fontsize": 9})
 print("Python:", platform.python_version())
@@ -132,7 +134,7 @@ By the end of this lab, you should be able to:
         md(r"""
 ## Scientific-use contract
 
-- The gas is calorically perfect unless a cell explicitly changes $gamma$.
+- The gas is calorically perfect unless a cell explicitly changes $\gamma$.
 - All inverse problems are evaluated only on a declared physical branch and domain.
 - Exact relations and bracketed roots are the references; a neural prediction is never its own validation target.
 - A converged nonlinear solver is not automatically a physically admissible solution.
@@ -421,7 +423,9 @@ By the end, you should be able to:
 The authoritative research code is
 [`GasDynamicsSciML`](https://github.com/Ehsan-Roohi/GasDynamicsSciML) at commit
 `374431a1033138f56e2752bf8bbf9b75a454d80c`. FlowMLLab stores byte-identical
-copies of six small CSV/JSON evidence files so this lab can run offline.
+copies of the small CSV/JSON evidence files so this lab can run offline. A
+separate FlowMLLab audit adds a local RBF baseline trained on the same 4096
+random states as the MLP; it is not presented as upstream article evidence.
 
 Do not claim that neural models replace exact relations or high-fidelity CFD.
 On covered one-dimensional tables, interpolation is often faster and more
@@ -649,16 +653,21 @@ parameterization.
 """),
         code(r"""
 dimensions = evidence["high_dimensional"].copy()
+scattered = evidence["scattered_baseline"].copy()
 dimensions["interpolation_percent"] = 100.0 * dimensions["interpolation_rel_l2"]
 dimensions["mlp_percent"] = 100.0 * dimensions["mlp_rel_l2"]
+scattered["rbf_percent"] = 100.0 * scattered["relative_l2"]
 display(dimensions[["dimension", "grid_nodes_per_axis", "grid_training_states",
                     "mlp_training_states", "interpolation_percent", "mlp_percent"]])
+display(scattered[["dimension", "training_states", "neighbors", "rbf_percent"]])
 
 plt.figure(figsize=(7.8, 4.7))
 plt.semilogy(dimensions["dimension"], dimensions["interpolation_percent"], "o-",
              color="#E9A23B", lw=2.3, label="regular-grid interpolation")
 plt.semilogy(dimensions["dimension"], dimensions["mlp_percent"], "o-",
              color="#2A9D8F", lw=2.3, label="bounded MLP")
+plt.semilogy(scattered["dimension"], scattered["rbf_percent"], "s--",
+             color="#2F75B5", lw=2.0, label="scattered local RBF")
 plt.xticks([2, 3, 4, 5])
 plt.xlabel("number of physical inputs")
 plt.ylabel("relative L2 error (%) - log scale")
@@ -667,7 +676,19 @@ plt.legend(frameon=False)
 plt.show()
 
 five_d = dimensions.loc[dimensions["dimension"] == 5].iloc[0]
+five_d_rbf = scattered.loc[scattered["dimension"] == 5].iloc[0]
 assert five_d["mlp_rel_l2"] < five_d["interpolation_rel_l2"]
+assert five_d["mlp_rel_l2"] < five_d_rbf["relative_l2"] < five_d["interpolation_rel_l2"]
+"""),
+        md(r"""
+### Why the scattered baseline changes the conclusion
+
+The regular grid has only five nodes per coordinate in five dimensions, so it
+is an intentionally difficult storage geometry. The local thin-plate RBF uses
+the same 4096 Latin-hypercube states as the MLP and reaches about 0.95% relative
+$L_2$, compared with 4.88% for the regular grid and 0.177% for the bounded MLP.
+The neural result therefore survives a fairer data-spread comparison, but the
+margin is much smaller than the regular-grid-only plot suggests.
 """),
         md(r"""
 ## 7. Application-scale evidence and physical diagnostics
@@ -770,7 +791,7 @@ Choose one of the five inverse tasks and submit:
 
 
 def notebook(cells, title: str):
-    return nbf.v4.new_notebook(
+    generated = nbf.v4.new_notebook(
         cells=cells,
         metadata={
             "kernelspec": {"display_name": "Python 3", "language": "python", "name": "python3"},
@@ -778,6 +799,9 @@ def notebook(cells, title: str):
             "flowmllab": {"week": 8, "title": title, "profile": "student"},
         },
     )
+    for index, cell in enumerate(generated["cells"]):
+        cell["id"] = f"w8-{index:03d}"
+    return generated
 
 
 def main() -> None:

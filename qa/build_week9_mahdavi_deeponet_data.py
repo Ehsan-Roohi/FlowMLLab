@@ -222,8 +222,9 @@ def main() -> None:
                 "derivatives of all 15 public DSMC snapshots at the pinned source commit."
             ),
             "micro_nozzle_teaching_model": (
-                "The notebook's compact centerline POD/branch model is not the paper's "
-                "trained full two-dimensional six-output shock-aligned surrogate."
+                "The notebook audits shock-centered POD compression and evaluates physical-coordinate "
+                "and source-only shock-aligned interpolation baselines. These are not the paper's "
+                "trained six-output DeepONet."
             ),
         },
         "builder_pod_audit": pod_reference,

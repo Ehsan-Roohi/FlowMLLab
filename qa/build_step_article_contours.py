@@ -280,7 +280,7 @@ def plot_case(
     result: dict[str, object],
     output: Path,
     *,
-    prediction_label: str = "DeepONet",
+    prediction_label: str = "Stored article-model output",
     title_prefix: str | None = None,
     metric_label: str = "stored-field vector relative L2",
     footnote: str | None = None,
@@ -426,7 +426,7 @@ def plot_case(
     fig.suptitle(title, fontsize=13)
     if footnote is None:
         footnote = (
-            "DSMC and DeepONet fields are evaluated on the same source grid; "
+            "DSMC and stored article-model fields are evaluated on the same source grid; "
             "axes preserve the measured L/H=5 domain."
         )
     fig.text(

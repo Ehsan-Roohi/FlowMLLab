@@ -236,7 +236,7 @@ def fit_pod_polynomial_operator(
     rank: int,
     degree: int,
 ) -> dict[str, np.ndarray | float | int]:
-    """Fit a compact branch-trunk operator with POD trunk and polynomial branch."""
+    """Fit a POD-polynomial profile surrogate with polynomial coefficient maps."""
     x = np.asarray(mach, dtype=float)[training_indices]
     matrix = np.asarray(snapshots, dtype=float)[training_indices]
     mean = matrix.mean(axis=0)

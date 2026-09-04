@@ -439,8 +439,11 @@ CELLS = [
         2. Which assumption lets coefficient variances add through squared POD modes?
         3. Why may thousands of grid nodes still provide only weak calibration evidence?
         4. When should interpolation be preferred even if the GP mean has lower average error?
-        5. Design a new calibration set that tests extrapolation without reusing a blind case.
-        6. What additional model is required when experimental observations disagree systematically with CFD?
+        5. Implement leave-one-development-case-out calibration: rotate the
+           calibration role across available development Reynolds numbers,
+           refit the scale without the scored case, and plot coverage variability.
+        6. Design a new calibration set that tests extrapolation without reusing a blind case.
+        7. What additional model is required when experimental observations disagree systematically with CFD?
 
         A strong report separates point accuracy, interval calibration, physical
         validity, and the boundary of the training distribution.

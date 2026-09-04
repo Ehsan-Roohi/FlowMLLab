@@ -67,8 +67,10 @@ jobs:
           python-version: "3.11"
           cache: pip
 
-      - name: Install PDF validation utility
-        run: sudo apt-get update && sudo apt-get install -y poppler-utils
+      - name: Install PDF build and validation utilities
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y latexmk poppler-utils texlive-latex-extra texlive-fonts-recommended
 
       - name: Install package
         run: |
@@ -78,6 +80,12 @@ jobs:
 
       - name: Rebuild student notebooks
         run: python notebooks/week09/make_week9_notebooks.py
+
+      - name: Rebuild Week 9 lecture PDF
+        working-directory: lectures/source
+        run: |
+          latexmk -pdf -interaction=nonstopmode -halt-on-error week09_rarefied_deeponet_case_studies.tex
+          cp week09_rarefied_deeponet_case_studies.pdf ../week09_rarefied_deeponet_case_studies.pdf
 
       - name: Reproduce independent step validation
         run: |
@@ -104,7 +112,6 @@ jobs:
           test -s results/mahdavi_deeponet/nozzle_centerline_15cases.npz
           test -s results/mahdavi_deeponet/nozzle_fields_15cases.npz
           test -s results/mahdavi_deeponet/nozzle_flowmllab_heldout_metrics.csv
-          test -s results/mahdavi_deeponet/nozzle_flowmllab_vs_article.csv
           test -s results/mahdavi_deeponet/nozzle_flowmllab_manifest.json
 
       - name: Run software and release gates
@@ -121,6 +128,13 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add notebooks/week09/W9_Lab1_Microstep_Zonal_DeepONet_Student.ipynb
           git add notebooks/week09/W9_Lab2_Shock_Aligned_Nozzle_DeepONet_Student.ipynb
+          git add lectures/week09_rarefied_deeponet_case_studies.pdf
+          git add results/mahdavi_deeponet/nozzle_flowmllab_selection.csv
+          git add results/mahdavi_deeponet/nozzle_flowmllab_heldout_metrics.csv
+          git add results/mahdavi_deeponet/nozzle_flowmllab_manifest.json
+          git add results/mahdavi_deeponet/nozzle_flowmllab/
+          git add results/mahdavi_deeponet/step_article_contours/
+          git add results/mahdavi_deeponet/step_article_contour_manifest.json
           if git diff --cached --quiet; then
             echo "Week 9 notebooks are already current."
           else
