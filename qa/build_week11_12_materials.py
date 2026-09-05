@@ -392,7 +392,7 @@ def research_cells(week):
         ordinary Run All reads retained evidence and does not rerun research training.
         ''')]
     return [md('''
-        ## 7. Real DSMC archive: recompute heat-flux errors
+        ## 8. Historical DSMC archive: contrast with the new teaching fit
         Source: Roohi, [arXiv:2609.01637](https://doi.org/10.48550/arXiv.2609.01637),
         author-supplied JCP2 cavity archive. These DSMC fields predate FlowMLLab.
         This historical prospective archive is now inspected evidence, not a new
@@ -438,6 +438,10 @@ def build_notebook(week, execute):
     name, _ = NAMES[week]
     relative = f'notebooks/week{week}/{name}.ipynb'
     cells = week11() if week == 11 else week12()
+    if week == 12:
+        from week12_noise2noise_cells import cells as noise2noise_cells
+        cells += noise2noise_cells()
+        cells[0].source += '\n\n**Development extension:** this checkout trains a fresh Noise2Noise-style MLP on real DSMC data. Until merged, use this local branch; the main-branch Colab button below opens the previously published version.'
     cells[0].source += '\n\n**Research extension:** the final section reads real author-research evidence, clearly separated from the synthetic warm-up.'
     cells += research_cells(week)
     cells[0].source += badge(relative)
@@ -456,8 +460,9 @@ def build_notebook(week, execute):
                        resources={'metadata': {'path': str(path.parent)}}).execute()
         figures = [o['data']['image/png'] for c in nb.cells if c.cell_type == 'code'
                    for o in c.outputs if 'image/png' in o.get('data', {})]
-        if len(figures) != 3:
-            raise ValueError(f'Expected warm-up plus two research figures for Week {week}, got {len(figures)}')
+        expected = 5 if week == 12 else 3
+        if len(figures) != expected:
+            raise ValueError(f'Expected {expected} figures for Week {week}, got {len(figures)}')
         dest = ROOT / 'results' / 'week11_12_teaching'
         dest.mkdir(parents=True, exist_ok=True)
         (dest / f'week{week}_teaching.png').write_bytes(base64.b64decode(figures[0]))
@@ -490,10 +495,12 @@ def build_pdf(week):
         story.append(Paragraph(f'FLOWMLLAB / WEEK {week} / {i+1:02d}', small))
         story.append(Paragraph(html.escape(name), heading))
         for para in content.strip().split('\n\n'):
-            if para.strip() in ('[TEACHING_FIGURE]', '[RESEARCH_FIGURE]'):
+            if para.strip() in ('[TEACHING_FIGURE]', '[RESEARCH_FIGURE]', '[NOISE2NOISE_FIGURE]', '[NOISE2NOISE_AUDIT]'):
                 image = ROOT / 'results' / 'week11_12_teaching' / f'week{week}_teaching.png'
                 if para.strip() == '[RESEARCH_FIGURE]':
                     image = ROOT / 'results' / f'week{week}_research' / ('airfoil_2.png' if week == 11 else 'cavity_qy_hero.png')
+                if para.strip() in ('[NOISE2NOISE_FIGURE]', '[NOISE2NOISE_AUDIT]'):
+                    image = ROOT / 'results/week12_noise2noise' / ('qy_seed26082107.png' if para.strip() == '[NOISE2NOISE_FIGURE]' else 'profiles_and_errors.png')
                 if image.exists():
                     from PIL import Image as PILImage
                     with PILImage.open(image) as im:
@@ -518,7 +525,8 @@ def build_pdf(week):
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--execute', action='store_true')
+    parser.add_argument('--week', type=int, choices=[11,12], help='Rebuild only this week')
     args = parser.parse_args()
-    for week in (11,12):
+    for week in ([args.week] if args.week else (11,12)):
         build_notebook(week, args.execute)
         build_pdf(week)

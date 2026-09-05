@@ -1,0 +1,156 @@
+{
+  "source_archive": "JCP2(1).zip",
+  "source_archive_sha256": "2adfae50c1fe59e1192150498fa616be599a7ebe32b6fb35d82189840e79ea3b",
+  "source_prediction_sha256": "7f5c72b561061cff53aad60e024ebdc8a248adc0dcf4aaf90c847cfbdaaa5ae4",
+  "source_summary": {
+    "all_G1_gates_pass": true,
+    "classification": "fully_prospective_blind_interface",
+    "condition": "S2_kn0p085_u350",
+    "fields": [
+      "rho",
+      "u",
+      "v",
+      "T",
+      "Pxy",
+      "Pxx_minus_Pyy",
+      "qx",
+      "qy"
+    ],
+    "full_hierarchy_promoted_units_below_raw_B10": 64,
+    "full_hierarchy_promoted_units_total": 64,
+    "gates": {
+      "G1_qy_below_0p95_of_pnet_alone_p0_and_frozen_envelope_in_all_units": true,
+      "G1_qy_exact_sign_p_at_most_0p05_for_each_comparator": true,
+      "all_eight_fields_reported_for_promoted_method": true,
+      "all_evaluation_and_reference_seeds_disjoint": true,
+      "eight_evaluation_units_after_preregistered_QC": true,
+      "prediction_hash_verified_before_reference_open": true,
+      "promoted_below_raw_B10_in_all_field_seed_units": true,
+      "raw_B3_and_raw_B10_are_disjoint": true,
+      "reference_has_260_disjoint_blocks": true,
+      "reference_minimum_effective_blocks_at_least_150": true
+    },
+    "heat_flux_noise_policy": "within-unit between-block scatter; sixth-order raw moments were not stored, so no direct particle-level q variance is claimed",
+    "qy_envelope_margin_wins": 8,
+    "qy_primary_tests": {
+      "p0_eb": {
+        "bootstrap_95_percent_CI": [
+          0.5381422263923592,
+          0.5585587697389173
+        ],
+        "geometric_error_ratio": 0.5498178288525662,
+        "one_sided_exact_sign_p": 0.00390625,
+        "units": 8,
+        "wins": 8
+      },
+      "pnet_alone": {
+        "bootstrap_95_percent_CI": [
+          0.30615424811326414,
+          0.3209601640001945
+        ],
+        "geometric_error_ratio": 0.3135575247594667,
+        "one_sided_exact_sign_p": 0.00390625,
+        "units": 8,
+        "wins": 8
+      },
+      "pnet_frozen_gain": {
+        "bootstrap_95_percent_CI": [
+          0.5504114232486733,
+          0.574161726809948
+        ],
+        "geometric_error_ratio": 0.5637168971056411,
+        "one_sided_exact_sign_p": 0.00390625,
+        "units": 8,
+        "wins": 8
+      }
+    },
+    "reference_blocks": 260,
+    "reference_effective_blocks_by_field": {
+      "Pxx_minus_Pyy": 260.0,
+      "Pxy": 260.0,
+      "T": 260.0,
+      "qx": 260.0,
+      "qy": 260.0,
+      "rho": 260.0,
+      "u": 260.0,
+      "v": 260.0
+    },
+    "reference_noise_nrmse_squared_by_field": {
+      "Pxx_minus_Pyy": 6.077273709596093e-05,
+      "Pxy": 2.9042463831108244e-05,
+      "T": 2.804407181883507e-07,
+      "qx": 0.00015970827052809986,
+      "qy": 0.00035331288208052846,
+      "rho": 3.991003401593024e-07,
+      "u": 1.1550140276142647e-05,
+      "v": 2.4450882792917876e-05
+    },
+    "selected_evaluation_seeds": [
+      26082101,
+      26082102,
+      26082103,
+      26082104,
+      26082105,
+      26082106,
+      26082107,
+      26082108
+    ],
+    "selected_reference_seeds": [
+      26082201,
+      26082202,
+      26082204,
+      26082205,
+      26082208,
+      26082210,
+      26082211,
+      26082212,
+      26082213,
+      26082214,
+      26082215,
+      26082216,
+      26082217,
+      26082218,
+      26082219,
+      26082220,
+      26082221,
+      26082222,
+      26082223,
+      26082224
+    ],
+    "stage": "JCP2_prospective_cavity_S2",
+    "temperature_particle_delta_noise_diagnostic": {
+      "cell_fraction_within_15_percent_before_persistence_calibration": 0.3362,
+      "median_predicted_to_three_block_scatter_ratio": 1.009526801162516,
+      "persistence_calibration_fitted_on_prospective_reference": false,
+      "uses_recorded_fourth_raw_speed_moment": true
+    }
+  },
+  "condition": "S2_kn0p085_u350",
+  "fields": [
+    "qx",
+    "qy"
+  ],
+  "split": {
+    "train": [
+      26082101,
+      26082102,
+      26082103,
+      26082104
+    ],
+    "validation": [
+      26082105,
+      26082106
+    ],
+    "test": [
+      26082107,
+      26082108
+    ]
+  },
+  "split_status": "Declared teaching split of previously inspected archive; not a new blind research test.",
+  "independence": "Distinct seeds and observation/reference disjointness are documented by the source archive; RNG streams and block ancestry were not re-audited from solver logs.",
+  "scope": "Same-condition denoising only; no new DSMC, no research-checkpoint use. Two held-out noise realizations do not establish new-condition generalization.",
+  "files": {
+    "evaluation_only.npz": "a4b5f44e5cdd64937be8deeed809e99977d351a29da599d648054ef232b52be0",
+    "observations.npz": "e5ed6a7d4431a87b322090079e2131b49fa3365b8de905e9887e1a84c53cca41"
+  }
+}

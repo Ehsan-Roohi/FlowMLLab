@@ -1,0 +1,38 @@
+{
+  "split": {
+    "train": [
+      26082101,
+      26082102,
+      26082103,
+      26082104
+    ],
+    "validation": [
+      26082105,
+      26082106
+    ],
+    "test": [
+      26082107,
+      26082108
+    ]
+  },
+  "architecture": [
+    64,
+    32
+  ],
+  "patch_width": 5,
+  "max_iter": 160,
+  "samples_per_seed": 3000,
+  "initialization": 12,
+  "width_candidates": [
+    0.5,
+    1,
+    1.5,
+    2
+  ],
+  "reference_used_for_training_or_selection": false,
+  "test_status": "Previously inspected archive, held out from this teaching fit; not new blind evidence.",
+  "data_files": {
+    "evaluation_only.npz": "a4b5f44e5cdd64937be8deeed809e99977d351a29da599d648054ef232b52be0",
+    "observations.npz": "e5ed6a7d4431a87b322090079e2131b49fa3365b8de905e9887e1a84c53cca41"
+  }
+}

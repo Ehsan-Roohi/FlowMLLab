@@ -29,15 +29,16 @@ def verify(render=False):
         print(f'Week {week}: {len(cells)} executed code cells, no errors')
         pdf = next((ROOT / 'lectures').glob(f'week{week}_*.pdf'))
         reader = PdfReader(pdf)
-        assert len(reader.pages) == 8, (pdf, len(reader.pages))
+        expected_pages = 12 if week == 12 else 8
+        assert len(reader.pages) == expected_pages, (pdf, len(reader.pages))
         assert all(len(p.extract_text()) > 500 for p in reader.pages)
         if render:
             from PIL import Image, ImageOps, ImageDraw
-            dest = ROOT / 'tmp' / 'week11_12_pdf_review'
+            dest = ROOT / 'tmp' / 'week11_12_pdf_review' / f'week{week}_{expected_pages}pages'
             dest.mkdir(parents=True, exist_ok=True)
             prefix = dest / f'week{week}'
             subprocess.run(['pdftoppm','-r','90','-png',str(pdf),str(prefix)],check=True)
-            sheet = Image.new('RGB',(1200,1800),'#dbe3e9')
+            sheet = Image.new('RGB',(1200,450*((expected_pages+1)//2)),'#dbe3e9')
             for i, image in enumerate(sorted(dest.glob(f'week{week}-*.png'))):
                 with Image.open(image) as im:
                     thumb=ImageOps.contain(im.convert('RGB'),(585,425))
@@ -45,7 +46,7 @@ def verify(render=False):
                 sheet.paste(thumb,(col*600+(600-thumb.width)//2,row*450+18))
                 ImageDraw.Draw(sheet).text((col*600+12,row*450+4),f'Page {i+1}',fill='black')
             sheet.save(dest / f'week{week}_review.jpg')
-        print(pdf.name, '8 pages')
+        print(pdf.name, f'{expected_pages} pages')
     link_files = [ROOT/'README.md', ROOT/'lectures/README.md',
                   ROOT/'results/week11_12_teaching/README.md']
     link_files += list((ROOT/'notebooks/week11').glob('*.md'))

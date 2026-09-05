@@ -67,6 +67,15 @@ blanket license to upstream research assets.
 
 ## Scope that has not been established
 
+The Week 12 development extension additionally extracts raw-three-block qx/qy
+observations for all eight JCP2 seeds, with Raw(10) and the reference in a
+separate evaluation file. [Subset provenance](data/week12_noise2noise/README.md)
+and [fresh Noise2Noise-style training results](results/week12_noise2noise/README.md)
+distinguish this newly fitted teaching MLP from archived research predictions.
+The split is for same-condition denoising of previously inspected data, not new
+blind research evidence. The implementation is original; Lehtinen et al. are
+cited for the method and no NVlabs implementation or weights are copied.
+
 The BGK and polyatomic-shock parts of PoF 057108 are not automatically reproduced
 by integrating its cylinder archive. Likewise, the supplied `LJ_*` archives
 must not be confused with the separately verified Jäger package above or automatically attributed to

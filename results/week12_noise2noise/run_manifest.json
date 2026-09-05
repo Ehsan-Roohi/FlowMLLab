@@ -1,0 +1,82 @@
+{
+  "split": {
+    "train": [
+      26082101,
+      26082102,
+      26082103,
+      26082104
+    ],
+    "validation": [
+      26082105,
+      26082106
+    ],
+    "test": [
+      26082107,
+      26082108
+    ]
+  },
+  "architecture": [
+    64,
+    32
+  ],
+  "patch_width": 5,
+  "max_iter": 160,
+  "samples_per_seed": 3000,
+  "initialization": 12,
+  "width_candidates": [
+    0.5,
+    1,
+    1.5,
+    2
+  ],
+  "reference_used_for_training_or_selection": false,
+  "test_status": "Previously inspected archive, held out from this teaching fit; not new blind evidence.",
+  "data_files": {
+    "evaluation_only.npz": "a4b5f44e5cdd64937be8deeed809e99977d351a29da599d648054ef232b52be0",
+    "observations.npz": "e5ed6a7d4431a87b322090079e2131b49fa3365b8de905e9887e1a84c53cca41"
+  },
+  "fit_seconds": 13.875,
+  "iterations": 160,
+  "last_training_loss": 0.00976253135949197,
+  "warnings": [
+    "Stochastic Optimizer: Maximum iterations (160) reached and the optimization hasn't converged yet."
+  ],
+  "gaussian_width": 1.0,
+  "gaussian_validation_scores": {
+    "0.5": 0.05337546778110018,
+    "1.0": 0.0477885337708342,
+    "1.5": 0.057740415411764875,
+    "2.0": 0.07195289477649729
+  },
+  "mlp_noisy_validation_score": 0.046346950673952066,
+  "mean_reference_nrmse": {
+    "qx": {
+      "Raw(3)": 0.11868888133174546,
+      "Gaussian": 0.08762127921253356,
+      "Spectral": 0.07173696060278913,
+      "Training mean (prior only)": 0.05977159413009261,
+      "Noise2Noise MLP": 0.10374427399688282,
+      "MLP + observed mean": 0.10240112189749698,
+      "Raw(10), larger budget": 0.06555177472028384
+    },
+    "qy": {
+      "Raw(3)": 0.1760345276264933,
+      "Gaussian": 0.08199198885437778,
+      "Spectral": 0.07976383158091402,
+      "Training mean (prior only)": 0.09053306840670863,
+      "Noise2Noise MLP": 0.0630800853882566,
+      "MLP + observed mean": 0.06270632679465962,
+      "Raw(10), larger budget": 0.09874232826333518
+    }
+  },
+  "files": {
+    "metrics.csv": "c55e3d30bf0a8a12631d52c716ad53985310e8d913bbb815923950986bf31455",
+    "plan.json": "0507005a5ac262072046e6e6daa1214898762b0948a700b28724a6174eca325b",
+    "profiles_and_errors.png": "f57848e1cc80f0ebb97bb610b37f1794ef86e6d71b41dc000671b647d5561598",
+    "qx_seed26082107.png": "da51235909f65768875c7933625550cd040f76820309b9ec44954353e6e961c4",
+    "qx_seed26082108.png": "6b67d47a7ce9312df376ed7d376729d0f936fb06dd453fd1ebe0fd68af704d1f",
+    "qy_seed26082107.png": "37292f55587e8ebe5ab266ae5ab48a2d7870b42d3aea05cb2947dad30753a9f0",
+    "qy_seed26082108.png": "0ceede76a49c0ef32faf15d438349897d11ee942b7bc380f82c246e9d9a1cd59",
+    "test_predictions.npz": "cdcf1b457f50a6475d6950a485d2717c8c4e718ab2c1d22c8b28ee438bdcba41"
+  }
+}

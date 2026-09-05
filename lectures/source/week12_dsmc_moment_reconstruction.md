@@ -76,6 +76,44 @@ Submit the pooled-versus-separate central-moment check, the frozen experiment pr
 
 Extensions: introduce temporal correlation and measure the failure of the 1/B noise law; add a narrow layer and quantify smoothing bias; implement normal/tangential rotation and area-weighted mean restoration; design independent references for a real DSMC run. These are extensions, not already-executed article reproductions.
 
-Run notebooks/week12/W12_DSMC_Moment_Reconstruction.ipynb using CPU dependencies in FlowMLLab or its Colab launcher. A normal run leaves retained evidence unchanged. Synthetic warm-up scores and real archive scores occupy separate sections. The real-data section checks source-file hashes and recomputes all displayed first-seed errors from the retained subset.
+Run notebooks/week12/W12_DSMC_Moment_Reconstruction.ipynb using CPU dependencies in the local development checkout. Until merged, the main-branch Colab launcher opens the published predecessor. A normal run leaves retained evidence unchanged. Synthetic controls, a fresh real-data Noise2Noise fit and historical research predictions occupy separate sections.
 
 Reading: Ehsan Roohi, Geometry-native machine learning reconstruction of DSMC moment fields with support monitoring, arXiv:2609.01637, https://doi.org/10.48550/arXiv.2609.01637. Lecture wording and classroom code are original, AI-assisted FlowMLLab additions grounded in the author's manuscript. No original research data, solver or checkpoint is fabricated or silently substituted.
+
+## Noise2Noise: learn from noisy targets
+
+Suppose Y=f+e and Y'=f+e' are two noisy measurements of the same underlying field. For squared loss, training against Y' has the same population optimum as training against f if the target perturbation has zero conditional mean given the input and underlying field: E[e' | Y,f]=0. The cross term then vanishes and the target-noise energy is independent of the predictor. Independence and zero conditional mean are sufficient, not something guaranteed by two different filenames.
+
+The idea comes from Lehtinen et al., Noise2Noise: Learning Image Restoration without Clean Data, ICML 2018, https://arxiv.org/abs/1803.04189. The FlowMLLab patch MLP is an original teaching implementation, not copied NVlabs code or the article's architecture. Roohi's existing real DSMC observations supply the data; no Gaussian noise is added and no research-network predictions enter training.
+
+DSMC heat flux is a nonlinear central moment. Finite-sample bias, correlated blocks, transient evolution and mismatched underlying fields can invalidate the simple argument. An unbiased observation of a coarse discrete estimator would also not prove agreement with the continuum kinetic solution. This exercise tests practical denoising against a finite independent reference, not those stronger claims.
+
+Ask before running: why does training a noisy input against itself reward an identity map? Why does averaging independent targets reduce training-target noise without making that target exact? What fails when the input seed contributes to its own target?
+
+## Real-data training protocol and fair baselines
+
+Use the JCP2 cavity at Kn=0.085 and lid speed 350 m/s. Eight independent-seed identifiers are available on the same 100x100 grid. The source archive documents separate observation/reference seeds and disjoint Raw(3)/Raw(10); the course does not independently reconstruct RNG streams or original block ancestry. Coordinates and field values retain normalized array positions and archive units.
+
+Freeze training seeds 26082101-104, validation 105-106 and evaluation 107-108. For each training input, form a noisy target from the other three training seeds. Its three input blocks do not appear in the nine-block target according to the archive. The four pairs share training data; spatial patches and pair reuse do not create independent experimental replicates.
+
+A 5x5 patch of qx and qy supplies 50 features to a fixed 64x32 tanh MLP. Training-only scales, initialization 12, 3,000 patch locations per seed and a 160-epoch budget are fixed. No spatial coordinates or random-pixel early-stopping split are used. Reflection padding is numerical, not a physical boundary condition; edge-band errors expose its limitations.
+
+Compare Raw(3), a Gaussian width chosen by noisy validation pairs, a training-fitted DCT filter, the 12-development-block training mean and the MLP. Report a separate mean-restored MLP, never select it using test errors. Raw(10) is an additional larger-budget comparator. Open the evaluation reference only after fitting and selection. These previously inspected archive seeds are held out from this fit, not a newly blind scientific test.
+
+## Fresh fit: improvement and a neural failure
+
+[NOISE2NOISE_FIGURE]
+
+The fresh patch MLP reduces mean qy reference error from 17.60% for Raw(3) to 6.31% across two evaluation seeds. Gaussian filtering gives 8.20%, the spectral filter 7.98%, and the training mean 9.05%. These are course-model results, distinct from the historical research estimator's 4.34% across eight seeds. Do not merge their protocols or claim reproduction of the research network.
+
+For qx the MLP gives 10.37%, versus 11.87% raw, 8.76% Gaussian, 7.17% spectral and 5.98% training mean. The simple baseline wins. The optimizer reached 160 epochs without satisfying its convergence criterion; its warning remains in the notebook and retained manifest. This is a budget-limited demonstration, not a fully optimized network.
+
+Every Run All fits the model from raw observations and recomputes the scores. No stored predictions are used to replace the fresh teaching fit. Data and retained results remain read-only. Increasing training effort is a future development experiment: declare its selection rule before looking at new evaluation results and retain this initial outcome.
+
+## Inspect profiles, then state what was learned
+
+[NOISE2NOISE_AUDIT]
+
+Both components and both evaluation seeds are retained. Inspect column-49 profiles, direct relative L2 error, gradient error and the outer-10%-array edge-band error. Gradients of the finite reference contain noise too; they are not exact derivative truth. The common contour scale includes all displayed values without interpolation or clipping.
+
+Submit all 28 component/method/seed scores and explain why the training mean is so competitive for a fixed underlying field. Compare mean-restored and unconstrained MLP outputs: measured-mean preservation need not reduce reference error. Two seeds cannot justify statistical significance, calibrated uncertainty or a simulation-speedup claim. A stronger next experiment needs independently qualified realizations and entire-condition holdouts, not more random patches from the same cavity.

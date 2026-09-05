@@ -1,5 +1,27 @@
 # Week 12 - Observation-conditioned DSMC moment reconstruction
 
+## Development extension: actually train on real DSMC
+
+The notebook now includes a fresh CPU Noise2Noise-style patch MLP, not just
+archived figures. Four raw-observation seeds train the model, two choose the
+Gaussian baseline width, and two evaluate all methods. The high-budget
+reference is excluded from fitting and selection. Training takes about 14
+seconds on the tested machine; allow another 20-30 classroom minutes.
+
+Use the current local `codex/week12-noise2noise` checkout. The main-branch Colab
+link below still opens the published predecessor until the extension is merged.
+No new release or DOI has been created. The lecture now has 12 pages.
+
+[Fresh fit, all scores and failures](../../results/week12_noise2noise/README.md) ·
+[Source data and independence limits](../../data/week12_noise2noise/README.md).
+
+The MLP improves qy but loses to simpler baselines on qx; its 160-epoch
+convergence warning is retained. This is same-condition denoising of an
+already-inspected archive, not a new blind test or the paper's research model.
+Every Run All retrains the teaching MLP without rewriting data or results.
+
+## Materials
+
 [Lecture PDF](../../lectures/week12_dsmc_moment_reconstruction.pdf) ·
 [Executable notebook](W12_DSMC_Moment_Reconstruction.ipynb) ·
 [Open in Colab](https://colab.research.google.com/github/Ehsan-Roohi/FlowMLLab/blob/main/notebooks/week12/W12_DSMC_Moment_Reconstruction.ipynb)
