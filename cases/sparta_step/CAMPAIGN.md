@@ -1,5 +1,9 @@
 # Pressure-driven SPARTA step campaign
 
+> Archived refinement proposal: this matrix exceeds the current pilot-scale particle
+> budget and is not the current execution plan. Start with the [fixed-budget GPU
+> benchmark](GPU.md); do not use the older 39-run submission command for this stage.
+
 This campaign follows the successful Unity pilot **64013621**. It keeps N2,
 VHS via VSS alpha=1, 300 K diffuse walls, pressure ratio 2, outlet-reference
 Kn=0.01, the 85.47 micrometre channel length, and step location x/L=0.3.

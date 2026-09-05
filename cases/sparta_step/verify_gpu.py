@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Exercise actual Kokkos styles, cross-backend restarts, capacity deck and Slurm guards.
+"""Exercise actual Kokkos styles, cross-backend restarts, particle budget and Slurm guards.
 
 The CI/local host backend test is not evidence of a working CUDA build.
 """
@@ -21,18 +21,18 @@ def main():
     p.add_argument('--launcher',default='mpirun');p.add_argument('--serial',action='store_true')
     a=p.parse_args()
     cpu=str(Path(a.cpu_binary).resolve());kk=str(Path(a.kokkos_binary).resolve())
+    for seed in gpu.campaign.SEEDS:
+        assert gpu.check_particle_budget(gpu.benchmark_row(seed))==5100000
+    for change in [dict(nx=3500,ny=700),dict(ppc=40)]:
+        try:gpu.check_particle_budget(dict(gpu.benchmark_row(20260905),**change))
+        except ValueError as exc:assert 'PARTICLE_BUDGET_EXCEEDED' in str(exc)
+        else:raise AssertionError('Unrequested particle enlargement was accepted')
+    assert not hasattr(gpu,'capacity_deck')
+    print('PILOT_PARTICLE_BUDGET_GUARD_PASS',flush=True)
     with tempfile.TemporaryDirectory(prefix='step-kk-test-') as temp:
         out=Path(temp)
         gpu.preflight(out,cpu,kk,a.launcher,host_kokkos=True,serial=a.serial)
         print('HOST_KOKKOS_FRESH_AND_BIDIRECTIONAL_RESTART_PASS',flush=True)
-        # All production tally commands and pressure BCs are initialized at capacity cadence.
-        row=gpu.smoke_row()
-        path=out/'capacity'
-        gpu.capacity_deck(path,row)
-        result=gpu.execute(path,gpu.command(kk,'kokkos',a.launcher,host_kokkos=True,serial=a.serial),timeout=300)
-        assert sum(r['steps'] for r in result['loops'])==70
-        assert 'GPU_CAPACITY_PROBE_COMPLETE' in (path/'solver.stdout').read_text()
-        print('HOST_KOKKOS_CAPACITY_DECK_PASS',flush=True)
         # Exercise exact production benchmark time segmentation on a cheap mesh.
         row=gpu.benchmark_row(gpu.campaign.SEEDS[0]);row.update(nx=20,ny=100,ppc=8)
         path=out/'timed-small'
@@ -62,7 +62,7 @@ def main():
             with contextlib.redirect_stdout(io.StringIO()):gpu.submit(Path(__file__).parent,base,'a'*40)
             assert sbatch.call_count==1
             cmd=sbatch.call_args.args[0]
-            assert all(x in cmd for x in ['--gpus=1','--ntasks=16','--constraint=a40','--export=ALL'])
+            assert all(x in cmd for x in ['--gpus=1','--ntasks=16','--constraint=a40','--export=ALL','--mem=48G'])
             try:gpu.submit(Path(__file__).parent,base,'a'*40)
             except ValueError as exc:assert 'already recorded' in str(exc)
             else:raise AssertionError('Duplicate benchmark was submitted')

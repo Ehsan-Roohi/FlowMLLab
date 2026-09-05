@@ -11,13 +11,13 @@ caught in the actual Kokkos host-backend regression. The `ave/time` and `ave/sur
 use host implementations; transfer/aggregation overhead is included in timings.
 
 This is **not a GPU production campaign submission**. It establishes a usable
-build, actual solver compatibility, measured speed, and short-run memory capacity.
+build, actual solver compatibility, measured speed, and memory use at the existing pilot scale.
 It neither cancels nor duplicates the separate CPU campaign.
 
 ## One allocation, a measured comparison
 
 `submit_gpu_benchmark.sh FULL_FLOWMLLAB_SHA` downloads immutable code and requests
-one A40, 16 CPU cores, 128 GiB host RAM, and a four-hour wall limit in Unity's `gpu`
+one A40, 16 CPU cores, 48 GiB host RAM, and a four-hour wall limit in Unity's `gpu`
 partition. Only batch jobs load modules. Use `--gpu a100` or `--gpu h100` after the
 SHA to request a different documented architecture; the allocation must match.
 No GPU speedup or four-hour completion time is promised by this wall limit.
@@ -33,10 +33,14 @@ No GPU speedup or four-hour completion time is promised by this wall limit.
    backend, alternating arm order across three repeats. CPU uses 16 MPI ranks;
    GPU uses one rank and one device, on the **same allocated node**. Never reuse
    the old CPU pilot wall time as the speedup denominator.
-4. Run fresh fine-grid GPU capacity probes for h/H=0.16 with PPC20 (~70 million
-   particles) and h/H=0.50 with PPC40 (~125 million). They initialize all production
-   tallies and advance 70 steps; huge field/restart dumps are omitted. A failed
-   probe records its failure while preserving completed paired benchmark results.
+
+The particle policy is fixed at the successful pilot: **1000 x 200 grid, PPC20,
+unchanged particle weight**, and about **5.1 million initial simulated particles**.
+No 70/125-million-particle memory probes, refined grids, or PPC40 cases are submitted.
+A budget guard rejects accidental mesh/PPC enlargement, and this benchmark no
+longer derives its dimensions from the archived 39-run refinement proposal.
+The actual particle inventory may fluctuate through physical inlet/outlet transport;
+particles are never deleted or rescaled to force an artificial exact count.
 
 The benchmark requires the actual pilot's `pilot/restart.final` and `case.json` on
 Unity. It does not try to manufacture particles from uploaded averaged fields.
@@ -62,13 +66,13 @@ an intentionally frequent-output workload, not a production wall-time forecast.
 The sampling interval is only `1.4356806318703457e-8 s`. Short-window field L2,
 mass-flow and pressure differences are diagnostics, **not a validated CPU/GPU
 statistical equivalence test**. A longer matched sampling comparison and the
-existing mesh/dt/PPC/seed checks are still needed for scientific data acceptance.
+numerical and sampling sensitivity checks are still needed for scientific data acceptance;
+this performance test does not approve the archived expensive refinement matrix.
 
 `nvidia-smi` samples allocated-device memory every 500 ms. The maximum sampled
-value is not an exact peak. A 70-step fresh-state capacity pass does not establish
-memory headroom after long flow evolution or during checkpoint/output operations.
-CUDA out-of-memory may mean using a larger-memory GPU or splitting one case
-across GPUs; it must not be fixed by silently lowering particle count or resolution.
+value is not an exact peak. It measures the existing pilot case; it does not
+establish capacity for a larger simulation. Increasing particle count is outside
+this run's scope. Any future dataset plan must respect the same particle budget.
 
 Use `gpu_benchmark.py status --out RUN_DIRECTORY`; it queries the exact saved job
 ID through `sacct`, then shows timings and log tails. A successful job ends with

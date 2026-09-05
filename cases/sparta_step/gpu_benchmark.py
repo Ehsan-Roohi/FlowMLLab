@@ -93,7 +93,7 @@ def execute(path, cmd, timeout=7200, gpu_uuid=None):
     stuck = [int(v) for v in re.findall(r'Particles stuck\s*=\s*(\d+)', log)]
     if re.search(r'^ERROR', log, re.M) or not stuck or any(stuck):
         raise ValueError(f'Solver error or stuck-particle accounting invalid: {path}')
-    loops = re.findall(r'Loop time of ([\d.eE+-]+) on (\d+) procs for (\d+) steps', log)
+    loops = re.findall(r'Loop time of ([\d.eE+-]+) on (\d+) procs for (\d+) steps with (\d+) particles', log)
     if not loops:
         raise ValueError('Solver timing lines absent')
     memory_samples = []
@@ -103,7 +103,8 @@ def execute(path, cmd, timeout=7200, gpu_uuid=None):
             with contextlib.suppress(ValueError):
                 memory_samples.append(float(values[1]))
     timing = dict(wall_seconds=elapsed,
-                  loops=[dict(seconds=float(t), ranks=int(n), steps=int(s)) for t, n, s in loops],
+                  loops=[dict(seconds=float(t), ranks=int(n), steps=int(s), end_particles=int(p))
+                         for t, n, s, p in loops],
                   peak_device_memory_sampled_mib=max(memory_samples, default=None),
                   memory_note='500 ms samples of allocated device usage, not an exact allocation peak.',
                   command=cmd)
@@ -154,44 +155,18 @@ def preflight(out, cpu_binary, kk_binary, launcher='mpirun', host_kokkos=False, 
 
 
 def benchmark_row(seed):
-    row = campaign.matrix()[0].copy()
-    row.update(id=f'gpu_benchmark_s{seed}', seed=seed, warmup_steps=700,
-               sampling_steps=1400, block_steps=350, sample_every=35)
-    return row
+    # Independent of the archived refinement matrix: a later matrix edit must
+    # not silently turn this benchmark into a much larger simulation.
+    return dict(id=f'gpu_benchmark_s{seed}', seed=seed, phase='gpu_benchmark',
+                height_percent=50, nx=1000, ny=200, ppc=20, dt_s=campaign.COMMON_DT,
+                warmup_steps=700, sampling_steps=1400, block_steps=350, sample_every=35)
 
 
-def capacity_deck(path, row):
-    """Allocate campaign-scale particles and all production tallies, then move 70 steps.
-
-    Fresh, transient flow: this proves a memory/load path, not steady-state capacity
-    or scientific convergence. No enormous field/restart dump is produced.
-    """
-    path = Path(path)
-    m = pilot.generate(path, smoke=True, ratio=row['height_percent']/100, nx=row['nx'],
-                       ny=row['ny'], ppc=row['ppc'], seed=row['seed'])
-    prefix = (path/'in.step').read_text().split('fix check grid/check ', 1)[0]
-    deck = campaign.sampling_deck(dict(warmup_steps=35, sampling_steps=70,
-                                      block_steps=35000, sample_every=35))
-    # Use the production tally cadence; run lengths need not emit a completed block.
-    deck = deck.split('print "SPARTA_STEP_SAMPLING_BEGIN"', 1)[1]
-    lines = []
-    for line in deck.splitlines():
-        if line.startswith(('run ', 'dump ', 'dump_modify ', 'write_restart ', 'print ')):
-            continue
-        lines.append(line)
-    path.joinpath('in.step').write_text(prefix+f'timestep {row["dt_s"]:.17g}\n'
-        'compute boundary boundary gas n press shx ke\n'
-        'variable exits_in equal c_boundary[1][1]\n'
-        'variable exits_out equal c_boundary[2][1]\n'
-        'variable inventory equal np\n'
-        'fix check grid/check 35 error\n'
-        'stats 35\nstats_style step cpu np ncoll nattempt nexit\n'
-        +'\n'.join(lines)+'\nrun 70\nprint "GPU_CAPACITY_PROBE_COMPLETE"\n')
-    kk_deck(path/'in.step')
-    m.update(level='transient_gpu_capacity_probe', dt_s=row['dt_s'], final_step=70,
-             warmup_steps=0, sampling_steps=70, campaign_case=row,
-             training_data_approved=False)
-    pilot.write_json(path/'case.json', m)
+def check_particle_budget(row):
+    estimate = row['nx']*row['ny']*(1-.3*row['height_percent']/100)*row['ppc']*1.5
+    if (row['nx']>1000 or row['ny']>200 or row['ppc']>20 or estimate>5100000.01):
+        raise ValueError('PILOT_PARTICLE_BUDGET_EXCEEDED: no mesh/PPC enlargement is authorized')
+    return round(estimate)
 
 
 def run(out):
@@ -206,7 +181,8 @@ def run(out):
     restart_hash = pilot.sha(restart)
     summary = dict(status='benchmark_running', flowmllab_commit=cfg['flowmllab_commit'],
         sparta_commit=pilot.SPARTA_COMMIT, hardware=hardware, restart=str(restart),
-        restart_sha256=restart_hash, measurements=[], comparisons=[], capacity=[],
+        restart_sha256=restart_hash, measurements=[], comparisons=[], particle_policy='retain successful pilot grid and particle weight',
+        grid=[1000,200], ppc_outlet_reference=20, initial_particles_estimate=5100000,
         training_data_approved=False, scientific_cpu_gpu_equivalence_validated=False,
         notes=['Three paired repeat runs begin at the same CPU pilot restart; they are not independent flow datasets.',
                'Seed labels do not imply identical CPU/GPU random trajectories.',
@@ -215,7 +191,7 @@ def run(out):
                'Sampling loop timing includes all tallies and deliberately frequent compressed output.',
                'End-to-end timing includes input, MPI startup, restart read/write and output.',
                'Short-window field differences are diagnostics, not a statistical equivalence test.',
-               'Fine-grid capacity probes start fresh. Long-run memory headroom still needs observation.'])
+               'No fine-grid or increased-PPC cases are generated. Open-boundary particle inventory can fluctuate physically.'])
     pilot.write_json(out/'gpu_benchmark_report.json', summary)
     for i, seed in enumerate(campaign.SEEDS):
         reports, timings, paths = {}, {}, {}
@@ -223,6 +199,7 @@ def run(out):
         for backend in (['cpu', 'kokkos'] if i % 2 == 0 else ['kokkos', 'cpu']):
             path = out/f'benchmark-{backend}-s{seed}'
             row = benchmark_row(seed)
+            check_particle_budget(row)
             campaign.generate_case(path, row, restart, 'smoke', smoke=True)
             if backend == 'kokkos': kk_deck(path/'in.step')
             m = load(path/'case.json')
@@ -261,27 +238,6 @@ def run(out):
                for b in ['cpu', 'kokkos']}
         summary['speedups'][key] = dict(cpu_16_ranks_median_s=med['cpu'], gpu_1_median_s=med['kokkos'],
                                        cpu_over_gpu=med['cpu']/med['kokkos'])
-    summary['status'] = 'paired_benchmark_complete_capacity_pending'
-    pilot.write_json(out/'gpu_benchmark_report.json', summary)
-    # The densest production case is fine h50/PPC40, and h16 maximizes the PPC20 geometry sweep.
-    for row in [dict(campaign.matrix()[11]), dict(campaign.matrix()[10])]:
-        path = out/f'capacity-{row["id"]}'
-        capacity_deck(path, row)
-        try:
-            timing = execute(path, command(gpu, 'kokkos', launcher), timeout=3600, gpu_uuid=hardware['uuid'])
-            if 'GPU_CAPACITY_PROBE_COMPLETE' not in (path/'solver.stdout').read_text():
-                raise ValueError('Capacity marker missing')
-            entry = dict(case_id=row['id'], status='transient_capacity_pass', timing=timing,
-                         initial_particles_estimate=row['initial_simulated_particles_estimate'])
-        except (RuntimeError, ValueError, subprocess.TimeoutExpired) as exc:
-            entry = dict(case_id=row['id'], status='capacity_probe_failed', reason=str(exc))
-            summary['capacity'].append(entry)
-            summary['status'] = 'paired_benchmark_complete_capacity_failed'
-            pilot.write_json(out/'gpu_benchmark_report.json', summary)
-            raise
-        summary['capacity'].append(entry)
-        pilot.write_json(out/'gpu_benchmark_report.json', summary)
-        print(f'GPU_CAPACITY_PASS case={row["id"]}', flush=True)
     summary['status'] = 'gpu_route_benchmark_complete'
     pilot.write_json(out/'gpu_benchmark_report.json', summary)
     (out/'GPU_BENCHMARK_COMPLETE').write_text('Execution/performance evidence only; campaign not submitted.\n')
@@ -293,8 +249,8 @@ def show_report(report):
     print('STATUS=', report['status'])
     for name, values in report.get('speedups', {}).items():
         print(f'{name}: CPU16={values["cpu_16_ranks_median_s"]:.3f}s GPU1={values["gpu_1_median_s"]:.3f}s CPU/GPU={values["cpu_over_gpu"]:.3f}')
-    for entry in report.get('capacity', []):
-        print('CAPACITY=', entry['case_id'], entry['status'], entry.get('timing', {}).get('peak_device_memory_sampled_mib'))
+    print('GRID=', report.get('grid'), 'PPC=', report.get('ppc_outlet_reference'),
+          'INITIAL_PARTICLE_ESTIMATE=', report.get('initial_particles_estimate'))
 
 
 def submit(root, base, ref, gpu='a40', new_run=False):
@@ -323,11 +279,14 @@ def submit(root, base, ref, gpu='a40', new_run=False):
         restart=str(restart), gpu_type=gpu, expected_compute_capability=ARCH[gpu][0],
         kokkos_arch=ARCH[gpu][1], cuda_module='cuda/12.6', mpi_module='openmpi/5.0.3-cuda12.6',
         out=str(out), cpu_ranks=16, gpu_ranks=1, jobs={}, training_data_approved=False)
+    meta.update(particle_policy='retain successful pilot grid and particle weight',
+                initial_particle_estimate=check_particle_budget(benchmark_row(campaign.SEEDS[0])),
+                grid=[1000,200], ppc_outlet_reference=20, large_particle_probes=False)
     pilot.write_json(out/'manifest.json', meta)
     (base/POINTER).write_text(str(out)+'\n')
     cmd = ['sbatch', '--parsable', '--account=pi_roohie_umass_edu', '--partition=gpu',
         '--nodes=1', '--ntasks=16', '--cpus-per-task=1', '--gpus=1', f'--constraint={gpu}',
-        '--mem=128G', '--time=04:00:00', '--job-name=step-gpu-bench', '--export=ALL',
+        '--mem=48G', '--time=04:00:00', '--job-name=step-gpu-bench', '--export=ALL',
         f'--chdir={out}', f'--output={out}/slurm-%j.out', f'--error={out}/slurm-%j.err', str(code/'gpu_job.sh')]
     try:
         raw = subprocess.check_output(cmd, env=dict(os.environ, SPARTA_GPU_OUT=str(out)), text=True).strip()

@@ -4,14 +4,16 @@ This is the first **solver-transfer, boundary and cost pilot**, before making a
 larger FlowMLLab geometry dataset. It is not a validated replacement for Bird's
 DSMC data and is not a new neural-network benchmark. No ML test archive is read.
 
-The follow-on [39-run campaign](CAMPAIGN.md) provides matched-time grid controls,
+The archived [39-run refinement proposal](CAMPAIGN.md) provides matched-time grid controls,
 timestep/particle checks, and a dependent 15-height geometry dataset. See the
 [complete run matrix](campaign_matrix.csv). Its single submission preserves this
-pilot and uses a separate immutable run directory.
+pilot and uses a separate immutable run directory. **It exceeds the current
+pilot-scale particle budget and is not the current execution plan.**
 
 The [CPU/GPU benchmark](GPU.md) builds a separate Kokkos/CUDA executable, tests
 the pressure-driven case and cross-backend restarts, measures three paired
-CPU/GPU repeats, and probes fine-grid GPU memory before a production migration.
+CPU/GPU repeats at the existing 1000x200 grid and particle weight. No enlarged
+particle-count or fine-grid capacity probes are included.
 
 The case uses unmodified upstream SPARTA commit
 `95b9abaa8bd548991cc3c3f1c58b34722f7ade74`, compiled for **CPU MPI**. A GPU allocation
