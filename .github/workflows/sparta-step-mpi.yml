@@ -44,3 +44,5 @@ jobs:
         run: python3 -I cases/sparta_step/verify_local.py --binary "$RUNNER_TEMP/sparta-step-source/src/spa_mpi" --mpi-launcher mpirun --ranks 2 --geometry-only --check-legacy-failure
       - name: Reproduce legacy failure and verify four ranks
         run: python3 -I cases/sparta_step/verify_local.py --binary "$RUNNER_TEMP/sparta-step-source/src/spa_mpi" --mpi-launcher mpirun --ranks 4 --geometry-only --check-legacy-failure
+      - name: Verify campaign sampling, fresh solves and changed-rank restart
+        run: python3 -I cases/sparta_step/verify_campaign.py --binary "$RUNNER_TEMP/sparta-step-source/src/spa_mpi" --launcher mpirun --ranks 2
