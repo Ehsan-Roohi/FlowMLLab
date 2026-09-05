@@ -13,11 +13,21 @@ branch or an edited browser-only script.
 | Cylinder CFD qualification | Unity CPU job **64023967** running from `6f463ac`; one CPU, 8 GiB, 24-hour limit | Finish D40 and inspect the fixed grid/statistics gates before any domain/Mach/trajectory campaign |
 | Micro-step architecture V5 | Existing A40 job **64004321** completed 18 controlled fits plus two anchors in 7:05 | [Report-level audit](../results/step_architecture_v5/README.md); no duplicate training or promotion of poor vortex results |
 | Weeks 11 and 12 | Both notebooks executed locally; Week 12 freshly refitted | Execution/reproduction only; not a new independent research validation |
-| SPARTA GPU benchmark | Job **64023942** failed before solver execution: `libcudart.so.12` unresolved | Fix and verify the runtime dependency before a bounded retry; CPU guard **64023943** completed but did not resume the solver |
+| SPARTA GPU benchmark | Job **64023942** failed before solver execution: `libcudart.so.12` unresolved | Fixed and verified against its real binary; bounded retry **64024425**, guard **64024426**, submitted from `369ecf6` to `gpu-preempt` |
 | Nozzle correction | Original exporter/data defect remains | Recover the producing run and follow the [versioned data-note procedure](../docs/NOZZLE_DATA_NOTE.md); more ML training cannot repair reference data |
 
-SPARTA's guard correctly printed `NO_AUTOMATIC_RETRY` after the software failure.
-No CPU/GPU speedup or statistical equivalence result is available from that job.
+SPARTA's original CPU guard **64023943** correctly printed `NO_AUTOMATIC_RETRY`
+after the software failure; its exit 0 was not a successful solver continuation.
+The explicit retry followed five passing Linux path-resolution tests, a passing
+mocked scheduler/retry regression, and an actual `ldd` check of the saved CUDA
+binary with no unresolved dependencies. That preflight did not execute a solver
+or a GPU kernel. The exact failed-job ownership, run directory and accounting
+state were checked, and no active duplicate benchmark existed before submission.
+The retry uses one A40, 16 CPU ranks for the paired reference and 48 GiB host RAM,
+with a four-hour limit per allocation. It retains the existing at-most-eight
+allocation recovery policy for preemption/node failure/timeouts, not software
+failures. Old logs and outputs are preserved in their original run directory.
+No CPU/GPU speedup or statistical equivalence result is available yet.
 The archived 39-run refinement matrix is not approved by this audit. The saved
 benchmark remains at the existing pilot's 1000x200 grid, PPC20 and approximately
 5.1 million particles, not a new production-data campaign.
@@ -56,9 +66,11 @@ All **437 retained files remained byte-identical** during the final audit.
 
 Local environment: NumPy 2.2.6, SciPy 1.15.3, pandas 2.3.3,
 scikit-learn 1.6.1, matplotlib 3.10.9, nbclient 0.11.0. These scientific package
-versions satisfy the repository constraints. The audit used base commit
-`6f463ac` plus the follow-up runner and import tests committed with this note;
-the scratch summary records individual source hashes.
+versions satisfy the repository constraints. The complete audit was repeated
+successfully on published commit `369ecf6e0ffaf3e86b49156eaab8559a50f0d733`,
+after integrating the already-published SPARTA recovery code. The scratch
+summary records individual source hashes; runner SHA256 is
+`c852b98a7948f8f48226f278888ad5a46fc262bd945e960ab295136ecbaaa749`.
 
 Week 12 still retains its finite-iteration optimizer warning and the baseline
 advantage for qx. No test-guided epoch sweep, new accuracy claim or selective
