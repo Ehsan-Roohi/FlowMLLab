@@ -1,0 +1,52 @@
+name: Publish FlowMLLab v1.4.1
+
+on:
+  push:
+    tags: [v1.4.1]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    if: github.repository == 'Ehsan-Roohi/FlowMLLab'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: v1.4.1
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: pip
+          cache-dependency-path: pyproject.toml
+      - name: Install validation and packaging dependencies
+        run: |
+          sudo apt-get update && sudo apt-get install -y poppler-utils
+          python -m pip install -e ".[test]" build twine
+      - name: Verify version and scientific release
+        run: |
+          python -c "import flowmllab; assert flowmllab.__version__ == '1.4.1'"
+          python -m unittest discover -s tests -v
+          flowmllab smoke --root .
+          python qa/validate_course_release.py
+      - name: Build distributions
+        run: |
+          python -m build
+          python -m twine check dist/*
+      - name: Publish the reviewed tag
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          if gh release view v1.4.1 >/dev/null 2>&1; then
+            echo "Release v1.4.1 already exists; leaving it unchanged."
+          else
+            gh release create v1.4.1 --verify-tag \
+              --title "FlowMLLab v1.4.1 — Collision DeepONet companion and stabilization" \
+              --notes-file RELEASE_NOTES_v1.4.1.md \
+              dist/* \
+              lectures/week10_1_abinitio_collision_deeponet.md \
+              results/abinitio_deeponet_cylinder/contours_overview.png
+          fi

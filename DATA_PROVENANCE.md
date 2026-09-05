@@ -50,7 +50,8 @@ without a verified mapping of potential, species, source code and producing runs
 
 v1.4.0 and its [version DOI](https://doi.org/10.5281/zenodo.22315623) are immutable.
 The fall-2026 maintenance round fixes defects and clarifies existing material;
-the author-requested Week 10.1 companion is supplemental reading, not a new training notebook or release. Consolidate changes into tested
-maintenance updates. Unexecuted comparison designs are not scientific results.
+the author-requested Week 10.1 companion is supplemental reading, not a new
+training notebook. These changes are consolidated in the separately requested
+v1.4.1 maintenance release. Unexecuted comparison designs are not scientific results.
 Do not pursue external benchmark adoption until source-data integrity,
 fair-comparison and licensing gates are resolved.

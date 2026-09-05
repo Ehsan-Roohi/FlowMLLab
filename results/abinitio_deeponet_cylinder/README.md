@@ -78,4 +78,5 @@ this does not grant a blanket license for the dataset, checkpoint or
 third-party DS2V source. Cite the paper and FlowMLLab for this case.
 
 This is a Week 10.1 supplemental reading case, not a new training notebook.
-The archived v1.4.0 tag and DOI remain unchanged; no new release is created.
+The archived v1.4.0 tag and DOI remain unchanged. This companion is included
+in the separately requested v1.4.1 maintenance release.

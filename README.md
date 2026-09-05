@@ -2,7 +2,7 @@
 
 [![FlowMLLab CI](https://github.com/Ehsan-Roohi/FlowMLLab/actions/workflows/ci.yml/badge.svg)](https://github.com/Ehsan-Roohi/FlowMLLab/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.22315623.svg)](https://doi.org/10.5281/zenodo.22315623)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.22074169.svg)](https://doi.org/10.5281/zenodo.22074169)
 
 Learn scientific machine learning through reproducible fluid-mechanics experiments:
 generate numerical data, compare transparent baselines with learned models, and
@@ -19,7 +19,7 @@ research by Ehsan Roohi and collaborators, then brought into FlowMLLab for
 teaching. The course adds new code and baselines, not a new origin for those
 data. See [per-case papers, data lineage, reuse limits and AI-assistance
 disclosure](DATA_PROVENANCE.md). v1.4.0 remains the frozen archive; this cycle
-adds maintenance and an author-requested Week 10.1 reading companion, with no new training notebook or release.
+is consolidated in v1.4.1, including the author-requested Week 10.1 reading companion, with no new training notebook.
 
 | Your goal | Open |
 | --- | --- |
@@ -214,9 +214,10 @@ Student submissions are not included.
 · [Citation metadata](CITATION.cff)
 · [Workshop, support, and consulting details](docs/RESULTS_GUIDE.md#workshops-support-and-consulting)
 
-Current release: **v1.4.0** · [GitHub release](https://github.com/Ehsan-Roohi/FlowMLLab/releases/tag/v1.4.0)
-· [Release notes](RELEASE_NOTES_v1.4.0.md).
-Version-specific DOI: **[10.5281/zenodo.22315623](https://doi.org/10.5281/zenodo.22315623)**.
+Current release: **v1.4.1** · [GitHub release](https://github.com/Ehsan-Roohi/FlowMLLab/releases/tag/v1.4.1)
+· [Release notes](RELEASE_NOTES_v1.4.1.md).
+The v1.4.1 version-specific DOI is awaiting confirmation from Zenodo.
+Previous v1.4.0 DOI: [10.5281/zenodo.22315623](https://doi.org/10.5281/zenodo.22315623).
 The [all-versions DOI](https://doi.org/10.5281/zenodo.22074169) resolves to the latest published archive.
 
 **Ehsan Roohi** · University of Massachusetts Amherst · [roohie@umass.edu](mailto:roohie@umass.edu)

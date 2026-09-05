@@ -6,7 +6,7 @@ This guide retains the detailed evidence, figures, protocols, and limitations be
 
 [![FlowMLLab CI](https://github.com/Ehsan-Roohi/FlowMLLab/actions/workflows/ci.yml/badge.svg)](https://github.com/Ehsan-Roohi/FlowMLLab/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](../LICENSE)
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.22315623.svg)](https://doi.org/10.5281/zenodo.22315623)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.22074169.svg)](https://doi.org/10.5281/zenodo.22074169)
 
 ## Week 10.1 companion: ab initio collision DeepONet
 
@@ -538,7 +538,8 @@ If FlowMLLab supports your teaching or research, you can also support its contin
 
 Use [CITATION.cff](../CITATION.cff) when citing the release.
 
-Version 1.4.0 is the current source and archived release:
+Version 1.4.1 is the current source release; its version-specific DOI is awaiting archival confirmation.
+The previous version 1.4.0 remains archived at:
 [10.5281/zenodo.22315623](https://doi.org/10.5281/zenodo.22315623).
 The [all-versions DOI](https://doi.org/10.5281/zenodo.22074169) points to the latest published archive.
 See [CITATION.cff](../CITATION.cff) for current citation metadata. The GitHub release and archival record

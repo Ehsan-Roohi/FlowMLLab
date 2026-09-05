@@ -1,7 +1,7 @@
 {
   "title": "FlowMLLab: An Open-Source Framework for Reproducible CFD-to-Scientific-Machine-Learning Experiments",
-  "description": "Version 1.4.0 adds the Week-7.1 rarefied hypersonic-cylinder operator-learning lab and lecture, checksummed 20-case DSMC teaching data, full-resolution cylinder visualization, and an ordered gallery with separate entries for every course week. It also retains improved nozzle boundary/registration diagnostics and controlled micro-step architecture comparison tools. The release preserves transparent baselines, negative results, source provenance, and explicit validity limits.",
-  "version": "1.4.0",
+  "description": "Version 1.4.1 consolidates course stabilization and adds the Week 10.1 reading companion on ab initio Jager Ar-Ar collision DeepONet. Author-supplied research fields are visualized with shared-color temperature, Mach, pressure and density contours, verified hashes and explicit asynchronous-snapshot limits. The later DeepONet package is distinguished from the original PoF 38, 057123 MLP and from the Week 7.1 field-surrogate case. This release also retains the improved Week 7.1 classroom MLP, scientific documentation landing page, per-case research attribution, notebook scratch-output protections, and SPARTA pilot safeguards. Software is MIT licensed; dataset and third-party solver rights remain separately scoped. No new DSMC campaign or original-paper speedup reproduction is claimed.",
+  "version": "1.4.1",
   "creators": [
     {
       "name": "Roohi, Ehsan",
@@ -25,6 +25,11 @@
     "reproducible software"
   ],
   "related_identifiers": [
+    {
+      "identifier": "10.1063/5.0328463",
+      "relation": "references",
+      "scheme": "doi"
+    },
     {
       "identifier": "https://github.com/Ehsan-Roohi/FlowMLLab",
       "relation": "isSupplementTo",
