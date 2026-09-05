@@ -8,6 +8,7 @@ import contextlib
 import importlib.util
 import io
 from pathlib import Path
+import subprocess
 import tempfile
 from unittest import mock
 
@@ -31,6 +32,16 @@ def main():
     print('PILOT_PARTICLE_BUDGET_GUARD_PASS',flush=True)
     with tempfile.TemporaryDirectory(prefix='step-kk-test-') as temp:
         out=Path(temp)
+        # Reproduce Unity job 64024425's actual parser failure without a GPU.
+        # The production package options must also be exercised on the host;
+        # checking a command string alone previously missed this failure.
+        legacy = gpu.command(kk,'kokkos',a.launcher,host_kokkos=True,serial=a.serial)
+        legacy[-1] = 'off'
+        failed = subprocess.run(legacy, input='', text=True, cwd=out,
+                                capture_output=True, timeout=60)
+        assert failed.returncode != 0
+        assert 'Illegal package kokkos command' in failed.stdout + failed.stderr
+        print('LEGACY_GPU_AWARE_OFF_FAILURE_REPRODUCED',flush=True)
         gpu.preflight(out,cpu,kk,a.launcher,host_kokkos=True,serial=a.serial)
         print('HOST_KOKKOS_FRESH_AND_BIDIRECTIONAL_RESTART_PASS',flush=True)
         # Exercise exact production benchmark time segmentation on a cheap mesh.
@@ -52,7 +63,7 @@ def main():
         assert cmd[:3]==['mpirun','-np','1']
         assert cmd[cmd.index('-np')+1]=='1'
         assert cmd[cmd.index('-k'):cmd.index('-k')+4]==['-k','on','g','1']
-        assert cmd[-4:]==['-pk','kokkos','gpu/aware','off']
+        assert cmd[-4:]==['-pk','kokkos','gpu/aware','no']
         base=out/'submit-base'
         pilotpath=base/'runs'/gpu.campaign.PILOT_RUN/'pilot';pilotpath.mkdir(parents=True)
         (pilotpath/'restart.final').write_bytes(b'test fixture only')

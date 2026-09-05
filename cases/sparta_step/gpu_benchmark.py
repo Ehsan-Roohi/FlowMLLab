@@ -67,8 +67,9 @@ def command(binary, backend, launcher='mpirun', ranks=16, host_kokkos=False, ser
         if not host_kokkos:
             result += ['g', '1']
         result += ['-sf', 'kk']
-        if not host_kokkos:
-            result += ['-pk', 'kokkos', 'gpu/aware', 'off']
+        # The pinned SPARTA parser accepts yes/no, not on/off. Exercise this
+        # same package option in the host regression as in the CUDA allocation.
+        result += ['-pk', 'kokkos', 'gpu/aware', 'no']
     return result
 
 
