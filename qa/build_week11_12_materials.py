@@ -441,7 +441,7 @@ def build_notebook(week, execute):
     if week == 12:
         from week12_noise2noise_cells import cells as noise2noise_cells
         cells += noise2noise_cells()
-        cells[0].source += '\n\n**Development extension:** this checkout trains a fresh Noise2Noise-style MLP on real DSMC data. Until merged, use this local branch; the main-branch Colab button below opens the previously published version.'
+        cells[0].source += '\n\n**Practical extension:** this notebook trains a fresh Noise2Noise-style MLP on real DSMC data. Use a current complete checkout or the Colab button below.'
     cells[0].source += '\n\n**Research extension:** the final section reads real author-research evidence, clearly separated from the synthetic warm-up.'
     cells += research_cells(week)
     cells[0].source += badge(relative)

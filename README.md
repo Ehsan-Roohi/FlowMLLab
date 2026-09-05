@@ -228,7 +228,7 @@ Mean reference NRMSE for qy: Raw(3) 17.61%, Raw(10) 9.80%, conditioned estimator
 [Notebook and lecture](notebooks/week12/README.md). The independent reference still has sampling noise.
 Weeks 11 and 12 are working-course additions after v1.4.1, not part of its archived DOI.
 
-Development-only Week 12 completion: [train a fresh Noise2Noise-style MLP on real DSMC](results/week12_noise2noise/README.md).
+Week 12 practical completion: [train a fresh Noise2Noise-style MLP on real DSMC](results/week12_noise2noise/README.md).
 The notebook now fits from raw observations, compares seven estimators and
 reports both held-out seeds. This is separate from the archived figures above;
 no new release or DOI is implied.

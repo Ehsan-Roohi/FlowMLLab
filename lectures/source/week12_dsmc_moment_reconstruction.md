@@ -76,7 +76,7 @@ Submit the pooled-versus-separate central-moment check, the frozen experiment pr
 
 Extensions: introduce temporal correlation and measure the failure of the 1/B noise law; add a narrow layer and quantify smoothing bias; implement normal/tangential rotation and area-weighted mean restoration; design independent references for a real DSMC run. These are extensions, not already-executed article reproductions.
 
-Run notebooks/week12/W12_DSMC_Moment_Reconstruction.ipynb using CPU dependencies in the local development checkout. Until merged, the main-branch Colab launcher opens the published predecessor. A normal run leaves retained evidence unchanged. Synthetic controls, a fresh real-data Noise2Noise fit and historical research predictions occupy separate sections.
+Run notebooks/week12/W12_DSMC_Moment_Reconstruction.ipynb using CPU dependencies in a current complete checkout or use its main-branch Colab launcher. A normal run leaves retained evidence unchanged. Synthetic controls, a fresh real-data Noise2Noise fit and historical research predictions occupy separate sections.
 
 Reading: Ehsan Roohi, Geometry-native machine learning reconstruction of DSMC moment fields with support monitoring, arXiv:2609.01637, https://doi.org/10.48550/arXiv.2609.01637. Lecture wording and classroom code are original, AI-assisted FlowMLLab additions grounded in the author's manuscript. No original research data, solver or checkpoint is fabricated or silently substituted.
 

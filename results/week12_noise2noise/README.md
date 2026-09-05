@@ -1,6 +1,6 @@
 # Week 12 — freshly trained Noise2Noise-style DSMC lab
 
-Development extension, not a release or new DOI. A complete Run All trains a
+Working-course extension, not a release or new DOI. A complete Run All trains a
 small model from real observations; it does not merely display checkpoint images.
 
 Data: existing Roohi JCP2 cavity archive associated with
@@ -65,9 +65,8 @@ Contour scales cover every displayed value with no interpolation or clipping.
 ## Reproduce
 
 Run the [Week 12 notebook](../../notebooks/week12/W12_DSMC_Moment_Reconstruction.ipynb)
-from this local development checkout. It keeps all new outputs in memory and
-does not rewrite retained evidence. The main-branch Colab launcher still opens
-the published predecessor until this extension is merged.
+from a current complete checkout or use its main-branch Colab launcher.
+It keeps all new outputs in memory and does not rewrite retained evidence.
 
 For an explicit new evidence run:
 
