@@ -6,7 +6,7 @@ A small visual coding experiment by Ehsan Roohi.
 
 | Output | Self-contained source | 12-second video |
 |---|---|---|
-| First retained animation | [HTML](originals/first.html) | [MP4](videos/first.mp4) |
+| Ultra High (user-reported setting) | [HTML](originals/first.html) | [MP4](videos/first.mp4) |
 | Medium (user-reported setting) | [HTML](originals/medium.html) | [MP4](videos/medium.mp4) |
 | Light (user-reported setting) | [HTML](originals/light.html) | [MP4](videos/light.mp4) |
 
@@ -14,7 +14,7 @@ See [the shared prompt](PROMPT.md). The original animations use hand-authored SV
 
 ## Interpretation
 
-These are three retained code specimens produced sequentially in one conversation, with earlier outputs visible in context and some tool-assisted checks during creation. They are not blind, independent, single-shot trials. The assistant did not independently verify the backend model or reasoning settings. The first animation is identified by its order rather than assigning it an unverified setting. No ranking or general model-performance claim is made.
+These are three retained code specimens produced sequentially in one conversation, with earlier outputs visible in context and some tool-assisted checks during creation. They are not blind, independent, single-shot trials. The assistant did not independently verify the backend model or reasoning settings. The user identifies the first animation as Ultra High; its source and video retain the filename `first` so existing links continue to work. No ranking or general model-performance claim is made.
 
 For this publication the HTML files were copied byte-for-byte, including any existing visual or mechanical imperfections. SHA-256 hashes are in `manifest.json`. Watch for pedal attachment, chain motion, wall/ground contact, and loop continuity; appearance alone does not validate the mechanism. The same-scene similarity may reflect the shared conversation context.
 
