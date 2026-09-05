@@ -37,11 +37,13 @@ or collaborator artifact in the source archive. The classroom split and the
 trained 3x96 tanh MLP are teaching designs, not a reproduction of the
 published full-resolution Fusion-DeepONet accuracy.
 
-The quoted teaching-use permission is not a standardized open-data license.
-CC BY 4.0 has **not** been assigned to this derivative. Broader redistribution
-or PhysicsNeMo adoption requires documented approval from the relevant rights
-holders, including coauthors where applicable. The software's MIT license does
-not establish those data rights. See [case provenance](../../DATA_PROVENANCE.md).
+The committed derivative is licensed **CC BY 4.0**, authorized by Ehsan Roohi
+on 2026-09-05 after confirming ownership of the cylinder data. See the
+[data-specific grant, attribution and scope](DATA_LICENSE.md). The paper's
+open-access status and the software's MIT license are separate from this grant.
+The cylinder licensing gate is resolved; scientific reproducibility and any
+PhysicsNeMo integration still require their own checks.
+See [case provenance](../../DATA_PROVENANCE.md).
 
 The historical NPZ keys `temperature_ratio` and `pressure_ratio` remain for
 byte-level compatibility only; source normalization is not verified by those

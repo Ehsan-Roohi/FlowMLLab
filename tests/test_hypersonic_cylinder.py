@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from pathlib import Path
+import json
 import unittest
 
 import numpy as np
@@ -34,6 +35,9 @@ class HypersonicCylinderWeek71Tests(unittest.TestCase):
         self.assertGreater(report["points"], 40_000)
         self.assertEqual(tuple(report["targets"]), TARGET_NAMES)
         self.assertEqual(report["paper_doi"], "10.1063/5.0334590")
+        manifest = json.loads((ROOT / "data/hypersonic_cylinder/manifest.json").read_text())
+        self.assertEqual(manifest["license"], "CC-BY-4.0")
+        self.assertTrue((ROOT / "data/hypersonic_cylinder" / manifest["license_file"]).is_file())
 
     def test_casewise_split_has_no_case_leakage(self) -> None:
         masks = casewise_split_masks(self.data.mach_inf)

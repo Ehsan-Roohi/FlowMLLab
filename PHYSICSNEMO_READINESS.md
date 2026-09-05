@@ -5,6 +5,12 @@ existing NVIDIA collaboration. No outreach has been sent in this work.
 
 ## Proposed contribution
 
+Cylinder licensing update (2026-09-05): Ehsan Roohi confirmed ownership and
+authorized the committed Week-7.1 dataset's CC BY 4.0 release; see its
+[data license](data/hypersonic_cylinder/DATA_LICENSE.md). That resolves the
+cylinder permission gate, not the nozzle defects or a PhysicsNeMo recipe's
+scientific/integration gates. No external submission is implied.
+
 A reproducible rarefied micro-nozzle benchmark and a pressure/geometry-to-field
 neural-surrogate recipe, including DSMC provenance, explicit boundary metadata,
 fair interpolation baselines, local shock metrics, and a compact teaching run.

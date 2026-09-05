@@ -165,7 +165,10 @@ def build(archive_path: Path, output_path: Path) -> None:
             "rarefied-cylinder study"
         ),
         "paper_doi": "10.1063/5.0334590",
-        "license": "Released by the corresponding author for FlowMLLab teaching use",
+        "license": "CC-BY-4.0",
+        "license_file": "DATA_LICENSE.md",
+        "license_authorized_by": "Ehsan Roohi",
+        "license_authorization_date": "2026-09-05",
         "derivation": {
             "grid_selection": (
                 "50 deterministic indices per coordinate from each 400 x 400 grid"

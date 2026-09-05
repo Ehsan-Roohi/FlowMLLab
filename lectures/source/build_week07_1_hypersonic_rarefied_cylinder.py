@@ -246,7 +246,7 @@ def build() -> None:
         0.9 * inch, 3.6 * inch, 11.5 * inch, 1.7 * inch,
     )
     deck.paragraph(
-        "<b>Provenance.</b> Research DSMC data precede the course. This MLP is a new teaching model, not the paper's trained Fusion-DeepONet. A single fit provides no calibrated UQ. Broader data licensing awaits rights-holder approval.",
+        "<b>Provenance.</b> Research DSMC data precede the course. This MLP is a new teaching model, not the paper's trained Fusion-DeepONet. A single fit provides no calibrated UQ. The committed dataset is CC BY 4.0, authorized by Ehsan Roohi on 2026-09-05; see DATA_LICENSE.md.",
         0.9 * inch, 1.6 * inch, 11.5 * inch, 1.0 * inch, SMALL,
     )
     deck.end()
