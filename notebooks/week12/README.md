@@ -15,3 +15,10 @@ DSMC moment fields with support monitoring*,
 JCP submission is author-confirmed; no JCP publication is claimed.
 This **synthetic scalar CPU analog is not the paper's MambaIR or coupled cylinder
 estimator** and produces no new DSMC data. See [scope and figures](../../results/week11_12_teaching/README.md).
+
+The final section audits [real DSMC cavity results](../../results/week12_research/README.md)
+from the author's existing JCP2 archive: qx/qy, eight observation seeds, 80
+recomputed scores and large common-scale contours. The notebook checks retained
+hashes and recomputes first-seed errors. This is archive re-evaluation, not new
+neural training or a newly blind trial. Full comparisons and profiles retain
+the prior-only and Raw(10) baselines alongside the conditioned estimator.

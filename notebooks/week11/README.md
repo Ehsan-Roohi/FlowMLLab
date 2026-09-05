@@ -12,8 +12,11 @@ against a physical baseline. Outputs remain in memory; results/ is not overwritt
 Research source: Ehsan Roohi, *Physics-audited joint neural segmentation of shocks
 and vortex cores: cross-solver transfer and controlled airfoil--cylinder studies*,
 author-supplied 2026 manuscript, [ShockVortexML](https://github.com/Ehsan-Roohi/ShockVortexML).
-The lab is an original manufactured-field teaching analog, **not** a research
-checkpoint, gas-dynamically consistent shock simulation or reproduction of the
-paper's segmentation metrics. See [provenance and figures](../../results/week11_12_teaching/README.md).
+The warm-up is an original manufactured-field teaching analog, **not** a
+gas-dynamically consistent shock simulation or the paper's network.
+The final section adds [real research evidence](../../results/week11_research/README.md):
+six fresh frozen-checkpoint forward passes on existing airfoil/cylinder fields,
+three times each, with native masks and source hashes. No new CFD, training or
+human-ground-truth accuracy is claimed. All synthetic exercises remain available.
 
 Next: [Week 12 - noisy DSMC moment reconstruction](../week12/README.md).

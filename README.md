@@ -208,19 +208,24 @@ Shared colors, **different times and sampling windows**: qualitative comparison 
 
 ### Week 11 — Shock and vortex identification
 
-![Week 11 manufactured feature-detection controls](results/week11_12_teaching/week11_teaching.png)
+![Week 11 real airfoil field and learned shock and vortex masks](results/week11_research/airfoil_2.png)
 
-Original analytic teaching fields; a trained local MLP versus a physical baseline.
-Related to Roohi's [ShockVortexML research](https://github.com/Ehsan-Roohi/ShockVortexML),
-not a reproduction of its CFD fields or network. [Notebook and lecture](notebooks/week11/README.md).
+Six fresh fixed-checkpoint forward passes on existing airfoil and cylinder fields from
+Roohi's [ShockVortexML research](https://github.com/Ehsan-Roohi/ShockVortexML).
+ML-only outputs; previously inspected development-test cases, not human-validated accuracy.
+[All six full-size figures and provenance](results/week11_research/README.md) ·
+[Notebook and lecture](notebooks/week11/README.md). Synthetic controls remain as the warm-up.
 
 ### Week 12 — DSMC moment reconstruction
 
-![Week 12 synthetic noisy-field reconstruction](results/week11_12_teaching/week12_teaching.png)
+![Week 12 real DSMC heat flux reference, observation and reconstruction](results/week12_research/cavity_qy_hero.png)
 
-Original synthetic sampling analog, not new DSMC results or a MambaIR reproduction.
-Based on the principles of [Roohi, arXiv:2609.01637](https://doi.org/10.48550/arXiv.2609.01637).
-[Notebook and lecture](notebooks/week12/README.md) · [Scope and reproduction](results/week11_12_teaching/README.md).
+Existing author-supplied DSMC cavity results associated with
+[Roohi, arXiv:2609.01637](https://doi.org/10.48550/arXiv.2609.01637).
+Eight seeds, both heat-flux components, 80 recomputed errors; no new DSMC or neural training.
+Mean reference NRMSE for qy: Raw(3) 17.61%, Raw(10) 9.80%, conditioned estimator 4.34%.
+[Full comparisons, profiles and all-seed errors](results/week12_research/README.md) ·
+[Notebook and lecture](notebooks/week12/README.md). The independent reference still has sampling noise.
 Weeks 11 and 12 are working-course additions after v1.4.1, not part of its archived DOI.
 
 ## Reuse and contribute

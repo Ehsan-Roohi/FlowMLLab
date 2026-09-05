@@ -8,12 +8,15 @@ This guide retains the detailed evidence, figures, protocols, and limitations be
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](../LICENSE)
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.22348207.svg)](https://doi.org/10.5281/zenodo.22348207)
 
-## Weeks 11 and 12: executed classroom analogs
+## Weeks 11 and 12: real research evidence and CPU controls
 
-[Feature identification and noisy-moment reconstruction](../results/week11_12_teaching/README.md)
-includes one executed CPU notebook and a PDF lecture per week. The retained
-figures use manufactured fields and synthetic blocks, not original research
-CFD/DSMC data. All case-wise scores and limitation statements are in the notebooks.
+[Week 11 real airfoil/cylinder inference](../results/week11_research/README.md)
+retains six fresh frozen-checkpoint runs on existing research fields.
+[Week 12 real DSMC reconstruction](../results/week12_research/README.md)
+retains heat-flux contours, profiles and 80 recomputed eight-seed scores.
+Both have executed notebook extensions, PDF lectures and source attribution.
+No new solver run or neural training is claimed. The original
+[synthetic CPU controls](../results/week11_12_teaching/README.md) remain as warm-ups.
 These working-course additions postdate the immutable v1.4.1 archive.
 
 ## Week 10.1 companion: ab initio collision DeepONet

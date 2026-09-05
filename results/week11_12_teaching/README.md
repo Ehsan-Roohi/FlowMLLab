@@ -1,5 +1,10 @@
 # Weeks 11 and 12 - executed teaching analogs
 
+These original warm-up figures are preserved. The main course gallery now shows
+[Week 11 real airfoil/cylinder inference](../week11_research/README.md) and
+[Week 12 real DSMC heat-flux reconstruction](../week12_research/README.md).
+Both notebooks and lectures distinguish the warm-up from those research sections.
+
 These figures come from the two executed classroom notebooks, not the author's
 research simulations. Source methods are attributed separately below. No original
 CFD/DSMC archive or research checkpoint is redistributed. These additions postdate

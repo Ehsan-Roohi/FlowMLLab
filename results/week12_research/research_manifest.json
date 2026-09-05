@@ -1,0 +1,42 @@
+{
+  "source_archive": "JCP2(1).zip",
+  "archive_sha256": "2adfae50c1fe59e1192150498fa616be599a7ebe32b6fb35d82189840e79ea3b",
+  "prediction_sha256": "7f5c72b561061cff53aad60e024ebdc8a248adc0dcf4aaf90c847cfbdaaa5ae4",
+  "condition": "S2_kn0p085_u350",
+  "seeds": [
+    26082101,
+    26082102,
+    26082103,
+    26082104,
+    26082105,
+    26082106,
+    26082107,
+    26082108
+  ],
+  "illustrated_seed": 26082101,
+  "scope": "Historical JCP2 archive re-evaluation; not a new prospective trial or neural training. Archive method names retained; no claim of reproducing the final paper estimator.",
+  "citation": "Ehsan Roohi, Geometry-native machine learning reconstruction of DSMC moment fields with support monitoring, arXiv:2609.01637 (2026).",
+  "reference": "Independent finite-budget DSMC reference; raw-3 and raw-10 observations are disjoint according to archive summary.",
+  "metrics": "Equal-cell L2 relative error against stored reference, not reference-noise-deconvolved error.",
+  "recomputed_scores": 80,
+  "archived_scores_checked": 64,
+  "max_archived_score_difference": 1.3835730408584546e-09,
+  "fresh_baseline": "16 qx/qy Gaussian-filter evaluations, fixed sigma=1 cell; not selected on this reference.",
+  "display": "No interpolation or clipping; symmetric shared color limits cover all five displayed fields. Normalized array positions, not verified physical coordinates.",
+  "files": {
+    "cavity_qx.pdf": "8641ac40c9fe1b13fe08bc213f28f2ddb1ccfc126592ee259b129c9b7237b05a",
+    "cavity_qx.png": "920e34f9c74a3758ba84f271c43e4adccd841904110ab1de9c1c4b26ea4faa1d",
+    "cavity_qx_audit.pdf": "44e3652439c280a5e14e43cda2dd510e035e854157ecc85aad155f58f4be2c01",
+    "cavity_qx_audit.png": "0fc2e56b65623e8357193e9e34c6404e22395a2388115982483b186485dee0c1",
+    "cavity_qx_hero.pdf": "8aa3c2b684fa644d0beb44a5c91a2bedbcdde80158dc4c413c2b8f2710b0f659",
+    "cavity_qx_hero.png": "894a3f9a5b8bffe6038a8e1a0992281c70db3451f3332df84cf05c8767ccf77e",
+    "cavity_qy.pdf": "a3ad816347fd2a726dd893d7e6903c187a71a7ae3c63aabd621f59396bb9f34d",
+    "cavity_qy.png": "bb0eba964236512a477f392480427e6e2beafa1d184a8513589e4f452dd813ed",
+    "cavity_qy_audit.pdf": "b5a2c0412cc5f7608e51f5f026da3edf270ccef41a5674a08c9805f59a4798a6",
+    "cavity_qy_audit.png": "b040411bc7debf145570daf0da8ae92feb96373e616995cafb07d1fa2e4263d8",
+    "cavity_qy_hero.pdf": "e2eceb1aab3560e8fd503c810cd88907d61c8537f3d0f98621eab68fcf861ddf",
+    "cavity_qy_hero.png": "c73015e59ae5d9ba6607d2240cf556f4215b212db4f73750a9e46385c74a18da",
+    "first_seed_fields.npz": "a77d45e6698d2c4bb4a35c0461239e2cca6864ee3c667b648aa0c0365a817d0b",
+    "metrics.csv": "8890e63dbe74e6cd1eb2ff59aa74f1cb2fa5631be25919ba81298e4868ed6763"
+  }
+}

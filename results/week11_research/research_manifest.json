@@ -1,0 +1,110 @@
+{
+  "selection": "first/middle/last eligible time after t>1 for two development-test trajectories; all review IDs excluded",
+  "ids": [
+    "re1e6_retained_s000126900",
+    "re1e6_retained_s000153090",
+    "re1e6_retained_s000165780",
+    "cylinder_grid_f180_cfl0p20_s00004662",
+    "cylinder_grid_f180_cfl0p20_s00014985",
+    "cylinder_grid_f180_cfl0p20_s00025641"
+  ],
+  "checkpoint_sha256": "cf1f1ab2aed767589fc5a53af136a24da5748a3d9a0d06d8ade70804e74b1048",
+  "new_solver_runs": false,
+  "new_training": false,
+  "human_accuracy": false,
+  "runs": [
+    {
+      "dataset_id": "re1e6_retained_s000126900",
+      "case": "re1e6_retained",
+      "time": 23.500000000000004,
+      "family": "airfoil",
+      "split": "test",
+      "primitive_sha256": "ef6a25bbe66adb0f20a22fe5dcd940c44a6b301736a7fb0e5621f0b2d31bdd7b",
+      "figure": "airfoil_1.png",
+      "shock_pixels": 9538,
+      "vortex_pixels": 6992,
+      "input_rebuild_verified": true,
+      "array_sha256": "f4b6692d94c4f14ff890a912f7d10f8730654fdcd72c3458c800437701447bd7"
+    },
+    {
+      "dataset_id": "re1e6_retained_s000153090",
+      "case": "re1e6_retained",
+      "time": 28.35,
+      "family": "airfoil",
+      "split": "test",
+      "primitive_sha256": "3fab30e7301f72557151267d0df5722a5f150d8e3f2b68972f757f12dcff2367",
+      "figure": "airfoil_2.png",
+      "shock_pixels": 9609,
+      "vortex_pixels": 6626,
+      "input_rebuild_verified": true,
+      "array_sha256": "5ff5393f6b9700c8ce56cfc23893832dd3476c455817c4276002c8f1aaedb948"
+    },
+    {
+      "dataset_id": "re1e6_retained_s000165780",
+      "case": "re1e6_retained",
+      "time": 30.700000000000003,
+      "family": "airfoil",
+      "split": "test",
+      "primitive_sha256": "624a899292b8e4f6ec1b5c5b9e102d15707750e34d2e405ae2f14e3a4be52014",
+      "figure": "airfoil_3.png",
+      "shock_pixels": 9690,
+      "vortex_pixels": 6766,
+      "input_rebuild_verified": true,
+      "array_sha256": "3edb5d2eae877128bb721cdd1ed0973984bb56c6e48dc07974c23a08a8f3451c"
+    },
+    {
+      "dataset_id": "cylinder_grid_f180_cfl0p20_s00004662",
+      "case": "grid_f180_cfl0p20",
+      "time": 1.4,
+      "family": "cylinder",
+      "split": "test",
+      "primitive_sha256": "bde6a31d147712953c9831314b8780641c45dbec46e136fcdf0fda12e96e4e22",
+      "figure": "cylinder_1.png",
+      "shock_pixels": 10187,
+      "vortex_pixels": 3996,
+      "input_rebuild_verified": true,
+      "array_sha256": "334459a1a3c95ed80c9f17f94ee4368f614c1ec9308ebd1a116e81c2fd6dbd55"
+    },
+    {
+      "dataset_id": "cylinder_grid_f180_cfl0p20_s00014985",
+      "case": "grid_f180_cfl0p20",
+      "time": 4.5,
+      "family": "cylinder",
+      "split": "test",
+      "primitive_sha256": "7578f4754670547d3a8f2a50cc8f74fc1288b93a1ef6c51aaabbaf3aec836c2f",
+      "figure": "cylinder_2.png",
+      "shock_pixels": 9763,
+      "vortex_pixels": 6610,
+      "input_rebuild_verified": true,
+      "array_sha256": "3bc6859959279ef0e49497a921a5128e94641b9faa6974936ed9b9b4b3493fae"
+    },
+    {
+      "dataset_id": "cylinder_grid_f180_cfl0p20_s00025641",
+      "case": "grid_f180_cfl0p20",
+      "time": 7.699999999999999,
+      "family": "cylinder",
+      "split": "test",
+      "primitive_sha256": "4de8cc1f7c8c7bea27617417b0742f6c8204af368a7dbf53bce8e7e42f98b0a2",
+      "figure": "cylinder_3.png",
+      "shock_pixels": 9088,
+      "vortex_pixels": 5483,
+      "input_rebuild_verified": true,
+      "array_sha256": "88aa0a830812de2864ef5ea16b0bbc7ae8191f8d326bed855e6aac03fd719285"
+    }
+  ],
+  "thresholds": {
+    "shock": 0.97,
+    "vortex_core": 0.85
+  },
+  "seconds": 53.703000000008615,
+  "scope": "New forward passes on previously inspected development-test CFD. No tuning, human labels, hybrid, independent accuracy or new CFD.",
+  "figure_sha256": {
+    "airfoil_1.png": "a9edf9da5c5ad8d30df57867febed675bb500740b088c7d5910d8fd75bc9829e",
+    "airfoil_2.png": "9f6e7aae3a70fe9e820c0f590178bb21117bb7b899c642802eae4d2c5b2ce258",
+    "airfoil_3.png": "1a15284af25b3d58448acf6c3a40c785f25df81922116c1be9cc48809e8bebc0",
+    "cylinder_1.png": "d5871acb7fec0794ce67305eddfc3abb113c78f6dc47e5616d0757810125efc7",
+    "cylinder_2.png": "40e3b07d0dd694b281e651848a7ed549dca5310d9e15895cf7ccaa79679068b8",
+    "cylinder_3.png": "e069ec70aeaa123415098b868d1cd1de2204c8dcd73fcc7ed4654ae2ffb06fe6"
+  },
+  "display": "Native pixels, full field of view; solid-crossing density-gradient stencils excluded. No threshold tuning."
+}

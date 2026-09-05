@@ -8,7 +8,7 @@ Suggested 90-minute class: 15 minutes of diagnostic controls, 20 minutes of phys
 
 Research basis: Ehsan Roohi, Physics-audited joint neural segmentation of shocks and vortex cores: cross-solver transfer and controlled airfoil--cylinder studies (author-supplied research manuscript, 2026). The source describes joint detection in airfoil and cylinder fields. Do not describe the manuscript as a published JCP article or invent a journal DOI.
 
-The executable lab is an original, deliberately small CPU teaching analog. Its analytic compression layers and vortices are not CFD results, research training data or the article's neural checkpoint. This distinction stays visible on every retained teaching figure.
+The executable lab starts with an original CPU teaching analog. Its final section reads real airfoil and cylinder research fields through retained figures and a provenance ledger: six fresh forward passes with a frozen research checkpoint. No new CFD or research-model training is claimed. The analytic warm-up and research evidence remain explicitly separate.
 
 ## Vorticity is necessary context, not a core label
 
@@ -52,13 +52,13 @@ Assignment: remove rotational inputs, rebuild the model with a fresh predeclared
 
 ## Read the colored outputs critically
 
-[TEACHING_FIGURE]
+[RESEARCH_FIGURE]
 
-The figure compares construction labels, a physical baseline and a trained local MLP on one held-out manufactured field. Colors distinguish background, compression layer, vortex core and overlap. This is an executed classroom result, not a figure reproduced from the manuscript.
+Real airfoil field from Roohi's ShockVortexML study: native-density schlieren, learned shock mask and learned vortex mask. The fresh forward pass uses frozen thresholds 0.97 and 0.85. Geometry-crossing display-gradient stencils are excluded. These ML-only masks are not human labels or a hybrid. Thin missed branches and merged cores remain visible.
 
 Dice = 2*|prediction intersect reference|/(|prediction|+|reference|). Empty-versus-empty is assigned one in this lab; state the convention. A front shifted by one pixel can have poor Dice while remaining close physically. Conversely, a thick predicted envelope can gain overlap without locating the centerline accurately.
 
-Complement pixel overlap with a declared front-distance tolerance in physical units, connected-component fragmentation, and one-to-one vortex-core matching. Raw component counts do not establish correct object matching or temporal identities. Inspect all held-out cases, not only the nicest picture.
+The gallery retains first/middle/last eligible times for both airfoil and cylinder, excluding all human-review frames. These are previously inspected development-test trajectories; do not infer independent accuracy from appearance or mask counts. The notebook retains the synthetic Dice exercise separately. All six full-size comparisons and checkpoint provenance are in results/week11_research/.
 
 ## Reference provenance and transfer gates
 
