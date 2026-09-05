@@ -76,6 +76,12 @@ def _sha256(path: Path) -> str:
     return digest.hexdigest()
 
 
+def _sha256_canonical_text(path: Path) -> str:
+    """Hash text with LF newlines so Git checkouts are platform independent."""
+    payload = path.read_bytes().replace(b"\r\n", b"\n").replace(b"\r", b"\n")
+    return hashlib.sha256(payload).hexdigest()
+
+
 def _step_smoothed_directory(source: str | Path) -> Path:
     """Resolve a source checkout or a direct smoothed-data directory."""
     candidate = Path(source).expanduser().resolve()
@@ -1389,7 +1395,7 @@ def validate_nozzle_flowmllab_results(root: str | Path) -> dict[str, Any]:
     if _sha256(metrics_path) != manifest["metrics_csv_sha256"]:
         raise ValueError("nozzle held-out table hash mismatch")
     article_path = root_path / manifest["retained_article_evidence_csv"]
-    if _sha256(article_path) != manifest["retained_article_evidence_csv_sha256"]:
+    if _sha256_canonical_text(article_path) != manifest["retained_article_evidence_csv_sha256"]:
         raise ValueError("nozzle retained article table hash mismatch")
     with metrics_path.open(encoding="utf-8") as stream:
         rows = list(csv.DictReader(stream))

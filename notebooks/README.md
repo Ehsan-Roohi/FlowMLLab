@@ -27,6 +27,7 @@ only for notebooks that explicitly require CUDA.
 | Weeks 5–6 | P5 rarefied cavity | [Open in Colab](https://colab.research.google.com/github/Ehsan-Roohi/FlowMLLab/blob/main/notebooks/week05_06/P5_Rarefied_Cavity.ipynb) |
 | Weeks 5–6 | P6 Fokker-Planck closure | [Open in Colab](https://colab.research.google.com/github/Ehsan-Roohi/FlowMLLab/blob/main/notebooks/week05_06/P6_FP_Cavity_Closure.ipynb) |
 | Week 7 | Lattice-Boltzmann cylinder wakes | [Open in Colab](https://colab.research.google.com/github/Ehsan-Roohi/FlowMLLab/blob/main/notebooks/week07/W7_Lattice_Boltzmann_Cylinder_Student.ipynb) |
+| Week 7.1 | Rarefied hypersonic-cylinder operator learning | [Open in Colab](https://colab.research.google.com/github/Ehsan-Roohi/FlowMLLab/blob/main/notebooks/week07_1/W7_1_Hypersonic_Rarefied_Cylinder_DeepONet.ipynb) |
 | Week 8 | Exact gas dynamics before ML | [Open in Colab](https://colab.research.google.com/github/Ehsan-Roohi/FlowMLLab/blob/main/notebooks/week08/W8_Lab1_Exact_Gas_Dynamics_Student.ipynb) |
 | Week 8 | Gas-dynamics SciML evidence | [Open in Colab](https://colab.research.google.com/github/Ehsan-Roohi/FlowMLLab/blob/main/notebooks/week08/W8_Lab2_Gas_Dynamics_SciML_Evidence_Student.ipynb) |
 | Week 9 | Micro-step zonal-loss DeepONet | [Open in Colab](https://colab.research.google.com/github/Ehsan-Roohi/FlowMLLab/blob/main/notebooks/week09/W9_Lab1_Microstep_Zonal_DeepONet_Student.ipynb) |
@@ -42,6 +43,7 @@ only for notebooks that explicitly require CUDA.
 - `week04/`: CFD data production, scalar/field surrogates, and a 27-cell POD-DeepONet laboratory with development-only selection, a visible blind-test gate, three-seed uncertainty, Ghia checks, physical diagnostics, and timing.
 - `week05_06/`: the original combined two-week guided-project pack. Week 5 establishes the setup, baseline, controlled modification, and checkpoint; Week 6 completes the same selected track, physical validation, reproducibility package, and final report.
 - `week07/`: D2Q9 BGK/TRT cylinder flow, a concise collide--stream--boundary algorithm walkthrough, physically gated force and Strouhal diagnostics, an executed three-grid study with a retained formal asymptotic/GCI failure, Reynolds-regime classification, strong temporal baselines, and separate one-step/recursive audits of a four-frame multi-scale CNN on a retained held-out interpolation case.
+- `week07_1/`: incremental rarefied hypersonic-cylinder operator lab using a compact author-released derivative of 20 DSMC Mach cases, frozen whole-case splits, a strong structured field-interpolation baseline, reviewed Fusion-DeepONet anatomy, a fast CPU teaching analog, and empirical ensemble-coverage checks.
 - `week08/`: two CPU labs that start from exact branch-aware gas dynamics, then compare bracketed roots, interpolation, and physics-guided MLP evidence across five inverse problems, edge holdouts, dimensional scaling, and application workloads.
 - `week09/`: two CPU research-to-classroom labs based on the Roohi--Mahdavi micro-step and micro-nozzle studies. The first uses two author-permitted, checksummed derivatives of nine real DSMC height fields with file-level case separation; the second reproduces shock-centered POD and fresh full-field predictions from checksummed derivatives of 15 public DSMC snapshots before evaluating three held-out pressures.
 - `week10/`: one complete CPU article-reproduction lab with 14 rarefied-cavity fields, mono/diatomic shock profiles, the DSMC algorithm, full provenance audit, log-Knudsen synthesis, POD-branch operators, physical interpretation, and retained numerical gates.
@@ -72,6 +74,14 @@ evidence are in `../results/cylinder_ml/`.
 The corrected one-step CNN, cubic-extrapolation comparison, downstream
 diagnostics, and failed 50-step recursive audit are retained separately in
 `../results/cylinder_cnn/`.
+
+The Week-7.1 notebook is intentionally additive. It does not mix the continuum
+LBM labels with the rarefied DSMC archive. The 1.4 GB source ZIP is reduced by a
+deterministic, checksummed builder to 44,500 finite teaching points. The retained
+result is scientifically useful precisely because the direct Mach-field
+interpolation baseline strongly outperforms the low-capacity CPU operator analog;
+the optional TensorFlow cell builds the reviewed Fusion-DeepONet topology but
+does not claim full paper reproduction.
 
 The additive `week04/W4_1_Classical_ROM_Cavity.ipynb` lab comes after the
 original Week-4 sequence without modifying it.  It implements dynamic centered

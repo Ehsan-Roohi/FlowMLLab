@@ -38,6 +38,7 @@ REQUIRED = [
     "flowmllab/cylinder_cnn.py",
     "flowmllab/cylinder_phase.py",
     "flowmllab/gas_dynamics.py",
+    "flowmllab/hypersonic_cylinder.py",
     "flowmllab/mahdavi_deeponet.py",
     "flowmllab/aescte_dsmc.py",
     "flowmllab/probabilistic_uq.py",
@@ -48,6 +49,7 @@ REQUIRED = [
     "tests/test_cylinder_cnn.py",
     "tests/test_cylinder_phase.py",
     "tests/test_gas_dynamics.py",
+    "tests/test_hypersonic_cylinder.py",
     "tests/test_mahdavi_deeponet.py",
     "tests/test_aescte_dsmc.py",
     "tests/test_probabilistic_uq.py",
@@ -61,6 +63,8 @@ REQUIRED = [
     "qa/run_cylinder_phase_stable.py",
     "qa/build_week8_gas_dynamics_figures.py",
     "qa/run_week8_scattered_baseline.py",
+    "qa/build_hypersonic_cylinder_subset.py",
+    "qa/run_hypersonic_cylinder_evidence.py",
     "qa/build_week9_mahdavi_deeponet_data.py",
     "qa/build_step_independent_contours.py",
     "qa/run_nozzle_field_validation.py",
@@ -84,6 +88,9 @@ REQUIRED = [
     "notebooks/week04/W4_1_Classical_ROM_Cavity.ipynb",
     "notebooks/week07/W7_Lattice_Boltzmann_Cylinder_Student.ipynb",
     "notebooks/week07/make_week7_notebook.py",
+    "notebooks/week07_1/W7_1_Hypersonic_Rarefied_Cylinder_DeepONet.ipynb",
+    "notebooks/week07_1/make_week7_1_notebook.py",
+    "notebooks/week07_1/README.md",
     "notebooks/week08/W8_Lab1_Exact_Gas_Dynamics_Student.ipynb",
     "notebooks/week08/W8_Lab2_Gas_Dynamics_SciML_Evidence_Student.ipynb",
     "notebooks/week08/make_week8_notebooks.py",
@@ -117,6 +124,8 @@ REQUIRED = [
     "lectures/week05_06_project_guide.pdf",
     "lectures/week07_cylinder_lbm_neural_surrogate.pdf",
     "lectures/source/week07_cylinder_lbm_neural_surrogate.tex",
+    "lectures/week07_1_hypersonic_rarefied_cylinder.pdf",
+    "lectures/source/build_week07_1_hypersonic_rarefied_cylinder.py",
     "lectures/week08_gas_dynamics_sciml.pdf",
     "lectures/source/week08_gas_dynamics_sciml.tex",
     "lectures/week09_rarefied_deeponet_case_studies.pdf",
@@ -184,6 +193,11 @@ REQUIRED = [
     "results/cylinder_lbm/re40_teaching_case.npz",
     "results/cylinder_lbm/re100_teaching_case.npz",
     "results/cylinder_lbm/re180_teaching_case.npz",
+    "data/hypersonic_cylinder/README.md",
+    "data/hypersonic_cylinder/manifest.json",
+    "data/hypersonic_cylinder/cylinder_teaching_subset.npz",
+    "results/hypersonic_cylinder_week7_1/metrics.json",
+    "results/hypersonic_cylinder_week7_1/mach85_baseline_audit.png",
     "results/gas_dynamics_week8/README.md",
     "results/gas_dynamics_week8/provenance.json",
     "results/gas_dynamics_week8/primary_metrics.csv",
@@ -347,7 +361,7 @@ def validate_notebooks() -> tuple[int, int]:
                 for cell in cells
             ), f"missing learner-edition marker: {path}"
         count += 1
-    assert count == 24, f"expected 24 notebooks, found {count}"
+    assert count == 25, f"expected 25 notebooks, found {count}"
     return count, code_cells
 
 
@@ -952,9 +966,42 @@ def validate_week10_aescte_results() -> dict[str, object]:
     return summary
 
 
+def validate_hypersonic_cylinder_results() -> dict[str, object]:
+    """Verify the Week-7.1 provenance, split, baseline, and claim boundary."""
+    from flowmllab.hypersonic_cylinder import (  # noqa: PLC0415
+        validate_hypersonic_cylinder_evidence,
+    )
+
+    report = validate_hypersonic_cylinder_evidence(ROOT)
+    assert report["cases"] == 20
+    assert report["points"] == 44_500
+    assert report["paper_doi"] == "10.1063/5.0334590"
+    retained = json.loads(
+        (ROOT / "results/hypersonic_cylinder_week7_1/metrics.json").read_text(
+            encoding="utf-8"
+        )
+    )
+    interpolation = retained["splits"]["interpolation"]
+    baseline = interpolation["linear_case_baseline_relative_l2"]
+    teaching = interpolation["teaching_operator_relative_l2"]
+    assert all(value < 0.01 for value in baseline.values())
+    assert all(teaching[name] > baseline[name] for name in baseline)
+    notebook = json.loads(
+        (
+            ROOT
+            / "notebooks/week07_1/W7_1_Hypersonic_Rarefied_Cylinder_DeepONet.ipynb"
+        ).read_text(encoding="utf-8")
+    )
+    source = "\n".join("".join(cell.get("source", [])) for cell in notebook["cells"])
+    assert "Mandatory strong baseline" in source
+    assert "does **not** report the published full-resolution accuracy" in source
+    assert "RUN_FULL_NEURAL = False" in source
+    return report
+
+
 def validate_pdfs() -> int:
     pdfs = sorted((ROOT / "lectures").glob("*.pdf"))
-    assert len(pdfs) == 10
+    assert len(pdfs) == 11
     for path in pdfs:
         result = subprocess.run(
             ["pdfinfo", str(path)], check=True, capture_output=True, text=True
@@ -979,6 +1026,7 @@ def main() -> None:
     week9_metrics = validate_week9_mahdavi_deeponet_results()
     week10_metrics = validate_week10_aescte_results()
     uq_metrics = validate_probabilistic_uq_results()
+    hypersonic_cylinder_metrics = validate_hypersonic_cylinder_results()
     article_metrics = validate_article_alignment()
     pdfs = validate_pdfs()
     excluded_roots = {".external", ".git", ".venv", "tmp", "venv"}
@@ -1000,6 +1048,10 @@ def main() -> None:
     print("Cavity ROM release metrics:", json.dumps(cavity_rom_metrics, sort_keys=True))
     print("Cylinder LBM release metrics:", json.dumps(cylinder_metrics, sort_keys=True))
     print("Cylinder grid-verification metrics:", json.dumps(cylinder_grid_metrics, sort_keys=True))
+    print(
+        "Hypersonic-cylinder Week-7.1 metrics:",
+        json.dumps(hypersonic_cylinder_metrics, sort_keys=True),
+    )
     print("Week-8 gas-dynamics metrics:", json.dumps(week8_metrics, sort_keys=True))
     print("Week-9 Roohi--Mahdavi metrics:", json.dumps(week9_metrics, sort_keys=True))
     print("Week-10 DSMC reproduction metrics:", json.dumps(week10_metrics, sort_keys=True))

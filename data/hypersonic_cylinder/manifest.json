@@ -1,0 +1,247 @@
+{
+  "schema_version": 1,
+  "artifact": "cylinder_teaching_subset.npz",
+  "artifact_sha256": "ab55029f5171f9a05efad4b906d99d031c9c55a89eef9c21b744a30cf0d304d7",
+  "source_archive": "AllMachNNCylinder.zip",
+  "source_archive_sha256": "bda221759a372a2054ca4c76bde923febf0b682404b41f67cc190f9b03c71f7b",
+  "source_description": "Author-supplied structured DSMC fields for the hypersonic rarefied-cylinder study",
+  "paper_doi": "10.1063/5.0334590",
+  "license": "Released by the corresponding author for FlowMLLab teaching use",
+  "derivation": {
+    "grid_selection": "50 deterministic indices per coordinate from each 400 x 400 grid",
+    "invalid_filter": "finite targets with absolute value below 1e20",
+    "committed_columns": [
+      "mach_inf",
+      "x",
+      "y",
+      "local_mach",
+      "temperature_ratio",
+      "pressure_ratio",
+      "case_id",
+      "source_row"
+    ]
+  },
+  "cases": [
+    {
+      "case_id": 0,
+      "mach_inf": 5.0,
+      "source_entry": "structured/StructuredGridM5.dat",
+      "source_grid": [
+        400,
+        400
+      ],
+      "selected_points_before_filter": 2500,
+      "retained_points": 2225
+    },
+    {
+      "case_id": 1,
+      "mach_inf": 5.5,
+      "source_entry": "structured/StructuredGridM55.dat",
+      "source_grid": [
+        400,
+        400
+      ],
+      "selected_points_before_filter": 2500,
+      "retained_points": 2225
+    },
+    {
+      "case_id": 2,
+      "mach_inf": 6.0,
+      "source_entry": "structured/StructuredGridM6.dat",
+      "source_grid": [
+        400,
+        400
+      ],
+      "selected_points_before_filter": 2500,
+      "retained_points": 2225
+    },
+    {
+      "case_id": 3,
+      "mach_inf": 6.5,
+      "source_entry": "structured/StructuredGridM65.dat",
+      "source_grid": [
+        400,
+        400
+      ],
+      "selected_points_before_filter": 2500,
+      "retained_points": 2225
+    },
+    {
+      "case_id": 4,
+      "mach_inf": 7.0,
+      "source_entry": "structured/StructuredGridM7.dat",
+      "source_grid": [
+        400,
+        400
+      ],
+      "selected_points_before_filter": 2500,
+      "retained_points": 2225
+    },
+    {
+      "case_id": 5,
+      "mach_inf": 7.5,
+      "source_entry": "structured/StructuredGridM75.dat",
+      "source_grid": [
+        400,
+        400
+      ],
+      "selected_points_before_filter": 2500,
+      "retained_points": 2225
+    },
+    {
+      "case_id": 6,
+      "mach_inf": 8.0,
+      "source_entry": "structured/StructuredGridM8.dat",
+      "source_grid": [
+        400,
+        400
+      ],
+      "selected_points_before_filter": 2500,
+      "retained_points": 2225
+    },
+    {
+      "case_id": 7,
+      "mach_inf": 8.25,
+      "source_entry": "structured/StructuredGridM825.dat",
+      "source_grid": [
+        400,
+        400
+      ],
+      "selected_points_before_filter": 2500,
+      "retained_points": 2225
+    },
+    {
+      "case_id": 8,
+      "mach_inf": 8.5,
+      "source_entry": "structured/StructuredGridM85.dat",
+      "source_grid": [
+        400,
+        400
+      ],
+      "selected_points_before_filter": 2500,
+      "retained_points": 2225
+    },
+    {
+      "case_id": 9,
+      "mach_inf": 8.75,
+      "source_entry": "structured/StructuredGridM875.dat",
+      "source_grid": [
+        400,
+        400
+      ],
+      "selected_points_before_filter": 2500,
+      "retained_points": 2225
+    },
+    {
+      "case_id": 10,
+      "mach_inf": 9.0,
+      "source_entry": "structured/StructuredGridM9.dat",
+      "source_grid": [
+        400,
+        400
+      ],
+      "selected_points_before_filter": 2500,
+      "retained_points": 2225
+    },
+    {
+      "case_id": 11,
+      "mach_inf": 9.25,
+      "source_entry": "structured/StructuredGridM925.dat",
+      "source_grid": [
+        400,
+        400
+      ],
+      "selected_points_before_filter": 2500,
+      "retained_points": 2225
+    },
+    {
+      "case_id": 12,
+      "mach_inf": 9.5,
+      "source_entry": "structured/StructuredGridM95.dat",
+      "source_grid": [
+        400,
+        400
+      ],
+      "selected_points_before_filter": 2500,
+      "retained_points": 2225
+    },
+    {
+      "case_id": 13,
+      "mach_inf": 9.75,
+      "source_entry": "structured/StructuredGridM975.dat",
+      "source_grid": [
+        400,
+        400
+      ],
+      "selected_points_before_filter": 2500,
+      "retained_points": 2225
+    },
+    {
+      "case_id": 14,
+      "mach_inf": 10.0,
+      "source_entry": "structured/StructuredGridM10.dat",
+      "source_grid": [
+        400,
+        400
+      ],
+      "selected_points_before_filter": 2500,
+      "retained_points": 2225
+    },
+    {
+      "case_id": 15,
+      "mach_inf": 11.0,
+      "source_entry": "structured/StructuredGridM11.dat",
+      "source_grid": [
+        400,
+        400
+      ],
+      "selected_points_before_filter": 2500,
+      "retained_points": 2225
+    },
+    {
+      "case_id": 16,
+      "mach_inf": 12.0,
+      "source_entry": "structured/StructuredGridM12.dat",
+      "source_grid": [
+        400,
+        400
+      ],
+      "selected_points_before_filter": 2500,
+      "retained_points": 2225
+    },
+    {
+      "case_id": 17,
+      "mach_inf": 13.0,
+      "source_entry": "structured/StructuredGridM13.dat",
+      "source_grid": [
+        400,
+        400
+      ],
+      "selected_points_before_filter": 2500,
+      "retained_points": 2225
+    },
+    {
+      "case_id": 18,
+      "mach_inf": 14.0,
+      "source_entry": "structured/StructuredGridM14.dat",
+      "source_grid": [
+        400,
+        400
+      ],
+      "selected_points_before_filter": 2500,
+      "retained_points": 2225
+    },
+    {
+      "case_id": 19,
+      "mach_inf": 15.0,
+      "source_entry": "structured/StructuredGridM15.dat",
+      "source_grid": [
+        400,
+        400
+      ],
+      "selected_points_before_filter": 2500,
+      "retained_points": 2225
+    }
+  ],
+  "total_points": 44500
+}

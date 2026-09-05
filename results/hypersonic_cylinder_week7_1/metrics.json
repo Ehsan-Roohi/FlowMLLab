@@ -1,0 +1,155 @@
+{
+  "schema_version": 1,
+  "status": "pass",
+  "evidence_contract": {
+    "status": "pass",
+    "cases": 20,
+    "points": 44500,
+    "targets": [
+      "local_mach",
+      "temperature_ratio",
+      "pressure_ratio"
+    ],
+    "split_cases": {
+      "train": [
+        5.0,
+        6.0,
+        7.0,
+        8.0,
+        9.0,
+        10.0,
+        11.0,
+        12.0,
+        13.0,
+        14.0
+      ],
+      "validation": [
+        8.25,
+        8.75,
+        9.25,
+        9.75
+      ],
+      "interpolation": [
+        5.5,
+        6.5,
+        7.5,
+        8.5,
+        9.5
+      ],
+      "extrapolation": [
+        15.0
+      ]
+    },
+    "paper_doi": "10.1063/5.0334590",
+    "source_archive_sha256": "bda221759a372a2054ca4c76bde923febf0b682404b41f67cc190f9b03c71f7b"
+  },
+  "teaching_model": {
+    "name": "separable random-feature ridge ensemble",
+    "members": 5,
+    "latent_dim": 64,
+    "fit_seconds": 0.2981128999963403,
+    "claim": "teaching analog; not the published Fusion-DeepONet"
+  },
+  "splits": {
+    "train": {
+      "cases": [
+        5.0,
+        6.0,
+        7.0,
+        8.0,
+        9.0,
+        10.0,
+        11.0,
+        12.0,
+        13.0,
+        14.0
+      ],
+      "points": 22250,
+      "linear_case_baseline_relative_l2": {
+        "local_mach": 0.0,
+        "temperature_ratio": 0.0,
+        "pressure_ratio": 0.0
+      },
+      "teaching_operator_relative_l2": {
+        "local_mach": 0.2041158658702814,
+        "temperature_ratio": 0.29380790701163656,
+        "pressure_ratio": 0.3950161859070036
+      },
+      "teaching_operator_two_sigma_coverage": {
+        "local_mach": 0.7689887640449439,
+        "temperature_ratio": 0.7884044943820224,
+        "pressure_ratio": 0.8105168539325843
+      }
+    },
+    "validation": {
+      "cases": [
+        8.25,
+        8.75,
+        9.25,
+        9.75
+      ],
+      "points": 8900,
+      "linear_case_baseline_relative_l2": {
+        "local_mach": 0.002154488312948315,
+        "temperature_ratio": 0.002772803301503069,
+        "pressure_ratio": 0.003186995846668761
+      },
+      "teaching_operator_relative_l2": {
+        "local_mach": 0.19784524732917308,
+        "temperature_ratio": 0.267065166091749,
+        "pressure_ratio": 0.3574059730503415
+      },
+      "teaching_operator_two_sigma_coverage": {
+        "local_mach": 0.7435955056179775,
+        "temperature_ratio": 0.7867415730337078,
+        "pressure_ratio": 0.8241573033707865
+      }
+    },
+    "interpolation": {
+      "cases": [
+        5.5,
+        6.5,
+        7.5,
+        8.5,
+        9.5
+      ],
+      "points": 11125,
+      "linear_case_baseline_relative_l2": {
+        "local_mach": 0.003979301624669397,
+        "temperature_ratio": 0.006085681790293489,
+        "pressure_ratio": 0.007786496693869565
+      },
+      "teaching_operator_relative_l2": {
+        "local_mach": 0.19581073702780263,
+        "temperature_ratio": 0.28058545596625467,
+        "pressure_ratio": 0.3804374577782493
+      },
+      "teaching_operator_two_sigma_coverage": {
+        "local_mach": 0.7951460674157304,
+        "temperature_ratio": 0.8560898876404495,
+        "pressure_ratio": 0.875685393258427
+      }
+    },
+    "extrapolation": {
+      "cases": [
+        15.0
+      ],
+      "points": 2225,
+      "linear_case_baseline_relative_l2": {
+        "local_mach": 0.00538199589503629,
+        "temperature_ratio": 0.008767873215518186,
+        "pressure_ratio": 0.008482035542528863
+      },
+      "teaching_operator_relative_l2": {
+        "local_mach": 0.7309060086771496,
+        "temperature_ratio": 0.6467054220049561,
+        "pressure_ratio": 1.0080720367660416
+      },
+      "teaching_operator_two_sigma_coverage": {
+        "local_mach": 1.0,
+        "temperature_ratio": 1.0,
+        "pressure_ratio": 1.0
+      }
+    }
+  }
+}
