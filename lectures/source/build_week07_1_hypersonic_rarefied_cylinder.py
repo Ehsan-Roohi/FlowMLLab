@@ -17,9 +17,9 @@ from reportlab.platypus import Paragraph
 
 ROOT = Path(__file__).resolve().parents[2]
 OUTPUT = ROOT / "output" / "pdf" / "week07_1_hypersonic_rarefied_cylinder.pdf"
-METRICS = ROOT / "results" / "hypersonic_cylinder_week7_1" / "metrics.json"
+METRICS = ROOT / "results" / "hypersonic_cylinder_week7_1" / "mlp_metrics.json"
 FIELD_FIGURE = (
-    ROOT / "results" / "hypersonic_cylinder_week7_1" / "mach85_baseline_audit.png"
+    ROOT / "results" / "hypersonic_cylinder_week7_1" / "cylinder_homepage.png"
 )
 
 PAGE = landscape((7.5 * inch, 13.333 * inch))
@@ -186,7 +186,7 @@ def build() -> None:
             "Freeze whole-case splits before model selection.",
             "Read the branch, trunk, layerwise fusion, and output head.",
             "Challenge the neural model with a structured interpolation baseline.",
-            "Audit ensemble spread with empirical coverage, not visual confidence.",
+            "Audit training error; a single MLP does not provide calibrated uncertainty.",
         ]),
         0.95 * inch, 5.35 * inch, 5.25 * inch, 4.2 * inch,
     )
@@ -236,13 +236,28 @@ def build() -> None:
     deck.paragraph("shock layer", 2.1 * inch, 5.25 * inch, 1.8 * inch, 0.3 * inch, SMALL)
     deck.end()
 
+    deck.begin("Mach independence and the classroom MLP")
+    deck.paragraph(
+        "<b>Physical motivation.</b> At high Mach, appropriately nondimensionalized fields can vary slowly with Mach under compatible gas, rarefaction, geometry and boundary conditions. This motivates interpolation; a small error alone is not proof of Mach independence. The source TOV/P scaling must be verified.",
+        0.9 * inch, 5.9 * inch, 11.5 * inch, 2.0 * inch,
+    )
+    deck.paragraph(
+        "<b>Required model.</b> Three 96-unit tanh layers; inputs (Mach, x, y); equal standardized-target MSE. Scalers use training cases only. Adam, fixed seed 760, maximum 300 epochs and 40-epoch patience; best epoch selected on four whole validation cases. Report training error as an underfitting diagnostic.",
+        0.9 * inch, 3.6 * inch, 11.5 * inch, 1.7 * inch,
+    )
+    deck.paragraph(
+        "<b>Provenance.</b> Research DSMC data precede the course. This MLP is a new teaching model, not the paper's trained Fusion-DeepONet. A single fit provides no calibrated UQ. Broader data licensing awaits rights-holder approval.",
+        0.9 * inch, 1.6 * inch, 11.5 * inch, 1.0 * inch, SMALL,
+    )
+    deck.end()
+
     deck.begin("The learning object is an operator")
     deck.box(0.75 * inch, 3.45 * inch, 2.4 * inch, 1.55 * inch, fill=colors.HexColor("#FFF4E5"), stroke=ORANGE)
     deck.paragraph("<b>Branch input</b><br/>freestream M_inf", 1.05 * inch, 4.55 * inch, 1.8 * inch, 0.8 * inch, CENTER)
     draw_arrow(deck.canvas, 3.2 * inch, 4.22 * inch, 4.25 * inch, 4.22 * inch)
     deck.box(4.3 * inch, 2.8 * inch, 4.65 * inch, 2.85 * inch, fill=PALE, stroke=TEAL)
     deck.paragraph(
-        "<b>G_theta: M_inf -> q(x,y)</b><br/><br/>q = [ local Mach, T/T_inf, p/p_inf ]",
+        "<b>G_theta: M_inf -> q(x,y)</b><br/><br/>q = [ local Mach, source TOV, source P ]",
         4.65 * inch, 4.95 * inch, 3.95 * inch, 1.4 * inch,
         ParagraphStyle("operator", parent=CENTER, fontName="Helvetica-Bold", fontSize=20, leading=28),
     )
@@ -277,7 +292,7 @@ def build() -> None:
     deck.paragraph(
         bullet_list([
             "M_inf, x, y",
-            "local Mach, T/T_inf, p/p_inf",
+            "local Mach, source TOV, source P (legacy ratio keys do not verify scaling)",
             "case ID and original source-grid row",
             "archive and derivative SHA-256 hashes",
         ]),
@@ -383,7 +398,7 @@ def build() -> None:
     c.setFont("Helvetica-Bold", 11)
     c.drawCentredString(11.875 * inch, 3.85 * inch, "Dense(3)")
     c.setFont("Helvetica", 10)
-    c.drawCentredString(11.875 * inch, 3.55 * inch, "M, T/T_inf, p/p_inf")
+    c.drawCentredString(11.875 * inch, 3.55 * inch, "M, TOV, P")
     draw_arrow(c, 10.6 * inch, 3.78 * inch, 11.1 * inch, 3.78 * inch, color=RED)
     deck.paragraph(
         "Each block includes dropout in the reviewed stored model. Branch state is added to the matching trunk depth before the final branch-trunk combination.",
@@ -412,7 +427,7 @@ def build() -> None:
         deck.paragraph(detail, 3.5 * inch, y + 0.22 * inch, 8.85 * inch, 0.55 * inch, SMALL)
     deck.end()
 
-    deck.begin("Deep ensembles: disagreement is not calibration")
+    deck.begin("Optional ensembles: not run by the single-MLP lab")
     deck.box(0.7 * inch, 3.55 * inch, 3.0 * inch, 2.15 * inch, fill=colors.HexColor("#FFF4E5"), stroke=ORANGE)
     deck.paragraph("<b>Five fits</b><br/>different initial weights<br/>same frozen protocol", 1.05 * inch, 5.15 * inch, 2.3 * inch, 1.2 * inch, CENTER)
     draw_arrow(deck.canvas, 3.75 * inch, 4.62 * inch, 4.75 * inch, 4.62 * inch)
@@ -429,7 +444,7 @@ def build() -> None:
     )
     deck.end()
 
-    deck.begin("Executed evidence: the simple baseline wins")
+    deck.begin("Executed evidence: trained MLP versus interpolation")
     splits = metrics["splits"]
     baseline = splits["interpolation"]["linear_case_baseline_relative_l2"]
     operator = splits["interpolation"]["teaching_operator_relative_l2"]
@@ -441,8 +456,8 @@ def build() -> None:
     chart_h = 4.25 * inch
     c = deck.canvas
     c.setStrokeColor(colors.HexColor("#BCCCDC"))
-    for tick in range(0, 41, 10):
-        y = chart_y + chart_h * tick / 40
+    for tick in range(0, 11, 2):
+        y = chart_y + chart_h * tick / 10
         c.line(chart_x, y, chart_x + chart_w, y)
         c.setFillColor(MUTED)
         c.setFont("Helvetica", 10)
@@ -454,7 +469,7 @@ def build() -> None:
             (-0.25 * inch, baseline[key], TEAL, "field interpolation"),
             (0.25 * inch, operator[key], RED, "teaching operator"),
         ):
-            height = min(chart_h, chart_h * (100 * value) / 40)
+            height = min(chart_h, chart_h * (100 * value) / 10)
             c.setFillColor(color)
             c.rect(center + dx - 0.18 * inch, chart_y, 0.36 * inch, height, fill=1, stroke=0)
         c.setFillColor(INK)
@@ -467,12 +482,12 @@ def build() -> None:
     )
     deck.box(8.85 * inch, 1.55 * inch, 3.65 * inch, 1.75 * inch, fill=colors.HexColor("#FDECEC"), stroke=RED)
     deck.paragraph(
-        "<b>Teaching analog</b><br/>19.6% | 28.1% | 38.0%",
+        "<b>Trained 3x96 MLP</b><br/>" + " | ".join(f"{100 * operator[key]:.2f}%" for key in keys),
         9.15 * inch, 2.75 * inch, 3.05 * inch, 0.8 * inch, CENTER,
     )
     deck.end()
 
-    deck.begin("Where does interpolation error live?")
+    deck.begin("Full source-grid interpolation: separate from MLP metrics")
     if FIELD_FIGURE.is_file():
         deck.canvas.drawImage(
             str(FIELD_FIGURE),
@@ -513,7 +528,7 @@ def build() -> None:
         bullet_list([
             "Baseline and teaching-operator relative-L2 errors by target and split.",
             "One physics-based interpretation of an error hot spot.",
-            "Two-sigma coverage and a calibration judgment.",
+            "Training error and an explicit statement that the single MLP has no calibrated UQ.",
             "A short explanation of random-point leakage.",
             "One deployment condition that could justify full neural training.",
         ]),

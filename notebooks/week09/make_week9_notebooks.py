@@ -832,7 +832,8 @@ shock-window error and increases global error by no more than two percentage
 points. The rule is frozen before evaluating 16, 25, and 30 kPa. These are
 interpolation baselines, not a newly trained DeepONet.
 
-The program writes a machine-readable selection table, 18 held-out rows with
+The program writes only to ignored `tmp/week09_lab2/`, never to retained
+`results/`. It produces a machine-readable selection table, 18 held-out rows with
 global, shock-window, and density-gradient-weighted metrics for both methods,
 an error heatmap, a 6-by-3 centerline comparison, and full 2-D comparisons.
 Article numbers remain in their own immutable CSV; no difference column is
@@ -849,9 +850,11 @@ command = [
     _flowmllab_sys.executable,
     str(REPO_ROOT / "qa/run_nozzle_field_validation.py"),
     "--root", str(REPO_ROOT),
+    "--output-dir", str(REPO_ROOT / "tmp/week09_lab2"),
 ]
 _flowmllab_subprocess.run(command, check=True)
-generated_metrics = pd.read_csv(RESULTS / "nozzle_flowmllab_heldout_metrics.csv")
+GENERATED_RESULTS = REPO_ROOT / "tmp/week09_lab2"
+generated_metrics = pd.read_csv(GENERATED_RESULTS / "nozzle_flowmllab_heldout_metrics.csv")
 display(generated_metrics.pivot(
     index="field", columns="held_out_pressure_kpa",
     values="selected_global_relative_l2_percent",
@@ -873,7 +876,7 @@ if _NozzleImage is not None:
         "nozzle_flowmllab/nozzle_back_pressure_profiles.png",
         "nozzle_flowmllab/nozzle_back_pressure_error_summary.png",
     ):
-        display(_NozzleImage(filename=str(RESULTS / filename)))
+        display(_NozzleImage(filename=str(GENERATED_RESULTS / filename)))
 """),
         md(r"""
 ## 6. Registered POD models: a trained neural branch and a stronger baseline
@@ -1013,6 +1016,7 @@ def write_notebook(filename: str, cells) -> None:
     (HERE / filename).write_text(
         json.dumps(notebook, indent=1, ensure_ascii=False, sort_keys=True) + "\n",
         encoding="utf-8",
+        newline="\n",
     )
 
 

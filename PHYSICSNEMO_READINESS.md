@@ -57,15 +57,13 @@ positions belong only in evaluation diagnostics. Keep tutorial and research
 configurations visibly separate. This describes proposed work, not files
 already implemented in this branch.
 
-## Human route
+## Public technical route
 
-The supplied screenshot shows Ricardo Vinuesa as a first-degree connection
-and Mohammad Amin Nabian's request pending. Once the benchmark has the
-evidence above, ask Ricardo whether an introduction to the relevant PhysicsNeMo
-engineer makes sense. A technical conversation can ask whether rarefied-flow
-coverage is useful and which dataset/model interface maintainers prefer.
-The public collaboration form is another concrete route. A maintainer's scope
-feedback is more useful at this point than a request for a generic partnership.
+After the data-integrity and benchmark gates are met, use the public
+collaboration form linked in the contribution guide. This technical assessment
+does not require personal networking information. Hardware-support availability
+must be checked directly: historical Hardware Grant descriptions do not
+establish that applications are open today.
 
 Proposed technical ask: review a licensed DSMC benchmark and a runnable neural
 recipe for possible inclusion as a rarefied-flow example. Attach exact failure

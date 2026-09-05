@@ -1,2 +1,47 @@
 <!doctype html>
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>FlowMLLab interactive experiments</title></head><body style="font-family:system-ui;max-width:760px;margin:4rem auto;padding:0 1rem"><h1>FlowMLLab interactive experiments</h1><p><a href="llm-physics-tests/">Does the physics hold? — Three rotating-hexagon simulations and a common numerical audit</a></p><p><a href="https://github.com/Ehsan-Roohi/FlowMLLab">FlowMLLab source and course materials</a></p></body></html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Reproducible machine learning in fluid mechanics: teaching notebooks, research-data provenance and strong baselines.">
+<title>FlowMLLab — Machine learning in fluid mechanics</title>
+<style>
+body{font-family:system-ui,sans-serif;color:#172b3a;background:#f5f7fa;margin:0}
+main{max-width:960px;margin:auto;padding:40px 24px}h1{font-size:2.6rem}p,li{line-height:1.7}
+a{color:#075da3}nav{display:flex;flex-wrap:wrap;gap:20px}section{background:white;padding:24px;margin-top:24px;border:1px solid #dbe3e9;border-radius:8px}footer{margin-top:30px}
+</style></head>
+<body><main>
+<p>FALL 2026 · V1.4 TEACHING SERIES</p>
+<h1>FlowMLLab</h1>
+<p>Machine learning in fluid mechanics: physical models, reproducible experiments,
+and comparisons against strong non-neural baselines.</p>
+<nav aria-label="Main navigation">
+<a href="https://github.com/Ehsan-Roohi/FlowMLLab#readme">Course &amp; weekly gallery</a>
+<a href="https://github.com/Ehsan-Roohi/FlowMLLab/blob/main/COURSE_MAP.md">Course map</a>
+<a href="https://github.com/Ehsan-Roohi/FlowMLLab/blob/main/docs/RESULTS_GUIDE.md">Results &amp; limitations</a>
+<a href="https://doi.org/10.5281/zenodo.22315623">Archived v1.4.0 / DOI</a>
+</nav>
+<section><h2>From research cases to teaching experiments</h2>
+<p>The article-linked DSMC cases originate in earlier research by Ehsan Roohi
+and collaborators. FlowMLLab brings selected data into a teaching setting;
+its new loaders, baselines and classroom models are distinct from the original
+research solvers and published neural models.</p>
+<p><a href="https://github.com/Ehsan-Roohi/FlowMLLab/blob/main/DATA_PROVENANCE.md">Case-by-case sources, citations and reuse status</a></p></section>
+<section><h2>Study and reproduce</h2>
+<p>Follow Week 1 through Week 10, including incremental labs 2.1, 4.1 and 7.1.
+Each week has its own learning material.</p>
+<ul><li><a href="https://github.com/Ehsan-Roohi/FlowMLLab/tree/main/notebooks">Notebooks and Colab launch links</a></li>
+<li><a href="notebooks/W7_1_Hypersonic_Rarefied_Cylinder_DeepONet.html">Executed Week 7.1: cylinder MLP and interpolation</a></li>
+<li><a href="notebooks/W9_Lab2_Shock_Aligned_Nozzle_DeepONet_Student.html">Executed Week 9 Lab 2: nozzle baselines and registration</a></li>
+<li><a href="https://github.com/Ehsan-Roohi/FlowMLLab/tree/main/lectures">Lecture notes</a></li>
+<li><a href="https://github.com/Ehsan-Roohi/FlowMLLab/blob/main/docs/RESULTS_GUIDE.md">Retained results, reproduction commands and known defects</a></li></ul>
+<p>Retained results are evidence, not notebook scratch space. Executing a teaching
+example does not by itself reproduce a paper's accuracy.</p></section>
+<section><h2>Stabilization, not expansion</h2>
+<p>The v1.4.0 archive remains unchanged. Maintenance focuses on reproducibility,
+provenance and fair comparisons, with no new module or release in this round.</p>
+<p>Nozzle symmetry/export defects remain unresolved in the source data.
+Cylinder open-data licensing requires documented rights-holder approval.
+Neither dataset is presented as ready for external benchmark adoption.</p></section>
+<footer>Scientific interpretation and publication decisions remain the authors'
+responsibility. See the repository for data-specific attribution and AI-assistance disclosure.</footer>
+</main></body></html>

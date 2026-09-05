@@ -128,7 +128,7 @@ the exact DSMC export still needs repair.
 | Fresh unseen `Re=95`, 277-frame autonomous vorticity error versus educational LBM labels | **4.281%** global; **5.194%** worst frame |
 | Fresh unseen `Re=95` Strouhal error versus educational LBM labels | **0.264%** |
 | Week-7.1 rarefied-cylinder blind field interpolation | Local Mach **0.398%**; temperature **0.609%**; pressure **0.779%** relative $L_2$ |
-| Week-7.1 CPU teaching operator on the same cases | Local Mach **19.6%**; temperature **28.1%**; pressure **38.0%** — retained baseline loss |
+| Week-7.1 trained 3x96 tanh MLP on the same cases | Local Mach **1.53%**; temperature **2.70%**; pressure **2.50%**; training errors **1.26% / 2.21% / 1.82%**. Strong interpolation still wins; [revised metrics](../results/hypersonic_cylinder_week7_1/mlp_metrics.json). |
 | Retained `Re=105` one-step cylinder vorticity error versus educational LBM labels | **0.815%** relative $L_2$; cubic baseline **1.053%** |
 | Mean cylinder-wake profile error versus educational LBM labels at `2D,4D,6D,8D` | **0.804%** relative $L_2$ |
 | Three-seed velocity error on retained cavity cases | **0.0727%–0.4455%** relative $L_2$ |
@@ -436,32 +436,6 @@ and
   </a>
 </p>
 
-### Experimental SDF/SIREN Geom-DeepONet
-
-[`flowmllab/step_geom_deeponet.py`](../flowmllab/step_geom_deeponet.py) implements
-a two-dimensional adaptation of He et al.'s Geom-DeepONet for this same step
-dataset. Its branch receives only `h/H`; its point trunk receives normalized
-`(x,y)` and an analytic signed distance to the step boundary. Initial
-branch/trunk features are fused, pooled, passed through a SIREN trunk, and
-contracted to predict `(U,V)`. The input builder has no flow-field argument, and
-tests prove that changing target `U,V` cannot change sampled locations or model
-inputs.
-
-Run the complete 5/2/2 development protocol after installing the optional ML
-dependencies:
-
-```bash
-python -m pip install -e ".[ml]"
-python qa/run_step_geom_deeponet.py --root . --epochs 500
-```
-
-The runner selects the zonal-loss weight using H33/H58, refits on all seven
-learning cases, and opens the separate H44/H67 archive only afterward. It is a
-development benchmark until multi-seed accuracy and physics gates are retained;
-it does not replace the checked-in coordinate-MLP evidence. This implementation
-supports variable point counts, but the available data vary only `h/H` at fixed
-`Kn=0.01`, so they do not establish arbitrary-shape or joint `(Kn,h/H)`
-generalization.
 
 [Lab 2](https://colab.research.google.com/github/Ehsan-Roohi/FlowMLLab/blob/main/notebooks/week09/W9_Lab2_Shock_Aligned_Nozzle_DeepONet_Student.ipynb)
 uses compact, checksummed full-field and centerline derivatives of all 15

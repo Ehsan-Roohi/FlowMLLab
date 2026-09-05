@@ -287,9 +287,14 @@ def select_interpolation_method(
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--root", type=Path, default=ROOT)
+    parser.add_argument("--output-dir", type=Path,
+                        help="Scratch output directory; defaults to tmp/nozzle_field_validation")
     args = parser.parse_args()
     root = args.root.resolve()
-    result_dir = root / "results/mahdavi_deeponet"
+    source_dir = root / "results/mahdavi_deeponet"
+    result_dir = (args.output_dir or root / "tmp/nozzle_field_validation").resolve()
+    if result_dir == root / "results" or root / "results" in result_dir.parents:
+        raise ValueError("Retained results are read-only; select a scratch output directory")
     figure_dir = result_dir / "nozzle_flowmllab"
     figure_dir.mkdir(parents=True, exist_ok=True)
     data = load_nozzle_fields(root)
@@ -389,7 +394,7 @@ def main() -> None:
         "model": "development-selected physical-coordinate or shock-aligned interpolation baseline",
         "branch_input": "back pressure in kPa",
         "source_archive": "results/mahdavi_deeponet/nozzle_fields_15cases.npz",
-        "source_archive_sha256": sha256(result_dir / "nozzle_fields_15cases.npz"),
+        "source_archive_sha256": sha256(source_dir / "nozzle_fields_15cases.npz"),
         "development_pressures_kpa": list(DEVELOPMENT_PRESSURES_KPA),
         "held_out_pressures_kpa": NOZZLE_HELD_OUT_KPA.astype(int).tolist(),
         "selection_rule": (
@@ -414,10 +419,10 @@ def main() -> None:
         "metrics_csv_sha256": sha256(metrics_path),
         "retained_article_evidence_csv": "results/mahdavi_deeponet/nozzle_paper_field_errors.csv",
         "retained_article_evidence_csv_sha256": sha256(
-            result_dir / "nozzle_paper_field_errors.csv"
+            source_dir / "nozzle_paper_field_errors.csv"
         ),
         "figure_sha256": {
-            path.relative_to(root).as_posix(): sha256(path)
+            path.relative_to(result_dir).as_posix(): sha256(path)
             for path in (profiles_path, symmetry_profiles_path, *contour_paths, summary_path)
         },
     }

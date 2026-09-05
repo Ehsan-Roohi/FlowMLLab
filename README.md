@@ -14,6 +14,13 @@ numerical foundations to continuum and rarefied-flow research examples.
 
 ## Start here
 
+**Research provenance:** the article-linked DSMC cases were produced in earlier
+research by Ehsan Roohi and collaborators, then brought into FlowMLLab for
+teaching. The course adds new code and baselines, not a new origin for those
+data. See [per-case papers, data lineage, reuse limits and AI-assistance
+disclosure](DATA_PROVENANCE.md). v1.4.0 remains the frozen archive; this cycle
+is maintenance only, with no new modules or release.
+
 | Your goal | Open |
 | --- | --- |
 | Run a first experiment in 20 minutes | [Launch the introductory Colab](https://colab.research.google.com/github/Ehsan-Roohi/FlowMLLab/blob/main/notebooks/week05_06/P0_Project_Setup.ipynb) |
@@ -140,9 +147,11 @@ solid/sentinel region.
 
 Across the five held-out cases in the **compact teaching dataset**, interpolation
 errors are **0.398% / 0.609% / 0.779%** for local Mach, temperature and pressure.
-The CPU teaching operator performs worse (**19.6% / 28.1% / 38.0%**); these results
-do not reproduce the published full-model accuracy.
-[Data](data/hypersonic_cylinder/README.md) · [Metrics](results/hypersonic_cylinder_week7_1/metrics.json)
+The trained **3×96 tanh MLP** gives **1.53% / 2.70% / 2.50%**, with training
+errors **1.26% / 2.21% / 1.82%**. Interpolation still wins; the earlier
+underfit random-feature ridge is no longer the default classroom comparison.
+These are new teaching runs, not the published model's accuracy.
+[Data and paper](data/hypersonic_cylinder/README.md) · [MLP metrics](results/hypersonic_cylinder_week7_1/mlp_metrics.json)
 
 ### Week 8 — Gas dynamics and SciML
 

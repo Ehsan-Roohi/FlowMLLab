@@ -977,13 +977,15 @@ def validate_hypersonic_cylinder_results() -> dict[str, object]:
     assert report["points"] == 44_500
     assert report["paper_doi"] == "10.1063/5.0334590"
     retained = json.loads(
-        (ROOT / "results/hypersonic_cylinder_week7_1/metrics.json").read_text(
+        (ROOT / "results/hypersonic_cylinder_week7_1/mlp_metrics.json").read_text(
             encoding="utf-8"
         )
     )
     interpolation = retained["splits"]["interpolation"]
     baseline = interpolation["linear_case_baseline_relative_l2"]
     teaching = interpolation["teaching_operator_relative_l2"]
+    assert retained["teaching_model"]["name"] == "trained 3x96 tanh MLP"
+    assert all(value < 0.05 for value in retained["splits"]["train"]["teaching_operator_relative_l2"].values())
     assert all(value < 0.01 for value in baseline.values())
     assert all(teaching[name] > baseline[name] for name in baseline)
     notebook = json.loads(
@@ -996,6 +998,9 @@ def validate_hypersonic_cylinder_results() -> dict[str, object]:
     assert "Mandatory strong baseline" in source
     assert "does **not** report the published full-resolution accuracy" in source
     assert "RUN_FULL_NEURAL = False" in source
+    assert "fit_cylinder_mlp" in source
+    assert all(cell.get("id") for cell in notebook["cells"])
+    assert len({cell["id"] for cell in notebook["cells"]}) == len(notebook["cells"])
     return report
 
 

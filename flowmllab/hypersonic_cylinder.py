@@ -2,9 +2,9 @@
 
 The committed data are a compact derivative of author-supplied DSMC fields
 associated with Roohi et al., Physics of Fluids 38, 057108 (2026).  The default
-CPU surrogate is a separable random-feature ridge ensemble.  It exposes the
-branch/trunk inductive bias and deep-ensemble workflow without claiming to
-reproduce the full Fusion-DeepONet or its published accuracy.
+CPU surrogate is a trained three-layer tanh MLP. The earlier random-feature
+ridge ensemble is retained only for backwards-compatible experiments; neither
+model reproduces the full Fusion-DeepONet or its published accuracy.
 """
 
 from __future__ import annotations
@@ -12,12 +12,15 @@ from __future__ import annotations
 from dataclasses import dataclass
 import hashlib
 import json
+import copy
 from pathlib import Path
 from typing import Iterable
 
 import numpy as np
 from sklearn.linear_model import Ridge
+from sklearn.neural_network import MLPRegressor
 from sklearn.preprocessing import StandardScaler
+from threadpoolctl import threadpool_limits
 
 
 DEFAULT_TRAIN_MACH = np.asarray([5, 6, 7, 8, 9, 10, 11, 12, 13, 14], dtype=float)
@@ -25,6 +28,63 @@ DEFAULT_VALIDATION_MACH = np.asarray([8.25, 8.75, 9.25, 9.75], dtype=float)
 DEFAULT_INTERPOLATION_MACH = np.asarray([5.5, 6.5, 7.5, 8.5, 9.5], dtype=float)
 DEFAULT_EXTRAPOLATION_MACH = np.asarray([15.0], dtype=float)
 TARGET_NAMES = ("local_mach", "temperature_ratio", "pressure_ratio")
+# Legacy NPZ keys are preserved for byte-level provenance, not as unit claims.
+TARGET_LABELS = ("local Mach (MA)", "source temperature (TOV)", "source pressure (P)")
+
+
+@dataclass
+class CylinderMLP:
+    input_scaler: StandardScaler
+    target_scaler: StandardScaler
+    model: MLPRegressor
+    validation_history: list[float]
+    best_epoch: int
+
+    def predict(self, mach_inf: np.ndarray, x: np.ndarray, y: np.ndarray) -> np.ndarray:
+        inputs = self.input_scaler.transform(np.column_stack((mach_inf, x, y)))
+        with threadpool_limits(limits=1):
+            return self.target_scaler.inverse_transform(self.model.predict(inputs))
+
+
+def fit_cylinder_mlp(data, train_mask, validation_mask, *, epochs=300,
+                     patience=40, seed=760) -> CylinderMLP:
+    """Train 3x96 tanh; select epoch on disjoint whole validation cases only.
+
+    Scaling is fitted exclusively on training rows. The fixed budget/seed and
+    equal standardized-target loss are not selected on either held-out set.
+    Unlike sklearn's random-row early stopping, this preserves case separation.
+    """
+    train = np.asarray(train_mask, dtype=bool)
+    validation = np.asarray(validation_mask, dtype=bool)
+    shape = (len(data.mach_inf),)
+    if train.shape != shape or validation.shape != shape or not train.any() or not validation.any():
+        raise ValueError("Nonempty train and validation masks must match the dataset")
+    if np.intersect1d(data.mach_inf[train], data.mach_inf[validation]).size:
+        raise ValueError("Training and validation must use disjoint Mach cases")
+    if epochs < 1 or patience < 1:
+        raise ValueError("epochs and patience must be positive")
+    inputs = np.column_stack((data.mach_inf, data.x, data.y))
+    sx = StandardScaler().fit(inputs[train])
+    sy = StandardScaler().fit(data.targets[train])
+    x_train, x_val = sx.transform(inputs[train]), sx.transform(inputs[validation])
+    y_train, y_val = sy.transform(data.targets[train]), sy.transform(data.targets[validation])
+    model = MLPRegressor(hidden_layer_sizes=(96, 96, 96), activation="tanh",
+                         solver="adam", batch_size=min(1024, len(x_train)),
+                         learning_rate_init=0.002, alpha=1e-5,
+                         early_stopping=False, random_state=seed)
+    history, best_loss, best_epoch, best_model = [], float("inf"), 0, None
+    with threadpool_limits(limits=1):
+        for epoch in range(1, epochs + 1):
+            model.partial_fit(x_train, y_train)
+            loss = float(np.mean((model.predict(x_val) - y_val) ** 2))
+            if not np.isfinite(loss):
+                raise ValueError("Non-finite MLP validation loss")
+            history.append(loss)
+            if loss < best_loss:
+                best_loss, best_epoch, best_model = loss, epoch, copy.deepcopy(model)
+            if epoch - best_epoch >= patience:
+                break
+    return CylinderMLP(sx, sy, best_model, history, best_epoch)
 
 
 def _sha256(path: Path) -> str:

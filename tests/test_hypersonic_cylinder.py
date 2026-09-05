@@ -11,6 +11,7 @@ from flowmllab.hypersonic_cylinder import (
     casewise_split_masks,
     ensemble_predict,
     fit_separable_ridge_ensemble,
+    fit_cylinder_mlp,
     load_cylinder_teaching_data,
     relative_l2,
     validate_hypersonic_cylinder_evidence,
@@ -86,6 +87,18 @@ class HypersonicCylinderWeek71Tests(unittest.TestCase):
             truth, estimate, weights=(1.0, 1.0, 1.0)
         )
         self.assertGreater(pressure_weighted, equal_weighted)
+
+    def test_mlp_rejects_case_leakage_and_scales_training_only(self) -> None:
+        masks = casewise_split_masks(self.data.mach_inf)
+        with self.assertRaises(ValueError):
+            fit_cylinder_mlp(self.data, masks["train"], masks["train"], epochs=1)
+        selected = masks["train"].copy()
+        selected[np.flatnonzero(selected)[1:]] = False
+        model = fit_cylinder_mlp(self.data, selected, masks["validation"], epochs=1)
+        np.testing.assert_allclose(model.target_scaler.mean_, self.data.targets[selected].mean(axis=0))
+        self.assertEqual(model.best_epoch, 1)
+        prediction = model.predict(self.data.mach_inf[:2], self.data.x[:2], self.data.y[:2])
+        self.assertTrue(np.isfinite(prediction).all())
 
 
 if __name__ == "__main__":

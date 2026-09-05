@@ -14,8 +14,7 @@ from flowmllab.hypersonic_cylinder import (
     TARGET_NAMES,
     case_interpolation_baseline,
     casewise_split_masks,
-    ensemble_predict,
-    fit_separable_ridge_ensemble,
+    fit_cylinder_mlp,
     load_cylinder_teaching_data,
     relative_l2,
     validate_hypersonic_cylinder_evidence,
@@ -29,33 +28,31 @@ def error_dict(values: np.ndarray) -> dict[str, float]:
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--root", type=Path, default=Path(__file__).resolve().parents[1])
-    parser.add_argument("--members", type=int, default=5)
-    parser.add_argument("--latent-dim", type=int, default=64)
+    parser.add_argument("--output-dir", type=Path)
     args = parser.parse_args()
 
     root = args.root.resolve()
-    output = root / "results" / "hypersonic_cylinder_week7_1"
+    output = (args.output_dir or root / "tmp/hypersonic_cylinder_week7_1").resolve()
+    if output == root / "results" or root / "results" in output.parents:
+        raise ValueError("Use scratch output; retain reviewed results separately")
     output.mkdir(parents=True, exist_ok=True)
     data = load_cylinder_teaching_data(root)
     masks = casewise_split_masks(data.mach_inf)
 
     started = time.perf_counter()
-    ensemble = fit_separable_ridge_ensemble(
-        data,
-        masks["train"],
-        members=args.members,
-        latent_dim=args.latent_dim,
-    )
+    model = fit_cylinder_mlp(data, masks["train"], masks["validation"])
     fit_seconds = time.perf_counter() - started
 
     metrics: dict[str, object] = {
-        "schema_version": 1,
+        "schema_version": 2,
         "status": "pass",
         "evidence_contract": validate_hypersonic_cylinder_evidence(root),
         "teaching_model": {
-            "name": "separable random-feature ridge ensemble",
-            "members": args.members,
-            "latent_dim": args.latent_dim,
+            "name": "trained 3x96 tanh MLP",
+            "seed": 760,
+            "max_epochs": 300,
+            "selected_epoch": model.best_epoch,
+            "validation_standardized_mse": model.validation_history,
             "fit_seconds": fit_seconds,
             "claim": "teaching analog; not the published Fusion-DeepONet",
         },
@@ -63,18 +60,14 @@ def main() -> None:
     }
 
     for name, mask in masks.items():
-        mean, spread = ensemble_predict(
-            ensemble, data.mach_inf[mask], data.x[mask], data.y[mask]
-        )
+        mean = model.predict(data.mach_inf[mask], data.x[mask], data.y[mask])
         baseline = case_interpolation_baseline(data, masks["train"], mask)
         truth = data.targets[mask]
-        coverage = np.mean(np.abs(truth - mean) <= 2.0 * spread, axis=0)
         metrics["splits"][name] = {
             "cases": sorted(np.unique(data.mach_inf[mask]).tolist()),
             "points": int(np.count_nonzero(mask)),
             "linear_case_baseline_relative_l2": error_dict(relative_l2(truth, baseline)),
             "teaching_operator_relative_l2": error_dict(relative_l2(truth, mean)),
-            "teaching_operator_two_sigma_coverage": error_dict(coverage),
         }
 
     metrics_path = output / "metrics.json"
@@ -85,7 +78,7 @@ def main() -> None:
     baseline = case_interpolation_baseline(data, masks["train"], case_mask)
     x = data.x[case_mask]
     y = data.y[case_mask]
-    labels = (r"Local $M$", r"$T/T_\infty$", r"$p/p_\infty$")
+    labels = (r"Local $M$", "source temperature (TOV)", "source pressure (P)")
     fig, axes = plt.subplots(2, 3, figsize=(12.5, 7.2), constrained_layout=True)
     for column, label in enumerate(labels):
         top = axes[0, column].tricontourf(x, y, truth[:, column], levels=28, cmap="viridis")

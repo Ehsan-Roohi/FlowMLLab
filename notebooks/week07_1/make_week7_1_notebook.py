@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import json
+import hashlib
 from pathlib import Path
 
 
@@ -56,8 +57,7 @@ from flowmllab.hypersonic_cylinder import (
     TARGET_NAMES,
     case_interpolation_baseline,
     casewise_split_masks,
-    ensemble_predict,
-    fit_separable_ridge_ensemble,
+    fit_cylinder_mlp,
     load_cylinder_teaching_data,
     relative_l2,
     validate_hypersonic_cylinder_evidence,
@@ -95,8 +95,8 @@ is required before a neural operator is more useful than direct interpolation?
 2. formulate the cylinder map as an operator $G:M_\infty\mapsto q(x,y)$;
 3. enforce whole-case training, validation, interpolation, and extrapolation splits;
 4. explain branch, trunk, layerwise fusion, standardized targets, and weighted loss;
-5. compare a strong structured interpolation baseline with a fast separable teaching model; and
-6. interpret deep-ensemble spread as a diagnostic, not guaranteed uncertainty calibration.
+5. compare structured interpolation with a trained 3x96 tanh MLP; and
+6. diagnose underfitting from training errors without confusing accuracy and calibration.
 '''),
     markdown(r'''
 ## Evidence and reuse contract
@@ -108,7 +108,7 @@ The committed NPZ contains 44,500 deterministic points from 20 cases; the
 1.4 GB archive, logs, checkpoints, and 116 historical scripts are not copied.
 
 This lab does **not** report the published full-resolution accuracy. Its default
-ridge ensemble is a CPU teaching analog. The optional TensorFlow builder exposes
+MLP is a newly trained classroom baseline, not the paper model. The optional TensorFlow builder exposes
 the reviewed Fusion-DeepONet topology, but full reproduction requires the
 original 50,000-point sampling, five trained networks, frozen protocol, and
 adequate compute.
@@ -132,9 +132,19 @@ mean free path is not negligible relative to the cylinder diameter, continuum
 closure and no-slip assumptions need qualification. DSMC estimates moments of
 a particle distribution, so its fields also carry sampling noise.
 
-The three nondimensional targets are
+The three source fields are local Mach, TOV (temperature), and P (pressure).
+The legacy NPZ names `temperature_ratio` and `pressure_ratio` are retained only
+for file compatibility; no verified division by freestream values is recorded.
+Do not infer units or nondimensionalization from those names.
 
-$$q(x,y;M_\infty)=\left[M(x,y),\;T(x,y)/T_\infty,\;p(x,y)/p_\infty\right].$$
+$$q(x,y;M_\infty)=\left[M(x,y),\;TOV(x,y),\;P(x,y)\right].$$
+
+At high Mach, hypersonic Mach-number independence can make appropriately
+nondimensionalized fields change slowly with Mach, under fixed geometry and
+compatible gas, rarefaction and boundary conditions. This motivates a strong
+interpolation baseline, but small interpolation errors alone do not prove that
+limit. Verify the source scaling and operating conditions before attributing
+the observed sub-percent errors solely to this principle.
 
 **Prediction prompt:** Where should the largest interpolation error occur: in
 the freestream, inside the shock layer, or near the surface? Record your reason
@@ -143,7 +153,7 @@ before plotting.
     code(r'''
 case = np.isclose(data.mach_inf, 8.5)
 fig, axes = plt.subplots(1, 3, figsize=(13, 3.6), constrained_layout=True)
-labels = (r"local $M$", r"$T/T_\infty$", r"$p/p_\infty$")
+labels = (r"local $M$", "source temperature (TOV)", "source pressure (P)")
 for j, (axis, label) in enumerate(zip(axes, labels)):
     artist = axis.tricontourf(data.x[case], data.y[case], data.targets[case, j],
                               levels=28, cmap="viridis")
@@ -213,56 +223,54 @@ uses Adam, early stopping, learning-rate reduction, and five independent fits.
 One reviewed script weights standardized pressure error five times more than
 the other two components:
 
-$$L=\operatorname{MSE}(M)+\operatorname{MSE}(T/T_\infty)+5\operatorname{MSE}(p/p_\infty).$$
+$$L=\operatorname{MSE}(M_s)+\operatorname{MSE}(TOV_s)+5\operatorname{MSE}(P_s),$$
+
+where the subscript denotes training-set standardization, not physical nondimensionalization.
 
 Because historical archive scripts disagree in several settings, this notebook
 records the reviewed topology and avoids presenting any one script filename as
 the canonical paper release.
 '''),
     markdown(r'''
-## 5. Fast separable teaching analog
+## 5. A trained CPU MLP baseline
 
-To keep the required path CPU-only, we freeze random tanh branch and trunk
-features, multiply them elementwise, and fit ridge coefficients. This preserves
-the separable operator idea but **is not a trained DeepONet**. Its purpose is to
-make the split, baseline, ensemble, and failure analysis executable.
+Train three 96-unit tanh layers on (Mach, x, y), with equal standardized-target
+MSE. Input/output scalers use training cases only. Select the best epoch using
+the four whole validation cases, with a fixed 300-epoch budget, 40-epoch
+patience and seed 760. No random-row validation or held-out tuning is used.
+This is an MLP, **not a DeepONet**. The old random-feature ridge underfit even
+the training fields and is no longer the required teaching model.
 
-**Prediction prompt:** Will this low-capacity analog beat field interpolation?
+**Prediction prompt:** Will this trained model beat field interpolation?
 Why might a more complex model still be valuable for unstructured meshes,
 multiple geometry parameters, or unavailable bracketing cases?
 '''),
     code(r'''
 started = time.perf_counter()
-ensemble = fit_separable_ridge_ensemble(
-    data, masks["train"], members=5, latent_dim=64, alpha=1e-3, seed=760
+model = fit_cylinder_mlp(
+    data, masks["train"], masks["validation"], epochs=300, patience=40, seed=760
 )
-print(f"Five-member CPU fit: {time.perf_counter() - started:.2f} s")
+print(f"CPU MLP fit: {time.perf_counter() - started:.2f} s; selected epoch {model.best_epoch}")
 
 operator_rows = []
 predictions = {}
-spreads = {}
 for split_name, mask in masks.items():
-    mean, spread = ensemble_predict(
-        ensemble, data.mach_inf[mask], data.x[mask], data.y[mask]
-    )
-    predictions[split_name], spreads[split_name] = mean, spread
+    mean = model.predict(data.mach_inf[mask], data.x[mask], data.y[mask])
+    predictions[split_name] = mean
     errors = relative_l2(data.targets[mask], mean)
-    coverage = np.mean(np.abs(data.targets[mask] - mean) <= 2 * spread, axis=0)
     operator_rows.append({
         "split": split_name,
         **{f"L2 {name}": value for name, value in zip(TARGET_NAMES, errors)},
-        **{f"2sigma {name}": value for name, value in zip(TARGET_NAMES, coverage)},
     })
 display(pd.DataFrame(operator_rows))
 '''),
     markdown(r'''
 ## 6. Error localization and uncertainty honesty
 
-Ensemble spread is epistemic disagreement under the selected architecture and
-training procedure. It is not automatically a calibrated probability interval.
-Report empirical coverage of $\mu\pm2s$ and inspect where the error is large.
-Low coverage means the ensemble is overconfident; increasing its member count
-does not by itself fix model bias.
+This single MLP does not estimate uncertainty. Report training, validation and
+held-out errors separately; large training error signals underfitting, not
+evidence against neural models as a class. An optional independent multi-seed
+study can measure variability, but ensemble spread alone is not calibrated UQ.
 '''),
     code(r'''
 mask = masks["interpolation"] & np.isclose(data.mach_inf, 8.5)
@@ -306,7 +314,7 @@ else:
 1. Give the three interpolation and three extrapolation relative-$L_2$ errors
    for both the strong baseline and the teaching operator.
 2. Identify one region where each method fails and connect it to cylinder-flow physics.
-3. Report two-sigma coverage per target and state whether the ensemble is calibrated.
+3. Report training error and explain why this single fit provides no calibrated uncertainty.
 4. Explain why a random point split would inflate the scientific claim.
 5. Propose one change that could justify a full Fusion-DeepONet experiment.
 
@@ -320,6 +328,8 @@ speedup, full-resolution fields, or uncertainty calibration from this notebook.
 
 
 def main() -> None:
+    for index, cell in enumerate(CELLS):
+        cell["id"] = hashlib.sha256(f"{index}:{cell['source']}".encode()).hexdigest()[:12]
     notebook = {
         "cells": CELLS,
         "metadata": {
@@ -331,7 +341,7 @@ def main() -> None:
         "nbformat_minor": 5,
     }
     target = HERE / "W7_1_Hypersonic_Rarefied_Cylinder_DeepONet.ipynb"
-    target.write_text(json.dumps(notebook, indent=1, ensure_ascii=False) + "\n", encoding="utf-8")
+    target.write_text(json.dumps(notebook, indent=1, ensure_ascii=False) + "\n", encoding="utf-8", newline="\n")
     print(f"Wrote {target}")
 
 
