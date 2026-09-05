@@ -68,6 +68,14 @@ identify an entire boundary row. Its result is saved separately as
 The raw archives remain unchanged. Fixing the boundary alone does not establish
 interior conservation, thermodynamic consistency, or the wall condition.
 
+The main profile figures now use the stored boundary-constrained prediction
+for V and label its zero value as a prescribed condition. The legacy comparison
+panels use the same stated boundary condition. Neither presents nonzero raw
+boundary values as a physical centerline result. Those values appear only in
+the separate audit below. The other fields, raw arrays, model weights and
+regression metrics are unchanged. A zero boundary profile does not define a
+relative L2 denominator and is not assigned a learned accuracy percentage.
+
 ![Boundary audit](symmetry_boundary_audit.png)
 
 ## Evidence and reproduction
@@ -77,6 +85,13 @@ python -m pip install -e .
 OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 python qa/run_nozzle_transport_validation.py --stage select
 OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 python qa/run_nozzle_transport_validation.py --stage evaluate
 python -m unittest discover -s tests -p test_nozzle_transport.py -v
+```
+
+To regenerate only the corrected profiles from the checked retained predictions,
+without refitting models or changing scores:
+
+```bash
+python qa/run_nozzle_transport_validation.py --stage profiles
 ```
 
 The retained run uses Python 3.12, NumPy 2.2.6, SciPy 1.15.3,

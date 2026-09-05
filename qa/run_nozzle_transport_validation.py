@@ -118,17 +118,31 @@ def select_models(data: dict, output: Path) -> dict:
 
 
 def plot_results(data: dict, indices: np.ndarray, old: np.ndarray,
-                 selected: np.ndarray, neural: np.ndarray, output: Path) -> list[Path]:
+                 selected: np.ndarray, neural: np.ndarray, output: Path,
+                 *, constrained: np.ndarray, profiles_only: bool = False) -> list[Path]:
     """Draw actual profiles and all six fields, with shared scales and full errors."""
     paths = []
     x, y = data["x_m"] * 1e6, data["y_m"] * 1e6
     centerline = int(data["centerline_index"])
+    if not np.allclose(data["y_m"][centerline], 92e-6, rtol=0, atol=1e-11):
+        raise ValueError("profile row does not match the documented symmetry plane")
+    if np.any(constrained[:, centerline, :, 2] != 0):
+        raise ValueError("profile prediction violates the supplied symmetry boundary")
     for local, index in enumerate(indices):
         pressure = int(data["pressure_kpa"][index])
         reference = np.stack([data[name][index] for name in FIELDS], axis=-1)
         errors = field_errors(reference, selected[local])
         fig, axes = plt.subplots(2, 3, figsize=(13.8, 7.6), layout="constrained")
         for channel, axis in enumerate(axes.flat):
+            if channel == 2:
+                axis.plot(x[centerline], constrained[local, centerline, :, channel],
+                          color="#008679", lw=2, label=r"Prescribed symmetry: $V=0$")
+                axis.set(xlabel=r"$x$ ($\mu$m)", ylabel=LABELS[channel],
+                         title="Symmetry boundary", ylim=(-0.5, 0.5), yticks=[-0.5, 0, 0.5])
+                axis.legend(loc="lower center", frameon=False, fontsize=9)
+                axis.grid(alpha=0.16)
+                axis.spines[["top", "right"]].set_visible(False)
+                continue
             axis.plot(x[centerline], reference[centerline, :, channel], color="#172B3A",
                       lw=1.6, marker="o", ms=2.4, markevery=4, label="DSMC reference")
             axis.plot(x[centerline], old[local, centerline, :, channel], color="#9B9FA5",
@@ -139,21 +153,18 @@ def plot_results(data: dict, indices: np.ndarray, old: np.ndarray,
                       lw=1.7, label="development-selected transport model")
             axis.set(xlabel=r"$x$ ($\mu$m)", ylabel=LABELS[channel])
             axis.set_title(f"Full-field error: {errors[channel]:.2f}%", fontsize=10)
-            if channel == 2:
-                axis.axhline(0, color="#B42318", lw=1.2, label="required symmetry V=0")
-                axis.set_title("Exported boundary V violates symmetry", color="#B42318", fontsize=10)
-                axis.text(0.02, 0.03, "Raw-data fit is not boundary validation",
-                          transform=axis.transAxes, fontsize=8, color="#B42318")
             axis.grid(alpha=0.16)
             axis.spines[["top", "right"]].set_visible(False)
         handles, labels = axes[0, 0].get_legend_handles_labels()
         fig.legend(handles, labels, loc="outside lower center", ncol=2, frameon=False, fontsize=9)
-        fig.suptitle(f"Micro-nozzle at {pressure} kPa | exported row y = 92 um", fontsize=16)
+        fig.suptitle(f"Micro-nozzle at {pressure} kPa | centerline y = 92 um", fontsize=16)
         for suffix in ("png", "pdf"):
             path = output / f"nozzle_P{pressure}_profiles.{suffix}"
             fig.savefig(path, dpi=220)
             paths.append(path)
         plt.close(fig)
+        if profiles_only:
+            continue
         fig, axes = plt.subplots(6, 3, figsize=(12.8, 15.0), layout="constrained")
         for channel in range(6):
             ref, prediction = reference[:, :, channel], selected[local, :, :, channel]
@@ -276,7 +287,7 @@ def evaluate(data: dict, selection: dict, output: Path) -> dict:
         start = time.perf_counter()
         predict_transport_pod(fitted, query)
         times.append(time.perf_counter() - start)
-    figures = plot_results(data, test, old, selected, neural, output)
+    figures = plot_results(data, test, old, selected, neural, output, constrained=constrained)
     figures.append(output / "symmetry_boundary_audit.png")
     report = {
         "schema_version": 1, "selected_branch": cfg["branch"], "selected_rank": cfg["rank"],
@@ -293,6 +304,7 @@ def evaluate(data: dict, selection: dict, output: Path) -> dict:
         "symmetry_boundary_y_m": 92e-6,
         "source_boundary_condition_defect": "exported nodal V is nonzero on the stated symmetry plane; raw fitting metrics are not physical validation",
         "symmetry_projection_scope": "separately stored prediction applies V=0 at known boundary, leaves interior unchanged, and is not used for the reported raw regression improvement",
+        "profile_v_semantics": "boundary-constrained prediction V=0; raw nonzero V curves appear only in the separate symmetry audit; other profile panels and all raw-label scores are unchanged",
         "metric_contract": "same historical FlowMLLab global, shock-window and gradient-weighted definitions for every model; article-local metrics are not assumed identical",
         "selected_fit_seconds": fit_seconds,
         "selected_prediction_seconds_per_case_median": float(np.median(times)/len(query)),
@@ -315,11 +327,29 @@ def main() -> None:
     """Run selection and evaluation in separate, reviewable phases if requested."""
     parser = argparse.ArgumentParser()
     parser.add_argument("--output-dir", type=Path, default=ROOT / "results/nozzle_transport")
-    parser.add_argument("--stage", choices=("select", "evaluate", "all"), default="all")
+    parser.add_argument("--stage", choices=("select", "evaluate", "profiles", "all"), default="all")
     args = parser.parse_args()
     output = args.output_dir.resolve()
     output.mkdir(parents=True, exist_ok=True)
     data = load_nozzle_fields(ROOT)
+    if args.stage == "profiles":
+        report = json.loads((output / "report.json").read_text())
+        if report["source_archive_sha256"] != sha256(ROOT / "results/mahdavi_deeponet/nozzle_fields_15cases.npz"):
+            raise ValueError("retained predictions and source archive differ")
+        path = output / "predictions.npz"
+        if report["model_and_predictions_sha256"][path.name] != sha256(path):
+            raise ValueError("retained prediction hash mismatch")
+        with np.load(path, allow_pickle=False) as stored:
+            indices = np.array([int(np.flatnonzero(data["pressure_kpa"] == p)[0])
+                                for p in stored["pressure_kpa"]])
+            figures = plot_results(data, indices, stored["previous"], stored["selected"],
+                                   stored["neural"], output,
+                                   constrained=stored["symmetry_constrained"], profiles_only=True)
+        report["figures_sha256"].update({p.name: sha256(p) for p in figures})
+        report["profile_v_semantics"] = "boundary-constrained prediction V=0; raw nonzero V curves appear only in the separate symmetry audit; other profile panels and all raw-label scores are unchanged"
+        (output / "report.json").write_text(json.dumps(report, indent=2, sort_keys=True) + "\n")
+        print("Regenerated three profile figures from unchanged retained predictions.")
+        return
     if args.stage in {"select", "all"}:
         select_models(data, output)
     if args.stage in {"evaluate", "all"}:

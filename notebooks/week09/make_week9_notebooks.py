@@ -837,6 +837,12 @@ global, shock-window, and density-gradient-weighted metrics for both methods,
 an error heatmap, a 6-by-3 centerline comparison, and full 2-D comparisons.
 Article numbers remain in their own immutable CSV; no difference column is
 computed between non-commensurate evidence levels.
+
+In the centerline figure, the $V$ panels show the prescribed symmetry condition
+$V=0$, not the inconsistent exported boundary samples. Raw $V$ curves remain
+in the separate symmetry audit below. No learned accuracy or relative error
+against a zero boundary profile is claimed; all CSV regression metrics still
+refer to the original raw fields.
 """),
         code(r"""
 command = [
@@ -936,7 +942,11 @@ The mass-flow profile error is also recorded (1.14%, 3.06%, and 2.07% for the
 selected model); this does not mean exact conservation. Even the source DSMC
 fields have about 6% streamwise mass-flow spread under this discrete diagnostic.
 The historical shock-window definition is retained for matched comparisons;
-the independently corrected station error is reported separately.
+the independently corrected station error is reported separately. The displayed
+$V$ centerline uses the separately stored boundary-constrained prediction;
+this plotting correction leaves model weights, raw fields, and scores unchanged.
+To rebuild just these panels, run
+`python qa/run_nozzle_transport_validation.py --stage profiles`.
 
 ## 7. Retained full-model paper evidence
 

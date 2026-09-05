@@ -77,5 +77,28 @@
     "Recover article checkpoint and identical evaluation contract",
     "Improve and assess the 30 kPa failure on independent new cases",
     "Build and record an actual PhysicsNeMo/PyTorch GPU recipe before proposing integration"
-  ]
+  ],
+  "profile_fix_validation": {
+    "date": "2026-09-05",
+    "profile_boundary": "V=0 is prescribed on the documented y=92 micrometre symmetry plane; not a learned accuracy score",
+    "tests": {
+      "ran": 91,
+      "passed": 88,
+      "skipped": 3
+    },
+    "smoke": "pass",
+    "repository_qa": "pass",
+    "notebook": [
+      {
+        "notebook": "notebooks/week09/W9_Lab2_Shock_Aligned_Nozzle_DeepONet_Student.ipynb",
+        "execution_mode": "IPython in process; Jupyter socket transport unavailable",
+        "status": "pass",
+        "seconds": 14.37,
+        "cells": 25
+      }
+    ],
+    "pdf": "Week 9 rebuilt; updated profile pages rendered and visually verified",
+    "raw_source_model_and_score_changes": false,
+    "latest_main_included": "7b6c225a237c1ee43a60f301ecb658b2bbce3de8"
+  }
 }
