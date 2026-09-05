@@ -39,7 +39,7 @@ the distributions, companion note and contour overview. The source archive
 contains the full retained course tree; the large private research ZIP and
 original checkpoint are not redistributed.
 
-The existing GitHub–Zenodo integration should archive this release within
-the FlowMLLab family (concept DOI **10.5281/zenodo.22074169**). A version DOI
-will be cited only after a matching Zenodo record is confirmed; the v1.4.0
-DOI **10.5281/zenodo.22315623** must not be relabeled as v1.4.1.
+The GitHub–Zenodo integration archived this release with version DOI
+[10.5281/zenodo.22348207](https://doi.org/10.5281/zenodo.22348207), within
+the FlowMLLab family (concept DOI **10.5281/zenodo.22074169**).
+The v1.4.0 DOI **10.5281/zenodo.22315623** remains unchanged.
