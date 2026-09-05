@@ -18,6 +18,7 @@ solver tests, not a Python surrogate or fabricated output.
 | Truncated final output | Correctly rejected |
 | Mock Slurm pipeline | Correct `afterok` build → pilot → collect; single-node/export rules |
 | Partial Slurm submission failure | Previously submitted job ID retained |
+| Published bootstrap downloaded from GitHub and executed with a mock `sbatch` | Passed; all three dependencies and saved IDs verified; no real jobs submitted |
 | Python compilation and Bash syntax | Passed |
 | MPI executable compilation against MPICH 4.3.2 | Passed locally |
 | Local 2-rank MPI execution | **Blocked at MPI initialization** by runtime socket restrictions; no MPI pass claimed |

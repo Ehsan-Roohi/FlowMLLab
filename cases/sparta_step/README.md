@@ -96,9 +96,10 @@ That larger run is not automatically submitted.
 Use a full **FlowMLLab commit SHA**, not `main`, in the download URL and argument:
 
 ```bash
-(set -o pipefail; curl -fsSL --retry 3 https://raw.githubusercontent.com/Ehsan-Roohi/FlowMLLab/FLOW_COMMIT/cases/sparta_step/submit_unity.sh | bash -s -- FLOW_COMMIT)
+(set -o pipefail; curl -fsSL --retry 3 https://raw.githubusercontent.com/Ehsan-Roohi/FlowMLLab/FLOW_COMMIT/cases/sparta_step/submit_unity.sh | bash -s -- FLOW_COMMIT) || echo SPARTA_SUBMIT_FAILED_TERMINAL_REMAINS_OPEN
 ```
 
+The final `|| echo` also guards a login shell that already has `set -e` enabled.
 The command runs in child shells, preserves the login shell and HOME, and does
 not edit existing Conda environments or existing FlowMLLab checkouts. It creates
 a unique directory under:
@@ -131,7 +132,7 @@ Set `FLOW_SPARTA_BASE` to select a different scratch base.
 Status, without changing shell options:
 
 ```bash
-(B=/scratch4/workspace/roohie_umass_edu-mfc-a40-cv/flowmllab-sparta-step; O=$(cat "$B/LATEST_SPARTA_STEP_PILOT") && python3 -I "$O/code/pilot.py" status --out "$O")
+(B=/scratch4/workspace/roohie_umass_edu-mfc-a40-cv/flowmllab-sparta-step; O=$(cat "$B/LATEST_SPARTA_STEP_PILOT") && python3 -I "$O/code/pilot.py" status --out "$O") || echo SPARTA_STATUS_FAILED
 ```
 
 ## Output contract
