@@ -76,3 +76,5 @@ jobs:
           cmake --build "$RUNNER_TEMP/step-kk" -j2
       - name: Exercise Kokkos styles and CPU to Kokkos restart conversions
         run: python3 -I cases/sparta_step/verify_gpu.py --cpu-binary "$RUNNER_TEMP/step-cpu/src/spa_mpi" --kokkos-binary "$RUNNER_TEMP/step-kk/src/spa_kokkos_serial"
+      - name: Kill CPU and Kokkos runs mid-sampling and recover sealed checkpoints
+        run: python3 -I cases/sparta_step/verify_gpu_resume.py --cpu-binary "$RUNNER_TEMP/step-cpu/src/spa_mpi" --kokkos-binary "$RUNNER_TEMP/step-kk/src/spa_kokkos_serial"

@@ -36,7 +36,8 @@ def main():
         # Exercise exact production benchmark time segmentation on a cheap mesh.
         row=gpu.benchmark_row(gpu.campaign.SEEDS[0]);row.update(nx=20,ny=100,ppc=8)
         path=out/'timed-small'
-        gpu.campaign.generate_case(path,row,out/'preflight/cpu-fresh-h50/restart.final','smoke',smoke=True)
+        fresh, _, _ = gpu.checkpoint.completed(out/'preflight/cpu-fresh-h50')
+        gpu.campaign.generate_case(path,row,fresh/'restart.final','smoke',smoke=True)
         gpu.kk_deck(path/'in.step')
         result=gpu.execute(path,gpu.command(kk,'kokkos',a.launcher,host_kokkos=True,serial=a.serial),timeout=300)
         gpu.validate_case(path)

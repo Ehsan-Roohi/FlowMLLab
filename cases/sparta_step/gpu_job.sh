@@ -5,7 +5,20 @@ OUT="${SPARTA_GPU_OUT:?Missing GPU benchmark output directory}"
 CODE="$OUT/code"
 trap 'rc=$?; printf "SPARTA_GPU_JOB_FAILED rc=%s line=%s\n" "$rc" "$LINENO" >&2; exit "$rc"' ERR
 cd "$OUT"
+exec 9>"$OUT/execution.lock"
+flock -n 9 || { echo GPU_RUN_ALREADY_ACTIVE >&2; exit 1; }
 sha256sum -c code.sha256
+# Slurm REQUEUE restarts the entire batch script; partial CMake builds and
+# committed solver arms live on shared scratch and must survive this restart.
+if (( ${SLURM_RESTART_COUNT:-0} >= 8 )); then
+  echo PREEMPT_RETRY_LIMIT_REACHED >&2; exit 1
+fi
+ATTEMPT="${SLURM_JOB_ID}-r${SLURM_RESTART_COUNT:-0}"
+if [[ -d "$OUT/allocation-records" && ! -d "$OUT/allocation-records/$ATTEMPT" ]]; then
+  FLOW_STARTS="$(find "$OUT/allocation-records" -mindepth 1 -maxdepth 1 -type d | wc -l)"
+  if (( FLOW_STARTS >= 8 )); then echo PREEMPT_RETRY_LIMIT_REACHED >&2; exit 1; fi
+fi
+mkdir -p "$OUT/allocation-records/$ATTEMPT"
 export PYTHONNOUSERSITE=1 OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1
 unset PYTHONPATH PYTHONHOME OMPI_CXX MPICH_CXX
 module purge
@@ -27,7 +40,9 @@ nvidia-smi
 import json,sys
 p=sys.argv[1]
 d=json.load(open(p));d.update(mpi_launcher=sys.argv[2],mpi_compiler=sys.argv[3])
-with open(p,'w') as f: json.dump(d,f,indent=2)
+with open(p+'.pending','w') as f: json.dump(d,f,indent=2)
+import os
+os.replace(p+'.pending',p)
 PY
 # Use system CMake when sufficient; otherwise a private tool-only venv, never ~/.local.
 if command -v cmake >/dev/null && "$PYTHON" -I -c 'import re,subprocess; v=re.search(r"(\d+)\.(\d+)",subprocess.check_output(["cmake","--version"],text=True)); raise SystemExit(tuple(map(int,v.groups())) < (3,22))'; then
@@ -38,8 +53,11 @@ else
   CMAKE="$OUT/cmake-tools/bin/cmake"
 fi
 "$CMAKE" --version
-nvcc -std=c++20 "$CODE/cuda_probe.cu" -o "$OUT/cuda-probe"
-"$OUT/cuda-probe" > "$OUT/cuda-device.json"
+nvcc -std=c++20 "$CODE/cuda_probe.cu" -o "$OUT/cuda-probe.pending"
+mv "$OUT/cuda-probe.pending" "$OUT/cuda-probe"
+"$OUT/cuda-probe" > "$OUT/cuda-device.json.pending"
+mv "$OUT/cuda-device.json.pending" "$OUT/cuda-device.json"
+cp "$OUT/cuda-device.json" "$OUT/allocation-records/$ATTEMPT/"
 ARCH="$("$PYTHON" -I - "$OUT" <<'PY'
 import json,pathlib,sys
 p=pathlib.Path(sys.argv[1]);h=json.loads((p/'cuda-device.json').read_text());c=json.loads((p/'manifest.json').read_text())
@@ -51,10 +69,14 @@ PY
 cat "$OUT/cuda-device.json"
 echo CUDA_KERNEL_PREFLIGHT_PASS
 SOURCE="$OUT/source"
-git init "$SOURCE"
-git -C "$SOURCE" remote add origin https://github.com/sparta/sparta.git
-git -C "$SOURCE" fetch --depth 1 origin 95b9abaa8bd548991cc3c3f1c58b34722f7ade74
-git -C "$SOURCE" checkout --detach FETCH_HEAD
+if [[ ! -d "$SOURCE/.git" ]]; then git init "$SOURCE"; fi
+if ! git -C "$SOURCE" remote get-url origin >/dev/null 2>&1; then
+  git -C "$SOURCE" remote add origin https://github.com/sparta/sparta.git
+fi
+if ! git -C "$SOURCE" cat-file -e 95b9abaa8bd548991cc3c3f1c58b34722f7ade74^{commit} 2>/dev/null; then
+  git -C "$SOURCE" fetch --depth 1 origin 95b9abaa8bd548991cc3c3f1c58b34722f7ade74
+fi
+git -C "$SOURCE" checkout --detach 95b9abaa8bd548991cc3c3f1c58b34722f7ade74
 test "$(git -C "$SOURCE" rev-parse HEAD)" = 95b9abaa8bd548991cc3c3f1c58b34722f7ade74
 # Separate out-of-source builds; same revision, MPI ABI and optimization level.
 "$CMAKE" -S "$SOURCE/cmake" -B "$OUT/build-cpu" \
@@ -80,5 +102,6 @@ GPU_MPI="$(awk '$1 ~ /^libmpi\.so/ {print $3; exit}' "$OUT/gpu-libraries.txt")"
 test -n "$CPU_MPI"
 test "$CPU_MPI" = "$GPU_MPI"
 sha256sum "$CPU_MPI" > "$OUT/mpi-library.sha256"
+cp "$OUT/binary.sha256" "$OUT/mpi-library.sha256" "$OUT/allocation-records/$ATTEMPT/"
 "$PYTHON" -I "$CODE/gpu_benchmark.py" run --out "$OUT"
 "$PYTHON" -I "$CODE/gpu_benchmark.py" pack --out "$OUT"
