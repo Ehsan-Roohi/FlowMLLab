@@ -1,6 +1,21 @@
 #!/usr/bin/env bash
 # Batch child process only. Preserve HOME; never source into a login shell.
 set -euo pipefail
+flowml_cuda_runtime_dir() {
+  local toolkit candidate resolved
+  toolkit="$(dirname "$(dirname "$(readlink -f "$1")")")"
+  for candidate in "$toolkit/lib64" "$toolkit/targets/x86_64-linux/lib"; do
+    if [[ -r "$candidate/libcudart.so.12" ]]; then
+      resolved="$(readlink -f "$candidate/libcudart.so.12")"
+      case "$resolved" in
+        */stubs/*) continue ;;
+        "$toolkit"/*) dirname "$resolved"; return 0 ;;
+      esac
+    fi
+  done
+  echo CUDA12_RUNTIME_NOT_IN_SELECTED_TOOLKIT >&2
+  return 1
+}
 OUT="${SPARTA_GPU_OUT:?Missing GPU benchmark output directory}"
 CODE="$OUT/code"
 trap 'rc=$?; printf "SPARTA_GPU_JOB_FAILED rc=%s line=%s\n" "$rc" "$LINENO" >&2; exit "$rc"' ERR
@@ -25,6 +40,12 @@ module purge
 # These module names are published in Unity's module usage documentation.
 module load cuda/12.6 openmpi/5.0.3-cuda12.6
 module list
+# Unity's module exposes nvcc but not libcudart in the runtime search path.
+# Resolve only this compiler's toolkit, never CUDA stubs or another installation.
+CUDA_RUNTIME_DIR="$(flowml_cuda_runtime_dir "$(command -v nvcc)")"
+export LD_LIBRARY_PATH="$CUDA_RUNTIME_DIR${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
+readlink -f "$CUDA_RUNTIME_DIR/libcudart.so.12" > "$OUT/allocation-records/$ATTEMPT/cuda-runtime-path.txt"
+sha256sum "$CUDA_RUNTIME_DIR/libcudart.so.12" > "$OUT/allocation-records/$ATTEMPT/cuda-runtime.sha256"
 export TMPDIR="$(mktemp -d "/tmp/stepgpu-${SLURM_JOB_ID}-XXXXXXXX")"
 export OMPI_MCA_orte_tmpdir_base="$TMPDIR" PRTE_MCA_prte_tmpdir_base="$TMPDIR"
 PYTHON="$(command -v python3)"
@@ -95,8 +116,12 @@ sha256sum "$OUT/build-cpu/src/spa_mpi" "$OUT/build-gpu/src/spa_kokkos_cuda" > "$
 ldd "$OUT/build-cpu/src/spa_mpi" > "$OUT/cpu-libraries.txt"
 ldd "$OUT/build-gpu/src/spa_kokkos_cuda" > "$OUT/gpu-libraries.txt"
 if grep -q 'not found' "$OUT/cpu-libraries.txt" "$OUT/gpu-libraries.txt"; then
+  grep 'not found' "$OUT/cpu-libraries.txt" "$OUT/gpu-libraries.txt" >&2
   echo UNRESOLVED_BINARY_LIBRARY >&2; exit 1
 fi
+GPU_CUDART="$(awk '$1 ~ /^libcudart\.so/ {print $3; exit}' "$OUT/gpu-libraries.txt")"
+test -n "$GPU_CUDART"
+test "$(readlink -f "$GPU_CUDART")" = "$(readlink -f "$CUDA_RUNTIME_DIR/libcudart.so.12")"
 CPU_MPI="$(awk '$1 ~ /^libmpi\.so/ {print $3; exit}' "$OUT/cpu-libraries.txt")"
 GPU_MPI="$(awk '$1 ~ /^libmpi\.so/ {print $3; exit}' "$OUT/gpu-libraries.txt")"
 test -n "$CPU_MPI"

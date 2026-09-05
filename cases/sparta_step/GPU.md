@@ -144,6 +144,16 @@ repeating a migration command prints its saved status instead of creating anothe
 
 ## Build and validation boundaries
 
+The 2026-09-05 A40 allocation 64023942 built both binaries but stopped at the
+shared-library gate: Unity's CUDA module put `nvcc` on PATH without adding
+`libcudart.so.12` to the runtime search path. No solver timing resulted. The
+launcher now resolves that library only inside the selected compiler's toolkit,
+records its path/hash per allocation, prepends its directory for batch children,
+and verifies the linked GPU library matches it. It does not install packages,
+change the login environment, or accept a CUDA stub/another toolkit. The Linux
+regression is `python qa/test_sparta_cuda_runtime.py`; a real GPU benchmark is
+still required after these path-resolution tests.
+
 The bundled Kokkos is 5.0.2, requiring C++20, CMake >=3.22 and NVCC >=12.2.
 The upstream CUDA preset defaults to Hopper90, so A40 explicitly selects
 AMPERE86 and A100 AMPERE80. A tiny CUDA kernel fails early on a toolkit/driver or
