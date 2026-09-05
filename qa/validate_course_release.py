@@ -42,6 +42,16 @@ REQUIRED = [
     "flowmllab/mahdavi_deeponet.py",
     "flowmllab/aescte_dsmc.py",
     "flowmllab/probabilistic_uq.py",
+    "flowmllab/feature_reconstruction.py",
+    "tests/test_feature_reconstruction.py",
+    "qa/build_week11_12_materials.py",
+    "qa/verify_week11_12_materials.py",
+    "notebooks/week11/W11_Shock_Vortex_Identification.ipynb",
+    "notebooks/week12/W12_DSMC_Moment_Reconstruction.ipynb",
+    "lectures/week11_shock_vortex_identification.pdf",
+    "lectures/week12_dsmc_moment_reconstruction.pdf",
+    "results/week11_12_teaching/week11_teaching.png",
+    "results/week11_12_teaching/week12_teaching.png",
     "tests/test_core.py",
     "tests/test_cavity_rom.py",
     "tests/test_cylinder_lbm.py",
@@ -342,6 +352,7 @@ def validate_notebooks() -> tuple[int, int]:
         if relative.startswith((
             "notebooks/week02_1/", "notebooks/week08/",
             "notebooks/week09/", "notebooks/week10/",
+            "notebooks/week11/", "notebooks/week12/",
         )):
             assert len(ids) == len(cells), f"missing cell id in current teaching notebook: {path}"
         for index, cell in enumerate(cells):
@@ -361,7 +372,7 @@ def validate_notebooks() -> tuple[int, int]:
                 for cell in cells
             ), f"missing learner-edition marker: {path}"
         count += 1
-    assert count == 25, f"expected 25 notebooks, found {count}"
+    assert count == 27, f"expected 27 notebooks, found {count}"
     return count, code_cells
 
 
@@ -1006,7 +1017,7 @@ def validate_hypersonic_cylinder_results() -> dict[str, object]:
 
 def validate_pdfs() -> int:
     pdfs = sorted((ROOT / "lectures").glob("*.pdf"))
-    assert len(pdfs) == 11
+    assert len(pdfs) == 13
     for path in pdfs:
         result = subprocess.run(
             ["pdfinfo", str(path)], check=True, capture_output=True, text=True

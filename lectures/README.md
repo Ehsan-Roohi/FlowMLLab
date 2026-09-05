@@ -16,6 +16,17 @@
 
 Editable sources are included in `source/` where they were available. The PDF is the authoritative rendered lecture for this release; Week 2.1 also includes an editable PPTX and its deterministic JavaScript builder.
 
+## Weeks 11 and 12 (working course, after v1.4.1)
+
+| Lecture | Notebook | Editable source |
+| --- | --- | --- |
+| [Week 11: shock and vortex identification](week11_shock_vortex_identification.pdf) | [CPU lab](../notebooks/week11/W11_Shock_Vortex_Identification.ipynb) | [Lecture notes](source/week11_shock_vortex_identification.md) |
+| [Week 12: DSMC moment reconstruction](week12_dsmc_moment_reconstruction.pdf) | [CPU lab](../notebooks/week12/W12_DSMC_Moment_Reconstruction.ipynb) | [Lecture notes](source/week12_dsmc_moment_reconstruction.md) |
+
+Each has eight lecture-note pages, worked concepts, an executed classroom figure
+and assessment prompts. Research attribution and synthetic-teaching scope are
+explicit; neither notebook claims to reproduce the original research model.
+
 ## Week 10.1 reading companion
 
 [Ab initio collision DeepONet](week10_1_abinitio_collision_deeponet.md) is a

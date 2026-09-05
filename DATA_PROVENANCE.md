@@ -37,6 +37,28 @@ publication was requested by Ehsan Roohi; no blanket license is inferred for
 the original dataset, checkpoint or third-party solver. Only derived figures,
 provenance and the new plotting code are published, not the source archive.
 
+## Weeks 11 and 12: research-informed classroom analogs
+
+Week 11 is based on Ehsan Roohi's author-supplied 2026 manuscript,
+*Physics-audited joint neural segmentation of shocks and vortex cores:
+cross-solver transfer and controlled airfoil--cylinder studies*, and its
+[ShockVortexML research repository](https://github.com/Ehsan-Roohi/ShockVortexML).
+Week 12 cites Ehsan Roohi, *Geometry-native machine learning reconstruction of
+DSMC moment fields with support monitoring*,
+[arXiv:2609.01637](https://doi.org/10.48550/arXiv.2609.01637) (2026), confirmed by
+the author as the JCP-submitted manuscript intended for this course extension.
+Neither is described here as an already-published JCP article.
+
+The author requested these weeks explicitly after the v1.4.1 release. Their
+lecture wording, diagnostic code, analytic fields and Gaussian noisy-block
+experiments are original AI-assisted teaching additions. Unlike the imported
+research cases above, **these new notebooks do not contain original CFD/DSMC
+research data**: all generated values are labelled classroom analogs. They do
+not reproduce the research dual-decoder network, MambaIR prior, nine-field
+cylinder estimator, original checkpoints or article metrics. No private
+manuscript ZIP, solver code or research data is redistributed. See the
+[executed figures and scope](results/week11_12_teaching/README.md).
+
 ## Scope that has not been established
 
 The BGK and polyatomic-shock parts of PoF 057108 are not automatically reproduced

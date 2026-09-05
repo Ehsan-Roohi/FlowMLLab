@@ -37,6 +37,17 @@
 | 10C | Mono/diatomic shock operators | Fit POD trunks and Mach branches; compare interpolation and one-sided extrapolation | Density/velocity/temperature profiles; translational overshoot; rotational lag; fixed error gates |
 | [10.1](lectures/week10_1_abinitio_collision_deeponet.md) (reading companion) | Ab initio collision-angle DeepONet inside DSMC | Inspect author-supplied Jäger cylinder contours, shared colors and time metadata | Distinguish microscopic maps from whole-field surrogates; later DeepONet versus article MLP; asynchronous outputs; no speedup or convergence claim |
 
+## New research-informed weeks (working course after v1.4.1)
+
+| Module | Concept | Executable exercise | Evidence and limits |
+| --- | --- | --- | --- |
+| [11](notebooks/week11/README.md) | Shock/core identification; shear versus rotation; overlapping labels | Manufactured controls, trained local MLP, physical baseline | Complete-case splits, validation-only thresholds, both tasks and fragmentation; not research CFD or the original dual-decoder network |
+| [12](notebooks/week12/README.md) | Additive moments, prior-plus-observation reconstruction, support | Particle algebra, scalar DCT gain, paired synthetic sampling comparisons | Mean and gradient checks, independent noisy reference, support abstention; not a MambaIR or nine-field cylinder reproduction |
+
+Each includes a PDF lecture and an executed CPU notebook. Week 12 follows
+Week 11 because noise-sensitive derivatives connect feature detection to field
+reconstruction; it can also be taught directly after Weeks 3 and 10.
+
 ## Suggested adoption modes
 
 ### One-day workshop

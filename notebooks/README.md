@@ -6,6 +6,13 @@ only for notebooks that explicitly require CUDA.
 
 ## One-click Colab launcher
 
+The working course now includes Weeks 11 and 12 (after archived v1.4.1):
+
+- [Week 11: shock and vortex identification](week11/README.md) · [Open in Colab](https://colab.research.google.com/github/Ehsan-Roohi/FlowMLLab/blob/main/notebooks/week11/W11_Shock_Vortex_Identification.ipynb)
+- [Week 12: noisy DSMC moment reconstruction](week12/README.md) · [Open in Colab](https://colab.research.google.com/github/Ehsan-Roohi/FlowMLLab/blob/main/notebooks/week12/W12_DSMC_Moment_Reconstruction.ipynb)
+
+Both are CPU teaching analogs, clearly separated from research-model reproduction.
+
 | Module | Notebook | Launch |
 | --- | --- | --- |
 | Week 1 | Python for CFD and AI | [Open in Colab](https://colab.research.google.com/github/Ehsan-Roohi/FlowMLLab/blob/main/notebooks/week01/01_python_for_cfd_ai_fluids.ipynb) |

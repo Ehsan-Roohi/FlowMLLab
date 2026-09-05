@@ -9,7 +9,7 @@ generate numerical data, compare transparent baselines with learned models, and
 check both prediction error and physical fidelity.
 
 Developed for **MIE 690A: AI in Fluid Mechanics**, University of Massachusetts
-Amherst. The course includes **25 notebooks and 12 lectures** (11 PDFs), plus a Week 10.1 reading companion, from
+Amherst. The working course includes **27 notebooks and 14 lectures** (13 PDFs), plus a Week 10.1 reading companion, from
 numerical foundations to continuum and rarefied-flow research examples.
 
 ## Start here
@@ -19,7 +19,7 @@ research by Ehsan Roohi and collaborators, then brought into FlowMLLab for
 teaching. The course adds new code and baselines, not a new origin for those
 data. See [per-case papers, data lineage, reuse limits and AI-assistance
 disclosure](DATA_PROVENANCE.md). v1.4.0 remains the frozen archive; this cycle
-is consolidated in v1.4.1, including the author-requested Week 10.1 reading companion, with no new training notebook.
+was consolidated in v1.4.1, including the author-requested Week 10.1 reading companion, with no new training notebook in that archive. The subsequently requested Weeks 11 and 12 extend the working course with two explicitly labelled teaching analogs.
 
 | Your goal | Open |
 | --- | --- |
@@ -49,6 +49,8 @@ Weeks 5 and 6 share a project pack and lecture guide, but have separate learning
 | [9](#week-9--rarefied-micro-step-and-micro-nozzle) | Geometry-dependent and shock-aligned operators | [Week 9 labs](notebooks/week09/README.md) | [Lecture 9](lectures/week09_rarefied_deeponet_case_studies.pdf) |
 | [10](#week-10--dsmc-cavity-and-molecular-shocks) | Cavity and mono/diatomic shock reproduction | [Week 10 lab](notebooks/week10/README.md) | [Lecture 10](lectures/week10_dsmc_data_driven_surrogates.pdf) |
 | [10.1](#week-101--ab-initio-collision-deeponet) | Molecular scattering and DSMC cylinder contours | [Reading case and figures](results/abinitio_deeponet_cylinder/README.md) | [Lecture companion](lectures/week10_1_abinitio_collision_deeponet.md) |
+| [11](#week-11--shock-and-vortex-identification) | Physical diagnostics and overlapping learned labels | [Week 11 lab](notebooks/week11/README.md) | [Lecture 11](lectures/week11_shock_vortex_identification.pdf) |
+| [12](#week-12--dsmc-moment-reconstruction) | Additive moments, observation-conditioned reconstruction and support | [Week 12 lab](notebooks/week12/README.md) | [Lecture 12](lectures/week12_dsmc_moment_reconstruction.pdf) |
 
 ## Results gallery · in course order
 
@@ -203,6 +205,23 @@ Shared colors, **different times and sampling windows**: qualitative comparison 
 [All four colored fields and provenance](results/abinitio_deeponet_cylinder/README.md)
 · [Surface pressure and heat flux](results/abinitio_deeponet_cylinder/README.md#surface-pressure-and-heat-flux)
 · [Week 10.1 lecture companion](lectures/week10_1_abinitio_collision_deeponet.md)
+
+### Week 11 — Shock and vortex identification
+
+![Week 11 manufactured feature-detection controls](results/week11_12_teaching/week11_teaching.png)
+
+Original analytic teaching fields; a trained local MLP versus a physical baseline.
+Related to Roohi's [ShockVortexML research](https://github.com/Ehsan-Roohi/ShockVortexML),
+not a reproduction of its CFD fields or network. [Notebook and lecture](notebooks/week11/README.md).
+
+### Week 12 — DSMC moment reconstruction
+
+![Week 12 synthetic noisy-field reconstruction](results/week11_12_teaching/week12_teaching.png)
+
+Original synthetic sampling analog, not new DSMC results or a MambaIR reproduction.
+Based on the principles of [Roohi, arXiv:2609.01637](https://doi.org/10.48550/arXiv.2609.01637).
+[Notebook and lecture](notebooks/week12/README.md) · [Scope and reproduction](results/week11_12_teaching/README.md).
+Weeks 11 and 12 are working-course additions after v1.4.1, not part of its archived DOI.
 
 ## Reuse and contribute
 

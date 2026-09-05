@@ -8,6 +8,14 @@ This guide retains the detailed evidence, figures, protocols, and limitations be
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](../LICENSE)
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.22348207.svg)](https://doi.org/10.5281/zenodo.22348207)
 
+## Weeks 11 and 12: executed classroom analogs
+
+[Feature identification and noisy-moment reconstruction](../results/week11_12_teaching/README.md)
+includes one executed CPU notebook and a PDF lecture per week. The retained
+figures use manufactured fields and synthetic blocks, not original research
+CFD/DSMC data. All case-wise scores and limitation statements are in the notebooks.
+These working-course additions postdate the immutable v1.4.1 archive.
+
 ## Week 10.1 companion: ab initio collision DeepONet
 
 [Four colored cylinder fields and provenance](../results/abinitio_deeponet_cylinder/README.md)
