@@ -19,6 +19,17 @@ EXPECTED_DATA_SHA256 = "09b96b744ee4d18126d8dcc92feb60e128774a1b4d41bb3d8c90a63c
 
 
 REQUIRED = [
+    "flowmllab/modal_tools.py",
+    "flowmllab/modal_experiments.py",
+    "flowmllab/field_metrics.py",
+    "tests/test_modal_tools.py",
+    "qa/verify_modal_labs.py",
+    "data/modal_labs/manifest.json",
+    "results/modal_labs/metrics.json",
+    "notebooks/week05_06/W5_Lab2_Sparse_Sensing_Dynamics.ipynb",
+    "notebooks/week07/W7_Lab2_Modal_Forecasting.ipynb",
+    "lectures/week05_modal_sensing.pdf",
+    "lectures/week07_modal_forecasting.pdf",
     ".gitattributes",
     "README.md",
     "START_HERE.md",
@@ -372,7 +383,7 @@ def validate_notebooks() -> tuple[int, int]:
                 for cell in cells
             ), f"missing learner-edition marker: {path}"
         count += 1
-    assert count == 27, f"expected 27 notebooks, found {count}"
+    assert count == 29, f"expected 29 notebooks, found {count}"
     return count, code_cells
 
 
@@ -1017,7 +1028,7 @@ def validate_hypersonic_cylinder_results() -> dict[str, object]:
 
 def validate_pdfs() -> int:
     pdfs = sorted((ROOT / "lectures").glob("*.pdf"))
-    assert len(pdfs) == 13
+    assert len(pdfs) == 15
     for path in pdfs:
         result = subprocess.run(
             ["pdfinfo", str(path)], check=True, capture_output=True, text=True

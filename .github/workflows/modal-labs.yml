@@ -1,0 +1,25 @@
+name: Modal teaching companions
+on:
+  pull_request:
+    paths: ['flowmllab/**', 'qa/*modal*', 'tests/test_modal_tools.py', 'data/modal_labs/**', 'results/modal_labs/**', 'notebooks/week05_06/W5_Lab2*', 'notebooks/week07/W7_Lab2*', '.github/workflows/modal-labs.yml']
+  push:
+    paths: ['flowmllab/**', 'qa/*modal*', 'tests/test_modal_tools.py', 'data/modal_labs/**', 'results/modal_labs/**', 'notebooks/week05_06/W5_Lab2*', 'notebooks/week07/W7_Lab2*', '.github/workflows/modal-labs.yml']
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  execute:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python -m pip install -e . nbformat nbclient nbconvert ipykernel
+      - run: python -m unittest discover -s tests -p test_modal_tools.py -v
+      - run: python qa/verify_modal_labs.py --output tmp/modal-ci
+      - uses: actions/upload-artifact@v4
+        with:
+          name: executed-modal-companions
+          path: tmp/modal-ci/

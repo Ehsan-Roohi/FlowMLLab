@@ -39,6 +39,12 @@
 
 ## New research-informed weeks (working course after v1.4.1)
 
+Development companions within existing weeks (no new numbered week or DOI):
+[Week 5 sparse sensing/dynamics](notebooks/week05_06/W5_Lab2_Sparse_Sensing_Dynamics.ipynb)
+and [Week 7 modal forecasting](notebooks/week07/W7_Lab2_Modal_Forecasting.ipynb).
+Both share explicit field, ROI-edge, scalar-integral and temporal-spectrum
+metrics. [Protocol, all failures and provenance](results/modal_labs/README.md).
+
 | Module | Concept | Executable exercise | Evidence and limits |
 | --- | --- | --- | --- |
 | [11](notebooks/week11/README.md) | Shock/core identification; shear versus rotation; overlapping labels | Manufactured controls, trained local MLP, physical baseline | Complete-case splits, validation-only thresholds, both tasks and fragmentation; not research CFD or the original dual-decoder network |

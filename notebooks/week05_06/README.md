@@ -20,3 +20,12 @@ The available track notebooks are:
 
 The authoritative lecture and project map is
 `../../lectures/week05_06_project_guide.pdf`.
+
+## Development companion: sensing and sparse dynamics
+
+[W5 Lab2](W5_Lab2_Sparse_Sensing_Dynamics.ipynb) adds QR/D-optimal velocity
+sensor placement, five seeded random comparisons and an integral-SINDy bridge
+on previously generated author LBM fields. Read the
+[companion lecture](../../lectures/week05_modal_sensing.pdf) and
+[full protocol/results](../../results/modal_labs/README.md).
+This is a working-branch addition to Week 5, not a new numbered week or release.
