@@ -1,0 +1,44 @@
+{
+  "source_archive_sha256": "bda221759a372a2054ca4c76bde923febf0b682404b41f67cc190f9b03c71f7b",
+  "source_entries": [
+    {
+      "entry": "structured/StructuredGridM8.dat",
+      "sha256": "5348b42973e02ac0f03fccfb3f4e1707fe39da3ee1a38104852cbd2a3022fba8"
+    },
+    {
+      "entry": "structured/StructuredGridM85.dat",
+      "sha256": "b2b11baf883ab7d9484fd8ea6b990b38faf9dfd505326c652241a8726176df8f"
+    },
+    {
+      "entry": "structured/StructuredGridM9.dat",
+      "sha256": "6b42555176bd9b688f4e08a1aef4e01b4790a2601cf5153d581614353b2c2cee"
+    }
+  ],
+  "grid_shape": [
+    400,
+    400
+  ],
+  "freestream_mach": 8.5,
+  "baseline_mach": [
+    8,
+    9
+  ],
+  "common_valid_points": 142504,
+  "full_grid_baseline_relative_l2": {
+    "local_mach": 0.0017045664326583024,
+    "source_TOV": 0.003408170213376943,
+    "source_P": 0.003650264175076851
+  },
+  "rendering": {
+    "method": "masked contourf",
+    "levels": 161,
+    "spatial_smoothing": false,
+    "dpi": 300,
+    "pixels": [
+      3900,
+      1980
+    ]
+  },
+  "note": "Full-grid single-case scores; compact classroom metrics remain unchanged.",
+  "figure_sha256": "130a25f62cb56651801fe773fbd28927df7ea6a7a0cc80a32cbf7ec8dc4f6827"
+}

@@ -26,12 +26,14 @@ numerical foundations to continuum and rarefied-flow research examples.
 ### Rarefied hypersonic cylinder · Week 7.1
 
 Follow a bow shock through the author's DSMC fields and test prediction at an
-unseen freestream Mach number. The figure uses the retained **Mach 8.5** case;
-gray cells mark omitted solid/sentinel samples in the compact teaching grid.
+unseen freestream Mach number. The figure uses the original **400 × 400 Mach 8.5**
+DSMC field with continuous contours; gray marks the masked solid/sentinel region.
+The error panels use Mach-8/Mach-9 interpolation on this full grid
+([figure provenance](results/hypersonic_cylinder_week7_1/cylinder_homepage_provenance.json)).
 
 ![Rarefied-cylinder Mach 8.5: DSMC fields and whole-case interpolation errors](results/hypersonic_cylinder_week7_1/cylinder_homepage.png)
 
-Across the five held-out interpolation cases, the field-interpolation baseline
+Across the five held-out interpolation cases in the compact teaching dataset, the field-interpolation baseline
 has **0.398% local-Mach, 0.609% temperature, and 0.779% pressure relative L2 error**.
 The CPU teaching operator performs worse (19.6%, 28.1%, and 38.0%): students
 investigate that result alongside Fusion-DeepONet architecture and uncertainty.
