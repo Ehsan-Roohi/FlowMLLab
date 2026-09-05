@@ -154,24 +154,10 @@ learned inverse maps under matched budgets.
 
 ### Week 9 — Rarefied micro-step and micro-nozzle
 
-**Micro-step comparisons — one image row.** Select an image to open its full resolution.
+![Held-out H44 micro-step: DSMC and independent teaching-model contours](results/mahdavi_deeponet/step_independent_contours/held_out_H44_independent.png)
 
-<table>
-<tr>
-<th>Kn = 0.004 · article reconstruction</th>
-<th>H44 · article reconstruction</th>
-<th>H44 · independent teaching model</th>
-</tr>
-<tr>
-<td width="33%"><a href="results/mahdavi_deeponet/step_article_contours/article_figure_06_Kn0p004.png"><img src="results/mahdavi_deeponet/step_article_contours/article_figure_06_Kn0p004.png" alt="Micro-step Kn0.004 article DSMC and stored target-assisted model contours" width="100%"></a></td>
-<td width="33%"><a href="results/mahdavi_deeponet/step_article_contours/article_figure_15_H44.png"><img src="results/mahdavi_deeponet/step_article_contours/article_figure_15_H44.png" alt="Micro-step H44 article DSMC and stored target-assisted model contours" width="100%"></a></td>
-<td width="33%"><a href="results/mahdavi_deeponet/step_independent_contours/held_out_H44_independent.png"><img src="results/mahdavi_deeponet/step_independent_contours/held_out_H44_independent.png" alt="Held-out H44 DSMC and independent geometry-coordinate teaching model" width="100%"></a></td>
-</tr>
-</table>
-
-The two stored article comparisons use target-derived flow patches and are
-reconstruction evidence. The independent teaching model uses geometry and
-coordinates only. [Step evidence and provenance](results/mahdavi_deeponet/README.md)
+The independent H44 teaching model uses geometry and coordinates only.
+[Step evidence and provenance](results/mahdavi_deeponet/README.md)
 
 ![Micro-nozzle 25-kPa DSMC fields, selected registered POD model and absolute errors](results/nozzle_transport/nozzle_P25_fields.png)
 
