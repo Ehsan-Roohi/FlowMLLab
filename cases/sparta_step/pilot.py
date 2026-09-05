@@ -74,6 +74,7 @@ def generate(out, smoke=False, ratio=0.5, kn=0.01, pressure_ratio=2.0,
     meta = {
         "status": "generated", "level": "smoke" if smoke else "cost_and_boundary_pilot",
         "sparta_commit": SPARTA_COMMIT, "seed": seed,
+        "grid_partition": "block * * 1; balance_grid rcb cell before read_surf",
         "L_m": L, "H_m": H, "step_x_m": sx, "step_height_m": h, "h_over_H": ratio,
         "Kn_outlet_reference": kn, "lambda_outlet_reference_m": lam,
         "lambda_inlet_reference_m": lam / pressure_ratio, "tau_inlet_reference_s": tau_in,
@@ -120,7 +121,9 @@ dimension 2
 global gridcut 0.0
 boundary o s p
 create_box 0 {L:.17g} 0 {H:.17g} -0.5 0.5
-create_grid {nx} {ny} 1
+create_grid {nx} {ny} 1 block * * 1
+# gridcut=0 needs a clumped partition and ghost cells BEFORE surface marking.
+balance_grid rcb cell
 global nrho {nout:.17g} fnum {fnum:.17g}
 species nitrogen.species N2
 mixture gas N2 temp {T} vstream 0 0 0
@@ -129,7 +132,6 @@ read_surf step.surf
 surf_collide wall diffuse {T} 1.0
 surf_modify all collide wall
 bound_modify ylo yhi collide wall
-balance_grid rcb cell
 collide vss gas nitrogen.vss
 collide_modify rotate smooth vibrate no
 create_particles initial n 0

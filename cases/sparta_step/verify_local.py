@@ -18,16 +18,50 @@ spec.loader.exec_module(pilot)
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--binary", required=True)
+    parser.add_argument("--mpi-launcher", help="Path to mpirun/mpiexec; omitted for serial")
+    parser.add_argument("--ranks", type=int, default=2)
+    parser.add_argument("--geometry-only", action="store_true")
+    parser.add_argument("--check-legacy-failure", action="store_true")
     args = parser.parse_args()
     binary = str(Path(args.binary).resolve())
+    if args.ranks < 1:
+        parser.error("--ranks must be positive")
+    if args.check_legacy_failure and (not args.mpi_launcher or args.ranks < 2):
+        parser.error("--check-legacy-failure requires at least two MPI ranks")
+    launch = [args.mpi_launcher, "-np", str(args.ranks)] if args.mpi_launcher else []
     with tempfile.TemporaryDirectory(prefix="sparta-step-verification-") as work:
         root = Path(work)
-        for name, ratio, pr in [("h25", .25, 2), ("h50", .5, 2), ("h75", .75, 2), ("equilibrium", .5, 1)]:
+        if args.check_legacy_failure:
+            # Reproduce Unity job 64010511 with the old dispersed grid ordering.
+            old = root / "legacy_failure"
+            pilot.generate(old, smoke=True)
+            deck = (old / "in.step").read_text()
+            deck = deck.replace("create_grid 50 20 1 block * * 1", "create_grid 50 20 1 stride xyz")
+            deck = deck.replace("balance_grid rcb cell\n", "")
+            deck = deck.replace("collide vss gas", "balance_grid rcb cell\ncollide vss gas")
+            (old / "in.step").write_text(deck)
+            with open(old / "in.step") as inp, open(old / "solver.stdout", "w") as stdout:
+                failed = subprocess.run(launch + [binary], cwd=old, stdin=inp, stdout=stdout,
+                                        stderr=subprocess.STDOUT, timeout=120)
+            message = (old / "solver.stdout").read_text()
+            expected = "Cannot mark grid cells as inside/outside surfs because ghost cells do not exist"
+            if failed.returncode == 0 or expected not in message:
+                print(message[-12000:])
+                raise AssertionError("Legacy parallel failure was not reproduced")
+            print("LEGACY_MPI_GHOST_FAILURE_REPRODUCED", flush=True)
+        cases = [("h25", .25, 2), ("h50", .5, 2), ("h75", .75, 2)]
+        if not args.geometry_only:
+            cases.append(("equilibrium", .5, 1))
+        for name, ratio, pr in cases:
             out = root / name
             extra = {"ppc": 40, "warmup": 1000, "sample": 1000} if name == "equilibrium" else {}
             pilot.generate(out, smoke=True, ratio=ratio, pressure_ratio=pr, **extra)
             with open(out / "in.step") as inp, open(out / "solver.stdout", "w") as stdout:
-                subprocess.run([binary], cwd=out, stdin=inp, stdout=stdout, stderr=subprocess.STDOUT, check=True)
+                completed = subprocess.run(launch + [binary], cwd=out, stdin=inp, stdout=stdout,
+                                           stderr=subprocess.STDOUT, timeout=180)
+            if completed.returncode:
+                print((out / "solver.stdout").read_text()[-12000:])
+                raise AssertionError(f"SPARTA failed for {name}: {completed.returncode}")
             with contextlib.redirect_stdout(io.StringIO()):
                 result = pilot.report(out)
             assert result["stuck_particles"] == 0

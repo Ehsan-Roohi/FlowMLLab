@@ -1,0 +1,46 @@
+name: SPARTA step MPI regression
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'cases/sparta_step/**'
+      - '.github/workflows/sparta-step-mpi.yml'
+  pull_request:
+    paths:
+      - 'cases/sparta_step/**'
+      - '.github/workflows/sparta-step-mpi.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  mpi-regression:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    env:
+      OMP_NUM_THREADS: '1'
+      OMPI_MCA_rmaps_base_oversubscribe: '1'
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install MPI build dependencies
+        run: sudo apt-get update && sudo apt-get install -y g++ make openmpi-bin libopenmpi-dev
+      - name: Build pinned SPARTA MPI
+        shell: bash
+        run: |
+          set -euo pipefail
+          SOURCE="$RUNNER_TEMP/sparta-step-source"
+          git init "$SOURCE"
+          git -C "$SOURCE" remote add origin https://github.com/sparta/sparta.git
+          git -C "$SOURCE" fetch --depth 1 origin 95b9abaa8bd548991cc3c3f1c58b34722f7ade74
+          git -C "$SOURCE" checkout --detach FETCH_HEAD
+          test "$(git -C "$SOURCE" rev-parse HEAD)" = 95b9abaa8bd548991cc3c3f1c58b34722f7ade74
+          make -C "$SOURCE/src" -j2 mpi CC=mpicxx LINK=mpicxx
+          mpirun --version
+      - name: Verify one-rank solver and output checks
+        run: python3 -I cases/sparta_step/verify_local.py --binary "$RUNNER_TEMP/sparta-step-source/src/spa_mpi" --mpi-launcher mpirun --ranks 1
+      - name: Reproduce legacy failure and verify two ranks
+        run: python3 -I cases/sparta_step/verify_local.py --binary "$RUNNER_TEMP/sparta-step-source/src/spa_mpi" --mpi-launcher mpirun --ranks 2 --geometry-only --check-legacy-failure
+      - name: Reproduce legacy failure and verify four ranks
+        run: python3 -I cases/sparta_step/verify_local.py --binary "$RUNNER_TEMP/sparta-step-source/src/spa_mpi" --mpi-launcher mpirun --ranks 4 --geometry-only --check-legacy-failure

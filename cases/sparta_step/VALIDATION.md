@@ -22,7 +22,7 @@ solver tests, not a Python surrogate or fabricated output.
 | Python compilation and Bash syntax | Passed |
 | MPI executable compilation against MPICH 4.3.2 | Passed locally |
 | Local 2-rank MPI execution | **Blocked at MPI initialization** by runtime socket restrictions; no MPI pass claimed |
-| Unity OpenMPI 5.0.3 execution | Pending mandatory in-cluster build/preflight job |
+| Unity OpenMPI 5.0.3 execution | Original job 64010511 built and launched MPI, then failed during surface import; see correction below |
 
 For the equal-pressure control, the first/last-cell mean pressures were about
 30.244 and 31.779 kPa versus a 32.081 kPa reservoir, and mean bulk velocity was
@@ -55,3 +55,26 @@ Remaining scientific work: recover the exact Bird Kn reference state and gas
 relaxation settings, check reservoir treatment, establish stationarity and
 uncertainty, perform mesh/dt/PPC studies, and compare raw profiles at matched
 physical parameters. `training_data_approved=false` is intentional.
+
+## MPI surface-import correction after Unity job 64010511
+
+The user-supplied Unity log establishes that compilation and MPI startup worked.
+The failure occurred at `read_surf step.surf`, before any warmup steps:
+
+```
+WARNING: Could not acquire nearby ghost cells b/c grid partition is not clumped
+ERROR: Cannot mark grid cells as inside/outside surfs because ghost cells do not exist
+```
+
+Jobs 64010512 and 64010513 were cancelled by their dependencies; they did not
+independently crash. The original generated deck balanced the grid only after
+`read_surf`. The corrected deck explicitly creates processor blocks and performs
+RCB balancing before reading the surface. This ordering follows
+`CreateGrid::command`, `BalanceGrid::command`, and `Grid::set_inout` in the pinned
+upstream source.
+
+A dedicated MPI workflow now reproduces the original failure and checks the
+corrected geometries at two and four ranks. It also runs the full short
+verification suite at one rank. The workflow result on the exact fix commit,
+rather than the older serial results above, is the relevant regression evidence.
+A corrected Unity run and all physical convergence checks remain pending.

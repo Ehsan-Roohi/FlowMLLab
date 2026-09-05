@@ -82,6 +82,12 @@ the report. The particle weight uses **2D unit-depth cell area**, not L cubed.
 The step is aligned with the Cartesian mesh, its normals point into the fluid,
 and an in-solver `grid/check ... error` checks particle placement.
 
+For MPI, `create_grid ... block * * 1` explicitly starts with compact processor
+blocks. `balance_grid rcb cell` then runs **before** `read_surf`. With
+`global gridcut 0.0`, a dispersed partition cannot acquire nearby ghost cells,
+so surface inside/outside marking fails. Balancing after surface import is too
+late; a one-rank run cannot expose this error. This corrects Unity job 64010511.
+
 **This pilot does not meet the manuscript's stated cell size < lambda/3
 criterion.** At the reference inlet the largest cell size is about one mean
 free path. The point is to establish executable provenance, boundary behavior,
@@ -186,3 +192,15 @@ geometry and particle accounting, checks an equal-pressure equilibrium control,
 and confirms malformed output is rejected. Submission tests replace `sbatch`
 with a mock and verify dependency/failure handling without submitting jobs.
 See `VALIDATION.md` for the checks actually performed for this revision.
+
+An MPI regression workflow builds the same pinned SPARTA source and checks one,
+two and four ranks. For the two- and four-rank runs it first reproduces the old
+ghost-cell failure as a negative control, then runs all three corrected step
+geometries through final output validation:
+
+```bash
+python3 -I cases/sparta_step/verify_local.py --binary /absolute/path/to/spa_mpi --mpi-launcher mpirun --ranks 2 --geometry-only --check-legacy-failure
+```
+
+This verifies parallel initialization and short-run output integrity. It does
+not establish converged DSMC fields or Bird parity.
