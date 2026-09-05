@@ -201,6 +201,7 @@ DSMC generates these fields using exact-derived or DeepONet-derived angle tables
 this is not a whole-field neural prediction or reproduction of the article's MLP.
 Shared colors, **different times and sampling windows**: qualitative comparison only.
 [All four colored fields and provenance](results/abinitio_deeponet_cylinder/README.md)
+· [Surface pressure and heat flux](results/abinitio_deeponet_cylinder/README.md#surface-pressure-and-heat-flux)
 · [Week 10.1 lecture companion](lectures/week10_1_abinitio_collision_deeponet.md)
 
 ## Reuse and contribute

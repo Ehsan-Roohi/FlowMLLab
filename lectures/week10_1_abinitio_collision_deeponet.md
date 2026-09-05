@@ -1,7 +1,7 @@
 # Week 10.1 — Ab initio collision DeepONet
 
 Supplemental reading after Week 10; no new executable training notebook.
-[Retained colored fields](../results/abinitio_deeponet_cylinder/README.md).
+[Retained colored fields and surface profiles](../results/abinitio_deeponet_cylinder/README.md).
 
 ## Research source
 
@@ -72,6 +72,26 @@ package, 21 grid points had cosine discrepancies above 0.1. Independent
 quadrature agreed with the exact reference at those points to below 9e-10.
 Their effect on flow depends on which collision states the solver visits.
 Do not replace a collision-distribution-weighted assessment with a global mean.
+
+## Surface pressure and heating
+
+![Surface pressure and heat flux](../results/abinitio_deeponet_cylinder/surface_comparison.png)
+
+The previously prepared surface comparison uses reconstructed, non-overlapping
+increments ending at NOUT 88–98 in both runs. The figure's neural-derived
+table denotes DeepONet. The upstream stagnation region is near 180° in the
+archive's angle convention. Read pressure in Pa and wall heat flux in kW/m².
+
+The exact window spans tU/D=8.45938–9.52651 and the DeepONet window
+8.46433–9.53072: close, not identical. Relative spatial L2 differences are
+**0.4451% for pressure** and **1.0919% for heat flux** over 90 equal segments.
+These are descriptive between-run differences, not isolated surrogate errors.
+Shading represents four block means' range, not confidence bands; temporal
+variations are comparable to the differences between runs.
+
+See the [surface evidence and reconstruction method](../results/abinitio_deeponet_cylinder/README.md#surface-pressure-and-heat-flux)
+for the sampling-reset treatment, source archives and vector figure.
+Do not transfer these surface percentages to the asynchronous field contours.
 
 ## Discussion and assessment
 

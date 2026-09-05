@@ -15,7 +15,7 @@ without hand-editing JSON.
 ## Week 10.1 — Ab initio collision DeepONet
 
 Continue with the [lecture companion](../../lectures/week10_1_abinitio_collision_deeponet.md)
-and [colored cylinder contours](../../results/abinitio_deeponet_cylinder/README.md).
+and [colored cylinder contours and surface pressure/heat flux](../../results/abinitio_deeponet_cylinder/README.md).
 This author-supplied research case learns molecular scattering, not the whole
 flow field. It is related to [Roohi et al., PoF 38, 057123 (2026)](https://doi.org/10.1063/5.0328463),
 but uses the later DeepONet package rather than the article's MLP. The plotted

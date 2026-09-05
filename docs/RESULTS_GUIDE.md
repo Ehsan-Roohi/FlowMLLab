@@ -11,6 +11,7 @@ This guide retains the detailed evidence, figures, protocols, and limitations be
 ## Week 10.1 companion: ab initio collision DeepONet
 
 [Four colored cylinder fields and provenance](../results/abinitio_deeponet_cylinder/README.md)
+· [Surface pressure and heat flux](../results/abinitio_deeponet_cylinder/README.md#surface-pressure-and-heat-flux)
 · [Lecture note](../lectures/week10_1_abinitio_collision_deeponet.md).
 Author-supplied later DeepONet research package related to
 [Roohi et al., PoF 38, 057123 (2026)](https://doi.org/10.1063/5.0328463).
