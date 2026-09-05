@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>The Pocket Aviator</title>
+<style>
+*{box-sizing:border-box}body{margin:0;min-height:100vh;display:grid;place-items:center;background:#302638;color:#fff3df;font-family:system-ui,sans-serif}main{width:min(1220px,96vw);padding:18px 0}svg{display:block;width:100%;height:auto;aspect-ratio:16/9;border-radius:18px;box-shadow:0 24px 65px #140f2440}nav{display:flex;gap:12px;justify-content:center;padding-top:16px}button{font:600 15px system-ui;color:#432f46;background:#fff1d6;border:0;border-radius:24px;padding:12px 26px;cursor:pointer;min-width:105px}button:hover{background:#ffd18b}button:focus-visible{outline:3px solid #75cdc3;outline-offset:4px}.ink{stroke:#573a50;stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
+</style>
+</head>
+<body><main>
+<svg id="stage" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 720" role="img" aria-labelledby="title description">
+<title id="title">The Pocket Aviator</title><desc id="description">A jaunty pelican pedals a teal and coral flying machine on a lavender morning. A chain powers its propeller. It accelerates, takes off, performs a graceful loop through a cloud, and lands back at its starting place. Twelve seconds, repeating.</desc>
+<defs>
+<linearGradient id="sky" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#c5bbdc"/><stop offset="1" stop-color="#f8d9c3"/></linearGradient>
+<linearGradient id="hull" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#92ddd0"/><stop offset="1" stop-color="#4aa8a5"/></linearGradient>
+<pattern id="fabric" width="36" height="36" patternUnits="userSpaceOnUse"><rect width="36" height="36" fill="#f4a292"/><path d="M0 0V36" stroke="#ffe1be" stroke-width="15"/></pattern>
+<g id="cloud" fill="#fff5e9"><path d="M-97 18C-133-8-107-39-80-35C-90-74-36-88-15-52C17-83 62-59 59-28C99-37 122-1 93 20Q0 39-97 18Z"/></g>
+<g id="wheel" class="ink"><circle r="20" fill="#573a50"/><circle r="14" fill="#f9dbac"/><path d="M-13 0H13M0-13V13M-9-9 9 9M-9 9 9-9" stroke-width="2"/><circle r="4" fill="#79c9bd"/></g>
+<g id="foot" class="ink"><path d="M-9-9L-14 0H18L12-8 6-3 0-11Z" fill="#edaf51"/><path d="M-15 4H19" stroke-width="5"/></g>
+</defs>
+<rect width="1280" height="720" fill="url(#sky)"/>
+<circle cx="1065" cy="112" r="57" fill="#ffe5a7"/>
+<path d="M996 112H1134M1007 138H1123" stroke="#f8d9c3" stroke-width="5"/>
+<g opacity=".55"><use href="#cloud" transform="translate(190 142) scale(.75 .5)"/><use href="#cloud" transform="translate(1110 355) scale(.56 .4)"/></g>
+<path d="M0 490Q190 427 350 506Q560 422 755 506Q990 420 1280 492V720H0Z" fill="#b5b2be"/>
+<path d="M0 553Q240 481 487 555Q845 455 1280 547V720H0Z" fill="#9fb6ae"/>
+<path d="M0 596H1280V720H0Z" fill="#e5caa7"/>
+<path d="M0 596H1280" stroke="#79626a" stroke-width="3"/>
+<path d="M0 657H1280" stroke="#fff1d7" stroke-width="4" stroke-dasharray="48 36"/>
+<g class="ink" transform="translate(75 480)"><path d="M0 115V0" fill="none"/><path d="M0 0L75 12 0 31Z" fill="#ed8b80"/><path d="M23 4V25M46 8V21" stroke="#ffe0b0" stroke-width="9"/><circle r="5" fill="#ffe0b0"/></g>
+<g fill="#8d9d94"><path d="M26 702l6-12 3 13m94-9 5-10 3 10m887 6 4-10 4 10m144-2 4-8 3 8"/></g>
+<use href="#cloud" transform="translate(720 224) scale(1.05 .85)"/>
+<ellipse id="shadow" cx="365" cy="598" rx="150" ry="11" fill="#573a50" opacity=".17"/>
+<g id="aircraft" transform="translate(365 516)">
+<!-- A single rigid airframe carries every mechanical and character part. -->
+<g class="ink">
+<path d="M-78-15L-174-36-190-79-165-75-143-39-85-32" fill="#ed9287"/>
+<path d="M-197-33L-157-47-120-29-169-19Z" fill="#f6c58e"/>
+<!-- The parasol wing stays are behind the pilot. -->
+<path d="M-83-15L-113-181M84-15L104-181M-83-15L104-181" fill="none" stroke="#786474" stroke-width="4"/>
+<path d="M-83 60L-62-4 74 60 52-4M-83 60L74 60" fill="none" stroke-width="6"/>
+<path d="M-107-26Q-14-60 114-33Q125-4 83 17Q-41 45-107-26Z" fill="url(#hull)"/>
+<path d="M-94-18Q-4 19 92-13" fill="none" stroke="#bcf0d7" stroke-width="3"/>
+<ellipse cx="-37" cy="-31" rx="32" ry="9" fill="#573a50"/>
+<path d="M-40-33V-57M-59-57H-18M28-24L44-66 61-70" fill="none" stroke-width="5"/>
+<path d="M112-39H169" fill="none" stroke-width="7"/>
+</g>
+<g transform="translate(-83 60)"><g id="wheelRear"><use href="#wheel"/></g></g>
+<g transform="translate(74 60)"><g id="wheelFront"><use href="#wheel"/></g></g>
+<path id="legFar" fill="none" stroke="#c88e46" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/>
+<g id="footFar"><use href="#foot"/></g>
+<!-- The visible chain travels on exact sprocket tangents. -->
+<path id="chainTrack" fill="none" stroke="#573a50" stroke-width="6"/>
+<path id="chain" fill="none" stroke="#ffdfab" stroke-width="2.5"/>
+<g transform="translate(5 29)"><g id="crank" class="ink"><circle r="23" fill="#efba6f"/><circle r="16" fill="#fff1d6"/><path d="M-16 0H16M0-16V16" stroke-width="3"/><path d="M-23 0H23" stroke-width="5"/><circle r="4" fill="#75c5b8"/></g></g>
+<g id="driveMount"><g id="drive" class="ink"><circle r="11.5" fill="#fff1d6"/><path d="M-8 0H8M0-8V8"/><circle r="3" fill="#ed9287"/></g></g>
+<!-- Long bill, generous throat pouch, feathered wings and webbed feet. -->
+<g class="ink">
+<path d="M-76-65L-110-81-99-49-65-37Z" fill="#fff4e3"/>
+<path d="M-79-65C-93-105-48-127-18-103C10-82 8-48-20-33C-47-20-74-34-79-65Z" fill="#fff8eb"/>
+<path d="M-21-78Q-2-83-8-109C-20-146 9-163 35-153C66-141 53-112 32-110Q15-107 25-80Q31-60 4-49Z" fill="#fff8eb"/>
+<path d="M45-137Q111-143 157-119Q162-115 156-110L48-115Z" fill="#f4be5f"/>
+<path d="M49-114Q76-69 151-108Q113-97 49-114Z" fill="#e9a76a"/>
+<path d="M56-123L150-117" stroke="#b37a50" stroke-width="2"/>
+<path d="M-4-142Q7-168 33-155L45-143Z" fill="#6d657f"/>
+<path d="M-5-141L48-139" stroke="#6d657f" stroke-width="6"/>
+<circle cx="30" cy="-134" r="12" fill="#e1f0e4"/>
+<path d="M24-141L28-143" stroke="#fff" stroke-width="2"/>
+<circle id="eye" cx="33" cy="-133" r="3.2" fill="#573a50" stroke="none"/>
+<path id="happy" d="M27-131Q33-138 39-131" fill="none" opacity="0"/>
+<path d="M-1-106L20-103 17-93-3-97Z" fill="#ed8b80"/>
+<path id="scarf" d="M0-102Q-27-116-52-102L-46-91Q-20-103 1-96Z" fill="#ed8b80"/>
+<path d="M-65-89Q-26-95-10-64L-27-42Q-63-49-72-73Q-78-89-65-89Z" fill="#e2e7d7"/>
+<path d="M-63-77L-33-51M-49-82L-22-59" fill="none" stroke="#a6b6ab" stroke-width="2"/>
+</g>
+<path id="legNear" fill="none" stroke="#e8aa52" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/>
+<g id="footNear"><use href="#foot"/></g>
+<!-- A striped fabric parasol, drawn last so its edges stay crisp. -->
+<g class="ink"><path d="M-139-189Q-15-207 130-187L111-171Q-18-184-139-173Z" fill="url(#fabric)"/><path d="M-127-175Q-7-188 117-173" fill="none" stroke="#ffdcb3" stroke-width="2"/><path d="M-40-193L-5-191-9-180-44-182Z" fill="#fff4e3" stroke-width="2"/></g>
+<g id="propeller" class="ink" fill="#b77d69"><path id="blade0"/><path id="blade1"/><path id="blade2"/></g>
+<ellipse cx="169" cy="-39" rx="7" ry="9" fill="#f6c58e" class="ink"/>
+</g>
+<!-- This small foreground wisp briefly veils the aircraft. -->
+<path d="M642 241Q633 213 666 209Q678 187 703 209Q729 189 748 213Q776 211 781 239Q719 261 642 241Z" fill="#fff7ed" opacity=".6"/>
+</svg>
+<nav aria-label="Animation controls"><button id="toggle" type="button">Pause</button><button id="restart" type="button">Restart</button></nav>
+</main>
+<script>
+(()=>{
+'use strict';
+const $=id=>document.getElementById(id),TAU=2*Math.PI;
+const clamp=x=>Math.max(0,Math.min(1,x)),smooth=x=>{x=clamp(x);return x*x*(3-2*x)};
+const integral=x=>x*x*x-.5*x*x*x*x;
+// The start and stop ramps integrate to exactly 18 crank turns per loop.
+function turns(t){let area;if(t<1)area=integral(t);else if(t<10)area=t-.5;else{const u=(t-10)/2;area=9.5+2*(u-integral(u))}return 18*area/10.5}
+// Position and velocity are continuous at every Hermite waypoint.
+const route=[[0,365,516,0,0],[3,365,516,0,0],[4.5,525,516,165,0],[6,895,405,190,-140],[7,990,260,0,-100],[8,715,245,-260,0],[9,370,335,-150,145],[10.5,275,516,90,0],[11.5,365,516,0,0],[12,365,516,0,0]];
+function flight(t){let i=0;while(i<route.length-2&&t>route[i+1][0])i++;const a=route[i],b=route[i+1],h=b[0]-a[0],u=(t-a[0])/h;
+const p=k=>(2*u**3-3*u*u+1)*a[k]+(u**3-2*u*u+u)*h*a[k+2]+(-2*u**3+3*u*u)*b[k]+(u**3-u*u)*h*b[k+2];
+const v=k=>((6*u*u-6*u)*a[k]+(3*u*u-4*u+1)*h*a[k+2]+(-6*u*u+6*u)*b[k]+(3*u*u-2*u)*h*b[k+2])/h;
+let angle=Math.atan2(v(2),v(1));
+if(t<=4.5)angle=0;else if(t>=10.5)angle=-TAU;else {
+if(angle>0)angle-=TAU;
+const level=smooth((516-p(2))/120);
+if(t<7)angle*=level;else if(t>9)angle=-TAU+(angle+TAU)*level;
+}
+return{x:p(1),y:p(2),angle};}
+// 24-tooth crank, 12-tooth driven sprocket; 60 links close the chain.
+const A={x:5,y:29,r:23},B={x:0,y:-39,r:11.5},pitch=TAU*A.r/24;
+function chainLength(d){const alpha=Math.acos((A.r-B.r)/d);return 2*Math.sqrt(d*d-(A.r-B.r)**2)+2*B.r*alpha+A.r*(TAU-2*alpha)}
+let low=69,high=200;for(let i=0;i<64;i++){const d=(low+high)/2;if(chainLength(d)<60*pitch)low=d;else high=d}
+const distance=(low+high)/2;B.x=A.x+Math.sqrt(distance**2-(B.y-A.y)**2);
+$('driveMount').setAttribute('transform',`translate(${B.x} ${B.y})`);
+const base=Math.atan2(B.y-A.y,B.x-A.x),alpha=Math.acos((A.r-B.r)/distance),point=(c,a)=>[c.x+c.r*Math.cos(a),c.y+c.r*Math.sin(a)];
+const ap=point(A,base-alpha),bp=point(B,base-alpha),bm=point(B,base+alpha),am=point(A,base+alpha);
+const chain=`M${ap}L${bp}A${B.r} ${B.r} 0 0 1 ${bm}L${am}A${A.r} ${A.r} 0 1 1 ${ap}Z`;
+for(const id of ['chainTrack','chain'])$(id).setAttribute('d',chain);$('chain').setAttribute('stroke-dasharray',`${pitch*.42} ${pitch*.58}`);
+// Both ankles coincide with the webbed feet; feet stay level on the pedals.
+function leg(side,a,hx){const x=A.x+A.r*Math.cos(a),y=A.y+A.r*Math.sin(a),hy=-36,dx=x-4-hx,dy=y-6-hy,d=Math.hypot(dx,dy),L=56,q=Math.sqrt(Math.max(0,L*L-d*d/4));
+$('leg'+side).setAttribute('d',`M${hx} ${hy}L${hx+dx/2-dy*q/d} ${hy+dy/2+dx*q/d}L${x-4} ${y-6}`);$('foot'+side).setAttribute('transform',`translate(${x} ${y})`);}
+function draw(t){const f=flight(t),a=TAU*turns(t),deg=a*180/Math.PI;
+$('aircraft').setAttribute('transform',`translate(${f.x} ${f.y}) rotate(${f.angle*180/Math.PI})`);
+$('crank').setAttribute('transform',`rotate(${deg})`);$('drive').setAttribute('transform',`rotate(${2*deg})`);$('chain').setAttribute('stroke-dashoffset',-A.r*a);
+leg('Far',a+Math.PI,-27);leg('Near',a,-39);
+// Axial projection of three blades, with the same 2:1 transmission ratio.
+for(let i=0;i<3;i++){const phase=2*a+i*TAU/3,ux=13*Math.cos(phase),uy=60*Math.sin(phase),vx=3*Math.sin(phase),vy=-7*Math.cos(phase);
+$('blade'+i).setAttribute('d',`M${169+vx} ${-39+vy}Q${169+ux*.8+2*vx} ${-39+uy*.8+2*vy} ${169+ux} ${-39+uy}Q${169+ux*.7-2*vx} ${-39+uy*.7-2*vy} ${169-vx} ${-39-vy}Z`);}
+// Wheels roll without slipping on the runway, and coast during flight.
+let wheel;if(t<=4.5)wheel=(f.x-365)/20;else if(t<10.5){const u=(t-4.5)/6,start=8,end=6*TAU-4.5;wheel=(2*u**3-3*u*u+1)*start+(u**3-2*u*u+u)*6*165/20+(-2*u**3+3*u*u)*end+(u**3-u*u)*6*90/20}else wheel=6*TAU-4.5+(f.x-275)/20;
+for(const id of ['wheelRear','wheelFront'])$(id).setAttribute('transform',`rotate(${wheel*180/Math.PI})`);
+const happy=smooth((t-6)/.5)*(1-smooth((t-9)/.6));$('eye').setAttribute('opacity',1-happy);$('happy').setAttribute('opacity',happy);
+const flutter=5*Math.sin(2*a)*smooth(t)*(1-smooth((t-10)/2));$('scarf').setAttribute('d',`M0-102Q-27 ${-116+flutter}-52 ${-102+flutter}L-46 ${-91+flutter}Q-20-103 1-96Z`);
+const lift=clamp((516-f.y)/300);$('shadow').setAttribute('cx',f.x);$('shadow').setAttribute('rx',150-70*lift);$('shadow').setAttribute('opacity',.17-.11*lift);}
+let time=0,last=null,paused=matchMedia('(prefers-reduced-motion: reduce)').matches;
+function label(){$('toggle').textContent=paused?'Play':'Pause';$('toggle').setAttribute('aria-pressed',String(paused))}
+$('toggle').addEventListener('click',()=>{paused=!paused;last=null;label()});$('restart').addEventListener('click',()=>{time=0;last=null;draw(0)});
+document.addEventListener('visibilitychange',()=>{last=null});
+function frame(now){if(last!==null&&!paused&&!document.hidden)time=(time+(now-last)/1000)%12;last=now;draw(time);requestAnimationFrame(frame)}draw(0);label();requestAnimationFrame(frame);
+})();
+</script></body></html>

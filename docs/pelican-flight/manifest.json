@@ -1,0 +1,14 @@
+{
+  "originals/first.html": {
+    "sha256": "4d6ef36c42ee7f15c4edc2fdedd98737cfc47211b419973b0473f45fd1034548",
+    "bytes": 13875
+  },
+  "originals/light.html": {
+    "sha256": "9f1b7f625023fb3491a23e50b81415ca47277045d0ada158780066d917152d6f",
+    "bytes": 9210
+  },
+  "originals/medium.html": {
+    "sha256": "5aa9042d806f4a1f7156e405ec4e12f7e90a6631a653fb541560bcfc947e2e9b",
+    "bytes": 12301
+  }
+}

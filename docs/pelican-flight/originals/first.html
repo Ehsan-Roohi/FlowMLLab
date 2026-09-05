@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Pelican Air — The Pedal Express</title>
+<style>
+  *{box-sizing:border-box}
+  body{margin:0;min-height:100vh;display:grid;place-content:center;background:#163c48;font-family:Georgia,serif;padding:20px}
+  main{width:min(1200px,calc(100vw - 40px))}
+  svg{display:block;width:100%;aspect-ratio:16/9;height:auto;border-radius:14px;box-shadow:0 18px 55px #061e2840}
+  .ink{stroke:#274652;stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
+  .controls{display:flex;justify-content:center;gap:12px;padding-top:16px}
+  button{font:600 15px system-ui,sans-serif;border:1px solid #c8ddd9;border-radius:24px;background:#f7edd9;color:#244553;padding:11px 22px;cursor:pointer;min-height:44px}
+  button:hover{background:#fff9ed}button:focus-visible{outline:3px solid #f5c25f;outline-offset:4px}
+  @media(max-width:600px){body{padding:8px}main{width:calc(100vw - 16px)}svg{border-radius:8px}}
+</style>
+</head>
+<body>
+<main>
+<svg id="scene" viewBox="0 0 1280 720" role="img" aria-labelledby="title description">
+  <title id="title">Pelican Air: the pedal express</title>
+  <desc id="description">A goggled pelican pedals a handmade flying machine, takes off, loops through a cloud, and lands. Its webbed feet follow the pedals, and a chain drives the propeller. The twelve-second scene repeats seamlessly.</desc>
+  <defs>
+    <linearGradient id="sky" x2="0" y2="1"><stop stop-color="#b9dbdd"/><stop offset="1" stop-color="#edf1dc"/></linearGradient>
+    <linearGradient id="wing" x2="0" y2="1"><stop stop-color="#fbe3a0"/><stop offset="1" stop-color="#e9ae58"/></linearGradient>
+    <pattern id="grass" width="64" height="24" patternUnits="userSpaceOnUse"><path d="M10 17l3-4m32 8 4-3" fill="none" stroke="#a5ba99" stroke-width="2"/></pattern>
+    <g id="cloud-shape" fill="#fffaf0"><path d="M-86 18C-112 15-113-19-89-24C-91-60-43-71-24-44C-5-79 48-58 45-26C83-43 108-5 84 17Z"/></g>
+    <g id="wheel-art" class="ink"><circle r="20" fill="#294752"/><circle r="14" fill="#e7d6a6" stroke-width="2"/><path d="M-13 0H13M0-13V13M-9-9 9 9M-9 9 9-9" stroke="#57757a" stroke-width="2"/><circle r="4" fill="#f8edce"/></g>
+  </defs>
+  <!-- The camera, runway, and distant scenery never move. -->
+  <path fill="url(#sky)" d="M0 0H1280V720H0Z"/>
+  <circle cx="1090" cy="116" r="48" fill="#f9df9a"/>
+  <circle cx="1090" cy="116" r="66" fill="none" stroke="#f7edc8" stroke-width="2"/>
+  <g opacity=".6"><use href="#cloud-shape" transform="translate(175 151) scale(.8 .5)"/><use href="#cloud-shape" transform="translate(1100 315) scale(.6 .38)"/></g>
+  <path d="M0 525Q120 452 253 526Q437 450 613 531Q789 453 948 515Q1112 442 1280 518V650H0Z" fill="#acc6b1"/>
+  <path d="M0 563Q153 510 332 569Q522 511 734 569Q996 506 1280 555V720H0Z" fill="#c6d0a5"/>
+  <path d="M0 594H1280V720H0Z" fill="#dfd5ac"/>
+  <path d="M0 594H1280" stroke="#879e91" stroke-width="3"/>
+  <path d="M0 656H1280" stroke="#f5ebce" stroke-width="3" stroke-dasharray="36 34"/>
+  <path fill="url(#grass)" d="M0 678H1280V720H0Z"/>
+  <g transform="translate(70 490)" class="ink"><path d="M0 103V0" fill="none"/><path d="M0 0L72 10 0 25Z" fill="#c6664b"/><path d="M0 25L47 34 0 47Z" fill="#e6b958"/></g>
+  <g transform="translate(1165 494)" class="ink"><path d="M0 100V0" fill="none"/><path d="M0 0L57 8V25L0 18Z" fill="#f6e7c5"/><path d="M19 3V20M38 6V23" stroke="#c6664b" stroke-width="9"/></g>
+  <g transform="translate(768 255)"><use href="#cloud-shape" opacity=".83"/><path d="M-65 28Q0 46 68 27" stroke="#d3e3da" stroke-width="3" fill="none"/></g>
+  <ellipse id="shadow" cx="360" cy="596" rx="154" ry="12" fill="#385b50" opacity=".18"/>
+  <g id="plane" transform="translate(360 514)">
+    <!-- Far wing and far leg are behind the airframe. -->
+    <g class="ink"><path d="M-69-32L-16-73 113-53 63-9Z" fill="#d6aa65"/><path d="M-25-59 53-27M17-62 81-36" stroke="#f4d898" stroke-width="2"/></g>
+    <path id="far-leg" class="ink" fill="none" stroke="#b77e42" stroke-width="9"/>
+    <g id="far-foot" class="ink"><path d="M-8-8-13 0H15L10-8 5-4 0-10Z" fill="#dd9d45"/><path d="M-12 3H15" stroke-width="4"/></g>
+    <!-- Tail, fuselage, landing gear and stays form one connected object. -->
+    <g class="ink">
+      <path d="M-45 13L-171-9-183-43-161-46-116-10" fill="#62958e"/>
+      <path d="M-167-13L-193-3-137 4-119-8Z" fill="#efc66b"/>
+      <path d="M-91 58L-64 2 12 31 73 58 53-3M-91 58L12 31 73 58" fill="none" stroke="#355765" stroke-width="6"/>
+      <path d="M-65 1L-3-22 64-5 12 31Z" fill="#689f98"/>
+      <path d="M-73-3Q-22 18 85-4L119-22 97-40-51-30Z" fill="#e6b86e"/>
+      <path d="M-64-8Q12 2 89-12" fill="none" stroke="#fbdf9b" stroke-width="3"/>
+      <path d="M-48-20V-50M-66-49H-24" fill="none" stroke-width="6"/>
+      <path d="M17-11L44-53 58-59" fill="none" stroke-width="5"/>
+      <path d="M48-62L69-59" fill="none" stroke="#b77750" stroke-width="7"/>
+      <path id="shaft" d="M80-21L105-32H164" fill="none" stroke-width="7"/>
+    </g>
+    <g transform="translate(-91 60)"><g id="rear-wheel"><use href="#wheel-art"/></g></g>
+    <g transform="translate(73 60)"><g id="front-wheel"><use href="#wheel-art"/></g></g>
+    <!-- Both chain runs use the exact common tangents of the sprockets. -->
+    <path id="chain-base" fill="none" stroke="#213e49" stroke-width="6"/>
+    <path id="chain-links" fill="none" stroke="#f0dcaa" stroke-width="2" stroke-dasharray="3 5"/>
+    <g transform="translate(12 31)"><g id="crank" class="ink"><circle r="22" fill="#bb924e"/><circle r="15" fill="#f4d795"/><path d="M-15 0H15M0-15V15" stroke-width="3"/><path d="M-22 0H22" stroke="#294753" stroke-width="5"/><circle r="4" fill="#e7e7cb"/></g></g>
+    <g id="drive-mount" transform="translate(105 -32)"><g id="drive" class="ink"><circle r="11" fill="#f0d388"/><path d="M-8 0H8M0-8V8"/><circle r="3" fill="#355665"/></g></g>
+    <!-- Pelican silhouette: rounded body, S neck, huge bill and hanging pouch. -->
+    <g class="ink">
+      <path d="M-72-57L-107-73-91-41-63-31Z" fill="#ebead8"/>
+      <path d="M-77-56C-85-98-22-114 6-79C14-65 5-36-19-25C-46-11-72-26-77-56Z" fill="#fff4da"/>
+      <path d="M-29-68C-2-75-17-111 0-139C14-164 51-153 56-133C61-114 38-104 26-100C11-95 26-64 5-48Z" fill="#fff5de"/>
+      <path d="M47-132Q94-133 145-118Q158-113 148-107L48-108Z" fill="#edbd57"/>
+      <path d="M50-107Q87-68 145-106Q95-95 50-107Z" fill="#e8a35d"/>
+      <path d="M58-112L143-112" stroke="#c98a41" stroke-width="2"/>
+      <path d="M-2-142Q12-171 43-153L52-141-2-136Z" fill="#aa7050"/>
+      <path d="M3-148Q21-163 38-151" fill="none" stroke="#e7b97a" stroke-width="3"/>
+      <path d="M-3-135L46-136" stroke="#5c594a" stroke-width="6"/>
+      <ellipse cx="31" cy="-135" rx="15" ry="12" fill="#d9e8db"/>
+      <path d="M24-141L29-144" stroke="#fffaf0" stroke-width="3"/>
+      <circle id="eye" cx="35" cy="-134" r="3.3" fill="#294653" stroke="none"/>
+      <path id="happy-eye" d="M29-132Q35-140 41-132" fill="none" opacity="0"/>
+      <path d="M11-105L28-102 22-93 5-95Z" fill="#c9664c"/>
+      <path id="scarf" d="M9-100Q-23-111-42-98L-52-104-47-89Q-15-89 12-96Z" fill="#ce6c4e"/>
+      <path d="M-65-75Q-27-91-9-61L-26-40Q-40-42-62-62Q-78-74-65-75Z" fill="#e6e7d3"/>
+      <path d="M-58-68L-31-48M-46-74L-20-54" fill="none" stroke="#a0b8ae" stroke-width="2"/>
+    </g>
+    <path id="near-leg" fill="none" stroke="#e8ab54" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/>
+    <g id="near-foot" class="ink"><path d="M-8-8-13 0H15L10-8 5-4 0-10Z" fill="#f3bd5b"/><path d="M-12 3H15" stroke-width="4"/></g>
+    <!-- Near wing is carried by two visible rigid struts. -->
+    <g class="ink"><path d="M-63-4L-87 16M64-8L36 23" fill="none" stroke-width="5"/><path d="M-93 11Q-31-5 86 9L65 26Q-37 21-91 33Z" fill="url(#wing)"/><path d="M-63 8L-65 28M-27 5L-29 24M12 6L10 23M47 7L44 24" fill="none" stroke="#b58e51" stroke-width="2"/><ellipse cx="-18" cy="16" rx="12" ry="5" fill="#cf6b4c" stroke="none"/></g>
+    <g id="propeller" class="ink" fill="#ae7550"><path id="blade0"/><path id="blade1"/><path id="blade2"/></g>
+    <ellipse cx="164" cy="-32" rx="7" ry="9" fill="#f3d089" class="ink"/>
+  </g>
+  <!-- A translucent foreground tuft gives the cloud real depth. -->
+  <g fill="#fffaf0" opacity=".67"><path d="M693 273Q681 248 708 242Q718 218 742 236Q765 219 780 244Q807 247 793 270Q748 284 693 273Z"/></g>
+</svg>
+<div class="controls"><button id="toggle" type="button" aria-pressed="false">Pause</button><button id="restart" type="button">Restart</button></div>
+</main>
+<script>
+(()=>{
+  'use strict';
+  const $=id=>document.getElementById(id),TAU=2*Math.PI,DURATION=12;
+  const clamp=x=>Math.max(0,Math.min(1,x)),smooth=x=>{x=clamp(x);return x*x*(3-2*x)};
+  const primitive=x=>x*x*x-.5*x*x*x*x;
+  // Integral of a smooth start/stop cadence: exactly 18 crank revolutions.
+  function turns(t){let area;
+    if(t<1)area=primitive(t);
+    else if(t<10)area=.5+t-1;
+    else{const u=(t-10)/2;area=9.5+2*(u-primitive(u));}
+    return 18*area/10.5;
+  }
+  // Time, x, y, dx/dt, dy/dt. Hermite segments share endpoint velocities.
+  const route=[[0,360,514,0,0],[3,360,514,0,0],[4.5,520,514,160,0],
+    [6,900,420,200,-140],[7,1020,250,0,-100],[8,730,220,-250,0],
+    [9,340,310,-160,150],[10.5,240,514,100,0],[11.5,360,514,0,0],[12,360,514,0,0]];
+  function flight(t){
+    let j=0;while(j<route.length-2&&t>route[j+1][0])j++;
+    const a=route[j],b=route[j+1],h=b[0]-a[0],u=(t-a[0])/h;
+    const p=(i)=> (2*u**3-3*u*u+1)*a[i]+(u**3-2*u*u+u)*h*a[i+2]+(-2*u**3+3*u*u)*b[i]+(u**3-u*u)*h*b[i+2];
+    const v=(i)=> ((6*u*u-6*u)*a[i]+(3*u*u-4*u+1)*h*a[i+2]+(-6*u*u+6*u)*b[i]+(3*u*u-2*u)*h*b[i+2])/h;
+    const x=p(1),y=p(2),vx=v(1),vy=v(2);
+    return {x,y,angle:Math.hypot(vx,vy)>1e-5?Math.atan2(vy,vx):0};
+  }
+  // Exact external tangents for a 22:11 two-sprocket transmission.
+  // This centre distance gives 58 chain pitches and 24/12 pitch teeth.
+  const A={x:12,y:31,r:22},B={x:12+Math.sqrt(114.6636949043801**2-63**2),y:-32,r:11};
+  $('drive-mount').setAttribute('transform',`translate(${B.x} ${B.y})`);
+  $('shaft').setAttribute('d',`M80-21L${B.x}-32H164`);
+  const dx=B.x-A.x,dy=B.y-A.y,d=Math.hypot(dx,dy),base=Math.atan2(dy,dx),alpha=Math.acos((A.r-B.r)/d);
+  const tangent=(c,a)=>[c.x+c.r*Math.cos(a),c.y+c.r*Math.sin(a)];
+  const p=tangent(A,base-alpha),q=tangent(B,base-alpha),r=tangent(B,base+alpha),s=tangent(A,base+alpha);
+  const chain=`M${p}L${q}A11 11 0 0 1 ${r}L${s}A22 22 0 1 1 ${p}Z`;
+  $('chain-base').setAttribute('d',chain);$('chain-links').setAttribute('d',chain);
+  const chainLength=2*Math.sqrt(d*d-(A.r-B.r)**2)+2*B.r*alpha+A.r*(TAU-2*alpha);
+  const links=58,linkPitch=chainLength/links;
+  $('chain-links').setAttribute('stroke-dasharray',`${linkPitch*.38} ${linkPitch*.62}`);
+  // Two-segment inverse kinematics keeps ankles on the pedal platforms.
+  function leg(path,foot,phase,hipX){
+    const px=A.x+22*Math.cos(phase),py=A.y+22*Math.sin(phase),hx=hipX,hy=-34;
+    const ax=px-4,ay=py-6,dx=ax-hx,dy=ay-hy,dist=Math.hypot(dx,dy),L1=54,L2=53;
+    const reach=Math.min(L1+L2-.001,Math.max(.001,dist));
+    const along=(L1*L1-L2*L2+reach*reach)/(2*reach),height=Math.sqrt(Math.max(0,L1*L1-along*along));
+    const kx=hx+dx/dist*along-dy/dist*height,ky=hy+dy/dist*along+dx/dist*height;
+    $(path).setAttribute('d',`M${hx},${hy}L${kx},${ky}L${ax},${ay}`);
+    $(foot).setAttribute('transform',`translate(${px} ${py})`);
+  }
+  function render(t){
+    const f=flight(t),a=TAU*turns(t),deg=a*180/Math.PI;
+    const pitch=f.angle*smooth((514-f.y)/220);
+    $('plane').setAttribute('transform',`translate(${f.x} ${f.y}) rotate(${pitch*180/Math.PI})`);
+    $('crank').setAttribute('transform',`rotate(${deg})`);$('drive').setAttribute('transform',`rotate(${2*deg})`);
+    $('chain-links').setAttribute('stroke-dashoffset',-a*22);
+    leg('far-leg','far-foot',a+Math.PI,-30);leg('near-leg','near-foot',a,-39);
+    for(let i=0;i<3;i++){
+      const phase=2*a+i*TAU/3,ux=13*Math.cos(phase),uy=62*Math.sin(phase),vx=3*Math.sin(phase),vy=-7*Math.cos(phase);
+      $('blade'+i).setAttribute('d',`M${164+vx},${-32+vy}Q${164+ux*.8+vx*2},${-32+uy*.8+vy*2} ${164+ux},${-32+uy}Q${164+ux*.5-vx*2},${-32+uy*.5-vy*2} ${164-vx},${-32-vy}Z`);
+    }
+    // Ground wheels roll with displacement; airborne wheels coast.
+    let wheel;
+    if(t<=3)wheel=0;
+    else if(t<=4.5)wheel=(f.x-360)/20;
+    else if(t<10.5){const u=(t-4.5)/6;wheel=8+(12*Math.PI-14)*(3*u*u-2*u*u*u)+8*6*(u**3-2*u*u+u)+5*6*(u**3-u*u);}
+    else wheel=12*Math.PI-6+(f.x-240)/20;
+    for(const id of ['rear-wheel','front-wheel'])$(id).setAttribute('transform',`rotate(${wheel*180/Math.PI})`);
+    const happy=smooth((t-5.8)/.6)*(1-smooth((t-9)/.5));
+    $('eye').setAttribute('opacity',1-happy);$('happy-eye').setAttribute('opacity',happy);
+    const flutter=Math.sin(a*2)*5*smooth(t)*(1-smooth((t-10)/2));
+    $('scarf').setAttribute('d',`M9-100Q-23 ${-111+flutter} -42 ${-98+flutter}L-52 ${-104+flutter}-47 ${-89+flutter}Q-15-89 12-96Z`);
+    const lift=clamp((514-f.y)/300);
+    $('shadow').setAttribute('cx',f.x);$('shadow').setAttribute('rx',154*(1-.48*lift));$('shadow').setAttribute('opacity',.18*(1-.7*lift));
+  }
+  let time=0,last=null,paused=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  function controls(){$('toggle').textContent=paused?'Play':'Pause';$('toggle').setAttribute('aria-pressed',String(paused));}
+  $('toggle').addEventListener('click',()=>{paused=!paused;last=null;controls();});
+  $('restart').addEventListener('click',()=>{time=0;last=null;render(0);});
+  document.addEventListener('visibilitychange',()=>{last=null;});
+  function frame(now){if(last!==null&&!paused&&!document.hidden)time=(time+(now-last)/1000)%DURATION;last=now;render(time);requestAnimationFrame(frame);}
+  render(0);controls();requestAnimationFrame(frame);
+})();
+</script>
+</body>
+</html>
