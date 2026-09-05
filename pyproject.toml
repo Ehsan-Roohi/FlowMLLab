@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "flowmllab"
-version = "1.3.0"
+version = "1.4.0"
 description = "Reproducible CFD-to-scientific-machine-learning experiments"
 readme = "README.md"
 requires-python = ">=3.10,<3.14"

@@ -554,10 +554,11 @@ If FlowMLLab supports your teaching or research, you can also support its contin
 
 Use [CITATION.cff](../CITATION.cff) when citing the release.
 
-Version 1.3.0 is the current source release. The latest archived release remains
-v1.1.0 until a new Zenodo record is minted; its version-specific DOI is
-[10.5281/zenodo.22126785](https://doi.org/10.5281/zenodo.22126785) and is also
-recorded in [CITATION.cff](../CITATION.cff). The GitHub release and archival record
+Version 1.4.0 is the current source release. The
+[all-versions DOI](https://doi.org/10.5281/zenodo.22074169) points to the latest
+published archive; v1.3.0 is archived at
+[10.5281/zenodo.22306908](https://doi.org/10.5281/zenodo.22306908).
+See [CITATION.cff](../CITATION.cff) for current citation metadata. The GitHub release and archival record
 contain only FlowMLLab. They do not include materials from any separate research
 repository.
 

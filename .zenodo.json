@@ -1,6 +1,7 @@
 {
   "title": "FlowMLLab: An Open-Source Framework for Reproducible CFD-to-Scientific-Machine-Learning Experiments",
-  "description": "Version 1.3.0 of FlowMLLab adds checksummed rarefied-cavity, monatomic-shock, and diatomic-shock DSMC data; a complete article-reproduction lecture and notebook; and an improved six-field micro-nozzle validation workflow to the installable CFD-to-scientific-ML framework.",
+  "description": "Version 1.4.0 adds the Week-7.1 rarefied hypersonic-cylinder operator-learning lab and lecture, checksummed 20-case DSMC teaching data, full-resolution cylinder visualization, and an ordered gallery with separate entries for every course week. It also retains improved nozzle boundary/registration diagnostics and controlled micro-step architecture comparison tools. The release preserves transparent baselines, negative results, source provenance, and explicit validity limits.",
+  "version": "1.4.0",
   "creators": [
     {
       "name": "Roohi, Ehsan",
