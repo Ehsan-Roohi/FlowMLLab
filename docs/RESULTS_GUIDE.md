@@ -8,6 +8,16 @@ This guide retains the detailed evidence, figures, protocols, and limitations be
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](../LICENSE)
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.22315623.svg)](https://doi.org/10.5281/zenodo.22315623)
 
+## Week 10.1 companion: ab initio collision DeepONet
+
+[Four colored cylinder fields and provenance](../results/abinitio_deeponet_cylinder/README.md)
+· [Lecture note](../lectures/week10_1_abinitio_collision_deeponet.md).
+Author-supplied later DeepONet research package related to
+[Roohi et al., PoF 38, 057123 (2026)](https://doi.org/10.1063/5.0328463).
+The original paper's MLP is not reproduced. Exact NOUT98 and DeepONet NOUT95
+have different times and sampling windows; the shared-color plots are
+qualitative comparisons, not synchronized error or speedup measurements.
+
 ## Qualified numerical-flow evidence to scientific ML—with explicit validity limits
 
 Start with a physics-checked circular-cylinder teaching wake, compare LBM with an

@@ -9,7 +9,7 @@ generate numerical data, compare transparent baselines with learned models, and
 check both prediction error and physical fidelity.
 
 Developed for **MIE 690A: AI in Fluid Mechanics**, University of Massachusetts
-Amherst. The course includes **25 notebooks and 12 lectures** (11 PDFs), from
+Amherst. The course includes **25 notebooks and 12 lectures** (11 PDFs), plus a Week 10.1 reading companion, from
 numerical foundations to continuum and rarefied-flow research examples.
 
 ## Start here
@@ -19,7 +19,7 @@ research by Ehsan Roohi and collaborators, then brought into FlowMLLab for
 teaching. The course adds new code and baselines, not a new origin for those
 data. See [per-case papers, data lineage, reuse limits and AI-assistance
 disclosure](DATA_PROVENANCE.md). v1.4.0 remains the frozen archive; this cycle
-is maintenance only, with no new modules or release.
+adds maintenance and an author-requested Week 10.1 reading companion, with no new training notebook or release.
 
 | Your goal | Open |
 | --- | --- |
@@ -48,6 +48,7 @@ Weeks 5 and 6 share a project pack and lecture guide, but have separate learning
 | [8](#week-8--gas-dynamics-and-sciml) | Exact compressible-flow branches and learned inverse maps | [Week 8 labs](notebooks/week08/README.md) | [Lecture 8](lectures/week08_gas_dynamics_sciml.pdf) |
 | [9](#week-9--rarefied-micro-step-and-micro-nozzle) | Geometry-dependent and shock-aligned operators | [Week 9 labs](notebooks/week09/README.md) | [Lecture 9](lectures/week09_rarefied_deeponet_case_studies.pdf) |
 | [10](#week-10--dsmc-cavity-and-molecular-shocks) | Cavity and mono/diatomic shock reproduction | [Week 10 lab](notebooks/week10/README.md) | [Lecture 10](lectures/week10_dsmc_data_driven_surrogates.pdf) |
+| [10.1](#week-101--ab-initio-collision-deeponet) | Molecular scattering and DSMC cylinder contours | [Reading case and figures](results/abinitio_deeponet_cylinder/README.md) | [Lecture companion](lectures/week10_1_abinitio_collision_deeponet.md) |
 
 ## Results gallery · in course order
 
@@ -189,6 +190,18 @@ and **1.018% maximum shock-profile relative L2 error**, with the data contract
 and regeneration workflow available for inspection.
 [Reproduction evidence](results/aescte_dsmc/README.md)
 · [Data contract](data/aescte_dsmc/README.md)
+
+### Week 10.1 — Ab initio collision DeepONet
+
+![Jäger Ar–Ar cylinder temperature: Exact and DeepONet at different output times](results/abinitio_deeponet_cylinder/temperature_exact_deeponet.png)
+
+Author-supplied research fields from the later DeepONet collision-angle package,
+related to [Roohi, Shoja-sani and Stefanov, PoF 38, 057123 (2026)](https://doi.org/10.1063/5.0328463).
+DSMC generates these fields using exact-derived or DeepONet-derived angle tables;
+this is not a whole-field neural prediction or reproduction of the article's MLP.
+Shared colors, **different times and sampling windows**: qualitative comparison only.
+[All four colored fields and provenance](results/abinitio_deeponet_cylinder/README.md)
+· [Week 10.1 lecture companion](lectures/week10_1_abinitio_collision_deeponet.md)
 
 ## Reuse and contribute
 

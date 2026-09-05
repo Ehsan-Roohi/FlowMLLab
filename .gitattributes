@@ -28,5 +28,8 @@
 *.pptx binary
 *.zip binary
 
+# Large generated vector contours are figure assets, not hand-written source.
+results/abinitio_deeponet_cylinder/*.svg binary -whitespace linguist-generated=true
+
 # Preserve author-supplied DSMC tables byte-for-byte, including legacy line endings.
 data/aescte_dsmc/raw/** -text -whitespace

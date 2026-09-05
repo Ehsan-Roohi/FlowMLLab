@@ -16,6 +16,13 @@
 
 Editable sources are included in `source/` where they were available. The PDF is the authoritative rendered lecture for this release; Week 2.1 also includes an editable PPTX and its deterministic JavaScript builder.
 
+## Week 10.1 reading companion
+
+[Ab initio collision DeepONet](week10_1_abinitio_collision_deeponet.md) is a
+supplement to Lecture 10, with [colored research-field comparisons](../results/abinitio_deeponet_cylinder/README.md)
+and a citation to [Roohi et al., PoF 38, 057123](https://doi.org/10.1063/5.0328463).
+It is a Markdown reading note, not an additional PDF or training notebook.
+
 Recommended teaching pattern for each meeting:
 
 1. physical framing and a prediction question;

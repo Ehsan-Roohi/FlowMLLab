@@ -35,6 +35,7 @@
 | 10A | DSMC solver qualification and provenance | Audit cavity/shock tables, run metadata, hashes, shapes, and molecular models | Mesh/time/particle/sample checklist; exact case inventory; machine-readable manifest |
 | 10B | Rarefied-cavity parameter synthesis | Reproduce complete held-out fields at $Kn=0.05$ and $0.5$ for two lid speeds | Shared contour scales, normalized RMSE denominators, profiles, and higher-moment diagnosis |
 | 10C | Mono/diatomic shock operators | Fit POD trunks and Mach branches; compare interpolation and one-sided extrapolation | Density/velocity/temperature profiles; translational overshoot; rotational lag; fixed error gates |
+| [10.1](lectures/week10_1_abinitio_collision_deeponet.md) (reading companion) | Ab initio collision-angle DeepONet inside DSMC | Inspect author-supplied Jäger cylinder contours, shared colors and time metadata | Distinguish microscopic maps from whole-field surrogates; later DeepONet versus article MLP; asynchronous outputs; no speedup or convergence claim |
 
 ## Suggested adoption modes
 
