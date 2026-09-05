@@ -67,13 +67,12 @@ jobs:
           git -C "$SOURCE" fetch --depth 1 origin 95b9abaa8bd548991cc3c3f1c58b34722f7ade74
           git -C "$SOURCE" checkout --detach FETCH_HEAD
           cmake -S "$SOURCE/cmake" -B "$RUNNER_TEMP/step-cpu" \
-            -DCMAKE_BUILD_TYPE=Release -DBUILD_MPI=ON -DSPARTA_MACHINE=mpi \
-            -DCMAKE_RUNTIME_OUTPUT_DIRECTORY="$RUNNER_TEMP/step-cpu"
+            -DCMAKE_BUILD_TYPE=Release -DBUILD_MPI=ON -DSPARTA_MACHINE=mpi
           cmake --build "$RUNNER_TEMP/step-cpu" -j2
           cmake -S "$SOURCE/cmake" -B "$RUNNER_TEMP/step-kk" \
             -DCMAKE_BUILD_TYPE=Release -DBUILD_MPI=ON -DPKG_KOKKOS=ON \
             -DCMAKE_CXX_STANDARD=20 -DKokkos_ENABLE_SERIAL=ON -DKokkos_ENABLE_OPENMP=OFF \
-            -DSPARTA_MACHINE=kokkos_serial -DCMAKE_RUNTIME_OUTPUT_DIRECTORY="$RUNNER_TEMP/step-kk"
+            -DSPARTA_MACHINE=kokkos_serial
           cmake --build "$RUNNER_TEMP/step-kk" -j2
       - name: Exercise Kokkos styles and CPU to Kokkos restart conversions
-        run: python3 -I cases/sparta_step/verify_gpu.py --cpu-binary "$RUNNER_TEMP/step-cpu/spa_mpi" --kokkos-binary "$RUNNER_TEMP/step-kk/spa_kokkos_serial"
+        run: python3 -I cases/sparta_step/verify_gpu.py --cpu-binary "$RUNNER_TEMP/step-cpu/src/spa_mpi" --kokkos-binary "$RUNNER_TEMP/step-kk/src/spa_kokkos_serial"

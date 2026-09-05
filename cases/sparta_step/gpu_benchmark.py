@@ -198,7 +198,7 @@ def run(out):
     out = Path(out).resolve()
     cfg = load(out/'manifest.json')
     hardware = load(out/'cuda-device.json')
-    cpu, gpu = out/'build-cpu'/'spa_mpi', out/'build-gpu'/'spa_kokkos_cuda'
+    cpu, gpu = out/'build-cpu'/'src'/'spa_mpi', out/'build-gpu'/'src'/'spa_kokkos_cuda'
     launcher = cfg['mpi_launcher']
     preflight(out, cpu, gpu, launcher)
     restart = Path(cfg['restart'])

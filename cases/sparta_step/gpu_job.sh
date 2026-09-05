@@ -59,7 +59,6 @@ test "$(git -C "$SOURCE" rev-parse HEAD)" = 95b9abaa8bd548991cc3c3f1c58b34722f7a
 # Separate out-of-source builds; same revision, MPI ABI and optimization level.
 "$CMAKE" -S "$SOURCE/cmake" -B "$OUT/build-cpu" \
   -D CMAKE_BUILD_TYPE=Release -D CMAKE_CXX_COMPILER="$MPICXX" \
-  -D CMAKE_RUNTIME_OUTPUT_DIRECTORY="$OUT/build-cpu" \
   -D BUILD_MPI=ON -D PKG_KOKKOS=OFF -D SPARTA_MACHINE=mpi
 "$CMAKE" --build "$OUT/build-cpu" -j8
 export NVCC_WRAPPER_DEFAULT_COMPILER="$(command -v g++)"
@@ -68,12 +67,11 @@ export NVCC_WRAPPER_DEFAULT_COMPILER="$(command -v g++)"
   -S "$SOURCE/cmake" -B "$OUT/build-gpu" \
   -D Kokkos_ARCH_HOPPER90=OFF "-DKokkos_ARCH_${ARCH}=ON" \
   -D CMAKE_BUILD_TYPE=Release -D CMAKE_CXX_STANDARD=20 \
-  -D CMAKE_RUNTIME_OUTPUT_DIRECTORY="$OUT/build-gpu" \
   -D Kokkos_ENABLE_IMPL_CUDA_MALLOC_ASYNC=OFF
 "$CMAKE" --build "$OUT/build-gpu" -j8
-sha256sum "$OUT/build-cpu/spa_mpi" "$OUT/build-gpu/spa_kokkos_cuda" > "$OUT/binary.sha256"
-ldd "$OUT/build-cpu/spa_mpi" > "$OUT/cpu-libraries.txt"
-ldd "$OUT/build-gpu/spa_kokkos_cuda" > "$OUT/gpu-libraries.txt"
+sha256sum "$OUT/build-cpu/src/spa_mpi" "$OUT/build-gpu/src/spa_kokkos_cuda" > "$OUT/binary.sha256"
+ldd "$OUT/build-cpu/src/spa_mpi" > "$OUT/cpu-libraries.txt"
+ldd "$OUT/build-gpu/src/spa_kokkos_cuda" > "$OUT/gpu-libraries.txt"
 if grep -q 'not found' "$OUT/cpu-libraries.txt" "$OUT/gpu-libraries.txt"; then
   echo UNRESOLVED_BINARY_LIBRARY >&2; exit 1
 fi
