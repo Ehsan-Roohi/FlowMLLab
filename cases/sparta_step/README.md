@@ -9,6 +9,10 @@ timestep/particle checks, and a dependent 15-height geometry dataset. See the
 [complete run matrix](campaign_matrix.csv). Its single submission preserves this
 pilot and uses a separate immutable run directory.
 
+The [CPU/GPU benchmark](GPU.md) builds a separate Kokkos/CUDA executable, tests
+the pressure-driven case and cross-backend restarts, measures three paired
+CPU/GPU repeats, and probes fine-grid GPU memory before a production migration.
+
 The case uses unmodified upstream SPARTA commit
 `95b9abaa8bd548991cc3c3f1c58b34722f7ade74`, compiled for **CPU MPI**. A GPU allocation
 alone does not make this executable use GPUs.

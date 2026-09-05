@@ -46,3 +46,34 @@ jobs:
         run: python3 -I cases/sparta_step/verify_local.py --binary "$RUNNER_TEMP/sparta-step-source/src/spa_mpi" --mpi-launcher mpirun --ranks 4 --geometry-only --check-legacy-failure
       - name: Verify campaign sampling, fresh solves and changed-rank restart
         run: python3 -I cases/sparta_step/verify_campaign.py --binary "$RUNNER_TEMP/sparta-step-source/src/spa_mpi" --launcher mpirun --ranks 2
+
+  kokkos-host-regression:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    env:
+      OMP_NUM_THREADS: '1'
+      OMPI_MCA_rmaps_base_oversubscribe: '1'
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install build dependencies
+        run: sudo apt-get update && sudo apt-get install -y g++ cmake openmpi-bin libopenmpi-dev
+      - name: Build pinned CPU and Kokkos Serial backends
+        shell: bash
+        run: |
+          set -euo pipefail
+          SOURCE="$RUNNER_TEMP/sparta-kokkos-source"
+          git init "$SOURCE"
+          git -C "$SOURCE" remote add origin https://github.com/sparta/sparta.git
+          git -C "$SOURCE" fetch --depth 1 origin 95b9abaa8bd548991cc3c3f1c58b34722f7ade74
+          git -C "$SOURCE" checkout --detach FETCH_HEAD
+          cmake -S "$SOURCE/cmake" -B "$RUNNER_TEMP/step-cpu" \
+            -DCMAKE_BUILD_TYPE=Release -DBUILD_MPI=ON -DSPARTA_MACHINE=mpi \
+            -DCMAKE_RUNTIME_OUTPUT_DIRECTORY="$RUNNER_TEMP/step-cpu"
+          cmake --build "$RUNNER_TEMP/step-cpu" -j2
+          cmake -S "$SOURCE/cmake" -B "$RUNNER_TEMP/step-kk" \
+            -DCMAKE_BUILD_TYPE=Release -DBUILD_MPI=ON -DPKG_KOKKOS=ON \
+            -DCMAKE_CXX_STANDARD=20 -DKokkos_ENABLE_SERIAL=ON -DKokkos_ENABLE_OPENMP=OFF \
+            -DSPARTA_MACHINE=kokkos_serial -DCMAKE_RUNTIME_OUTPUT_DIRECTORY="$RUNNER_TEMP/step-kk"
+          cmake --build "$RUNNER_TEMP/step-kk" -j2
+      - name: Exercise Kokkos styles and CPU to Kokkos restart conversions
+        run: python3 -I cases/sparta_step/verify_gpu.py --cpu-binary "$RUNNER_TEMP/step-cpu/spa_mpi" --kokkos-binary "$RUNNER_TEMP/step-kk/spa_kokkos_serial"
