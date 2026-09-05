@@ -17,7 +17,7 @@ It neither cancels nor duplicates the separate CPU campaign.
 ## One allocation, a measured comparison
 
 `submit_gpu_benchmark.sh FULL_FLOWMLLAB_SHA` downloads immutable code and requests
-one A40, 16 CPU cores, 48 GiB host RAM, and a four-hour wall limit in Unity's `gpu`
+one A40, 16 CPU cores, 48 GiB host RAM, and a four-hour wall limit in Unity's `gpu-preempt`
 partition. Only batch jobs load modules. Use `--gpu a100` or `--gpu h100` after the
 SHA to request a different documented architecture; the allocation must match.
 No GPU speedup or four-hour completion time is promised by this wall limit.
@@ -49,6 +49,67 @@ match. Each repeat starts at that same checkpoint: these are performance repeats
 **not three independent production datasets**. Random trajectories can differ
 between backends even with identical seed labels.
 
+## Preemption, checkpoints and migration
+
+For the existing **pending** benchmark, use:
+
+```bash
+bash submit_gpu_benchmark.sh FULL_FLOWMLLAB_SHA --replace-job 64022083
+```
+
+The migration verifies the saved job ID, Slurm owner, job name and working
+directory. It holds that pending job, submits the replacement on hold, installs
+its recovery dependency, cancels only the old pending job, and releases the new
+one. Its transaction record makes repeating the command idempotent. If the old
+job has started or finished in the meantime, it reports that state and leaves it
+intact. An interrupted migration can be completed by repeating the same command.
+Unrelated jobs and the original CPU pilot files are never altered.
+
+The GPU job has `--requeue` and append-mode Slurm logs. A small **CPU recovery job**
+(one core, 512 MiB, five-minute limit) waits on `afterany` for it. If Unity cancels
+a preempted allocation instead of requeuing it, that recovery job resubmits into
+`gpu-preempt`, using the **same run directory and code**. Only `PREEMPTED`,
+`NODE_FAIL` and `TIMEOUT` qualify. A user cancellation, solver failure or OOM does
+not trigger an automatic retry. There is a maximum of eight allocation starts;
+all files remain available at the limit. The recovery job being pending with
+`Dependency` is normal. This does not rely on advance signal delivery: Unity
+documents that preempt-partition jobs can be killed after two hours, and Slurm
+does not guarantee a preemption warning from a wall-time `--signal` request.
+
+Recovery boundaries for this short benchmark:
+
+| Interruption point | What the next allocation does |
+| --- | --- |
+| Source checkout / compilation | Reuses pinned source and completed CMake objects |
+| Tiny preflight | Reuses checksum-verified completed cases; retries only an incomplete case |
+| Before the 700-step warmup checkpoint | Starts the incomplete arm from the original pilot restart |
+| After the warmup checkpoint / during sampling | Reads sealed warm particles, re-equilibrates for 350 steps, then collects a **new full 1,400-step** window |
+| After a verified arm | Reuses its fields, report and timings without rerunning it |
+
+The warm particle checkpoint is written to a temporary name, closed by SPARTA,
+then renamed and given an atomic SHA-256 receipt by the rank-zero `shell` command.
+Unsealed files and checksum mismatches are skipped. Final-arm receipts are written
+only after full output validation. Every attempt has its own directory, so partial
+averages and logs are retained rather than overwritten or concatenated. This
+checkpoint interval is a **stage boundary**, not a claim of saving every timestep.
+
+SPARTA restarts do not store running averages, RNG state or collision maxima.
+Consequently a resumed trajectory is not bitwise identical; its sampling window
+is restarted after the extra equilibration. Timing records identify the allocation,
+host and resumed status. Only uninterrupted CPU/GPU pairs in the same allocation
+enter reported speedups. Cross-allocation pairs and resumed arms remain in the
+report as diagnostics. If no pair qualifies, `speedups` is empty; no misleading
+mixed-node median is printed. Lost attempts are excluded from successful-attempt
+wall time and retained in their own logs.
+
+`gpu_benchmark.py status --out RUN_DIRECTORY` shows the current GPU ID, allocation
+history, recovery job IDs, completed-arm count and committed checkpoint count.
+`verify_gpu_resume.py` deliberately SIGKILLs real CPU and Kokkos host-backend
+solvers during sampling, rejects a truncated newer checkpoint, resumes and checks
+the complete new block window, and ensures completed arms are not rerun. Its
+mock-Slurm checks cover pending-job migration and bounded retry policy. Actual
+Unity preemption and CUDA execution remain allocation-side checks.
+
 ## Interpreting the report
 
 `gpu_benchmark_report.json` records median CPU/GPU timing ratios separately for:
@@ -79,7 +140,7 @@ ID through `sacct`, then shows timings and log tails. A successful job ends with
 `SPARTA_GPU_BENCHMARK_COMPLETE TRAINING_DATA_APPROVED=False` and automatically
 writes `gpu_benchmark_review.tar.gz`. `pack --out ...` also works after a failure.
 The pointer is `LATEST_SPARTA_STEP_GPU_BENCHMARK`. Duplicate submission is refused;
-`--new-run` is an intentional new benchmark, never a silent retry.
+repeating a migration command prints its saved status instead of creating another run.
 
 ## Build and validation boundaries
 
@@ -98,4 +159,7 @@ CUDA or execute an NVIDIA device; those checks occur in the Unity allocation.
 Sources: [SPARTA acceleration manual](https://sparta.github.io/doc/Section_accelerate.html),
 [pinned pressure-boundary implementation](https://github.com/sparta/sparta/blob/95b9abaa8bd548991cc3c3f1c58b34722f7ade74/src/KOKKOS/fix_emit_face_kokkos.cpp),
 [Unity modules](https://docs.unity.rc.umass.edu/documentation/software/modules/module-usage/),
-[Unity GPU guide](https://docs.unity.rc.umass.edu/documentation/tools/gpus/).
+[Unity GPU guide](https://docs.unity.rc.umass.edu/documentation/tools/gpus/),
+[Unity partitions](https://docs.unity.rc.umass.edu/documentation/cluster_specs/partitions/),
+[Slurm preemption](https://slurm.schedmd.com/preempt.html),
+[SPARTA restart limitations](https://sparta.github.io/doc/read_restart.html).

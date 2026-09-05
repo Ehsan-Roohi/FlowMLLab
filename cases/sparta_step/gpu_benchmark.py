@@ -9,6 +9,7 @@ import os
 from pathlib import Path
 import re
 import shutil
+import socket
 import statistics
 import subprocess
 import sys
@@ -20,9 +21,13 @@ spec = importlib.util.spec_from_file_location('step_campaign', Path(__file__).wi
 campaign = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(campaign)
 pilot = campaign.pilot
+spec = importlib.util.spec_from_file_location('gpu_checkpoint', Path(__file__).with_name('gpu_checkpoint.py'))
+checkpoint = importlib.util.module_from_spec(spec)
+spec.loader.exec_module(checkpoint)
 POINTER = 'LATEST_SPARTA_STEP_GPU_BENCHMARK'
 FILES = ['gpu_benchmark.py', 'gpu_job.sh', 'submit_gpu_benchmark.sh', 'cuda_probe.cu',
-         'verify_gpu.py', 'GPU.md', 'campaign.py', 'pilot.py']
+         'verify_gpu.py', 'GPU.md', 'campaign.py', 'pilot.py', 'gpu_checkpoint.py',
+         'gpu_preempt.py', 'gpu_guard.sh', 'verify_gpu_resume.py']
 ARCH = {'a40': ('8.6', 'AMPERE86'), 'a100': ('8.0', 'AMPERE80'), 'h100': ('9.0', 'HOPPER90')}
 
 
@@ -127,27 +132,67 @@ def validate_case(path):
     return result
 
 
+def resumable_case(root, row, restart, cmd, backend, gpu_uuid=None, timeout=7200):
+    root = Path(root)
+    done = checkpoint.completed(root)
+    if done:
+        print(f'REUSE_COMPLETED_ARM={root}', flush=True)
+        return done
+    attempts = root/'attempts'; attempts.mkdir(parents=True, exist_ok=True)
+    # Never overwrite an interrupted output or append new samples to its averages.
+    number = max([int(p.name) for p in attempts.iterdir() if p.name.isdigit()], default=0)+1
+    path = attempts/f'{number:04d}'
+    warm = checkpoint.latest_warm(root)
+    resumed_row = row.copy()
+    if warm:
+        restart = warm
+        # Collision maxima and RNG are not restored: re-equilibrate for one block,
+        # then collect an entirely new, full-length sampling window.
+        resumed_row['warmup_steps'] = row['block_steps']
+        print(f'RESUME_PARTICLES={warm} NEW_SAMPLING_WINDOW=True', flush=True)
+    campaign.generate_case(path, resumed_row, restart, 'smoke' if restart else None, smoke=True)
+    metadata = load(path/'case.json')
+    metadata.update(checkpoint_resume=bool(warm), attempt=number,
+                    interrupted_prior_attempts=number-1, training_data_approved=False)
+    pilot.write_json(path/'case.json', metadata)
+    checkpoint.checkpoint_deck(path)
+    if backend == 'kokkos': kk_deck(path/'in.step')
+    timing = execute(path, cmd, timeout=timeout, gpu_uuid=gpu_uuid)
+    if checkpoint.latest_warm(root) != path/'restart.warm':
+        raise ValueError('Warm checkpoint commit missing after successful solver')
+    expected = [resumed_row['warmup_steps'], row['sampling_steps']-row['block_steps'], row['block_steps']]
+    if [x['steps'] for x in timing['loops']] != expected:
+        raise ValueError(f'Unexpected benchmark loop segmentation: expected {expected}')
+    timing.update(checkpoint_resumed=bool(warm), attempt=number,
+        allocation=dict(job=os.environ.get('SLURM_JOB_ID'),
+            restart_count=os.environ.get('SLURM_RESTART_COUNT', '0'),
+            host=socket.gethostname(), gpu_uuid=gpu_uuid),
+        warmup_loop_seconds=timing['loops'][0]['seconds'],
+        sampling_loop_seconds=sum(v['seconds'] for v in timing['loops'][1:]),
+        wall_note='Successful attempt only; interrupted attempts retained separately.')
+    pilot.write_json(path/'timing.json', timing)
+    report = validate_case(path)
+    checkpoint.commit_result(root, path, timing, report)
+    return path, timing, report
+
+
 def preflight(out, cpu_binary, kk_binary, launcher='mpirun', host_kokkos=False, serial=False):
     root = Path(out)/'preflight'
-    root.mkdir()
+    root.mkdir(exist_ok=True)
+    fresh = {}
     launch = {b: command(cpu_binary if b == 'cpu' else kk_binary, b, launcher,
                         ranks=2, host_kokkos=host_kokkos, serial=serial) for b in ['cpu', 'kokkos']}
     for height in [16, 50, 75]:
         for backend in ['cpu', 'kokkos']:
             path = root/f'{backend}-fresh-h{height}'
-            campaign.generate_case(path, smoke_row(height), smoke=True)
-            if backend == 'kokkos': kk_deck(path/'in.step')
-            execute(path, launch[backend], timeout=300)
-            validate_case(path)
+            fresh[backend, height], _, _ = resumable_case(path, smoke_row(height), None,
+                launch[backend], backend, timeout=300)
             print(f'GPU_ROUTE_FRESH_PASS backend={backend} height={height}', flush=True)
     # Both directions matter: existing CPU particles -> GPU, and GPU checkpoint -> CPU.
     for previous, backend in [('cpu', 'kokkos'), ('kokkos', 'cpu')]:
         path = root/f'{previous}-to-{backend}'
-        campaign.generate_case(path, smoke_row(), root/f'{previous}-fresh-h50'/'restart.final',
-                               'smoke', smoke=True)
-        if backend == 'kokkos': kk_deck(path/'in.step')
-        execute(path, launch[backend], timeout=300)
-        validate_case(path)
+        resumable_case(path, smoke_row(), fresh[previous,50]/'restart.final',
+                       launch[backend], backend, timeout=300)
         print(f'GPU_ROUTE_RESTART_PASS from={previous} to={backend}', flush=True)
     pilot.write_json(Path(out)/'preflight.json', dict(status='preflight_complete',
         kokkos_backend='Serial' if host_kokkos else 'CUDA',
@@ -179,6 +224,8 @@ def run(out):
     restart = Path(cfg['restart'])
     # Hash once, then require exactly the same restart for every timed arm.
     restart_hash = pilot.sha(restart)
+    if restart_hash != cfg['restart_sha256']:
+        raise ValueError('Pilot restart changed since submission; refusing mixed provenance')
     summary = dict(status='benchmark_running', flowmllab_commit=cfg['flowmllab_commit'],
         sparta_commit=pilot.SPARTA_COMMIT, hardware=hardware, restart=str(restart),
         restart_sha256=restart_hash, measurements=[], comparisons=[], particle_policy='retain successful pilot grid and particle weight',
@@ -189,7 +236,9 @@ def run(out):
                'Cell sampling cadence and dt match campaign; benchmark block dumps occur 100x more often.',
                'Warmup loop timing measures pressure-driven transport/collisions before field tallies.',
                'Sampling loop timing includes all tallies and deliberately frequent compressed output.',
-               'End-to-end timing includes input, MPI startup, restart read/write and output.',
+               'End-to-end timing includes input, MPI startup, restart read/write, checkpoint sealing and output.',
+               'Completed arms survive preemption. Only uninterrupted same-allocation pairs enter speedups.',
+               'Resumed particles receive one equilibration block and a fresh full sampling window; RNG is not restored.',
                'Short-window field differences are diagnostics, not a statistical equivalence test.',
                'No fine-grid or increased-PPC cases are generated. Open-boundary particle inventory can fluctuate physically.'])
     pilot.write_json(out/'gpu_benchmark_report.json', summary)
@@ -200,19 +249,10 @@ def run(out):
             path = out/f'benchmark-{backend}-s{seed}'
             row = benchmark_row(seed)
             check_particle_budget(row)
-            campaign.generate_case(path, row, restart, 'smoke', smoke=True)
-            if backend == 'kokkos': kk_deck(path/'in.step')
-            m = load(path/'case.json')
-            m.update(level='cpu_gpu_short_benchmark', training_data_approved=False)
-            pilot.write_json(path/'case.json', m)
             cmd = command(cpu if backend == 'cpu' else gpu, backend, launcher)
-            timing = execute(path, cmd, gpu_uuid=hardware['uuid'] if backend == 'kokkos' else None)
-            reports[backend] = validate_case(path)
-            if [x['steps'] for x in timing['loops']] != [700, 1050, 350]:
-                raise ValueError('Unexpected benchmark loop segmentation')
-            timing.update(backend=backend, seed=seed,
-                          warmup_loop_seconds=timing['loops'][0]['seconds'],
-                          sampling_loop_seconds=sum(v['seconds'] for v in timing['loops'][1:]))
+            path, timing, reports[backend] = resumable_case(path, row, restart, cmd,
+                backend, gpu_uuid=hardware['uuid'] if backend == 'kokkos' else None)
+            timing.update(backend=backend, seed=seed)
             summary['measurements'].append(timing)
             timings[backend], paths[backend] = timing, path
             pilot.write_json(out/'gpu_benchmark_report.json', summary)
@@ -224,7 +264,13 @@ def run(out):
                          for r in campaign.diagnostic_probes(p/'grid.final.gz', load(p/'case.json'))}
         # field_difference uses its second argument as the reference norm.
         difference = campaign.field_difference(probes['kokkos'], probes['cpu'])
+        # A resumed allocation can be a different node. Do not silently pool
+        # cross-allocation CPU/GPU timings into a same-node speedup claim.
+        keys = ['job', 'restart_count', 'host']
+        comparable = (not any(t['checkpoint_resumed'] for t in timings.values()) and
+            all(timings['cpu']['allocation'][k] == timings['kokkos']['allocation'][k] for k in keys))
         summary['comparisons'].append(dict(seed=seed, field_difference=difference,
+            eligible_paired_speedup=comparable,
             mass_flow_cpu=reports['cpu']['mass_out_kg_per_m_s'],
             mass_flow_gpu=reports['kokkos']['mass_out_kg_per_m_s'],
             boundary_pressure_cpu=reports['cpu']['boundary_adjacent_mean_pressure_Pa'],
@@ -233,8 +279,11 @@ def run(out):
     if pilot.sha(restart) != restart_hash:
         raise ValueError('Pilot restart changed during paired benchmark')
     summary['speedups'] = {}
+    eligible = [r['seed'] for r in summary['comparisons'] if r['eligible_paired_speedup']]
+    summary['eligible_speedup_seeds'] = eligible
     for key in ['warmup_loop_seconds', 'sampling_loop_seconds', 'wall_seconds']:
-        med = {b: statistics.median(r[key] for r in summary['measurements'] if r['backend']==b)
+        if not eligible: break
+        med = {b: statistics.median(r[key] for r in summary['measurements'] if r['backend']==b and r['seed'] in eligible)
                for b in ['cpu', 'kokkos']}
         summary['speedups'][key] = dict(cpu_16_ranks_median_s=med['cpu'], gpu_1_median_s=med['kokkos'],
                                        cpu_over_gpu=med['cpu']/med['kokkos'])
@@ -247,13 +296,14 @@ def run(out):
 
 def show_report(report):
     print('STATUS=', report['status'])
+    print('ELIGIBLE_SPEEDUP_SEEDS=', report.get('eligible_speedup_seeds', []))
     for name, values in report.get('speedups', {}).items():
         print(f'{name}: CPU16={values["cpu_16_ranks_median_s"]:.3f}s GPU1={values["gpu_1_median_s"]:.3f}s CPU/GPU={values["cpu_over_gpu"]:.3f}')
     print('GRID=', report.get('grid'), 'PPC=', report.get('ppc_outlet_reference'),
           'INITIAL_PARTICLE_ESTIMATE=', report.get('initial_particles_estimate'))
 
 
-def submit(root, base, ref, gpu='a40', new_run=False):
+def submit(root, base, ref, gpu='a40', new_run=False, partition='gpu-preempt', hold=False):
     if not re.fullmatch('[0-9a-f]{40}', ref): raise ValueError('Full commit SHA required')
     root, base = Path(root).resolve(), Path(base).resolve()
     (base/'runs').mkdir(parents=True, exist_ok=True)
@@ -276,35 +326,42 @@ def submit(root, base, ref, gpu='a40', new_run=False):
     for name in FILES: shutil.copy2(root/name, code/name)
     (out/'code.sha256').write_text(''.join(f'{pilot.sha(code/n)}  code/{n}\n' for n in FILES))
     meta = dict(status='submitting', flowmllab_commit=ref, sparta_commit=pilot.SPARTA_COMMIT,
-        restart=str(restart), gpu_type=gpu, expected_compute_capability=ARCH[gpu][0],
+        restart=str(restart), restart_sha256=pilot.sha(restart), gpu_type=gpu, expected_compute_capability=ARCH[gpu][0],
         kokkos_arch=ARCH[gpu][1], cuda_module='cuda/12.6', mpi_module='openmpi/5.0.3-cuda12.6',
         out=str(out), cpu_ranks=16, gpu_ranks=1, jobs={}, training_data_approved=False)
     meta.update(particle_policy='retain successful pilot grid and particle weight',
                 initial_particle_estimate=check_particle_budget(benchmark_row(campaign.SEEDS[0])),
-                grid=[1000,200], ppc_outlet_reference=20, large_particle_probes=False)
+                grid=[1000,200], ppc_outlet_reference=20, large_particle_probes=False,
+                partition=partition, checkpoint_policy='warm particles + completed arms; full sampling windows',
+                max_allocations=8, allocations=[], guards={})
     pilot.write_json(out/'manifest.json', meta)
-    (base/POINTER).write_text(str(out)+'\n')
-    cmd = ['sbatch', '--parsable', '--account=pi_roohie_umass_edu', '--partition=gpu',
+    cmd = ['sbatch', '--parsable', '--account=pi_roohie_umass_edu', f'--partition={partition}',
         '--nodes=1', '--ntasks=16', '--cpus-per-task=1', '--gpus=1', f'--constraint={gpu}',
         '--mem=48G', '--time=04:00:00', '--job-name=step-gpu-bench', '--export=ALL',
+        '--requeue', '--open-mode=append',
         f'--chdir={out}', f'--output={out}/slurm-%j.out', f'--error={out}/slurm-%j.err', str(code/'gpu_job.sh')]
+    if hold: cmd.insert(1, '--hold')
     try:
         raw = subprocess.check_output(cmd, env=dict(os.environ, SPARTA_GPU_OUT=str(out)), text=True).strip()
         job = raw.split(';')[0]
         if not job.isdigit(): raise ValueError(f'Invalid sbatch result: {raw!r}')
-        meta.update(status='submitted', jobs={'benchmark':job})
+        meta.update(status='submitted_held' if hold else 'submitted', jobs={'benchmark':job}, allocations=[job])
         (out/'JOB_ID').write_text(job+'\n')
     except Exception:
         meta['status']='submission_failed'; pilot.write_json(out/'manifest.json', meta); raise
     pilot.write_json(out/'manifest.json', meta)
+    (base/POINTER).write_text(str(out)+'\n')
     print(f'OUT={out}\nGPU_BENCHMARK_JOB={job}\nGPU={gpu} CPU_REFERENCE_RANKS=16')
     print('Only the benchmark is submitted. Existing campaigns are unchanged.')
+    return out, job
 
 
 def status(out):
     out = Path(out)
     cfg = load(out/'manifest.json')
     print('OUT=', out)
+    print('PARTITION=', cfg.get('partition'), 'ALLOCATIONS=', cfg.get('allocations'),
+          'RECOVERY_GUARDS=', cfg.get('guards'))
     job = cfg['jobs'].get('benchmark')
     if job:
         print('JOB=', job)
@@ -312,6 +369,8 @@ def status(out):
     path = out/'gpu_benchmark_report.json'
     if path.exists(): show_report(load(path))
     else: print('BENCHMARK_REPORT_NOT_YET_AVAILABLE')
+    print('COMPLETED_ARMS=', len(list(out.glob('benchmark-*/COMPLETE.json'))),
+          'COMMITTED_WARM_CHECKPOINTS=', len(list(out.glob('benchmark-*/attempts/*/WARM_CHECKPOINT.json'))))
     for path in sorted(out.glob('slurm-*.out'))+sorted(out.glob('slurm-*.err')):
         print('LOG=',path)
         subprocess.run(['tail','-n','25',str(path)], check=False)
