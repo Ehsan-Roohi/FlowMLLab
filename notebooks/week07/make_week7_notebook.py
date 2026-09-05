@@ -42,6 +42,9 @@ TARGET = HERE / "W7_Lattice_Boltzmann_Cylinder_Student.ipynb"
 
 
 def md(text: str):
+    # GitHub's notebook renderer expects dollar-delimited math in Markdown.
+    text = text.replace(r"\[", "$$").replace(r"\]", "$$")
+    text = text.replace(r"\(", "$").replace(r"\)", "$")
     return nbf.v4.new_markdown_cell(text.strip() + "\n")
 
 

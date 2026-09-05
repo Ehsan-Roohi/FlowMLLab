@@ -11,6 +11,7 @@ import sys
 from pathlib import Path
 
 import matplotlib.pyplot as plt
+from matplotlib.transforms import Bbox
 import numpy as np
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -61,12 +62,26 @@ def draw_profiles(
     output: Path,
 ) -> None:
     centerline = int(data["centerline_index"])
+    if not np.allclose(data["y_m"][centerline], 92e-6, rtol=0, atol=1e-11):
+        raise ValueError("profile row does not match the documented symmetry plane")
     x_um = data["x_m"][centerline] * 1.0e6
     fig, axes = plt.subplots(6, 3, figsize=(13.8, 14.4), constrained_layout=True)
     for column, case_index in enumerate(held_out_indices):
         pressure = int(data["pressure_kpa"][case_index])
         for row, (field, (label, _, _)) in enumerate(FIELDS.items()):
             axis = axes[row, column]
+            if field == "v_ms":
+                axis.plot(x_um, np.zeros_like(x_um), color="#008679", linewidth=2.0,
+                          label=r"Prescribed symmetry: $V=0$")
+                axis.set(ylim=(-0.5, 0.5), yticks=[-0.5, 0, 0.5],
+                         title=f"{pressure} kPa | symmetry boundary", xlabel=r"$x$ ($\mu$m)")
+                if column == 0:
+                    axis.set_ylabel(label)
+                axis.legend(loc="lower center", frameon=False, fontsize=8)
+                axis.grid(alpha=0.22)
+                # The exported nonzero boundary values are retained in the raw
+                # archive and separate audit, not presented as physical V here.
+                continue
             axis.plot(
                 x_um, data[field][case_index, centerline], color="black",
                 linewidth=2.0, label="DSMC",
@@ -94,10 +109,17 @@ def draw_profiles(
             axis.grid(alpha=0.22)
     axes[0, 0].legend(frameon=False, fontsize=8)
     fig.suptitle(
-        "Held-out nozzle profiles: physical versus shock-aligned baselines",
+        "Nozzle centerline profiles | prescribed symmetry condition for V",
         fontsize=15,
     )
     fig.savefig(output, dpi=220, bbox_inches="tight")
+    # Export the requested three V panels directly from the plotted artists.
+    fig.canvas.draw()
+    renderer = fig.canvas.get_renderer()
+    v_row = list(FIELDS).index("v_ms")
+    bounds = Bbox.union([axis.get_tightbbox(renderer) for axis in axes[v_row]])
+    bounds = bounds.transformed(fig.dpi_scale_trans.inverted()).expanded(1.01, 1.0)
+    fig.savefig(output.with_name("nozzle_symmetry_profiles.png"), dpi=220, bbox_inches=bounds)
     plt.close(fig)
 
 
@@ -344,6 +366,7 @@ def main() -> None:
     write_csv(metrics_path, metrics)
 
     profiles_path = figure_dir / "nozzle_back_pressure_profiles.png"
+    symmetry_profiles_path = figure_dir / "nozzle_symmetry_profiles.png"
     summary_path = figure_dir / "nozzle_back_pressure_error_summary.png"
     draw_profiles(
         data, physical_predictions, aligned_predictions,
@@ -362,6 +385,7 @@ def main() -> None:
     manifest = {
         "schema_version": 3,
         "generator": "qa/run_nozzle_field_validation.py",
+        "profile_v_semantics": "prescribed V=0 at y=92 micrometres; not a measured DSMC curve or a fitted accuracy result; raw export retained separately",
         "model": "development-selected physical-coordinate or shock-aligned interpolation baseline",
         "branch_input": "back pressure in kPa",
         "source_archive": "results/mahdavi_deeponet/nozzle_fields_15cases.npz",
@@ -394,7 +418,7 @@ def main() -> None:
         ),
         "figure_sha256": {
             path.relative_to(root).as_posix(): sha256(path)
-            for path in (profiles_path, *contour_paths, summary_path)
+            for path in (profiles_path, symmetry_profiles_path, *contour_paths, summary_path)
         },
     }
     manifest_path = result_dir / "nozzle_flowmllab_manifest.json"

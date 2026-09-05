@@ -1,4 +1,5 @@
 {
+  "boundary_caveat": "The max-y row is at the stated symmetry plane, but exported V is nonzero. Original labels are preserved; this is not a boundary-condition validation dataset.",
   "builder_pod_audit": {
     "physical": {
       "E123_percent": 93.7617868849599,
@@ -22,7 +23,7 @@
     "microstep_scope": "Kn and h/H generalization are demonstrated separately, not jointly; the height study is at fixed Kn=0.01.",
     "microstep_teaching_model": "The leakage-free coordinate surrogate receives only h/H, x, y, and known geometry; it does not receive U, V, pressure, target masks, or target-field patches."
   },
-  "derivation": "First Tecplot POINT zone (101x31); seven full physical fields retained on the original common grid; max-y half-domain symmetry centerline extracted separately; density-shock diagnostics recomputed with FlowMLLab's documented detector.",
+  "derivation": "First Tecplot POINT zone (101x31); seven full physical fields retained on the original common grid; max-y exported boundary row extracted separately; density-shock diagnostics recomputed with FlowMLLab's documented detector.",
   "derived_files": {
     "nozzle_centerline_15cases.npz": "7e644751574f4a58c1a6c6974a89ec063f73a6a65fd373e5abeaa35827bf611e",
     "nozzle_fields_15cases.npz": "688e88c1460f13f1151c009d11ac6acc684dea65adfa45bf79c91f929460d0f9",

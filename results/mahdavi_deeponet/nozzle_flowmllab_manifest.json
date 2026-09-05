@@ -28,7 +28,8 @@
     "results/mahdavi_deeponet/nozzle_flowmllab/nozzle_back_pressure_P25_contours.png": "2c4655f83290b95351cfa010732944c6e73a163c912be23413beeb8605e4537a",
     "results/mahdavi_deeponet/nozzle_flowmllab/nozzle_back_pressure_P30_contours.png": "528a5bb3fd0e413163d5d97b6998b3d36f27bafc22add1175447c1d51e57288a",
     "results/mahdavi_deeponet/nozzle_flowmllab/nozzle_back_pressure_error_summary.png": "9a562464327eaabbfa6535c6f8c48e2dafb6066a6ee92379247f3e31de4cea6a",
-    "results/mahdavi_deeponet/nozzle_flowmllab/nozzle_back_pressure_profiles.png": "0c00edd4b603a012d15cd207a39f0ec0f1dc416ead2b26ff9f82a63fdb5a361d"
+    "results/mahdavi_deeponet/nozzle_flowmllab/nozzle_back_pressure_profiles.png": "b2e4e38eac312706afc5114d030326f1f500edaf8b7e313682e1e25392bad374",
+    "results/mahdavi_deeponet/nozzle_flowmllab/nozzle_symmetry_profiles.png": "0b9fbccfd915bc63a4da066744c877d924374206ce2fe002dad49234224b39db"
   },
   "generator": "qa/run_nozzle_field_validation.py",
   "held_out_cases_opened_after_selection": true,
@@ -39,6 +40,7 @@
   ],
   "metrics_csv_sha256": "3e496a7af9b8f792500cee5f917c9928ed454a7172dfef5e91a408bf5b2252d5",
   "model": "development-selected physical-coordinate or shock-aligned interpolation baseline",
+  "profile_v_semantics": "prescribed V=0 at y=92 micrometres; not a measured DSMC curve or a fitted accuracy result; raw export retained separately",
   "retained_article_evidence_csv": "results/mahdavi_deeponet/nozzle_paper_field_errors.csv",
   "retained_article_evidence_csv_sha256": "1301140996906daa611b2e08543cf24132cf0338c054102a520223853382916d",
   "route_by_pressure": {

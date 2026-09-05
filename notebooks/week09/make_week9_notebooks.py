@@ -562,13 +562,26 @@ print(json.dumps(public_report, indent=2))
 ## 1. Data audit before model fitting
 
 The source files span back pressures from 15 to 33 kPa. Each main zone is
-101 by 31; this teaching archive retains the max-$y$ symmetry centerline and
+101 by 31; this teaching archive retains the exported max-$y$ boundary row and
 seven recorded fields. `pressure_tecplot` keeps the original file values
 without inferring a unit not stated by the Tecplot header.
 
 The compact file is not a new simulation. Its provenance records every source
 filename and SHA-256, the exact source commit, the extraction rule, the derived
 file hash, and the licensing change notice.
+
+**The exported symmetry values are not boundary-consistent.** The max-$y$ row
+lies at $y=92\,\mu$m, the stated symmetry plane, but its raw $V$ reaches about
+$-4.31$ m/s at 16 kPa. The physical boundary requires $V=0$. The archived
+Fortran exporter assigns adjacent cell values to boundary nodes without odd
+reflection of $V$; this is consistent with the observed defect, although the
+exact producing executable for these files has not been recovered. Matching
+that curve measures agreement with an exported label, not physical validity.
+The original arrays remain unchanged for provenance. The separate
+`predict_with_symmetry(..., symmetry_y_m=92e-6)` interface imposes the known
+boundary on predictions, leaves interior values unchanged, and does not
+contribute to the reported raw-data accuracy improvement. Repairing the exact
+DSMC export and checking the interior remain necessary.
 """),
         code(r"""
 data = load_nozzle_centerlines(REPO_ROOT)
@@ -824,6 +837,12 @@ global, shock-window, and density-gradient-weighted metrics for both methods,
 an error heatmap, a 6-by-3 centerline comparison, and full 2-D comparisons.
 Article numbers remain in their own immutable CSV; no difference column is
 computed between non-commensurate evidence levels.
+
+In the centerline figure, the $V$ panels show the prescribed symmetry condition
+$V=0$, not the inconsistent exported boundary samples. Raw $V$ curves remain
+in the separate symmetry audit below. No learned accuracy or relative error
+against a zero boundary profile is claimed; all CSV regression metrics still
+refer to the original raw fields.
 """),
         code(r"""
 command = [
@@ -857,7 +876,79 @@ if _NozzleImage is not None:
         display(_NozzleImage(filename=str(RESULTS / filename)))
 """),
         md(r"""
-## 6. Retained full-model paper evidence
+## 6. Registered POD models: a trained neural branch and a stronger baseline
+
+The previous sensor sometimes selects the outlet gradient near the wall.
+Translating an entire row also moves the fixed throat. The new experiment
+searches for a **positive interior compression** and registers the field with
+a monotone map that fixes inlet, throat, and outlet. A robust quadratic predicts
+the compression station from training pressures. The 22 kPa development case
+is retained; its non-monotone station is not deleted or relabelled.
+
+The registered, channel-scaled fields define a joint POD basis. Complete-case
+development folds compare ranks 2, 4, and 6, a quadratic coefficient branch,
+and tanh neural branches of width 8 or 16 with three seeds. Registration,
+normalization, and POD are recomputed inside each fold. Selection minimizes
+the mean six-field relative $L_2$ error. The polynomial branch wins; it must
+not be labelled a neural-network result. The separately trained neural ensemble
+is also retained, with convergence flags and seed dispersion.
+
+The following cell uses frozen numerical checkpoints and reproduces the
+predictions without retraining. For the full development sweep, run
+`python qa/run_nozzle_transport_validation.py --stage all` from the repository
+root. The 16/25/30 kPa cases were inspected during earlier project work: these
+new results are a **regression assessment on historical holdouts**, not a fresh
+blind test. A new independent pressure sweep is needed for a research claim.
+"""),
+        code(r"""
+from flowmllab.nozzle_transport import (
+    load_transport_model, predict_transport_pod, predict_with_symmetry,
+)
+
+transport_dir = REPO_ROOT / "results/nozzle_transport"
+transport_report = json.loads((transport_dir / "report.json").read_text())
+transport_metrics = pd.read_csv(transport_dir / "regression_metrics.csv")
+transport_model = load_transport_model(transport_dir / "selected_model.npz")
+transport_prediction = predict_transport_pod(transport_model, [16.0, 25.0, 30.0])
+with np.load(transport_dir / "predictions.npz", allow_pickle=False) as stored:
+    np.testing.assert_allclose(transport_prediction, stored["selected"], rtol=1e-9, atol=1e-10)
+print("Selected coefficient branch:", transport_report["selected_branch"])
+print("Selected POD rank:", transport_report["selected_rank"])
+print("Neural ensemble rank/width:", transport_report["neural_rank"], transport_report["neural_width"])
+display(transport_metrics.pivot(index="field", columns="pressure_kpa",
+                              values="selected_global_relative_l2_percent"))
+display(transport_metrics.pivot(index="field", columns="pressure_kpa",
+                              values="neural_global_relative_l2_percent"))
+display(pd.read_csv(transport_dir / "physical_diagnostics.csv"))
+symmetry_prediction = predict_with_symmetry(transport_model, [16, 25, 30], symmetry_y_m=92e-6)
+np.testing.assert_array_equal(symmetry_prediction[:, -1, :, 2], 0.0)
+print("Raw-label regression is not physical validation:", transport_report["physical_validation_passed"])
+display(_NozzleImage(filename=str(transport_dir / "symmetry_boundary_audit.png")))
+if _NozzleImage is not None:
+    for pressure_kpa in (16, 25, 30):
+        display(_NozzleImage(filename=str(transport_dir / f"nozzle_P{pressure_kpa}_profiles.png")))
+"""),
+        md(r"""
+The average full-field error decreases from 6.429% for the previous selected
+interpolation baseline to 4.199% for registered POD with a quadratic branch;
+the trained neural ensemble reaches 4.604%. At 25 kPa, the selected model's
+$U$ and $V$ errors are 2.173% and 2.713%. The 30 kPa case remains difficult:
+the pressure-only shock locator misses the compression station by 3.431
+micrometres on average, with $U$ and Mach errors of 11.601% and 13.667%.
+Neither a sharper colormap nor a target-assisted shift would resolve this
+deployment limitation. Predictions are not clipped or smoothed after scoring.
+
+The mass-flow profile error is also recorded (1.14%, 3.06%, and 2.07% for the
+selected model); this does not mean exact conservation. Even the source DSMC
+fields have about 6% streamwise mass-flow spread under this discrete diagnostic.
+The historical shock-window definition is retained for matched comparisons;
+the independently corrected station error is reported separately. The displayed
+$V$ centerline uses the separately stored boundary-constrained prediction;
+this plotting correction leaves model weights, raw fields, and scores unchanged.
+To rebuild just these panels, run
+`python qa/run_nozzle_transport_validation.py --stage profiles`.
+
+## 7. Retained full-model paper evidence
 
 The next tables are read from immutable CSV transcriptions. They describe the
 article's full two-dimensional held-out outputs and hard 16 kPa comparison;
