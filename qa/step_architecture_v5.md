@@ -5,6 +5,11 @@ whether the small geometry-feature MLP, ordinary DeepONet, or the existing
 FlowMLLab Geom-DeepONet performs better under a shared training protocol.
 It does not replace the accepted teaching outputs or continue V4 weights.
 
+Update 2026-09-05: the existing A40 run **64004321** was recovered and audited.
+It completed all 18 controlled fits and two historical anchors in about seven
+minutes. See [all-arm results and limitations](../results/step_architecture_v5/README.md).
+Do not submit it again merely because an older note says the GPU run is pending.
+
 ## Frozen scope
 
 - Development heights: 16, 21, 25, 50, 75 percent; validation: 33, 58 percent.
@@ -143,7 +148,8 @@ six-arm CPU smoke passed with TensorFlow 2.20.0, Keras 3.15.1, NumPy 2.2.6 and
 scikit-learn 1.6.1. It checked equal update/exposure/schedule records, H5 restore,
 and review packaging. Independently calling the original sklearn helper reproduced
 both historical validation rows within 0.01 percentage points. These are execution
-and reproduction checks; the 18-fit A40 comparison has not been run here.
+and reproduction checks. The subsequently recovered A40 report is linked above;
+it is report-level development evidence, not independently reproduced inference.
 
 Reference: He et al. (2024), Geom-DeepONet,
 <https://doi.org/10.1016/j.cma.2024.117130>. This is a 2D FlowMLLab adaptation,

@@ -1,0 +1,67 @@
+# Execution audit — 2026-09-05
+
+Development branch only. No new release, DOI, front-page research claim, or
+change to the frozen scientific acceptance criteria. Upload reviewed code to
+GitHub first; Unity runs must retrieve a full immutable commit, not a moving
+branch or an edited browser-only script.
+
+## What needs computation
+
+| Work | Verified state | Next action |
+|---|---|---|
+| DMD, sparse sensors, SINDy companions | Both notebooks and all retained metrics reproduced locally | Research forecasts require qualified CFD first, not another fit to the old coarse labels |
+| Cylinder CFD qualification | Unity CPU job **64023967** running from `6f463ac`; one CPU, 8 GiB, 24-hour limit | Finish D40 and inspect the fixed grid/statistics gates before any domain/Mach/trajectory campaign |
+| Micro-step architecture V5 | Existing A40 job **64004321** completed 18 controlled fits plus two anchors in 7:05 | [Report-level audit](../results/step_architecture_v5/README.md); no duplicate training or promotion of poor vortex results |
+| Weeks 11 and 12 | Both notebooks executed locally; Week 12 freshly refitted | Execution/reproduction only; not a new independent research validation |
+| SPARTA GPU benchmark | Job **64023942** failed before solver execution: `libcudart.so.12` unresolved | Fix and verify the runtime dependency before a bounded retry; CPU guard **64023943** completed but did not resume the solver |
+| Nozzle correction | Original exporter/data defect remains | Recover the producing run and follow the [versioned data-note procedure](../docs/NOZZLE_DATA_NOTE.md); more ML training cannot repair reference data |
+
+SPARTA's guard correctly printed `NO_AUTOMATIC_RETRY` after the software failure.
+No CPU/GPU speedup or statistical equivalence result is available from that job.
+The archived 39-run refinement matrix is not approved by this audit. The saved
+benchmark remains at the existing pilot's 1000x200 grid, PPC20 and approximately
+5.1 million particles, not a new production-data campaign.
+
+D40 is serial NumPy, not a CUDA program. Its measured local 100-step full-grid
+timing was 53.90 seconds; the full 80,000-step run is genuinely long. Do not
+duplicate it locally or request GPUs for unchanged serial code. Its Unity
+environment has newer NumPy/pandas/SciPy/scikit-learn versions than the declared
+package ranges. Preserve that running environment and its provenance; any
+acceptance needs explicit cross-environment checks, not a silent package change.
+See the [research qualification gates](MODAL_RESEARCH_PROTOCOL.md).
+
+## Local verification
+
+Command from the repository root, with the project dependencies and Jupyter
+notebook execution tools installed:
+
+```bash
+python qa/run_local_followup.py --output tmp/followup-new
+```
+
+The runner refuses an existing output directory or an output inside retained
+data/results/notebooks/lectures. It uses a private Jupyter kernel/configuration
+and writes executed notebooks, fit results, logs, versions and source hashes to
+scratch. On Windows it needs normal local-process permissions for secure
+Jupyter connection files and loopback sockets; do not disable Jupyter security.
+
+Verified on Windows/Python 3.12.14: 137 core tests collected, 3 optional skips,
+no failures; 13 V5 protocol tests collected, 2 Linux-only skips, no failures.
+All 13 V5 tests also passed separately on Unity/Linux (mocked job submission,
+not additional allocations). Four notebooks executed end-to-end: Week 5 sparse
+sensing, Week 7 modal forecasting, Week 11 identification, and Week 12 DSMC
+reconstruction. All modal metrics and all 28 Week 12 metric rows reproduced
+within the pre-existing 2% relative / 1e-5 absolute cross-library tolerance.
+All **437 retained files remained byte-identical** during the final audit.
+
+Local environment: NumPy 2.2.6, SciPy 1.15.3, pandas 2.3.3,
+scikit-learn 1.6.1, matplotlib 3.10.9, nbclient 0.11.0. These scientific package
+versions satisfy the repository constraints. The audit used base commit
+`6f463ac` plus the follow-up runner and import tests committed with this note;
+the scratch summary records individual source hashes.
+
+Week 12 still retains its finite-iteration optimizer warning and the baseline
+advantage for qx. No test-guided epoch sweep, new accuracy claim or selective
+replacement of those results was made. The V5 CSV was checked byte-for-byte
+against an extraction of the original report (SHA256
+`afd5b847326981a8a49a79f6a38c83bada7f0bb893965a734546d28f641f6c82`).

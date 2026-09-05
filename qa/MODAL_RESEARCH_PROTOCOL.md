@@ -102,8 +102,11 @@ Local timing pilot (2026-09-05): 100 steps on the production-size800x320 grid
 took53.90 seconds, without startup ramp and with no physical-validation claim.
 Linear extrapolation to80000 steps is approximately12 hours on this machine;
 startup costs, machine load and cluster hardware make this only a rough estimate.
-Production has NOT been launched. Confirm a Unity login and suitable batch
-resources before submitting; no SSH host alias is configured in this workspace.
+Production was launched on Unity as job **64023967**, from GitHub commit
+`6f463acac0a1e00ada6ecbd6cae8b0d31a4da302`, with one CPU, 8 GiB RAM and a
+24-hour limit. Its start and smoke output were checked. Scientific completion
+and grid acceptance remain pending; do not submit a duplicate. See
+[execution status and remaining work](EXECUTION_STATUS.md).
 
 ## Primary methodological sources
 
