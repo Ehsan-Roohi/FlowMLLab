@@ -41,6 +41,7 @@ flowmllab smoke --root .
 python qa/validate_course_release.py
 ```
 
-The existing GitHub–Zenodo integration is expected to archive the published
-release in the FlowMLLab version family (concept DOI 10.5281/zenodo.22074169).
-Only a confirmed Zenodo record should be used as the version-specific DOI.
+The GitHub publication workflow passed, including scientific validation and
+distribution checks. Zenodo archived version 1.4.0 with version-specific DOI
+[10.5281/zenodo.22315623](https://doi.org/10.5281/zenodo.22315623), in the
+FlowMLLab version family (concept DOI 10.5281/zenodo.22074169).

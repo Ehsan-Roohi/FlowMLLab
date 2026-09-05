@@ -2,7 +2,7 @@
 
 [![FlowMLLab CI](https://github.com/Ehsan-Roohi/FlowMLLab/actions/workflows/ci.yml/badge.svg)](https://github.com/Ehsan-Roohi/FlowMLLab/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.22074169.svg)](https://doi.org/10.5281/zenodo.22074169)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.22315623.svg)](https://doi.org/10.5281/zenodo.22315623)
 
 Learn scientific machine learning through reproducible fluid-mechanics experiments:
 generate numerical data, compare transparent baselines with learned models, and
@@ -206,10 +206,10 @@ Student submissions are not included.
 · [Citation metadata](CITATION.cff)
 · [Workshop, support, and consulting details](docs/RESULTS_GUIDE.md#workshops-support-and-consulting)
 
-Source release: **v1.4.0**. [Release notes](RELEASE_NOTES_v1.4.0.md).
-The [all-versions Zenodo DOI](https://doi.org/10.5281/zenodo.22074169) resolves to
-the latest published archive. The last confirmed archive during release preparation
-is [v1.3.0](https://doi.org/10.5281/zenodo.22306908).
+Current release: **v1.4.0** · [GitHub release](https://github.com/Ehsan-Roohi/FlowMLLab/releases/tag/v1.4.0)
+· [Release notes](RELEASE_NOTES_v1.4.0.md).
+Version-specific DOI: **[10.5281/zenodo.22315623](https://doi.org/10.5281/zenodo.22315623)**.
+The [all-versions DOI](https://doi.org/10.5281/zenodo.22074169) resolves to the latest published archive.
 
 **Ehsan Roohi** · University of Massachusetts Amherst · [roohie@umass.edu](mailto:roohie@umass.edu)
 

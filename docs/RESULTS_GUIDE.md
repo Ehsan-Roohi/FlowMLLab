@@ -6,7 +6,7 @@ This guide retains the detailed evidence, figures, protocols, and limitations be
 
 [![FlowMLLab CI](https://github.com/Ehsan-Roohi/FlowMLLab/actions/workflows/ci.yml/badge.svg)](https://github.com/Ehsan-Roohi/FlowMLLab/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](../LICENSE)
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.22126785.svg)](https://doi.org/10.5281/zenodo.22126785)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.22315623.svg)](https://doi.org/10.5281/zenodo.22315623)
 
 ## Qualified numerical-flow evidence to scientific ML—with explicit validity limits
 
@@ -554,10 +554,9 @@ If FlowMLLab supports your teaching or research, you can also support its contin
 
 Use [CITATION.cff](../CITATION.cff) when citing the release.
 
-Version 1.4.0 is the current source release. The
-[all-versions DOI](https://doi.org/10.5281/zenodo.22074169) points to the latest
-published archive; v1.3.0 is archived at
-[10.5281/zenodo.22306908](https://doi.org/10.5281/zenodo.22306908).
+Version 1.4.0 is the current source and archived release:
+[10.5281/zenodo.22315623](https://doi.org/10.5281/zenodo.22315623).
+The [all-versions DOI](https://doi.org/10.5281/zenodo.22074169) points to the latest published archive.
 See [CITATION.cff](../CITATION.cff) for current citation metadata. The GitHub release and archival record
 contain only FlowMLLab. They do not include materials from any separate research
 repository.
