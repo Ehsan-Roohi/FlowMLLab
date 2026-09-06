@@ -9,7 +9,7 @@
 
 ## Outstanding research inputs
 
-The exact nozzle producing-run lineage, raw moments and exporter have not been recovered in this change. See `docs/NOZZLE_DATA_NOTE.md`. No source correction, corrigendum decision, new paper-level model reproduction, preprint publication, or collaborator signature is implied.
+The exact nozzle producing-run lineage, raw moments and exporter have not been recovered in this change. See `docs/NOZZLE_DATA_NOTE.md`. The author decisions are recorded separately in `qa/AUTHOR_DECISIONS_2026-09-06.md`; no source correction, new paper-level model reproduction, submitted corrigendum, preprint deposit, or collection of collaborator signatures is implied.
 The cylinder data license is already resolved in `data/hypersonic_cylinder/DATA_LICENSE.md`; do not list it as pending.
 The D40 teaching data and temporal audit remain available; failed grid-independence criteria are preserved.
 
