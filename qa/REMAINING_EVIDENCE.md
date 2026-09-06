@@ -8,3 +8,5 @@
 - Week7.1 Mach-cylinder text comparison: completed in [paper-to-course audit](WEEK71_PAPER_PARITY.md), including architecture inconsistencies, split/support differences and retained baseline comparisons. Quantitative figure reproduction remains open pending checkpoints, preprocessing and figure-specific splits; Knudsen/diatomic branches remain unassessed.
 - Micro-step corrigendum, coauthor permission and Week11 preprint: require author decisions; no consent or publication decision inferred.
 - Fresh DSMC test cases: require defined cases and new simulation outputs; the new Re115 case is LBM, not DSMC.
+
+- Cylinder source recovery: [five candidate weights located and hashed on Unity](CYLINDER_SOURCE_RECOVERY.md); member-0 architecture inspected. Producing-script identity and scaler consistency remain blocking; no paper inference claimed.
