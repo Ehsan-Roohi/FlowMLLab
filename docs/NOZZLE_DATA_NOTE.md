@@ -34,13 +34,15 @@ been inspected; they are regression tests, not fresh blind validation.
 3. Check symmetry, wall conditions, integrated flux with documented quadrature,
    and sampling/grid sensitivity. Retain before/after values and checksums.
 4. Recompute every affected paper figure and metric using the same protocol.
-   Ehsan Roohi and Amirmehran Mahdavi must decide whether the differences
-   require a corrigendum and coordinate with the journal. No decision or
-   message on their behalf is implied by this note.
+   The authors have agreed to proceed with a corrigendum if this source audit
+   establishes that the published result is affected. The verified correction
+   and its numerical consequences must be prepared before journal submission;
+   see the [author-decision record](../qa/AUTHOR_DECISIONS_2026-09-06.md).
 5. Publish a distinct corrected dataset version, with its own identifier,
    machine-readable change log, source lineage and license. Preserve the old
    version and link it to the correction. Then update the course derivatives
    and compare old/new results without silently replacing historical evidence.
 
-**Current gate:** exact producing-run lineage and author review are still
-required. No corrected-data DOI, corrected field, or corrigendum is claimed.
+**Current gate:** the author-decision gate is closed. Exact producing-run
+lineage and numerical verification are still required. No corrected-data DOI,
+corrected field, submitted corrigendum or journal action is claimed.
