@@ -1,8 +1,9 @@
 {
   "all_metric_reproduction": "PASS, rtol=2%, atol=1e-5 (cross-library tolerance)",
-  "retained_files_unchanged": 470,
+  "phase_portability": "wrapped absolute tolerance 1e-3 rad; all non-phase gates unchanged",
+  "retained_files_unchanged": 471,
   "notebook_seconds": {
-    "W5_Lab2_Sparse_Sensing_Dynamics.ipynb": 3.8218312400022114,
-    "W7_Lab2_Modal_Forecasting.ipynb": 3.3644344639978954
+    "W5_Lab2_Sparse_Sensing_Dynamics.ipynb": 3.716708549000032,
+    "W7_Lab2_Modal_Forecasting.ipynb": 3.3906082109970157
   }
 }

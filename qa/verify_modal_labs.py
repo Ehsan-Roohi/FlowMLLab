@@ -38,6 +38,11 @@ def main():
             assert len(actual)==len(expected),path
             for i,(a,b) in enumerate(zip(actual,expected)):compare(a,b,path+'/'+str(i))
         elif isinstance(expected,(int,float)):
+            if path.endswith('/phase_error_at_reference_peak'):
+                # Phase lives on a circle; relative error is ill-conditioned near zero.
+                delta = np.arctan2(np.sin(actual-expected), np.cos(actual-expected))
+                assert abs(delta) <= 1e-3, (path,actual,expected)
+                return
             assert np.isclose(actual,expected,rtol=.02,atol=1e-5),(path,actual,expected)
         else:assert actual==expected,(path,actual,expected)
     # JSON object keys are strings (the in-memory budget keys are integers).
@@ -61,6 +66,7 @@ def main():
     after={str(p):hashlib.sha256(p.read_bytes()).hexdigest() for p in files}
     assert before==after,'Retained files changed during verification'
     summary={'all_metric_reproduction':'PASS, rtol=2%, atol=1e-5 (cross-library tolerance)',
+        'phase_portability':'wrapped absolute tolerance 1e-3 rad; all non-phase gates unchanged',
         'retained_files_unchanged':len(files),'notebook_seconds':durations}
     (args.output/'verification.json').write_text(json.dumps(summary,indent=2)+'\n',newline='\n')
     print(json.dumps(summary,indent=2))

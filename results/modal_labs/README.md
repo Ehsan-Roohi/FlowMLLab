@@ -29,7 +29,9 @@ Use a fresh output path each time. The verification command additionally require
 nbformat, nbclient, nbconvert and ipykernel. It executes both notebooks and emits
 executed HTML into scratch, verifies input/code hashes and compares **all**
 reported candidate/seed metrics with retained values. Its declared portability
-tolerance is 2% relative plus 1e-5 absolute; identical local reruns were deterministic.
+tolerance is 2% relative plus 1e-5 absolute for non-angular values; phase uses
+a wrapped absolute tolerance of 0.001 rad (0.057 degrees), because relative error
+is ill-conditioned near zero; identical local reruns were deterministic.
 CI has been added for this check and HTML artifacts; remote CI is not claimed
 until the branch is pushed and actually runs.
 
@@ -116,3 +118,9 @@ not independent CFD samples. Full-field POD oracle is a nondeployable floor.
 - This is original low-Mach LBM, not hypersonic DSMC, shock segmentation, robust
   noisy-DMD benchmarking or an independent validation of a Roohi article.
 - Main remains the frozen course until reviewed; these are development companions.
+
+CI portability correction: even the pinned environment on GitHub differed by
+0.000304 rad in the MLP phase diagnostic (-0.009063 vs -0.009367 rad).
+The original uniform relative check rejected this near-zero angle. Only angular
+comparison now uses the absolute circular tolerance above; model selection,
+field-error gates, source data and retained scores are unchanged.
