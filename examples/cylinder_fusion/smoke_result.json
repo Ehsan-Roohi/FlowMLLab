@@ -1,0 +1,12 @@
+{
+  "scope": "synthetic execution smoke only; not physical accuracy",
+  "tensorflow": "2.16.2",
+  "epochs": 1,
+  "members": 1,
+  "training_exit": 0,
+  "fresh_process_replay_exit": 0,
+  "prediction_rows": 40,
+  "all_finite": true,
+  "bundle_tests": 2,
+  "source_sha256": "dc11288d8f4eab1825ca38cdbb031b2f4b708fec99a59f251753a183c85dae66"
+}
