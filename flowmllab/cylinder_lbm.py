@@ -892,7 +892,8 @@ def simulate_cylinder(
                 "or lower Reynolds/inflow speed"
             )
 
-        if local_step % config.history_stride == 0 or local_step == config.steps:
+        # Keep force history uniform; omit a partial final averaging block.
+        if local_step % config.history_stride == 0 or (local_step == config.steps and not times):
             times.append(float(step))
             # Block averaging removes harmless one-lattice-step momentum-exchange
             # jitter without filtering the much slower physical shedding signal.
