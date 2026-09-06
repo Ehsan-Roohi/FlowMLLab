@@ -1,13 +1,20 @@
 {
-  "schema_version": 1,
+  "schema_version": 2,
   "source_location": "/work/pi_roohie_umass_edu/Nozzle",
   "recovered_utc": "2026-09-06",
   "case_count": 15,
-  "selection_rule": "Canonical author files named exactly P=<integer>full.dat; predicted and _full/_full_full derivatives excluded.",
+  "selection_rule": "Author files named exactly P=<back-pressure-kPa>full.dat; predicted and _full/_full_full derivatives excluded.",
+  "data_role": "full-domain Tecplot derivatives of the retained half-domain DSMC exports; not raw moments",
+  "full_domain_transform": {
+    "base_zones": "all non-Y values equal the original export after float32 conversion",
+    "y_translation_m": -0.000092,
+    "mirror_zones": "Y reflected; variables 1 and 3-12 shared unchanged",
+    "known_defect": "QY, V and Txy require sign reversal under reflection but are shared unchanged"
+  },
   "files": [
     {
       "file": "P=15full.dat",
-      "pressure_ratio": 15,
+      "back_pressure_kpa": 15,
       "bytes": 944283,
       "sha256": "e8b41aaad07d14576060e1f8d84369af6cec1e929dfca2f5b2c276ea502b9ba8",
       "zone_dimensions": {
@@ -18,7 +25,7 @@
     },
     {
       "file": "P=16full.dat",
-      "pressure_ratio": 16,
+      "back_pressure_kpa": 16,
       "bytes": 944489,
       "sha256": "d3e80207e5126174b716d70e57cdee7ab3f6eb02b21e183a698ab60e93961526",
       "zone_dimensions": {
@@ -29,7 +36,7 @@
     },
     {
       "file": "P=18full.dat",
-      "pressure_ratio": 18,
+      "back_pressure_kpa": 18,
       "bytes": 944263,
       "sha256": "68b8919a1e3afcb1b986fb569ca5e067791bb73ad9d07c6b7515b3435701394a",
       "zone_dimensions": {
@@ -40,7 +47,7 @@
     },
     {
       "file": "P=19full.dat",
-      "pressure_ratio": 19,
+      "back_pressure_kpa": 19,
       "bytes": 945016,
       "sha256": "b1452ae2491550d6f5c9744485651eccd5441fc93181094640ffdf2ec0715413",
       "zone_dimensions": {
@@ -51,7 +58,7 @@
     },
     {
       "file": "P=20full.dat",
-      "pressure_ratio": 20,
+      "back_pressure_kpa": 20,
       "bytes": 944594,
       "sha256": "5e21954598f0a798db0371fbf0fa2b199ab32c44bcbb47f563c4cfc35d49d151",
       "zone_dimensions": {
@@ -62,7 +69,7 @@
     },
     {
       "file": "P=22full.dat",
-      "pressure_ratio": 22,
+      "back_pressure_kpa": 22,
       "bytes": 944839,
       "sha256": "c0bc0124b3d92bb0d6e055319b5d66806af9972c7414326e19d28bce46706d15",
       "zone_dimensions": {
@@ -73,7 +80,7 @@
     },
     {
       "file": "P=23full.dat",
-      "pressure_ratio": 23,
+      "back_pressure_kpa": 23,
       "bytes": 945211,
       "sha256": "12210d2a75eb80d426ee62de0ca633c6cfc4a174ff6e0ecd0e253038a2acbbfc",
       "zone_dimensions": {
@@ -84,7 +91,7 @@
     },
     {
       "file": "P=24full.dat",
-      "pressure_ratio": 24,
+      "back_pressure_kpa": 24,
       "bytes": 945456,
       "sha256": "1ed902bfe51754a4bae9ad7e0a887548db1c64072803e6a16bd2dcee929edf44",
       "zone_dimensions": {
@@ -95,7 +102,7 @@
     },
     {
       "file": "P=25full.dat",
-      "pressure_ratio": 25,
+      "back_pressure_kpa": 25,
       "bytes": 945097,
       "sha256": "cc9a558ede72f0b98c499e367dc3bca6797a4e0fc9959e820ce0168c4615c14f",
       "zone_dimensions": {
@@ -106,7 +113,7 @@
     },
     {
       "file": "P=26full.dat",
-      "pressure_ratio": 26,
+      "back_pressure_kpa": 26,
       "bytes": 945703,
       "sha256": "cf7f6f050c2373e699672d4cf47177c37a78130599cbfe9652c0fc6f0ed09aea",
       "zone_dimensions": {
@@ -117,7 +124,7 @@
     },
     {
       "file": "P=27full.dat",
-      "pressure_ratio": 27,
+      "back_pressure_kpa": 27,
       "bytes": 945700,
       "sha256": "c883d514bee51ac9c28b5727cee63ff7e456d1b5d928fd7de2a640ae6eee31e9",
       "zone_dimensions": {
@@ -128,7 +135,7 @@
     },
     {
       "file": "P=28full.dat",
-      "pressure_ratio": 28,
+      "back_pressure_kpa": 28,
       "bytes": 946022,
       "sha256": "5f9649b0ad2de9726720c532cd2e4bb5faed08a11a3f836e2ae7a72cafd5fe98",
       "zone_dimensions": {
@@ -139,7 +146,7 @@
     },
     {
       "file": "P=29full.dat",
-      "pressure_ratio": 29,
+      "back_pressure_kpa": 29,
       "bytes": 945953,
       "sha256": "32b8cdf23ccf4bd2742378e0e2f287b415f875836d9e238c2a6d9120ddfea016",
       "zone_dimensions": {
@@ -150,7 +157,7 @@
     },
     {
       "file": "P=30full.dat",
-      "pressure_ratio": 30,
+      "back_pressure_kpa": 30,
       "bytes": 945824,
       "sha256": "222ca3567f33bf308b86f0059a2f8d17f08f9a42d7d0ff1cac93e983cffaf732",
       "zone_dimensions": {
@@ -161,7 +168,7 @@
     },
     {
       "file": "P=33full.dat",
-      "pressure_ratio": 33,
+      "back_pressure_kpa": 33,
       "bytes": 946302,
       "sha256": "2c3b66a1ef3612f4e8b3a87d52dd9a9a61c548e12a7d9191b7dcdadb2a170e28",
       "zone_dimensions": {

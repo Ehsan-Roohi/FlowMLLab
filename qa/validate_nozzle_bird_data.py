@@ -14,8 +14,11 @@ EXPECTED = [15, 16, 18, 19, 20, *range(22, 31), 33]
 
 def main() -> None:
     manifest = json.loads((DATA / "manifest.json").read_text())
+    assert manifest["schema_version"] == 2
     assert manifest["case_count"] == 15
-    assert [entry["pressure_ratio"] for entry in manifest["files"]] == EXPECTED
+    assert [entry["back_pressure_kpa"] for entry in manifest["files"]] == EXPECTED
+    transform = manifest["full_domain_transform"]
+    assert transform["y_translation_m"] == -0.000092
     actual = sorted(DATA.glob("P=*full.dat"), key=lambda p: int(re.search(r"P=(\d+)", p.name).group(1)))
     assert [int(re.search(r"P=(\d+)", p.name).group(1)) for p in actual] == EXPECTED
     for path, entry in zip(actual, manifest["files"]):
@@ -27,7 +30,13 @@ def main() -> None:
         assert 'VARIABLES = "X"' in head
         assert "ZONETYPE=Ordered" in head
         assert entry["zone_dimensions"] == {"I": 101, "J": 31, "K": 1}
-    print("NOZZLE_BIRD_DATA_PASS: 15 files; hashes and 101x31x1 headers verified")
+        full_text = payload.decode("ascii", errors="replace")
+        assert full_text.count("ZONE T=") == 4
+        assert full_text.count("VARSHARELIST = ([1,3-12]=") == 2
+    print(
+        "NOZZLE_BIRD_DATA_PASS: 15 back-pressure files; hashes, four-zone "
+        "headers and mirror variable sharing verified"
+    )
 
 
 if __name__ == "__main__":

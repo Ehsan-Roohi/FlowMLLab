@@ -18,14 +18,19 @@ The approximately 6% variation flagged in review is not itself proof of a
 solver conservation failure: export, boundary, cell/node and quadrature
 conventions must first be resolved.
 
-An exporter defect is a hypothesis to verify against the exact producing run.
-Prescribing V=0 in a boundary plot or prediction wrapper is not correction of
-the underlying measured fields. Existing historical test cases have already
-been inspected; they are regression tests, not fresh blind validation.
+The full-domain post-processing defect is now demonstrated. Relative to the
+recovered half-domain exports, the first two zones translate `Y` by -92
+micrometres exactly at float32 precision. The two added mirror zones share every
+non-`Y` variable unchanged, so the odd components `QY`, `V` and `Txy` receive
+the wrong mirrored sign. A recovered 2009 source candidate also fills its
+symmetry-plane nodal row from adjacent cell-centered samples rather than
+explicitly imposing `V=0`. This supports an export/post-processing explanation,
+not a particle-solver boundary-condition failure. Prescribing V=0 only in a
+plot or prediction wrapper would still not correct the retained source fields.
 
 ## Required correction and publication sequence
 
-1. Start from the fifteen canonical pressure-ratio snapshots recovered at
+1. Start from the fifteen full-domain back-pressure derivatives recovered at
    `/work/pi_roohie_umass_edu/Nozzle`, then recover the exact solver revision,
    input decks, raw accumulated moments, exporter revision, grid convention and
    sampling metadata for each snapshot. Available derived fields alone cannot
@@ -45,7 +50,9 @@ been inspected; they are regression tests, not fresh blind validation.
    version and link it to the correction. Then update the course derivatives
    and compare old/new results without silently replacing historical evidence.
 
-**Current gate:** the author-decision gate is closed and the canonical Unity
-snapshot directory is located. Exact Bird-2D producing-run lineage and numerical
-verification are still required. No corrected-data DOI, corrected field,
-submitted corrigendum or journal action is claimed.
+**Current gate:** the author-decision gate is closed, the Unity snapshot
+directory is located, the pressure labels and full-domain transformation are
+resolved, and the mirror-sign defect is identified. Exact Bird-2D
+producing-run lineage and corrected re-export/rerun verification are still
+required. No corrected-data DOI, corrected field, submitted corrigendum or
+journal action is claimed.
