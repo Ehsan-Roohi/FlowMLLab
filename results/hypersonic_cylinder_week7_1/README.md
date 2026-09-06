@@ -3,7 +3,9 @@
 The DSMC fields come from earlier Roohi et al. research,
 [PoF 38, 057108 (2026)](https://doi.org/10.1063/5.0334590), not from an
 AI-generated simulation. See the [data card](../../data/hypersonic_cylinder/README.md)
-for exact lineage, comparison to the article and pending reuse permissions.
+for exact lineage, comparison to the article and the resolved derivative-specific license.
+The [paper-to-course audit](../../qa/WEEK71_PAPER_PARITY.md) records what is
+comparable and what still needs the original checkpoints and preprocessing.
 
 `mlp_metrics.json` records the current trained 3x96 tanh classroom baseline,
 including seed, training time, selected epoch and validation loss history.
