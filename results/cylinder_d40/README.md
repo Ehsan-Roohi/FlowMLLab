@@ -30,3 +30,10 @@ python qa/audit_temporal_d40.py /tmp/flowml_temporal_audit_new
 ```
 
 CSV and JSON retain metrics, configuration and temporal analysis. Nine complete lift cycles were available. Recirculation temporal uncertainty cannot be inferred from a single mean field.
+
+
+## Overview figure
+
+![Cylinder wake, forces and cycle means](cylinder_d40_overview.png)
+
+[PDF](cylinder_d40_overview.pdf). Reproduce from the repository root with `python qa/plot_cylinder_d40.py` (NumPy and Matplotlib). The final vorticity is shown at tU/D=100, clipped to +/-2; force histories are shown from tU/D=20. Cycle means describe temporal drift, not confidence intervals.
