@@ -1,0 +1,12 @@
+{
+  "re100_D040.npz": "8fd1f50c9d27adf2f07f0acaae7606aaaafa0b0e0538afc2fe989e3260c35043",
+  "grid_metrics.csv": "02bdb3f371724a47b8fa1f122d630a7f5e0cae8f3f9f19125b99287b60ccc232",
+  "assessment.json": "be45768a3a3e546ebeed03ae46f21433ad8f51fd0c3332b3ae573b23fc809079",
+  "protocol.json": "8be0f67d1d6b3662c4eca632672cc3c6188b277bca451c0b1e41814969f30746",
+  "new_grid_metrics.json": "7bf4c4ee352855b3435a0c35f509b252afe357a00fd9f892c891a70885aa3e87",
+  "README.md": "b6bae4bb23b472756ec3dce862de4c998a1c03c09f741045708218300c6e7b85",
+  "temporal_audit/D18_cycles.csv": "3cb0da3ed74553157d924bd3a948204a5c20ed79d1ad7840e56243b4e165c00c",
+  "temporal_audit/D27_cycles.csv": "227ebb3c040a1c5a28b80d76e493a2b2d97b002eb1f22a8867bd9242f9c04092",
+  "temporal_audit/D40_cycles.csv": "e7529161b9b4c7f1222465c44f5906b1e3022752f5a76bcc5365f6928d46b760",
+  "temporal_audit/temporal_audit.json": "e977e1dc4c5222a456157cf5ac221b55ddf3093f9afd842060b7e27b7c38d12f"
+}

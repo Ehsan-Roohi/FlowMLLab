@@ -1,0 +1,95 @@
+{
+  "method": "Time-weighted window means and complete positive-going lift cycles; descriptive sensitivity, not independent-sample confidence intervals",
+  "cases": {
+    "18": {
+      "source": "/project/pi_roohie_umass_edu/FlowMLLab_modal_6f463ac_uniform/results/cylinder_grid_convergence/re100_D018.npz",
+      "sha256": "d6a0899d02abe37943afb51e3b4f359655ebeaa9d7919ee98cadf406b5098bf5",
+      "window": [
+        45.0,
+        100.0
+      ],
+      "Cd_window_means": {
+        "45": 1.5552472872445078,
+        "55": 1.5604593168143872,
+        "65": 1.5623673488412584,
+        "75": 1.5629470033248265
+      },
+      "Cd_first_half": 1.5475548015218796,
+      "Cd_second_half": 1.5629397729671364,
+      "half_change_percent": 0.9843611194338864,
+      "complete_cycles": 9,
+      "cycle_Cd_mean": 1.5562410675147467,
+      "cycle_Cd_min": 1.530646746990913,
+      "cycle_Cd_max": 1.5631693359989265,
+      "cycle_Cd_first": 1.530646746990913,
+      "cycle_Cd_last": 1.5631693359989265,
+      "cycle_Cd_slope_per_cycle": 0.0032870027346064844,
+      "cycle_St_mean": 0.18172851182532956,
+      "cycle_St_min": 0.18073835810562758,
+      "cycle_St_max": 0.1822738135245276,
+      "Lr_temporal_uncertainty": "UNAVAILABLE: only one time-mean velocity field retained; no time-resolved velocity snapshots"
+    },
+    "27": {
+      "source": "/project/pi_roohie_umass_edu/FlowMLLab_modal_6f463ac_uniform/results/cylinder_grid_convergence/re100_D027.npz",
+      "sha256": "a9f854931d8e8b637100f84a6f788c56b7c5f9df4126c336c66430248e81d986",
+      "window": [
+        45.0,
+        100.0
+      ],
+      "Cd_window_means": {
+        "45": 1.5226256005511138,
+        "55": 1.5273788423670662,
+        "65": 1.5288914393527167,
+        "75": 1.5296366380850475
+      },
+      "Cd_first_half": 1.5157489149498216,
+      "Cd_second_half": 1.5295022861524061,
+      "half_change_percent": 0.8992056649475403,
+      "complete_cycles": 9,
+      "cycle_Cd_mean": 1.5230768110838708,
+      "cycle_Cd_min": 1.4989516200121213,
+      "cycle_Cd_max": 1.5296645052597122,
+      "cycle_Cd_first": 1.4989516200121213,
+      "cycle_Cd_last": 1.5296645052597122,
+      "cycle_Cd_slope_per_cycle": 0.0031066731823304492,
+      "cycle_St_mean": 0.182432775017457,
+      "cycle_St_min": 0.18035956319538,
+      "cycle_St_max": 0.1832903264968261,
+      "Lr_temporal_uncertainty": "UNAVAILABLE: only one time-mean velocity field retained; no time-resolved velocity snapshots"
+    },
+    "40": {
+      "source": "/project/pi_roohie_umass_edu/FlowMLLab_modal_6f463ac_uniform/tmp/unity-d40-64026823/production/re100_D040.npz",
+      "sha256": "8fd1f50c9d27adf2f07f0acaae7606aaaafa0b0e0538afc2fe989e3260c35043",
+      "window": [
+        45.0,
+        99.98625000000001
+      ],
+      "Cd_window_means": {
+        "45": 1.5306355796907019,
+        "55": 1.5354806480338827,
+        "65": 1.5370277569729176,
+        "75": 1.5378014128045132
+      },
+      "Cd_first_half": 1.523604602913819,
+      "Cd_second_half": 1.5376665564675849,
+      "half_change_percent": 0.9144995379277642,
+      "complete_cycles": 9,
+      "cycle_Cd_mean": 1.531125991642903,
+      "cycle_Cd_min": 1.5065716962845037,
+      "cycle_Cd_max": 1.5378441009054402,
+      "cycle_Cd_first": 1.5065716962845037,
+      "cycle_Cd_last": 1.5378441009054402,
+      "cycle_Cd_slope_per_cycle": 0.0031617290787862248,
+      "cycle_St_mean": 0.18249458989863576,
+      "cycle_St_min": 0.18055056316595336,
+      "cycle_St_max": 0.18313106959368572,
+      "Lr_temporal_uncertainty": "UNAVAILABLE: only one time-mean velocity field retained; no time-resolved velocity snapshots"
+    }
+  },
+  "D40_minus_D27_by_start": {
+    "45": 0.008009979139588008,
+    "55": 0.008101805666816508,
+    "65": 0.00813631762020095,
+    "75": 0.00816477471946575
+  }
+}

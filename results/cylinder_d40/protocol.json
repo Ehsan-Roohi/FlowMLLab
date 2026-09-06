@@ -1,0 +1,60 @@
+{
+  "schema": 1,
+  "stage": "solution_verification_only",
+  "research_ready": false,
+  "case": "Re100_D40_fixed_domain_continuation",
+  "settings": {
+    "nx": 800,
+    "ny": 320,
+    "diameter": 40.0,
+    "center": [
+      200.0,
+      159.5
+    ],
+    "inflow_velocity": 0.05,
+    "steps": 80000,
+    "history_stride": 13,
+    "statistics_start": 36000,
+    "startup_ramp_steps": 1000,
+    "perturbation": 0.01,
+    "seed": 690,
+    "collision_model": "trt",
+    "cylinder_boundary": "bouzidi"
+  },
+  "solver_sha256": "8f5fb055b4ca30e75757d8a7811936e72fa0b72c0904fe1c11e8ba877fd6f394",
+  "qualification_code_sha256": "b718b43263121ea09bb0ed6ae5f42fdd743b649a13cff637537382c40996bd83",
+  "grid_metric_code_sha256": "8845d3f7bf1d253b18b8ac5ec5e2181a567f403b711953a575907d28f230fa79",
+  "coarse_evidence_sha256": {
+    "grid_metrics.csv": "30383b23508bd8eb8e5bb9428b48f3ea4d4879b11756bba4621a6cc07ed42ea5",
+    "re100_D018.npz": "d6a0899d02abe37943afb51e3b4f359655ebeaa9d7919ee98cadf406b5098bf5",
+    "re100_D027.npz": "a9f854931d8e8b637100f84a6f788c56b7c5f9df4126c336c66430248e81d986"
+  },
+  "gci_sequence": [
+    18,
+    27,
+    40
+  ],
+  "gci_method": "generalized unequal-ratio Richardson, positive monotone order required",
+  "quantity_gates": {
+    "Cd_mean": {
+      "fine_pair_percent": 3.0,
+      "gci_percent": 5.0
+    },
+    "St": {
+      "fine_pair_percent": 2.0,
+      "gci_percent": 3.0
+    },
+    "Lr_over_D": {
+      "fine_pair_percent": 5.0,
+      "gci_percent": 8.0
+    }
+  },
+  "next_gate_policy": "No automatic promotion to model training, main, release or front page.",
+  "remaining_required": [
+    "sampling convergence",
+    "domain/blockage sensitivity",
+    "Mach sensitivity",
+    "physically matched independent validation",
+    "independent multi-case long-horizon ML tests"
+  ]
+}

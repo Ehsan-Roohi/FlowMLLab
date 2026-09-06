@@ -253,3 +253,7 @@ The [all-versions DOI](https://doi.org/10.5281/zenodo.22074169) resolves to the 
 **Ehsan Roohi** · University of Massachusetts Amherst · [roohie@umass.edu](mailto:roohie@umass.edu)
 
 Copyright © 2026 Ehsan Roohi. [MIT License](LICENSE).
+
+## Re100 cylinder data
+
+[Use the D40 teaching dataset](results/cylinder_d40/README.md): force histories, final fields and a three-grid comparison.

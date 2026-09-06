@@ -8,7 +8,7 @@ def avg(t,y,a,b):
  q=(t>a)&(t<b); x=np.r_[a,t[q],b]; z=np.r_[np.interp(a,t,y),y[q],np.interp(b,t,y)]
  return float(np.trapezoid(z,x)/(b-a))
 for d in (18,27,40):
- p=(root/'results/cylinder_grid_convergence'/f're100_D{d:03d}.npz') if d!=40 else root/'tmp/unity-d40-64026823/production/re100_D040.npz'
+ p=(root/'results/cylinder_grid_convergence'/f're100_D{d:03d}.npz') if d!=40 else root/'results/cylinder_d40/re100_D040.npz'
  with np.load(p,allow_pickle=False) as z:
   m=json.loads(str(z['metadata'])); c=m['config']; t=z['time'].astype(float)*c['inflow_velocity']/c['diameter']; cd=z['drag_coefficient'].astype(float);cl=z['lift_coefficient'].astype(float)
  assert np.all(np.diff(t)>0) and np.isfinite(cd).all() and np.isfinite(cl).all()

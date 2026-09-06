@@ -1,0 +1,56 @@
+{
+  "grid_gate_pass": false,
+  "statistics_pass": true,
+  "quantities": {
+    "Cd_mean": {
+      "valid_asymptotic_sequence": false,
+      "reason": "non_monotone_or_roundoff_limited",
+      "refinement_ratio": 1.4814814814814814,
+      "refinement_ratios": [
+        1.5,
+        1.4814814814814814
+      ],
+      "constant_refinement_ratio": false,
+      "observed_order": null,
+      "richardson_extrapolated": null,
+      "fine_pair_relative_change_percent": 0.523885842867976,
+      "fine_grid_gci_percent": null,
+      "safety_factor": 1.25,
+      "pass": false
+    },
+    "St": {
+      "valid_asymptotic_sequence": true,
+      "reason": "accepted",
+      "refinement_ratio": 1.4814814814814814,
+      "refinement_ratios": [
+        1.5,
+        1.4814814814814814
+      ],
+      "constant_refinement_ratio": false,
+      "observed_order": 6.461108011723972,
+      "richardson_extrapolated": 0.1828857381466891,
+      "fine_pair_relative_change_percent": 0.037039108036001724,
+      "fine_grid_gci_percent": 0.003966250075852927,
+      "safety_factor": 1.25,
+      "pass": true
+    },
+    "Lr_over_D": {
+      "valid_asymptotic_sequence": false,
+      "reason": "non_monotone_or_roundoff_limited",
+      "refinement_ratio": 1.4814814814814814,
+      "refinement_ratios": [
+        1.5,
+        1.4814814814814814
+      ],
+      "constant_refinement_ratio": false,
+      "observed_order": null,
+      "richardson_extrapolated": null,
+      "fine_pair_relative_change_percent": 1.0517076945016208,
+      "fine_grid_gci_percent": null,
+      "safety_factor": 1.25,
+      "pass": false
+    }
+  },
+  "research_ready": false,
+  "reason": "Fixed-domain grid gate only; domain, Mach, external validation and independent ML gates remain pending."
+}

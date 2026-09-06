@@ -1,5 +1,6 @@
 import sys
-sys.path.insert(0,sys.argv[1])
+from pathlib import Path
+sys.path.insert(0,str(Path(__file__).resolve().parents[1]))
 import numpy as np
 from flowmllab.cylinder_lbm import simulate_cylinder
 for n in (201,200,3):
