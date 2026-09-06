@@ -25,9 +25,11 @@ been inspected; they are regression tests, not fresh blind validation.
 
 ## Required correction and publication sequence
 
-1. Recover the exact solver revision, input decks, raw accumulated moments,
-   exporter revision, grid convention and sampling metadata for each snapshot.
-   Available derived fields alone cannot establish those details.
+1. Start from the fifteen canonical pressure-ratio snapshots recovered at
+   `/work/pi_roohie_umass_edu/Nozzle`, then recover the exact solver revision,
+   input decks, raw accumulated moments, exporter revision, grid convention and
+   sampling metadata for each snapshot. Available derived fields alone cannot
+   establish those details; see the [Unity inventory](../qa/UNITY_BIRD_SOURCE_INVENTORY.md).
 2. Reproduce the export, identify the faulty indexing/normalization if present,
    and fix it at source. Re-export from valid raw moments; rerun the solver if
    the source moments are affected. Do not zero a row and call it new data.
@@ -43,6 +45,7 @@ been inspected; they are regression tests, not fresh blind validation.
    version and link it to the correction. Then update the course derivatives
    and compare old/new results without silently replacing historical evidence.
 
-**Current gate:** the author-decision gate is closed. Exact producing-run
-lineage and numerical verification are still required. No corrected-data DOI,
-corrected field, submitted corrigendum or journal action is claimed.
+**Current gate:** the author-decision gate is closed and the canonical Unity
+snapshot directory is located. Exact Bird-2D producing-run lineage and numerical
+verification are still required. No corrected-data DOI, corrected field,
+submitted corrigendum or journal action is claimed.
