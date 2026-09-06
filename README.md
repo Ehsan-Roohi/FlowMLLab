@@ -9,7 +9,7 @@ generate numerical data, compare transparent baselines with learned models, and
 check both prediction error and physical fidelity.
 
 Developed for **MIE 690A: AI in Fluid Mechanics**, University of Massachusetts
-Amherst. The working course includes **27 notebooks and 14 lectures** (13 PDFs), plus a Week 10.1 reading companion, from
+Amherst. The [notebook catalog](notebooks/README.md) and [lecture catalog](lectures/README.md) cover the working course, from
 numerical foundations to continuum and rarefied-flow research examples.
 
 ## Start here
@@ -18,8 +18,11 @@ numerical foundations to continuum and rarefied-flow research examples.
 research by Ehsan Roohi and collaborators, then brought into FlowMLLab for
 teaching. The course adds new code and baselines, not a new origin for those
 data. See [per-case papers, data lineage, reuse limits and AI-assistance
-disclosure](DATA_PROVENANCE.md). v1.4.0 remains the frozen archive; this cycle
-was consolidated in v1.4.1, including the author-requested Week 10.1 reading companion, with no new training notebook in that archive. The subsequently requested Weeks 11 and 12 extend the working course with two explicitly labelled teaching analogs.
+disclosure](DATA_PROVENANCE.md).
+
+**Fall 2026 baseline:** v1.4.1 is the immutable DOI snapshot; the moving course
+branches contain later changes. Experimental code is not a validated benchmark.
+See the [term freeze, development policy and meaning of held-out tests](PUBLISHING.md).
 
 | Your goal | Open |
 | --- | --- |

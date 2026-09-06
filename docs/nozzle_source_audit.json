@@ -1,0 +1,96 @@
+{
+  "source_commit": "e1b234ba499408d3b6224633972f939f3b2301d6",
+  "archives": [
+    {
+      "archive": "Nozzle (1).zip",
+      "archive_sha256": "683810989e600a594c9586116cdb0fcd03f8e3a01a8c8f94bc8603f06d8d1b20",
+      "entry_count": 1476,
+      "exact_copy_count": 0,
+      "LF_equivalent_snapshot_names": [
+        "P=15.dat",
+        "P=16.dat",
+        "P=18.dat",
+        "P=19.dat",
+        "P=20.dat",
+        "P=22.dat",
+        "P=23.dat",
+        "P=24.dat",
+        "P=25.dat",
+        "P=26.dat",
+        "P=27.dat",
+        "P=28.dat",
+        "P=29.dat",
+        "P=30.dat",
+        "P=33.dat"
+      ],
+      "non_equivalent_same_basename_count": 0,
+      "candidate_solver_or_input_entries": [],
+      "root_P16": {
+        "entry": "P=16.dat",
+        "sha256": "b04dc6872ee2cebf3bff26339291acfd4b6f3daeaa62793109ad106ce66da302",
+        "lf_normalized_sha256": "f34a3317dc8da2735588c582c7c01ff7b52789e66b7ee3798b5cbc293163aa97"
+      }
+    },
+    {
+      "archive": "Nozzle(1).zip",
+      "archive_sha256": "7e13a1f5f659f3fdb415c1da256af80f41a4a062eee8e523bf6351b0b4dcdae0",
+      "entry_count": 2275,
+      "exact_copy_count": 0,
+      "LF_equivalent_snapshot_names": [
+        "P=15.dat",
+        "P=16.dat",
+        "P=18.dat",
+        "P=19.dat",
+        "P=20.dat",
+        "P=22.dat",
+        "P=23.dat",
+        "P=24.dat",
+        "P=25.dat",
+        "P=26.dat",
+        "P=27.dat",
+        "P=28.dat",
+        "P=29.dat",
+        "P=30.dat",
+        "P=33.dat"
+      ],
+      "non_equivalent_same_basename_count": 0,
+      "candidate_solver_or_input_entries": [],
+      "root_P16": {
+        "entry": "P=16.dat",
+        "sha256": "b04dc6872ee2cebf3bff26339291acfd4b6f3daeaa62793109ad106ce66da302",
+        "lf_normalized_sha256": "f34a3317dc8da2735588c582c7c01ff7b52789e66b7ee3798b5cbc293163aa97"
+      }
+    },
+    {
+      "archive": "Nozzle.zip",
+      "archive_sha256": "95c23650b91e519c05115a1cff2fa5af68813de1550174eb6100e023c7c5ed4f",
+      "entry_count": 101,
+      "exact_copy_count": 0,
+      "LF_equivalent_snapshot_names": [],
+      "non_equivalent_same_basename_count": 0,
+      "candidate_solver_or_input_entries": [],
+      "root_P16": null
+    },
+    {
+      "archive": "Nozzle Results.zip",
+      "archive_sha256": "29334e51d430a78b3d2da67270059aa4190a2eb25900f70d04bc7c08251b0c55",
+      "entry_count": 21,
+      "exact_copy_count": 0,
+      "LF_equivalent_snapshot_names": [],
+      "non_equivalent_same_basename_count": 0,
+      "candidate_solver_or_input_entries": [],
+      "root_P16": null
+    },
+    {
+      "archive": "AllresultsNozzleHeat",
+      "archive_sha256": "9992688bf2c53f7f4ca8a1f4bbce61a1240ae6edc6ed337e14a9fd3036aaa93f",
+      "entry_count": 157,
+      "exact_copy_count": 0,
+      "LF_equivalent_snapshot_names": [],
+      "non_equivalent_same_basename_count": 0,
+      "candidate_solver_or_input_entries": [],
+      "root_P16": null
+    }
+  ],
+  "scope": "Named solver/input search only. No nested archive extraction, unknown-extension moment decoding or solver reconstruction; absence is not proof that raw data do not exist elsewhere."
+}

@@ -1,0 +1,502 @@
+{
+  "source_archive": "AllMachNNCylinder.zip",
+  "source_sha256": "bda221759a372a2054ca4c76bde923febf0b682404b41f67cc190f9b03c71f7b",
+  "derivative_sha256": "ab55029f5171f9a05efad4b906d99d031c9c55a89eef9c21b744a30cf0d304d7",
+  "source_columns_in_target_order": [
+    "MA",
+    "TOV",
+    "P"
+  ],
+  "matched_retained_rows": 44500,
+  "freestream_division_in_course_import": false,
+  "converter_hashes_for_manual_review": {
+    "Allconvert.py": "958b14a6a371180cce0ac8135c4c38da499ea1da8f5f367c1aa6c4efe1b28cd5",
+    "ConvertTriangulateGridToStructuredGrid.py": "4ad9291d95597d359292784cb1a1f9da1bf6cf19a5bca81e36ab6a07cf84f92d",
+    "Convert_TriangulateGridToStructuredGrid.py": "cb30e9245d26a5e6aef69c8989b2f0593227d4e0ce20b81834825560b2d0013f"
+  },
+  "fortran_entries": [],
+  "named_DS2V_input_entries": [],
+  "interpretation": "Source MA/TOV/P, not verified freestream ratios. EOS check is SI-consistency evidence, not recovery of solver inputs or freestream reference constants.",
+  "cases": [
+    {
+      "mach_inf": 5,
+      "entry": "structured/StructuredGridM5.dat",
+      "grid": [
+        400,
+        400
+      ],
+      "matched_retained_rows": 2225,
+      "tov_range": [
+        199.426368,
+        1829.38405
+      ],
+      "p_range": [
+        0.529485325,
+        43.6374143
+      ],
+      "upstream_edge_tov_median": 200.13631149999998,
+      "upstream_edge_p_median": 1.1386257899999999,
+      "p_vs_ND_kB_TTR_relative_error_quantiles": [
+        0.00003483766416173994,
+        0.010943062178941226,
+        0.04236673072707182
+      ]
+    },
+    {
+      "mach_inf": 5.5,
+      "entry": "structured/StructuredGridM55.dat",
+      "grid": [
+        400,
+        400
+      ],
+      "matched_retained_rows": 2225,
+      "tov_range": [
+        199.566658,
+        2171.02296
+      ],
+      "p_range": [
+        0.621632819,
+        52.7115856
+      ],
+      "upstream_edge_tov_median": 199.83459549999998,
+      "upstream_edge_p_median": 1.1361656,
+      "p_vs_ND_kB_TTR_relative_error_quantiles": [
+        0.00003619723392365084,
+        0.01568738073601262,
+        0.042026828817555005
+      ]
+    },
+    {
+      "mach_inf": 6,
+      "entry": "structured/StructuredGridM6.dat",
+      "grid": [
+        400,
+        400
+      ],
+      "matched_retained_rows": 2225,
+      "tov_range": [
+        199.119995,
+        2544.42036
+      ],
+      "p_range": [
+        0.713248219,
+        62.6053636
+      ],
+      "upstream_edge_tov_median": 199.62962199999998,
+      "upstream_edge_p_median": 1.134690105,
+      "p_vs_ND_kB_TTR_relative_error_quantiles": [
+        0.0000369041275169496,
+        0.01585270685557597,
+        0.042293312927975835
+      ]
+    },
+    {
+      "mach_inf": 6.5,
+      "entry": "structured/StructuredGridM65.dat",
+      "grid": [
+        400,
+        400
+      ],
+      "matched_retained_rows": 2225,
+      "tov_range": [
+        199.330002,
+        2949.26198
+      ],
+      "p_range": [
+        0.807916246,
+        73.3273885
+      ],
+      "upstream_edge_tov_median": 199.51655,
+      "upstream_edge_p_median": 1.13379834,
+      "p_vs_ND_kB_TTR_relative_error_quantiles": [
+        0.000037144006329454886,
+        0.015827501548849255,
+        0.04087263108351646
+      ]
+    },
+    {
+      "mach_inf": 7,
+      "entry": "structured/StructuredGridM7.dat",
+      "grid": [
+        400,
+        400
+      ],
+      "matched_retained_rows": 2225,
+      "tov_range": [
+        199.287373,
+        3385.59735
+      ],
+      "p_range": [
+        0.915244852,
+        84.9120332
+      ],
+      "upstream_edge_tov_median": 199.4637245,
+      "upstream_edge_p_median": 1.133249095,
+      "p_vs_ND_kB_TTR_relative_error_quantiles": [
+        0.00003742794123470127,
+        0.01354712312806358,
+        0.03746497183747619
+      ]
+    },
+    {
+      "mach_inf": 7.5,
+      "entry": "structured/StructuredGridM75.dat",
+      "grid": [
+        400,
+        400
+      ],
+      "matched_retained_rows": 2225,
+      "tov_range": [
+        199.229996,
+        3854.35222
+      ],
+      "p_range": [
+        1.02346511,
+        97.4235031
+      ],
+      "upstream_edge_tov_median": 199.50507399999998,
+      "upstream_edge_p_median": 1.1332957399999999,
+      "p_vs_ND_kB_TTR_relative_error_quantiles": [
+        0.00003675155951370755,
+        0.011429434619255286,
+        0.03995637924295135
+      ]
+    },
+    {
+      "mach_inf": 8,
+      "entry": "structured/StructuredGridM8.dat",
+      "grid": [
+        400,
+        400
+      ],
+      "matched_retained_rows": 2225,
+      "tov_range": [
+        199.304289,
+        4354.45482
+      ],
+      "p_range": [
+        1.13175714,
+        110.771702
+      ],
+      "upstream_edge_tov_median": 199.541466,
+      "upstream_edge_p_median": 1.13317707,
+      "p_vs_ND_kB_TTR_relative_error_quantiles": [
+        0.00003716810399956953,
+        0.011766083637042834,
+        0.03717072571066043
+      ]
+    },
+    {
+      "mach_inf": 8.25,
+      "entry": "structured/StructuredGridM825.dat",
+      "grid": [
+        400,
+        400
+      ],
+      "matched_retained_rows": 2225,
+      "tov_range": [
+        199.257785,
+        4617.36097
+      ],
+      "p_range": [
+        1.13119831,
+        117.621701
+      ],
+      "upstream_edge_tov_median": 199.54469899999998,
+      "upstream_edge_p_median": 1.1332451300000002,
+      "p_vs_ND_kB_TTR_relative_error_quantiles": [
+        0.000039007548690232776,
+        0.011427314101049099,
+        0.03845408219984376
+      ]
+    },
+    {
+      "mach_inf": 8.5,
+      "entry": "structured/StructuredGridM85.dat",
+      "grid": [
+        400,
+        400
+      ],
+      "matched_retained_rows": 2225,
+      "tov_range": [
+        199.320376,
+        4884.06816
+      ],
+      "p_range": [
+        1.13138877,
+        124.919069
+      ],
+      "upstream_edge_tov_median": 199.59184549999998,
+      "upstream_edge_p_median": 1.13313493,
+      "p_vs_ND_kB_TTR_relative_error_quantiles": [
+        0.000037135979894175576,
+        0.011418465260076782,
+        0.03990792177147174
+      ]
+    },
+    {
+      "mach_inf": 8.75,
+      "entry": "structured/StructuredGridM875.dat",
+      "grid": [
+        400,
+        400
+      ],
+      "matched_retained_rows": 2225,
+      "tov_range": [
+        199.164516,
+        5161.87413
+      ],
+      "p_range": [
+        1.13100004,
+        132.390022
+      ],
+      "upstream_edge_tov_median": 199.6188655,
+      "upstream_edge_p_median": 1.1331105099999998,
+      "p_vs_ND_kB_TTR_relative_error_quantiles": [
+        0.000037557571315058514,
+        0.012219841507136345,
+        0.041738100020314695
+      ]
+    },
+    {
+      "mach_inf": 9,
+      "entry": "structured/StructuredGridM9.dat",
+      "grid": [
+        400,
+        400
+      ],
+      "matched_retained_rows": 2225,
+      "tov_range": [
+        199.425711,
+        5448.30804
+      ],
+      "p_range": [
+        1.13187141,
+        139.958339
+      ],
+      "upstream_edge_tov_median": 199.7204825,
+      "upstream_edge_p_median": 1.13354398,
+      "p_vs_ND_kB_TTR_relative_error_quantiles": [
+        0.00003639763876728418,
+        0.012337718532861919,
+        0.04280512165826281
+      ]
+    },
+    {
+      "mach_inf": 9.25,
+      "entry": "structured/StructuredGridM925.dat",
+      "grid": [
+        400,
+        400
+      ],
+      "matched_retained_rows": 2225,
+      "tov_range": [
+        199.314212,
+        5747.5681
+      ],
+      "p_range": [
+        1.13118945,
+        147.72581
+      ],
+      "upstream_edge_tov_median": 199.72641099999998,
+      "upstream_edge_p_median": 1.1333589800000001,
+      "p_vs_ND_kB_TTR_relative_error_quantiles": [
+        0.00003742153499981983,
+        0.011712056132442084,
+        0.04437138379055775
+      ]
+    },
+    {
+      "mach_inf": 9.5,
+      "entry": "structured/StructuredGridM95.dat",
+      "grid": [
+        400,
+        400
+      ],
+      "matched_retained_rows": 2225,
+      "tov_range": [
+        199.423102,
+        6048.007
+      ],
+      "p_range": [
+        1.13163386,
+        155.85749
+      ],
+      "upstream_edge_tov_median": 199.76484449999998,
+      "upstream_edge_p_median": 1.1335469900000001,
+      "p_vs_ND_kB_TTR_relative_error_quantiles": [
+        0.00003611039169908317,
+        0.01227308401387894,
+        0.04545622789835592
+      ]
+    },
+    {
+      "mach_inf": 9.75,
+      "entry": "structured/StructuredGridM975.dat",
+      "grid": [
+        400,
+        400
+      ],
+      "matched_retained_rows": 2225,
+      "tov_range": [
+        199.275688,
+        6360.42661
+      ],
+      "p_range": [
+        1.13073689,
+        164.252867
+      ],
+      "upstream_edge_tov_median": 199.8602635,
+      "upstream_edge_p_median": 1.13412093,
+      "p_vs_ND_kB_TTR_relative_error_quantiles": [
+        0.00003801992017656112,
+        0.012216135302614691,
+        0.04706325777696906
+      ]
+    },
+    {
+      "mach_inf": 10,
+      "entry": "structured/StructuredGridM10.dat",
+      "grid": [
+        400,
+        400
+      ],
+      "matched_retained_rows": 2225,
+      "tov_range": [
+        199.226222,
+        6678.67074
+      ],
+      "p_range": [
+        1.13223147,
+        172.852233
+      ],
+      "upstream_edge_tov_median": 199.8602415,
+      "upstream_edge_p_median": 1.1340496999999998,
+      "p_vs_ND_kB_TTR_relative_error_quantiles": [
+        0.00003770535811066328,
+        0.0130758647927088,
+        0.04829390773914356
+      ]
+    },
+    {
+      "mach_inf": 11,
+      "entry": "structured/StructuredGridM11.dat",
+      "grid": [
+        400,
+        400
+      ],
+      "matched_retained_rows": 2225,
+      "tov_range": [
+        198.853329,
+        8025.22611
+      ],
+      "p_range": [
+        1.13026015,
+        208.569716
+      ],
+      "upstream_edge_tov_median": 200.044399,
+      "upstream_edge_p_median": 1.133993255,
+      "p_vs_ND_kB_TTR_relative_error_quantiles": [
+        0.00003640709133538621,
+        0.013563935595616694,
+        0.052393841205650604
+      ]
+    },
+    {
+      "mach_inf": 12,
+      "entry": "structured/StructuredGridM12.dat",
+      "grid": [
+        400,
+        400
+      ],
+      "matched_retained_rows": 2225,
+      "tov_range": [
+        198.977766,
+        9503.82151
+      ],
+      "p_range": [
+        1.13119778,
+        248.29098
+      ],
+      "upstream_edge_tov_median": 200.2353665,
+      "upstream_edge_p_median": 1.13478083,
+      "p_vs_ND_kB_TTR_relative_error_quantiles": [
+        0.00003757887297933663,
+        0.013629492976389865,
+        0.05669528916518584
+      ]
+    },
+    {
+      "mach_inf": 13,
+      "entry": "structured/StructuredGridM13.dat",
+      "grid": [
+        400,
+        400
+      ],
+      "matched_retained_rows": 2225,
+      "tov_range": [
+        198.924485,
+        11095.9027
+      ],
+      "p_range": [
+        1.13000902,
+        291.263945
+      ],
+      "upstream_edge_tov_median": 200.5907145,
+      "upstream_edge_p_median": 1.13527855,
+      "p_vs_ND_kB_TTR_relative_error_quantiles": [
+        0.00003760775997794612,
+        0.012872855544968644,
+        0.06035846272525779
+      ]
+    },
+    {
+      "mach_inf": 14,
+      "entry": "structured/StructuredGridM14.dat",
+      "grid": [
+        400,
+        400
+      ],
+      "matched_retained_rows": 2225,
+      "tov_range": [
+        198.989871,
+        12833.8053
+      ],
+      "p_range": [
+        1.13016241,
+        337.359215
+      ],
+      "upstream_edge_tov_median": 200.84684199999998,
+      "upstream_edge_p_median": 1.135708795,
+      "p_vs_ND_kB_TTR_relative_error_quantiles": [
+        0.00003677311822361309,
+        0.012812080156919856,
+        0.06369125141425437
+      ]
+    },
+    {
+      "mach_inf": 15,
+      "entry": "structured/StructuredGridM15.dat",
+      "grid": [
+        400,
+        400
+      ],
+      "matched_retained_rows": 2225,
+      "tov_range": [
+        199.350222,
+        14679.3403
+      ],
+      "p_range": [
+        1.12926843,
+        387.530997
+      ],
+      "upstream_edge_tov_median": 200.916627,
+      "upstream_edge_p_median": 1.13571898,
+      "p_vs_ND_kB_TTR_relative_error_quantiles": [
+        0.00003825196760429477,
+        0.012183609317099824,
+        0.0665806844651508
+      ]
+    }
+  ]
+}

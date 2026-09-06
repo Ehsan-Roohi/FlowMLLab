@@ -36,6 +36,7 @@ flowmllab qa --root .
 
 ## Scientific-change contract
 
+- Follow the [term freeze, branch policy and evaluation terminology](PUBLISHING.md).
 - Preserve complete-case train/validation/blind partitions.
 - Compare a changed model with the declared non-neural or exact baseline.
 - Retain physical diagnostics and machine-readable evidence with aggregate errors.

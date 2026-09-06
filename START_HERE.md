@@ -18,7 +18,7 @@ This page is the shortest reliable path from a fresh checkout to a meaningful sc
 
 Do not begin with Track 6 unless you already understand case-wise splitting, scaling, offline versus closed-loop validation, and GPU troubleshooting.
 
-The complete [notebook launcher](notebooks/README.md) links directly to all 27
+The complete [notebook launcher](notebooks/README.md) links directly to the
 Colab notebooks. Their first code cells obtain the repository and package, so a
 fresh Colab runtime does not require manual file uploads.
 
@@ -89,6 +89,9 @@ Typical student runtimes are approximate:
 | Week 2.1 probabilistic UQ | CPU | <1 min with retained evidence; no TensorFlow required |
 
 ## 5. Keep blind cases blind
+
+Use the [evaluation terminology](PUBLISHING.md#evaluation-terminology) to
+distinguish a sealed fresh test from a previously inspected historical holdout.
 
 Before the first blind cell, save:
 

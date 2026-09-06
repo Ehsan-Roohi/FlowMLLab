@@ -23,6 +23,35 @@ Prescribing V=0 in a boundary plot or prediction wrapper is not correction of
 the underlying measured fields. Existing historical test cases have already
 been inspected; they are regression tests, not fresh blind validation.
 
+## Archive recovery checkpoint — 2026-09-05
+
+The [machine-readable archive audit](nozzle_source_audit.json) identifies all
+fifteen published `P=*.dat` snapshots in both author-supplied archives
+`Nozzle (1).zip` and `Nozzle(1).zip`. Their contents match the published SHA-256
+values **after CRLF-to-LF conversion only**. They are not byte-identical before
+that conversion. No physical value was changed, and this is recovery of the
+existing exports, not discovery of corrected data.
+
+The audit also inspected `Nozzle.zip`, `Nozzle Results.zip`, and the ZIP-format
+archive `AllresultsNozzleHeat`. None of those three yielded the same named
+published snapshots. Across these five archives, a scoped filename search for
+Fortran source, `.inp`, and named DS2V/DS2VD decks found no candidates. This
+does not rule out raw moments in unknown formats, nested archives, or other
+folders. It does not establish which exporter caused the observed inconsistency.
+
+Reproduce comparisons locally using the original archives; no archived code
+is executed, extracted, or uploaded:
+
+```bash
+python qa/audit_nozzle_archives.py --archive "/path/to/Nozzle (1).zip" \
+  --archive "/path/to/Nozzle(1).zip" --output tmp/nozzle-source-audit.json
+```
+
+Still needed: the producing solver/exporter revision, matching input deck,
+raw accumulated moments, grid convention and sampling record. A different
+nozzle project or a file with a similar name is not a substitute without a
+documented lineage match.
+
 ## Required correction and publication sequence
 
 1. Recover the exact solver revision, input decks, raw accumulated moments,

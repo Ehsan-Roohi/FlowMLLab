@@ -29,7 +29,7 @@ COLUMNS = (
     "TOV", "MA", "MC", "MCT", "MFP", "SOF", "FSP", "ANG", "P",
     "Angular momentum/",
 )
-TARGET_INDICES = (11, 10, 18)  # local Mach, T/T_inf, p/p_inf
+TARGET_INDICES = (11, 10, 18)  # source MA, TOV, P; no freestream division
 
 
 def sha256(path: Path) -> str:

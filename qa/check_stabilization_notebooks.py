@@ -45,6 +45,9 @@ def main():
                              ("JUPYTER_RUNTIME_DIR", "jupyter_runtime")):
         os.environ[variable] = str(scratch / folder)
     os.environ["PYTHONPATH"] = str(ROOT) + os.pathsep + os.environ.get("PYTHONPATH", "")
+    # A headless Agg override executes successfully but drops plt.show() figures
+    # from notebook outputs. Inline rendering is also headless and embeds them.
+    os.environ["MPLBACKEND"] = "module://matplotlib_inline.backend_inline"
     before = retained_hashes()
     results = []
     for filename in NOTEBOOKS:
@@ -54,6 +57,11 @@ def main():
         executed = NotebookClient(notebook, timeout=600, kernel_name="python3",
                                   resources={"metadata": {"path": str(ROOT)}}).execute()
         elapsed = time.perf_counter() - started
+        if any("plt.show(" in cell.source for cell in executed.cells):
+            images = [output for cell in executed.cells for output in cell.get("outputs", [])
+                      if {"image/png", "image/svg+xml"} & output.get("data", {}).keys()]
+            if not images:
+                raise AssertionError(f"Executed notebook lost its embedded figures: {filename}")
         # Keep machine-specific paths out of published teaching outputs.
         for cell in executed.cells:
             for output in cell.get("outputs", []):
