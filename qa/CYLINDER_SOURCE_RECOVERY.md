@@ -41,3 +41,16 @@ The source-directory discovery advances the [paper parity audit](WEEK71_PAPER_PA
 It does not close quantitative reproduction. The user-reported asymmetric
 near-cylinder shock overlay belongs to a separate ShockVortexML diagnostic;
 these DSMC surrogate files cannot explain that image by themselves.
+
+## Executable correction
+
+The recovered `33fusion.py` revision is now adapted in
+[`examples/cylinder_fusion`](../examples/cylinder_fusion/README.md). Explicit
+training writes paired preprocessing and model hashes; replay never refits
+scalers or launches training. A fresh-process synthetic smoke run and bundle
+regression tests pass (see the checked-in smoke report).
+
+Further source inspection confirms this script trains six 512-wide layers per
+branch/trunk with BatchNormalization and Dropout, whereas the historical weights
+inspected above have four 256-wide layers. The executable correction is complete;
+historical checkpoint-to-paper attribution remains a separate evidence question.
