@@ -9,7 +9,7 @@ generate numerical data, compare transparent baselines with learned models, and
 check both prediction error and physical fidelity.
 
 Developed for **MIE 690A: AI in Fluid Mechanics**, University of Massachusetts
-Amherst. The working course includes **27 notebooks and 14 lectures** (13 PDFs), plus a Week 10.1 reading companion, from
+Amherst. The working course includes **30 notebooks and 16 lectures** (15 PDFs), plus a Week 10.1 reading companion, from
 numerical foundations to continuum and rarefied-flow research examples.
 
 ## Start here
@@ -259,3 +259,8 @@ Copyright © 2026 Ehsan Roohi. [MIT License](LICENSE).
 [Use the D40 teaching dataset](results/cylinder_d40/README.md): force histories, final fields and a three-grid comparison.
 
 See [branch and release procedure](docs/BRANCH_AND_RELEASE_POLICY.md) for evidence promotion and reproducible notebook HTML.
+
+### Recovered modal labs and first Re115 evaluation
+
+- [Sparse sensing notebook](notebooks/week05_06/W5_Lab2_Sparse_Sensing_Dynamics.ipynb) and [modal forecasting notebook](notebooks/week07/W7_Lab2_Modal_Forecasting.ipynb): [reproducible evidence and figures](results/modal_labs/README.md).
+- [First frozen-model Re115 evaluation](results/cylinder_re115_evaluation/README.md): 3.17% global vorticity error, with sampling and pressure limitations reported.

@@ -1,0 +1,30 @@
+{
+  "model": "Fourier phase decoder",
+  "selected_harmonics": 6,
+  "selection_source": "results/cylinder_phase/phase_stable_metrics.json",
+  "development_reynolds": [
+    90,
+    110,
+    120,
+    140
+  ],
+  "validation_reynolds": 100,
+  "test_reynolds": 115,
+  "initial_true_fields": 4,
+  "sampling": "Re115 compact snapshots every 125 lattice steps; use actual time differences, 4 initial frames span 375 steps",
+  "thresholds": {
+    "vorticity_global_relative_l2": 0.15,
+    "vorticity_max_frame_relative_l2": 0.15,
+    "strouhal_relative_error": 0.02
+  },
+  "selection": "No tuning on Re115. Retain previously selected six harmonics.",
+  "baselines": [
+    "nearest development phase decoder",
+    "time-matched linear field interpolation"
+  ],
+  "forces": "No force predictor in existing decoder; report CFD force statistics separately, not surrogate force accuracy.",
+  "source_commit": "a63beb52f90c380036d2b9e7d4380e691b3ae620",
+  "model_code_sha256": "008803ccc6f503bbf756c603dcfa4596a44a0e85d0c4058de38571a75ca58adb",
+  "test_archive_sha256": "4ad871399a44e5cc5aafbc1385e76c96ce9029d2b4c6203283415b87c7e472a5",
+  "status": "protocol_frozen_before_scoring"
+}

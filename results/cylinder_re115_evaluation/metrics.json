@@ -1,0 +1,66 @@
+{
+  "validation_reproduction": {
+    "future_frames": 277,
+    "vorticity_global_relative_l2": 0.06037396192550659,
+    "vorticity_max_frame_relative_l2": 0.07958615571260452,
+    "vorticity_last_frame_relative_l2": 0.07958615571260452,
+    "cfd_strouhal": 0.18181314259001635,
+    "predicted_strouhal": 0.18118867537936398,
+    "strouhal_relative_error": 0.0034346648529173193,
+    "passes": true
+  },
+  "test": {
+    "future_frames": 53,
+    "vorticity_global_relative_l2": 0.031705550849437714,
+    "vorticity_max_frame_relative_l2": 0.0500715896487236,
+    "vorticity_last_frame_relative_l2": 0.0500715896487236,
+    "cfd_strouhal": 0.1873435453770742,
+    "predicted_strouhal": 0.1873518836006072,
+    "strouhal_relative_error": 4.450766380134208e-05,
+    "passes": true
+  },
+  "nearest_development_baseline": {
+    "future_frames": 53,
+    "vorticity_global_relative_l2": 0.21042172610759735,
+    "vorticity_max_frame_relative_l2": 0.3361489474773407,
+    "vorticity_last_frame_relative_l2": 0.3361489474773407,
+    "cfd_strouhal": 0.1873435453770742,
+    "predicted_strouhal": 0.1856558194376204,
+    "strouhal_relative_error": 0.009008722110264523,
+    "passes": false
+  },
+  "time_matched_linear_baseline": {
+    "future_frames": 53,
+    "vorticity_global_relative_l2": 0.32503411173820496,
+    "vorticity_max_frame_relative_l2": 0.41792887449264526,
+    "vorticity_last_frame_relative_l2": 0.41792887449264526,
+    "cfd_strouhal": 0.1873435453770742,
+    "frequency_scope": "No single frequency inferred from the superposed fields; only field errors compared."
+  },
+  "initial_true_frames": 4,
+  "initial_span_tU_D": 1.5625,
+  "future_cfd_inputs": 0,
+  "phase": 1.2710260354218246,
+  "source": "reproduced public release decoder; Unity-specific modal run is separately audited",
+  "force_scope": "No force surrogate; CFD-only late-window statistics",
+  "decoder_field_errors": {
+    "u": 0.0028515635058283806,
+    "v": 0.03061707131564617,
+    "p": 0.10093279182910919
+  },
+  "nearest_field_errors": {
+    "u": 0.02162657305598259,
+    "v": 0.21724958717823029,
+    "p": 0.13497097790241241
+  },
+  "linear_field_errors": {
+    "u": 0.024517206475138664,
+    "v": 0.2599273920059204,
+    "p": 0.08089043945074081
+  },
+  "cfd_force_statistics_tstar_ge75": {
+    "mean_Cd": 1.566091775894165,
+    "rms_Cl": 0.3012453019618988
+  },
+  "sampling_note": "Compact test has 53 future fields; initial four fields span 1.5625 convective units, unlike 0.3125 in the dense validation protocol."
+}

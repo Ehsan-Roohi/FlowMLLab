@@ -130,3 +130,9 @@ Run notebooks in order. Restart and run all before submission. A notebook with s
 ## Week 10.1 executable scattering lab
 
 [Classical collision map and surrogate audit](week10_1/W10_1_Collision_Map_Surrogate_Audit.ipynb): CPU Lennard-Jones teaching model, analytic scattering checks, transport integrals, and localized surrogate errors.
+
+## Modal companions
+
+- [Week 5 sparse sensing](week05_06/W5_Lab2_Sparse_Sensing_Dynamics.ipynb)
+- [Week 7 modal forecasting](week07/W7_Lab2_Modal_Forecasting.ipynb)
+- [Retained protocol, metrics and figures](../results/modal_labs/README.md)

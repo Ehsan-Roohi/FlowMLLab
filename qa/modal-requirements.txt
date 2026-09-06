@@ -1,0 +1,5 @@
+# Retained evidence environment; do not relax numeric gates for dependency drift.
+numpy==2.2.6
+scipy==1.15.3
+scikit-learn==1.6.1
+matplotlib==3.10.9

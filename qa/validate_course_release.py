@@ -19,6 +19,10 @@ EXPECTED_DATA_SHA256 = "09b96b744ee4d18126d8dcc92feb60e128774a1b4d41bb3d8c90a63c
 
 
 REQUIRED = [
+    "notebooks/week05_06/W5_Lab2_Sparse_Sensing_Dynamics.ipynb",
+    "notebooks/week07/W7_Lab2_Modal_Forecasting.ipynb",
+    "results/cylinder_re115_evaluation/metrics.json",
+    "results/modal_labs/metrics.json",
     "flowmllab/scattering_lab.py",
     "notebooks/week10_1/W10_1_Collision_Map_Surrogate_Audit.ipynb",
     ".gitattributes",
@@ -374,7 +378,7 @@ def validate_notebooks() -> tuple[int, int]:
                 for cell in cells
             ), f"missing learner-edition marker: {path}"
         count += 1
-    assert count == 28, f"expected 28 notebooks, found {count}"
+    assert count == 30, f"expected 30 notebooks, found {count}"
     return count, code_cells
 
 
@@ -1019,7 +1023,7 @@ def validate_hypersonic_cylinder_results() -> dict[str, object]:
 
 def validate_pdfs() -> int:
     pdfs = sorted((ROOT / "lectures").glob("*.pdf"))
-    assert len(pdfs) == 13
+    assert len(pdfs) == 15
     for path in pdfs:
         result = subprocess.run(
             ["pdfinfo", str(path)], check=True, capture_output=True, text=True

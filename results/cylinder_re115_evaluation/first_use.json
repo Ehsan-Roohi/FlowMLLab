@@ -1,0 +1,5 @@
+{
+  "test_sha256": "4ad871399a44e5cc5aafbc1385e76c96ce9029d2b4c6203283415b87c7e472a5",
+  "frozen_model_sha256": "997b5dd5cf4d0054a485f5b8f345a414bddc396438b5c63e9fa3724b7c0444f3",
+  "purpose": "first model scoring; no subsequent selection permitted"
+}

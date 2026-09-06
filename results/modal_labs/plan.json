@@ -1,0 +1,64 @@
+{
+  "forecast": {
+    "case": 110,
+    "train": [
+      0,
+      160
+    ],
+    "validation": [
+      160,
+      210
+    ],
+    "test": [
+      210,
+      281
+    ],
+    "dmd_ranks": [
+      2,
+      4,
+      6,
+      8
+    ],
+    "sindy_rank": 2,
+    "sindy_thresholds": [
+      0.01,
+      0.05,
+      0.1
+    ],
+    "sindy_degree": 3,
+    "sindy_window": 4,
+    "mlp_rank": 8,
+    "mlp_history": 4,
+    "mlp_hidden": [
+      32,
+      32
+    ],
+    "mlp_seed": 17,
+    "mlp_max_iter": 1500,
+    "selection": "Minimum validation field relative L2; no reset at test boundary"
+  },
+  "sensors": {
+    "train": [
+      90,
+      110
+    ],
+    "validation": 100,
+    "test": 105,
+    "rank": 8,
+    "budgets": [
+      8,
+      16,
+      32
+    ],
+    "noise_fraction": 0.01,
+    "seeds": [
+      10,
+      11,
+      12,
+      13,
+      14
+    ],
+    "selection": "Smallest budget with mean optimized validation L2 <= 0.05; otherwise minimum validation L2"
+  },
+  "scope": "Previously inspected coarse author LBM; educational ROI, not grid-independent CFD or blind research."
+}

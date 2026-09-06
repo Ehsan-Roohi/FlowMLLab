@@ -7,10 +7,7 @@ snapshot is retained: 57 fields at 125-timestep intervals, selected by index
 without screening the solution. The original solver metadata records the
 25-timestep sampling; export subsampling is explicit in the metadata/manifest.
 
-No surrogate fitting, model selection or error scoring has used this case in
-this change. A public checksum is a provenance seal, not an access restriction.
-Freeze the model, preprocessing and assessment protocol before first scoring;
-then log first use and retire blind-test status after feedback. Integrity checks
+First scoring is now complete: see [protocol, model hashes and results](../../results/cylinder_re115_evaluation/README.md). This case is retired as an untouched test after this feedback. A public checksum is a provenance seal, not an access restriction. Integrity checks
 passed; this is not a grid-independent or statistically certified DNS benchmark.
 
 Reproduce from the repository root with:

@@ -1,0 +1,8 @@
+{
+  "all_metric_reproduction": "PASS, rtol=2%, atol=1e-5 (cross-library tolerance)",
+  "retained_files_unchanged": 470,
+  "notebook_seconds": {
+    "W5_Lab2_Sparse_Sensing_Dynamics.ipynb": 3.8218312400022114,
+    "W7_Lab2_Modal_Forecasting.ipynb": 3.3644344639978954
+  }
+}
