@@ -1,0 +1,46 @@
+{
+  "schema": 1,
+  "inspection_date": "2026-09-06",
+  "method": "read-only Unity shell; sha256sum and h5py metadata, no model deserialization",
+  "source_directory": "/project/pi_roohie_umass_edu/AllMachNNCylinder",
+  "paper_identity_verified": false,
+  "inference_executed": false,
+  "source_sha256": {
+    "32fusion.py": "657644e9d1391ef1523278d066225902876a9d8e610e91f0e16634bb446e2349",
+    "33fusion.py": "a2015510a33bcd7e0dca4e9f2cf16f03b700ab59fe49fa5e1da1d0e2a35778ed"
+  },
+  "checkpoint_sha256": {
+    "modelsold/cylinder_fusion_model_0.h5": "dfbe3d67625ec5908da52b7813583c396959955559de1b888c177ec6edc3b59c",
+    "modelsold/cylinder_fusion_model_1.h5": "59498a8bb5983260af566b416fac40ca40ca074acef0c0ee26d0a6dbfdc21842",
+    "modelsold/cylinder_fusion_model_2.h5": "97c83e6c3da75842962179f848fa2b993ba7ea7928cf53b0616ad99773731748",
+    "modelsold/cylinder_fusion_model_3.h5": "1ae32784e0f83c11046df66847931a519c15b4f56dac9a839c7bc59735425b91",
+    "modelsold/cylinder_fusion_model_4.h5": "14bdbceec025038b4ac1d9d4264ab86441a3dcdc8cf5de876993f4e5eb64e5f8"
+  },
+  "member0_metadata": {
+    "keras_version": "2.15.0",
+    "input_layers": 2,
+    "dense_256_tanh_layers": 8,
+    "add_layers": 4,
+    "lambda_layers": 1,
+    "output_units": 3,
+    "output_activation": "linear"
+  },
+  "scaler_filename_search": {
+    "scope": "recursive source_directory",
+    "patterns": [
+      "*scaler*",
+      "*.pkl",
+      "*.joblib"
+    ],
+    "matches": [],
+    "absence_of_embedded_scalers_proven": false
+  },
+  "blockers": [
+    "Exact producing script and figure association unknown",
+    "Candidate scripts use Mach 5/7/9 training and Mach 10 test, not claimed Mach-15 protocol",
+    "Candidate 33fusion.py refits scalers with a different sample budget during replay",
+    "Original sampling/scalers and model member consistency still need verification"
+  ],
+  "all_five_ordered_layer_classes_and_widths_match": true,
+  "full_topology_equivalence_verified": false
+}
