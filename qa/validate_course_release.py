@@ -19,6 +19,8 @@ EXPECTED_DATA_SHA256 = "09b96b744ee4d18126d8dcc92feb60e128774a1b4d41bb3d8c90a63c
 
 
 REQUIRED = [
+    "flowmllab/scattering_lab.py",
+    "notebooks/week10_1/W10_1_Collision_Map_Surrogate_Audit.ipynb",
     ".gitattributes",
     "README.md",
     "START_HERE.md",
@@ -372,7 +374,7 @@ def validate_notebooks() -> tuple[int, int]:
                 for cell in cells
             ), f"missing learner-edition marker: {path}"
         count += 1
-    assert count == 27, f"expected 27 notebooks, found {count}"
+    assert count == 28, f"expected 28 notebooks, found {count}"
     return count, code_cells
 
 

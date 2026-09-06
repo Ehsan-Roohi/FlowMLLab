@@ -76,3 +76,7 @@ Assess evidence rather than software completion. Recommended final-project categ
 7. scientific communication.
 
 No category should require the ML method to outperform the baseline.
+
+## Week 10.1 executable scattering lab
+
+[Classical collision map and surrogate audit](notebooks/week10_1/W10_1_Collision_Map_Surrogate_Audit.ipynb): CPU Lennard-Jones teaching model, analytic scattering checks, transport integrals, and localized surrogate errors.

@@ -108,3 +108,7 @@ The previous surface-profile audit used other reconstructed windows and
 removed overlapping cumulative samples. Its surface errors are not errors
 of these two-dimensional fields. This companion reports no synchronized
 error map, confidence interval, steady-state certification or speedup.
+
+## Week 10.1 executable scattering lab
+
+[Classical collision map and surrogate audit](../notebooks/week10_1/W10_1_Collision_Map_Surrogate_Audit.ipynb): CPU Lennard-Jones teaching model, analytic scattering checks, transport integrals, and localized surrogate errors.

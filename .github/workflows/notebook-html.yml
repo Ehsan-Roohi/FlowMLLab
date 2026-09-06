@@ -1,0 +1,34 @@
+name: Reproduce teaching notebook HTML
+on:
+  workflow_dispatch:
+  pull_request:
+    paths: ['notebooks/**', 'flowmllab/**', 'qa/check_stabilization_notebooks.py', '.github/workflows/notebook-html.yml']
+  push:
+    branches: [main]
+    paths: ['notebooks/**', 'flowmllab/**', 'qa/check_stabilization_notebooks.py', '.github/workflows/notebook-html.yml']
+permissions:
+  contents: read
+jobs:
+  html:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      OPENBLAS_NUM_THREADS: '1'
+      OMP_NUM_THREADS: '1'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: pip
+      - name: Install notebook runtime
+        run: python -m pip install -e . nbformat nbclient nbconvert ipykernel
+      - name: Execute notebooks and verify retained data unchanged
+        run: python qa/check_stabilization_notebooks.py --publish-html
+      - uses: actions/upload-artifact@v4
+        with:
+          name: executed-teaching-html
+          path: |
+            docs/notebooks/*.html
+            tmp/stabilization/execution_report.json
+          if-no-files-found: error

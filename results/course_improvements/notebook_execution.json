@@ -1,0 +1,22 @@
+{
+  "execution_backend": "in_process",
+  "runs": [
+    {
+      "notebook": "notebooks/week10_1/W10_1_Collision_Map_Surrogate_Audit.ipynb",
+      "seconds": 17.284788696997566,
+      "status": "pass"
+    },
+    {
+      "notebook": "notebooks/week07_1/W7_1_Hypersonic_Rarefied_Cylinder_DeepONet.ipynb",
+      "seconds": 26.289485805998993,
+      "status": "pass"
+    },
+    {
+      "notebook": "notebooks/week09/W9_Lab2_Shock_Aligned_Nozzle_DeepONet_Student.ipynb",
+      "seconds": 14.384324129998276,
+      "status": "pass"
+    }
+  ],
+  "retained_files_checked": 360,
+  "retained_hashes_unchanged": true
+}

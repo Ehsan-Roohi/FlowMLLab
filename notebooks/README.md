@@ -126,3 +126,7 @@ Each project notebook now includes:
 - track-specific further reading.
 
 Run notebooks in order. Restart and run all before submission. A notebook with stale out-of-order state is not a reproducible result.
+
+## Week 10.1 executable scattering lab
+
+[Classical collision map and surrogate audit](week10_1/W10_1_Collision_Map_Surrogate_Audit.ipynb): CPU Lennard-Jones teaching model, analytic scattering checks, transport integrals, and localized surrogate errors.

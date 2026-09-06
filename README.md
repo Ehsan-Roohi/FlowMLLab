@@ -257,3 +257,5 @@ Copyright © 2026 Ehsan Roohi. [MIT License](LICENSE).
 ## Re100 cylinder data
 
 [Use the D40 teaching dataset](results/cylinder_d40/README.md): force histories, final fields and a three-grid comparison.
+
+See [branch and release procedure](docs/BRANCH_AND_RELEASE_POLICY.md) for evidence promotion and reproducible notebook HTML.

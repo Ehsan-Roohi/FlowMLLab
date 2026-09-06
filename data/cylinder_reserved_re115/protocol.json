@@ -1,0 +1,26 @@
+{
+  "reynolds": 115,
+  "settings": {
+    "nx": 240,
+    "ny": 96,
+    "diameter": 12.0,
+    "center": [
+      60.0,
+      47.5
+    ],
+    "inflow_velocity": 0.05,
+    "steps": 22000,
+    "history_stride": 4,
+    "snapshot_start": 15000,
+    "snapshot_stride": 25,
+    "perturbation": 0.01,
+    "seed": 690,
+    "collision_model": "trt",
+    "cylinder_boundary": "bouzidi"
+  },
+  "purpose": "Reserved independent teaching test; no model selection or scoring",
+  "source_commit": "ffa81cb17f208d03c6125a2cf19cc5844a73e949",
+  "solver_sha256": "8f5fb055b4ca30e75757d8a7811936e72fa0b72c0904fe1c11e8ba877fd6f394",
+  "release_rule": "Freeze model, preprocessing, metrics and thresholds before scoring. Public bytes are not access-controlled; log first use and retire blind status after inspection.",
+  "quality_scope": "Array integrity only; grid/domain independence and statistical stationarity are not certified."
+}

@@ -1,0 +1,23 @@
+{
+  "file": "cylinder_cfd_re115.npz",
+  "bytes": 13909475,
+  "sha256": "4ad871399a44e5cc5aafbc1385e76c96ce9029d2b4c6203283415b87c7e472a5",
+  "snapshots": 57,
+  "status": "reserved_unscored",
+  "reynolds": 115,
+  "integrity_pass": true,
+  "source_full_archive_sha256": "12ae9ebcf08d49ef9111f70b89bc0615e78d88742a75918e748bdccd1e2180eb",
+  "export_snapshot_subsample_stride": 5,
+  "parts": [
+    {
+      "file": "cylinder_cfd_re115.npz.part01",
+      "bytes": 8388608,
+      "sha256": "dbe25d20a11290a3ce8069a0f341adb713eed7a481ed1cbad4ae87fbfe010607"
+    },
+    {
+      "file": "cylinder_cfd_re115.npz.part02",
+      "bytes": 5520867,
+      "sha256": "96fb9d66d2648d663805db652dc88d91c763173b3e09bda0ab5908f1be2f0ec9"
+    }
+  ]
+}
