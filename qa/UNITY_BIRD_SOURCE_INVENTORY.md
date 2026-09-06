@@ -6,9 +6,23 @@ This inventory records read-only inspection of the author's Unity storage. It di
 
 The working directory is `/work/pi_roohie_umass_edu/Nozzle`.
 
-It contains fifteen canonical Tecplot snapshots named `P=<PR>full.dat` for pressure ratios 15, 16, 18, 19, 20, 22--30 and 33. Multiple scripts in the same directory consume the glob `P=*full.dat`; examples label these inputs as DSMC Tecplot files and define held-out pressure ratios such as 15, 25 and 33. The directory also contains later transformed and predicted files, so an unqualified `P=*full.dat` glob matches more than the fifteen canonical inputs.
+It contains fifteen full-domain Tecplot derivatives named `P=<kPa>full.dat` for back pressures 15, 16, 18, 19, 20, 22--30 and 33 kPa. Multiple scripts in the same directory consume the glob `P=*full.dat`; examples label these inputs as DSMC Tecplot files and define held-out back pressures such as 15, 25 and 33 kPa. The directory also contains later transformed and predicted files, so an unqualified `P=*full.dat` glob matches more than the fifteen selected inputs.
 
-No Bird-2D executable, Fortran source, DS2 input deck or explicit Bird marker was found within two levels of this directory. The maintainer identifies the canonical snapshots as output of the two-dimensional Bird code, but the exact solver/input/exporter chain has not yet been independently reconstructed. The similarly named `/project/pi_roohie_umass_edu/Nozzle_Heat` directory is a later GHS wall-heat-flux design study and is not the producing archive for these snapshots.
+No Bird-2D executable, Fortran source, input deck or explicit Bird marker was
+found within two levels of this Unity directory. Author-supplied laptop archives
+subsequently yielded a 2009 modified Bird-family `DSMC2` source and a matching
+25-kPa input. The 100-by-30 main and 30-by-40 buffer cell grids generate the
+same 101-by-31 and 31-by-41 nodal zone dimensions as the article exports. The
+source's output schema lacks the article export's `QX`, `QY` and `Txy` fields,
+so it remains a close solver-family candidate rather than the exact producer.
+
+The full-domain files are deterministic derivatives of the article repository's
+half-domain exports: all non-`Y` values in the first two zones match exactly at
+float32 precision, `Y` is translated by -92 micrometres, and two Tecplot mirror
+zones are appended. Those mirror zones share `QY`, `V` and `Txy` without the
+required sign reversal. The similarly named `/project/pi_roohie_umass_edu/Nozzle_Heat`
+directory and recovered 7-kPa/300-K and 2026 GHS archives are later wall-heat-
+flux/model studies, not the producing archive for the article snapshots.
 
 ## Argon cylinder
 
