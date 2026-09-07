@@ -28,6 +28,12 @@ horizontal-v centerline, and 15% for the interior velocity vector. This is a
 near-matched comparison: the PINN regularizes the moving lid near both corners,
 whereas the retained CFD case uses the classical discontinuous lid.
 
+The 300-step qualification completed all computations but missed all three frozen
+gates narrowly (11.27%, 19.24%, and 15.51%). Those results are retained as a
+failed gate, not published as course evidence. A second, predeclared extension
+continues the identical optimizer and collocation state to 1,000 steps without
+changing any threshold or selecting a new seed.
+
 The independent audit reports unmasked momentum residuals, continuity, hard-wall
 errors, environment versions, hardware, source identity, and job identity. A
 contour is watermarked as unvalidated until comparison with the matched CFD

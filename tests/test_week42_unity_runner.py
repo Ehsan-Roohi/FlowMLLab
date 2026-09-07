@@ -27,9 +27,11 @@ def test_slurm_requests_a100_and_runs_dependency_gate_first():
     assert "#SBATCH --requeue" in text
     assert "FLOWML_PINN_RUN_ID" in text
     assert "FLOWML_PINN_REFERENCE" in text
+    assert "FLOWML_PINN_STEPS" in text
     runner = (ROOT / "qa" / "run_week42_deepplasma.py").read_text(encoding="utf-8")
     for required in ("optimizer.state", "collocation_points", "cuda_rng", "os.replace"):
         assert required in runner
+    assert 'saved_config.pop("optimizer_steps", None)' in runner
 
 
 def test_optional_dependency_versions_are_pinned():

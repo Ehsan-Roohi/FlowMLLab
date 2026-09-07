@@ -177,7 +177,7 @@ def atomic_checkpoint(path: Path, module, model, optimizer, points, completed_st
 def train_restartable(module, model, output, points_n, steps, checkpoint_every, resume):
     checkpoint = output / "checkpoint.pt"
     config = {"reynolds_number": module.Re, "collocation_points": points_n,
-              "optimizer_steps": steps, "seed": module.SEED,
+              "seed": module.SEED,
               "upstream_commit": UPSTREAM_COMMIT}
     optimizer = module.SSBroyden2(
         model.parameters(), lr=module.SSB_LR, gtol=1e-12,
@@ -188,8 +188,12 @@ def train_restartable(module, model, output, points_n, steps, checkpoint_every, 
     start = 0
     if resume and checkpoint.exists():
         saved = torch.load(checkpoint, map_location=module.device, weights_only=False)
-        if saved["config"] != config:
-            raise RuntimeError(f"Refusing incompatible checkpoint: {saved['config']} != {config}")
+        saved_config = dict(saved["config"])
+        # Checkpoints made before extension support stored the former target step
+        # count. It is not part of the mathematical state and may be increased.
+        saved_config.pop("optimizer_steps", None)
+        if saved_config != config:
+            raise RuntimeError(f"Refusing incompatible checkpoint: {saved_config} != {config}")
         model.load_state_dict(saved["model"])
         for key in ("H", "x", "k"):
             optimizer.state[key] = saved["optimizer"][key]
@@ -198,6 +202,8 @@ def train_restartable(module, model, output, points_n, steps, checkpoint_every, 
         torch.cuda.set_rng_state_all(saved["cuda_rng"])
         np.random.set_state(saved["numpy_rng"])
         start = int(saved["completed_steps"])
+        if steps < start:
+            raise RuntimeError(f"Requested target {steps} precedes checkpoint step {start}")
         print(f"Resumed checkpoint at completed step {start}", flush=True)
     else:
         collocation = module.sample_pde_points(points_n)

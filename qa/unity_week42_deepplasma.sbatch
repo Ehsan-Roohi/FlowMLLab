@@ -30,11 +30,13 @@ RUN_ROOT="${SLURM_SUBMIT_DIR}/tmp/week42-pinn-${FLOWML_PINN_RUN_ID}"
 # Dependency and hardware gate: failure stops before training.
 "$FLOWML_PINN_PYTHON" qa/check_week42_environment.py
 set +e
+extra_args=()
+[[ -z "${FLOWML_PINN_STEPS:-}" ]] || extra_args+=(--steps "$FLOWML_PINN_STEPS")
 "$FLOWML_PINN_PYTHON" qa/run_week42_deepplasma.py \
   --mode "${FLOWML_PINN_MODE:-smoke}" \
   --source "$DEEPPLASMA_LDC" \
   --reference-npz "$FLOWML_PINN_REFERENCE" \
-  --output "$RUN_ROOT" --resume
+  --output "$RUN_ROOT" --resume "${extra_args[@]}"
 runner_status=$?
 set -e
 if [[ "$runner_status" -eq 99 ]]; then
