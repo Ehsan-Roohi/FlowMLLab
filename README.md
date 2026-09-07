@@ -9,7 +9,8 @@ generate numerical data, compare transparent baselines with learned models, and
 check both prediction error and physical fidelity.
 
 Developed for **MIE 690A: AI in Fluid Mechanics**, University of Massachusetts
-Amherst. The working course includes **31 notebooks and 17 lecture items** (16 PDFs plus the Week 10.1 reading companion), from
+Amherst. The working course includes **32 notebooks** and a continuous lecture
+sequence from
 numerical foundations to continuum and rarefied-flow research examples.
 
 ## Start here
@@ -54,6 +55,7 @@ Weeks 5 and 6 share a project pack and lecture guide, but have separate learning
 | [10.1](#week-101--ab-initio-collision-deeponet) | Molecular scattering and DSMC cylinder contours | [CPU scattering lab](notebooks/week10_1/W10_1_Collision_Map_Surrogate_Audit.ipynb) · [Research fields](results/abinitio_deeponet_cylinder/README.md) | [Lecture companion](lectures/week10_1_abinitio_collision_deeponet.md) |
 | [11](#week-11--shock-and-vortex-identification) | Physical diagnostics and overlapping learned labels | [Week 11 lab](notebooks/week11/README.md) | [Lecture 11](lectures/week11_shock_vortex_identification.pdf) |
 | [12](#week-12--dsmc-moment-reconstruction) | Additive moments, observation-conditioned reconstruction and support | [Week 12 lab](notebooks/week12/README.md) | [Lecture 12](lectures/week12_dsmc_moment_reconstruction.pdf) |
+| [13](#week-13--rectangular-cavity-pinn-research-audit) | Streamfunction PINNs across Reynolds number and cavity depth | [Week 13 audit](notebooks/week13/README.md) | [Lecture 13](lectures/week13_rectangular_cavity_pinn.pdf) |
 
 ## Results gallery · in course order
 
@@ -278,6 +280,20 @@ Week 12 practical completion: [train a fresh Noise2Noise-style MLP on real DSMC]
 The notebook now fits from raw observations, compares seven estimators and
 reports both held-out seeds. This is separate from the archived figures above;
 no new release or DOI is implied.
+
+### Week 13 — Rectangular-cavity PINN research audit
+
+![Four-case streamfunction PINN matrix for square and deep cavities](results/week13_rectangular_pinn/week13_matrix.png)
+
+The independent final module compares `Re=100,400` and depth-to-width ratios
+`D=1,2` using exact streamfunction wall constraints and a restartable float64
+A100 trajectory: Adam followed by SSBroyden2. Square cases are tested against
+frozen near-matched CFD field gates; deep cases remain residual-audited
+hypotheses until raw matched CFD is available. Training, held-out full-domain
+and corner-band histories are retained separately.
+[Notebook, evidence limits and reproduction](notebooks/week13/README.md) ·
+[Unity protocol](qa/WEEK13_PINN_MATRIX_PROTOCOL.md) ·
+[Continuous-text lecture](lectures/week13_rectangular_cavity_pinn.pdf).
 
 ## Reuse and contribute
 

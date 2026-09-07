@@ -19,6 +19,18 @@ EXPECTED_DATA_SHA256 = "09b96b744ee4d18126d8dcc92feb60e128774a1b4d41bb3d8c90a63c
 
 
 REQUIRED = [
+    "lectures/week13_rectangular_cavity_pinn.pdf",
+    "lectures/source/week13_rectangular_cavity_pinn.md",
+    "notebooks/week13/README.md",
+    "notebooks/week13/W13_Rectangular_Cavity_PINN_Research.ipynb",
+    "qa/run_week13_rectangular_pinn.py",
+    "qa/unity_week13_pinn_matrix.sbatch",
+    "qa/harvest_week13_results.py",
+    "qa/build_week13_materials.py",
+    "qa/WEEK13_PINN_MATRIX_PROTOCOL.md",
+    "results/week13_rectangular_pinn/manifest.json",
+    "results/week13_rectangular_pinn/week13_matrix.png",
+    "results/week13_rectangular_pinn/week13_optimizer_history.png",
     "lectures/week04_2_pinn_cavity.pdf",
     "lectures/source/week04_2_pinn_cavity.md",
     "qa/build_week04_2_lecture.py",

@@ -6,13 +6,16 @@ only for notebooks that explicitly require CUDA.
 
 ## One-click Colab launcher
 
-The working course now includes Week 7.2 and Weeks 11-12 (after archived v1.4.1):
+The working course now includes Week 7.2 and Weeks 11-13 (after archived v1.4.1):
 
 - [Week 7.2: sparse-sensor state estimation](week07_2/README.md) · [Open in Colab](https://colab.research.google.com/github/Ehsan-Roohi/FlowMLLab/blob/main/notebooks/week07_2/W7_2_Cylinder_Wake_State_Estimation.ipynb)
 - [Week 11: shock and vortex identification](week11/README.md) · [Open in Colab](https://colab.research.google.com/github/Ehsan-Roohi/FlowMLLab/blob/main/notebooks/week11/W11_Shock_Vortex_Identification.ipynb)
 - [Week 12: noisy DSMC moment reconstruction](week12/README.md) · [Open in Colab](https://colab.research.google.com/github/Ehsan-Roohi/FlowMLLab/blob/main/notebooks/week12/W12_DSMC_Moment_Reconstruction.ipynb)
+- [Week 13: rectangular-cavity PINN research audit](week13/README.md) · [Open in Colab](https://colab.research.google.com/github/Ehsan-Roohi/FlowMLLab/blob/main/notebooks/week13/W13_Rectangular_Cavity_PINN_Research.ipynb)
 
-Both are CPU teaching analogs, clearly separated from research-model reproduction.
+Weeks 11 and 12 are CPU teaching analogs. Week 13 audits retained A100 results
+without retraining in Colab and preserves the distinction between field-qualified
+square cases and residual-only deep cases.
 
 | Module | Notebook | Launch |
 | --- | --- | --- |
@@ -43,6 +46,7 @@ Both are CPU teaching analogs, clearly separated from research-model reproductio
 | Week 9 | Micro-step zonal-loss DeepONet | [Open in Colab](https://colab.research.google.com/github/Ehsan-Roohi/FlowMLLab/blob/main/notebooks/week09/W9_Lab1_Microstep_Zonal_DeepONet_Student.ipynb) |
 | Week 9 | Shock-aligned micro-nozzle DeepONet | [Open in Colab](https://colab.research.google.com/github/Ehsan-Roohi/FlowMLLab/blob/main/notebooks/week09/W9_Lab2_Shock_Aligned_Nozzle_DeepONet_Student.ipynb) |
 | Week 10 | DSMC cavity and mono/diatomic shock reproduction | [Open in Colab](https://colab.research.google.com/github/Ehsan-Roohi/FlowMLLab/blob/main/notebooks/week10/W10_DSMC_Data_Driven_Surrogates_Student.ipynb) |
+| Week 13 | Rectangular-cavity PINN research audit | [Open in Colab](https://colab.research.google.com/github/Ehsan-Roohi/FlowMLLab/blob/main/notebooks/week13/W13_Rectangular_Cavity_PINN_Research.ipynb) |
 
 ## Weekly laboratories
 
@@ -63,6 +67,10 @@ Both are CPU teaching analogs, clearly separated from research-model reproductio
 - `week08/`: two CPU labs that start from exact branch-aware gas dynamics, then compare bracketed roots, interpolation, and physics-guided MLP evidence across five inverse problems, edge holdouts, dimensional scaling, and application workloads.
 - `week09/`: two CPU research-to-classroom labs based on the Roohi--Mahdavi micro-step and micro-nozzle studies. The first uses two author-permitted, checksummed derivatives of nine real DSMC height fields with file-level case separation; the second reproduces shock-centered POD and fresh full-field predictions from checksummed derivatives of 15 public DSMC snapshots before evaluating three held-out pressures.
 - `week10/`: one complete CPU article-reproduction lab with 14 rarefied-cavity fields, mono/diatomic shock profiles, the DSMC algorithm, full provenance audit, log-Knudsen synthesis, POD-branch operators, physical interpretation, and retained numerical gates.
+- `week13/`: an evidence-only audit of four restartable float64 A100
+  streamfunction-PINN runs across Reynolds number and cavity depth. It separates
+  masked training loss, independent residuals, corner behavior, exact walls and
+  matched square-case CFD gates.
 
 The Week-9 evidence contract is intentionally asymmetric. Lab 1 uses real
 micro-step DSMC fields under a specific author publication permission, and its

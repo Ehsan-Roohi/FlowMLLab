@@ -203,12 +203,16 @@ def build_pdf(records, outdir):
                 ax.set(title=f"Re={record['re']}, D={record['depth']}", xlabel="optimizer step", ylabel="residual RMS")
                 ax.grid(which="both", alpha=.2)
             axes[0, 0].legend(frameon=False, fontsize=8)
+            fig.savefig(RESULTS / "week13_optimizer_history.png", dpi=260,
+                        bbox_inches="tight", facecolor="white")
             caption = "Figure 3. Adam (left of the orange line) followed by SSBroyden2. Held-out full-domain and top-corner residuals prevent masked training loss from being mistaken for global accuracy."
         else:
             fig, axes = plt.subplots(2, 2, figsize=(8.2, 7.0), constrained_layout=True)
             for ax, record in zip(axes.ravel(), records):
                 image = plt.imread(record["dir"] / "fields.png")
                 ax.imshow(image); ax.axis("off"); ax.set_title(f"Re={record['re']}, D={record['depth']}", fontsize=10)
+            fig.savefig(RESULTS / "week13_matrix.png", dpi=260,
+                        bbox_inches="tight", facecolor="white")
             caption = "Figure 4. Retained case renders from the exact Unity jobs. These panels preserve geometric aspect ratio inside each source render. Square cases have CFD gates; deep cases are residual-audited hypotheses, not field validations."
         image = raster(fig, max_height=325 if key in ("losses", "fields") else 220)
         return KeepTogether([image, Spacer(1, 4), para(caption, "caption")])

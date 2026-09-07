@@ -54,12 +54,15 @@ trained high-Re model. Rebuild with `python qa/build_week04_2_lecture.py`.
 | --- | --- | --- | --- |
 | [11](notebooks/week11/README.md) | Shock/core identification; shear versus rotation; overlapping labels | Manufactured controls, trained local MLP, physical baseline | Complete-case splits, validation-only thresholds, both tasks and fragmentation; not research CFD or the original dual-decoder network |
 | [12](notebooks/week12/README.md) | Additive moments, prior-plus-observation reconstruction, support | Synthetic warm-up plus fresh Noise2Noise-style patch-MLP training on real DSMC cavity observations | Four fitting seeds, two selection seeds, two evaluation seeds; high-budget reference excluded from fitting; mixed qx/qy baseline results; already-inspected archive, not a fresh blind or paper-model reproduction |
+| [13](notebooks/week13/README.md) | Streamfunction PINNs, Reynolds number, rectangular geometry and optimizer continuation | Audit four retained A100 cases at Re=100/400 and D=1/2; inspect Adam-to-SSBroyden2 histories and colored fields | Frozen square-case CFD gates; independent full/corner residuals; exact walls; deep cases explicitly lack matched field validation; paper extension requires matched representation and seed study |
 
 Each includes a PDF lecture and an executed CPU notebook. Week 11 additionally
 audits frozen-checkpoint research masks; these are not new ground-truth accuracy
 measurements. Week 12 follows
 Week 11 because noise-sensitive derivatives connect feature detection to field
 reconstruction; it can also be taught directly after Weeks 3 and 10.
+Week 13 is an independent final research audit that returns to continuum cavity
+flow after students understand optimization, validation and evidence boundaries.
 
 ## Suggested adoption modes
 

@@ -28,16 +28,19 @@ analytic-check JSON under `output/pdf/`; it does not run upstream training.
 McDevitt permitted use of the case; his code remains linked upstream, not
 relicensed or vendored. Locally supplied third-party teaching files are not redistributed.
 
-## Weeks 11 and 12 (working course, after v1.4.1)
+## Weeks 11 through 13 (working course, after v1.4.1)
 
 | Lecture | Notebook | Editable source |
 | --- | --- | --- |
 | [Week 11: shock and vortex identification](week11_shock_vortex_identification.pdf) | [CPU lab](../notebooks/week11/W11_Shock_Vortex_Identification.ipynb) | [Lecture notes](source/week11_shock_vortex_identification.md) |
 | [Week 12: DSMC moment reconstruction](week12_dsmc_moment_reconstruction.pdf) | [CPU lab](../notebooks/week12/W12_DSMC_Moment_Reconstruction.ipynb) | [Lecture notes](source/week12_dsmc_moment_reconstruction.md) |
+| [Week 13: rectangular-cavity PINN research audit](week13_rectangular_cavity_pinn.pdf) | [Evidence-audit notebook](../notebooks/week13/W13_Rectangular_Cavity_PINN_Research.ipynb) | [Continuous-text lecture](source/week13_rectangular_cavity_pinn.md) |
 
 Each has eight lecture-note pages, worked concepts, an executed classroom figure
 and assessment prompts. Research attribution and synthetic-teaching scope are
 explicit; neither notebook claims to reproduce the original research model.
+Week 13 is a separate final-course research module built from retained A100
+runs; its deep-cavity cases are not called field-validated without matched raw CFD.
 
 ## Week 10.1 reading companion
 

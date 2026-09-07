@@ -28,7 +28,7 @@ its new loaders, baselines and classroom models are distinct from the original
 research solvers and published neural models.</p>
 <p><a href="https://github.com/Ehsan-Roohi/FlowMLLab/blob/main/DATA_PROVENANCE.md">Case-by-case sources, citations and reuse status</a></p></section>
 <section><h2>Study and reproduce</h2>
-<p>Follow Week 1 through Week 12, including incremental labs 2.1, 4.1 and 7.1 and the Week 10.1 scattering lab and reading companion.
+<p>Follow Week 1 through Week 13, including incremental labs 1.1, 2.1, 4.1, 4.2, 7.1 and 7.2 and the Week 10.1 scattering lab and reading companion.
 Each week has its own learning material.</p>
 <ul><li><a href="https://github.com/Ehsan-Roohi/FlowMLLab/tree/main/notebooks">Notebooks and Colab launch links</a></li>
 <li><a href="notebooks/W10_1_Collision_Map_Surrogate_Audit.html">Executed Week 10.1: scattering and surrogate audit</a></li>
@@ -39,13 +39,14 @@ Each week has its own learning material.</p>
 <li><a href="https://github.com/Ehsan-Roohi/FlowMLLab/blob/main/lectures/week10_1_abinitio_collision_deeponet.md">Week 10.1 reading companion: ab initio collision DeepONet and colored cylinder fields</a> — related to <a href="https://doi.org/10.1063/5.0328463">Roohi et al., Physics of Fluids 38, 057123 (2026)</a>; different output times, qualitative comparison only.</li>
 <li><a href="https://github.com/Ehsan-Roohi/FlowMLLab/tree/main/notebooks/week11">Week 11: shock and vortex identification</a> — CPU controls plus <a href="https://github.com/Ehsan-Roohi/FlowMLLab/tree/main/results/week11_research">six real airfoil/cylinder model runs</a>; no new CFD or human-validated accuracy.</li>
 <li><a href="https://github.com/Ehsan-Roohi/FlowMLLab/tree/main/notebooks/week12">Week 12: DSMC moment reconstruction</a> — synthetic controls, <a href="https://github.com/Ehsan-Roohi/FlowMLLab/tree/main/results/week12_noise2noise">fresh CPU Noise2Noise-style training on real DSMC observations</a>, and a separate <a href="https://github.com/Ehsan-Roohi/FlowMLLab/tree/main/results/week12_research">historical research audit</a>. Includes whole-seed splits, simple baselines and retained failures; no new DSMC simulation.</li>
+<li><a href="https://github.com/Ehsan-Roohi/FlowMLLab/tree/main/notebooks/week13">Week 13: rectangular-cavity PINN research audit</a> — retained float64 A100 runs across Reynolds number and depth, Adam-to-SSBroyden2 histories, exact walls, CFD gates for square cases and explicit no-field-reference limits for deep cases.</li>
 <li><a href="https://github.com/Ehsan-Roohi/FlowMLLab/blob/main/docs/RESULTS_GUIDE.md">Retained results, reproduction commands and known defects</a></li></ul>
 <p>Retained results are evidence, not notebook scratch space. Executing a teaching
 example does not by itself reproduce a paper's accuracy.</p></section>
 <section><h2>Release scope and course extensions</h2>
 <p>The v1.4.0 archive remains unchanged. Maintenance focuses on reproducibility,
 provenance and fair comparisons. The separately requested v1.4.1 release includes the Week 10.1 scattering lab and reading companion and existing research contours, without a new training notebook.</p>
-<p>The author-requested Weeks 11 and 12 are later working-course additions; they do not alter the archived v1.4.1 DOI.</p>
+<p>The author-requested Weeks 11 through 13 are later working-course additions; they do not alter the archived v1.4.1 DOI.</p>
 <p>Nozzle symmetry/export defects remain unresolved in the source data.
 The cylinder teaching dataset is now CC BY 4.0 with Ehsan Roohi's authorization;
 see its <a href="https://github.com/Ehsan-Roohi/FlowMLLab/blob/main/data/hypersonic_cylinder/DATA_LICENSE.md">data license</a>.
