@@ -1,0 +1,23 @@
+{
+  "schema": 1,
+  "render_only": true,
+  "slurm_job_id": "64060708",
+  "partition": "gpu-preempt",
+  "state": "COMPLETED",
+  "exit_code": "0:0",
+  "elapsed": "00:00:41",
+  "source_commit": "a2e4383",
+  "training_job_id": "64059767",
+  "files": {
+    "qualified_validation.png": {
+      "sha256": "26f958510b7e911eba2aed6e549158f82849233f72d63a61dd099a9f1b110431",
+      "width": 3196,
+      "height": 1889
+    },
+    "optimizer_convergence.png": {
+      "sha256": "35c4365aafd522a9a9bb61cc65c1ca26e8263b5b80ed5a9dbaaf210c87103c54",
+      "width": 1902,
+      "height": 1122
+    }
+  }
+}

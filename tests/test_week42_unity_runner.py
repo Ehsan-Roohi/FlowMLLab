@@ -28,12 +28,17 @@ def test_slurm_requests_a100_and_runs_dependency_gate_first():
     assert "FLOWML_PINN_RUN_ID" in text
     assert "FLOWML_PINN_REFERENCE" in text
     assert "FLOWML_PINN_STEPS" in text
+    assert "FLOWML_PINN_RENDER_ONLY" in text
     runner = (ROOT / "qa" / "run_week42_deepplasma.py").read_text(encoding="utf-8")
     for required in ("optimizer.state", "collocation_points", "cuda_rng", "os.replace"):
         assert required in runner
     assert 'saved_config.pop("optimizer_steps", None)' in runner
     assert 'map_location="cpu"' in runner
     assert 'value.to(module.device)' in runner
+    assert '"--render-only"' in runner
+    assert "qualified_validation.png" in runner
+    assert "optimizer_convergence.png" in runner
+    assert "Refusing a qualified figure for an unqualified audit" in runner
 
 
 def test_optional_dependency_versions_are_pinned():

@@ -16,12 +16,25 @@ class PINNCavityLectureTests(unittest.TestCase):
         for line in source.splitlines():
             if line.startswith('@equation '): self.assertIn(line.split()[1], EQS)
             if line.startswith('@table '): self.assertIn(line.split()[1], TABLES)
-            if line.startswith('@figure '): self.assertIn(line.split()[1], ['cavity','graph','lid'])
+            if line.startswith('@figure '): self.assertIn(line.split()[1], ['cavity','graph','lid','qualified'])
         self.assertEqual(source.count('@equation '), 10)
-        self.assertEqual(source.count('@figure '), 3)
+        self.assertEqual(source.count('@figure '), 4)
         self.assertIn('SOAP_STEPS=0', source)
         self.assertIn('not a newly trained PINN', source)
         self.assertIn('fcb1566eaa3253d4a4108fbac9d49a38fd10ad6b', source)
+
+    def test_qualified_figure_is_the_audited_unity_render(self):
+        import hashlib
+        import json
+
+        evidence = ROOT/'results/week04_2_pinn_cavity'
+        manifest = json.loads((evidence/'render-audit.json').read_text(encoding='utf-8'))
+        self.assertTrue(manifest['render_only'])
+        self.assertEqual(manifest['state'], 'COMPLETED')
+        self.assertEqual(manifest['training_job_id'], '64059767')
+        for name, record in manifest['files'].items():
+            self.assertEqual(hashlib.sha256((evidence/name).read_bytes()).hexdigest(),
+                             record['sha256'])
 
 
 if __name__ == '__main__':

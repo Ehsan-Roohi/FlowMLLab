@@ -1,0 +1,65 @@
+{
+  "claim_status": "qualified-near-matched-reference",
+  "mode": "qualification",
+  "reynolds_number": 100.0,
+  "collocation_points": 16384,
+  "optimizer_steps": 1000,
+  "completed_steps": 1000,
+  "restartable": true,
+  "seed": 12345,
+  "elapsed_seconds": 139.19453191757202,
+  "raw_residual_rms": {
+    "momentum_x": 0.03779990689886368,
+    "momentum_y": 0.024649350676788508,
+    "continuity": 2.3389713962687064e-15
+  },
+  "wall_error": {
+    "bottom": {
+      "u_max_abs_error": 0.0,
+      "v_max_abs_error": 0.0
+    },
+    "left": {
+      "u_max_abs_error": 0.0,
+      "v_max_abs_error": 0.0
+    },
+    "right": {
+      "u_max_abs_error": 0.0,
+      "v_max_abs_error": 0.0
+    },
+    "top": {
+      "u_max_abs_error": 0.0,
+      "v_max_abs_error": 0.0
+    }
+  },
+  "model_parameters": 5352,
+  "precision": "torch.float64",
+  "gpu": "NVIDIA A100-SXM4-80GB",
+  "torch": "2.5.1",
+  "torch_cuda": "12.4",
+  "python": "3.11.15",
+  "upstream_repository": "https://github.com/cmcdevitt2/DeepPlasma",
+  "upstream_commit": "fcb1566eaa3253d4a4108fbac9d49a38fd10ad6b",
+  "upstream_sha256": "391a2174cb9f6e8863c14d7b350077e54209134de9f85a17719c398146f91458",
+  "slurm_job_id": "64059767",
+  "cfd_comparison": {
+    "reference": "/project/pi_roohie_umass_edu/FlowMLLab_week42_20260907/data/cavity_data.npz",
+    "reference_case_index": 0,
+    "note": "PINN smooth lid versus classical-lid CFD: near-matched comparison.",
+    "metrics": {
+      "u_centerline_relative_l2": 0.021836372669837505,
+      "v_centerline_relative_l2": 0.04424509584355628,
+      "interior_velocity_relative_l2": 0.031043095018218392
+    },
+    "frozen_thresholds": {
+      "u_centerline_relative_l2": 0.1,
+      "v_centerline_relative_l2": 0.15,
+      "interior_velocity_relative_l2": 0.15
+    },
+    "passes": {
+      "u_centerline_relative_l2": true,
+      "v_centerline_relative_l2": true,
+      "interior_velocity_relative_l2": true
+    },
+    "all_pass": true
+  }
+}

@@ -39,6 +39,13 @@ errors, environment versions, hardware, source identity, and job identity. A
 contour is watermarked as unvalidated until comparison with the matched CFD
 reference is complete.
 
+The continuation completed on Unity job `64059767` at 1,000 steps and passed
+all three frozen gates: 2.18% for the vertical-u centerline, 4.42% for the
+horizontal-v centerline and 3.10% for the independently sampled interior
+velocity vector. Its claim is therefore limited to a qualified Re=100,
+near-matched-reference result. Selected audit and figure evidence is retained in
+`results/week04_2_pinn_cavity`; the 229 MB restart checkpoint stays on Unity.
+
 The base interpreter is Unity's existing PyTorch 2.5.1+cu124 environment. The two
 otherwise-missing imports are installed into a project-local target directory
 from `qa/requirements-week42-unity.txt`; the shared environment is not modified.

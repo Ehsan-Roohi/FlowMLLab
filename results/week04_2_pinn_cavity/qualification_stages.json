@@ -1,0 +1,31 @@
+{
+  "protocol": "predeclared Re=100 near-matched CFD qualification",
+  "frozen_thresholds": {
+    "u_centerline_relative_l2": 0.10,
+    "v_centerline_relative_l2": 0.15,
+    "interior_velocity_relative_l2": 0.15
+  },
+  "stages": [
+    {
+      "slurm_job_id": "64059418",
+      "completed_steps": 300,
+      "decision": "fail-retained",
+      "metrics": {
+        "u_centerline_relative_l2": 0.112714,
+        "v_centerline_relative_l2": 0.192358,
+        "interior_velocity_relative_l2": 0.155111
+      }
+    },
+    {
+      "slurm_job_id": "64059767",
+      "continued_from_step": 300,
+      "completed_steps": 1000,
+      "decision": "pass",
+      "metrics": {
+        "u_centerline_relative_l2": 0.021836372669837505,
+        "v_centerline_relative_l2": 0.04424509584355628,
+        "interior_velocity_relative_l2": 0.031043095018218392
+      }
+    }
+  ]
+}

@@ -65,6 +65,14 @@ TABLES = {
         ['Pressure after gauge alignment', 'Pressure variation relative to the reference.', 'A physically meaningful absolute pressure offset.'],
         ['Seed / grid / sampling study', 'Sensitivity to initialization and numerical resolution.', 'Universality outside the tested problem family.'],
     ]),
+    'qualified': ('Table 4. Predeclared Re=100 qualification against the near-matched CFD field.', [
+        ['Metric', 'Retained result', 'Frozen gate / decision'],
+        ['Vertical centerline u(0.5,y)', '2.18% relative L2', '10% / pass'],
+        ['Horizontal centerline v(x,0.5)', '4.42% relative L2', '15% / pass'],
+        ['Interior velocity vector', '3.10% relative L2; 8,192 audit points', '15% / pass'],
+        ['Hard velocity conditions', 'zero max error on 1,001 points per wall', 'reported separately'],
+        ['Unmasked momentum residual', 'RMS 0.0378 and 0.0246', 'reported separately'],
+    ]),
 }
 
 
@@ -117,6 +125,7 @@ def build(outdir: Path):
         'caption':ParagraphStyle('caption',fontName='Times-Roman',fontSize=9.5,leading=12,spaceAfter=9),
         'tablecaption':ParagraphStyle('tablecaption',fontName='Times-Roman',fontSize=9.5,leading=12,spaceAfter=7,keepWithNext=True),
         'cell':ParagraphStyle('cell',fontName='Times-Roman',fontSize=9.4,leading=12),
+        'reference':ParagraphStyle('reference',fontName='Times-Roman',fontSize=9.1,leading=11.4,spaceAfter=4.5),
     }
     def paragraph(t, style='body'):
         t = escape(t)
@@ -144,6 +153,21 @@ def build(outdir: Path):
         t.setStyle(TableStyle([('BACKGROUND',(0,0),(-1,0),colors.HexColor('#e9f0f4')),('LINEABOVE',(0,0),(-1,0),.7,colors.HexColor('#29475b')),('LINEBELOW',(0,0),(-1,0),.5,colors.HexColor('#29475b')),('LINEBELOW',(0,-1),(-1,-1),.7,colors.HexColor('#29475b')),('VALIGN',(0,0),(-1,-1),'TOP'),('TOPPADDING',(0,0),(-1,-1),6),('BOTTOMPADDING',(0,0),(-1,-1),6)]))
         return [paragraph(caption,'tablecaption'),t,Spacer(1,10)]
     def figure(key):
+        if key=='qualified':
+            path=ROOT/'results/week04_2_pinn_cavity/qualified_validation.png'
+            if not path.is_file():
+                raise FileNotFoundError('Qualified Unity figure is required: '+str(path))
+            digest=hashlib.sha256(path.read_bytes()).hexdigest()
+            expected='26f958510b7e911eba2aed6e549158f82849233f72d63a61dd099a9f1b110431'
+            if digest != expected:
+                raise ValueError('Qualified Unity figure hash mismatch: '+digest)
+            im=Image(str(path)); scale=min(width/im.imageWidth,278/im.imageHeight)
+            im.drawWidth=im.imageWidth*scale; im.drawHeight=im.imageHeight*scale
+            cap=('Figure 4. Qualified Re=100 PINN evidence regenerated from the accepted Unity checkpoint: '
+                 'velocity components, speed and streamlines, pointwise velocity error, and both CFD centerline '
+                 'comparisons. The large corner differences in panel (d) expose the regularized-versus-classical '
+                 'lid mismatch rather than being hidden by the domain-average metric.')
+            return KeepTogether([im,Spacer(1,5),paragraph(cap,'caption')])
         if key=='cavity':
             with np.load(ROOT/'data/cavity_data.npz',allow_pickle=False) as d:
                 i=int(np.flatnonzero(d['Re']==100)[0]); assert bool(d['accepted'][i])
@@ -174,16 +198,19 @@ def build(outdir: Path):
             cap='Figure 2. The streamfunction-pressure construction. The network supplies a correction, not the prescribed wall motion. Momentum residuals require third spatial derivatives of the physical streamfunction.'
         fig.savefig(outdir/f'{NAME}_{key}.svg',bbox_inches='tight')
         return KeepTogether([raster(fig),Spacer(1,5),paragraph(cap,'caption')])
-    story=[]; number=0
+    story=[]; number=0; in_references=False
     for block in (ROOT/'lectures/source'/f'{NAME}.md').read_text(encoding='utf-8').strip().split('\n\n'):
         if block.startswith('@equation '):
             number+=1; story.append(equation(block.split()[1],number))
         elif block.startswith('@figure '): story.append(figure(block.split()[1]))
         elif block.startswith('@table '): story.extend(table(block.split()[1]))
-        elif block.startswith('### '): story.append(paragraph(block[4:],'heading'))
+        elif block.startswith('### '):
+            in_references = block[4:].strip() == 'References and provenance'
+            story.append(paragraph(block[4:],'heading'))
         elif block.startswith('## '): story.append(paragraph(block[3:],'subtitle'))
         elif block.startswith('# '): story.append(paragraph(block[2:],'title'))
-        else: story.append(paragraph(block.replace('\n',' ')))
+        else: story.append(paragraph(block.replace('\n',' '),
+                                         'reference' if in_references else 'body'))
     def footer(c,doc):
         c.saveState(); c.setStrokeColor(colors.HexColor('#b7c3cd')); c.setLineWidth(.4)
         c.line(52,43,A4[0]-52,43); c.setFont('Times-Roman',9)

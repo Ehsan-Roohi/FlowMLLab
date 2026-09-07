@@ -123,13 +123,16 @@ cost tradeoff. [Run the ROM lab](notebooks/week04/W4_1_Classical_ROM_Cavity.ipyn
 
 ### Week 4.2 — PINNs and the lid-driven cavity
 
+![Qualified Re=100 cavity PINN fields, error map and CFD centerline comparisons](results/week04_2_pinn_cavity/qualified_validation.png)
+
 [Continuous-text lecture](lectures/week04_2_pinn_cavity.pdf): derive the
 Navier–Stokes residual, construct hard streamfunction boundary conditions and
 design a matched-reference validation. Includes an attributed reading of
 [McDevitt's DeepPlasma cavity code](https://github.com/cmcdevitt2/DeepPlasma/tree/fcb1566eaa3253d4a4108fbac9d49a38fd10ad6b/LDC),
-used with his permission. Analytic checks and a retained CFD illustration are
-not presented as new high-Re PINN training evidence. This is a working-course
-reading addition, not a new release or archived-DOI result.
+used with his permission. The retained Unity A100 qualification at Re=100 passes
+the predeclared near-matched CFD gates: 2.18% and 4.42% on the two centerlines
+and 3.10% for the interior velocity vector. This is not presented as new
+high-Re PINN evidence. [Read the evidence and restart protocol](results/week04_2_pinn_cavity/README.md).
 
 ### Week 5 — Physics-guided projects
 

@@ -122,7 +122,7 @@ Begin on CPU with calculus and boundary tests. Then use an exact smooth Navier-S
 
 Float64 support and fast float64 arithmetic are different questions. Retain the upstream double-precision requirement initially and benchmark a small representative residual/backward pass on the allocated GPU. Record its model and peak memory before sizing the full batch. A CPU fallback being selectable does not make the default 262143-point third-derivative workload an appropriate laptop exercise. The optional SOAP path explicitly uses CUDA graphs and requires a compatible CUDA execution environment.
 
-No cluster job is required to read or regenerate this lecture. Its figures come from the retained CFD archive or explicit analytic formulas. A production PINN run is a separate experiment with a pinned upstream commit, environment record, configuration, checkpoint, and evaluation manifest. It should be submitted to an approved GPU allocation rather than executed on the interactive CPU session.
+No cluster job is required to read or regenerate this lecture. The qualified PINN evidence discussed below was produced separately from a pinned upstream commit on Unity's gpu-preempt partition, with an environment record, atomic checkpoint, fixed evaluation protocol, and machine-readable audit. The lecture builder reads only the selected retained evidence; it never starts training on the reader's machine.
 
 ### 9. An exact test before a difficult cavity
 
@@ -152,7 +152,19 @@ Inspect contours of reference, prediction, and signed or absolute error with equ
 
 There is a useful logical warning: the identically zero velocity with constant pressure has zero steady momentum residual and zero divergence, but violates the moving-lid condition. Conversely, the hard lifting has correct wall velocities and continuity before training but need not satisfy momentum. These counterexamples explain why no single residual, physical invariant, or attractive contour is sufficient.
 
-For research use, repeat independent initializations and retain failed runs as well as successful ones. A reasonable initial qualification protocol could require combined velocity error below 1 percent at Re=100, a matched reference uncertainty comfortably smaller than that target, and separately specified wall and residual limits. This is a proposed acceptance target, not a measured result or a universal PINN threshold. Revise it only with documented physical and numerical justification, not simply because a run fails.
+For research use, repeat independent initializations and retain failed runs as well as successful ones. A tighter future target might require combined velocity error below 1 percent at Re=100, with reference uncertainty comfortably smaller than that target and separately specified wall and residual limits. That is a proposed research target, not the gate used for the qualification below and not a universal PINN threshold. Revise a frozen criterion only with documented physical and numerical justification, not simply because a run fails.
+
+### 10.1. Retained Unity qualification at Re=100
+
+Before examining the trained field, the course protocol fixed three near-matched CFD gates: 10 percent for the vertical u centerline, 15 percent for the horizontal v centerline, and 15 percent for an interior velocity-vector comparison at 8,192 independently sampled points. The first 300-step run missed all three gates at 11.27, 19.24, and 15.51 percent. That failure was retained. No seed, collocation point, architecture, or threshold was selected after seeing it.
+
+The run then continued the same float64 model, fixed set of 16,384 collocation points, dense SSBroyden2 inverse-Hessian state, and CPU/GPU random-number states to 1,000 steps. The continuation passed all three gates. It ran on an NVIDIA A100-SXM4-80GB in Unity's gpu-preempt partition. This supports a qualified Re=100 near-matched-reference claim; it does not establish high-Re accuracy or equivalence between the regularized and discontinuous lid problems.
+
+@figure qualified
+
+@table qualified
+
+The independent raw residual audit used points distinct from the optimization set. Momentum residual RMS values were 0.0378 and 0.0246; divergence RMS was 2.34 times 10 to the minus 15. The hard lifting produced zero measured velocity mismatch on 1,001 points per wall. Field error, raw residual, and wall satisfaction remain separate evidence. The audit, optimizer history, exact software environment, failed first stage, and restart protocol are retained under results/week04_2_pinn_cavity.
 
 ### 11. From this forward solve to research questions
 
