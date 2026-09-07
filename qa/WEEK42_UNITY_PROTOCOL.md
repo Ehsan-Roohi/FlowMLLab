@@ -16,3 +16,9 @@ The independent audit reports unmasked momentum residuals, continuity, hard-wall
 errors, environment versions, hardware, source identity, and job identity. A
 contour is watermarked as unvalidated until comparison with the matched CFD
 reference is complete.
+
+The base interpreter is Unity's existing PyTorch 2.5.1+cu124 environment. The two
+otherwise-missing imports are installed into a project-local target directory
+from `qa/requirements-week42-unity.txt`; the shared environment is not modified.
+The Slurm preflight imports every dependency, runs `pip check`, and performs a
+float64 CUDA operation before the training driver is called.
