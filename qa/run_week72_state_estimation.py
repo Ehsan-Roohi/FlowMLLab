@@ -95,10 +95,6 @@ def make_figures(out, cases, result, model, examples):
             ax.set(title=name, xlabel='x/D', ylabel='y/D')
             ax.set_aspect('equal', adjustable='box')
             ax.set_xticks([2, 4, 6, 8, 10, 12]); ax.set_yticks([-2, 0, 2])
-            if index == 1:
-                iy, ix = np.unravel_index(model.sensor_indices, truth.shape)
-                ax.scatter(case['x'][ix], case['y'][iy], s=9, facecolors='none',
-                           edgecolors='#152536', linewidths=.55)
         cax = fig.add_axes([.88, .45, .014, .43])
         fig.colorbar(im, cax=cax, label='v/U', ticks=np.linspace(-vmax, vmax, 5), format='%.2f')
         for index, (name, error) in enumerate(zip(['(e) Kalman absolute error', '(f) Sensor-only absolute error'], errors)):
@@ -111,6 +107,29 @@ def make_figures(out, cases, result, model, examples):
         fig.colorbar(err_im, cax=cax, label='Absolute error in v/U', ticks=np.linspace(0, emax, 4), format='%.3f')
         for extension in ('png', 'svg'):
             fig.savefig(out/f'state_estimation_fields.{extension}', facecolor='white')
+        plt.close(fig)
+        # Sensor geometry is displayed separately so it cannot obscure the field.
+        iy, ix = np.unravel_index(model.sensor_indices, truth.shape)
+        sx, sy = case['x'][ix], case['y'][iy]
+        fig, axes = plt.subplots(1, 2, figsize=(8, 2), gridspec_kw={'width_ratios': [1.45, 1]})
+        dx, dy = float(np.diff(case['x'])[0]), float(np.diff(case['y'])[0])
+        zoom = (float(sx.min()-2*dx), float(sx.max()+2*dx),
+                float(sy.min()-2*dy), float(sy.max()+2*dy))
+        for ax in axes:
+            ax.scatter(sx, sy, s=5, c='#176b82', edgecolors='none', zorder=3)
+            ax.set(xlabel='x/D', ylabel='y/D')
+            ax.set_aspect('equal', adjustable='box')
+            ax.grid(color='#e3e9ed', linewidth=.4, zorder=0)
+        axes[0].set(title='32 sensors in the wake region',
+                    xlim=(case['x'][0],case['x'][-1]), ylim=(case['y'][0],case['y'][-1]))
+        from matplotlib.patches import Rectangle
+        axes[0].add_patch(Rectangle((zoom[0],zoom[2]),zoom[1]-zoom[0],zoom[3]-zoom[2],
+                                   fill=False,edgecolor='#8795a1',linewidth=.7,linestyle='--'))
+        axes[1].set(title='Sensor cluster - enlarged', xlim=zoom[:2], ylim=zoom[2:])
+        axes[1].collections[0].set_sizes([8])
+        fig.subplots_adjust(left=.07,right=.97,bottom=.24,top=.82,wspace=.3)
+        for extension in ('png','svg'):
+            fig.savefig(out/f'state_estimation_sensors.{extension}', facecolor='white')
         plt.close(fig)
         # Legacy filename remains valid for existing notebooks; its content is a table.
         labels = {'kalman': 'Kalman filter', 'sensor_only': 'Sensor-only POD',

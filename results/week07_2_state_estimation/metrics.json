@@ -725,7 +725,7 @@
     }
   ],
   "claim_boundary": "Previously inspected Re110 trajectory with synthetic sensor noise; causal filtering, not smoothing or a new blind CFD result.",
-  "elapsed_seconds": 10.159765899996273,
+  "elapsed_seconds": 11.369353999994928,
   "environment": {
     "python": "3.12.14",
     "numpy": "2.2.6",
@@ -735,7 +735,7 @@
   },
   "source_hashes": {
     "flowmllab/state_estimation.py": "93f50444a31ed4feeae5aa5f4929c40f7cd998fd6dd7993d356f323a88e48376",
-    "qa/run_week72_state_estimation.py": "4c2275424fef2c32cdf56dd66565e3461d1b2fb551437298a2643fc7354499f2",
+    "qa/run_week72_state_estimation.py": "a3ced0b2a4e16335d9f129935ea87df7e63ce381ea81b6657d3dba8159940448",
     "data/modal_labs/manifest.json": "ddf3bf5dcc86b3dcdf858b0ce8bc2994c334956a13c77e339a49dc57759913df"
   }
 }

@@ -36,7 +36,7 @@ Baselines: open-loop DMD receives no measurements after frame 159; persistence r
 ---
 # Retained field result
 
-The final test-frame contours use one common signed color scale and the same sampled grid. Filled contours interpolate level crossings only for display; scores use the original arrays. Sensor circles show selected transverse-velocity measurements, not physical probes of pressure or force.
+The final test-frame contours use one common signed color scale and the same sampled grid. Filled contours interpolate level crossings only for display; scores use the original arrays. A separate sensor-location panel and enlarged view show all 32 transverse-velocity measurements without covering the contours.
 
 Across five noise seeds, mean test relative L2 is 2.179% for Kalman, 3.163% for sensor-only, 4.359% for open-loop DMD and 131.813% for persistence. The first two have sample SD 0.066% and 0.064%. Open-loop and persistence do not depend on synthetic sensor noise, so their across-seed SD is zero.
 
