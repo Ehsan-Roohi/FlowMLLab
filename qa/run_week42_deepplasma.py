@@ -114,6 +114,109 @@ def render(module, model, device, output: Path, n=181):
     plt.close(fig)
 
 
+def predict_grid(module, model, device, n=181):
+    """Evaluate velocity and gauge pressure on a Cartesian plotting grid."""
+    axis = torch.linspace(0.0, 1.0, n, device=device)
+    yy, xx = torch.meshgrid(axis, axis, indexing="ij")
+    xy = torch.stack((xx.ravel(), yy.ravel()), 1).requires_grad_(True)
+    u, v, p = module.output_transform_cavity_flow(xy, model(xy))
+    shape = (n, n)
+    return (axis.detach().cpu().numpy(),
+            u.detach().cpu().numpy().reshape(shape),
+            v.detach().cpu().numpy().reshape(shape),
+            p.detach().cpu().numpy().reshape(shape))
+
+
+def render_qualified_validation(module, model, device, reference_path: Path,
+                                output: Path, audit: dict, n=181):
+    """Render the qualified PINN beside its near-matched CFD reference."""
+    data = np.load(reference_path)
+    matches = np.flatnonzero(np.isclose(data["Re"], module.Re))
+    if len(matches) != 1:
+        raise RuntimeError(f"Expected one CFD case at Re={module.Re:g}, found {len(matches)}")
+    case = int(matches[0])
+    axis, up, vp, _ = predict_grid(module, model, device, n=n)
+    xx, yy = np.meshgrid(axis, axis)
+    ref_x, ref_y = data["x"], data["y"]
+    query = np.column_stack((yy.ravel(), xx.ravel()))
+    ur = RegularGridInterpolator((ref_y, ref_x), data["u"][case])(query).reshape(n, n)
+    vr = RegularGridInterpolator((ref_y, ref_x), data["v"][case])(query).reshape(n, n)
+    speed = np.hypot(up, vp)
+    error = np.hypot(up - ur, vp - vr)
+
+    plt.rcParams.update({"font.size": 9, "axes.titlesize": 10,
+                         "axes.labelsize": 9, "figure.titlesize": 12})
+    fig, axes = plt.subplots(2, 3, figsize=(12.2, 7.15), constrained_layout=True)
+    for ax, field, title in zip(axes[0, :2], (up, vp),
+                                (r"(a) PINN $u/U$", r"(b) PINN $v/U$")):
+        lim = max(abs(np.nanpercentile(field, 1)), abs(np.nanpercentile(field, 99)), 1e-12)
+        im = ax.contourf(xx, yy, field, 41, cmap="RdBu_r", vmin=-lim, vmax=lim,
+                         extend="both")
+        fig.colorbar(im, ax=ax, shrink=.84, pad=.02)
+        ax.set(xlabel=r"$x/L$", ylabel=r"$y/L$", title=title, aspect="equal")
+    ax = axes[0, 2]
+    im = ax.contourf(xx, yy, speed, 41, cmap="viridis", extend="max")
+    ax.streamplot(axis, axis, up, vp, color="white", density=.75,
+                  linewidth=.45, arrowsize=.55)
+    fig.colorbar(im, ax=ax, shrink=.84, pad=.02)
+    ax.set(xlabel=r"$x/L$", ylabel=r"$y/L$", title=r"(c) PINN $|\mathbf{u}|/U$", aspect="equal")
+
+    ax = axes[1, 0]
+    vmax = max(float(np.nanpercentile(error, 99)), 1e-12)
+    im = ax.contourf(xx, yy, error, 41, cmap="magma", vmin=0, vmax=vmax, extend="max")
+    fig.colorbar(im, ax=ax, shrink=.84, pad=.02)
+    ax.set(xlabel=r"$x/L$", ylabel=r"$y/L$",
+           title=r"(d) $|\mathbf{u}_{PINN}-\mathbf{u}_{CFD}|/U$", aspect="equal")
+
+    mid_x = int(np.argmin(abs(ref_x - .5)))
+    mid_y = int(np.argmin(abs(ref_y - .5)))
+    model_mid = int(np.argmin(abs(axis - .5)))
+    ax = axes[1, 1]
+    ax.plot(data["u"][case, :, mid_x], ref_y, color="black", lw=1.8, label="CFD")
+    ax.plot(up[:, model_mid], axis, color="#0072B2", lw=1.7, ls="--", label="PINN")
+    ax.axvline(0, color="0.75", lw=.7)
+    ax.set(xlabel=r"$u/U$", ylabel=r"$y/L$", title=r"(e) $u(0.5,y)$", ylim=(0, 1))
+    ax.grid(alpha=.2); ax.legend(frameon=False)
+    ax = axes[1, 2]
+    ax.plot(ref_x, data["v"][case, mid_y, :], color="black", lw=1.8, label="CFD")
+    ax.plot(axis, vp[model_mid, :], color="#D55E00", lw=1.7, ls="--", label="PINN")
+    ax.axhline(0, color="0.75", lw=.7)
+    ax.set(xlabel=r"$x/L$", ylabel=r"$v/U$", title=r"(f) $v(x,0.5)$", xlim=(0, 1))
+    ax.grid(alpha=.2); ax.legend(frameon=False)
+
+    metrics = audit["cfd_comparison"]["metrics"]
+    fig.suptitle(
+        f"Qualified cavity PINN at Re={module.Re:g} — near-matched CFD validation\n"
+        f"centerline errors: u {100*metrics['u_centerline_relative_l2']:.2f}%, "
+        f"v {100*metrics['v_centerline_relative_l2']:.2f}%; "
+        f"interior velocity {100*metrics['interior_velocity_relative_l2']:.2f}%",
+        fontweight="semibold")
+    fig.savefig(output / "qualified_validation.png", dpi=260, bbox_inches="tight")
+    fig.savefig(output / "qualified_validation.pdf", bbox_inches="tight")
+    plt.close(fig)
+
+
+def render_convergence(history_path: Path, output: Path):
+    records = [json.loads(line) for line in history_path.read_text(encoding="utf-8").splitlines()
+               if line.strip()]
+    latest = {int(row["completed_step"]): row for row in records}
+    steps = np.array(sorted(latest))
+    mx = np.sqrt([latest[int(step)]["masked_momentum_x_mse"] for step in steps])
+    my = np.sqrt([latest[int(step)]["masked_momentum_y_mse"] for step in steps])
+    fig, ax = plt.subplots(figsize=(7.2, 4.2), constrained_layout=True)
+    ax.semilogy(steps, mx, lw=1.4, color="#0072B2", label=r"masked $r_x$ RMS")
+    ax.semilogy(steps, my, lw=1.4, color="#D55E00", label=r"masked $r_y$ RMS")
+    if steps.min() <= 300 <= steps.max():
+        ax.axvline(300, color="0.35", ls=":", lw=1.1)
+        ax.text(306, ax.get_ylim()[1] / 1.8, "initial 300-step gate", fontsize=8,
+                color="0.3", va="top")
+    ax.set(xlabel="completed SSBroyden2 step", ylabel="collocation residual RMS",
+           title="Continuation from the retained optimizer checkpoint")
+    ax.grid(which="both", alpha=.22); ax.legend(frameon=False)
+    fig.savefig(output / "optimizer_convergence.png", dpi=260, bbox_inches="tight")
+    plt.close(fig)
+
+
 def compare_cfd(module, model, device, reference_path: Path):
     """Compare against the retained conventional-CFD field at the same Re."""
     data = np.load(reference_path)
@@ -245,6 +348,8 @@ def main():
     parser.add_argument("--checkpoint-every", type=int, default=100)
     parser.add_argument("--resume", action="store_true")
     parser.add_argument("--reference-npz", type=Path)
+    parser.add_argument("--render-only", action="store_true",
+                        help="Regenerate evidence figures from the retained checkpoint")
     args = parser.parse_args()
     defaults = {"smoke": (100.0, 2048, 3),
                 "qualification": (100.0, 16384, 300),
@@ -273,6 +378,21 @@ def main():
     torch.manual_seed(module.SEED)
     np.random.seed(module.SEED)
     model = module.PINN().to(module.device)
+    if args.render_only:
+        checkpoint = Path.cwd() / "checkpoint.pt"
+        audit_path = Path.cwd() / "audit.json"
+        if not checkpoint.is_file() or not audit_path.is_file() or not args.reference_npz:
+            raise RuntimeError("Render-only mode requires checkpoint, audit and CFD reference")
+        saved = torch.load(checkpoint, map_location="cpu", weights_only=False)
+        model.load_state_dict(saved["model"])
+        model.to(module.device)
+        audit = json.loads(audit_path.read_text(encoding="utf-8"))
+        if audit.get("claim_status") != "qualified-near-matched-reference":
+            raise RuntimeError("Refusing a qualified figure for an unqualified audit")
+        render_qualified_validation(module, model, module.device,
+                                    args.reference_npz.resolve(), Path.cwd(), audit)
+        render_convergence(Path.cwd() / "optimizer-history.jsonl", Path.cwd())
+        return 0
     signal.signal(signal.SIGUSR1, request_checkpoint)
     signal.signal(signal.SIGTERM, request_checkpoint)
     started = time.time()
@@ -307,7 +427,12 @@ def main():
             module, model, module.device, args.reference_npz.resolve())
         if args.mode == "qualification" and audit["cfd_comparison"]["all_pass"]:
             audit["claim_status"] = "qualified-near-matched-reference"
-    render(module, model, module.device, Path.cwd())
+    if audit["claim_status"] == "qualified-near-matched-reference":
+        render_qualified_validation(module, model, module.device,
+                                    args.reference_npz.resolve(), Path.cwd(), audit)
+        render_convergence(Path.cwd() / "optimizer-history.jsonl", Path.cwd())
+    else:
+        render(module, model, module.device, Path.cwd())
     Path("model").mkdir(exist_ok=True)
     torch.save({"model": model.state_dict(), "audit": audit}, "model/audited_final.pt")
     Path("audit.json").write_text(json.dumps(audit, indent=2) + "\n", encoding="utf-8")
