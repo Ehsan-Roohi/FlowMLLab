@@ -7,7 +7,7 @@ ROOT = Path(__file__).resolve().parents[1]
 def test_runner_pins_upstream_source_and_requires_cuda():
     text = (ROOT / "qa" / "run_week42_deepplasma.py").read_text(encoding="utf-8")
     assert "fcb1566eaa3253d4a4108fbac9d49a38fd10ad6b" in text
-    assert "0a917522a757a442647e9c255b98b8b6d932692a855dc3d6ec5596c2a8507b18" in text
+    assert "391a2174cb9f6e8863c14d7b350077e54209134de9f85a17719c398146f91458" in text
     assert "CUDA GPU is required" in text
     assert "raw_residuals" in text
 

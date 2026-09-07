@@ -3,7 +3,8 @@
 This protocol executes the lid-driven-cavity PINN from Christopher J. McDevitt's
 DeepPlasma repository, used with his permission. The external source is not
 redistributed: Unity checks out commit `fcb1566eaa3253d4a4108fbac9d49a38fd10ad6b`
-and verifies SHA-256 `0a917522a757a442647e9c255b98b8b6d932692a855dc3d6ec5596c2a8507b18`.
+and verifies the LF checkout SHA-256
+`391a2174cb9f6e8863c14d7b350077e54209134de9f85a17719c398146f91458`.
 
 The first submitted job is a three-step GPU smoke test at Re=100. Its purpose is
 to verify imports, CUDA float64 automatic differentiation, the dense
