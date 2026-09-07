@@ -1,0 +1,53 @@
+{
+  "schema": 1,
+  "cases": {
+    "re100-d1": {
+      "slurm_job_id": "64064729",
+      "claim_status": "field-qualified-square-case",
+      "files": {
+        "audit.json": "727e67ab1cf5d5424ed2f0135a99c0f2819fed66115f53ada243db3cd0cd8d4c",
+        "optimizer-history.jsonl": "1d5e763afc3500c2603062c7c33ffd6f1a43849642b534ae104d201fe07472a7",
+        "adam-endpoint.json": "4f88c0fc8db7bbf8a29b2ed3fae8114bf77a55ea258e5b4495b0b3798599c6b0",
+        "fields.png": "363302432575eebe5d3b8718650e30da368f08a8e38022e8e684b9ad29734e69",
+        "loss.png": "64e692ceb0642be3c4e8f1a3e950e72712a5e21aa383158a48e37101abf1803c",
+        "environment-lock.txt": "ab94ed8e3b583834e74b46bab08214c05bf2ba7f9a75c90679b3b15fdad2dddb"
+      }
+    },
+    "re400-d1": {
+      "slurm_job_id": "64064730",
+      "claim_status": "field-qualified-square-case",
+      "files": {
+        "audit.json": "a4a95f9d9fe3e56ca50fee12fae97ce8abd282d3e5f1a1b2b912e038daf58a4f",
+        "optimizer-history.jsonl": "b41435d7a16933a1943fb79622adcac90c39cd9c84569b45b235bb44d6b33147",
+        "adam-endpoint.json": "0952f197a833a75f51c0b6ed685d63a18aefe1a0cae5649c7c667bde35eadfe6",
+        "fields.png": "78c76227bf8ed7d9e658c831f862d9539c4ea02784ff397e9a9f5d5968ae9e03",
+        "loss.png": "dd0913d1c8adb6ef2625c6557938368b4b29dbfff8e3c509bd2c997f24eadbf0",
+        "environment-lock.txt": "ab94ed8e3b583834e74b46bab08214c05bf2ba7f9a75c90679b3b15fdad2dddb"
+      }
+    },
+    "re100-d2": {
+      "slurm_job_id": "64064731",
+      "claim_status": "residual-audited-no-field-reference",
+      "files": {
+        "audit.json": "3884b229f7d522a76a3c922c877d3188470a4a68f330e258a10527696fbbfc6a",
+        "optimizer-history.jsonl": "846337054825c9ce7315aad8f0f5ffa3a91f43d8787eb6a1778137b717bec497",
+        "adam-endpoint.json": "6e3f700ab28039263253e5af4b8e597e3fae503501c8d9b583b6ddc384764c53",
+        "fields.png": "8bac0080526ca842b155b38ae27a9ff914f6b7fa24f8ed3e9a542c513cc1970d",
+        "loss.png": "d62fb5c0b657e9a8f78cb063dc9717316e964ba8f6c9767c0c65ab76d2c1fa72",
+        "environment-lock.txt": "ab94ed8e3b583834e74b46bab08214c05bf2ba7f9a75c90679b3b15fdad2dddb"
+      }
+    },
+    "re400-d2": {
+      "slurm_job_id": "64064728",
+      "claim_status": "residual-audited-no-field-reference",
+      "files": {
+        "audit.json": "57aa7afcd4f183f9c689b8f8eb3e47815399e78d34be27e3abe9866d53a2a40b",
+        "optimizer-history.jsonl": "2e76bcba1951ac4dbf279d1e4e180251be08605b834b967860084ca3201573e9",
+        "adam-endpoint.json": "a4caccdf4ae32b90b0060d18b879434ede33d52f4c318911b90fcada40ee8dd2",
+        "fields.png": "cb16571e35814edd73a2beb7154222c28c54c3141a8aeefbe5e35763afebcd5d",
+        "loss.png": "229197402a2622af4741cd4b00c5b53e103da1c7db01214c71feb462d0e9708d",
+        "environment-lock.txt": "ab94ed8e3b583834e74b46bab08214c05bf2ba7f9a75c90679b3b15fdad2dddb"
+      }
+    }
+  }
+}

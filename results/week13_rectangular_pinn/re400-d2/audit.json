@@ -1,0 +1,45 @@
+{
+  "claim_status": "residual-audited-no-field-reference",
+  "reynolds_number": 400.0,
+  "aspect_ratio_depth_over_width": 2.0,
+  "optimizers": [
+    "Adam",
+    "SSBroyden2"
+  ],
+  "adam_steps": 1000,
+  "ssbroyden2_steps": 3000,
+  "collocation_points": 16384,
+  "precision": "torch.float64",
+  "gpu": "NVIDIA A100-SXM4-80GB",
+  "elapsed_seconds": 556.4497473239899,
+  "upstream_commit": "fcb1566eaa3253d4a4108fbac9d49a38fd10ad6b",
+  "upstream_sha256": "391a2174cb9f6e8863c14d7b350077e54209134de9f85a17719c398146f91458",
+  "slurm_job_id": "64064728",
+  "independent_residual": {
+    "momentum_x_rms": 0.054167828028929596,
+    "momentum_y_rms": 0.11875432339003698,
+    "continuity_rms": 1.864562395784336e-15,
+    "top_corner_momentum_x_rms": 0.3937618704605646,
+    "top_corner_momentum_y_rms": 0.8633187623530276,
+    "points": 8192,
+    "corner_points": 155
+  },
+  "wall_error": {
+    "bottom": {
+      "u_max_abs_error": 0.0,
+      "v_max_abs_error": 0.0
+    },
+    "left": {
+      "u_max_abs_error": 0.0,
+      "v_max_abs_error": 0.0
+    },
+    "right": {
+      "u_max_abs_error": 0.0,
+      "v_max_abs_error": 0.0
+    },
+    "top": {
+      "u_max_abs_error": 0.0,
+      "v_max_abs_error": 0.0
+    }
+  }
+}

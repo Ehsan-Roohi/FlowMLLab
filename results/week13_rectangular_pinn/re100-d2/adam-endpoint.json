@@ -1,0 +1,9 @@
+{
+  "momentum_x_rms": 1.3251154186296643,
+  "momentum_y_rms": 4.179806194568482,
+  "continuity_rms": 1.0604164117712442e-15,
+  "top_corner_momentum_x_rms": 7.784398702647222,
+  "top_corner_momentum_y_rms": 28.138293179571505,
+  "points": 4096,
+  "corner_points": 73
+}
