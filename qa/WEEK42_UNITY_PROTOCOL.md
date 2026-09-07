@@ -13,6 +13,10 @@ scientific accuracy result. A long Re=5,000 job may be submitted only after the
 smoke evidence has been inspected and a matching CFD reference and acceptance
 thresholds have been frozen.
 
+Unity jobs for this case are submitted to `gpu-preempt` with one A100. Because
+the partition can preempt jobs, production runs must add restartable checkpoints
+before their step count or wall time is increased.
+
 The independent audit reports unmasked momentum residuals, continuity, hard-wall
 errors, environment versions, hardware, source identity, and job identity. A
 contour is watermarked as unvalidated until comparison with the matched CFD

@@ -1,6 +1,6 @@
 #!/bin/bash
 #SBATCH --job-name=flowml-w42-pinn
-#SBATCH --partition=gpu
+#SBATCH --partition=gpu-preempt
 #SBATCH --account=pi_roohie_umass_edu
 #SBATCH --nodes=1
 #SBATCH --ntasks=1

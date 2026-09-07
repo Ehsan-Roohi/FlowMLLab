@@ -14,6 +14,7 @@ def test_runner_pins_upstream_source_and_requires_cuda():
 
 def test_slurm_requests_a100_and_runs_dependency_gate_first():
     text = (ROOT / "qa" / "unity_week42_deepplasma.sbatch").read_text(encoding="utf-8")
+    assert "#SBATCH --partition=gpu-preempt" in text
     assert "#SBATCH --gres=gpu:a100:1" in text
     assert "check_week42_environment.py" in text
     assert text.index("check_week42_environment.py") < text.index('"$FLOWML_PINN_PYTHON" qa/run_week42_deepplasma.py')
