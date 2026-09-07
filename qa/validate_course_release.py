@@ -21,6 +21,16 @@ EXPECTED_DATA_SHA256 = "09b96b744ee4d18126d8dcc92feb60e128774a1b4d41bb3d8c90a63c
 REQUIRED = [
     "notebooks/week05_06/W5_Lab2_Sparse_Sensing_Dynamics.ipynb",
     "notebooks/week07/W7_Lab2_Modal_Forecasting.ipynb",
+    "notebooks/week07_2/W7_2_Cylinder_Wake_State_Estimation.ipynb",
+    "notebooks/week07_2/README.md",
+    "flowmllab/state_estimation.py",
+    "qa/run_week72_state_estimation.py",
+    "qa/build_week72_materials.py",
+    "lectures/week07_2_cylinder_state_estimation.pdf",
+    "lectures/source/week07_2_cylinder_state_estimation.md",
+    "results/week07_2_state_estimation/metrics.json",
+    "results/week07_2_state_estimation/state_estimation_fields.png",
+    "results/week07_2_state_estimation/state_estimation_scores.png",
     "results/cylinder_re115_evaluation/metrics.json",
     "results/modal_labs/metrics.json",
     "flowmllab/scattering_lab.py",
@@ -50,6 +60,7 @@ REQUIRED = [
     "flowmllab/probabilistic_uq.py",
     "flowmllab/feature_reconstruction.py",
     "tests/test_feature_reconstruction.py",
+    "tests/test_state_estimation.py",
     "qa/build_week11_12_materials.py",
     "qa/verify_week11_12_materials.py",
     "notebooks/week11/W11_Shock_Vortex_Identification.ipynb",
@@ -356,7 +367,7 @@ def validate_notebooks() -> tuple[int, int]:
         ids = [cell.get("id") for cell in cells if cell.get("id")]
         assert len(ids) == len(set(ids)), f"duplicate cell id: {path}"
         if relative.startswith((
-            "notebooks/week02_1/", "notebooks/week08/",
+            "notebooks/week02_1/", "notebooks/week07_2/", "notebooks/week08/",
             "notebooks/week09/", "notebooks/week10/",
             "notebooks/week11/", "notebooks/week12/",
         )):
@@ -378,7 +389,7 @@ def validate_notebooks() -> tuple[int, int]:
                 for cell in cells
             ), f"missing learner-edition marker: {path}"
         count += 1
-    assert count == 30, f"expected 30 notebooks, found {count}"
+    assert count == 31, f"expected 31 notebooks, found {count}"
     return count, code_cells
 
 
@@ -1023,7 +1034,7 @@ def validate_hypersonic_cylinder_results() -> dict[str, object]:
 
 def validate_pdfs() -> int:
     pdfs = sorted((ROOT / "lectures").glob("*.pdf"))
-    assert len(pdfs) == 15
+    assert len(pdfs) == 16
     for path in pdfs:
         result = subprocess.run(
             ["pdfinfo", str(path)], check=True, capture_output=True, text=True

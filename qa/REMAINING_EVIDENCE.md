@@ -1,6 +1,7 @@
 # Evidence status — 2026-09-06
 
 - Week10.1 scattering lab, notebook HTML CI, branch/release policy: already published.
+- Week7.2 state estimation: the CPU teaching implementation is complete on the previously inspected Re110 trajectory. Its causal filter improves the matched point-estimate baselines, while nominal-95% marginal coverage remains severely low. Missing-sensor stress, validation-only uncertainty calibration and a genuinely untouched trajectory remain future evidence; no new CFD or new-Re claim is made.
 - Modal labs: selectively recovered from commit 6f463acac0a1e00ada6ecbd6cae8b0d31a4da302 in the Unity checkout. All retained metrics reproduced with pinned dependencies; two notebooks executed; 15 tests passed. Original CFD need not be rerun for this reproduction.
 - New Re115 LBM case: first frozen-model assessment completed; published protocol, coefficient hashes, first-use record and figures. Retire untouched-test status after feedback.
 - D40: closed for this release by maintainer decision after acceptance of the lift-coefficient result. Grid independence is waived as a release gate; this decision does not establish asymptotic grid convergence for other quantities.

@@ -11,7 +11,7 @@ material. Proposed treatments must follow `THEORY_SOURCE_POLICY.md`.
 | Information theory and proper scores | Week 2.1 reports Gaussian NLL, CRPS, interval width and coverage | Descriptive pointwise coverage is not simultaneous field coverage | Audit correlated errors and case-level calibration | Next |
 | Gaussian processes | Week 2.1 contains a POD--GP cavity baseline against interpolation | Limited-case calibration and extrapolation remain limitations | Extend the existing lab, not a duplicate introductory GP week | Maintain |
 | Deep predictive uncertainty | Three-seed ensembles are retained | Spread is correctly limited but not calibrated as a predictive distribution | Compare ensemble spread with GP intervals and observed coverage | High |
-| Gaussian filtering and state-space models | Temporal baselines and cylinder rollouts | No data-assimilation formulation | Filter noisy lift/pressure signals and preserve phase and Strouhal evidence | Next |
+| Gaussian filtering and state-space models | Week 7.2 compares POD-space causal filtering with open-loop and sensor-only baselines | Marginal intervals are severely under-covered; no smoothing or new-Re evidence | Validation-only uncertainty calibration, missing-sensor stress and an untouched trajectory | Next |
 | Probabilistic graphical models and message passing | No dedicated treatment | Weak connection to the current fixed-grid workflow | Sensor networks or local state estimation | Later |
 | Variational inference and MCMC | No dedicated treatment | Computational cost is high relative to the current teaching need | Posterior inference for selected closure parameters | Later |
 | Latent-variable and generative models | POD supplies an interpretable linear latent basis | No probabilistic latent model or generative claim | Compare POD with a probabilistic latent representation only when a validated dataset warrants it | Later |
@@ -39,6 +39,10 @@ The protocol requires:
 See the [existing notebook](notebooks/week02_1/Probabilistic_UQ_CFD.ipynb)
 for implementation; these topics are not missing modules.
 
+Week 7.2 is also implemented as a bounded [state-estimation lab](notebooks/week07_2/README.md).
+It deliberately retains its nominal-95% coverage failure; a low point error is
+not treated as calibrated state uncertainty.
+
 ## Proposed increments, not released lessons
 
 The following are curriculum proposals, not executed research results. Reuse
@@ -49,13 +53,11 @@ Restricted handouts, worked solutions and assessment files are not import source
 | --- | --- | --- |
 | 3.1, revisited in 12 | How many independent observations does a DSMC average contain? Compare naive standard errors, autocorrelation-aware effective sample size and block averaging. | Use ordered raw samples, not spatial pixels or unordered seed averages as a time series. Verify on a known correlated process first; defer real-data claims if temporal samples are unavailable. |
 | 5.1 | Does a small PINN residual imply an accurate flow solution? Use an independently implemented analytic Kovasznay reference, boundary and divergence errors, then a fixed-budget baseline comparison. | Separate collocation from evaluation points; report field and boundary errors, seed spread and runtime. Time-dependent/causal PINNs are a later extension, not implied by a steady test. |
-| 7.2 | Can sparse noisy sensors correct a cylinder-wake forecast? Compare a POD-space Kalman filter with persistence, open-loop dynamics and sensor-only reconstruction. | Fit dynamics and noise models on development sequences only. Distinguish causal filtering from smoothing with future observations; report phase, field error and interval coverage on complete held-out trajectories. |
 | Existing 2.1 | Deepen posterior-predictive calibration and GP limitations. | Preserve the same baselines and split; no duplicate introductory Bayesian or GP module. |
 | Existing 4.1, later | When is nonlinear latent compression justified against POD? | Equal data and latent dimension; separate reconstruction from rollout; include boundary/divergence checks and total training cost. No automatic VAE superiority claim. |
 
-Prioritize 7.2 and sampling diagnostics over adding generic classifiers or GANs.
-The filtering proposal can start on CPU with existing reduced coordinates; it
-does not require a new CFD campaign merely to test the implementation.
+Prioritize sampling diagnostics and a genuinely untouched Week 7.2 trajectory
+over adding generic classifiers or GANs.
 
 Public independent-authoring references:
 

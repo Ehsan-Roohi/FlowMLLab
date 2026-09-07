@@ -22,6 +22,7 @@ ROOT = Path(__file__).resolve().parents[1]
 NOTEBOOKS = (
     "notebooks/week10_1/W10_1_Collision_Map_Surrogate_Audit.ipynb",
     "notebooks/week07_1/W7_1_Hypersonic_Rarefied_Cylinder_DeepONet.ipynb",
+    "notebooks/week07_2/W7_2_Cylinder_Wake_State_Estimation.ipynb",
     "notebooks/week09/W9_Lab2_Shock_Aligned_Nozzle_DeepONet_Student.ipynb",
 )
 
@@ -37,6 +38,8 @@ def execute_in_process(notebook):
     import base64
     import io
     import sys
+    import matplotlib
+    matplotlib.use("Agg", force=True)
     import matplotlib.pyplot as plt
     from IPython.core.interactiveshell import InteractiveShell
     from IPython.utils.capture import capture_output

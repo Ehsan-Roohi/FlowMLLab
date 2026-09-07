@@ -26,6 +26,12 @@ class CourseNavigationTests(unittest.TestCase):
             with self.subTest(document=name):
                 self.assertIn(target, (ROOT / name).read_text(encoding='utf-8'))
 
+    def test_week72_is_discoverable_from_course_entry_points(self):
+        target = 'notebooks/week07_2/README.md'
+        for name in ('README.md', 'COURSE_MAP.md', 'THEORY_GAP_MATRIX.md'):
+            with self.subTest(document=name):
+                self.assertIn(target, (ROOT / name).read_text(encoding='utf-8'))
+
     def test_proposals_are_distinct_from_implemented_uq(self):
         matrix = (ROOT / 'THEORY_GAP_MATRIX.md').read_text(encoding='utf-8')
         self.assertIn('notebooks/week02_1/Probabilistic_UQ_CFD.ipynb', matrix)

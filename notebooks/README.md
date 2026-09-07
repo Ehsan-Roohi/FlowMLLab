@@ -6,8 +6,9 @@ only for notebooks that explicitly require CUDA.
 
 ## One-click Colab launcher
 
-The working course now includes Weeks 11 and 12 (after archived v1.4.1):
+The working course now includes Week 7.2 and Weeks 11-12 (after archived v1.4.1):
 
+- [Week 7.2: sparse-sensor state estimation](week07_2/README.md) · [Open in Colab](https://colab.research.google.com/github/Ehsan-Roohi/FlowMLLab/blob/main/notebooks/week07_2/W7_2_Cylinder_Wake_State_Estimation.ipynb)
 - [Week 11: shock and vortex identification](week11/README.md) · [Open in Colab](https://colab.research.google.com/github/Ehsan-Roohi/FlowMLLab/blob/main/notebooks/week11/W11_Shock_Vortex_Identification.ipynb)
 - [Week 12: noisy DSMC moment reconstruction](week12/README.md) · [Open in Colab](https://colab.research.google.com/github/Ehsan-Roohi/FlowMLLab/blob/main/notebooks/week12/W12_DSMC_Moment_Reconstruction.ipynb)
 
@@ -35,6 +36,7 @@ Both are CPU teaching analogs, clearly separated from research-model reproductio
 | Weeks 5–6 | P6 Fokker-Planck closure | [Open in Colab](https://colab.research.google.com/github/Ehsan-Roohi/FlowMLLab/blob/main/notebooks/week05_06/P6_FP_Cavity_Closure.ipynb) |
 | Week 7 | Lattice-Boltzmann cylinder wakes | [Open in Colab](https://colab.research.google.com/github/Ehsan-Roohi/FlowMLLab/blob/main/notebooks/week07/W7_Lattice_Boltzmann_Cylinder_Student.ipynb) |
 | Week 7.1 | Rarefied hypersonic-cylinder operator learning | [Open in Colab](https://colab.research.google.com/github/Ehsan-Roohi/FlowMLLab/blob/main/notebooks/week07_1/W7_1_Hypersonic_Rarefied_Cylinder_DeepONet.ipynb) |
+| Week 7.2 | Sparse-sensor cylinder-wake state estimation | [Open in Colab](https://colab.research.google.com/github/Ehsan-Roohi/FlowMLLab/blob/main/notebooks/week07_2/W7_2_Cylinder_Wake_State_Estimation.ipynb) |
 | Week 8 | Exact gas dynamics before ML | [Open in Colab](https://colab.research.google.com/github/Ehsan-Roohi/FlowMLLab/blob/main/notebooks/week08/W8_Lab1_Exact_Gas_Dynamics_Student.ipynb) |
 | Week 8 | Gas-dynamics SciML evidence | [Open in Colab](https://colab.research.google.com/github/Ehsan-Roohi/FlowMLLab/blob/main/notebooks/week08/W8_Lab2_Gas_Dynamics_SciML_Evidence_Student.ipynb) |
 | Week 9 | Micro-step zonal-loss DeepONet | [Open in Colab](https://colab.research.google.com/github/Ehsan-Roohi/FlowMLLab/blob/main/notebooks/week09/W9_Lab1_Microstep_Zonal_DeepONet_Student.ipynb) |
@@ -51,6 +53,7 @@ Both are CPU teaching analogs, clearly separated from research-model reproductio
 - `week05_06/`: the original combined two-week guided-project pack. Week 5 establishes the setup, baseline, controlled modification, and checkpoint; Week 6 completes the same selected track, physical validation, reproducibility package, and final report.
 - `week07/`: D2Q9 BGK/TRT cylinder flow, a concise collide--stream--boundary algorithm walkthrough, physically gated force and Strouhal diagnostics, an executed three-grid study with a retained formal asymptotic/GCI failure, Reynolds-regime classification, strong temporal baselines, and separate one-step/recursive audits of a four-frame multi-scale CNN on a retained held-out interpolation case.
 - `week07_1/`: incremental rarefied hypersonic-cylinder operator lab using a compact author-released derivative of 20 DSMC Mach cases, frozen whole-case splits, a strong structured field-interpolation baseline, reviewed Fusion-DeepONet anatomy, a fast CPU teaching analog, and empirical ensemble-coverage checks.
+- `week07_2/`: causal POD-space Kalman filtering of the retained Re110 LBM wake with validation-selected sensors and covariance inflation, matched sensor-only/open-loop/persistence baselines, and an explicit marginal-coverage failure.
 - `week08/`: two CPU labs that start from exact branch-aware gas dynamics, then compare bracketed roots, interpolation, and physics-guided MLP evidence across five inverse problems, edge holdouts, dimensional scaling, and application workloads.
 - `week09/`: two CPU research-to-classroom labs based on the Roohi--Mahdavi micro-step and micro-nozzle studies. The first uses two author-permitted, checksummed derivatives of nine real DSMC height fields with file-level case separation; the second reproduces shock-centered POD and fresh full-field predictions from checksummed derivatives of 15 public DSMC snapshots before evaluating three held-out pressures.
 - `week10/`: one complete CPU article-reproduction lab with 14 rarefied-cavity fields, mono/diatomic shock profiles, the DSMC algorithm, full provenance audit, log-Knudsen synthesis, POD-branch operators, physical interpretation, and retained numerical gates.
