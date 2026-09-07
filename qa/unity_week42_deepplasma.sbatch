@@ -7,7 +7,9 @@
 #SBATCH --cpus-per-task=4
 #SBATCH --mem=32G
 #SBATCH --gres=gpu:a100:1
-#SBATCH --time=00:30:00
+#SBATCH --time=02:00:00
+#SBATCH --signal=B:USR1@600
+#SBATCH --requeue
 #SBATCH --output=week42-pinn-%j.log
 
 set -euo pipefail
@@ -21,13 +23,21 @@ test -f qa/run_week42_deepplasma.py
 export OMP_NUM_THREADS=4 OPENBLAS_NUM_THREADS=4 MKL_NUM_THREADS=4
 export MPLBACKEND=Agg PYTHONUNBUFFERED=1
 export PYTHONPATH="$FLOWML_PINN_DEPS${PYTHONPATH:+:$PYTHONPATH}"
-RUN_ROOT="${SLURM_SUBMIT_DIR}/tmp/week42-pinn-${SLURM_JOB_ID:?}"
-test ! -e "$RUN_ROOT"
+: "${FLOWML_PINN_RUN_ID:?Set a stable run identifier shared by requeues}"
+RUN_ROOT="${SLURM_SUBMIT_DIR}/tmp/week42-pinn-${FLOWML_PINN_RUN_ID}"
 
 # Dependency and hardware gate: failure stops before training.
 "$FLOWML_PINN_PYTHON" qa/check_week42_environment.py
+set +e
 "$FLOWML_PINN_PYTHON" qa/run_week42_deepplasma.py \
   --mode "${FLOWML_PINN_MODE:-smoke}" \
   --source "$DEEPPLASMA_LDC" \
-  --output "$RUN_ROOT"
+  --output "$RUN_ROOT" --resume
+runner_status=$?
+set -e
+if [[ "$runner_status" -eq 99 ]]; then
+  scontrol requeue "${SLURM_JOB_ID:?}"
+  exit 0
+fi
+[[ "$runner_status" -eq 0 ]] || exit "$runner_status"
 "$FLOWML_PINN_PYTHON" -m pip freeze > "$RUN_ROOT/environment-lock.txt"

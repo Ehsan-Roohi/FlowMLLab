@@ -13,6 +13,7 @@ import importlib.util
 import json
 import os
 import platform
+import signal
 import sys
 import time
 from pathlib import Path
@@ -25,6 +26,13 @@ import torch
 
 UPSTREAM_COMMIT = "fcb1566eaa3253d4a4108fbac9d49a38fd10ad6b"
 UPSTREAM_SHA256 = "391a2174cb9f6e8863c14d7b350077e54209134de9f85a17719c398146f91458"
+STOP_REQUESTED = False
+
+
+def request_checkpoint(signum, _frame):
+    global STOP_REQUESTED
+    STOP_REQUESTED = True
+    print(f"Received signal {signum}; checkpointing after the current optimizer step", flush=True)
 
 
 def load_upstream(path: Path):
@@ -105,6 +113,74 @@ def render(module, model, device, output: Path, n=181):
     plt.close(fig)
 
 
+def atomic_checkpoint(path: Path, module, model, optimizer, points, completed_steps, config):
+    payload = {
+        "model": model.state_dict(),
+        "optimizer": {"H": optimizer.state["H"], "x": optimizer.state["x"],
+                      "k": optimizer.state["k"]},
+        "collocation_points": points,
+        "completed_steps": completed_steps,
+        "config": config,
+        "torch_rng": torch.get_rng_state(),
+        "cuda_rng": torch.cuda.get_rng_state_all(),
+        "numpy_rng": np.random.get_state(),
+    }
+    temporary = path.with_suffix(".tmp")
+    torch.save(payload, temporary)
+    os.replace(temporary, path)
+
+
+def train_restartable(module, model, output, points_n, steps, checkpoint_every, resume):
+    checkpoint = output / "checkpoint.pt"
+    config = {"reynolds_number": module.Re, "collocation_points": points_n,
+              "optimizer_steps": steps, "seed": module.SEED,
+              "upstream_commit": UPSTREAM_COMMIT}
+    optimizer = module.SSBroyden2(
+        model.parameters(), lr=module.SSB_LR, gtol=1e-12,
+        line_search=module.SSB_LINE_SEARCH, c1=module.SSB_C1, c2=module.SSB_C2,
+        wolfe_maxiter=module.SSB_LS_MAXITER, zoom_maxiter=module.SSB_ZOOM_MAXITER,
+        amax=module.SSB_AMAX, dtype=torch.float64, device=module.device,
+    )
+    start = 0
+    if resume and checkpoint.exists():
+        saved = torch.load(checkpoint, map_location=module.device, weights_only=False)
+        if saved["config"] != config:
+            raise RuntimeError(f"Refusing incompatible checkpoint: {saved['config']} != {config}")
+        model.load_state_dict(saved["model"])
+        for key in ("H", "x", "k"):
+            optimizer.state[key] = saved["optimizer"][key]
+        collocation = saved["collocation_points"].to(module.device)
+        torch.set_rng_state(saved["torch_rng"])
+        torch.cuda.set_rng_state_all(saved["cuda_rng"])
+        np.random.set_state(saved["numpy_rng"])
+        start = int(saved["completed_steps"])
+        print(f"Resumed checkpoint at completed step {start}", flush=True)
+    else:
+        collocation = module.sample_pde_points(points_n)
+    metrics = output / "optimizer-history.jsonl"
+    for step in range(start, steps):
+        def closure():
+            optimizer.zero_grad(set_to_none=True)
+            r1, r2 = module.fp_pde(model, collocation)
+            loss = torch.mean(r1**2) + torch.mean(r2**2)
+            loss.backward()
+            return loss
+        optimizer.step(closure)
+        with torch.enable_grad():
+            r1, r2 = module.fp_pde(model, collocation)
+            values = {"completed_step": step + 1,
+                      "masked_momentum_x_mse": float(torch.mean(r1**2).detach().cpu()),
+                      "masked_momentum_y_mse": float(torch.mean(r2**2).detach().cpu())}
+        with metrics.open("a", encoding="utf-8", newline="\n") as handle:
+            handle.write(json.dumps(values) + "\n")
+        if (step + 1) % checkpoint_every == 0 or step + 1 == steps or STOP_REQUESTED:
+            atomic_checkpoint(checkpoint, module, model, optimizer, collocation,
+                              step + 1, config)
+        if STOP_REQUESTED:
+            return step + 1, False
+    return steps, True
+
+
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--source", type=Path, required=True)
@@ -113,6 +189,8 @@ def main():
     parser.add_argument("--re", type=float, default=None)
     parser.add_argument("--points", type=int, default=None)
     parser.add_argument("--steps", type=int, default=None)
+    parser.add_argument("--checkpoint-every", type=int, default=100)
+    parser.add_argument("--resume", action="store_true")
     args = parser.parse_args()
     defaults = {"smoke": (100.0, 2048, 3), "research": (5000.0, 262143, 10000)}
     reynolds, points, steps = defaults[args.mode]
@@ -123,7 +201,7 @@ def main():
         raise RuntimeError("CUDA GPU is required; this job must not run on a login/CPU node")
     if torch.get_default_dtype() != torch.float32:
         raise RuntimeError("Unexpected process-wide default dtype before upstream import")
-    args.output.mkdir(parents=True, exist_ok=False)
+    args.output.mkdir(parents=True, exist_ok=args.resume)
     os.chdir(args.output)
     module, digest = load_upstream(args.source.resolve())
     if module.device.type != "cuda" or torch.get_default_dtype() != torch.float64:
@@ -139,9 +217,15 @@ def main():
     torch.manual_seed(module.SEED)
     np.random.seed(module.SEED)
     model = module.PINN().to(module.device)
+    signal.signal(signal.SIGUSR1, request_checkpoint)
+    signal.signal(signal.SIGTERM, request_checkpoint)
     started = time.time()
-    module.train_pinn(model, module.device, save_prefix=f"{args.mode}_")
+    completed_steps, complete = train_restartable(
+        module, model, Path.cwd(), points, steps, args.checkpoint_every, args.resume)
     elapsed = time.time() - started
+    if not complete:
+        print(f"Checkpoint complete at step {completed_steps}; requesting requeue", flush=True)
+        return 99
     generator = torch.Generator(device="cpu").manual_seed(78321)
     audit_points = torch.rand((min(8192, points), 2), generator=generator,
                               dtype=torch.float64).to(module.device)
@@ -150,6 +234,7 @@ def main():
         "claim_status": "workflow-only" if args.mode == "smoke" else "pending-reference-validation",
         "mode": args.mode, "reynolds_number": reynolds,
         "collocation_points": points, "optimizer_steps": steps,
+        "completed_steps": completed_steps, "restartable": True,
         "seed": module.SEED, "elapsed_seconds": elapsed,
         "raw_residual_rms": {"momentum_x": rms(rx), "momentum_y": rms(ry), "continuity": rms(div)},
         "wall_error": wall_audit(module, model, module.device),
@@ -162,10 +247,11 @@ def main():
         "slurm_job_id": os.environ.get("SLURM_JOB_ID"),
     }
     render(module, model, module.device, Path.cwd())
+    Path("model").mkdir(exist_ok=True)
     torch.save({"model": model.state_dict(), "audit": audit}, "model/audited_final.pt")
     Path("audit.json").write_text(json.dumps(audit, indent=2) + "\n", encoding="utf-8")
     print(json.dumps(audit, indent=2))
 
 
 if __name__ == "__main__":
-    main()
+    raise SystemExit(main() or 0)

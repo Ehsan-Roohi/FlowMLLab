@@ -15,7 +15,10 @@ thresholds have been frozen.
 
 Unity jobs for this case are submitted to `gpu-preempt` with one A100. Because
 the partition can preempt jobs, production runs must add restartable checkpoints
-before their step count or wall time is increased.
+before their step count or wall time is increased. The runner now atomically
+checkpoints the network, the dense inverse-Hessian state, fixed collocation set,
+completed step, configuration, and CPU/GPU random-number states. A stable run ID
+is reused after requeue, and an incompatible configuration is rejected.
 
 The independent audit reports unmasked momentum residuals, continuity, hard-wall
 errors, environment versions, hardware, source identity, and job identity. A
