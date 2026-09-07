@@ -9,7 +9,7 @@ generate numerical data, compare transparent baselines with learned models, and
 check both prediction error and physical fidelity.
 
 Developed for **MIE 690A: AI in Fluid Mechanics**, University of Massachusetts
-Amherst. The working course includes **30 notebooks and 16 lectures** (15 PDFs), plus a Week 10.1 reading companion, from
+Amherst. The working course includes **31 notebooks and 17 lecture items** (16 PDFs plus the Week 10.1 reading companion), from
 numerical foundations to continuum and rarefied-flow research examples.
 
 ## Start here
@@ -45,10 +45,11 @@ Weeks 5 and 6 share a project pack and lecture guide, but have separate learning
 | [6](#week-6--physical-validation-and-final-evidence) | Closure testing, physical validation and reproducibility | [Week 6 closure track](notebooks/week05_06/P6_FP_Cavity_Closure.ipynb) · [All tracks](notebooks/week05_06/README.md) | [Shared Weeks 5–6 guide](lectures/week05_06_project_guide.pdf) |
 | [7](#week-7--unsteady-cylinder-wakes) | LBM, vortex shedding and autonomous surrogates | [Week 7 lab](notebooks/week07/W7_Lattice_Boltzmann_Cylinder_Student.ipynb) | [Lecture 7](lectures/week07_cylinder_lbm_neural_surrogate.pdf) |
 | [7.1](#week-71--rarefied-hypersonic-cylinder) | DSMC fields and Mach-to-field operators | [Week 7.1 lab](notebooks/week07_1/W7_1_Hypersonic_Rarefied_Cylinder_DeepONet.ipynb) | [Lecture 7.1](lectures/week07_1_hypersonic_rarefied_cylinder.pdf) |
+| [7.2](#week-72--sparse-sensor-state-estimation) | Causal filtering of a cylinder wake from noisy sparse sensors | [Week 7.2 lab](notebooks/week07_2/README.md) | [Lecture 7.2](lectures/week07_2_cylinder_state_estimation.pdf) |
 | [8](#week-8--gas-dynamics-and-sciml) | Exact compressible-flow branches and learned inverse maps | [Week 8 labs](notebooks/week08/README.md) | [Lecture 8](lectures/week08_gas_dynamics_sciml.pdf) |
 | [9](#week-9--rarefied-micro-step-and-micro-nozzle) | Geometry-dependent and shock-aligned operators | [Week 9 labs](notebooks/week09/README.md) | [Lecture 9](lectures/week09_rarefied_deeponet_case_studies.pdf) |
 | [10](#week-10--dsmc-cavity-and-molecular-shocks) | Cavity and mono/diatomic shock reproduction | [Week 10 lab](notebooks/week10/README.md) | [Lecture 10](lectures/week10_dsmc_data_driven_surrogates.pdf) |
-| [10.1](#week-101--ab-initio-collision-deeponet) | Molecular scattering and DSMC cylinder contours | [Reading case and figures](results/abinitio_deeponet_cylinder/README.md) | [Lecture companion](lectures/week10_1_abinitio_collision_deeponet.md) |
+| [10.1](#week-101--ab-initio-collision-deeponet) | Molecular scattering and DSMC cylinder contours | [CPU scattering lab](notebooks/week10_1/W10_1_Collision_Map_Surrogate_Audit.ipynb) · [Research fields](results/abinitio_deeponet_cylinder/README.md) | [Lecture companion](lectures/week10_1_abinitio_collision_deeponet.md) |
 | [11](#week-11--shock-and-vortex-identification) | Physical diagnostics and overlapping learned labels | [Week 11 lab](notebooks/week11/README.md) | [Lecture 11](lectures/week11_shock_vortex_identification.pdf) |
 | [12](#week-12--dsmc-moment-reconstruction) | Additive moments, observation-conditioned reconstruction and support | [Week 12 lab](notebooks/week12/README.md) | [Lecture 12](lectures/week12_dsmc_moment_reconstruction.pdf) |
 
@@ -156,6 +157,17 @@ underfit random-feature ridge is no longer the default classroom comparison.
 These are new teaching runs, not the published model's accuracy.
 [Data and paper](data/hypersonic_cylinder/README.md) · [MLP metrics](results/hypersonic_cylinder_week7_1/mlp_metrics.json)
 
+### Week 7.2 — Sparse-sensor state estimation
+
+![Reference and causal state estimates at the final test frame](results/week07_2_state_estimation/state_estimation_fields.png)
+
+A validation-selected rank-8 Kalman filter assimilates 32 noisy transverse-velocity
+sensors on the retained Re110 wake. Mean test relative L2 is **2.18%**, versus
+**3.16%** for matched sensor-only POD reconstruction and **4.36%** for open-loop
+DMD. Its nominal 95% marginal intervals cover only **55.1%** of sampled values;
+the overconfidence is retained as a model failure.
+[Protocol, all baselines and limits](results/week07_2_state_estimation/README.md)
+
 ### Week 8 — Gas dynamics and SciML
 
 ![Gas-dynamics model evidence, blind errors and matched-budget comparisons](results/gas_dynamics_week8/week8_model_evidence.png)
@@ -205,6 +217,12 @@ Shared colors, **different times and sampling windows**: qualitative comparison 
 [All four colored fields and provenance](results/abinitio_deeponet_cylinder/README.md)
 · [Surface pressure and heat flux](results/abinitio_deeponet_cylinder/README.md#surface-pressure-and-heat-flux)
 · [Week 10.1 lecture companion](lectures/week10_1_abinitio_collision_deeponet.md)
+
+[Run the CPU collision-map lab](notebooks/week10_1/W10_1_Collision_Map_Surrogate_Audit.ipynb):
+solve a reduced Lennard-Jones scattering problem, check analytic limits and
+audit a fitted surrogate using transport integrals. This executable analog is
+separate from the Jäger research fields above; it does not reproduce the
+article's potential or network.
 
 ### Week 11 — Shock and vortex identification
 

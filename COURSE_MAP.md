@@ -25,26 +25,29 @@
 | 7A | Lattice-Boltzmann mechanics | Derive D2Q9 equilibrium; compare transparent BGK with robust TRT; identify every boundary operation | Mass/density stability, `Ma`, `tau`, no-slip mask, and reproducible configuration |
 | 7B | Cylinder-wake regimes and CFD verification | Run `Re=5,20,40,100,180`; then perform the fixed-physics `D/dx=12,18,27` study at `Re=100` | Correct regime classification; statistical gates; acoustic-mode rejection; retained formal asymptotic/GCI failure; declared next refinement; literature bands; and separate grid/domain/validation decisions |
 | 7C | Educational unsteady field learning | Reynolds/phase POD failure baseline, four-frame multi-scale CNN, and a phase-stable learned decoder | Case-wise split; one-step field/spectral/downstream checks; retained failed CNN recursion; validation-only harmonic selection; fresh `Re=95` 277-frame rollout; and separately gated vorticity/Strouhal evidence |
-| 7.1 | Rarefied hypersonic-cylinder operator learning | Audit 20 DSMC Mach cases; formulate `M_inf -> q(x,y)`; inspect the reviewed Fusion-DeepONet topology; fit a CPU separable teaching analog | Author-release provenance and hashes; whole-case split; strong structured field interpolation; blind interpolation/extrapolation errors; ensemble coverage; retained neural-baseline failure; no full-paper reproduction claim |
+| 7.1 | Rarefied hypersonic-cylinder operator learning | Audit 20 DSMC Mach cases; compare a 3x96 tanh MLP with structured Mach-field interpolation | Whole-case split; historical interpolation/extrapolation errors; interpolation wins all six aggregate comparisons; legacy normalization names are not verified units; [paper-parity limits](qa/WEEK71_PAPER_PARITY.md), not full-paper reproduction |
+| [7.2](notebooks/week07_2/README.md) | Linear-Gaussian state estimation and information contracts | Fit training-only POD dynamics and sensor maps; compare causal Kalman filtering with open-loop DMD, persistence and matched sensor-only reconstruction | Validation-selected rank/sensors/inflation; five held noise seeds; 2.18% mean test error; retained 55.1% nominal-95% marginal coverage failure; previously inspected trajectory, not new-Re or grid-independent evidence |
 | 8A | Exact compressible-flow references | Rayleigh, Fanno, oblique-shock, nozzle-shock, shock-tube, shock-polar, interacting-wave, and Taylor--Maccoll computations | Declared domain and branch; exact/bracketed/ODE reference; forward-substitution residual; limiting behavior |
 | 8B | Branch-aware gas-dynamics SciML | Expose hidden-branch regression failure; compare bounded MLPs with interpolation across five inverse tasks | Frozen blind errors; matched coverage; physical bounds and residuals; edge-holdout test; explicit exact/interpolation/MLP decision |
 | 8C | Dimensional scaling and CFD bridge | Generalized two-to-five-input shock tube; 100,000-state workload; qualified SU2 diamond-airfoil workflow | Matched offline budget; storage and timing protocol; source hashes; no unverified SU2 case promoted to a training label |
 | 9A | Geometry-dependent operator learning | Map real DSMC micro-step height and coordinates to velocity through a branch--trunk representation | File-separated 5/2/2 geometry split; validation-only loss selection; no held-out flow patches; retained paper evidence kept separate |
-| 9B | Physics-guided zonal objectives | Balance reverse-flow and main-flow errors with separately normalized regional losses | Validation-only loss-weight selection; global/local tradeoff; untouched 44% and 67% teaching tests |
+| 9B | Physics-guided zonal objectives | Balance reverse-flow and main-flow errors with separately normalized regional losses | Validation-only loss-weight selection; global/local tradeoff; historical 44% and 67% teaching tests, no longer untouched after inspection |
 | 9C | Shock-aligned rarefied-flow operators | Audit 15 public DSMC nozzle cases; compare physical and shock-centered POD; fit full-field POD trunks and neural branches | Source hashes and CC BY attribution; 8-to-2 mode POD audit; frozen 16/25/30 kPa tests; 2-D density/$U$/Mach/pressure errors; shock-location error |
 | 10A | DSMC solver qualification and provenance | Audit cavity/shock tables, run metadata, hashes, shapes, and molecular models | Mesh/time/particle/sample checklist; exact case inventory; machine-readable manifest |
 | 10B | Rarefied-cavity parameter synthesis | Reproduce complete held-out fields at $Kn=0.05$ and $0.5$ for two lid speeds | Shared contour scales, normalized RMSE denominators, profiles, and higher-moment diagnosis |
 | 10C | Mono/diatomic shock operators | Fit POD trunks and Mach branches; compare interpolation and one-sided extrapolation | Density/velocity/temperature profiles; translational overshoot; rotational lag; fixed error gates |
-| [10.1](lectures/week10_1_abinitio_collision_deeponet.md) (reading companion) | Ab initio collision-angle DeepONet inside DSMC | Inspect author-supplied Jäger cylinder contours, shared colors and time metadata | Distinguish microscopic maps from whole-field surrogates; later DeepONet versus article MLP; asynchronous outputs; no speedup or convergence claim |
+| [10.1](notebooks/week10_1/W10_1_Collision_Map_Surrogate_Audit.ipynb) | Classical scattering, surrogate audit and a separate research companion | Solve a reduced Lennard-Jones collision map on CPU; inspect author-supplied Jäger cylinder fields separately | Analytic deflection checks and transport-integral errors; Lennard-Jones is not the article potential; asynchronous research contours do not establish speedup or convergence |
 
 ## New research-informed weeks (working course after v1.4.1)
 
 | Module | Concept | Executable exercise | Evidence and limits |
 | --- | --- | --- | --- |
 | [11](notebooks/week11/README.md) | Shock/core identification; shear versus rotation; overlapping labels | Manufactured controls, trained local MLP, physical baseline | Complete-case splits, validation-only thresholds, both tasks and fragmentation; not research CFD or the original dual-decoder network |
-| [12](notebooks/week12/README.md) | Additive moments, prior-plus-observation reconstruction, support | Particle algebra, scalar DCT gain, paired synthetic sampling comparisons | Mean and gradient checks, independent noisy reference, support abstention; not a MambaIR or nine-field cylinder reproduction |
+| [12](notebooks/week12/README.md) | Additive moments, prior-plus-observation reconstruction, support | Synthetic warm-up plus fresh Noise2Noise-style patch-MLP training on real DSMC cavity observations | Four fitting seeds, two selection seeds, two evaluation seeds; high-budget reference excluded from fitting; mixed qx/qy baseline results; already-inspected archive, not a fresh blind or paper-model reproduction |
 
-Each includes a PDF lecture and an executed CPU notebook. Week 12 follows
+Each includes a PDF lecture and an executed CPU notebook. Week 11 additionally
+audits frozen-checkpoint research masks; these are not new ground-truth accuracy
+measurements. Week 12 follows
 Week 11 because noise-sensitive derivatives connect feature detection to field
 reconstruction; it can also be taught directly after Weeks 3 and 10.
 
@@ -77,6 +80,8 @@ Assess evidence rather than software completion. Recommended final-project categ
 
 No category should require the ML method to outperform the baseline.
 
-## Week 10.1 executable scattering lab
+## Proposed additions
 
-[Classical collision map and surrogate audit](notebooks/week10_1/W10_1_Collision_Map_Surrogate_Audit.ipynb): CPU Lennard-Jones teaching model, analytic scattering checks, transport integrals, and localized surrogate errors.
+See the [theory coverage and proposal matrix](THEORY_GAP_MATRIX.md) for proposed
+3.1 sampling diagnostics, 5.1 PINN verification and 7.2 state estimation.
+These are not existing lessons or qualified research results.
