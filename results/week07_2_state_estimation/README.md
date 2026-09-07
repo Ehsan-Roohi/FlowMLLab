@@ -27,3 +27,17 @@ factor was chosen using test coverage.
 The five seeds perturb measurements of one CFD trajectory; they are not five
 independent CFD realizations and do not justify population confidence intervals.
 See `metrics.json` for all candidates, per-seed scores, environment and hashes.
+
+## Figure and lecture layout
+
+The six-panel wake figure uses equal physical x/y scales on every axis. The
+PDF embeds the image at its native width-to-height ratio. Panels (a-d) share
+one velocity scale covering all displayed values; (e-f) share an absolute-error
+scale. The cylinder wall lies outside the plotted wake region. The first
+evaluation seed (31) and final test frame are unchanged.
+
+`state_estimation_fields.svg` provides the vector export;
+`state_estimation_fields.png` is the high-resolution notebook/homepage copy.
+The historical filename `state_estimation_scores.png` now contains a table,
+and the lecture uses a selectable-text table computed from `metrics.json`.
+Both show all four baselines, with standard deviations in percentage points.

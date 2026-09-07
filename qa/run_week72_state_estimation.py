@@ -76,27 +76,63 @@ def experiment(cases):
 
 
 def make_figures(out, cases, result, model, examples):
-    case = cases[110]; truth = case['v'][160:]; extent = [case['x'][0], case['x'][-1], case['y'][0], case['y'][-1]]
-    plt.rcParams.update({'font.size': 10, 'axes.spines.top': False, 'axes.spines.right': False, 'savefig.dpi': 220})
-    names = ['LBM reference', 'Kalman filter', 'Open-loop DMD', 'Sensor-only']
-    fields = [truth[-1], examples['kalman'][-1], examples['open_loop'][-1], examples['sensor_only'][-1]]
-    vmax = float(np.max(np.abs(truth[-1])))
-    fig, axes = plt.subplots(4, 1, figsize=(10.5, 8), layout='compressed')
-    for ax, name, values in zip(axes, names, fields):
-        im = ax.contourf(case['x'], case['y'], values, levels=np.linspace(-vmax, vmax, 33), cmap='RdBu_r', extend='both')
-        ax.set(title=name, xlabel='x/D', ylabel='y/D', aspect='equal')
-        if name == 'Kalman filter':
-            iy, ix = np.unravel_index(model.sensor_indices, truth.shape[1:]); ax.scatter(case['x'][ix], case['y'][iy], s=12, facecolors='none', edgecolors='black')
-    fig.colorbar(im, ax=axes.tolist(), label='v/U', shrink=.75)
-    fig.suptitle('Week 7.2: final test frame, common color scale')
-    fig.savefig(out/'state_estimation_fields.png'); plt.close(fig)
-    fig, ax = plt.subplots(figsize=(8, 4.5), layout='constrained')
-    for name in ('kalman','open_loop','persistence','sensor_only'):
-        mean = np.mean([100*r['test']['relative_l2'] for r in result['methods'][name]])
-        std = np.std([100*r['test']['relative_l2'] for r in result['methods'][name]], ddof=1)
-        ax.bar(name, mean, yerr=std, capsize=4)
-    ax.set(ylabel='Test relative L2 (%)', title='Five sensor-noise seeds; mean +/- sample SD')
-    fig.savefig(out/'state_estimation_scores.png'); plt.close(fig)
+    """Equal physical x/y scales, vector companion, and an actual score table."""
+    case = cases[110]; truth = case['v'][-1]
+    names = ['(a) LBM reference', '(b) Kalman filter', '(c) Open-loop DMD', '(d) Sensor-only']
+    fields = [truth, examples['kalman'][-1], examples['open_loop'][-1], examples['sensor_only'][-1]]
+    vmax = max(float(np.max(np.abs(field))) for field in fields)
+    errors = [np.abs(fields[1]-truth), np.abs(fields[3]-truth)]
+    emax = max(float(error.max()) for error in errors)
+    with plt.rc_context({'font.size': 9, 'axes.titlesize': 10, 'axes.labelsize': 9,
+                         'axes.linewidth': .6, 'xtick.labelsize': 8, 'ytick.labelsize': 8,
+                         'font.family': 'DejaVu Sans', 'svg.fonttype': 'none', 'savefig.dpi': 320}):
+        fig = plt.figure(figsize=(8, 5.5))
+        grid = fig.add_gridspec(3, 2, left=.08, right=.84, bottom=.085,
+                               top=.95, hspace=.48, wspace=.25)
+        for index, (name, values) in enumerate(zip(names, fields)):
+            ax = fig.add_subplot(grid[index//2, index%2])
+            im = ax.contourf(case['x'], case['y'], values, levels=np.linspace(-vmax, vmax, 49), cmap='RdBu_r')
+            ax.set(title=name, xlabel='x/D', ylabel='y/D')
+            ax.set_aspect('equal', adjustable='box')
+            ax.set_xticks([2, 4, 6, 8, 10, 12]); ax.set_yticks([-2, 0, 2])
+            if index == 1:
+                iy, ix = np.unravel_index(model.sensor_indices, truth.shape)
+                ax.scatter(case['x'][ix], case['y'][iy], s=9, facecolors='none',
+                           edgecolors='#152536', linewidths=.55)
+        cax = fig.add_axes([.88, .45, .014, .43])
+        fig.colorbar(im, cax=cax, label='v/U', ticks=np.linspace(-vmax, vmax, 5), format='%.2f')
+        for index, (name, error) in enumerate(zip(['(e) Kalman absolute error', '(f) Sensor-only absolute error'], errors)):
+            ax = fig.add_subplot(grid[2, index])
+            err_im = ax.contourf(case['x'], case['y'], error, levels=np.linspace(0, emax, 33), cmap='magma')
+            ax.set(title=name, xlabel='x/D', ylabel='y/D')
+            ax.set_aspect('equal', adjustable='box')
+            ax.set_xticks([2, 4, 6, 8, 10, 12]); ax.set_yticks([-2, 0, 2])
+        cax = fig.add_axes([.88, .10, .014, .20])
+        fig.colorbar(err_im, cax=cax, label='Absolute error in v/U', ticks=np.linspace(0, emax, 4), format='%.3f')
+        for extension in ('png', 'svg'):
+            fig.savefig(out/f'state_estimation_fields.{extension}', facecolor='white')
+        plt.close(fig)
+        # Legacy filename remains valid for existing notebooks; its content is a table.
+        labels = {'kalman': 'Kalman filter', 'sensor_only': 'Sensor-only POD',
+                  'open_loop': 'Open-loop DMD', 'persistence': 'Persistence'}
+        rows = []
+        for name, label in labels.items():
+            values = np.array([100*r['test']['relative_l2'] for r in result['methods'][name]])
+            rows.append([label, f'{values.mean():.3f}', f'{values.std(ddof=1):.3f}'])
+        fig, ax = plt.subplots(figsize=(8, 2.3)); ax.axis('off')
+        table = ax.table(cellText=rows, colLabels=['Method', 'Mean relative L2 (%)', 'Sample SD (pp)'],
+                         colWidths=[.42, .33, .25], cellLoc='left', bbox=[0, .09, 1, .83])
+        table.auto_set_font_size(False); table.set_fontsize(11)
+        for (row, col), cell in table.get_celld().items():
+            cell.set_edgecolor('#dbe3e9'); cell.set_linewidth(.45)
+            if row == 0:
+                cell.set_facecolor('#173b56'); cell.set_text_props(color='white', weight='bold')
+            else:
+                cell.set_facecolor('#eaf4f5' if row == 1 else ('#f3f6f8' if row%2 else 'white'))
+                if col: cell.set_text_props(ha='right')
+        fig.subplots_adjust(left=.02, right=.98, bottom=.09, top=.97)
+        fig.text(.02, .035, 'Five measurement-noise seeds on one trajectory. SD in percentage points (pp).', fontsize=9, color='#506070')
+        fig.savefig(out/'state_estimation_scores.png', facecolor='white'); plt.close(fig)
 
 
 def main():
