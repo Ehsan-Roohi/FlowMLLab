@@ -20,6 +20,14 @@ checkpoints the network, the dense inverse-Hessian state, fixed collocation set,
 completed step, configuration, and CPU/GPU random-number states. A stable run ID
 is reused after requeue, and an incompatible configuration is rejected.
 
+The predeclared Re=100 qualification uses 16,384 fixed collocation points and
+300 SSBroyden2 steps. It compares both centerlines and 8,192 independently drawn
+interior points with the retained conventional CFD field. The thresholds fixed
+before seeing the PINN result are 10% for the vertical-u centerline, 15% for the
+horizontal-v centerline, and 15% for the interior velocity vector. This is a
+near-matched comparison: the PINN regularizes the moving lid near both corners,
+whereas the retained CFD case uses the classical discontinuous lid.
+
 The independent audit reports unmasked momentum residuals, continuity, hard-wall
 errors, environment versions, hardware, source identity, and job identity. A
 contour is watermarked as unvalidated until comparison with the matched CFD

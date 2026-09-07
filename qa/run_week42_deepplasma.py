@@ -23,6 +23,7 @@ matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 import numpy as np
 import torch
+from scipy.interpolate import RegularGridInterpolator
 
 UPSTREAM_COMMIT = "fcb1566eaa3253d4a4108fbac9d49a38fd10ad6b"
 UPSTREAM_SHA256 = "391a2174cb9f6e8863c14d7b350077e54209134de9f85a17719c398146f91458"
@@ -113,6 +114,49 @@ def render(module, model, device, output: Path, n=181):
     plt.close(fig)
 
 
+def compare_cfd(module, model, device, reference_path: Path):
+    """Compare against the retained conventional-CFD field at the same Re."""
+    data = np.load(reference_path)
+    matches = np.flatnonzero(np.isclose(data["Re"], module.Re))
+    if len(matches) != 1:
+        raise RuntimeError(f"Expected one CFD case at Re={module.Re:g}, found {len(matches)}")
+    case = int(matches[0])
+    axis_x, axis_y = data["x"], data["y"]
+    xline = torch.as_tensor(axis_x, device=device).reshape(-1, 1)
+    yline = torch.as_tensor(axis_y, device=device).reshape(-1, 1)
+    vertical = torch.cat((torch.full_like(yline, 0.5), yline), 1).requires_grad_(True)
+    horizontal = torch.cat((xline, torch.full_like(xline, 0.5)), 1).requires_grad_(True)
+    up, _, _ = module.output_transform_cavity_flow(vertical, model(vertical))
+    _, vp, _ = module.output_transform_cavity_flow(horizontal, model(horizontal))
+    u_ref = data["u"][case, :, np.argmin(abs(axis_x - 0.5))]
+    v_ref = data["v"][case, np.argmin(abs(axis_y - 0.5)), :]
+    up = up.detach().cpu().numpy().ravel()
+    vp = vp.detach().cpu().numpy().ravel()
+    relative = lambda a, b: float(np.linalg.norm(a - b) / np.linalg.norm(b))
+    rng = np.random.default_rng(92831)
+    xy = rng.uniform(0.05, 0.95, size=(8192, 2))
+    xy_t = torch.as_tensor(xy, device=device, dtype=torch.float64).requires_grad_(True)
+    ui, vi, _ = module.output_transform_cavity_flow(xy_t, model(xy_t))
+    query_yx = xy[:, ::-1]
+    ui_ref = RegularGridInterpolator((axis_y, axis_x), data["u"][case])(query_yx)
+    vi_ref = RegularGridInterpolator((axis_y, axis_x), data["v"][case])(query_yx)
+    pred = np.column_stack((ui.detach().cpu().numpy().ravel(), vi.detach().cpu().numpy().ravel()))
+    truth = np.column_stack((ui_ref, vi_ref))
+    values = {
+        "u_centerline_relative_l2": relative(up, u_ref),
+        "v_centerline_relative_l2": relative(vp, v_ref),
+        "interior_velocity_relative_l2": relative(pred, truth),
+    }
+    thresholds = {"u_centerline_relative_l2": 0.10,
+                  "v_centerline_relative_l2": 0.15,
+                  "interior_velocity_relative_l2": 0.15}
+    passes = {key: values[key] <= thresholds[key] for key in thresholds}
+    return {"reference": str(reference_path), "reference_case_index": case,
+            "note": "PINN smooth lid versus classical-lid CFD: near-matched comparison.",
+            "metrics": values, "frozen_thresholds": thresholds,
+            "passes": passes, "all_pass": all(passes.values())}
+
+
 def atomic_checkpoint(path: Path, module, model, optimizer, points, completed_steps, config):
     payload = {
         "model": model.state_dict(),
@@ -185,14 +229,17 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--source", type=Path, required=True)
     parser.add_argument("--output", type=Path, required=True)
-    parser.add_argument("--mode", choices=("smoke", "research"), required=True)
+    parser.add_argument("--mode", choices=("smoke", "qualification", "research"), required=True)
     parser.add_argument("--re", type=float, default=None)
     parser.add_argument("--points", type=int, default=None)
     parser.add_argument("--steps", type=int, default=None)
     parser.add_argument("--checkpoint-every", type=int, default=100)
     parser.add_argument("--resume", action="store_true")
+    parser.add_argument("--reference-npz", type=Path)
     args = parser.parse_args()
-    defaults = {"smoke": (100.0, 2048, 3), "research": (5000.0, 262143, 10000)}
+    defaults = {"smoke": (100.0, 2048, 3),
+                "qualification": (100.0, 16384, 300),
+                "research": (5000.0, 262143, 10000)}
     reynolds, points, steps = defaults[args.mode]
     reynolds = args.re if args.re is not None else reynolds
     points = args.points if args.points is not None else points
@@ -246,11 +293,18 @@ def main():
         "upstream_commit": UPSTREAM_COMMIT, "upstream_sha256": digest,
         "slurm_job_id": os.environ.get("SLURM_JOB_ID"),
     }
+    if args.reference_npz:
+        audit["cfd_comparison"] = compare_cfd(
+            module, model, module.device, args.reference_npz.resolve())
+        if args.mode == "qualification" and audit["cfd_comparison"]["all_pass"]:
+            audit["claim_status"] = "qualified-near-matched-reference"
     render(module, model, module.device, Path.cwd())
     Path("model").mkdir(exist_ok=True)
     torch.save({"model": model.state_dict(), "audit": audit}, "model/audited_final.pt")
     Path("audit.json").write_text(json.dumps(audit, indent=2) + "\n", encoding="utf-8")
     print(json.dumps(audit, indent=2))
+    if args.mode == "qualification" and not audit.get("cfd_comparison", {}).get("all_pass", False):
+        return 2
 
 
 if __name__ == "__main__":

@@ -10,6 +10,8 @@ def test_runner_pins_upstream_source_and_requires_cuda():
     assert "391a2174cb9f6e8863c14d7b350077e54209134de9f85a17719c398146f91458" in text
     assert "CUDA GPU is required" in text
     assert "raw_residuals" in text
+    assert '"qualification": (100.0, 16384, 300)' in text
+    assert '"u_centerline_relative_l2": 0.10' in text
 
 
 def test_slurm_requests_a100_and_runs_dependency_gate_first():
@@ -24,6 +26,7 @@ def test_slurm_requests_a100_and_runs_dependency_gate_first():
     assert "FLOWML_PINN_DEPS" in text
     assert "#SBATCH --requeue" in text
     assert "FLOWML_PINN_RUN_ID" in text
+    assert "FLOWML_PINN_REFERENCE" in text
     runner = (ROOT / "qa" / "run_week42_deepplasma.py").read_text(encoding="utf-8")
     for required in ("optimizer.state", "collocation_points", "cuda_rng", "os.replace"):
         assert required in runner

@@ -24,6 +24,7 @@ export OMP_NUM_THREADS=4 OPENBLAS_NUM_THREADS=4 MKL_NUM_THREADS=4
 export MPLBACKEND=Agg PYTHONUNBUFFERED=1
 export PYTHONPATH="$FLOWML_PINN_DEPS${PYTHONPATH:+:$PYTHONPATH}"
 : "${FLOWML_PINN_RUN_ID:?Set a stable run identifier shared by requeues}"
+: "${FLOWML_PINN_REFERENCE:?Set the absolute retained CFD NPZ path}"
 RUN_ROOT="${SLURM_SUBMIT_DIR}/tmp/week42-pinn-${FLOWML_PINN_RUN_ID}"
 
 # Dependency and hardware gate: failure stops before training.
@@ -32,6 +33,7 @@ set +e
 "$FLOWML_PINN_PYTHON" qa/run_week42_deepplasma.py \
   --mode "${FLOWML_PINN_MODE:-smoke}" \
   --source "$DEEPPLASMA_LDC" \
+  --reference-npz "$FLOWML_PINN_REFERENCE" \
   --output "$RUN_ROOT" --resume
 runner_status=$?
 set -e
