@@ -36,6 +36,7 @@ Weeks 5 and 6 share a project pack and lecture guide, but have separate learning
 | Week | Topic | Notebook / lab | Lecture |
 | --- | --- | --- | --- |
 | [1](#week-1--numerical-foundations) | Python, numerical methods and CFD validation | [Week 1 labs](notebooks/week01/) | [Lecture 1](lectures/week01_numerical_foundations.pdf) |
+| [1.1](#week-11--ai-assisted-scientific-software) | Specification, verification, physical gates and accountable AI use | [Week 1.1 lab](notebooks/week01_1/W1_1_AI_Assisted_Scientific_Software.ipynb) | [Lecture 1.1](lectures/week01_1_ai_assisted_scientific_software.pdf) |
 | [2](#week-2--supervised-learning-and-rarefaction) | Features, scaling, baselines and model validity | [Week 2 lab](notebooks/week02/AI_in_Fluids_Week2_Colab_Expanded.ipynb) | [Lecture 2](lectures/week02_supervised_learning_rarefaction.pdf) |
 | [2.1](#week-21--probabilistic-uncertainty) | Bayesian prediction, calibration and uncertainty | [Week 2.1 lab](notebooks/week02_1/Probabilistic_UQ_CFD.ipynb) | [Lecture 2.1](lectures/week02_1_probabilistic_uq.pdf) |
 | [3](#week-3--kinetic-theory-and-dsmc) | Maxwellian sampling and particle simulation | [Week 3 labs](notebooks/week03/) | [Lecture 3](lectures/week03_kinetic_dsmc.pdf) |
@@ -66,6 +67,18 @@ Follow the captions for data provenance and validity limits; the
 Start with a numerical solution and an independent benchmark: cavity fields,
 centerlines and Ghia comparisons establish what a useful training label means.
 [Figure contract](ARTICLE_FIGURE_MAP.md)
+
+### Week 1.1 — AI-assisted scientific software
+
+![Executable scientific contract for an AI-proposed cavity diagnostic](results/week01_1_scientific_software/week01_1_acceptance_summary.png)
+
+An independently derived manufactured solution establishes second-order
+convergence before the accepted `Re=100` cavity case is opened. Seven frozen gates
+then bind array semantics, vorticity convention, incompressibility, wall
+conditions, thresholds and the complete data hash into one machine-readable
+decision. [Run the lab](notebooks/week01_1/W1_1_AI_Assisted_Scientific_Software.ipynb)
+· [Read the scientific specification](notebooks/week01_1/SCIENTIFIC_SPEC.md)
+· [Inspect the retained evidence](results/week01_1_scientific_software/README.md)
 
 ### Week 2 — Supervised learning and rarefaction
 

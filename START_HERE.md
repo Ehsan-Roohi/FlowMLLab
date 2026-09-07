@@ -8,6 +8,7 @@ This page is the shortest reliable path from a fresh checkout to a meaningful sc
 | --- | --- | --- | --- |
 | Complete beginner | You know fluid mechanics but have limited Python experience | `notebooks/week01/01_python_for_cfd_ai_fluids.ipynb` | [Open in Colab](https://colab.research.google.com/github/Ehsan-Roohi/FlowMLLab/blob/main/notebooks/week01/01_python_for_cfd_ai_fluids.ipynb) |
 | Python-ready | You can use NumPy and Matplotlib | `notebooks/week01/03_cavity_ghia.ipynb` | [Open in Colab](https://colab.research.google.com/github/Ehsan-Roohi/FlowMLLab/blob/main/notebooks/week01/03_cavity_ghia.ipynb) |
+| AI-assisted research-software ready | You want to qualify agent-proposed scientific code before using it in a result | `notebooks/week01_1/W1_1_AI_Assisted_Scientific_Software.ipynb` | [Open in Colab](https://colab.research.google.com/github/Ehsan-Roohi/FlowMLLab/blob/main/notebooks/week01_1/W1_1_AI_Assisted_Scientific_Software.ipynb) |
 | Scientific-ML ready | You already understand CFD validation and supervised learning | `notebooks/week05_06/P0_Project_Setup.ipynb` | [Open in Colab](https://colab.research.google.com/github/Ehsan-Roohi/FlowMLLab/blob/main/notebooks/week05_06/P0_Project_Setup.ipynb) |
 | Gas-dynamics ready | You know Mach number and perfect-gas relations and want exact-to-ML comparisons | `notebooks/week08/W8_Lab1_Exact_Gas_Dynamics_Student.ipynb` | [Open in Colab](https://colab.research.google.com/github/Ehsan-Roohi/FlowMLLab/blob/main/notebooks/week08/W8_Lab1_Exact_Gas_Dynamics_Student.ipynb) |
 | Rarefied-cylinder ready | You want real DSMC fields, operator-learning anatomy, and a hard baseline test | `notebooks/week07_1/W7_1_Hypersonic_Rarefied_Cylinder_DeepONet.ipynb` | [Open in Colab](https://colab.research.google.com/github/Ehsan-Roohi/FlowMLLab/blob/main/notebooks/week07_1/W7_1_Hypersonic_Rarefied_Cylinder_DeepONet.ipynb) |
@@ -73,6 +74,7 @@ Typical student runtimes are approximate:
 | --- | --- | --- |
 | Week 1 Python/TensorFlow warmups | CPU | 10–30 min each |
 | Week 1 cavity validation | CPU | 10–40 min, depending on solver settings |
+| Week 1.1 scientific-software audit | CPU | <1 min; no remote model or TensorFlow required |
 | Week 2 surrogate | CPU or Colab | 20–45 min |
 | Week 3 Maxwellian lab | CPU | 20–40 min |
 | Week 3 mini DSMC | CPU/GPU | 30–120 min depending on grid and particle budget |

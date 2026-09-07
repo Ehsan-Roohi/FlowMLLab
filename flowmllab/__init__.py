@@ -16,6 +16,7 @@ from .probabilistic_uq import (
     fit_pod_gaussian_process,
     validate_probabilistic_uq_evidence,
 )
+from .scientific_software import validate_week01_1_evidence
 from .step_geom_deeponet import (
     StepDomain,
     build_step_geom_deeponet,
@@ -44,5 +45,6 @@ __all__ = [
     "validate_probabilistic_uq_evidence",
     "validate_week8_evidence",
     "validate_week9_evidence",
+    "validate_week01_1_evidence",
 ]
 __version__ = "1.4.1"

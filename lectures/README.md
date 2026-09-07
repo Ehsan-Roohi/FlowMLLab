@@ -3,6 +3,7 @@
 | File | Main topics | Companion notebooks |
 | --- | --- | --- |
 | `week01_numerical_foundations.pdf` | Python, TensorFlow, CFD fields, finite differences, convergence, Ghia validation | `notebooks/week01/` |
+| `week01_1_ai_assisted_scientific_software.pdf` | Specification, manufactured-solution verification, physical gates, provenance, adversarial axis tests, human-agent authority and disclosure | `notebooks/week01_1/W1_1_AI_Assisted_Scientific_Software.ipynb` |
 | `week02_supervised_learning_rarefaction.pdf` | Neurons, MLPs, losses, optimization, scaling, case-wise splits, rarefaction | `notebooks/week02/` |
 | `week02_1_probabilistic_uq.pdf` | Observation models, exact Bayesian regression, POD--Gaussian-process fields, proper scores, leakage-free calibration, retained blind under-coverage | `notebooks/week02_1/Probabilistic_UQ_CFD.ipynb` |
 | `week03_kinetic_dsmc.pdf` | Distribution functions, Maxwellian moments, sampling error, DSMC | `notebooks/week03/` |

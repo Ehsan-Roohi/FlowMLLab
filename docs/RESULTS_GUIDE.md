@@ -177,7 +177,7 @@ the exact DSMC export still needs repair.
 
 **FlowMLLab** is an open-source framework for reproducible CFD-to-scientific-machine-learning experiments. It integrates transparent continuum and particle solvers, case-wise data partitions, non-neural baselines, coordinate networks, POD-DeepONet models, physical diagnostics, machine-readable evidence, and release checks.
 
-The repository contains a twelve-lecture learning path: the complete tutorial and lecture layer developed for the original six-week graduate course **MIE 690A: AI in Fluid Mechanics**, University of Massachusetts Amherst, Summer 2026, plus the Week-2.1 probabilistic-UQ, Week-7 cylinder, Week-7.1 rarefied hypersonic-cylinder, Week-8 gas-dynamics, Week-9 rarefied DeepONet, and Week-10 DSMC article-reproduction increments. The reusable modules, datasets, validators, and figure builders are the software core; the notebooks are documented examples of that framework.
+The repository contains a cumulative lecture/laboratory path: the complete tutorial layer developed for the original six-week graduate course **MIE 690A: AI in Fluid Mechanics**, University of Massachusetts Amherst, Summer 2026, plus independently authored working-course increments. Week 1.1 adds accountable AI-assisted scientific software; later increments cover probabilistic UQ, cylinder flows, exact gas dynamics, rarefied DeepONet, DSMC reproduction, feature identification, and noisy-moment reconstruction. The reusable modules, datasets, validators, and figure builders are the software core; the notebooks are documented examples of that framework.
 
 The course treats scientific machine learning as a controlled computational-physics experiment:
 
@@ -197,8 +197,9 @@ Start with [START_HERE.md](../START_HERE.md). It gives the installation check, r
 | `flowmllab/` | Installable Python package, including cavity, cylinder LBM, learned-wake, rarefied hypersonic-cylinder, exact gas-dynamics, and probabilistic-UQ modules plus scientific asset checks and CLI |
 | `demo/` | Read-only Streamlit explorer for the retained POD--DeepONet blind cases |
 | `pyproject.toml` | Versioned package metadata, bounded compatible dependencies, optional ML/test environments, and `flowmllab` entry point |
-| `lectures/` | Twelve lectures delivered in eleven PDFs: Weeks 1–4, incremental Week-2.1 UQ, a shared Weeks 5–6 guide, and Week-7, Week-7.1, Week-8, Week-9, and Week-10 extensions |
+| `lectures/` | Rendered lecture PDFs and editable sources, including the incremental Week-1.1 scientific-software contract and advanced working-course extensions |
 | `notebooks/week01`–`week04` | Eleven guided laboratories for Weeks 1–4, including the incremental Week-2.1 probabilistic-UQ and Week-4.1 classical-ROM labs |
+| `notebooks/week01_1` | Executed vendor-neutral audit of an AI-proposed cavity diagnostic: analytic convergence, adversarial axis failure, real-field physical gates, provenance, and disclosure |
 | `notebooks/week05_06` | The original combined Weeks 5–6 project pack: seven expanded notebooks (`P0`–`P6`) with PINNs/physics-guided learning, POD, uncertainty, rarefied flow, FP closure, frozen decision gates, and final-project evidence |
 | `notebooks/week07` | The Week-7 cylinder-wake LBM and neural-surrogate extension |
 | `notebooks/week07_1` | Incremental rarefied hypersonic-cylinder lab with author-released DSMC fields, whole-case splits, a strong field baseline, Fusion-DeepONet anatomy, and ensemble diagnostics |
@@ -222,6 +223,7 @@ Start with [START_HERE.md](../START_HERE.md). It gives the installation check, r
 | `results/gas_dynamics_week8/` | Checksummed evidence snapshot, exact-physics maps, matched baselines, edge holdouts, high-dimensional scaling, timing, and source provenance |
 | `results/mahdavi_deeponet/` | Compact CC BY 4.0 full-field/centerline derivatives of 15 public nozzle DSMC snapshots, fresh FlowMLLab predictions, step evidence, source hashes, POD audit, licenses, and manifests |
 | `results/probabilistic_uq/` | Frozen complete-case POD--GP protocol, interpolation baseline, proper scores, blind coverage, and retained under-coverage result |
+| `results/week01_1_scientific_software/` | Frozen diagnostic thresholds, exact cavity-data digest, six gate outcomes, accept/reject JSON, and the course figure |
 | `advanced/fp_closure/` | Bounded educational workflow for exact and learned Fokker–Planck closure testing |
 | `references/` | Annotated reading guide and BibTeX database |
 | `qa/` | Release validator for notebook syntax, required assets, and reproducibility anchors |
@@ -231,6 +233,7 @@ Start with [START_HERE.md](../START_HERE.md). It gives the installation check, r
 The recommended path is cumulative:
 
 - **Week 1 — Numerical foundations:** Python/NumPy/TensorFlow fundamentals, finite differences, residuals, and validation of lid-driven-cavity centerlines against Ghia et al.
+- **Week 1.1 — AI-assisted scientific software:** freeze axes, signs, stencil support, references, and thresholds before implementation; recover second-order convergence on an analytic streamfunction; reject an executable axis-swap bug; then audit the accepted `Re=100` cavity field with physical gates, provenance, manual review, disclosure, and a bounded claim.
 - **Week 2 — Supervised learning and model validity:** features, targets, scaling, losses, optimization, case-wise splits, interpolation versus extrapolation, and rarefied-flow nondimensionalization.
 - **Week 2.1 — Probabilistic UQ for CFD surrogates:** connect observation models to losses, compute an exact Bayesian posterior for noisy velocity measurements, propagate POD--GP coefficient uncertainty to cavity fields, compare proper scores and interpolation, and retain the failure of single-field interval scaling to reach nominal blind coverage.
 - **Week 3 — Particle and kinetic descriptions:** Maxwellian sampling, macroscopic moments, sampling-error scaling, DSMC algorithmic structure, noisy labels, and averaging.

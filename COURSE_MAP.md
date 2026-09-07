@@ -5,6 +5,7 @@
 | 1A | Eulerian fields, nondimensionalization, boundary conditions | Annotate lid-driven cavity variables and scales | Explain what is prescribed, solved, and derived |
 | 1B | Python/NumPy/TensorFlow for scientific work | Arrays, slicing, finite differences, tensors, gradients | Derivative/residual calculation and one-neuron update |
 | 1C | Numerical convergence versus validation | Streamfunction–vorticity cavity and Ghia comparison | Residual, centerlines, streamlines, and benchmark errors |
+| 1.1 | AI-assisted scientific software and accountable trust | Freeze an executable diagnostic specification; verify against an analytic streamfunction; reject an axis-swap bug; audit the accepted `Re=100` cavity field | Observed order, analytic error, physical gates, data SHA-256, retained accept/reject JSON, manual scientific review, AI-use disclosure, and bounded claim |
 | 2A | Features, targets, scaling, and losses | Build a rarefied-flow regression dataset | Explicit feature/target table and split definition |
 | 2B | Knudsen number and model validity | Classify continuum, slip, transition, and free-molecular regimes | Explain why nondimensional inputs encode physical validity |
 | 2C | Baseline before neural model | Polynomial/interpolation versus DNN | Interpolation/extrapolation comparison and limitation statement |

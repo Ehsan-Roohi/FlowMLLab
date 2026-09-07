@@ -25,6 +25,7 @@ spatial nodes or shifted physical regimes.
 
 - **Ghia, Ghia & Shin (1982).** Classical centerline data for the lid-driven cavity; used to distinguish solver convergence from validation. [DOI](https://doi.org/10.1016/0021-9991(82)90058-4)
 - **Wilson et al. (2014).** Practical scientific-computing habits for readable, testable, reusable work. [DOI](https://doi.org/10.1371/journal.pbio.1001745)
+- **Wilson et al. (2017).** A pragmatic workflow for data, software, collaboration, project organization, and manuscripts; methodological background for the independently authored Week-1.1 scientific-software contract. [DOI](https://doi.org/10.1371/journal.pcbi.1005510)
 - **Sandve et al. (2013).** Ten concise rules for preserving the evidence chain of a computational study. [DOI](https://doi.org/10.1371/journal.pcbi.1003285)
 - **Kluyver et al. (2016).** Jupyter as a reproducible computational narrative rather than a collection of disconnected cells. [DOI](https://doi.org/10.3233/978-1-61499-649-1-87)
 

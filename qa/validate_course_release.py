@@ -19,6 +19,17 @@ EXPECTED_DATA_SHA256 = "09b96b744ee4d18126d8dcc92feb60e128774a1b4d41bb3d8c90a63c
 
 
 REQUIRED = [
+    "flowmllab/scientific_software.py",
+    "tests/test_scientific_software.py",
+    "qa/build_week01_1_materials.py",
+    "notebooks/week01_1/README.md",
+    "notebooks/week01_1/SCIENTIFIC_SPEC.md",
+    "notebooks/week01_1/W1_1_AI_Assisted_Scientific_Software.ipynb",
+    "lectures/source/week01_1_ai_assisted_scientific_software.md",
+    "lectures/week01_1_ai_assisted_scientific_software.pdf",
+    "results/week01_1_scientific_software/README.md",
+    "results/week01_1_scientific_software/acceptance_record.json",
+    "results/week01_1_scientific_software/week01_1_acceptance_summary.png",
     "notebooks/week05_06/W5_Lab2_Sparse_Sensing_Dynamics.ipynb",
     "notebooks/week07/W7_Lab2_Modal_Forecasting.ipynb",
     "notebooks/week07_2/W7_2_Cylinder_Wake_State_Estimation.ipynb",
@@ -389,7 +400,7 @@ def validate_notebooks() -> tuple[int, int]:
                 for cell in cells
             ), f"missing learner-edition marker: {path}"
         count += 1
-    assert count == 31, f"expected 31 notebooks, found {count}"
+    assert count == 32, f"expected 32 notebooks, found {count}"
     return count, code_cells
 
 
@@ -1032,9 +1043,32 @@ def validate_hypersonic_cylinder_results() -> dict[str, object]:
     return report
 
 
+def validate_week01_1_results() -> dict[str, object]:
+    """Recompute the Week-1.1 scientific-software acceptance contract."""
+
+    from flowmllab.scientific_software import validate_week01_1_evidence  # noqa: PLC0415
+
+    report = validate_week01_1_evidence(ROOT)
+    assert report["decision"] == "accept"
+    assert all(report["gates"].values())
+    assert float(report["verification"]["observed_order"]) >= 1.90
+    assert float(report["cavity"]["archive_vorticity_relative_l2"]) <= 4.0e-2
+    notebook = json.loads(
+        (ROOT / "notebooks/week01_1/W1_1_AI_Assisted_Scientific_Software.ipynb").read_text(
+            encoding="utf-8"
+        )
+    )
+    source = "\n".join("".join(cell.get("source", [])) for cell in notebook["cells"])
+    assert "Axis-swapped relative L2" in source
+    assert "Required AI-use disclosure" in source
+    assert "This notebook is intentionally vendor-neutral" in source
+    assert all(cell.get("id") for cell in notebook["cells"])
+    return report
+
+
 def validate_pdfs() -> int:
     pdfs = sorted((ROOT / "lectures").glob("*.pdf"))
-    assert len(pdfs) == 16
+    assert len(pdfs) == 17
     for path in pdfs:
         result = subprocess.run(
             ["pdfinfo", str(path)], check=True, capture_output=True, text=True
@@ -1060,6 +1094,7 @@ def main() -> None:
     week10_metrics = validate_week10_aescte_results()
     uq_metrics = validate_probabilistic_uq_results()
     hypersonic_cylinder_metrics = validate_hypersonic_cylinder_results()
+    scientific_software_metrics = validate_week01_1_results()
     article_metrics = validate_article_alignment()
     pdfs = validate_pdfs()
     excluded_roots = {".external", ".git", ".venv", "tmp", "venv"}
@@ -1089,6 +1124,7 @@ def main() -> None:
     print("Week-9 Roohi--Mahdavi metrics:", json.dumps(week9_metrics, sort_keys=True))
     print("Week-10 DSMC reproduction metrics:", json.dumps(week10_metrics, sort_keys=True))
     print("Probabilistic-UQ metrics:", json.dumps(uq_metrics, sort_keys=True))
+    print("Week-1.1 scientific-software metrics:", json.dumps(scientific_software_metrics, sort_keys=True))
     print("Article-aligned validation metrics:", json.dumps(article_metrics, sort_keys=True))
 
 

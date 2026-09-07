@@ -1,0 +1,62 @@
+{
+  "cavity": {
+    "archive_vorticity_relative_l2": 0.0290205208936695,
+    "dataset_sha256": "09b96b744ee4d18126d8dcc92feb60e128774a1b4d41bb3d8c90a63ccfbabc36",
+    "grid": [
+      65,
+      65
+    ],
+    "interior_divergence_linf": 3.552713678800501e-15,
+    "interior_divergence_rms": 2.4180150874938615e-16,
+    "reynolds": 100.0,
+    "split": "train",
+    "wall_velocity_max_abs_error": 0.0
+  },
+  "decision": "accept",
+  "gates": {
+    "cavity_incompressibility": true,
+    "cavity_vorticity_agreement": true,
+    "cavity_wall_contract": true,
+    "dataset_identity": true,
+    "fine_grid_vorticity": true,
+    "manufactured_incompressibility": true,
+    "second_order_verification": true
+  },
+  "thresholds": {
+    "cavity_divergence_rms_max": 1e-12,
+    "cavity_vorticity_relative_l2_max": 0.04,
+    "fine_vorticity_relative_l2_max": 0.0005,
+    "manufactured_divergence_rms_max": 1e-12,
+    "observed_order_min": 1.9,
+    "wall_velocity_max_abs_error_max": 1e-12
+  },
+  "verification": {
+    "observed_order": 1.9965057195574742,
+    "rows": [
+      {
+        "divergence_rms": 3.0585631639439325e-15,
+        "h": 0.0625,
+        "points": 17,
+        "vorticity_relative_l2": 0.025504641595567534
+      },
+      {
+        "divergence_rms": 6.953771967045513e-15,
+        "h": 0.03125,
+        "points": 33,
+        "vorticity_relative_l2": 0.0064131488557943855
+      },
+      {
+        "divergence_rms": 1.481043188754839e-14,
+        "h": 0.015625,
+        "points": 65,
+        "vorticity_relative_l2": 0.0016056069643816762
+      },
+      {
+        "divergence_rms": 2.748430954319108e-14,
+        "h": 0.0078125,
+        "points": 129,
+        "vorticity_relative_l2": 0.0004015468503208841
+      }
+    ]
+  }
+}

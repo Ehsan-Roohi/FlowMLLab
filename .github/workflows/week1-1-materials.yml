@@ -1,0 +1,42 @@
+name: Rebuild and verify Week 1.1 materials
+
+on:
+  pull_request:
+    paths:
+      - "flowmllab/scientific_software.py"
+      - "tests/test_scientific_software.py"
+      - "qa/build_week01_1_materials.py"
+      - "notebooks/week01_1/**"
+      - "lectures/source/week01_1_ai_assisted_scientific_software.md"
+      - "lectures/week01_1_ai_assisted_scientific_software.pdf"
+      - "results/week01_1_scientific_software/**"
+      - ".github/workflows/week1-1-materials.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - name: Install runtime and PDF dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y poppler-utils
+          python -m pip install --upgrade pip
+          python -m pip install -e ".[test]" matplotlib nbformat nbclient ipykernel reportlab
+      - name: Run focused scientific tests
+        run: python -m unittest tests.test_scientific_software -v
+      - name: Rebuild and execute all materials
+        run: python qa/build_week01_1_materials.py --execute
+      - name: Verify notebook and PDF
+        run: |
+          python -m unittest tests.test_scientific_software -v
+          pdfinfo lectures/week01_1_ai_assisted_scientific_software.pdf
+          test -s results/week01_1_scientific_software/week01_1_acceptance_summary.png

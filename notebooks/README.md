@@ -19,6 +19,7 @@ Both are CPU teaching analogs, clearly separated from research-model reproductio
 | Week 1 | Python for CFD and AI | [Open in Colab](https://colab.research.google.com/github/Ehsan-Roohi/FlowMLLab/blob/main/notebooks/week01/01_python_for_cfd_ai_fluids.ipynb) |
 | Week 1 | TensorFlow for AI in fluids | [Open in Colab](https://colab.research.google.com/github/Ehsan-Roohi/FlowMLLab/blob/main/notebooks/week01/02_tensorflow_for_ai_fluids.ipynb) |
 | Week 1 | Cavity CFD and Ghia validation | [Open in Colab](https://colab.research.google.com/github/Ehsan-Roohi/FlowMLLab/blob/main/notebooks/week01/03_cavity_ghia.ipynb) |
+| Week 1.1 | AI-assisted scientific software and executable acceptance gates | [Open in Colab](https://colab.research.google.com/github/Ehsan-Roohi/FlowMLLab/blob/main/notebooks/week01_1/W1_1_AI_Assisted_Scientific_Software.ipynb) |
 | Week 2 | Supervised learning and rarefaction | [Open in Colab](https://colab.research.google.com/github/Ehsan-Roohi/FlowMLLab/blob/main/notebooks/week02/AI_in_Fluids_Week2_Colab_Expanded.ipynb) |
 | Week 2.1 | Probabilistic UQ for CFD surrogates | [Open in Colab](https://colab.research.google.com/github/Ehsan-Roohi/FlowMLLab/blob/main/notebooks/week02_1/Probabilistic_UQ_CFD.ipynb) |
 | Week 3 | Maxwellian noise and ML | [Open in Colab](https://colab.research.google.com/github/Ehsan-Roohi/FlowMLLab/blob/main/notebooks/week03/AI_in_Fluids_Week3_Lab1_Maxwellian_Noise_ML_Student.ipynb) |
@@ -46,6 +47,11 @@ Both are CPU teaching analogs, clearly separated from research-model reproductio
 ## Weekly laboratories
 
 - `week01/`: Python, TensorFlow, and validated continuum cavity CFD.
+- `week01_1/`: a vendor-neutral, specification-driven audit of code proposed by
+  a person or coding agent. The lab verifies second-order vorticity on four
+  manufactured grids, rejects an executable axis-swap bug, audits the accepted
+  `Re=100` cavity field, and requires a complete AI-use disclosure and bounded
+  claim.
 - `week02/`: supervised-learning foundations and a rarefied-flow surrogate.
 - `week02_1/`: the incremental probabilistic-UQ lecture/lab pair. It connects Gaussian observation models, exact Bayesian regression, POD--Gaussian-process fields, proper scores, validation scaling, and blind under-coverage between Weeks 2 and 3.
 - `week03/`: Maxwellian sampling/noise and a mini DSMC cavity.
