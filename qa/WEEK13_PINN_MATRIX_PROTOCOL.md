@@ -62,3 +62,33 @@ sbatch qa/unity_week13_pinn_matrix.sbatch
 
 The array writes only to `tmp/week13-pinn-*`.  Results enter the retained course
 evidence only after the audit gates have been checked case by case.
+
+## Research-paper extension (not claimed by the pilot)
+
+Służalec et al. (Journal of Computational Science 95, 2026, 102817) report
+failure from `Re=100` upward for their primitive-variable/FOSLS PINN and
+CRVPINN cavity experiments.  Their seven-output formulation represents
+`(u,v,p)` plus four first-derivative auxiliary fields; it is not the
+streamfunction-pressure construction used here.  Both studies solve the
+Navier--Stokes equations, so the scientific contrast is **representation and
+constraint structure**, not "Navier--Stokes versus streamfunction."
+
+The present four-run matrix is only a feasibility pilot.  A paper-quality test
+must hold lid regularization, reference problem, network capacity, collocation
+support, precision and computational budget fixed while comparing:
+
+1. primitive-variable/FOSLS PINN;
+2. streamfunction-pressure PINN;
+3. Adam-only and Adam-to-quasi-Newton schedules;
+4. multiple independent seeds at each `(Re, depth/width)` pair.
+
+Primary outcomes must include field and centreline errors against a
+grid-converged matched CFD/FEM reference, an H1-type error, full and corner-band
+residuals, wall errors, vortex topology, wall time and residual-evaluation
+count.  Failed seeds remain in the denominator.  This factorial design is
+required before attributing a success to the streamfunction representation.
+
+Reference: T. Służalec et al., "Reliable physics-informed neural networks for
+Navier--Stokes simulations. Can we trust AI-generated numerical simulations?",
+*Journal of Computational Science* 95 (2026) 102817,
+https://doi.org/10.1016/j.jocs.2026.102817.

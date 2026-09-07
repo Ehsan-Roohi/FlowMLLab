@@ -131,8 +131,13 @@ def train(module, model, output, reynolds, aspect, points_n, adam_steps, ssb_ste
     saved = None
     if resume and checkpoint.is_file():
         saved = torch.load(checkpoint, map_location="cpu", weights_only=False)
-        if saved["config"] != config:
+        immutable = ("reynolds_number", "aspect_ratio", "collocation_points", "seed")
+        if any(saved["config"].get(key) != config[key] for key in immutable):
             raise RuntimeError("Refusing an incompatible checkpoint")
+        if adam_steps < saved["adam_done"] or ssb_steps < saved["ssb_done"]:
+            raise RuntimeError("Requested optimizer target precedes the checkpoint")
+        if saved["phase"] != "adam" and adam_steps != saved["adam_done"]:
+            raise RuntimeError("Adam cannot be extended after SSBroyden2 has started")
         model.load_state_dict(saved["model"])
         train_points = saved["train_points"].to(module.device)
         adam_done, ssb_done, phase = saved["adam_done"], saved["ssb_done"], saved["phase"]
@@ -341,7 +346,7 @@ def main():
                      args.adam_steps, args.ssb_steps, args.checkpoint_every, args.resume)
     if not complete:
         return 99
-    audit = {"claim_status": "residual-qualified-only", "reynolds_number": args.re,
+    audit = {"claim_status": "residual-audited-no-field-reference", "reynolds_number": args.re,
              "aspect_ratio_depth_over_width": args.aspect_ratio,
              "optimizers": ["Adam", "SSBroyden2"], "adam_steps": args.adam_steps,
              "ssbroyden2_steps": args.ssb_steps, "collocation_points": args.points,
@@ -355,9 +360,11 @@ def main():
         comparison = square_cfd_metrics(module, model, args.reference_npz.resolve(), args.re)
         if comparison is not None:
             audit["cfd_comparison"] = comparison
-            audit["claim_status"] = "field-compared-square-case"
+            audit["claim_status"] = ("field-qualified-square-case" if comparison["all_pass"]
+                                     else "field-comparison-failed-square-case")
     Path("audit.json").write_text(json.dumps(audit, indent=2) + "\n", encoding="utf-8")
     render(module, model, Path.cwd(), args.re, args.aspect_ratio, audit)
+    Path("COMPLETE").write_text("audit and retained figures written\n", encoding="utf-8")
     print(json.dumps(audit, indent=2))
     return 0
 

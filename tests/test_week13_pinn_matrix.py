@@ -15,7 +15,11 @@ def test_rectangular_runner_has_physical_scaling_and_two_optimizers():
     assert "heldout_momentum_rms" in text
     assert "wall_audit" in text
     assert "UPSTREAM_COMMIT" in text
-    assert "field-compared-square-case" in text
+    assert "residual-audited-no-field-reference" in text
+    assert "field-qualified-square-case" in text
+    assert "field-comparison-failed-square-case" in text
+    assert 'Path("COMPLETE").write_text' in text
+    assert 'immutable = ("reynolds_number"' in text
 
 
 def test_matrix_job_is_restartable_gpu_preempt_array():
@@ -34,3 +38,10 @@ def test_protocol_does_not_overclaim_deep_cavity_validation():
     assert "not** labelled field-validated" in text
     assert "top-corner residual" in text
     assert "SIGUSR1" in text
+
+
+def test_harvester_excludes_checkpoints_and_normalizes_legacy_labels():
+    text = (ROOT / "qa" / "harvest_week13_results.py").read_text(encoding="utf-8")
+    assert "checkpoint.pt" not in text
+    assert "residual-audited-no-field-reference" in text
+    assert "field-qualified-square-case" in text
