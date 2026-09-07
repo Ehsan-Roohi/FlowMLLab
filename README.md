@@ -48,7 +48,7 @@ Weeks 5 and 6 share a project pack and lecture guide, but have separate learning
 | [8](#week-8--gas-dynamics-and-sciml) | Exact compressible-flow branches and learned inverse maps | [Week 8 labs](notebooks/week08/README.md) | [Lecture 8](lectures/week08_gas_dynamics_sciml.pdf) |
 | [9](#week-9--rarefied-micro-step-and-micro-nozzle) | Geometry-dependent and shock-aligned operators | [Week 9 labs](notebooks/week09/README.md) | [Lecture 9](lectures/week09_rarefied_deeponet_case_studies.pdf) |
 | [10](#week-10--dsmc-cavity-and-molecular-shocks) | Cavity and mono/diatomic shock reproduction | [Week 10 lab](notebooks/week10/README.md) | [Lecture 10](lectures/week10_dsmc_data_driven_surrogates.pdf) |
-| [10.1](#week-101--ab-initio-collision-deeponet) | Molecular scattering and DSMC cylinder contours | [Reading case and figures](results/abinitio_deeponet_cylinder/README.md) | [Lecture companion](lectures/week10_1_abinitio_collision_deeponet.md) |
+| [10.1](#week-101--ab-initio-collision-deeponet) | Molecular scattering and DSMC cylinder contours | [CPU scattering lab](notebooks/week10_1/W10_1_Collision_Map_Surrogate_Audit.ipynb) · [Research fields](results/abinitio_deeponet_cylinder/README.md) | [Lecture companion](lectures/week10_1_abinitio_collision_deeponet.md) |
 | [11](#week-11--shock-and-vortex-identification) | Physical diagnostics and overlapping learned labels | [Week 11 lab](notebooks/week11/README.md) | [Lecture 11](lectures/week11_shock_vortex_identification.pdf) |
 | [12](#week-12--dsmc-moment-reconstruction) | Additive moments, observation-conditioned reconstruction and support | [Week 12 lab](notebooks/week12/README.md) | [Lecture 12](lectures/week12_dsmc_moment_reconstruction.pdf) |
 
@@ -205,6 +205,12 @@ Shared colors, **different times and sampling windows**: qualitative comparison 
 [All four colored fields and provenance](results/abinitio_deeponet_cylinder/README.md)
 · [Surface pressure and heat flux](results/abinitio_deeponet_cylinder/README.md#surface-pressure-and-heat-flux)
 · [Week 10.1 lecture companion](lectures/week10_1_abinitio_collision_deeponet.md)
+
+[Run the CPU collision-map lab](notebooks/week10_1/W10_1_Collision_Map_Surrogate_Audit.ipynb):
+solve a reduced Lennard-Jones scattering problem, check analytic limits and
+audit a fitted surrogate using transport integrals. This executable analog is
+separate from the Jäger research fields above; it does not reproduce the
+article's potential or network.
 
 ### Week 11 — Shock and vortex identification
 

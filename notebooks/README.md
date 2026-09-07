@@ -74,7 +74,9 @@ every field plot to force, density, Mach-number, relaxation-time, blockage, and
 reference diagnostics. Before ML, students audit a retained `Re=100`
 three-grid sequence (`D/dx=12,18,27`) with fixed nondimensional physics and
 statistical convergence. Fine-pair tolerances pass, but the formal
-asymptotic/GCI gate fails and is retained; `D/dx=40` is the next declared run.
+asymptotic/GCI gate fails and is retained. The subsequent D40 release decision
+is recorded in [evidence status](../qa/REMAINING_EVIDENCE.md); a waived release
+gate does not establish asymptotic grid convergence.
 Machine-readable retained evidence is in `../results/cylinder_lbm/`.
 The executed 1080p complete-Re blind animation and its field-error/baseline
 evidence are in `../results/cylinder_ml/`.
@@ -86,9 +88,10 @@ The Week-7.1 notebook is intentionally additive. It does not mix the continuum
 LBM labels with the rarefied DSMC archive. The 1.4 GB source ZIP is reduced by a
 deterministic, checksummed builder to 44,500 finite teaching points. The retained
 result is scientifically useful precisely because the direct Mach-field
-interpolation baseline strongly outperforms the low-capacity CPU operator analog;
-the optional TensorFlow cell builds the reviewed Fusion-DeepONet topology but
-does not claim full paper reproduction.
+interpolation baseline outperforms the trained 3x96 tanh MLP on all six aggregate
+field comparisons. See the [paper-to-course audit](../qa/WEEK71_PAPER_PARITY.md)
+for historical split errors, normalization caveats and the separate requirements
+for full paper reproduction.
 
 The additive `week04/W4_1_Classical_ROM_Cavity.ipynb` lab comes after the
 original Week-4 sequence without modifying it.  It implements dynamic centered
