@@ -142,37 +142,101 @@ print('PASS: retained data and evidence unchanged.')'''),
 
 
 def make_pdf():
+    import json
+    from statistics import mean, stdev
     from reportlab.lib import colors
-    from reportlab.lib.enums import TA_LEFT
     from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
     from reportlab.lib.utils import ImageReader
-    from reportlab.platypus import SimpleDocTemplate, Paragraph, PageBreak, Spacer, Image
+    from reportlab.pdfbase import pdfmetrics
+    from reportlab.pdfbase.ttfonts import TTFont
+    from reportlab.platypus import SimpleDocTemplate, Paragraph, PageBreak, Spacer, Image, Table, TableStyle
     source = ROOT/'lectures/source/week07_2_cylinder_state_estimation.md'
     out = ROOT/'output/pdf/week07_2_cylinder_state_estimation.pdf'; out.parent.mkdir(parents=True,exist_ok=True)
-    styles=getSampleStyleSheet()
-    styles.add(ParagraphStyle(name='CourseTitle',fontName='Helvetica-Bold',fontSize=21,leading=25,textColor=colors.HexColor('#173b56'),spaceAfter=18))
-    styles.add(ParagraphStyle(name='CourseBody',fontName='Helvetica',fontSize=10.4,leading=15,spaceAfter=10,alignment=TA_LEFT))
-    story=[]
-    pages=source.read_text(encoding='utf-8').split('\n---\n')
-    for page_index,page in enumerate(pages):
-        if page_index: story.append(PageBreak())
-        for block in page.strip().split('\n\n'):
-            heading,sep,body=block.partition('\n')
-            if heading.startswith('# '):
-                story.append(Paragraph(html.escape(heading[2:]),styles['CourseTitle']))
-                if body: story.append(Paragraph(html.escape(body).replace('\n','<br/>'),styles['CourseBody']))
-            else: story.append(Paragraph(html.escape(block).replace('\n','<br/>'),styles['CourseBody']))
-        if page_index==4:
-            story.extend([Spacer(1,6),Image(str(ROOT/'results/week07_2_state_estimation/state_estimation_fields.png'),width=500,height=381)])
-        if page_index==5:
-            story.extend([Spacer(1,8),Image(str(ROOT/'results/week07_2_state_estimation/state_estimation_scores.png'),width=480,height=270)])
-    def footer(canvas,doc):
-        canvas.setStrokeColor(colors.HexColor('#c7d5df'));canvas.line(42,38,553,38)
-        canvas.setFont('Helvetica',8);canvas.setFillColor(colors.HexColor('#506070'))
-        canvas.drawString(42,25,'FlowMLLab | Week 7.2 | State estimation')
+    evidence = json.loads((ROOT/'results/week07_2_state_estimation/metrics.json').read_text())
+    styles = getSampleStyleSheet()
+    ink = colors.HexColor('#173b56'); muted = colors.HexColor('#506070')
+    styles.add(ParagraphStyle(name='Title72', fontName='Helvetica-Bold', fontSize=23, leading=27, textColor=ink, spaceAfter=12))
+    styles.add(ParagraphStyle(name='Heading72', fontName='Helvetica-Bold', fontSize=12, leading=16, textColor=ink, spaceBefore=10, spaceAfter=6, keepWithNext=True))
+    styles.add(ParagraphStyle(name='Body72', fontName='Helvetica', fontSize=10.2, leading=14.4, spaceAfter=7))
+    styles.add(ParagraphStyle(name='Small72', fontName='Helvetica', fontSize=8.8, leading=12, textColor=muted, spaceAfter=7))
+    math_font = Path('C:/Windows/Fonts/timesi.ttf')
+    if not math_font.is_file():
+        from matplotlib.font_manager import FontProperties, findfont
+        math_font = Path(findfont(FontProperties(family='DejaVu Serif', style='italic')))
+    pdfmetrics.registerFont(TTFont('Equation72Embedded', str(math_font)))
+    styles.add(ParagraphStyle(name='Equation72', fontName='Equation72Embedded', fontSize=12, leading=18, leftIndent=12, spaceAfter=4))
+    sections = [page.strip().split('\n\n') for page in source.read_text(encoding='utf-8').split('\n---\n')]
+    story = []
+    def paragraph(text, style='Body72'):
+        story.append(Paragraph(text, styles[style]))
+    def section(index, skip=0):
+        blocks = sections[index]
+        paragraph(html.escape(blocks[0].removeprefix('# ')), 'Heading72')
+        for block in blocks[1+skip:]:
+            paragraph(html.escape(block).replace('\n', ' '))
+    def table(rows, widths, header=True):
+        obj = Table(rows, colWidths=widths, hAlign='LEFT')
+        settings = [('FONTNAME',(0,0),(-1,-1),'Helvetica'), ('FONTSIZE',(0,0),(-1,-1),9.4),
+                    ('TOPPADDING',(0,0),(-1,-1),9), ('BOTTOMPADDING',(0,0),(-1,-1),9),
+                    ('LINEBELOW',(0,0),(-1,0),.7,ink), ('VALIGN',(0,0),(-1,-1),'MIDDLE'),
+                    ('ROWBACKGROUNDS',(0,1),(-1,-1),[colors.HexColor('#f0f5f7'),colors.white])]
+        if header:
+            settings += [('BACKGROUND',(0,0),(-1,0),ink), ('TEXTCOLOR',(0,0),(-1,0),colors.white),
+                         ('FONTNAME',(0,0),(-1,0),'Helvetica-Bold')]
+        obj.setStyle(TableStyle(settings)); story.extend([obj, Spacer(1,8)])
+
+    # Page 1: concept, measurement model and the full causal update in one place.
+    paragraph('07.2  /  CYLINDER WAKE', 'Small72')
+    paragraph('State estimation<br/>from sparse sensors', 'Title72')
+    for block in sections[0][1:]: paragraph(html.escape(block), 'Body72')
+    paragraph('01  Reduced model and observations', 'Heading72')
+    paragraph('Let x<sub>k</sub> be a <b>column</b> of POD coefficients; the code stores its transpose a<sub>k</sub>. The POD basis contains training modes, and H selects its sensor rows. With F = A<super>T</super>, the model is:')
+    for equation in ('q<sub>k</sub> = q&#772; + Φx<sub>k</sub>',
+                     'x<sub>k+1</sub> = Fx<sub>k</sub> + w<sub>k</sub>, &nbsp; w<sub>k</sub> ~ N(0,Q)',
+                     'y<sub>k</sub> = q&#772;<sub>s</sub> + Hx<sub>k</sub> + v<sub>k</sub>, &nbsp; v<sub>k</sub> ~ N(0,R)'):
+        paragraph(equation.replace('q&#772;', 'q<sub>mean</sub>'), 'Equation72')
+    for block in sections[1][2:]: paragraph(html.escape(block))
+    paragraph('02  Causal predict-update recursion', 'Heading72')
+    for equation in ('x<super>-</super> = Fx<super>+</super>, &nbsp; P<super>-</super> = FP<super>+</super>F<super>T</super> + Q',
+                     'r = y - q<sub>mean,s</sub> - Hx<super>-</super>, &nbsp; S = HP<super>-</super>H<super>T</super> + R',
+                     'K = P<super>-</super>H<super>T</super>S<super>-1</super>, &nbsp; x<super>+</super> = x<super>-</super> + Kr',
+                     'P<super>+</super> = (I-KH)P<super>-</super>(I-KH)<super>T</super> + KRK<super>T</super>'):
+        paragraph(equation, 'Equation72')
+    paragraph('Superscripts - and + denote predicted and updated states. The code solves for the gain and uses the Joseph covariance update. A prefix-invariance test checks that future measurements cannot alter earlier estimates.', 'Small72')
+    paragraph(html.escape(sections[2][-1]), 'Small72')
+
+    # Page 2: native text table generated from retained metrics, followed by UQ.
+    story.append(PageBreak())
+    paragraph('Protocol and quantitative evidence', 'Title72')
+    section(3)
+    paragraph('Test error across five measurement-noise seeds', 'Heading72')
+    rows = [['Method', 'Mean relative L2 (%)', 'Sample SD (pp)']]
+    for name, label in [('kalman','Kalman filter'),('sensor_only','Sensor-only POD'),('open_loop','Open-loop DMD'),('persistence','Persistence')]:
+        values = [100*r['test']['relative_l2'] for r in evidence['methods'][name]]
+        rows.append([label, f'{mean(values):.3f}', f'{stdev(values):.3f}'])
+    table(rows, [218,160,133])
+    paragraph('SD is measured in percentage points (pp). Open-loop and persistence ignore sensor noise, so their across-seed SD is zero. All rows use the same test frames; these are repeated measurements of one CFD trajectory.', 'Small72')
+    paragraph(html.escape(sections[4][-1]))
+    section(5)
+
+    # Page 3: explicit physical aspect ratio; the PDF never stretches an image.
+    story.append(PageBreak())
+    paragraph('Wake reconstruction and local errors', 'Title72')
+    figure = ROOT/'results/week07_2_state_estimation/state_estimation_fields.png'
+    width, height = ImageReader(str(figure)).getSize()
+    story.append(Image(str(figure), width=511, height=511*height/width))
+    paragraph('Final test frame, first evaluation seed (31). Panels (a-d) share the velocity scale; (e-f) share the absolute-error scale. Circles mark the 32 sensors. Equal x/D and y/D scales preserve physical geometry. The cylinder itself lies outside this wake region.', 'Small72')
+    paragraph('Reading the figure', 'Heading72')
+    paragraph('The velocity contours show the coherent wake; the absolute-error panels reveal differences that a signed color scale can hide. Contour rendering interpolates level crossings for display; all scores use the original 32 x 78 samples.', 'Body72')
+    section(6)
+    def footer(canvas, doc):
+        canvas.setStrokeColor(colors.HexColor('#d4dfe6')); canvas.line(42,39,553,39)
+        canvas.setFont('Helvetica',8); canvas.setFillColor(muted)
+        canvas.drawString(42,25,'FlowMLLab  /  Ehsan Roohi  /  Week 7.2')
         canvas.drawRightString(553,25,str(doc.page))
-    SimpleDocTemplate(str(out),pagesize=(595,842),rightMargin=42,leftMargin=42,topMargin=38,bottomMargin=52,
-        title='Week 7.2 - Cylinder wake state estimation',author='Ehsan Roohi / FlowMLLab').build(story,onFirstPage=footer,onLaterPages=footer)
+    SimpleDocTemplate(str(out), pagesize=(595,842), rightMargin=42,leftMargin=42,
+        topMargin=38,bottomMargin=52, title='Week 7.2 - Cylinder wake state estimation',
+        author='Ehsan Roohi / FlowMLLab').build(story,onFirstPage=footer,onLaterPages=footer)
     shutil.copy2(out,ROOT/'lectures'/out.name); print(out)
 
 
