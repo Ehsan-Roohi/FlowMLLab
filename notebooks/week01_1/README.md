@@ -1,4 +1,4 @@
-# Week 1.1 - AI-assisted scientific software
+# Week 1.1 - AI-Assisted Scientific Software: Specification, Verification, and Trust
 
 This incremental module sits between numerical foundations and supervised
 learning. It teaches students to turn a scientific change request into an
@@ -18,11 +18,17 @@ same implementation against the accepted `Re=100` FlowMLLab cavity field.
 
 ## Required submission
 
-1. A completed AI-use disclosure, including `No coding agent used` when applicable.
-2. A candidate implementation or controlled modification.
-3. The complete acceptance JSON, including failed gates.
-4. One manual code-review finding that is scientific rather than stylistic.
-5. A bounded claim stating exactly what the evidence does and does not support.
+The assessed task is specified in [ASSIGNMENT.md](ASSIGNMENT.md): add a boundary
+volume-flux diagnostic using a coding agent. Complete and commit [SPEC.md](SPEC.md)
+before requesting code. Use [PROCESS_LOG.md](PROCESS_LOG.md),
+[LINE_REVIEW.md](LINE_REVIEW.md) and [REPORT.md](REPORT.md) for the submission.
+The notebook above is the worked preparation, not the completed student assignment.
+
+1. Specification-first commit and actual coding-agent prompt/model log.
+2. A new boundary-flux implementation and its original and corrected diffs.
+3. Unit, regression, invariant and independent-reference outputs, including failures.
+4. Line-by-line review of every changed code and test line.
+5. The report titled "What the agent produced, what the physicist corrected, and why".
 
 Do not tune a threshold after opening the final cavity result. If the frozen
 contract fails, retain the failure and revise the method in a new, versioned

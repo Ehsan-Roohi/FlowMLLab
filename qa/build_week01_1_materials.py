@@ -392,7 +392,8 @@ def build_notebook() -> Path:
         """
         ## 6. Required AI-use disclosure and manual review
 
-        Copy this block into your report and complete it even if no agent was used:
+        The assessed assignment requires a coding agent of your choice.
+        Complete [PROCESS_LOG.md](PROCESS_LOG.md) with actual interaction records:
 
         - **Tool/model/date:**
         - **Exact specification supplied:**
@@ -402,21 +403,27 @@ def build_notebook() -> Path:
         - **Failed gates retained:**
         - **Bounded claim:**
 
-        Manual review must address at least one scientific issue: axis order,
-        units, sign convention, stencil support, boundary treatment, reference
-        suitability, or threshold justification. Naming and formatting comments
-        alone do not satisfy the requirement.
+        Review every changed code and test line using [LINE_REVIEW.md](LINE_REVIEW.md).
+        Cover axis order, units, signs, quadrature, boundaries, invalid inputs and
+        reference independence. Record actual human corrections; never fabricate them.
         """
     )
     md(
         """
-        ## 7. Controlled extension
+        ## 7. Required GitHub implementation assignment
 
-        Ask a coding agent, a collaborator, or yourself to make exactly one
-        controlled change: support a stretched grid, add circulation, or refactor
-        the derivative kernel. Do not change the frozen gates after opening the
-        cavity result. Submit the specification, diff, complete test output,
-        acceptance JSON, manual review, and a claim limited to the evidence.
+        Follow [ASSIGNMENT.md](ASSIGNMENT.md). First complete and commit [SPEC.md](SPEC.md),
+        then ask a coding agent to add `net_volume_flux(x, y, u, v)` in
+        `flowmllab/student_mass_balance.py`. The function is your new contribution;
+        running the instructor's reference notebook is only preparation.
+
+        Run `python qa/check_week01_1_candidate.py flowmllab/student_mass_balance.py`
+        from the repository root, then the existing scientific-software tests.
+        Report unit, numerical-regression, physical-invariant and independent-reference
+        evidence separately. Preserve failed attempts and the original AI patch.
+        Submit the diff, specification-first commit, process log, line review and
+        [REPORT.md](REPORT.md), titled **What the agent produced, what the physicist
+        corrected, and why**, as a PR in your own fork or the instructor-designated repo.
 
         **Exit question:** Which passing gate would still be insufficient for an
         unstructured-mesh turbulent-flow claim, and what new reference would you

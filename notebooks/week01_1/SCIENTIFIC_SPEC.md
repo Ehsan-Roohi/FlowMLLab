@@ -57,7 +57,7 @@ necessary but not sufficient for a scientific claim.
 
 Every submission must state:
 
-- tool/model and date used, or `No coding agent used`;
+- tool/model and date used (the assessed task requires a coding agent; see ASSIGNMENT.md);
 - the exact task specification supplied to the tool;
 - files or functions proposed by the tool;
 - material human corrections and why they were necessary;

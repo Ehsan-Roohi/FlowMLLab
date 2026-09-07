@@ -140,7 +140,19 @@ Use a supported Python version and record the packages actually used. Preserve t
 
 Numerical agreement and byte-identical files are different properties. A plotting-library change may alter image metadata without changing scientific values. Conversely, an unchanged image does not prove that it came from the stated input. Inspect the numerical record and execution context as well as the rendered document. Reproducibility is a chain of identifiable operations, not just a fixed random seed [1,2].
 
-### 12. Exercises and assessment
+### 12. Required GitHub implementation assignment
+
+The worked notebook prepares you for an actual contribution. Add net_volume_flux(x, y, u, v) in flowmllab/student_mass_balance.py using a coding agent of your choice. Compute the outward boundary integral with composite trapezoidal quadrature: integrate u on the right minus the left edge, and v on the top minus the bottom edge. For dimensional velocities this is volume flux per unit depth, in square metres per second; its normalized value is Q/(U L). It is not a variable-density mass-flux diagnostic. Zero integrated flux can hide compensating local errors, so it complements rather than replaces the divergence audit.
+
+Follow ASSIGNMENT.md in notebooks/week01_1. Complete the supplied SPEC.md with the physical problem, inputs and outputs, units, validity limits, numerical criteria and failure cases. Commit it before requesting code, and record that commit in PROCESS_LOG.md. Preserve the actual prompt, tool and model identifier, original generated patch, edited files and human corrections. The assessed task requires an agent; any access exception must be agreed with the instructor and recorded explicitly.
+
+Report four distinct levels of evidence: unit tests for signs and invalid inputs; numerical regression against retained Week 1.1 evidence; physical invariants on constant velocity and the closed cavity; and independent analytic boundary integrals. The instructor checker also adds 0.1 to the right-edge horizontal velocity on the unit square, requiring a flux increase of 0.1. This deliberately altered field is a fault-detection test, not a new CFD solution. A function that always returns zero must fail. Run the candidate checker from the repository root and retain its complete output:
+
+@code python qa/check_week01_1_candidate.py flowmllab/student_mass_balance.py
+
+Review every changed code and test line using LINE_REVIEW.md, including the meaning of axes, normal signs, quadrature weights, units and reference values. Submit a PR in your own fork or the instructor-designated repository with the specification-first commit, implementation, tests, process log, review and REPORT.md. Its title must be: What the agent produced, what the physicist corrected, and why. Record real corrections; if none were needed, explain the evidence supporting that conclusion. Running the reference notebook alone does not complete this assignment.
+
+### 13. Exercises and assessment
 
 Exercise 1. Derive the rigid-rotation result u = -a y, v = a x by hand. Explain which sign and axis errors it reveals. Why does a method that is exact for a linear field still need the nonlinear reference and the grid study?
 
@@ -152,7 +164,7 @@ Exercise 4. Propose a verification study for stretched Cartesian coordinates. St
 
 Submit the specification, convergence study, cavity interpretation, one reviewed failure and exact reproduction information. Assessment assigns 20% to specification, 25% to verification, 20% to the physical consistency audit, 15% to manual scientific review, 10% to provenance and 10% to the limits of the claim. Explain what each result means and what it cannot establish.
 
-### 13. Guidance for interpreting the exercises
+### 14. Guidance for interpreting the exercises
 
 For rigid rotation, differentiating v = a x with respect to x gives a, while differentiating u = -a y with respect to y gives -a. Subtraction therefore gives 2a. Both normal derivatives vanish, giving zero divergence. The swapped expression also gives zero in this case, which immediately exposes its failure as a vorticity diagnostic when a is nonzero. A centered difference differentiates linear functions exactly apart from roundoff, so this example tests semantics rather than the expected truncation-error rate. The nonlinear streamfunction supplies the curvature and higher derivatives needed to examine that rate.
 

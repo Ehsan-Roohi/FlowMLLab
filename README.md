@@ -78,6 +78,7 @@ then bind array semantics, vorticity convention, incompressibility, wall
 conditions, thresholds and the complete data hash into one machine-readable
 decision. [Run the lab](notebooks/week01_1/W1_1_AI_Assisted_Scientific_Software.ipynb)
 · [Read the scientific specification](notebooks/week01_1/SCIENTIFIC_SPEC.md)
+· [Complete the agent-assisted GitHub assignment](notebooks/week01_1/ASSIGNMENT.md)
 · [Inspect the retained evidence](results/week01_1_scientific_software/README.md)
 
 ### Week 2 — Supervised learning and rarefaction
