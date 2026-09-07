@@ -6,6 +6,7 @@ on:
       - "flowmllab/scientific_software.py"
       - "tests/test_scientific_software.py"
       - "qa/build_week01_1_materials.py"
+      - "qa/week01_1_lecture.py"
       - "notebooks/week01_1/**"
       - "lectures/source/week01_1_ai_assisted_scientific_software.md"
       - "lectures/week01_1_ai_assisted_scientific_software.pdf"

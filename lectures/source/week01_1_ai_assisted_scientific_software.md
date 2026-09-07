@@ -11,18 +11,30 @@ agent. The authoritative rendered lecture is
 
 ## Slide sequence
 
-1. Module scope and vendor-neutral learning objective.
-2. Execution, verification, physical validity, and reproducibility.
-3. Scientific failure modes missed by conventional unit tests.
-4. Specification before implementation.
-5. Frozen executable thresholds.
-6. Array, derivative, sign, and stencil-support conventions.
-7. Manufactured-solution convergence and accepted CFD evidence.
-8. Interpretation of the real-case audit.
+1. Scientific question and retained cavity velocity field.
+2. Execution, mathematical verification, physical validation, and reproducibility.
+3. Explicit scientific specification and array contract.
+4. Differential operators, sign convention, and second-order interior stencil.
+5. Streamfunction construction and analytic vorticity.
+6. Four-grid convergence plot and observed order.
+7. Real cavity vorticity and interpretation of the archive audit.
+8. All seven measured values alongside their frozen acceptance thresholds.
 9. A plausible axis-swap failure that executes but is rejected.
-10. Human-agent loop and authority boundaries.
-11. Evidence-based assessment rubric.
-12. Bounded conclusion, references, and exit question.
+10. Concrete implementation brief and human review workflow.
+11. Input identity, execution context, and reproducible decision evidence.
+12. Evidence-based assessment rubric and discussion question.
+13. Bounded conclusion and references.
+
+## Visual design and build
+
+The 13-page landscape lecture uses a consistent typographic hierarchy,
+typeset mathematical expressions, full-size scientific figures, and open
+tables. The lecture renderer is `../../qa/week01_1_lecture.py`, called by the
+material builder. Every text box has an overflow check. The cavity keeps
+equal axis scaling. Its vorticity uses an explicitly labeled symmetric-log
+color scale (linear within +/-1) to show the core and wall extremes without
+clipping data. No measurements or acceptance thresholds were changed for
+the redesign.
 
 ## Retained numerical anchors
 

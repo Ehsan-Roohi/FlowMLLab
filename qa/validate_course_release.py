@@ -22,6 +22,7 @@ REQUIRED = [
     "flowmllab/scientific_software.py",
     "tests/test_scientific_software.py",
     "qa/build_week01_1_materials.py",
+    "qa/week01_1_lecture.py",
     "notebooks/week01_1/README.md",
     "notebooks/week01_1/SCIENTIFIC_SPEC.md",
     "notebooks/week01_1/W1_1_AI_Assisted_Scientific_Software.ipynb",
