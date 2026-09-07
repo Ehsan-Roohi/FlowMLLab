@@ -19,6 +19,9 @@ EXPECTED_DATA_SHA256 = "09b96b744ee4d18126d8dcc92feb60e128774a1b4d41bb3d8c90a63c
 
 
 REQUIRED = [
+    "lectures/week04_2_pinn_cavity.pdf",
+    "lectures/source/week04_2_pinn_cavity.md",
+    "qa/build_week04_2_lecture.py",
     "flowmllab/scientific_software.py",
     "tests/test_scientific_software.py",
     "qa/build_week01_1_materials.py",
@@ -1070,7 +1073,7 @@ def validate_week01_1_results() -> dict[str, object]:
 
 def validate_pdfs() -> int:
     pdfs = sorted((ROOT / "lectures").glob("*.pdf"))
-    assert len(pdfs) == 17
+    assert len(pdfs) == 18
     for path in pdfs:
         result = subprocess.run(
             ["pdfinfo", str(path)], check=True, capture_output=True, text=True

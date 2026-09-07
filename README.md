@@ -42,6 +42,7 @@ Weeks 5 and 6 share a project pack and lecture guide, but have separate learning
 | [3](#week-3--kinetic-theory-and-dsmc) | Maxwellian sampling and particle simulation | [Week 3 labs](notebooks/week03/) | [Lecture 3](lectures/week03_kinetic_dsmc.pdf) |
 | [4](#week-4--cavity-surrogates-and-deeponet) | CFD datasets, field surrogates and operator learning | [Week 4 labs](notebooks/week04/) | [Lecture 4](lectures/week04_cavity_surrogates_deeponet.pdf) |
 | [4.1](#week-41--classical-reduced-order-models) | POD–Galerkin and POD–DEIM | [Week 4.1 lab](notebooks/week04/W4_1_Classical_ROM_Cavity.ipynb) | [Week 4 companion](lectures/week04_cavity_surrogates_deeponet.pdf); theory in lab |
+| [4.2](#week-42--pinns-and-the-lid-driven-cavity) | PINN foundations, hard constraints and cavity verification | Derivations and assignments in the lecture; no new trained result | [Lecture 4.2](lectures/week04_2_pinn_cavity.pdf) |
 | [5](#week-5--physics-guided-projects) | POD, physics-guided learning and frozen project protocols | [Week 5 project setup and tracks](notebooks/week05_06/README.md) | [Shared Weeks 5–6 guide](lectures/week05_06_project_guide.pdf) |
 | [6](#week-6--physical-validation-and-final-evidence) | Closure testing, physical validation and reproducibility | [Week 6 closure track](notebooks/week05_06/P6_FP_Cavity_Closure.ipynb) · [All tracks](notebooks/week05_06/README.md) | [Shared Weeks 5–6 guide](lectures/week05_06_project_guide.pdf) |
 | [7](#week-7--unsteady-cylinder-wakes) | LBM, vortex shedding and autonomous surrogates | [Week 7 lab](notebooks/week07/W7_Lattice_Boltzmann_Cylinder_Student.ipynb) | [Lecture 7](lectures/week07_cylinder_lbm_neural_surrogate.pdf) |
@@ -119,6 +120,16 @@ centerlines and measured inference cost.
 
 Compare reduced dynamics, hyper-reduction, blind trajectories and the offline/online
 cost tradeoff. [Run the ROM lab](notebooks/week04/W4_1_Classical_ROM_Cavity.ipynb)
+
+### Week 4.2 — PINNs and the lid-driven cavity
+
+[Continuous-text lecture](lectures/week04_2_pinn_cavity.pdf): derive the
+Navier–Stokes residual, construct hard streamfunction boundary conditions and
+design a matched-reference validation. Includes an attributed reading of
+[McDevitt's DeepPlasma cavity code](https://github.com/cmcdevitt2/DeepPlasma/tree/fcb1566eaa3253d4a4108fbac9d49a38fd10ad6b/LDC),
+used with his permission. Analytic checks and a retained CFD illustration are
+not presented as new high-Re PINN training evidence. This is a working-course
+reading addition, not a new release or archived-DOI result.
 
 ### Week 5 — Physics-guided projects
 

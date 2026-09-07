@@ -17,6 +17,7 @@
 | 4B | Scalar and coordinate surrogates | `(Re,x,y) → (u,v,p)` with case-wise holdout | Blind errors plus wall, divergence, pressure, and centerline checks |
 | 4C | Operator learning with an interpretable trunk | Executed scalar-branch POD-DeepONet for the parametric cavity | Development-only selection; all three blind fields and seeds; wall/divergence checks; Ghia-fidelity table; measured CFD/inference cost; explicit scalar-branch limitation |
 | 4.1 | Classical dynamical ROM and nonlinear cost | Centered POD--Galerkin and POD--DEIM for the same transient cavity | Exact recovery of accepted FOM fields; grid/time refinement; validation-only rank freeze; all blind trajectories; wall/divergence/vortex checks; offline, online, and break-even cost |
+| 4.2 | PINNs and lid-driven cavity physics | Derive soft/hard constraints, inspect pinned DeepPlasma code, verify analytic formulas | Matched lid and Re, pressure gauge, independent residual/field checks; lecture assignments, not a new trained model |
 | 5A | POD and reduced-order learning | SVD/POD basis and neural or interpolated coefficients | Energy, representation error, learning error, and blind reconstruction |
 | 5B | Physics-guided objectives and PINNs | Wall/divergence-weighted loss and PDE-residual concepts | Matched ablation with a predeclared tolerance and a justified model choice |
 | 5C | Research protocol | Freeze question, baseline, split, metric, and failure threshold | Signed/frozen project card before blind testing |
@@ -38,6 +39,14 @@
 | 10B | Rarefied-cavity parameter synthesis | Reproduce complete held-out fields at $Kn=0.05$ and $0.5$ for two lid speeds | Shared contour scales, normalized RMSE denominators, profiles, and higher-moment diagnosis |
 | 10C | Mono/diatomic shock operators | Fit POD trunks and Mach branches; compare interpolation and one-sided extrapolation | Density/velocity/temperature profiles; translational overshoot; rotational lag; fixed error gates |
 | [10.1](notebooks/week10_1/W10_1_Collision_Map_Surrogate_Audit.ipynb) | Classical scattering, surrogate audit and a separate research companion | Solve a reduced Lennard-Jones collision map on CPU; inspect author-supplied Jäger cylinder fields separately | Analytic deflection checks and transport-integral errors; Lennard-Jones is not the article potential; asynchronous research contours do not establish speedup or convergence |
+
+## Incremental reading: Week 4.2
+
+[PINNs and the lid-driven cavity](lectures/week04_2_pinn_cavity.pdf) follows
+Weeks 2 and 4. It introduces nondimensional residuals, soft/hard constraints,
+McDevitt's streamfunction lifting, exact-solution checks, and a matched CFD/PINN
+evaluation protocol. It contains derivations and five assignments, not a newly
+trained high-Re model. Rebuild with `python qa/build_week04_2_lecture.py`.
 
 ## New research-informed weeks (working course after v1.4.1)
 
