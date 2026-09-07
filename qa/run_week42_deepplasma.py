@@ -187,7 +187,9 @@ def train_restartable(module, model, output, points_n, steps, checkpoint_every, 
     )
     start = 0
     if resume and checkpoint.exists():
-        saved = torch.load(checkpoint, map_location=module.device, weights_only=False)
+        # Keep serialized CPU RNG bytes on CPU. Move only mathematical GPU state
+        # explicitly below; a blanket CUDA map breaks torch.set_rng_state().
+        saved = torch.load(checkpoint, map_location="cpu", weights_only=False)
         saved_config = dict(saved["config"])
         # Checkpoints made before extension support stored the former target step
         # count. It is not part of the mathematical state and may be increased.
@@ -196,7 +198,8 @@ def train_restartable(module, model, output, points_n, steps, checkpoint_every, 
             raise RuntimeError(f"Refusing incompatible checkpoint: {saved_config} != {config}")
         model.load_state_dict(saved["model"])
         for key in ("H", "x", "k"):
-            optimizer.state[key] = saved["optimizer"][key]
+            value = saved["optimizer"][key]
+            optimizer.state[key] = value.to(module.device) if torch.is_tensor(value) else value
         collocation = saved["collocation_points"].to(module.device)
         torch.set_rng_state(saved["torch_rng"])
         torch.cuda.set_rng_state_all(saved["cuda_rng"])

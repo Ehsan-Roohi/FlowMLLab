@@ -32,6 +32,8 @@ def test_slurm_requests_a100_and_runs_dependency_gate_first():
     for required in ("optimizer.state", "collocation_points", "cuda_rng", "os.replace"):
         assert required in runner
     assert 'saved_config.pop("optimizer_steps", None)' in runner
+    assert 'map_location="cpu"' in runner
+    assert 'value.to(module.device)' in runner
 
 
 def test_optional_dependency_versions_are_pinned():
