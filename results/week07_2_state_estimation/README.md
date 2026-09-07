@@ -41,3 +41,7 @@ evaluation seed (31) and final test frame are unchanged.
 The historical filename `state_estimation_scores.png` now contains a table,
 and the lecture uses a selectable-text table computed from `metrics.json`.
 Both show all four baselines, with standard deviations in percentage points.
+
+`state_estimation_sensors.png` and `.svg` show the unchanged 32 sensor locations
+on a separate geometry panel, with an enlarged view of the cluster. Markers
+have been removed from the field contours to keep the reconstructed wake clear.

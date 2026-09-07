@@ -103,6 +103,7 @@ for name,records in result['methods'].items():
                  'sample_SD_percent':values.std(ddof=1)})
 display(pd.DataFrame(rows).sort_values('test_relative_L2_mean_percent'))
 display(Image(filename=str(scratch/'state_estimation_fields.png')))
+display(Image(filename=str(scratch/'state_estimation_sensors.png')))
 display(Image(filename=str(scratch/'state_estimation_scores.png')))'''),
         md('''## 5. Audit uncertainty, not only the point estimate
 
@@ -204,6 +205,7 @@ def make_pdf():
         paragraph(equation, 'Equation72')
     paragraph('Superscripts - and + denote predicted and updated states. The code solves for the gain and uses the Joseph covariance update. A prefix-invariance test checks that future measurements cannot alter earlier estimates.', 'Small72')
     paragraph(html.escape(sections[2][-1]), 'Small72')
+    paragraph('Reproducibility: '+html.escape(sections[6][1]), 'Small72')
 
     # Page 2: native text table generated from retained metrics, followed by UQ.
     story.append(PageBreak())
@@ -225,10 +227,13 @@ def make_pdf():
     figure = ROOT/'results/week07_2_state_estimation/state_estimation_fields.png'
     width, height = ImageReader(str(figure)).getSize()
     story.append(Image(str(figure), width=511, height=511*height/width))
-    paragraph('Final test frame, first evaluation seed (31). Panels (a-d) share the velocity scale; (e-f) share the absolute-error scale. Circles mark the 32 sensors. Equal x/D and y/D scales preserve physical geometry. The cylinder itself lies outside this wake region.', 'Small72')
-    paragraph('Reading the figure', 'Heading72')
-    paragraph('The velocity contours show the coherent wake; the absolute-error panels reveal differences that a signed color scale can hide. Contour rendering interpolates level crossings for display; all scores use the original 32 x 78 samples.', 'Body72')
-    section(6)
+    paragraph('Final test frame, first evaluation seed (31). Panels (a-d) share the velocity scale; (e-f) share the absolute-error scale. Equal x/D and y/D scales preserve physical geometry. Scores use the original 32 x 78 samples. The cylinder lies outside the plotted region.', 'Small72')
+    sensors = ROOT/'results/week07_2_state_estimation/state_estimation_sensors.png'
+    width, height = ImageReader(str(sensors)).getSize()
+    story.append(Image(str(sensors), width=480, height=480*height/width))
+    paragraph('Sensor locations are shown separately. The dashed rectangle identifies the enlarged view; every dot denotes one of the same 32 training-selected locations.', 'Small72')
+    paragraph('Exercises and references', 'Heading72')
+    for block in sections[6][2:]: paragraph(html.escape(block), 'Small72')
     def footer(canvas, doc):
         canvas.setStrokeColor(colors.HexColor('#d4dfe6')); canvas.line(42,39,553,39)
         canvas.setFont('Helvetica',8); canvas.setFillColor(muted)
