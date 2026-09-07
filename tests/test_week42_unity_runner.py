@@ -15,9 +15,11 @@ def test_runner_pins_upstream_source_and_requires_cuda():
 def test_slurm_requests_a100_and_runs_dependency_gate_first():
     text = (ROOT / "qa" / "unity_week42_deepplasma.sbatch").read_text(encoding="utf-8")
     assert "#SBATCH --gres=gpu:a100:1" in text
-    assert "torch.cuda.is_available" in text
-    assert text.index("pip check") < text.index('"$FLOWML_PINN_PYTHON" qa/run_week42_deepplasma.py')
-    assert "dtype=torch.float64" in text
+    assert "check_week42_environment.py" in text
+    assert text.index("check_week42_environment.py") < text.index('"$FLOWML_PINN_PYTHON" qa/run_week42_deepplasma.py')
+    gate = (ROOT / "qa" / "check_week42_environment.py").read_text(encoding="utf-8")
+    assert 'dtype=torch.float64' in gate
+    assert '"status": "READY"' in gate
     assert "FLOWML_PINN_DEPS" in text
 
 
@@ -25,3 +27,4 @@ def test_optional_dependency_versions_are_pinned():
     lines = (ROOT / "qa" / "requirements-week42-unity.txt").read_text(encoding="utf-8")
     assert "scikit-optimize==0.10.2" in lines
     assert "pytorch-optimizer==3.10.1" in lines
+    assert "sympy==1.13.1" in lines

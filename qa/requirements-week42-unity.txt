@@ -2,3 +2,6 @@
 # PyTorch 2.5.1+cu124, NumPy, and Matplotlib come from Unity's audited dsmc-gpu environment.
 scikit-optimize==0.10.2
 pytorch-optimizer==3.10.1
+pyaml==25.7.0
+fsspec==2024.10.0
+sympy==1.13.1

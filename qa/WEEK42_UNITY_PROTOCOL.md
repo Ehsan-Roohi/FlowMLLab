@@ -21,5 +21,8 @@ reference is complete.
 The base interpreter is Unity's existing PyTorch 2.5.1+cu124 environment. The two
 otherwise-missing imports are installed into a project-local target directory
 from `qa/requirements-week42-unity.txt`; the shared environment is not modified.
-The Slurm preflight imports every dependency, runs `pip check`, and performs a
-float64 CUDA operation before the training driver is called.
+The Slurm preflight imports the complete dependency chain used here, verifies
+the pinned package versions and upstream APIs, and performs a float64 CUDA
+operation before the training driver is called. This targeted gate is necessary
+because Unity's shared environment contains unrelated packages whose metadata
+conflict with each other; those packages are neither imported nor modified.
