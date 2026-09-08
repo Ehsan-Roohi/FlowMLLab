@@ -296,9 +296,13 @@ Square cavity, D = H/L = 1:
 
 ![Reynolds 100 square cavity PINN speed, streamfunction and streamlines](results/week13_rectangular_pinn/re100-d1/fields.png)
 
+![Reynolds 100 square cavity PINN training and held-out residual histories](results/week13_rectangular_pinn/re100-d1/loss.png)
+
 Deep cavity, D = H/L = 2:
 
 ![Reynolds 100 deep cavity PINN speed, streamfunction and streamlines](results/week13_rectangular_pinn/re100-d2/fields.png)
+
+![Reynolds 100 deep cavity PINN training and held-out residual histories](results/week13_rectangular_pinn/re100-d2/loss.png)
 
 **Re = 400**
 
@@ -306,9 +310,19 @@ Square cavity, D = H/L = 1:
 
 ![Reynolds 400 square cavity PINN speed, streamfunction and streamlines](results/week13_rectangular_pinn/re400-d1/fields.png)
 
+![Reynolds 400 square cavity PINN training and held-out residual histories](results/week13_rectangular_pinn/re400-d1/loss.png)
+
 Deep cavity, D = H/L = 2:
 
 ![Reynolds 400 deep cavity PINN speed, streamfunction and streamlines](results/week13_rectangular_pinn/re400-d2/fields.png)
+
+![Reynolds 400 deep cavity PINN training and held-out residual histories](results/week13_rectangular_pinn/re400-d2/loss.png)
+
+Loss curves show momentum **residual RMS**, not CFD field error: blue is the
+Adam warm-up (steps 1–1000), orange is SSBroyden2 continuation, dashed black is
+the held-out full-domain residual, and dotted green is the held-out top-corner
+residual. Decreasing training loss alone does not establish convergence of the
+physical solution; the retained held-out discrepancies remain visible.
 
 The independent final module compares `Re=100,400` and depth-to-width ratios
 `D=1,2` using exact streamfunction wall constraints and a restartable float64

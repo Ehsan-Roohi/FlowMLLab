@@ -21,6 +21,30 @@ does not contain a raw, matched CFD field at the same geometry and smoothed lid.
 The Cheng--Hung benchmark supports topology interpretation, not a reconstructed
 pointwise error computed from a publication figure.
 
+## Retained loss curves
+
+Each case is shown separately at full width. The plotted loss is momentum
+residual RMS, not squared loss or CFD solution error. Blue/orange distinguish
+Adam and SSBroyden2; black dashed and green dotted curves track the held-out
+full-domain and top-corner residuals. These are existing Unity training records,
+not new runs. A low masked training residual does not certify the full domain.
+
+### Re = 100, H/L = 1
+
+![Re100 square cavity loss history](../../results/week13_rectangular_pinn/re100-d1/loss.png)
+
+### Re = 100, H/L = 2
+
+![Re100 deep cavity loss history](../../results/week13_rectangular_pinn/re100-d2/loss.png)
+
+### Re = 400, H/L = 1
+
+![Re400 square cavity loss history](../../results/week13_rectangular_pinn/re400-d1/loss.png)
+
+### Re = 400, H/L = 2
+
+![Re400 deep cavity loss history](../../results/week13_rectangular_pinn/re400-d2/loss.png)
+
 ## Reproduction
 
 The exact training runner, restartable `gpu-preempt` batch file, harvest gate and
