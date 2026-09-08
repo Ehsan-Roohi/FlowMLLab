@@ -78,7 +78,10 @@ def patch_smoke_report(path):
     if 'smoke_roundoff_unresolved' in source:return
     assert source.count(marker)==1
     replacement='        # Only a short smoke run may classify a sparsely sampled cut-cell\n        # thermal moment as unresolved. Raw dump/CSV values remain unchanged.\n        thermal_tol = 64 * math.ulp(1.0) * max(1., m["T_wall_K"])\n        smoke_roundoff_unresolved = (m["level"] == "campaign_smoke" and\n            0 < area < m["dx_m"]*m["dy_m"] and 0 < count < 1 and n > 0 and\n            abs(temp) <= thermal_tol and abs(p) <= n*KB*thermal_tol and\n            math.isclose(p, n*KB*temp, rel_tol=1e-7, abs_tol=n*KB*thermal_tol))\n        if smoke_roundoff_unresolved:\n            temp, p = 0., 0.\n        unresolved = smoke_roundoff_unresolved or (0 < area < .01*m["dx_m"]*m["dy_m"] and'
-    source=source.replace(marker,replacement)
+    line=next(line for line in source.splitlines() if line.lstrip()==marker.lstrip())
+    indent=line[:len(line)-len(line.lstrip())]
+    replacement='\n'.join(indent+part[8:] for part in replacement.splitlines())
+    source=source.replace(line,replacement)
     source=source.replace('"mean_particles": count})','"mean_particles": count, "raw_temperature_K": r[13], "raw_pressure_Pa": r[14], "smoke_roundoff_unresolved": smoke_roundoff_unresolved})')
     compile(source,str(path),'exec');path.write_text(source)
 
@@ -91,7 +94,7 @@ def repair(out):
         queued=subprocess.check_output(['squeue','-h','-u',str(os.getuid()),'-o','%A'],text=True).split()
         active=set(queued).intersection(m['jobs'].values())
         if active:raise RuntimeError('Prior campaign jobs still active: '+str(active))
-        archive=out/'before_roundoff_repair';archive.mkdir()
+        archive=Path(tempfile.mkdtemp(prefix='before_roundoff_repair-',dir=out))
         for name in ['manifest.json','code.sha256']:shutil.copy2(out/name,archive/name)
         shutil.copytree(out/'code',archive/'code',ignore=shutil.ignore_patterns('__pycache__'))
         patch_smoke_report(out/'code/pilot.py')
