@@ -29,6 +29,7 @@ def submit(base):
         out=Path(tempfile.mkdtemp(prefix='step-controls-20260908-',dir=base/'runs'))
         shutil.copytree(prev/'code',out/'code',ignore=shutil.ignore_patterns('__pycache__'))
         shutil.copy2(__file__,out/'code/step_controls_20260908.py')
+        patch_smoke_report(out/'code/pilot.py')
         for name in ['step_interpolation_train_v2.py']:
             shutil.copy2(base/name,out/'code'/name)
         reps=[meta['cases'][i] for i in [12,14,15,1]]
@@ -69,18 +70,61 @@ fi
         with (out/'run_matrix.csv').open('w') as f:
             keys=['index','id','control','nx','ny','ppc','dt_s','warmup_steps','sampling_steps','block_steps','sample_every','seed'];w=csv.DictWriter(f,fieldnames=keys,extrasaction='ignore');w.writeheader();w.writerows(rows)
         pointer.write_text(str(out)+'\n')
-        env=dict(os.environ,STEP_CONTROL_OUT=str(out),STEP_CONTROL_PYTHON=str(base/'runs/step-interpolation-20260908/venv/bin/python'))
-        def queue(name,ranks,mem,wall,array=None,dep=None):
-            cmd=['sbatch','--parsable','--account='+m['account'],'--partition=cpu-preempt','--constraint=x86_64','--nodes=1','--ntasks='+str(ranks),'--cpus-per-task=1','--mem='+mem,'--time='+wall,'--requeue','--job-name=step-control-'+name,'--chdir='+str(out),'--output='+str(out/(name+'-%A_%a.out')),'--error='+str(out/(name+'-%A_%a.err')),'--export=ALL']
-            if array:cmd+=['--array='+array+'%'+str(concurrency)]
-            if dep:cmd+=['--dependency=afterok:'+dep,'--kill-on-invalid-dep=yes']
-            jid=subprocess.check_output(cmd+[str(out/'job.sh'),name],env=env,text=True).strip().split(';')[0];assert jid.isdigit();m['jobs'][name]=jid;save(out/'manifest.json',m);print(name,jid,flush=True);return jid
-        a=queue('preflight',64,'128G','02:00:00')
-        b=queue('controls',64,'128G','7-00:00:00','0-17',a)
-        c=queue('review',1,'32G','06:00:00',dep=b)
-        d=queue('bezier',64,'128G','7-00:00:00','18-23',c)
-        queue('evaluate',1,'32G','06:00:00',dep=d)
-        print('OUT='+str(out),flush=True)
+        queue_pipeline(out,m)
+
+def patch_smoke_report(path):
+    path=Path(path);source=path.read_text()
+    marker='        unresolved = (0 < area < .01*m["dx_m"]*m["dy_m"] and'
+    if 'smoke_roundoff_unresolved' in source:return
+    assert source.count(marker)==1
+    replacement='        # Only a short smoke run may classify a sparsely sampled cut-cell\n        # thermal moment as unresolved. Raw dump/CSV values remain unchanged.\n        thermal_tol = 64 * math.ulp(1.0) * max(1., m["T_wall_K"])\n        smoke_roundoff_unresolved = (m["level"] == "campaign_smoke" and\n            0 < area < m["dx_m"]*m["dy_m"] and 0 < count < 1 and n > 0 and\n            abs(temp) <= thermal_tol and abs(p) <= n*KB*thermal_tol and\n            math.isclose(p, n*KB*temp, rel_tol=1e-7, abs_tol=n*KB*thermal_tol))\n        if smoke_roundoff_unresolved:\n            temp, p = 0., 0.\n        unresolved = smoke_roundoff_unresolved or (0 < area < .01*m["dx_m"]*m["dy_m"] and'
+    source=source.replace(marker,replacement)
+    source=source.replace('"mean_particles": count})','"mean_particles": count, "raw_temperature_K": r[13], "raw_pressure_Pa": r[14], "smoke_roundoff_unresolved": smoke_roundoff_unresolved})')
+    compile(source,str(path),'exec');path.write_text(source)
+
+def repair(out):
+    out=Path(out).resolve()
+    with (out/'repair.lock').open('a') as lock:
+        fcntl.flock(lock,fcntl.LOCK_EX|fcntl.LOCK_NB)
+        m=read(out/'manifest.json')
+        if m.get('roundoff_repair'):raise RuntimeError('Repair already prepared; inspect recorded jobs')
+        queued=subprocess.check_output(['squeue','-h','-u',str(os.getuid()),'-o','%A'],text=True).split()
+        active=set(queued).intersection(m['jobs'].values())
+        if active:raise RuntimeError('Prior campaign jobs still active: '+str(active))
+        archive=out/'before_roundoff_repair';archive.mkdir()
+        for name in ['manifest.json','code.sha256']:shutil.copy2(out/name,archive/name)
+        shutil.copytree(out/'code',archive/'code',ignore=shutil.ignore_patterns('__pycache__'))
+        patch_smoke_report(out/'code/pilot.py')
+        shutil.copy2(__file__,out/'code/step_controls_20260908.py')
+        cpu=load_module(out/'code/cpu_campaign.py','repair_cpu')
+        # Revalidate the actual failed output before spending CPU time on reruns.
+        failed=out/'preflight/followup16_diagnostic_geo48_smooth_ramp_15__medium/attempts/0001'
+        with (out/'roundoff_revalidation.log').open('w') as log, contextlib.redirect_stdout(log):
+            report=cpu.bench.validate_case(failed)
+        assert report['training_data_approved'] is False
+        m['roundoff_repair']=dict(previous_jobs=m['jobs'],scope='campaign_smoke only; raw data retained; production criteria unchanged',revalidated_case=str(failed),unresolved=report.get('unresolved_thermal_cut_cells',[]))
+        m['jobs']={}
+        reserved=sum(j['cpus'] for j in cpu.account_jobs(m['account']))
+        m['concurrency']=min(4,(1000-reserved-5)//64)
+        if m['concurrency']<1:raise RuntimeError('Insufficient account CPU headroom')
+        save(out/'manifest.json',m)
+        (out/'code.sha256').write_text(''.join(sha(p)+' '+str(p.relative_to(out))+'\n' for p in sorted((out/'code').glob('*')) if p.is_file())+sha(out/'job.sh')+' job.sh\n')
+        queue_pipeline(out,m)
+
+def queue_pipeline(out,m):
+    base=Path(m["base"]);concurrency=m["concurrency"]
+    env=dict(os.environ,STEP_CONTROL_OUT=str(out),STEP_CONTROL_PYTHON=str(base/'runs/step-interpolation-20260908/venv/bin/python'))
+    def queue(name,ranks,mem,wall,array=None,dep=None):
+        cmd=['sbatch','--parsable','--account='+m['account'],'--partition=cpu-preempt','--constraint=x86_64','--nodes=1','--ntasks='+str(ranks),'--cpus-per-task=1','--mem='+mem,'--time='+wall,'--requeue','--job-name=step-control-'+name,'--chdir='+str(out),'--output='+str(out/(name+'-%A_%a.out')),'--error='+str(out/(name+'-%A_%a.err')),'--export=ALL']
+        if array:cmd+=['--array='+array+'%'+str(concurrency)]
+        if dep:cmd+=['--dependency=afterok:'+dep,'--kill-on-invalid-dep=yes']
+        jid=subprocess.check_output(cmd+[str(out/'job.sh'),name],env=env,text=True).strip().split(';')[0];assert jid.isdigit();m['jobs'][name]=jid;save(out/'manifest.json',m);print(name,jid,flush=True);return jid
+    a=queue('preflight',64,'128G','04:00:00')
+    b=queue('controls',64,'128G','7-00:00:00','0-17',a)
+    c=queue('review',1,'32G','06:00:00',dep=b)
+    d=queue('bezier',64,'128G','7-00:00:00','18-23',c)
+    queue('evaluate',1,'32G','06:00:00',dep=d)
+    print('OUT='+str(out),flush=True)
 
 def run_case(out,row,smoke=False):
     cpu=load_module(out/'code/cpu_campaign.py','existing_cpu');camp,bench,ck=cpu.campaign,cpu.bench,cpu.checkpoint
@@ -182,8 +226,9 @@ def evaluate(out):
     print('SIX_BEZIER_FROZEN_EVALUATION_COMPLETE',flush=True)
 
 if __name__=='__main__':
-    ap=argparse.ArgumentParser();ap.add_argument('action',choices=['submit','preflight','controls','review','bezier','evaluate']);ap.add_argument('--base');ap.add_argument('--out');a=ap.parse_args()
+    ap=argparse.ArgumentParser();ap.add_argument('action',choices=['submit','repair','preflight','controls','review','bezier','evaluate']);ap.add_argument('--base');ap.add_argument('--out');a=ap.parse_args()
     if a.action=='submit':submit(a.base)
+    elif a.action=='repair':repair(a.out)
     else:
         out=Path(a.out).resolve();m=read(out/'manifest.json')
         if a.action=='preflight':
