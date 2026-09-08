@@ -1,5 +1,5 @@
 cff-version: 1.2.0
-message: "If you use FlowMLLab, please cite the v1.5.1 software release and the relevant research-case articles. The concept DOI identifies the release family."
+message: "If you use FlowMLLab, please cite this v1.5.1 software release and the relevant research-case articles."
 title: "FlowMLLab: An Open-Source Framework for Reproducible CFD-to-Scientific-Machine-Learning Experiments"
 type: software
 authors:
@@ -30,5 +30,5 @@ keywords:
   - direct simulation Monte Carlo
   - reproducibility
 version: "1.5.1"
-doi: "10.5281/zenodo.22074169"
-date-released: "2026-09-07"
+doi: "10.5281/zenodo.22651906"
+date-released: "2026-09-08"

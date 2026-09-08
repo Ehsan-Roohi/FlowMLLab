@@ -57,8 +57,11 @@ wheel/source-distribution validation. The release attaches the Python
 distributions, Week 13 lecture, notebook and four full-width field figures.
 The source archive includes the retained course tree and source code.
 
-The version-specific Zenodo DOI is added to current citation metadata after
-the GitHub-Zenodo integration confirms publication. The release family uses
+Published archive: [10.5281/zenodo.22651906](https://doi.org/10.5281/zenodo.22651906).
+The release passed 187 tests (3 optional skips), the complete course validator
+and six end-to-end notebook executions on Linux. All 455 retained data/result
+file hashes remained unchanged. Python 3.10, 3.11, 3.12 and 3.13 CI passed.
+The release family uses
 concept DOI [10.5281/zenodo.22074169](https://doi.org/10.5281/zenodo.22074169).
 The v1.4.1 DOI [10.5281/zenodo.22348207](https://doi.org/10.5281/zenodo.22348207)
 continues to identify that historical archive.
