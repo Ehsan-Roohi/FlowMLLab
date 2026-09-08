@@ -24,6 +24,7 @@ NOTEBOOKS = (
     "notebooks/week07_1/W7_1_Hypersonic_Rarefied_Cylinder_DeepONet.ipynb",
     "notebooks/week07_2/W7_2_Cylinder_Wake_State_Estimation.ipynb",
     "notebooks/week09/W9_Lab2_Shock_Aligned_Nozzle_DeepONet_Student.ipynb",
+    "notebooks/week13/W13_Rectangular_Cavity_PINN_Research.ipynb",
 )
 
 

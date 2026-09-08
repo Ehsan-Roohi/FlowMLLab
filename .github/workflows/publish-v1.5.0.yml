@@ -1,0 +1,62 @@
+name: Publish FlowMLLab v1.5.0
+
+on:
+  push:
+    tags: [v1.5.0]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    if: github.repository == 'Ehsan-Roohi/FlowMLLab'
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      OPENBLAS_NUM_THREADS: '1'
+      OMP_NUM_THREADS: '1'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: v1.5.0
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: pip
+      - name: Install validation and packaging dependencies
+        run: |
+          sudo apt-get update && sudo apt-get install -y poppler-utils
+          python -m pip install -e ".[test]" build twine nbformat nbclient nbconvert ipykernel
+      - name: Verify version, tests and scientific evidence
+        run: |
+          python -c "import flowmllab; assert flowmllab.__version__ == '1.5.0'"
+          python -m pytest -q tests qa
+          flowmllab smoke --root .
+          python qa/validate_course_release.py
+      - name: Execute reviewed notebooks without changing retained evidence
+        run: python qa/check_stabilization_notebooks.py
+      - name: Build and validate distributions
+        run: |
+          python -m build
+          python -m twine check dist/*
+      - name: Publish the reviewed tag
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          if gh release view v1.5.0 >/dev/null 2>&1; then
+            echo "Release v1.5.0 already exists; leaving it unchanged."
+          else
+            mkdir -p release-assets
+            for case in re100-d1 re100-d2 re400-d1 re400-d2; do
+              cp "results/week13_rectangular_pinn/$case/fields.png" "release-assets/$case-fields.png"
+            done
+            gh release create v1.5.0 --verify-tag --latest \
+              --title "FlowMLLab v1.5.0 - Scientific software and cavity PINN research" \
+              --notes-file RELEASE_NOTES_v1.5.0.md \
+              dist/* \
+              lectures/week13_rectangular_cavity_pinn.pdf \
+              notebooks/week13/W13_Rectangular_Cavity_PINN_Research.ipynb \
+              release-assets/*.png
+          fi

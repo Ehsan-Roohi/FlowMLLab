@@ -2,7 +2,7 @@
 
 [![FlowMLLab CI](https://github.com/Ehsan-Roohi/FlowMLLab/actions/workflows/ci.yml/badge.svg)](https://github.com/Ehsan-Roohi/FlowMLLab/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.22348207.svg)](https://doi.org/10.5281/zenodo.22348207)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.22074169.svg)](https://doi.org/10.5281/zenodo.22074169)
 
 Learn scientific machine learning through reproducible fluid-mechanics experiments:
 generate numerical data, compare transparent baselines with learned models, and
@@ -19,8 +19,9 @@ numerical foundations to continuum and rarefied-flow research examples.
 research by Ehsan Roohi and collaborators, then brought into FlowMLLab for
 teaching. The course adds new code and baselines, not a new origin for those
 data. See [per-case papers, data lineage, reuse limits and AI-assistance
-disclosure](DATA_PROVENANCE.md). v1.4.0 remains the frozen archive; this cycle
-was consolidated in v1.4.1, including the author-requested Week 10.1 reading companion, with no new training notebook in that archive. The subsequently requested Weeks 11 and 12 extend the working course with two explicitly labelled teaching analogs.
+disclosure](DATA_PROVENANCE.md). Version 1.5.0 consolidates the course through
+Week 13, including research-data audits, executable reconstruction and
+state-estimation labs, and retained Unity cavity-PINN results.
 
 | Your goal | Open |
 | --- | --- |
@@ -274,16 +275,34 @@ Eight seeds, both heat-flux components, 80 recomputed errors; no new DSMC or neu
 Mean reference NRMSE for qy: Raw(3) 17.61%, Raw(10) 9.80%, conditioned estimator 4.34%.
 [Full comparisons, profiles and all-seed errors](results/week12_research/README.md) ·
 [Notebook and lecture](notebooks/week12/README.md). The independent reference still has sampling noise.
-Weeks 11 and 12 are working-course additions after v1.4.1, not part of its archived DOI.
+Weeks 11 and 12 were developed after v1.4.1 and are included in v1.5.0.
 
 Week 12 practical completion: [train a fresh Noise2Noise-style MLP on real DSMC](results/week12_noise2noise/README.md).
 The notebook now fits from raw observations, compares seven estimators and
 reports both held-out seeds. This is separate from the archived figures above;
-no new release or DOI is implied.
+both are included in the v1.5.0 course archive.
 
 ### Week 13 — Rectangular-cavity PINN research audit
 
-![Four-case streamfunction PINN matrix for square and deep cavities](results/week13_rectangular_pinn/week13_matrix.png)
+**Re = 100**
+
+Square cavity, D = H/L = 1:
+
+![Reynolds 100 square cavity PINN speed, streamfunction and streamlines](results/week13_rectangular_pinn/re100-d1/fields.png)
+
+Deep cavity, D = H/L = 2:
+
+![Reynolds 100 deep cavity PINN speed, streamfunction and streamlines](results/week13_rectangular_pinn/re100-d2/fields.png)
+
+**Re = 400**
+
+Square cavity, D = H/L = 1:
+
+![Reynolds 400 square cavity PINN speed, streamfunction and streamlines](results/week13_rectangular_pinn/re400-d1/fields.png)
+
+Deep cavity, D = H/L = 2:
+
+![Reynolds 400 deep cavity PINN speed, streamfunction and streamlines](results/week13_rectangular_pinn/re400-d2/fields.png)
 
 The independent final module compares `Re=100,400` and depth-to-width ratios
 `D=1,2` using exact streamfunction wall constraints and a restartable float64
@@ -306,9 +325,10 @@ Student submissions are not included.
 · [Citation metadata](CITATION.cff)
 · [Workshop, support, and consulting details](docs/RESULTS_GUIDE.md#workshops-support-and-consulting)
 
-Current release: **v1.4.1** · [GitHub release](https://github.com/Ehsan-Roohi/FlowMLLab/releases/tag/v1.4.1)
-· [Release notes](RELEASE_NOTES_v1.4.1.md).
-The v1.4.1 version-specific DOI is [10.5281/zenodo.22348207](https://doi.org/10.5281/zenodo.22348207).
+Current release: **v1.5.0** · [GitHub release](https://github.com/Ehsan-Roohi/FlowMLLab/releases/tag/v1.5.0)
+· [Release notes](RELEASE_NOTES_v1.5.0.md).
+The v1.5.0 version-specific DOI will be recorded here after Zenodo confirms publication.
+Previous v1.4.1 DOI: [10.5281/zenodo.22348207](https://doi.org/10.5281/zenodo.22348207).
 Previous v1.4.0 DOI: [10.5281/zenodo.22315623](https://doi.org/10.5281/zenodo.22315623).
 The [all-versions DOI](https://doi.org/10.5281/zenodo.22074169) resolves to the latest published archive.
 
