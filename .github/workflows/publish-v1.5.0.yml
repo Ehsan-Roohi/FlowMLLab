@@ -28,7 +28,8 @@ jobs:
       - name: Install validation and packaging dependencies
         run: |
           sudo apt-get update && sudo apt-get install -y poppler-utils
-          python -m pip install -e ".[test]" build twine nbformat nbclient nbconvert ipykernel
+          # The immutable v1.5.0 tag predates the lecture-test dependency fix.
+          python -m pip install -e ".[test]" reportlab build twine nbformat nbclient nbconvert ipykernel
       - name: Verify version, tests and scientific evidence
         run: |
           python -c "import flowmllab; assert flowmllab.__version__ == '1.5.0'"

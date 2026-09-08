@@ -54,6 +54,7 @@ ml = [
 ]
 test = [
   "pytest>=8,<9",
+  "reportlab>=4,<6",
 ]
 demo = [
   "streamlit==1.62.0",
