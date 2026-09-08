@@ -24,6 +24,9 @@ cd "${SLURM_SUBMIT_DIR:?}"
 task="${SLURM_ARRAY_TASK_ID:?}"
 suffix="production"
 extra=()
+if [[ "${FLOWML_CFD_SENSITIVITY:-0}" == 1 ]]; then
+    extra+=(--sensitivity)
+fi
 if [[ "${FLOWML_CFD_SMOKE:-0}" == 1 ]]; then
     suffix="smoke"
     extra+=(--smoke)

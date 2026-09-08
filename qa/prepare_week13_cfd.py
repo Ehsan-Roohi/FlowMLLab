@@ -86,16 +86,27 @@ def main():
     ap.add_argument("--task", type=int, required=True)
     ap.add_argument("--smoke", action="store_true")
     ap.add_argument("--ranks", type=int, default=8)
+    ap.add_argument("--sensitivity", action="store_true")
     args = ap.parse_args()
     if not 0 <= args.task < len(CASES) * len(GRIDS):
         ap.error("task must be 0..47")
     re, depth = CASES[args.task // len(GRIDS)]
     nx = 20 if args.smoke else GRIDS[args.task % len(GRIDS)]
     iterations = 20 if args.smoke else 20000
+    variant = "baseline"
+    if args.sensitivity:
+        if not 0 <= args.task < 6:
+            ap.error("sensitivity task must be 0..5")
+        re, depth = (100, 500)[args.task % 2], 5.0
+        variant = ("refine270", "leastSquares", "linearUpwind")[args.task // 2]
+        nx = 20 if args.smoke else (270 if variant == "refine270" else 180)
+        iterations = 20 if args.smoke else 120000
     spec = dict(format_version=2, re=re, depth_over_width=depth, nx=nx, ny=round(nx*depth),
                 ranks=args.ranks, iterations=iterations, lid="uniform/classical",
                 solver="OpenFOAM-v2406/simpleFoam/laminar", status="unvalidated-candidate",
                 reference="https://doi.org/10.1016/j.compfluid.2005.08.006")
+    if args.sensitivity:
+        spec["sensitivity_variant"] = variant
     path = args.output.resolve()
     marker = path / "case-spec.json"
     if path.exists():
@@ -104,7 +115,14 @@ def main():
         print(path)
         return
     path.mkdir(parents=True)
-    for name, content in files(re, depth, nx, iterations, args.ranks).items():
+    generated = files(re, depth, nx, iterations, args.ranks)
+    if variant == "leastSquares":
+        generated["system/fvSchemes"] = generated["system/fvSchemes"].replace(
+            "gradSchemes {default Gauss linear;}", "gradSchemes {default leastSquares;}")
+    elif variant == "linearUpwind":
+        generated["system/fvSchemes"] = generated["system/fvSchemes"].replace(
+            "div(phi,U) Gauss linear;", "div(phi,U) Gauss linearUpwind grad(U);")
+    for name, content in generated.items():
         dest = path / name
         dest.parent.mkdir(parents=True, exist_ok=True)
         dest.write_text(content, encoding="ascii", newline="\n")
