@@ -93,9 +93,13 @@ def run_case(out,row,smoke=False):
         if done:return done
         a=root/'attempts';a.mkdir(exist_ok=True);idx=max([int(p.name) for p in a.iterdir() if p.name.isdigit()],default=0)+1;p=a/f'{idx:04d}'
         r=dict(row);warm=ck.latest_warm(root)
-        if smoke:r.update(ppc=2,warmup_steps=20,sampling_steps=40,block_steps=10,sample_every=1,smoke=True)
+        if smoke:r.update(ppc=2,warmup_steps=100,sampling_steps=200,block_steps=50,sample_every=1,smoke=True)
         if warm:r['warmup_steps']=r['block_steps']
-        camp.generate_case(p,r,warm,'retry' if warm else None,smoke=smoke)
+        generation_row=dict(r)
+        if warm:
+            pilot_block=50 if smoke else 2000
+            generation_row['warmup_steps']=((r['warmup_steps']+pilot_block-1)//pilot_block)*pilot_block
+        camp.generate_case(p,generation_row,warm,'retry' if warm else None,smoke=smoke)
         deck=(p/'in.step').read_text();b=r['block_steps'];s=r['sampling_steps']
         first=f'run {s-b}\ndump final';last=f'run {b}\nwrite_restart restart.final'
         assert deck.count(first)==1 and deck.count(last)==1
