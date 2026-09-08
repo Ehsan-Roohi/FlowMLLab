@@ -43,6 +43,11 @@ if [[ ! -f mesh-ready ]]; then
     touch mesh-ready
 fi
 foamDictionary system/controlDict -entry stopAt -set endTime
+if [[ -n "${FLOWML_CFD_END_TIME:-}" ]]; then
+    [[ "$FLOWML_CFD_END_TIME" =~ ^[0-9]+$ ]] || exit 2
+    (( FLOWML_CFD_END_TIME >= 20000 && FLOWML_CFD_END_TIME <= 120000 )) || exit 2
+    foamDictionary system/controlDict -entry endTime -set "$FLOWML_CFD_END_TIME"
+fi
 stopping=0
 checkpoint() {
     stopping=1
