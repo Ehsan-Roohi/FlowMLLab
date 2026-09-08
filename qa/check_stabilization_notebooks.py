@@ -20,6 +20,7 @@ from nbconvert import HTMLExporter
 
 ROOT = Path(__file__).resolve().parents[1]
 NOTEBOOKS = (
+    "notebooks/week01_1/W1_1_AI_Assisted_Scientific_Software.ipynb",
     "notebooks/week10_1/W10_1_Collision_Map_Surrogate_Audit.ipynb",
     "notebooks/week07_1/W7_1_Hypersonic_Rarefied_Cylinder_DeepONet.ipynb",
     "notebooks/week07_2/W7_2_Cylinder_Wake_State_Estimation.ipynb",

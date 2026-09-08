@@ -17,7 +17,7 @@ retains heat-flux contours, profiles and 80 recomputed eight-seed scores.
 Both have executed notebook extensions, PDF lectures and source attribution.
 No new solver run or neural training is claimed. The original
 [synthetic CPU controls](../results/week11_12_teaching/README.md) remain as warm-ups.
-These additions postdate v1.4.1 and are included in v1.5.0.
+These additions postdate v1.4.1 and are included in v1.5.1.
 
 ## Week 10.1 companion: ab initio collision DeepONet
 
@@ -555,7 +555,7 @@ If FlowMLLab supports your teaching or research, you can also support its contin
 
 Use [CITATION.cff](../CITATION.cff) when citing the release.
 
-Version 1.5.0 consolidates the course through Week 13; its version DOI will be
+Version 1.5.1 consolidates the course through Week 13; its version DOI will be
 recorded after Zenodo confirms publication.
 Version 1.4.1 remains archived at [10.5281/zenodo.22348207](https://doi.org/10.5281/zenodo.22348207).
 The previous version 1.4.0 remains archived at:

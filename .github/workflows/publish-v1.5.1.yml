@@ -1,8 +1,8 @@
-name: Publish FlowMLLab v1.5.0
+name: Publish FlowMLLab v1.5.1
 
 on:
   push:
-    tags: [v1.5.0]
+    tags: [v1.5.1]
   workflow_dispatch:
 
 permissions:
@@ -19,7 +19,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          ref: v1.5.0
+          ref: v1.5.1
           persist-credentials: false
       - uses: actions/setup-python@v5
         with:
@@ -28,11 +28,10 @@ jobs:
       - name: Install validation and packaging dependencies
         run: |
           sudo apt-get update && sudo apt-get install -y poppler-utils
-          # The immutable v1.5.0 tag predates the lecture-test dependency fix.
-          python -m pip install -e ".[test]" reportlab build twine nbformat nbclient nbconvert ipykernel
+          python -m pip install -e ".[test]" build twine nbformat nbclient nbconvert ipykernel
       - name: Verify version, tests and scientific evidence
         run: |
-          python -c "import flowmllab; assert flowmllab.__version__ == '1.5.0'"
+          python -c "import flowmllab; assert flowmllab.__version__ == '1.5.1'"
           python -m pytest -q tests qa
           flowmllab smoke --root .
           python qa/validate_course_release.py
@@ -46,16 +45,16 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          if gh release view v1.5.0 >/dev/null 2>&1; then
-            echo "Release v1.5.0 already exists; leaving it unchanged."
+          if gh release view v1.5.1 >/dev/null 2>&1; then
+            echo "Release v1.5.1 already exists; leaving it unchanged."
           else
             mkdir -p release-assets
             for case in re100-d1 re100-d2 re400-d1 re400-d2; do
               cp "results/week13_rectangular_pinn/$case/fields.png" "release-assets/$case-fields.png"
             done
-            gh release create v1.5.0 --verify-tag --latest \
-              --title "FlowMLLab v1.5.0 - Scientific software and cavity PINN research" \
-              --notes-file RELEASE_NOTES_v1.5.0.md \
+            gh release create v1.5.1 --verify-tag --latest \
+              --title "FlowMLLab v1.5.1 - Scientific software and cavity PINN research" \
+              --notes-file RELEASE_NOTES_v1.5.1.md \
               dist/* \
               lectures/week13_rectangular_cavity_pinn.pdf \
               notebooks/week13/W13_Rectangular_Cavity_PINN_Research.ipynb \

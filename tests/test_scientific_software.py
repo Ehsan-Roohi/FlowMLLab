@@ -4,6 +4,8 @@ import json
 from pathlib import Path
 import tempfile
 import unittest
+from unittest import mock
+from copy import deepcopy
 
 import numpy as np
 
@@ -77,9 +79,36 @@ class ScientificSoftwareTests(unittest.TestCase):
         self.assertEqual(recovered["decision"], "accept")
         self.assertNotIn("timestamp", recovered)
 
-    def test_retained_evidence_recomputes_exactly(self) -> None:
+    def test_retained_evidence_recomputes_with_roundoff_tolerance(self) -> None:
         record = validate_week01_1_evidence(ROOT)
         self.assertEqual(record["decision"], "accept")
+
+    def test_evidence_allows_only_diagnostic_roundoff(self) -> None:
+        record = evaluate_acceptance(verification_sweep(), audit_cavity_case(ROOT))
+        record["verification"]["observed_order"] += 1e-12
+        record["verification"]["rows"][-1]["divergence_rms"] += 2e-14
+        record["cavity"]["archive_vorticity_relative_l2"] += 1e-14
+        with mock.patch("flowmllab.scientific_software.evaluate_acceptance", return_value=record):
+            self.assertEqual(validate_week01_1_evidence(ROOT)["decision"], "accept")
+
+    def test_evidence_rejects_drift_nonfinite_and_contract_changes(self) -> None:
+        original = evaluate_acceptance(verification_sweep(), audit_cavity_case(ROOT))
+        changes = [
+            ("cavity", "archive_vorticity_relative_l2", .0291),
+            ("cavity", "archive_vorticity_relative_l2", float("nan")),
+            ("cavity", "reynolds", 100.000000000001),
+            ("cavity", "dataset_sha256", "0" * 64),
+            ("thresholds", "cavity_divergence_rms_max", 1.001e-12),
+            ("gates", "cavity_incompressibility", False),
+            ("gates", "cavity_incompressibility", 1),
+        ]
+        for section, key, value in changes:
+            with self.subTest(section=section, key=key, value=value):
+                record = deepcopy(original)
+                record[section][key] = value
+                with mock.patch("flowmllab.scientific_software.evaluate_acceptance", return_value=record):
+                    with self.assertRaises(ValueError):
+                        validate_week01_1_evidence(ROOT)
 
 
 if __name__ == "__main__":

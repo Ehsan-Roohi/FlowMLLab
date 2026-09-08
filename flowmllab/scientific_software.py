@@ -264,7 +264,14 @@ def write_acceptance_record(record: dict[str, object], path: str | Path) -> Path
 
 
 def validate_week01_1_evidence(root: str | Path) -> dict[str, object]:
-    """Recompute Week 1.1 gates and require exact retained evidence agreement."""
+    """Recompute the frozen contract, allowing only metric-level roundoff.
+
+    Data hashes, thresholds, decisions and metadata remain exact. Computed
+    diagnostics may differ across libm/BLAS implementations: use rtol=1e-10
+    and atol=1e-13 for these metrics only. The independent physical gates are
+    reapplied without changing their thresholds, including the 1e-12
+    incompressibility limit. Neither the retained record nor data is rewritten.
+    """
 
     repository = Path(root).resolve()
     record_path = repository / "results" / "week01_1_scientific_software" / "acceptance_record.json"
@@ -272,10 +279,38 @@ def validate_week01_1_evidence(root: str | Path) -> dict[str, object]:
         raise ValueError("missing Week 1.1 acceptance record")
     retained = json.loads(record_path.read_text(encoding="utf-8"))
     recomputed = evaluate_acceptance(verification_sweep(), audit_cavity_case(repository))
-    if retained != recomputed:
-        raise ValueError("Week 1.1 retained evidence differs from the recomputed contract")
-    if retained["decision"] != "accept" or not all(retained["gates"].values()):
+    if recomputed["decision"] != "accept" or not all(recomputed["gates"].values()):
         raise ValueError("Week 1.1 scientific acceptance gate failed")
+
+    metric_paths = {
+        ("verification", "observed_order"),
+        *(("verification", "rows", i, key)
+          for i in range(len(recomputed["verification"]["rows"]))
+          for key in ("vorticity_relative_l2", "divergence_rms")),
+        *(("cavity", key) for key in (
+            "interior_divergence_rms", "interior_divergence_linf",
+            "archive_vorticity_relative_l2", "wall_velocity_max_abs_error",
+        )),
+    }
+
+    def same(observed: object, expected: object, path: tuple = ()) -> bool:
+        if type(observed) is not type(expected):
+            return False
+        if isinstance(expected, dict):
+            return observed.keys() == expected.keys() and all(
+                same(observed[key], value, (*path, key)) for key, value in expected.items()
+            )
+        if isinstance(expected, list):
+            return len(observed) == len(expected) and all(
+                same(a, b, (*path, i)) for i, (a, b) in enumerate(zip(observed, expected))
+            )
+        if path in metric_paths:
+            return bool(np.isfinite(observed) and np.isfinite(expected) and
+                        np.isclose(observed, expected, rtol=1e-10, atol=1e-13))
+        return observed == expected
+
+    if not same(retained, recomputed):
+        raise ValueError("Week 1.1 retained evidence differs from the recomputed contract")
     return retained
 
 

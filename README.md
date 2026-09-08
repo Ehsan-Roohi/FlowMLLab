@@ -19,7 +19,7 @@ numerical foundations to continuum and rarefied-flow research examples.
 research by Ehsan Roohi and collaborators, then brought into FlowMLLab for
 teaching. The course adds new code and baselines, not a new origin for those
 data. See [per-case papers, data lineage, reuse limits and AI-assistance
-disclosure](DATA_PROVENANCE.md). Version 1.5.0 consolidates the course through
+disclosure](DATA_PROVENANCE.md). Version 1.5.1 consolidates the course through
 Week 13, including research-data audits, executable reconstruction and
 state-estimation labs, and retained Unity cavity-PINN results.
 
@@ -275,12 +275,12 @@ Eight seeds, both heat-flux components, 80 recomputed errors; no new DSMC or neu
 Mean reference NRMSE for qy: Raw(3) 17.61%, Raw(10) 9.80%, conditioned estimator 4.34%.
 [Full comparisons, profiles and all-seed errors](results/week12_research/README.md) ·
 [Notebook and lecture](notebooks/week12/README.md). The independent reference still has sampling noise.
-Weeks 11 and 12 were developed after v1.4.1 and are included in v1.5.0.
+Weeks 11 and 12 were developed after v1.4.1 and are included in v1.5.1.
 
 Week 12 practical completion: [train a fresh Noise2Noise-style MLP on real DSMC](results/week12_noise2noise/README.md).
 The notebook now fits from raw observations, compares seven estimators and
 reports both held-out seeds. This is separate from the archived figures above;
-both are included in the v1.5.0 course archive.
+both are included in the v1.5.1 course archive.
 
 ### Week 13 — Rectangular-cavity PINN research audit
 
@@ -325,9 +325,9 @@ Student submissions are not included.
 · [Citation metadata](CITATION.cff)
 · [Workshop, support, and consulting details](docs/RESULTS_GUIDE.md#workshops-support-and-consulting)
 
-Current release: **v1.5.0** · [GitHub release](https://github.com/Ehsan-Roohi/FlowMLLab/releases/tag/v1.5.0)
-· [Release notes](RELEASE_NOTES_v1.5.0.md).
-The v1.5.0 version-specific DOI will be recorded here after Zenodo confirms publication.
+Current release: **v1.5.1** · [GitHub release](https://github.com/Ehsan-Roohi/FlowMLLab/releases/tag/v1.5.1)
+· [Release notes](RELEASE_NOTES_v1.5.1.md).
+The v1.5.1 version-specific DOI will be recorded here after Zenodo confirms publication.
 Previous v1.4.1 DOI: [10.5281/zenodo.22348207](https://doi.org/10.5281/zenodo.22348207).
 Previous v1.4.0 DOI: [10.5281/zenodo.22315623](https://doi.org/10.5281/zenodo.22315623).
 The [all-versions DOI](https://doi.org/10.5281/zenodo.22074169) resolves to the latest published archive.

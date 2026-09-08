@@ -384,8 +384,9 @@ def build_notebook() -> Path:
         )
         display(gate_table)
         print("FINAL DECISION:", record["decision"].upper())
-        retained = json.loads((ROOT / "results/week01_1_scientific_software/acceptance_record.json").read_text())
-        assert retained == record
+        from flowmllab.scientific_software import validate_week01_1_evidence
+        # Metric roundoff is allowed; data hashes, thresholds and decisions stay exact.
+        retained = validate_week01_1_evidence(ROOT)
         """
     )
     md(

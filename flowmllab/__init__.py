@@ -47,4 +47,4 @@ __all__ = [
     "validate_week9_evidence",
     "validate_week01_1_evidence",
 ]
-__version__ = "1.5.0"
+__version__ = "1.5.1"

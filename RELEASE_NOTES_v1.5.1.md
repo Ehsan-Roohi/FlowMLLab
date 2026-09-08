@@ -1,8 +1,12 @@
-# FlowMLLab v1.5.0
+# FlowMLLab v1.5.1
 
 This author-requested release consolidates the course through Week 13:
 33 notebooks, 19 PDF lectures, retained numerical evidence and reproducible
 scientific-ML experiments. It preserves the historical v1.4.1 archive.
+
+The v1.5.0 tag did not pass clean Linux qualification and was not published
+as a GitHub/Zenodo release. Version 1.5.1 includes the missing lecture-test
+dependency and the cross-platform numerical-regression correction below.
 
 ## Course and evidence additions
 
@@ -39,6 +43,13 @@ establish a new paper benchmark or resolve a source-data defect. Dataset and
 upstream-code permissions remain separate from the software MIT license.
 
 ## Verification and distribution
+
+Week 1.1 diagnostic metrics allow floating-point roundoff across libm/BLAS
+implementations (`rtol=1e-10`, `atol=1e-13`). Dataset hashes, thresholds,
+metadata and acceptance decisions still match exactly, and physical gates
+are independently recomputed with their original limits. Tests reject
+material drift, nonfinite values and changes to the frozen contract.
+No retained numerical data or acceptance record has been regenerated.
 
 Publication is gated by the package tests, scientific smoke test, complete
 course validator, notebook execution with retained-data hash checks, and

@@ -28,7 +28,7 @@ jobs:
       - name: Install FlowMLLab
         run: python -m pip install --upgrade pip && python -m pip install -e ".[test]"
       - name: Package tests
-        run: python -m unittest discover -s tests -v
+        run: python -m pytest -q tests qa
       - name: Core scientific smoke test
         run: flowmllab smoke --root .
       - name: Full release QA
