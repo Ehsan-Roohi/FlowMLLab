@@ -50,7 +50,8 @@ checkpoint() {
 }
 trap checkpoint USR1 TERM
 runlog="log.simpleFoam.${SLURM_JOB_ID}.${SLURM_RESTART_COUNT:-0}"
-mpirun -np "$SLURM_NTASKS" simpleFoam -parallel > "$runlog" 2>&1 &
+# Single-node jobs do not need the OFI provider (libfabric init crashed on URI).
+mpirun --mca pml ob1 --mca btl self,vader,tcp -np "$SLURM_NTASKS" simpleFoam -parallel > "$runlog" 2>&1 &
 child=$!
 set +e
 wait "$child"
