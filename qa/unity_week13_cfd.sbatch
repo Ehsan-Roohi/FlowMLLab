@@ -32,7 +32,7 @@ case_dir="$FLOWML_CFD_RUNS/${suffix}-${task}"
 python3 qa/prepare_week13_cfd.py --output "$case_dir" --task "$task" \
     --ranks "$SLURM_NTASKS" "${extra[@]}"
 cd "$case_dir"
-foamVersion
+echo "OpenFOAM ${WM_PROJECT_VERSION:?} precision=${WM_PRECISION_OPTION:?}"
 git -C "$SLURM_SUBMIT_DIR" rev-parse HEAD
 command -v simpleFoam
 if [[ ! -f mesh-ready ]]; then

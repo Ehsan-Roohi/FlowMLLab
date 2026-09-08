@@ -56,7 +56,7 @@ boundaryField {
         "constant/turbulenceProperties": dictionary("turbulenceProperties", "simulationType laminar;"),
         "system/controlDict": dictionary("controlDict", f"""application simpleFoam;
 startFrom latestTime; startTime 0; stopAt endTime; endTime {iterations}; deltaT 1;
-writeControl timeStep; writeInterval 500; purgeWrite 3;
+writeControl timeStep; writeInterval {min(500, iterations)}; purgeWrite 3;
 writeFormat binary; writePrecision 16; writeCompression off;
 timeFormat general; timePrecision 12; runTimeModifiable true;
 """),
@@ -92,7 +92,7 @@ def main():
     re, depth = CASES[args.task // len(GRIDS)]
     nx = 20 if args.smoke else GRIDS[args.task % len(GRIDS)]
     iterations = 20 if args.smoke else 20000
-    spec = dict(re=re, depth_over_width=depth, nx=nx, ny=round(nx*depth),
+    spec = dict(format_version=2, re=re, depth_over_width=depth, nx=nx, ny=round(nx*depth),
                 ranks=args.ranks, iterations=iterations, lid="uniform/classical",
                 solver="OpenFOAM-v2406/simpleFoam/laminar", status="unvalidated-candidate",
                 reference="https://doi.org/10.1016/j.compfluid.2005.08.006")
