@@ -48,6 +48,9 @@ dependencies = [
 ]
 
 [project.optional-dependencies]
+reconstruction = [
+  "torch>=2.6,<3",
+]
 ml = [
   "tensorflow>=2.16,<2.22",
   "keras>=3.3,<3.16",

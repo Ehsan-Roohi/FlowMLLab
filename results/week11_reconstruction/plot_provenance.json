@@ -1,0 +1,7 @@
+{
+  "source_sha256": "b901536588e4ed3367daf05fa87bfcce9c6ee00f192eace786676e17b3c94530",
+  "frame": 140,
+  "seed": 17,
+  "display": "Native-grid filled-contour level crossings only; no change to metrics or fields",
+  "layout": "Equal physical aspect ratio; one method per aligned row"
+}

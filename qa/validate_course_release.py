@@ -387,7 +387,11 @@ def validate_notebooks() -> tuple[int, int]:
         assert "FLOWMLLAB_COLAB_BOOTSTRAP_V1" in full_source, (
             f"missing Colab repository bootstrap: {path}"
         )
-        assert any(
+        reconstruction_lab = relative == 'notebooks/week11/W11_Lab2_Reconstruction_and_Identification.ipynb'
+        if reconstruction_lab:
+            assert 'FlowMLLab retained-LBM reconstruction audit v1' in full_source
+            assert 'velocity-derived weak references' in full_source
+        assert reconstruction_lab or any(
             marker in full_source
             for marker in (
                 "MIE690A article-aligned validation v3",
@@ -422,7 +426,7 @@ def validate_notebooks() -> tuple[int, int]:
                 for cell in cells
             ), f"missing learner-edition marker: {path}"
         count += 1
-    assert count == 33, f"expected 33 notebooks, found {count}"
+    assert count == 34, f"expected 34 notebooks, found {count}"
     return count, code_cells
 
 

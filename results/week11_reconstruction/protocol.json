@@ -1,0 +1,40 @@
+{
+  "train": [
+    90,
+    110
+  ],
+  "validation": 100,
+  "retained_test": 105,
+  "epochs": 60,
+  "seeds": [
+    17,
+    29,
+    43
+  ],
+  "batch_size": 32,
+  "optimizer": "Adam",
+  "learning_rate": 0.001,
+  "coarse_shape": [
+    8,
+    19
+  ],
+  "fine_shape": [
+    32,
+    78
+  ],
+  "swirl_threshold": 0.4013388454914093,
+  "label": "ROI-velocity-derived swirling strength; weak reference, not human truth",
+  "scope": "Previously inspected coarse incompressible LBM; no shock accuracy claim",
+  "mean": [
+    0.9608959555625916,
+    0.00038068482535891235
+  ],
+  "std": [
+    0.2253890037536621,
+    0.2542438507080078
+  ],
+  "torch": "2.14.0+cpu",
+  "numpy": "2.2.6",
+  "source_sha256": "a48150bef1f8b18661249a72d39af3586e46c4497a381e70e6a164d0b9af16c8",
+  "data_manifest_sha256": "ddf3bf5dcc86b3dcdf858b0ce8bc2994c334956a13c77e339a49dc57759913df"
+}

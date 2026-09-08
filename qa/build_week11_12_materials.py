@@ -8,6 +8,7 @@ from pathlib import Path
 import argparse
 import base64
 import html
+import json
 import shutil
 import sys
 import textwrap
@@ -474,7 +475,7 @@ def build_notebook(week, execute):
 def build_pdf(week):
     from reportlab.lib import colors
     from reportlab.lib.styles import ParagraphStyle
-    from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, PageBreak, Image
+    from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, PageBreak, Image, Table, TableStyle
     from reportlab.lib.enums import TA_LEFT
     _, stem = NAMES[week]
     source = ROOT / 'lectures' / 'source' / (stem+'.md')
@@ -485,16 +486,35 @@ def build_pdf(week):
     body = ParagraphStyle('body', fontName='Helvetica', fontSize=11.5, leading=17,
                           spaceAfter=13, textColor=colors.HexColor('#243746'), alignment=TA_LEFT)
     heading = ParagraphStyle('heading', parent=body, fontName='Helvetica-Bold',
-                             fontSize=23, leading=29, spaceAfter=22)
-    small = ParagraphStyle('small', parent=body, fontSize=9, leading=13)
+                             fontSize=23, leading=29, spaceAfter=22, keepWithNext=True)
+    small = ParagraphStyle('small', parent=body, fontSize=9, leading=13, keepWithNext=True)
     story = []
     for i, section in enumerate(sections):
         name, content = section.split('\n', 1)
-        if i:
+        if i and week != 11:
             story.append(PageBreak())
         story.append(Paragraph(f'FLOWMLLAB / WEEK {week} / {i+1:02d}', small))
         story.append(Paragraph(html.escape(name), heading))
         for para in content.strip().split('\n\n'):
+            if para.strip() == '[RECONSTRUCTION_TABLE]':
+                rows=json.loads((ROOT/'results/week11_reconstruction/metrics.json').read_text())
+                data=[['Method','Velocity L2 (%)','Vorticity L2 (%)','Dice']]
+                for method,label in [('Interpolation','Interpolation'),('reconstruction','U-Net field + diagnostic'),('segmentation','Direct U-Net mask')]:
+                    group=[r for r in rows if r['method']==method]
+                    vals=[]
+                    for key in ('velocity_relative_l2','vorticity_relative_l2','dice'):
+                        vals.append('N/A' if key not in group[0] else f"{sum(r[key] for r in group)/len(group)*(1 if key=='dice' else 100):.3f}")
+                    data.append([label,*vals])
+                table=Table(data,colWidths=[170,105,110,90],hAlign='LEFT')
+                table.setStyle(TableStyle([('FONTNAME',(0,0),(-1,0),'Helvetica-Bold'),('FONTSIZE',(0,0),(-1,-1),9),('BACKGROUND',(0,0),(-1,0),colors.HexColor('#e7f0f5')),('BOTTOMPADDING',(0,0),(-1,-1),10),('TOPPADDING',(0,0),(-1,-1),10),('LINEBELOW',(0,0),(-1,0),.7,colors.HexColor('#168aad'))]))
+                story.append(table)
+                continue
+            if para.strip() == '[RECONSTRUCTION_LOSS]':
+                from PIL import Image as PILImage
+                image=ROOT/'results/week11_reconstruction/loss.png'
+                with PILImage.open(image) as im: w,h=im.size
+                story.append(Image(str(image),width=475,height=475*h/w))
+                continue
             if para.strip() in ('[TEACHING_FIGURE]', '[RESEARCH_FIGURE]', '[NOISE2NOISE_FIGURE]', '[NOISE2NOISE_AUDIT]'):
                 image = ROOT / 'results' / 'week11_12_teaching' / f'week{week}_teaching.png'
                 if para.strip() == '[RESEARCH_FIGURE]':

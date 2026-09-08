@@ -10,6 +10,28 @@ ROOT=Path(__file__).resolve().parents[1]
 
 
 class ResearchEvidenceTests(unittest.TestCase):
+    def test_reconstruction_protocol_and_retained_hashes(self):
+        folder=ROOT/'results/week11_reconstruction'
+        manifest=json.loads((folder/'manifest.json').read_text())
+        for name,digest in manifest.items():
+            self.assertEqual(hashlib.sha256((folder/name).read_bytes()).hexdigest(),digest,name)
+        protocol=json.loads((folder/'protocol.json').read_text())
+        self.assertEqual(protocol['train'],[90,110])
+        self.assertEqual(protocol['validation'],100)
+        self.assertEqual(protocol['retained_test'],105)
+        self.assertEqual(protocol['seeds'],[17,29,43])
+        self.assertEqual(protocol['epochs'],60)
+        self.assertEqual(protocol['source_sha256'],hashlib.sha256((ROOT/'qa/run_week11_reconstruction.py').read_bytes()).hexdigest())
+        rows=json.loads((folder/'metrics.json').read_text())
+        self.assertEqual(len(rows),7)
+        for method in ('reconstruction','segmentation'):
+            self.assertEqual({r['seed'] for r in rows if r['method']==method},{17,29,43})
+        for row in rows:
+            self.assertTrue(0 <= row['dice'] <= 1)
+            self.assertTrue(0 <= row['iou'] <= 1)
+            if row['method']=='segmentation':
+                self.assertNotIn('velocity_relative_l2',row)
+
     def test_six_fixed_checkpoint_runs(self):
         folder=ROOT/'results/week11_research'
         report=json.loads((folder/'research_manifest.json').read_text())

@@ -1,0 +1,71 @@
+[
+  {
+    "method": "Interpolation",
+    "seed": null,
+    "velocity_relative_l2": 0.07886423170566559,
+    "vorticity_relative_l2": 0.39800745248794556,
+    "divergence_rms": 0.04866978898644447,
+    "dice": 0.7730359041081342,
+    "iou": 0.63051203468488
+  },
+  {
+    "method": "reconstruction",
+    "seed": 17,
+    "selected_epoch": 59,
+    "parameters": 29698,
+    "velocity_relative_l2": 0.01769641414284706,
+    "vorticity_relative_l2": 0.1122044175863266,
+    "divergence_rms": 0.031785860657691956,
+    "dice": 0.9476741538976977,
+    "iou": 0.9007550441809322
+  },
+  {
+    "method": "segmentation",
+    "seed": 17,
+    "selected_epoch": 58,
+    "parameters": 29689,
+    "probability_threshold": 0.55,
+    "dice": 0.9672587184080388,
+    "iou": 0.9367519781429351
+  },
+  {
+    "method": "reconstruction",
+    "seed": 29,
+    "selected_epoch": 57,
+    "parameters": 29698,
+    "velocity_relative_l2": 0.018909558653831482,
+    "vorticity_relative_l2": 0.12609955668449402,
+    "divergence_rms": 0.03292745724320412,
+    "dice": 0.941913449587775,
+    "iou": 0.8903914716289514
+  },
+  {
+    "method": "segmentation",
+    "seed": 29,
+    "selected_epoch": 57,
+    "parameters": 29689,
+    "probability_threshold": 0.55,
+    "dice": 0.9727337473585959,
+    "iou": 0.9470428963122289
+  },
+  {
+    "method": "reconstruction",
+    "seed": 43,
+    "selected_epoch": 58,
+    "parameters": 29698,
+    "velocity_relative_l2": 0.02090371400117874,
+    "vorticity_relative_l2": 0.14069701731204987,
+    "divergence_rms": 0.032095473259687424,
+    "dice": 0.9408726328722271,
+    "iou": 0.8886134032981493
+  },
+  {
+    "method": "segmentation",
+    "seed": 43,
+    "selected_epoch": 60,
+    "parameters": 29689,
+    "probability_threshold": 0.45000000000000007,
+    "dice": 0.9718400073463613,
+    "iou": 0.9453672202450087
+  }
+]

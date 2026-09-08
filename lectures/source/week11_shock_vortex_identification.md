@@ -70,6 +70,38 @@ Add new controls for grid changes, noise and solver changes. Recompute derivativ
 
 The research repository is https://github.com/Ehsan-Roohi/ShockVortexML. This lecture paraphrases the author-supplied manuscript and teaches its audit principles without copying a training pipeline or redistributing unpublished CFD archives.
 
+## Reconstruct the field before identifying structures
+
+The real-field companion asks a different question from the manufactured classification exercise. Suppose a sensor or storage pipeline supplies a spatially coarsened velocity field. Can a learned reconstruction recover the velocity gradients needed to identify a vortex? Our independent adaptation of the supplied Ricardo-course super-resolution exercise compares three paths: interpolation followed by a physical diagnostic; U-Net velocity reconstruction followed by that same diagnostic; and direct U-Net mask prediction. U-Net is the shared architecture, not a separate rival to a so-called Ricardo algorithm.
+
+A U-Net contracts the spatial representation to learn broader context, then expands it while concatenating encoder features through skip connections. The original architecture is described by Ronneberger, Fischer and Brox (2015), https://lmb.informatik.uni-freiburg.de/people/ronneber/u-net/. The course archive illustrates single-component turbulent-field reconstruction. Here we independently implement a smaller two-level network with two velocity inputs and either two reconstructed velocity outputs or one mask logit. No archive source code, weights or figures are redistributed, and this is not an exact reproduction of its four-level network.
+
+For reconstruction, minimize the mean squared difference between predicted and reference velocities after per-component training-only normalization. For direct segmentation, minimize binary cross entropy against the velocity-derived mask. These losses answer different questions. A velocity error with wavelength h produces a derivative error proportional to its amplitude divided by h; low velocity MSE therefore need not imply accurate swirling strength. Thresholding a diagnostic adds another discontinuity: a small change near the cutoff can switch many pixels.
+
+The real inputs are previously generated FlowMLLab LBM cylinder wakes, not newly simulated data and not the hypersonic cylinder article. The 32-by-78 downstream ROI is area-reduced to 8-by-19 and bilinearly restored before either neural path sees it. Both components are available. The physical coordinates retain their true aspect ratio. The native ROI is coarse and subsampled; it is not grid-independent DNS, and its boundary is not a physical wall.
+
+## A matched protocol and a limited reference
+
+Entire Re90 and Re110 cases provide training data; Re100 provides validation; previously inspected Re105 is the retained test. Every normalization statistic and the physical diagnostic threshold come from training only. The threshold is the 90th percentile of interior training swirling strength. Compute the reference and reconstructed diagnostics using the same ROI derivative operator, not the separately archived pre-subsampling vorticity. Omit a two-cell border from the metrics. Pure rotation and simple-shear controls verify this diagnostic independently of training.
+
+Both networks use Adam at 0.001, 60 epochs, batch size 32 and three fixed seeds. Select each checkpoint by minimum validation loss, and the direct mask probability threshold by validation Dice on a predeclared grid. Report all seeds, not the best retained-test seed. The first seed and midpoint frame are fixed for illustration. Parameter counts differ slightly because the output heads differ; this is matched input and optimization budget, not exact parameter equality.
+
+Read the companion notebook's table in two parts. Velocity and vorticity relative L2 errors assess reconstructed fields; divergence RMS is an additional consistency diagnostic, not an enforced constraint. Frame-macro Dice and IoU assess agreement with the thresholded native swirling-strength reference. Direct segmentation cannot have a velocity error because it produces no velocity. Empty-versus-empty masks score one. Temporal frames are correlated, so seed dispersion is not a confidence interval over independent flows.
+
+These wakes contain vortices but no shocks. The comparison cannot establish shock detection or identify every dynamically important coherent structure. Agreement with a derivative-based weak reference is not human-validated physical accuracy. Additional higher-resolution, independent flows and threshold-sensitivity experiments are required before broader research claims. The companion protocol records the source archive hash and explains the adaptation; the archive folder name alone does not establish code authorship or redistribution permission.
+
+Run notebooks/week11/W11_Lab2_Reconstruction_and_Identification.ipynb to audit the retained comparison and view loss histories. Its optional retraining cell runs all six fits into a fresh scratch directory, never into retained results. The synthetic warm-up and the separate research-image gallery remain available and retain their original evidence limitations.
+
+## Read the retained reconstruction comparison
+
+[RECONSTRUCTION_TABLE]
+
+The neural rows average three independently initialized fits on the same retained case; they are not confidence intervals across flows. The full per-seed table and color-field comparisons are in the companion notebook and results/week11_reconstruction/. All seven metric rows were recomputed from the saved models. The direct mask model scores higher against this particular weak reference, while the reconstruction model provides velocities for downstream diagnostics. Neither observation demonstrates shock detection or cross-solver generalization.
+
+[RECONSTRUCTION_LOSS]
+
+Solid curves show training loss and dashed curves validation loss. The two panels have different objectives and cannot be ranked by comparing their absolute heights. Several best checkpoints occur near the end of the fixed budget: this is a completed controlled run, not a proof of optimization convergence. Extending the budget is a new predeclared experiment, not an opportunity to select a better retained-test result retrospectively.
+
 ## Exit assessment and reproducibility
 
 Submit one page with: the split IDs, frozen thresholds, both methods' case-wise Dice, at least one failure, and a labeled comparison figure. Explain why vorticity does not imply a vortex, why independent sigmoid labels are appropriate, and why physical-label agreement is not independent physical validation.

@@ -20,3 +20,12 @@ three times each, with native masks and source hashes. No new CFD, training or
 human-ground-truth accuracy is claimed. All synthetic exercises remain available.
 
 Next: [Week 12 - noisy DSMC moment reconstruction](../week12/README.md).
+
+## Real-field reconstruction extension
+
+[Lab 2: reconstruction followed by identification](W11_Lab2_Reconstruction_and_Identification.ipynb)
+adds a matched-input comparison of interpolation, U-Net velocity reconstruction
+followed by swirling strength, and direct U-Net mask prediction on existing
+author LBM wakes. Read the [frozen protocol and attribution](RECONSTRUCTION_PROTOCOL.md).
+This is vortex-reference agreement on a coarse retained dataset, not independent
+shock accuracy. Full retraining is optional and writes only to a new scratch folder.

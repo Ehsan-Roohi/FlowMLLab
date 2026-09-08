@@ -265,6 +265,12 @@ ML-only outputs; previously inspected development-test cases, not human-validate
 [All six full-size figures and provenance](results/week11_research/README.md) ·
 [Notebook and lecture](notebooks/week11/README.md). Synthetic controls remain as the warm-up.
 
+**Real-field extension:** [U-Net reconstruction followed by vortex identification](results/week11_reconstruction/README.md)
+compares interpolation, reconstructed velocity plus swirling strength, and direct
+mask prediction on the same retained LBM wake cases. Three training seeds, loss
+histories and saved-checkpoint audits are included. These are weak-reference
+vortex scores on coarse incompressible data, not shock accuracy or a blind test.
+
 ### Week 12 — DSMC moment reconstruction
 
 ![Week 12 real DSMC heat flux reference, observation and reconstruction](results/week12_research/cavity_qy_hero.png)
