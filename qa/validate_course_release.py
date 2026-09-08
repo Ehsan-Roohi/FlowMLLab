@@ -28,9 +28,14 @@ REQUIRED = [
     "qa/harvest_week13_results.py",
     "qa/build_week13_materials.py",
     "qa/WEEK13_PINN_MATRIX_PROTOCOL.md",
+    "results/week13_rectangular_pinn/README.md",
     "results/week13_rectangular_pinn/manifest.json",
     "results/week13_rectangular_pinn/week13_matrix.png",
     "results/week13_rectangular_pinn/week13_optimizer_history.png",
+    "results/week13_rectangular_pinn/re100-d1/audit.json",
+    "results/week13_rectangular_pinn/re400-d1/audit.json",
+    "results/week13_rectangular_pinn/re100-d2/audit.json",
+    "results/week13_rectangular_pinn/re400-d2/audit.json",
     "lectures/week04_2_pinn_cavity.pdf",
     "lectures/source/week04_2_pinn_cavity.md",
     "qa/build_week04_2_lecture.py",
@@ -417,7 +422,7 @@ def validate_notebooks() -> tuple[int, int]:
                 for cell in cells
             ), f"missing learner-edition marker: {path}"
         count += 1
-    assert count == 32, f"expected 32 notebooks, found {count}"
+    assert count == 33, f"expected 33 notebooks, found {count}"
     return count, code_cells
 
 
@@ -1085,7 +1090,7 @@ def validate_week01_1_results() -> dict[str, object]:
 
 def validate_pdfs() -> int:
     pdfs = sorted((ROOT / "lectures").glob("*.pdf"))
-    assert len(pdfs) == 18
+    assert len(pdfs) == 19
     for path in pdfs:
         result = subprocess.run(
             ["pdfinfo", str(path)], check=True, capture_output=True, text=True

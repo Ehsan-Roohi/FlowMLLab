@@ -52,7 +52,7 @@ Restricted handouts, worked solutions and assessment files are not import source
 | Placement | Question and bounded experiment | Acceptance before promotion |
 | --- | --- | --- |
 | 3.1, revisited in 12 | How many independent observations does a DSMC average contain? Compare naive standard errors, autocorrelation-aware effective sample size and block averaging. | Use ordered raw samples, not spatial pixels or unordered seed averages as a time series. Verify on a known correlated process first; defer real-data claims if temporal samples are unavailable. |
-| 5.1 | Does a small PINN residual imply an accurate flow solution? Use an independently implemented analytic Kovasznay reference, boundary and divergence errors, then a fixed-budget baseline comparison. | Separate collocation from evaluation points; report field and boundary errors, seed spread and runtime. Time-dependent/causal PINNs are a later extension, not implied by a steady test. |
+| Existing 4.2 and 13 | Extend the current PINN reliability audit into a matched representation study. | Compare primitive/FOSLS and streamfunction formulations under identical physics and budgets; add grid-converged smooth-lid references and multiple preregistered seeds before a paper claim. |
 | Existing 2.1 | Deepen posterior-predictive calibration and GP limitations. | Preserve the same baselines and split; no duplicate introductory Bayesian or GP module. |
 | Existing 4.1, later | When is nonlinear latent compression justified against POD? | Equal data and latent dimension; separate reconstruction from rollout; include boundary/divergence checks and total training cost. No automatic VAE superiority claim. |
 

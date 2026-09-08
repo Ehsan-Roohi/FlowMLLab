@@ -17,11 +17,14 @@ from xml.sax.saxutils import escape
 import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
+from matplotlib import font_manager
 import numpy as np
 from reportlab.lib import colors
 from reportlab.lib.pagesizes import A4
 from reportlab.lib.styles import ParagraphStyle
 from reportlab.pdfgen.canvas import Canvas
+from reportlab.pdfbase import pdfmetrics
+from reportlab.pdfbase.ttfonts import TTFont
 from reportlab.platypus import Image, KeepTogether, Paragraph, SimpleDocTemplate, Spacer, Table, TableStyle
 
 
@@ -30,6 +33,10 @@ SOURCE = ROOT / "lectures/source/week13_rectangular_cavity_pinn.md"
 RESULTS = ROOT / "results/week13_rectangular_pinn"
 CASES = ((100, 1), (400, 1), (100, 2), (400, 2))
 NAME = "week13_rectangular_cavity_pinn"
+
+pdfmetrics.registerFont(TTFont("FlowSerif", font_manager.findfont("DejaVu Serif")))
+pdfmetrics.registerFont(TTFont("FlowSerifBold", font_manager.findfont(
+    font_manager.FontProperties(family="DejaVu Serif", weight="bold"))))
 
 EQUATIONS = {
     "mapping": [r"$D=H/L,\qquad x=X/L,\qquad \eta=Y/H,\qquad y/L=D\eta$",
@@ -44,10 +51,10 @@ EQUATIONS = {
     "lifting": [r"$B=16x(1-x)\eta(1-\eta),\qquad \psi_\theta=\psi_{lid}+B^2q_\theta$",
                 r"$\psi_{lid}=D(\eta-1)\eta^2g(x)\exp[-(1-\eta)^2/\delta_\eta^2]$",
                 r"$g(x)=(1-e^{-(1-x)^2/\delta_x^2})(1-e^{-x^2/\delta_x^2})$"],
-    "objective": [r"$\mathcal{L}_{train}=\langle \widetilde r_x^2+\widetilde r_y^2\rangle_{\mathcal C},\qquad \widetilde r_i=m r_i$",
-                  r"$\theta_0\xrightarrow{\mathrm{Adam}}\theta_A\xrightarrow{\mathrm{SSBroyden2}}\theta_Q$"],
-    "errors": [r"$E_{\mathbf u}=\|\mathbf u_\theta-\mathbf u_{ref}\|_{2,\Omega'}/\|\mathbf u_{ref}\|_{2,\Omega'}$",
-               r"$R_{full}=\sqrt{\langle r_x^2+r_y^2\rangle_{\mathcal T}},\qquad \mathcal T\cap\mathcal C=\varnothing$"],
+    "objective": [r"$\mathcal{L}_{train}=\langle \widetilde r_x^2+\widetilde r_y^2\rangle_{\mathcal{C}},\qquad \widetilde r_i=m r_i$",
+                  r"$\theta_0\longrightarrow\theta_A\longrightarrow\theta_Q\qquad[\mathrm{Adam};\ \mathrm{SSBroyden2}]$"],
+    "errors": [r"$E_{\mathbf{u}}=\|\mathbf{u}_\theta-\mathbf{u}_{ref}\|_{2,\Omega'}/\|\mathbf{u}_{ref}\|_{2,\Omega'}$",
+               r"$R_{full}=\sqrt{\langle r_x^2+r_y^2\rangle_{\mathcal{T}}},\qquad \mathcal{T}\cap\mathcal{C}=\varnothing$"],
 }
 
 
@@ -75,7 +82,9 @@ def result_rows(records):
                           + residual["top_corner_momentum_y_rms"]**2) / 2)
         compare = audit.get("cfd_comparison")
         gate = "n/a: no raw matched field" if compare is None else ("pass" if compare["all_pass"] else "fail")
-        rows.append([str(record["re"]), str(record["depth"]), audit["claim_status"],
+        claim = ("square: CFD gates pass" if audit["claim_status"] == "field-qualified-square-case"
+                 else "deep: no field reference")
+        rows.append([str(record["re"]), str(record["depth"]), claim,
                      f"{full:.3g}", f"{corner:.3g}", gate])
     return rows
 
@@ -84,20 +93,20 @@ def build_pdf(records, outdir):
     outdir.mkdir(parents=True, exist_ok=True)
     width = A4[0] - 104
     styles = {
-        "body": ParagraphStyle("body", fontName="Times-Roman", fontSize=10.6, leading=14.2,
-                               alignment=4, spaceAfter=7),
-        "title": ParagraphStyle("title", fontName="Times-Bold", fontSize=23, leading=27,
+        "body": ParagraphStyle("body", fontName="FlowSerif", fontSize=9.7, leading=12.8,
+                               alignment=4, spaceAfter=5.5),
+        "title": ParagraphStyle("title", fontName="FlowSerifBold", fontSize=23, leading=27,
                                 textColor=colors.HexColor("#17384d"), spaceAfter=8, keepWithNext=True),
-        "subtitle": ParagraphStyle("subtitle", fontName="Times-Roman", fontSize=16, leading=20,
+        "subtitle": ParagraphStyle("subtitle", fontName="FlowSerif", fontSize=16, leading=20,
                                    spaceAfter=11, keepWithNext=True),
-        "heading": ParagraphStyle("heading", fontName="Times-Bold", fontSize=12.7, leading=16,
-                                  textColor=colors.HexColor("#17384d"), spaceBefore=11, spaceAfter=6,
+        "heading": ParagraphStyle("heading", fontName="FlowSerifBold", fontSize=12.5, leading=15.5,
+                                  textColor=colors.HexColor("#17384d"), spaceBefore=9, spaceAfter=5,
                                   keepWithNext=True),
-        "caption": ParagraphStyle("caption", fontName="Times-Roman", fontSize=9, leading=11.3,
+        "caption": ParagraphStyle("caption", fontName="FlowSerif", fontSize=8.8, leading=11.1,
                                   spaceAfter=8),
-        "cell": ParagraphStyle("cell", fontName="Times-Roman", fontSize=8.25, leading=10.2),
-        "reference": ParagraphStyle("reference", fontName="Times-Roman", fontSize=8.8, leading=11,
-                                    spaceAfter=4),
+        "cell": ParagraphStyle("cell", fontName="FlowSerif", fontSize=8.0, leading=9.8),
+        "reference": ParagraphStyle("reference", fontName="FlowSerif", fontSize=7.7, leading=9.3,
+                                    spaceAfter=2.5),
     }
 
     def para(text, style="body"):
@@ -207,14 +216,25 @@ def build_pdf(records, outdir):
                         bbox_inches="tight", facecolor="white")
             caption = "Figure 3. Adam (left of the orange line) followed by SSBroyden2. Held-out full-domain and top-corner residuals prevent masked training loss from being mistaken for global accuracy."
         else:
-            fig, axes = plt.subplots(2, 2, figsize=(8.2, 7.0), constrained_layout=True)
+            # Each retained render is a wide three-panel strip.  Match the
+            # montage canvas to that shape so ReportLab does not inherit large
+            # bands of empty axes space between the two rows.
+            fig, axes = plt.subplots(2, 2, figsize=(8.2, 4.4), constrained_layout=True)
             for ax, record in zip(axes.ravel(), records):
-                image = plt.imread(record["dir"] / "fields.png")
-                ax.imshow(image); ax.axis("off"); ax.set_title(f"Re={record['re']}, D={record['depth']}", fontsize=10)
+                field = plt.imread(record["dir"] / "fields.png")
+                rgb = field[..., :3]
+                content = np.any(rgb < .985, axis=2)
+                rows, cols = np.where(content)
+                if rows.size:
+                    pad = 8
+                    r0, r1 = max(0, rows.min()-pad), min(field.shape[0], rows.max()+pad+1)
+                    c0, c1 = max(0, cols.min()-pad), min(field.shape[1], cols.max()+pad+1)
+                    field = field[r0:r1, c0:c1]
+                ax.imshow(field); ax.axis("off"); ax.set_title(f"Re={record['re']}, D={record['depth']}", fontsize=10)
             fig.savefig(RESULTS / "week13_matrix.png", dpi=260,
                         bbox_inches="tight", facecolor="white")
             caption = "Figure 4. Retained case renders from the exact Unity jobs. These panels preserve geometric aspect ratio inside each source render. Square cases have CFD gates; deep cases are residual-audited hypotheses, not field validations."
-        image = raster(fig, max_height=325 if key in ("losses", "fields") else 220)
+        image = raster(fig, max_height=(325 if key == "losses" else 225) if key in ("losses", "fields") else (165 if key == "geometry" else 220))
         return KeepTogether([image, Spacer(1, 4), para(caption, "caption")])
 
     story = []; equation_number = 0; references = False
@@ -237,7 +257,7 @@ def build_pdf(records, outdir):
 
     def footer(canvas, document):
         canvas.saveState(); canvas.setStrokeColor(colors.HexColor("#b7c3cd")); canvas.setLineWidth(.4)
-        canvas.line(52, 43, A4[0]-52, 43); canvas.setFont("Times-Roman", 8.8)
+        canvas.line(52, 43, A4[0]-52, 43); canvas.setFont("FlowSerif", 8.5)
         canvas.drawString(52, 29, "FlowMLLab | Week 13 | Rectangular-cavity PINNs")
         canvas.drawRightString(A4[0]-52, 29, str(document.page)); canvas.restoreState()
 
@@ -261,11 +281,35 @@ def notebook_cell(kind, source, cell_id):
 def build_notebook(target):
     cells = [
         notebook_cell("markdown", """# Week 13 — Rectangular-cavity PINNs as a research audit
+<!-- MIE690A article-aligned validation v4 -->
 
 This notebook audits the retained `gpu-preempt` matrix; it does **not** retrain the PINNs. It tests whether training, held-out residuals, top-corner behavior, exact walls and matched CFD evidence support the same conclusion. Deep cases are not labelled field-validated without raw matched CFD.
 
+[Open the published notebook in Colab](https://colab.research.google.com/github/Ehsan-Roohi/FlowMLLab/blob/main/notebooks/week13/W13_Rectangular_Cavity_PINN_Research.ipynb)
+
 Research contrast: streamfunction–pressure representation versus the primitive/FOSLS formulation studied by Służalec et al. (JCS 95, 2026, 102817). Both solve Navier–Stokes; the hypothesis concerns representation and constraint structure.
 """, "w13-00"),
+        notebook_cell("code", """# FLOWMLLAB_COLAB_BOOTSTRAP_V1
+# In Colab this cell obtains the complete public evidence tree. Locally it is a no-op.
+from pathlib import Path as _FlowMLLabPath
+import os as _flowmllab_os
+import subprocess as _flowmllab_subprocess
+import sys as _flowmllab_sys
+
+if "google.colab" in _flowmllab_sys.modules or _flowmllab_os.environ.get("COLAB_RELEASE_TAG"):
+    _flowmllab_root = _FlowMLLabPath("/content/FlowMLLab")
+    if not (_flowmllab_root / ".git").is_dir():
+        _flowmllab_subprocess.run(
+            ["git", "clone", "--depth", "1", "https://github.com/Ehsan-Roohi/FlowMLLab.git", str(_flowmllab_root)],
+            check=True,
+        )
+    _flowmllab_notebook_dir = _flowmllab_root / "notebooks/week13"
+    _flowmllab_os.chdir(_flowmllab_notebook_dir)
+    for _flowmllab_path in (_flowmllab_root, _flowmllab_notebook_dir):
+        if str(_flowmllab_path) not in _flowmllab_sys.path:
+            _flowmllab_sys.path.insert(0, str(_flowmllab_path))
+    print("FlowMLLab evidence ready:", _flowmllab_root)
+""", "w13-bootstrap"),
         notebook_cell("code", """from pathlib import Path
 import hashlib, json
 import matplotlib.pyplot as plt

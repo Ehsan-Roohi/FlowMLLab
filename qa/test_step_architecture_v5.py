@@ -6,6 +6,7 @@ six-arm, two-epoch `smoke` command. These tests check scientific bookkeeping.
 from __future__ import annotations
 
 import importlib.util
+import os
 from pathlib import Path
 import subprocess
 import sys
@@ -116,6 +117,7 @@ class ProtocolTests(unittest.TestCase):
                 v5.save_json(path, {'value': float('nan')})
             self.assertEqual(path.read_text().strip(), '{\n  "value": 1\n}')
 
+    @unittest.skipIf(os.name == "nt", "SLURM submission locking uses POSIX fcntl")
     def test_submit_snapshots_and_records_exact_job_without_changing_old_run(self):
         with tempfile.TemporaryDirectory(prefix='v5 test space ') as temp:
             base = Path(temp)
@@ -150,6 +152,7 @@ class ProtocolTests(unittest.TestCase):
             self.assertIn('--job-name=step-arch-v5', batch)
             self.assertIn('--chdir='+str(out), batch)
 
+    @unittest.skipIf(os.name == "nt", "SLURM submission locking uses POSIX fcntl")
     def test_active_job_prevents_duplicate_submission(self):
         with tempfile.TemporaryDirectory() as temp:
             base = Path(temp)

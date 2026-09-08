@@ -9,7 +9,7 @@ generate numerical data, compare transparent baselines with learned models, and
 check both prediction error and physical fidelity.
 
 Developed for **MIE 690A: AI in Fluid Mechanics**, University of Massachusetts
-Amherst. The working course includes **32 notebooks** and a continuous lecture
+Amherst. The working course includes **33 notebooks** and a continuous lecture
 sequence from
 numerical foundations to continuum and rarefied-flow research examples.
 

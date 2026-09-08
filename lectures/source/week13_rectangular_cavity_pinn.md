@@ -106,7 +106,7 @@ For deep cases no matching raw field is currently retained. They may be residual
 
 ### 9. Reading the four-case feasibility pilot
 
-The initial matrix contains Re=100 and 400 at D=1 and 2. Every case uses the same three-layer, 50-unit tanh network, 16384 collocation points, float64, 1000 Adam steps and 1000 SSBroyden2 steps. All jobs start from the same declared seed. This controls a first experiment but does not measure seed-to-seed success probability.
+The initial matrix contains Re=100 and 400 at D=1 and 2. Every case uses the same three-layer, 50-unit tanh network, 16384 collocation points, float64, 1000 Adam steps and 3000 SSBroyden2 steps. The quasi-Newton target was extended from 1000 to 3000 only after the initial residual audit, using exact optimizer-state continuation; that extension is therefore a disclosed post-pilot decision, not a preregistered paper protocol. All jobs start from the same declared seed. This controls a first experiment but does not measure seed-to-seed success probability.
 
 @figure fields
 

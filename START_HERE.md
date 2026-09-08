@@ -19,7 +19,7 @@ This page is the shortest reliable path from a fresh checkout to a meaningful sc
 
 Do not begin with Track 6 unless you already understand case-wise splitting, scaling, offline versus closed-loop validation, and GPU troubleshooting.
 
-The complete [notebook launcher](notebooks/README.md) links directly to all 32
+The complete [notebook launcher](notebooks/README.md) links directly to all 33
 Colab notebooks. Their first code cells obtain the repository and package, so a
 fresh Colab runtime does not require manual file uploads.
 

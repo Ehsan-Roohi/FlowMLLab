@@ -163,7 +163,9 @@ the exact DSMC export still needs repair.
 | FlowMLLab nozzle regression at 16/25/30 kPa | mean full-field relative $L_2$: previous interpolation **6.43%**, registered POD polynomial **4.20%**, trained neural ensemble **4.60%**; selected-model maximum **13.67%** |
 | Micro-step zonal-loss article evidence | Recirculation error: **14.6135% → 11.9413%**; full-domain error: **2.1739% → 2.2254%** |
 | Week-10 DSMC article reproduction | primary cavity maximum/mean NRMSE: **1.281% / 0.672%**; shock maximum/mean relative $L_2$: **1.018% / 0.424%** |
-| Reproducible learning and research entry points | **25 Colab notebooks + 12 lectures** (11 PDFs; Weeks 5–6 share one guide) |
+| Week-13 square-cavity PINN field gates | `Re=100`: **2.354% / 4.828% / 3.343%** centerline-$u$ / centerline-$v$ / interior-vector relative $L_2$; `Re=400`: **8.283% / 10.132% / 10.570%**; all frozen square-case gates pass |
+| Week-13 deep-cavity PINN audit | `D=2` full/corner momentum RMS: **0.370 / 1.923** at `Re=100`, **0.131 / 0.671** at `Re=400`; no matched raw field, so no field-accuracy claim |
+| Reproducible learning and research entry points | **33 Colab notebooks** and a continuous lecture sequence through Week 13 |
 
 ### Choose a starting point
 

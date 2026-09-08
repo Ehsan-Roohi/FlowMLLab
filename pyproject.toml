@@ -52,7 +52,9 @@ ml = [
   "tensorflow>=2.16,<2.22",
   "keras>=3.3,<3.16",
 ]
-test = []
+test = [
+  "pytest>=8,<9",
+]
 demo = [
   "streamlit==1.62.0",
 ]

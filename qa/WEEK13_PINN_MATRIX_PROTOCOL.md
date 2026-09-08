@@ -63,6 +63,16 @@ sbatch qa/unity_week13_pinn_matrix.sbatch
 The array writes only to `tmp/week13-pinn-*`.  Results enter the retained course
 evidence only after the audit gates have been checked case by case.
 
+## Disclosed pilot extension
+
+The first completed matrix used 1,000 Adam and 1,000 SSBroyden2 steps.  After
+inspecting its independent residuals, the author requested further convergence.
+The same checkpoints were continued to 3,000 SSBroyden2 steps with the public
+restart code; no case was restarted from a preferred seed.  This was a
+post-pilot diagnostic decision and is not represented as a preregistered
+stopping rule.  The retained histories include both endpoints and show that
+continued optimization did not improve every metric monotonically.
+
 ## Research-paper extension (not claimed by the pilot)
 
 Służalec et al. (Journal of Computational Science 95, 2026, 102817) report
