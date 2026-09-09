@@ -1,0 +1,38 @@
+{
+  "operation": "presentation-only replot; no inference or threshold change",
+  "model_label": "task-preserving Harmonized Joint (HJ)",
+  "coordinate_contract": "retained arrays already use reference-length coordinates",
+  "density_contract": "retained density is normalized by freestream density",
+  "items": {
+    "airfoil_1": {
+      "source_array_sha256": "f4b6692d94c4f14ff890a912f7d10f8730654fdcd72c3458c800437701447bd7",
+      "png_sha256": "afcd9a217522325f782b06954104f9f7253ec85bbebd8871499cb3c02ee62f18",
+      "pdf_sha256": "f1032a749136df3fb82fcc1a15220c9ea92c8cbe27219cf3dec441f20333657c"
+    },
+    "airfoil_2": {
+      "source_array_sha256": "5ff5393f6b9700c8ce56cfc23893832dd3476c455817c4276002c8f1aaedb948",
+      "png_sha256": "2b9d31f2178e3bb5761f07e8afae452aaf92f16e96e464ee81efe579b8222453",
+      "pdf_sha256": "925a07c8411482ef9146294bbbd8244fdde0287804a0f5fa28ffcfb0117b59ac"
+    },
+    "airfoil_3": {
+      "source_array_sha256": "3edb5d2eae877128bb721cdd1ed0973984bb56c6e48dc07974c23a08a8f3451c",
+      "png_sha256": "75806a598727989eb5e9e95ba19d86b50070edbb751a422bae04c417a5717426",
+      "pdf_sha256": "e9cd84425acbe13c7dce71fc9229d2b877b14e9347c0538152b15a49ed12f6fa"
+    },
+    "cylinder_1": {
+      "source_array_sha256": "334459a1a3c95ed80c9f17f94ee4368f614c1ec9308ebd1a116e81c2fd6dbd55",
+      "png_sha256": "071fc4825a080088b211c7200a6abd361beefb694d19f1ebeb778d793c10e112",
+      "pdf_sha256": "232b1fadf17b772695412bb304e7096d0326d6ab432b08d74de8b62b88e1a022"
+    },
+    "cylinder_2": {
+      "source_array_sha256": "3bc6859959279ef0e49497a921a5128e94641b9faa6974936ed9b9b4b3493fae",
+      "png_sha256": "8668119649f7a8c0203892db6a68272568e0ab38f03856ed8105938ed9540b2f",
+      "pdf_sha256": "ddec425a39cc035328e53b18f66e6b07782c85d385dde6b996fadd132627ecd3"
+    },
+    "cylinder_3": {
+      "source_array_sha256": "88aa0a830812de2864ef5ea16b0bbc7ae8191f8d326bed855e6aac03fd719285",
+      "png_sha256": "836d3fa010c01a4034212a79a6de794992fdabafb307191cb7f6d80c9b6ef56c",
+      "pdf_sha256": "520a8e02993b290f12946413505a958b0109c0d19a2f251350afa6b70133df16"
+    }
+  }
+}

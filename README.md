@@ -320,7 +320,13 @@ article's potential or network.
 
 **Problem:** Identify shocks/vortex cores and test reconstruction before detection.<br>
 **CFD / data:** Archived ShockVortexML compressible fields for the lead figure; FlowMLLab D2Q9–TRT LBM for the wake extension. The lead archive's exact producing-solver revision is not established here.<br>
-**Learning method:** Frozen joint shock/vortex segmentation checkpoint; a separate reconstruction U-Net versus direct-mask prediction comparison.
+**Learning method:** Harmonized Joint (HJ), a custom shared-encoder, multi-branch
+encoder-decoder with specialist shock, vortex-core, wake/shear and expansion
+paths. The displayed masks use the frozen task-preserving HJ shock-repair
+checkpoint: the shared encoder and complete vortex pathway remain fixed while
+the shock-specific path is adapted. HJ-joint and a capacity-matched U-Net are
+comparison models, not the network shown here. A separate lab uses U-Net for
+velocity-field reconstruction before physical vortex identification.
 
 ![Week 11 real airfoil field and learned shock and vortex masks](results/week11_research/airfoil_2.png)
 
@@ -328,7 +334,10 @@ Six fresh fixed-checkpoint forward passes on existing airfoil and cylinder field
 Roohi's [ShockVortexML research](https://github.com/Ehsan-Roohi/ShockVortexML).
 ML-only outputs; previously inspected development-test cases, not human-validated accuracy.
 [All six full-size figures and provenance](results/week11_research/README.md) ·
-[Notebook and lecture](notebooks/week11/README.md). Synthetic controls remain as the warm-up.
+[Notebook and lecture](notebooks/week11/README.md) ·
+[same-model airfoil movie (S2)](https://www.youtube.com/watch?v=j9rO5j3sudA) ·
+[same-model cylinder movie (S8)](https://www.youtube.com/watch?v=hh3K40KRBUQ).
+Synthetic controls remain as the warm-up.
 
 **Real-field extension:** [U-Net reconstruction followed by vortex identification](results/week11_reconstruction/README.md)
 compares interpolation, reconstructed velocity plus swirling strength, and direct

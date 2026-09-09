@@ -8,7 +8,7 @@ Suggested 90-minute class: 15 minutes of diagnostic controls, 20 minutes of phys
 
 Research basis: Ehsan Roohi, Physics-audited joint neural segmentation of shocks and vortex cores: cross-solver transfer and controlled airfoil--cylinder studies (author-supplied research manuscript, 2026). The source describes joint detection in airfoil and cylinder fields. Do not describe the manuscript as a published JCP article or invent a journal DOI.
 
-The executable lab starts with an original CPU teaching analog. Its final section reads real airfoil and cylinder research fields through retained figures and a provenance ledger: six fresh forward passes with a frozen research checkpoint. No new CFD or research-model training is claimed. The analytic warm-up and research evidence remain explicitly separate.
+The executable lab starts with an original CPU teaching analog. Its final section reads real airfoil and cylinder research fields through retained figures and a provenance ledger: six fresh forward passes with the frozen task-preserving Harmonized Joint (HJ) shock-repair checkpoint. No new CFD or research-model training is claimed. The analytic warm-up and research evidence remain explicitly separate.
 
 ## Vorticity is necessary context, not a core label
 
@@ -34,11 +34,15 @@ Discussion: why would a sensor appear accurate if its own thresholded gradient m
 
 A vortex can intersect a shock. An exclusive softmax over background, shock and vortex prohibits this overlap by construction. Independent sigmoid foreground outputs allow two labels at one location; a background mask can then be derived from their complement. Ambiguous regions and exact solid geometry require explicit treatment rather than silent relabelling.
 
-The research framework uses separate learned, physics-only and hybrid products, with task-restricted adaptation. If the shared encoder and the complete vortex pathway are frozen, changing only the shock branch preserves vortex outputs. Freezing the vortex decoder alone is insufficient when its input encoder continues to change. Output equality is a testable claim about computational dependencies, not a generic property of multitask learning.
+The principal research network is **Harmonized Joint (HJ)**, not a standard U-Net. It is a custom shared-encoder, multi-branch encoder-decoder. Specialist paths produce independent, potentially overlapping maps for shock, vortex core, wake/shear layer and expansion. Independent sigmoid decisions are essential because a physical location need not belong to only one structure. The full research workflow also keeps learned-only, physics-only and hybrid products distinct.
+
+The task-preserving HJ variant is a constrained adaptation of this architecture. During shock repair it freezes the shared encoder and the complete vortex pathway and updates only the shock-specific path. If the frozen computation is deterministic, the vortex map before and after adaptation must therefore be identical up to machine precision. Freezing the vortex decoder alone would not provide that guarantee if its input encoder changed. By contrast, **HJ-joint** updates shared parameters and all task paths together: it may improve shock scores slightly, but it can degrade the vortex task. This preservation-versus-plasticity comparison is part of the scientific claim and must be tested directly, not inferred from a model name.
+
+A capacity-matched U-Net is only a comparison baseline. It is not the principal HJ architecture, and the separate reconstruction exercise later in this lecture asks a different question again.
 
 For conflicting shared gradients g_s and g_v, projection methods can remove a component when their dot product is negative. Such methods can help one task and hurt another; retain both signed changes. Physical diagnostic channels do not by themselves constitute a PDE-residual loss or a PINN.
 
-Our local MLP has eight primitive/derivative features and two independent output decisions. It teaches overlap and evaluation, but has no spatial encoder, dual convolutional decoder or research adaptation mechanism.
+Our local MLP has eight primitive/derivative features and two independent output decisions. It teaches overlap and evaluation, but has no spatial encoder, specialist convolutional branches or task-preserving research adaptation mechanism.
 
 ## Freeze the experiment before opening the test
 
@@ -54,7 +58,7 @@ Assignment: remove rotational inputs, rebuild the model with a fresh predeclared
 
 [RESEARCH_FIGURE]
 
-Real airfoil field from Roohi's ShockVortexML study: native-density schlieren, learned shock mask and learned vortex mask. The fresh forward pass uses frozen thresholds 0.97 and 0.85. Geometry-crossing display-gradient stencils are excluded. These ML-only masks are not human labels or a hybrid. Thin missed branches and merged cores remain visible.
+Real airfoil field from Roohi's ShockVortexML study: native-density schlieren, learned shock mask and learned vortex mask. The fresh forward pass uses the frozen task-preserving HJ checkpoint `shock_repair_v2_native86_v1` and frozen thresholds 0.97 and 0.85. Only the shock and vortex outputs are displayed here; omission of the wake/shear and expansion overlays is not absence of those research paths. Geometry-crossing display-gradient stencils are excluded. These ML-only masks are not human labels or a hybrid. Thin missed branches and merged cores remain visible.
 
 Dice = 2*|prediction intersect reference|/(|prediction|+|reference|). Empty-versus-empty is assigned one in this lab; state the convention. A front shifted by one pixel can have poor Dice while remaining close physically. Conversely, a thick predicted envelope can gain overlap without locating the centerline accurately.
 
@@ -68,11 +72,11 @@ Before transferring to research CFD, identify the source solver and case, native
 
 Add new controls for grid changes, noise and solver changes. Recompute derivatives from perturbed primitive velocities; perturbing only the already-derived diagnostic channels tests a different problem. A shock-overlap region must not automatically veto a real core. Thresholds expressed in raster pixels change physical size with resolution.
 
-The research repository is https://github.com/Ehsan-Roohi/ShockVortexML. This lecture paraphrases the author-supplied manuscript and teaches its audit principles without copying a training pipeline or redistributing unpublished CFD archives.
+The research repository is https://github.com/Ehsan-Roohi/ShockVortexML. Two author-channel videos use the same fixed task-preserving model family and retained cases: [airfoil Supplementary Movie S2](https://www.youtube.com/watch?v=j9rO5j3sudA) and [cylinder Supplementary Movie S8](https://www.youtube.com/watch?v=hh3K40KRBUQ). Their descriptions identify the preserved vortex/wake/expansion outputs and link back to the research release. Videos that add the separate PM-v4 expansion branch are deliberately not cited as same-network evidence. This lecture paraphrases the author-supplied manuscript and teaches its audit principles without copying a training pipeline or redistributing unpublished CFD archives.
 
 ## Reconstruct the field before identifying structures
 
-The real-field companion asks a different question from the manufactured classification exercise. Suppose a sensor or storage pipeline supplies a spatially coarsened velocity field. Can a learned reconstruction recover the velocity gradients needed to identify a vortex? Our independent adaptation of the supplied Ricardo-course super-resolution exercise compares three paths: interpolation followed by a physical diagnostic; U-Net velocity reconstruction followed by that same diagnostic; and direct U-Net mask prediction. U-Net is the shared architecture, not a separate rival to a so-called Ricardo algorithm.
+The real-field companion asks a different question from both the manufactured classification exercise and the HJ research detector. Suppose a sensor or storage pipeline supplies a spatially coarsened velocity field. Can a learned reconstruction recover the velocity gradients needed to identify a vortex? Our independent adaptation of the supplied Ricardo-course super-resolution exercise compares three paths: interpolation followed by a physical diagnostic; U-Net velocity reconstruction followed by that same diagnostic; and direct U-Net mask prediction. U-Net is shared only between these two reconstruction/segmentation comparisons; it is not the principal HJ detector described above and not a separate rival to a so-called Ricardo algorithm.
 
 A U-Net contracts the spatial representation to learn broader context, then expands it while concatenating encoder features through skip connections. The original architecture is described by Ronneberger, Fischer and Brox (2015), https://lmb.informatik.uni-freiburg.de/people/ronneber/u-net/. The course archive illustrates single-component turbulent-field reconstruction. Here we independently implement a smaller two-level network with two velocity inputs and either two reconstructed velocity outputs or one mask logit. No archive source code, weights or figures are redistributed, and this is not an exact reproduction of its four-level network.
 

@@ -9,6 +9,22 @@
     "cylinder_grid_f180_cfl0p20_s00025641"
   ],
   "checkpoint_sha256": "cf1f1ab2aed767589fc5a53af136a24da5748a3d9a0d06d8ade70804e74b1048",
+  "model_identity": {
+    "name": "Harmonized Joint (HJ)",
+    "variant": "task-preserving shock repair",
+    "kit": "shock_repair_v2_native86_v1",
+    "displayed_outputs": [
+      "shock",
+      "vortex_core"
+    ],
+    "research_paths": [
+      "shock",
+      "vortex_core",
+      "wake_shear",
+      "expansion"
+    ],
+    "unet_role": "capacity-matched baseline / separate reconstruction experiment"
+  },
   "new_solver_runs": false,
   "new_training": false,
   "human_accuracy": false,
@@ -99,12 +115,13 @@
   "seconds": 53.703000000008615,
   "scope": "New forward passes on previously inspected development-test CFD. No tuning, human labels, hybrid, independent accuracy or new CFD.",
   "figure_sha256": {
-    "airfoil_1.png": "a9edf9da5c5ad8d30df57867febed675bb500740b088c7d5910d8fd75bc9829e",
-    "airfoil_2.png": "9f6e7aae3a70fe9e820c0f590178bb21117bb7b899c642802eae4d2c5b2ce258",
-    "airfoil_3.png": "1a15284af25b3d58448acf6c3a40c785f25df81922116c1be9cc48809e8bebc0",
-    "cylinder_1.png": "d5871acb7fec0794ce67305eddfc3abb113c78f6dc47e5616d0757810125efc7",
-    "cylinder_2.png": "40e3b07d0dd694b281e651848a7ed549dca5310d9e15895cf7ccaa79679068b8",
-    "cylinder_3.png": "e069ec70aeaa123415098b868d1cd1de2204c8dcd73fcc7ed4654ae2ffb06fe6"
+    "airfoil_1.png": "afcd9a217522325f782b06954104f9f7253ec85bbebd8871499cb3c02ee62f18",
+    "airfoil_2.png": "2b9d31f2178e3bb5761f07e8afae452aaf92f16e96e464ee81efe579b8222453",
+    "airfoil_3.png": "75806a598727989eb5e9e95ba19d86b50070edbb751a422bae04c417a5717426",
+    "cylinder_1.png": "071fc4825a080088b211c7200a6abd361beefb694d19f1ebeb778d793c10e112",
+    "cylinder_2.png": "8668119649f7a8c0203892db6a68272568e0ab38f03856ed8105938ed9540b2f",
+    "cylinder_3.png": "836d3fa010c01a4034212a79a6de794992fdabafb307191cb7f6d80c9b6ef56c"
   },
-  "display": "Native pixels, full field of view; solid-crossing density-gradient stencils excluded. No threshold tuning."
+  "display": "Native pixels, full field of view; solid-crossing density-gradient stencils excluded. No threshold tuning.",
+  "presentation_replot": "Title-only replot identifying task-preserving HJ; source-array hashes and PDF hashes are recorded in presentation_replot_manifest.json. No inference or mask changed."
 }

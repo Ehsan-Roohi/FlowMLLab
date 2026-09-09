@@ -48,7 +48,7 @@ def figure(fields, prob, masks, row, output, name):
         overlay[masks[k]]=to_rgba(color,.90)
         ax.imshow(overlay,origin='lower',extent=extent,interpolation='nearest')
         ax.set_title(title,fontsize=13)
-    fig.suptitle(f"{row['case']} | t = {row['time']:.3g} | fixed research model, ML-only",fontsize=16)
+    fig.suptitle(f"{row['case']} | t = {row['time']:.3g} | task-preserving HJ, ML-only",fontsize=16)
     fig.legend(handles=[Patch(color='#e85d04',label='shock (0.97)'),
                         Patch(color='#0077b6',label='vortex core (0.85)'),
                         Patch(color='#212e3b',label='solid')],loc='outside lower center',ncol=3,frameon=False)
@@ -86,6 +86,12 @@ def main():
     out.mkdir(parents=True)
     plan={'selection':'first/middle/last eligible time after t>1 for two development-test trajectories; all review IDs excluded',
           'ids':[r['dataset_id'] for r in selected], 'checkpoint_sha256':manifest['checkpoint_sha256'],
+          'model_identity':{'name':'Harmonized Joint (HJ)',
+                            'variant':'task-preserving shock repair',
+                            'kit':'shock_repair_v2_native86_v1',
+                            'displayed_outputs':['shock','vortex_core'],
+                            'research_paths':['shock','vortex_core','wake_shear','expansion'],
+                            'unet_role':'capacity-matched baseline / separate reconstruction experiment'},
           'new_solver_runs':False,'new_training':False,'human_accuracy':False}
     (out/'PLAN.json').write_text(json.dumps(plan,indent=2))
     sys.path.insert(0,str(kit/'src'));sys.path.insert(0,str(kit/'tools'))

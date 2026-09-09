@@ -41,8 +41,31 @@ class ResearchEvidenceTests(unittest.TestCase):
         self.assertFalse(report['new_solver_runs'])
         self.assertFalse(report['human_accuracy'])
         self.assertEqual(report['thresholds'],{'shock':.97,'vortex_core':.85})
+        identity=report['model_identity']
+        self.assertEqual(identity['name'],'Harmonized Joint (HJ)')
+        self.assertEqual(identity['variant'],'task-preserving shock repair')
+        self.assertEqual(identity['kit'],'shock_repair_v2_native86_v1')
+        self.assertEqual(identity['displayed_outputs'],['shock','vortex_core'])
+        self.assertEqual(identity['unet_role'],
+                         'capacity-matched baseline / separate reconstruction experiment')
         for name,sha in report['figure_sha256'].items():
             self.assertEqual(hashlib.sha256((folder/name).read_bytes()).hexdigest(),sha)
+        replot=json.loads((folder/'presentation_replot_manifest.json').read_text())
+        self.assertIn('no inference',replot['operation'])
+        for stem,item in replot['items'].items():
+            self.assertEqual(hashlib.sha256((folder/f'{stem}.png').read_bytes()).hexdigest(),
+                             item['png_sha256'])
+            self.assertEqual(hashlib.sha256((folder/f'{stem}.pdf').read_bytes()).hexdigest(),
+                             item['pdf_sha256'])
+
+    def test_week11_model_name_and_verified_movies_are_visible(self):
+        documents=[ROOT/'README.md',ROOT/'notebooks/week11/README.md',
+                   ROOT/'results/week11_research/README.md']
+        for document in documents:
+            text=document.read_text(encoding='utf-8')
+            self.assertIn('Harmonized Joint',text,document)
+            self.assertIn('j9rO5j3sudA',text,document)
+            self.assertIn('hh3K40KRBUQ',text,document)
 
     def test_dsmc_provenance_and_seed_coverage(self):
         folder=ROOT/'results/week12_research'

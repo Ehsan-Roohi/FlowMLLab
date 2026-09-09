@@ -15,16 +15,24 @@ author-supplied 2026 manuscript, [ShockVortexML](https://github.com/Ehsan-Roohi/
 The warm-up is an original manufactured-field teaching analog, **not** a
 gas-dynamically consistent shock simulation or the paper's network.
 The final section adds [real research evidence](../../results/week11_research/README.md):
-six fresh frozen-checkpoint forward passes on existing airfoil/cylinder fields,
-three times each, with native masks and source hashes. No new CFD, training or
-human-ground-truth accuracy is claimed. All synthetic exercises remain available.
+six fresh forward passes from the frozen task-preserving Harmonized Joint (HJ)
+shock-repair checkpoint on existing airfoil/cylinder fields, three times each,
+with native masks and source hashes. HJ is a custom shared-encoder, multi-branch
+encoder-decoder with specialist shock, vortex-core, wake/shear and expansion
+paths; it is not a standard U-Net. No new CFD, training or human-ground-truth
+accuracy is claimed. All synthetic exercises remain available.
+
+[Airfoil Supplementary Movie S2](https://www.youtube.com/watch?v=j9rO5j3sudA)
+and [cylinder Supplementary Movie S8](https://www.youtube.com/watch?v=hh3K40KRBUQ)
+use the same fixed task-preserving model family. The linked videos are qualitative
+research predictions, not an independent validation set.
 
 Next: [Week 12 - noisy DSMC moment reconstruction](../week12/README.md).
 
 ## Real-field reconstruction extension
 
 [Lab 2: reconstruction followed by identification](W11_Lab2_Reconstruction_and_Identification.ipynb)
-adds a matched-input comparison of interpolation, U-Net velocity reconstruction
+adds a separate matched-input comparison of interpolation, U-Net velocity reconstruction
 followed by swirling strength, and direct U-Net mask prediction on existing
 author LBM wakes. Read the [frozen protocol and attribution](RECONSTRUCTION_PROTOCOL.md).
 This is vortex-reference agreement on a coarse retained dataset, not independent
