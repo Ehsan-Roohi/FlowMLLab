@@ -334,10 +334,26 @@ Six fresh fixed-checkpoint forward passes on existing airfoil and cylinder field
 Roohi's [ShockVortexML research](https://github.com/Ehsan-Roohi/ShockVortexML).
 ML-only outputs; previously inspected development-test cases, not human-validated accuracy.
 [All six full-size figures and provenance](results/week11_research/README.md) ·
-[Notebook and lecture](notebooks/week11/README.md) ·
-[same-model airfoil movie (S2)](https://www.youtube.com/watch?v=j9rO5j3sudA) ·
-[same-model cylinder movie (S8)](https://www.youtube.com/watch?v=hh3K40KRBUQ).
+[Notebook and lecture](notebooks/week11/README.md).
 Synthetic controls remain as the warm-up.
+
+**Watch the extended research pipeline — airfoil and cylinder**
+
+[![Watch Movie S9: numerical schlieren on the left and learned airfoil structures on the right](https://huggingface.co/spaces/ehsanroohi/ShockVortexML-Demo/resolve/e54de0a6f8665ef3cb098061d0704b4d96e0c414/airfoil_movie_v2.png)](https://www.youtube.com/watch?v=ULA8x2jUEvA)
+
+[▶ Watch the airfoil video (S9)](https://www.youtube.com/watch?v=ULA8x2jUEvA)
+· [▶ Watch the cylinder video (S10)](https://www.youtube.com/watch?v=opVMf1OVdM4)
+· [Explore both examples on Hugging Face](https://huggingface.co/spaces/ehsanroohi/ShockVortexML-Demo)
+· [Download original-quality movies and provenance](https://github.com/Ehsan-Roohi/ShockVortexML/releases/tag/movies-localfront-v2-20260909)
+
+Click the preview to open the video on YouTube. The left panel shows numerical
+density schlieren; the right shows localized learned shock fronts, vortex-core
+candidates, wake/shear and expanding-flow regions. These movies use the extended
+local-front model with retained core/wake branches and the PM-v4 expansion-region
+branch, a different configuration from the HJ control checkpoint described above.
+Blue denotes expanding flow, not a validated centred Prandtl–Meyer fan.
+These inspected research examples retain detection errors; their visual coverage
+is not an independent accuracy measurement.
 
 **Real-field extension:** [U-Net reconstruction followed by vortex identification](results/week11_reconstruction/README.md)
 compares interpolation, reconstructed velocity plus swirling strength, and direct
