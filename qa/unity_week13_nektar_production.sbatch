@@ -61,7 +61,8 @@ python3 "$snapshot/run_week13_nektar_production.py" \
   --image "$FLOWML_NEKTAR_ROOT/nektar-v5.9.0.sif" \
   --order "${orders[$task]}" --dt "$dt" --commit "$commit" \
   --corner-convention "$FLOWML_NEKTAR_CORNER" --gate "$snapshot/restart-gate.json" \
-  --end-time 20 --seconds 6000
+  --end-time "${FLOWML_NEKTAR_END_TIME:-20}" \
+  --nx "${FLOWML_NEKTAR_NX:-8}" --ny "${FLOWML_NEKTAR_NY:-40}" --seconds 6000
 status=$?
 set -e
 if (( status == 75 )); then

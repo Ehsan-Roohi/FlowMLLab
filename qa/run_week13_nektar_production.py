@@ -79,7 +79,7 @@ def run(args):
     case.mkdir(parents=True, exist_ok=True)
     config = dict(re=100, order=args.order, dt=args.dt, chunk_time=1.0,
                   corner_convention=args.corner_convention, gate_sha256=sha(Path(args.gate)),
-                  end_time=args.end_time, nx=8, ny=40,
+                  end_time=args.end_time, nx=args.nx, ny=args.ny,
                   image_sha256=sha(Path(args.image)),
                   code_commit=args.commit, status='transient_pilot_not_steady_evidence')
     manifest = case/'campaign.json'
@@ -118,7 +118,8 @@ def run(args):
         steps = round(1.0/args.dt)
         if abs(steps*args.dt-1) > 1e-12:
             raise ValueError('dt must divide chunk duration exactly')
-        make_case(attempt, re=100, order=args.order, restart=str(prior) if prior else None,
+        make_case(attempt, re=100, order=args.order, nx=args.nx, ny=args.ny,
+                  restart=str(prior) if prior else None,
                   dt=args.dt, steps=steps, check_steps=steps,
                   corner_convention=args.corner_convention,
                   purpose='bounded_transient_pilot_not_steady_evidence')
@@ -174,5 +175,7 @@ if __name__ == '__main__':
     p.add_argument('--order', type=int, choices=[4, 6, 8], required=True)
     p.add_argument('--dt', type=float, default=0.0005)
     p.add_argument('--end-time', type=float, default=20)
+    p.add_argument('--nx', type=int, default=8)
+    p.add_argument('--ny', type=int, default=40)
     p.add_argument('--seconds', type=float, default=6000)
     raise SystemExit(run(p.parse_args()))
