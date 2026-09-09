@@ -14,8 +14,9 @@ set -euo pipefail
 : "${FLOWML_NEKTAR_ROOT:?}"
 : "${FLOWML_NEKTAR_PRODUCTION_ROOT:?}"
 : "${FLOWML_NEKTAR_EQUIVALENCE_GATE:?Path to reviewed successful restart gate}"
+: "${FLOWML_NEKTAR_CORNER:?Explicit reviewed corner convention required}"
 test -s "$FLOWML_NEKTAR_EQUIVALENCE_GATE"
-python3 - "$FLOWML_NEKTAR_EQUIVALENCE_GATE" <<'PY'
+python3 - "$FLOWML_NEKTAR_EQUIVALENCE_GATE" "$FLOWML_NEKTAR_CORNER" "${FLOWML_NEKTAR_FINE_DT:-0}" <<'PY'
 import json, sys
 with open(sys.argv[1]) as stream:
     gate = json.load(stream)
@@ -23,7 +24,10 @@ assert gate.get('gate_passed') is True, 'Restart agreement gate did not pass'
 assert gate.get('time_match_verified') is True, 'Restart time equality not verified'
 assert gate.get('Re') == 100, 'Wrong Reynolds number gate'
 assert {4, 6, 8}.issubset(gate.get('orders', [])), 'Missing order checks'
-assert {0.0005, 0.00025}.issubset(gate.get('dt', [])), 'Missing time-step checks'
+required_dt = {0.00025, 0.000125} if sys.argv[3] == '1' else {0.0005, 0.00025}
+assert required_dt.issubset(gate.get('dt', [])), 'Missing time-step checks'
+assert gate.get('corner_convention') == sys.argv[2], 'Wrong boundary convention'
+assert gate.get('boundary_operability_passed') is True, 'Boundary gate did not pass'
 assert gate.get('scope') == 'short_time_restart_operability_and_agreement_not_steady_accuracy'
 PY
 repo="${SLURM_SUBMIT_DIR:?}"
@@ -31,6 +35,10 @@ task="${SLURM_ARRAY_TASK_ID:?}"
 orders=(4 6 8 6)
 dt=0.0005
 if (( task == 3 )); then dt=0.00025; fi
+if [[ "${FLOWML_NEKTAR_FINE_DT:-0}" == 1 ]]; then
+  dt=0.00025
+  if (( task == 3 )); then dt=0.000125; fi
+fi
 test -f "$FLOWML_NEKTAR_ROOT/setup-complete"
 cd "$FLOWML_NEKTAR_ROOT"
 sha256sum -c container.sha256
@@ -52,6 +60,7 @@ python3 "$snapshot/run_week13_nektar_production.py" \
   --output "$FLOWML_NEKTAR_PRODUCTION_ROOT/task-${task}" \
   --image "$FLOWML_NEKTAR_ROOT/nektar-v5.9.0.sif" \
   --order "${orders[$task]}" --dt "$dt" --commit "$commit" \
+  --corner-convention "$FLOWML_NEKTAR_CORNER" --gate "$snapshot/restart-gate.json" \
   --end-time 20 --seconds 6000
 status=$?
 set -e

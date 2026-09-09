@@ -67,9 +67,18 @@ def field_time(path):
 def run(args):
     if not math.isfinite(args.dt) or args.dt <= 0 or args.seconds <= 120:
         raise ValueError('Positive finite dt and wall budget above 120 seconds required')
+    gate = json.loads(Path(args.gate).read_text())
+    if not (gate.get('gate_passed') is True and gate.get('time_match_verified') is True
+            and gate.get('boundary_operability_passed') is True
+            and gate.get('corner_convention') == args.corner_convention
+            and gate.get('Re') == 100 and args.order in gate.get('orders', [])
+            and args.dt in gate.get('dt', [])
+            and gate.get('scope') == 'short_time_restart_operability_and_agreement_not_steady_accuracy'):
+        raise ValueError('Explicit reviewed boundary/restart gate does not match this case')
     case = Path(args.output).resolve()
     case.mkdir(parents=True, exist_ok=True)
     config = dict(re=100, order=args.order, dt=args.dt, chunk_time=1.0,
+                  corner_convention=args.corner_convention, gate_sha256=sha(Path(args.gate)),
                   end_time=args.end_time, nx=8, ny=40,
                   image_sha256=sha(Path(args.image)),
                   code_commit=args.commit, status='transient_pilot_not_steady_evidence')
@@ -111,6 +120,7 @@ def run(args):
             raise ValueError('dt must divide chunk duration exactly')
         make_case(attempt, re=100, order=args.order, restart=str(prior) if prior else None,
                   dt=args.dt, steps=steps, check_steps=steps,
+                  corner_convention=args.corner_convention,
                   purpose='bounded_transient_pilot_not_steady_evidence')
         try:
             with (attempt/'solver.log').open('w') as log:
@@ -158,6 +168,9 @@ if __name__ == '__main__':
     p.add_argument('--output', required=True)
     p.add_argument('--image', required=True)
     p.add_argument('--commit', required=True)
+    p.add_argument('--gate', required=True)
+    p.add_argument('--corner-convention', choices=['legacy_conflicting','stationary_endpoints'],
+                   required=True)
     p.add_argument('--order', type=int, choices=[4, 6, 8], required=True)
     p.add_argument('--dt', type=float, default=0.0005)
     p.add_argument('--end-time', type=float, default=20)
