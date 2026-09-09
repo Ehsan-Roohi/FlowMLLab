@@ -69,7 +69,7 @@ Use Modules 1C, 2A, 2C, and a short version of 4B. The learning objective is to 
 
 ### Six-week intensive course
 
-Use all modules in order. Weeks 5–6 form one combined guided-project pack: Week 5 establishes the controlled modification and checkpoint; Week 6 completes the selected track and final evidence. Advanced Track 6 remains instructor-approved.
+Use Weeks 1–6 in order. Weeks 5–6 form one combined guided-project pack: Week 5 establishes the controlled modification and checkpoint; Week 6 completes the selected track and final evidence. Advanced Track 6 remains instructor-approved.
 Use Weeks 7--10 only after the original six-week sequence. Week 7 extends to unsteady external flow; Week 7.1 contrasts the continuum cylinder with rarefied hypersonic DSMC and operator learning; Week 8 extends to compressible-flow branches, exact-to-ML comparisons, and a qualified multidimensional-CFD bridge. Week 9 provides geometry-dependent and shock-aligned rarefied-flow operators. Week 10 closes the sequence with an end-to-end DSMC article-reproduction experiment. None replaces the Weeks 5–6 project.
 
 ### Full semester
@@ -90,8 +90,11 @@ Assess evidence rather than software completion. Recommended final-project categ
 
 No category should require the ML method to outperform the baseline.
 
-## Proposed additions
+## Further development
 
-See the [theory coverage and proposal matrix](THEORY_GAP_MATRIX.md) for proposed
-3.1 sampling diagnostics, 5.1 PINN verification and 7.2 state estimation.
-These are not existing lessons or qualified research results.
+See the [theory coverage and proposal matrix](THEORY_GAP_MATRIX.md) for the
+original proposal history, including additional sampling diagnostics.
+[Week 7.2 state estimation](notebooks/week07_2/README.md) is implemented;
+PINN verification is covered in the final [Week 13 module](notebooks/week13/README.md).
+Use the current course tables above to distinguish available modules from
+future proposals, and the linked results reports to assess their validation status.

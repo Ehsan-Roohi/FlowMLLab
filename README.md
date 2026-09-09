@@ -19,9 +19,7 @@ numerical foundations to continuum and rarefied-flow research examples.
 research by Ehsan Roohi and collaborators, then brought into FlowMLLab for
 teaching. The course adds new code and baselines, not a new origin for those
 data. See [per-case papers, data lineage, reuse limits and AI-assistance
-disclosure](DATA_PROVENANCE.md). Version 1.5.1 consolidates the course through
-Week 13, including research-data audits, executable reconstruction and
-state-estimation labs, and retained Unity cavity-PINN results.
+disclosure](DATA_PROVENANCE.md).
 
 | Your goal | Open |
 | --- | --- |
@@ -131,6 +129,10 @@ Use this retained cavity experiment as a project starting point: freeze a baseli
 change one modeling choice and evaluate complete unseen cases.
 [Project pack](notebooks/week05_06/README.md) · [Interactive demo](demo/README.md)
 
+Extend the project with the [sparse sensing lab](notebooks/week05_06/W5_Lab2_Sparse_Sensing_Dynamics.ipynb):
+reconstruct fields from limited measurements and inspect the
+[retained modal-method comparisons](results/modal_labs/README.md).
+
 ### Week 6 — Physical validation and final evidence
 
 ![Independent cavity pressure-recovery validation](results/article_figures/fig08_pressure_recovery.png)
@@ -156,6 +158,13 @@ asymptotic/GCI gate; these labels are not high-fidelity DNS.
 
 The earlier Re=100 POD comparison is retained as a failed baseline, separate
 from the autonomous Re=95 result. [Failure analysis](results/cylinder_ml/README.md)
+
+Continue with the [modal forecasting lab](notebooks/week07/W7_Lab2_Modal_Forecasting.ipynb)
+and its [reproducible evidence](results/modal_labs/README.md).
+The [Re100 D40 dataset](results/cylinder_d40/README.md) provides force histories,
+final fields and a three-grid comparison. A separate
+[frozen-model Re115 evaluation](results/cylinder_re115_evaluation/README.md)
+reports 3.17% global vorticity error, with sampling and pressure limitations.
 
 ### Week 7.1 — Rarefied hypersonic cylinder
 
@@ -267,12 +276,11 @@ Eight seeds, both heat-flux components, 80 recomputed errors; no new DSMC or neu
 Mean reference NRMSE for qy: Raw(3) 17.61%, Raw(10) 9.80%, conditioned estimator 4.34%.
 [Full comparisons, profiles and all-seed errors](results/week12_research/README.md) ·
 [Notebook and lecture](notebooks/week12/README.md). The independent reference still has sampling noise.
-Weeks 11 and 12 were developed after v1.4.1 and are included in v1.5.1.
 
-Week 12 practical completion: [train a fresh Noise2Noise-style MLP on real DSMC](results/week12_noise2noise/README.md).
-The notebook now fits from raw observations, compares seven estimators and
-reports both held-out seeds. This is separate from the archived figures above;
-both are included in the v1.5.1 course archive.
+The companion [Noise2Noise-style MLP lab](results/week12_noise2noise/README.md)
+trains on raw DSMC observations, compares seven estimators and reports both
+held-out seeds. Its training results are documented separately from the
+archived research reconstruction shown above.
 
 ### Week 13 — Rectangular-cavity PINN research audit
 
@@ -330,6 +338,8 @@ physical solution; the retained held-out discrepancies remain visible.
 The installable Python package, numerical solvers, notebooks, and teaching
 materials are open source. See [contribution guidelines](CONTRIBUTING.md), the
 [roadmap](ROADMAP.md), and [source/attribution policy](THEORY_SOURCE_POLICY.md).
+The [branch and release procedure](docs/BRANCH_AND_RELEASE_POLICY.md) describes
+evidence promotion and reproducible notebook HTML.
 Student submissions are not included.
 
 [Read the software manuscript](manuscript/FlowMLLab_v1.1.0_Original_Software_Article.pdf)
@@ -339,21 +349,10 @@ Student submissions are not included.
 Current release: **v1.5.1** · [GitHub release](https://github.com/Ehsan-Roohi/FlowMLLab/releases/tag/v1.5.1)
 · [Release notes](RELEASE_NOTES_v1.5.1.md).
 Version-specific Zenodo DOI: [10.5281/zenodo.22651906](https://doi.org/10.5281/zenodo.22651906).
-Previous v1.4.1 DOI: [10.5281/zenodo.22348207](https://doi.org/10.5281/zenodo.22348207).
-Previous v1.4.0 DOI: [10.5281/zenodo.22315623](https://doi.org/10.5281/zenodo.22315623).
+For earlier versions and their archived records, see the
+[release history](https://github.com/Ehsan-Roohi/FlowMLLab/releases).
 The [all-versions DOI](https://doi.org/10.5281/zenodo.22074169) resolves to the latest published archive.
 
 **Ehsan Roohi** · University of Massachusetts Amherst · [roohie@umass.edu](mailto:roohie@umass.edu)
 
 Copyright © 2026 Ehsan Roohi. [MIT License](LICENSE).
-
-## Re100 cylinder data
-
-[Use the D40 teaching dataset](results/cylinder_d40/README.md): force histories, final fields and a three-grid comparison.
-
-See [branch and release procedure](docs/BRANCH_AND_RELEASE_POLICY.md) for evidence promotion and reproducible notebook HTML.
-
-### Recovered modal labs and first Re115 evaluation
-
-- [Sparse sensing notebook](notebooks/week05_06/W5_Lab2_Sparse_Sensing_Dynamics.ipynb) and [modal forecasting notebook](notebooks/week07/W7_Lab2_Modal_Forecasting.ipynb): [reproducible evidence and figures](results/modal_labs/README.md).
-- [First frozen-model Re115 evaluation](results/cylinder_re115_evaluation/README.md): 3.17% global vorticity error, with sampling and pressure limitations reported.
