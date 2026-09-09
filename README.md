@@ -44,7 +44,6 @@ Weeks 5 and 6 share a project pack and lecture guide, but have separate learning
 | [3](#week-3--kinetic-theory-and-dsmc) | Maxwellian sampling and particle simulation | [Week 3 labs](notebooks/week03/) | [Lecture 3](lectures/week03_kinetic_dsmc.pdf) |
 | [4](#week-4--cavity-surrogates-and-deeponet) | CFD datasets, field surrogates and operator learning | [Week 4 labs](notebooks/week04/) | [Lecture 4](lectures/week04_cavity_surrogates_deeponet.pdf) |
 | [4.1](#week-41--classical-reduced-order-models) | POD–Galerkin and POD–DEIM | [Week 4.1 lab](notebooks/week04/W4_1_Classical_ROM_Cavity.ipynb) | [Week 4 companion](lectures/week04_cavity_surrogates_deeponet.pdf); theory in lab |
-| [4.2](#week-42--pinns-and-the-lid-driven-cavity) | PINN foundations, hard constraints and cavity verification | Derivations and assignments in the lecture; no new trained result | [Lecture 4.2](lectures/week04_2_pinn_cavity.pdf) |
 | [5](#week-5--physics-guided-projects) | POD, physics-guided learning and frozen project protocols | [Week 5 project setup and tracks](notebooks/week05_06/README.md) | [Shared Weeks 5–6 guide](lectures/week05_06_project_guide.pdf) |
 | [6](#week-6--physical-validation-and-final-evidence) | Closure testing, physical validation and reproducibility | [Week 6 closure track](notebooks/week05_06/P6_FP_Cavity_Closure.ipynb) · [All tracks](notebooks/week05_06/README.md) | [Shared Weeks 5–6 guide](lectures/week05_06_project_guide.pdf) |
 | [7](#week-7--unsteady-cylinder-wakes) | LBM, vortex shedding and autonomous surrogates | [Week 7 lab](notebooks/week07/W7_Lattice_Boltzmann_Cylinder_Student.ipynb) | [Lecture 7](lectures/week07_cylinder_lbm_neural_surrogate.pdf) |
@@ -123,19 +122,6 @@ centerlines and measured inference cost.
 
 Compare reduced dynamics, hyper-reduction, blind trajectories and the offline/online
 cost tradeoff. [Run the ROM lab](notebooks/week04/W4_1_Classical_ROM_Cavity.ipynb)
-
-### Week 4.2 — PINNs and the lid-driven cavity
-
-![Qualified Re=100 cavity PINN fields, error map and CFD centerline comparisons](results/week04_2_pinn_cavity/qualified_validation.png)
-
-[Continuous-text lecture](lectures/week04_2_pinn_cavity.pdf): derive the
-Navier–Stokes residual, construct hard streamfunction boundary conditions and
-design a matched-reference validation. Includes an attributed reading of
-[McDevitt's DeepPlasma cavity code](https://github.com/cmcdevitt2/DeepPlasma/tree/fcb1566eaa3253d4a4108fbac9d49a38fd10ad6b/LDC),
-used with his permission. The retained Unity A100 qualification at Re=100 passes
-the predeclared near-matched CFD gates: 2.18% and 4.42% on the two centerlines
-and 3.10% for the interior velocity vector. This is not presented as new
-high-Re PINN evidence. [Read the evidence and restart protocol](results/week04_2_pinn_cavity/README.md).
 
 ### Week 5 — Physics-guided projects
 
@@ -290,6 +276,21 @@ both are included in the v1.5.1 course archive.
 
 ### Week 13 — Rectangular-cavity PINN research audit
 
+The final module develops streamfunction PINNs for square and deep lid-driven
+cavities. Compare **Re = 100 and 400**, **H/L = 1 and 2**, and **Adam followed
+by SSBroyden2** using retained float64 A100 runs, exact wall constraints and
+independent residual checks. Square cases have frozen near-matched CFD gates;
+the displayed deep-cavity cases still require matched CFD field validation.
+
+[Lecture](lectures/week13_rectangular_cavity_pinn.pdf) ·
+[Notebook and results](notebooks/week13/README.md) ·
+[Reproduction protocol](qa/WEEK13_PINN_MATRIX_PROTOCOL.md)
+
+Preparatory reading covers [PINN residuals and hard boundary constraints](lectures/week04_2_pinn_cavity.pdf),
+including [McDevitt's DeepPlasma cavity code](https://github.com/cmcdevitt2/DeepPlasma/tree/fcb1566eaa3253d4a4108fbac9d49a38fd10ad6b/LDC),
+used with his permission. The earlier [Re=100 qualification and CFD comparison](results/week04_2_pinn_cavity/README.md)
+provides supporting evidence for this module.
+
 **Re = 100**
 
 Square cavity, D = H/L = 1:
@@ -323,16 +324,6 @@ Adam warm-up (steps 1–1000), orange is SSBroyden2 continuation, dashed black i
 the held-out full-domain residual, and dotted green is the held-out top-corner
 residual. Decreasing training loss alone does not establish convergence of the
 physical solution; the retained held-out discrepancies remain visible.
-
-The independent final module compares `Re=100,400` and depth-to-width ratios
-`D=1,2` using exact streamfunction wall constraints and a restartable float64
-A100 trajectory: Adam followed by SSBroyden2. Square cases are tested against
-frozen near-matched CFD field gates; deep cases remain residual-audited
-hypotheses until raw matched CFD is available. Training, held-out full-domain
-and corner-band histories are retained separately.
-[Notebook, evidence limits and reproduction](notebooks/week13/README.md) ·
-[Unity protocol](qa/WEEK13_PINN_MATRIX_PROTOCOL.md) ·
-[Continuous-text lecture](lectures/week13_rectangular_cavity_pinn.pdf).
 
 ## Reuse and contribute
 
