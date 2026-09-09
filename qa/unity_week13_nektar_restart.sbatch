@@ -18,16 +18,22 @@ order="${orders[$((task % 3))]}"
 dt=0.0005
 half=100
 if (( task >= 3 )); then dt=0.00025; half=200; fi
+corner="${FLOWML_NEKTAR_CORNER:-legacy_conflicting}"
+if [[ "${FLOWML_NEKTAR_FINE_DT:-0}" == 1 ]]; then
+    dt=0.00025; half=200
+    if (( task >= 3 )); then dt=0.000125; half=400; fi
+fi
 cd "$FLOWML_NEKTAR_ROOT"
 sha256sum -c container.sha256
 run="$FLOWML_NEKTAR_ROOT/restart-check-${SLURM_ARRAY_JOB_ID}-${task}"
 test ! -e "$run"
 mkdir "$run"
 git -C "$repo" rev-parse HEAD > "$run/code-commit.txt"
+cp "$repo/qa/prepare_week13_nektar.py" "$run/prepare_week13_nektar.py"
 run_segment() {
     local name="$1" steps="$2"
     shift 2
-    python3 "$repo/qa/prepare_week13_nektar.py" --output "$run/$name" --re 100 --order "$order" --dt "$dt" --steps "$steps" "$@"
+    python3 "$run/prepare_week13_nektar.py" --output "$run/$name" --re 100 --order "$order" --dt "$dt" --steps "$steps" --corner-convention "$corner" "$@"
     cd "$run/$name"
     apptainer exec --cleanenv --bind /project "$FLOWML_NEKTAR_ROOT/nektar-v5.9.0.sif" IncNavierStokesSolver cavity.xml > solver.log 2>&1
     test -s cavity.fld
