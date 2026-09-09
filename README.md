@@ -63,6 +63,10 @@ Follow the captions for data provenance and validity limits; the
 
 ### Week 1 — Numerical foundations
 
+**Problem:** Lid-driven cavity benchmark.<br>
+**CFD / data:** FlowMLLab finite-difference streamfunction–vorticity Navier–Stokes solver.<br>
+**Learning method:** No neural network; CFD is checked against Ghia centreline data.
+
 ![Cavity CFD benchmark and Ghia velocity validation](results/article_figures/fig02_cavity_benchmark.png)
 
 Start with a numerical solution and an independent benchmark: cavity fields,
@@ -70,6 +74,10 @@ centerlines and Ghia comparisons establish what a useful training label means.
 [Figure contract](ARTICLE_FIGURE_MAP.md)
 
 ### Week 1.1 — AI-assisted scientific software
+
+**Problem:** Verify cavity diagnostics and physical constraints.<br>
+**CFD / data:** Analytic manufactured solution and a retained FlowMLLab cavity field.<br>
+**Learning method:** No trained network; independent tests verify AI-proposed code.
 
 ![Executable scientific contract for an AI-proposed cavity diagnostic](results/week01_1_scientific_software/week01_1_acceptance_summary.png)
 
@@ -84,6 +92,10 @@ decision. [Run the lab](notebooks/week01_1/W1_1_AI_Assisted_Scientific_Software.
 
 ### Week 2 — Supervised learning and rarefaction
 
+**Problem:** Predict response across Knudsen number and accommodation.<br>
+**CFD / data:** Synthetic teaching equation; no CFD/DSMC run.<br>
+**Learning method:** Ridge regression, not a neural CFD model.
+
 ![Week 2 synthetic response across Knudsen regimes and accommodation coefficients](assets/week02_synthetic_response.png)
 
 The Week-2 notebook's synthetic response illustrates how Knudsen number and
@@ -91,6 +103,10 @@ accommodation affect the learning problem. This is a teaching equation, not a
 CFD/DSMC result. [Run the lab](notebooks/week02/AI_in_Fluids_Week2_Colab_Expanded.ipynb)
 
 ### Week 2.1 — Probabilistic uncertainty
+
+**Problem:** Predict cavity quantities and fields with uncertainty.<br>
+**CFD / data:** Retained FlowMLLab cavity CFD data.<br>
+**Learning method:** Bayesian regression and POD–Gaussian processes; non-neural models.
 
 ![Probabilistic CFD prediction, uncertainty and blind calibration checks](results/probabilistic_uq/probabilistic_uq_validation.png)
 
@@ -100,6 +116,10 @@ and blind coverage; the retained under-coverage is part of the lesson.
 
 ### Week 3 — Kinetic theory and DSMC
 
+**Problem:** Predict wall pressure from molecular motion.<br>
+**CFD / data:** FlowMLLab hard-sphere DSMC with no-time-counter (HS–NTC) collisions.<br>
+**Learning method:** No network in the displayed particle-solver validation.
+
 ![HS–NTC DSMC wall-pressure validation against Mohammadzadeh reference data](results/article_figures/fig10a_mohammadzadeh_validation.png)
 
 Connect molecular sampling to a macroscopic observable through the executed
@@ -107,6 +127,10 @@ HS–NTC wall-pressure validation.
 [Validation contract](ARTICLE_FIGURE_MAP.md)
 
 ### Week 4 — Cavity surrogates and DeepONet
+
+**Problem:** Map Reynolds number to cavity fields.<br>
+**CFD / data:** FlowMLLab finite-difference streamfunction–vorticity Navier–Stokes solver.<br>
+**Learning method:** POD–DeepONet: learned parameter-to-coefficient map with a fixed POD spatial basis.
 
 ![POD–DeepONet cavity fields, Ghia checks, blind errors and cost](results/pod_deeponet/pod_deeponet_ghia_validation.png)
 
@@ -116,12 +140,20 @@ centerlines and measured inference cost.
 
 ### Week 4.1 — Classical reduced-order models
 
+**Problem:** Evolve cavity flow in a reduced state space.<br>
+**CFD / data:** The Week-4 cavity equations and finite-difference full-order model.<br>
+**Learning method:** POD–Galerkin and POD–DEIM; neither is a neural network.
+
 ![Classical cavity POD–Galerkin and POD–DEIM validation and timing](results/cavity_rom/cavity_rom_validation.png)
 
 Compare reduced dynamics, hyper-reduction, blind trajectories and the offline/online
 cost tradeoff. [Run the ROM lab](notebooks/week04/W4_1_Classical_ROM_Cavity.ipynb)
 
 ### Week 5 — Physics-guided projects
+
+**Problem:** Build a cavity surrogate or reconstruct a wake from sparse sensors.<br>
+**CFD / data:** FlowMLLab cavity CFD for the animation; D2Q9–TRT LBM for the wake extension.<br>
+**Learning method:** POD–DeepONet for the animation; gappy POD, sensor placement and SINDy in the extension.
 
 ![Animated cavity comparison for three retained blind POD–DeepONet cases](assets/flowmllab_blind_demo.gif)
 
@@ -135,6 +167,10 @@ reconstruct fields from limited measurements and inspect the
 
 ### Week 6 — Physical validation and final evidence
 
+**Problem:** Recover and validate cavity pressure.<br>
+**CFD / data:** FlowMLLab cavity CFD with least-squares pressure-gradient reconstruction.<br>
+**Learning method:** No neural model in this pressure-recovery figure.
+
 ![Independent cavity pressure-recovery validation](results/article_figures/fig08_pressure_recovery.png)
 
 This existing pressure benchmark illustrates the independent physical checks
@@ -143,6 +179,10 @@ Week 6 completes the selected Week-5 track, including optional closure testing.
 [Project completion guide](notebooks/week05_06/README.md)
 
 ### Week 7 — Unsteady cylinder wakes
+
+**Problem:** Predict future cylinder-wake vorticity.<br>
+**CFD / data:** FlowMLLab D2Q9–TRT lattice Boltzmann solver (LBM).<br>
+**Learning method:** The lead result is a phase-stable learned Fourier decoder, not an autoregressive CNN; POD and CNN baselines are linked below.
 
 ![Fresh Re=95 cylinder wake: LBM and autonomous learned decoder](results/cylinder_phase/re095_phase_stable_lbm_vs_decoder.webp)
 
@@ -168,6 +208,10 @@ reports 3.17% global vorticity error, with sampling and pressure limitations.
 
 ### Week 7.1 — Rarefied hypersonic cylinder
 
+**Problem:** Predict cylinder fields as Mach number varies.<br>
+**CFD / data:** Author-supplied DSMC archives; exact source/checkpoint attribution remains subject to the linked audit.<br>
+**Learning method:** 3×96 tanh MLP versus Mach interpolation; separate from the article's Fusion-DeepONet.
+
 ![Original 400 by 400 Mach-8.5 DSMC fields and interpolation errors](results/hypersonic_cylinder_week7_1/cylinder_homepage.png)
 
 The original **400 × 400 Mach-8.5** fields are rendered with continuous contours.
@@ -185,6 +229,10 @@ These are new teaching runs, not the published model's accuracy.
 
 ### Week 7.2 — Sparse-sensor state estimation
 
+**Problem:** Estimate a wake from noisy velocity sensors.<br>
+**CFD / data:** Retained FlowMLLab D2Q9–TRT LBM Re110 trajectory.<br>
+**Learning method:** POD–DMD dynamics and a Kalman filter; no neural network in this estimator.
+
 ![Reference and causal state estimates at the final test frame](results/week07_2_state_estimation/state_estimation_fields.png)
 
 A validation-selected rank-8 Kalman filter assimilates 32 noisy transverse-velocity
@@ -196,6 +244,10 @@ the overconfidence is retained as a model failure.
 
 ### Week 8 — Gas dynamics and SciML
 
+**Problem:** Predict and invert compressible-flow relations.<br>
+**CFD / data:** Exact gas-dynamics relations and numerical root finding; no spatial CFD run.<br>
+**Learning method:** MLP inverse maps versus interpolation and radial-basis-function baselines.
+
 ![Gas-dynamics model evidence, blind errors and matched-budget comparisons](results/gas_dynamics_week8/week8_model_evidence.png)
 
 Preserve physical branches while comparing exact solvers, interpolation and
@@ -203,6 +255,10 @@ learned inverse maps under matched budgets.
 [Benchmarks and validity limits](results/gas_dynamics_week8/README.md)
 
 ### Week 9 — Rarefied micro-step and micro-nozzle
+
+**Problem:** Predict geometry-dependent step fields and pressure-dependent nozzle fields.<br>
+**CFD / data:** Author-supplied DSMC archives; the nozzle uses modified Bird-family exports with a documented boundary defect.<br>
+**Learning method:** Step: geometry/coordinate MLP. Nozzle: shock-aligned POD with polynomial or tanh-MLP coefficient maps. Article and experimental DeepONet results are distinguished in the linked reports.
 
 ![Held-out H44 micro-step: DSMC and independent teaching-model contours](results/mahdavi_deeponet/step_independent_contours/held_out_H44_independent.png)
 
@@ -223,6 +279,10 @@ these are historical-holdout regression results, not fresh blind validation.
 
 ### Week 10 — DSMC cavity and molecular shocks
 
+**Problem:** Reconstruct rarefied cavity and mono/diatomic shock data.<br>
+**CFD / data:** Author-supplied article DSMC tables, not new particle-solver runs.<br>
+**Learning method:** POD–polynomial operators and interpolation; no neural network in the displayed reproduction.
+
 ![DSMC cavity, monatomic and diatomic shocks, and Maxwell-equilibrium reproduction](results/aescte_dsmc/week10_dsmc_reproduction_summary.png)
 
 The article-data experiment retains **1.281% maximum primary cavity NRMSE**
@@ -232,6 +292,10 @@ and regeneration workflow available for inspection.
 · [Data contract](data/aescte_dsmc/README.md)
 
 ### Week 10.1 — Ab initio collision DeepONet
+
+**Problem:** Compute cylinder flow using a collision-angle surrogate.<br>
+**CFD / data:** Author-supplied DS2V-based DSMC research runs.<br>
+**Learning method:** DeepONet supplies scattering-angle tables, not whole-field predictions; the CPU lab is a separate Lennard-Jones analog.
 
 ![Jäger Ar–Ar cylinder temperature: Exact and DeepONet at different output times](results/abinitio_deeponet_cylinder/temperature_exact_deeponet.png)
 
@@ -252,6 +316,10 @@ article's potential or network.
 
 ### Week 11 — Shock and vortex identification
 
+**Problem:** Identify shocks/vortex cores and test reconstruction before detection.<br>
+**CFD / data:** Archived ShockVortexML compressible fields for the lead figure; FlowMLLab D2Q9–TRT LBM for the wake extension. The lead archive's exact producing-solver revision is not established here.<br>
+**Learning method:** Frozen joint shock/vortex segmentation checkpoint; a separate reconstruction U-Net versus direct-mask prediction comparison.
+
 ![Week 11 real airfoil field and learned shock and vortex masks](results/week11_research/airfoil_2.png)
 
 Six fresh fixed-checkpoint forward passes on existing airfoil and cylinder fields from
@@ -268,6 +336,10 @@ vortex scores on coarse incompressible data, not shock accuracy or a blind test.
 
 ### Week 12 — DSMC moment reconstruction
 
+**Problem:** Reduce cavity heat-flux sampling noise.<br>
+**CFD / data:** Author-supplied multi-seed DSMC with an independent finite-sample reference.<br>
+**Learning method:** Archived observation-conditioned estimator in the lead figure; a separate 64×32 tanh patch MLP in the Noise2Noise lab.
+
 ![Week 12 real DSMC heat flux reference, observation and reconstruction](results/week12_research/cavity_qy_hero.png)
 
 Existing author-supplied DSMC cavity results associated with
@@ -283,6 +355,10 @@ held-out seeds. Its training results are documented separately from the
 archived research reconstruction shown above.
 
 ### Week 13 — Rectangular-cavity PINN research audit
+
+**Problem:** Solve square and deep lid-driven cavities.<br>
+**CFD / data:** Displayed fields are PINN solutions, not CFD output. OpenFOAM finite-volume and Nektar++ spectral/hp cavity calculations form a separate reference-validation campaign; they are not yet certified matched references for these displayed deep-cavity PINNs.<br>
+**Learning method:** Streamfunction PINN with hard wall constraints, trained using Adam then SSBroyden2 in float64.
 
 The final module develops streamfunction PINNs for square and deep lid-driven
 cavities. Compare **Re = 100 and 400**, **H/L = 1 and 2**, and **Adam followed
