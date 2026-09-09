@@ -6,7 +6,7 @@
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=1
 #SBATCH --mem=8G
-#SBATCH --time=00:10:00
+#SBATCH --time=00:45:00
 #SBATCH --array=0-1%2
 #SBATCH --output=nektar-long-restart-%A_%a.log
 # Bounded Re100,p4 test: t=2 uninterrupted vs four t=0.5 segments.
@@ -15,11 +15,16 @@
 # A wall-time-limited run is incomplete, never a failed numerical comparison.
 set -euo pipefail
 : "${FLOWML_NEKTAR_ROOT:?}"
+: "${FLOWML_NEKTAR_CORNER:?Explicit convention required}"
 repo="${SLURM_SUBMIT_DIR:?}"
 task="${SLURM_ARRAY_TASK_ID:?}"
 dt=0.0005
 segment_steps=1000
 if (( task == 1 )); then dt=0.00025; segment_steps=2000; fi
+if [[ "${FLOWML_NEKTAR_FINE_DT:-0}" == 1 ]]; then
+  dt=0.00025; segment_steps=2000
+  if (( task == 1 )); then dt=0.000125; segment_steps=4000; fi
+fi
 if (( task < 0 || task > 1 )); then exit 2; fi
 export OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1
 cd "$FLOWML_NEKTAR_ROOT"
@@ -34,6 +39,7 @@ run_segment() {
   shift 2
   python3 "$run/prepare_week13_nektar.py" --output "$run/$name" --re 100 \
     --order 4 --dt "$dt" --steps "$steps" --check-steps "$steps" \
+    --corner-convention "$FLOWML_NEKTAR_CORNER" \
     --purpose accumulated_restart_bias_test_not_steady_evidence "$@"
   cd "$run/$name"
   apptainer exec --cleanenv --bind /project "$FLOWML_NEKTAR_ROOT/nektar-v5.9.0.sif" \
