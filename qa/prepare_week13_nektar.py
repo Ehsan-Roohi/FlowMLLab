@@ -11,9 +11,17 @@ import xml.etree.ElementTree as ET
 
 
 def make_case(output, re=100, order=4, nx=8, ny=40, restart=None, *,
-              dt=0.0005, steps=100, check_steps=50, purpose='qualification_only'):
+              dt=0.0005, steps=100, check_steps=50, purpose='qualification_only',
+              corner_convention='legacy_conflicting'):
     if re <= 0 or nx < 1 or ny < 1 or dt <= 0 or steps < 1 or check_steps < 1:
         raise ValueError('Positive Reynolds number, mesh, time step and step counts required')
+    if corner_convention not in ('legacy_conflicting', 'stationary_endpoints'):
+        raise ValueError('Unknown corner convention')
+    # Comparisons evaluate to 0/1 in the documented Nektar expression parser.
+    # This is the discontinuous constant lid with explicitly stationary corners,
+    # NOT a smooth polynomial lid. Its finite-p boundary projection must be audited.
+    # https://doc.nektar.info/userguide/latest/user-guidese13.html
+    lid_expression = '(x>0)*(x<1)' if corner_convention == 'stationary_endpoints' else '1'
     output = Path(output)
     output.mkdir(parents=True, exist_ok=True)
     root = ET.Element('NEKTAR')
@@ -70,7 +78,7 @@ def make_case(output, re=100, order=4, nx=8, ny=40, restart=None, *,
     bcs=ET.SubElement(cond,'BOUNDARYCONDITIONS')
     for i in range(2):
         region=ET.SubElement(bcs,'REGION',REF=str(i))
-        ET.SubElement(region,'D',VAR='u',VALUE=str(i))
+        ET.SubElement(region,'D',VAR='u',VALUE=lid_expression if i else '0')
         ET.SubElement(region,'D',VAR='v',VALUE='0')
         ET.SubElement(region,'N',VAR='p',VALUE='0',USERDEFINEDTYPE='H')
     initial=ET.SubElement(cond,'FUNCTION',NAME='InitialConditions')
@@ -81,7 +89,8 @@ def make_case(output, re=100, order=4, nx=8, ny=40, restart=None, *,
     ET.indent(root)
     ET.ElementTree(root).write(output/'cavity.xml',encoding='utf-8',xml_declaration=True)
     (output/'spec.json').write_text(json.dumps(dict(Re=re,depth=5,width=1,order=order,
-        nx=nx,ny=ny,dt=dt,steps=steps,restart=restart,status=purpose),indent=2)+'\n')
+        nx=nx,ny=ny,dt=dt,steps=steps,restart=restart,status=purpose,
+        corner_convention=corner_convention,lid_expression=lid_expression),indent=2)+'\n')
 
 
 if __name__=='__main__':
@@ -96,6 +105,9 @@ if __name__=='__main__':
     p.add_argument('--nx',type=int,default=8)
     p.add_argument('--ny',type=int,default=40)
     p.add_argument('--purpose',default='qualification_only')
+    p.add_argument('--corner-convention',choices=['legacy_conflicting','stationary_endpoints'],
+                   default='legacy_conflicting')
     a=p.parse_args()
     make_case(a.output,a.re,a.order,a.nx,a.ny,restart=a.restart,
-              dt=a.dt,steps=a.steps,check_steps=a.check_steps,purpose=a.purpose)
+              dt=a.dt,steps=a.steps,check_steps=a.check_steps,purpose=a.purpose,
+              corner_convention=a.corner_convention)

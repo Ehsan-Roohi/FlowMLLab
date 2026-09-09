@@ -88,10 +88,41 @@ def compare(reference, candidate, atol, rtol, coordinate_atol=1e-12):
              np.isclose(y, 0, atol=coordinate_atol, rtol=0)) & ~corner
     u = np.concatenate([part[1]["u"] for part in b])
     v = np.concatenate([part[1]["v"] for part in b])
+    side = (np.isclose(x, 0, atol=coordinate_atol, rtol=0) |
+            np.isclose(x, 1, atol=coordinate_atol, rtol=0)) & ~corner
+    side_ids = np.flatnonzero(side)
+    worst_side = int(side_ids[np.argmax(np.hypot(u[side], v[side]))]) if side.any() else None
+    top_side_ids = np.flatnonzero(side & (y >= 4.75))
+    # Preserve duplicate values if element traces disagree at the same coordinate.
+    top_samples = sorted(set((float(x[i]), float(y[i]), float(u[i]), float(v[i]))
+                             for i in top_side_ids))
+    central_lid = lid & (x >= .125-coordinate_atol) & (x <= .875+coordinate_atol)
+    nearcorner_lid = lid & ~central_lid
+
+    def lid_region(mask):
+        ids = np.flatnonzero(mask)
+        if not len(ids):
+            return dict(point_count=0, max_velocity_error=None, max_error_location=None)
+        worst = int(ids[np.argmax(np.hypot(u[mask]-1, v[mask]))])
+        return dict(point_count=len(ids),
+            max_velocity_error=float(np.hypot(u[worst]-1, v[worst])),
+            max_error_location=dict(x=float(x[worst]), y=float(y[worst]),
+                                    u=float(u[worst]), v=float(v[worst])))
+
     report["candidate_boundary_observations"] = {
         "assumed_domain": "[0,1] x [0,5]; moving lid u=1",
         "lid_max_velocity_error": float(np.max(np.hypot(u[lid]-1, v[lid]))) if lid.any() else None,
         "wall_max_speed": float(np.max(np.hypot(u[walls], v[walls]))) if walls.any() else None,
+        "side_max_speed_location": dict(x=float(x[worst_side]), y=float(y[worst_side]),
+            u=float(u[worst_side]), v=float(v[worst_side])) if worst_side is not None else None,
+        "side_top_samples_columns": ["x", "y", "u", "v"],
+        "side_top_samples_y_ge_4_75": top_samples,
+        "central_lid_x_0_125_to_0_875": lid_region(central_lid),
+        "nearcorner_lid_excluding_endpoints": lid_region(nearcorner_lid),
+        "nearcorner_lid_samples_columns": ["x", "y", "u", "v"],
+        "nearcorner_lid_samples": sorted(set((float(x[i]), float(y[i]), float(u[i]), float(v[i]))
+            for i in np.flatnonzero(nearcorner_lid))),
+        "boundary_partition_note": "Fixed first/last 0.125 of unit lid reported separately, not removed from full-lid error; central success does not certify classical lid BC",
         "corner_u_values": sorted(set(float(z) for z in u[corner])),
         "corner_note": "Lid/wall Dirichlet values conflict; reported, not excused by smoothing"}
     report["numeric_comparison_passed"] = all(v["passed"] for v in report["fields"].values())

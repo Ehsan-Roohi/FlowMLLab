@@ -59,6 +59,27 @@ class CheckVtu(unittest.TestCase):
         with self.assertRaises(ValueError):
             compare(self.a, self.b, 1e-12, 1e-8)
 
+    def test_boundary_location(self):
+        coords = "0 4.9 0 0.5 5 0 1 0 0"
+        fixture(self.a, coords=coords, u="0.75 1 0")
+        fixture(self.b, coords=coords, u="0.75 1 0")
+        report = compare(self.a, self.b, 1e-12, 1e-8)
+        observed = report['candidate_boundary_observations']
+        self.assertEqual(observed['side_max_speed_location'],
+                         dict(x=0.0, y=4.9, u=0.75, v=0.0))
+        self.assertEqual(observed['side_top_samples_y_ge_4_75'], [(0.0, 4.9, 0.75, 0.0)])
+        # Reproducible boundary error is NOT a restart-comparison failure.
+        self.assertTrue(report['numeric_comparison_passed'])
+
+    def test_lid_partition_does_not_hide_error(self):
+        coords = "0.05 5 0 0.5 5 0 1 0 0"
+        fixture(self.a, coords=coords, u="0.6 1 0")
+        fixture(self.b, coords=coords, u="0.6 1 0")
+        observed = compare(self.a, self.b, 1e-12, 1e-8)['candidate_boundary_observations']
+        self.assertAlmostEqual(observed['lid_max_velocity_error'], .4)
+        self.assertEqual(observed['central_lid_x_0_125_to_0_875']['max_velocity_error'], 0.)
+        self.assertAlmostEqual(observed['nearcorner_lid_excluding_endpoints']['max_velocity_error'], .4)
+
 
 if __name__ == "__main__":
     unittest.main()
