@@ -275,39 +275,63 @@ def generate(root: Path) -> dict[str, object]:
         blind_calibrated.std[representative, 1],
     )
 
-    figure, axes = plt.subplots(1, 5, figsize=(18, 3.8), constrained_layout=True)
-    extent = [float(x.min()), float(x.max()), float(y.min()), float(y.max())]
-    panels = (
-        (truth_speed, "CFD speed"),
-        (mean_speed, "POD-GP mean speed"),
-        (vector_error, "Vector error"),
-        (spread, "Calibrated marginal spread"),
-    )
-    for axis, (values, title) in zip(axes[:4], panels):
-        image = axis.imshow(values, origin="lower", extent=extent, aspect="equal")
-        figure.colorbar(image, ax=axis, fraction=0.046)
-        axis.set_title(title)
-        axis.set_xlabel("x")
-    axes[0].set_ylabel("y")
-    axes[4].plot(
-        aggregate_raw.nominal,
-        aggregate_raw.observed,
-        "o--",
-        label="raw GP",
-    )
-    axes[4].plot(
-        aggregate_calibrated.nominal,
-        aggregate_calibrated.observed,
-        "s-",
-        label="validation-scaled",
-    )
-    axes[4].plot([0.45, 1.0], [0.45, 1.0], "k:", label="ideal")
-    axes[4].set(xlim=(0.45, 1.0), ylim=(0.0, 1.0), xlabel="Nominal", ylabel="Observed")
-    axes[4].set_title("Blind pointwise coverage")
-    axes[4].legend(fontsize=8)
-    figure.suptitle("FlowMLLab probabilistic UQ evidence (field panels: blind Re=275)")
-    figure.savefig(output / "probabilistic_uq_validation.png", dpi=180)
-    plt.close(figure)
+    with plt.rc_context({
+        "font.size": 13,
+        "axes.titlesize": 15,
+        "axes.labelsize": 14,
+        "xtick.labelsize": 12,
+        "ytick.labelsize": 12,
+        "legend.fontsize": 12,
+    }):
+        figure = plt.figure(figsize=(14.2, 11.0), constrained_layout=True)
+        grid = figure.add_gridspec(3, 2, height_ratios=(1, 1, 0.9))
+        field_axes = [figure.add_subplot(grid[row, col]) for row in range(2) for col in range(2)]
+        coverage_axis = figure.add_subplot(grid[2, :])
+        extent = [float(x.min()), float(x.max()), float(y.min()), float(y.max())]
+        panels = (
+            (truth_speed, "CFD speed"),
+            (mean_speed, "POD-GP mean speed"),
+            (vector_error, "Vector error"),
+            (spread, "Calibrated marginal spread"),
+        )
+        for axis, (values, title) in zip(field_axes, panels):
+            image = axis.imshow(values, origin="lower", extent=extent, aspect="equal")
+            figure.colorbar(image, ax=axis, fraction=0.046)
+            axis.set_title(title)
+            axis.set_xlabel("x")
+            axis.set_ylabel("y")
+        coverage_axis.plot(
+            aggregate_raw.nominal,
+            aggregate_raw.observed,
+            "o--",
+            linewidth=2,
+            markersize=7,
+            label="raw GP",
+        )
+        coverage_axis.plot(
+            aggregate_calibrated.nominal,
+            aggregate_calibrated.observed,
+            "s-",
+            linewidth=2,
+            markersize=7,
+            label="validation-scaled",
+        )
+        coverage_axis.plot([0.45, 1.0], [0.45, 1.0], "k:", linewidth=2, label="ideal")
+        coverage_axis.set(
+            xlim=(0.45, 1.0), ylim=(0.0, 1.0),
+            xlabel="Nominal interval coverage", ylabel="Observed pointwise coverage",
+        )
+        coverage_axis.set_title("Blind pointwise coverage across held-out Reynolds numbers")
+        coverage_axis.grid(alpha=0.25)
+        coverage_axis.legend(frameon=False, ncol=3, loc="lower right")
+        figure.suptitle(
+            "Week 2.1 | Probabilistic UQ on a blind Re=275 field",
+            fontsize=20,
+            fontweight="bold",
+        )
+        figure.savefig(output / "probabilistic_uq_validation.png", dpi=200,
+                       bbox_inches="tight", facecolor="white")
+        plt.close(figure)
     return summary
 
 

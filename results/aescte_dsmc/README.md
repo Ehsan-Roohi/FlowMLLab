@@ -3,6 +3,13 @@
 This directory contains deterministic, machine-readable evidence generated from
 the committed DSMC tables for the Week 10 laboratory.
 
+The article's cavity model is a family of coordinate MLP specialists with
+Fourier features; it is not DeepONet. The cavity evidence retained here uses
+direct log-Kn interpolation of complete DSMC fields and does not claim to be a
+retrained copy of those MLPs. DeepONet belongs to the article's separate
+diatomic-shock study; the retained shock curves here use a POD-polynomial
+course surrogate.
+
 ## Reproduce
 
 ```bash

@@ -35,10 +35,10 @@
     "spatial_smoothing": false,
     "dpi": 300,
     "pixels": [
-      3900,
-      1980
+      4500,
+      2460
     ]
   },
   "note": "Full-grid single-case scores; compact classroom metrics remain unchanged.",
-  "figure_sha256": "130a25f62cb56651801fe773fbd28927df7ea6a7a0cc80a32cbf7ec8dc4f6827"
+  "figure_sha256": "bb482949be8e1bcc4edabde967a93cccd0aa10016062d6bdd571f2df771f0108"
 }

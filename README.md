@@ -194,11 +194,6 @@ asymptotic/GCI gate; these labels are not high-fidelity DNS.
 · [Model evidence](results/cylinder_phase/README.md)
 · [Grid study](results/cylinder_grid_convergence/README.md)
 
-[![Earlier Re=100 POD failure comparison](results/cylinder_ml/blind_re100_lbm_vs_neural_poster.png)](results/cylinder_ml/blind_re100_lbm_vs_neural.mp4)
-
-The earlier Re=100 POD comparison is retained as a failed baseline, separate
-from the autonomous Re=95 result. [Failure analysis](results/cylinder_ml/README.md)
-
 Continue with the [modal forecasting lab](notebooks/week07/W7_Lab2_Modal_Forecasting.ipynb)
 and its [reproducible evidence](results/modal_labs/README.md).
 The [Re100 D40 dataset](results/cylinder_d40/README.md) provides force histories,
@@ -281,14 +276,21 @@ these are historical-holdout regression results, not fresh blind validation.
 
 **Problem:** Reconstruct rarefied cavity and mono/diatomic shock data.<br>
 **CFD / data:** Author-supplied article DSMC tables, not new particle-solver runs.<br>
-**Learning method:** POD–polynomial operators and interpolation; no neural network in the displayed reproduction.
+**Article learning method:** the cavity uses a family of coordinate MLP experts,
+one per training Kn: fixed Fourier features of $(x,y)$ feed three 256-unit
+Swish dense layers, and neighboring experts are fused by log-Kn interpolation.
+It is **not DeepONet**. The article uses DeepONet for its diatomic-shock study.<br>
+**Displayed course reproduction:** direct log-Kn interpolation for the cavity and
+POD–polynomial profile surrogates for the shocks. These displayed predictions do
+not rerun the article's trained neural networks.
 
-![DSMC cavity, monatomic and diatomic shocks, and Maxwell-equilibrium reproduction](results/aescte_dsmc/week10_dsmc_reproduction_summary.png)
+![Large-format DSMC cavity and diatomic-shock course reproduction](results/aescte_dsmc/week10_dsmc_reproduction_summary.png)
 
 The article-data experiment retains **1.281% maximum primary cavity NRMSE**
 and **1.018% maximum shock-profile relative L2 error**, with the data contract
 and regeneration workflow available for inspection.
-[Reproduction evidence](results/aescte_dsmc/README.md)
+[Article (Roohi & Shoja-Sani, 2026)](https://doi.org/10.1016/j.ast.2025.110785)
+· [Reproduction evidence](results/aescte_dsmc/README.md)
 · [Data contract](data/aescte_dsmc/README.md)
 
 ### Week 10.1 — Ab initio collision DeepONet

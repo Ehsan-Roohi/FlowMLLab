@@ -219,18 +219,63 @@ def draw_monatomic_relaxation(data, prediction, output):
     plt.close(fig)
 
 
-def draw_summary(cavity_figure, diatomic_figure, metrics, output):
-    from PIL import Image
-    left = Image.open(cavity_figure).convert("RGB")
-    right = Image.open(diatomic_figure).convert("RGB")
-    left.thumbnail((1300, 620)); right.thumbnail((1300, 620))
-    canvas = Image.new("RGB", (1320, 1240), "white")
-    canvas.paste(left, ((1320-left.width)//2, 0))
-    canvas.paste(right, ((1320-right.width)//2, 620))
-    canvas.save(output, quality=94)
+def draw_summary(cavity, cavity_predictions, diatomic, prediction_17, output):
+    """Build a legible homepage hero instead of shrinking two dense figures."""
+    with plt.rc_context({
+        "font.size": 13,
+        "axes.titlesize": 15,
+        "axes.labelsize": 14,
+        "xtick.labelsize": 12,
+        "ytick.labelsize": 12,
+        "legend.fontsize": 12,
+    }):
+        fig, axes = plt.subplots(2, 2, figsize=(13.8, 10.2), constrained_layout=True)
+
+        lid, kn = 10, 0.05
+        index = cavity_case(cavity, lid, kn)
+        reference_speed = np.hypot(cavity["u_ms"][index], cavity["v_ms"][index])
+        prediction = cavity_predictions[(lid, kn)]
+        predicted_speed = np.hypot(prediction["u_ms"], prediction["v_ms"])
+        limits = (0.0, float(max(reference_speed.max(), predicted_speed.max())))
+        for ax, values, title in (
+            (axes[0, 0], reference_speed, "DSMC cavity speed"),
+            (axes[0, 1], predicted_speed, "Course log-Kn interpolation"),
+        ):
+            image = ax.imshow(values, origin="lower", extent=(0, 1, 0, 1),
+                              cmap="viridis", aspect="equal",
+                              vmin=limits[0], vmax=limits[1])
+            ax.set(title=title, xlabel=r"$x/L$", ylabel=r"$y/L$")
+            fig.colorbar(image, ax=ax, shrink=.86, label="speed (m/s)")
+
+        target = int(np.flatnonzero(np.isclose(diatomic["mach"], 1.7))[0])
+        x = diatomic["x_over_lambda"][target]
+        for ax, field, label in (
+            (axes[1, 0], "translational_temperature", r"$T^*_{tr}$"),
+            (axes[1, 1], "normalized_velocity", r"$U^*$"),
+        ):
+            ax.plot(x, diatomic[field][target], color=PALETTE["dsmc"],
+                    lw=2.5, label="DSMC")
+            ax.plot(x, prediction_17[field], color=PALETTE["model"],
+                    lw=2.1, ls="--", label="Course POD-polynomial")
+            ax.set(title=f"Diatomic shock, Mach 1.7: {label}",
+                   xlabel=r"$x/\lambda$", ylabel="normalized value")
+            ax.grid(alpha=.25)
+        axes[1, 0].legend(frameon=False)
+        fig.suptitle("Week 10 | DSMC fields and transparent course surrogates",
+                     fontsize=20, fontweight="bold")
+        fig.savefig(output, dpi=220, bbox_inches="tight", facecolor="white")
+        plt.close(fig)
 
 
 def main() -> None:
+    plt.rcParams.update({
+        "font.size": 12,
+        "axes.titlesize": 14,
+        "axes.labelsize": 13,
+        "xtick.labelsize": 11,
+        "ytick.labelsize": 11,
+        "legend.fontsize": 11,
+    })
     RESULTS.mkdir(parents=True, exist_ok=True)
     cavity_path = RESULTS / "cavity_fields_14cases.npz"
     diatomic_path = RESULTS / "diatomic_shock_6cases.npz"
@@ -280,7 +325,7 @@ def main() -> None:
     draw_cavity_profiles(cavity, cavity_predictions, cavity_profiles)
     draw_diatomic(diatomic, prediction_17, prediction_14, diatomic_figure)
     draw_monatomic_relaxation(monatomic, monatomic_prediction, mono_figure)
-    draw_summary(cavity_figure, diatomic_figure, rows, summary_figure)
+    draw_summary(cavity, cavity_predictions, diatomic, prediction_17, summary_figure)
 
     primary_cavity = [row["value"] for row in rows if row["case_family"] == "cavity" and row["field"] in {"u_ms", "v_ms", "temperature_k"}]
     shock_values = [row["value"] for row in rows if str(row["case_family"]).startswith(("diatomic", "monatomic"))]

@@ -59,9 +59,9 @@ def main():
     error = np.abs(prediction - truth)
     errors = relative_l2(truth[common_valid], prediction[common_valid])
 
-    plt.rcParams.update({"font.family": "DejaVu Sans", "font.size": 10,
+    plt.rcParams.update({"font.family": "DejaVu Sans", "font.size": 13,
                          "axes.spines.top": False, "axes.spines.right": False})
-    fig, axes = plt.subplots(2, 3, figsize=(13, 6.6), layout="constrained")
+    fig, axes = plt.subplots(2, 3, figsize=(15, 8.2), layout="constrained")
     labels = ["Local Mach", "Temperature · source TOV", "Pressure · source P"]
     for j, label in enumerate(labels):
         for i, values in enumerate((truth[:, :, j], error[:, :, j])):
@@ -82,9 +82,9 @@ def main():
             ax.set_title(label if i == 0 else
                          f"Absolute interpolation error\nRelative L2: {100*errors[j]:.3f}%")
     fig.suptitle("Rarefied cylinder | freestream Mach 8.5\nOriginal 400 × 400 DSMC fields",
-                 fontsize=17, fontweight="bold")
+                 fontsize=20, fontweight="bold")
     fig.supxlabel("Gray: masked solid/sentinel region. Interpolation uses Mach 8 and 9; no spatial smoothing.",
-                  fontsize=10)
+                  fontsize=12)
     output = root / "results/hypersonic_cylinder_week7_1"
     image_path = output / "cylinder_homepage.png"
     fig.savefig(image_path, dpi=300, facecolor="white")
@@ -96,7 +96,7 @@ def main():
         "full_grid_baseline_relative_l2": dict(zip(
             ["local_mach", "source_TOV", "source_P"], errors.tolist())),
         "rendering": {"method": "masked contourf", "levels": 161,
-                      "spatial_smoothing": False, "dpi": 300, "pixels": [3900, 1980]},
+                      "spatial_smoothing": False, "dpi": 300, "pixels": [4500, 2460]},
         "note": "Full-grid single-case scores; compact classroom metrics remain unchanged.",
         "figure_sha256": hashlib.sha256(image_path.read_bytes()).hexdigest(),
     }

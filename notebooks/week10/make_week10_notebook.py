@@ -101,14 +101,23 @@ Reference solutions are available at
 
 $$Kn=10^{-3},10^{-2},10^{-1},1,10.$$
 
-For a held-out value bracketed by $Kn_l$ and $Kn_u$, the article uses
+The **article's cavity model is not DeepONet**. It trains one coordinate MLP
+for each available $Kn$: $(x,y)$ first pass through fixed random Fourier
+features (scale 2.5), followed by three 256-unit Swish layers and a linear
+field-output layer. Dropout of 0.2 follows the first two hidden layers and the
+reported regularization is $L_2=10^{-6}$. Neighboring specialist predictions
+are then fused in log-$Kn$. DeepONet is used in the article's separate
+diatomic-shock experiment.
+
+For a held-out value bracketed by $Kn_l$ and $Kn_u$, that fusion rule is
 
 $$w=\frac{\log_{10}Kn_* - \log_{10}Kn_l}{\log_{10}Kn_u-\log_{10}Kn_l},\qquad
 \widehat q_*=(1-w)q_l+wq_u.$$
 
-Here the bracketing states are the complete supplied DSMC fields. Thus the
-reported sub-2% result measures log-Kn field interpolation, not the accuracy of
-a separately trained spatial specialist."""),
+In this **course reproduction**, however, $q_l$ and $q_u$ are the complete
+supplied DSMC fields, not outputs of retrained article MLPs. Thus the reported
+sub-2% result measures direct log-Kn field interpolation and must not be
+reported as MLP or DeepONet accuracy."""),
     code("""cavity = load_cavity_archive(RESULTS / "cavity_fields_14cases.npz")
 print("temperature tensor:", cavity["temperature_k"].shape)
 print("lid speeds:", np.unique(cavity["lid_speed_ms"]))

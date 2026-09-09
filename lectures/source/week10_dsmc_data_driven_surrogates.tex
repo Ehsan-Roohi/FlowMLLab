@@ -160,6 +160,15 @@ because those target tables are absent from the supplied archive.
 
 \clearpage
 \section{Rarefied Cavity: Logarithmic Parameter Synthesis}
+The article's cavity architecture is a \textbf{family of coordinate MLP
+specialists}, not DeepONet.  For each training Knudsen number, the inputs
+$(x,y)$ are mapped through fixed random Fourier features with scale 2.5 and
+then through three fully connected hidden layers of 256 Swish units.  The
+article reports dropout 0.2 after the first two hidden layers, $L_2$
+regularization with $\lambda=10^{-6}$, and a linear output layer.  Neighboring
+specialist predictions are fused in logarithmic Knudsen-number coordinates.
+DeepONet belongs to the article's separate diatomic-shock experiment.
+
 The development specialists use
 \[
 \Kn\in\{10^{-3},10^{-2},10^{-1},1,10\},
@@ -171,10 +180,11 @@ w&=\frac{\log_{10}\Kn_*-\log_{10}\Kn_l}
 {\log_{10}\Kn_u-\log_{10}\Kn_l},\\
 \widehat q(\Kn_*)&=(1-w)q(\Kn_l)+wq(\Kn_u).
 \end{align}
-This is the article's family-of-specialists synthesis step, applied here
-directly to complete supplied DSMC spatial fields. Consequently, the sub-2\%
-result measures log-$\Kn$ field interpolation; it is not the error of a newly
-trained spatial specialist. The distinction is part of the learning objective.
+This is the article's family-of-specialists synthesis rule, but the course
+reproduction applies it directly to complete supplied DSMC spatial fields.
+Consequently, the sub-2\% result measures direct log-$\Kn$ field interpolation;
+it is neither a retrained MLP result nor a DeepONet result. The distinction is
+part of the learning objective.
 
 For velocity, the normalized RMSE is
 \[

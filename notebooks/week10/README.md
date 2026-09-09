@@ -2,7 +2,15 @@
 
 `W10_DSMC_Data_Driven_Surrogates_Student.ipynb` teaches the full chain from
 DSMC data auditing to cavity log-Kn synthesis and monatomic/diatomic shock
-operators. It regenerates the retained results with:
+operators.
+
+The article's cavity network is a coordinate MLP specialist at each training
+Kn (fixed Fourier features, three 256-unit Swish layers), followed by log-Kn
+fusion. It is not DeepONet; DeepONet is used for the article's diatomic-shock
+case. The executable course cavity result directly interpolates complete DSMC
+fields and therefore is not presented as a rerun of those trained MLPs.
+
+Regenerate the retained results with:
 
 ```bash
 python qa/build_week10_aescte_dsmc_data.py

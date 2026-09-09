@@ -5,15 +5,15 @@
   "data_manifest_sha256": "455991685839806877a5456b2e0af3abf6340d568fa6fd79c668273e02e681ab",
   "diatomic_mach_2_target_available": false,
   "figures_sha256": {
-    "cavity_kn005_reproduction.png": "b45ec20069651f002a625b1591f309f92e052d74b9682b903d9b9e8f3fc454cb",
-    "cavity_validation_profiles.png": "40ed49ece4d0f90224922322c62d952a9babec1a6252d9153dc83bd75b016dc3",
-    "diatomic_shock_reproduction.png": "334a9d8f11500907de20d0ea8296dd4e9fc0a3bf68896c71b9c248c7dfd9e498",
-    "monatomic_relaxation_reproduction.png": "052ca58c9118a211b3aa22c595b16ff76d2a94fc7d1c807092c169aa73b41c63",
-    "week10_dsmc_reproduction_summary.png": "a9589f2c14651a87cc2b2ddc54309f73a74d40aa263a457ffbb4297947e152cb"
+    "cavity_kn005_reproduction.png": "76b9b53a4daf0c0263ca0464da7a46c666eba27fa91223ee55783aac4ff214d1",
+    "cavity_validation_profiles.png": "3657a66350f1678c27ad34bde1e87ca7809ac257a7dbc48b7dbaf4832b3f8a08",
+    "diatomic_shock_reproduction.png": "9df50522e3877c34b5d5dd0d59c3f46b4aa96eb9f8aaf19fe14f6c480cf1fc5c",
+    "monatomic_relaxation_reproduction.png": "1e2ae27b5e994ac081a2319dbea0d388cea16beed44802c6c1e32b1a1c1374d2",
+    "week10_dsmc_reproduction_summary.png": "6750c37f1aec48d7effdec7b03cdc88a6ff2375fd92b0cf7adf3f14476b2343e"
   },
-  "metrics_sha256": "4c2afa54aba6d31c3dbf24cf7a1a1f664622307e757c4887fa908d64446cba05",
+  "metrics_sha256": "483e516e56423fa2bb5620e57095d897684620cf5bd83777eb684cba4b228850",
   "schema_version": 1,
-  "shock_max_relative_l2_percent": 1.0184247943783042,
-  "shock_mean_relative_l2_percent": 0.4235029972000711,
+  "shock_max_relative_l2_percent": 1.0184247943783045,
+  "shock_mean_relative_l2_percent": 0.42350299720007123,
   "status": "pass"
 }
