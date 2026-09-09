@@ -39,7 +39,10 @@ def plot(vtu, output):
     levels = PAPER_LEVELS[(PAPER_LEVELS >= omega.min()) & (PAPER_LEVELS <= omega.max())]
 
     fig, ax = plt.subplots(figsize=(3.45, 10.2), constrained_layout=True)
-    cs = ax.contour(x, y, omega, levels=levels, colors="#111827", linewidths=0.55)
+    cs = ax.contour(
+        x, y, omega, levels=levels, colors="#111827", linewidths=0.55,
+        linestyles="solid",
+    )
     # Match the paper's labelled black contours while keeping labels legible.
     label_levels = levels[np.isin(levels, [
         -5, -1, -0.5, -0.1, -0.03, -0.01, -0.001, -1e-4, -1e-5,
