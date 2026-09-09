@@ -22,9 +22,12 @@ reynolds=(100 500 1000)
 re="${reynolds[$task]}"
 commit="$(git -C "$repo" rev-parse HEAD)"
 
-# Fail closed unless this exact commit is present on a published origin branch.
-git -C "$repo" fetch --quiet origin
-git -C "$repo" branch -r --contains "$commit" | grep -q 'origin/'
+# Fail closed unless this exact commit is the explicitly published GitHub ref.
+# Unity's checkout uses a restrictive fetch refspec, so FETCH_HEAD is the
+# reliable way to verify a one-off branch fetch.
+published_ref="${FLOWML_NEKTAR_PUBLISHED_REF:-codex/week13-nektar-production}"
+git -C "$repo" fetch --quiet origin "$published_ref"
+test "$(git -C "$repo" rev-parse FETCH_HEAD)" = "$commit"
 test -s "$FLOWML_NEKTAR_ROOT/nektar-v5.9.0.sif"
 test -s "$FLOWML_NEKTAR_EQUIVALENCE_GATE"
 
@@ -48,7 +51,8 @@ python3 "$snapshot/run_week13_nektar_reynolds.py" \
   --image "$FLOWML_NEKTAR_ROOT/nektar-v5.9.0.sif" \
   --gate "$snapshot/restart-gate.json" --commit "$commit" \
   --re "$re" --corner-convention stationary_endpoints \
-  --order 6 --dt 0.00025 --end-time 80 --nx 16 --ny 80 --seconds 6600
+  --order 6 --dt 0.00025 --end-time "${FLOWML_NEKTAR_END_TIME:-80}" \
+  --nx 16 --ny 80 --seconds "${FLOWML_NEKTAR_SECONDS:-6600}"
 status=$?
 set -e
 if (( status == 75 )); then
