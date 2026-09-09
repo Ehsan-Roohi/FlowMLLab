@@ -10,7 +10,10 @@ from pathlib import Path
 import xml.etree.ElementTree as ET
 
 
-def make_case(output, re=100, order=4, nx=8, ny=40, restart=None):
+def make_case(output, re=100, order=4, nx=8, ny=40, restart=None, *,
+              dt=0.0005, steps=100, check_steps=50, purpose='qualification_only'):
+    if re <= 0 or nx < 1 or ny < 1 or dt <= 0 or steps < 1 or check_steps < 1:
+        raise ValueError('Positive Reynolds number, mesh, time step and step counts required')
     output = Path(output)
     output.mkdir(parents=True, exist_ok=True)
     root = ET.Element('NEKTAR')
@@ -56,8 +59,8 @@ def make_case(output, re=100, order=4, nx=8, ny=40, restart=None):
     ET.SubElement(time,'METHOD').text='IMEX'
     ET.SubElement(time,'ORDER').text='2'
     params=ET.SubElement(cond,'PARAMETERS')
-    for key,value in {'TimeStep':0.0005,'NumSteps':100,'IO_CheckSteps':50,
-                      'IO_InfoSteps':10,'IO_CFLSteps':10,'Kinvis':1/re}.items():
+    for key,value in {'TimeStep':dt,'NumSteps':steps,'IO_CheckSteps':check_steps,
+                      'IO_InfoSteps':min(100, steps),'IO_CFLSteps':min(100, steps),'Kinvis':1/re}.items():
         ET.SubElement(params,'P').text=f'{key} = {value}'
     variables=ET.SubElement(cond,'VARIABLES')
     for i,v in enumerate(('u','v','p')): ET.SubElement(variables,'V',ID=str(i)).text=v
@@ -78,7 +81,7 @@ def make_case(output, re=100, order=4, nx=8, ny=40, restart=None):
     ET.indent(root)
     ET.ElementTree(root).write(output/'cavity.xml',encoding='utf-8',xml_declaration=True)
     (output/'spec.json').write_text(json.dumps(dict(Re=re,depth=5,width=1,order=order,
-        nx=nx,ny=ny,dt=0.0005,steps=100,restart=restart,status='qualification_only'),indent=2)+'\n')
+        nx=nx,ny=ny,dt=dt,steps=steps,restart=restart,status=purpose),indent=2)+'\n')
 
 
 if __name__=='__main__':
@@ -87,5 +90,12 @@ if __name__=='__main__':
     p.add_argument('--re',type=int,choices=[100,500],default=100)
     p.add_argument('--order',type=int,choices=[4,6,8],default=4)
     p.add_argument('--restart')
+    p.add_argument('--dt',type=float,default=0.0005)
+    p.add_argument('--steps',type=int,default=100)
+    p.add_argument('--check-steps',type=int,default=50)
+    p.add_argument('--nx',type=int,default=8)
+    p.add_argument('--ny',type=int,default=40)
+    p.add_argument('--purpose',default='qualification_only')
     a=p.parse_args()
-    make_case(a.output,a.re,a.order,restart=a.restart)
+    make_case(a.output,a.re,a.order,a.nx,a.ny,restart=a.restart,
+              dt=a.dt,steps=a.steps,check_steps=a.check_steps,purpose=a.purpose)
