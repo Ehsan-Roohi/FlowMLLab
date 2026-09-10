@@ -1,6 +1,8 @@
 """Offline design, numerics and retention tests; actual solver gates run on Unity."""
 import json
 import errno
+import os
+from contextlib import contextmanager
 from pathlib import Path
 import tempfile
 import time
@@ -24,6 +26,19 @@ class TestDirectory(tempfile.TemporaryDirectory):
                 time.sleep(.2*(attempt+1))
 
 
+@contextmanager
+def fixture_directory():
+    # Optional audit retention avoids filesystem teardown, NOT any assertions.
+    # Useful where directory deletion is busy on a shared filesystem.
+    if os.environ.get('FLOWML_KEEP_TEST_FIXTURES') == '1':
+        path = tempfile.mkdtemp(prefix='week13-tests-')
+        print('RETAINED_TEST_FIXTURES', path, flush=True)
+        yield path
+    else:
+        with TestDirectory() as path:
+            yield path
+
+
 class TestIndependence(unittest.TestCase):
     def test_eight_one_factor_cases(self):
         self.assertEqual(len(CASES), 8)
@@ -37,7 +52,7 @@ class TestIndependence(unittest.TestCase):
             self.assertLessEqual(changes, 1)
 
     def test_nested_mesh_and_identical_lid(self):
-        with TestDirectory() as temp:
+        with fixture_directory() as temp:
             root = Path(temp)
             for c in CASES:
                 dest = root/c['label']
@@ -98,7 +113,7 @@ class TestIndependence(unittest.TestCase):
             temporal_gate(rows)
 
     def test_only_own_intermediates_pruned(self):
-        with TestDirectory() as temp:
+        with fixture_directory() as temp:
             root = Path(temp)/'new'
             root.mkdir()
             source = Path(temp)/'source.fld'
@@ -123,7 +138,7 @@ class TestIndependence(unittest.TestCase):
             prune(root,records)  # Idempotent.
 
     def test_pruning_path_escape_rejected(self):
-        with TestDirectory() as temp:
+        with fixture_directory() as temp:
             root=Path(temp)/'new'
             root.mkdir()
             chunk=root/'step-0001'

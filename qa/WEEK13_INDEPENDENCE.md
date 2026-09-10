@@ -87,6 +87,11 @@ Incomplete attempts are not accepted as restarts and remain available for diagno
 
 `python -m unittest discover -s qa -p 'test_week13_independence.py' -v`
 
+On shared filesystems with busy-directory teardown, set
+`FLOWML_KEEP_TEST_FIXTURES=1` and `TMPDIR` to a project test directory. This
+retains the small test fixtures for audit; all assertions, including intermediate
+file-deletion/retention safety tests, still run unchanged.
+
 These cover manufactured polynomial integration down to amplitude 1e-14,
 vorticity sign, nested meshes, unchanged physical lid, temporal gates, and
 retention path safety. They do not replace the compute-node solver gates.
