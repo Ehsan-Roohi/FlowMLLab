@@ -1,4 +1,5 @@
 #!/bin/bash
+#SBATCH --mail-type=NONE
 #SBATCH --job-name=w13-nektar-boundary
 #SBATCH --partition=cpu-preempt
 #SBATCH --account=pi_roohie_umass_edu

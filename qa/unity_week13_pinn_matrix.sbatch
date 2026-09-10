@@ -1,4 +1,5 @@
 #!/bin/bash
+#SBATCH --mail-type=NONE
 #SBATCH --job-name=flowml-w13-pinn
 #SBATCH --partition=gpu-preempt
 #SBATCH --account=pi_roohie_umass_edu
