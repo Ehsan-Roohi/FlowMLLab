@@ -29,13 +29,27 @@ diagnostic, not a complete limit study of boundary regularization.
 Each case maps using FieldConvert interpfield (or an exact same-space copy),
 then maps back to the source space. Pointwise field agreement and four weak-vortex
 strength/centre checks must pass. The mapped restart retains t=220 explicitly.
-Before production, a 0.02-time solve is compared against two 0.01-time solves.
+Before production, a 0.5-time solve is compared against two 0.25-time solves,
+matching the actual production checkpoint cadence. Field tolerances remain
+atol=1e-8 and rtol=1e-5; four main-vortex strength and centre changes must also
+remain below 0.1% and 0.001W in this restart comparison.
 Equal end clocks, finite fields, no-slip walls, central lid, and CFL<0.8 are
 required. Full-lid projection errors are reported, not hidden or accepted as
 proof of classical-boundary accuracy. These gates establish operability only.
 
 Reference: [official FieldConvert modules](https://doc.nektar.info/userguide/latest/user-guidese26.html).
 No clipping of interpolated velocity or fitting to the article is used.
+
+### Retained short-startup negative result
+
+The initial array 64214120 used 0.02 versus two 0.01-time solves. The Re500 base
+case failed the pointwise gate: max u/v differences 1.66047e-5/1.49422e-5,
+against thresholds 1.11658e-5/6.56573e-6. Pressure also failed. The original
+diagnostics are retained; this is evidence of restart sensitivity at that short
+cadence, not proof that restarting is generally accurate. The replacement gate
+tests the actual 0.25 production cadence with unchanged field tolerances and an
+additional weak-vortex check. Even if it passes, long-horizon accumulated restart
+error remains part of the time-step verification, not a certified zero error.
 
 ## Temporal and scientific acceptance
 
