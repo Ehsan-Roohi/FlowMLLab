@@ -109,6 +109,25 @@ def run(args):
     ):
         raise ValueError("Reviewed boundary/restart-operability gate does not match")
 
+    initial = None
+    initial_path = getattr(args, "initial_state", None)
+    if initial_path:
+        initial = json.loads(Path(initial_path).read_text())
+        for key, expected in (("re", args.re), ("nx", args.nx), ("ny", args.ny),
+                              ("order", args.order), ("dt", args.dt),
+                              ("corner_convention", args.corner_convention)):
+            if initial.get(key) != expected:
+                raise ValueError(f"Initial-state mismatch: {key}")
+        if initial.get("operability_passed") is not True:
+            raise ValueError("Initial state has not passed mapping/operability checks")
+        if sha(initial["field"]) != initial["field_sha256"]:
+            raise ValueError("Initial-state field hash changed")
+        initial_time = field_time(initial["field"])
+        if abs(initial_time - initial["time"]) > 1e-7 or round(initial_time) < 1:
+            raise ValueError("Initial-state physical time mismatch")
+        if abs(initial_time - round(initial_time)) > 1e-7:
+            raise ValueError("Initial time must be an integer chunk boundary")
+
     case = Path(args.output).resolve()
     case.mkdir(parents=True, exist_ok=True)
     config = {
@@ -130,6 +149,9 @@ def run(args):
         "status": "transient_until_independent_steady_and_benchmark_audits_pass",
     }
     manifest = case / "campaign.json"
+    if initial:
+        config["initial_state_sha256"] = sha(initial_path)
+        config["start_time"] = round(initial["time"])
     if manifest.exists() and json.loads(manifest.read_text()) != config:
         raise ValueError("Campaign specification changed; use a new output directory")
     if not manifest.exists():
@@ -137,13 +159,15 @@ def run(args):
 
     deadline = time.monotonic() + args.seconds
     base = ["apptainer", "exec", "--cleanenv", "--bind", "/project", args.image]
-    prior = None
-    current = 0.0
+    prior = Path(initial["field"]) if initial else None
+    current = float(round(initial["time"])) if initial else 0.0
     chunk_count = round(args.end_time)
     if chunk_count != args.end_time or chunk_count < 1:
         raise ValueError("end-time must be a positive integer")
 
-    for index in range(chunk_count):
+    if chunk_count <= current:
+        raise ValueError("End time must exceed initial time")
+    for index in range(round(current), chunk_count):
         chunk = case / f"chunk-{index:04d}"
         chunk.mkdir(exist_ok=True)
         marker = chunk / "accepted.json"
@@ -204,7 +228,13 @@ def run(args):
              attempt / "convert-vorticity-vtu.log"),
         ]
         for command, log_path in commands:
-            status = run_process(command, attempt, log_path, deadline, reserve=20)
+            try:
+                status = run_process(command, attempt, log_path, deadline, reserve=20)
+            except subprocess.TimeoutExpired:
+                (attempt / "interrupted-budget.txt").write_text(
+                    "Unaccepted export attempt; restart from last accepted chunk.\n"
+                )
+                return 75
             if status:
                 raise subprocess.CalledProcessError(status, command)
         validate_ascii_vtu(attempt / "cavity.vtu")
@@ -239,6 +269,7 @@ if __name__ == "__main__":
     parser.add_argument("--image", required=True)
     parser.add_argument("--commit", required=True)
     parser.add_argument("--gate", required=True)
+    parser.add_argument("--initial-state", help="Verified mapped/continued state manifest")
     parser.add_argument("--re", type=int, choices=[100, 500, 1000], required=True)
     parser.add_argument("--corner-convention", choices=["stationary_endpoints"], required=True)
     parser.add_argument("--order", type=int, choices=[6], default=6)
