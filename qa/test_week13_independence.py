@@ -1,13 +1,27 @@
 """Offline design, numerics and retention tests; actual solver gates run on Unity."""
 import json
+import errno
 from pathlib import Path
 import tempfile
+import time
 import unittest
 import xml.etree.ElementTree as ET
 import numpy as np
 
 from week13_independence import CASES, session, x_vertices, PolynomialField, temporal_gate
 from run_week13_independence import prune
+
+
+class TestDirectory(tempfile.TemporaryDirectory):
+    """Retry only ENOTEMPTY on network filesystems; never suppress test errors."""
+    def cleanup(self):
+        for attempt in range(6):
+            try:
+                return super().cleanup()
+            except OSError as exc:
+                if exc.errno != errno.ENOTEMPTY or attempt == 5:
+                    raise
+                time.sleep(.2*(attempt+1))
 
 
 class TestIndependence(unittest.TestCase):
@@ -23,7 +37,7 @@ class TestIndependence(unittest.TestCase):
             self.assertLessEqual(changes, 1)
 
     def test_nested_mesh_and_identical_lid(self):
-        with tempfile.TemporaryDirectory() as temp:
+        with TestDirectory() as temp:
             root = Path(temp)
             for c in CASES:
                 dest = root/c['label']
@@ -84,7 +98,7 @@ class TestIndependence(unittest.TestCase):
             temporal_gate(rows)
 
     def test_only_own_intermediates_pruned(self):
-        with tempfile.TemporaryDirectory() as temp:
+        with TestDirectory() as temp:
             root = Path(temp)/'new'
             root.mkdir()
             source = Path(temp)/'source.fld'
@@ -109,7 +123,7 @@ class TestIndependence(unittest.TestCase):
             prune(root,records)  # Idempotent.
 
     def test_pruning_path_escape_rejected(self):
-        with tempfile.TemporaryDirectory() as temp:
+        with TestDirectory() as temp:
             root=Path(temp)/'new'
             root.mkdir()
             chunk=root/'step-0001'
