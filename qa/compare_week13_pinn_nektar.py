@@ -1,9 +1,9 @@
 """Compare a completed rectangular-cavity PINN checkpoint against Nektar++ vortex data.
 
-This is a post-only diagnostic-only, case-matched diagnostic4 extraction-only audit.  It reloadss the retained
+This is a post-only, case-matched extraction audit. It reloads the retained
 PINN checkpoint, evaluates its streamfunction on a fixed physical grid and
-extract-sos locates the corresponding alternating extrema near independently extracted-sos supplied
-N-Nektar++ centres.  It does not turn a residual-minimised PINN into validated CFD.
+locates the corresponding alternating extrema near independently extracted
+Nektar++ centres. It does not turn a residual-minimised PINN into validated CFD.
 """
 from __future__ import annotations
 
@@ -64,12 +64,16 @@ def main() -> int:
         iy, ix = np.unravel_index(np.argmin(local) if psin < 0 else np.argmax(local), local.shape)
         xp, yp = x[mask_x][ix], y[mask_y][iy]
         psip = float(local[iy, ix])
+        resolved = bool(psip * psin > 0.0)
         rows.append({
             "vortex": ref["vortex"],
             "nektar": {"x": xn, "y": yn, "psi": psin},
             "pinn": {"x": float(xp), "y": float(yp), "psi": psip},
             "centre_distance_W": float(np.hypot(xp - xn, yp - yn)),
-            "psi_relative_difference_percent": float(100.0 * abs(psip / psin - 1.0)),
+            "status": "compared" if resolved else "not_resolved_with_reference_sign",
+            "psi_relative_difference_percent": (
+                float(100.0 * abs(psip / psin - 1.0)) if resolved else None
+            ),
         })
 
     result = {
