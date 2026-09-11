@@ -146,7 +146,7 @@ def record_history(path, phase, phase_step, global_step, l1, l2, module, model,
 
 
 def train(module, model, output, reynolds, aspect, points_n, adam_steps, ssb_steps,
-          checkpoint_every, resume, network_config):
+          checkpoint_every, resume, network_config, init_checkpoint=None):
     config = {"reynolds_number": reynolds, "aspect_ratio": aspect,
               "collocation_points": points_n, "adam_steps": adam_steps,
               "ssb_steps": ssb_steps, "seed": module.SEED, **network_config}
@@ -174,6 +174,18 @@ def train(module, model, output, reynolds, aspect, points_n, adam_steps, ssb_ste
         torch.cuda.set_rng_state_all(saved["cuda_rng"])
         np.random.set_state(saved["numpy_rng"])
         print(f"Resumed {phase}: Adam={adam_done}, SSBroyden2={ssb_done}", flush=True)
+    elif init_checkpoint is not None:
+        source = torch.load(init_checkpoint, map_location="cpu", weights_only=False)
+        source_config = source.get("config", {})
+        architecture = ("hidden_width", "hidden_layers", "activation")
+        if any(source_config.get(key) != config[key] for key in architecture):
+            raise RuntimeError("Refusing an initialization checkpoint with a different network")
+        model.load_state_dict(source["model"])
+        print(
+            "Initialized model weights from "
+            f"{init_checkpoint}; optimizer and collocation points start fresh",
+            flush=True,
+        )
 
     if phase == "adam":
         optimizer = torch.optim.Adam(model.parameters(), lr=5e-4)
@@ -362,6 +374,10 @@ def main():
     parser.add_argument("--hidden-layers", type=int, default=3)
     parser.add_argument("--activation", choices=("tanh", "silu"), default="tanh")
     parser.add_argument("--resume", action="store_true")
+    parser.add_argument(
+        "--init-checkpoint", type=Path,
+        help="Initialize model weights from a completed lower-Re case; optimizer state is not reused",
+    )
     args = parser.parse_args()
     if not torch.cuda.is_available():
         raise RuntimeError("CUDA GPU is required")
@@ -384,7 +400,8 @@ def main():
     started = time.time()
     complete = train(module, model, Path.cwd(), args.re, args.aspect_ratio, args.points,
                      args.adam_steps, args.ssb_steps, args.checkpoint_every, args.resume,
-                     network_config)
+                     network_config,
+                     args.init_checkpoint.resolve() if args.init_checkpoint else None)
     if not complete:
         return 99
     audit = {"claim_status": "residual-audited-no-field-reference", "reynolds_number": args.re,
@@ -392,6 +409,8 @@ def main():
              "optimizers": ["Adam", "SSBroyden2"], "adam_steps": args.adam_steps,
              "ssbroyden2_steps": args.ssb_steps, "collocation_points": args.points,
              "network": network_config,
+             "initialization_checkpoint": (str(args.init_checkpoint.resolve())
+                                             if args.init_checkpoint else None),
              "precision": str(next(model.parameters()).dtype),
              "gpu": torch.cuda.get_device_name(0), "elapsed_seconds": time.time() - started,
              "upstream_commit": UPSTREAM_COMMIT,

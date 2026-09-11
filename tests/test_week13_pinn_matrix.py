@@ -40,6 +40,19 @@ def test_protocol_does_not_overclaim_deep_cavity_validation():
     assert "SIGUSR1" in text
 
 
+def test_re1000_ar2p2_job_uses_continuation_and_forwards_checkpoint_signal():
+    runner = (ROOT / "qa" / "run_week13_rectangular_pinn.py").read_text(encoding="utf-8")
+    job = (ROOT / "qa" / "unity_week13_pinn_re1000_ar2p2.sbatch").read_text(encoding="utf-8")
+    assert "--init-checkpoint" in runner
+    assert "optimizer and collocation points start fresh" in runner
+    assert "#SBATCH --partition=gpu-preempt" in job
+    assert "#SBATCH --mail-type=NONE" in job
+    assert "for re in 100 500 1000" in job
+    assert "--aspect-ratio 2.2" in job
+    assert "kill -USR1" in job
+    assert "--resume" in job
+
+
 def test_harvester_excludes_checkpoints_and_normalizes_legacy_labels():
     text = (ROOT / "qa" / "harvest_week13_results.py").read_text(encoding="utf-8")
     assert "checkpoint.pt" not in text
