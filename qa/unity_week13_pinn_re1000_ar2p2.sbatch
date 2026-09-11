@@ -77,7 +77,9 @@ for re in 100 500 1000; do
     fi
     exit "$status"
   fi
-  previous="$FLOWML_PINN_OUTPUT/re${re}-ar2p2-seed1234/checkpoint.pt"
+  # Initialize the next Reynolds number from the fixed-holdout-selected model,
+  # not the terminal quasi-Newton iterate.
+  previous="$FLOWML_PINN_OUTPUT/re${re}-ar2p2-seed1234/selected-model.pt"
 done
 
 "$FLOWML_PINN_PYTHON" -m pip freeze > "$FLOWML_PINN_OUTPUT/environment-lock.txt"

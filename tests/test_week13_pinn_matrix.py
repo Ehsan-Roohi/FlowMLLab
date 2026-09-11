@@ -51,6 +51,9 @@ def test_re1000_ar2p2_job_uses_continuation_and_forwards_checkpoint_signal():
     assert "--aspect-ratio 2.2" in job
     assert "kill -USR1" in job
     assert "--resume" in job
+    assert "selected-model.pt" in job
+    assert "validation_score" in runner
+    assert "terminal_independent_residual" in runner
 
 
 def test_harvester_excludes_checkpoints_and_normalizes_legacy_labels():

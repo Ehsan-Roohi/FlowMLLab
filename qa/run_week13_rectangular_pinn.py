@@ -124,6 +124,30 @@ def append_history(path, row):
         handle.write(json.dumps(row) + "\n")
 
 
+def validation_score(row):
+    """Fixed-holdout score used only to select the retained model."""
+    return row["heldout_momentum_rms"] + 0.25 * row["top_corner_momentum_rms"]
+
+
+def update_selected_model(path, model, row, config):
+    previous = None
+    if path.is_file():
+        previous = torch.load(path, map_location="cpu", weights_only=False)
+    score = validation_score(row)
+    if previous is not None and score >= previous["selection_score"]:
+        return False
+    payload = {
+        "model": {key: value.detach().cpu() for key, value in model.state_dict().items()},
+        "selection_row": row,
+        "selection_score": score,
+        "config": config,
+    }
+    temporary = path.with_suffix(".tmp")
+    torch.save(payload, temporary)
+    os.replace(temporary, path)
+    return True
+
+
 def residual_summary(module, model, points, reynolds, aspect, masked):
     rx, ry, div = residuals(module, model, points, reynolds, aspect, masked=masked)
     corner = (points[:, 1] > .9) & ((points[:, 0] < .1) | (points[:, 0] > .9))
@@ -136,13 +160,15 @@ def residual_summary(module, model, points, reynolds, aspect, masked):
 def record_history(path, phase, phase_step, global_step, l1, l2, module, model,
                    test_points, reynolds, aspect):
     test = residual_summary(module, model, test_points, reynolds, aspect, masked=False)
-    append_history(path, {"phase": phase, "phase_step": phase_step,
+    row = {"phase": phase, "phase_step": phase_step,
         "global_step": global_step, "train_rx_mse": float(l1.detach().cpu()),
         "train_ry_mse": float(l2.detach().cpu()),
         "heldout_momentum_rms": float(np.hypot(test["momentum_x_rms"],
                                                 test["momentum_y_rms"])),
         "heldout_continuity_rms": test["continuity_rms"],
-        "top_corner_momentum_rms": test["top_corner_momentum_rms"]})
+        "top_corner_momentum_rms": test["top_corner_momentum_rms"]}
+    append_history(path, row)
+    return row
 
 
 def train(module, model, output, reynolds, aspect, points_n, adam_steps, ssb_steps,
@@ -151,6 +177,7 @@ def train(module, model, output, reynolds, aspect, points_n, adam_steps, ssb_ste
               "collocation_points": points_n, "adam_steps": adam_steps,
               "ssb_steps": ssb_steps, "seed": module.SEED, **network_config}
     checkpoint = output / "checkpoint.pt"
+    selected_model = output / "selected-model.pt"
     history = output / "optimizer-history.jsonl"
     train_points = sample(module, points_n, module.SEED + 11)
     test_points = sample(module, min(4096, max(1024, points_n // 4)), module.SEED + 29)
@@ -202,8 +229,9 @@ def train(module, model, output, reynolds, aspect, points_n, adam_steps, ssb_ste
             loss.backward(); optimizer.step()
             adam_done = step + 1
             if adam_done == 1 or adam_done % 100 == 0 or adam_done == adam_steps:
-                record_history(history, "Adam", adam_done, adam_done, l1, l2,
-                               module, model, test_points, reynolds, aspect)
+                row = record_history(history, "Adam", adam_done, adam_done, l1, l2,
+                                     module, model, test_points, reynolds, aspect)
+                update_selected_model(selected_model, model, row, config)
             if adam_done % checkpoint_every == 0 or adam_done == adam_steps or STOP_REQUESTED:
                 next_phase = "ssbroyden2" if adam_done == adam_steps else "adam"
                 save_checkpoint(checkpoint, model, next_phase, adam_done, 0,
@@ -235,8 +263,9 @@ def train(module, model, output, reynolds, aspect, points_n, adam_steps, ssb_ste
         l1, l2 = mse_pair(module, model, train_points, reynolds, aspect)
         ssb_done = step + 1
         if ssb_done == 1 or ssb_done % 25 == 0 or ssb_done == ssb_steps:
-            record_history(history, "SSBroyden2", ssb_done, adam_steps + ssb_done,
-                           l1, l2, module, model, test_points, reynolds, aspect)
+            row = record_history(history, "SSBroyden2", ssb_done, adam_steps + ssb_done,
+                                 l1, l2, module, model, test_points, reynolds, aspect)
+            update_selected_model(selected_model, model, row, config)
         if ssb_done % checkpoint_every == 0 or ssb_done == ssb_steps or STOP_REQUESTED:
             save_checkpoint(checkpoint, model, "ssbroyden2", adam_done, ssb_done,
                             optimizer, train_points, config)
@@ -404,11 +433,20 @@ def main():
                      args.init_checkpoint.resolve() if args.init_checkpoint else None)
     if not complete:
         return 99
+    terminal_residual = independent_audit(module, model, args.re, args.aspect_ratio)
+    selected = torch.load("selected-model.pt", map_location="cpu", weights_only=False)
+    model.load_state_dict(selected["model"])
     audit = {"claim_status": "residual-audited-no-field-reference", "reynolds_number": args.re,
              "aspect_ratio_depth_over_width": args.aspect_ratio,
              "optimizers": ["Adam", "SSBroyden2"], "adam_steps": args.adam_steps,
              "ssbroyden2_steps": args.ssb_steps, "collocation_points": args.points,
-             "network": network_config,
+              "network": network_config,
+              "checkpoint_selection": {
+                  "criterion": "heldout_momentum_rms + 0.25 * top_corner_momentum_rms",
+                  "selected_row": selected["selection_row"],
+                  "selected_score": selected["selection_score"],
+                  "terminal_independent_residual": terminal_residual,
+              },
              "initialization_checkpoint": (str(args.init_checkpoint.resolve())
                                              if args.init_checkpoint else None),
              "precision": str(next(model.parameters()).dtype),
