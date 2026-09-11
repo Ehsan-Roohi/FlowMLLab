@@ -327,6 +327,7 @@ def main():
     parser.add_argument("--points", type=int, default=16384)
     parser.add_argument("--adam-steps", type=int, default=1000)
     parser.add_argument("--ssb-steps", type=int, default=1000)
+    parser.add_argument("--seed", type=int, default=1234)
     parser.add_argument("--checkpoint-every", type=int, default=100)
     parser.add_argument("--resume", action="store_true")
     args = parser.parse_args()
@@ -337,7 +338,11 @@ def main():
     args.output.mkdir(parents=True, exist_ok=args.resume)
     os.chdir(args.output)
     module, digest = load_upstream(args.source.resolve())
-    torch.manual_seed(module.SEED); np.random.seed(module.SEED)
+    # The upstream implementation stores its seed at module scope.  Override it
+    # explicitly so independent runs have disjoint, recorded initializations and
+    # collocation sets while preserving the pinned architecture/optimizer.
+    module.SEED = args.seed
+    torch.manual_seed(args.seed); np.random.seed(args.seed)
     model = module.PINN().to(module.device)
     signal.signal(signal.SIGUSR1, request_checkpoint)
     signal.signal(signal.SIGTERM, request_checkpoint)
