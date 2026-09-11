@@ -18,11 +18,39 @@ import matplotlib.pyplot as plt
 import numpy as np
 from scipy.interpolate import RegularGridInterpolator
 import torch
+from torch import nn
 
 from run_week42_deepplasma import UPSTREAM_COMMIT, load_upstream
 
 
 STOP_REQUESTED = False
+
+
+class ConfigurablePINN(nn.Module):
+    """DeepPlasma-style MLP with an explicitly recorded capacity/activation."""
+
+    def __init__(self, hidden_width=50, hidden_layers=3, activation="tanh"):
+        super().__init__()
+        activation_cls = {"tanh": nn.Tanh, "silu": nn.SiLU}[activation]
+        widths = [2] + [hidden_width] * hidden_layers + [2]
+        blocks = []
+        for in_features, out_features in zip(widths[:-2], widths[1:-1]):
+            blocks.extend((nn.Linear(in_features, out_features), activation_cls()))
+        blocks.append(nn.Linear(widths[-2], widths[-1]))
+        self.network = nn.Sequential(*blocks)
+        for layer in self.network:
+            if isinstance(layer, nn.Linear):
+                nn.init.xavier_normal_(layer.weight)
+                nn.init.zeros_(layer.bias)
+
+    def forward(self, inputs):
+        return self.network(inputs)
+
+
+def build_model(module, hidden_width, hidden_layers, activation):
+    if hidden_width == 50 and hidden_layers == 3 and activation == "tanh":
+        return module.PINN().to(module.device)
+    return ConfigurablePINN(hidden_width, hidden_layers, activation).to(module.device)
 
 
 def request_checkpoint(_signum, _frame):
@@ -118,10 +146,10 @@ def record_history(path, phase, phase_step, global_step, l1, l2, module, model,
 
 
 def train(module, model, output, reynolds, aspect, points_n, adam_steps, ssb_steps,
-          checkpoint_every, resume):
+          checkpoint_every, resume, network_config):
     config = {"reynolds_number": reynolds, "aspect_ratio": aspect,
               "collocation_points": points_n, "adam_steps": adam_steps,
-              "ssb_steps": ssb_steps, "seed": module.SEED}
+              "ssb_steps": ssb_steps, "seed": module.SEED, **network_config}
     checkpoint = output / "checkpoint.pt"
     history = output / "optimizer-history.jsonl"
     train_points = sample(module, points_n, module.SEED + 11)
@@ -131,7 +159,8 @@ def train(module, model, output, reynolds, aspect, points_n, adam_steps, ssb_ste
     saved = None
     if resume and checkpoint.is_file():
         saved = torch.load(checkpoint, map_location="cpu", weights_only=False)
-        immutable = ("reynolds_number", "aspect_ratio", "collocation_points", "seed")
+        immutable = ("reynolds_number", "aspect_ratio", "collocation_points", "seed",
+                     "hidden_width", "hidden_layers", "activation")
         if any(saved["config"].get(key) != config[key] for key in immutable):
             raise RuntimeError("Refusing an incompatible checkpoint")
         if adam_steps < saved["adam_done"] or ssb_steps < saved["ssb_done"]:
@@ -329,6 +358,9 @@ def main():
     parser.add_argument("--ssb-steps", type=int, default=1000)
     parser.add_argument("--seed", type=int, default=1234)
     parser.add_argument("--checkpoint-every", type=int, default=100)
+    parser.add_argument("--hidden-width", type=int, default=50)
+    parser.add_argument("--hidden-layers", type=int, default=3)
+    parser.add_argument("--activation", choices=("tanh", "silu"), default="tanh")
     parser.add_argument("--resume", action="store_true")
     args = parser.parse_args()
     if not torch.cuda.is_available():
@@ -343,18 +375,23 @@ def main():
     # collocation sets while preserving the pinned architecture/optimizer.
     module.SEED = args.seed
     torch.manual_seed(args.seed); np.random.seed(args.seed)
-    model = module.PINN().to(module.device)
+    network_config = {"hidden_width": args.hidden_width,
+                      "hidden_layers": args.hidden_layers,
+                      "activation": args.activation}
+    model = build_model(module, **network_config)
     signal.signal(signal.SIGUSR1, request_checkpoint)
     signal.signal(signal.SIGTERM, request_checkpoint)
     started = time.time()
     complete = train(module, model, Path.cwd(), args.re, args.aspect_ratio, args.points,
-                     args.adam_steps, args.ssb_steps, args.checkpoint_every, args.resume)
+                     args.adam_steps, args.ssb_steps, args.checkpoint_every, args.resume,
+                     network_config)
     if not complete:
         return 99
     audit = {"claim_status": "residual-audited-no-field-reference", "reynolds_number": args.re,
              "aspect_ratio_depth_over_width": args.aspect_ratio,
              "optimizers": ["Adam", "SSBroyden2"], "adam_steps": args.adam_steps,
              "ssbroyden2_steps": args.ssb_steps, "collocation_points": args.points,
+             "network": network_config,
              "precision": str(next(model.parameters()).dtype),
              "gpu": torch.cuda.get_device_name(0), "elapsed_seconds": time.time() - started,
              "upstream_commit": UPSTREAM_COMMIT,

@@ -15,7 +15,7 @@ import numpy as np
 import torch
 
 from run_week42_deepplasma import load_upstream
-from run_week13_rectangular_pinn import fields
+from run_week13_rectangular_pinn import build_model, fields
 
 
 def main() -> int:
@@ -38,7 +38,10 @@ def main() -> int:
         raise ValueError("Checkpoint and reference cases do not match")
 
     module, source_sha = load_upstream(a.source.resolve())
-    model = module.PINN().to(module.device)
+    network = {"hidden_width": cfg.get("hidden_width", 50),
+               "hidden_layers": cfg.get("hidden_layers", 3),
+               "activation": cfg.get("activation", "tanh")}
+    model = build_model(module, **network)
     model.load_state_dict(saved["model"])
     model.eval()
 
