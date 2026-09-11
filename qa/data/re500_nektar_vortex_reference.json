@@ -1,0 +1,11 @@
+{
+  "case": {"Re": 500, "depth_over_width": 5, "time": 219.99999999652567},
+  "source_directory": "/project/pi_roohie_umass_edu/FlowMLLab_nektar_post200_20260910/re500-d5-p6-n16x80/chunk-0219/attempt-00",
+  "vortices": [
+    {"vortex": 1, "computed": [0.5444123920631709, 4.600177159334479, -0.11587731946287565, 2.255666238225065]},
+    {"vortex": 2, "computed": [0.3927490234662158, 3.8526957795024193, 0.010487877848317558, -0.38601245843984955]},
+    {"vortex": 3, "computed": [0.48690716441520965, 2.53615591460576, -0.00004005015555450082, 0.0014469352501891909]},
+    {"vortex": 4, "computed": [0.499989422171168, 1.139155074034969, 1.117701582587194e-7, -4.0303232445228965e-6]}
+  ],
+  "provenance": "Values copied without rounding from output/re500_reference_comparison_20260910.json; Nektar++ accepted field hash ea2ca5a9f01bf11a1ef5ff527f25fb6ba784a3f5c7eaf2d46f24dd3d955372cb."
+}
