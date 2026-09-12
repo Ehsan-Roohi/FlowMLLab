@@ -16,6 +16,10 @@
 
 set -euo pipefail
 module load uri/main OpenFOAM/v2406-foss-2023a
+# OpenFOAM's upstream bashrc probes unset shell variables during setup.
+set +u
+source "${FOAM_BASH:?}"
+set -u
 : "${FLOWML_CFD_RUNS:?Set an absolute output directory}"
 cd "${SLURM_SUBMIT_DIR:?}"
 export OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1
