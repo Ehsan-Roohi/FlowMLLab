@@ -60,7 +60,9 @@ run_stage() {
     break
   done
   child_pid=""
-  set -e
+  # Leave errexit disabled until the caller has captured this return status.
+  # Re-enabling it here would terminate the batch shell on return 99 before
+  # the outer block can request a Slurm requeue.
   return "$status"
 }
 
