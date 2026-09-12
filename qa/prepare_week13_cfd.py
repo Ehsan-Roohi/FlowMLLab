@@ -9,7 +9,9 @@ from pathlib import Path
 
 CASES = [(r, 1.0) for r in (100, 400, 1000)] + [
     (1000, d) for d in (1.1, 1.15, 1.2, 1.25, 2.2, 2.3, 2.4, 3.2)
-] + [(r, 5.0) for r in (100, 500, 1000)] + [(r, 7.0) for r in (500, 1000)]
+] + [(r, 5.0) for r in (100, 500, 1000)] + [(r, 7.0) for r in (500, 1000)] + [
+    (500, 2.2)
+]
 GRIDS = (80, 120, 180)
 
 
@@ -89,7 +91,7 @@ def main():
     ap.add_argument("--sensitivity", action="store_true")
     args = ap.parse_args()
     if not 0 <= args.task < len(CASES) * len(GRIDS):
-        ap.error("task must be 0..47")
+        ap.error(f"task must be 0..{len(CASES) * len(GRIDS) - 1}")
     re, depth = CASES[args.task // len(GRIDS)]
     nx = 20 if args.smoke else GRIDS[args.task % len(GRIDS)]
     iterations = 20 if args.smoke else 20000

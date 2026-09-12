@@ -61,3 +61,15 @@ def test_harvester_excludes_checkpoints_and_normalizes_legacy_labels():
     assert "checkpoint.pt" not in text
     assert "residual-audited-no-field-reference" in text
     assert "field-qualified-square-case" in text
+
+
+def test_re500_ar2p2_matched_cfd_and_robust_pinn_jobs():
+    prep = (ROOT / "qa" / "prepare_week13_cfd.py").read_text(encoding="utf-8")
+    cfd = (ROOT / "qa" / "unity_week13_cfd_re500_ar2p2.sbatch").read_text(encoding="utf-8")
+    pinn = (ROOT / "qa" / "unity_week13_pinn_re500_ar2p2_v2.sbatch").read_text(encoding="utf-8")
+    runner = (ROOT / "qa" / "run_week13_rectangular_pinn.py").read_text(encoding="utf-8")
+    assert "(500, 2.2)" in prep
+    assert "#SBATCH --partition=cpu-preempt" in cfd and "48 +" in cfd
+    assert "#SBATCH --partition=gpu-preempt" in pinn and "65536" in pinn
+    assert "validation_panels" in runner
+    assert "max_three_seed_panels_plus_0.25_corner_v2" in runner
