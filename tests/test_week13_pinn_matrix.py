@@ -70,6 +70,6 @@ def test_re500_ar2p2_matched_cfd_and_robust_pinn_jobs():
     runner = (ROOT / "qa" / "run_week13_rectangular_pinn.py").read_text(encoding="utf-8")
     assert "(500, 2.2)" in prep
     assert "#SBATCH --partition=cpu-preempt" in cfd and "48 +" in cfd
-    assert "#SBATCH --partition=gpu-preempt" in pinn and "65536" in pinn
+    assert "#SBATCH --partition=gpu-preempt" in pinn and "32768" in pinn
     assert "validation_panels" in runner
     assert "max_three_seed_panels_plus_0.25_corner_v2" in runner

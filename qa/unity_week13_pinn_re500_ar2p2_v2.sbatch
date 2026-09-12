@@ -28,7 +28,7 @@ trap '[[ -n "$child" ]] && kill -USR1 "$child" 2>/dev/null || true' USR1 TERM
 set +e
 "$FLOWML_PINN_PYTHON" qa/run_week13_rectangular_pinn.py \
   --source "$DEEPPLASMA_LDC" --output "$run_root" --re 500 --aspect-ratio 2.2 \
-  --seed 1234 --points 65536 --hidden-width 80 --hidden-layers 4 --activation tanh \
+  --seed 1234 --points 32768 --hidden-width 64 --hidden-layers 4 --activation tanh \
   --adam-steps 10000 --ssb-steps 20000 --checkpoint-every 100 --resume &
 child=$!; wait "$child"; status=$?
 set -e
