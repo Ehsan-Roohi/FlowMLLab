@@ -115,6 +115,7 @@ def run(args):
         initial = json.loads(Path(initial_path).read_text())
         for key, expected in (("re", args.re), ("nx", args.nx), ("ny", args.ny),
                               ("order", args.order), ("dt", args.dt),
+                              ("depth", args.depth),
                               ("corner_convention", args.corner_convention)):
             if initial.get(key) != expected:
                 raise ValueError(f"Initial-state mismatch: {key}")
@@ -132,7 +133,7 @@ def run(args):
     case.mkdir(parents=True, exist_ok=True)
     config = {
         "re": args.re,
-        "depth_over_width": 5,
+        "depth_over_width": args.depth,
         "order": args.order,
         "dt": args.dt,
         "chunk_time": 1.0,
@@ -200,6 +201,7 @@ def run(args):
             attempt, re=args.re, order=args.order, nx=args.nx, ny=args.ny,
             restart=str(prior) if prior else None, dt=args.dt, steps=steps,
             check_steps=steps, corner_convention=args.corner_convention,
+            depth=args.depth,
             purpose="restartable_reynolds_matrix_not_yet_benchmark_certified",
         )
         try:
@@ -277,5 +279,6 @@ if __name__ == "__main__":
     parser.add_argument("--end-time", type=float, default=80)
     parser.add_argument("--nx", type=int, default=16)
     parser.add_argument("--ny", type=int, default=80)
+    parser.add_argument("--depth", type=float, default=5.0)
     parser.add_argument("--seconds", type=float, default=6600)
     raise SystemExit(run(parser.parse_args()))

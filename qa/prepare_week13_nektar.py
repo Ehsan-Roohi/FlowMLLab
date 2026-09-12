@@ -12,8 +12,8 @@ import xml.etree.ElementTree as ET
 
 def make_case(output, re=100, order=4, nx=8, ny=40, restart=None, *,
               dt=0.0005, steps=100, check_steps=50, purpose='qualification_only',
-              corner_convention='legacy_conflicting'):
-    if re <= 0 or nx < 1 or ny < 1 or dt <= 0 or steps < 1 or check_steps < 1:
+              corner_convention='legacy_conflicting', depth=5.0):
+    if re <= 0 or depth <= 0 or nx < 1 or ny < 1 or dt <= 0 or steps < 1 or check_steps < 1:
         raise ValueError('Positive Reynolds number, mesh, time step and step counts required')
     if corner_convention not in ('legacy_conflicting', 'stationary_endpoints'):
         raise ValueError('Unknown corner convention')
@@ -29,7 +29,7 @@ def make_case(output, re=100, order=4, nx=8, ny=40, restart=None, *,
     verts = ET.SubElement(geo, 'VERTEX')
     for j in range(ny+1):
         for i in range(nx+1):
-            ET.SubElement(verts, 'V', ID=str(j*(nx+1)+i)).text = f'{i/nx:.17g} {5*j/ny:.17g} 0'
+            ET.SubElement(verts, 'V', ID=str(j*(nx+1)+i)).text = f'{i/nx:.17g} {depth*j/ny:.17g} 0'
     edges = ET.SubElement(geo, 'EDGE')
     lookup = {}
     def edge(a, b):
@@ -88,7 +88,7 @@ def make_case(output, re=100, order=4, nx=8, ny=40, restart=None, *,
         for v in ('u','v','p'): ET.SubElement(initial,'E',VAR=v,VALUE='0')
     ET.indent(root)
     ET.ElementTree(root).write(output/'cavity.xml',encoding='utf-8',xml_declaration=True)
-    (output/'spec.json').write_text(json.dumps(dict(Re=re,depth=5,width=1,order=order,
+    (output/'spec.json').write_text(json.dumps(dict(Re=re,depth=depth,width=1,order=order,
         nx=nx,ny=ny,dt=dt,steps=steps,restart=restart,status=purpose,
         corner_convention=corner_convention,lid_expression=lid_expression),indent=2)+'\n')
 
@@ -104,10 +104,11 @@ if __name__=='__main__':
     p.add_argument('--check-steps',type=int,default=50)
     p.add_argument('--nx',type=int,default=8)
     p.add_argument('--ny',type=int,default=40)
+    p.add_argument('--depth',type=float,default=5.0)
     p.add_argument('--purpose',default='qualification_only')
     p.add_argument('--corner-convention',choices=['legacy_conflicting','stationary_endpoints'],
                    default='legacy_conflicting')
     a=p.parse_args()
     make_case(a.output,a.re,a.order,a.nx,a.ny,restart=a.restart,
               dt=a.dt,steps=a.steps,check_steps=a.check_steps,purpose=a.purpose,
-              corner_convention=a.corner_convention)
+              corner_convention=a.corner_convention,depth=a.depth)
