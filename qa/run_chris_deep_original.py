@@ -20,6 +20,21 @@ SOURCE_HASH = "b905a11536656780324a75111c5a1ec9a3aa135c8f49296e929528216d005cd2"
 OPT_HASH = "d680a8ce4b1242d0630a3754062ead04b83e05bb6d5acaf43fd2c6e5ebfddf50"
 
 
+def restart_safe_saveplot(saveplot):
+    """Skip author export calls before any training in a restarted process.
+
+    A skipped phase has no in-memory loss rows. DeepXDE cannot concatenate
+    that empty history; exporting it would also overwrite retained evidence.
+    Nonempty histories still use the unmodified exporter and propagate errors.
+    """
+    def save(history, train_state, *args, **kwargs):
+        if len(history.steps) == 0:
+            print("RESTART: skipping empty history export before resumed training", flush=True)
+            return None
+        return saveplot(history, train_state, *args, **kwargs)
+    return save
+
+
 def checked_extract(archive, target):
     names = {"CavityTrapREDepthSSB20.py", "_optimize.py", "optimizers.txt", "scipy_optimizer.txt"}
     target.mkdir(parents=True, exist_ok=True)
@@ -172,6 +187,7 @@ def main():
         return result
 
     dde.Model.train = train
+    dde.saveplot = restart_safe_saveplot(dde.saveplot)
     Path("provenance.json").write_text(json.dumps(dict(source_sha256=SOURCE_HASH,
         optimizer_sha256=OPT_HASH, parameters=expected, protocol="original source with explicit SSB dispatch and checkpoint wrapper"), indent=2))
     original["main"]()
