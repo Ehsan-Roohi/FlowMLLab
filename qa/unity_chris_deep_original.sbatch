@@ -20,6 +20,18 @@ print(':'.join(p for b in site.getsitepackages() for p in glob.glob(b + '/nvidia
 PY
 )
 export LD_LIBRARY_PATH="$cuda_libs${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
+cuda_data=$("$python" - <<'PY'
+import pathlib, site
+for base in site.getsitepackages():
+    p = pathlib.Path(base) / 'nvidia/cuda_nvcc'
+    if (p / 'nvvm/libdevice/libdevice.10.bc').is_file():
+        print(p)
+        break
+else:
+    raise SystemExit('CUDA libdevice missing; install TensorFlow CUDA extra')
+PY
+)
+export XLA_FLAGS="--xla_gpu_cuda_data_dir=$cuda_data"
 child=""
 trap '[[ -n "$child" ]] && kill -USR1 "$child" 2>/dev/null || true' USR1 TERM
 set +e
