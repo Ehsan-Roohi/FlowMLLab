@@ -21,7 +21,17 @@ if [[ ! -x "$root/venv/bin/python" ]]; then
 fi
 export DDE_BACKEND=tensorflow.compat.v1 MPLBACKEND=Agg
 export OMP_NUM_THREADS=4 PYTHONUNBUFFERED=1
-"$root/venv/bin/python" -m pip install 'numpy==1.26.4' 'scipy==1.13.1' 'deepxde==1.11.0'
+"$root/venv/bin/python" -m pip install 'numpy==1.26.4' 'scipy==1.13.1' 'deepxde==1.11.0' 'tensorflow[and-cuda]==2.15.1'
+# Make the pip-installed CUDA shared libraries visible before importing TF.
+cuda_libs=$("$root/venv/bin/python" - <<'PY'
+import glob
+import site
+print(':'.join(path for base in site.getsitepackages()
+               for path in glob.glob(base + '/nvidia/*/lib')))
+PY
+)
+export LD_LIBRARY_PATH="$cuda_libs${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
+nvidia-smi
 "$root/venv/bin/python" - <<'PY'
 import json
 import os
