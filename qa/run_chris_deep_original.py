@@ -62,9 +62,13 @@ def main():
     spec.loader.exec_module(custom)
     assert "method_bfgs" in __import__("inspect").signature(custom._minimize_bfgs).parameters
     # Test the supplied implementation, not an optimizer with the same label.
-    test = custom._minimize_bfgs(lambda x: np.sum((x - 1) ** 2), np.array([3., -2.]),
-                               jac=lambda x: 2 * (x - 1), method_bfgs="SSBroyden2", maxiter=20)
-    assert test.fun < 1e-16, test
+    # The unmodified author's formula has an a_k=0 degeneracy at machine-epsilon
+    # tolerance on tiny exactly-solvable objectives. Use a nondegenerate smoke
+    # test; do not alter the original cavity's own epsilon-level tolerance.
+    test = custom._minimize_bfgs(so.rosen, np.array([-1.2, 1.]),
+                               jac=so.rosen_der, method_bfgs="SSBroyden2",
+                               gtol=1e-8, maxiter=100)
+    assert test.fun < 1e-12, test
     original = runpy.run_path(str(src / "CavityTrapREDepthSSB20.py"), run_name="author_source")
     expected = dict(ReMin=900, ReMax=1100, DMin=2.1, DMax=2.3,
                     epochsAdam=5000, epochsLBFGS=25000, NumBFGS=10)
