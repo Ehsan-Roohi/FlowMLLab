@@ -17,7 +17,7 @@ from check_week13_nektar_vtu import read_vtu
 from audit_week13_cfd import REF, extrema
 
 
-def structured(pieces, decimals=12):
+def structured(pieces, decimals=12, depth=5.0):
     points = np.concatenate([p[0] for p in pieces])
     if not np.allclose(points[:, 2], 0, atol=1e-12, rtol=0):
         raise ValueError('Only planar z=0 exports supported')
@@ -26,8 +26,10 @@ def structured(pieces, decimals=12):
     x, y = np.unique(unique[:, 0]), np.unique(unique[:, 1])
     if len(unique) != len(x)*len(y) or min(len(x), len(y)) < 5:
         raise ValueError('Export is not a complete tensor-product grid; no silent interpolation')
-    if not np.allclose([x[0], x[-1], y[0], y[-1]], [0, 1, 0, 5], atol=1e-10, rtol=0):
-        raise ValueError('Expected width=1 depth=5 boundary-inclusive export')
+    if not np.isfinite(depth) or depth <= 0:
+        raise ValueError('Depth must be positive and finite')
+    if not np.allclose([x[0], x[-1], y[0], y[-1]], [0, 1, 0, depth], atol=1e-10, rtol=0):
+        raise ValueError(f'Expected width=1 depth={depth} boundary-inclusive export')
     ix, iy = np.searchsorted(x, unique[:, 0]), np.searchsorted(y, unique[:, 1])
     fields, jumps = {}, {}
     for name in ('u', 'v', 'p'):
@@ -55,7 +57,7 @@ def integrate_paths(x, y, u, v):
     return horizontal, vertical
 
 
-def diagnostics(x, y, fields):
+def diagnostics(x, y, fields, reynolds=100, depth=5.0):
     u, v = fields['u'], fields['v']
     horizontal, vertical = integrate_paths(x, y, u, v)
     disagreement = horizontal-vertical
@@ -67,7 +69,7 @@ def diagnostics(x, y, fields):
     interp_disagreement = RegularGridInterpolator((y, x), disagreement)
     interp_vertical = RegularGridInterpolator((y, x), vertical)
     comparisons = []
-    for index, row in enumerate(REF[(100, 5)]):
+    for index, row in enumerate(REF.get((reynolds, depth), [])):
         rx, ry, rp, rw = row
         candidates = [q for q in vortices if q['psi']*rp > 0 and abs(q['y']-ry) < .45]
         record = dict(vortex=index+1, reference=row, status='not_resolved_in_reference_neighborhood')
@@ -102,12 +104,12 @@ def diagnostics(x, y, fields):
     return report
 
 
-def audit(path):
-    x, y, fields, continuity = structured(read_vtu(path))
-    result = diagnostics(x, y, fields)
+def audit(path, reynolds=100, depth=5.0):
+    x, y, fields, continuity = structured(read_vtu(path), depth=depth)
+    result = diagnostics(x, y, fields, reynolds, depth)
     result.update(field_sha256=hashlib.sha256(Path(path).read_bytes()).hexdigest(),
-        Re=100, depth_over_width=5, nx_points=len(x), ny_points=len(y),
-        continuity=continuity, reference='Cheng & Hung 2006 Table 2; DOI 10.1016/j.compfluid.2005.08.006',
+        Re=reynolds, depth_over_width=depth, nx_points=len(x), ny_points=len(y),
+        continuity=continuity, reference=('Cheng & Hung 2006 Table 2; DOI 10.1016/j.compfluid.2005.08.006' if (reynolds, depth) in REF else None),
         limitations=['Transient time and steady convergence must be checked separately.',
             'Trapezoidal path disagreement mixes export/integration error and field inconsistency.',
             'Duplicate-coordinate averaging is not proof of continuity; inspect reported jumps.',
@@ -146,7 +148,9 @@ if __name__ == '__main__':
     p = argparse.ArgumentParser(description=__doc__)
     p.add_argument('vtu', nargs='?')
     p.add_argument('--self-test', action='store_true')
+    p.add_argument('--reynolds', type=float, default=100)
+    p.add_argument('--depth', type=float, default=5.0)
     a = p.parse_args()
     if not a.self_test and not a.vtu:
         p.error('VTU path or --self-test required')
-    print(json.dumps(self_test() if a.self_test else audit(a.vtu), indent=2, allow_nan=False))
+    print(json.dumps(self_test() if a.self_test else audit(a.vtu, a.reynolds, a.depth), indent=2, allow_nan=False))
