@@ -18,6 +18,7 @@ import zipfile
 
 SOURCE_HASH = "b905a11536656780324a75111c5a1ec9a3aa135c8f49296e929528216d005cd2"
 OPT_HASH = "d680a8ce4b1242d0630a3754062ead04b83e05bb6d5acaf43fd2c6e5ebfddf50"
+DEEP_CASES = [(100, 5), (500, 5), (1000, 5), (500, 7), (1000, 7)]
 
 
 def restart_safe_saveplot(saveplot):
@@ -57,6 +58,7 @@ def main():
     p.add_argument("--archive", type=Path, required=True)
     p.add_argument("--output", type=Path, required=True)
     p.add_argument("--preflight", action="store_true")
+    p.add_argument("--case-index", type=int, choices=range(5))
     args = p.parse_args()
     archive = args.archive.resolve()
     out = args.output.resolve()
@@ -89,10 +91,21 @@ def main():
                     epochsAdam=5000, epochsLBFGS=25000, NumBFGS=10)
     for k, v in expected.items():
         assert original[k] == v, (k, original[k])
+    if args.case_index is not None:
+        re, depth = DEEP_CASES[args.case_index]
+        expected.update(ReMin=.9*re, ReMax=1.1*re, DMin=depth-.1, DMax=depth+.1)
+        # run_path may return a copy; functions resolve the defining globals.
+        original['main'].__globals__.update(expected)
+        for function in ('main', 'pde', 'output_transform_cavity_flow'):
+            assert all(original[function].__globals__[k] == v for k, v in expected.items())
+    config_path = out / 'case-parameters.json'
+    if config_path.exists() and json.loads(config_path.read_text()) != expected:
+        raise ValueError('Refusing to reuse checkpoints with different physical parameters')
+    config_path.write_text(json.dumps(expected, indent=2))
     # Fail early if the installed geometry API cannot represent the original box.
     box = dde.geometry.Rectangle([0] * 5, [1] * 5)
     assert box.random_points(8).shape == (8, 5)
-    print("PREFLIGHT PASS: original deep box; GPU; float64; actual SSBroyden2", flush=True)
+    print("PREFLIGHT PASS: GPU; float64; actual SSBroyden2; parameters", expected, flush=True)
     if args.preflight:
         return
     os.chdir(out)
@@ -189,7 +202,7 @@ def main():
     dde.Model.train = train
     dde.saveplot = restart_safe_saveplot(dde.saveplot)
     Path("provenance.json").write_text(json.dumps(dict(source_sha256=SOURCE_HASH,
-        optimizer_sha256=OPT_HASH, parameters=expected, protocol="original source with explicit SSB dispatch and checkpoint wrapper"), indent=2))
+        optimizer_sha256=OPT_HASH, parameters=expected, protocol="author source with explicit SSB dispatch and checkpoint wrapper; declared parameter-box adaptation" if args.case_index is not None else "original source with explicit SSB dispatch and checkpoint wrapper"), indent=2))
     original["main"]()
 
 

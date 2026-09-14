@@ -33,9 +33,15 @@ PY
 )
 export XLA_FLAGS="--xla_gpu_cuda_data_dir=$cuda_data"
 child=""
+run_output="${CHRIS_RUN_OUTPUT:-$CHRIS_ENV_ROOT/training}"
+extra=()
+if [[ -n "${CHRIS_DEEP_MATRIX:-}" ]]; then
+  extra=(--case-index "${SLURM_ARRAY_TASK_ID:?}")
+  run_output="$run_output/case-${SLURM_ARRAY_TASK_ID}"
+fi
 trap '[[ -n "$child" ]] && kill -USR1 "$child" 2>/dev/null || true' USR1 TERM
 set +e
-"$python" qa/run_chris_deep_original.py --archive "$CHRIS_ENV_ROOT/chris-deep-original-inputs.zip" --output "$CHRIS_ENV_ROOT/training" &
+"$python" qa/run_chris_deep_original.py --archive "$CHRIS_ENV_ROOT/chris-deep-original-inputs.zip" --output "$run_output" "${extra[@]}" &
 child=$!
 wait "$child"
 status=$?
