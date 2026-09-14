@@ -167,7 +167,7 @@ def prepare(args, source, marker, source_spec, work, deadline):
     cfl = [float(v) for v in re.findall(r'CFL\s*(?:=|:)\s*([0-9.eE+-]+)', log)]
     if not cfl or not all(math.isfinite(v) and v < .8 for v in cfl):
         raise ValueError(f'Missing/excessive smoke CFL: {cfl}')
-    state = dict(re=args.re, nx=args.nx, ny=args.ny, order=6, dt=.00025,
+    state = dict(re=args.re, nx=args.nx, ny=args.ny, order=6, dt=.00025, depth=5.0,
                  corner_convention='stationary_endpoints', time=marker['time'],
                  field=str(mapped), field_sha256=sha(mapped),
                  source=str(source), source_field_sha256=marker['field_sha256'],
@@ -214,7 +214,7 @@ def main():
         if remaining < 240:
             return 75
         return run(SimpleNamespace(output=str(args.output / 'run'), image=args.image,
-                    gate=args.gate, commit=args.commit, re=args.re, order=6,
+                    gate=args.gate, commit=args.commit, re=args.re, order=6, depth=5.0,
                     corner_convention='stationary_endpoints', dt=.00025,
                     nx=args.nx, ny=args.ny, end_time=args.end_time,
                     seconds=int(remaining), initial_state=str(state)))
