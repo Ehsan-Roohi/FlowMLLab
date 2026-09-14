@@ -68,9 +68,20 @@ def main() -> None:
     parser.add_argument("--tri", type=float, default=0.0)
     parser.add_argument("--nx", type=int, default=301)
     parser.add_argument("--ny", type=int, default=661)
+    parser.add_argument("--parameters", type=Path,
+                        help="Training case-parameters.json for adapted parameter boxes")
     args = parser.parse_args()
 
     src = load_source(args.source.resolve())
+    if args.parameters:
+        parameters = json.loads(args.parameters.read_text())
+        for name in ('ReMin', 'ReMax', 'DMin', 'DMax'):
+            value = float(parameters[name])
+            if not np.isfinite(value):
+                raise ValueError('Nonfinite training parameter')
+            setattr(src, name, value)
+            src.pde.__globals__[name] = value
+            src.output_transform_cavity_flow.__globals__[name] = value
     dde = src.dde
     re_n = normalized(args.re, src.ReMin, src.ReMax, "Re")
     depth_n = normalized(args.depth, src.DMin, src.DMax, "depth")
@@ -111,6 +122,7 @@ def main() -> None:
     report = {
         "source": str(args.source),
         "checkpoint": str(args.checkpoint),
+        "parameters": str(args.parameters) if args.parameters else None,
         "case": {"Re": args.re, "depth_over_width": args.depth, "tri": args.tri},
         "grid": {"nx": args.nx, "ny": args.ny},
         "finite": bool(np.isfinite(prediction).all()),
