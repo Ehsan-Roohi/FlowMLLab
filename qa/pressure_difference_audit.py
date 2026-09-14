@@ -2,6 +2,7 @@
 import json
 import numpy as np
 import matplotlib.pyplot as plt
+from matplotlib.colors import SymLogNorm
 
 
 def pressure_audit(x, y, weights, pressures, output):
@@ -41,6 +42,19 @@ def pressure_audit(x, y, weights, pressures, output):
     fig.suptitle('Re = 1000 | D/W = 2.2 | retained PINN checkpoint 55118\nPressure differences: common area-weighted mean-zero gauge')
     fig.supxlabel('Differences are not certified PINN errors: lid profiles differ near corners.', fontsize=13)
     for ext in ('png', 'pdf'): fig.savefig(output/f'pressure_difference_linear.{ext}', dpi=220)
+    plt.close(fig)
+    fig, axes = plt.subplots(2, 3, figsize=(15, 8), layout='constrained')
+    norm = SymLogNorm(linthresh=1e-4, vmin=-limit, vmax=limit)
+    for col, (d, (_, _, label)) in enumerate(zip(differences, pairs)):
+        for row, bounds in enumerate([(0, .1), (.9, 1)]):
+            ax = axes[row, col]
+            im = ax.pcolormesh(x, y, d, cmap='RdBu_r', norm=norm, shading='auto')
+            ax.set(xlim=bounds, ylim=(2.1, 2.2), aspect='equal', xlabel='x/W', ylabel='y/W',
+                   title=label + (' | upper left' if row == 0 else ' | upper right'))
+    fig.colorbar(im, ax=axes, shrink=.8, label=r'$\Delta p/(\rho U^2)$ | symmetric log')
+    fig.suptitle('Corner pressure differences | Re = 1000 | D/W = 2.2')
+    fig.supxlabel('Common mean-zero gauge; shared scale, linear within +/-0.0001; no clipping. Lid profiles differ.', fontsize=12)
+    for ext in ('png', 'pdf'): fig.savefig(output/f'pressure_difference_corner_zoom.{ext}', dpi=220)
     plt.close(fig)
     fig, axes = plt.subplots(1, 2, figsize=(12, 6), layout='constrained')
     for p, label in zip(pressures, ['Nektar++', 'OpenFOAM', 'PINN']):
