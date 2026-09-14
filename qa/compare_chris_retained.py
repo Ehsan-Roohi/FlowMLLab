@@ -139,6 +139,8 @@ def main():
                RegularGridInterpolator((y,x),pn['p'])(cq).reshape(gx.shape)]
     means=[float(np.sum(weights*f)/np.sum(weights)) for f in pressures]
     pressures=[f-m for f,m in zip(pressures,means)]
+    from pressure_difference_audit import pressure_audit
+    report['pressure_difference_audit'] = pressure_audit(cx, cy, weights, pressures, a.output)
     pressure_limit=max(float(np.max(abs(f))) for f in pressures)
     report['pressure']={'gauge':'area-weighted mean removed on common cell-centre grid',
         'removed_means':means,'scale':'p/(rho U_lid^2); OpenFOAM kinematic pressure with U_lid=1',
