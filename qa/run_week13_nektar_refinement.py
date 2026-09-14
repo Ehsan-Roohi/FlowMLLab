@@ -192,12 +192,14 @@ def main():
     p.add_argument('--image', required=True)
     p.add_argument('--gate', required=True)
     p.add_argument('--commit', required=True)
-    p.add_argument('--re', type=int, choices=[500, 1000], required=True)
-    p.add_argument('--nx', type=int, choices=[16, 32], required=True)
-    p.add_argument('--ny', type=int, choices=[80, 160], required=True)
+    p.add_argument('--re', type=int, choices=[100, 500, 1000], required=True)
+    p.add_argument('--nx', type=int, choices=[16, 32, 64], required=True)
+    p.add_argument('--ny', type=int, choices=[80, 160, 320], required=True)
     p.add_argument('--end-time', type=int, required=True)
     p.add_argument('--seconds', type=int, default=6600)
     args = p.parse_args()
+    if args.ny != 5 * args.nx:
+        p.error('D/W=5 requires ny=5*nx')
     args.output = args.output.resolve()
     args.output.mkdir(parents=True, exist_ok=True)
     with (args.output / 'run.lock').open('a') as lock:
