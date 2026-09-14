@@ -6,6 +6,8 @@ import numpy as np
 import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
+from matplotlib.colors import SymLogNorm
+from scipy.integrate import cumulative_trapezoid
 from scipy.interpolate import RegularGridInterpolator
 from audit_week13_nektar import structured, integrate_paths
 from check_week13_nektar_vtu import read_vtu
@@ -96,6 +98,40 @@ def main():
     ax[1].set(xlabel='x/W',ylabel='v/U',title='Horizontal centreline')
     ax[2].set(xlabel='x/W',ylabel='u/U',title='Lid boundary comparison')
     fig.savefig(a.output/'profiles.png',dpi=180); plt.close(fig)
+    # Identical physical sample grid and derivative operator for all three plots.
+    finest=max(range(len(foam_fields)),key=lambda i:len(foam_fields[i][0]))
+    cx,cy,cv,_=foam_fields[finest]
+    gx,gy=np.meshgrid(cx,cy); cq=np.c_[gy.ravel(),gx.ravel()]
+    def common(xs,ys,f):
+        return [RegularGridInterpolator((ys,xs),f[k])(cq).reshape(gx.shape) for k in ('u','v')]
+    velocities=[common(xn,yn,fn),[cv[:,:,0],cv[:,:,1]],common(x,y,pn)]
+    titles=['Nektar++ | t = 120','OpenFOAM | 180 x 396','Chris PINN | checkpoint 55118']
+    stream=[]; vort=[]
+    for u,v in velocities:
+        stream.append(-cumulative_trapezoid(np.pad(v,((0,0),(1,0))),np.r_[0,cx],axis=1,initial=0)[:,1:])
+        vort.append(np.gradient(v,cx,axis=1,edge_order=2)-np.gradient(u,cy,axis=0,edge_order=2))
+    contour_levels=np.unique(np.r_[-.12,-.10,-.08,-.06,-.04,-.02,-.005,
+        -1e-3,-1e-4,-3e-5,-1e-5,-3e-6,-1e-6,-3e-7,-1e-7,
+        1e-7,1e-6,1e-5,1e-4,1e-3,.003,.006,.009,.012,.015])
+    plt.rcParams.update({'font.size':15,'axes.titlesize':15,'axes.labelsize':16})
+    for name,values in [('streamfunction',stream),('vorticity',vort)]:
+        fig,axes=plt.subplots(1,3,figsize=(13,9),layout='constrained')
+        if name=='vorticity':
+            limit=max(float(np.max(abs(w))) for w in values)
+            norm=SymLogNorm(linthresh=.01,vmin=-limit,vmax=limit)
+        for axis,value,title in zip(axes,values,titles):
+            if name=='streamfunction':
+                axis.contour(cx,cy,value,levels=contour_levels,colors='#172b4d',linewidths=.9)
+            else:
+                im=axis.pcolormesh(cx,cy,value,cmap='RdBu_r',norm=norm,shading='auto')
+            axis.set(title=title,xlabel='x/W',ylabel='y/W',xlim=(0,1),ylim=(0,2.2),aspect='equal')
+        if name=='vorticity':
+            fig.colorbar(im,ax=axes,shrink=.7,label=r'$\omega_z W/U$ (symmetric log; linear within $\pm0.01$)')
+        fig.suptitle('Re = 1000 | depth / width = 2.2\n'+('Streamfunction contours (identical levels)' if name=='streamfunction' else 'Vorticity: dv/dx - du/dy (identical colour scale)'),fontsize=18)
+        fig.supxlabel('Retained checkpoint comparison; lid profiles differ near corners.\n'+('Streamfunction reconstructed from velocity; weak corner eddies require further verification.' if name=='streamfunction' else 'Same 180 x 396 cell-centre grid and finite-difference derivatives; not spectral residuals.'),fontsize=11)
+        for ext in ('png','pdf'):
+            fig.savefig(a.output/f'{name}_comparison.{ext}',dpi=220)
+        plt.close(fig)
     print(json.dumps(report,indent=2))
 
 
