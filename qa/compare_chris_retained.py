@@ -158,7 +158,7 @@ def main():
                 axis.contour(cx,cy,stream[i],levels=contour_levels,colors='#17456b',linewidths=1)
             axis.set(title=title,xlabel='x/W',ylabel='y/W',xlim=(0,1),ylim=(0,.5 if name=='lower_vortices' else 2.2),aspect='equal')
         if name!='lower_vortices':
-            fig.colorbar(im,ax=axes,shrink=.7,label=r'$(p-\overline p)/(\rho U^2)$' if name=='pressure' else r'$|\mathbf{u}|/U$')
+            fig.colorbar(im,ax=axes,shrink=.7,label=r'$(p-\overline{p})/(\rho U^2)$' if name=='pressure' else r'$|\mathbf{u}|/U$')
         fig.suptitle('Re = 1000 | depth / width = 2.2\n'+{'pressure':'Pressure with a common mean-zero gauge','speed':'Speed and streamfunction contours','lower_vortices':'Lower cavity: identical streamfunction levels'}[name],fontsize=18)
         fig.supxlabel('Lid profiles differ near corners; retained PINN checkpoint 55118.\n'+('Area-weighted pressure means removed separately; shared linear colour scale.' if name=='pressure' else 'Derived from retained velocity fields; weak eddies require resolution checks.'),fontsize=11)
         for ext in ('png','pdf'): fig.savefig(a.output/f'{name}_comparison.{ext}',dpi=220)
