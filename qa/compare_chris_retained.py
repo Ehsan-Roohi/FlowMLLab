@@ -10,12 +10,14 @@ from scipy.interpolate import RegularGridInterpolator
 from audit_week13_nektar import structured, integrate_paths
 from check_week13_nektar_vtu import read_vtu
 from evaluate_chris_deep_original import vortex_candidates
+from audit_week13_cfd import audit as foam_audit
 
 
 def main():
     p = argparse.ArgumentParser()
     for k in ('pinn', 'vtu', 'previous', 'output'):
         p.add_argument('--'+k, type=Path, required=True)
+    p.add_argument('--foam', type=Path, required=True)
     a = p.parse_args()
     audit = json.loads((a.pinn.parent/'audit.json').read_text())
     assert audit['case'] == {'Re':1000.0, 'depth_over_width':2.2, 'tri':0.0}
@@ -50,6 +52,24 @@ def main():
         limitations=['Boundary profiles must match before interpreting differences as PINN error.',
             'Last saved interval does not establish steady or mesh convergence.',
             'Streamfunction extrema use export-grid integration, not spectral roots.'])
+    report['openfoam'] = []
+    foam_fields = []
+    for case in sorted(a.foam.glob('production-*')):
+        record,(xf,yf,vf,psif,area)=foam_audit(case)
+        if record['re'] != 1000 or not np.isclose(record['depth_over_width'],2.2):
+            raise ValueError('OpenFOAM case mismatch')
+        fx,fy=np.meshgrid(xf,yf); fq=np.c_[fy.ravel(),fx.ravel()]
+        def at_cells(xs,ys,f):
+            return np.stack([RegularGridInterpolator((ys,xs),f[k])(fq).reshape(fx.shape) for k in ('u','v')],axis=-1)
+        ref_f=at_cells(xn,yn,fn); pin_f=at_cells(x,y,pn)
+        def weighted(v):
+            return float(np.sqrt(np.sum(area[:,:,None]*(v-vf[:,:,:2])**2)/np.sum(area[:,:,None]*vf[:,:,:2]**2)))
+        record['nektar_relative_L2_vs_foam']=weighted(ref_f)
+        record['pinn_relative_L2_vs_foam']=weighted(pin_f)
+        report['openfoam'].append(record)
+        foam_fields.append((xf,yf,vf,psif))
+    if len(foam_fields)!=3:
+        raise ValueError('Expected all three OpenFOAM grids')
     a.output.mkdir(parents=True,exist_ok=True)
     (a.output/'comparison.json').write_text(json.dumps(report,indent=2,allow_nan=False))
     plt.rcParams.update({'font.size':13,'axes.titlesize':14})
@@ -67,6 +87,10 @@ def main():
         ax[0].plot(f['u'][:,len(x)//2],y,label=label)
         ax[1].plot(x,f['v'][len(y)//2],label=label)
         ax[2].plot(x,f['u'][-1],label=label)
+    for rec,(xf,yf,vf,_) in zip(report['openfoam'],foam_fields):
+        vi=RegularGridInterpolator((yf,xf),vf)
+        ax[0].plot(vi(np.c_[yf,np.full(len(yf),.5)])[:,0],yf,'--',label=f"Foam {rec['nx']}")
+        ax[1].plot(xf,vi(np.c_[np.full(len(xf),1.1),xf])[:,1],'--',label=f"Foam {rec['nx']}")
     for axis in ax: axis.legend(); axis.grid(alpha=.2)
     ax[0].set(xlabel='u/U',ylabel='y/W',title='Vertical centreline')
     ax[1].set(xlabel='x/W',ylabel='v/U',title='Horizontal centreline')
