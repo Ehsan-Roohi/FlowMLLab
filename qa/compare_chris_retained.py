@@ -147,8 +147,8 @@ def main():
         fig,axes=plt.subplots(1,3,figsize=(13,9 if name!='lower_vortices' else 5),layout='constrained')
         for i,(axis,title) in enumerate(zip(axes,titles)):
             if name=='pressure':
-                im=axis.contourf(cx,cy,pressures[i],levels=np.linspace(-pressure_limit,pressure_limit,41),cmap='RdBu_r')
-                axis.contour(cx,cy,pressures[i],levels=np.linspace(-pressure_limit,pressure_limit,15),colors='k',alpha=.25,linewidths=.4)
+                im=axis.pcolormesh(cx,cy,pressures[i],shading='auto',cmap='RdBu_r',norm=SymLogNorm(linthresh=.01,vmin=-pressure_limit,vmax=pressure_limit))
+                axis.contour(cx,cy,pressures[i],levels=[-1,-.3,-.1,-.03,-.01,0,.01,.03,.1,.3,1],colors='k',alpha=.3,linewidths=.5)
             elif name=='speed':
                 u,v=velocities[i]
                 vmax=max(float(np.max(np.hypot(*uv))) for uv in velocities)
@@ -158,9 +158,9 @@ def main():
                 axis.contour(cx,cy,stream[i],levels=contour_levels,colors='#17456b',linewidths=1)
             axis.set(title=title,xlabel='x/W',ylabel='y/W',xlim=(0,1),ylim=(0,.5 if name=='lower_vortices' else 2.2),aspect='equal')
         if name!='lower_vortices':
-            fig.colorbar(im,ax=axes,shrink=.7,label=r'$(p-\overline{p})/(\rho U^2)$' if name=='pressure' else r'$|\mathbf{u}|/U$')
+            fig.colorbar(im,ax=axes,shrink=.7,label=r'$(p-\overline{p})/(\rho U^2)$ (symmetric log)' if name=='pressure' else r'$|\mathbf{u}|/U$')
         fig.suptitle('Re = 1000 | depth / width = 2.2\n'+{'pressure':'Pressure with a common mean-zero gauge','speed':'Speed and streamfunction contours','lower_vortices':'Lower cavity: identical streamfunction levels'}[name],fontsize=18)
-        fig.supxlabel('Lid profiles differ near corners; retained PINN checkpoint 55118.\n'+('Area-weighted pressure means removed separately; shared linear colour scale.' if name=='pressure' else 'Derived from retained velocity fields; weak eddies require resolution checks.'),fontsize=11)
+        fig.supxlabel('Lid profiles differ near corners; retained PINN checkpoint 55118.\n'+('Area-weighted means removed; shared symmetric-log scale, linear within +/-0.01; no clipping.' if name=='pressure' else 'Derived from retained velocity fields; weak eddies require resolution checks.'),fontsize=11)
         for ext in ('png','pdf'): fig.savefig(a.output/f'{name}_comparison.{ext}',dpi=220)
         plt.close(fig)
     (a.output/'comparison.json').write_text(json.dumps(report,indent=2,allow_nan=False))
