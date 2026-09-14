@@ -12,7 +12,7 @@ from scipy.interpolate import RegularGridInterpolator
 from audit_week13_nektar import structured, integrate_paths
 from check_week13_nektar_vtu import read_vtu
 from evaluate_chris_deep_original import vortex_candidates
-from audit_week13_cfd import audit as foam_audit
+from audit_week13_cfd import audit as foam_audit, foam_list, mesh
 
 
 def main():
@@ -132,6 +132,38 @@ def main():
         for ext in ('png','pdf'):
             fig.savefig(a.output/f'{name}_comparison.{ext}',dpi=220)
         plt.close(fig)
+    fine_case=sorted(a.foam.glob('production-*'))[finest]
+    _,_,weights=mesh(fine_case,json.loads((fine_case/'case-spec.json').read_text()))
+    fp=foam_list(fine_case/str(report['openfoam'][finest]['time'])/'p',field=True,components=1).reshape(gx.shape)
+    pressures=[RegularGridInterpolator((yn,xn),fn['p'])(cq).reshape(gx.shape),fp,
+               RegularGridInterpolator((y,x),pn['p'])(cq).reshape(gx.shape)]
+    means=[float(np.sum(weights*f)/np.sum(weights)) for f in pressures]
+    pressures=[f-m for f,m in zip(pressures,means)]
+    pressure_limit=max(float(np.max(abs(f))) for f in pressures)
+    report['pressure']={'gauge':'area-weighted mean removed on common cell-centre grid',
+        'removed_means':means,'scale':'p/(rho U_lid^2); OpenFOAM kinematic pressure with U_lid=1',
+        'pinn_vs_nektar_relative_L2':float(np.sqrt(np.sum(weights*(pressures[2]-pressures[0])**2)/np.sum(weights*pressures[0]**2)))}
+    for name in ('pressure','speed','lower_vortices'):
+        fig,axes=plt.subplots(1,3,figsize=(13,9 if name!='lower_vortices' else 5),layout='constrained')
+        for i,(axis,title) in enumerate(zip(axes,titles)):
+            if name=='pressure':
+                im=axis.contourf(cx,cy,pressures[i],levels=np.linspace(-pressure_limit,pressure_limit,41),cmap='RdBu_r')
+                axis.contour(cx,cy,pressures[i],levels=np.linspace(-pressure_limit,pressure_limit,15),colors='k',alpha=.25,linewidths=.4)
+            elif name=='speed':
+                u,v=velocities[i]
+                vmax=max(float(np.max(np.hypot(*uv))) for uv in velocities)
+                im=axis.pcolormesh(cx,cy,np.hypot(u,v),shading='auto',cmap='viridis',vmin=0,vmax=vmax)
+                axis.contour(cx,cy,stream[i],levels=contour_levels,colors='white',alpha=.65,linewidths=.6)
+            else:
+                axis.contour(cx,cy,stream[i],levels=contour_levels,colors='#17456b',linewidths=1)
+            axis.set(title=title,xlabel='x/W',ylabel='y/W',xlim=(0,1),ylim=(0,.5 if name=='lower_vortices' else 2.2),aspect='equal')
+        if name!='lower_vortices':
+            fig.colorbar(im,ax=axes,shrink=.7,label=r'$(p-\overline p)/(\rho U^2)$' if name=='pressure' else r'$|\mathbf{u}|/U$')
+        fig.suptitle('Re = 1000 | depth / width = 2.2\n'+{'pressure':'Pressure with a common mean-zero gauge','speed':'Speed and streamfunction contours','lower_vortices':'Lower cavity: identical streamfunction levels'}[name],fontsize=18)
+        fig.supxlabel('Lid profiles differ near corners; retained PINN checkpoint 55118.\n'+('Area-weighted pressure means removed separately; shared linear colour scale.' if name=='pressure' else 'Derived from retained velocity fields; weak eddies require resolution checks.'),fontsize=11)
+        for ext in ('png','pdf'): fig.savefig(a.output/f'{name}_comparison.{ext}',dpi=220)
+        plt.close(fig)
+    (a.output/'comparison.json').write_text(json.dumps(report,indent=2,allow_nan=False))
     print(json.dumps(report,indent=2))
 
 
