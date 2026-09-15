@@ -10,6 +10,7 @@ import numpy as np
 import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
+from matplotlib.colors import TwoSlopeNorm
 from scipy.interpolate import RegularGridInterpolator
 from audit_week13_nektar import structured, integrate_paths
 from audit_week13_cfd import audit as foam_audit, extrema
@@ -60,6 +61,7 @@ def main():
     report['nektar_vortices']=extrema(psin,x,y)
     report['pinn_vortices']=extrema(psip,x,y)
     report['openfoam']=[]
+    foam_exports=[]
     for case in a.foam:
         record,(xf,yf,vf,psi,area)=foam_audit(case)
         if record['re'] != re or not np.isclose(record['depth_over_width'],depth):
@@ -69,6 +71,7 @@ def main():
         record['pinn_vs_foam']=metrics(at(x,y,pn,fq),fv,fq[:,0],area.ravel())
         record['foam_vs_nektar']=metrics(fv,at(xn,yn,nf,fq),fq[:,0],area.ravel())
         report['openfoam'].append(record)
+        foam_exports.append((record,xf,yf,vf,psi,area))
     a.output.mkdir(parents=True,exist_ok=False)
     (a.output/'comparison.json').write_text(json.dumps(report,indent=2,allow_nan=False))
     plt.rcParams.update({'font.size':14})
@@ -83,6 +86,75 @@ def main():
     for axis in ax: axis.set(xlabel='x/W',ylabel='y/W',aspect='equal')
     fig.suptitle('Re=100, D/W=5 — intermediate checkpoint comparison')
     fig.savefig(a.output/'streamfunction_comparison.png',dpi=220)
+    plt.close(fig)
+
+    # Publication-style three-solver field comparison on the finest OpenFOAM
+    # cell-centre grid.  Every row uses one common colour scale.  Pressure is
+    # shifted to the same area-weighted zero-mean gauge before comparison.
+    finest=max(foam_exports,key=lambda item:item[0]['nx'])
+    frec,xf,yf,vf,psif,area=finest
+    fxx,fyy=np.meshgrid(xf,yf); fq=np.c_[fyy.ravel(),fxx.ravel()]
+    def scalar_at(xs,ys,field):
+        return RegularGridInterpolator((ys,xs),field,bounds_error=False,
+                                       fill_value=None)(fq).reshape(fxx.shape)
+    nektar={k:scalar_at(xn,yn,nf[k]) for k in ('u','v','p')}
+    pinn={k:scalar_at(x,y,pn[k]) for k in ('u','v','p')}
+    foam={'u':vf[:,:,0],'v':vf[:,:,1],'p':vf[:,:,2]}
+    for fields in (nektar,foam,pinn):
+        fields['speed']=np.hypot(fields['u'],fields['v'])
+        fields['omega']=np.gradient(fields['v'],xf,axis=1,edge_order=2)-np.gradient(fields['u'],yf,axis=0,edge_order=2)
+    nektar['psi'],_=integrate_paths(xf,yf,nektar['u'],nektar['v'])
+    pinn['psi'],_=integrate_paths(xf,yf,pinn['u'],pinn['v'])
+    foam['psi']=psif
+    for fields in (nektar,foam,pinn):
+        fields['p']=fields['p']-np.sum(area*fields['p'])/np.sum(area)
+    solvers=[nektar,foam,pinn]
+    solver_titles=['Nektar++',f"OpenFOAM ({frec['nx']} x {frec['ny']})",'PINN checkpoint 72680']
+    rows=[('u',r'$u/U_{lid}$','RdBu_r'),('v',r'$v/U_{lid}$','RdBu_r'),
+          ('speed',r'$|\mathbf{u}|/U_{lid}$','viridis'),
+          ('p',r'$(p-\bar p)/(\rho U_{lid}^2)$','RdBu_r'),
+          ('omega',r'$\omega_z W/U_{lid}$','RdBu_r'),
+          ('psi',r'$\psi/(U_{lid}W)$','RdBu_r')]
+    plt.rcParams.update({'font.size':16,'axes.titlesize':17,'axes.labelsize':16})
+    fig,axes=plt.subplots(len(rows),3,figsize=(12,34),layout='constrained')
+    for i,(key,label,cmap) in enumerate(rows):
+        values=[fields[key] for fields in solvers]
+        if key=='speed':
+            lo,hi=0,max(float(np.nanmax(v)) for v in values); norm=None
+        else:
+            lim=max(float(np.nanpercentile(np.abs(v),99.5)) for v in values)
+            lo,hi=-lim,lim; norm=TwoSlopeNorm(vmin=lo,vcenter=0,vmax=hi)
+        for j,(axis,value,title) in enumerate(zip(axes[i],values,solver_titles)):
+            im=axis.pcolormesh(xf,yf,value,shading='auto',cmap=cmap,
+                               vmin=lo if norm is None else None,
+                               vmax=hi if norm is None else None,norm=norm)
+            if key in ('speed','psi'):
+                axis.contour(xf,yf,solvers[j]['psi'],levels=25,colors='white' if key=='speed' else 'black',linewidths=.45,alpha=.65)
+            axis.set(title=title if i==0 else '',xlabel='x/W',ylabel='y/W',
+                     xlim=(0,1),ylim=(0,depth),aspect='equal')
+        fig.colorbar(im,ax=axes[i].tolist(),shrink=.82,label=label)
+        axes[i,0].annotate(label,xy=(-.42,.5),xycoords='axes fraction',rotation=90,
+                           ha='center',va='center',fontsize=18,fontweight='bold')
+    fig.suptitle(f'Re = {re:g}, D/W = {depth:g}: matched-field comparison',fontsize=21)
+    fig.savefig(a.output/'all_fields_three_solver.png',dpi=220)
+    fig.savefig(a.output/'all_fields_three_solver.pdf')
+    plt.close(fig)
+
+    fig,axes=plt.subplots(len(rows),2,figsize=(8.5,34),layout='constrained')
+    for i,(key,label,_) in enumerate(rows):
+        diffs=[pinn[key]-nektar[key],pinn[key]-foam[key]]
+        lim=max(float(np.nanpercentile(np.abs(d),99.5)) for d in diffs)
+        norm=TwoSlopeNorm(vmin=-lim,vcenter=0,vmax=lim)
+        for axis,difference,title in zip(axes[i],diffs,['PINN - Nektar++','PINN - OpenFOAM']):
+            im=axis.pcolormesh(xf,yf,difference,shading='auto',cmap='RdBu_r',norm=norm)
+            axis.set(title=title if i==0 else '',xlabel='x/W',ylabel='y/W',
+                     xlim=(0,1),ylim=(0,depth),aspect='equal')
+        fig.colorbar(im,ax=axes[i].tolist(),shrink=.82,label='difference in '+label)
+        axes[i,0].annotate(label,xy=(-.52,.5),xycoords='axes fraction',rotation=90,
+                           ha='center',va='center',fontsize=18,fontweight='bold')
+    fig.suptitle(f'Re = {re:g}, D/W = {depth:g}: PINN error fields',fontsize=21)
+    fig.savefig(a.output/'all_fields_pinn_errors.png',dpi=220)
+    fig.savefig(a.output/'all_fields_pinn_errors.pdf')
     plt.close(fig)
     print(json.dumps(report,indent=2,allow_nan=False))
 
