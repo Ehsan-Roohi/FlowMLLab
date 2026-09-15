@@ -5,6 +5,10 @@ import importlib.metadata
 import json
 ROOT=Path(__file__).resolve().parents[1]
 out=ROOT/'results/week14_validation'
+# Match the repository's LF policy before hashing; Windows CRLF must not
+# invalidate the evidence when Git checks it out on Linux or Colab.
+for p in out.glob('*.json'):
+    p.write_text(p.read_text(encoding='utf-8'), encoding='utf-8', newline='\n')
 files={p.name:hashlib.sha256(p.read_bytes()).hexdigest() for p in sorted(out.iterdir())
        if p.suffix in ['.png','.npz','.json'] and p.name!='manifest.json'}
 manifest={'source_url':'https://www.cfd-sweden.se/lada/pythons-rans-code-RANS-open.tar.gz',
@@ -16,5 +20,5 @@ manifest={'source_url':'https://www.cfd-sweden.se/lada/pythons-rans-code-RANS-op
  'teaching_explanations_figures_audit':'Ehsan Roohi / FlowMLLab, AI-assisted'},
  'permission':'Instructor reports permission in shared conversation; exact written terms not supplied. No general relicensing of upstream material.',
  'reuse_boundary':'Attribution retained; publication authorized by instructor reporting permission. No upstream solver/checkpoints distributed and no blanket third-party relicensing.'}
-(out/'manifest.json').write_text(json.dumps(manifest,indent=2))
+(out/'manifest.json').write_text(json.dumps(manifest,indent=2), encoding='utf-8', newline='\n')
 print(f'Pinned {len(files)} compact evidence files')
