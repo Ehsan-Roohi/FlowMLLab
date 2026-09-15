@@ -64,9 +64,13 @@ def main():
     p.add_argument("--lower-anchors", type=int, default=0,
                    help="Extra residual points biased toward the lower 60% of the cavity")
     p.add_argument("--refine-adam-lr", type=float, default=1e-4)
+    p.add_argument("--refine-adam-steps", type=int, default=5000,
+                   help="Short restart-safe Adam budget for a refinement run")
     p.add_argument("--refine-ssb-steps", type=int, default=18000,
                    help="SSB iterations per restart-safe refinement phase")
     args = p.parse_args()
+    if args.refine_adam_steps < 1:
+        raise ValueError("--refine-adam-steps must be positive")
     archive = args.archive.resolve()
     out = args.output.resolve()
     out.mkdir(parents=True, exist_ok=True)
@@ -130,6 +134,7 @@ def main():
         state["refinement"] = {
             "lower_anchors": args.lower_anchors,
             "adam_lr": args.refine_adam_lr,
+            "adam_steps": args.refine_adam_steps,
             "ssb_steps_per_phase": args.refine_ssb_steps,
             "sampling": "deterministic target-case anchors; eta=0.6*Beta(1,2)",
         }
@@ -210,7 +215,7 @@ def main():
             kw["model_restore_path"] = state["checkpoint"]
         if phase[0] == 0:
             adam_offset[0] = state.get("adam_done", 0)
-            kw["epochs"] = max(1, 5000 - state.get("adam_done", 0))
+            kw["epochs"] = max(1, args.refine_adam_steps - state.get("adam_done", 0))
             kw["callbacks"] = list(kw.get("callbacks") or []) + [SaveAdam()]
         result = original_train(model, *a, **kw)
         state["checkpoint"] = model.save("model/restart", verbose=0)
