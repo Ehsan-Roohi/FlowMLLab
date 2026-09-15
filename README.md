@@ -1,5 +1,10 @@
 # FlowMLLab
 
+**Week 14:** [RANS, PINN and neural turbulence closures](notebooks/week14/README.md)
+based on Lars Davidson's pyCALC-RANS workflow: an executed teaching notebook,
+[12-page lecture](lectures/week14_rans_pinn_nn.pdf), and a transparent reproduction
+audit. Full paper-level numerical reproduction is not claimed.
+
 [![FlowMLLab CI](https://github.com/Ehsan-Roohi/FlowMLLab/actions/workflows/ci.yml/badge.svg)](https://github.com/Ehsan-Roohi/FlowMLLab/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.22651906.svg)](https://doi.org/10.5281/zenodo.22651906)
@@ -9,7 +14,7 @@ generate numerical data, compare transparent baselines with learned models, and
 check both prediction error and physical fidelity.
 
 Developed for **MIE 690A: AI in Fluid Mechanics**, University of Massachusetts
-Amherst. The working course includes **33 notebooks** and a continuous lecture
+Amherst. The working course includes **35 notebooks** and a continuous lecture
 sequence from
 numerical foundations to continuum and rarefied-flow research examples.
 

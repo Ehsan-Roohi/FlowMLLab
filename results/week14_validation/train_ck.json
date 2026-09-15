@@ -1,0 +1,10 @@
+{
+  "mode": "train_ck",
+  "seconds": 350.6101607999881,
+  "executed_source_sha256": "a579862693b2d72fe95708ef0ff7de8c297ca7588a62024f911323fe28859514",
+  "torch": "2.14.0+cpu",
+  "numpy": "2.5.3",
+  "seed": 42,
+  "test_mse": 0.00010168597646855102,
+  "epochs": 1000
+}

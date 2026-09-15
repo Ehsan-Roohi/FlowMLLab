@@ -1,0 +1,171 @@
+{
+  "profile_metrics": [
+    {
+      "case": "Unmodified RANS (archive)",
+      "U_relL2": 0.017259555559652858,
+      "k_relL2": 0.42849162656670553
+    },
+    {
+      "case": "PINN-corrected (archive)",
+      "U_relL2": 0.04988079510996624,
+      "k_relL2": 0.08945122001755175
+    },
+    {
+      "case": "baseline fresh restart",
+      "U_relL2": 0.017259567843329635,
+      "k_relL2": 0.4284916082541653
+    },
+    {
+      "case": "pinn fresh restart",
+      "U_relL2": 0.04988079702014602,
+      "k_relL2": 0.08945121876548197
+    },
+    {
+      "case": "NN5200 assembled-case restart",
+      "U_relL2": 0.040620555408117355,
+      "k_relL2": 0.03777736033348271
+    }
+  ],
+  "held_out_gap": [
+    {
+      "method": "PCHIP",
+      "relative_L2": 0.014674798390489298,
+      "RMSE": 0.006774663896060781
+    },
+    {
+      "method": "Adapted MLP",
+      "relative_L2": 0.041230901821386466,
+      "RMSE": 0.01903436725593476
+    }
+  ],
+  "runs": {
+    "balance": {
+      "mode": "balance",
+      "seconds": 102.20878339998308,
+      "executed_source_sha256": "d4f656e9ef82b51bfa135dee3d769b4731540993f60a43cbcf8fcbdb9a37646f",
+      "torch": "2.14.0+cpu",
+      "numpy": "2.5.3",
+      "seed": 42
+    },
+    "baseline": {
+      "mode": "baseline",
+      "seconds": 332.76067850002437,
+      "executed_source_sha256": "6b372a9a919a1761fe730853e0f18d8a65205000424f08a8c8c5492c9c80a7b3",
+      "torch": null,
+      "numpy": "2.5.3",
+      "seed": 42,
+      "iteration": 19999,
+      "residual": 3.119061175226011e-13,
+      "threshold": 1e-14,
+      "converged": false,
+      "restart": true,
+      "grid": [
+        1,
+        70
+      ],
+      "wall_shear": 0.9999999999987068,
+      "finite": true
+    },
+    "inverse": {
+      "mode": "inverse",
+      "seconds": 1846.8771399999969,
+      "executed_source_sha256": "56e30f8e1be2ed6b3fbb4a69fa233fcec46b181faaf060da52e3ddb7e2d329d9",
+      "torch": "2.14.0+cpu",
+      "numpy": "2.5.3",
+      "seed": 42,
+      "epochs": 200000,
+      "reported_final_total_loss": 231.0,
+      "reported_minimum_total_loss": 1.24,
+      "final_interior_loss": 230.6337890625,
+      "reference_diffusivity_relative_L2": 0.007554955711631769,
+      "finite": true,
+      "status": "Completed original checkpoint-resume script; downstream uses released coefficients, not these fresh outputs"
+    },
+    "nn10000": {
+      "mode": "nn10000",
+      "seconds": 1519.5551560000167,
+      "executed_source_sha256": "2b631c096736c78c0403b6c056ceca731696438c1de00bb8004cb269e536a9e6",
+      "torch": "2.14.0+cpu",
+      "numpy": "2.5.3",
+      "seed": 42,
+      "iteration": 39999,
+      "residual": 1.565908670701918e-05,
+      "threshold": 1e-06,
+      "converged": false,
+      "restart": true,
+      "grid": [
+        1,
+        120
+      ],
+      "wall_shear": 0.9986719914169347,
+      "finite": true
+    },
+    "nn5200": {
+      "mode": "nn5200",
+      "seconds": 700.9710190999904,
+      "executed_source_sha256": "da245453c9032ee5f678d92bf7f9ca8ba48a3d1b1221e43d5dcd194e5eb6734f",
+      "torch": "2.14.0+cpu",
+      "numpy": "2.5.3",
+      "seed": 42,
+      "iteration": 39999,
+      "residual": 0.0023858266293506902,
+      "threshold": 1e-06,
+      "converged": false,
+      "restart": true,
+      "grid": [
+        1,
+        70
+      ],
+      "wall_shear": 1.001233186764839,
+      "finite": true,
+      "adaptation": "5200 PINN case grid/setup/restart + original NN deployment, m=500 per paper; initialized with released spatial coefficients"
+    },
+    "pinn": {
+      "mode": "pinn",
+      "seconds": 8.359978899999987,
+      "executed_source_sha256": "8712d16d812d438105c6d818a302f42a9b6e4b6776d92725bb05e8495537f6da",
+      "torch": "2.14.0+cpu",
+      "numpy": "2.5.3",
+      "seed": 42,
+      "iteration": 1,
+      "residual": 9.311861904406214e-07,
+      "threshold": 1e-06,
+      "converged": true,
+      "restart": true,
+      "grid": [
+        1,
+        70
+      ],
+      "wall_shear": 0.9999934255792319,
+      "finite": true
+    },
+    "train_ck": {
+      "mode": "train_ck",
+      "seconds": 350.6101607999881,
+      "executed_source_sha256": "a579862693b2d72fe95708ef0ff7de8c297ca7588a62024f911323fe28859514",
+      "torch": "2.14.0+cpu",
+      "numpy": "2.5.3",
+      "seed": 42,
+      "test_mse": 0.00010168597646855102,
+      "epochs": 1000
+    }
+  },
+  "balance_regeneration": {
+    "c_k_pred_5200-plus-units-from-balance.txt": {
+      "max_absolute_difference": 0.5245846848806932,
+      "relative_L2": 0.10734090228977387,
+      "matches_released_target": false
+    },
+    "c_omega_2_pred_5200-plus-units-from-balance.txt": {
+      "max_absolute_difference": 0.019785783496610206,
+      "relative_L2": 0.13845078665478328,
+      "matches_released_target": false
+    },
+    "prand_k_5200-plus-units-from-balance-smooth.txt": {
+      "max_absolute_difference": 0.2988668526691709,
+      "relative_L2": 0.11863042672792241,
+      "matches_released_target": false
+    }
+  },
+  "claim_boundary": "Known-case reproduction; not prospective blind validation or mesh independence"
+}

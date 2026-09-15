@@ -1,0 +1,19 @@
+{
+  "mode": "baseline",
+  "seconds": 332.76067850002437,
+  "executed_source_sha256": "6b372a9a919a1761fe730853e0f18d8a65205000424f08a8c8c5492c9c80a7b3",
+  "torch": null,
+  "numpy": "2.5.3",
+  "seed": 42,
+  "iteration": 19999,
+  "residual": 3.119061175226011e-13,
+  "threshold": 1e-14,
+  "converged": false,
+  "restart": true,
+  "grid": [
+    1,
+    70
+  ],
+  "wall_shear": 0.9999999999987068,
+  "finite": true
+}

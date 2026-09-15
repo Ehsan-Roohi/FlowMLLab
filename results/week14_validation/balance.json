@@ -1,0 +1,8 @@
+{
+  "mode": "balance",
+  "seconds": 102.20878339998308,
+  "executed_source_sha256": "d4f656e9ef82b51bfa135dee3d769b4731540993f60a43cbcf8fcbdb9a37646f",
+  "torch": "2.14.0+cpu",
+  "numpy": "2.5.3",
+  "seed": 42
+}

@@ -1,5 +1,12 @@
 # Notebook guide
 
+## Week 14 - CPU / full-checkout module
+
+[RANS, PINN and neural closures](week14/README.md): an executed notebook with
+the true RANS baseline, source NN training protocol, and retained solver runs.
+This module requires a complete checkout and its isolated requirements file;
+it does not claim a tested Colab entry point.
+
 Each notebook opens directly from GitHub, clones the complete FlowMLLab release,
 and installs the tested package in its first code cell. Choose a Colab GPU runtime
 only for notebooks that explicitly require CUDA.

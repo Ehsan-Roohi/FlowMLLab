@@ -1,0 +1,48 @@
+{
+  "source_url": "https://www.cfd-sweden.se/lada/pythons-rans-code-RANS-open.tar.gz",
+  "source_archive_sha256": "7aae30d0e990e78ac008c03d008ddc7609ce3a4aae9cc55fada65f1be91d774f",
+  "upstream_update_date": "2026-09-11",
+  "files": {
+    "balance.json": "d47f171520e60e6139e69b5f7347da134de9fb9cbf42882602a4b729f675914a",
+    "baseline.json": "2a0a488d19a106994cf76487b8fb9dfd6ffb8bf787dfef8bf03cbe513b5cbbd7",
+    "baseline.npz": "80c8a2ae988f0966f4a8bf76fcb4f8a83b2f90d8671c386ed71a370f46c05810",
+    "coefficients.png": "11c0d7c2dbd85212be2efb4cc99bab22b0e5192c054722ae5ed5562f35eadee4",
+    "convergence.png": "9faf02238e6559a3b38152ba6d3c69ff905b5c70f9af2861118ebb557cd62d5f",
+    "equations.png": "b16d6df1f093840a1b211c86eb43fb88188a0540deca986c4b77270f5f5033c4",
+    "gap.png": "e6e29c788c5d9663767fa9f1c10ba64a796250a0a978290a033d9e9828dca30a",
+    "inverse.json": "c16c02a241b2c72cf7bba0f2300e9743f4adff19020084991c883b601b38cce3",
+    "inverse.npz": "405c18636f528c98302e9bc84928d3c099b62deaf543d4d99f83a025c6d22d91",
+    "inverse.png": "cb83b664fb05da7b22dcbaa8380bf913f80c337a32bb604cf8cd47cfe201bd27",
+    "nn10000.json": "12fe945d0260091a28dbaf9abe10617f31d4ab21f4c1e7288792ee6a22d6155c",
+    "nn10000.npz": "ce65276882c7b2196f9bedc4bc5576d242a8034aa7c8a7c9b15c4b1efd46562e",
+    "nn5200.json": "a34a887b76096c12e369d41cb9329dcd9857288be886de167efa166797565655",
+    "nn5200.npz": "b3e8becb4dc9ae20ae15e1cd513eea0a5944eee10384c69c3ae1ffb5819ea846",
+    "pinn.json": "68d1969b3de990d12d68136982be6a0497dab7df2b898609a6821cf0d26f10e3",
+    "pinn.npz": "eaf85580e83f58cb260f4ec8b5c7201a877a15a933fc209cb42b07eefbac8cfb",
+    "pinn_equation.png": "ba79cdab87d2d6849eb1915e373d860b6c019bdb86a84db14a7afa1999993aa2",
+    "pipeline.png": "10b93beec9609469d65b7731161930a69469d1845c2a21d691e9fc7b65dde6f8",
+    "profiles.png": "4fd47f91d306bf5b75fd7c7354a3dd5c6204327245ec8a0a96a6985fc840390f",
+    "summary.json": "e786c1daa2b1751a3c6d811262e749b333d7b6d6267a2713b37be4fdf38001f2",
+    "teaching_data.npz": "ffebcf9f6fc1d58abc82c8a6a511d179556724c314005ac474d07d39913ccc40",
+    "train_ck.json": "f24b794d5df08fe611106a1a93eeeaa4d575cf16cd5586b7a1ae417ab89c54cc",
+    "train_ck.npz": "fd53a6ccff85165a738c1b1f3a5f2c8a4f21404ff99f6a2c30aaf9ace33f0f88",
+    "training.png": "29de05b2a795ae9b85dc3dc1e5e9d3cbf3a0c1c3c671c39d5dcf5079b1c1e757"
+  },
+  "versions": {
+    "numpy": "2.5.3",
+    "scipy": "1.18.1",
+    "matplotlib": "3.11.2",
+    "scikit-learn": "1.9.1",
+    "torch": "2.14.0",
+    "nbformat": "5.11.1",
+    "nbclient": "0.11.0",
+    "pyamg": "5.3.0"
+  },
+  "attribution": {
+    "solver_and_workflow": "Lars Davidson",
+    "DNS": "Myoungkyu Lee and Robert D. Moser",
+    "teaching_explanations_figures_audit": "Ehsan Roohi / FlowMLLab, AI-assisted"
+  },
+  "permission": "Instructor reports permission in shared conversation; exact written terms not supplied. No general relicensing of upstream material.",
+  "reuse_boundary": "Attribution retained; publication authorized by instructor reporting permission. No upstream solver/checkpoints distributed and no blanket third-party relicensing."
+}

@@ -63,6 +63,14 @@ supports the final module's CFD comparison and restart protocol.
 
 ## Suggested adoption modes
 
+### Week 14 extension: RANS, PINN and neural closures
+
+[Lecture and lab](notebooks/week14/README.md), following the continuum/ML
+foundations and inverse-problem material. Uses Lars Davidson's pyCALC-RANS
+workflow and Lee-Moser DNS; separates source reproduction, classroom controls,
+and solver-coupled evidence. Failed reproduction gates remain visible.
+
+
 ### One-day workshop
 
 Use Modules 1C, 2A, 2C, and a short version of 4B. The learning objective is to distinguish a validated numerical label from a convenient training target and to compare a neural model with interpolation.

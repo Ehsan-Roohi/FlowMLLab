@@ -1,0 +1,20 @@
+{
+  "mode": "nn5200",
+  "seconds": 700.9710190999904,
+  "executed_source_sha256": "da245453c9032ee5f678d92bf7f9ca8ba48a3d1b1221e43d5dcd194e5eb6734f",
+  "torch": "2.14.0+cpu",
+  "numpy": "2.5.3",
+  "seed": 42,
+  "iteration": 39999,
+  "residual": 0.0023858266293506902,
+  "threshold": 1e-06,
+  "converged": false,
+  "restart": true,
+  "grid": [
+    1,
+    70
+  ],
+  "wall_shear": 1.001233186764839,
+  "finite": true,
+  "adaptation": "5200 PINN case grid/setup/restart + original NN deployment, m=500 per paper; initialized with released spatial coefficients"
+}

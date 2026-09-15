@@ -1,0 +1,15 @@
+{
+  "mode": "inverse",
+  "seconds": 1846.8771399999969,
+  "executed_source_sha256": "56e30f8e1be2ed6b3fbb4a69fa233fcec46b181faaf060da52e3ddb7e2d329d9",
+  "torch": "2.14.0+cpu",
+  "numpy": "2.5.3",
+  "seed": 42,
+  "epochs": 200000,
+  "reported_final_total_loss": 231.0,
+  "reported_minimum_total_loss": 1.24,
+  "final_interior_loss": 230.6337890625,
+  "reference_diffusivity_relative_L2": 0.007554955711631769,
+  "finite": true,
+  "status": "Completed original checkpoint-resume script; downstream uses released coefficients, not these fresh outputs"
+}

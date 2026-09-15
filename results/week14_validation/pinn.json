@@ -1,0 +1,19 @@
+{
+  "mode": "pinn",
+  "seconds": 8.359978899999987,
+  "executed_source_sha256": "8712d16d812d438105c6d818a302f42a9b6e4b6776d92725bb05e8495537f6da",
+  "torch": "2.14.0+cpu",
+  "numpy": "2.5.3",
+  "seed": 42,
+  "iteration": 1,
+  "residual": 9.311861904406214e-07,
+  "threshold": 1e-06,
+  "converged": true,
+  "restart": true,
+  "grid": [
+    1,
+    70
+  ],
+  "wall_shear": 0.9999934255792319,
+  "finite": true
+}
