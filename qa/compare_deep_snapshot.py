@@ -127,7 +127,8 @@ def main():
         for j,(axis,value,title) in enumerate(zip(axes[i],values,solver_titles)):
             im=axis.pcolormesh(xf,yf,value,shading='auto',cmap=cmap,
                                vmin=lo if norm is None else None,
-                               vmax=hi if norm is None else None,norm=norm)
+                               vmax=hi if norm is None else None,norm=norm,
+                               rasterized=True)
             if key in ('speed','psi'):
                 axis.contour(xf,yf,solvers[j]['psi'],levels=25,colors='white' if key=='speed' else 'black',linewidths=.45,alpha=.65)
             axis.set(title=title if i==0 else '',xlabel='x/W',ylabel='y/W',
@@ -146,7 +147,8 @@ def main():
         lim=max(float(np.nanpercentile(np.abs(d),99.5)) for d in diffs)
         norm=TwoSlopeNorm(vmin=-lim,vcenter=0,vmax=lim)
         for axis,difference,title in zip(axes[i],diffs,['PINN - Nektar++','PINN - OpenFOAM']):
-            im=axis.pcolormesh(xf,yf,difference,shading='auto',cmap='RdBu_r',norm=norm)
+            im=axis.pcolormesh(xf,yf,difference,shading='auto',cmap='RdBu_r',
+                               norm=norm,rasterized=True)
             axis.set(title=title if i==0 else '',xlabel='x/W',ylabel='y/W',
                      xlim=(0,1),ylim=(0,depth),aspect='equal')
         fig.colorbar(im,ax=axes[i].tolist(),shrink=.82,label='difference in '+label)
