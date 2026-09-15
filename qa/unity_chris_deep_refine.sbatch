@@ -15,6 +15,7 @@ set -euo pipefail
 : "${CHRIS_REFINE_OUTPUT:?}"
 anchors="${CHRIS_LOWER_ANCHORS:-40000}"
 adam_lr="${CHRIS_ADAM_LR:-1e-4}"
+ssb_steps="${CHRIS_SSB_STEPS:-18000}"
 python="$CHRIS_ENV_ROOT/venv/bin/python"
 site_packages="$($python -c 'import site; print(site.getsitepackages()[0])')"
 cuda_root="$site_packages/nvidia/cuda_nvcc"
@@ -26,6 +27,7 @@ refine_args=(
   --output "$CHRIS_REFINE_OUTPUT" --case-index 0
   --refine-from "$CHRIS_BASE_CHECKPOINT"
   --refine-adam-lr "$adam_lr"
+  --refine-ssb-steps "$ssb_steps"
 )
 if (( anchors > 0 )); then
   refine_args+=(--lower-anchors "$anchors")

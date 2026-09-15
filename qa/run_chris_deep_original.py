@@ -64,6 +64,8 @@ def main():
     p.add_argument("--lower-anchors", type=int, default=0,
                    help="Extra residual points biased toward the lower 60% of the cavity")
     p.add_argument("--refine-adam-lr", type=float, default=1e-4)
+    p.add_argument("--refine-ssb-steps", type=int, default=18000,
+                   help="SSB iterations per restart-safe refinement phase")
     args = p.parse_args()
     archive = args.archive.resolve()
     out = args.output.resolve()
@@ -99,6 +101,8 @@ def main():
     if args.case_index is not None:
         re, depth = DEEP_CASES[args.case_index]
         expected.update(ReMin=.9*re, ReMax=1.1*re, DMin=depth-.1, DMax=depth+.1)
+        if args.refine_from:
+            expected["epochsLBFGS"] = args.refine_ssb_steps
         # run_path may return a copy; functions resolve the defining globals.
         original['main'].__globals__.update(expected)
         for function in ('main', 'pde', 'output_transform_cavity_flow'):
@@ -126,6 +130,7 @@ def main():
         state["refinement"] = {
             "lower_anchors": args.lower_anchors,
             "adam_lr": args.refine_adam_lr,
+            "ssb_steps_per_phase": args.refine_ssb_steps,
             "sampling": "deterministic target-case anchors; eta=0.6*Beta(1,2)",
         }
     stop = [False]
@@ -239,6 +244,7 @@ def main():
             instance.add_anchors(anchors)
 
         dde.data.PDE.__init__ = pde_init
+    if args.refine_from:
         base_compile = dde.Model.compile
 
         def compile_refinement(model, optimizer, *a, **kw):
