@@ -12,6 +12,19 @@ spec.loader.exec_module(runner)
 
 
 class RestartExportTests(unittest.TestCase):
+    def test_repeated_precision_loss_is_an_external_plateau(self):
+        self.assertTrue(runner.external_plateau(
+            7.548158881160543e-08,
+            7.548158881160543e-08,
+            "Desired error not necessarily achieved due to precision loss.",
+        ))
+
+    def test_real_improvement_is_not_an_external_plateau(self):
+        self.assertFalse(runner.external_plateau(
+            8.0e-8, 7.5e-8,
+            "Desired error not necessarily achieved due to precision loss.",
+        ))
+
     def test_skipped_phases_preserve_existing_exports(self):
         exporter = Mock(side_effect=ValueError("empty arrays"))
         guarded = runner.restart_safe_saveplot(exporter)

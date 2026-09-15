@@ -9,6 +9,7 @@ import argparse
 import hashlib
 import importlib.util
 import json
+import math
 import os
 from pathlib import Path
 import runpy
@@ -34,6 +35,15 @@ def restart_safe_saveplot(saveplot):
             return None
         return saveplot(history, train_state, *args, **kwargs)
     return save
+
+
+def external_plateau(previous_loss, current_loss, message):
+    """Detect an SSB phase that cannot improve the stored objective."""
+    return (
+        previous_loss is not None
+        and math.isclose(current_loss, previous_loss, rel_tol=1e-13, abs_tol=0.0)
+        and "precision loss" in str(message).lower()
+    )
 
 
 def checked_extract(archive, target):
@@ -191,6 +201,17 @@ def main():
         print("SSBroyden2 result:", result.message, "loss=", result.fun, flush=True)
         if not np.isfinite(result.fun):
             raise FloatingPointError("Nonfinite external objective")
+        previous_loss = state.get("last_external_loss")
+        stalled = external_plateau(previous_loss, result.fun, result.message)
+        state["last_external_loss"] = float(result.fun)
+        if stalled:
+            state["external_stalled"] = True
+            state["external_stop_reason"] = (
+                "SSBroyden2 repeated the previous objective and reported precision loss"
+            )
+            print("SSBroyden2 plateau detected; later external phases will be skipped.",
+                  flush=True)
+        record()
         return result
 
     so.minimize = minimize
@@ -210,6 +231,12 @@ def main():
     def train(model, *a, **kw):
         phase[0] += 1
         if phase[0] < state["phase"]:
+            return model.losshistory, model.train_state
+        if phase[0] > 0 and state.get("external_stalled"):
+            state["phase"] = phase[0] + 1
+            record()
+            print(f"Skipping external phase {phase[0]}: "
+                  f"{state['external_stop_reason']}", flush=True)
             return model.losshistory, model.train_state
         if state.get("checkpoint"):
             kw["model_restore_path"] = state["checkpoint"]
