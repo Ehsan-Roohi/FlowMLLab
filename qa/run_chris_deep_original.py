@@ -69,6 +69,12 @@ def main():
     p.add_argument("--output", type=Path, required=True)
     p.add_argument("--preflight", action="store_true")
     p.add_argument("--case-index", type=int, choices=range(5))
+    p.add_argument("--depth", type=float, help="Declared continuation depth")
+    p.add_argument("--reynolds", type=float, help="Declared continuation Reynolds number")
+    p.add_argument("--ssb-phases", type=int, default=10)
+    p.add_argument("--seed", type=int, default=1234)
+    p.add_argument("--fixed-sampling", action="store_true",
+                   help="Keep deterministic collocation points across phases and restarts")
     p.add_argument("--refine-from", type=Path,
                    help="Complete checkpoint prefix used to start a separate refinement run")
     p.add_argument("--lower-anchors", type=int, default=0,
@@ -79,6 +85,14 @@ def main():
     p.add_argument("--refine-ssb-steps", type=int, default=18000,
                    help="SSB iterations per restart-safe refinement phase")
     args = p.parse_args()
+    explicit_case = args.depth is not None or args.reynolds is not None
+    if explicit_case and (args.depth is None or args.reynolds is None or args.case_index is not None):
+        p.error("Supply both --depth and --reynolds, without --case-index")
+    if explicit_case and not (math.isfinite(args.depth) and args.depth > .1
+                              and math.isfinite(args.reynolds) and args.reynolds > 0):
+        p.error("Depth must exceed 0.1 and Reynolds number must be positive and finite")
+    if args.ssb_phases < 1 or args.refine_ssb_steps < 1:
+        p.error("SSB phases and steps must be positive")
     if args.refine_adam_steps < 1:
         raise ValueError("--refine-adam-steps must be positive")
     archive = args.archive.resolve()
@@ -108,14 +122,16 @@ def main():
                                gtol=1e-8, maxiter=100)
     assert test.fun < 1e-12, test
     original = runpy.run_path(str(src / "CavityTrapREDepthSSB20.py"), run_name="author_source")
+    dde.config.set_random_seed(args.seed)
     expected = dict(ReMin=900, ReMax=1100, DMin=2.1, DMax=2.3,
                     epochsAdam=5000, epochsLBFGS=25000, NumBFGS=10)
     for k, v in expected.items():
         assert original[k] == v, (k, original[k])
-    if args.case_index is not None:
-        re, depth = DEEP_CASES[args.case_index]
+    if args.case_index is not None or explicit_case:
+        re, depth = ((args.reynolds, args.depth) if explicit_case else DEEP_CASES[args.case_index])
         expected.update(ReMin=.9*re, ReMax=1.1*re, DMin=depth-.1, DMax=depth+.1)
-        if args.refine_from:
+        expected["NumBFGS"] = args.ssb_phases
+        if args.refine_from or explicit_case:
             expected["epochsLBFGS"] = args.refine_ssb_steps
         # run_path may return a copy; functions resolve the defining globals.
         original['main'].__globals__.update(expected)
@@ -125,6 +141,14 @@ def main():
     if config_path.exists() and json.loads(config_path.read_text()) != expected:
         raise ValueError('Refusing to reuse checkpoints with different physical parameters')
     config_path.write_text(json.dumps(expected, indent=2))
+    training_config = dict(seed=args.seed, fixed_sampling=args.fixed_sampling,
+                           adam_steps=args.refine_adam_steps,
+                           adam_lr=args.refine_adam_lr if args.refine_from else original['lr'],
+                           lower_anchors=args.lower_anchors)
+    training_path = out / 'training-configuration.json'
+    if training_path.exists() and json.loads(training_path.read_text()) != training_config:
+        raise ValueError('Refusing to resume with different training settings')
+    training_path.write_text(json.dumps(training_config, indent=2))
     # Fail early if the installed geometry API cannot represent the original box.
     box = dde.geometry.Rectangle([0] * 5, [1] * 5)
     assert box.random_points(8).shape == (8, 5)
@@ -244,6 +268,9 @@ def main():
             adam_offset[0] = state.get("adam_done", 0)
             kw["epochs"] = max(1, args.refine_adam_steps - state.get("adam_done", 0))
             kw["callbacks"] = list(kw.get("callbacks") or []) + [SaveAdam()]
+        if args.fixed_sampling:
+            kw["callbacks"] = [cb for cb in kw.get("callbacks", [])
+                               if not isinstance(cb, dde.callbacks.PDEPointResampler)]
         result = original_train(model, *a, **kw)
         state["checkpoint"] = model.save("model/restart", verbose=0)
         state["phase"] = phase[0] + 1
@@ -257,8 +284,8 @@ def main():
     if args.lower_anchors:
         if args.lower_anchors < 1000:
             raise ValueError("Use at least 1000 refinement anchors")
-        if args.case_index is None:
-            raise ValueError("Refinement anchors require --case-index")
+        if args.case_index is None and not explicit_case:
+            raise ValueError("Refinement anchors require declared case parameters")
         base_pde_init = dde.data.PDE.__init__
 
         def pde_init(instance, *a, **kw):
@@ -267,10 +294,10 @@ def main():
             anchors = rng.random((args.lower_anchors, 5))
             anchors[:, 1] = 0.6 * rng.beta(1.0, 2.0, args.lower_anchors)
             anchors[:, 2] = (
-                DEEP_CASES[args.case_index][0] - expected["ReMin"]
+                re - expected["ReMin"]
             ) / (expected["ReMax"] - expected["ReMin"])
             anchors[:, 3] = (
-                DEEP_CASES[args.case_index][1] - expected["DMin"]
+                depth - expected["DMin"]
             ) / (expected["DMax"] - expected["DMin"])
             anchors[:, 4] = (0.0 - original["triMin"]) / (original["triMax"] - original["triMin"])
             instance.add_anchors(anchors)
@@ -288,6 +315,7 @@ def main():
     Path("provenance.json").write_text(json.dumps(dict(source_sha256=SOURCE_HASH,
         optimizer_sha256=OPT_HASH, parameters=expected,
         refinement=state.get("refinement"),
+        seed=args.seed, fixed_sampling=args.fixed_sampling,
         protocol="author source with explicit SSB dispatch and checkpoint wrapper; declared parameter-box adaptation" if args.case_index is not None else "original source with explicit SSB dispatch and checkpoint wrapper"), indent=2))
     original["main"]()
 
