@@ -1,0 +1,19 @@
+{
+  "mode": "nn10000",
+  "seconds": 1519.5551560000167,
+  "executed_source_sha256": "2b631c096736c78c0403b6c056ceca731696438c1de00bb8004cb269e536a9e6",
+  "torch": "2.14.0+cpu",
+  "numpy": "2.5.3",
+  "seed": 42,
+  "iteration": 39999,
+  "residual": 1.565908670701918e-05,
+  "threshold": 1e-06,
+  "converged": false,
+  "restart": true,
+  "grid": [
+    1,
+    120
+  ],
+  "wall_shear": 0.9986719914169347,
+  "finite": true
+}

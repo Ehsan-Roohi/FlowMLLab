@@ -1,5 +1,10 @@
 # FlowMLLab
 
+**Week 14:** [RANS, PINN and neural turbulence closures](notebooks/week14/README.md)
+based on Lars Davidson's pyCALC-RANS workflow: an executed teaching notebook,
+[12-page lecture](lectures/week14_rans_pinn_nn.pdf), and a transparent reproduction
+audit. Full paper-level numerical reproduction is not claimed.
+
 [![FlowMLLab CI](https://github.com/Ehsan-Roohi/FlowMLLab/actions/workflows/ci.yml/badge.svg)](https://github.com/Ehsan-Roohi/FlowMLLab/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.22651906.svg)](https://doi.org/10.5281/zenodo.22651906)
@@ -9,7 +14,7 @@ generate numerical data, compare transparent baselines with learned models, and
 check both prediction error and physical fidelity.
 
 Developed for **MIE 690A: AI in Fluid Mechanics**, University of Massachusetts
-Amherst. The working course includes **33 notebooks** and a continuous lecture
+Amherst. The working course includes **35 notebooks** and a continuous lecture
 sequence from
 numerical foundations to continuum and rarefied-flow research examples.
 
@@ -387,7 +392,7 @@ archived research reconstruction shown above.
 **CFD / data:** Displayed fields are PINN solutions, not CFD output. OpenFOAM finite-volume and Nektar++ spectral/hp cavity calculations form a separate reference-validation campaign; they are not yet certified matched references for these displayed deep-cavity PINNs.<br>
 **Learning method:** Streamfunction PINN with hard wall constraints, trained using Adam then SSBroyden2 in float64.
 
-The final module develops streamfunction PINNs for square and deep lid-driven
+The Week 13 module develops streamfunction PINNs for square and deep lid-driven
 cavities. Compare **Re = 100 and 400**, **H/L = 1 and 2**, and **Adam followed
 by SSBroyden2** using retained float64 A100 runs, exact wall constraints and
 independent residual checks. Square cases have frozen near-matched CFD gates;
@@ -435,6 +440,28 @@ Adam warm-up (steps 1–1000), orange is SSBroyden2 continuation, dashed black i
 the held-out full-domain residual, and dotted green is the held-out top-corner
 residual. Decreasing training loss alone does not establish convergence of the
 physical solution; the retained held-out discrepancies remain visible.
+
+### Week 14 - RANS, inverse PINN and neural turbulence closures
+
+**Problem:** Improve turbulent kinetic energy without confusing a coefficient fit
+with a validated coupled flow solution.<br>
+**CFD / data:** Lars Davidson's pyCALC-RANS source-checkpoint channel restarts;
+Lee-Moser DNS reference statistics.<br>
+**Learning method:** Inverse PINN diffusion inference and the original small
+ReLU coefficient-regression protocol, with a separately labeled interpolation control.
+
+![Week 14 classical and table-PINN channel profiles against DNS](results/week14_validation/profiles.png)
+
+[Executed notebook and CPU setup](notebooks/week14/README.md) ·
+[12-page lecture](lectures/week14_rans_pinn_nn.pdf) ·
+[Run ledger](results/week14_validation/README.md) ·
+[Paper-claim alignment](docs/WEEK14_PAPER_ALIGNMENT.md).
+
+This completed teaching audit retains unsuccessful convergence criteria and
+source-target regeneration differences. The plotted table-based PINN comparison
+is **not** a verified reproduction of the paper's final PINN-NN curves.
+The notebook reruns the small NN fit and checks retained CFD evidence; it does
+not silently present saved solver fields as a fresh Run-All CFD calculation.
 
 ## Reuse and contribute
 

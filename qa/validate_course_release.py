@@ -19,6 +19,10 @@ EXPECTED_DATA_SHA256 = "09b96b744ee4d18126d8dcc92feb60e128774a1b4d41bb3d8c90a63c
 
 
 REQUIRED = [
+    "notebooks/week14/W14_pyCALC_RANS_PINN_NN.ipynb",
+    "notebooks/week14/requirements.txt",
+    "lectures/week14_rans_pinn_nn.pdf",
+    "results/week14_validation/manifest.json",
     "lectures/week13_rectangular_cavity_pinn.pdf",
     "lectures/source/week13_rectangular_cavity_pinn.md",
     "notebooks/week13/README.md",
@@ -383,15 +387,21 @@ def validate_notebooks() -> tuple[int, int]:
             "https://colab.research.google.com/github/"
             f"Ehsan-Roohi/FlowMLLab/blob/main/{relative}"
         )
-        assert colab_url in full_source, f"missing direct Colab launcher: {path}"
-        assert "FLOWMLLAB_COLAB_BOOTSTRAP_V1" in full_source, (
+        week14_lab = relative == 'notebooks/week14/W14_pyCALC_RANS_PINN_NN.ipynb'
+        assert week14_lab or colab_url in full_source, f"missing direct Colab launcher: {path}"
+        assert week14_lab or "FLOWMLLAB_COLAB_BOOTSTRAP_V1" in full_source, (
             f"missing Colab repository bootstrap: {path}"
         )
         reconstruction_lab = relative == 'notebooks/week11/W11_Lab2_Reconstruction_and_Identification.ipynb'
         if reconstruction_lab:
             assert 'FlowMLLab retained-LBM reconstruction audit v1' in full_source
             assert 'velocity-derived weak references' in full_source
-        assert reconstruction_lab or any(
+        if week14_lab:
+            assert 'FlowMLLab teaching adaptation' in full_source
+            assert 'not a verified' in full_source
+            assert len([c for c in cells if c.get('cell_type')=='code']) == 7
+            assert all(c.get('execution_count') is not None for c in cells if c.get('cell_type')=='code')
+        assert week14_lab or reconstruction_lab or any(
             marker in full_source
             for marker in (
                 "MIE690A article-aligned validation v3",
@@ -426,7 +436,7 @@ def validate_notebooks() -> tuple[int, int]:
                 for cell in cells
             ), f"missing learner-edition marker: {path}"
         count += 1
-    assert count == 34, f"expected 34 notebooks, found {count}"
+    assert count == 35, f"expected 35 notebooks, found {count}"
     return count, code_cells
 
 
@@ -1094,7 +1104,7 @@ def validate_week01_1_results() -> dict[str, object]:
 
 def validate_pdfs() -> int:
     pdfs = sorted((ROOT / "lectures").glob("*.pdf"))
-    assert len(pdfs) == 19
+    assert len(pdfs) == 20
     for path in pdfs:
         result = subprocess.run(
             ["pdfinfo", str(path)], check=True, capture_output=True, text=True
@@ -1110,6 +1120,7 @@ def main() -> None:
     actual = digest(ROOT / "data" / "cavity_data.npz")
     assert actual == EXPECTED_DATA_SHA256, (actual, EXPECTED_DATA_SHA256)
     notebooks, code_cells = validate_notebooks()
+    subprocess.run([sys.executable, str(ROOT / 'qa/verify_week14.py')], check=True)
     metrics = smoke_common_baseline()
     deeponet_metrics = validate_pod_deeponet_results()
     cavity_rom_metrics = validate_cavity_rom_results()

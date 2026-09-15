@@ -64,8 +64,15 @@ class ResearchEvidenceTests(unittest.TestCase):
         for document in documents:
             text=document.read_text(encoding='utf-8')
             self.assertIn('Harmonized Joint',text,document)
-            self.assertIn('j9rO5j3sudA',text,document)
-            self.assertIn('hh3K40KRBUQ',text,document)
+            if document == ROOT/'README.md':
+                # The reviewed homepage now shows the extended S9/S10 pipeline;
+                # the dedicated research pages retain the earlier HJ controls.
+                self.assertIn('ULA8x2jUEvA',text,document)
+                self.assertIn('opVMf1OVdM4',text,document)
+                self.assertIn('different configuration from the HJ control',text,document)
+            else:
+                self.assertIn('j9rO5j3sudA',text,document)
+                self.assertIn('hh3K40KRBUQ',text,document)
 
     def test_dsmc_provenance_and_seed_coverage(self):
         folder=ROOT/'results/week12_research'

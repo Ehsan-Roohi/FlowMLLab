@@ -1,5 +1,9 @@
 # Start here
 
+For Davidson-based turbulence closures, see the [Week 14 guide](notebooks/week14/README.md).
+This CPU module uses a complete checkout and an isolated PyTorch environment;
+it distinguishes source reproduction from classroom controls and retains failed gates.
+
 This page is the shortest reliable path from a fresh checkout to a meaningful scientific result.
 
 ## 1. Choose your mode

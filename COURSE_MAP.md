@@ -46,13 +46,14 @@
 | [11](notebooks/week11/README.md) | Shock/core identification; shear versus rotation; overlapping labels | Manufactured controls, trained local MLP, physical baseline | Complete-case splits, validation-only thresholds, both tasks and fragmentation; not research CFD or the original dual-decoder network |
 | [12](notebooks/week12/README.md) | Additive moments, prior-plus-observation reconstruction, support | Synthetic warm-up plus fresh Noise2Noise-style patch-MLP training on real DSMC cavity observations | Four fitting seeds, two selection seeds, two evaluation seeds; high-budget reference excluded from fitting; mixed qx/qy baseline results; already-inspected archive, not a fresh blind or paper-model reproduction |
 | [13](notebooks/week13/README.md) | Streamfunction PINNs, Reynolds number, rectangular geometry and optimizer continuation | Audit four retained A100 cases at Re=100/400 and D=1/2; inspect Adam-to-SSBroyden2 histories and colored fields | Frozen square-case CFD gates; independent full/corner residuals; exact walls; deep cases explicitly lack matched field validation; paper extension requires matched representation and seed study |
+| [14](notebooks/week14/README.md) | RANS closure, inverse PINN and local-feature NN | Reproduce Davidson's small coefficient network; compare interpolation; inspect source solver restarts | Correct baseline identity, source hashes, residual gates and paper-stage distinction; full end-to-end paper reproduction is not established |
 
 Each includes a PDF lecture and an executed CPU notebook. Week 11 additionally
 audits frozen-checkpoint research masks; these are not new ground-truth accuracy
 measurements. Week 12 follows
 Week 11 because noise-sensitive derivatives connect feature detection to field
 reconstruction; it can also be taught directly after Weeks 3 and 10.
-Week 13 is an independent final research audit that returns to continuum cavity
+Week 13 is an independent research audit that returns to continuum cavity
 flow after students understand optimization, validation and evidence boundaries.
 
 The [PINN foundations reading](lectures/week04_2_pinn_cavity.pdf), originally
@@ -62,6 +63,14 @@ checks. The [initial Re=100 qualification](results/week04_2_pinn_cavity/README.m
 supports the final module's CFD comparison and restart protocol.
 
 ## Suggested adoption modes
+
+### Week 14 extension: RANS, PINN and neural closures
+
+[Lecture and lab](notebooks/week14/README.md), following the continuum/ML
+foundations and inverse-problem material. Uses Lars Davidson's pyCALC-RANS
+workflow and Lee-Moser DNS; separates source reproduction, classroom controls,
+and solver-coupled evidence. Failed reproduction gates remain visible.
+
 
 ### One-day workshop
 

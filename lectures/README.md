@@ -1,5 +1,13 @@
 # Lectures and guides
 
+## Week 14 - Davidson-based turbulence closure module
+
+[Lecture PDF](week14_rans_pinn_nn.pdf) / [editable notes](source/week14_rans_pinn_nn.md)
+/ [executed notebook and run guide](../notebooks/week14/README.md).
+Twelve pages: inverse PINN, three closure coefficients, original NN training,
+coupled RANS, and the limits found in the source-package audit. All figures are
+newly plotted from attributed data and retained executions.
+
 | File | Main topics | Companion notebooks |
 | --- | --- | --- |
 | `week01_numerical_foundations.pdf` | Python, TensorFlow, CFD fields, finite differences, convergence, Ghia validation | `notebooks/week01/` |
