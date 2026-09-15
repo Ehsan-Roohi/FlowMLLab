@@ -59,6 +59,11 @@ def main():
     p.add_argument("--output", type=Path, required=True)
     p.add_argument("--preflight", action="store_true")
     p.add_argument("--case-index", type=int, choices=range(5))
+    p.add_argument("--refine-from", type=Path,
+                   help="Complete checkpoint prefix used to start a separate refinement run")
+    p.add_argument("--lower-anchors", type=int, default=0,
+                   help="Extra residual points biased toward the lower 60% of the cavity")
+    p.add_argument("--refine-adam-lr", type=float, default=1e-4)
     args = p.parse_args()
     archive = args.archive.resolve()
     out = args.output.resolve()
@@ -112,6 +117,17 @@ def main():
     Path("model").mkdir(exist_ok=True)
     state_path = Path("resume.json")
     state = json.loads(state_path.read_text()) if state_path.exists() else {"phase": 0, "adam_done": 0}
+    if args.refine_from and not state_path.exists():
+        prefix = args.refine_from.resolve()
+        for suffix in (".index", ".meta", ".data-00000-of-00001"):
+            if not Path(str(prefix) + suffix).is_file():
+                raise FileNotFoundError(str(prefix) + suffix)
+        state["checkpoint"] = str(prefix)
+        state["refinement"] = {
+            "lower_anchors": args.lower_anchors,
+            "adam_lr": args.refine_adam_lr,
+            "sampling": "deterministic target-case anchors; eta=0.6*Beta(1,2)",
+        }
     stop = [False]
     for sig in (signal.SIGTERM, signal.SIGUSR1):
         signal.signal(sig, lambda *_: stop.__setitem__(0, True))
@@ -201,8 +217,40 @@ def main():
 
     dde.Model.train = train
     dde.saveplot = restart_safe_saveplot(dde.saveplot)
+    if args.lower_anchors:
+        if args.lower_anchors < 1000:
+            raise ValueError("Use at least 1000 refinement anchors")
+        if args.case_index is None:
+            raise ValueError("Refinement anchors require --case-index")
+        base_pde_init = dde.data.PDE.__init__
+
+        def pde_init(instance, *a, **kw):
+            base_pde_init(instance, *a, **kw)
+            rng = np.random.default_rng(20260914)
+            anchors = rng.random((args.lower_anchors, 5))
+            anchors[:, 1] = 0.6 * rng.beta(1.0, 2.0, args.lower_anchors)
+            anchors[:, 2] = (
+                DEEP_CASES[args.case_index][0] - expected["ReMin"]
+            ) / (expected["ReMax"] - expected["ReMin"])
+            anchors[:, 3] = (
+                DEEP_CASES[args.case_index][1] - expected["DMin"]
+            ) / (expected["DMax"] - expected["DMin"])
+            anchors[:, 4] = (0.0 - original["triMin"]) / (original["triMax"] - original["triMin"])
+            instance.add_anchors(anchors)
+
+        dde.data.PDE.__init__ = pde_init
+        base_compile = dde.Model.compile
+
+        def compile_refinement(model, optimizer, *a, **kw):
+            if str(optimizer).lower() == "adam":
+                kw["lr"] = args.refine_adam_lr
+            return base_compile(model, optimizer, *a, **kw)
+
+        dde.Model.compile = compile_refinement
     Path("provenance.json").write_text(json.dumps(dict(source_sha256=SOURCE_HASH,
-        optimizer_sha256=OPT_HASH, parameters=expected, protocol="author source with explicit SSB dispatch and checkpoint wrapper; declared parameter-box adaptation" if args.case_index is not None else "original source with explicit SSB dispatch and checkpoint wrapper"), indent=2))
+        optimizer_sha256=OPT_HASH, parameters=expected,
+        refinement=state.get("refinement"),
+        protocol="author source with explicit SSB dispatch and checkpoint wrapper; declared parameter-box adaptation" if args.case_index is not None else "original source with explicit SSB dispatch and checkpoint wrapper"), indent=2))
     original["main"]()
 
 
