@@ -1,4 +1,4 @@
-# Week 11 - Physics-audited shock and vortex identification
+# Week 11 - Shock, vortex and vapor-cloud identification
 
 ## From flow fields to defensible labels
 
@@ -115,3 +115,51 @@ Propose a front-location metric and a component-matching rule before looking at 
 Run notebooks/week11/W11_Shock_Vortex_Identification.ipynb from a complete FlowMLLab checkout or use its Colab launcher. It runs on CPU and keeps experiment outputs in memory. The authoring builder can regenerate the retained teaching notebook and figure; a student's Run All does not overwrite results/.
 
 Source attribution: Ehsan Roohi, Physics-audited joint neural segmentation of shocks and vortex cores: cross-solver transfer and controlled airfoil--cylinder studies, author-supplied 2026 manuscript; ShockVortexML repository above. Original FlowMLLab lecture wording, synthetic fields and code were AI-assisted and checked. These additions are not claims of original research-data generation or full-paper reproduction.
+
+## Hydrofoil cavitation: the machine-vision extension
+
+The final Week 11 example uses our existing hydrofoil vapor-cloud detection code and results. The task is to distinguish background, attached cavity and disconnected vapor cloud in a two-dimensional CFD field. A vapor-fraction image shows where vapor is present; attachment also depends on connectivity and contact with the hydrofoil. A thin ligament can change the interpretation of a large region.
+
+Unlike the overlapping shock and vortex labels, attached and disconnected are mutually exclusive states under the stated topology definition. A three-logit softmax classifier is therefore appropriate for this experiment. Solid and uncertain support need separate handling. A disconnected region in a two-dimensional field is not evidence of three-dimensional disconnection or a tracked shedding event.
+
+This is Ehsan Roohi's retained native_alpha20_v6 experiment from September 12, 2026, packaged as an executable extension. Inputs are real Fluent CFD vapor-fraction rasters and geometry, not experimental photographs. We reuse the original trained weights and 158 snapshots from seven cases. Default notebook execution reruns inference; it does not generate new CFD or retrain the model.
+
+Allow 30-45 additional classroom minutes: inspect the input and reference definition, run the saved detector, compare the cavity field and its detected structures, then discuss one failure. The companion is notebooks/week11/W11_Cavitation_Cloud_Detection.ipynb; the course launchers provide its direct Colab link.
+
+## Vapor support, native topology and learned classes
+
+The native weak teacher defines vapor support by alpha_v >= 0.20. Connected components are computed using original Fluent cell-face adjacency. A component that touches an actual wall face is attached; a component without that contact is disconnected in the two-dimensional representation. Components affected by external or cropped support remain uncertain. The published reference arrays retain that uncertainty as label 255, together with solid support excluded from scientific scores.
+
+The model receives three channels: vapor fraction, the solid mask, and the clipped pixel distance to solid, min(d/48,1). The five encoder widths are 8, 16, 24, 32 and 48. A learned projection of global-average bottleneck features supplies context; four skip-connected decoder stages use bilinear upsampling. A three-channel output head gives background, attached and disconnected logits. The original model has 126,275 trainable parameters.
+
+Inference is direct neural argmax. Reference masks do not enter inference, and no connectivity repair, hand-filled gap, component deletion or geometry veto is added afterward. Wall false positives are reported separately rather than silently hidden. The pixel-distance channel preserves the original preprocessing; it is not invariant to changing raster resolution.
+
+The references are algorithmic, not human ground truth. A separate classroom baseline thresholds the raster and uses four-connected pixels with one-cell wall contact. Its disagreement with the native teacher illustrates why raster connectivity must not be substituted silently for native-mesh contact. Neural predictions and this classical baseline remain separate products.
+
+## See the cavity and its detection together
+
+[CAVITATION_FIGURE]
+
+Left: CFD vapor volume fraction. Middle: native weak reference. Right: fresh inference from the original model. Orange denotes attached cavity; magenta denotes disconnected vapor in 2-D. Every panel uses the same vapor range [0,1] and physical coordinates. The illustrated times, 0.36 and 2.12 s, come from the TRAIN LES trajectory and were retained in the original review.
+
+The large downstream cloud is an interpretable detection, but the near-wall attachment decision can still be wrong. Inspect both classes, including small ligaments and wall errors. Do not interpret a visually persuasive training example as independent test accuracy. The complete gallery retains the original four LES times and worst-error examples.
+
+## Reproduce the result and keep the difficult cases
+
+The case split is fixed: Cases 13, 14, 16 and Case1LES are TRAIN (86 frames); Case 19 is validation (27); Cases 24 and 23 are nontraining (27 and 18). All were previously inspected during development. Neighboring frames are correlated; 158 frames do not represent 158 independent flow cases. No fresh blind evaluation is claimed.
+
+Rerun all frames with the saved model and compare every predicted pixel to the archived argmax output. Then recompute pooled TP, FP and FN over valid reference support. Dice = 2*TP/(2*TP+FP+FN). Empty-versus-empty is undefined here, unlike the synthetic warm-up's declared convention. Also count predictions inside solid and run a zero-vapor negative control with unchanged geometry.
+
+For Case1LES, attached/cloud Dice is 0.93323/0.88713. For inspected nontraining Case 24 it is 0.96270/0.49188, while Case 23 gives 0.97995/0.85525. The lower Case 24 cloud score remains part of the lesson. All seven cases, confusion counts, data hashes and figure times are retained in results/week11_cavitation/ and data/week11_cavitation/manifest.json.
+
+The notebook additionally compares a transparent raster baseline and adds seeded vapor-channel noise with standard deviation 0.02. This is a sensitivity exercise against the same clean reference, not a camera-noise model or an independent validation experiment. A baseline may win; do not tune the detector to conceal that outcome.
+
+## Training provenance, interpretation and assignment
+
+The retained v6 model starts from native_v4, whose earlier training used alpha_v >= 0.50 references, and receives 1000 additional Adam updates at learning rate 0.0002 with alpha20 labels. Its parent had 2000 updates. A poor from-scratch alpha20 development fit preceded this continuation. Report that history; do not call v6 a 1000-step from-scratch model or an equal-total-budget comparison.
+
+The optional notebook section reruns this final adaptation from the supplied parent using only the four TRAIN cases. It preserves cloud-frame sampling, vertical reflection, class-weighted cross entropy plus foreground Dice, and gradient clipping. The fixed final step is retained; no PDE residual or forecasting objective is used. A separate in-memory model is returned, leaving the original weights unchanged. Raw Fluent conversion and the earlier parent training are outside this public subset.
+
+Assignment: identify one attachment error in Case 24; compare neural and raster-baseline scores for both classes; explain the effect of an unresolved vapor ligament; and specify the new trajectories, expert annotations and temporal sampling needed to assess true cloud detachment and tracking. A smooth outline or a high weak-reference Dice alone does not validate those claims.
+
+Related work: Hatzissawidis et al., Deep learning semantic segmentation for cloud cavitation image analysis, Physics of Fluids 38, 093331 (2026), doi:10.1063/5.0345365. That study segments camera images and uses a subsequent heuristic sheet/cloud split. Our retained experiment directly predicts three classes from CFD rasters. This lesson does not reproduce their dataset or establish superiority to their method. Course adaptation and verification are AI-assisted; exact author-model and data provenance accompany the code.

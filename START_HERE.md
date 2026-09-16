@@ -25,7 +25,7 @@ This page is the shortest reliable path from a fresh checkout to a meaningful sc
 
 Do not begin with Track 6 unless you already understand case-wise splitting, scaling, offline versus closed-loop validation, and GPU troubleshooting.
 
-The complete [notebook launcher](notebooks/README.md) links directly to all 33
+The complete [notebook launcher](notebooks/README.md) links directly to the
 Colab notebooks. Their first code cells obtain the repository and package, so a
 fresh Colab runtime does not require manual file uploads.
 
@@ -34,6 +34,8 @@ fresh Colab runtime does not require manual file uploads.
 New working-course extensions: [Week 11 feature identification](notebooks/week11/README.md)
 and [Week 12 noisy-moment reconstruction](notebooks/week12/README.md). Both run on
 CPU without TensorFlow and clearly separate synthetic exercises from research results.
+Week 11 now also includes [hydrofoil vapor-cloud detection](notebooks/week11/W11_Cavitation_Cloud_Detection.ipynb):
+replay the author's existing model on retained CFD fields, with an optional final-stage training run.
 The independent [Week 13 cavity-PINN audit](notebooks/week13/README.md) reads
 retained Unity A100 evidence; it does not retrain the research runs in Colab.
 

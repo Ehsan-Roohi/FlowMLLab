@@ -1,0 +1,275 @@
+{
+  "version": 1,
+  "author": "Ehsan Roohi",
+  "source": "Author hydrofoil computer-vision experiment, native_alpha20_v6, 2026-09-12",
+  "scope": "Retained CFD vapor rasters and native weak labels; not photographs or human ground truth",
+  "reference_threshold": 0.2,
+  "classes": {
+    "0": "background",
+    "1": "attached_2d",
+    "2": "disconnected_2d",
+    "255": "ignore"
+  },
+  "inference": "3 input channels, neural argmax only; no topology repair",
+  "source_checkpoint_sha256": "e2ffa88b33582b99de7aff6396e9116949aef1bda87fac296454f7e00b97e921",
+  "parent_checkpoint_sha256": "6465c73699eb0a436521f2173353f945c253917cb17b3d89db15fcc77b996d9c",
+  "protocol": {
+    "seed": 20260912,
+    "steps": 1000,
+    "learning_rate": 0.0002,
+    "training_cases": [
+      "Case_13",
+      "Case_14",
+      "Case_16",
+      "Case1LES"
+    ],
+    "validation_case": "Case_19",
+    "new_test_case": null,
+    "reference_threshold": 0.2,
+    "initialization": "native_v4 checkpoint; preserve acquired cloud representation while adapting reference definition",
+    "selection": "fixed final1000 extra updates; 3000 total including parent; not equal-total-budget with v5",
+    "scope": "v5 from-scratch new-target fit was poor on TRAIN LES. This is a development follow-up; no new independent test claim.",
+    "class_counts": [
+      5770962,
+      233090,
+      88281
+    ],
+    "class_weights": [
+      0.20097299916042824,
+      1.0,
+      1.624905837713153
+    ],
+    "code_sha256": "5fa95116cc07f630eeb750e60d210659b9b1095f0928c06e910d061101b62d2b",
+    "sources": {
+      "Case_13": {
+        "source_sha256": "6d1c9ef6c15d3283debd4e090fb5b2f950fea73bb4aa4596b185f3d50a91b1ff",
+        "reference_sha256": "f1229081b3e3783940df20a8b3f53497e4a8a760ab579c83f55d48817566e5f0"
+      },
+      "Case_14": {
+        "source_sha256": "4bfa64a3c7582bedb13173a76f3e1fcd612ef379f4f4a9df99fcbb8992f289a2",
+        "reference_sha256": "25a7e53ba481a1491350bb5251378e2229168359eafb6f049ac3f87cf33996c9"
+      },
+      "Case_16": {
+        "source_sha256": "88fc86b74e4c9469cdc5fc903bca82c49789019191bc74bbd3a9c958bb11dc4a",
+        "reference_sha256": "9e0a6d7a22f2d66cf03da66c77effb533e154615958e090de61d0b5eb8ddba04"
+      },
+      "Case1LES": {
+        "source_sha256": "2e0e6396f8d19d61b5f490c9206a7f13e4a4bbfe3571acec3e3bc7b2afa71bc7",
+        "reference_sha256": "8d9eb700a0d341a8d9e7710a11592abf60bdd39b63eee02c1d3b6c06b9a0bd52"
+      },
+      "Case_19": {
+        "source_sha256": "e489b4c9345724cae2a7984afbed7a6825a5aff989f514ba67d664e0eb37e6ec",
+        "reference_sha256": "c6b850c34cae496e4692dd44c5503fb830d1da6b2b83a2c376f0112ebb916508"
+      }
+    }
+  },
+  "cases": [
+    {
+      "name": "Case_13",
+      "file": "Case_13.npz",
+      "role": "TRAIN",
+      "frames": 18,
+      "shape": [
+        18,
+        192,
+        384
+      ],
+      "source_raster_sha256": "6d1c9ef6c15d3283debd4e090fb5b2f950fea73bb4aa4596b185f3d50a91b1ff",
+      "native_reference_sha256": "f1229081b3e3783940df20a8b3f53497e4a8a760ab579c83f55d48817566e5f0",
+      "archived_metrics": {
+        "attached_2d": {
+          "dice": 0.9897120933182754,
+          "tp": 31987,
+          "fp": 531,
+          "fn": 134
+        },
+        "disconnected_2d": {
+          "dice": 0.9739663093415007,
+          "tp": 318,
+          "fp": 6,
+          "fn": 11
+        }
+      }
+    },
+    {
+      "name": "Case_14",
+      "file": "Case_14.npz",
+      "role": "TRAIN",
+      "frames": 18,
+      "shape": [
+        18,
+        192,
+        384
+      ],
+      "source_raster_sha256": "4bfa64a3c7582bedb13173a76f3e1fcd612ef379f4f4a9df99fcbb8992f289a2",
+      "native_reference_sha256": "25a7e53ba481a1491350bb5251378e2229168359eafb6f049ac3f87cf33996c9",
+      "archived_metrics": {
+        "attached_2d": {
+          "dice": 0.9788029925187033,
+          "tp": 28260,
+          "fp": 908,
+          "fn": 316
+        },
+        "disconnected_2d": {
+          "dice": 0.952755905511811,
+          "tp": 121,
+          "fp": 9,
+          "fn": 3
+        }
+      }
+    },
+    {
+      "name": "Case_16",
+      "file": "Case_16.npz",
+      "role": "TRAIN",
+      "frames": 18,
+      "shape": [
+        18,
+        192,
+        384
+      ],
+      "source_raster_sha256": "88fc86b74e4c9469cdc5fc903bca82c49789019191bc74bbd3a9c958bb11dc4a",
+      "native_reference_sha256": "9e0a6d7a22f2d66cf03da66c77effb533e154615958e090de61d0b5eb8ddba04",
+      "archived_metrics": {
+        "attached_2d": {
+          "dice": 0.9766845510493924,
+          "tp": 24757,
+          "fp": 1045,
+          "fn": 137
+        },
+        "disconnected_2d": {
+          "dice": 0.8804878048780488,
+          "tp": 361,
+          "fp": 80,
+          "fn": 18
+        }
+      }
+    },
+    {
+      "name": "Case1LES",
+      "file": "Case1LES.npz",
+      "role": "TRAIN",
+      "frames": 32,
+      "shape": [
+        32,
+        192,
+        384
+      ],
+      "source_raster_sha256": "2e0e6396f8d19d61b5f490c9206a7f13e4a4bbfe3571acec3e3bc7b2afa71bc7",
+      "native_reference_sha256": "8d9eb700a0d341a8d9e7710a11592abf60bdd39b63eee02c1d3b6c06b9a0bd52",
+      "archived_metrics": {
+        "attached_2d": {
+          "dice": 0.9332317880361771,
+          "tp": 142756,
+          "fp": 15684,
+          "fn": 4743
+        },
+        "disconnected_2d": {
+          "dice": 0.887129106348659,
+          "tp": 75897,
+          "fp": 7761,
+          "fn": 11552
+        }
+      }
+    },
+    {
+      "name": "Case_19",
+      "file": "Case_19.npz",
+      "role": "validation (inspected)",
+      "frames": 27,
+      "shape": [
+        27,
+        192,
+        384
+      ],
+      "source_raster_sha256": "e489b4c9345724cae2a7984afbed7a6825a5aff989f514ba67d664e0eb37e6ec",
+      "native_reference_sha256": "c6b850c34cae496e4692dd44c5503fb830d1da6b2b83a2c376f0112ebb916508",
+      "archived_metrics": {
+        "attached_2d": {
+          "dice": 0.9693949943079639,
+          "tp": 29378,
+          "fp": 517,
+          "fn": 1338
+        },
+        "disconnected_2d": {
+          "dice": 0.568081991215227,
+          "tp": 388,
+          "fp": 563,
+          "fn": 27
+        }
+      }
+    },
+    {
+      "name": "Case_24",
+      "file": "Case_24.npz",
+      "role": "nontraining (previously inspected)",
+      "frames": 27,
+      "shape": [
+        27,
+        192,
+        384
+      ],
+      "source_raster_sha256": "b1435c001a41f08e4101db7b88a0762076d55cbcea59703ef6d1ba10a653e5cb",
+      "native_reference_sha256": "2bba5330e987bee34ae62cbccf06e0cb4e595ff99df456124e59eaef007b355c",
+      "archived_metrics": {
+        "attached_2d": {
+          "dice": 0.9627024761765939,
+          "tp": 26418,
+          "fp": 524,
+          "fn": 1523
+        },
+        "disconnected_2d": {
+          "dice": 0.49187759727993957,
+          "tp": 651,
+          "fp": 888,
+          "fn": 457
+        }
+      }
+    },
+    {
+      "name": "Case_23",
+      "file": "Case_23.npz",
+      "role": "nontraining (previously inspected)",
+      "frames": 18,
+      "shape": [
+        18,
+        192,
+        384
+      ],
+      "source_raster_sha256": "3138e899c1d51eb7b95807837c774e44da5540f694c7ac235991a85b111c4e3d",
+      "native_reference_sha256": "4a17fdb03e703fffae2f9f51a701a362b9ae75ab26632d2d249e621347da43da",
+      "archived_metrics": {
+        "attached_2d": {
+          "dice": 0.9799469784514989,
+          "tp": 28832,
+          "fp": 924,
+          "fn": 256
+        },
+        "disconnected_2d": {
+          "dice": 0.8552456839309429,
+          "tp": 322,
+          "fp": 76,
+          "fn": 33
+        }
+      }
+    }
+  ],
+  "files": {
+    "Case1LES.npz": "2f72466ee8fa9bfc54fd7c2a0e1a75e72118eab4ab9757fce6aca47938d7989b",
+    "Case_13.npz": "a500c6fd8db5384b7f4787e58e14c8885e393d207db282c43ba87815278a9f80",
+    "Case_14.npz": "f6da6261fd588695892b5e4aa85ee93c47a5211ac9c1ebf355732d75c232c8c9",
+    "Case_16.npz": "f6993742fd33ddb3e40822f3257634c92972be73b8efef26920ed16c799766b7",
+    "Case_19.npz": "9dad3fd712c90dd43d8452762218849a308c327e8476a6f28d84514f9fd6e7e0",
+    "Case_23.npz": "6d16b7e594e82f3dad34e76dabb200396c1c82ecf823d502e1152439f038e4a7",
+    "Case_24.npz": "021b8bf8a7e2e25d16a9f6161e66141fa4530153c8063b59cd50b00d1f298779",
+    "detector_weights.npz": "a62be9d50eaab9ed0f29e44f2c6bdcc6f7ff4d3e020a830fa3066959b0206084",
+    "parent_weights.npz": "5e7a296a0e79e5e64b639f9277474d374fdd27678e5b87dacf95087e0ef99c6f"
+  },
+  "prior_work": "https://doi.org/10.1063/5.0345365",
+  "source_code_sha256": {
+    "cavitation_context_v3_20260912.py": "c7cb572bc9c8e72f75a0b65fc137e8fa54e411a29163022e26aa69e8e9099cf6",
+    "cavitation_native_train_20260912.py": "5fa95116cc07f630eeb750e60d210659b9b1095f0928c06e910d061101b62d2b",
+    "cavitation_alpha20_20260912.py": "27a62f79bb2b7abeba06aa07afb5bdef2f5b75fcbe0dfff89eda0e6f1b9e02c3",
+    "cavitation_alpha20_transfer_20260912.py": "1f06e26256e8e93c271c35c03960bbd8a624f1a0194f21e2e850f3b7ffe71f6d"
+  }
+}

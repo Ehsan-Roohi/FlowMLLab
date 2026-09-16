@@ -1,4 +1,4 @@
-"""Check executed new notebooks, local links and eight-page PDF notes.
+"""Check executed notebooks, local links and expanded Week 11/12 PDF notes.
 
 Use --render to produce local PDF review sheets under ignored tmp/.
 """
@@ -34,7 +34,10 @@ def verify(render=False):
         if week == 12:
             assert expected_pages == 12, (pdf, expected_pages)
         else:
-            assert 6 <= expected_pages <= 10, (pdf, expected_pages)
+            assert expected_pages == 14, (pdf, expected_pages)
+            lecture_text = ' '.join(' '.join(p.extract_text() for p in reader.pages).split())
+            assert 'Hydrofoil cavitation: the machine-vision extension' in lecture_text
+            assert 'native_alpha20_v6' in lecture_text
         assert all(len(p.extract_text()) > 500 for p in reader.pages)
         if render:
             from PIL import Image, ImageOps, ImageDraw

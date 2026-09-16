@@ -385,6 +385,28 @@ mask prediction on the same retained LBM wake cases. Three training seeds, loss
 histories and saved-checkpoint audits are included. These are weak-reference
 vortex scores on coarse incompressible data, not shock accuracy or a blind test.
 
+#### Hydrofoil vapor-cloud detection
+
+**Problem:** Detect attached cavities and disconnected vapor clouds around a hydrofoil.<br>
+**CFD / data:** The author's existing Fluent vapor-fraction fields: 158 retained snapshots from seven cases.<br>
+**Learning method:** The original 126,275-parameter context U-Net predicts background,
+attached cavity and disconnected cloud directly. The notebook reruns the saved
+model; an optional section reproduces its final adaptation stage.
+
+![Hydrofoil cavity and vapor-cloud detection: CFD field, native weak reference and learned output](results/week11_cavitation/cloud_detection.png)
+
+The cavity field and its detection appear side by side. Orange denotes attached
+cavity; magenta denotes disconnected vapor in 2-D. These two illustrated LES
+frames are training examples. The complete gallery also retains a difficult
+nontraining case and the original worst-error frames. Scores measure agreement
+with native-mesh weak references, not human-validated accuracy.
+
+[Open in Colab](https://colab.research.google.com/github/Ehsan-Roohi/FlowMLLab/blob/main/notebooks/week11/W11_Cavitation_Cloud_Detection.ipynb)
+· [Notebook](notebooks/week11/W11_Cavitation_Cloud_Detection.ipynb)
+· [Detection and training code](flowmllab/cavitation_detection.py)
+· [Results and provenance](results/week11_cavitation/README.md)
+· [Expanded Lecture 11](lectures/week11_shock_vortex_identification.pdf)
+
 ### Week 12 — DSMC moment reconstruction
 
 **Problem:** Reduce cavity heat-flux sampling noise.<br>

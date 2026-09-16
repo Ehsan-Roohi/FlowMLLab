@@ -454,6 +454,18 @@ def build_notebook(week, execute):
         cells[0].source += '\n\n**Practical extension:** this notebook trains a fresh Noise2Noise-style MLP on real DSMC data. Use a current complete checkout or the Colab button below.'
     cells[0].source += '\n\n**Research extension:** the final section reads real author-research evidence, clearly separated from the synthetic warm-up.'
     cells += research_cells(week)
+    if week == 11:
+        cells.append(md('''
+        ## Continue Week 11: hydrofoil vapor-cloud detection
+        Run the author's existing cavitation detector on 158 retained CFD frames,
+        compare the vapor field with attached-cavity and disconnected-cloud masks,
+        and inspect the original difficult cases.
+        [Cavitation notebook](W11_Cavitation_Cloud_Detection.ipynb) ·
+        [Open in Colab](https://colab.research.google.com/github/Ehsan-Roohi/FlowMLLab/blob/main/notebooks/week11/W11_Cavitation_Cloud_Detection.ipynb) ·
+        [Code](../../flowmllab/cavitation_detection.py) ·
+        [Results](../../results/week11_cavitation/README.md).
+        The final section of Lecture 11 develops this separate, real-data example.
+        '''))
     cells[0].source += badge(relative)
     cells[1].source = bootstrap(f'notebooks/week{week}') + cells[1].source
     for i, c in enumerate(cells):
@@ -498,9 +510,12 @@ def build_pdf(week):
                              fontSize=23, leading=29, spaceAfter=22, keepWithNext=True)
     small = ParagraphStyle('small', parent=body, fontSize=9, leading=13, keepWithNext=True)
     story = []
+    cavitation_started = False
     for i, section in enumerate(sections):
         name, content = section.split('\n', 1)
-        if i and week != 11:
+        if week == 11 and name == 'Hydrofoil cavitation: the machine-vision extension':
+            cavitation_started = True
+        if i and (week != 11 or cavitation_started):
             story.append(PageBreak())
         story.append(Paragraph(f'FLOWMLLAB / WEEK {week} / {i+1:02d}', small))
         story.append(Paragraph(html.escape(name), heading))
@@ -524,8 +539,10 @@ def build_pdf(week):
                 with PILImage.open(image) as im: w,h=im.size
                 story.append(Image(str(image),width=475,height=475*h/w))
                 continue
-            if para.strip() in ('[TEACHING_FIGURE]', '[RESEARCH_FIGURE]', '[NOISE2NOISE_FIGURE]', '[NOISE2NOISE_AUDIT]'):
+            if para.strip() in ('[TEACHING_FIGURE]', '[RESEARCH_FIGURE]', '[NOISE2NOISE_FIGURE]', '[NOISE2NOISE_AUDIT]', '[CAVITATION_FIGURE]'):
                 image = ROOT / 'results' / 'week11_12_teaching' / f'week{week}_teaching.png'
+                if para.strip() == '[CAVITATION_FIGURE]':
+                    image = ROOT / 'results/week11_cavitation/cloud_detection.png'
                 if para.strip() == '[RESEARCH_FIGURE]':
                     image = ROOT / 'results' / f'week{week}_research' / ('airfoil_2.png' if week == 11 else 'cavity_qy_hero.png')
                 if para.strip() in ('[NOISE2NOISE_FIGURE]', '[NOISE2NOISE_AUDIT]'):

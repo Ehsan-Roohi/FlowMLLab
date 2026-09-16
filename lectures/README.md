@@ -40,7 +40,7 @@ relicensed or vendored. Locally supplied third-party teaching files are not redi
 
 | Lecture | Notebook | Editable source |
 | --- | --- | --- |
-| [Week 11: shock and vortex identification](week11_shock_vortex_identification.pdf) | [CPU controls](../notebooks/week11/W11_Shock_Vortex_Identification.ipynb) · [U-Net reconstruction comparison](../notebooks/week11/W11_Lab2_Reconstruction_and_Identification.ipynb) | [Lecture notes](source/week11_shock_vortex_identification.md) |
+| [Week 11: shock, vortex and vapor-cloud identification](week11_shock_vortex_identification.pdf) | [CPU controls](../notebooks/week11/W11_Shock_Vortex_Identification.ipynb) · [U-Net reconstruction comparison](../notebooks/week11/W11_Lab2_Reconstruction_and_Identification.ipynb) · [Hydrofoil vapor-cloud detection](../notebooks/week11/W11_Cavitation_Cloud_Detection.ipynb) | [Lecture notes](source/week11_shock_vortex_identification.md) |
 | [Week 12: DSMC moment reconstruction](week12_dsmc_moment_reconstruction.pdf) | [CPU lab](../notebooks/week12/W12_DSMC_Moment_Reconstruction.ipynb) | [Lecture notes](source/week12_dsmc_moment_reconstruction.md) |
 | [Week 13: rectangular-cavity PINN research audit](week13_rectangular_cavity_pinn.pdf) | [Evidence-audit notebook](../notebooks/week13/W13_Rectangular_Cavity_PINN_Research.ipynb) | [Continuous-text lecture](source/week13_rectangular_cavity_pinn.md) |
 | [Week 14: RANS and neural closures](week14_rans_pinn_nn.pdf) | [Executed lab](../notebooks/week14/README.md) | [Notes](source/week14_rans_pinn_nn.md) |

@@ -27,8 +27,6 @@ and [cylinder Supplementary Movie S8](https://www.youtube.com/watch?v=hh3K40KRBU
 use the same fixed task-preserving model family. The linked videos are qualitative
 research predictions, not an independent validation set.
 
-Next: [Week 12 - noisy DSMC moment reconstruction](../week12/README.md).
-
 ## Real-field reconstruction extension
 
 [Lab 2: reconstruction followed by identification](W11_Lab2_Reconstruction_and_Identification.ipynb)
@@ -37,3 +35,27 @@ followed by swirling strength, and direct U-Net mask prediction on existing
 author LBM wakes. Read the [frozen protocol and attribution](RECONSTRUCTION_PROTOCOL.md).
 This is vortex-reference agreement on a coarse retained dataset, not independent
 shock accuracy. Full retraining is optional and writes only to a new scratch folder.
+
+## Hydrofoil vapor-cloud detection extension
+
+[Cavitation notebook](W11_Cavitation_Cloud_Detection.ipynb) ·
+[Open in Colab](https://colab.research.google.com/github/Ehsan-Roohi/FlowMLLab/blob/main/notebooks/week11/W11_Cavitation_Cloud_Detection.ipynb) ·
+[Model, inference and adaptation code](../../flowmllab/cavitation_detection.py) ·
+[Results gallery](../../results/week11_cavitation/README.md)
+
+This is the existing author machine-vision experiment for hydrofoil vapor clouds,
+packaged with the original model and 158 retained CFD snapshots from seven cases.
+Run All reproduces the three-class predictions and pooled metrics, draws the
+vapor field beside its detection, compares a raster-topology baseline and checks
+zero-vapor/noisy inputs. The final section of the lecture develops the same example.
+Allow 30-45 minutes for discussion; the CPU inference itself is shorter.
+
+Inputs are CFD vapor-fraction rasters and geometry, not camera photographs.
+Labels describe attached cavity and disconnected vapor in 2-D; native weak
+references are not human ground truth. Four cases trained the model; the other
+three were previously inspected. Full case identities, hashes, failures and
+training provenance are retained. Default execution leaves the supplied data
+and weights unchanged. The optional 1000-update final-stage adaptation starts
+from the supplied parent checkpoint and returns a separate model in memory.
+
+Next: [Week 12 - noisy DSMC moment reconstruction](../week12/README.md).

@@ -17,6 +17,7 @@ The working course now includes Week 7.2 and Weeks 11-13 (after archived v1.4.1)
 
 - [Week 7.2: sparse-sensor state estimation](week07_2/README.md) · [Open in Colab](https://colab.research.google.com/github/Ehsan-Roohi/FlowMLLab/blob/main/notebooks/week07_2/W7_2_Cylinder_Wake_State_Estimation.ipynb)
 - [Week 11: shock and vortex identification](week11/README.md) · [Open in Colab](https://colab.research.google.com/github/Ehsan-Roohi/FlowMLLab/blob/main/notebooks/week11/W11_Shock_Vortex_Identification.ipynb)
+- [Week 11 extension: hydrofoil vapor-cloud detection](week11/W11_Cavitation_Cloud_Detection.ipynb) · [Open in Colab](https://colab.research.google.com/github/Ehsan-Roohi/FlowMLLab/blob/main/notebooks/week11/W11_Cavitation_Cloud_Detection.ipynb)
 - [Week 12: noisy DSMC moment reconstruction](week12/README.md) · [Open in Colab](https://colab.research.google.com/github/Ehsan-Roohi/FlowMLLab/blob/main/notebooks/week12/W12_DSMC_Moment_Reconstruction.ipynb)
 - [Week 13: rectangular-cavity PINN research audit](week13/README.md) · [Open in Colab](https://colab.research.google.com/github/Ehsan-Roohi/FlowMLLab/blob/main/notebooks/week13/W13_Rectangular_Cavity_PINN_Research.ipynb)
 

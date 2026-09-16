@@ -1,0 +1,62 @@
+{
+  "figures": {
+    "cloud_detection.png": {
+      "sha256": "e57fd0b382672305e9ef966418dd1c2ed4fa38aebc459487476c8571b4befe83",
+      "case": "Case1LES",
+      "indices": [
+        0,
+        22
+      ],
+      "times": [
+        0.36,
+        2.12
+      ]
+    },
+    "les_sequence.png": {
+      "sha256": "cd7c2782b6409d8f11e3f637e1bf748bb435235e6afcc43aa7fea76eddd6ffcd",
+      "case": "Case1LES",
+      "indices": [
+        0,
+        17,
+        22,
+        31
+      ],
+      "times": [
+        0.36,
+        1.72,
+        2.12,
+        2.84
+      ]
+    },
+    "transfer_and_failure.png": {
+      "sha256": "58d091f5de4bfc11f865a34d9e1896323e4ae52c72f96c788cf95a6af0d3f217",
+      "case": "Case_24",
+      "indices": [
+        0,
+        17,
+        24,
+        26
+      ],
+      "times": [
+        0.08,
+        1.44,
+        2.0,
+        2.16
+      ]
+    },
+    "les_worst_error.png": {
+      "sha256": "72f5f1212d82da1ab04feb1cde88f2a0eec3198f1eeb38e10160b50cc65861e0",
+      "case": "Case1LES",
+      "indices": [
+        26
+      ],
+      "times": [
+        2.44
+      ]
+    }
+  },
+  "model_sha256": "a62be9d50eaab9ed0f29e44f2c6bdcc6f7ff4d3e020a830fa3066959b0206084",
+  "manifest_sha256": "993e49683cb831a322957fc9e55b6a5179d7a72a520549a2b79678bfb22f8638",
+  "code_sha256": "285de8c895d271658057e65b853a7125e7d3772f0ac0d6be039393569b85e7ef",
+  "selection": "Original retained review times plus original worst-error frames; no best-test selection"
+}
