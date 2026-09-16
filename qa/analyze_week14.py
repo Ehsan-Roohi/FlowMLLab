@@ -39,7 +39,7 @@ np.testing.assert_allclose(archive[:,0],baseline[:,0],rtol=0,atol=1e-14)
 np.savez_compressed(OUT/'teaching_data.npz',dns=dns,stress=stress,
                    corrected_archive=archive,baseline_archive=baseline,ck=ck,sigma=sigma,com=com)
 metrics=[]
-fig,axes=plt.subplots(1,2,figsize=(11,4.1),layout='constrained')
+fig,axes=plt.subplots(1,2,figsize=(11,4.55))
 for ax,truth,label in zip(axes,[dns[:,2],kdns],[r'$U^+$',r'$k^+$']):
     ax.semilogx(dns[:,1],truth,color='#24364b',lw=2.4,label='Lee-Moser DNS')
     ax.set(xlabel=r'$y^+$',ylabel=label,xlim=(.3,5200))
@@ -58,8 +58,10 @@ for name,color in [('baseline',C[0]),('pinn',C[1])]:
                         'k_relL2':rel(a['k'],np.interp(a['y'],stress[:,0],kdns))})
 axes[0].set_title('Mean flow: necessary, not sufficient')
 axes[1].set_title('Turbulence energy reveals the difference')
-axes[1].legend(fontsize=8,loc='upper center',bbox_to_anchor=(.5,-.19),ncol=2,frameon=False)
-save(fig,'profiles')
+handles,labels=axes[1].get_legend_handles_labels()
+fig.legend(handles,labels,fontsize=8,loc='lower center',bbox_to_anchor=(.5,.015),ncol=3,frameon=False)
+fig.tight_layout(rect=(0,.18,1,1))
+save(fig,'profiles_legend_below')
 
 fig,axes=plt.subplots(1,3,figsize=(11,3.2),layout='constrained')
 for ax,val,default,title in zip(axes,[sigma,ck,com],[2,1,.075],

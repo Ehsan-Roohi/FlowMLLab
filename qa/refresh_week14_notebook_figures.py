@@ -13,9 +13,12 @@ notebook=json.loads(path.read_text(encoding='utf-8'))
 count=0
 for cell in notebook['cells']:
     source=''.join(cell.get('source',[]))
-    for name in ['profiles','coefficients','gap','convergence','inverse']:
-        if "'"+name+".png'" not in source:
+    for name in ['profiles_legend_below','coefficients','gap','convergence','inverse']:
+        old_name='profiles' if name=='profiles_legend_below' else name
+        if "'"+old_name+".png'" not in source and "'"+name+".png'" not in source:
             continue
+        if old_name!=name:
+            cell['source']=[part.replace("'profiles.png'","'profiles_legend_below.png'") for part in cell['source']]
         outputs=[o for o in cell.get('outputs',[]) if 'image/png' in o.get('data',{})]
         assert len(outputs)==1, (cell['id'],name)
         outputs[0]['data']['image/png']=base64.b64encode(
