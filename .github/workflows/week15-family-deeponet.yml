@@ -1,0 +1,47 @@
+name: Week 15 family holdout DeepONet
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - qa/train_week15_family_deeponet.py
+      - .github/workflows/week15-family-deeponet.yml
+permissions:
+  contents: write
+jobs:
+  train:
+    strategy:
+      fail-fast: false
+      matrix:
+        seed: [17, 29, 43]
+    runs-on: ubuntu-latest
+    timeout-minutes: 330
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: pip
+      - run: python -m pip install tensorflow-cpu==2.20.0
+      - run: python qa/train_week15_family_deeponet.py --output family-deeponet-seed${{ matrix.seed }} --seed ${{ matrix.seed }}
+      - uses: actions/upload-artifact@v4
+        with:
+          name: family-deeponet-seed${{ matrix.seed }}
+          path: family-deeponet-seed${{ matrix.seed }}/
+          if-no-files-found: error
+  retain-evidence:
+    needs: train
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: family-deeponet-seed*
+          path: results/week15_family_deeponet
+      - run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add results/week15_family_deeponet
+          git commit -m 'Retain three-seed family-holdout DeepONet evidence'
+          git push
