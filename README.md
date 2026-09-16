@@ -166,11 +166,18 @@ cost tradeoff. [Run the ROM lab](notebooks/week04/W4_1_Classical_ROM_Cavity.ipyn
 
 ![Week 4.2 diverse-lid example: Navier–Stokes reference, Stokes-corrected prediction and absolute errors in velocity and recovered pressure](figures/Cavity_diverse_velocity_pressure.png)
 
+![Week 4.2 diverse-lid speed contours with streamlines and primary and corner recirculation markers, plus interior vorticity and error](figures/Cavity_diverse_streamlines_vorticity.png)
+
 This held-out diverse-lid example shows reference fields, predictions and absolute
-errors. The contours are linearly interpolated for display; numerical errors use
-the original 25 × 25 samples. The retained tests support same-grid surrogate performance; they do not
-establish grid-independent CFD accuracy. [Run the Week 4.2 lab](notebooks/week04/W4_Lab4_Stokes_to_Navier_Stokes.ipynb)
-· [Read the eight-page companion](lectures/week04_2_stokes_to_navier_stokes.pdf)
+errors, including speed streamlines and interior vorticity. Across six retained
+same-family tests per lid type, the primary and lower-right recirculation centers
+match the reference grid nodes in all cases; mean interior vorticity errors are
+0.12% for constant lids and 1.49% for diverse lids. The contours are linearly
+interpolated for display; errors use the original 25 × 25 samples. These same-grid
+regression tests do not establish grid-independent CFD accuracy or independently
+validated corner vortices. [See the constant-lid vortex figure](figures/Cavity_constant_streamlines_vorticity.png)
+· [Run the Week 4.2 lab](notebooks/week04/W4_Lab4_Stokes_to_Navier_Stokes.ipynb)
+· [Read the ten-page companion](lectures/week04_2_stokes_to_navier_stokes.pdf)
 · [Inspect the retained results](results/stokes_refined/README.md)
 
 ### Week 5 — Physics-guided projects

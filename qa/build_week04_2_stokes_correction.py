@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Build the executed Week 4.2 notebook, figures, and eight-page lecture PDF."""
+"""Build the executed Week 4.2 notebook, figures, and ten-page lecture PDF."""
 
 from __future__ import annotations
 
@@ -11,6 +11,7 @@ import matplotlib
 
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
+from matplotlib.colors import SymLogNorm
 import nbformat as nbf
 import numpy as np
 import pandas as pd
@@ -28,7 +29,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 
 from execute_cavity_lesson import execute
-from flowmllab.cavity_diversity import lid_profile
+from flowmllab.cavity_diversity import fields, lid_profile
 
 
 RESULTS = ROOT / "results/stokes_refined"
@@ -145,6 +146,139 @@ def make_field_figures() -> None:
         out = figures_dir / f"Cavity_{family}_velocity_pressure.png"
         fig.savefig(out, dpi=170)
         plt.close(fig)
+
+
+def make_vortex_figures() -> None:
+    """Compare speed, streamlines and grid-derived vorticity on retained cases."""
+    data = np.load(RESULTS / "expanded/expanded.npz")
+    predictions = np.load(RESULTS / "expanded/predictions.npz")
+    cases = json.loads((RESULTS / "expanded/expanded_cases.json").read_text())
+    n = data["psi"].shape[-1]
+    h = 1 / (n - 1)
+    grid = np.linspace(0, 1, n)
+    display_grid = np.linspace(0, 1, 201)
+    yy, xx = np.meshgrid(display_grid, display_grid, indexing="ij")
+    display_points = np.column_stack((yy.ravel(), xx.ravel()))
+    inner = grid[1:-1]
+    inner_display = np.linspace(inner[0], inner[-1], 201)
+    yi, xi = np.meshgrid(inner_display, inner_display, indexing="ij")
+    inner_points = np.column_stack((yi.ravel(), xi.ravel()))
+    corner = (slice(1, 10), slice(15, 24))  # Lower-right on the retained n=25 grid.
+
+    def display(values: np.ndarray, interior: bool = False) -> np.ndarray:
+        coordinates = (inner, inner) if interior else (grid, grid)
+        points = inner_points if interior else display_points
+        return RegularGridInterpolator(coordinates, values, method="linear")(
+            points).reshape(201, 201)
+
+    def vorticity(psi: np.ndarray) -> np.ndarray:
+        # Match the interior finite-difference operator used by evaluate().
+        return -(psi[1:-1, 2:] + psi[1:-1, :-2] + psi[2:, 1:-1]
+                 + psi[:-2, 1:-1] - 4 * psi[1:-1, 1:-1]) / h**2
+
+    def centers(psi: np.ndarray) -> tuple[tuple[int, int], tuple[int, int]]:
+        primary = np.unravel_index(np.argmin(psi), psi.shape)
+        local = np.unravel_index(np.argmax(psi[corner]), psi[corner].shape)
+        secondary = (local[0] + corner[0].start, local[1] + corner[1].start)
+        return primary, secondary
+
+    rows = []
+    for family in ("constant", "diverse"):
+        ids = [i for i, case in enumerate(cases)
+               if case["family"] == family and case["split"] == "test"]
+        predicted = predictions[f"{family}_{family}_ensemble"]
+        assert len(ids) == len(predicted) == 6
+        for j, i in enumerate(ids):
+            ref, pred = data["psi"][i], predicted[j]
+            ref_primary, ref_secondary = centers(ref)
+            pred_primary, pred_secondary = centers(pred)
+            wr, wp = vorticity(ref), vorticity(pred)
+            rows.append(dict(
+                family=family, case=cases[i]["id"], Re=cases[i]["Re"],
+                primary_ref_y=ref_primary[0], primary_ref_x=ref_primary[1],
+                primary_pred_y=pred_primary[0], primary_pred_x=pred_primary[1],
+                lower_right_ref_y=ref_secondary[0], lower_right_ref_x=ref_secondary[1],
+                lower_right_pred_y=pred_secondary[0], lower_right_pred_x=pred_secondary[1],
+                lower_right_ref_psi=ref[ref_secondary],
+                lower_right_pred_psi=pred[pred_secondary],
+                interior_vorticity_rel_l2=np.linalg.norm(wp - wr) / np.linalg.norm(wr),
+            ))
+
+        i = ids[0]
+        ref, pred = data["psi"][i], predicted[0]
+        lid = data["lid"][i]
+        ur, vr = (component[0] for component in fields(ref[None], lid[None]))
+        up, vp = (component[0] for component in fields(pred[None], lid[None]))
+        speed_ref, speed_pred = np.hypot(ur, vr), np.hypot(up, vp)
+        omega_ref, omega_pred = vorticity(ref), vorticity(pred)
+        family_rows = [row for row in rows if row["family"] == family]
+        primary_matches = sum((r["primary_ref_y"], r["primary_ref_x"]) ==
+                              (r["primary_pred_y"], r["primary_pred_x"])
+                              for r in family_rows)
+        secondary_matches = sum((r["lower_right_ref_y"], r["lower_right_ref_x"]) ==
+                                (r["lower_right_pred_y"], r["lower_right_pred_x"])
+                                for r in family_rows)
+        mean_vorticity_error = np.mean([r["interior_vorticity_rel_l2"]
+                                        for r in family_rows])
+
+        fig, axes = plt.subplots(2, 3, figsize=(14.4, 9.4), layout="constrained")
+        fig.suptitle(f"{family.title()} lid | first retained test case | Re = {cases[i]['Re']:.1f}\n"
+                     "Navier-Stokes reference vs Stokes-corrected prediction",
+                     fontsize=16)
+        for col, (psi, u, v, speed, label) in enumerate((
+            (ref, ur, vr, speed_ref, "Reference"),
+            (pred, up, vp, speed_pred, "Prediction"),
+        )):
+            ax = axes[0, col]
+            im = ax.imshow(display(speed), origin="lower", extent=(0, 1, 0, 1),
+                           cmap="viridis", vmin=0,
+                           vmax=max(float(speed_ref.max()), float(speed_pred.max())),
+                           interpolation="bilinear")
+            ax.streamplot(grid, grid, u, v, density=1.25, color="white",
+                          linewidth=0.65, arrowsize=0.65)
+            primary, secondary = centers(psi)
+            ax.scatter(primary[1] * h, primary[0] * h, s=90, marker="o",
+                       c="#FFB547", edgecolors="black", linewidths=0.8, zorder=5)
+            ax.scatter(secondary[1] * h, secondary[0] * h, s=95, marker="^",
+                       c="#F66DCC", edgecolors="black", linewidths=0.8, zorder=5)
+            ax.set(title=f"{label}: speed + streamlines")
+            fig.colorbar(im, ax=ax, fraction=0.046, pad=0.03)
+        ax = axes[0, 2]
+        im = ax.imshow(display(np.abs(speed_pred - speed_ref)), origin="lower",
+                       extent=(0, 1, 0, 1), cmap="magma", vmin=0,
+                       interpolation="bilinear")
+        ax.set(title="Absolute speed error")
+        fig.colorbar(im, ax=ax, fraction=0.046, pad=0.03)
+
+        limit = max(float(np.abs(omega_ref).max()), float(np.abs(omega_pred).max()))
+        omega_norm = SymLogNorm(linthresh=1, vmin=-limit, vmax=limit)
+        for col, (omega, label) in enumerate(((omega_ref, "Reference"),
+                                              (omega_pred, "Prediction"))):
+            ax = axes[1, col]
+            im = ax.imshow(display(omega, interior=True), origin="lower",
+                           extent=(h, 1-h, h, 1-h), cmap="RdBu_r", norm=omega_norm,
+                           interpolation="bilinear")
+            ax.set(title=f"{label}: interior vorticity")
+            fig.colorbar(im, ax=ax, fraction=0.046, pad=0.03)
+        ax = axes[1, 2]
+        im = ax.imshow(display(np.abs(omega_pred - omega_ref), interior=True),
+                       origin="lower", extent=(h, 1-h, h, 1-h), cmap="magma",
+                       vmin=0, interpolation="bilinear")
+        ax.set(title="Absolute interior vorticity error")
+        fig.colorbar(im, ax=ax, fraction=0.046, pad=0.03)
+        for ax in axes.flat:
+            ax.set(xlim=(0, 1), ylim=(0, 1), xlabel="x/L", ylabel="y/L")
+            ax.set_aspect("equal")
+        fig.supxlabel(
+            f"Orange circle: primary vortex; pink triangle: lower-right recirculation. "
+            f"Across 6 retained {family}-lid tests: centers match {primary_matches}/6 and "
+            f"{secondary_matches}/6 grid nodes; mean interior vorticity error "
+            f"{100 * mean_vorticity_error:.2f}%.", fontsize=10)
+        fig.savefig(ROOT / "figures" / f"Cavity_{family}_streamlines_vorticity.png", dpi=180)
+        plt.close(fig)
+
+    pd.DataFrame(rows).to_csv(RESULTS / "vortex_comparison.csv", index=False,
+                              float_format="%.12g")
 
 
 def build_notebook(figures: dict[str, Path]) -> None:
@@ -286,7 +420,14 @@ pressure.groupby(['train','test'])[['pressure_full_percent','pressure_core_perce
         nbf.v4.new_markdown_cell("""The following fields are linearly interpolated for display only. Numerical samples and all errors remain on the original 25 x 25 grid."""),
         nbf.v4.new_code_cell("""display(Image(filename=str(ROOT/'figures/Cavity_constant_velocity_pressure.png')))
 display(Image(filename=str(ROOT/'figures/Cavity_diverse_velocity_pressure.png')))"""),
-        nbf.v4.new_markdown_cell("""## 9. Interpretation and claim boundary
+        nbf.v4.new_markdown_cell("""## 9. Streamlines and vortex capture
+
+The speed maps below overlay streamlines from the original `n=25` velocity samples. Orange circles mark the primary streamfunction minimum; pink triangles mark the positive streamfunction maximum in the lower-right corner. Interior vorticity is computed with the same discrete `-Laplacian(psi)` operator for reference and prediction. Colors are interpolated for display only. The secondary corner feature is a grid-resolved recirculation candidate, not an independently validated vortex core."""),
+        nbf.v4.new_code_cell("""vortices = pd.read_csv(R/'vortex_comparison.csv')
+display(vortices.groupby('family')['interior_vorticity_rel_l2'].agg(['mean','max']).round(4))
+display(Image(filename=str(ROOT/'figures/Cavity_constant_streamlines_vorticity.png')))
+display(Image(filename=str(ROOT/'figures/Cavity_diverse_streamlines_vorticity.png')))"""),
+        nbf.v4.new_markdown_cell("""## 10. Interpretation and claim boundary
 
 The diverse-lid model generalizes much better across boundary families and OOD groups. Constant-only training remains poor on diverse lids because it never learns dependence on lid shape. The best retained mean errors are 0.107% for constant-to-constant and 0.917% for diverse-to-diverse velocity prediction.
 
@@ -314,6 +455,7 @@ def build_pdf(figures: dict[str, Path]) -> None:
     comparison = pd.read_csv(RESULTS / "comparison.csv")
     pressure = pd.read_csv(RESULTS / "pressure_metrics.csv")
     selection = pd.read_csv(RESULTS / "expanded/selection.csv")
+    vortex = pd.read_csv(RESULTS / "vortex_comparison.csv")
     width, height = A4
     c = canvas.Canvas(str(PDF), pagesize=A4, pageCompression=1)
     c.setTitle("FlowMLLab Week 4.2 - Stokes-to-Navier-Stokes Correction")
@@ -335,7 +477,7 @@ def build_pdf(figures: dict[str, Path]) -> None:
         c.setFillColor(colors.white); c.setFont("Times-Bold", 15)
         c.drawString(16*mm, height - 14*mm, title)
         c.setFont("Times-Roman", 8.5)
-        c.drawRightString(width - 16*mm, height - 14*mm, f"FlowMLLab | Week 4.2 | {page}/8")
+        c.drawRightString(width - 16*mm, height - 14*mm, f"FlowMLLab | Week 4.2 | {page}/10")
         c.setFillColor(TEXT)
         return height - 31*mm
 
@@ -542,12 +684,48 @@ def build_pdf(figures: dict[str, Path]) -> None:
     y2 = _p(c, "What is not established", 111*mm, 67*mm, 82*mm, h2)
     _p(c, "Mesh independence; high-fidelity CFD validation; independent pressure validation; a new network architecture; universal transfer from a constant lid to unseen boundary shapes.", 111*mm, y2-2*mm, 82*mm, small)
     finish()
+
+    # Pages 9-10: speed/streamline and vorticity evidence for both lid families.
+    for page, family in ((9, "constant"), (10, "diverse")):
+        y = header(page, f"{family.title()}-lid vortices and streamlines")
+        y = _p(c, "Speed colors and white streamlines compare the same retained test case. The orange circle is the primary streamfunction minimum; the pink triangle marks a positive lower-right streamfunction maximum. Vorticity is the negative discrete Laplacian of streamfunction in both fields, with a shared symmetric-log color scale.",
+               16*mm, y, width-32*mm, body) - 3*mm
+        c.drawImage(str(ROOT / "figures" / f"Cavity_{family}_streamlines_vorticity.png"),
+                    16*mm, y-127*mm, width=width-32*mm, height=124*mm,
+                    preserveAspectRatio=True, anchor="c")
+        y -= 133*mm
+        group = vortex[vortex.family == family]
+        primary = int(((group.primary_ref_x == group.primary_pred_x) &
+                       (group.primary_ref_y == group.primary_pred_y)).sum())
+        corner = int(((group.lower_right_ref_x == group.lower_right_pred_x) &
+                      (group.lower_right_ref_y == group.lower_right_pred_y)).sum())
+        mean_omega = 100 * group.interior_vorticity_rel_l2.mean()
+        worst_omega = 100 * group.interior_vorticity_rel_l2.max()
+        values = [["Six retained tests", "Observed", "Meaning"],
+                  ["Primary-vortex grid node", f"{primary}/6 matched", "same sampled center"],
+                  ["Lower-right local maximum", f"{corner}/6 matched", "small recirculation candidate"],
+                  ["Interior vorticity relative L2", f"{mean_omega:.2f}% mean; {worst_omega:.2f}% worst", "same-grid comparison"]]
+        table = Table(values, colWidths=[59*mm, 47*mm, 58*mm], rowHeights=9*mm)
+        table.setStyle(TableStyle([("FONT",(0,0),(-1,-1),"Times-Roman",8.4),
+                                   ("FONT",(0,0),(-1,0),"Times-Bold",8.4),
+                                   ("BACKGROUND",(0,0),(-1,0),NAVY),
+                                   ("TEXTCOLOR",(0,0),(-1,0),colors.white),
+                                   ("GRID",(0,0),(-1,-1),0.35,MID),
+                                   ("VALIGN",(0,0),(-1,-1),"MIDDLE"),
+                                   ("ROWBACKGROUNDS",(0,1),(-1,-1),[colors.white,LIGHT])]))
+        table.wrapOn(c, width-32*mm, 45*mm)
+        table.drawOn(c, 16*mm, y-39*mm)
+        y -= 45*mm
+        _p(c, "Display colors are linearly interpolated for legibility. Streamlines follow the retained n=25 velocity field; vortex positions and vorticity errors are measured on original grid nodes. Agreement here does not establish mesh-independent capture of the small corner vortex.",
+           16*mm, y, width-32*mm, note)
+        finish()
     c.save()
 
 
 def main() -> None:
     figures = make_figures()
     make_field_figures()
+    make_vortex_figures()
     build_notebook(figures)
     build_pdf(figures)
     print(NOTEBOOK.relative_to(ROOT).as_posix())

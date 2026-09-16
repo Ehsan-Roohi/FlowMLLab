@@ -1,7 +1,7 @@
 # Week 4 Lab 4: Stokes-to-Navier-Stokes correction evidence
 
 This directory contains the retained evidence used by the executed Week-4 Lab 4
-notebook and its eight-page lecture companion. The task is
+notebook and its ten-page lecture companion. The task is
 
 `matched Stokes field + Reynolds number -> Navier-Stokes streamfunction correction`.
 
@@ -52,6 +52,8 @@ universal transfer from a constant lid to unseen boundary shapes.
   predictions, and the expanded dataset manifest.
 - `pressure_metrics.csv`: pressure-recovery consistency metrics.
 - `velocity_pressure_fields.npz`: plotted velocity and recovered-pressure arrays.
+- `vortex_comparison.csv`: original-grid primary and lower-right streamfunction
+  extrema plus interior vorticity errors for all six same-family tests per lid.
 - `week04_2_*.png`: regenerated lecture/notebook figures.
 
 All reported fields use an `n=25` grid and the same educational finite-difference
@@ -60,3 +62,8 @@ network-method novelty is claimed.
 The displayed velocity and pressure contours use linear interpolation between
 retained grid samples for legibility. All field errors are computed on the
 original `n=25` arrays before display interpolation.
+The speed/streamline and vorticity comparisons are in the
+[constant-lid figure](../../figures/Cavity_constant_streamlines_vorticity.png) and
+[diverse-lid figure](../../figures/Cavity_diverse_streamlines_vorticity.png). The latter's lower-right
+streamfunction maximum is a grid-resolved recirculation candidate. Matching its
+node does not establish mesh-independent capture of a small secondary vortex.

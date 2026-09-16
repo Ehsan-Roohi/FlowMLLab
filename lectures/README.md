@@ -31,7 +31,7 @@ Editable sources are included in `source/` where they were available. The PDF is
 The Week-4 correction companion and executed Lab 4 are rebuilt together by
 [`../qa/build_week04_2_stokes_correction.py`](../qa/build_week04_2_stokes_correction.py).
 The builder reads retained numerical evidence, regenerates the plots, executes
-all notebook code cells sequentially and writes the eight-page Times-style PDF.
+all notebook code cells sequentially and writes the ten-page Times-style PDF.
 The historical PINN reading remains at `source/week04_2_pinn_cavity.md` with its
 builder at `../qa/build_week04_2_lecture.py` for existing Week-13 references.
 
