@@ -24,3 +24,8 @@ python notebooks/week09/make_week9_notebooks.py
 
 The full evidence and licensing contract is in
 [`results/mahdavi_deeponet/`](../../results/mahdavi_deeponet/).
+
+
+## Lab 3: pre-fit coordinate audit
+
+[Moving-throat nozzle audit](W9_Lab3_Nozzle_Data_Alignment_Audit.ipynb) extends the Week 4 branch/trunk data contract with an independent quasi-1D isentropic reference. Run all cells on CPU; the two intentional failures are caught, then the repaired pairs and reference physics pass. This is a debugging exercise, not a trained nozzle surrogate. [Companion notes](../../lectures/week09_3_nozzle_data_alignment.pdf).

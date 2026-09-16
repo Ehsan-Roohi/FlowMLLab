@@ -445,7 +445,7 @@ def validate_notebooks() -> tuple[int, int]:
                 for cell in cells
             ), f"missing learner-edition marker: {path}"
         count += 1
-    assert count == 36, f"expected 36 notebooks, found {count}"
+    assert count == 37, f"expected 37 notebooks, found {count}"
     return count, code_cells
 
 
@@ -1113,7 +1113,7 @@ def validate_week01_1_results() -> dict[str, object]:
 
 def validate_pdfs() -> int:
     pdfs = sorted((ROOT / "lectures").glob("*.pdf"))
-    assert len(pdfs) == 21
+    assert len(pdfs) == 22
     for path in pdfs:
         result = subprocess.run(
             ["pdfinfo", str(path)], check=True, capture_output=True, text=True

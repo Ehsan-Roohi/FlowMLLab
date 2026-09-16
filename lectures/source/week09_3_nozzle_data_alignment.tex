@@ -1,0 +1,54 @@
+\documentclass[11pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,booktabs,hyperref}
+\title{Week 9 Lab 3: Nozzle Data Alignment Audit}
+\author{FlowMLLab -- AI in Fluid Mechanics}
+\date{}
+\begin{document}\maketitle
+\section*{Purpose and scope}
+Extend the Week 4 branch--trunk data contract to moving-throat nozzle grids.
+This CPU exercise uses an ideal-gas, inviscid, isentropic, choked, shock-free
+quasi-one-dimensional reference. It does not train a neural model or validate
+multidimensional CFD. The exercise is independently written.
+\section*{Three objects, one physical pairing}
+For nozzle $c$ and query $j$,
+\[
+B_c=[A_c(\xi_1)/A_t,\ldots,A_c(\xi_{41})/A_t,p_{0,c},T_{0,c}],
+\qquad (B_c,x_{cj})\mapsto q_c(x_{cj}).
+\]
+The sensor locations $\xi_i$ are fixed. The geometry values vary. Query grids
+may differ; here each includes its own throat exactly. Targets are
+$q=(M,p,T,\rho,u)$. The branch and target case IDs must agree, and the query
+must equal the source target coordinate in the same units.
+\section*{Intentional failures}
+The notebook first repeats the first nozzle's query grid for every nozzle.
+All array shapes remain correct, but the coordinate audit rejects the pairing.
+It then incorrectly uses the case-dependent query grids as fixed branch
+sensors; the sensor audit rejects this too. These are expected caught errors,
+not failed notebook execution.
+\section*{Repair and reference checks}
+Keep each target's own query location; evaluate branch geometry at the common
+41 sensors. Alternatively, evaluate all reference fields directly at common
+queries. If CFD fields are interpolated instead, measure interpolation error
+separately. Check positivity, $|M(x_t)-1|$, area--Mach consistency and
+\[
+C_{\dot m}=\frac{\operatorname{std}(\rho u A/A_t)}
+{\operatorname{mean}(\rho u A/A_t)}.
+\]
+These checks verify the reference. Passing them does not demonstrate neural
+accuracy. An audit also cannot discover metadata that was already mislabeled
+by the exporter; retain independent source coordinates.
+\section*{From debugging to a model comparison}
+Split complete physical cases before expanding spatial rows. Fit normalization
+and any POD basis on selection-training cases only. Validation supports model
+selection and early stopping. Freeze MLP and DeepONet before a fresh final test;
+previously inspected cases are diagnostic data. Report per-case relative
+$L_2$ mean, standard deviation and maximum; physical violations; and warmed-up
+full-profile prediction time. A new random seed is not proof of disjoint cases.
+The two-parameter geometry family is not evidence of arbitrary-shape generalization.
+\section*{Questions}
+Why can loss decrease on incorrectly paired data? Why does repeating a branch
+row differ from tiling the branch matrix? Why need sensors and queries not
+coincide? What evidence distinguishes metadata consistency, reference validity,
+and neural accuracy? Explain before adding a more complex architecture.
+\end{document}
