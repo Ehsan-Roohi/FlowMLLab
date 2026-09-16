@@ -8,7 +8,7 @@
 #SBATCH --cpus-per-task=4
 #SBATCH --mem=80G
 #SBATCH --time=01:55:00
-#SBATCH --signal=B:USR1@180
+#SBATCH --signal=B:USR1@600
 #SBATCH --requeue
 #SBATCH --mail-type=NONE
 #SBATCH --output=chris-d5-w64-n200k-%j.log
@@ -34,8 +34,16 @@ set +e
   --archive "$archive" --output "$CHRIS_RUN_OUTPUT" \
   --case-index 0 --hidden-width 64 --num-domain 200000 &
 child=$!
-wait "$child"
-status=$?
+while :; do
+  wait "$child"
+  status=$?
+  # A batch-directed USR1 interrupts Bash wait (status 138) while Python
+  # may still be saving a restart vector. Wait for Python to exit with 99.
+  if (( status == 138 || status == 143 )) && kill -0 "$child" 2>/dev/null; then
+    continue
+  fi
+  break
+done
 set -e
 if (( status == 99 )); then
   scontrol requeue "${SLURM_JOB_ID:?}"
