@@ -667,7 +667,15 @@ def geometry_comparison(case):
         ep=100*np.linalg.norm(pp-pt)/np.linalg.norm(pt)
         labels.append(f'{name} · seed 17\nEv={ev:.2f}% · Ep={ep:.2f}%')
     vmax=max(float(v.max()) for v in speed); plim=max(float(np.abs(v).max()) for v in pressure)
-    fig,axs=plt.subplots(4,2,figsize=(12.8,8.8),sharex=True,sharey=True)
+    fig=plt.figure(figsize=(12.8,8.8))
+    grid=fig.add_gridspec(4,4,left=.23,right=.97,top=.89,bottom=.09,
+                          width_ratios=[20,1,20,1],wspace=.20,hspace=.70)
+    axs=np.empty((4,2),dtype=object)
+    for row in range(4):
+        for col,grid_col in enumerate((0,2)):
+            axs[row,col]=fig.add_subplot(grid[row,grid_col],
+                sharex=axs[0,0] if row or col else None,
+                sharey=axs[0,0] if row or col else None)
     for i,(a,label) in enumerate(zip(aa,labels)):
         im0=axs[i,0].pcolormesh(x,y,speed[i],cmap='viridis',vmin=0,vmax=vmax,shading='nearest')
         axs[i,0].streamplot(np.linspace(x[0],x[-1],len(x)),np.linspace(y[0],y[-1],len(y)),
@@ -676,11 +684,14 @@ def geometry_comparison(case):
         im1=axs[i,1].pcolormesh(x,y,pressure[i],cmap='RdBu_r',vmin=-plim,vmax=plim,shading='nearest')
         axs[i,0].set_ylabel(label,rotation=0,ha='right',va='center',labelpad=22,fontsize=9)
         for ax in axs[i]: ax.set_aspect('equal'); ax.set_facecolor('#d9dde2')
+        axs[i,1].tick_params(axis='y',labelleft=False)
+        if i<3:
+            for ax in axs[i]: ax.tick_params(axis='x',labelbottom=False)
     axs[0,0].set_title('Speed + streamlines'); axs[0,1].set_title('Centered pressure')
     for ax in axs[-1]: ax.set_xlabel('x/H')
-    fig.colorbar(im0,ax=axs[:,0],shrink=.72,pad=.015); fig.colorbar(im1,ax=axs[:,1],shrink=.72,pad=.015)
+    fig.colorbar(im0,cax=fig.add_subplot(grid[:,1]),label='Speed')
+    fig.colorbar(im1,cax=fig.add_subplot(grid[:,3]),label='Centered pressure')
     fig.suptitle(case.replace('_medium','')+' · unseen geometry · common column scales',fontsize=15)
-    fig.subplots_adjust(left=.23)
     fig.savefig(NEW/f'generated/{case}_fields.png',dpi=165,bbox_inches='tight'); plt.show()
 
 for case in ['g009_Re100_medium','g048_Re50_medium']: geometry_comparison(case)
