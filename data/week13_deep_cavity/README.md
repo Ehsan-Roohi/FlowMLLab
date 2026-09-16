@@ -16,6 +16,14 @@ these files. The full-grid finite-difference divergence maximum is about 4.33;
 it must not be omitted or mistaken for the model's automatic-differentiation
 residual. Field finiteness and boundary checks are not convergence proof.
 
+`nektar_cavity_t120.vtu` is the raw Nektar++ CFD export used for the selected
+comparison. `nektar_cfd_on_pinn_grid.npz` is its duplicate-consolidated linear
+mapping to the PINN grid; `comparison.json` records provenance and metrics.
+The two-row `cfd_pinn_fields.png` uses common speed and pressure scales. Its
+3.59% velocity relative L2 is near-matched evidence, not final validation:
+the lid mismatch is retained and one last-time difference does not establish
+mesh independence or a steady asymptote.
+
 ## Separately recovered continuation history
 
 `loss_continuation.dat` contains the step and two training momentum MSE columns

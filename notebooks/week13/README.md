@@ -4,6 +4,11 @@ The primary retained example is now **Re=1000, D/W=2.2**, checkpoint
 `restart-55118.ckpt`. The notebook reads the supplied raw field, checks its
 geometry and derived quantities, and regenerates speed/streamlines, mean-zero
 pressure, vorticity and lower-vortex details. Full color ranges are retained.
+A retained Nektar++ CFD field at t=120 is now mapped to the same 301-by-661
+grid and shown directly above the PINN with common speed and pressure scales.
+The notebook keeps only one additional visual case: the Re=100, D/W=1
+near-matched CFD/PINN qualification panel. The older four-case matrix remains
+as a numerical audit table rather than a repeated image gallery.
 A separate visible CPU PINN training exercise teaches the architecture,
 boundary lifting, residual loss and optimizer. It is not this author's model.
 

@@ -53,3 +53,7 @@ deep fields are correct, or that streamfunction PINNs solve high-Re cavities.
 
 Run `python qa/build_week13_materials.py --publish-copy` to regenerate the
 lecture PDF, audit notebook and overview figures from these immutable records.
+
+The repository front page and current notebook no longer display all eight
+per-case field/loss images. They select D/W=2.2 and Re=100, D/W=1 for teaching.
+These retained files remain here so the four-case audit stays reproducible.

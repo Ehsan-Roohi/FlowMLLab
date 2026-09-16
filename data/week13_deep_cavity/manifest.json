@@ -1,7 +1,10 @@
 {
   "files": {
     "field.npz": "952c6b926001a23a1b60c6a0d876ccc1e4159907f109407fdf60087febcd6069",
-    "audit.json": "75be86c9acfde3e635edee3cea8ca4403f41dd6a2e690a568a12ab8d4c45f12a"
+    "audit.json": "75be86c9acfde3e635edee3cea8ca4403f41dd6a2e690a568a12ab8d4c45f12a",
+    "nektar_cavity_t120.vtu": "1c9df4b47ada8f078c710eaf73b198e37b96cc1ac35dc55737c879d487e0cddc",
+    "nektar_cfd_on_pinn_grid.npz": "814075de5efed302b0d84fc6b22e579b80fc8c6c3925764400f0edd78f29d0cf",
+    "comparison.json": "55699e56e668fa53ba5c994a13a840db46d5a7ec0d5c6b0a40f852ed57f56c3b"
   },
   "checkpoint": "restart-55118.ckpt",
   "case": {
@@ -9,5 +12,11 @@
     "depth_over_width": 2.2
   },
   "source": "User-supplied Unity field export, received 2026-09-16",
-  "qualification": "Retained field, not independently certified final convergence. No model weights or matching CFD fields supplied."
+  "qualification": "Retained field, not independently certified final convergence. No model weights or matching CFD fields supplied.",
+  "matched_comparison": {
+    "cfd": "Nektar++ cavity.vtu at t=120, mapped to the 301x661 PINN grid",
+    "pinn": "restart-55118.ckpt field export",
+    "velocity_relative_L2": 0.03586145920830385,
+    "qualification": "Boundary/lid mismatch and lack of mesh/steady convergence remain explicit."
+  }
 }

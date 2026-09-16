@@ -27,6 +27,7 @@
 *.jpeg binary
 *.pptx binary
 *.zip binary
+*.vtu binary
 
 # Large generated vector contours are figure assets, not hand-written source.
 results/abinitio_deeponet_cylinder/*.svg binary -whitespace linguist-generated=true

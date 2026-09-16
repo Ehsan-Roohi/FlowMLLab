@@ -391,23 +391,19 @@ archived research reconstruction shown above.
 
 ### Week 13 — Rectangular-cavity PINN research audit
 
-Primary retained case: **Re=1000, D/W=2.2**, checkpoint 55118. The separately recovered loss history ends at checkpoint 65711; it is not matched CFD validation or a from-scratch history.
-
-![Deep-cavity velocity, pressure and vorticity](results/week13_deep_cavity/fields.png)
-
-![Observed continuation training loss](results/week13_deep_cavity/loss_continuation.png)
-
-The four older cases below remain secondary feasibility audits.
+The front page retains only two representative comparisons. Complete fields,
+loss histories and the four-case audit remain in the [Week 13 notebook](notebooks/week13/W13_Rectangular_Cavity_PINN_Research.ipynb).
 
 **Problem:** Solve square and deep lid-driven cavities.<br>
-**CFD / data:** Displayed fields are PINN solutions, not CFD output. OpenFOAM finite-volume and Nektar++ spectral/hp cavity calculations form a separate reference-validation campaign; they are not yet certified matched references for these displayed deep-cavity PINNs.<br>
+**CFD / data:** Nektar++ CFD and PINN fields are shown in separate, labelled rows on a common grid. The square case retains a near-matched CFD/PINN validation panel.<br>
 **Learning method:** Streamfunction PINN with hard wall constraints, trained using Adam then SSBroyden2 in float64.
 
 The Week 13 module develops streamfunction PINNs for square and deep lid-driven
 cavities. Compare **Re = 100 and 400**, **H/L = 1 and 2**, and **Adam followed
 by SSBroyden2** using retained float64 A100 runs, exact wall constraints and
-independent residual checks. Square cases have frozen near-matched CFD gates;
-the displayed deep-cavity cases still require matched CFD field validation.
+independent residual checks. The selected D/W=2.2 comparison uses Nektar++ at
+t=120 and PINN checkpoint 55118. Its 3.59% velocity relative L2 is not a final
+mesh/steady-convergence claim: the retained lid profiles differ.
 
 [Lecture](lectures/week13_rectangular_cavity_pinn.pdf) ·
 [Notebook and results](notebooks/week13/README.md) ·
@@ -418,39 +414,17 @@ including [McDevitt's DeepPlasma cavity code](https://github.com/cmcdevitt2/Deep
 used with his permission. The earlier [Re=100 qualification and CFD comparison](results/week04_2_pinn_cavity/README.md)
 provides supporting evidence for this module.
 
-**Re = 100**
+**Selected case A — Re=1000, D/W=2.2:** CFD and PINN speed/streamlines and
+mean-zero pressure use common scales. The pressure scale is symmetric-log and
+retains the full range.
 
-Square cavity, D = H/L = 1:
+![Nektar++ CFD and PINN fields for the Re=1000, D/W=2.2 cavity](results/week13_deep_cavity/cfd_pinn_fields.png)
 
-![Reynolds 100 square cavity PINN speed, streamfunction and streamlines](results/week13_rectangular_pinn/re100-d1/fields.png)
+**Selected case B — Re=100, D/W=1:** the PINN fields, pointwise velocity
+difference and CFD/PINN centreline profiles are kept as the compact square-case
+qualification. Interior velocity relative L2 is 3.10%.
 
-![Reynolds 100 square cavity PINN training and held-out residual histories](results/week13_rectangular_pinn/re100-d1/loss.png)
-
-Deep cavity, D = H/L = 2:
-
-![Reynolds 100 deep cavity PINN speed, streamfunction and streamlines](results/week13_rectangular_pinn/re100-d2/fields.png)
-
-![Reynolds 100 deep cavity PINN training and held-out residual histories](results/week13_rectangular_pinn/re100-d2/loss.png)
-
-**Re = 400**
-
-Square cavity, D = H/L = 1:
-
-![Reynolds 400 square cavity PINN speed, streamfunction and streamlines](results/week13_rectangular_pinn/re400-d1/fields.png)
-
-![Reynolds 400 square cavity PINN training and held-out residual histories](results/week13_rectangular_pinn/re400-d1/loss.png)
-
-Deep cavity, D = H/L = 2:
-
-![Reynolds 400 deep cavity PINN speed, streamfunction and streamlines](results/week13_rectangular_pinn/re400-d2/fields.png)
-
-![Reynolds 400 deep cavity PINN training and held-out residual histories](results/week13_rectangular_pinn/re400-d2/loss.png)
-
-Loss curves show momentum **residual RMS**, not CFD field error: blue is the
-Adam warm-up (steps 1–1000), orange is SSBroyden2 continuation, dashed black is
-the held-out full-domain residual, and dotted green is the held-out top-corner
-residual. Decreasing training loss alone does not establish convergence of the
-physical solution; the retained held-out discrepancies remain visible.
+![Near-matched CFD validation of the Re=100, D/W=1 PINN](results/week04_2_pinn_cavity/qualified_validation.png)
 
 ### Week 14 - RANS, inverse PINN and neural turbulence closures
 
@@ -473,6 +447,19 @@ source-target regeneration differences. The plotted table-based PINN comparison
 is **not** a verified reproduction of the paper's final PINN-NN curves.
 The notebook reruns the small NN fit and checks retained CFD evidence; it does
 not silently present saved solver fields as a fresh Run-All CFD calculation.
+
+### Week 15 — Geometry-aware neural operators
+
+[Executed notebook and data guide](notebooks/week15/README.md) · [Lecture](lectures/week15_geometry_generalization.pdf).
+This unseen-geometry example places OpenFOAM CFD, Geo-DeepONet and FNO in rows;
+speed with streamlines and mean-zero pressure use common column scales.
+
+![OpenFOAM CFD, Geo-DeepONet and FNO comparison for an unseen step geometry](results/step_geometry_generalization/generated/g009_Re100_medium_fields.png)
+
+The lab includes 130 sampled OpenFOAM fields across 51 masks and explicit
+geometry/family holdouts. U-FNO is included in the historical g011 audit.
+Ordinary DeepONet code and retained DSMC V5 results are included separately;
+no ordinary-DeepONet OpenFOAM prediction is fabricated.
 
 ## Reuse and contribute
 
@@ -497,7 +484,3 @@ The [all-versions DOI](https://doi.org/10.5281/zenodo.22074169) resolves to the 
 **Ehsan Roohi** · University of Massachusetts Amherst · [roohie@umass.edu](mailto:roohie@umass.edu)
 
 Copyright © 2026 Ehsan Roohi. [MIT License](LICENSE).
-
-### Week 15 — Geometry-aware neural operators
-
-[Executed notebook and data guide](notebooks/week15/README.md) · [Lecture](lectures/week15_geometry_generalization.pdf). Compare CFD and Geo-DeepONet/FNO velocity, pressure and streamlines with shared scales. The lab includes 130 sampled OpenFOAM fields across 51 masks and explicit geometry/family holdouts. U-FNO is included in the historical g011 audit. Ordinary DeepONet code and retained DSMC V5 results are included separately: no ordinary-DeepONet OpenFOAM predictions are fabricated.

@@ -1,0 +1,229 @@
+{
+  "case": {
+    "Re": 1000.0,
+    "depth_over_width": 2.2,
+    "tri": 0.0
+  },
+  "checkpoint": "/project/pi_roohie_umass_edu/FlowMLLab_chris_deep_tf_20260913/training/model/restart-55118.ckpt",
+  "nektar_file": "/project/pi_roohie_umass_edu/FlowMLLab_nektar_re1000_ar2p2_20260913/re1000-ar2p2-p6-n24x54/chunk-0119/attempt-00/cavity.vtu",
+  "previous_file": "/project/pi_roohie_umass_edu/FlowMLLab_nektar_re1000_ar2p2_20260913/re1000-ar2p2-p6-n24x54/chunk-0118/attempt-00/cavity.vtu",
+  "velocity_relative_L2": 0.03586145920830385,
+  "nektar_last_interval_relative_L2": 1.9441425293613026e-05,
+  "lid_max_difference": 1.0274855292950273,
+  "nektar_vortices": [
+    {
+      "x": 0.53,
+      "y": 1.78,
+      "psi": -0.11975363267932002
+    },
+    {
+      "x": 0.3433333333333334,
+      "y": 1.0366666666666666,
+      "psi": 0.013616709886513582
+    },
+    {
+      "x": 0.18333333333333335,
+      "y": 0.21666666666666667,
+      "psi": -3.54802977466562e-05
+    },
+    {
+      "x": 0.9166666666666667,
+      "y": 0.08,
+      "psi": -7.545898909367924e-07
+    }
+  ],
+  "pinn_vortices": [
+    {
+      "x": 0.53,
+      "y": 1.78,
+      "psi": -0.11915864142738371
+    },
+    {
+      "x": 0.3433333333333334,
+      "y": 1.0366666666666666,
+      "psi": 0.01356213728474614
+    },
+    {
+      "x": 0.18333333333333335,
+      "y": 0.21666666666666667,
+      "psi": -3.5781328890547793e-05
+    },
+    {
+      "x": 0.92,
+      "y": 0.08333333333333334,
+      "psi": -6.554423542289705e-07
+    }
+  ],
+  "path_disagreement": {
+    "nektar": 0.0018132417787393674,
+    "pinn": 0.00010958848285850436
+  },
+  "continuity": {
+    "raw_points": 63504,
+    "unique_points": 47125,
+    "coordinate_rounding_decimals": 12,
+    "maximum_duplicate_field_jump": {
+      "u": 0.0,
+      "v": 0.0,
+      "p": 0.0
+    },
+    "consolidation": "duplicate values averaged; jumps retained for review"
+  },
+  "limitations": [
+    "Boundary profiles must match before interpreting differences as PINN error.",
+    "Last saved interval does not establish steady or mesh convergence.",
+    "Streamfunction extrema use export-grid integration, not spectral roots."
+  ],
+  "openfoam": [
+    {
+      "case": "production-21",
+      "format_version": 2,
+      "re": 1000,
+      "depth_over_width": 2.2,
+      "nx": 80,
+      "ny": 176,
+      "ranks": 8,
+      "iterations": 20000,
+      "lid": "uniform/classical",
+      "solver": "OpenFOAM-v2406/simpleFoam/laminar",
+      "status": "unvalidated-candidate",
+      "reference": "https://doi.org/10.1016/j.compfluid.2005.08.006",
+      "time": 20000,
+      "residuals": {
+        "Ux": 2.126786099572964e-16,
+        "Uy": 2.169763146084038e-16,
+        "p": 1.600174914011945e-13
+      },
+      "right_wall_psi_closure": 0.0004487651172278384,
+      "vortices": [
+        {
+          "x": 0.52975077921942,
+          "y": 1.778541629451286,
+          "psi": -0.11846918466471247,
+          "omega_paper_convention": 2.11654373943852,
+          "psi_relative_change": 1.644682044306765e-13
+        },
+        {
+          "x": 0.34679649498506643,
+          "y": 1.031697897733194,
+          "psi": 0.013460603190533483,
+          "omega_paper_convention": -0.4550438277406105,
+          "psi_relative_change": 6.972090234139484e-14
+        },
+        {
+          "x": 0.17583627399884755,
+          "y": 0.20563557356337295,
+          "psi": -3.0215886011480263e-05,
+          "omega_paper_convention": 0.008311482690557419,
+          "psi_relative_change": 2.336693960405583e-12
+        }
+      ],
+      "paper": [],
+      "field_sha256": "8ee935af22b458e6de0f1440bb9b92db170914c727259e5eb5938de3fa491e2d",
+      "previous_time": 19500,
+      "velocity_relative_change": 1.4717276960421916e-13,
+      "nektar_relative_L2_vs_foam": 0.018098146655023316,
+      "pinn_relative_L2_vs_foam": 0.031994961223962476
+    },
+    {
+      "case": "production-22",
+      "format_version": 2,
+      "re": 1000,
+      "depth_over_width": 2.2,
+      "nx": 120,
+      "ny": 264,
+      "ranks": 8,
+      "iterations": 20000,
+      "lid": "uniform/classical",
+      "solver": "OpenFOAM-v2406/simpleFoam/laminar",
+      "status": "unvalidated-candidate",
+      "reference": "https://doi.org/10.1016/j.compfluid.2005.08.006",
+      "time": 20000,
+      "residuals": {
+        "Ux": 3.068023407433663e-13,
+        "Uy": 4.353239490520855e-13,
+        "p": 2.8836591050367e-12
+      },
+      "right_wall_psi_closure": 0.00022421920233407598,
+      "vortices": [
+        {
+          "x": 0.5295546355603759,
+          "y": 1.779024230831329,
+          "psi": -0.11916523434537706,
+          "omega_paper_convention": 2.132428695766503,
+          "psi_relative_change": 3.0171950489992783e-10
+        },
+        {
+          "x": 0.34484785389518297,
+          "y": 1.034011108249797,
+          "psi": 0.013556685737213437,
+          "omega_paper_convention": -0.46050923065102073,
+          "psi_relative_change": 1.981099621308049e-09
+        },
+        {
+          "x": 0.1818136370743721,
+          "y": 0.21100719689249603,
+          "psi": -3.4035486320100484e-05,
+          "omega_paper_convention": 0.008816533722955957,
+          "psi_relative_change": 4.728463514031252e-08
+        }
+      ],
+      "paper": [],
+      "field_sha256": "e76f2edd74228f1df2e23fd805931675df0e8e171d5aa7c864f8012d88df0402",
+      "previous_time": 19500,
+      "velocity_relative_change": 6.454437628811811e-10,
+      "nektar_relative_L2_vs_foam": 0.012782066370155984,
+      "pinn_relative_L2_vs_foam": 0.03347019554797846
+    },
+    {
+      "case": "production-23",
+      "format_version": 2,
+      "re": 1000,
+      "depth_over_width": 2.2,
+      "nx": 180,
+      "ny": 396,
+      "ranks": 8,
+      "iterations": 20000,
+      "lid": "uniform/classical",
+      "solver": "OpenFOAM-v2406/simpleFoam/laminar",
+      "status": "unvalidated-candidate",
+      "reference": "https://doi.org/10.1016/j.compfluid.2005.08.006",
+      "time": 20000,
+      "residuals": {
+        "Ux": 3.700140979315267e-09,
+        "Uy": 5.623600865631096e-09,
+        "p": 2.396903352752097e-08
+      },
+      "right_wall_psi_closure": 0.00010660364107489562,
+      "vortices": [
+        {
+          "x": 0.5294702234142138,
+          "y": 1.779223281199149,
+          "psi": -0.11947003451072861,
+          "omega_paper_convention": 2.1391333424044316,
+          "psi_relative_change": 1.2183360383084815e-06
+        },
+        {
+          "x": 0.3439442992925039,
+          "y": 1.0350601807109967,
+          "psi": 0.013599032424469082,
+          "omega_paper_convention": -0.46307760401485726,
+          "psi_relative_change": 2.505427612229569e-05
+        },
+        {
+          "x": 0.18449050793480934,
+          "y": 0.21343597397708697,
+          "psi": -3.578356334910347e-05,
+          "omega_paper_convention": 0.009030785806066576,
+          "psi_relative_change": 0.0006965479903533275
+        }
+      ],
+      "paper": [],
+      "field_sha256": "cbadcdc9bbc2fc6109d4f5ba6d0c0ad43c7dc4c0e7f57381f5f2e48e92728430",
+      "previous_time": 19500,
+      "velocity_relative_change": 8.118412335293425e-06,
+      "nektar_relative_L2_vs_foam": 0.011851303173593787,
+      "pinn_relative_L2_vs_foam": 0.03515732452262049
+    }
+  ]
+}
