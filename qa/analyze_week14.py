@@ -58,7 +58,7 @@ for name,color in [('baseline',C[0]),('pinn',C[1])]:
                         'k_relL2':rel(a['k'],np.interp(a['y'],stress[:,0],kdns))})
 axes[0].set_title('Mean flow: necessary, not sufficient')
 axes[1].set_title('Turbulence energy reveals the difference')
-axes[1].legend(fontsize=7.5)
+axes[1].legend(fontsize=8,loc='upper center',bbox_to_anchor=(.5,-.19),ncol=2,frameon=False)
 save(fig,'profiles')
 
 fig,axes=plt.subplots(1,3,figsize=(11,3.2),layout='constrained')
@@ -67,7 +67,7 @@ for ax,val,default,title in zip(axes,[sigma,ck,com],[2,1,.075],
     ax.semilogx(archive[:,0]*5200,val,color=C[0],lw=2,label='Released correction')
     ax.axhline(default,color=C[1],ls='--',label='Unmodified constant')
     ax.set(xlabel=r'$y^+$',title=title)
-axes[0].legend(fontsize=8)
+axes[0].legend(fontsize=8,loc='upper center',bbox_to_anchor=(.5,-.2),frameon=False)
 save(fig,'coefficients')
 
 y,u,k,om,_=archive.T
@@ -90,7 +90,7 @@ ax.semilogx(yp,ck,color='#24364b',lw=2,label='Source target')
 ax.semilogx(yp,pc,'--',color=C[0],label='PCHIP')
 ax.semilogx(yp,pred,color=C[1],label='Adapted tanh MLP')
 ax.set(xlabel=r'$y^+$',ylabel=r'$C_k$',title='A strong interpolation control')
-ax.legend(fontsize=9,ncol=2)
+ax.legend(fontsize=9,ncol=2,loc='upper center',bbox_to_anchor=(.5,-.2),frameon=False)
 save(fig,'gap')
 
 fig,ax=plt.subplots(figsize=(10,3),layout='constrained')
@@ -126,7 +126,7 @@ for i,name in enumerate(['baseline','pinn','nn10000','nn5200']):
             ax.semilogy(a[:,0],a[:,1],color=C[i],label=name)
 ax.axhline(1e-6,color='#7b8795',ls='--',lw=1,label='1e-6')
 ax.set(xlabel='Outer iteration (restart)',ylabel='Reported maximum scaled residual',title='Convergence is a separate claim')
-ax.legend(fontsize=9)
+ax.legend(fontsize=9,ncol=5,loc='upper center',bbox_to_anchor=(.5,-.2),frameon=False)
 save(fig,'convergence')
 inverse_file=SRC/'PINN-NN-inverse/loss-vist-diffusion-pinn-5200-half-channel-load.txt'
 if (OUT/'inverse.json').exists():
@@ -152,7 +152,7 @@ if (OUT/'inverse.json').exists():
     axes[1].semilogx(pred[:,0]*5200,pred[:,1],color=C[0],label='New 200k-epoch execution')
     axes[1].semilogx(archived[:,0]*5200,archived[:,1],'--',color=C[1],label='Released output table')
     axes[1].set(xlabel=r'$y^+$',ylabel=r'$\nu_{t,PINN}/\nu$',title='Compare outputs; do not conflate runs')
-    axes[1].legend(fontsize=8)
+    axes[1].legend(fontsize=8,loc='upper center',bbox_to_anchor=(.5,-.2),frameon=False)
     save(fig,'inverse')
 if (OUT/'nn5200.npz').exists():
     a=np.load(OUT/'nn5200.npz')
