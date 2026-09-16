@@ -284,16 +284,17 @@ these are historical-holdout regression results, not fresh blind validation.
 
 **Problem:** Detect a silent branch/trunk correspondence error before fitting a nozzle operator.<br>
 **Reference:** Independent quasi-1D isentropic solutions for three moving-throat geometries.<br>
-**Learning method:** No model is trained; executable audits test fixed branch sensors, per-case trunk coordinates and reference physics.
+**Learning method:** Matched 2×48 tanh MLP surrogates isolate the effect of correct versus corrupted trunk-coordinate pairing.
 
-![Moving-throat nozzle coordinate error, repair and physics gates](results/nozzle_alignment_audit/nozzle_data_alignment_audit.svg)
+![Blind nozzle-surrogate predictions and errors before and after coordinate repair](results/nozzle_alignment_audit/nozzle_alignment_impact.svg)
 
-Reusing the first nozzle's coordinates for every target preserves array shape
-but moves later targets to the wrong physical locations. The audit catches that
-error and the independent use of variable branch sensors. After repair, the
-coordinate error is zero and the sonic-throat, mass-flow and area–Mach checks
-pass. This lab turns a realistic DeepONet failure into a reusable pre-fit test.
+In a controlled quasi-1D stress test, reusing the first nozzle's coordinates
+for every target preserves array shape but raises mean relative L2 error on
+three unseen geometries from **1.63% to 6.72%**. Correct pairing reduces blind
+error by **76%** under the same architecture, training cases and random seed.
+This isolates the value of the pre-fit audit; it is not a DSMC accuracy claim.
 [Run the audit](notebooks/week09/W9_Lab3_Nozzle_Data_Alignment_Audit.ipynb) ·
+[Metrics and protocol](results/nozzle_alignment_audit/README.md) ·
 [Companion notes](lectures/week09_3_nozzle_data_alignment.pdf)
 
 ### Week 10 — DSMC cavity and molecular shocks

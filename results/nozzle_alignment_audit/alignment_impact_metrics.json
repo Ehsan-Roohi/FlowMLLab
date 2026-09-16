@@ -1,0 +1,31 @@
+{
+  "claim_scope": "controlled quasi-1D isentropic stress test; not DSMC",
+  "training_cases": 24,
+  "blind_cases": [
+    {
+      "throat_x_over_L": 0.365,
+      "exit_area_ratio": 2.35,
+      "aligned_relative_l2": 0.018705839158499868,
+      "misaligned_relative_l2": 0.12456506003304087
+    },
+    {
+      "throat_x_over_L": 0.435,
+      "exit_area_ratio": 3.15,
+      "aligned_relative_l2": 0.012154442942706302,
+      "misaligned_relative_l2": 0.03880872268114746
+    },
+    {
+      "throat_x_over_L": 0.495,
+      "exit_area_ratio": 3.65,
+      "aligned_relative_l2": 0.018066310781355836,
+      "misaligned_relative_l2": 0.038351126535929606
+    }
+  ],
+  "mean_aligned_relative_l2": 0.016308864294187337,
+  "mean_misaligned_relative_l2": 0.06724163641670598,
+  "relative_error_reduction": 0.7574588430132934,
+  "model": "matched 2x48 tanh MLPRegressor; only coordinate pairing differs",
+  "random_state": 7,
+  "training_case_seed": 42,
+  "scikit_learn_version": "1.8.0"
+}
