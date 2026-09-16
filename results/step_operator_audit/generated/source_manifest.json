@@ -1,0 +1,457 @@
+{
+  "archive_sha256": "190bb252c2739fc2acfa0841233652144b82eb9ca3a01ad6ddb2ae0f0429ade1",
+  "members": {
+    "wake_focused/geom/seed_17/metrics.json": "8118362cb2bd4c3d8d93be290333e89fe1d642458180015c19e787bee177d2d3",
+    "wake_focused/geom/seed_17/g011_Re25_medium_prediction.npz": "9b13b8fccfbf1ebc8fec1e9b6658bcea7a53ce054b648f43d770563ea59234c5",
+    "wake_focused/geom/seed_17/g011_Re50_medium_prediction.npz": "748df1361c7a400ef6a798d899ac7134cdfc6442888b7e835d90f865e455d1f9",
+    "wake_focused/geom/seed_17/g011_Re100_medium_prediction.npz": "48f53702e2a2d75488135a3db4950dfba167eec7494de6542d170d35c3d19e68",
+    "wake_focused/fno/seed_17/metrics.json": "0db09a4e65e0ab28215190c7bac4732a05055915611fa07b883275872df15d2b",
+    "wake_focused/fno/seed_17/g011_Re25_medium_prediction.npz": "e6e5d3f4cbf35e1eec7ef8dc2fe119492e3bb9abd9f8171b8174a77e7144e097",
+    "wake_focused/fno/seed_17/g011_Re50_medium_prediction.npz": "85932cfef12d41f25327e539bc5024b4013071c30802bc9acc64ed22ca8937c9",
+    "wake_focused/fno/seed_17/g011_Re100_medium_prediction.npz": "0b3611965809371a8029c559f4e3ef6e307f382f92be4d75fdda7c14324b2989",
+    "wake_focused/ufno/seed_17/metrics.json": "4d4e7bd11f8e6cc02ab9b6fdb443276d8172c7de9db85841085d4d537bcc2497",
+    "wake_focused/ufno/seed_17/g011_Re25_medium_prediction.npz": "80eee18b4a027c0fa90bff008aae3835915515e725122e4add878bcf9c609f10",
+    "wake_focused/ufno/seed_17/g011_Re50_medium_prediction.npz": "5e3662781c27056a2dcd63261729686838eaaf472a7856e3293a09148e6d8aa6",
+    "wake_focused/ufno/seed_17/g011_Re100_medium_prediction.npz": "12d01298ef8a0482b16777274b1c5e986cc49f8a16a866c01f683572a6e5aa47"
+  },
+  "reports": {
+    "geom": {
+      "model": "geom",
+      "protocol": "wake_focused_geometry_holdout",
+      "seed": 17,
+      "epochs": 400,
+      "target": [
+        "u",
+        "v",
+        "Re*p_kinematic"
+      ],
+      "pressure_transform": "p_star=Re_in*p",
+      "dataset_sha256": "28d4d4c440cdc4c1ac1d13749ce00b0690d99f29cf20fd56c65fc00b6a8058fd",
+      "code_sha256": "6437def40d092709a77062318f6ac5d80905936b1d692b4399a94040a6ec9d49",
+      "geometry_ids": {
+        "train": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          12,
+          13,
+          14,
+          16,
+          18,
+          19,
+          20,
+          21,
+          22,
+          23,
+          24,
+          25,
+          26,
+          27,
+          29,
+          30,
+          31,
+          32,
+          33,
+          34,
+          36,
+          37,
+          38,
+          39,
+          40,
+          41,
+          43,
+          45,
+          46,
+          48,
+          49,
+          51
+        ],
+        "validation": [
+          10,
+          15,
+          17,
+          28,
+          35,
+          42,
+          44,
+          47,
+          50
+        ],
+        "test": [
+          11
+        ]
+      },
+      "polygon_split": {
+        "train": [
+          6,
+          7,
+          8,
+          9
+        ],
+        "validation": [
+          10
+        ],
+        "test": [
+          11
+        ]
+      },
+      "loss_weights": {
+        "near_sdf": 4.0,
+        "reverse_u": 12.0
+      },
+      "test": [
+        {
+          "case": "g011_Re100_medium",
+          "geometry": 11,
+          "family": "polygon_pocket",
+          "Re": 100,
+          "field_sha256": "2fd28148a52d119143f993bbcc5b3f6edf1c6427e7756401d2d02b974237a32e",
+          "geometry_hash": "2c1f5d694c0c2a898beb97f98954c92fc22f91aed82136c35ced0e3cab479b48",
+          "relative_l2_percent": [
+            23.39078140258789,
+            43.67383575439453,
+            8.107514381408691
+          ],
+          "velocity_relative_l2_percent": 24.92154312133789,
+          "reverse_flow_iou": 0.696256038647343,
+          "reverse_area_error_fraction": 0.0024070021881838076
+        },
+        {
+          "case": "g011_Re25_medium",
+          "geometry": 11,
+          "family": "polygon_pocket",
+          "Re": 25,
+          "field_sha256": "c9d4891f4be449934f697d8039de3a17dbfd5cc74e74544862035ee5a8932294",
+          "geometry_hash": "2c1f5d694c0c2a898beb97f98954c92fc22f91aed82136c35ced0e3cab479b48",
+          "relative_l2_percent": [
+            28.888988494873047,
+            44.57878112792969,
+            5.851784706115723
+          ],
+          "velocity_relative_l2_percent": 29.88976287841797,
+          "reverse_flow_iou": 0.38521677327647474,
+          "reverse_area_error_fraction": 0.05915390226112327
+        },
+        {
+          "case": "g011_Re50_medium",
+          "geometry": 11,
+          "family": "polygon_pocket",
+          "Re": 50,
+          "field_sha256": "7a06761afc5949a4972b9e6fd310b94804eba99b360e93212e299d4dc8847ba1",
+          "geometry_hash": "2c1f5d694c0c2a898beb97f98954c92fc22f91aed82136c35ced0e3cab479b48",
+          "relative_l2_percent": [
+            25.120643615722656,
+            39.70509719848633,
+            2.784736394882202
+          ],
+          "velocity_relative_l2_percent": 26.111074447631836,
+          "reverse_flow_iou": 0.590687977762335,
+          "reverse_area_error_fraction": 0.03464624361779723
+        }
+      ],
+      "mean_case_pressure_error_percent": 5.581345160802205,
+      "median_case_pressure_error_percent": 5.851784706115723,
+      "pooled_pressure_error_percent": 5.546383203637147,
+      "seconds": 145.41792726516724,
+      "best_epoch": 316
+    },
+    "fno": {
+      "model": "fno",
+      "protocol": "wake_focused_geometry_holdout",
+      "seed": 17,
+      "epochs": 400,
+      "target": [
+        "u",
+        "v",
+        "Re*p_kinematic"
+      ],
+      "pressure_transform": "p_star=Re_in*p",
+      "dataset_sha256": "28d4d4c440cdc4c1ac1d13749ce00b0690d99f29cf20fd56c65fc00b6a8058fd",
+      "code_sha256": "6437def40d092709a77062318f6ac5d80905936b1d692b4399a94040a6ec9d49",
+      "geometry_ids": {
+        "train": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          12,
+          13,
+          14,
+          16,
+          18,
+          19,
+          20,
+          21,
+          22,
+          23,
+          24,
+          25,
+          26,
+          27,
+          29,
+          30,
+          31,
+          32,
+          33,
+          34,
+          36,
+          37,
+          38,
+          39,
+          40,
+          41,
+          43,
+          45,
+          46,
+          48,
+          49,
+          51
+        ],
+        "validation": [
+          10,
+          15,
+          17,
+          28,
+          35,
+          42,
+          44,
+          47,
+          50
+        ],
+        "test": [
+          11
+        ]
+      },
+      "polygon_split": {
+        "train": [
+          6,
+          7,
+          8,
+          9
+        ],
+        "validation": [
+          10
+        ],
+        "test": [
+          11
+        ]
+      },
+      "loss_weights": {
+        "near_sdf": 4.0,
+        "reverse_u": 12.0
+      },
+      "test": [
+        {
+          "case": "g011_Re100_medium",
+          "geometry": 11,
+          "family": "polygon_pocket",
+          "Re": 100,
+          "field_sha256": "2fd28148a52d119143f993bbcc5b3f6edf1c6427e7756401d2d02b974237a32e",
+          "geometry_hash": "2c1f5d694c0c2a898beb97f98954c92fc22f91aed82136c35ced0e3cab479b48",
+          "relative_l2_percent": [
+            23.46636962890625,
+            40.127403259277344,
+            6.311023235321045
+          ],
+          "velocity_relative_l2_percent": 24.66322898864746,
+          "reverse_flow_iou": 0.629735935706085,
+          "reverse_area_error_fraction": 0.0002188183807439825
+        },
+        {
+          "case": "g011_Re25_medium",
+          "geometry": 11,
+          "family": "polygon_pocket",
+          "Re": 25,
+          "field_sha256": "c9d4891f4be449934f697d8039de3a17dbfd5cc74e74544862035ee5a8932294",
+          "geometry_hash": "2c1f5d694c0c2a898beb97f98954c92fc22f91aed82136c35ced0e3cab479b48",
+          "relative_l2_percent": [
+            16.408130645751953,
+            30.186458587646484,
+            4.3699212074279785
+          ],
+          "velocity_relative_l2_percent": 17.377803802490234,
+          "reverse_flow_iou": 0.6532467532467533,
+          "reverse_area_error_fraction": 0.009846827133479213
+        },
+        {
+          "case": "g011_Re50_medium",
+          "geometry": 11,
+          "family": "polygon_pocket",
+          "Re": 50,
+          "field_sha256": "7a06761afc5949a4972b9e6fd310b94804eba99b360e93212e299d4dc8847ba1",
+          "geometry_hash": "2c1f5d694c0c2a898beb97f98954c92fc22f91aed82136c35ced0e3cab479b48",
+          "relative_l2_percent": [
+            19.15288543701172,
+            33.895301818847656,
+            4.814809799194336
+          ],
+          "velocity_relative_l2_percent": 20.218929290771484,
+          "reverse_flow_iou": 0.6563803169307757,
+          "reverse_area_error_fraction": 0.012545587162654996
+        }
+      ],
+      "mean_case_pressure_error_percent": 5.16525141398112,
+      "median_case_pressure_error_percent": 4.814809799194336,
+      "pooled_pressure_error_percent": 4.597549300396097,
+      "seconds": 270.1514549255371,
+      "best_epoch": 321
+    },
+    "ufno": {
+      "model": "ufno",
+      "protocol": "wake_focused_geometry_holdout",
+      "seed": 17,
+      "epochs": 400,
+      "target": [
+        "u",
+        "v",
+        "p_kinematic"
+      ],
+      "pressure_transform": "none",
+      "dataset_sha256": "28d4d4c440cdc4c1ac1d13749ce00b0690d99f29cf20fd56c65fc00b6a8058fd",
+      "code_sha256": "6437def40d092709a77062318f6ac5d80905936b1d692b4399a94040a6ec9d49",
+      "geometry_ids": {
+        "train": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          12,
+          13,
+          14,
+          16,
+          18,
+          19,
+          20,
+          21,
+          22,
+          23,
+          24,
+          25,
+          26,
+          27,
+          29,
+          30,
+          31,
+          32,
+          33,
+          34,
+          36,
+          37,
+          38,
+          39,
+          40,
+          41,
+          43,
+          45,
+          46,
+          48,
+          49,
+          51
+        ],
+        "validation": [
+          10,
+          15,
+          17,
+          28,
+          35,
+          42,
+          44,
+          47,
+          50
+        ],
+        "test": [
+          11
+        ]
+      },
+      "polygon_split": {
+        "train": [
+          6,
+          7,
+          8,
+          9
+        ],
+        "validation": [
+          10
+        ],
+        "test": [
+          11
+        ]
+      },
+      "loss_weights": {
+        "near_sdf": 4.0,
+        "reverse_u": 12.0
+      },
+      "test": [
+        {
+          "case": "g011_Re100_medium",
+          "geometry": 11,
+          "family": "polygon_pocket",
+          "Re": 100,
+          "field_sha256": "2fd28148a52d119143f993bbcc5b3f6edf1c6427e7756401d2d02b974237a32e",
+          "geometry_hash": "2c1f5d694c0c2a898beb97f98954c92fc22f91aed82136c35ced0e3cab479b48",
+          "relative_l2_percent": [
+            25.603612899780273,
+            42.24584197998047,
+            10.72459602355957
+          ],
+          "velocity_relative_l2_percent": 26.775602340698242,
+          "reverse_flow_iou": 0.6545454545454545,
+          "reverse_area_error_fraction": 0.005105762217359592
+        },
+        {
+          "case": "g011_Re25_medium",
+          "geometry": 11,
+          "family": "polygon_pocket",
+          "Re": 25,
+          "field_sha256": "c9d4891f4be449934f697d8039de3a17dbfd5cc74e74544862035ee5a8932294",
+          "geometry_hash": "2c1f5d694c0c2a898beb97f98954c92fc22f91aed82136c35ced0e3cab479b48",
+          "relative_l2_percent": [
+            18.8220272064209,
+            28.760120391845703,
+            9.43935775756836
+          ],
+          "velocity_relative_l2_percent": 19.4525146484375,
+          "reverse_flow_iou": 0.6572164948453608,
+          "reverse_area_error_fraction": 0.010795040116703136
+        },
+        {
+          "case": "g011_Re50_medium",
+          "geometry": 11,
+          "family": "polygon_pocket",
+          "Re": 50,
+          "field_sha256": "7a06761afc5949a4972b9e6fd310b94804eba99b360e93212e299d4dc8847ba1",
+          "geometry_hash": "2c1f5d694c0c2a898beb97f98954c92fc22f91aed82136c35ced0e3cab479b48",
+          "relative_l2_percent": [
+            20.636423110961914,
+            33.284175872802734,
+            10.681127548217773
+          ],
+          "velocity_relative_l2_percent": 21.504932403564453,
+          "reverse_flow_iou": 0.6731583403895004,
+          "reverse_area_error_fraction": 0.011816192560175055
+        }
+      ],
+      "mean_case_pressure_error_percent": 10.281693776448568,
+      "median_case_pressure_error_percent": 10.681127548217773,
+      "pooled_pressure_error_percent": 9.78029773607449,
+      "seconds": 498.37896943092346,
+      "best_epoch": 391
+    }
+  }
+}

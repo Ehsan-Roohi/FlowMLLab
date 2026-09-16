@@ -1,0 +1,477 @@
+"""Build the self-contained, source-backed Week 9 operator audit notebook."""
+from pathlib import Path
+import nbformat as nbf
+
+ROOT = Path(__file__).resolve().parents[1]
+cells = []
+def md(s): cells.append(nbf.v4.new_markdown_cell(s.strip()))
+def code(s): cells.append(nbf.v4.new_code_cell(s.strip()))
+
+md(r"""
+# Lab 3 — Geometry-aware operators for separated step flow
+## Geo-DeepONet, FNO and U-FNO: from global accuracy to physical diagnostics
+
+**FlowMLLab · Week 9 extension · Ehsan Roohi's retained research outputs**
+
+This executable CPU lab audits **nine saved predictions**, not nine newly trained models:
+three architectures × Re = 25, 50, 100, one geometry (`g011`), one seed (17).
+The reference is the CFD field stored alongside each prediction, **not DSMC**.
+This continuum study is distinct from the rarefied micro-step data in Lab 1.
+
+The companion `dataset.npz` contains the actual 130 accepted, sampled OpenFOAM
+fields used by this historical run: 106 training cases, 21 validation cases and
+3 test cases, grouped by whole geometry. The notebook verifies its recorded hash,
+inspects every array, reconstructs a case manifest and visualizes all three splits.
+
+Learning outcomes: check geometry-level splits; compare velocity and pressure fairly;
+differentiate velocity without crossing solid boundaries; distinguish reverse-flow
+footprints from vortex identification; and design a defensible next experiment.
+
+**Execution boundary.** Training/validation/test fields are included, but checkpoints,
+the original training source and complete OpenFOAM case directories are not. Running
+all cells re-computes data audits, metrics and figures from actual retained fields.
+It does not retrain the networks or independently validate the CFD solver.
+The historical test geometry has since been inspected repeatedly: it is now a
+development example, not an unopened final test.
+
+### Run
+Use Python 3.10+ with `numpy`, `pandas`, `matplotlib`, `scipy`, `nbformat`, and `ipykernel`.
+In the repository the archive is found automatically. For standalone/Colab use, upload
+`wake_predictions.tgz` and `dataset.npz` beside this notebook. No automatic download
+or paid GPU is needed.
+""")
+code(r"""
+from pathlib import Path
+import io, json, tarfile, hashlib, platform
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+from scipy.ndimage import binary_erosion
+from IPython.display import display
+
+EXPECTED_SHA = '190bb252c2739fc2acfa0841233652144b82eb9ca3a01ad6ddb2ae0f0429ade1'
+EXPECTED_DATASET_SHA = '28d4d4c440cdc4c1ac1d13749ce00b0690d99f29cf20fd56c65fc00b6a8058fd'
+roots = [Path.cwd(), *Path.cwd().parents]
+candidates = [p / 'results/step_operator_audit/wake_predictions.tgz' for p in roots]
+candidates += [Path.cwd() / 'wake_predictions.tgz']
+ARCHIVE = next((p for p in candidates if p.is_file()), None)
+if ARCHIVE is None:
+    raise FileNotFoundError('Upload wake_predictions.tgz next to the notebook, then rerun.')
+assert hashlib.sha256(ARCHIVE.read_bytes()).hexdigest() == EXPECTED_SHA, 'Wrong archive version'
+data_candidates = [p / 'results/step_operator_audit/source/dataset.npz' for p in roots]
+data_candidates += [Path.cwd() / 'dataset.npz']
+DATASET = next((p for p in data_candidates if p.is_file()), None)
+if DATASET is None:
+    raise FileNotFoundError('Upload dataset.npz next to the notebook, then rerun.')
+assert hashlib.sha256(DATASET.read_bytes()).hexdigest() == EXPECTED_DATASET_SHA, 'Wrong dataset version'
+OUT = ARCHIVE.parent / 'generated'
+OUT.mkdir(exist_ok=True)
+plt.rcParams.update({'figure.dpi': 115, 'font.size': 10, 'axes.titlesize': 12,
+                     'axes.spines.top': False, 'axes.spines.right': False})
+print('Verified archive:', ARCHIVE.name)
+print('Verified OpenFOAM dataset:', DATASET.name)
+print('Python:', platform.python_version(), '| NumPy:', np.__version__)
+""")
+md(r"""
+## 1. What do the three models represent?
+
+| Model label in archive | Conceptual learning mechanism | Key diagnostic question |
+|---|---|---|
+| Geo-DeepONet (`geom`) | Geometry-conditioned branch/trunk operator representation | Does geometry conditioning preserve local separation? |
+| FNO (`fno`) | Learned spectral mixing of grid-based feature fields | Does global spectral accuracy hide local boundary errors? |
+| U-FNO (`ufno`) | Fourier operator augmented by a local U-shaped pathway | Does local processing improve the wake, pressure, or neither? |
+
+These are conceptual descriptions, **not an audited reconstruction of the exact
+training architectures**. The archive records a training-code hash, but contains no
+source to verify layers, parameter counts or conditioning implementation.
+Do not replace those missing details with a newly invented network.
+
+The source records 400 training epochs, seed 17, near-SDF weight 4 and reverse-flow
+weight 12. Verify these values below rather than importing a later experiment's setup.
+All three Reynolds numbers of the test geometry must stay outside training and selection.
+""")
+code(r"""
+MODELS = ['geom', 'fno', 'ufno']
+LABELS = {'geom':'Geo-DeepONet', 'fno':'FNO', 'ufno':'U-FNO'}
+RES = [25, 50, 100]
+fields, reports, manifest = {}, {}, {}
+# Read members in memory; do not extract untrusted paths to the filesystem.
+with tarfile.open(ARCHIVE, 'r:gz') as tar:
+    for model in MODELS:
+        prefix = f'wake_focused/{model}/seed_17/'
+        raw = tar.extractfile(prefix + 'metrics.json').read()
+        reports[model] = json.loads(raw)
+        manifest[prefix+'metrics.json'] = hashlib.sha256(raw).hexdigest()
+        for re in RES:
+            name = prefix + f'g011_Re{re}_medium_prediction.npz'
+            raw = tar.extractfile(name).read()
+            manifest[name] = hashlib.sha256(raw).hexdigest()
+            with np.load(io.BytesIO(raw), allow_pickle=False) as z:
+                fields[model, re] = {key:z[key].copy() for key in z.files}
+
+for model, report in reports.items():
+    splits = [set(report['geometry_ids'][k]) for k in ['train','validation','test']]
+    assert all(not (splits[i] & splits[j]) for i in range(3) for j in range(i))
+    assert splits[2] == {11} and report['seed'] == 17
+    assert report['protocol'] == 'wake_focused_geometry_holdout'
+    for re in RES:
+        f = fields[model,re]
+        assert f['prediction'].shape == f['truth'].shape == (18000,3)
+        assert f['mask'].dtype == bool and f['mask'].sum() > 0
+        assert np.isfinite(f['prediction']).all() and np.isfinite(f['truth']).all()
+        for key in ['truth','coordinates','mask','shape']:
+            np.testing.assert_array_equal(f[key], fields['geom',re][key])
+
+display(pd.DataFrame([{'model':LABELS[m], 'seed':r['seed'], 'epochs':r['epochs'],
+    'best_epoch':r['best_epoch'], 'target':str(r['target']),
+    'pressure_transform':r.get('pressure_transform'),
+    'loss_weights':str(r.get('loss_weights'))} for m,r in reports.items()]))
+(OUT / 'source_manifest.json').write_text(json.dumps({'archive_sha256':EXPECTED_SHA,
+    'members':manifest,'reports':reports}, indent=2), encoding='utf-8')
+print('All nine fields are finite; reference fields match across models; recorded splits are disjoint.')
+""")
+md(r"""
+## 2. Audit the actual OpenFOAM training, validation and test fields
+
+`dataset.npz` stores 130 accepted fields on the common 60×300 sampling grid.
+`raw[...,0:3]` are $u$, $v$ and the stored pressure target; `queries` contain
+normalized $x$, $y$ and signed distance to the obstacle; `masks` identify fluid.
+The saved training metadata names the pressure target as $p^*=Re\,p$.
+
+The dataset does not contain a geometry-ID column. We therefore assign IDs by the
+first occurrence of each unique geometry mask, matching the source's sorted case order.
+This reconstruction is checked directly for `g011`: all three fields, masks and
+coordinates are bit-for-bit identical to the references in the prediction archive.
+The mapping for the other IDs remains an auditable inference until the original source
+or an explicit case-name manifest is recovered.
+""")
+code(r"""
+with np.load(DATASET, allow_pickle=False) as z:
+    dataset = {k:z[k].copy() for k in z.files}
+assert set(dataset) == {'raw','queries','masks','Re','shape'}
+assert tuple(dataset['shape']) == (60,300)
+assert dataset['raw'].shape == dataset['queries'].shape == (130,18000,3)
+assert dataset['masks'].shape == (130,18000) and dataset['masks'].dtype == bool
+assert dataset['Re'].shape == (130,) and set(dataset['Re']) == {25,50,100}
+assert np.isfinite(dataset['raw']).all() and np.isfinite(dataset['queries']).all()
+
+# Stable fingerprints identify geometry without trusting file names.
+fingerprints = [hashlib.sha256(np.packbits(m).tobytes()).hexdigest() for m in dataset['masks']]
+geometry_order = list(dict.fromkeys(fingerprints))
+geometry_ids = np.array([geometry_order.index(h)+1 for h in fingerprints])
+assert len(geometry_order) == 51
+
+source_splits = {k:set(reports['geom']['geometry_ids'][k]) for k in ['train','validation','test']}
+split_name = np.array([next(k for k,v in source_splits.items() if int(g) in v) for g in geometry_ids])
+assert [int((split_name==k).sum()) for k in ['train','validation','test']] == [106,21,3]
+assert [len(set(geometry_ids[split_name==k])) for k in ['train','validation','test']] == [41,9,1]
+
+# Direct identity check anchors inferred group 11 to recorded g011.
+for i in np.where(geometry_ids==11)[0]:
+    re = int(dataset['Re'][i]); retained = fields['geom',re]
+    np.testing.assert_array_equal(dataset['raw'][i],retained['truth'])
+    np.testing.assert_array_equal(dataset['masks'][i],retained['mask'])
+    np.testing.assert_allclose(dataset['queries'][i,:,:2],retained['coordinates']/[5,1],rtol=0,atol=0)
+
+case_manifest = pd.DataFrame({'case_index':np.arange(130),'geometry_id_inferred':geometry_ids,
+    'Re':dataset['Re'],'split':split_name,'fluid_cells':dataset['masks'].sum(axis=1),
+    'geometry_mask_sha256':fingerprints})
+case_manifest.to_csv(OUT/'dataset_case_manifest.csv',index=False)
+coverage = case_manifest.groupby(['split','Re']).size().unstack(fill_value=0).reindex(['train','validation','test'])
+display(coverage.assign(total=coverage.sum(axis=1)))
+print('PASS: 130 finite sampled OpenFOAM fields; 51 masks; split counts 106/21/3; g011 identity verified.')
+""")
+md(r"""
+### Coverage and representative fields
+
+The left panel counts cases (not geometries) by Reynolds number. The field panels use
+one Re=50 case from each split and plot the actual sampled OpenFOAM speed and stored
+pressure target. No predicted field or synthetic replacement is used here.
+""")
+code(r"""
+fig,axs=plt.subplots(1,2,figsize=(10,3.8))
+coverage.plot(kind='bar',ax=axs[0],color=['#4c78a8','#f58518','#54a24b'])
+axs[0].set(title='Accepted OpenFOAM cases by split',xlabel='',ylabel='cases')
+axs[0].tick_params(axis='x',rotation=0); axs[0].legend(title='Re',frameon=False)
+geom_counts=case_manifest.groupby('split').geometry_id_inferred.nunique().reindex(['train','validation','test'])
+axs[1].bar(geom_counts.index,geom_counts.values,color=['#4c78a8','#f58518','#54a24b'])
+axs[1].set(title='Whole geometries by split',ylabel='unique geometry masks')
+for ax in axs: ax.grid(axis='y',alpha=.2)
+fig.tight_layout(); fig.savefig(OUT/'dataset_coverage.png',dpi=150,bbox_inches='tight'); plt.show()
+
+selected=[]
+for sp in ['train','validation','test']:
+    idx=int(case_manifest.index[(case_manifest.split==sp)&(case_manifest.Re==50)][0]); selected.append((sp,idx))
+fig,axs=plt.subplots(3,3,figsize=(15,7.5),sharex=True,sharey=True)
+for row,(sp,idx) in enumerate(selected):
+    ny,nx=map(int,dataset['shape']); q=dataset['queries'][idx].reshape(ny,nx,3)
+    a=dataset['raw'][idx].reshape(ny,nx,3); mask=dataset['masks'][idx].reshape(ny,nx)
+    x=5*q[0,:,0]; y=q[:,0,1]
+    vals=[q[:,:,2],np.ma.masked_where(~mask,np.hypot(a[:,:,0],a[:,:,1])),
+          np.ma.masked_where(~mask,a[:,:,2]-a[:,:,2][mask].mean())]
+    titles=['Signed distance','OpenFOAM speed','Mean-removed stored pressure']
+    for col,(val,title) in enumerate(zip(vals,titles)):
+        cm=plt.get_cmap('viridis' if col==1 else 'RdBu_r').copy(); cm.set_bad('#dadde2')
+        lim=float(np.max(np.abs(val)))
+        im=axs[row,col].pcolormesh(x,y,val,shading='nearest',cmap=cm,
+            vmin=0 if col==1 else -lim,vmax=lim)
+        axs[row,col].set_aspect('equal'); axs[row,col].set_facecolor('#dadde2')
+        if row==0: axs[row,col].set_title(title)
+        if col==0: axs[row,col].set_ylabel(f'{sp} · g{geometry_ids[idx]:03d}\ny')
+        if row==2: axs[row,col].set_xlabel('x/H')
+        fig.colorbar(im,ax=axs[row,col],shrink=.72,pad=.015)
+fig.suptitle('Actual sampled OpenFOAM fields · Re=50 · one whole geometry per split',fontsize=15)
+fig.tight_layout(); fig.savefig(OUT/'dataset_split_examples.png',dpi=150,bbox_inches='tight'); plt.show()
+""")
+md(r"""
+## 3. Metrics with explicit physical meaning
+
+For fluid cells $M$, joint velocity error is
+$100\|[\hat u-u,\hat v-v]_M\|_2/\|[u,v]_M\|_2$.
+We report both raw-pressure relative error and shape error after **independent
+mean removal** from reference and prediction. The latter discards pressure offset;
+it is not a correction to the original prediction or evidence the outlet gauge was wrong.
+A small pressure-fluctuation denominator can produce a large relative percentage.
+
+The pressure column is evaluated as stored. The metadata describes the training
+transform $p^*=Re\,p$; it does not unambiguously specify whether stored arrays have
+already been inverse-transformed. Per-case relative errors and mean-removal errors
+are invariant to a common nonzero scaling, so no guessed conversion is needed.
+Absolute pressure units and pooled errors across Reynolds numbers are not inferred.
+
+Reverse-flow IoU compares sets $u<0$ over fluid cells. It does **not** count vortices,
+locate their centers, or measure wall-shear reattachment. Vorticity is
+$\omega=\partial v/\partial x-\partial u/\partial y$; evaluate it only where the
+finite-difference stencil remains entirely in fluid.
+""")
+code(r"""
+def relative(pred, truth):
+    denom = np.linalg.norm(truth)
+    return float(100*np.linalg.norm(pred-truth)/denom) if denom > 1e-12 else np.nan
+
+def grid(f):
+    ny,nx = map(int, f['shape'])
+    xy = f['coordinates'].reshape(ny,nx,2)
+    x,y = xy[0,:,0],xy[:,0,1]
+    assert np.all(np.diff(x)>0) and np.all(np.diff(y)>0)
+    np.testing.assert_allclose(xy[:,:,0], np.broadcast_to(x, (ny,nx)))
+    np.testing.assert_allclose(xy[:,:,1], np.broadcast_to(y[:,None], (ny,nx)))
+    return x,y,f['mask'].reshape(ny,nx)
+
+def curl(a,x,y):
+    return np.gradient(a[:,:,1],x,axis=1,edge_order=2)-np.gradient(a[:,:,0],y,axis=0,edge_order=2)
+
+def diagnostics(f):
+    x,y,mask = grid(f)
+    truth,pred = (f[k].astype(float) for k in ['truth','prediction'])
+    t,p = truth[mask.ravel()],pred[mask.ravel()]
+    t0,p0 = t[:,2]-t[:,2].mean(),p[:,2]-p[:,2].mean()
+    rt,rp = t[:,0]<0,p[:,0]<0
+    union = (rt|rp).sum()
+    interior = binary_erosion(mask, structure=np.ones((3,3)), border_value=0)
+    wt,wp = [curl(a.reshape(*mask.shape,3),x,y) for a in [truth,pred]]
+    return {'velocity_L2_pct':relative(p[:,:2],t[:,:2]),
+        'pressure_raw_L2_pct':relative(p[:,2],t[:,2]),
+        'pressure_centered_L2_pct':relative(p0,t0),
+        'pressure_reference_fluctuation_rms':float(np.sqrt(np.mean(t0**2))),
+        'vorticity_interior_L2_pct':relative(wp[interior],wt[interior]),
+        'reverse_IoU':float((rt&rp).sum()/union) if union else np.nan,
+        'reverse_area_relative_error_pct':float(100*abs(rp.sum()-rt.sum())/rt.sum()) if rt.sum() else np.nan,
+        'reference_reverse_cells':int(rt.sum()), 'predicted_reverse_cells':int(rp.sum()),
+        'derivative_cells':int(interior.sum())}
+
+rows = []
+for m in MODELS:
+    for re in RES:
+        values = diagnostics(fields[m,re])
+        recorded = next(r for r in reports[m]['test'] if r['Re']==re)
+        # Float64 recalculation versus original float32 report.
+        assert abs(values['velocity_L2_pct']-recorded['velocity_relative_l2_percent']) < 0.001
+        assert abs(values['pressure_raw_L2_pct']-recorded['relative_l2_percent'][2]) < 0.001
+        values['source_reverse_IoU'] = recorded['reverse_flow_iou']
+        values['reverse_IoU_delta_from_source'] = values['reverse_IoU']-recorded['reverse_flow_iou']
+        rows.append({'model':LABELS[m], 'Re':re, **values})
+metrics = pd.DataFrame(rows)
+metrics.to_csv(OUT/'recomputed_metrics.csv',index=False)
+display(metrics.round(4))
+print('All nine velocity and raw-pressure metrics reproduce the source report.')
+print('Reverse-IoU differs from the source: the source threshold/region is not recorded.')
+print('We retain both values; our explicit definition is u<0 over every fluid cell.')
+""")
+md('## 4. Verify the diagnostics before interpreting the networks')
+code(r"""
+# Manufactured solid-body rotation: u=-y, v=x -> omega=2.
+x = np.linspace(0,2,19); y = np.linspace(0,1,13)
+X,Y = np.meshgrid(x,y)
+a = np.stack([-Y,X,np.zeros_like(X)],axis=-1)
+np.testing.assert_allclose(curl(a,x,y),2,atol=1e-12)
+test = {k:v.copy() for k,v in fields['geom',50].items()}
+test['prediction'] = test['truth'].copy()
+v = diagnostics(test)
+assert v['velocity_L2_pct']==0 and v['vorticity_interior_L2_pct']==0 and v['reverse_IoU']==1
+test['prediction'] = test['prediction'].astype(float)
+test['prediction'][:,2] += 10
+assert diagnostics(test)['pressure_centered_L2_pct'] < 1e-10
+assert diagnostics(test)['pressure_raw_L2_pct'] > 0
+# Solid values must not contaminate fluid-interior derivatives.
+test['prediction'][~test['mask'],:2] = 1e6
+assert diagnostics(test)['vorticity_interior_L2_pct'] == 0
+print('PASS: derivative sign/axis, perfect prediction, pressure-offset invariance, solid exclusion.')
+""")
+md(r"""
+## 5. Which quantity changes the ranking?
+No seed error bars are plotted: this archive contains only seed 17.
+Reynolds-number variation is not a substitute for independent training seeds.
+""")
+code(r"""
+fig,axs = plt.subplots(1,3,figsize=(12,3.8))
+for ax,col,title in zip(axs,['velocity_L2_pct','pressure_centered_L2_pct','reverse_IoU'],
+                       ['Velocity error (%)','Pressure shape error (%)','Reverse-flow IoU']):
+    for m in MODELS:
+        d = metrics[metrics.model==LABELS[m]].sort_values('Re')
+        ax.plot(d.Re,d[col],'-o',label=LABELS[m])
+    ax.set(title=title,xlabel='Re',xticks=RES); ax.grid(alpha=.2)
+fig.legend(*axs[0].get_legend_handles_labels(),loc='lower center',ncol=3,frameon=False)
+fig.tight_layout(rect=(0,.12,1,1))
+fig.savefig(OUT/'metric_comparison.png',bbox_inches='tight'); plt.show()
+""")
+md(r"""
+## 6. Field comparisons — same color scale, actual velocity streamlines
+
+For each Reynolds number, rows are CFD, Geo, FNO and U-FNO. Columns show speed,
+mean-removed pressure (stored units), and interior vorticity. Streamlines use each
+row's own velocity. Gray areas are solid or excluded derivative stencils, not zero-valued fluid.
+The red contour is $u=0$, the boundary of reverse flow, **not a vortex-core detector**.
+These are sampled 60×300 fields, not necessarily the original CFD mesh resolution.
+""")
+code(r"""
+def compare_fields(re):
+    f = fields['geom',re]; x,y,mask = grid(f)
+    interior = binary_erosion(mask,structure=np.ones((3,3)),border_value=0)
+    arrays = [f['truth']] + [fields[m,re]['prediction'] for m in MODELS]
+    arrays = [a.reshape(*mask.shape,3).astype(float) for a in arrays]
+    derived=[]
+    for a in arrays:
+        speed=np.hypot(a[:,:,0],a[:,:,1])
+        pressure=a[:,:,2]-a[:,:,2][mask].mean()
+        derived.append([np.ma.masked_where(~mask,speed),
+                        np.ma.masked_where(~mask,pressure),
+                        np.ma.masked_where(~interior,curl(a,x,y))])
+    limits=[max(float(v[0].max()) for v in derived)]
+    limits += [max(float(np.abs(v[j]).max()) for v in derived) for j in [1,2]]
+    fig,axs=plt.subplots(4,3,figsize=(16,8.5),sharex=True,sharey=True)
+    for i,(a,vals,label) in enumerate(zip(arrays,derived,['CFD']+[LABELS[m] for m in MODELS])):
+        for j,ax in enumerate(axs[i]):
+            cm=plt.get_cmap('viridis' if j==0 else 'RdBu_r').copy(); cm.set_bad('#dadde2')
+            im=ax.pcolormesh(x,y,vals[j],shading='nearest',cmap=cm,
+                            vmin=0 if j==0 else -limits[j],vmax=limits[j])
+            if j==0:
+                # linspace avoids roundoff in stored coordinates triggering streamplot's uniformity check.
+                ax.streamplot(np.linspace(x[0],x[-1],len(x)),np.linspace(y[0],y[-1],len(y)),
+                    np.ma.masked_where(~mask,a[:,:,0]),np.ma.masked_where(~mask,a[:,:,1]),
+                    color='white',density=.8,linewidth=.4,arrowsize=.5)
+                ax.contour(x,y,np.ma.masked_where(~mask,a[:,:,0]),levels=[0],colors=['#e34336'],linewidths=.7)
+            ax.set_aspect('equal'); ax.set_facecolor('#dadde2')
+            if i==0: ax.set_title(['Speed + streamlines + u=0','Mean-removed pressure','Vorticity: fluid interior'][j])
+            if j==0: ax.set_ylabel(label+'\ny coordinate')
+            if i==3: ax.set_xlabel('x coordinate')
+            if i==0: fig.colorbar(im,ax=axs[:,j],shrink=.65,pad=.015)
+    fig.suptitle(f'g011 · Re={re} · retained seed 17 · common column scales',fontsize=16)
+    fig.savefig(OUT/f'fields_Re{re}.png',dpi=150,bbox_inches='tight'); plt.show()
+
+for re in RES: compare_fields(re)
+""")
+md(r"""
+## 7. Local error: global averages can hide separation failure
+Below, choose a Reynolds number without selecting a 'best' model. Error scales are
+shared across the three models; the right-hand profiles are taken at the nearest
+sampled coordinate to x=3.0. This coordinate is a diagnostic choice, not a measured
+reattachment location.
+""")
+code(r"""
+RE_VIEW = 50
+f=fields['geom',RE_VIEW]; x,y,mask=grid(f)
+t=f['truth'].reshape(*mask.shape,3)
+errors=[np.ma.masked_where(~mask,np.linalg.norm(fields[m,RE_VIEW]['prediction'].reshape(*mask.shape,3)[:,:,:2]-t[:,:,:2],axis=2)) for m in MODELS]
+vmax=max(float(e.max()) for e in errors)
+fig,axs=plt.subplots(3,2,figsize=(12,7),gridspec_kw={'width_ratios':[3,1]})
+ix=int(np.argmin(abs(x-3.0)))
+for i,m in enumerate(MODELS):
+    im=axs[i,0].pcolormesh(x,y,errors[i],cmap='magma',vmin=0,vmax=vmax,shading='nearest')
+    axs[i,0].set(title=LABELS[m]+' |velocity error|',xlabel='x coordinate',ylabel='y coordinate',aspect='equal',facecolor='#dadde2')
+    p=fields[m,RE_VIEW]['prediction'].reshape(*mask.shape,3)
+    axs[i,1].plot(np.ma.masked_where(~mask[:,ix],t[:,ix,0]),y,label='CFD')
+    axs[i,1].plot(np.ma.masked_where(~mask[:,ix],p[:,ix,0]),y,label='Prediction')
+    axs[i,1].set(xlabel='u',ylabel='y coordinate',title=f'x={x[ix]:.3f}')
+fig.tight_layout(rect=(0,.07,.9,1))
+cax=fig.add_axes([.92,.22,.015,.55]); fig.colorbar(im,cax=cax,label='Velocity error magnitude')
+fig.legend(*axs[0,1].get_legend_handles_labels(),loc='lower center',ncol=2,frameon=False)
+fig.savefig(OUT/'local_errors.png',dpi=150,bbox_inches='tight'); plt.show()
+""")
+md(r"""
+## 8. Research progression — do not mix experiments
+
+The source conversation reports subsequent Geo/FNO experiments, including a
+combined pressure-gradient/reverse-flow loss and broader geometry/family splits.
+Those **later raw predictions are not in this archive**. Consequently this notebook
+does not graph their quoted scores as independently verified measurements and does
+not combine their three-seed results with this older single-seed comparison.
+
+**Audit finding:** reverse-flow IoU recomputed with the explicit u<0/all-fluid rule
+does not exactly match the saved report. The source does not document its threshold
+or region. Both values and their difference are retained; we do not tune a threshold
+to manufacture agreement or claim the original IoU was reproduced.
+
+The older raw pressure metric can look much smaller than mean-removed pressure
+error. Both are valid questions with different denominators. Report them together,
+state the reference convention, and inspect spatial errors before claiming success.
+
+### A controlled extension of the step case
+1. Inventory all geometries, Reynolds numbers, solver settings and data hashes.
+2. Freeze two separate splits: whole geometries within known families, then a whole
+   unseen family (e.g. double-step). All Reynolds numbers of one geometry stay together.
+3. Fit all scalers on training fields only; fix the pressure convention. Geometry/SDF,
+   coordinates and Re may be inputs; reference velocity and target-derived wake masks may not.
+4. Keep Geo, FNO and U-FNO on identical splits; report parameter counts, optimizer
+   updates and time rather than calling unequal architectures 'identical cost'.
+5. Compare field loss, pressure-gradient loss, reverse-flow weighting, and their
+   combination. Choose weights/checkpoints on validation, never the examined test fields.
+6. Repeat with seeds 17, 29, 43; report per-case scores, mean/std, worst cases and failures.
+7. Validate CFD convergence, grid/time sensitivity, flux balance and a suitable
+   independent step benchmark before interpreting learned fields as physical truth.
+
+### Student submission
+Explain whether model ranking changes between velocity, pressure and reverse flow.
+Why is a low raw-pressure percentage insufficient? Why is u<0 IoU not vortex-center
+accuracy? Which cells were excluded from vorticity? Propose one genuinely unopened
+geometry test, and list the files needed to reproduce training (source at recorded
+hash, environment, split/scalers, checkpoints, histories and reference-solver records).
+
+### Provenance
+- Author-provided `wake_predictions.tgz`, SHA256 verified in cell 1; training protocol
+  `wake_focused_geometry_holdout`. Individual member hashes and complete source
+  metadata are exported to `generated/source_manifest.json`.
+- Original run identifier reported in the conversation: `64302321` (not independently
+  checked against the scheduler here).
+- Source discussion: [بررسی وضعیت ران‌ها](https://chatgpt.com/g/g-p-6a9cb70bca088191b3c56cff0bf4ffe4-jyw-dyp-nt-w-stp/c/6aa31405-950c-83e9-b04d-be4c383ca09f).
+- This is a teaching audit of the author's artifacts, not a replication of an external
+  Geo-DeepONet paper or a claim of a new architecture. No new license for upstream data
+  or code is assigned by this notebook. Do not publish the private conversation itself.
+""")
+code(r"""
+summary={'status':'passed', 'mode':'dataset_and_retained_prediction_audit_not_training',
+    'archive_sha256':EXPECTED_SHA,'dataset_sha256':EXPECTED_DATASET_SHA,
+    'dataset_cases':130,'dataset_geometries':51,'split_cases':{'train':106,'validation':21,'test':3},
+    'predictions':len(fields),'prediction_geometries':1,'seeds':[17],
+    'Re':RES,'source_metric_checks':18,'diagnostic_tests':4,'dataset_checks':9,
+    'source_discrepancies':['reverse-flow IoU: source threshold/region undocumented'],
+    'missing':['training source','checkpoints','complete OpenFOAM case directories','later prediction bundles'],
+    'numpy':np.__version__,'python':platform.python_version()}
+(OUT/'execution_summary.json').write_text(json.dumps(summary,indent=2),encoding='utf-8')
+display(pd.DataFrame([summary]).drop(columns=['missing']))
+print('Audit complete. Outputs:',OUT)
+""")
+nb = nbf.v4.new_notebook(cells=cells, metadata={'kernelspec':{'display_name':'Python 3','language':'python','name':'python3'}})
+dest = ROOT/'notebooks/week09/W9_Lab3_Geometry_Operators_Step_Audit.ipynb'
+nbf.write(nb,dest)
+print(dest)
