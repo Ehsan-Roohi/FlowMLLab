@@ -14,7 +14,7 @@ from scipy.ndimage import binary_erosion
 
 ROOT = Path(__file__).resolve().parents[1]
 DATA = ROOT / 'results/step_operator_audit'
-NB = ROOT / 'notebooks/week09/W9_Lab3_Geometry_Operators_Step_Audit.ipynb'
+NB = ROOT / 'notebooks/week15/W15_Geometry_Operators_Step_Audit.ipynb'
 EXPECTED = '190bb252c2739fc2acfa0841233652144b82eb9ca3a01ad6ddb2ae0f0429ade1'
 EXPECTED_DATASET = '28d4d4c440cdc4c1ac1d13749ce00b0690d99f29cf20fd56c65fc00b6a8058fd'
 notebook = nbformat.read(NB, as_version=4)
@@ -38,6 +38,20 @@ for model in ('geom', 'fno', 'ufno'):
 
 
 class AuditTests(unittest.TestCase):
+    def test_project_vanilla_deeponet_code_and_v5_evidence(self):
+        source = (ROOT/'qa/step_architecture_v5.py').read_text(encoding='utf-8')
+        self.assertIn("name='vanilla_deeponet'", source)
+        self.assertIn('for width in (128, 128)', source)
+        self.assertIn('contraction(rank=48, output_dim=2)', source)
+        v5 = pd.read_csv(ROOT/'results/step_architecture_v5/seed_metrics.csv')
+        self.assertEqual(len(v5), 18)
+        self.assertEqual(set(v5['model']), {'mlp','deeponet','geom'})
+        deep = v5[v5['model']=='deeponet'].groupby('sampler')[
+            ['terminal_global_percent','terminal_vortex_percent']].mean()
+        self.assertAlmostEqual(deep.loc['uniform','terminal_global_percent'], 14.0063, places=3)
+        self.assertAlmostEqual(deep.loc['zonal','terminal_global_percent'], 23.3082, places=3)
+        self.assertTrue((v5[v5['model']=='deeponet']['status']=='no_eligible_checkpoint').all())
+
     def test_archive_and_all_member_hashes(self):
         self.assertEqual(hashlib.sha256((DATA/'wake_predictions.tgz').read_bytes()).hexdigest(), EXPECTED)
         manifest = json.loads((DATA/'generated/source_manifest.json').read_text())
@@ -48,10 +62,10 @@ class AuditTests(unittest.TestCase):
     def test_notebook_executed_without_errors(self):
         nbformat.validate(notebook)
         code = [c for c in notebook.cells if c.cell_type == 'code']
-        self.assertEqual(len(code), 12)
-        self.assertEqual([c.execution_count for c in code], list(range(1, 13)))
+        self.assertEqual(len(code), 13)
+        self.assertEqual([c.execution_count for c in code], list(range(1, 14)))
         self.assertFalse(any(o.output_type == 'error' for c in code for o in c.outputs))
-        self.assertEqual(sum('image/png' in o.get('data', {}) for c in code for o in c.outputs), 10)
+        self.assertEqual(sum('image/png' in o.get('data', {}) for c in code for o in c.outputs), 11)
 
     def test_full_dataset_hash_shapes_and_case_splits(self):
         path = DATA/'source/dataset.npz'

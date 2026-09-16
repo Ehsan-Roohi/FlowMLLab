@@ -26,6 +26,8 @@
   "source_discrepancies": [
     "reverse-flow IoU: source threshold/region undocumented"
   ],
+  "ordinary_deeponet_source": "qa/step_architecture_v5.py",
+  "ordinary_deeponet_v5_records": 18,
   "followup_protocols": [
     "diverse_geometry_v1",
     "diverse_family_v1"

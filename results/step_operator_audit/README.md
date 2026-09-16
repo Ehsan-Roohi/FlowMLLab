@@ -6,7 +6,7 @@ recomputed teaching diagnostics.
 Archive SHA256: `190bb252c2739fc2acfa0841233652144b82eb9ca3a01ad6ddb2ae0f0429ade1`.
 Dataset SHA256: `28d4d4c440cdc4c1ac1d13749ce00b0690d99f29cf20fd56c65fc00b6a8058fd`.
 
-Run [Week 9 Lab 3](../../notebooks/week09/W9_Lab3_Geometry_Operators_Step_Audit.ipynb).
+Run [Week 15](../../notebooks/week15/W15_Geometry_Operators_Step_Audit.ipynb).
 It uses NumPy, pandas, SciPy and Matplotlib on CPU. No training or GPU is required.
 Rebuild the notebook source with `python qa/build_step_operator_notebook.py`;
 this clears outputs, so execute all cells again afterwards.
@@ -38,7 +38,9 @@ this clears outputs, so execute all cells again afterwards.
   geometry- and family-holdout metrics, complete casebooks, and representative raw
   Geo/FNO fields. Missing: original training source at the recorded hash, model
   checkpoints, complete OpenFOAM case directories, exact train-versus-validation
-  identity lists, and ordinary-DeepONet predictions for the follow-up protocols.
+  identity lists, and ordinary-DeepONet OpenFOAM predictions for the follow-up
+  protocols. The exact project DeepONet builder and its separate V5 DSMC metrics
+  are included in Week 15.
 - No new license is assigned to the author's upstream research materials.
 
 Generated files: 130-row case manifest, nine-row prediction-metric CSV,

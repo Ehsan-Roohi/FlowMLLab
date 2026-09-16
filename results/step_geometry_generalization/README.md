@@ -1,6 +1,6 @@
 # Step-flow geometry generalization evidence
 
-This directory supports Week 9 Lab 3. It separates two three-seed, 400-epoch
+This directory supports Week 15. It separates two three-seed, 400-epoch
 experiments on the 130-case sampled OpenFOAM dataset committed at
 `../step_operator_audit/source/dataset.npz`.
 
@@ -20,9 +20,10 @@ The two casebooks place CFD, Geo-DeepONet, and FNO in rows and speed with
 streamlines, velocity error, and centered pressure in columns. The notebook
 uses only speed/streamlines and centered pressure for the main teaching figure.
 
-No ordinary-DeepONet prediction bundle was recovered for either follow-up
-protocol; no such score or contour is synthesized. U-FNO appears only in the
-older `g011` audit. The full sampled OpenFOAM fields are included, while the
+No ordinary-DeepONet OpenFOAM prediction bundle was recovered for either follow-up
+protocol; no such contour is synthesized. The notebook instead includes the exact
+ordinary-DeepONet code and retained V5 metrics already present in the project,
+clearly labeled as the separate DSMC step-height experiment. U-FNO appears only in
+the older `g011` audit. The full sampled OpenFOAM fields are included, while the
 original case directories, solver logs, model checkpoints, and exact
 train-versus-validation identity lists are not represented as present.
-

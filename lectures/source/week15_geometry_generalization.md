@@ -1,4 +1,4 @@
-# Week 9.3 — Neural operators under geometry change
+# Week 15 — Neural operators under geometry change
 
 ## 1. The scientific question
 
@@ -24,11 +24,17 @@ If a contains only Reynolds number or boundary values, the trunk basis remains t
 
 Geo-DeepONet supplies a mask, signed-distance field, or learned geometry representation to the operator. This makes geometry visible; it does not guarantee extrapolation to a missing topology.
 
+[VANILLA]
+
+FlowMLLab already contains the ordinary DeepONet implementation in `qa/step_architecture_v5.py`: step height enters a two-layer 128-wide tanh branch, normalized x/y enter a two-layer 128-wide tanh trunk, rank is 48, and the contraction returns u and v. The notebook prints and structurally verifies that exact builder instead of presenting only an equation.
+
+The retained V5 DSMC height experiment used three seeds and matched sampling schedules. Ordinary DeepONet reached mean terminal global errors of 14.01% (uniform) and 23.31% (zonal), with vortex-region errors of 190.44% and 93.41%; no seed passed the predeclared checkpoint ceiling. This is direct project evidence of the limitation, but it is a different rarefied-flow dataset and is not relabeled as an OpenFOAM result.
+
 ## 4. FNO and U-FNO
 
 An FNO layer has the form v_(l+1) = sigma(W_l v_l + F^-1(R_l F(v_l))). The learned low-frequency spectral multiplier is efficient on a common grid. Masks, sharp walls, pressure gradients, and new topology still produce out-of-distribution structure.
 
-U-FNO adds a local U-shaped pathway to Fourier blocks, improving access to multiscale local features. In the retained archive U-FNO is available only for g011. It was not run in the two three-seed generalization protocols; the lecture does not invent that comparison.
+U-FNO adds a local U-shaped pathway to Fourier blocks, improving access to multiscale local features. In the retained archive U-FNO is available only for g011. It was not run in the two three-seed OpenFOAM generalization protocols; the lecture does not invent that comparison. Ordinary DeepONet is represented by its exact V5 code and retained DSMC results above, while the OpenFOAM field rows remain the models actually present in that prediction archive.
 
 ## 5. What was trained and what was tested
 
@@ -76,3 +82,14 @@ Li et al. (2021), Fourier Neural Operator for Parametric Partial Differential Eq
 
 Li et al. (2022), Fourier Neural Operator with Learned Deformations for PDEs on General Geometries, arXiv:2207.05209.
 
+## 11. In-class diagnostic questions
+
+Why can a branch that receives only Reynolds number or step height not distinguish two masks at the same flow condition? Which additional information must be available before calling a model geometry-aware? Explain why adding signed distance helps within represented shape families but cannot guarantee a new topology.
+
+At g048/Re50, decide whether the FNO result is acceptable if the application needs velocity only, surface force, or pressure-driven loading. Use the velocity and centered-pressure errors separately. Then identify what reverse-flow IoU can and cannot say about vortex structure.
+
+Compare the V5 ordinary DeepONet with Geo-DeepONet using the frozen checkpoint rule, not only terminal means. Why is “no eligible checkpoint” different from a crashed training run? Why must those DSMC results remain separate from the OpenFOAM casebooks?
+
+## 12. Required student submission
+
+Submit the split map; the exact ordinary-DeepONet code path and architecture table; one g009 and one g048 CFD/model comparison; the geometry- and family-holdout metric table; and a paragraph distinguishing interpolation, unseen geometry, and unseen topology. State every missing artifact needed for a full retraining claim: frozen train/validation identities, scalers, source hash, checkpoints, histories, OpenFOAM case directories, solver convergence, and grid-sensitivity evidence.

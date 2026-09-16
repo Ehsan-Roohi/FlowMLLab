@@ -1,4 +1,4 @@
-"""Build the self-contained, source-backed Week 9 operator audit notebook."""
+"""Build the self-contained, source-backed Week 15 operator audit notebook."""
 from pathlib import Path
 import nbformat as nbf
 
@@ -8,10 +8,10 @@ def md(s): cells.append(nbf.v4.new_markdown_cell(s.strip()))
 def code(s): cells.append(nbf.v4.new_code_cell(s.strip()))
 
 md(r"""
-# Lab 3 — Geometry-aware operators for separated step flow
+# Week 15 — Geometry-aware neural operators for separated step flow
 ## Geo-DeepONet, FNO and U-FNO: from global accuracy to physical diagnostics
 
-**FlowMLLab · Week 9 extension · Ehsan Roohi's retained research outputs**
+**FlowMLLab · Week 15 · Ehsan Roohi's retained research outputs**
 
 This executable CPU lab audits **nine saved predictions**, not nine newly trained models:
 three architectures × Re = 25, 50, 100, one geometry (`g011`), one seed (17).
@@ -466,7 +466,69 @@ hash, environment, split/scalers, checkpoints, histories and reference-solver re
   or code is assigned by this notebook. Do not publish the private conversation itself.
 """)
 md(r"""
-## 9. Geometry generalization: two genuinely harder protocols
+## 9. The project's ordinary DeepONet — code and retained V5 evidence
+
+The project already contains an ordinary DeepONet implementation in
+`qa/step_architecture_v5.py`; omitting it would be misleading. Its branch receives
+only normalized step height, its trunk receives normalized `(x,y)`, and a rank-48
+inner product returns two velocity components. The exact project architecture is:
+
+- two 128-wide `tanh` layers in the branch and trunk;
+- branch projection to 48 latent coefficients;
+- trunk projection to `48 × 2` spatial coefficients; and
+- an operator contraction producing `(u,v)`.
+
+That V5 experiment concerns the author's **rarefied DSMC height family**, not the
+continuum 130-case OpenFOAM archive below. It is nevertheless direct evidence for
+the requested lesson: ordinary DeepONet had 14.01%/23.31% terminal global error for
+uniform/zonal sampling and 190.44%/93.41% vortex-region error, and no seed met the
+predeclared checkpoint ceiling. Geo-DeepONet-uniform produced eligible checkpoints
+for all three seeds. We keep the studies separate instead of attaching DSMC scores
+to OpenFOAM contours.
+""")
+code(r"""
+import ast, textwrap
+V5_SOURCE = ARCHIVE.parents[1].parent / 'qa/step_architecture_v5.py'
+V5_METRICS = ARCHIVE.parents[1].parent / 'results/step_architecture_v5/seed_metrics.csv'
+source_text=V5_SOURCE.read_text(encoding='utf-8')
+tree=ast.parse(source_text)
+node=next(n for n in tree.body if isinstance(n,ast.FunctionDef) and n.name=='build_model')
+project_build_model=ast.get_source_segment(source_text,node)
+assert "name='vanilla_deeponet'" in project_build_model
+assert "for width in (128, 128)" in project_build_model
+assert "contraction(rank=48, output_dim=2)" in project_build_model
+print(project_build_model)
+
+def numpy_operator_contraction(branch_latent,trunk_latent,rank=48,output_dim=2):
+    # Dependency-free shape/value test of the project's branch-trunk contraction.
+    b=np.asarray(branch_latent,float)
+    t=np.asarray(trunk_latent,float).reshape(*np.asarray(trunk_latent).shape[:-1],output_dim,rank)
+    return np.einsum('...r,...qor->...qo',b,t)
+
+rng=np.random.default_rng(15)
+b=rng.normal(size=(4,48)); t=rng.normal(size=(4,137,96))
+y=numpy_operator_contraction(b,t)
+assert y.shape==(4,137,2) and np.isfinite(y).all()
+v5=pd.read_csv(V5_METRICS)
+assert set(v5.model)=={'mlp','deeponet','geom'} and set(v5.seed)=={690,691,692}
+display(v5.groupby(['model','sampler'])[['terminal_global_percent','terminal_vortex_percent']].mean().round(3))
+
+fig,axs=plt.subplots(1,2,figsize=(10.5,4.2))
+for ax,col,title in zip(axs,['terminal_global_percent','terminal_vortex_percent'],
+                       ['V5 terminal global error (%)','V5 terminal vortex-region error (%)']):
+    for j,(model,color) in enumerate([('mlp','#777777'),('deeponet','#d1495b'),('geom','#146c94')]):
+        for sampler,marker,offset in [('uniform','o',-.12),('zonal','s',.12)]:
+            d=v5[(v5.model==model)&(v5.sampler==sampler)][col]
+            ax.scatter([j+offset]*len(d),d,s=28,alpha=.45,color=color,marker=marker)
+            ax.scatter([j+offset],[d.mean()],s=95,color=color,marker=marker,edgecolor='white',zorder=3)
+    ax.set(xticks=range(3),xticklabels=['MLP','ordinary\nDeepONet','Geo-\nDeepONet'],title=title)
+    ax.grid(axis='y',alpha=.22)
+fig.suptitle('Existing V5 DSMC step-height experiment · three seeds · points, not bars')
+fig.tight_layout(); fig.savefig(OUT/'vanilla_deeponet_v5_points.png',dpi=160,bbox_inches='tight'); plt.show()
+print('PASS: exact project builder located; ordinary-DeepONet contract and all 18 V5 records verified.')
+""")
+md(r"""
+## 10. Geometry generalization: two genuinely harder protocols
 
 The retained follow-up study uses the same 130 accepted OpenFOAM fields but freezes
 two different scientific questions. **Geometry holdout** trains on 107 cases,
@@ -542,7 +604,7 @@ fig.suptitle('Every held-out case plus protocol mean (large marker) · three-see
 fig.tight_layout(); fig.savefig(NEW/'generated/generalization_case_points.png',dpi=160,bbox_inches='tight'); plt.show()
 """)
 md(r"""
-## 10. CFD beside neural predictions — velocity, streamlines, and pressure
+## 11. CFD beside neural predictions — velocity, streamlines, and pressure
 
 Each case below uses a common column scale. Rows are CFD, Geo-DeepONet, and FNO;
 columns are speed with the row's own streamlines, then independently mean-removed
@@ -584,7 +646,7 @@ def geometry_comparison(case):
 for case in ['g009_Re100_medium','g048_Re50_medium']: geometry_comparison(case)
 """)
 md(r"""
-## 11. What the tests actually establish
+## 12. What the tests actually establish
 
 For unseen geometries within represented families, mean velocity error is about
 4.81% for Geo-DeepONet and 2.53% for FNO, but centered-pressure error reverses the
@@ -613,6 +675,8 @@ summary={'status':'passed', 'mode':'dataset_and_retained_prediction_audit_not_tr
     'predictions':len(fields),'prediction_geometries':1,'seeds':[17],
     'Re':RES,'source_metric_checks':18,'diagnostic_tests':4,'dataset_checks':9,
     'source_discrepancies':['reverse-flow IoU: source threshold/region undocumented'],
+    'ordinary_deeponet_source':'qa/step_architecture_v5.py',
+    'ordinary_deeponet_v5_records':int(len(v5)),
     'followup_protocols':['diverse_geometry_v1','diverse_family_v1'],
     'followup_test_cases':int(diverse[['protocol','case']].drop_duplicates().shape[0]),
     'followup_seeds':[17,29,43],
@@ -623,6 +687,7 @@ display(pd.DataFrame([summary]).drop(columns=['missing']))
 print('Audit complete. Outputs:',OUT)
 """)
 nb = nbf.v4.new_notebook(cells=cells, metadata={'kernelspec':{'display_name':'Python 3','language':'python','name':'python3'}})
-dest = ROOT/'notebooks/week09/W9_Lab3_Geometry_Operators_Step_Audit.ipynb'
+dest = ROOT/'notebooks/week15/W15_Geometry_Operators_Step_Audit.ipynb'
+dest.parent.mkdir(parents=True,exist_ok=True)
 nbf.write(nb,dest)
 print(dest)
