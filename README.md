@@ -48,6 +48,7 @@ Weeks 5 and 6 share a project pack and lecture guide, but have separate learning
 | [3](#week-3--kinetic-theory-and-dsmc) | Maxwellian sampling and particle simulation | [Week 3 labs](notebooks/week03/) | [Lecture 3](lectures/week03_kinetic_dsmc.pdf) |
 | [4](#week-4--cavity-surrogates-and-deeponet) | CFD datasets, field surrogates and operator learning | [Week 4 labs](notebooks/week04/) | [Lecture 4](lectures/week04_cavity_surrogates_deeponet.pdf) |
 | [4.1](#week-41--classical-reduced-order-models) | POD–Galerkin and POD–DEIM | [Week 4.1 lab](notebooks/week04/W4_1_Classical_ROM_Cavity.ipynb) | [Week 4 companion](lectures/week04_cavity_surrogates_deeponet.pdf); theory in lab |
+| [4.2](#week-42--stokes-to-navier-stokes-correction) | Matched Stokes input and learned Navier–Stokes correction | [Week 4.2 lab](notebooks/week04/W4_Lab4_Stokes_to_Navier_Stokes.ipynb) | [Week 4.2 companion](lectures/week04_2_stokes_to_navier_stokes.pdf) |
 | [5](#week-5--physics-guided-projects) | POD, physics-guided learning and frozen project protocols | [Week 5 project setup and tracks](notebooks/week05_06/README.md) | [Shared Weeks 5–6 guide](lectures/week05_06_project_guide.pdf) |
 | [6](#week-6--physical-validation-and-final-evidence) | Closure testing, physical validation and reproducibility | [Week 6 closure track](notebooks/week05_06/P6_FP_Cavity_Closure.ipynb) · [All tracks](notebooks/week05_06/README.md) | [Shared Weeks 5–6 guide](lectures/week05_06_project_guide.pdf) |
 | [7](#week-7--unsteady-cylinder-wakes) | LBM, vortex shedding and autonomous surrogates | [Week 7 lab](notebooks/week07/W7_Lattice_Boltzmann_Cylinder_Student.ipynb) | [Lecture 7](lectures/week07_cylinder_lbm_neural_surrogate.pdf) |
@@ -146,11 +147,6 @@ Complete-case testing combines field error, wall/divergence checks, reference
 centerlines and measured inference cost.
 [Model and validation evidence](results/pod_deeponet/README.md)
 
-The fourth Week-4 lab uses a matched Stokes solution and Reynolds number to
-learn the nonlinear Navier-Stokes streamfunction correction across constant and
-spatially diverse lid conditions. [Run Lab 4](notebooks/week04/W4_Lab4_Stokes_to_Navier_Stokes.ipynb)
-or read its [eight-page companion](lectures/week04_2_stokes_to_navier_stokes.pdf).
-
 ### Week 4.1 — Classical reduced-order models
 
 **Problem:** Evolve cavity flow in a reduced state space.<br>
@@ -161,6 +157,20 @@ or read its [eight-page companion](lectures/week04_2_stokes_to_navier_stokes.pdf
 
 Compare reduced dynamics, hyper-reduction, blind trajectories and the offline/online
 cost tradeoff. [Run the ROM lab](notebooks/week04/W4_1_Classical_ROM_Cavity.ipynb)
+
+### Week 4.2 — Stokes-to-Navier-Stokes correction
+
+**Problem:** Predict the nonlinear cavity-flow correction from a matched Stokes field.<br>
+**CFD / data:** Constant and spatially diverse lid conditions on the same retained 25 × 25 grid.<br>
+**Learning method:** A POD-based neural correction conditioned on the Stokes field and Reynolds number; pressure is recovered afterwards.
+
+![Week 4.2 diverse-lid example: Navier–Stokes reference, Stokes-corrected prediction and absolute errors in velocity and recovered pressure](figures/Cavity_diverse_velocity_pressure.png)
+
+This held-out diverse-lid example shows reference fields, predictions and absolute
+errors. The retained tests support same-grid surrogate performance; they do not
+establish grid-independent CFD accuracy. [Run the Week 4.2 lab](notebooks/week04/W4_Lab4_Stokes_to_Navier_Stokes.ipynb)
+· [Read the eight-page companion](lectures/week04_2_stokes_to_navier_stokes.pdf)
+· [Inspect the retained results](results/stokes_refined/README.md)
 
 ### Week 5 — Physics-guided projects
 
