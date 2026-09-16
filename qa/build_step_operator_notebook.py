@@ -44,6 +44,7 @@ No paid GPU is needed.
 [Open in Colab](https://colab.research.google.com/github/Ehsan-Roohi/FlowMLLab/blob/main/notebooks/week15/W15_Geometry_Operators_Step_Audit.ipynb)
 """)
 code(r"""
+%matplotlib inline
 from pathlib import Path
 import io, json, tarfile, hashlib, platform
 import numpy as np
@@ -563,10 +564,11 @@ $$v_{l+1}=\sigma\!\left(W_l v_l+\mathcal F^{-1}(R_l\,\mathcal Fv_l)\right).$$
 It is efficient on a common grid, but discontinuous masks, pressure gauge/gradients,
 and unseen topology are difficult. U-FNO adds a local U-shaped path to the Fourier
 blocks. In this repository U-FNO is available only for the older `g011` audit above;
-it was **not** evaluated in the two three-seed protocols below. Likewise, no ordinary
-DeepONet prediction bundle exists for these protocols. We explain that baseline's
-limitation without inventing contours or scores. The controlled comparison below is
-Geo-DeepONet versus FNO, three seeds, 400 epochs.
+it was **not** evaluated in the two three-seed protocols below. Ordinary DeepONet is
+now trained on the same 107/11/12 OpenFOAM geometry-holdout split for three seeds and
+400 epochs. Its branch receives Reynolds number only and its trunk receives x/y; mask,
+SDF and geometry ID are deliberately withheld. This is the fixed-domain baseline that
+tests whether Reynolds interpolation alone transfers to an unseen wall shape.
 """)
 code(r"""
 NEW = ARCHIVE.parents[1] / 'step_geometry_generalization'
@@ -589,6 +591,21 @@ summary3=(diverse.groupby(['protocol','model'])
                reverse_iou=('reverse_iou_mean','mean')).reset_index())
 display(summary3.round(3))
 
+DEEP_ROOT = ARCHIVE.parents[1] / 'week15_ordinary_deeponet'
+deep_files=sorted(DEEP_ROOT.glob('ordinary-deeponet-seed*/case_metrics.csv'))
+assert len(deep_files)==3,deep_files
+deep=pd.concat([pd.read_csv(path) for path in deep_files],ignore_index=True)
+assert set(deep.seed)=={17,29,43} and len(deep)==36
+deep_summary=(deep.groupby(['case','geometry','Re'])
+              .agg(velocity_mean=('velocity_percent','mean'),
+                   velocity_std=('velocity_percent','std'),
+                   pressure_mean=('pressure_percent','mean'),
+                   pressure_std=('pressure_percent','std'),
+                   reverse_iou_mean=('reverse_iou','mean')).reset_index())
+display(pd.DataFrame([{'model':'ordinary DeepONet','protocol':'diverse_geometry_v1',
+    'velocity_error':deep.velocity_percent.mean(),'pressure_error':deep.pressure_percent.mean(),
+    'reverse_iou':deep.reverse_iou.mean()}]).round(3))
+
 # Point/range plots only: no bars.
 fig,axs=plt.subplots(1,3,figsize=(12.5,4.1))
 for ax,(metric,title) in zip(axs,[('velocity_mean','Velocity error (%)'),
@@ -601,7 +618,11 @@ for ax,(metric,title) in zip(axs,[('velocity_mean','Velocity error (%)'),
             ax.scatter(d,[ypos]*len(d),s=18,alpha=.35,color=color,marker=marker)
             ax.scatter([d.mean()],[ypos],s=85,color=color,marker=marker,edgecolor='white',zorder=3)
             ypos+=1
-    ax.set(title=title,yticks=range(4),yticklabels=['Geom · Geo','Geom · FNO','Family · Geo','Family · FNO'])
+    d=deep_summary[{'velocity_mean':'velocity_mean','pressure_mean':'pressure_mean',
+                    'reverse_iou_mean':'reverse_iou_mean'}[metric]]
+    ax.scatter(d,[4]*len(d),s=18,alpha=.35,color='#7b3294',marker='D')
+    ax.scatter([d.mean()],[4],s=85,color='#7b3294',marker='D',edgecolor='white',zorder=3)
+    ax.set(title=title,yticks=range(5),yticklabels=['Geom · Geo','Geom · FNO','Family · Geo','Family · FNO','Geom · ordinary DeepONet'])
     ax.grid(axis='x',alpha=.22)
 fig.suptitle('Every held-out case plus protocol mean (large marker) · three-seed statistics')
 fig.tight_layout(); fig.savefig(NEW/'generated/generalization_case_points.png',dpi=160,bbox_inches='tight'); plt.show()
@@ -609,7 +630,8 @@ fig.tight_layout(); fig.savefig(NEW/'generated/generalization_case_points.png',d
 md(r"""
 ## 11. CFD beside neural predictions — velocity, streamlines, and pressure
 
-Each case below uses a common column scale. Rows are CFD, Geo-DeepONet, and FNO;
+Each case below uses a common column scale. Rows are CFD, ordinary DeepONet,
+Geo-DeepONet, and FNO;
 columns are speed with the row's own streamlines, then independently mean-removed
 pressure. These are raw seed-17 fields from the held-out geometry protocol—not
 interpolated screenshots. The first case shows FNO's strong velocity result; the
@@ -622,17 +644,21 @@ def load_followup(case,model):
     path=NEW/f'source/predictions/geometry_holdout/{model}/seed_17/{case}_prediction.npz'
     with np.load(path,allow_pickle=False) as z: return {k:z[k].copy() for k in z.files}
 
+def load_ordinary(case):
+    path=DEEP_ROOT/f'ordinary-deeponet-seed17/predictions/geometry_holdout/ordinary_deeponet/seed_17/{case}_prediction.npz'
+    with np.load(path,allow_pickle=False) as z: return {k:z[k].copy() for k in z.files}
+
 def geometry_comparison(case):
-    fs=[load_followup(case,'geo_deeponet'),load_followup(case,'geo_deeponet'),load_followup(case,'fno')]
-    arr=[fs[0]['truth'],fs[1]['prediction'],fs[2]['prediction']]
+    fs=[load_followup(case,'geo_deeponet'),load_ordinary(case),load_followup(case,'geo_deeponet'),load_followup(case,'fno')]
+    arr=[fs[0]['truth'],fs[1]['prediction'],fs[2]['prediction'],fs[3]['prediction']]
     ny,nx=map(int,fs[0]['shape']); xy=fs[0]['coordinates'].reshape(ny,nx,2)
     x,y=xy[0,:,0],xy[:,0,1]; mask=fs[0]['mask'].reshape(ny,nx)
     aa=[a.reshape(ny,nx,3).astype(float) for a in arr]
     speed=[np.ma.masked_where(~mask,np.hypot(a[:,:,0],a[:,:,1])) for a in aa]
     pressure=[np.ma.masked_where(~mask,a[:,:,2]-a[:,:,2][mask].mean()) for a in aa]
     vmax=max(float(v.max()) for v in speed); plim=max(float(np.abs(v).max()) for v in pressure)
-    fig,axs=plt.subplots(3,2,figsize=(12.8,6.7),sharex=True,sharey=True)
-    for i,(a,label) in enumerate(zip(aa,['CFD','Geo-DeepONet · seed 17','FNO · seed 17'])):
+    fig,axs=plt.subplots(4,2,figsize=(12.8,8.8),sharex=True,sharey=True)
+    for i,(a,label) in enumerate(zip(aa,['CFD','ordinary DeepONet · seed 17','Geo-DeepONet · seed 17','FNO · seed 17'])):
         im0=axs[i,0].pcolormesh(x,y,speed[i],cmap='viridis',vmin=0,vmax=vmax,shading='nearest')
         axs[i,0].streamplot(np.linspace(x[0],x[-1],len(x)),np.linspace(y[0],y[-1],len(y)),
           np.ma.masked_where(~mask,a[:,:,0]),np.ma.masked_where(~mask,a[:,:,1]),
@@ -665,6 +691,12 @@ trusted under geometry change merely because it interpolates Reynolds number wel
 Use the casebooks to inspect every failure; do not summarize this experiment with one
 bar height.
 
+The new fixed-domain ordinary DeepONet makes that limitation directly measurable on
+the same 12 OpenFOAM geometry-holdout cases: three-seed mean velocity error is 28.96%,
+centered-pressure error is 299.57%, and reverse-flow IoU is 0.406. At g009/Re100 its
+three velocity errors span only 46.61–47.14%, so the failure is repeatable rather than
+a single unlucky initialization.
+
 ### References
 
 - Lu et al. (2021), *Learning nonlinear operators via DeepONet based on the universal approximation theorem of operators*, Nature Machine Intelligence 3, 218–229.
@@ -680,10 +712,11 @@ summary={'status':'passed', 'mode':'dataset_and_retained_prediction_audit_not_tr
     'source_discrepancies':['reverse-flow IoU: source threshold/region undocumented'],
     'ordinary_deeponet_source':'qa/step_architecture_v5.py',
     'ordinary_deeponet_v5_records':int(len(v5)),
+    'ordinary_deeponet_openfoam_records':int(len(deep)),
     'followup_protocols':['diverse_geometry_v1','diverse_family_v1'],
     'followup_test_cases':int(diverse[['protocol','case']].drop_duplicates().shape[0]),
     'followup_seeds':[17,29,43],
-    'missing':['training source','checkpoints','complete OpenFOAM case directories','ordinary-DeepONet predictions for follow-up protocols'],
+    'missing':['Geo-DeepONet/FNO training source','checkpoints','complete OpenFOAM case directories'],
     'numpy':np.__version__,'python':platform.python_version()}
 (OUT/'execution_summary.json').write_text(json.dumps(summary,indent=2),encoding='utf-8')
 display(pd.DataFrame([summary]).drop(columns=['missing']))

@@ -52,6 +52,26 @@ class AuditTests(unittest.TestCase):
         self.assertAlmostEqual(deep.loc['zonal','terminal_global_percent'], 23.3082, places=3)
         self.assertTrue((v5[v5['model']=='deeponet']['status']=='no_eligible_checkpoint').all())
 
+    def test_openfoam_ordinary_deeponet_three_seed_evidence(self):
+        root = ROOT/'results/week15_ordinary_deeponet'
+        metric_files = sorted(root.glob('ordinary-deeponet-seed*/case_metrics.csv'))
+        manifest_files = sorted(root.glob('ordinary-deeponet-seed*/manifest.json'))
+        self.assertEqual(len(metric_files), 3)
+        self.assertEqual(len(manifest_files), 3)
+        table = pd.concat([pd.read_csv(path) for path in metric_files], ignore_index=True)
+        self.assertEqual(len(table), 36)
+        self.assertEqual(set(table.seed), {17, 29, 43})
+        self.assertEqual(set(table.geometry), {'g009', 'g023', 'g036', 'g048'})
+        self.assertAlmostEqual(table.velocity_percent.mean(), 28.9601068, places=5)
+        self.assertAlmostEqual(table.pressure_percent.mean(), 299.5745888, places=4)
+        self.assertAlmostEqual(table.reverse_iou.mean(), 0.4056609, places=6)
+        for path in manifest_files:
+            manifest = json.loads(path.read_text(encoding='utf-8'))
+            self.assertEqual(manifest['dataset_sha256'], EXPECTED_DATASET)
+            self.assertEqual(manifest['epochs'], 400)
+            self.assertEqual(manifest['split']['test_geometry_ids'], [9, 23, 36, 48])
+            self.assertEqual(manifest['excluded_geometry_inputs'], ['mask', 'SDF', 'geometry ID'])
+
     def test_archive_and_all_member_hashes(self):
         self.assertEqual(hashlib.sha256((DATA/'wake_predictions.tgz').read_bytes()).hexdigest(), EXPECTED)
         manifest = json.loads((DATA/'generated/source_manifest.json').read_text())

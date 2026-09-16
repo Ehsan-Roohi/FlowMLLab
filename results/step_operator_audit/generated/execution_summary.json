@@ -28,6 +28,7 @@
   ],
   "ordinary_deeponet_source": "qa/step_architecture_v5.py",
   "ordinary_deeponet_v5_records": 18,
+  "ordinary_deeponet_openfoam_records": 36,
   "followup_protocols": [
     "diverse_geometry_v1",
     "diverse_family_v1"
@@ -39,10 +40,9 @@
     43
   ],
   "missing": [
-    "training source",
+    "Geo-DeepONet/FNO training source",
     "checkpoints",
-    "complete OpenFOAM case directories",
-    "ordinary-DeepONet predictions for follow-up protocols"
+    "complete OpenFOAM case directories"
   ],
   "numpy": "2.5.3",
   "python": "3.12.14"

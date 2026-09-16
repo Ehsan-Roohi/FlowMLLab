@@ -34,13 +34,15 @@ The retained V5 DSMC height experiment used three seeds and matched sampling sch
 
 An FNO layer has the form v_(l+1) = sigma(W_l v_l + F^-1(R_l F(v_l))). The learned low-frequency spectral multiplier is efficient on a common grid. Masks, sharp walls, pressure gradients, and new topology still produce out-of-distribution structure.
 
-U-FNO adds a local U-shaped pathway to Fourier blocks, improving access to multiscale local features. In the retained archive U-FNO is available only for g011. It was not run in the two three-seed OpenFOAM generalization protocols; the lecture does not invent that comparison. Ordinary DeepONet is represented by its exact V5 code and retained DSMC results above, while the OpenFOAM field rows remain the models actually present in that prediction archive.
+U-FNO adds a local U-shaped pathway to Fourier blocks, improving access to multiscale local features. In the retained archive U-FNO is available only for g011. It was not run in the two three-seed OpenFOAM generalization protocols; the lecture does not invent that comparison. Ordinary DeepONet is now trained separately on the OpenFOAM geometry-holdout split with Reynolds number in the branch and fixed x/y in the trunk, but without mask, SDF, or geometry ID.
 
 ## 5. What was trained and what was tested
 
 [POINTS]
 
-Protocol A, geometry holdout: 107 training cases, 11 validation cases, and 12 tests from unseen g009, g023, g036, and g048. Protocol B, family holdout: 103 training, 8 validation, and 19 tests from the excluded double-step family g012 and g045 through g051. Geo-DeepONet and FNO were run for 400 epochs with seeds 17, 29, and 43.
+Protocol A, geometry holdout: 107 training cases, 11 validation cases, and 12 tests from unseen g009, g023, g036, and g048. Protocol B, family holdout: 103 training, 8 validation, and 19 tests from the excluded double-step family g012 and g045 through g051. Geo-DeepONet and FNO were run for 400 epochs with seeds 17, 29, and 43. The new ordinary-DeepONet baseline uses the same Protocol-A counts, tests, epochs and seeds; its explicit 11-case validation grouping is recorded with the run.
+
+Across the 12 geometry-holdout tests, ordinary DeepONet gives 28.96% mean velocity error, 299.57% mean centered-pressure error, and 0.406 mean reverse-flow IoU. At g009/Re100, all three seeds give about 46.6–47.1% velocity error. These are executed OpenFOAM-dataset results, not the older DSMC V5 scores.
 
 Exact test identities are committed in case_metrics.csv. The separately frozen train-versus-validation identity lists and checkpoints were not recovered, so they are not guessed. The development pool is the complement of the named tests, but membership of its train and validation subsets must be restored before claiming full retraining reproducibility.
 
@@ -48,7 +50,7 @@ Exact test identities are committed in case_metrics.csv. The separately frozen t
 
 [G009]
 
-Rows are CFD, Geo-DeepONet, and FNO. Columns show speed with each row's own streamlines and independently mean-removed pressure. Common column scales prevent each model from choosing flattering limits. At g009/Re100, FNO has the stronger velocity score, but pressure is a separate question.
+Rows are CFD, ordinary DeepONet, Geo-DeepONet, and FNO. Columns show speed with each row's own streamlines and independently mean-removed pressure. Common column scales prevent each model from choosing flattering limits. Ordinary DeepONet cannot distinguish two unseen masks at the same Reynolds number because geometry is absent from its inputs.
 
 ## 7. A velocity win can hide pressure failure
 
@@ -88,7 +90,7 @@ Why can a branch that receives only Reynolds number or step height not distingui
 
 At g048/Re50, decide whether the FNO result is acceptable if the application needs velocity only, surface force, or pressure-driven loading. Use the velocity and centered-pressure errors separately. Then identify what reverse-flow IoU can and cannot say about vortex structure.
 
-Compare the V5 ordinary DeepONet with Geo-DeepONet using the frozen checkpoint rule, not only terminal means. Why is “no eligible checkpoint” different from a crashed training run? Why must those DSMC results remain separate from the OpenFOAM casebooks?
+Compare ordinary DeepONet with Geo-DeepONet on the same OpenFOAM test geometry. Which field differences follow directly from hiding mask and SDF? Then compare with the older V5 DSMC study and explain why results from the two datasets must remain separate.
 
 ## 12. Required student submission
 

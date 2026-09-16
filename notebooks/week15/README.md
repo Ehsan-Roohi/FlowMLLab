@@ -8,13 +8,13 @@ is the executed companion to the Week 15 lecture. It includes:
 - 130 sampled OpenFOAM fields spanning 51 geometry masks;
 - the historical Geo-DeepONet/FNO/U-FNO `g011` audit;
 - four unseen-geometry tests and a held-out double-step-family protocol; and
-- CFD, Geo-DeepONet, and FNO velocity/streamline and pressure fields using
+- CFD, ordinary DeepONet, Geo-DeepONet, and FNO velocity/streamline and pressure fields using
   common column scales.
 
-Ordinary DeepONet's retained V5 scores come from the rarefied DSMC step-height
-study. No ordinary-DeepONet OpenFOAM prediction bundle is claimed. This boundary
-keeps the code/results in the lecture without mixing two different datasets.
+Ordinary DeepONet now also has a separate three-seed OpenFOAM geometry-holdout
+run with the same 107/11/12 case counts and 400-epoch budget. Its branch sees
+Reynolds number only; geometry masks, SDF and geometry IDs are withheld. The
+older retained V5 scores remain clearly labelled as a distinct DSMC study.
 
 Rebuild with `python qa/build_step_operator_notebook.py`, then execute all cells.
 The lecture is [`lectures/week15_geometry_generalization.pdf`](../../lectures/week15_geometry_generalization.pdf).
-
