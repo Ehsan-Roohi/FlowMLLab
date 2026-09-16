@@ -28,8 +28,8 @@ FIGURES={
  'SPLIT':('__SPLIT__','Whole-geometry case map for the retained 130-field dataset; no bar chart.'),
  'VANILLA':('__VANILLA__','Existing V5 project comparison: each point is one seed; large markers are means. The ordinary DeepONet fails the frozen checkpoint gate.'),
  'POINTS':('generalization_case_points.png','Every held-out case and the protocol mean. Large markers are means; small markers are individual cases.'),
- 'G009':('g009_Re100_medium_fields.png','Unseen geometry g009 at Re=100: CFD, ordinary DeepONet, Geo-DeepONet, and FNO in rows; speed/streamlines and centered pressure in columns.'),
- 'G048':('g048_Re50_medium_fields.png','Unseen geometry g048 at Re=50: the fixed-domain DeepONet is shown beside geometry-aware and spectral operators.'),
+ 'G009':('g009_Re100_medium_fields.png','Unseen geometry g009 at Re=100: CFD, ordinary DeepONet, Geo-DeepONet, and FNO in rows. Row labels report seed-17 velocity and centered-pressure errors; ordinary DeepONet is markedly worse.'),
+ 'G048':('g048_Re50_medium_fields.png','Unseen geometry g048 at Re=50: the fixed-domain DeepONet is shown beside geometry-aware and spectral operators, with seed-17 errors printed in each row.'),
  'FAMILY':('casebook_g049_Re50_family.png','Whole-family holdout example g049 at Re=50 from the retained three-seed casebook.')}
 def figure(key,number,heading=None):
     rel,caption=FIGURES[key]

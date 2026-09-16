@@ -463,7 +463,10 @@ Ordinary DeepONet is trained on the same 107/11/12 OpenFOAM geometry-holdout
 split for three seeds. Its branch sees Reynolds number but no mask, SDF, or
 geometry ID, making the fixed-domain limitation directly visible. Across the 12
 unseen-geometry tests it reaches 28.96% mean velocity error, 299.57% mean
-centered-pressure error, and 0.406 reverse-flow IoU.
+centered-pressure error, and 0.406 reverse-flow IoU. In the displayed g009/Re=100
+case, its seed-17 velocity error is 46.69%, substantially larger than the
+10.25% Geo-DeepONet and 2.81% FNO errors; the exact per-model velocity and pressure errors are
+printed on the figure.
 
 ## Reuse and contribute
 

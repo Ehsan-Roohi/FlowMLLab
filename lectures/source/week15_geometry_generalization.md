@@ -50,7 +50,7 @@ Exact test identities are committed in case_metrics.csv. The separately frozen t
 
 [G009]
 
-Rows are CFD, ordinary DeepONet, Geo-DeepONet, and FNO. Columns show speed with each row's own streamlines and independently mean-removed pressure. Common column scales prevent each model from choosing flattering limits. Ordinary DeepONet cannot distinguish two unseen masks at the same Reynolds number because geometry is absent from its inputs.
+Rows are CFD, ordinary DeepONet, Geo-DeepONet, and FNO. Columns show speed with each row's own streamlines and independently mean-removed pressure. Common column scales prevent each model from choosing flattering limits, and every model row reports its seed-17 velocity and centered-pressure errors. For g009/Re100, ordinary DeepONet has 46.69% velocity error and 92.25% centered-pressure error, versus 10.25%/19.36% for Geo-DeepONet and 2.81%/10.69% for FNO. It cannot distinguish two unseen masks at the same Reynolds number because geometry is absent from its inputs.
 
 ## 7. A velocity win can hide pressure failure
 
