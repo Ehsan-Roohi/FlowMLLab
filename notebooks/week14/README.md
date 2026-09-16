@@ -1,7 +1,7 @@
 # Week 14 - RANS, PINN and neural turbulence closures
 
 - [Executed teaching notebook](W14_pyCALC_RANS_PINN_NN.ipynb)
-- [12-page lecture](../../lectures/week14_rans_pinn_nn.pdf)
+- [Lecture in the Week 13 research-notes format](../../lectures/week14_rans_pinn_nn.pdf)
 - [Editable lecture source](../../lectures/source/week14_rans_pinn_nn.md)
 - [Review of the supplied notebook](../../docs/WEEK14_NOTEBOOK_REVIEW.md)
 - [Relationship to the paper's actual claims](../../docs/WEEK14_PAPER_ALIGNMENT.md)
