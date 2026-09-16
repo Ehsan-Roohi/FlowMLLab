@@ -4,6 +4,7 @@ The larger run changes both network width and collocation count, so this is
 an observed run comparison, not an isolated neural-capacity experiment.
 """
 import argparse
+import hashlib
 import json
 from pathlib import Path
 
@@ -17,7 +18,21 @@ from scipy.interpolate import RegularGridInterpolator
 from audit_week13_nektar import structured, integrate_paths
 from audit_week13_cfd import audit as foam_audit
 from check_week13_nektar_vtu import read_vtu
-from run_week13_nektar_refinement import accepted_source
+
+def accepted_source(chunk, reynolds):
+    chunk = chunk.resolve()
+    marker = json.loads((chunk/"accepted.json").read_text())
+    spec = json.loads((chunk.parent/"campaign.json").read_text())
+    if (not marker.get("clean_exit") or spec["re"] != reynolds
+            or spec["order"] != 6 or spec["depth_over_width"] != 5):
+        raise ValueError("Nektar++ case provenance mismatch")
+    source = (chunk/marker["attempt"]).resolve()
+    if source.parent != chunk:
+        raise ValueError("Accepted attempt escapes its chunk")
+    digest = hashlib.sha256((source/"cavity.vtu").read_bytes()).hexdigest()
+    if digest != marker["primitive_vtu_sha256"]:
+        raise ValueError("Accepted VTU hash mismatch")
+    return source, marker, spec
 
 
 def interpolate(x, y, field, xx, yy):
