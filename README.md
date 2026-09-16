@@ -1,7 +1,5 @@
 # FlowMLLab
 
-![FlowMLLab: reproducible fluid-mechanics solvers, scientific machine learning, blind tests and physical validation](assets/flowmllab_hero.png)
-
 **New in v1.6.0:** [Week 15: geometry-aware operators](notebooks/week15/README.md), with OpenFOAM data and explicit held-out geometries; [Week 13: D/W=2.2 fields and continuation loss](notebooks/week13/README.md).
 
 **Week 14:** [RANS, PINN and neural turbulence closures](notebooks/week14/README.md)
@@ -50,7 +48,6 @@ Weeks 5 and 6 share a project pack and lecture guide, but have separate learning
 | [3](#week-3--kinetic-theory-and-dsmc) | Maxwellian sampling and particle simulation | [Week 3 labs](notebooks/week03/) | [Lecture 3](lectures/week03_kinetic_dsmc.pdf) |
 | [4](#week-4--cavity-surrogates-and-deeponet) | CFD datasets, field surrogates and operator learning | [Week 4 labs](notebooks/week04/) | [Lecture 4](lectures/week04_cavity_surrogates_deeponet.pdf) |
 | [4.1](#week-41--classical-reduced-order-models) | POD–Galerkin and POD–DEIM | [Week 4.1 lab](notebooks/week04/W4_1_Classical_ROM_Cavity.ipynb) | [Week 4 companion](lectures/week04_cavity_surrogates_deeponet.pdf); theory in lab |
-| [4.2](#week-42--physics-informed-cavity-flow) | Physics-informed cavity flow and independent qualification | [Evidence and reproduction protocol](results/week04_2_pinn_cavity/README.md) | [Lecture 4.2](lectures/week04_2_pinn_cavity.pdf) |
 | [5](#week-5--physics-guided-projects) | POD, physics-guided learning and frozen project protocols | [Week 5 project setup and tracks](notebooks/week05_06/README.md) | [Shared Weeks 5–6 guide](lectures/week05_06_project_guide.pdf) |
 | [6](#week-6--physical-validation-and-final-evidence) | Closure testing, physical validation and reproducibility | [Week 6 closure track](notebooks/week05_06/P6_FP_Cavity_Closure.ipynb) · [All tracks](notebooks/week05_06/README.md) | [Shared Weeks 5–6 guide](lectures/week05_06_project_guide.pdf) |
 | [7](#week-7--unsteady-cylinder-wakes) | LBM, vortex shedding and autonomous surrogates | [Week 7 lab](notebooks/week07/W7_Lattice_Boltzmann_Cylinder_Student.ipynb) | [Lecture 7](lectures/week07_cylinder_lbm_neural_surrogate.pdf) |
@@ -149,6 +146,17 @@ Complete-case testing combines field error, wall/divergence checks, reference
 centerlines and measured inference cost.
 [Model and validation evidence](results/pod_deeponet/README.md)
 
+![Branch sensors, trunk queries, targets and the pre-fit alignment audit](results/pod_deeponet/week04_data_contract.png)
+
+The new pre-fit audit makes the operator-learning data contract explicit before
+any model is trained. It checks case identity, query/target coordinates, fixed
+branch sensors and casewise splits, then verifies that an intentional
+misalignment is rejected. Week 4 also separates a pointwise MLP, the course's
+parameter-to-field POD–DeepONet-style surrogate, and a full
+function-to-function DeepONet. These additions prevent shape-correct but
+physically wrong training pairs without making the existing notebook longer.
+[Run the Week 4 lab](notebooks/week04/W4_Lab3_DeepONet_Cavity_Student.ipynb)
+
 ### Week 4.1 — Classical reduced-order models
 
 **Problem:** Evolve cavity flow in a reduced state space.<br>
@@ -159,22 +167,6 @@ centerlines and measured inference cost.
 
 Compare reduced dynamics, hyper-reduction, blind trajectories and the offline/online
 cost tradeoff. [Run the ROM lab](notebooks/week04/W4_1_Classical_ROM_Cavity.ipynb)
-
-### Week 4.2 — Physics-informed cavity flow
-
-**Problem:** Solve the steady Re=100 lid-driven cavity from the governing equations.<br>
-**CFD / data:** Independent near-matched finite-difference reference; no CFD labels are used to train the PINN.<br>
-**Learning method:** Float64 physics-informed neural network with fixed collocation points and a restartable SSBroyden2 optimizer.
-
-![Qualified cavity PINN fields, error map and independent CFD centerline comparisons](results/week04_2_pinn_cavity/qualified_validation.png)
-
-The retained A100 run continues one predeclared optimizer state from 300 to
-1,000 steps. It passes the frozen centerline and interior-field gates with
-**2.18%**, **4.42%** and **3.10%** relative errors, while satisfying continuity
-and hard wall conditions independently. This is a qualified Re=100 teaching
-case, with the smooth-lid versus discontinuous-lid difference stated explicitly.
-[Evidence and limits](results/week04_2_pinn_cavity/README.md) ·
-[Lecture 4.2](lectures/week04_2_pinn_cavity.pdf)
 
 ### Week 5 — Physics-guided projects
 
