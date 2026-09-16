@@ -18,7 +18,7 @@ generate numerical data, compare transparent baselines with learned models, and
 check both prediction error and physical fidelity.
 
 Developed for **MIE 690A: AI in Fluid Mechanics**, University of Massachusetts
-Amherst. The v1.6.0 course includes **36 notebooks and 21 lecture PDFs**, with
+Amherst. The v1.6.0 course includes **37 notebooks and 22 lecture PDFs**, with
 Weeks 14 and 15 in the main course table below.
 
 ## Start here
@@ -50,6 +50,7 @@ Weeks 5 and 6 share a project pack and lecture guide, but have separate learning
 | [3](#week-3--kinetic-theory-and-dsmc) | Maxwellian sampling and particle simulation | [Week 3 labs](notebooks/week03/) | [Lecture 3](lectures/week03_kinetic_dsmc.pdf) |
 | [4](#week-4--cavity-surrogates-and-deeponet) | CFD datasets, field surrogates and operator learning | [Week 4 labs](notebooks/week04/) | [Lecture 4](lectures/week04_cavity_surrogates_deeponet.pdf) |
 | [4.1](#week-41--classical-reduced-order-models) | POD–Galerkin and POD–DEIM | [Week 4.1 lab](notebooks/week04/W4_1_Classical_ROM_Cavity.ipynb) | [Week 4 companion](lectures/week04_cavity_surrogates_deeponet.pdf); theory in lab |
+| [4.2](#week-42--physics-informed-cavity-flow) | Physics-informed cavity flow and independent qualification | [Evidence and reproduction protocol](results/week04_2_pinn_cavity/README.md) | [Lecture 4.2](lectures/week04_2_pinn_cavity.pdf) |
 | [5](#week-5--physics-guided-projects) | POD, physics-guided learning and frozen project protocols | [Week 5 project setup and tracks](notebooks/week05_06/README.md) | [Shared Weeks 5–6 guide](lectures/week05_06_project_guide.pdf) |
 | [6](#week-6--physical-validation-and-final-evidence) | Closure testing, physical validation and reproducibility | [Week 6 closure track](notebooks/week05_06/P6_FP_Cavity_Closure.ipynb) · [All tracks](notebooks/week05_06/README.md) | [Shared Weeks 5–6 guide](lectures/week05_06_project_guide.pdf) |
 | [7](#week-7--unsteady-cylinder-wakes) | LBM, vortex shedding and autonomous surrogates | [Week 7 lab](notebooks/week07/W7_Lattice_Boltzmann_Cylinder_Student.ipynb) | [Lecture 7](lectures/week07_cylinder_lbm_neural_surrogate.pdf) |
@@ -158,6 +159,22 @@ centerlines and measured inference cost.
 
 Compare reduced dynamics, hyper-reduction, blind trajectories and the offline/online
 cost tradeoff. [Run the ROM lab](notebooks/week04/W4_1_Classical_ROM_Cavity.ipynb)
+
+### Week 4.2 — Physics-informed cavity flow
+
+**Problem:** Solve the steady Re=100 lid-driven cavity from the governing equations.<br>
+**CFD / data:** Independent near-matched finite-difference reference; no CFD labels are used to train the PINN.<br>
+**Learning method:** Float64 physics-informed neural network with fixed collocation points and a restartable SSBroyden2 optimizer.
+
+![Qualified cavity PINN fields, error map and independent CFD centerline comparisons](results/week04_2_pinn_cavity/qualified_validation.png)
+
+The retained A100 run continues one predeclared optimizer state from 300 to
+1,000 steps. It passes the frozen centerline and interior-field gates with
+**2.18%**, **4.42%** and **3.10%** relative errors, while satisfying continuity
+and hard wall conditions independently. This is a qualified Re=100 teaching
+case, with the smooth-lid versus discontinuous-lid difference stated explicitly.
+[Evidence and limits](results/week04_2_pinn_cavity/README.md) ·
+[Lecture 4.2](lectures/week04_2_pinn_cavity.pdf)
 
 ### Week 5 — Physics-guided projects
 
@@ -281,6 +298,22 @@ not a learned accuracy result. Raw exports have a documented symmetry defect;
 these are historical-holdout regression results, not fresh blind validation.
 [Nozzle report](results/nozzle_transport/README.md)
 · [Raw boundary audit](results/nozzle_transport/symmetry_boundary_audit.png)
+
+#### Week 9 Lab 3 — Moving-throat data-alignment audit
+
+**Problem:** Detect a silent branch/trunk correspondence error before fitting a nozzle operator.<br>
+**Reference:** Independent quasi-1D isentropic solutions for three moving-throat geometries.<br>
+**Learning method:** No model is trained; executable audits test fixed branch sensors, per-case trunk coordinates and reference physics.
+
+![Moving-throat nozzle data-alignment failure, repair and physics gates](results/nozzle_alignment_audit/nozzle_data_alignment_audit.png)
+
+Reusing the first nozzle's coordinates for every target preserves array shape
+but moves later targets to the wrong physical locations. The audit catches that
+error and the independent use of variable branch sensors. After repair, the
+coordinate error is zero and the sonic-throat, mass-flow and area–Mach checks
+pass. This lab turns a realistic DeepONet failure into a reusable pre-fit test.
+[Run the audit](notebooks/week09/W9_Lab3_Nozzle_Data_Alignment_Audit.ipynb) ·
+[Companion notes](lectures/week09_3_nozzle_data_alignment.pdf)
 
 ### Week 10 — DSMC cavity and molecular shocks
 
