@@ -659,7 +659,7 @@ def load_ordinary(case):
     with np.load(path,allow_pickle=False) as z: return {k:z[k].copy() for k in z.files}
 
 def training_geometry_strip():
-    train_examples=[1,6,30,44]
+    train_examples=[1,18,30,44]
     recorded=json.loads((DEEP_ROOT/'ordinary-deeponet-seed17/manifest.json').read_text())['split']
     forbidden=set(recorded['validation_geometry_ids']+recorded['test_geometry_ids'])
     assert not (set(train_examples)&forbidden)
@@ -667,6 +667,9 @@ def training_geometry_strip():
     assert (recorded['train_cases'],recorded['validation_cases'],recorded['test_cases'])==(107,11,12)
     geo=load_followup('g009_Re100_medium','geo_deeponet')
     np.testing.assert_array_equal(dataset['masks'][np.flatnonzero(geometry_ids==9)[0]],geo['mask'])
+    # Reject a near-duplicate mask: g006 differs from g009 in only 40/18000 cells.
+    assert all(np.mean(dataset['masks'][np.flatnonzero(geometry_ids==gid)[0]] != geo['mask']) >= .01
+               for gid in train_examples)
     from matplotlib.colors import ListedColormap
     mask_cmap=ListedColormap(['#263d53','#dceef1'])
     fig,axs=plt.subplots(1,5,figsize=(12.8,2.5),facecolor='white')
