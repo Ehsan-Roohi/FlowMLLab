@@ -1,19 +1,34 @@
 {
   "figures": {
     "methods_Plunging3.png": {
-      "sha256": "a2e92b303c9bc90b118d5541d93cbbb942bd1541209ef9400e10e151b43106a0",
+      "sha256": "7331e53d58e8396f23bc9cd394b5c5a377e69126c7422cb257fbc015d68f4f4b",
       "key": "Plunging3_003",
       "time": 1.579999999999937,
-      "seed": 11
+      "seed": 11,
+      "solid_false_positive_pixels": {
+        "alpha_topology": 0,
+        "pressure_threshold": 0,
+        "pressure_patch": 0,
+        "pressure_unet": 951,
+        "pressure_topology": 863
+      }
     },
     "methods_Oscillation3.png": {
-      "sha256": "f2d94aaeb6b52f861455089d657f32e5bd676db28e0142f4fe8e8d4301380d46",
+      "sha256": "65816bf8f0d30da7fe859a80d05e18628a24520e6ee4352fb122acaf35db564f",
       "key": "Oscillation3_010",
       "time": 2.999999999999781,
-      "seed": 11
+      "seed": 11,
+      "solid_false_positive_pixels": {
+        "alpha_topology": 0,
+        "pressure_threshold": 0,
+        "pressure_patch": 0,
+        "pressure_unet": 977,
+        "pressure_topology": 855
+      }
     }
   },
   "manifest_sha256": "4a3eeec01187cc7f49866c28b4c177d012ff40ccfe830ff679cfbb86d8da0a52",
-  "code_sha256": "f769a5932bd75c02c342462a60ae1ecaab212aa1b1205bb1f256b5f29ad1e457",
-  "selection": "Maximum valid CFD cavity area in each case, not model score; all frames are retained for pooled evaluation"
+  "code_sha256": "53791da6ac198f286760bb24fe8953e20c4bd81373d1947ee84f29f07366943b",
+  "selection": "Maximum valid CFD cavity area in each case, not model score; all frames are retained for pooled evaluation",
+  "display": "Thicker colored contours with white contrast halos; arrows count unmodified false vapor predictions inside solid. Dice excludes solid/uncertain support."
 }

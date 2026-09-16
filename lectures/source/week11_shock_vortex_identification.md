@@ -170,7 +170,7 @@ Related work: Hatzissawidis et al., Deep learning semantic segmentation for clou
 
 The six panels show one retained CFD frame and five original methods: alpha-input context U-Net, fixed pressure threshold, pressure-only 3x3 model, pressure U-Net and pressure topology U-Net. All panels share geometry, physical coordinates, time and the same alpha background. Alpha is displayed for comparison but never enters pressure inference.
 
-Orange and magenta mean attached and disconnected classes. Green means total cavity for methods without a topology output. A scalar vapor estimate cannot by itself name an attached cavity or a disconnected cloud. Common total-cavity Dice unites the two topology classes and compares that support with scalar predictions thresholded at 0.20.
+Orange and magenta mean attached and disconnected classes. Green means total cavity for methods without a topology output. White halos improve contour visibility. Arrows mark false vapor inside the solid hydrofoil, not attached cavities. Fluid-only Dice excludes solid and uncertain support, so those solid errors are counted separately. Common cavity Dice unites the two topology classes and compares that support with scalar predictions thresholded at 0.20.
 
 The plot uses the first pressure seed (11) and the Plunging3 frame with maximum valid CFD cavity area, independently of model scores. The notebook replays all 16 frames from Plunging3 and Oscillation3 with all three pressure seeds. Both trajectories were excluded from optimization but previously inspected. Neither contains valid attached-reference pixels, so attached-class transfer is not validated here.
 

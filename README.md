@@ -398,8 +398,10 @@ original saved models, including all three pressure-model seeds.
 
 All panels show the same CFD field, geometry and time. Orange/magenta denote
 attached/disconnected classes; green denotes total cavity for methods without
-a topology output. Pressure models receive no alpha input. The illustrated
-frame has the largest valid CFD cavity area in this retained trajectory and
+a topology output. Pressure models receive no alpha input. Colored contours
+have white contrast halos; arrows mark erroneous vapor predictions
+inside the solid hydrofoil. The displayed Dice excludes solid/uncertain support.
+The illustrated frame has the largest valid CFD cavity area in this retained trajectory and
 uses the first seed (11); the notebook includes all 16 frames and three seeds.
 These inspected nontraining cases use algorithmic weak references and different
 input information, so this is not a blind or matched-input accuracy ranking.

@@ -140,10 +140,13 @@ def replay():
         fig.savefig(OUT/filename,dpi=170)
         plt.close(fig)
         figures[filename] = dict(sha256=digest(OUT/filename),key=frames[i]['key'],
-            time=float(frames[i]['time']),seed=11)
+            time=float(frames[i]['time']),seed=11,
+            solid_false_positive_pixels={name:int((method_mask(name,seed11[i][name])&frames[i]['wall']).sum())
+                                         for name in methods})
     write_json(OUT/'methods_figure_provenance.json',dict(figures=figures,
         manifest_sha256=digest(DATA/'manifest.json'),code_sha256=digest(ROOT/'flowmllab/cavitation_methods.py'),
-        selection=manifest['frame_selection']))
+        selection=manifest['frame_selection'],
+        display='Thicker colored contours with white contrast halos; arrows count unmodified false vapor predictions inside solid. Dice excludes solid/uncertain support.'))
     print(f'Alpha/pressure comparison: {len(frames)} shared frames, 3 pressure seeds, {checked} archived array checks passed.',flush=True)
 
 
@@ -216,6 +219,10 @@ def notebook_cells():
     These are different output semantics, not interchangeable cloud labels.
     The panel Dice values describe this one frame; the table above pools the
     complete two trajectories and retains all pressure seeds.
+    White halos improve contour visibility without changing masks. Arrows mark
+    false vapor predictions inside the solid hydrofoil: these are model errors,
+    not attached cavities. The displayed Dice excludes solid/uncertain support;
+    it does not penalize these solid errors, which are reported separately.
     '''), code('''
     for case_name in methods_manifest['cases']:
         ids = [i for i,f in enumerate(frames) if f['case']==case_name]

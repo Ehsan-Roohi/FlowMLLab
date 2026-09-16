@@ -17,6 +17,13 @@ pressure-only 3×3 model, pressure U-Net and pressure topology U-Net. CFD alpha
 provides the same background in every panel; it is never supplied to pressure
 inference. Orange/magenta denote attached/disconnected classes. Green denotes
 total cavity for methods without topology output. Raw wall mistakes are visible.
+Colored contours have white contrast halos for readability. Arrows mark false
+vapor predictions inside the solid: these are model errors, not attached cavities.
+The displayed Dice excludes solid/uncertain support and therefore does not
+penalize these solid errors. Their pixel counts are retained separately in the
+figure provenance. At the illustrated Plunging3 time, the pressure U-Net predicts
+951 solid pixels as vapor and the topology U-Net predicts 863, out of 1087 solid
+pixels. Neither error is hidden by changing or masking the original prediction.
 
 Each case's largest valid CFD cavity area determines the illustrated frame;
 model score does not select it. Seed 11 is the first declared pressure seed.

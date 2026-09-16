@@ -29,3 +29,21 @@ This verifies local execution and evidence preservation. A hosted Google Colab
 runtime was not launched. The short adaptation contract is not a new complete
 training reproduction. These checks do not establish independent physical
 accuracy, new-case generalization or temporal cloud tracking.
+
+## Contour readability and solid-error clarification
+
+The author's screenshot review identified faint green cloud outlines and
+unexplained contours around the hydrofoil. The original Plunging3 masks confirm
+that the main reference cloud has 653 pixels: the pressure threshold detects
+571 of them and the pressure U-Net detects 651. The cloud is not wholly missed;
+the original thin green outline lacked contrast against the blue field.
+The pressure U-Net and pressure topology U-Net also predict 951 and 863 solid
+pixels as vapor, respectively, out of 1087 solid pixels. These are model errors.
+
+Contours now use thicker lines with white contrast halos. Arrows mark the
+unchanged solid errors, and panel scores explicitly say fluid-only. The same
+16-frame/three-seed replay still passes all 192 archived-array checks; numerical
+metrics are unchanged. No threshold, weights, masks or geometry veto changed.
+The updated notebook passed a fresh local Run All (10 code cells, four figures,
+244 relative links, 51 retained files unchanged). Both updated figures and
+lecture page 15 were visually checked; the lecture remains 16 pages.

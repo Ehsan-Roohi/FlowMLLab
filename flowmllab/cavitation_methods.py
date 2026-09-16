@@ -144,6 +144,9 @@ def methods_figure(frame, output):
     import matplotlib.pyplot as plt
     from matplotlib.lines import Line2D
     from matplotlib.colors import ListedColormap
+    import matplotlib.patheffects as pe
+    outline_effects = [pe.Stroke(linewidth=4.2, foreground='white'), pe.Normal()]
+    total_color = '#00843d'
     x,y,wall = frame['x'],frame['y'],frame['wall']
     extent = [x[0]-(x[1]-x[0])/2,x[-1]+(x[1]-x[0])/2,
               y[0]-(y[1]-y[0])/2,y[-1]+(y[1]-y[0])/2]
@@ -164,22 +167,34 @@ def methods_figure(frame, output):
             labels = frame['reference'] if name is None else output[name]
             for cls,color in [(1,'#dc8d00'),(2,'#c32983')]:
                 if (labels==cls).any():
-                    ax.contour(x,y,labels==cls,levels=[.5],colors=color,linewidths=1.2)
+                    contour = ax.contour(x,y,labels==cls,levels=[.5],colors=color,linewidths=2.2)
+                    contour.set_path_effects(outline_effects)
         else:
             mask = method_mask(name,output[name])
             if mask.any():
-                ax.contour(x,y,mask,levels=[.5],colors='#159879',linewidths=1.2)
+                contour = ax.contour(x,y,mask,levels=[.5],colors=total_color,linewidths=2.2)
+                contour.set_path_effects(outline_effects)
         if name:
             score = binary_score(method_mask(name,output[name]),frame['alpha']>=.2,valid)['dice']
-            title += '\nTotal-cavity Dice = '+('N/A (both empty)' if score is None else f'{score:.3f}')
+            title += '\nFluid-only cavity Dice = '+('N/A (both empty)' if score is None else f'{score:.3f}')
+            solid_fp = method_mask(name,output[name])&wall
+            if solid_fp.any():
+                yy,xx = np.nonzero(solid_fp)
+                ax.annotate(f'False vapor in solid\n{int(solid_fp.sum())} pixels',
+                            xy=(float(x[xx].mean()),float(y[yy].mean())),
+                            xytext=(.73,.50),textcoords='axes fraction',
+                            fontsize=9,color='#9b3016',ha='center',va='center',
+                            bbox=dict(boxstyle='round,pad=.25',facecolor='white',edgecolor='#9b3016',alpha=.96),
+                            arrowprops=dict(arrowstyle='->',color='#9b3016',lw=1.3),
+                            zorder=10)
         else:
             title += '\nAlgorithmic alpha >= 0.20 reference'
         ax.set(title=title,xlabel='x [m]',ylabel='y [m]')
     fig.colorbar(im,ax=axes,shrink=.7,label='CFD vapor fraction (same background in every panel)')
     fig.suptitle(f'Hydrofoil vapor-cloud detection | {frame["case"]}, t = {float(frame["time"]):.4f} s\n'
                  'Same field and time | frozen original models | pressure-model seed 11',fontsize=14)
-    fig.legend(handles=[Line2D([0],[0],color='#dc8d00',label='Attached'),
-                        Line2D([0],[0],color='#c32983',label='Disconnected cloud (2-D)'),
-                        Line2D([0],[0],color='#159879',label='Total cavity only (no topology output)')],
+    fig.legend(handles=[Line2D([0],[0],color='#dc8d00',lw=2.2,label='Attached'),
+                        Line2D([0],[0],color='#c32983',lw=2.2,label='Disconnected cloud (2-D)'),
+                        Line2D([0],[0],color=total_color,lw=2.2,label='Total cavity only (no topology output)')],
                loc='outside lower center',ncol=3,frameon=False)
     return fig
