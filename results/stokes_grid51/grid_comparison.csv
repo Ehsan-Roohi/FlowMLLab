@@ -1,0 +1,9 @@
+train,test,error_25_percent,error_51_percent
+constant,constant,0.10718725,0.096759072
+constant,diverse,19.9204,16.554512
+constant,ood_re,36.982478,30.700256
+constant,ood_shape,37.192325,33.067815
+diverse,constant,2.0443952,1.9598133
+diverse,diverse,0.9174396,0.8100919
+diverse,ood_re,10.204399,6.4250434
+diverse,ood_shape,8.4284571,7.8780822

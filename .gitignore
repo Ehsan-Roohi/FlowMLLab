@@ -11,6 +11,7 @@ dist/
 *.log
 .DS_Store
 results/cylinder_cnn/cache/
+results/stokes_grid51/parts/
 lectures/source/*.aux
 lectures/source/*.fdb_latexmk
 lectures/source/*.fls

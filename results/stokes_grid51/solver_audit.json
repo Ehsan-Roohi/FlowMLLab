@@ -1,0 +1,6 @@
+{
+  "grid": 51,
+  "case_count": 184,
+  "max_steady_rhs": 1.7106978400516226e-05,
+  "note": "Fresh 51x51 finite-difference solves; unchanged, previously inspected cases."
+}

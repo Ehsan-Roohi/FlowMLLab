@@ -432,6 +432,9 @@ display(Image(filename=str(ROOT/'figures/Cavity_diverse_streamlines_vorticity.pn
 The diverse-lid model generalizes much better across boundary families and OOD groups. Constant-only training remains poor on diverse lids because it never learns dependence on lid shape. The best retained mean errors are 0.107% for constant-to-constant and 0.917% for diverse-to-diverse velocity prediction.
 
 These are same-grid surrogate errors against an educational finite-difference solver. The study does not establish mesh-independent CFD accuracy, a new neural architecture, or greater physical fidelity than the numerical labels. The useful result is narrower: an actual Stokes field is a strong low-fidelity coordinate for learning the nonlinear Navier-Stokes correction when the training boundary conditions span the intended use."""),
+        nbf.v4.new_markdown_cell("""## 11. Numerical-grid refinement
+
+The [51 × 51 validation companion](W4_Lab4_Grid51_Validation.ipynb) recomputes all 184 Navier–Stokes and matched Stokes cases, retrains the selected POD correction, and compares the numerical reference and surrogate errors against this 25 × 25 baseline. The [three-page PDF addendum](../../lectures/week04_2_grid51_validation.pdf) includes the speed, streamline and vorticity figures. The 25-to-51 change remains substantial, so neither grid establishes mesh-independent CFD accuracy."""),
     ]
     notebook = nbf.v4.new_notebook(cells=cells)
     notebook.metadata.update({

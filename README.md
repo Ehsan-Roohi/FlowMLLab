@@ -161,7 +161,7 @@ cost tradeoff. [Run the ROM lab](notebooks/week04/W4_1_Classical_ROM_Cavity.ipyn
 ### Week 4.2 — Stokes-to-Navier-Stokes correction
 
 **Problem:** Predict the nonlinear cavity-flow correction from a matched Stokes field.<br>
-**CFD / data:** Constant and spatially diverse lid conditions on the same retained 25 × 25 grid.<br>
+**CFD / data:** Constant and spatially diverse lid conditions, solved independently on 25 × 25 and 51 × 51 grids.<br>
 **Learning method:** A POD-based neural correction conditioned on the Stokes field and Reynolds number; pressure is recovered afterwards.
 
 ![Week 4.2 diverse-lid example: Navier–Stokes reference, Stokes-corrected prediction and absolute errors in velocity and recovered pressure](figures/Cavity_diverse_velocity_pressure.png)
@@ -179,6 +179,20 @@ validated corner vortices. [See the constant-lid vortex figure](figures/Cavity_c
 · [Run the Week 4.2 lab](notebooks/week04/W4_Lab4_Stokes_to_Navier_Stokes.ipynb)
 · [Read the ten-page companion](lectures/week04_2_stokes_to_navier_stokes.pdf)
 · [Inspect the retained results](results/stokes_refined/README.md)
+
+The 51 × 51 refinement solves all 184 cases again and retrains the selected
+three-seed POD correction. Mean same-family velocity errors are 0.097% for
+constant lids and 0.810% for diverse lids, compared with 0.107% and 0.917%
+at 25 × 25. The 25-to-51 CFD velocity change is still about 20.6% for constant
+tests and 17.8% for diverse tests when the fine solution is sampled on the
+coarse grid. This is a better resolved surrogate experiment, not a claim of
+mesh-independent CFD accuracy.
+
+![Week 4.2 diverse-lid 51 by 51 speed, streamlines, vorticity and errors](figures/Cavity_diverse_grid51_streamlines_vorticity.png)
+
+[Open the 51 × 51 validation notebook](notebooks/week04/W4_Lab4_Grid51_Validation.ipynb)
+· [Read the 51 × 51 PDF addendum](lectures/week04_2_grid51_validation.pdf)
+· [Inspect the refined data and metrics](results/stokes_grid51/README.md)
 
 ### Week 5 — Physics-guided projects
 
