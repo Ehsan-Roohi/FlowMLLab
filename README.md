@@ -146,17 +146,6 @@ Complete-case testing combines field error, wall/divergence checks, reference
 centerlines and measured inference cost.
 [Model and validation evidence](results/pod_deeponet/README.md)
 
-![Branch sensors, trunk queries, targets and the pre-fit alignment audit](results/pod_deeponet/week04_data_contract.png)
-
-The new pre-fit audit makes the operator-learning data contract explicit before
-any model is trained. It checks case identity, query/target coordinates, fixed
-branch sensors and casewise splits, then verifies that an intentional
-misalignment is rejected. Week 4 also separates a pointwise MLP, the course's
-parameter-to-field POD–DeepONet-style surrogate, and a full
-function-to-function DeepONet. These additions prevent shape-correct but
-physically wrong training pairs without making the existing notebook longer.
-[Run the Week 4 lab](notebooks/week04/W4_Lab3_DeepONet_Cavity_Student.ipynb)
-
 ### Week 4.1 — Classical reduced-order models
 
 **Problem:** Evolve cavity flow in a reduced state space.<br>
@@ -297,7 +286,7 @@ these are historical-holdout regression results, not fresh blind validation.
 **Reference:** Independent quasi-1D isentropic solutions for three moving-throat geometries.<br>
 **Learning method:** No model is trained; executable audits test fixed branch sensors, per-case trunk coordinates and reference physics.
 
-![Moving-throat nozzle data-alignment failure, repair and physics gates](results/nozzle_alignment_audit/nozzle_data_alignment_audit.png)
+![Moving-throat nozzle coordinate error, repair and physics gates](results/nozzle_alignment_audit/nozzle_data_alignment_audit.svg)
 
 Reusing the first nozzle's coordinates for every target preserves array shape
 but moves later targets to the wrong physical locations. The audit catches that
