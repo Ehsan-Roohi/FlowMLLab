@@ -630,14 +630,13 @@ fig.tight_layout(); fig.savefig(NEW/'generated/generalization_case_points.png',d
 md(r"""
 ## 11. CFD beside neural predictions — velocity, streamlines, and pressure
 
-First read the experiment from left to right: several distinct development
-geometries, an unseen geometry withheld from fitting, and four fields on that
-same unseen geometry. The blue thumbnails below are **confirmed training**
-examples for the newly trained ordinary DeepONet. The historical Geo-DeepONet
-and FNO runs retain test identities and counts, but not separate train-versus-
-validation identity lists; we do not claim that every blue thumbnail was in
-their training subset. The test geometry g009 is excluded from both training
-and validation in this geometry-holdout protocol.
+The geometry-only strip identifies four **confirmed training** examples for the
+newly trained ordinary DeepONet, plus the wholly unseen g009 test geometry. The
+channel's physical 5:1 aspect ratio is preserved. Directly below it, the original
+four-row CFD/model comparison keeps each model's own streamlines and pressure.
+The historical Geo-DeepONet/FNO runs retain test identities and counts, but not
+separate train-versus-validation identity lists; the strip does not claim those
+four geometries were in each historical training subset.
 
 Each case below uses a common column scale. Rows are CFD, ordinary DeepONet,
 Geo-DeepONet, and FNO;
@@ -659,60 +658,39 @@ def load_ordinary(case):
     path=DEEP_ROOT/f'ordinary-deeponet-seed17/predictions/geometry_holdout/ordinary_deeponet/seed_17/{case}_prediction.npz'
     with np.load(path,allow_pickle=False) as z: return {k:z[k].copy() for k in z.files}
 
-def geometry_generalization_overview():
-    case='g009_Re100_medium'
-    geo=load_followup(case,'geo_deeponet')
-    ordinary=load_ordinary(case)
-    fno=load_followup(case,'fno')
-    train_examples=[1,6,18,30,44]
+def training_geometry_strip():
+    train_examples=[1,6,30,44]
     recorded=json.loads((DEEP_ROOT/'ordinary-deeponet-seed17/manifest.json').read_text())['split']
     forbidden=set(recorded['validation_geometry_ids']+recorded['test_geometry_ids'])
     assert not (set(train_examples)&forbidden)
     assert recorded['test_geometry_ids']==[9,23,36,48]
     assert (recorded['train_cases'],recorded['validation_cases'],recorded['test_cases'])==(107,11,12)
-    fig=plt.figure(figsize=(15.5,6.3),facecolor='white')
-    top=fig.add_gridspec(1,6,left=.04,right=.96,top=.80,bottom=.62,wspace=.18)
+    geo=load_followup('g009_Re100_medium','geo_deeponet')
+    np.testing.assert_array_equal(dataset['masks'][np.flatnonzero(geometry_ids==9)[0]],geo['mask'])
     from matplotlib.colors import ListedColormap
     mask_cmap=ListedColormap(['#263d53','#dceef1'])
+    fig,axs=plt.subplots(1,5,figsize=(12.8,2.5),facecolor='white')
     for j,gid in enumerate(train_examples+[9]):
         idx=int(np.flatnonzero(geometry_ids==gid)[0])
         mask=dataset['masks'][idx].reshape(60,300)
-        ax=fig.add_subplot(top[0,j])
-        ax.imshow(mask,origin='lower',extent=(0,5,0,1),aspect='auto',
+        ax=axs[j]
+        ax.imshow(mask,origin='lower',extent=(0,5,0,1),aspect='equal',
                   cmap=mask_cmap,vmin=0,vmax=1,interpolation='nearest')
         ax.set(xticks=[],yticks=[],xlim=(0,5),ylim=(0,1))
-        ax.set_title(f'g{gid:03d}',fontsize=12,color='#b44235' if gid==9 else '#244e65',pad=7)
+        ax.set_aspect('equal',adjustable='box')
+        ax.set_title(('UNSEEN TEST  ' if gid==9 else 'TRAIN  ')+f'g{gid:03d}',
+                     fontsize=11,color='#b44235' if gid==9 else '#244e65',pad=8)
         for spine in ax.spines.values():
             spine.set_visible(True); spine.set_color('#b44235' if gid==9 else '#4f8194'); spine.set_linewidth(2)
-    np.testing.assert_array_equal(dataset['masks'][np.flatnonzero(geometry_ids==9)[0]],geo['mask'])
-    fig.text(.04,.88,'KNOWN TRAINING SHAPES  ·  ordinary DeepONet, 5 of 42 geometries',
-             fontsize=15,weight='bold',color='#244e65')
-    fig.text(.80,.88,'UNSEEN TEST',fontsize=15,weight='bold',color='#b44235')
-    fig.text(.5,.535,'Hold out the entire g009 geometry at every Re  ↓  predict g009 at Re=100',
-             ha='center',fontsize=15,weight='bold',color='#25394b')
-    bottom=fig.add_gridspec(1,4,left=.04,right=.90,top=.45,bottom=.19,wspace=.15)
-    ny,nx=map(int,geo['shape']); mask=geo['mask'].reshape(ny,nx)
-    outputs=[('OpenFOAM CFD',geo['truth']),('ordinary DeepONet',ordinary['prediction']),
-             ('Geo-DeepONet',geo['prediction']),('FNO',fno['prediction'])]
-    vmax=max(float(np.hypot(a.reshape(ny,nx,3)[:,:,0],a.reshape(ny,nx,3)[:,:,1])[mask].max())
-             for _,a in outputs)
-    for j,(name,array) in enumerate(outputs):
-        a=array.reshape(ny,nx,3)
-        speed=np.ma.masked_where(~mask,np.hypot(a[:,:,0],a[:,:,1]))
-        ax=fig.add_subplot(bottom[0,j])
-        im=ax.imshow(speed,origin='lower',extent=(0,5,0,1),aspect='auto',
-                     cmap='viridis',vmin=0,vmax=vmax,interpolation='nearest')
-        ax.set(xticks=[],yticks=[],xlim=(0,5),ylim=(0,1))
-        ax.set_title(name,fontsize=12,pad=7)
-    fig.colorbar(im,cax=fig.add_axes([.915,.19,.012,.26]),label='Speed / common scale')
-    fig.text(.04,.095,'Blue masks: confirmed ordinary-DeepONet training examples (107 train cases); red mask: g009 (12 held-out cases over four shapes).',
-             fontsize=10,color='#344b5e')
-    fig.text(.04,.053,'Geo-DeepONet/FNO exact train-versus-validation geometry IDs were not retained; the test IDs and split counts are retained.',
-             fontsize=10,color='#344b5e')
-    fig.savefig(NEW/'generated/geometry_train_to_unseen_test.png',dpi=165,bbox_inches='tight')
+    fig.suptitle('Four training geometries  →  entire g009 geometry held out  →  CFD and neural fields below',
+                 fontsize=14,weight='bold',color='#25394b',y=.98)
+    fig.text(.5,.07,'Original x/H = 0–5, y/H = 0–1 (5:1 aspect preserved). Confirmed ordinary-DeepONet training members; Geo/FNO train IDs not retained.',
+             ha='center',fontsize=9,color='#344b5e')
+    fig.subplots_adjust(left=.02,right=.98,top=.78,bottom=.20,wspace=.15)
+    fig.savefig(NEW/'generated/geometry_training_strip.png',dpi=165,bbox_inches='tight')
     plt.show()
 
-geometry_generalization_overview()
+training_geometry_strip()
 
 def geometry_comparison(case):
     fs=[load_followup(case,'geo_deeponet'),load_ordinary(case),load_followup(case,'geo_deeponet'),load_followup(case,'fno')]

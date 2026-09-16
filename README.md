@@ -451,14 +451,17 @@ not silently present saved solver fields as a fresh Run-All CFD calculation.
 ### Week 15 — Geometry-aware neural operators
 
 [Executed notebook and data guide](notebooks/week15/README.md) · [Lecture](lectures/week15_geometry_generalization.pdf).
-Read the experiment from left to right: different training geometries, a held-out
-g009 geometry, then OpenFOAM CFD and three neural predictions on that unseen shape.
-The blue thumbnails are confirmed ordinary-DeepONet training examples; the
-historical Geo-DeepONet/FNO train-versus-validation identity lists were not retained.
+The geometry strip identifies four confirmed ordinary-DeepONet training shapes
+and the unseen g009 test shape at their original 5:1 physical aspect ratio.
+The historical Geo-DeepONet/FNO train-versus-validation identities were not retained.
+The full comparison below preserves the original CFD and model streamlines,
+speed fields, and centered-pressure fields.
 
-![Distinct training geometries, held-out test geometry, and CFD versus neural predictions](results/step_geometry_generalization/generated/geometry_train_to_unseen_test.png)
+![Four training geometries and the held-out g009 geometry at physical aspect ratio](results/step_geometry_generalization/generated/geometry_training_strip.png)
 
-[Detailed speed, streamline, and centered-pressure comparison](results/step_geometry_generalization/generated/g009_Re100_medium_fields.png) uses common column scales and reports each model's errors.
+![OpenFOAM CFD and three neural predictions with streamlines and centered pressure](results/step_geometry_generalization/generated/g009_Re100_medium_fields.png)
+
+The detailed comparison uses common column scales and reports each model's errors.
 
 The lab includes 130 sampled OpenFOAM fields across 51 masks and explicit
 geometry/family holdouts. U-FNO is included in the historical g011 audit.

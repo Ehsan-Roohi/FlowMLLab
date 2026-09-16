@@ -10,9 +10,7 @@ Learning outcomes: formulate DeepONet, Geo-DeepONet, FNO, and U-FNO; design whol
 
 ## 2. Data and split discipline
 
-[OVERVIEW]
-
-Five actual training geometries from the ordinary-DeepONet split illustrate the shape diversity available for learning. The red g009 geometry is withheld at every Reynolds number; the lower row compares OpenFOAM CFD with three model predictions on g009 at Re=100. The historical Geo-DeepONet/FNO train-versus-validation identity lists were not retained, so the blue examples are not asserted to have been in each of those models' training subsets.
+[SPLIT]
 
 The dataset contains 130 accepted sampled OpenFOAM fields, 51 distinct masks, Reynolds numbers 25, 50, and 100, and a 60×300 common grid. Every case stores u, v, pressure, coordinates, a fluid mask, and signed distance. All Reynolds-number variants of a geometry must remain in one split.
 
@@ -40,8 +38,6 @@ U-FNO adds a local U-shaped pathway to Fourier blocks, improving access to multi
 
 ## 5. What was trained and what was tested
 
-[SPLIT]
-
 [POINTS]
 
 Protocol A, geometry holdout: 107 training cases, 11 validation cases, and 12 tests from unseen g009, g023, g036, and g048. Protocol B, family holdout: 103 training, 8 validation, and 19 tests from the excluded double-step family g012 and g045 through g051. Geo-DeepONet and FNO were run for 400 epochs with seeds 17, 29, and 43. The new ordinary-DeepONet baseline uses the same Protocol-A counts, tests, epochs and seeds; its explicit 11-case validation grouping is recorded with the run.
@@ -51,6 +47,10 @@ Across the 12 geometry-holdout tests, ordinary DeepONet gives 28.96% mean veloci
 Exact test identities are committed in case_metrics.csv. The separately frozen train-versus-validation identity lists and checkpoints were not recovered, so they are not guessed. The development pool is the complement of the named tests, but membership of its train and validation subsets must be restored before claiming full retraining reproducibility.
 
 ## 6. Read fields, not only scores
+
+[TRAIN]
+
+The blue panels are confirmed ordinary-DeepONet training geometries; red g009 is excluded at every Reynolds number. Exact historical Geo-DeepONet/FNO train-versus-validation identities are unavailable. The full CFD/model fields with streamlines follow immediately below.
 
 [G009]
 

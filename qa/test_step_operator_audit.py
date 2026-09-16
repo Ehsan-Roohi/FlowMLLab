@@ -86,7 +86,7 @@ class AuditTests(unittest.TestCase):
         self.assertEqual([c.execution_count for c in code], list(range(1, 14)))
         self.assertFalse(any(o.output_type == 'error' for c in code for o in c.outputs))
         self.assertEqual(sum('image/png' in o.get('data', {}) for c in code for o in c.outputs), 12)
-        self.assertTrue((ROOT/'results/step_geometry_generalization/generated/geometry_train_to_unseen_test.png').is_file())
+        self.assertTrue((ROOT/'results/step_geometry_generalization/generated/geometry_training_strip.png').is_file())
 
     def test_full_dataset_hash_shapes_and_case_splits(self):
         path = DATA/'source/dataset.npz'
