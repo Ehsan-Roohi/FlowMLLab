@@ -1,0 +1,60 @@
+name: Week 15 ordinary DeepONet evidence
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - qa/train_week15_vanilla_deeponet.py
+      - .github/workflows/week15-ordinary-deeponet.yml
+
+permissions:
+  contents: write
+
+jobs:
+  train:
+    strategy:
+      fail-fast: false
+      matrix:
+        seed: [17, 29, 43]
+    runs-on: ubuntu-latest
+    timeout-minutes: 330
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - name: Install numerical runtime
+        run: python -m pip install --disable-pip-version-check tensorflow-cpu==2.20.0
+      - name: Train and evaluate seed ${{ matrix.seed }}
+        run: |
+          python qa/train_week15_vanilla_deeponet.py \
+            --dataset results/step_operator_audit/source/dataset.npz \
+            --output run-seed${{ matrix.seed }} \
+            --epochs 400 --steps-per-epoch 16 --batch-size 8192 \
+            --seeds ${{ matrix.seed }}
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ordinary-deeponet-seed${{ matrix.seed }}
+          path: |
+            run-seed${{ matrix.seed }}/manifest.json
+            run-seed${{ matrix.seed }}/case_metrics.csv
+            run-seed${{ matrix.seed }}/predictions/
+          if-no-files-found: error
+
+  publish-evidence:
+    needs: train
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: ordinary-deeponet-seed*
+          path: results/week15_ordinary_deeponet
+      - name: Record immutable training evidence
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add results/week15_ordinary_deeponet
+          git commit -m "Add Week 15 ordinary DeepONet OpenFOAM evidence"
+          git push
