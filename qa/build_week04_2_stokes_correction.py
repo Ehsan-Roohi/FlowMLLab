@@ -14,6 +14,7 @@ import matplotlib.pyplot as plt
 import nbformat as nbf
 import numpy as np
 import pandas as pd
+from scipy.interpolate import RegularGridInterpolator
 from reportlab.lib import colors
 from reportlab.lib.enums import TA_CENTER, TA_LEFT
 from reportlab.lib.pagesizes import A4
@@ -91,6 +92,59 @@ def make_figures() -> dict[str, Path]:
         ax.grid(alpha=0.2); ax.legend(frameon=False)
     p = RESULTS / "week04_2_validation_history.png"; fig.savefig(p, dpi=220); plt.close(fig); out["history"] = p
     return out
+
+
+def make_field_figures() -> None:
+    """Render retained n=25 fields smoothly without changing the saved samples."""
+    data = np.load(RESULTS / "velocity_pressure_fields.npz")
+    cases = json.loads((ROOT / "results/cavity_diversity_pilot/manifest.json").read_text())["cases"]
+    figures_dir = ROOT / "figures"
+    figures_dir.mkdir(exist_ok=True)
+    sample_grid = np.linspace(0, 1, 25)
+    display_grid = np.linspace(0, 1, 201)
+    yy, xx = np.meshgrid(display_grid, display_grid, indexing="ij")
+    display_points = np.column_stack((yy.ravel(), xx.ravel()))
+
+    def display_field(field: np.ndarray) -> np.ndarray:
+        # Linear interpolation is used for pixels only; errors and metrics stay
+        # on the original 25-by-25 numerical grid.
+        return RegularGridInterpolator((sample_grid, sample_grid), field,
+                                       method="linear")(display_points).reshape(xx.shape)
+
+    for family in ("constant", "diverse"):
+        case = next(c for c in cases if c["family"] == family and c["split"] == "test")
+        reference = {key: data[f"reference_{family}_{key}"][0] for key in ("u", "v", "p")}
+        prediction = {key: data[f"{family}_{family}_{key}"][0] for key in ("u", "v", "p")}
+        reference["speed"] = np.hypot(reference["u"], reference["v"])
+        prediction["speed"] = np.hypot(prediction["u"], prediction["v"])
+
+        fig, axes = plt.subplots(4, 3, figsize=(13, 15.6), layout="constrained")
+        fig.suptitle(f"{family.title()} lid | first held-out case | Re = {case['Re']:.1f}\n"
+                     "Left: NS reference | center: Stokes + neural correction | right: error",
+                     fontsize=15)
+        for row, (key, label) in enumerate((
+            ("u", "u / U_ref"), ("v", "v / U_ref"),
+            ("speed", "Speed / U_ref"), ("p", "Recovered p / (rho U_ref^2)"),
+        )):
+            ref, pred = reference[key], prediction[key]
+            error = np.abs(pred - ref)  # Before display interpolation.
+            lower = min(float(ref.min()), float(pred.min()))
+            upper = max(float(ref.max()), float(pred.max()))
+            for col, (values, title) in enumerate(((ref, label), (pred, "Prediction"),
+                                                    (error, "Absolute error"))):
+                ax = axes[row, col]
+                im = ax.imshow(display_field(values), origin="lower", extent=(0, 1, 0, 1),
+                               cmap="magma" if col == 2 else "coolwarm",
+                               vmin=0 if col == 2 else lower,
+                               vmax=float(error.max()) if col == 2 else upper,
+                               interpolation="bilinear", aspect="equal")
+                ax.set(title=title, xlabel="x/L", ylabel="y/L")
+                fig.colorbar(im, ax=ax, fraction=0.046, pad=0.03)
+        fig.supxlabel("Display interpolation only; all model errors use the original 25 x 25 samples.",
+                      fontsize=9, color="#425466")
+        out = figures_dir / f"Cavity_{family}_velocity_pressure.png"
+        fig.savefig(out, dpi=170)
+        plt.close(fig)
 
 
 def build_notebook(figures: dict[str, Path]) -> None:
@@ -229,6 +283,7 @@ main.pivot(index=['train','test'], columns='model', values='velocity_percent').r
 Pressure has zero global mean. The reference pressure and predicted pressure are both recovered from their velocity fields using the same least-squares momentum-gradient method. Core errors remove two boundary layers and align the core gauge separately. This is a consistency comparison, not validation against an independently solved pressure field."""),
         nbf.v4.new_code_cell("""pressure = pd.read_csv(R/'pressure_metrics.csv')
 pressure.groupby(['train','test'])[['pressure_full_percent','pressure_core_percent','gradient_residual']].mean().round(3)"""),
+        nbf.v4.new_markdown_cell("""The following fields are linearly interpolated for display only. Numerical samples and all errors remain on the original 25 x 25 grid."""),
         nbf.v4.new_code_cell("""display(Image(filename=str(ROOT/'figures/Cavity_constant_velocity_pressure.png')))
 display(Image(filename=str(ROOT/'figures/Cavity_diverse_velocity_pressure.png')))"""),
         nbf.v4.new_markdown_cell("""## 9. Interpretation and claim boundary
@@ -471,14 +526,14 @@ def build_pdf(figures: dict[str, Path]) -> None:
 
     # Page 7
     y = header(7, "Held-out constant-lid field")
-    y = _p(c, "First test case in manifest order; never selected by prediction quality. Left: Navier-Stokes reference. Center: Stokes plus learned correction. Right: absolute error. Shared reference/prediction scales are used within each row.", 16*mm, y, width-32*mm, small) - 2*mm
+    y = _p(c, "First test case in manifest order; never selected by prediction quality. Left: Navier-Stokes reference. Center: Stokes plus learned correction. Right: absolute error. Shared reference/prediction scales are used within each row. Linear interpolation smooths display only; metrics use the original n=25 grid.", 16*mm, y, width-32*mm, small) - 2*mm
     c.drawImage(str(ROOT / "figures/Cavity_constant_velocity_pressure.png"), 19*mm, 26*mm,
                 width=width-38*mm, height=y-29*mm, preserveAspectRatio=True, anchor="c")
     finish()
 
     # Page 8
     y = header(8, "Held-out diverse-lid field and claim boundary")
-    y = _p(c, "The diverse model is evaluated on the first diverse-lid test case in manifest order. The pressure row is a recovered field rather than a network output.", 16*mm, y, width-32*mm, small) - 2*mm
+    y = _p(c, "The diverse model is evaluated on the first diverse-lid test case in manifest order. The pressure row is a recovered field rather than a network output. Linear interpolation smooths display only; metrics use the original n=25 grid.", 16*mm, y, width-32*mm, small) - 2*mm
     c.drawImage(str(ROOT / "figures/Cavity_diverse_velocity_pressure.png"), 23*mm, 73*mm,
                 width=width-46*mm, height=y-78*mm, preserveAspectRatio=True, anchor="c")
     y = 67*mm
@@ -492,10 +547,11 @@ def build_pdf(figures: dict[str, Path]) -> None:
 
 def main() -> None:
     figures = make_figures()
+    make_field_figures()
     build_notebook(figures)
     build_pdf(figures)
-    print(NOTEBOOK)
-    print(PDF)
+    print(NOTEBOOK.relative_to(ROOT).as_posix())
+    print(PDF.relative_to(ROOT).as_posix())
 
 
 if __name__ == "__main__":

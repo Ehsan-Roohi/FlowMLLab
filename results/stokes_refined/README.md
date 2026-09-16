@@ -57,3 +57,6 @@ universal transfer from a constant lid to unseen boundary shapes.
 All reported fields use an `n=25` grid and the same educational finite-difference
 solver. No mesh-independent accuracy, independent pressure validation, or new
 network-method novelty is claimed.
+The displayed velocity and pressure contours use linear interpolation between
+retained grid samples for legibility. All field errors are computed on the
+original `n=25` arrays before display interpolation.

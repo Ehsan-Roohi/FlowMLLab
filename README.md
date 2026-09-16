@@ -167,7 +167,8 @@ cost tradeoff. [Run the ROM lab](notebooks/week04/W4_1_Classical_ROM_Cavity.ipyn
 ![Week 4.2 diverse-lid example: Navier–Stokes reference, Stokes-corrected prediction and absolute errors in velocity and recovered pressure](figures/Cavity_diverse_velocity_pressure.png)
 
 This held-out diverse-lid example shows reference fields, predictions and absolute
-errors. The retained tests support same-grid surrogate performance; they do not
+errors. The contours are linearly interpolated for display; numerical errors use
+the original 25 × 25 samples. The retained tests support same-grid surrogate performance; they do not
 establish grid-independent CFD accuracy. [Run the Week 4.2 lab](notebooks/week04/W4_Lab4_Stokes_to_Navier_Stokes.ipynb)
 · [Read the eight-page companion](lectures/week04_2_stokes_to_navier_stokes.pdf)
 · [Inspect the retained results](results/stokes_refined/README.md)
