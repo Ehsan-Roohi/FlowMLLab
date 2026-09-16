@@ -19,9 +19,14 @@ This optional research-to-classroom extension contains three CPU-friendly labs:
    audits 130 sampled OpenFOAM training/validation/test fields and independently
    recomputes velocity, pressure, vorticity and reverse-flow diagnostics from nine
    retained Geo-DeepONet/FNO/U-FNO predictions on a continuum step/obstacle case.
-   This is an executed data/output audit, not retraining. See
+   It then adds two three-seed generalization protocols: 12 tests from four unseen
+   geometries and 19 tests from an unseen double-step family, with CFD/Geo/FNO
+   velocity-streamline and pressure comparisons. This is an executed data/output
+   audit, not retraining. See
    [`results/step_operator_audit`](../../results/step_operator_audit/) for provenance,
-   source-metric discrepancies and the missing training artifacts. For standalone
+   [`results/step_geometry_generalization`](../../results/step_geometry_generalization/)
+   for follow-up metrics, casebooks, and representative raw fields, and the
+   [Week 9.3 lecture](../../lectures/week09_3_geometry_generalization.pdf). For standalone
    use, place `wake_predictions.tgz` and `dataset.npz` beside the notebook and install
    `requirements_step_operator_audit.txt`.
 

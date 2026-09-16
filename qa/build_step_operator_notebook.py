@@ -182,22 +182,29 @@ display(coverage.assign(total=coverage.sum(axis=1)))
 print('PASS: 130 finite sampled OpenFOAM fields; 51 masks; split counts 106/21/3; g011 identity verified.')
 """)
 md(r"""
-### Coverage and representative fields
+### Split map and representative fields
 
-The left panel counts cases (not geometries) by Reynolds number. The field panels use
-one Re=50 case from each split and plot the actual sampled OpenFOAM speed and stored
-pressure target. No predicted field or synthetic replacement is used here.
+The split map below is deliberately **not a bar chart**. Each square is one accepted
+OpenFOAM case; rows are geometry identities and columns are Reynolds numbers. The
+field panels use one Re=50 case from each split and plot the actual sampled OpenFOAM
+speed and stored pressure target. No predicted field or synthetic replacement is used.
 """)
 code(r"""
-fig,axs=plt.subplots(1,2,figsize=(10,3.8))
-coverage.plot(kind='bar',ax=axs[0],color=['#4c78a8','#f58518','#54a24b'])
-axs[0].set(title='Accepted OpenFOAM cases by split',xlabel='',ylabel='cases')
-axs[0].tick_params(axis='x',rotation=0); axs[0].legend(title='Re',frameon=False)
-geom_counts=case_manifest.groupby('split').geometry_id_inferred.nunique().reindex(['train','validation','test'])
-axs[1].bar(geom_counts.index,geom_counts.values,color=['#4c78a8','#f58518','#54a24b'])
-axs[1].set(title='Whole geometries by split',ylabel='unique geometry masks')
-for ax in axs: ax.grid(axis='y',alpha=.2)
-fig.tight_layout(); fig.savefig(OUT/'dataset_coverage.png',dpi=150,bbox_inches='tight'); plt.show()
+split_code={'train':0,'validation':1,'test':2}
+split_grid=np.full((51,3),np.nan)
+for row in case_manifest.itertuples():
+    split_grid[int(row.geometry_id_inferred)-1,RES.index(int(row.Re))]=split_code[row.split]
+from matplotlib.colors import ListedColormap, BoundaryNorm
+fig,ax=plt.subplots(figsize=(6.4,9.2))
+cmap=ListedColormap(['#4c78a8','#f2a541','#d1495b']); cmap.set_bad('#eef1f4')
+ax.imshow(split_grid,origin='lower',aspect='.22',cmap=cmap,norm=BoundaryNorm([-.5,.5,1.5,2.5],3))
+ax.set(xticks=range(3),xticklabels=[f'Re={r}' for r in RES],
+       yticks=np.arange(0,51,5),yticklabels=[f'g{i:03d}' for i in range(1,52,5)],
+       xlabel='Flow condition',ylabel='Geometry identity',title='Whole-geometry split map · one square per OpenFOAM case')
+handles=[plt.Line2D([],[],marker='s',linestyle='',color=c,label=k) for k,c in
+         zip(['train','validation','test'],['#4c78a8','#f2a541','#d1495b'])]
+ax.legend(handles=handles,loc='upper left',bbox_to_anchor=(1.02,1),frameon=False)
+fig.tight_layout(); fig.savefig(OUT/'dataset_split_matrix.png',dpi=150,bbox_inches='tight'); plt.show()
 
 selected=[]
 for sp in ['train','validation','test']:
@@ -458,6 +465,147 @@ hash, environment, split/scalers, checkpoints, histories and reference-solver re
   Geo-DeepONet paper or a claim of a new architecture. No new license for upstream data
   or code is assigned by this notebook. Do not publish the private conversation itself.
 """)
+md(r"""
+## 9. Geometry generalization: two genuinely harder protocols
+
+The retained follow-up study uses the same 130 accepted OpenFOAM fields but freezes
+two different scientific questions. **Geometry holdout** trains on 107 cases,
+validates on 11, and tests 12 cases from four unseen geometries (`g009`, `g023`,
+`g036`, `g048`). **Family holdout** trains on 103 cases, validates on 8, and tests
+19 cases from an excluded double-step family (`g012`, `g045`–`g051`; availability
+varies by Reynolds number). All Reynolds-number variants of a held-out geometry stay
+outside training. The exact test cases are printed from the committed metrics file;
+the training/validation *counts* are retained, but their separate identity lists were
+not present in the downloaded evidence and are not guessed.
+
+### Operator theory and the geometry problem
+
+A vanilla DeepONet represents an operator through a branch/trunk inner product,
+
+$$\hat q(\xi)=\sum_{k=1}^{p} b_k(a)\,t_k(\xi)+c.$$
+
+If the branch encoding $a$ contains only flow parameters, the learned spatial basis
+$t_k$ is tied to the training domain. Changing a wall, obstacle, or topology changes
+the valid coordinate set and boundary conditions; ordinary DeepONet therefore has no
+automatic geometry equivariance. Geometry-aware DeepONet adds a mask/SDF or another
+shape encoding to the operator input, but it still must extrapolate when an entire
+shape family is absent.
+
+FNO alternates local channel mixing with learned spectral convolution,
+
+$$v_{l+1}=\sigma\!\left(W_l v_l+\mathcal F^{-1}(R_l\,\mathcal Fv_l)\right).$$
+
+It is efficient on a common grid, but discontinuous masks, pressure gauge/gradients,
+and unseen topology are difficult. U-FNO adds a local U-shaped path to the Fourier
+blocks. In this repository U-FNO is available only for the older `g011` audit above;
+it was **not** evaluated in the two three-seed protocols below. Likewise, no ordinary
+DeepONet prediction bundle exists for these protocols. We explain that baseline's
+limitation without inventing contours or scores. The controlled comparison below is
+Geo-DeepONet versus FNO, three seeds, 400 epochs.
+""")
+code(r"""
+NEW = ARCHIVE.parents[1] / 'step_geometry_generalization'
+CASE_METRICS = NEW / 'source/case_metrics.csv'
+assert CASE_METRICS.is_file()
+diverse = pd.read_csv(CASE_METRICS)
+assert set(diverse.protocol)=={'diverse_geometry_v1','diverse_family_v1'}
+assert set(diverse.model)=={'Geo','FNO'} and set(diverse.nseed)=={3}
+expected_test={'diverse_geometry_v1':{'g009','g023','g036','g048'},
+               'diverse_family_v1':{'g012','g045','g046','g047','g048','g049','g050','g051'}}
+for protocol, geoms in expected_test.items():
+    got=set(diverse.loc[diverse.protocol==protocol,'geometry'])
+    assert got==geoms,(protocol,got)
+    print(protocol, 'test geometries:', ', '.join(sorted(got)))
+    print(diverse.loc[(diverse.protocol==protocol)&(diverse.model=='Geo'),
+          ['case','Re']].sort_values(['case']).to_string(index=False))
+
+summary3=(diverse.groupby(['protocol','model'])
+          .agg(velocity_error=('velocity_mean','mean'),pressure_error=('pressure_mean','mean'),
+               reverse_iou=('reverse_iou_mean','mean')).reset_index())
+display(summary3.round(3))
+
+# Point/range plots only: no bars.
+fig,axs=plt.subplots(1,3,figsize=(12.5,4.1))
+for ax,(metric,title) in zip(axs,[('velocity_mean','Velocity error (%)'),
+                                  ('pressure_mean','Centered-pressure error (%)'),
+                                  ('reverse_iou_mean','Reverse-flow IoU')]):
+    ypos=0
+    for protocol,marker in [('diverse_geometry_v1','o'),('diverse_family_v1','s')]:
+        for model,color in [('Geo','#d1495b'),('FNO','#146c94')]:
+            d=diverse[(diverse.protocol==protocol)&(diverse.model==model)][metric]
+            ax.scatter(d,[ypos]*len(d),s=18,alpha=.35,color=color,marker=marker)
+            ax.scatter([d.mean()],[ypos],s=85,color=color,marker=marker,edgecolor='white',zorder=3)
+            ypos+=1
+    ax.set(title=title,yticks=range(4),yticklabels=['Geom · Geo','Geom · FNO','Family · Geo','Family · FNO'])
+    ax.grid(axis='x',alpha=.22)
+fig.suptitle('Every held-out case plus protocol mean (large marker) · three-seed statistics')
+fig.tight_layout(); fig.savefig(NEW/'generated/generalization_case_points.png',dpi=160,bbox_inches='tight'); plt.show()
+""")
+md(r"""
+## 10. CFD beside neural predictions — velocity, streamlines, and pressure
+
+Each case below uses a common column scale. Rows are CFD, Geo-DeepONet, and FNO;
+columns are speed with the row's own streamlines, then independently mean-removed
+pressure. These are raw seed-17 fields from the held-out geometry protocol—not
+interpolated screenshots. The first case shows FNO's strong velocity result; the
+second exposes the crucial trade-off: a plausible velocity field can coexist with a
+very poor pressure field. The committed PDF casebooks contain all 12 geometry-holdout
+and all 19 family-holdout test cases in the same row-wise format.
+""")
+code(r"""
+def load_followup(case,model):
+    path=NEW/f'source/predictions/geometry_holdout/{model}/seed_17/{case}_prediction.npz'
+    with np.load(path,allow_pickle=False) as z: return {k:z[k].copy() for k in z.files}
+
+def geometry_comparison(case):
+    fs=[load_followup(case,'geo_deeponet'),load_followup(case,'geo_deeponet'),load_followup(case,'fno')]
+    arr=[fs[0]['truth'],fs[1]['prediction'],fs[2]['prediction']]
+    ny,nx=map(int,fs[0]['shape']); xy=fs[0]['coordinates'].reshape(ny,nx,2)
+    x,y=xy[0,:,0],xy[:,0,1]; mask=fs[0]['mask'].reshape(ny,nx)
+    aa=[a.reshape(ny,nx,3).astype(float) for a in arr]
+    speed=[np.ma.masked_where(~mask,np.hypot(a[:,:,0],a[:,:,1])) for a in aa]
+    pressure=[np.ma.masked_where(~mask,a[:,:,2]-a[:,:,2][mask].mean()) for a in aa]
+    vmax=max(float(v.max()) for v in speed); plim=max(float(np.abs(v).max()) for v in pressure)
+    fig,axs=plt.subplots(3,2,figsize=(12.8,6.7),sharex=True,sharey=True)
+    for i,(a,label) in enumerate(zip(aa,['CFD','Geo-DeepONet · seed 17','FNO · seed 17'])):
+        im0=axs[i,0].pcolormesh(x,y,speed[i],cmap='viridis',vmin=0,vmax=vmax,shading='nearest')
+        axs[i,0].streamplot(np.linspace(x[0],x[-1],len(x)),np.linspace(y[0],y[-1],len(y)),
+          np.ma.masked_where(~mask,a[:,:,0]),np.ma.masked_where(~mask,a[:,:,1]),
+          color='white',density=.85,linewidth=.42,arrowsize=.5)
+        im1=axs[i,1].pcolormesh(x,y,pressure[i],cmap='RdBu_r',vmin=-plim,vmax=plim,shading='nearest')
+        axs[i,0].set_ylabel(label+'\ny')
+        for ax in axs[i]: ax.set_aspect('equal'); ax.set_facecolor('#d9dde2')
+    axs[0,0].set_title('Speed + streamlines'); axs[0,1].set_title('Centered pressure')
+    for ax in axs[-1]: ax.set_xlabel('x/H')
+    fig.colorbar(im0,ax=axs[:,0],shrink=.72,pad=.015); fig.colorbar(im1,ax=axs[:,1],shrink=.72,pad=.015)
+    fig.suptitle(case.replace('_medium','')+' · unseen geometry · common column scales',fontsize=15)
+    fig.savefig(NEW/f'generated/{case}_fields.png',dpi=165,bbox_inches='tight'); plt.show()
+
+for case in ['g009_Re100_medium','g048_Re50_medium']: geometry_comparison(case)
+""")
+md(r"""
+## 11. What the tests actually establish
+
+For unseen geometries within represented families, mean velocity error is about
+4.81% for Geo-DeepONet and 2.53% for FNO, but centered-pressure error reverses the
+story (23.53% versus 43.46%). Holding out the whole double-step family is much harder:
+mean velocity errors rise to 18.56% and 9.16%, pressure errors to 74.58% and 255.61%,
+and reverse-flow IoU falls to 0.410 and 0.578. Case-level seed spread is also large
+for Geo-DeepONet in several family tests.
+
+The defensible conclusion is therefore not “FNO wins.” It is that neither model has
+demonstrated reliable topology extrapolation, velocity ranking does not determine
+pressure ranking, and a fixed-domain or incompletely conditioned DeepONet cannot be
+trusted under geometry change merely because it interpolates Reynolds number well.
+Use the casebooks to inspect every failure; do not summarize this experiment with one
+bar height.
+
+### References
+
+- Lu et al. (2021), *Learning nonlinear operators via DeepONet based on the universal approximation theorem of operators*, Nature Machine Intelligence 3, 218–229.
+- Li et al. (2021), *Fourier Neural Operator for Parametric Partial Differential Equations*, ICLR.
+- Li et al. (2022), *Fourier Neural Operator with Learned Deformations for PDEs on General Geometries*, arXiv:2207.05209.
+""")
 code(r"""
 summary={'status':'passed', 'mode':'dataset_and_retained_prediction_audit_not_training',
     'archive_sha256':EXPECTED_SHA,'dataset_sha256':EXPECTED_DATASET_SHA,
@@ -465,7 +613,10 @@ summary={'status':'passed', 'mode':'dataset_and_retained_prediction_audit_not_tr
     'predictions':len(fields),'prediction_geometries':1,'seeds':[17],
     'Re':RES,'source_metric_checks':18,'diagnostic_tests':4,'dataset_checks':9,
     'source_discrepancies':['reverse-flow IoU: source threshold/region undocumented'],
-    'missing':['training source','checkpoints','complete OpenFOAM case directories','later prediction bundles'],
+    'followup_protocols':['diverse_geometry_v1','diverse_family_v1'],
+    'followup_test_cases':int(diverse[['protocol','case']].drop_duplicates().shape[0]),
+    'followup_seeds':[17,29,43],
+    'missing':['training source','checkpoints','complete OpenFOAM case directories','ordinary-DeepONet predictions for follow-up protocols'],
     'numpy':np.__version__,'python':platform.python_version()}
 (OUT/'execution_summary.json').write_text(json.dumps(summary,indent=2),encoding='utf-8')
 display(pd.DataFrame([summary]).drop(columns=['missing']))

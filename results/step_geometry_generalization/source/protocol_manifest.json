@@ -1,0 +1,23 @@
+{
+  "dataset": "../../step_operator_audit/source/dataset.npz",
+  "dataset_cases": 130,
+  "models": ["Geo-DeepONet", "FNO"],
+  "seeds": [17, 29, 43],
+  "epochs": 400,
+  "protocols": {
+    "diverse_geometry_v1": {
+      "train_cases": 107,
+      "validation_cases": 11,
+      "test_cases": 12,
+      "test_geometries": ["g009", "g023", "g036", "g048"]
+    },
+    "diverse_family_v1": {
+      "train_cases": 103,
+      "validation_cases": 8,
+      "test_cases": 19,
+      "test_family": "double-step",
+      "test_geometries": ["g012", "g045", "g046", "g047", "g048", "g049", "g050", "g051"]
+    }
+  },
+  "evidence_boundary": "Exact test identities are in case_metrics.csv. Separate train/validation identity lists, checkpoints, and original OpenFOAM case directories were not recovered; they are not inferred."
+}

@@ -26,11 +26,21 @@
   "source_discrepancies": [
     "reverse-flow IoU: source threshold/region undocumented"
   ],
+  "followup_protocols": [
+    "diverse_geometry_v1",
+    "diverse_family_v1"
+  ],
+  "followup_test_cases": 31,
+  "followup_seeds": [
+    17,
+    29,
+    43
+  ],
   "missing": [
     "training source",
     "checkpoints",
     "complete OpenFOAM case directories",
-    "later prediction bundles"
+    "ordinary-DeepONet predictions for follow-up protocols"
   ],
   "numpy": "2.5.3",
   "python": "3.12.14"

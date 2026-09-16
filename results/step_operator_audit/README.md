@@ -34,12 +34,14 @@ this clears outputs, so execute all cells again afterwards.
   geometry is development evidence, not a fresh blind test.
 - Pressure absolute units cannot be confirmed from this archive alone. Per-case
   relative errors are invariant under a common nonzero pressure scaling.
-- Missing: original training source at the recorded hash, model checkpoints,
-  complete OpenFOAM case directories and later combined-loss/multi-family prediction bundles.
-  This lab does not reproduce their training or their later reported improvements.
+- The companion `results/step_geometry_generalization` package adds the later
+  geometry- and family-holdout metrics, complete casebooks, and representative raw
+  Geo/FNO fields. Missing: original training source at the recorded hash, model
+  checkpoints, complete OpenFOAM case directories, exact train-versus-validation
+  identity lists, and ordinary-DeepONet predictions for the follow-up protocols.
 - No new license is assigned to the author's upstream research materials.
 
 Generated files: 130-row case manifest, nine-row prediction-metric CSV,
-source-member hashes and metadata, execution summary, dataset coverage and split
+source-member hashes and metadata, execution summary, non-bar split matrix and split
 examples, three four-row field comparisons, metric comparison, and local-error plot.
 The archive is read in memory, never blindly extracted.

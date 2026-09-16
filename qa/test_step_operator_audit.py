@@ -48,10 +48,10 @@ class AuditTests(unittest.TestCase):
     def test_notebook_executed_without_errors(self):
         nbformat.validate(notebook)
         code = [c for c in notebook.cells if c.cell_type == 'code']
-        self.assertEqual(len(code), 10)
-        self.assertEqual([c.execution_count for c in code], list(range(1, 11)))
+        self.assertEqual(len(code), 12)
+        self.assertEqual([c.execution_count for c in code], list(range(1, 13)))
         self.assertFalse(any(o.output_type == 'error' for c in code for o in c.outputs))
-        self.assertEqual(sum('image/png' in o.get('data', {}) for c in code for o in c.outputs), 7)
+        self.assertEqual(sum('image/png' in o.get('data', {}) for c in code for o in c.outputs), 10)
 
     def test_full_dataset_hash_shapes_and_case_splits(self):
         path = DATA/'source/dataset.npz'
