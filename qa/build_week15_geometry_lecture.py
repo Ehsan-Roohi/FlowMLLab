@@ -7,7 +7,7 @@ from reportlab.lib.styles import ParagraphStyle
 from reportlab.pdfbase import pdfmetrics
 from reportlab.pdfbase.ttfonts import TTFont
 from reportlab.pdfgen.canvas import Canvas
-from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, Image, KeepTogether
+from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, Image, KeepTogether, PageBreak
 from matplotlib import font_manager
 
 ROOT=Path(__file__).resolve().parents[1]
@@ -27,6 +27,7 @@ def para(text,style='body'):
 FIGURES={
  'SPLIT':('__SPLIT__','Whole-geometry case map for the retained 130-field dataset; no bar chart.'),
  'VANILLA':('__VANILLA__','Existing V5 project comparison: each point is one seed; large markers are means. The ordinary DeepONet fails the frozen checkpoint gate.'),
+ 'OVERVIEW':('geometry_train_to_unseen_test.png','Five confirmed ordinary-DeepONet training geometries (blue) versus unseen g009 (red), followed by CFD and seed-17 predictions on g009/Re100. Geo-DeepONet/FNO exact train identities are unavailable.'),
  'POINTS':('generalization_case_points.png','Every held-out case and the protocol mean. Large markers are means; small markers are individual cases.'),
  'G009':('g009_Re100_medium_fields.png','Unseen geometry g009 at Re=100: CFD, ordinary DeepONet, Geo-DeepONet, and FNO in rows. Row labels report seed-17 velocity and centered-pressure errors; ordinary DeepONet is markedly worse.'),
  'G048':('g048_Re50_medium_fields.png','Unseen geometry g048 at Re=50: the fixed-domain DeepONet is shown beside geometry-aware and spectral operators, with seed-17 errors printed in each row.'),
@@ -48,6 +49,7 @@ story=[para('Neural Operators under Geometry Change','title'),
 fnum=0
 for section in source.split('\n## ')[1:]:
     title,content=section.split('\n',1); blocks=content.strip().split('\n\n')
+    if title.startswith('11. '): story.append(PageBreak())
     first=blocks[0].strip().strip('[]') in FIGURES; heading=para(title,'heading')
     if not first: story.append(heading)
     for i,block in enumerate(blocks):

@@ -11,6 +11,11 @@ is the executed companion to the Week 15 lecture. It includes:
 - CFD, ordinary DeepONet, Geo-DeepONet, and FNO velocity/streamline and pressure fields using
   common column scales.
 
+The first geometry-generalization figure separates confirmed ordinary-DeepONet
+training shapes from the held-out g009 shape, then shows CFD and model predictions
+on g009. Geo-DeepONet/FNO train-versus-validation geometry identities were not
+retained, so their exact training members are not inferred.
+
 Ordinary DeepONet now also has a separate three-seed OpenFOAM geometry-holdout
 run with the same 107/11/12 case counts and 400-epoch budget. Its branch sees
 Reynolds number only; geometry masks, SDF and geometry IDs are withheld. The

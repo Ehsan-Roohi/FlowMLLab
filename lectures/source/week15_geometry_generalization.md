@@ -10,7 +10,9 @@ Learning outcomes: formulate DeepONet, Geo-DeepONet, FNO, and U-FNO; design whol
 
 ## 2. Data and split discipline
 
-[SPLIT]
+[OVERVIEW]
+
+Five actual training geometries from the ordinary-DeepONet split illustrate the shape diversity available for learning. The red g009 geometry is withheld at every Reynolds number; the lower row compares OpenFOAM CFD with three model predictions on g009 at Re=100. The historical Geo-DeepONet/FNO train-versus-validation identity lists were not retained, so the blue examples are not asserted to have been in each of those models' training subsets.
 
 The dataset contains 130 accepted sampled OpenFOAM fields, 51 distinct masks, Reynolds numbers 25, 50, and 100, and a 60×300 common grid. Every case stores u, v, pressure, coordinates, a fluid mask, and signed distance. All Reynolds-number variants of a geometry must remain in one split.
 
@@ -37,6 +39,8 @@ An FNO layer has the form v_(l+1) = sigma(W_l v_l + F^-1(R_l F(v_l))). The learn
 U-FNO adds a local U-shaped pathway to Fourier blocks, improving access to multiscale local features. In the retained archive U-FNO is available only for g011. It was not run in the two three-seed OpenFOAM generalization protocols; the lecture does not invent that comparison. Ordinary DeepONet is now trained separately on the OpenFOAM geometry-holdout split with Reynolds number in the branch and fixed x/y in the trunk, but without mask, SDF, or geometry ID.
 
 ## 5. What was trained and what was tested
+
+[SPLIT]
 
 [POINTS]
 
