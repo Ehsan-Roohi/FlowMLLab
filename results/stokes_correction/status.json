@@ -1,0 +1,11 @@
+{
+  "status": "complete",
+  "trained_checkpoints": 60,
+  "paired_cases": 64,
+  "epochs": 300,
+  "seeds": [
+    7,
+    17,
+    27
+  ]
+}

@@ -1,0 +1,25 @@
+train,test,model,velocity_percent,worst_percent
+constant,constant,Original POD,2.5233435643093567,4.65755131972703
+constant,constant,Refined / same data,0.18456256586881017,0.2648419830208011
+constant,constant,Refined / 64 train,0.10718724876186904,0.1402593046935655
+constant,diverse,Original POD,26.50547854744812,55.904487163459095
+constant,diverse,Refined / same data,20.157009153823807,38.62572218774994
+constant,diverse,Refined / 64 train,19.92039964222974,39.80834034345802
+constant,ood_shape,Original POD,47.75900416819718,79.02316862172789
+constant,ood_shape,Refined / same data,35.24820645462657,60.244239835787575
+constant,ood_shape,Refined / 64 train,37.19232456975986,62.138011646176416
+constant,ood_re,Original POD,34.848337020959356,75.22668636207122
+constant,ood_re,Refined / same data,38.63056067691423,56.42163356287553
+constant,ood_re,Refined / 64 train,36.98247790552987,56.33642128808174
+diverse,constant,Original POD,5.269878721410879,7.440094844825511
+diverse,constant,Refined / same data,6.858709077990755,10.127085511388497
+diverse,constant,Refined / 64 train,2.0443952358512094,3.013427105257256
+diverse,diverse,Original POD,4.031653243626826,8.462291346909149
+diverse,diverse,Refined / same data,4.828234562033571,12.176103765912098
+diverse,diverse,Refined / 64 train,0.9174395982069067,1.91919393447063
+diverse,ood_shape,Original POD,9.841065869528892,21.838886934544615
+diverse,ood_shape,Refined / same data,12.320181056526293,20.17359065636042
+diverse,ood_shape,Refined / 64 train,8.428457063314767,12.859426707887955
+diverse,ood_re,Original POD,22.700295874861514,34.734835730733245
+diverse,ood_re,Refined / same data,19.20928288758017,27.52100980384335
+diverse,ood_re,Refined / 64 train,10.204399357468278,17.071738054194594

@@ -16,7 +16,8 @@ newly plotted from attributed data and retained executions.
 | `week02_1_probabilistic_uq.pdf` | Observation models, exact Bayesian regression, POD--Gaussian-process fields, proper scores, leakage-free calibration, retained blind under-coverage | `notebooks/week02_1/Probabilistic_UQ_CFD.ipynb` |
 | `week03_kinetic_dsmc.pdf` | Distribution functions, Maxwellian moments, sampling error, DSMC | `notebooks/week03/` |
 | `week04_cavity_surrogates_deeponet.pdf` | Data qualification, scalar/field surrogates, DeepONet, physical metrics | `notebooks/week04/` |
-| [week04_2_pinn_cavity.pdf](week04_2_pinn_cavity.pdf) | Continuous-text PINN foundations, cavity physics, hard streamfunction lifting, inspected DeepPlasma configuration, exact-solution checks and validation protocol | Five assignments in the lecture; no new trained PINN claim |
+| [week04_2_pinn_cavity.pdf](week04_2_pinn_cavity.pdf) | Historical PINN foundations reading, now preparatory material for Week 13 | Five assignments in the lecture; no new trained PINN claim |
+| [week04_2_stokes_to_navier_stokes.pdf](week04_2_stokes_to_navier_stokes.pdf) | Actual Stokes input, Reynolds-speed consistency, constant/diverse lids, POD correction network, validation-only selection and bounded regression evidence | `notebooks/week04/W4_Lab4_Stokes_to_Navier_Stokes.ipynb` |
 | `week05_06_project_guide.pdf` | Six project tracks, frozen protocols, POD, uncertainty, rarefied cavity, FP closure | `notebooks/week05_06/P0_Project_Setup.ipynb` through `P6_FP_Cavity_Closure.ipynb` |
 | `week07_cylinder_lbm_neural_surrogate.pdf` | Circular-cylinder physics; concise D2Q9 BGK/TRT algorithm; curved-wall boundaries; force and gated Strouhal diagnostics; executed three-grid study with retained formal asymptotic/GCI failure; POD/CNN failure analysis; and leakage-controlled 277-frame phase-stable validation | `notebooks/week07/W7_Lattice_Boltzmann_Cylinder_Student.ipynb` |
 | `week07_1_hypersonic_rarefied_cylinder.pdf` | Rarefaction and DSMC cylinder fields; parameter-to-field operators; whole-case splitting; reviewed Fusion-DeepONet topology; strong Mach-field interpolation; deep-ensemble diagnostics; retained baseline win; and explicit claim boundaries | `notebooks/week07_1/W7_1_Hypersonic_Rarefied_Cylinder_DeepONet.ipynb` |
@@ -27,14 +28,12 @@ newly plotted from attributed data and retained executions.
 
 Editable sources are included in `source/` where they were available. The PDF is the authoritative rendered lecture for this release; Week 2.1 also includes an editable PPTX and its deterministic JavaScript builder.
 
-Week 4.2 is a working-course reading addition. Its editable text is
-[`source/week04_2_pinn_cavity.md`](source/week04_2_pinn_cavity.md), with equations,
-original figures and analytic preflight checks in
-[`../qa/build_week04_2_lecture.py`](../qa/build_week04_2_lecture.py).
-Run `python qa/build_week04_2_lecture.py` to generate a PDF, SVG figures and
-analytic-check JSON under `output/pdf/`; it does not run upstream training.
-McDevitt permitted use of the case; his code remains linked upstream, not
-relicensed or vendored. Locally supplied third-party teaching files are not redistributed.
+The Week-4 correction companion and executed Lab 4 are rebuilt together by
+[`../qa/build_week04_2_stokes_correction.py`](../qa/build_week04_2_stokes_correction.py).
+The builder reads retained numerical evidence, regenerates the plots, executes
+all notebook code cells sequentially and writes the eight-page Times-style PDF.
+The historical PINN reading remains at `source/week04_2_pinn_cavity.md` with its
+builder at `../qa/build_week04_2_lecture.py` for existing Week-13 references.
 
 ## Weeks 11 through 13 (working course, after v1.4.1)
 

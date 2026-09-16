@@ -19,6 +19,7 @@ Current advanced modules: [Week 13: deep-cavity PINNs](notebooks/week13/README.m
 | 4B | Scalar and coordinate surrogates | `(Re,x,y) → (u,v,p)` with case-wise holdout | Blind errors plus wall, divergence, pressure, and centerline checks |
 | 4C | Operator learning with an interpretable trunk | Executed scalar-branch POD-DeepONet for the parametric cavity | Development-only selection; all three blind fields and seeds; wall/divergence checks; Ghia-fidelity table; measured CFD/inference cost; explicit scalar-branch limitation |
 | 4.1 | Classical dynamical ROM and nonlinear cost | Centered POD--Galerkin and POD--DEIM for the same transient cavity | Exact recovery of accepted FOM fields; grid/time refinement; validation-only rank freeze; all blind trajectories; wall/divergence/vortex checks; offline, online, and break-even cost |
+| 4D | Multi-fidelity correction | Actual matched Stokes field plus Reynolds number to Navier-Stokes streamfunction correction | Constant/diverse lid formulas; complete-case splits; validation-only POD/MLP selection; three-seed ensemble; four family-transfer tests; shape/Re OOD limits |
 | 5A | POD and reduced-order learning | SVD/POD basis and neural or interpolated coefficients | Energy, representation error, learning error, and blind reconstruction |
 | 5B | Physics-guided objectives and PINNs | Wall/divergence-weighted loss and PDE-residual concepts | Matched ablation with a predeclared tolerance and a justified model choice |
 | 5C | Research protocol | Freeze question, baseline, split, metric, and failure threshold | Signed/frozen project card before blind testing |
@@ -62,7 +63,8 @@ The [PINN foundations reading](lectures/week04_2_pinn_cavity.pdf), originally
 numbered 4.2, is preparatory material within Week 13. It covers nondimensional
 residuals, soft/hard constraints, McDevitt's streamfunction lifting and analytic
 checks. The [initial Re=100 qualification](results/week04_2_pinn_cavity/README.md)
-supports the final module's CFD comparison and restart protocol.
+supports the final module's CFD comparison and restart protocol. The new Week-4
+Lab 4 covers Stokes-to-Navier-Stokes correction.
 
 ## Suggested adoption modes
 

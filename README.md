@@ -146,6 +146,11 @@ Complete-case testing combines field error, wall/divergence checks, reference
 centerlines and measured inference cost.
 [Model and validation evidence](results/pod_deeponet/README.md)
 
+The fourth Week-4 lab uses a matched Stokes solution and Reynolds number to
+learn the nonlinear Navier-Stokes streamfunction correction across constant and
+spatially diverse lid conditions. [Run Lab 4](notebooks/week04/W4_Lab4_Stokes_to_Navier_Stokes.ipynb)
+or read its [eight-page companion](lectures/week04_2_stokes_to_navier_stokes.pdf).
+
 ### Week 4.1 — Classical reduced-order models
 
 **Problem:** Evolve cavity flow in a reduced state space.<br>

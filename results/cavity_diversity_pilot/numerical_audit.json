@@ -1,0 +1,32 @@
+{
+  "grid_pairs": [
+    {
+      "case": "ghia100",
+      "coarse": 25,
+      "fine": 49,
+      "velocity_relative_difference": 0.07162812229439106
+    },
+    {
+      "case": "variable250",
+      "coarse": 25,
+      "fine": 49,
+      "velocity_relative_difference": 0.17687402258533552
+    },
+    {
+      "case": "ghia100",
+      "coarse": 49,
+      "fine": 97,
+      "velocity_relative_difference": 0.025898962243619646
+    },
+    {
+      "case": "variable250",
+      "coarse": 49,
+      "fine": 97,
+      "velocity_relative_difference": 0.044092989696003115
+    }
+  ],
+  "time_step_half_psi_relative_difference": 1.9358277443952938e-06,
+  "ghia_Re100_n97_u_rmse": 0.0018622105682008238,
+  "ghia_Re100_n97_v_rmse": 0.0038634874895468515,
+  "caveat": "Two representative cases only; not certification of all labels. Uniform-lid corner singularities remain. No GCI/asymptotic-order claim."
+}

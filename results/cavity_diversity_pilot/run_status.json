@@ -1,0 +1,23 @@
+{
+  "status": "executed",
+  "profile": "pilot",
+  "config": {
+    "n": 25,
+    "train": 16,
+    "val": 4,
+    "test": 6,
+    "epochs": 120,
+    "seeds": [
+      7
+    ]
+  },
+  "case_count": 64,
+  "dataset_sha256": "dc78a9e1f1fe779a929ffbfb6132cc359a1c178b4d95858d8ba0fe74666072b6",
+  "limitations": [
+    "Same-grid educational references; no claim of grid independence",
+    "Pilot is one seed and small training budget",
+    "Fixed square geometry; no mesh/geometry transfer",
+    "Parameter counts differ; report architecture and budget together",
+    "Test cases are regression cases after this first evaluation"
+  ]
+}

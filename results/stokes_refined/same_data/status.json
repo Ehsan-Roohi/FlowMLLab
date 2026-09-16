@@ -1,0 +1,8 @@
+{
+  "stage": "same_data",
+  "complete": true,
+  "train_per_family": 16,
+  "validation_per_family": 4,
+  "test_status": "same original pilot regression tests",
+  "selection": "validation only; mean ensemble predetermined"
+}

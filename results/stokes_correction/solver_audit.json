@@ -1,0 +1,29 @@
+{
+  "manufactured_refinement": [
+    {
+      "n": 17,
+      "relative_psi_l2": 0.03775492004748761
+    },
+    {
+      "n": 33,
+      "relative_psi_l2": 0.009470566335148587
+    },
+    {
+      "n": 65,
+      "relative_psi_l2": 0.0023698514961688604
+    }
+  ],
+  "observed_orders": [
+    1.9951420562387159,
+    1.9986540434734834
+  ],
+  "linear_relative_residual": 2.6163105762986103e-16,
+  "timing": {
+    "case": "constant_Re100_n25",
+    "NS_seconds": 0.5499443169974256,
+    "Stokes_factorization_seconds": 0.005258235003566369,
+    "Stokes_cached_solve_seconds": 0.0002817230051732622,
+    "scope": "One CPU case, not a universal solver speedup; neural inference and offline training reported separately"
+  },
+  "stokes_unmodified_velocity_error": 0.32448530690038196
+}
