@@ -53,7 +53,7 @@ def equation(key,number):
     return table
 
 FIGURES={
- 'PROFILES':('profiles','Classical and table-based PINN profiles against Lee-Moser DNS. Markers are fresh restarted solves, not a verified reproduction of the final PINN-NN curves in Figure 8 of the paper.'),
+ 'PROFILES':('profiles_legend_below','Classical and table-based PINN profiles against Lee-Moser DNS. Markers are fresh restarted solves, not a verified reproduction of the final PINN-NN curves in Figure 8 of the paper.'),
  'PIPELINE':('pipeline','Four stages of the attributed research workflow, each requiring a different kind of evidence.'),
  'COEFFICIENTS':('coefficients','Released spatial correction coefficients and unmodified model constants.'),
  'TRAINING':('training','Original c_k regression protocol with an explicit initialization seed. Random-point accuracy is not whole-case transfer.'),

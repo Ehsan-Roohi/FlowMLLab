@@ -85,7 +85,7 @@ for name,a in [('Actual baseline archive',baseline),('PINN-corrected archive',co
                      'pointwise_relative_L2':relative_l2(a[:,column],ref),
                      'midpoint_weighted_relative_L2':relative_l2(a[:,column],ref,cell_widths(y))})
 display(pd.DataFrame(rows))
-display(Image(filename=str(EVIDENCE/'profiles.png')))
+display(Image(filename=str(EVIDENCE/'profiles_legend_below.png')))
 assert relative_l2(baseline[:,2],np.interp(baseline[:,0],stress[:,0],k_dns)) > .4
 '''),md(r'''
 ## 2. Recover the source features and target
