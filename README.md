@@ -1,5 +1,7 @@
 # FlowMLLab
 
+![FlowMLLab: reproducible fluid-mechanics solvers, scientific machine learning, blind tests and physical validation](assets/flowmllab_hero.png)
+
 **New in v1.6.0:** [Week 15: geometry-aware operators](notebooks/week15/README.md), with OpenFOAM data and explicit held-out geometries; [Week 13: D/W=2.2 fields and continuation loss](notebooks/week13/README.md).
 
 **Week 14:** [RANS, PINN and neural turbulence closures](notebooks/week14/README.md)
