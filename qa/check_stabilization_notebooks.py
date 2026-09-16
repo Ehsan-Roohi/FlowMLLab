@@ -10,6 +10,7 @@ import argparse
 import hashlib
 import json
 import os
+import shutil
 from pathlib import Path
 import time
 
@@ -89,7 +90,14 @@ def main():
                              ("JUPYTER_CONFIG_DIR", "jupyter_config"),
                              ("JUPYTER_RUNTIME_DIR", "jupyter_runtime")):
         os.environ[variable] = str(scratch / folder)
-    os.environ["PYTHONPATH"] = str(ROOT) + os.pathsep + os.environ.get("PYTHONPATH", "")
+    # Figure-generating teaching cells write only into an isolated checkout.
+    # Preserve and hash-check the published research evidence in ROOT.
+    execution_root = scratch / 'execution-tree'
+    shutil.copytree(ROOT, execution_root, dirs_exist_ok=True,
+                    ignore=shutil.ignore_patterns('.git', 'tmp', 'output', 'dist',
+                                                 'build', '__pycache__', '.pytest_cache'))
+    os.environ["PYTHONPATH"] = str(execution_root) + os.pathsep + os.environ.get("PYTHONPATH", "")
+    os.chdir(execution_root)
     before = retained_hashes()
     results = []
     for filename in NOTEBOOKS:
@@ -100,7 +108,7 @@ def main():
             executed = execute_in_process(notebook)
         else:
             executed = NotebookClient(notebook, timeout=600, kernel_name="python3",
-                                      resources={"metadata": {"path": str(ROOT)}}).execute()
+                                      resources={"metadata": {"path": str(execution_root)}}).execute()
         elapsed = time.perf_counter() - started
         # Keep machine-specific paths out of published teaching outputs.
         for cell in executed.cells:
