@@ -1,0 +1,228 @@
+{
+  "scope": "Previously inspected optimization-held-out cases; alpha and pressure methods have different inputs and training histories",
+  "compared_output": "Common total-cavity support; alpha/topology outputs union classes 1 and 2; scalar outputs threshold at alpha_hat>=0.20",
+  "rows": [
+    {
+      "case": "Plunging3",
+      "method": "alpha_topology",
+      "seed": 11,
+      "frames": 7,
+      "tp": 1512,
+      "fp": 133,
+      "fn": 29,
+      "dice": 0.9491525423728814
+    },
+    {
+      "case": "Plunging3",
+      "method": "pressure_threshold",
+      "seed": 11,
+      "frames": 7,
+      "tp": 1191,
+      "fp": 108,
+      "fn": 350,
+      "dice": 0.8387323943661972
+    },
+    {
+      "case": "Plunging3",
+      "method": "pressure_patch",
+      "seed": 11,
+      "frames": 7,
+      "tp": 1321,
+      "fp": 180,
+      "fn": 220,
+      "dice": 0.8685075608152532
+    },
+    {
+      "case": "Plunging3",
+      "method": "pressure_unet",
+      "seed": 11,
+      "frames": 7,
+      "tp": 1490,
+      "fp": 519,
+      "fn": 51,
+      "dice": 0.8394366197183099
+    },
+    {
+      "case": "Plunging3",
+      "method": "pressure_topology",
+      "seed": 11,
+      "frames": 7,
+      "tp": 1510,
+      "fp": 613,
+      "fn": 31,
+      "dice": 0.824235807860262
+    },
+    {
+      "case": "Oscillation3",
+      "method": "alpha_topology",
+      "seed": 11,
+      "frames": 9,
+      "tp": 363,
+      "fp": 40,
+      "fn": 11,
+      "dice": 0.9343629343629344
+    },
+    {
+      "case": "Oscillation3",
+      "method": "pressure_threshold",
+      "seed": 11,
+      "frames": 9,
+      "tp": 241,
+      "fp": 3,
+      "fn": 133,
+      "dice": 0.7799352750809061
+    },
+    {
+      "case": "Oscillation3",
+      "method": "pressure_patch",
+      "seed": 11,
+      "frames": 9,
+      "tp": 328,
+      "fp": 18,
+      "fn": 46,
+      "dice": 0.9111111111111111
+    },
+    {
+      "case": "Oscillation3",
+      "method": "pressure_unet",
+      "seed": 11,
+      "frames": 9,
+      "tp": 356,
+      "fp": 90,
+      "fn": 18,
+      "dice": 0.8682926829268293
+    },
+    {
+      "case": "Oscillation3",
+      "method": "pressure_topology",
+      "seed": 11,
+      "frames": 9,
+      "tp": 370,
+      "fp": 120,
+      "fn": 4,
+      "dice": 0.8564814814814815
+    },
+    {
+      "case": "Plunging3",
+      "method": "pressure_patch",
+      "seed": 22,
+      "frames": 7,
+      "tp": 1352,
+      "fp": 202,
+      "fn": 189,
+      "dice": 0.8736672051696285
+    },
+    {
+      "case": "Plunging3",
+      "method": "pressure_unet",
+      "seed": 22,
+      "frames": 7,
+      "tp": 1526,
+      "fp": 1068,
+      "fn": 15,
+      "dice": 0.7380894800483676
+    },
+    {
+      "case": "Plunging3",
+      "method": "pressure_topology",
+      "seed": 22,
+      "frames": 7,
+      "tp": 1523,
+      "fp": 803,
+      "fn": 18,
+      "dice": 0.7876907163175588
+    },
+    {
+      "case": "Oscillation3",
+      "method": "pressure_patch",
+      "seed": 22,
+      "frames": 9,
+      "tp": 335,
+      "fp": 23,
+      "fn": 39,
+      "dice": 0.9153005464480874
+    },
+    {
+      "case": "Oscillation3",
+      "method": "pressure_unet",
+      "seed": 22,
+      "frames": 9,
+      "tp": 374,
+      "fp": 214,
+      "fn": 0,
+      "dice": 0.7775467775467776
+    },
+    {
+      "case": "Oscillation3",
+      "method": "pressure_topology",
+      "seed": 22,
+      "frames": 9,
+      "tp": 374,
+      "fp": 169,
+      "fn": 0,
+      "dice": 0.8157033805888768
+    },
+    {
+      "case": "Plunging3",
+      "method": "pressure_patch",
+      "seed": 33,
+      "frames": 7,
+      "tp": 1326,
+      "fp": 177,
+      "fn": 215,
+      "dice": 0.871222076215506
+    },
+    {
+      "case": "Plunging3",
+      "method": "pressure_unet",
+      "seed": 33,
+      "frames": 7,
+      "tp": 1536,
+      "fp": 1309,
+      "fn": 5,
+      "dice": 0.7004103967168263
+    },
+    {
+      "case": "Plunging3",
+      "method": "pressure_topology",
+      "seed": 33,
+      "frames": 7,
+      "tp": 1534,
+      "fp": 1306,
+      "fn": 7,
+      "dice": 0.7002967359050445
+    },
+    {
+      "case": "Oscillation3",
+      "method": "pressure_patch",
+      "seed": 33,
+      "frames": 9,
+      "tp": 324,
+      "fp": 17,
+      "fn": 50,
+      "dice": 0.9062937062937063
+    },
+    {
+      "case": "Oscillation3",
+      "method": "pressure_unet",
+      "seed": 33,
+      "frames": 9,
+      "tp": 374,
+      "fp": 270,
+      "fn": 0,
+      "dice": 0.7347740667976425
+    },
+    {
+      "case": "Oscillation3",
+      "method": "pressure_topology",
+      "seed": 33,
+      "frames": 9,
+      "tp": 374,
+      "fp": 281,
+      "fn": 0,
+      "dice": 0.7269193391642371
+    }
+  ],
+  "archived_array_checks": 192,
+  "archived_binary_predictions_identical": true
+}

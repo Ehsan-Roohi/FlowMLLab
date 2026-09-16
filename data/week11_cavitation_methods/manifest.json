@@ -1,0 +1,768 @@
+{
+  "version": 1,
+  "source": "Author cavitation experiments, 2026-09-13",
+  "cases": [
+    "Plunging3",
+    "Oscillation3"
+  ],
+  "seeds": [
+    11,
+    22,
+    33
+  ],
+  "displayed_seed": 11,
+  "frame_selection": "Maximum valid CFD cavity area in each case, not model score; all frames are retained for pooled evaluation",
+  "scope": "Previously inspected optimization-held-out cases; alpha and pressure methods have different inputs and training histories",
+  "pressure_definition": "float32 gauge pressure + operating pressure - configured vapor pressure, then zero solid",
+  "comparison": "Common total-cavity support; alpha/topology outputs union classes 1 and 2; scalar outputs threshold at alpha_hat>=0.20",
+  "threshold_baseline": "p_abs < p_v (pressure deficit < 0); no fitted parameter",
+  "output_limits": "Only alpha-input and pressure-topology networks distinguish attached and disconnected. Others output total cavity only.",
+  "training": {
+    "alpha_topology": {
+      "split": {
+        "frames": "Up to 9 equally spaced saved indices per archive, fixed before scores; complete trajectories never cross splits",
+        "train": [
+          "WithPorousLES",
+          "WithoutPorousLES",
+          "Plunging2"
+        ],
+        "validation": [
+          "Oscillation2"
+        ],
+        "test": [
+          "Plunging3",
+          "Oscillation3"
+        ],
+        "label": "native face connectivity, alpha>=0.20; per-frame moving geometry; uncertain crop components ignored",
+        "geometry_claim": "case/motion transfer until shape audit establishes distinct geometries"
+      },
+      "steps": 1000,
+      "seed": 20260913,
+      "learning_rate": 0.0001,
+      "parent_sha256": "e2ffa88b33582b99de7aff6396e9116949aef1bda87fac296454f7e00b97e921",
+      "selection": "fixed final step, no test-based selection",
+      "noise": "training alpha Gaussian sigma uniform 0..0.05 in 50% batches",
+      "threshold": 0.2
+    },
+    "pressure_patch": {
+      "train": [
+        "Case 13",
+        "Case1LES",
+        "WithPorousLES",
+        "WithoutPorousLES",
+        "Plunging2"
+      ],
+      "validation": [
+        "Case 14",
+        "Oscillation2"
+      ],
+      "test": [
+        "Case 16",
+        "Plunging3",
+        "Oscillation3"
+      ],
+      "seeds": [
+        11,
+        22,
+        33
+      ],
+      "steps": 1500,
+      "batch_per_case": 512,
+      "noise_sd_Pa": [
+        0,
+        100,
+        1000
+      ],
+      "alpha_input": false,
+      "inputs": "3x3 pressure deficit at four fixed asinh scales plus wall mask",
+      "selection": "Macro-average validation BCE across Case14 and Oscillation2, clean/100/1000 Pa, every 300 steps; test read after checkpoint freeze",
+      "sampling": "Every step includes every training case, balanced cavity/noncavity inside case with prevalence correction",
+      "pvap_config": {
+        "Case 13": [
+          103088.0,
+          93096.1
+        ],
+        "Case 14": [
+          103088.0,
+          93096.1
+        ],
+        "Case 16": [
+          103088.0,
+          93096.1
+        ],
+        "Case1LES": [
+          103088.0,
+          95594.08
+        ]
+      },
+      "limitations": "Case16/Plunging3/Oscillation3 were previously exposed in prior development; optimization-held-out here, not newly blind. No temporal/PDE loss.",
+      "source_sha256": "390c194363c20df405d1279fdcbf1e5c87c98a611be71771804fd474191c698c",
+      "selection_prose_correction": "Actual executable code selects validation macro MAE at 300-step intervals, not BCE."
+    },
+    "pressure_unet": {
+      "train": [
+        "Case 13",
+        "Case1LES",
+        "WithPorousLES",
+        "WithoutPorousLES",
+        "Plunging2"
+      ],
+      "validation": [
+        "Case 14",
+        "Oscillation2"
+      ],
+      "test": [
+        "Case 16",
+        "Plunging3",
+        "Oscillation3"
+      ],
+      "seeds": [
+        11,
+        22,
+        33
+      ],
+      "steps": 1500,
+      "crop": 64,
+      "noise_sd_Pa": [
+        0,
+        100,
+        1000
+      ],
+      "alpha_input": false,
+      "model": "two-level pressure-only U-Net; base width 8; GroupNorm; skip connections",
+      "parameter_count": 29929,
+      "inputs": "pressure deficit at four fixed asinh scales plus wall mask",
+      "target": "continuous vapor volume fraction; alpha>=0.2 only for reported binary Dice",
+      "loss": "valid-pixel BCE to continuous alpha, weight 1+4alpha, plus 0.25 weighted L1",
+      "sampling": "one 64x64 crop per training case per optimizer update; 70% centers near alpha>=0.2",
+      "comparison": "same case split, three seeds, fixed noise schedule and 1500 optimizer updates as v6; architecture capacity is not matched",
+      "selection": "lowest macro validation MAE over both validation cases and all three noise levels at steps 600, 1200 and 1500",
+      "limitations": "Optimization-held-out test cases were exposed in prior development; no claim of newly blind validation, PDE learning, or object tracking.",
+      "source_sha256": "8ba73ff25c5eb7e53f69a5fe1aa1303f67e9d94b87057ea71f167d60e77d153c"
+    },
+    "pressure_topology": {
+      "train": [
+        "Case 13",
+        "Case1LES",
+        "WithPorousLES",
+        "WithoutPorousLES",
+        "Plunging2"
+      ],
+      "validation": [
+        "Case 14",
+        "Oscillation2"
+      ],
+      "test": [
+        "Case 16",
+        "Plunging3",
+        "Oscillation3"
+      ],
+      "seeds": [
+        11,
+        22,
+        33
+      ],
+      "steps": 1500,
+      "crop": 64,
+      "noise_sd_Pa": [
+        0,
+        100,
+        1000
+      ],
+      "alpha_input": false,
+      "parameter_count": 29956,
+      "model": "shared pressure-only two-level U-Net with continuous-alpha and three-class topology heads",
+      "inputs": "pressure deficit at four fixed asinh scales plus wall mask",
+      "targets": "continuous alpha plus native-connectivity background/attached/detached classes at alpha>=0.20; uncertain and solid pixels excluded",
+      "loss": "weighted alpha BCE+L1 plus weighted three-class cross entropy",
+      "sampling": "one crop per training case per update; intended 40% attached, 40% detached, 20% random with fallback to available cavity",
+      "selection": "highest macro attached/detached validation Dice across both validation cases and all fixed noise levels at steps 600, 1200, 1500",
+      "limitations": "Topology labels are solver-derived, not human truth; 2-D disconnection is not proof of 3-D shedding; test cases were exposed during prior development.",
+      "source_sha256": "7de91ccae8396622579b43b3d3810df5604d945e0ab6011531299e9c61fe2643"
+    }
+  },
+  "files": {
+    "alpha_topology.npz": "810c56c15e598d353ab915eb1d2fc36a4112442efb51160c6bf0ec5594a81bf5",
+    "Oscillation3_000.npz": "7366fe5542a1999de116cdd1fbb1387433dc14841b757947bc0118699ee1b9f6",
+    "Oscillation3_001.npz": "dbf1961a385bb8e577e19dc0311796441add5311d10740e9ee0906a212f92fe0",
+    "Oscillation3_002.npz": "62f99bce50af4691d2f686b168218eae2ea9f583034cc028c42a2d571b82488e",
+    "Oscillation3_003.npz": "d99a667aa04e4ece14064d3ec2b2228063db376980a5439f35ea09f608c3b25a",
+    "Oscillation3_004.npz": "2a63ff9658a2d5ca001a9cd0500ab7a7268e2886f30fb393edd43c2f1f8be6c3",
+    "Oscillation3_006.npz": "2037f7731180593ce115ceca874e8c52641e00aeb962df08e5674ff6c670e03c",
+    "Oscillation3_007.npz": "3cd58da2d442e98f20d4de5651627bf590f1a295217822544a6eef541d47d96e",
+    "Oscillation3_008.npz": "65bbeba0808d23126a41d409ef7abdb701be5c89d9e7c647dc82c2f7430a419f",
+    "Oscillation3_010.npz": "0fcfea962bdf85c64ab39952d856d6d77f4420a29d95d57420c9525f1fdb7749",
+    "Plunging3_000.npz": "4d1a9adb1845a949b268d859454f0f45ddb31c555af23b82acef27593afb280a",
+    "Plunging3_001.npz": "42d22bf97aea85140d1f4616af38df82cfa3f4c92be37cbf3782705ab713ad9c",
+    "Plunging3_002.npz": "ad9e86ac66b60b7454ed5ffd4cdb4ce613e948d5ad4e22468010f62970557c76",
+    "Plunging3_003.npz": "75c1d2abfb2640d911b609dbb7c36accaf0a02d7e5466fe760d1f8b9fb8de77e",
+    "Plunging3_004.npz": "1fd8b92b725474f08d1c84b2b072ae3c934da3cf4f09e6b4dad7a9c37fa36f6b",
+    "Plunging3_005.npz": "93ef7c3ad75554b753ed873534fe360aa4290c7b1297e3a73ce9e5209801438c",
+    "Plunging3_006.npz": "7ed9cf4fb8ae5541eadfb917a960b6b3141595d4fd35e546caa38a6bd23fad9b",
+    "pressure_patch_11.npz": "5a1d0557f9b9abb07a117612fb7e8545ab5f6b564e183143c7b525c99cc7f7a6",
+    "pressure_patch_22.npz": "ea788c04e95031004c9456bfe1eb1e2d05dc4d16f952539472f1cec4790a2269",
+    "pressure_patch_33.npz": "997bbb33d00b308bd851f743865fbcfe9a28a7ee8f48564948bbe56e2ceca5b0",
+    "pressure_topology_11.npz": "189bc131b436ab08961ffe554ef3e05bcda189cd86854a0a77aa80160e0a391e",
+    "pressure_topology_22.npz": "36db49e2c9d1f26a1c514408c1e52f6a48a916d19526dccabe633bbf22ca4316",
+    "pressure_topology_33.npz": "4b1d14c3cad139279a3610795b2078d3884a659633f093632f7a95266dd8b45a",
+    "pressure_unet_11.npz": "f9cf8a3b2b35a147aae5ca17966edcd22ab1416eebde9d286e6f58557bc37256",
+    "pressure_unet_22.npz": "714aa1e04448275e6938a1222408d188bc0b0d46ef7e706b06fb1bd558e6225d",
+    "pressure_unet_33.npz": "e9a987442391ee3f718bc532dd7fcf5658364009a7a1d3e99b411eba4a29288a"
+  },
+  "frames": [
+    {
+      "key": "Plunging3_000",
+      "case": "Plunging3",
+      "index": 0,
+      "file": "Plunging3_000.npz",
+      "time": 1.339999999999963,
+      "source_sha256": "70b7ac83beadc32c3c966c8d7e99b239feba72aa84ff48fe2048d6b3a43ebd7f",
+      "pressure_source_sha256": "ef5beaf0f530a7cd8cc71bb1ed3f14d5eeef52da7a62e158df484c9f2a5f381b",
+      "pressure_settings": {
+        "p_vap_config": 3169.0,
+        "operating_pressure": 103088.0
+      },
+      "archived_prediction_sha256": {
+        "pressure_patch_11": "4dfc4d40ed742092669b951ea7bdb4bc049f2706db06df46ba65e136e65c1358",
+        "pressure_patch_22": "ed13e5adf581c034f024079d2241ddd0b220ea74aa54e32688a9c0c23e30bd67",
+        "pressure_patch_33": "d5e9ef72a568cb7a925f5755bd3aced58b8ff66d21edbbd2000ccab78ac9ee73",
+        "pressure_unet_11": "07186143d489ec2dce3e5c15f3ccc120f0d5d5454a85c4652c67e56bc287e633",
+        "pressure_unet_22": "6900db78cde266798b939874e54fea80e18f72f0657aae7c55adb543c928cbe3",
+        "pressure_unet_33": "9dc6ce00d7a8517defc1905fa17233592083bd22f56de41b74ef04dfd71ff460",
+        "pressure_topology_11": "bdb205f0d745964af9e26096fb5f6379fe342e4d5904c75295bec7ce0a2c745a",
+        "pressure_topology_22": "d19927186bcabd818403c5ab9c9c795cd6d8a11f1362ec2797ee9391c9ab4c01",
+        "pressure_topology_33": "036eaa1dd1c0436f170ddcbc1d588f431a2abd4024e367a221138d9a04223a08"
+      }
+    },
+    {
+      "key": "Plunging3_001",
+      "case": "Plunging3",
+      "index": 1,
+      "file": "Plunging3_001.npz",
+      "time": 1.419999999999954,
+      "source_sha256": "933cdccb98aac34adaa8138eac5039068145800e8ef6cada33a0a75f2dc5878b",
+      "pressure_source_sha256": "1bb22020c5531c0c8b2b35e04df417ad681c5f1c40d299b33a04b94bd87647dc",
+      "pressure_settings": {
+        "p_vap_config": 3169.0,
+        "operating_pressure": 103088.0
+      },
+      "archived_prediction_sha256": {
+        "pressure_patch_11": "d76cdf336b029935dd4ad216ee8dbcc833118742df7efa98201fd55aca62af1b",
+        "pressure_patch_22": "6eccf93d454e63f8cda6864c7d10cc73a3ca818d520a2cda4db2a7a3bfc7e595",
+        "pressure_patch_33": "b8539e6a2e2eae624ef8c6d97f505d441fd058202356ef4499592916c69a033d",
+        "pressure_unet_11": "967bdbda5d6c01a3d1b4759d6753da9d9b23f921fb626ef567e6bded06add36c",
+        "pressure_unet_22": "903cc9039cbc59d84465ae2ef616f092fb51f31dbc0c81029606da6c2ceb9330",
+        "pressure_unet_33": "caa3556161de0a405d373e72441c4ebab48ddede0b090ed1e66e6592cd97f202",
+        "pressure_topology_11": "a472ca4fa225665a93ee3e3583aabd093e7ba53a096936e0513b666233aa7055",
+        "pressure_topology_22": "3575443c6543fdc6b810280e4f51222a3aa5b1e8b8bacdcec653bdbb738fe306",
+        "pressure_topology_33": "2e53ad6441dcccc830b74fe6758f4dd20d92493050a666d0a78ea85e8c1504cd"
+      }
+    },
+    {
+      "key": "Plunging3_002",
+      "case": "Plunging3",
+      "index": 2,
+      "file": "Plunging3_002.npz",
+      "time": 1.499999999999946,
+      "source_sha256": "449434152767eb8332696e74178d254549f8fe440efc981f9e78ad1de6184331",
+      "pressure_source_sha256": "15b4bff211ed56ad75cc52866905fb66421f6240592d94d567f266c5d6fce4d5",
+      "pressure_settings": {
+        "p_vap_config": 3169.0,
+        "operating_pressure": 103088.0
+      },
+      "archived_prediction_sha256": {
+        "pressure_patch_11": "b6709433cc87caaa33082a56da86f8a02e0af0a9be8249ad85d45ed68a97b829",
+        "pressure_patch_22": "c40f2998aecb8b2e40682cedd00a4c8a76fb0cd192579d60e9aaf981991a9844",
+        "pressure_patch_33": "b5272b016a8b65eb6e1fac4c7c75b7666eaf4bdae99f901e53151e7197bb534c",
+        "pressure_unet_11": "7a58eb52f5593adef922180c09a6bcaef119c7dc262b00f844b21c544ba7c72e",
+        "pressure_unet_22": "ed211312170b99d5f24d6bf7e9c28de331e57abac56833f4b6f2f1f2456e12e4",
+        "pressure_unet_33": "c7d52a849f4d3313f3b8592af142c35281c3d45c8a22d47463876e8d5e29109b",
+        "pressure_topology_11": "995e7cd33a2268db5d476fb1f8b32c0a58de00b659109722cb73bd68e345cd13",
+        "pressure_topology_22": "10a6ccd8a302cff2d2e1bc9599d8751c8d4243a1c5c2ebc162a24c9d0eaa0121",
+        "pressure_topology_33": "247f717057fac920bc95f76f4d242bb944d9eefd4c90e276df4f4b50b5fcd885"
+      }
+    },
+    {
+      "key": "Plunging3_003",
+      "case": "Plunging3",
+      "index": 3,
+      "file": "Plunging3_003.npz",
+      "time": 1.579999999999937,
+      "source_sha256": "b7df424e6837939761a3d8e23cb47009533b466e11e15fcb7ed55c309d114a38",
+      "pressure_source_sha256": "68ed414da6e054f2e35ee6c2d11589dd9103c376309f3ef6e150cf5cb38789fb",
+      "pressure_settings": {
+        "p_vap_config": 3169.0,
+        "operating_pressure": 103088.0
+      },
+      "archived_prediction_sha256": {
+        "pressure_patch_11": "7a1bfa51386b2ad407b8020736b11212145bf2b4356327091c93adb76945b240",
+        "pressure_patch_22": "97c5d01de6129341bbc8d0c52ef102f3927d1aef762edb39e2b8839598d6667f",
+        "pressure_patch_33": "bb9e36e9d014409a10efdbd1d3d1c49f9b2f67f984682c931ef55fa26c560ee0",
+        "pressure_unet_11": "32a8dddb80fddecb9cf0e64364aa3d8fb365996ffeb7b0f9bcee06de42038e86",
+        "pressure_unet_22": "191fe3c01b907a85febe3bc89a1a7e3c70f6b40336dddb75ca9bfb700055edfa",
+        "pressure_unet_33": "779745fb1f9a87d9b1d323565c5c376d69bf495749b691f061dab8e80a25e072",
+        "pressure_topology_11": "e2f547cac2740b7faca574d8c766543aaac32e5b88db4b2ae916397d6e87639f",
+        "pressure_topology_22": "7b3bc75d7cef65d5a84df3d6c124c6828d8e2dac4ce27c4727a0b485b2429a63",
+        "pressure_topology_33": "c82bbc925f83ffb2f4657c3739643fae98c84910fc40562cb6cb3de44e476f1d"
+      }
+    },
+    {
+      "key": "Plunging3_004",
+      "case": "Plunging3",
+      "index": 4,
+      "file": "Plunging3_004.npz",
+      "time": 1.659999999999928,
+      "source_sha256": "0d7caeb87f6ba05b43ed5ce06715ecba3ce2f3e5f1f0a90ec56d9e4f9d27cfa3",
+      "pressure_source_sha256": "e35fc953811b25b8dd6f9e574384e831dd429e02edc0775f56cacaacc1677f79",
+      "pressure_settings": {
+        "p_vap_config": 3169.0,
+        "operating_pressure": 103088.0
+      },
+      "archived_prediction_sha256": {
+        "pressure_patch_11": "14763e6e4dfd6143c8ce02d70d8987929dbcfddfb1911aa13329f3e4db0048f2",
+        "pressure_patch_22": "a6c437eb9e83bba82e968df13c83e68411eeaf8f192ef9af3251607e281eb9f7",
+        "pressure_patch_33": "eb727674f4920730b7794ef9bd069500b4f0bc2c118fc9c2b9f7c9b437372de6",
+        "pressure_unet_11": "3581e79616001abd797bd2948d7b5805cdd950e2bf6aa8d55700fe20c92e797a",
+        "pressure_unet_22": "2a4dfca55ebf10417e00ce2bea00dd4e3de4e52ce5aae1c5937201b2dc27c016",
+        "pressure_unet_33": "c90ef266f8e89d685ed2eeabae21545e9124910df70f2560ce07eab4fb143390",
+        "pressure_topology_11": "163b5df4a5265aeea6fb68143c984dac9b81b7e172987d62df29542baef89056",
+        "pressure_topology_22": "97aabf7d563e36676bcc2d05bc8fbbe10976817c89c18131bbe798deb8e22cbd",
+        "pressure_topology_33": "9b20e99d2589a81168f0aa871aa0494b4da8eb966863e02aa889e2b46edc92ec"
+      }
+    },
+    {
+      "key": "Plunging3_005",
+      "case": "Plunging3",
+      "index": 5,
+      "file": "Plunging3_005.npz",
+      "time": 1.739999999999919,
+      "source_sha256": "d95d321653e13333398ca6f1c930d0ef2f022b3e2e3a9a237933ffb7596916ae",
+      "pressure_source_sha256": "0e562cdd24ad1877008ba9b8e22a0cdaa8100753d7646497cf693486b0ad53d4",
+      "pressure_settings": {
+        "p_vap_config": 3169.0,
+        "operating_pressure": 103088.0
+      },
+      "archived_prediction_sha256": {
+        "pressure_patch_11": "cacbc628c6e1a3adafe3580524cf5bb63fc7a0dc634daf49b76f7e64c8a74741",
+        "pressure_patch_22": "7bbd475ef6b5b99212a5760650d0889799c37634cc27877f901b588c6dcb876d",
+        "pressure_patch_33": "4b3f94beeb8d66dcd765f9aacaaf027c527ca4c1a346976860710c0a617600e9",
+        "pressure_unet_11": "620771b5fc0e5f1bdf57e076a82a1652a970e7234ba5505897d64f3b938c6c5e",
+        "pressure_unet_22": "f6d14b0af998778a828124beee0c0d915b1f76e4ec4bb0460f6bb4f658c39b29",
+        "pressure_unet_33": "39f429fc58d333d09f43cb04f0cc2c8163026bd5982f7fe71a045c2f0e890ffd",
+        "pressure_topology_11": "790eb5dd63a4f241bbf41dd1af6e607378cd18bab061afb539933adcd70517b6",
+        "pressure_topology_22": "cc5fea47fb2255e3139184c8bd84b6ab9c874ecf797060e2e20ec09e7917d602",
+        "pressure_topology_33": "f5d4fae2d957612f816d5a34f170e18248d90f815e035da3d69edf2a8139d8d3"
+      }
+    },
+    {
+      "key": "Plunging3_006",
+      "case": "Plunging3",
+      "index": 6,
+      "file": "Plunging3_006.npz",
+      "time": 1.799999999999913,
+      "source_sha256": "888714c99d5d0958c21a6c1dc3d59716f076953e44191e3f0646f39c79aa046c",
+      "pressure_source_sha256": "a02a6ae3cdcdebc5734fa8829c96cad826109c9d4fac00866bbe2d128e952b1c",
+      "pressure_settings": {
+        "p_vap_config": 3169.0,
+        "operating_pressure": 103088.0
+      },
+      "archived_prediction_sha256": {
+        "pressure_patch_11": "ea52ea08e18823f1dc2e3da33c891669958ec718c6bdf82a295a0a4b3eea9bb9",
+        "pressure_patch_22": "19afbd4f024e8701e56d8a148fedd404e4875d69f2f98ac1661ea7439de155e1",
+        "pressure_patch_33": "8b562353fdc1456c01ef9b09043731ea0927cb671ffaade805d392f126f8df73",
+        "pressure_unet_11": "f4bea35d83fdf786a4899740e5120d85ca9837548c588a90f64a3d823c4a13a2",
+        "pressure_unet_22": "51932b27c4852683fbdb3bdb423bbdf150abadbd3f2c9480ce71409026f76c3c",
+        "pressure_unet_33": "5357fdd024378a167f778dc33f3c63b831bdd68eb6578ec6073643df6b8dde32",
+        "pressure_topology_11": "6614ff082ce001785103edc875c54ed061fb17283efcb3797592eb1abb7caa6a",
+        "pressure_topology_22": "93c52f34c80fd7daa4805bfbc6d02546bf50752cfec5f6fcc0e395bab0fe24a0",
+        "pressure_topology_33": "673446876baf1f7bbd5d0eeadc65106af862cfd4f04457f9cc218a00aa62b616"
+      }
+    },
+    {
+      "key": "Oscillation3_000",
+      "case": "Oscillation3",
+      "index": 0,
+      "file": "Oscillation3_000.npz",
+      "time": 2.259999999999862,
+      "source_sha256": "5cf7c02261dcc25663d696e5b70379aa4a7b3699d469d5783270c4bd45a3e67c",
+      "pressure_source_sha256": "49482641f159f87ebc7c3d7c01496deb6312f808d7c990a59ff0f3fdec65a6aa",
+      "pressure_settings": {
+        "p_vap_config": 3169.0,
+        "operating_pressure": 103088.0
+      },
+      "archived_prediction_sha256": {
+        "pressure_patch_11": "e01949597ecdf524fd9397832d3f6c4b40975c101093fb35f0eaed231cf0b2bf",
+        "pressure_patch_22": "2ea0610cdb3d808988a0be7de71cadad762c75dcaa4eaa01b9a90df8414f0692",
+        "pressure_patch_33": "0e0eb57c83e08984be3df2abb44a2228258786f66177567488a93a97acbf813e",
+        "pressure_unet_11": "050ffc2a70a2380c330a81e94226087318ea49957dfb8e41db3a0d20d0b4fae3",
+        "pressure_unet_22": "2e5c4979a08a9dbc317238a22b66b909ac8f52d716c7177477fa46fcd1ac98ad",
+        "pressure_unet_33": "3a27e6d117c315f05adc69f6be8628c6dd41382f428f7bf5bcd2befb527d3271",
+        "pressure_topology_11": "41013b8f81eb140746a73ec18f4a65767de0a32e37b50b985772cc25e757ba2a",
+        "pressure_topology_22": "c4572010fe5ccb1e9a4a8a01a976f7f63ae10316815f0558c42fa31214bf7084",
+        "pressure_topology_33": "240241f3622511e2b5d0becd5a92f3e0225c95bebd060ac9a705f4bce9d144ec"
+      }
+    },
+    {
+      "key": "Oscillation3_001",
+      "case": "Oscillation3",
+      "index": 1,
+      "file": "Oscillation3_001.npz",
+      "time": 2.339999999999853,
+      "source_sha256": "89c726f78b998579a4e99845371510802c083c678f1d085c49e7a627706fa1f3",
+      "pressure_source_sha256": "5c3832d3baf310f8d5fb5aa6c86ab414c22b9f5ec84d6867b809cc81dd04c598",
+      "pressure_settings": {
+        "p_vap_config": 3169.0,
+        "operating_pressure": 103088.0
+      },
+      "archived_prediction_sha256": {
+        "pressure_patch_11": "7ca2319e482ed4ea5c5a7e4b8f5d3b655fa83412ac12ad9174d0f6ed81fec2de",
+        "pressure_patch_22": "2a321ff8ed68ecceae5b5397595afff7bcf347f03f5dece1a20c1ec99605978b",
+        "pressure_patch_33": "b4f60a3a0018ddde22cfc1499f9309d9f7524dde0292724eec7beea28ca99935",
+        "pressure_unet_11": "378e38aef4ff16536af16bbeb424d52b8f65659ef76d9bacf524f3637416bdd9",
+        "pressure_unet_22": "d336d593c1e753091dcd24ddf66fac2ebd490e9d4d8374d424f716fbae638d04",
+        "pressure_unet_33": "72c51b71bf56cb76693e9afc1d0fd5186792a9ff056bf1883145dfe735920cdb",
+        "pressure_topology_11": "62589d1d5a6b6160918f2f0b328d89ce5977ee8d242546e125e2882c18c4c9ba",
+        "pressure_topology_22": "6d8a41791bf84fdcf441a15e9477f4a59afe72dd4bfd9a645d7e754a6ff00c03",
+        "pressure_topology_33": "4479b984aa97ba1c4ce6fc83e22f2da2bca6f68a9a8b4c99638edf99261e0a25"
+      }
+    },
+    {
+      "key": "Oscillation3_002",
+      "case": "Oscillation3",
+      "index": 2,
+      "file": "Oscillation3_002.npz",
+      "time": 2.419999999999844,
+      "source_sha256": "297c59df11cb41107e5e69d1b363229c8d3513ab74289a3bd756fdf3c64f9e51",
+      "pressure_source_sha256": "262c1505d04f875b61d4067b89b690728199dff50d1279ae0e1d19531170fe29",
+      "pressure_settings": {
+        "p_vap_config": 3169.0,
+        "operating_pressure": 103088.0
+      },
+      "archived_prediction_sha256": {
+        "pressure_patch_11": "1a7506c4dd52ea72452aa000219d0c354c03638e1c6b6af229e617d99a3ccf8d",
+        "pressure_patch_22": "90006ff25fce18e5412e121f3a2faf396f2efc05e5553333f5ef5a7364c1efe9",
+        "pressure_patch_33": "22e85405b8edafddf11e3a74d8a4e7daabb5e54b49b01b242fe040ab5564f590",
+        "pressure_unet_11": "f32835049dc8da0a7700a8e412f8a35fee27bdae59b711d4e15b29f2524e783a",
+        "pressure_unet_22": "5bbcf590c941acadaf23c7113606ecdf803cafbdf31bc3724a8152178593cfb4",
+        "pressure_unet_33": "2a9bcc14dae53a8010b3322af00047b3624530657f22195d241f395d217611b4",
+        "pressure_topology_11": "74a0be59abac4b0fa601ee455283b57b7b0c4ec397a7941d6089817d38db364e",
+        "pressure_topology_22": "d9d04010435291679199d5a454baf08808a855df6f6d91a734a4db6c843f7334",
+        "pressure_topology_33": "15352fa7680035a048ab6bf0b9370c9b6f17f29125e10d3c7ff696533a539fed"
+      }
+    },
+    {
+      "key": "Oscillation3_003",
+      "case": "Oscillation3",
+      "index": 3,
+      "file": "Oscillation3_003.npz",
+      "time": 2.499999999999836,
+      "source_sha256": "102c4931a86a2f311d7bb7268d7145eb728021c99e39fcc627763c1c81e46fea",
+      "pressure_source_sha256": "66cc6d82006f7ae009122ddadddcab971fec694389ff87dcd8d28ea868a45ee9",
+      "pressure_settings": {
+        "p_vap_config": 3169.0,
+        "operating_pressure": 103088.0
+      },
+      "archived_prediction_sha256": {
+        "pressure_patch_11": "d636b6f2c43d1db99c1cc780a11a765a185d33a3d17d92acfd5a19ed92043c81",
+        "pressure_patch_22": "944f8f2684aaefa2604914fd0f07b25287528520a74634982806c2f20d6fb835",
+        "pressure_patch_33": "43d14b29cc9a3d954256fcb244ee97511e0fd45a37932e94a2caf7e7bc09e22d",
+        "pressure_unet_11": "642b31ec52a797a93a4708c03332a4279e010ddf75c71f62480dc33c41d754e2",
+        "pressure_unet_22": "96741ded3d03ec9a47e5f2cf1ef6fdb8d5491cf2208198f07af879212518abfc",
+        "pressure_unet_33": "1c135d87ae48f31dbd75e6bff327187ee0835dea77ce530a4de1df3eba702cdb",
+        "pressure_topology_11": "e40bfc04a36eb2303db209c82c622d37c2fd02b0e632668858381c836160f306",
+        "pressure_topology_22": "85292636a45eefaf5f75c30e8bc3df9631254a2b29b563e970bfd9443f92a885",
+        "pressure_topology_33": "ea24c535d635f2b650ebc3c28937de2a66fe334dec541410cb44067094ad1a06"
+      }
+    },
+    {
+      "key": "Oscillation3_004",
+      "case": "Oscillation3",
+      "index": 4,
+      "file": "Oscillation3_004.npz",
+      "time": 2.579999999999827,
+      "source_sha256": "feeb5982a0cd3a11bddb5411f5a59983de0ccf899260072c65862d06263ba689",
+      "pressure_source_sha256": "de831dd09869981292cf2afa980ea1a4d711b2cbe41c101349d028dff47f62a1",
+      "pressure_settings": {
+        "p_vap_config": 3169.0,
+        "operating_pressure": 103088.0
+      },
+      "archived_prediction_sha256": {
+        "pressure_patch_11": "9845dd4f935c7f78690cfd1db4626203be46d288bd11304d67dd6a72df995448",
+        "pressure_patch_22": "4556c85c37417628a817a4cddfddc0adf9bb161ee18189cf20e3fe85d183cec6",
+        "pressure_patch_33": "46b51b338500b6a01c6b6fcbb42dcc16222a150f41e79581ad30248eb114c939",
+        "pressure_unet_11": "1d7bc0e9007dd6a0755b5fd946bcd38b70e4b30ca45479edf415ba8d03662d89",
+        "pressure_unet_22": "1c9d8abcf123af92e7244dea93d0121780f1411fb8c0cfd7a2a62c788537533c",
+        "pressure_unet_33": "1aafeb3077c79fee378f851000f03d873665cff6a92444d896085dafa125243a",
+        "pressure_topology_11": "6157de2c656f5d49a6da02f29195c5d69ac4be81985b8d3567311d6870e49244",
+        "pressure_topology_22": "e7fb1116db3f8eab2c061d8ca2155a25690d86cbeb0072c130cf0960dfc7f741",
+        "pressure_topology_33": "4321ca9eacd14b39b89a559ef83bec827d4ea3892df68846218f82c4ac97c45d"
+      }
+    },
+    {
+      "key": "Oscillation3_006",
+      "case": "Oscillation3",
+      "index": 6,
+      "file": "Oscillation3_006.npz",
+      "time": 2.739999999999809,
+      "source_sha256": "a598eba85b31ba375a7edbcd8a340118749a1928b808cba2e58568b2cbaeafa2",
+      "pressure_source_sha256": "6232a9b9dd365f6cc20f441c09e6e4a7daf51f4464b813ec306965d2a095233c",
+      "pressure_settings": {
+        "p_vap_config": 3169.0,
+        "operating_pressure": 103088.0
+      },
+      "archived_prediction_sha256": {
+        "pressure_patch_11": "d4154fff4692536c827ca879e4a5c2ff076ba421b26694ede4a7fb988cd6fc01",
+        "pressure_patch_22": "ad4314c51ec3e8ff1029c7330bb50938e3a0751c5f4bdc1e6445bb08d8162142",
+        "pressure_patch_33": "9b50c30c0caef6965e2c36480388e19ca6077e73e89d48383df947d055cca07b",
+        "pressure_unet_11": "7d7e71bf414441b23eae61a3ef5ffd923130905db19ba18ebf6ca79f3756ef60",
+        "pressure_unet_22": "23f16bd1d6a951f1a30e5a50baf9326222bec6fd45fb87b2df480fca8a969e21",
+        "pressure_unet_33": "c1a2c8f4bf007b6ead42bec4f47d9cb7b3cbe59d56dde24b58a028c8a8ccb6ce",
+        "pressure_topology_11": "0bae6fca0095d0d2db1c93d64b23a9c37a8479798ddb9f2551ebbfcb06464f1c",
+        "pressure_topology_22": "72d15ae0f1dd2017cd951c1407fbe9df61233bb463eee867499098f535d5444b",
+        "pressure_topology_33": "c0e4f89a08f4780b7b998881821f8573f8e5d04ff45a22b4608f2fc73aff8ccc"
+      }
+    },
+    {
+      "key": "Oscillation3_007",
+      "case": "Oscillation3",
+      "index": 7,
+      "file": "Oscillation3_007.npz",
+      "time": 2.8199999999998,
+      "source_sha256": "a21217033247f6f8e3748229c3290d1f3dced234e35c3fd3ef6d19247281b6aa",
+      "pressure_source_sha256": "10d3cdccb13945c85b06ee043b368aea2d3c98af88b344b39f2e54dc88bea7dd",
+      "pressure_settings": {
+        "p_vap_config": 3169.0,
+        "operating_pressure": 103088.0
+      },
+      "archived_prediction_sha256": {
+        "pressure_patch_11": "d93043776d8f101100a69bb91c38d39f6a50c1453e973ece4a0d2d99d92b3414",
+        "pressure_patch_22": "1b2ffac239852f57c9f8232c1d20fedbd0df99aecedf41b2f6ba434dc8966e1e",
+        "pressure_patch_33": "616e6d1264441d0b7928e4a99827044d755b8d47e7693109ccf462da848333ec",
+        "pressure_unet_11": "7cb5044180b9b04bb12df1bdca140fe1a2184c4526f575d56a91897598f78696",
+        "pressure_unet_22": "f8c2b72e0781ad840a26379552517660320eeaf783baeb3524a6eced709a7336",
+        "pressure_unet_33": "50777b408362f60995f47cc6241738e1ae9b0c15dcbce2e8e11a89be268d9d85",
+        "pressure_topology_11": "7145b2208b90af4e672d33b58481f65ba677871323e0d199e35db4d372e5fdc6",
+        "pressure_topology_22": "867d0e267d433b4961473541903cb18a0a2212bbbb926ce7eed14016cffaf9f3",
+        "pressure_topology_33": "1bf00b50f2bce384a180b438d1aeb14735e48277c8d78d377e2c54a8cb13522d"
+      }
+    },
+    {
+      "key": "Oscillation3_008",
+      "case": "Oscillation3",
+      "index": 8,
+      "file": "Oscillation3_008.npz",
+      "time": 2.899999999999792,
+      "source_sha256": "0cd683dc3547d8335cc335e5d432594c0668f00f2056dec18062482b7570517a",
+      "pressure_source_sha256": "c13116a3f6f637569a7ec15fa5a82ba13a2185a50fe843be51c9685ea2c27564",
+      "pressure_settings": {
+        "p_vap_config": 3169.0,
+        "operating_pressure": 103088.0
+      },
+      "archived_prediction_sha256": {
+        "pressure_patch_11": "f2518bf1b627ef640c76221c36c7151e5a25b3eb27a32b6d8b1624c159c40706",
+        "pressure_patch_22": "932ef766fd83c108deb9061dee5b70f93146724d5669050b9d3412276343de51",
+        "pressure_patch_33": "87617b397f092c5be47d5f47de207144bcfdf60ecea619faec61621bd798bfd3",
+        "pressure_unet_11": "42265f44def1f9cfb26df0ac789ad9423a60e305f463b710906e5190072075d6",
+        "pressure_unet_22": "a271d672d8fbfebbca012857a8ff083c1e8c410d84891cacfca429a402c73bc6",
+        "pressure_unet_33": "1ca7c5652efd820ac6263f00bf70031820951552f33b8077ea105a0f732549b4",
+        "pressure_topology_11": "4c7f6e6300eb8bfe4298417cf53d26e609aa1dc20ecbb7aad56f6f8cde9ef762",
+        "pressure_topology_22": "024f9987ac9f69b573aa481a9cfc01aeaaf06f0be188a35c9e61556aa5b1df82",
+        "pressure_topology_33": "5de23d3710a465331ec26e3a0d18e6571d0d308d7876720e24491db61278ef32"
+      }
+    },
+    {
+      "key": "Oscillation3_010",
+      "case": "Oscillation3",
+      "index": 10,
+      "file": "Oscillation3_010.npz",
+      "time": 2.999999999999781,
+      "source_sha256": "d6218b34868b2c77752e09ee3de815b65f3d2b5d401e5fafc34b6c795888a75c",
+      "pressure_source_sha256": "a2404fa9366a2edc9dff57059fdb722e3dd33aa9d2cf3bd3880cff6af035baed",
+      "pressure_settings": {
+        "p_vap_config": 3169.0,
+        "operating_pressure": 103088.0
+      },
+      "archived_prediction_sha256": {
+        "pressure_patch_11": "e95d54ede8fa668d95e25de9869813071786296143d113d9acd563db9e0da1b2",
+        "pressure_patch_22": "55e2ec5cc18c4e8dc6e7e7dd89579e8701fc0e14f75a4a86a17e2bc0a5ba82c3",
+        "pressure_patch_33": "f2870817f6f87c8e3bc26a6dfe64835d2312e3116e05cb5e8e079bfd065d642b",
+        "pressure_unet_11": "3e4403fb99966b4e36c8cd7e52d928be579e50f7ad72078c6a81c7edae339ab8",
+        "pressure_unet_22": "29f7a5387531032ed64b99d1024749cff0cae15003c689051aff7e0eb9b8516c",
+        "pressure_unet_33": "51f260e8bad5c402fefb48191772a83615e18bd0cb84bd3e64f14a0b6ef7de0a",
+        "pressure_topology_11": "115868f1b60fb8775defa40b147e8c2b565a0473487125dbb0641489c8938b3b",
+        "pressure_topology_22": "bfcce48664fc2d608d5cc9050d6ce9611b927cc6dff3de4a115b8af7a3ce7804",
+        "pressure_topology_33": "f01b20f60b0882b0505eb6ef4469aa6aa2fc131738c16b9e3cc23c363a47191d"
+      }
+    }
+  ],
+  "source_checkpoints": {
+    "alpha_topology": "830439e1d60216b9053ab50ca8619ccb040a6aa788fee3fb0dd4df65bfe1ece3",
+    "pressure_patch_11": "44a2acc11e3511d140d142188cc583db5fbca6eeec6318d796c3b19fb8303d95",
+    "pressure_patch_22": "a503160c9028a2722612b8124f927197a4c738ec3cde43d21c63cac947452287",
+    "pressure_patch_33": "52586f8ca92c8ca0b69fbe0127fbd14c039052e176b29276bb0701f3fb5382ec",
+    "pressure_unet_11": "2a08d28082a0b89871e73feac472832fe5a7ccad6f8126fb150df0db81fcac9a",
+    "pressure_unet_22": "c0fc7f68cf742a4c2520e3f2d951cee220c9117728192b9835097e1daf6f8616",
+    "pressure_unet_33": "c813a10299e0fb4875413e810f9e4dbb72c0b72354bef6938a0314434bfd32e2",
+    "pressure_topology_11": "45083f67e6f6d51e012a86de3edf4947a2821861aea29368817ef3ec3ac582e4",
+    "pressure_topology_22": "b0a7200cfac496dbd25f8f96a77bd7049a46bffa7cbcebb200d25d514855cb6b",
+    "pressure_topology_33": "b97731a332265e233f8b3e4a6ea76b38b4b3ddda11ca7fe15f860fa4f193fe43"
+  },
+  "source_code_sha256": {
+    "cavitation_multicase_20260913.py": "e1065b8422734a642f8e4bdc601be0f3d821106176e14593d98867a254c3d170",
+    "cavitation_combined_static_dynamic_v6.py": "390c194363c20df405d1279fdcbf1e5c87c98a611be71771804fd474191c698c",
+    "cavitation_pressure_unet_v8.py": "8ba73ff25c5eb7e53f69a5fe1aa1303f67e9d94b87057ea71f167d60e77d153c",
+    "cavitation_pressure_topology_unet_v9.py": "7de91ccae8396622579b43b3d3810df5604d945e0ab6011531299e9c61fe2643"
+  },
+  "retained_pressure_patch_noise_metrics": {
+    "11": {
+      "Plunging3_0": {
+        "dice": 0.8685075608152532,
+        "cavity_mae": 0.2324499245358318,
+        "mae": 0.001066868985487408,
+        "tp": 1321,
+        "fp": 180,
+        "fn": 220
+      },
+      "Plunging3_100": {
+        "dice": 0.8521412941544233,
+        "cavity_mae": 0.33641472580678894,
+        "mae": 0.0014535520145407036,
+        "tp": 1363,
+        "fp": 295,
+        "fn": 178
+      },
+      "Plunging3_1000": {
+        "dice": 0.7395253442719015,
+        "cavity_mae": 0.4199525701930042,
+        "mae": 0.002001969023772193,
+        "tp": 1262,
+        "fp": 610,
+        "fn": 279
+      },
+      "Oscillation3_0": {
+        "dice": 0.9111111111111111,
+        "cavity_mae": 0.23006903168989376,
+        "mae": 0.00030522228259473983,
+        "tp": 328,
+        "fp": 18,
+        "fn": 46
+      },
+      "Oscillation3_100": {
+        "dice": 0.8963660834454913,
+        "cavity_mae": 0.3358646994606059,
+        "mae": 0.00037266358253741465,
+        "tp": 333,
+        "fp": 36,
+        "fn": 41
+      },
+      "Oscillation3_1000": {
+        "dice": 0.8170103092783505,
+        "cavity_mae": 0.42064517959553926,
+        "mae": 0.00045661705198520936,
+        "tp": 317,
+        "fp": 85,
+        "fn": 57
+      }
+    },
+    "22": {
+      "Plunging3_0": {
+        "dice": 0.8736672051696285,
+        "cavity_mae": 0.22437095580203126,
+        "mae": 0.0010389071158091883,
+        "tp": 1352,
+        "fp": 202,
+        "fn": 189
+      },
+      "Plunging3_100": {
+        "dice": 0.8510769230769231,
+        "cavity_mae": 0.3176351215528405,
+        "mae": 0.001412860655313395,
+        "tp": 1383,
+        "fp": 326,
+        "fn": 158
+      },
+      "Plunging3_1000": {
+        "dice": 0.7276399307559146,
+        "cavity_mae": 0.4202505652584247,
+        "mae": 0.0020105372086789085,
+        "tp": 1261,
+        "fp": 664,
+        "fn": 280
+      },
+      "Oscillation3_0": {
+        "dice": 0.9153005464480874,
+        "cavity_mae": 0.21783704426199357,
+        "mae": 0.0002845357640966278,
+        "tp": 335,
+        "fp": 23,
+        "fn": 39
+      },
+      "Oscillation3_100": {
+        "dice": 0.8988173455978975,
+        "cavity_mae": 0.31472950313180525,
+        "mae": 0.00035057881323726577,
+        "tp": 342,
+        "fp": 45,
+        "fn": 32
+      },
+      "Oscillation3_1000": {
+        "dice": 0.8152866242038217,
+        "cavity_mae": 0.41905042831910483,
+        "mae": 0.0004432687009485005,
+        "tp": 320,
+        "fp": 91,
+        "fn": 54
+      }
+    },
+    "33": {
+      "Plunging3_0": {
+        "dice": 0.871222076215506,
+        "cavity_mae": 0.233357845383136,
+        "mae": 0.001044310727370464,
+        "tp": 1326,
+        "fp": 177,
+        "fn": 215
+      },
+      "Plunging3_100": {
+        "dice": 0.8528584817244611,
+        "cavity_mae": 0.33882591834244674,
+        "mae": 0.0014384949203685542,
+        "tp": 1365,
+        "fp": 295,
+        "fn": 176
+      },
+      "Plunging3_1000": {
+        "dice": 0.7400576368876081,
+        "cavity_mae": 0.42118536226939723,
+        "mae": 0.0019972713857027693,
+        "tp": 1284,
+        "fp": 645,
+        "fn": 257
+      },
+      "Oscillation3_0": {
+        "dice": 0.9062937062937063,
+        "cavity_mae": 0.2332630578209372,
+        "mae": 0.00028528039969860473,
+        "tp": 324,
+        "fp": 17,
+        "fn": 50
+      },
+      "Oscillation3_100": {
+        "dice": 0.8963660834454913,
+        "cavity_mae": 0.33817505199003983,
+        "mae": 0.00035410134407087287,
+        "tp": 333,
+        "fp": 36,
+        "fn": 41
+      },
+      "Oscillation3_1000": {
+        "dice": 0.821882951653944,
+        "cavity_mae": 0.42036569309744604,
+        "mae": 0.00043715001520789313,
+        "tp": 323,
+        "fp": 89,
+        "fn": 51
+      }
+    }
+  }
+}

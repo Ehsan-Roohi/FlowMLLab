@@ -34,10 +34,12 @@ def verify(render=False):
         if week == 12:
             assert expected_pages == 12, (pdf, expected_pages)
         else:
-            assert expected_pages == 14, (pdf, expected_pages)
+            assert expected_pages == 16, (pdf, expected_pages)
             lecture_text = ' '.join(' '.join(p.extract_text() for p in reader.pages).split())
             assert 'Hydrofoil cavitation: the machine-vision extension' in lecture_text
             assert 'native_alpha20_v6' in lecture_text
+            assert 'Alpha and pressure methods on the same field' in lecture_text
+            assert 'Interpreting pressure-based detection' in lecture_text
         assert all(len(p.extract_text()) > 500 for p in reader.pages)
         if render:
             from PIL import Image, ImageOps, ImageDraw

@@ -57,7 +57,7 @@ Weeks 5 and 6 share a project pack and lecture guide, but have separate learning
 | [9](#week-9--rarefied-micro-step-and-micro-nozzle) | Geometry-dependent and shock-aligned operators | [Week 9 labs](notebooks/week09/README.md) | [Lecture 9](lectures/week09_rarefied_deeponet_case_studies.pdf) |
 | [10](#week-10--dsmc-cavity-and-molecular-shocks) | Cavity and mono/diatomic shock reproduction | [Week 10 lab](notebooks/week10/README.md) | [Lecture 10](lectures/week10_dsmc_data_driven_surrogates.pdf) |
 | [10.1](#week-101--ab-initio-collision-deeponet) | Molecular scattering and DSMC cylinder contours | [CPU scattering lab](notebooks/week10_1/W10_1_Collision_Map_Surrogate_Audit.ipynb) · [Research fields](results/abinitio_deeponet_cylinder/README.md) | [Lecture companion](lectures/week10_1_abinitio_collision_deeponet.md) |
-| [11](#week-11--shock-and-vortex-identification) | Physical diagnostics and overlapping learned labels | [Week 11 lab](notebooks/week11/README.md) | [Lecture 11](lectures/week11_shock_vortex_identification.pdf) |
+| [11](#week-11--shock-and-vortex-identification) | Shock/vortex identification; alpha and pressure methods for vapor clouds | [Week 11 lab](notebooks/week11/README.md) | [Lecture 11](lectures/week11_shock_vortex_identification.pdf) |
 | [12](#week-12--dsmc-moment-reconstruction) | Additive moments, observation-conditioned reconstruction and support | [Week 12 lab](notebooks/week12/README.md) | [Lecture 12](lectures/week12_dsmc_moment_reconstruction.pdf) |
 | [13](#week-13--rectangular-cavity-pinn-research-audit) | Streamfunction PINNs across Reynolds number and cavity depth | [Week 13 audit](notebooks/week13/README.md) | [Lecture 13](lectures/week13_rectangular_cavity_pinn.pdf) |
 | [14](#week-14---rans-inverse-pinn-and-neural-turbulence-closures) | Davidson-based RANS, inverse PINN and neural closures | [Week 14 lab](notebooks/week14/README.md) | [Lecture 14](lectures/week14_rans_pinn_nn.pdf) |
@@ -388,22 +388,26 @@ vortex scores on coarse incompressible data, not shock accuracy or a blind test.
 #### Hydrofoil vapor-cloud detection
 
 **Problem:** Detect attached cavities and disconnected vapor clouds around a hydrofoil.<br>
-**CFD / data:** The author's existing Fluent vapor-fraction fields: 158 retained snapshots from seven cases.<br>
-**Learning method:** The original 126,275-parameter context U-Net predicts background,
-attached cavity and disconnected cloud directly. The notebook reruns the saved
-model; an optional section reproduces its final adaptation stage.
+**CFD / data:** The author's existing Fluent fields: 158 original alpha-input
+snapshots, plus 16 shared moving-case snapshots for comparing the methods.<br>
+**Methods:** Alpha-input context U-Net, fixed pressure threshold, pressure-only
+3×3 model, pressure U-Net and pressure topology U-Net. The notebook reruns the
+original saved models, including all three pressure-model seeds.
 
-![Hydrofoil cavity and vapor-cloud detection: CFD field, native weak reference and learned output](results/week11_cavitation/cloud_detection.png)
+![Same-frame hydrofoil vapor-cloud detection with alpha and pressure methods](results/week11_cavitation/methods_Plunging3.png)
 
-The cavity field and its detection appear side by side. Orange denotes attached
-cavity; magenta denotes disconnected vapor in 2-D. These two illustrated LES
-frames are training examples. The complete gallery also retains a difficult
-nontraining case and the original worst-error frames. Scores measure agreement
-with native-mesh weak references, not human-validated accuracy.
+All panels show the same CFD field, geometry and time. Orange/magenta denote
+attached/disconnected classes; green denotes total cavity for methods without
+a topology output. Pressure models receive no alpha input. The illustrated
+frame has the largest valid CFD cavity area in this retained trajectory and
+uses the first seed (11); the notebook includes all 16 frames and three seeds.
+These inspected nontraining cases use algorithmic weak references and different
+input information, so this is not a blind or matched-input accuracy ranking.
 
 [Open in Colab](https://colab.research.google.com/github/Ehsan-Roohi/FlowMLLab/blob/main/notebooks/week11/W11_Cavitation_Cloud_Detection.ipynb)
 · [Notebook](notebooks/week11/W11_Cavitation_Cloud_Detection.ipynb)
 · [Detection and training code](flowmllab/cavitation_detection.py)
+· [Alpha/pressure comparison code](flowmllab/cavitation_methods.py)
 · [Results and provenance](results/week11_cavitation/README.md)
 · [Expanded Lecture 11](lectures/week11_shock_vortex_identification.pdf)
 

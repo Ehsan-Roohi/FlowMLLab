@@ -163,3 +163,25 @@ The optional notebook section reruns this final adaptation from the supplied par
 Assignment: identify one attachment error in Case 24; compare neural and raster-baseline scores for both classes; explain the effect of an unresolved vapor ligament; and specify the new trajectories, expert annotations and temporal sampling needed to assess true cloud detachment and tracking. A smooth outline or a high weak-reference Dice alone does not validate those claims.
 
 Related work: Hatzissawidis et al., Deep learning semantic segmentation for cloud cavitation image analysis, Physics of Fluids 38, 093331 (2026), doi:10.1063/5.0345365. That study segments camera images and uses a subsequent heuristic sheet/cloud split. Our retained experiment directly predicts three classes from CFD rasters. This lesson does not reproduce their dataset or establish superiority to their method. Course adaptation and verification are AI-assisted; exact author-model and data provenance accompany the code.
+
+## Alpha and pressure methods on the same field
+
+[CAVITATION_METHODS_FIGURE]
+
+The six panels show one retained CFD frame and five original methods: alpha-input context U-Net, fixed pressure threshold, pressure-only 3x3 model, pressure U-Net and pressure topology U-Net. All panels share geometry, physical coordinates, time and the same alpha background. Alpha is displayed for comparison but never enters pressure inference.
+
+Orange and magenta mean attached and disconnected classes. Green means total cavity for methods without a topology output. A scalar vapor estimate cannot by itself name an attached cavity or a disconnected cloud. Common total-cavity Dice unites the two topology classes and compares that support with scalar predictions thresholded at 0.20.
+
+The plot uses the first pressure seed (11) and the Plunging3 frame with maximum valid CFD cavity area, independently of model scores. The notebook replays all 16 frames from Plunging3 and Oscillation3 with all three pressure seeds. Both trajectories were excluded from optimization but previously inspected. Neither contains valid attached-reference pixels, so attached-class transfer is not validated here.
+
+## Interpreting pressure-based detection
+
+The input deficit is gauge pressure plus operating pressure minus configured vapor pressure, in Pa. Preserve the original float32 operation order. Four asinh channels use scales 10, 100, 1000 and 10000 Pa, together with geometry. The fixed pressure baseline uses absolute pressure strictly below configured vapor pressure; it is a total-cavity comparator, not a topology classifier.
+
+The 3x3 model uses local pressure and wall patches with two small tanh layers. The pressure U-Net uses wider spatial context and skip connections. The topology U-Net adds a three-class head. These are the original saved networks, including weaker variants. Default execution performs inference only. The pressure models have no vapor-fraction input; the alpha model has different information and training history, so this is not a matched-input architecture ranking.
+
+More context did not uniformly improve the original results. On Plunging3, the original three-seed pressure-patch Dice fell from 0.8711 for clean pressure to 0.7357 with 1000-Pa input-noise standard deviation. Oscillation3 fell from 0.9109 to 0.8181. These historical noise results remain in the manifest; the new gallery replays clean inputs. A pressure deficit is a useful feature, not a cavitation transport law or a learned shedding forecast.
+
+Inspect the visible wall false positives, missed cloud edges and the distinction between frame and trajectory scores. Native references are algorithmic and exclude solid/uncertain support from Dice, while the overlays retain unmodified predictions. The two examples do not establish temporal object identity, new-geometry transfer or independent physical accuracy.
+
+Run the final sections of W11_Cavitation_Cloud_Detection.ipynb. The reusable implementation is flowmllab/cavitation_methods.py; numeric weights, source hashes and pressure settings are in data/week11_cavitation_methods/. Explain why the pressure threshold can disagree with vapor fraction, and what independent evidence would be needed before choosing a detector for a new flow.

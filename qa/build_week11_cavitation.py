@@ -335,6 +335,9 @@ display(pd.DataFrame([{k:c[k] for k in ['name','role','frames']} for c in manife
     regeneration, mesh convergence, expert ground truth and forecasting are outside
     this replay. Continue to [Week 12](../week12/README.md).
     ''')]
+    from build_week11_cavitation_methods import notebook_cells
+    cells[-1:-1] = notebook_cells()
+    cells[0].source += '\n\n**Multi-method extension:** compare our alpha-input detector, pressure threshold, pressure 3x3 model and two pressure U-Nets on the same 16 moving-case frames.'
     for i, cell in enumerate(cells):
         cell.id = f'w11-cav-{i:02d}'
     notebook = nbf.v4.new_notebook(cells=cells, metadata={

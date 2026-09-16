@@ -21,7 +21,7 @@ ROOT = Path(__file__).resolve().parents[1]
 
 def hashes():
     return {p.relative_to(ROOT).as_posix():hashlib.sha256(p.read_bytes()).hexdigest()
-            for folder in ['data/week11_cavitation', 'results/week11_cavitation']
+            for folder in ['data/week11_cavitation', 'data/week11_cavitation_methods', 'results/week11_cavitation']
             for p in (ROOT/folder).rglob('*') if p.is_file()}
 
 
@@ -52,11 +52,12 @@ def main():
     assert all(c.execution_count is not None for c in code)
     assert not any(o.output_type == 'error' for c in code for o in c.outputs)
     figures = sum('image/png' in o.get('data', {}) for c in code for o in c.outputs)
-    assert figures >= 2, 'Comparison figures were not rendered'
+    assert figures >= 4, 'Alpha and pressure comparison figures were not rendered'
     links = 0
     for relative in ['README.md', 'COURSE_MAP.md', 'notebooks/README.md',
                      'notebooks/week11/README.md', 'lectures/README.md',
-                     'data/week11_cavitation/README.md', 'results/week11_cavitation/README.md']:
+                     'data/week11_cavitation/README.md', 'data/week11_cavitation_methods/README.md',
+                     'results/week11_cavitation/README.md']:
         source = ROOT/relative
         for target in re.findall(r'\]\(([^\s)]+)\)', source.read_text(encoding='utf-8')):
             parsed = urlsplit(target)

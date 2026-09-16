@@ -1,10 +1,37 @@
-# Existing hydrofoil vapor-cloud detection: executable evidence
+# Hydrofoil vapor-cloud detection: alpha and pressure methods
 
 [Colab](https://colab.research.google.com/github/Ehsan-Roohi/FlowMLLab/blob/main/notebooks/week11/W11_Cavitation_Cloud_Detection.ipynb) ·
 [Notebook](../../notebooks/week11/W11_Cavitation_Cloud_Detection.ipynb) ·
 [Code](../../flowmllab/cavitation_detection.py) ·
 [Lecture 11](../../lectures/week11_shock_vortex_identification.pdf) ·
 [Data and model provenance](../../data/week11_cavitation/manifest.json)
+
+## Compare the methods on identical fields and times
+
+![Alpha and pressure methods on the same Plunging3 frame](methods_Plunging3.png)
+
+![Alpha and pressure methods on the same Oscillation3 frame](methods_Oscillation3.png)
+
+The comparison includes alpha-input context U-Net, fixed pressure threshold,
+pressure-only 3×3 model, pressure U-Net and pressure topology U-Net. CFD alpha
+provides the same background in every panel; it is never supplied to pressure
+inference. Orange/magenta denote attached/disconnected classes. Green denotes
+total cavity for methods without topology output. Raw wall mistakes are visible.
+
+Each case's largest valid CFD cavity area determines the illustrated frame;
+model score does not select it. Seed 11 is the first declared pressure seed.
+The frame Dice printed in a panel differs from the whole-trajectory pooled
+scores in [the complete table](methods_metrics.json), which retains all
+16 frames and three seeds. Both cases lack valid attached-reference pixels.
+They were excluded from training but previously inspected. Inputs and training
+histories differ, so these are not blind or matched-input accuracy rankings.
+The less successful U-Net variants remain visible as diagnostic comparisons.
+
+[Comparison code](../../flowmllab/cavitation_methods.py) ·
+[Data, weights and protocol](../../data/week11_cavitation_methods/README.md) ·
+[Figure times and hashes](methods_figure_provenance.json).
+
+## Original alpha-input detector and its retained cases
 
 This extension packages Ehsan Roohi's existing hydrofoil machine-vision code and
 results (`native_alpha20_v6`, 2026-09-12). The original 126,275-parameter context
@@ -80,6 +107,7 @@ To rebuild the retained figures and notebook from the public bundle:
 ```sh
 python -m pip install -e '.[test,reconstruction]' nbclient ipykernel
 python qa/build_week11_cavitation.py
+python qa/build_week11_cavitation_methods.py
 ```
 
 Student Run All computes in memory and preserves the retained files. The builder

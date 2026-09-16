@@ -45,6 +45,12 @@ shock accuracy. Full retraining is optional and writes only to a new scratch fol
 
 This is the existing author machine-vision experiment for hydrofoil vapor clouds,
 packaged with the original model and 158 retained CFD snapshots from seven cases.
+The final multi-method section compares 16 shared moving-case frames using the
+alpha-input model, fixed pressure threshold, pressure-only 3×3 model, pressure
+U-Net and pressure topology U-Net, replaying all three original pressure seeds.
+Each figure uses identical fields and times; pressure inference receives no alpha.
+[Comparison data and weights](../../data/week11_cavitation_methods/README.md).
+
 Run All reproduces the three-class predictions and pooled metrics, draws the
 vapor field beside its detection, compares a raster-topology baseline and checks
 zero-vapor/noisy inputs. The final section of the lecture develops the same example.

@@ -1,0 +1,19 @@
+{
+  "figures": {
+    "methods_Plunging3.png": {
+      "sha256": "a2e92b303c9bc90b118d5541d93cbbb942bd1541209ef9400e10e151b43106a0",
+      "key": "Plunging3_003",
+      "time": 1.579999999999937,
+      "seed": 11
+    },
+    "methods_Oscillation3.png": {
+      "sha256": "f2d94aaeb6b52f861455089d657f32e5bd676db28e0142f4fe8e8d4301380d46",
+      "key": "Oscillation3_010",
+      "time": 2.999999999999781,
+      "seed": 11
+    }
+  },
+  "manifest_sha256": "4a3eeec01187cc7f49866c28b4c177d012ff40ccfe830ff679cfbb86d8da0a52",
+  "code_sha256": "f769a5932bd75c02c342462a60ae1ecaab212aa1b1205bb1f256b5f29ad1e457",
+  "selection": "Maximum valid CFD cavity area in each case, not model score; all frames are retained for pooled evaluation"
+}

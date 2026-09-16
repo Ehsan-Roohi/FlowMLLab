@@ -539,10 +539,12 @@ def build_pdf(week):
                 with PILImage.open(image) as im: w,h=im.size
                 story.append(Image(str(image),width=475,height=475*h/w))
                 continue
-            if para.strip() in ('[TEACHING_FIGURE]', '[RESEARCH_FIGURE]', '[NOISE2NOISE_FIGURE]', '[NOISE2NOISE_AUDIT]', '[CAVITATION_FIGURE]'):
+            if para.strip() in ('[TEACHING_FIGURE]', '[RESEARCH_FIGURE]', '[NOISE2NOISE_FIGURE]', '[NOISE2NOISE_AUDIT]', '[CAVITATION_FIGURE]', '[CAVITATION_METHODS_FIGURE]'):
                 image = ROOT / 'results' / 'week11_12_teaching' / f'week{week}_teaching.png'
                 if para.strip() == '[CAVITATION_FIGURE]':
                     image = ROOT / 'results/week11_cavitation/cloud_detection.png'
+                if para.strip() == '[CAVITATION_METHODS_FIGURE]':
+                    image = ROOT / 'results/week11_cavitation/methods_Plunging3.png'
                 if para.strip() == '[RESEARCH_FIGURE]':
                     image = ROOT / 'results' / f'week{week}_research' / ('airfoil_2.png' if week == 11 else 'cavity_qy_hero.png')
                 if para.strip() in ('[NOISE2NOISE_FIGURE]', '[NOISE2NOISE_AUDIT]'):
