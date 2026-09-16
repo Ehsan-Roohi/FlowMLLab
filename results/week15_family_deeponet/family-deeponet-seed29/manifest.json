@@ -1,0 +1,458 @@
+{
+  "protocol": "diverse_family_v1",
+  "seed": 29,
+  "epochs": 400,
+  "steps_per_epoch": 16,
+  "batch_size": 8192,
+  "dataset_sha256": "28d4d4c440cdc4c1ac1d13749ce00b0690d99f29cf20fd56c65fc00b6a8058fd",
+  "split_sha256": "8b78351580fb1ceb1323b2088281f29d9232d66485c670cf5d3138fc28e72b8d",
+  "split": {
+    "train": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      20,
+      21,
+      22,
+      23,
+      24,
+      25,
+      26,
+      27,
+      28,
+      29,
+      30,
+      31,
+      34,
+      35,
+      36,
+      37,
+      38,
+      39,
+      40,
+      41,
+      42,
+      43,
+      46,
+      47,
+      48,
+      49,
+      50,
+      51,
+      52,
+      53,
+      54,
+      55,
+      56,
+      57,
+      58,
+      59,
+      60,
+      61,
+      62,
+      63,
+      64,
+      65,
+      66,
+      67,
+      68,
+      69,
+      70,
+      71,
+      72,
+      73,
+      74,
+      75,
+      76,
+      77,
+      81,
+      82,
+      83,
+      84,
+      85,
+      86,
+      87,
+      88,
+      89,
+      90,
+      91,
+      92,
+      93,
+      94,
+      95,
+      96,
+      97,
+      98,
+      99,
+      100,
+      101,
+      102,
+      103,
+      104,
+      105,
+      106,
+      107,
+      108,
+      109,
+      110,
+      111,
+      112
+    ],
+    "validation": [
+      17,
+      18,
+      19,
+      44,
+      45,
+      78,
+      79,
+      80
+    ],
+    "heldout": [
+      32,
+      33,
+      113,
+      114,
+      115,
+      116,
+      117,
+      118,
+      119,
+      120,
+      121,
+      122,
+      123,
+      124,
+      125,
+      126,
+      127,
+      128,
+      129
+    ],
+    "local_train": [
+      14,
+      15,
+      16,
+      20,
+      21,
+      22,
+      23,
+      24,
+      25,
+      26,
+      27,
+      28,
+      29,
+      30,
+      31
+    ],
+    "checkpoint": [
+      17,
+      18,
+      19,
+      44,
+      45,
+      78,
+      79,
+      80
+    ],
+    "geometry_ids": {
+      "train": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        8,
+        9,
+        10,
+        11,
+        13,
+        14,
+        15,
+        16,
+        17,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44
+      ],
+      "validation": [
+        7,
+        18,
+        32
+      ],
+      "heldout": [
+        12,
+        45,
+        46,
+        47,
+        48,
+        49,
+        50,
+        51
+      ]
+    },
+    "protocol": "family",
+    "note": "Retrospective grouped benchmark on existing data; no claim of prospectively untouched test. Geometry holdout is not certified parameter interpolation."
+  },
+  "training_code_sha256": "efd68fed764f4569541689f0e32b413b4ff087103a59dc0db6682270d96cbdc2",
+  "model_code_sha256": "a89a0cd8598f1eafd6b3e0d24d1a0228873c21b6caca87aa28f9d482e2b6cba1",
+  "checkpoint_sha256": "cbf73fe95884c36ee4f86de17f0ea3d8a2bc39e9b9049b4a2b060f0871305aee",
+  "checkpoint_epoch": 260,
+  "history": [
+    {
+      "epoch": 1,
+      "train_mse_scaled": 0.9314406290650368,
+      "validation_mse_scaled": 1.0625091791152954
+    },
+    {
+      "epoch": 10,
+      "train_mse_scaled": 0.6736703217029572,
+      "validation_mse_scaled": 0.8264684677124023
+    },
+    {
+      "epoch": 20,
+      "train_mse_scaled": 0.6470806039869785,
+      "validation_mse_scaled": 0.7876843810081482
+    },
+    {
+      "epoch": 30,
+      "train_mse_scaled": 0.6353974565863609,
+      "validation_mse_scaled": 0.7627686858177185
+    },
+    {
+      "epoch": 40,
+      "train_mse_scaled": 0.6187483705580235,
+      "validation_mse_scaled": 0.7722434401512146
+    },
+    {
+      "epoch": 50,
+      "train_mse_scaled": 0.6235459856688976,
+      "validation_mse_scaled": 0.7587550282478333
+    },
+    {
+      "epoch": 60,
+      "train_mse_scaled": 0.6183416619896889,
+      "validation_mse_scaled": 0.7587736248970032
+    },
+    {
+      "epoch": 70,
+      "train_mse_scaled": 0.6169281303882599,
+      "validation_mse_scaled": 0.75206059217453
+    },
+    {
+      "epoch": 80,
+      "train_mse_scaled": 0.6139339432120323,
+      "validation_mse_scaled": 0.7561466097831726
+    },
+    {
+      "epoch": 90,
+      "train_mse_scaled": 0.6238997727632523,
+      "validation_mse_scaled": 0.7502244114875793
+    },
+    {
+      "epoch": 100,
+      "train_mse_scaled": 0.6074706241488457,
+      "validation_mse_scaled": 0.7423216700553894
+    },
+    {
+      "epoch": 110,
+      "train_mse_scaled": 0.6056323684751987,
+      "validation_mse_scaled": 0.7469512820243835
+    },
+    {
+      "epoch": 120,
+      "train_mse_scaled": 0.6052198521792889,
+      "validation_mse_scaled": 0.7496988773345947
+    },
+    {
+      "epoch": 130,
+      "train_mse_scaled": 0.6060463190078735,
+      "validation_mse_scaled": 0.7485950589179993
+    },
+    {
+      "epoch": 140,
+      "train_mse_scaled": 0.607753973454237,
+      "validation_mse_scaled": 0.7423369288444519
+    },
+    {
+      "epoch": 150,
+      "train_mse_scaled": 0.6075299270451069,
+      "validation_mse_scaled": 0.7380416393280029
+    },
+    {
+      "epoch": 160,
+      "train_mse_scaled": 0.608633928000927,
+      "validation_mse_scaled": 0.7406845092773438
+    },
+    {
+      "epoch": 170,
+      "train_mse_scaled": 0.612320002168417,
+      "validation_mse_scaled": 0.7327847480773926
+    },
+    {
+      "epoch": 180,
+      "train_mse_scaled": 0.6031276658177376,
+      "validation_mse_scaled": 0.7402992844581604
+    },
+    {
+      "epoch": 190,
+      "train_mse_scaled": 0.6073935739696026,
+      "validation_mse_scaled": 0.729042112827301
+    },
+    {
+      "epoch": 200,
+      "train_mse_scaled": 0.613919660449028,
+      "validation_mse_scaled": 0.7359434962272644
+    },
+    {
+      "epoch": 210,
+      "train_mse_scaled": 0.6123384535312653,
+      "validation_mse_scaled": 0.7271153926849365
+    },
+    {
+      "epoch": 220,
+      "train_mse_scaled": 0.6015290841460228,
+      "validation_mse_scaled": 0.7292434573173523
+    },
+    {
+      "epoch": 230,
+      "train_mse_scaled": 0.6043555103242397,
+      "validation_mse_scaled": 0.7422082424163818
+    },
+    {
+      "epoch": 240,
+      "train_mse_scaled": 0.6030712686479092,
+      "validation_mse_scaled": 0.7375022768974304
+    },
+    {
+      "epoch": 250,
+      "train_mse_scaled": 0.6012297049164772,
+      "validation_mse_scaled": 0.7437868118286133
+    },
+    {
+      "epoch": 260,
+      "train_mse_scaled": 0.6046563908457756,
+      "validation_mse_scaled": 0.7169561386108398
+    },
+    {
+      "epoch": 270,
+      "train_mse_scaled": 0.5978798344731331,
+      "validation_mse_scaled": 0.7348341941833496
+    },
+    {
+      "epoch": 280,
+      "train_mse_scaled": 0.6039288677275181,
+      "validation_mse_scaled": 0.7306903004646301
+    },
+    {
+      "epoch": 290,
+      "train_mse_scaled": 0.6120044514536858,
+      "validation_mse_scaled": 0.7233551144599915
+    },
+    {
+      "epoch": 300,
+      "train_mse_scaled": 0.6004554145038128,
+      "validation_mse_scaled": 0.7380951046943665
+    },
+    {
+      "epoch": 310,
+      "train_mse_scaled": 0.6052842326462269,
+      "validation_mse_scaled": 0.736142635345459
+    },
+    {
+      "epoch": 320,
+      "train_mse_scaled": 0.603065624833107,
+      "validation_mse_scaled": 0.7249460220336914
+    },
+    {
+      "epoch": 330,
+      "train_mse_scaled": 0.6023445725440979,
+      "validation_mse_scaled": 0.7274978756904602
+    },
+    {
+      "epoch": 340,
+      "train_mse_scaled": 0.6024895720183849,
+      "validation_mse_scaled": 0.7278340458869934
+    },
+    {
+      "epoch": 350,
+      "train_mse_scaled": 0.6037955172359943,
+      "validation_mse_scaled": 0.7194890975952148
+    },
+    {
+      "epoch": 360,
+      "train_mse_scaled": 0.6032369434833527,
+      "validation_mse_scaled": 0.7291020750999451
+    },
+    {
+      "epoch": 370,
+      "train_mse_scaled": 0.59294693171978,
+      "validation_mse_scaled": 0.7296902537345886
+    },
+    {
+      "epoch": 380,
+      "train_mse_scaled": 0.608633641153574,
+      "validation_mse_scaled": 0.7272740006446838
+    },
+    {
+      "epoch": 390,
+      "train_mse_scaled": 0.5982633158564568,
+      "validation_mse_scaled": 0.7270295023918152
+    },
+    {
+      "epoch": 400,
+      "train_mse_scaled": 0.6033688187599182,
+      "validation_mse_scaled": 0.7230814099311829
+    }
+  ],
+  "training_seconds": 116.82969097899996,
+  "tensorflow": "2.20.0",
+  "numpy": "2.5.3",
+  "branch_inputs": [
+    "Re"
+  ],
+  "trunk_inputs": [
+    "x",
+    "y"
+  ],
+  "limitation": "Geometry-blind fixed-domain baseline, NOT all DeepONet variants. Same Re and xy imply identical unmasked predictions across geometries.",
+  "selection": "Validation only; test family never used for scaling, gradient updates or checkpoint selection. Retrospective benchmark, not prospectively untouched research test."
+}
