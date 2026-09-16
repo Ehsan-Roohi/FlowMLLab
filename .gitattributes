@@ -34,3 +34,5 @@ results/abinitio_deeponet_cylinder/*.svg binary -whitespace linguist-generated=t
 # Preserve author-supplied DSMC tables byte-for-byte, including legacy line endings.
 data/aescte_dsmc/raw/** -text -whitespace
 data/nozzle_bird_pr/*.dat -text -whitespace
+data/week13_deep_cavity/audit.json -text
+data/week13_deep_cavity/loss_continuation.dat -text

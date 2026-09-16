@@ -1,5 +1,7 @@
 # Course map: concept → computation → evidence
 
+Current advanced modules: [Week 13: deep-cavity PINNs](notebooks/week13/README.md), [Week 14: RANS and neural closures](notebooks/week14/README.md), and [Week 15: geometry-aware operators and OpenFOAM data](notebooks/week15/README.md).
+
 | Module | Conceptual focus | Guided computation | Evidence required before moving on |
 | --- | --- | --- | --- |
 | 1A | Eulerian fields, nondimensionalization, boundary conditions | Annotate lid-driven cavity variables and scales | Explain what is prescribed, solved, and derived |

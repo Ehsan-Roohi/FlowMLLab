@@ -1,0 +1,13 @@
+{
+  "files": {
+    "field.npz": "952c6b926001a23a1b60c6a0d876ccc1e4159907f109407fdf60087febcd6069",
+    "audit.json": "75be86c9acfde3e635edee3cea8ca4403f41dd6a2e690a568a12ab8d4c45f12a"
+  },
+  "checkpoint": "restart-55118.ckpt",
+  "case": {
+    "Re": 1000,
+    "depth_over_width": 2.2
+  },
+  "source": "User-supplied Unity field export, received 2026-09-16",
+  "qualification": "Retained field, not independently certified final convergence. No model weights or matching CFD fields supplied."
+}

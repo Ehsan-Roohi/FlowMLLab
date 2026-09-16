@@ -1,5 +1,7 @@
 # Start here
 
+Current advanced modules: [Week 13: deep-cavity PINNs](notebooks/week13/README.md), [Week 14: RANS and neural closures](notebooks/week14/README.md), and [Week 15: geometry-aware operators and OpenFOAM data](notebooks/week15/README.md).
+
 For Davidson-based turbulence closures, see the [Week 14 guide](notebooks/week14/README.md).
 This CPU module uses a complete checkout and an isolated PyTorch environment;
 it distinguishes source reproduction from classroom controls and retains failed gates.

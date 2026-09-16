@@ -19,6 +19,11 @@ EXPECTED_DATA_SHA256 = "09b96b744ee4d18126d8dcc92feb60e128774a1b4d41bb3d8c90a63c
 
 
 REQUIRED = [
+    "notebooks/week15/W15_Geometry_Operators_Step_Audit.ipynb",
+    "lectures/week15_geometry_generalization.pdf",
+    "results/step_operator_audit/source/dataset.npz",
+    "data/week13_deep_cavity/field.npz",
+    "data/week13_deep_cavity/loss_continuation.dat",
     "notebooks/week14/W14_pyCALC_RANS_PINN_NN.ipynb",
     "notebooks/week14/requirements.txt",
     "lectures/week14_rans_pinn_nn.pdf",
@@ -388,8 +393,9 @@ def validate_notebooks() -> tuple[int, int]:
             f"Ehsan-Roohi/FlowMLLab/blob/main/{relative}"
         )
         week14_lab = relative == 'notebooks/week14/W14_pyCALC_RANS_PINN_NN.ipynb'
+        week15_lab = relative == 'notebooks/week15/W15_Geometry_Operators_Step_Audit.ipynb'
         assert week14_lab or colab_url in full_source, f"missing direct Colab launcher: {path}"
-        assert week14_lab or "FLOWMLLAB_COLAB_BOOTSTRAP_V1" in full_source, (
+        assert week14_lab or week15_lab or "FLOWMLLAB_COLAB_BOOTSTRAP_V1" in full_source, (
             f"missing Colab repository bootstrap: {path}"
         )
         reconstruction_lab = relative == 'notebooks/week11/W11_Lab2_Reconstruction_and_Identification.ipynb'
@@ -399,9 +405,12 @@ def validate_notebooks() -> tuple[int, int]:
         if week14_lab:
             assert 'FlowMLLab teaching adaptation' in full_source
             assert 'not a verified' in full_source
-            assert len([c for c in cells if c.get('cell_type')=='code']) == 7
+            assert len([c for c in cells if c.get('cell_type')=='code']) == 8
             assert all(c.get('execution_count') is not None for c in cells if c.get('cell_type')=='code')
-        assert week14_lab or reconstruction_lab or any(
+        if week15_lab:
+            assert len([c for c in cells if c.get('cell_type')=='code']) == 13
+            assert 'dataset.npz' in full_source and 'def diagnostics(' in full_source
+        assert week14_lab or week15_lab or reconstruction_lab or any(
             marker in full_source
             for marker in (
                 "MIE690A article-aligned validation v3",
@@ -436,7 +445,7 @@ def validate_notebooks() -> tuple[int, int]:
                 for cell in cells
             ), f"missing learner-edition marker: {path}"
         count += 1
-    assert count == 35, f"expected 35 notebooks, found {count}"
+    assert count == 36, f"expected 36 notebooks, found {count}"
     return count, code_cells
 
 
@@ -1104,7 +1113,7 @@ def validate_week01_1_results() -> dict[str, object]:
 
 def validate_pdfs() -> int:
     pdfs = sorted((ROOT / "lectures").glob("*.pdf"))
-    assert len(pdfs) == 20
+    assert len(pdfs) == 21
     for path in pdfs:
         result = subprocess.run(
             ["pdfinfo", str(path)], check=True, capture_output=True, text=True

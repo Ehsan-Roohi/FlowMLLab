@@ -251,11 +251,15 @@ if 'inverse' in summary['runs']:
 if 'nn5200' in summary['runs']:
     print('Additional constructed 5200 NN case, not an unchanged archive case:')
     display(pd.Series(summary['runs']['nn5200']))
-    display(pd.DataFrame(summary['profile_metrics']))
+    profiles=pd.DataFrame(summary['profile_metrics'])
+    display(profiles[~profiles['case'].isin(['baseline fresh restart','pinn fresh restart'])])
+    print('Identical baseline/PINN restart rows are omitted: they are consistency checks, not independent physical validation.')
 '''))
+from classroom_cells import inverse
+cells[2:2]=inverse()
 for i,c in enumerate(cells): c.id=f'w14-{i:02d}'
 nb=nbf.v4.new_notebook(cells=cells,metadata={'kernelspec':{'display_name':'Python 3','language':'python','name':'python3'},
-    'language_info':{'name':'python','version':'3.12'},
+    'language_info':{'name':'python','version':'3.12'}, 'classroom_revision':1,
     'flowmllab':{'scope':'Attributed source reproduction and separately labeled teaching controls'}})
 out=ROOT/'notebooks/week14/W14_pyCALC_RANS_PINN_NN.ipynb'
 out.parent.mkdir(parents=True,exist_ok=True)

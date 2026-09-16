@@ -83,3 +83,7 @@ if parser.parse_args().execute:
     from nbclient import NotebookClient
     NotebookClient(nb,timeout=240,kernel_name='python3',resources={'metadata':{'path':str(ROOT/'notebooks/week11')}}).execute()
 nbf.write(nb,ROOT/'notebooks/week11/W11_Lab2_Reconstruction_and_Identification.ipynb')
+from improve_classroom_notebooks import revise
+from classroom_cells import unet
+revise(ROOT/'notebooks/week11/W11_Lab2_Reconstruction_and_Identification.ipynb',
+       lambda notebook: notebook.cells.__setitem__(slice(2,2),unet()))

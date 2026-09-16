@@ -54,6 +54,8 @@ square cases and residual-only deep cases.
 | Week 9 | Shock-aligned micro-nozzle DeepONet | [Open in Colab](https://colab.research.google.com/github/Ehsan-Roohi/FlowMLLab/blob/main/notebooks/week09/W9_Lab2_Shock_Aligned_Nozzle_DeepONet_Student.ipynb) |
 | Week 10 | DSMC cavity and mono/diatomic shock reproduction | [Open in Colab](https://colab.research.google.com/github/Ehsan-Roohi/FlowMLLab/blob/main/notebooks/week10/W10_DSMC_Data_Driven_Surrogates_Student.ipynb) |
 | Week 13 | Rectangular-cavity PINN research audit | [Open in Colab](https://colab.research.google.com/github/Ehsan-Roohi/FlowMLLab/blob/main/notebooks/week13/W13_Rectangular_Cavity_PINN_Research.ipynb) |
+| Week 14 | RANS, inverse PINN and neural closures | [Notebook and setup](week14/README.md) |
+| Week 15 | Geometry-aware neural operators | [Notebook and OpenFOAM data](week15/README.md) |
 
 ## Weekly laboratories
 

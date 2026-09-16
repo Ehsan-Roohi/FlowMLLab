@@ -30,9 +30,20 @@ package with its different dependency pins into this isolated environment;
 the notebook imports the checkout directly.
 
 Open the notebook from this complete checkout and Run All. It trains the
+small inverse PINN against a manufactured analytic control before it trains the
 original-size 2-10-10-1 ReLU model for 1000 epochs and reruns the interpolation
 control. It verifies hashes before reading retained CFD evidence; it does not
 pretend those saved CFD outputs were just recomputed by Run All.
+
+### Colab and dependency isolation
+
+The Week 14 requirements describe a separate environment, not an extra to be
+installed alongside the repository's older base dependency bounds. In a fresh
+Colab runtime, obtain the complete checkout, run
+`%pip install -r /content/FlowMLLab/notebooks/week14/requirements.txt`, restart
+the runtime if NumPy or SciPy was already imported, then open this notebook and
+Run All. Do not also run `pip install -e .`. A hosted Colab run has not been
+validated in this revision; the saved outputs come from local Python 3.12 CPU.
 
 To repeat complete original scripts, use:
 

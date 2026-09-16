@@ -1,0 +1,49 @@
+{
+  "status": "passed",
+  "mode": "dataset_and_retained_prediction_audit_not_training",
+  "archive_sha256": "190bb252c2739fc2acfa0841233652144b82eb9ca3a01ad6ddb2ae0f0429ade1",
+  "dataset_sha256": "28d4d4c440cdc4c1ac1d13749ce00b0690d99f29cf20fd56c65fc00b6a8058fd",
+  "dataset_cases": 130,
+  "dataset_geometries": 51,
+  "split_cases": {
+    "train": 106,
+    "validation": 21,
+    "test": 3
+  },
+  "predictions": 9,
+  "prediction_geometries": 1,
+  "seeds": [
+    17
+  ],
+  "Re": [
+    25,
+    50,
+    100
+  ],
+  "source_metric_checks": 18,
+  "diagnostic_tests": 4,
+  "dataset_checks": 9,
+  "source_discrepancies": [
+    "reverse-flow IoU: source threshold/region undocumented"
+  ],
+  "ordinary_deeponet_source": "qa/step_architecture_v5.py",
+  "ordinary_deeponet_v5_records": 18,
+  "followup_protocols": [
+    "diverse_geometry_v1",
+    "diverse_family_v1"
+  ],
+  "followup_test_cases": 31,
+  "followup_seeds": [
+    17,
+    29,
+    43
+  ],
+  "missing": [
+    "training source",
+    "checkpoints",
+    "complete OpenFOAM case directories",
+    "ordinary-DeepONet predictions for follow-up protocols"
+  ],
+  "numpy": "2.5.3",
+  "python": "3.12.14"
+}

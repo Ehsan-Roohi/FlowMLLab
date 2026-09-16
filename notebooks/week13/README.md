@@ -1,4 +1,18 @@
-# Week 13 — research audit of rectangular-cavity PINNs
+# Week 13 — deep-cavity PINNs: learn, train and audit
+
+The primary retained example is now **Re=1000, D/W=2.2**, checkpoint
+`restart-55118.ckpt`. The notebook reads the supplied raw field, checks its
+geometry and derived quantities, and regenerates speed/streamlines, mean-zero
+pressure, vorticity and lower-vortex details. Full color ranges are retained.
+A separate visible CPU PINN training exercise teaches the architecture,
+boundary lifting, residual loss and optimizer. It is not this author's model.
+
+Data and SHA-256 provenance are in `data/week13_deep_cavity`. The supplied
+export does not include model weights or matching CFD fields. The separately
+recovered `loss_continuation.dat` ends at checkpoint **65711**, not field 55118;
+it is a resumed training history, not independent test loss or CFD error.
+it is not labelled independently certified final convergence. Rebuild this
+addition with `python qa/add_week13_deep_case.py` after the base notebook builder.
 
 This independent final-course module develops the lid-driven-cavity PINN beyond
 the Week 4.2 foundations. The notebook audits a retained four-case Unity A100

@@ -10,13 +10,13 @@ class StateEstimationTests(unittest.TestCase):
     def test_filter_tracks_known_linear_low_rank_system(self):
         rng = np.random.default_rng(4)
         modes, _ = np.linalg.qr(rng.normal(size=(24, 2)))
-        states = np.array([[np.cos(.12*k), np.sin(.12*k)] for k in range(100)])
+        states = np.array([[np.cos(4*np.pi*k/105), np.sin(4*np.pi*k/105)] for k in range(145)])
         fields = states @ modes.T
-        model = fit_reduced_kalman(fields[:60], rank=2, sensor_count=5, noise_sigma=.01)
-        observations = fields[60:, model.sensor_indices] + rng.normal(0, .01, (40, 5))
+        model = fit_reduced_kalman(fields[:105], rank=2, sensor_count=5, noise_sigma=.01)
+        observations = fields[105:, model.sensor_indices] + rng.normal(0, .01, (40, 5))
         filtered, covariances, innovations = kalman_filter(model, observations)
         prediction = reconstruct_states(model, filtered)
-        self.assertLess(np.linalg.norm(prediction-fields[60:]) / np.linalg.norm(fields[60:]), .15)
+        self.assertLess(np.linalg.norm(prediction-fields[105:]) / np.linalg.norm(fields[105:]), .02)
         self.assertEqual(covariances.shape, (40, 2, 2))
         self.assertEqual(innovations.shape, (40, 5))
         self.assertTrue(np.all(np.linalg.eigvalsh(covariances) >= -1e-12))

@@ -79,7 +79,7 @@ def result_rows(records):
         audit = record["audit"]; residual = audit["independent_residual"]
         full = np.hypot(residual["momentum_x_rms"], residual["momentum_y_rms"])
         corner = np.sqrt((residual["top_corner_momentum_x_rms"]**2
-                          + residual["top_corner_momentum_y_rms"]**2) / 2)
+                          + residual["top_corner_momentum_y_rms"]**2))
         compare = audit.get("cfd_comparison")
         gate = "n/a: no raw matched field" if compare is None else ("pass" if compare["all_pass"] else "fail")
         claim = ("square: CFD gates pass" if audit["claim_status"] == "field-qualified-square-case"
@@ -179,6 +179,16 @@ def build_pdf(records, outdir):
                          "axes.spines.top": False, "axes.spines.right": False})
 
     def figure(key):
+        if key in ('deep_fields', 'deep_loss', 'deep_streamfunction'):
+            files={'deep_fields':'fields.png','deep_loss':'loss_continuation.png','deep_streamfunction':'streamfunction.png'}
+            captions={
+                'deep_fields':'Deep-cavity retained field: Re=1000, D/W=2.2, checkpoint 55118. Speed with streamlines, mean-zero pressure and vorticity. Symmetric-log scales retain the full pressure/vorticity range; equal physical aspect ratio is preserved.',
+                'deep_loss':'Observed continuation training MSEs through checkpoint 65711. The field shown above is checkpoint 55118. Logged steps are local to the resumed process, not a from-scratch history. These curves are not independent test loss or CFD error.',
+                'deep_streamfunction':'Integrated streamfunction and lower-cavity detail from checkpoint 55118. Candidate recirculation features are field diagnostics, not independently validated vortex centres.'}
+            path=ROOT/'results/week13_deep_cavity'/files[key]
+            pixels=plt.imread(path); h,w=pixels.shape[:2]
+            scale=min(490/w,350/h)
+            return KeepTogether([Image(str(path),width=w*scale,height=h*scale),Spacer(1,4),para(captions[key],'caption')])
         if key == "geometry":
             fig, axes = plt.subplots(1, 2, figsize=(7.5, 3), constrained_layout=True)
             for ax, depth in zip(axes, (1, 2)):
@@ -207,7 +217,7 @@ def build_pdf(records, outdir):
                 train = [np.sqrt(row["train_rx_mse"] + row["train_ry_mse"]) for row in rows]
                 ax.semilogy(x, train, color="#0072B2", label="masked train")
                 ax.semilogy(x, [row["heldout_momentum_rms"] for row in rows], "--", color="black", label="held-out full")
-                ax.semilogy(x, [row["top_corner_momentum_rms"] for row in rows], ":", color="#009E73", label="top corners")
+                ax.semilogy(x, [np.sqrt(2)*row["top_corner_momentum_rms"] for row in rows], ":", color="#009E73", label="top corners (vector RMS)")
                 ax.axvline(1000, color="#D55E00", lw=.9, alpha=.8)
                 ax.set(title=f"Re={record['re']}, D={record['depth']}", xlabel="optimizer step", ylabel="residual RMS")
                 ax.grid(which="both", alpha=.2)
@@ -390,6 +400,8 @@ The next paper-quality experiment must compare primitive/FOSLS and streamfunctio
         "language_info": {"name": "python", "version": "3"}}, "nbformat": 4, "nbformat_minor": 5}
     target.parent.mkdir(parents=True, exist_ok=True)
     target.write_text(json.dumps(notebook, indent=1) + "\n", encoding="utf-8")
+    from improve_classroom_notebooks import revise, w13
+    revise(target, w13)
     return target
 
 
@@ -401,6 +413,8 @@ def main():
     records = load_cases()
     pdf = build_pdf(records, args.output_dir)
     notebook = build_notebook(ROOT / "notebooks/week13/W13_Rectangular_Cavity_PINN_Research.ipynb")
+    import subprocess, sys
+    subprocess.run([sys.executable, str(ROOT/'qa/add_week13_deep_case.py')], check=True)
     manifest = {"builder": str(Path(__file__).relative_to(ROOT)), "source": str(SOURCE.relative_to(ROOT)),
                 "pdf_sha256": hashlib.sha256(pdf.read_bytes()).hexdigest(),
                 "case_audits": {f"re{r['re']}-d{r['depth']}": hashlib.sha256((r['dir']/"audit.json").read_bytes()).hexdigest() for r in records}}

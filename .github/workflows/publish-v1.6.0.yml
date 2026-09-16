@@ -1,0 +1,50 @@
+name: Publish FlowMLLab v1.6.0
+on:
+  push:
+    tags: [v1.6.0]
+permissions:
+  contents: write
+jobs:
+  release:
+    if: github.repository == 'Ehsan-Roohi/FlowMLLab'
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      OPENBLAS_NUM_THREADS: '1'
+      OMP_NUM_THREADS: '1'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: v1.6.0
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install test and packaging dependencies
+        run: |
+          sudo apt-get update && sudo apt-get install -y poppler-utils
+          python -m pip install -e '.[test]' build twine nbformat nbclient
+      - name: Test release
+        run: |
+          python -c "import flowmllab; assert flowmllab.__version__ == '1.6.0'"
+          python -m pytest -q tests qa
+          flowmllab smoke --root .
+          python qa/validate_course_release.py
+      - name: Build distributions
+        run: |
+          python -m build
+          python -m twine check dist/*
+      - name: Publish without modifying previous releases
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          if gh release view v1.6.0 >/dev/null 2>&1; then
+            echo 'Existing v1.6.0 left unchanged.'
+          else
+            gh release create v1.6.0 --verify-tag --latest \
+              --title 'FlowMLLab v1.6.0 - Deep-cavity PINNs and Weeks 14-15' \
+              --notes-file RELEASE_NOTES_v1.6.0.md dist/* \
+              lectures/week13_rectangular_cavity_pinn.pdf \
+              lectures/week14_rans_pinn_nn.pdf \
+              lectures/week15_geometry_generalization.pdf
+          fi

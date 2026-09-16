@@ -10,6 +10,24 @@ Week 13 builds on the verified Re=100 square-cavity pilot in Week 4.2 and on Chr
 
 ### 1. The cavity is a family of problems, not one picture
 
+### Primary retained example: Re=1000, D/W=2.2
+
+The updated notebook begins with the supplied deep-cavity field exported from restart-55118.ckpt on a 301 by 661 physical grid. It checks hashes, geometry, finite values, stationary-wall velocity, integrated streamfunction and finite-difference vorticity before plotting. The short CPU PINN later in the notebook teaches the algorithm; it does not reproduce this author-model checkpoint. The older four-case matrix below remains a secondary feasibility audit.
+
+@figure deep_fields
+
+Pressure is shown after removal of its physical-area-weighted mean. Pressure and vorticity use explicitly labelled symmetric-log scales without percentile clipping. Stationary-wall speeds vanish in the export. The full-grid finite-difference divergence maximum is about 4.33; sharp boundary variations can amplify finite-difference error even for a streamfunction model. This is not an autodifferentiated momentum audit and is not sufficient evidence of convergence. Matching raw CFD fields and model weights are not included in this export, so no new CFD error or final-convergence claim is made.
+
+@figure deep_streamfunction
+
+The recovered Unity training/data/loss.dat contains a later continuation history. The companion resume.json identifies restart-65711.ckpt. Seventy-four distinct logged steps remain after removing identical stage-boundary duplicates. The graph reports the two momentum training mean-square residuals and their sum; the last total is approximately 3.34e-10. Original test columns duplicated training values and are not independent validation. The resumed-process step axis must not be interpreted as the complete training clock or aligned with checkpoint 55118 by numeric label alone.
+
+@figure deep_loss
+
+Exercise: explain why these small training residuals cannot by themselves validate the earlier field. Identify the missing matched-checkpoint residual and CFD evidence, then compare the full-grid and corner-excluded finite-difference diagnostics printed by the notebook. Distinguish observation, numerical consistency and physical validation in the conclusion.
+
+### Geometry and governing equations
+
 Let the cavity width be L and its physical depth be H. Define D=H/L and use normalized computational coordinates x in [0,1] and eta in [0,1], with y=D eta. The lid speed U and width L define Re=UL/nu. This convention deliberately keeps Re tied to the width while D changes the geometry; choosing H instead would define a different parameterization and must not be mixed into the same table.
 
 @equation mapping

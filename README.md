@@ -1,5 +1,7 @@
 # FlowMLLab
 
+**New in v1.6.0:** [Week 15: geometry-aware operators](notebooks/week15/README.md), with OpenFOAM data and explicit held-out geometries; [Week 13: D/W=2.2 fields and continuation loss](notebooks/week13/README.md).
+
 **Week 14:** [RANS, PINN and neural turbulence closures](notebooks/week14/README.md)
 based on Lars Davidson's pyCALC-RANS workflow: an executed teaching notebook,
 [12-page lecture](lectures/week14_rans_pinn_nn.pdf), and a transparent reproduction
@@ -7,7 +9,7 @@ audit. Full paper-level numerical reproduction is not claimed.
 
 [![FlowMLLab CI](https://github.com/Ehsan-Roohi/FlowMLLab/actions/workflows/ci.yml/badge.svg)](https://github.com/Ehsan-Roohi/FlowMLLab/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.22651906.svg)](https://doi.org/10.5281/zenodo.22651906)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.22074169.svg)](https://doi.org/10.5281/zenodo.22074169)
 
 Learn scientific machine learning through reproducible fluid-mechanics experiments:
 generate numerical data, compare transparent baselines with learned models, and
@@ -59,6 +61,8 @@ Weeks 5 and 6 share a project pack and lecture guide, but have separate learning
 | [11](#week-11--shock-and-vortex-identification) | Physical diagnostics and overlapping learned labels | [Week 11 lab](notebooks/week11/README.md) | [Lecture 11](lectures/week11_shock_vortex_identification.pdf) |
 | [12](#week-12--dsmc-moment-reconstruction) | Additive moments, observation-conditioned reconstruction and support | [Week 12 lab](notebooks/week12/README.md) | [Lecture 12](lectures/week12_dsmc_moment_reconstruction.pdf) |
 | [13](#week-13--rectangular-cavity-pinn-research-audit) | Streamfunction PINNs across Reynolds number and cavity depth | [Week 13 audit](notebooks/week13/README.md) | [Lecture 13](lectures/week13_rectangular_cavity_pinn.pdf) |
+| [14](#week-14---rans-inverse-pinn-and-neural-turbulence-closures) | Davidson-based RANS, inverse PINN and neural closures | [Week 14 lab](notebooks/week14/README.md) | [Lecture 14](lectures/week14_rans_pinn_nn.pdf) |
+| [15](#week-15--geometry-aware-neural-operators) | Geometry generalization, Geo-DeepONet, FNO and U-FNO | [Week 15 lab](notebooks/week15/README.md) | [Lecture 15](lectures/week15_geometry_generalization.pdf) |
 
 ## Results gallery · in course order
 
@@ -388,6 +392,14 @@ archived research reconstruction shown above.
 
 ### Week 13 — Rectangular-cavity PINN research audit
 
+Primary retained case: **Re=1000, D/W=2.2**, checkpoint 55118. The separately recovered loss history ends at checkpoint 65711; it is not matched CFD validation or a from-scratch history.
+
+![Deep-cavity velocity, pressure and vorticity](results/week13_deep_cavity/fields.png)
+
+![Observed continuation training loss](results/week13_deep_cavity/loss_continuation.png)
+
+The four older cases below remain secondary feasibility audits.
+
 **Problem:** Solve square and deep lid-driven cavities.<br>
 **CFD / data:** Displayed fields are PINN solutions, not CFD output. OpenFOAM finite-volume and Nektar++ spectral/hp cavity calculations form a separate reference-validation campaign; they are not yet certified matched references for these displayed deep-cavity PINNs.<br>
 **Learning method:** Streamfunction PINN with hard wall constraints, trained using Adam then SSBroyden2 in float64.
@@ -476,9 +488,9 @@ Student submissions are not included.
 · [Citation metadata](CITATION.cff)
 · [Workshop, support, and consulting details](docs/RESULTS_GUIDE.md#workshops-support-and-consulting)
 
-Current release: **v1.5.1** · [GitHub release](https://github.com/Ehsan-Roohi/FlowMLLab/releases/tag/v1.5.1)
-· [Release notes](RELEASE_NOTES_v1.5.1.md).
-Version-specific Zenodo DOI: [10.5281/zenodo.22651906](https://doi.org/10.5281/zenodo.22651906).
+Current release: **v1.6.0** · [GitHub release](https://github.com/Ehsan-Roohi/FlowMLLab/releases/tag/v1.6.0)
+· [Release notes](RELEASE_NOTES_v1.6.0.md).
+Previous v1.5.1 Zenodo DOI: [10.5281/zenodo.22651906](https://doi.org/10.5281/zenodo.22651906).
 For earlier versions and their archived records, see the
 [release history](https://github.com/Ehsan-Roohi/FlowMLLab/releases).
 The [all-versions DOI](https://doi.org/10.5281/zenodo.22074169) resolves to the latest published archive.
@@ -486,3 +498,7 @@ The [all-versions DOI](https://doi.org/10.5281/zenodo.22074169) resolves to the 
 **Ehsan Roohi** · University of Massachusetts Amherst · [roohie@umass.edu](mailto:roohie@umass.edu)
 
 Copyright © 2026 Ehsan Roohi. [MIT License](LICENSE).
+
+### Week 15 — Geometry-aware neural operators
+
+[Executed notebook and data guide](notebooks/week15/README.md) · [Lecture](lectures/week15_geometry_generalization.pdf). Compare CFD and Geo-DeepONet/FNO velocity, pressure and streamlines with shared scales. The lab includes 130 sampled OpenFOAM fields across 51 masks and explicit geometry/family holdouts. U-FNO is included in the historical g011 audit. Ordinary DeepONet code and retained DSMC V5 results are included separately: no ordinary-DeepONet OpenFOAM predictions are fabricated.

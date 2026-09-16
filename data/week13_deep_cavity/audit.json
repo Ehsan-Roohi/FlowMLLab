@@ -1,0 +1,47 @@
+{
+  "source": "/project/pi_roohie_umass_edu/FlowMLLab_chris_deep_tf_20260913/training/source/CavityTrapREDepthSSB20.py",
+  "checkpoint": "/project/pi_roohie_umass_edu/FlowMLLab_chris_deep_tf_20260913/training/model/restart-55118.ckpt",
+  "case": {
+    "Re": 1000.0,
+    "depth_over_width": 2.2,
+    "tri": 0.0
+  },
+  "grid": {
+    "nx": 301,
+    "ny": 661
+  },
+  "finite": true,
+  "max_abs_divergence_fd": 4.325564732506521,
+  "wall_max_abs_velocity": {
+    "bottom": 0.0,
+    "left": 0.0,
+    "right": 0.0
+  },
+  "vortex_candidates": [
+    {
+      "x": 0.53,
+      "y": 1.78,
+      "psi": -0.1191650194119203
+    },
+    {
+      "x": 0.3433333333333334,
+      "y": 1.0366666666666666,
+      "psi": 0.013563170042210004
+    },
+    {
+      "x": 0.18333333333333335,
+      "y": 0.21666666666666667,
+      "psi": -3.5784040514594976e-05
+    },
+    {
+      "x": 0.92,
+      "y": 0.08333333333333334,
+      "psi": -6.566131757064475e-07
+    }
+  ],
+  "limitations": [
+    "Streamfunction is reconstructed by integrating u from the bottom wall.",
+    "Candidate extrema are not CFD or publication validation.",
+    "Finite-difference divergence includes differentiation error near walls."
+  ]
+}
