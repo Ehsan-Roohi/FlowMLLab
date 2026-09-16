@@ -232,15 +232,60 @@ The scalar output is commonly written
 \end{center}
 
 \subsection{What we implement in Week 4}
-The class notebook uses Reynolds number in the branch and $(x,y)$ in the trunk:
-\begin{equation}
-B(\widetilde{\Rey}),\qquad T(x,y)\quad\longrightarrow\quad (u,v).
-\end{equation}
-This is a \textbf{parameterized DeepONet-style architecture}. It is useful for learning a parametric solution family, but it is not a full demonstration of learning an arbitrary input function. A genuine cavity operator-learning dataset could vary the lid profile $U_{lid}(x)$; the branch would receive sensor values $[U_{lid}(\xi_1),\ldots,U_{lid}(\xi_m)]$.
+The class notebook uses scalar Reynolds number in the velocity branch and
+$\log\Rey$ in the pressure branch, with separate fixed POD spatial trunks:
+\[
+\widehat{\boldsymbol{u}}=\overline{\boldsymbol{u}}+
+\sum_k b_k^u(\Rey)t_k^u(x,y),\qquad
+\widehat p=\overline p+\sum_k b_k^p(\log\Rey)t_k^p(x,y).
+\]
+These spatial modes are computed from allowed CFD snapshots rather than learned
+by a coordinate network. This is a restricted parameter-to-field POD--DeepONet.
+It does not demonstrate learning arbitrary input functions. A function-input
+cavity dataset could vary the lid profile, with branch sensors
+$[U_{lid}(\xi_1),\ldots,U_{lid}(\xi_m)]$.
 
 \begin{warningbox}
 Do not claim operator generalization from a dataset that varies only one scalar parameter. The architecture may be DeepONet-like, but the scientific claim is parameter-to-field generalization.
 \end{warningbox}
+
+
+\subsection{Audit the physical pairing before fitting}
+For case $c$ and query $j$, a supervised pair is
+\[
+\bigl(B_c,\boldsymbol{x}_{cj}\bigr)\longmapsto q_c(\boldsymbol{x}_{cj}).
+\]
+Correct array shapes do not prove that these three entries belong together.
+Preserve source case IDs and source coordinates before flattening or shuffling.
+Compare branch case IDs to target case IDs and trunk queries to source target
+coordinates. In the cavity, check both $x$ and $y$, meshgrid indexing, and the
+flattening order. A permutation can preserve every shape while destroying the pairing.
+
+For a fixed-sensor branch, sensor positions and their order are shared across
+cases; the sampled function values vary. Query coordinates may vary across
+cases, provided each target retains its own query. Repeating the first case's
+coordinates is valid only after verifying that all query grids coincide.
+
+The accompanying Lab 3 now includes an executable pre-fit audit and a negative
+control with deliberately permuted coordinates. Metadata copied from the same
+incorrect source cannot independently detect the error: preserve solver-export
+metadata and check its physical interpretation as well.
+
+\paragraph{POD versus a learned trunk.}
+The implemented POD--DeepONet uses a fixed spatial basis derived from allowed
+training fields and a scalar Reynolds-number branch. It is a restricted
+parameter-to-field model. A conventional function-input DeepONet instead
+encodes samples such as a lid-velocity profile and learns a coordinate trunk.
+Even a sampled geometry input from a low-dimensional family does not establish
+accuracy for arbitrary geometries.
+
+\paragraph{Keep fitting and evaluation separate.}
+During model selection, fit scalers, means, and POD bases on selection-training
+cases only. A declared final refit may include validation cases after choices
+are frozen; blind cases remain excluded. Split before expanding cases into rows.
+Different random seeds do not by themselves guarantee distinct physical cases.
+If inspected test results influence repairs or tuning, reserve a fresh final test.
+The Week 9 moving-throat nozzle audit applies these same rules to variable grids.
 
 \section{Comparing Coordinate DNN and DeepONet}
 The coordinate DNN mixes parameters and coordinates at its input. DeepONet keeps a separate representation of the case and the query location, then combines latent features. This separation can be beneficial when many functions and coordinates are available, but no architecture is guaranteed to win on a small dataset.
@@ -340,3 +385,4 @@ Unstable DeepONet result & Sparse function/case coverage & Reduce claim; repeat 
 \end{enumerate}
 
 \end{document}
+
