@@ -12,6 +12,27 @@ spec.loader.exec_module(runner)
 
 
 class RestartExportTests(unittest.TestCase):
+    def test_capacity_adapter_changes_only_hidden_width(self):
+        calls = []
+        received = []
+
+        def base_fnn(layers, activation, initializer):
+            received.append((layers, activation, initializer))
+            return object()
+
+        adapter = runner.capacity_fnn_adapter(base_fnn, 64, calls)
+        adapter([5] + [32] * 6 + [3], "tanh", "Glorot normal")
+        self.assertEqual(received, [([5] + [64] * 6 + [3],
+                                     "tanh", "Glorot normal")])
+        self.assertEqual(len(calls), 1)
+        with self.assertRaisesRegex(ValueError, "exactly one"):
+            adapter([5] + [32] * 6 + [3], "tanh", "Glorot normal")
+
+    def test_capacity_adapter_rejects_changed_author_architecture(self):
+        adapter = runner.capacity_fnn_adapter(lambda *a: None, 64, [])
+        with self.assertRaisesRegex(ValueError, "Unexpected author FNN"):
+            adapter([5, 32, 32, 3], "tanh", "Glorot normal")
+
     def test_repeated_precision_loss_is_an_external_plateau(self):
         self.assertTrue(runner.external_plateau(
             7.548158881160543e-08,

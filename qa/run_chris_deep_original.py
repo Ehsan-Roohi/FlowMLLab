@@ -46,6 +46,22 @@ def external_plateau(previous_loss, current_loss, message):
     )
 
 
+def capacity_fnn_adapter(base_fnn, hidden_width, calls):
+    """Change only the width of the author's active six-layer FNN.
+
+    Fail closed if a future private source changes its architecture. The
+    physics and output transform remain in the author-supplied source.
+    """
+    def build(layers, *args, **kwargs):
+        if list(layers) != [5] + [32] * 6 + [3]:
+            raise ValueError(f"Unexpected author FNN architecture: {layers}")
+        calls.append(1)
+        if len(calls) != 1:
+            raise ValueError("Expected exactly one author FNN construction")
+        return base_fnn([5] + [hidden_width] * 6 + [3], *args, **kwargs)
+    return build
+
+
 def checked_extract(archive, target):
     names = {"CavityTrapREDepthSSB20.py", "_optimize.py", "optimizers.txt", "scipy_optimizer.txt"}
     target.mkdir(parents=True, exist_ok=True)
@@ -73,6 +89,10 @@ def main():
     p.add_argument("--reynolds", type=float, help="Declared continuation Reynolds number")
     p.add_argument("--ssb-phases", type=int, default=10)
     p.add_argument("--seed", type=int, default=1234)
+    p.add_argument("--hidden-width", type=int, default=32,
+                   help="Width of each of the author's six tanh hidden layers")
+    p.add_argument("--num-domain", type=int, default=100000,
+                   help="Number of interior PDE collocation points")
     p.add_argument("--fixed-sampling", action="store_true",
                    help="Keep deterministic collocation points across phases and restarts")
     p.add_argument("--refine-from", type=Path,
@@ -93,6 +113,8 @@ def main():
         p.error("Depth must exceed 0.1 and Reynolds number must be positive and finite")
     if args.ssb_phases < 1 or args.refine_ssb_steps < 1:
         p.error("SSB phases and steps must be positive")
+    if args.hidden_width < 8 or args.num_domain < 1000:
+        p.error("Hidden width must be at least 8 and domain points at least 1000")
     if args.refine_adam_steps < 1:
         raise ValueError("--refine-adam-steps must be positive")
     archive = args.archive.resolve()
@@ -127,6 +149,10 @@ def main():
                     epochsAdam=5000, epochsLBFGS=25000, NumBFGS=10)
     for k, v in expected.items():
         assert original[k] == v, (k, original[k])
+    assert original["interiorpts"] == [100000, 1000, 2000, 2000], original["interiorpts"]
+    original["main"].__globals__["interiorpts"] = [
+        args.num_domain, *original["interiorpts"][1:]
+    ]
     if args.case_index is not None or explicit_case:
         re, depth = ((args.reynolds, args.depth) if explicit_case else DEEP_CASES[args.case_index])
         expected.update(ReMin=.9*re, ReMax=1.1*re, DMin=depth-.1, DMax=depth+.1)
@@ -145,6 +171,10 @@ def main():
                            adam_steps=args.refine_adam_steps,
                            adam_lr=args.refine_adam_lr if args.refine_from else original['lr'],
                            lower_anchors=args.lower_anchors)
+    if args.hidden_width != 32 or args.num_domain != 100000:
+        training_config["capacity"] = dict(hidden_width=args.hidden_width,
+                                            hidden_layers=6,
+                                            num_domain=args.num_domain)
     training_path = out / 'training-configuration.json'
     if training_path.exists() and json.loads(training_path.read_text()) != training_config:
         raise ValueError('Refusing to resume with different training settings')
@@ -152,7 +182,9 @@ def main():
     # Fail early if the installed geometry API cannot represent the original box.
     box = dde.geometry.Rectangle([0] * 5, [1] * 5)
     assert box.random_points(8).shape == (8, 5)
-    print("PREFLIGHT PASS: GPU; float64; actual SSBroyden2; parameters", expected, flush=True)
+    print("PREFLIGHT PASS: GPU; float64; actual SSBroyden2; parameters", expected,
+          "capacity", dict(hidden_width=args.hidden_width,
+                           hidden_layers=6, num_domain=args.num_domain), flush=True)
     if args.preflight:
         return
     os.chdir(out)
@@ -314,10 +346,20 @@ def main():
         dde.Model.compile = compile_refinement
     Path("provenance.json").write_text(json.dumps(dict(source_sha256=SOURCE_HASH,
         optimizer_sha256=OPT_HASH, parameters=expected,
+        architecture=[5] + [args.hidden_width] * 6 + [3],
+        num_domain=args.num_domain,
         refinement=state.get("refinement"),
         seed=args.seed, fixed_sampling=args.fixed_sampling,
         protocol="author source with explicit SSB dispatch and checkpoint wrapper; declared parameter-box adaptation" if args.case_index is not None else "original source with explicit SSB dispatch and checkpoint wrapper"), indent=2))
-    original["main"]()
+    base_fnn = dde.maps.FNN
+    calls = []
+    dde.maps.FNN = capacity_fnn_adapter(base_fnn, args.hidden_width, calls)
+    try:
+        original["main"]()
+    finally:
+        dde.maps.FNN = base_fnn
+    if len(calls) != 1:
+        raise RuntimeError(f"Expected one author FNN construction, found {len(calls)}")
 
 
 if __name__ == "__main__":
