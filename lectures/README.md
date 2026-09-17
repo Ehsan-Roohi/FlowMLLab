@@ -10,7 +10,7 @@ newly plotted from attributed data and retained executions.
 
 | File | Main topics | Companion notebooks |
 | --- | --- | --- |
-| `week01_numerical_foundations.pdf` | Python, TensorFlow, CFD fields, finite differences, convergence, Ghia validation | `notebooks/week01/` |
+| [week01_numerical_foundations.pdf](week01_numerical_foundations.pdf) | Continuity and component momentum, nondimensionalization, streamfunction/vorticity derivations, finite differences, wall conditions, coupled iteration, convergence, Ghia validation | `notebooks/week01/` |
 | `week01_1_ai_assisted_scientific_software.pdf` | Specification, manufactured-solution verification, physical gates, provenance, adversarial axis tests, human-agent authority and disclosure | `notebooks/week01_1/W1_1_AI_Assisted_Scientific_Software.ipynb` |
 | `week02_supervised_learning_rarefaction.pdf` | Neurons, MLPs, losses, optimization, scaling, case-wise splits, rarefaction | `notebooks/week02/` |
 | `week02_1_probabilistic_uq.pdf` | Observation models, exact Bayesian regression, POD--Gaussian-process fields, proper scores, leakage-free calibration, retained blind under-coverage | `notebooks/week02_1/Probabilistic_UQ_CFD.ipynb` |
@@ -66,3 +66,48 @@ Recommended teaching pattern for each meeting:
 3. guided notebook work;
 4. benchmark/baseline/physical comparison; and
 5. an exit prompt asking what evidence would falsify the conclusion.
+
+## Rebuilding the Week-1 foundations lecture
+
+The expanded 27-page [editable LaTeX source](source/week01_numerical_foundations.tex)
+includes the proof of the original lecture's Eq. (15), an optional curl-of-momentum
+derivation, and the distinction between inner Poisson sweeps and outer time steps.
+The sign convention and wall formulas match the introductory Week-1 notebook.
+The [finite-difference and code companion source](source/week01_code_walkthrough.tex)
+is included in the same PDF: pages 14–17 cover worked finite differences and
+Poisson iteration, pages 18–21 explain the existing solver functions, page 22
+shows algorithm diagrams, and page 23 maps all sixteen original sections.
+See the [coverage audit](source/week01_coverage.md) for what was restored or
+clarified and an immutable link to the unchanged original PDF.
+
+From the repository root, regenerate the figure and numerical record with:
+
+```bash
+python qa/build_week01_foundations_figure.py
+```
+
+This runs only the existing introductory Re=100 solver functions and benchmark
+arrays, without executing the notebook's separate retained pressure-validation
+demonstrations. It requires NumPy and Matplotlib. The figure and single-grid
+diagnostics are retained in `source/week01_assets/`; they are not a claim of
+grid independence or a new research validation.
+
+Compile with a standard LaTeX installation (including the packages named in the source):
+
+```bash
+cd lectures/source
+pdflatex -interaction=nonstopmode -halt-on-error -output-directory=/tmp week01_numerical_foundations.tex
+pdflatex -interaction=nonstopmode -halt-on-error -output-directory=/tmp week01_numerical_foundations.tex
+cp /tmp/week01_numerical_foundations.pdf ../week01_numerical_foundations.pdf
+```
+
+### Explicitly named PDF editions
+
+- [23-page edition](versions/week01_23pages.pdf): the complete code and finite-difference revision.
+- [27-page edition with pressure derivation](versions/week01_27pages_pressure_derivation.pdf): includes the full 23-page material and four new pages on pressure elimination, Poisson derivation, wall data, compatibility, gauge, and method attribution.
+
+The main `week01_numerical_foundations.pdf` now matches the 27-page edition.
+The new appendix source is [week01_pressure_derivation.tex](source/week01_pressure_derivation.tex).
+It distinguishes curl-based pressure elimination from streamfunction-based
+continuity, and the notebook's Jacobi/Euler method from Ghia's CSI-MG method.
+Both named editions have been reopened and their page counts verified.

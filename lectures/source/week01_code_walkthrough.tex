@@ -1,0 +1,339 @@
+% Included by week01_numerical_foundations.tex after the core lecture.
+\newpage
+\topic{A1}{Finite differences: from a slope to a formula}\label{sec:fd-slope}
+A derivative is a limiting slope, $f'(x_i)=\lim_{h\to0}[f(x_i+h)-f(x_i)]/h$. On a grid, $h$ is finite. We approximate the derivative using available samples and ask how the neglected terms depend on $h$. A difference is the numerator; a derivative approximation also divides by the correct distance.
+
+\begin{center}
+\begin{tikzpicture}[x=2.4cm,y=1cm,>=stealth]
+\draw[->] (-.35,0)--(2.5,0) node[right] {$x$};
+\foreach \x/\lab in {0/{i-1},1/i,2/{i+1}}{
+\fill[accent] (\x,0) circle (2pt);
+\node[above=5pt] at (\x,0) {$f_{\lab}$};
+\node[below=5pt] at (\x,0) {$x_{\lab}$};}
+\draw[<->] (0,-.9)--(1,-.9) node[midway,below] {$h$};
+\draw[<->] (1,-.9)--(2,-.9) node[midway,below] {$h$};
+\end{tikzpicture}
+\end{center}
+Expand about $x_i$, keeping the signs of odd powers:
+\begin{align*}
+f_{i+1}&=f_i+h f'_i+\frac{h^2}{2}f''_i+\frac{h^3}{6}f'''_i+O(h^4),\\
+f_{i-1}&=f_i-h f'_i+\frac{h^2}{2}f''_i-\frac{h^3}{6}f'''_i+O(h^4).
+\end{align*}
+Using the first line alone gives a forward difference. Using the second gives a backward difference. Subtracting the two cancels the even powers and gives a centered difference:
+\begin{center}\begin{tabular}{lll}\toprule
+Method & Approximation to $f'_i$ & Leading error\\\midrule
+Forward & $(f_{i+1}-f_i)/h$ & $+(h/2)f''_i$\\[5pt]
+Backward & $(f_i-f_{i-1})/h$ & $-(h/2)f''_i$\\[5pt]
+Centered & $(f_{i+1}-f_{i-1})/(2h)$ & $+(h^2/6)f'''_i$\\\bottomrule
+\end{tabular}\end{center}
+\textbf{Why $2h$?} The centered numerator spans from $x_i-h$ to $x_i+h$, a distance $2h$. Dividing it by $h$ would double the derivative. The centered estimate uses symmetric neighbors and cancels the first-order error for smooth fields.
+
+\textbf{Boundary distinction.} At $i=0$ there is no stored $f_{-1}$. A centered stencil therefore needs ghost values or a different boundary formula. A second-order one-sided derivative is $(-3f_0+4f_1-f_2)/(2h)$. The cavity code instead imposes wall velocities directly and obtains wall vorticity from the streamfunction Taylor expansion on page~9.
+\checkpoint{Which approximation needs the center value $f_i$, and which needs both neighbors? Do not confuse the first derivative with the three-point second derivative on the next page.}
+\newpage
+\topic{A2}{Worked examples: accuracy and curvature}\label{sec:fd-errors}
+Take $f(x)=x^3$ at $x=1$. The exact slope is $f'(1)=3$. For $h=0.1$, the samples are $f(0.9)=0.729$, $f(1)=1$, and $f(1.1)=1.331$:
+\[
+D_+f=\frac{1.331-1}{0.1}=3.31,\quad
+D_-f=\frac{1-0.729}{0.1}=2.71,\quad
+D_0f=\frac{1.331-0.729}{0.2}=3.01.
+\]
+\begin{center}\begin{tabular}{rrrrr}\toprule
+$h$ & Forward & Backward & Centered & $|D_0f-3|$\\\midrule
+0.10 & 3.3100 & 2.7100 & 3.0100 & 0.0100\\
+0.05 & 3.1525 & 2.8525 & 3.0025 & 0.0025\\\bottomrule
+\end{tabular}\end{center}
+Halving $h$ reduces the centered error by a factor of four here. This is what second-order truncation error means: approximately $C h^2$ for a smooth fixed function as $h$ decreases. It does not mean two decimal places or two iterations. At extremely small spacing, roundoff and subtractive cancellation can become important.
+
+\textbf{Second derivative: add instead of subtract.} Adding the Taylor expansions eliminates the odd powers:
+\[
+f_{i+1}+f_{i-1}=2f_i+h^2f''_i+\frac{h^4}{12}f^{(4)}_i+O(h^6).
+\]
+Thus
+\[
+\boxed{D_{xx}f_i=\frac{f_{i+1}-2f_i+f_{i-1}}{h^2}
+=f''_i+\frac{h^2}{12}f^{(4)}_i+O(h^4).}
+\]
+This measures how the slope changes, or curvature. For $f=x^4$ at $x=1$ with $h=0.1$, it gives $(1.4641-2+0.6561)/0.01=12.02$, compared with the exact value $12$. At $h=0.05$ it gives $12.005$: the error again decreases fourfold.
+
+\textbf{Small executable example (independent of the CFD run)}
+\begin{lstlisting}
+for h in (0.1, 0.05):
+    f = lambda x: x**3
+    forward = (f(1+h) - f(1)) / h
+    backward = (f(1) - f(1-h)) / h
+    centered = (f(1+h) - f(1-h)) / (2*h)
+    curvature = ((1+h)**4 - 2 + (1-h)**4) / h**2
+    print(h, forward, backward, centered, curvature)
+\end{lstlisting}
+\checkpoint{For $f=x^2$, centered first and second derivatives are exact in exact arithmetic. Why is that example alone insufficient to demonstrate the observed order of a general derivative approximation?}
+\newpage
+\topic{A3}{The two-dimensional stencil and array slices}\label{sec:fd-grid}
+At $(x_i,y_j)$, use two neighbors in $x$ and two in $y$. Equal spacing gives the five-point Laplacian. Diagonal nodes are not used by this stencil.
+\begin{center}
+\begin{tikzpicture}[x=1.5cm,y=1.05cm,>=stealth]
+\draw[step=1,gray!35] (-1.1,-1.1) grid (1.1,1.1);
+\draw[accent,thick] (-1,0)--(1,0) (0,-1)--(0,1);
+\foreach \x/\y/\lab in {0/0/C,1/0/E,-1/0/W,0/1/N,0/-1/S}
+{\node[draw=accent,fill=white,circle,inner sep=4pt] at (\x,\y) {$\lab$};}
+\node[right] at (1.3,0) {$E=f_{j,i+1}$};
+\node[above] at (0,1.25) {$N=f_{j+1,i}$};
+\node[below] at (0,-1.25) {$S=f_{j-1,i}$};
+\node[left] at (-1.3,0) {$W=f_{j,i-1}$};
+\draw[->] (3,-1)--(3.6,-1) node[right] {$x,\ i$};
+\draw[->] (3,-1)--(3,-.3) node[above] {$y,\ j$};
+\end{tikzpicture}
+\end{center}
+\[
+L_h f=\frac{E-2C+W}{\Delta x^2}+\frac{N-2C+S}{\Delta y^2}
+\quad\xrightarrow{\Delta x=\Delta y=h}\quad
+\frac{E+W+N+S-4C}{h^2}.
+\]
+\textbf{Numerical check.} For $f=x^2+3y^2$ at $(0.5,0.5)$ and $h=0.1$, $(C,E,W,N,S)=(1,1.11,0.91,1.33,0.73)$. Then $L_h f=(4.08-4)/0.01=8$, matching $f_{xx}+f_{yy}=2+6$. This smooth polynomial is a stencil check, not a cavity solution.
+
+\textbf{One stencil, many nodes at once.} In an $N_y\times N_x$ NumPy array:
+\begin{center}\begin{tabular}{lll}\toprule
+Stencil part & Python slice & Shape\\\midrule
+Center & \texttt{f[1:-1, 1:-1]} & $(N_y-2,N_x-2)$\\
+East / west & \texttt{f[1:-1, 2:]} / \texttt{f[1:-1, :-2]} & Same\\
+North / south & \texttt{f[2:, 1:-1]} / \texttt{f[:-2, 1:-1]} & Same\\\bottomrule
+\end{tabular}\end{center}
+\texttt{1:-1} excludes the first and last entries; \texttt{2:} starts at index 2; \texttt{:-2} stops before the last two entries. NumPy applies arithmetic element by element to these equally shaped blocks. For $N=65$, every interior block is $63\times63$.
+
+\textbf{Read \texttt{laplacian(phi, dx, dy)}.} It allocates \texttt{zeros\_like(phi)}, fills only the interior using the two second differences, and returns an array of the original shape. Its zero boundary entries are uncomputed placeholders, not a claim that the physical Laplacian is zero at a wall. The transport function writes the same interior stencil explicitly.
+\newpage
+\topic{A4}{From the Poisson stencil to a coupled system}\label{sec:fd-system}
+For equal spacing, $L_h\psi=-\omega$ becomes
+\[
+4\psi_C-\psi_E-\psi_W-\psi_N-\psi_S=h^2\omega_C.
+\]
+Solving this row for $\psi_C$ gives a local update, but its four neighbors are also unknown. This is why discretization produces a \emph{system} of equations rather than a collection of independent calculations.
+
+\textbf{A four-unknown problem you can solve by hand.} Take two interior nodes in each direction in the unit square: $h=1/3$. All boundary values of $\psi$ are zero. Label the interior values $a,b$ along the lower row and $c,d$ along the upper row, and prescribe $\omega=-2$ at all four interior nodes. Then
+\[
+\begin{bmatrix}
+4&-1&-1&0\\-1&4&0&-1\\-1&0&4&-1\\0&-1&-1&4
+\end{bmatrix}
+\begin{bmatrix}a\\b\\c\\d\end{bmatrix}
+=-\frac{2}{9}\begin{bmatrix}1\\1\\1\\1\end{bmatrix}.
+\]
+The solution is $a=b=c=d=-1/9$. This example tests the Poisson equation only; its prescribed vorticity is not obtained from a complete no-slip cavity solve.
+
+\textbf{Jacobi iteration from zero.} Update each node from the \emph{previous sweep's} neighbors:
+\[
+a^{k+1}=\tfrac14(b^k+c^k-2/9),\qquad
+b^{k+1}=\tfrac14(a^k+d^k-2/9),
+\]
+with analogous rows for $c,d$. Symmetry makes all four entries identical in this example:
+\begin{center}\begin{tabular}{rrr}\toprule
+Sweep $k$ & Each interior $\psi$ & Error relative to $-1/9$\\\midrule
+0 & $0$ & $1/9$\\
+1 & $-1/18$ & $1/18$\\
+2 & $-1/12$ & $1/36$\\
+3 & $-7/72$ & $1/72$\\
+$\infty$ & $-1/9$ & $0$\\\bottomrule
+\end{tabular}\end{center}
+\textbf{Why the code uses \texttt{old = psi.copy()}.} A complete snapshot makes the dependence on the old sweep explicit. In a nested point loop, immediately reusing updated neighbors would instead give a Gauss--Seidel-type sweep. In NumPy, the whole right-hand expression is evaluated before assignment, but \texttt{.copy()} also makes the algorithm unambiguous and preserves the earlier values.
+
+This Poisson iteration index $k$ is not time. Its inputs are a fixed current $\omega$ and fixed wall $\psi$. After this solve, the outer algorithm evolves $\omega$ and must solve a new Poisson problem.
+\newpage
+\topic{B1}{Reading the code: grid and Poisson solve}\label{sec:code-start}
+The following excerpts are from the introductory solver in \texttt{03\_cavity\_ghia.ipynb}; comments and line wrapping are added for teaching. Execute the definitions before calling \texttt{run\_cavity}. The separate pressure-validation cells at the start of that notebook are not required to understand these functions.
+
+\textbf{\texttt{build\_grid(N)}: positions before fields}
+\begin{lstlisting}
+x = np.linspace(0.0, 1.0, N)
+y = np.linspace(0.0, 1.0, N)
+X, Y = np.meshgrid(x, y)
+dx = x[1] - x[0]
+dy = y[1] - y[0]
+\end{lstlisting}
+\texttt{linspace} includes both endpoints, so $N$ nodes give $N-1$ intervals and $\Delta x=1/(N-1)$. With the default \texttt{meshgrid} indexing, \texttt{X[j,i]=x[i]} and \texttt{Y[j,i]=y[j]}. \texttt{X,Y} are coordinate arrays for plotting; they are not the velocity fields. The function returns all six arrays/scalars. For $N=65$, \texttt{x.shape=(65,)} and \texttt{X.shape=(65,65)}.
+
+\textbf{\texttt{solve\_streamfunction\_poisson}: implement the algebra}
+\begin{lstlisting}
+dx2 = dx**2
+dy2 = dy**2
+denom = 2.0 * (dx2 + dy2)
+for _ in range(iterations):
+    old = psi.copy()
+    psi[1:-1, 1:-1] = (
+        (old[1:-1, 2:] + old[1:-1, :-2]) * dy2
+        + (old[2:, 1:-1] + old[:-2, 1:-1]) * dx2
+        + omega[1:-1, 1:-1] * dx2 * dy2
+    ) / denom
+    psi[0, :] = 0.0
+    psi[-1, :] = 0.0
+    psi[:, 0] = 0.0
+    psi[:, -1] = 0.0
+\end{lstlisting}
+The first neighbor sum is east plus west; the second is north plus south. Multiplying the finite-difference equation by $\Delta x^2\Delta y^2$ explains the apparently crossed weights: east/west gets \texttt{dy2} and north/south gets \texttt{dx2}. The \emph{positive} omega term in the numerator is correct for $\nabla^2\psi=-\omega$.
+
+\texttt{range(iterations)} performs a fixed number of sweeps; the underscore means that the loop counter is unused. The four assignments restore the Dirichlet wall values after each sweep. There is no residual-based stopping test inside this function. The returned \texttt{psi} is then used to calculate velocity.
+\newpage
+\topic{B2}{Reading the code: wall vorticity and velocity}
+\textbf{\texttt{apply\_vorticity\_boundary\_conditions}}
+\begin{lstlisting}
+omega[0, 1:-1] = -2.0 * psi[1, 1:-1] / dy**2
+omega[-1, 1:-1] = (
+    -2.0 * psi[-2, 1:-1] / dy**2 - 2.0 * U / dy
+)
+omega[1:-1, 0] = -2.0 * psi[1:-1, 1] / dx**2
+omega[1:-1, -1] = -2.0 * psi[1:-1, -2] / dx**2
+\end{lstlisting}
+Line 1 updates the bottom, lines 2--4 the top, then the left and right walls. Index \texttt{-1} means the last row or column and \texttt{-2} the next-to-last one. Since \texttt{y} increases from 0 to 1, the last row is the top wall. The top-wall expression contains the additional moving-lid term derived on page~9.
+
+Slices exclude corners because two different walls meet there. The notebook sets each corner to the average of its adjacent wall values, for example
+\begin{lstlisting}
+omega[-1, 0] = 0.5 * (omega[-1, 1] + omega[-2, 0])
+\end{lstlisting}
+This function updates the supplied array in place and returns it. The caller's \texttt{omega} therefore changes; it is not an independent new array.
+
+\textbf{\texttt{compute\_velocity}: derivatives of the new streamfunction}
+\begin{lstlisting}
+u = np.zeros_like(psi)
+v = np.zeros_like(psi)
+u[1:-1, 1:-1] = (
+    psi[2:, 1:-1] - psi[:-2, 1:-1]
+) / (2.0 * dy)
+v[1:-1, 1:-1] = -(
+    psi[1:-1, 2:] - psi[1:-1, :-2]
+) / (2.0 * dx)
+u[0, :] = 0.0
+u[-1, :] = U
+u[:, 0] = 0.0
+u[:, -1] = 0.0
+\end{lstlisting}
+Horizontal velocity uses a difference in the \emph{first} index because $u=\psi_y$. Vertical velocity uses a difference in the second index and a minus sign because $v=-\psi_x$. The notebook also explicitly sets all four boundaries of \texttt{v} to zero.
+
+The final two assignments for \texttt{u} overwrite the top corners with zero. Changing assignment order can change the corner convention. For the lecture's nondimensional $Re=100$ case, keep \texttt{U=1}; changing only \texttt{U} while holding the diffusion coefficient $1/Re$ fixed changes the effective Reynolds number based on the actual lid speed.
+\newpage
+\topic{B3}{Reading the code: one vorticity time step}
+\textbf{\texttt{advance\_vorticity}} takes the current fields and returns both updated vorticity and the old snapshot. The snapshot is needed for explicit stepping and the change diagnostic.
+\begin{lstlisting}
+old = omega.copy()
+dwdx = (old[1:-1, 2:] - old[1:-1, :-2]) / (2.0 * dx)
+dwdy = (old[2:, 1:-1] - old[:-2, 1:-1]) / (2.0 * dy)
+lap_omega = (
+    (old[1:-1, 2:] - 2.0*old[1:-1, 1:-1]
+     + old[1:-1, :-2]) / dx**2
+    + (old[2:, 1:-1] - 2.0*old[1:-1, 1:-1]
+       + old[:-2, 1:-1]) / dy**2
+)
+convection = u[1:-1, 1:-1]*dwdx + v[1:-1, 1:-1]*dwdy
+diffusion = (1.0 / Re) * lap_omega
+omega[1:-1, 1:-1] = (
+    old[1:-1, 1:-1] + dt * (-convection + diffusion)
+)
+return omega, old
+\end{lstlisting}
+\begin{center}\begin{tabular}{ll}\toprule
+Code quantity & Mathematical meaning\\\midrule
+\texttt{dwdx, dwdy} & $D_x\omega^n, D_y\omega^n$\\
+\texttt{lap\_omega} & $L_h\omega^n$\\
+\texttt{convection} & $u^nD_x\omega^n+v^nD_y\omega^n$\\
+\texttt{diffusion} & $Re^{-1}L_h\omega^n$\\
+\texttt{-convection + diffusion} & Approximation to $\partial\omega/\partial t$\\\bottomrule
+\end{tabular}\end{center}
+The transport equation has convection on the left. Moving it to the right explains the minus sign in the update. Multiplying the right-hand side by \texttt{dt} converts a rate of change into an increment. There is no division by \texttt{dt} in the final explicit update.
+
+\textbf{One-node calculation.} Suppose $\omega^n=-2$, $u=0.4$, $v=-0.1$, $D_x\omega=3$, $D_y\omega=-2$, and $L_h\omega=20$. At $Re=100$ and $\Delta t=0.001$, convection is $1.4$, diffusion is $0.2$, and
+\[
+\omega^{n+1}=-2+0.001(-1.4+0.2)=-2.0012.
+\]
+These supplied local numbers illustrate the arithmetic, not a measured cavity point. For a real node, the surrounding old-field values determine all three derivatives.
+
+Only interior entries are advanced. Boundary entries are imposed separately by the wall-vorticity function, after the update. Mixing new and old neighbor values inside this explicit stencil would implement a different numerical method.
+\newpage
+\topic{B4}{Reading the code: orchestration and diagnostics}
+\textbf{\texttt{run\_cavity}} creates the grid, initializes zero arrays, and imposes wall vorticity before entering this loop. This excerpt follows the actual call order; the long diagnostic expression is wrapped for readability.
+\begin{lstlisting}
+for step in range(1, steps + 1):
+    psi = solve_streamfunction_poisson(
+        psi, omega, dx, dy, iterations=poisson_iters)
+    omega = apply_vorticity_boundary_conditions(
+        psi, omega, U, dx, dy)
+    u, v = compute_velocity(psi, U, dx, dy)
+    omega, old_omega = advance_vorticity(
+        omega, u, v, Re, dt, dx, dy)
+    omega = apply_vorticity_boundary_conditions(
+        psi, omega, U, dx, dy)
+    if step % report_every == 0:
+        residual = (np.linalg.norm(omega - old_omega)
+                    / (np.linalg.norm(omega) + 1e-30))
+        residual_steps.append(step)
+        residual_values.append(residual)
+\end{lstlisting}
+\texttt{range(1, steps+1)} includes the final requested step. The modulo condition reports every \texttt{report\_every} steps; it does not skip evolution between reports. For a two-dimensional array, this use of \texttt{np.linalg.norm} gives the Frobenius norm, the square root of the sum of squared entries.
+
+After the loop the code performs another Poisson solve with \texttt{2*poisson\_iters}, reapplies wall vorticity, and recomputes velocity. It returns a dictionary containing coordinates, fields, diagnostics, and run parameters. Access a field as \texttt{result["u"]}. The final adjustment means the last printed change diagnostic is not a fresh simultaneous residual evaluation of every returned equation.
+
+\textbf{\texttt{centerline\_profiles} and \texttt{ghia\_errors}}
+\begin{lstlisting}
+mid = len(x) // 2
+u_center = u[:, mid] / U
+v_center = v[mid, :] / U
+u_interp = np.interp(GHIA_Y, y, u_center)
+v_interp = np.interp(GHIA_X, x, v_center)
+err_u = np.linalg.norm(u_interp-GHIA_U) / np.linalg.norm(GHIA_U)
+err_v = np.linalg.norm(v_interp-GHIA_V) / np.linalg.norm(GHIA_V)
+\end{lstlisting}
+For the odd uniform grid $N=65$, index 32 lies at 0.5. \texttt{u[:,mid]} fixes $x$ and varies $y$; \texttt{v[mid,:]} fixes $y$ and varies $x$. \texttt{np.interp} samples these computed curves at the benchmark coordinates. An even grid has no node exactly at 0.5, so this simple index selection would need interpolation in the transverse direction too.
+\newpage
+\topic{C}{Visual guide: the solver and pressure extension}\label{sec:visual-guide}
+\textbf{The actual loop has two levels.} The diagram retains the original lecture's algorithm overview while making the fixed-step behavior and boundary-update order explicit.
+\begin{center}
+\begin{tikzpicture}[>=stealth,box/.style={draw=accent,rounded corners,align=center,text width=9.7cm,minimum height=.62cm,font=\small},node distance=.3cm]
+\node[box] (init) {Initialize $\psi,\omega$; impose wall vorticity};
+\node[box,below=of init] (poisson) {Inner loop: Jacobi solve for $\psi$ at fixed $\omega$};
+\node[box,below=of poisson] (vel) {Update wall $\omega$; recover $u,v$ and impose wall velocities};
+\node[box,below=of vel] (step) {Advance interior $\omega$; reapply wall $\omega$};
+\node[box,below=of step] (report) {Record change diagnostic at reporting steps};
+\node[box,below=of report] (finish) {After requested steps: final Poisson solve and velocity recovery};
+\draw[->] (init)--(poisson);\draw[->] (poisson)--(vel);\draw[->] (vel)--(step);\draw[->] (step)--(report);\draw[->] (report)--(finish);
+\draw[->] (report.east)--++(.8,0) |- (poisson.east);
+\node[rotate=90,font=\small,fill=white] at (6.3,-2.4) {next outer step};
+\end{tikzpicture}
+\end{center}
+There is no tolerance-triggered exit in the current teaching loop. Inspect equation defects and benchmark agreement as well as changes between iterates. A declining update alone does not demonstrate grid independence.
+
+\textbf{Optional pressure recovery.} This separate path begins with a computed velocity field; it is not a feedback step required by the streamfunction--vorticity solver.
+\begin{center}
+\begin{tikzpicture}[>=stealth,box/.style={draw=accent,rounded corners,align=center,text width=9.7cm,minimum height=.62cm,font=\small},node distance=.3cm]
+\node[box] (u) {Velocity field $u,v$: compute consistent velocity gradients};
+\node[box,below=of u] (rhs) {Form pressure-Poisson right-hand side and wall data};
+\node[box,below=of rhs] (p) {Solve $\nabla^2p=-[u_x^2+2u_yv_x+v_y^2]$};
+\node[box,below=of p] (g) {Set the gauge: $p\leftarrow p-\bar p$};
+\draw[->] (u)--(rhs);\draw[->] (rhs)--(p);\draw[->] (p)--(g);
+\end{tikzpicture}
+\end{center}
+The gauge removes an arbitrary constant. Correct wall data and Neumann compatibility still matter, as explained on page~13. The introductory \texttt{run\_cavity} return dictionary does not contain a pressure field; the notebook's separate pressure-validation material is an extension with its own run settings.
+
+\textbf{Suggested classroom sequence.} Derive one stencil, do one update by hand, identify the matching array slice, and then run the full example. Ask students to predict the effect of a sign error before showing a plot.
+\newpage
+\topic{D}{Coverage of the original lecture}\label{sec:coverage}
+This expanded edition reorganizes the original lecture; it is not a verbatim copy. The table maps all sixteen original sections. Earlier shortened definitions and visual explanations have been restored or expanded. The original PDF remains available unchanged at its baseline Git commit, linked in the accompanying coverage note.
+\begin{center}\small
+\begin{tabular}{p{.49\linewidth}p{.43\linewidth}}\toprule
+Original section & Where to find it here\\\midrule
+1. Purpose of this lecture & Opening page: learning question and three notebooks\\[4pt]
+2. What is a fluid? & Section 1: definition, examples, and variable glossary\\[4pt]
+3. Continuum viewpoint & Section 1: molecular scales, fields, and arrays\\[4pt]
+4. Eulerian description & Section 1: fixed positions versus particle following\\[4pt]
+5. Velocity and material derivative & Section 1: chain rule and local/convective acceleration\\[4pt]
+6. Conservation of mass & Section 2: general and incompressible continuity\\[4pt]
+7. Momentum: Navier--Stokes & Section 2: vector and both component equations\\[4pt]
+8. Reynolds number & Section 3: scales, physical interpretation, $Re=100$\\[4pt]
+9. Boundary conditions & Section 8 and B2: no slip, impermeability, corner convention\\[4pt]
+10. Streamfunction--vorticity & Sections 4--6: definitions, proof, transport derivation\\[4pt]
+11. Finite differences & Section 7 and A1--A4: Taylor series, examples, stencil, algebraic system\\[4pt]
+12. Residuals and convergence & Section 10 and B4: diagnostics, limits, ML connection\\[4pt]
+13. Couette, Poiseuille, cavity & Section 11; Couette example also in Section 4\\[4pt]
+14. Ghia validation & Section 11 and B4: profiles, interpolation, errors\\[4pt]
+15. Optional pressure recovery & Section 12 and C: equation, boundary data, gauge\\[4pt]
+16. End-of-week outcomes & Section 12 and the checkpoints throughout\\\bottomrule
+\end{tabular}\end{center}
+\textbf{Figures.} The old streamline illustration is replaced by a fresh computation with centerline comparisons (page~12). The five-point stencil has a new labeled drawing in A3. The solver and pressure-recovery diagrams are redrawn in C. Their instructional roles are preserved, while the solver diagram now matches the code's fixed-step implementation.
+
+\textbf{Scientific clarifications.} The original Eq.~(15) is proved in Section 5; equation numbers have otherwise changed. Dimensionless viscosity is distinguished from physical viscosity. Pressure recovery is stated with its boundary conditions and gauge. The claim that iteration stops at a residual tolerance is replaced by the actual fixed-step behavior. These corrections retain the topics while improving accuracy.
+\textbf{Code scope.} The notebook's numerical algorithm is unchanged. B1--B4 explain its existing operations; the arithmetic examples in A and B are explicitly identified as teaching checks.
