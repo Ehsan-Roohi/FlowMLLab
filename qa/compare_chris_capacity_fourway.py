@@ -16,7 +16,7 @@ import numpy as np
 from scipy.interpolate import RegularGridInterpolator
 
 from audit_week13_nektar import structured, integrate_paths
-from audit_week13_cfd import audit as foam_audit
+from audit_week13_cfd import audit as foam_audit, foam_list
 from check_week13_nektar_vtu import read_vtu
 
 def accepted_source(chunk, reynolds):
@@ -80,8 +80,10 @@ def main():
     xx, yy = np.meshgrid(x, y)
     solvers = []
     titles = ["Nektar++", "OpenFOAM", "PINN width 32", "PINN width 64"]
+    foam_pressure = foam_list(args.foam/str(frec["time"])/"p",
+                              field=True, components=1).reshape(len(yf), len(xf))
     for xs, ys, fields in ((xn, yn, nf),
-                           (xf, yf, dict(u=vf[:,:,0], v=vf[:,:,1], p=vf[:,:,2]))):
+                           (xf, yf, dict(u=vf[:,:,0], v=vf[:,:,1], p=foam_pressure))):
         solvers.append({k: interpolate(xs, ys, fields[k], xx, yy)
                         for k in ("u", "v", "p")})
     for path in (args.pinn_small, args.pinn_large):
@@ -110,7 +112,10 @@ def main():
             "pressure_L2_vs_Nektar": relative_l2(solvers[i]["p"], solvers[0]["p"]),
             "velocity_L2_bottom_y_lt_1_vs_Nektar": relative_l2(
                 np.stack((solvers[i]["u"][y<1],solvers[i]["v"][y<1]),axis=-1),
-                np.stack((solvers[0]["u"][y<1],solvers[0]["v"][y<1]),axis=-1))}
+                np.stack((solvers[0]["u"][y<1],solvers[0]["v"][y<1]),axis=-1)),
+            "velocity_RMS_bottom_Ulid": float(np.sqrt(np.mean(
+                (solvers[i]["u"][y<1]-solvers[0]["u"][y<1])**2 +
+                (solvers[i]["v"][y<1]-solvers[0]["v"][y<1])**2)))}
     (args.output/"metrics.json").write_text(json.dumps(report, indent=2, allow_nan=False))
 
     plt.rcParams.update({"font.size": 13, "axes.titlesize": 16, "axes.labelsize": 14,
