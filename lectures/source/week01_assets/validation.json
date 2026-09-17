@@ -1,0 +1,11 @@
+{
+  "Re": 100,
+  "N": 65,
+  "dt": 0.001,
+  "steps": 10000,
+  "poisson_iters": 60,
+  "relative_L2_u": 0.0034296498099561524,
+  "relative_L2_v": 0.01770763229844223,
+  "last_reported_relative_vorticity_change": 6.024754085625641e-07,
+  "scope": "Fresh execution of existing Week-1 notebook solver functions; single-grid teaching comparison, not grid-independent certification."
+}

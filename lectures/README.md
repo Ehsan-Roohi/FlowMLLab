@@ -10,7 +10,7 @@ newly plotted from attributed data and retained executions.
 
 | File | Main topics | Companion notebooks |
 | --- | --- | --- |
-| `week01_numerical_foundations.pdf` | Python, TensorFlow, CFD fields, finite differences, convergence, Ghia validation | `notebooks/week01/` |
+| [week01_numerical_foundations.pdf](week01_numerical_foundations.pdf) | Continuity and component momentum, nondimensionalization, streamfunction/vorticity derivations, finite differences, wall conditions, coupled iteration, convergence, Ghia validation | `notebooks/week01/` |
 | `week01_1_ai_assisted_scientific_software.pdf` | Specification, manufactured-solution verification, physical gates, provenance, adversarial axis tests, human-agent authority and disclosure | `notebooks/week01_1/W1_1_AI_Assisted_Scientific_Software.ipynb` |
 | `week02_supervised_learning_rarefaction.pdf` | Neurons, MLPs, losses, optimization, scaling, case-wise splits, rarefaction | `notebooks/week02/` |
 | `week02_1_probabilistic_uq.pdf` | Observation models, exact Bayesian regression, POD--Gaussian-process fields, proper scores, leakage-free calibration, retained blind under-coverage | `notebooks/week02_1/Probabilistic_UQ_CFD.ipynb` |
@@ -66,3 +66,31 @@ Recommended teaching pattern for each meeting:
 3. guided notebook work;
 4. benchmark/baseline/physical comparison; and
 5. an exit prompt asking what evidence would falsify the conclusion.
+
+## Rebuilding the Week-1 foundations lecture
+
+The expanded 13-page [editable LaTeX source](source/week01_numerical_foundations.tex)
+includes the proof of the original lecture's Eq. (15), an optional curl-of-momentum
+derivation, and the distinction between inner Poisson sweeps and outer time steps.
+The sign convention and wall formulas match the introductory Week-1 notebook.
+
+From the repository root, regenerate the figure and numerical record with:
+
+```bash
+python qa/build_week01_foundations_figure.py
+```
+
+This runs only the existing introductory Re=100 solver functions and benchmark
+arrays, without executing the notebook's separate retained pressure-validation
+demonstrations. It requires NumPy and Matplotlib. The figure and single-grid
+diagnostics are retained in `source/week01_assets/`; they are not a claim of
+grid independence or a new research validation.
+
+Compile with a standard LaTeX installation (including the packages named in the source):
+
+```bash
+cd lectures/source
+pdflatex -interaction=nonstopmode -halt-on-error -output-directory=/tmp week01_numerical_foundations.tex
+pdflatex -interaction=nonstopmode -halt-on-error -output-directory=/tmp week01_numerical_foundations.tex
+cp /tmp/week01_numerical_foundations.pdf ../week01_numerical_foundations.pdf
+```
