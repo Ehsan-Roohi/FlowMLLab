@@ -23,5 +23,5 @@ export OMP_NUM_THREADS=4
     --foam "$CFD/openfoam-continue/production-34" \
     --loss-small "$SMALL/data/loss.dat" \
     --loss-large "$LARGE/data/loss.dat" \
-    --output "$LARGE/fourway-comparison"
+    --output "$LARGE/fourway-comparison-v2"
 
