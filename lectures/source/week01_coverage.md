@@ -64,3 +64,14 @@ The notebook and solver algorithm are unchanged. The existing single-grid CFD
 figure/record are retained from the earlier fresh execution. The new arithmetic
 examples (cubic slopes, quartic curvature, a quadratic 2D Laplacian, a four-node
 Poisson system, and a single vorticity update) were checked independently.
+
+## Pressure follow-up: 27-page edition
+
+The core coverage map above still applies. Pages 24–27 add the reason for
+pressure elimination, a full componentwise pressure-Poisson derivation,
+dimensional scaling, wall-normal momentum conditions, compatibility, gauge,
+and analytic sign checks. Sources include the historical Thom (1933) paper
+and the directly relevant Ghia et al. (1982) cavity benchmark; the notebook's
+Jacobi/Euler algorithm is explicitly distinguished from Ghia's CSI-MG method.
+The prior 23-page PDF is preserved in `lectures/versions/week01_23pages.pdf`;
+the current edition has its own 27-page filename in that same directory.

@@ -69,7 +69,7 @@ Recommended teaching pattern for each meeting:
 
 ## Rebuilding the Week-1 foundations lecture
 
-The expanded 23-page [editable LaTeX source](source/week01_numerical_foundations.tex)
+The expanded 27-page [editable LaTeX source](source/week01_numerical_foundations.tex)
 includes the proof of the original lecture's Eq. (15), an optional curl-of-momentum
 derivation, and the distinction between inner Poisson sweeps and outer time steps.
 The sign convention and wall formulas match the introductory Week-1 notebook.
@@ -100,3 +100,14 @@ pdflatex -interaction=nonstopmode -halt-on-error -output-directory=/tmp week01_n
 pdflatex -interaction=nonstopmode -halt-on-error -output-directory=/tmp week01_numerical_foundations.tex
 cp /tmp/week01_numerical_foundations.pdf ../week01_numerical_foundations.pdf
 ```
+
+### Explicitly named PDF editions
+
+- [23-page edition](versions/week01_23pages.pdf): the complete code and finite-difference revision.
+- [27-page edition with pressure derivation](versions/week01_27pages_pressure_derivation.pdf): includes the full 23-page material and four new pages on pressure elimination, Poisson derivation, wall data, compatibility, gauge, and method attribution.
+
+The main `week01_numerical_foundations.pdf` now matches the 27-page edition.
+The new appendix source is [week01_pressure_derivation.tex](source/week01_pressure_derivation.tex).
+It distinguishes curl-based pressure elimination from streamfunction-based
+continuity, and the notebook's Jacobi/Euler method from Ghia's CSI-MG method.
+Both named editions have been reopened and their page counts verified.

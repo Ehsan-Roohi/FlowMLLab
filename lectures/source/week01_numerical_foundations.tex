@@ -16,7 +16,8 @@
 \begin{center}
 {\color{accent}\LARGE\bfseries AI in Fluids: Week 1}\\[8pt]
 {\Large From conservation laws to a cavity solver}\\[6pt]
-{\large Numerical foundations for students new to CFD}
+{\large Numerical foundations for students new to CFD}\\[4pt]
+{\small Expanded edition: 27 pages, including pressure derivation}
 \end{center}
 \vspace{8pt}
 \textbf{The learning question.} How can a computer predict the recirculating flow in a box when only the wall motion, fluid properties, and geometry are given?
@@ -43,7 +44,8 @@ Pages & Topic\\\midrule
 12--13 & Benchmarks, optional pressure recovery, and assessment\\
 \pageref{sec:fd-slope}--\pageref{sec:fd-system} & Finite-difference tutorial: examples, stencils, algebraic system\\
 \pageref{sec:code-start}--\pageref{sec:visual-guide} & Code walkthrough and visual algorithm guide\\
-\pageref{sec:coverage} & Coverage map of all original lecture sections\\\bottomrule
+\pageref{sec:coverage} & Coverage map of all original lecture sections\\
+\pageref{sec:pressure-why}--\pageref{sec:pressure-references} & Pressure elimination, full pressure derivation, references\\\bottomrule
 \end{tabular}\end{center}
 \textbf{Conventions.} A right-handed $(x,y,z)$ system is used, with $x$ rightward and $y$ upward. Positive $\omega=\omega_z$ means counterclockwise local rotation. Dimensional quantities have a subscript $d$ when scales are introduced. After nondimensionalization, unadorned variables are dimensionless.
 
@@ -384,4 +386,5 @@ One must handle discrete compatibility when using Neumann data. Pressure is then
 \end{enumerate}
 {\small Explanations and derivations were independently written for FlowMLLab's introductory cavity example, using the requested topic checklist. The figure is a fresh execution of FlowMLLab's own solver. No restricted course text, solution, figure, or code was incorporated. No ML split or calibration is involved in this numerical-foundations extension; its baseline is the stated Ghia centerline comparison.}
 \input{week01_code_walkthrough.tex}
+\input{week01_pressure_derivation.tex}
 \end{document}
