@@ -1,7 +1,9 @@
 \documentclass[11pt]{article}
 \usepackage[a4paper,margin=22mm,headheight=15pt]{geometry}
 \usepackage{amsmath,amssymb,graphicx,booktabs,array,xcolor,fancyhdr,enumitem,hyperref}
-\usepackage{mathptmx}
+\usepackage{mathptmx,listings,tikz}
+\usetikzlibrary{positioning}
+\lstset{language=Python,basicstyle=\ttfamily\small,keywordstyle=\color{accent},commentstyle=\color{gray},showstringspaces=false,breaklines=true,columns=fullflexible,keepspaces=true,frame=single,rulecolor=\color{accent!35},backgroundcolor=\color{accent!3},xleftmargin=3pt,xrightmargin=3pt,aboveskip=7pt,belowskip=7pt}
 \definecolor{accent}{HTML}{176578}
 \hypersetup{colorlinks=true,linkcolor=accent,urlcolor=accent}
 \pagestyle{fancy}\fancyhf{}\lhead{FlowMLLab | AI in Fluids}\rhead{Week 1: Numerical foundations}\cfoot{\thepage}
@@ -38,14 +40,17 @@ Pages & Topic\\\midrule
 5--7 & Streamfunction, vorticity, proof of original Eq.~(15), optional transport derivation\\
 8--9 & Finite differences and wall boundary conditions\\
 10--11 & Coupled iteration, convergence, and stability\\
-12--13 & Benchmarks, optional pressure recovery, and assessment\\\bottomrule
+12--13 & Benchmarks, optional pressure recovery, and assessment\\
+\pageref{sec:fd-slope}--\pageref{sec:fd-system} & Finite-difference tutorial: examples, stencils, algebraic system\\
+\pageref{sec:code-start}--\pageref{sec:visual-guide} & Code walkthrough and visual algorithm guide\\
+\pageref{sec:coverage} & Coverage map of all original lecture sections\\\bottomrule
 \end{tabular}\end{center}
 \textbf{Conventions.} A right-handed $(x,y,z)$ system is used, with $x$ rightward and $y$ upward. Positive $\omega=\omega_z$ means counterclockwise local rotation. Dimensional quantities have a subscript $d$ when scales are introduced. After nondimensionalization, unadorned variables are dimensionless.
 
 \textbf{Scope.} A constant-density, constant-viscosity Newtonian fluid; two-dimensional incompressible motion; no nonconservative body force. The cavity is a square with a uniformly translating top wall. This is a teaching model, not a model for rarefied or compressible flow.
 \newpage
 \topic{1}{Fluids, fields, and acceleration}
-A fluid continuously deforms under an applied shear stress. Both liquids and gases are fluids. In the continuum description, density, velocity, pressure, and temperature are fields rather than properties of individually tracked molecules. The approximation requires molecular length scales to be small compared with the relevant flow scales.
+A fluid continuously deforms under an applied shear stress. A solid can sustain a static shear deformation; a fluid keeps deforming under sustained shear. Air, water, oil, and gas mixtures are examples. Both liquids and gases are fluids, although their density and compressibility differ. In the continuum description, density, velocity, pressure, and temperature are fields rather than properties of individually tracked molecules. The approximation requires molecular length scales to be small compared with the relevant flow scales.
 
 \begin{center}\begin{tabular}{lll}\toprule
 Symbol & Meaning & SI unit\\\midrule
@@ -54,9 +59,12 @@ $\boldsymbol{u}_d=(u_d,v_d)$ & Velocity & $\mathrm{m\,s^{-1}}$\\
 $p_d$ & Pressure & $\mathrm{Pa}$\\
 $\mu$ & Dynamic viscosity & $\mathrm{Pa\,s}$\\
 $\nu=\mu/\rho$ & Kinematic viscosity & $\mathrm{m^2\,s^{-1}}$\\
+$T$ & Temperature (thermal state) & $\mathrm{K}$\\
 $\psi_d$ & Two-dimensional streamfunction & $\mathrm{m^2\,s^{-1}}$\\
 $\omega_d$ & Out-of-plane vorticity & $\mathrm{s^{-1}}$\\\bottomrule
 \end{tabular}\end{center}
+Here $\rho$ is mass per unit volume, $p_d$ is isotropic compressive normal stress, $\mu$ measures resistance to shear deformation, and $\nu$ is momentum diffusivity. Temperature is not solved in this constant-property cavity model.
+
 In an Eulerian description, $u_d=u_d(x_d,y_d,t_d)$: we ask what passes a fixed position. A Lagrangian description instead follows a moving particle. The cavity notebook uses Eulerian arrays, with \texttt{u[j,i]} representing the horizontal velocity at $(x_i,y_j)$.
 
 \textbf{Why acceleration is not just a time derivative.} Follow a fluid particle with $\dd x_d/\dd t_d=u_d$ and $\dd y_d/\dd t_d=v_d$. Applying the chain rule to its horizontal velocity gives
@@ -85,7 +93,7 @@ For the constant-density fluid used here, it becomes
 \begin{equation}\boxed{\frac{\partial u_d}{\partial x_d}+\frac{\partial v_d}{\partial y_d}=0.}\label{eq:mass}\end{equation}
 A small material fluid element preserves its volume: local inflow and outflow balance. This does not require either velocity component to be spatially constant.
 
-\textbf{Momentum conservation.} For an incompressible Newtonian fluid with constant properties and no body force, the two component equations are
+\textbf{Momentum conservation.} For an incompressible Newtonian fluid with constant properties and no body force, the vector statement is $\partial_t\boldsymbol{u}_d+(\boldsymbol{u}_d\cdot\nabla_d)\boldsymbol{u}_d=-\rho^{-1}\nabla_d p_d+\nu\nabla_d^2\boldsymbol{u}_d$, where the time derivative is with respect to $t_d$. Written componentwise:
 \begin{align}
 \underbrace{\frac{\partial u_d}{\partial t_d}}_{\text{local change}}+
 \underbrace{u_d\frac{\partial u_d}{\partial x_d}+v_d\frac{\partial u_d}{\partial y_d}}_{\text{convection}}
@@ -108,7 +116,7 @@ Let $L$ be the cavity side length and $U>0$ the lid-speed scale. Choose the conv
 x=\frac{x_d}{L},\quad y=\frac{y_d}{L},\quad t=\frac{t_dU}{L},\quad
 u=\frac{u_d}{U},\quad v=\frac{v_d}{U},\quad p=\frac{p_d-p_{\rm ref}}{\rho U^2}.
 \end{equation}
-All variables in these ratios are now dimensionless. The chain rule gives, for example,
+The newly defined variables $x,y,t,u,v,p$ are dimensionless. The chain rule gives, for example,
 \[
 \frac{\partial u_d}{\partial t_d}=\frac{U^2}{L}u_t,\qquad
 u_d\frac{\partial u_d}{\partial x_d}=\frac{U^2}{L}u u_x,
@@ -125,7 +133,7 @@ u_x+v_y&=0,\\
 u_t+uu_x+vu_y&=-p_x+\frac{1}{Re}(u_{xx}+u_{yy}),\\
 v_t+uv_x+vv_y&=-p_y+\frac{1}{Re}(v_{xx}+v_{yy}).
 \end{align}
-\textbf{Interpretation.} Reynolds number compares inertial and viscous effects using the chosen scales. Its value alone does not give a universal transition threshold: geometry, disturbances, and boundary conditions also matter.
+\textbf{Interpretation.} Reynolds number compares inertial and viscous effects using the chosen scales. Its value alone does not give a universal transition threshold: geometry, disturbances, and boundary conditions also matter. At small $Re$, viscous diffusion dominates; increasing inertia can produce recirculation and thinner layers. At sufficiently large $Re$, instability, transition, and turbulence may occur, depending on the flow. These are tendencies, not universal Reynolds-number thresholds.
 
 \textbf{Notebook translation.} The square becomes $0\leq x,y\leq1$, and the lid speed is $u=1$. At $Re=100$, the dimensionless diffusion coefficient is $0.01$. This does \emph{not} imply a physical kinematic viscosity of $0.01\,\mathrm{m^2/s}$ unless the dimensional scales make that true. For example, $L=0.1\,\mathrm{m}$ and $U=0.01\,\mathrm{m/s}$ give $\nu=10^{-5}\,\mathrm{m^2/s}$ at the same Reynolds number.
 
@@ -246,7 +254,7 @@ Here $k$ is an inner iteration index and $\omega$ is held fixed. At $h=0.1$, if 
 The interior spatial formulas are second order for smooth fields; forward Euler is first order in time. Boundaries and corner singularities can limit the observed global accuracy.
 \newpage
 \topic{8}{Boundary conditions: closing the system}
-The square cavity has $u=1,v=0$ on the moving top lid away from corners and $u=v=0$ on the other walls. Set $\psi=0$ on the entire boundary to impose impermeability. The tangential velocity conditions are encoded in boundary values of $\omega$.
+No slip means that the fluid velocity equals the solid-wall velocity; impermeability means no flow through the wall. The square cavity has $u=1,v=0$ on the moving top lid away from corners and $u=v=0$ on the other walls. Set $\psi=0$ on the entire boundary to impose impermeability. The tangential velocity conditions are encoded in boundary values of $\omega$.
 
 \textbf{Derive the top-wall formula.} Let $P$ be the first interior point, a distance $h=\Delta y$ below the top wall $w$. Taylor expansion into the domain gives
 \[
@@ -375,4 +383,5 @@ One must handle discrete compatibility when using Neumann data. Pressure is then
 \item J. D. Anderson (1995). \emph{Computational Fluid Dynamics: The Basics with Applications}. McGraw Hill. Background on discretization and numerical solution.
 \end{enumerate}
 {\small Explanations and derivations were independently written for FlowMLLab's introductory cavity example, using the requested topic checklist. The figure is a fresh execution of FlowMLLab's own solver. No restricted course text, solution, figure, or code was incorporated. No ML split or calibration is involved in this numerical-foundations extension; its baseline is the stated Ghia centerline comparison.}
+\input{week01_code_walkthrough.tex}
 \end{document}

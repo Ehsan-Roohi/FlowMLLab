@@ -69,10 +69,16 @@ Recommended teaching pattern for each meeting:
 
 ## Rebuilding the Week-1 foundations lecture
 
-The expanded 13-page [editable LaTeX source](source/week01_numerical_foundations.tex)
+The expanded 23-page [editable LaTeX source](source/week01_numerical_foundations.tex)
 includes the proof of the original lecture's Eq. (15), an optional curl-of-momentum
 derivation, and the distinction between inner Poisson sweeps and outer time steps.
 The sign convention and wall formulas match the introductory Week-1 notebook.
+The [finite-difference and code companion source](source/week01_code_walkthrough.tex)
+is included in the same PDF: pages 14–17 cover worked finite differences and
+Poisson iteration, pages 18–21 explain the existing solver functions, page 22
+shows algorithm diagrams, and page 23 maps all sixteen original sections.
+See the [coverage audit](source/week01_coverage.md) for what was restored or
+clarified and an immutable link to the unchanged original PDF.
 
 From the repository root, regenerate the figure and numerical record with:
 
