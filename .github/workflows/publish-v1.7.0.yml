@@ -1,0 +1,49 @@
+name: Publish FlowMLLab v1.7.0
+on:
+  push:
+    tags: [v1.7.0]
+permissions:
+  contents: write
+jobs:
+  release:
+    if: github.repository == 'Ehsan-Roohi/FlowMLLab'
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      OPENBLAS_NUM_THREADS: '1'
+      OMP_NUM_THREADS: '1'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install test and packaging dependencies
+        run: |
+          sudo apt-get update && sudo apt-get install -y poppler-utils
+          python -m pip install -e '.[test]' build twine
+          python -m pip install 'torch>=2.6,<3' --index-url https://download.pytorch.org/whl/cpu
+      - name: Test release
+        run: |
+          python -c "import flowmllab; assert flowmllab.__version__ == '1.7.0'"
+          python -m pytest -q tests qa
+          flowmllab smoke --root .
+          flowmllab qa --root .
+      - name: Build distributions
+        run: |
+          python -m build
+          python -m twine check dist/*
+      - name: Publish new version
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          if gh release view v1.7.0 >/dev/null 2>&1; then
+            echo 'Existing v1.7.0 left unchanged.'
+          else
+            gh release create v1.7.0 --verify-tag --latest \
+              --title 'FlowMLLab v1.7.0 - Self-supervised wake learning' \
+              --notes-file RELEASE_NOTES_v1.7.0.md dist/* \
+              lectures/week07_3_masked_pretraining.pdf \
+              lectures/week07_4_diverse_wake_pretraining.pdf
+          fi

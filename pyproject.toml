@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "flowmllab"
-version = "1.6.1"
+version = "1.7.0"
 description = "Reproducible CFD-to-scientific-machine-learning experiments"
 readme = "README.md"
 requires-python = ">=3.10,<3.14"
@@ -58,6 +58,8 @@ ml = [
 test = [
   "pytest>=8,<9",
   "nbformat>=5.10,<6",
+  "nbclient>=0.10,<1",
+  "ipykernel>=6,<8",
   "reportlab>=4,<6",
   "pypdf>=3,<7",
 ]

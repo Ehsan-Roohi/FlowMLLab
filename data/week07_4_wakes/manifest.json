@@ -1,0 +1,249 @@
+{
+  "schema_version": 1,
+  "description": "Compact FlowMLLab LBM trajectories for diverse-wake pretraining",
+  "split_contract": {
+    "development": [
+      60,
+      65,
+      70,
+      75,
+      80,
+      85,
+      90,
+      100,
+      110,
+      120,
+      130
+    ],
+    "validation": [
+      105
+    ],
+    "test": [
+      95,
+      115,
+      125,
+      135
+    ]
+  },
+  "settings": {
+    "nx": 120,
+    "ny": 48,
+    "diameter": 6.0,
+    "center": [
+      30.0,
+      23.5
+    ],
+    "inflow_velocity": 0.05,
+    "steps": 10000,
+    "history_stride": 5,
+    "snapshot_start": 5000,
+    "snapshot_stride": 20,
+    "collision_model": "trt",
+    "cylinder_boundary": "bouzidi"
+  },
+  "crop": {
+    "y": [
+      8,
+      40
+    ],
+    "x": [
+      30,
+      108
+    ]
+  },
+  "cases": [
+    {
+      "reynolds": 60,
+      "role": "development",
+      "file": "re060.npz",
+      "frames": 251,
+      "bytes": 2321131,
+      "sha256": "8d7a26ff43a15004c1e371721d1e6f98a94cdae9ea8b74b2226f955216cddfcf",
+      "elapsed_seconds": null,
+      "perturbation": 0.006,
+      "seed": 7460,
+      "strouhal": null
+    },
+    {
+      "reynolds": 65,
+      "role": "development",
+      "file": "re065.npz",
+      "frames": 251,
+      "bytes": 2323265,
+      "sha256": "0e2aa781de544e978f78f81efc1b6cdfe6265fb7a60da15fb44c07f9a2735df8",
+      "elapsed_seconds": null,
+      "perturbation": 0.01,
+      "seed": 7465,
+      "strouhal": null
+    },
+    {
+      "reynolds": 70,
+      "role": "development",
+      "file": "re070.npz",
+      "frames": 251,
+      "bytes": 2321107,
+      "sha256": "5a6026bb50fa39f321fe6cd66255ebe90c00f69bb70dfbeb1f234f780271c384",
+      "elapsed_seconds": null,
+      "perturbation": 0.014,
+      "seed": 7470,
+      "strouhal": null
+    },
+    {
+      "reynolds": 75,
+      "role": "development",
+      "file": "re075.npz",
+      "frames": 251,
+      "bytes": 2320729,
+      "sha256": "08587350975c329c8eeea82db5a453e25092aefee26462aa6cbd4e05501355ab",
+      "elapsed_seconds": null,
+      "perturbation": 0.006,
+      "seed": 7475,
+      "strouhal": null
+    },
+    {
+      "reynolds": 80,
+      "role": "development",
+      "file": "re080.npz",
+      "frames": 251,
+      "bytes": 2318046,
+      "sha256": "94ef3238df6fbf8a79d1e1c6c12e8735abc6edc91070fe73d666fae15abc146f",
+      "elapsed_seconds": null,
+      "perturbation": 0.01,
+      "seed": 7480,
+      "strouhal": null
+    },
+    {
+      "reynolds": 85,
+      "role": "development",
+      "file": "re085.npz",
+      "frames": 251,
+      "bytes": 2315860,
+      "sha256": "6d8437251ca49452d7885a4dc81eb7053e21eccadac761219348f8f3039126f9",
+      "elapsed_seconds": null,
+      "perturbation": 0.014,
+      "seed": 7485,
+      "strouhal": null
+    },
+    {
+      "reynolds": 90,
+      "role": "development",
+      "file": "re090.npz",
+      "frames": 251,
+      "bytes": 2317912,
+      "sha256": "e5690e72e11fede7539ccb1150fba76c5930d14b5617abe7bb11192c0b74e0fb",
+      "elapsed_seconds": null,
+      "perturbation": 0.006,
+      "seed": 7490,
+      "strouhal": null
+    },
+    {
+      "reynolds": 95,
+      "role": "test",
+      "file": "re095.npz",
+      "frames": 251,
+      "bytes": 2316289,
+      "sha256": "d5ddabfb64af115e2320f471e6780572f3b6acebaa5398bf44dbf54b43993179",
+      "elapsed_seconds": null,
+      "perturbation": 0.01,
+      "seed": 7495,
+      "strouhal": null
+    },
+    {
+      "reynolds": 100,
+      "role": "development",
+      "file": "re100.npz",
+      "frames": 251,
+      "bytes": 2316446,
+      "sha256": "2467286cbce5955e3e89e96221bade82d1162af4f4e0b21789bfdd7bfa5b64ed",
+      "elapsed_seconds": null,
+      "perturbation": 0.014,
+      "seed": 7500,
+      "strouhal": null
+    },
+    {
+      "reynolds": 105,
+      "role": "validation",
+      "file": "re105.npz",
+      "frames": 251,
+      "bytes": 2317741,
+      "sha256": "7db5e3c8d8cf373a2b762cea8fac94bcf047f06e447a1a99066b6d1e86554bd1",
+      "elapsed_seconds": null,
+      "perturbation": 0.006,
+      "seed": 7505,
+      "strouhal": null
+    },
+    {
+      "reynolds": 110,
+      "role": "development",
+      "file": "re110.npz",
+      "frames": 251,
+      "bytes": 2317452,
+      "sha256": "59dc01c87d031cf9ffa545786d0912c3f79df560702ea11bb7a33e1dd83b18a5",
+      "elapsed_seconds": null,
+      "perturbation": 0.01,
+      "seed": 7510,
+      "strouhal": null
+    },
+    {
+      "reynolds": 115,
+      "role": "test",
+      "file": "re115.npz",
+      "frames": 251,
+      "bytes": 2317837,
+      "sha256": "e248f4c94c568853c45bd24a9bbc4c31a7cd7a25e7f2acad72f8d86ff83d6c3a",
+      "elapsed_seconds": null,
+      "perturbation": 0.014,
+      "seed": 7515,
+      "strouhal": null
+    },
+    {
+      "reynolds": 120,
+      "role": "development",
+      "file": "re120.npz",
+      "frames": 251,
+      "bytes": 2318824,
+      "sha256": "e23fdbba4c0b66129384c621f865acdddeaa6a91eb1c98a0110b647177a0891d",
+      "elapsed_seconds": null,
+      "perturbation": 0.006,
+      "seed": 7520,
+      "strouhal": null
+    },
+    {
+      "reynolds": 125,
+      "role": "test",
+      "file": "re125.npz",
+      "frames": 251,
+      "bytes": 2318991,
+      "sha256": "6d8e4d7637cf798a267709fab9e5d96d758d2debd26117cd31a3e6f78c00d32c",
+      "elapsed_seconds": null,
+      "perturbation": 0.01,
+      "seed": 7525,
+      "strouhal": null
+    },
+    {
+      "reynolds": 130,
+      "role": "development",
+      "file": "re130.npz",
+      "frames": 251,
+      "bytes": 2319498,
+      "sha256": "c1466f231908ffeda610421606cc09e82accdc6f4908b16d6a2f924a63ede414",
+      "elapsed_seconds": null,
+      "perturbation": 0.014,
+      "seed": 7530,
+      "strouhal": null
+    },
+    {
+      "reynolds": 135,
+      "role": "test",
+      "file": "re135.npz",
+      "frames": 251,
+      "bytes": 2319978,
+      "sha256": "4c03c6f12817e64c33110b3d6e40318e863bb0e6cfd4a377b9844f9592ba3336",
+      "elapsed_seconds": null,
+      "perturbation": 0.006,
+      "seed": 7535,
+      "strouhal": null
+    }
+  ],
+  "limitations": "Quick educational D2Q9-TRT runs; not grid-independent DNS."
+}

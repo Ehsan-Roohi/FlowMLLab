@@ -89,6 +89,8 @@ Typical student runtimes are approximate:
 | Week 2.1 probabilistic UQ | CPU | <1 min with retained evidence; no TensorFlow required |
 | Week 4.2 Stokes-to-Navier-Stokes lab and 51 x 51 addendum | CPU | <5 min reading retained evidence; full regeneration is an optional switch that needs PyTorch |
 | Week 7.2 sparse-sensor state estimation | CPU | a few minutes for the validation grid; no TensorFlow required |
+| Week 7.3 self-supervised pretraining and label efficiency | CPU | about 10 min on two cores (1 min pretraining, 4 min label-efficiency loop, 3 min budget control); `QUICK = True` gives about 3 min; PyTorch required |
+| Week 7.4 diverse-wake representation transfer | CPU, PyTorch for regeneration | Retained evidence in seconds; full protocol with `python qa/run_week07_4_protocol.py`; regenerate LBM separately |
 | Week 9 Lab 3 data-alignment audit | CPU | <2 min |
 | Week 10.1 collision-map surrogate | CPU | <5 min |
 | Week 11 shock/vortex, reconstruction and cavitation labs | CPU | 5 to 15 min each; PyTorch for the cavitation and reconstruction labs |

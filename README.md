@@ -1,6 +1,6 @@
 <h1><img src="docs/assets/flowmllab-logo.png" alt="FlowMLLab — fluid-streamline F logo" width="520"></h1>
 
-**New in v1.6.1:** a repository-wide teaching-material audit improves definitions, worked examples, notebook reliability, figure readability, and release QA across Weeks 1–15. See the [v1.6.1 release notes](RELEASE_NOTES_v1.6.1.md).
+**New in v1.7.0:** self-supervised wake learning in Weeks 7.3 and 7.4: a retained gappy-POD win, followed by diverse-trajectory pretraining for label-efficient lift decoding. [Release notes](RELEASE_NOTES_v1.7.0.md).
 
 **Week 14:** [RANS, PINN and neural turbulence closures](notebooks/week14/README.md)
 based on Lars Davidson's pyCALC-RANS workflow: an executed teaching notebook,
@@ -9,14 +9,14 @@ audit. Full paper-level numerical reproduction is not claimed.
 
 [![FlowMLLab CI](https://github.com/Ehsan-Roohi/FlowMLLab/actions/workflows/ci.yml/badge.svg)](https://github.com/Ehsan-Roohi/FlowMLLab/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.22831809.svg)](https://doi.org/10.5281/zenodo.22831809)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.22074169.svg)](https://doi.org/10.5281/zenodo.22074169)
 
 Learn scientific machine learning through reproducible fluid-mechanics experiments:
 generate numerical data, compare transparent baselines with learned models, and
 check both prediction error and physical fidelity.
 
 Developed for **MIE 690A: AI in Fluid Mechanics**, University of Massachusetts
-Amherst. The course now includes **40 notebooks and 24 lecture PDFs**; every module
+Amherst. The course now includes **42 notebooks and 26 lecture PDFs**; every module
 has a row in the course table below.
 
 ## Start here
@@ -54,6 +54,8 @@ Weeks 5 and 6 share a project pack and lecture guide, but have separate learning
 | [7](#week-7--unsteady-cylinder-wakes) | LBM, vortex shedding and autonomous surrogates | [Week 7 lab](notebooks/week07/W7_Lattice_Boltzmann_Cylinder_Student.ipynb) | [Lecture 7](lectures/week07_cylinder_lbm_neural_surrogate.pdf) |
 | [7.1](#week-71--rarefied-hypersonic-cylinder) | DSMC fields and Mach-to-field operators | [Week 7.1 lab](notebooks/week07_1/W7_1_Hypersonic_Rarefied_Cylinder_DeepONet.ipynb) | [Lecture 7.1](lectures/week07_1_hypersonic_rarefied_cylinder.pdf) |
 | [7.2](#week-72--sparse-sensor-state-estimation) | Causal filtering of a cylinder wake from noisy sparse sensors | [Week 7.2 lab](notebooks/week07_2/README.md) | [Lecture 7.2](lectures/week07_2_cylinder_state_estimation.pdf) |
+| [7.3](#week-73--self-supervised-pretraining-and-label-efficiency) | Masked-autoencoder pretraining on unlabelled wakes; error versus number of labelled frames against gappy POD | [Week 7.3 lab](notebooks/week07_3/README.md) | [Lecture 7.3](lectures/week07_3_masked_pretraining.pdf) |
+| [7.4](#week-74--diverse-wake-pretraining) | Representation transfer and target-label efficiency for lift | [Week 7.4 lab](notebooks/week07_4/README.md) | [Lecture 7.4](lectures/week07_4_diverse_wake_pretraining.pdf) |
 | [8](#week-8--gas-dynamics-and-sciml) | Exact compressible-flow branches and learned inverse maps | [Week 8 labs](notebooks/week08/README.md) | [Lecture 8](lectures/week08_gas_dynamics_sciml.pdf) |
 | [9](#week-9--rarefied-micro-step-and-micro-nozzle) | Geometry-dependent and shock-aligned operators | [Week 9 labs](notebooks/week09/README.md) | [Lecture 9](lectures/week09_rarefied_deeponet_case_studies.pdf) |
 | [10](#week-10--dsmc-cavity-and-molecular-shocks) | Cavity and mono/diatomic shock reproduction | [Week 10 lab](notebooks/week10/README.md) | [Lecture 10](lectures/week10_dsmc_data_driven_surrogates.pdf) |
@@ -229,7 +231,9 @@ Week 6 completes the selected Week-5 track, including optional closure testing.
 **CFD / data:** FlowMLLab D2Q9–TRT lattice Boltzmann solver (LBM).<br>
 **Learning method:** The lead result is a phase-stable learned Fourier decoder, not an autoregressive CNN; POD and CNN baselines are linked below.
 
-![Fresh Re=95 cylinder wake: LBM and autonomous learned decoder](results/cylinder_phase/re095_phase_stable_lbm_vs_decoder.webp)
+![Week 7: global and worst-frame vorticity errors for the 277-frame autonomous rollout](results/cylinder_phase/homepage_week07.png)
+
+[Watch the LBM/decoder wake animation](results/cylinder_phase/re095_phase_stable_lbm_vs_decoder.webp)
 
 Four initial fields seed **277 autonomous future frames** at unseen **Re = 95**,
 with **4.281% global vorticity error** against educational LBM labels.
@@ -281,6 +285,35 @@ sensors on the retained Re110 wake. Mean test relative L2 is **2.18%**, versus
 DMD. Its nominal 95% marginal intervals cover only **55.1%** of sampled values;
 the overconfidence is retained as a model failure.
 [Protocol, all baselines and limits](results/week07_2_state_estimation/README.md)
+
+### Week 7.3 — Self-supervised pretraining and label efficiency
+
+**Problem:** Complete a wake field from 25% of its patches for a new trajectory with few labelled frames.<br>
+**CFD / data:** The four retained FlowMLLab D2Q9–TRT LBM wakes (Re = 90, 100, 105, 110).<br>
+**Learning method:** A masked autoencoder pretrained on the unlabelled Re90/Re100 wakes (He et al., 2022; the MAPA protocol of Tang, Spalding and Cogan, 2026), used zero-shot, with a frozen linear probe, fine-tuned and from scratch; gappy POD with transferred, target-only and pooled bases as the matched classical baselines.
+
+![Hidden-pixel error against the number of labelled Re110 frames](results/week07_3_pretraining/label_efficiency.png)
+
+The pretrained pipeline beats the same architecture from scratch at every label
+count under the matched 300-step downstream budget. At `k = 1, 2`, validation
+early stopping keeps the zero-shot pretrained weights; label-driven improvement
+starts at `k = 4`. With the full pretraining budget the from-scratch model still
+fails at `k = 2`. Gappy POD with a basis transferred from the unlabelled wakes is
+nevertheless an order of magnitude more accurate (**about 1.4%** zero-shot
+against **about 18%** for the network), and its pooled basis improves with every
+label. The classical win is retained and explained: this periodic wake is low-rank.
+[Protocol, all methods and limits](results/week07_3_pretraining/README.md)
+
+### Week 7.4 — Diverse-wake pretraining
+
+**Problem:** Decode instantaneous lift on Reynolds trajectories excluded from pretraining.<br>
+**CFD / data:** Sixteen compact D2Q9-TRT LBM trajectories, Re60-135; eleven development cases, Re105 validation, four target cases.<br>
+**Learning method:** Frozen pretrained and random encoders plus ridge, compared with POD-32 plus ridge.
+
+![Lift decoding error versus target-label budget on four Reynolds trajectories](results/week07_4_diverse_pretraining/homepage_week07_4.png)
+
+The retained pretrained encoder achieves **12.31% mean lift NRMSE with 32 target labels**, versus **16.02% for the random encoder with 128**: better mean accuracy with one-quarter as many target labels. POD-32 leads through k=32; the pretrained encoder has lower mean error at k=64 and 128. This is a MAPA-inspired teaching result, not a reproduction of MAPA or a universal neural advantage. Source labels used in ridge selection are additional to k. One encoder initialization and coarse, fixed-geometry CFD limit the claim.
+[Protocol, per-trajectory results and limitations](results/week07_4_diverse_pretraining/README.md)
 
 ### Week 8 — Gas dynamics and SciML
 
@@ -571,9 +604,9 @@ Student submissions are not included.
 · [Citation metadata](CITATION.cff)
 · [Workshop, support, and consulting details](docs/RESULTS_GUIDE.md#workshops-support-and-consulting)
 
-Current release: **v1.6.1** · [GitHub release](https://github.com/Ehsan-Roohi/FlowMLLab/releases/tag/v1.6.1)
-· [Release notes](RELEASE_NOTES_v1.6.1.md).
-Version-specific v1.6.1 Zenodo DOI: [10.5281/zenodo.22831809](https://doi.org/10.5281/zenodo.22831809);
+Current release: **v1.7.0** · [GitHub release](https://github.com/Ehsan-Roohi/FlowMLLab/releases/tag/v1.7.0)
+· [Release notes](RELEASE_NOTES_v1.7.0.md).
+Previous v1.6.1 archive DOI: [10.5281/zenodo.22831809](https://doi.org/10.5281/zenodo.22831809);
 the archived v1.6.0 record remains available at [10.5281/zenodo.22784541](https://doi.org/10.5281/zenodo.22784541).
 For earlier versions and their archived records, see the
 [release history](https://github.com/Ehsan-Roohi/FlowMLLab/releases).

@@ -6,7 +6,7 @@ validation take priority over increasing the number of methods.
 
 ## Current state (v1.6 line)
 
-- Fifteen weekly modules with 40 notebooks and 24 lecture PDFs; every notebook
+- Fifteen weekly modules with 41 notebooks and 25 lecture PDFs; every notebook
   is listed in the [launcher](notebooks/README.md) and every lecture in the
   [lecture index](lectures/README.md), and the release gate checks both lists.
 - Weeks 1 to 10 are student-run laboratories; Weeks 11 to 15 combine a CPU
@@ -33,9 +33,11 @@ Ordered by what most improves a student's experience:
    insertions from notebooks.
 5. Move large retained datasets to release assets fetched on demand so that
    the Colab bootstrap clone stays small.
-6. Only then add new modules; a candidate is a label-efficiency lab
-   (self-supervised pretraining on the Week 7 LBM wake, linear probe, error
-   versus number of labelled frames, POD and Kalman baselines).
+6. Only then add new modules. The label-efficiency lab proposed here is now
+   [Week 7.3](notebooks/week07_3/README.md) (masked-autoencoder pretraining on
+   the Week 7 LBM wake, linear probe, fine-tuning, error versus number of
+   labelled frames, gappy-POD baselines); its open extensions are its exercises
+   (structured masks, a vorticity label, noisy sensors, larger budgets).
 
 ## Good first contributions
 
@@ -61,3 +63,5 @@ implementation so the validation contract can be agreed first.
 - expanding the repository only to increase its apparent method count.
 
 See [CONTRIBUTING.md](CONTRIBUTING.md) for the scientific-change contract.
+
+Week 7.4 is implemented as the independent [diverse-wake transfer lab](notebooks/week07_4/README.md), paired with the classical-baseline lesson of Week 7.3. Future work requires new held-out trajectories, multiple encoder seeds, validation-selected POD rank, and independent initial-condition/geometry shifts.

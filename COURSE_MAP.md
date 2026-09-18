@@ -31,6 +31,8 @@ Every module links to its notebook. The [notebook launcher](notebooks/README.md)
 | [7C](notebooks/week07/W7_Lattice_Boltzmann_Cylinder_Student.ipynb) | Educational unsteady field learning | Reynolds/phase POD failure baseline, four-frame multi-scale CNN, and a phase-stable learned decoder | Case-wise split; one-step field/spectral/downstream checks; retained failed CNN recursion; validation-only harmonic selection; fresh `Re=95` 277-frame rollout; and separately gated vorticity/Strouhal evidence |
 | [7.1](notebooks/week07_1/W7_1_Hypersonic_Rarefied_Cylinder_DeepONet.ipynb) | Rarefied hypersonic-cylinder operator learning | Audit 20 DSMC Mach cases; compare a 3x96 tanh MLP with structured Mach-field interpolation | Whole-case split; historical interpolation/extrapolation errors; interpolation wins all six aggregate comparisons; legacy normalization names are not verified units; [paper-parity limits](qa/WEEK71_PAPER_PARITY.md), not full-paper reproduction |
 | [7.2](notebooks/week07_2/README.md) | Linear-Gaussian state estimation and information contracts | Fit training-only POD dynamics and sensor maps; compare causal Kalman filtering with open-loop DMD, persistence and matched sensor-only reconstruction | Validation-selected rank/sensors/inflation; five held noise seeds; 2.18% mean test error; retained 55.1% nominal-95% marginal coverage failure; previously inspected trajectory, not new-Re or grid-independent evidence |
+| [7.3](notebooks/week07_3/README.md) | Self-supervised pretraining and label efficiency | Pretrain a masked autoencoder on the unlabelled Re90/Re100 wakes; complete masked Re110 frames zero-shot, with a linear probe, fine-tuned and from scratch for k = 1 to 128 labelled frames; gappy POD with transferred, target-only and pooled bases as matched baselines | Every choice on the Re105 validation trajectory; three mask seeds; fine-tuning beats from-scratch at every k and most at small k; retained win of gappy POD (about 1.4% zero-shot) over the network (about 18%); previously inspected trajectory, not new-physics evidence |
+| [7.4](notebooks/week07_4/README.md) | Representation transfer to external force labels | Pretrain across eleven Reynolds cases; adapt frozen neural/POD probes to four target trajectories | Matched target labels; validation-only selection; source-label accounting; mean gains over random features; fixed-rank POD comparison; one encoder seed and coarse-CFD limits |
 | [8A](notebooks/week08/W8_Lab1_Exact_Gas_Dynamics_Student.ipynb) | Exact compressible-flow references | Rayleigh, Fanno, oblique-shock, nozzle-shock, shock-tube, shock-polar, interacting-wave, and Taylor--Maccoll computations | Declared domain and branch; exact/bracketed/ODE reference; forward-substitution residual; limiting behavior |
 | [8B](notebooks/week08/W8_Lab2_Gas_Dynamics_SciML_Evidence_Student.ipynb) | Branch-aware gas-dynamics SciML | Expose hidden-branch regression failure; compare bounded MLPs with interpolation across five inverse tasks | Frozen blind errors; matched coverage; physical bounds and residuals; edge-holdout test; explicit exact/interpolation/MLP decision |
 | [8C](notebooks/week08/W8_Lab2_Gas_Dynamics_SciML_Evidence_Student.ipynb) | Dimensional scaling and CFD bridge | Generalized two-to-five-input shock tube; 100,000-state workload; qualified SU2 diamond-airfoil workflow | Matched offline budget; storage and timing protocol; source hashes; no unverified SU2 case promoted to a training label |
@@ -82,7 +84,7 @@ Use Weeks 1 to 6 in order. Weeks 5 and 6 form one combined guided-project pack: 
 
 Take the extension weeks after the core; none replaces the Weeks 5 to 6 project.
 
-- Weeks 7, 7.1 and 7.2: unsteady external flow (LBM cylinder), the rarefied hypersonic cylinder with operator learning, and sparse-sensor state estimation.
+- Weeks 7, 7.1, 7.2, 7.3 and 7.4: unsteady external flow (LBM cylinder), the rarefied hypersonic cylinder with operator learning, sparse-sensor state estimation, self-supervised reconstruction, and diverse-wake transfer to lift with an explicit target-label budget.
 - Week 8: compressible-flow branches, exact-to-ML comparisons and a qualified multidimensional-CFD bridge.
 - Weeks 9 and 9.3: geometry-dependent and shock-aligned rarefied-flow operators, and the data-alignment audit that precedes any operator fit.
 - Weeks 10 and 10.1: an end-to-end DSMC article reproduction and the collision-map surrogate companion.
@@ -111,7 +113,8 @@ No category should require the ML method to outperform the baseline.
 
 See the [theory coverage and proposal matrix](THEORY_GAP_MATRIX.md) for the
 original proposal history, including additional sampling diagnostics.
-[Week 7.2 state estimation](notebooks/week07_2/README.md) is implemented;
+[Week 7.2 state estimation](notebooks/week07_2/README.md) and
+[Week 7.3 label efficiency](notebooks/week07_3/README.md) are implemented;
 PINN verification is covered in the final [Week 13 module](notebooks/week13/README.md).
 Use the current course tables above to distinguish available modules from
 future proposals, and the linked results reports to assess their validation status.
