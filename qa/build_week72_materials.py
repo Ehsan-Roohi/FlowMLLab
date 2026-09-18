@@ -86,7 +86,7 @@ result, model, examples = experiment(cases)
 make_figures(scratch,cases,result,model,examples)
 display(pd.DataFrame(result['candidates']).sort_values('validation_relative_l2_mean').head(12))
 print('Selected:',result['selected'])
-print('Fresh figures:',scratch)'''),
+print('Fresh figures written to a temporary folder:', scratch.name)'''),
         md('''## 4. Compare matched baselines
 
 Open-loop DMD receives no future measurements. Persistence repeats frame 159.

@@ -4,28 +4,38 @@ FlowMLLab grows through small, testable changes that preserve the released
 scientific protocols. New examples are welcome, but reproducibility and physical
 validation take priority over increasing the number of methods.
 
-## Released in v1.2
+## Current state (v1.6 line)
 
-- deploy the read-only blind-case explorer and link it directly from the README;
-- make a clean package distribution pass an isolated wheel/sdist check;
-- document Windows and Apple-silicon installation outcomes;
-- add contributor-reported notebook runtimes without changing the frozen results;
-- collect course and laboratory adoptions with permission; and
-- keep Python 3.10--3.12 CI, repository QA, and scientific evidence gates green.
-- add the post-course Week-7 D2Q9 cylinder module, retained regime evidence, and a
-  leakage-safe educational POD/neural comparison.
+- Fifteen weekly modules with 40 notebooks and 24 lecture PDFs; every notebook
+  is listed in the [launcher](notebooks/README.md) and every lecture in the
+  [lecture index](lectures/README.md), and the release gate checks both lists.
+- Weeks 1 to 10 are student-run laboratories; Weeks 11 to 15 combine a CPU
+  teaching exercise with audits of retained research evidence.
+- Python 3.10 to 3.13 CI runs the package tests, the core smoke test and the
+  full release gate on every push.
 
-## Next release
+## Next
 
-- retain the Week-2.1 probabilistic-UQ increment: exact Bayesian regression,
-  POD--GP cavity fields, proper scores, validation-only interval scaling, and
-  the blind under-coverage result;
-- enforce the public theory-source policy and originality record;
-- keep checksummed text evidence and release QA stable on Windows;
-- add a faster optional backend for the qualification-resolution LBM sweep;
-- add interpolated curved-wall bounce-back and domain/grid refinement evidence;
-- add a compact four-frame one-step/rollout exercise after the Reynolds/phase
-  surrogate, while retaining the POD and persistence baselines.
+Ordered by what most improves a student's experience:
+
+1. Execute Weeks 1 to 4 and P0 end to end in a fresh Colab runtime after every
+   change to `common/` and record the runtimes in `START_HERE.md`.
+2. Bring the remaining audit-style modules (Weeks 11, 12, 14 and 15) to the
+   shape of Weeks 4.2 and 13: learning goals, definitions before use, one
+   model the student trains, results, interpretation, claim boundary, exercise;
+   provenance in one cell per notebook and one notice per lecture.
+3. Add the missing definitions and worked examples to the lecture notes of
+   Weeks 7.2, 9.3, 10.1, 11, 12, 14 and 15 (Dice/IoU, Kalman update, DeepONet
+   branch/trunk, wall units, scattering integral), and re-plot the Week 12
+   field panels with a robust colour scale.
+4. Consolidate the duplicated cavity solvers and `relative_l2` helpers into
+   `flowmllab/` with one argument convention, and remove the `sys.path`
+   insertions from notebooks.
+5. Move large retained datasets to release assets fetched on demand so that
+   the Colab bootstrap clone stays small.
+6. Only then add new modules; a candidate is a label-efficiency lab
+   (self-supervised pretraining on the Week 7 LBM wake, linear probe, error
+   versus number of labelled frames, POD and Kalman baselines).
 
 ## Good first contributions
 

@@ -16,11 +16,20 @@
 \begin{center}
 {\color{accent}\LARGE\bfseries AI in Fluids: Week 1}\\[8pt]
 {\Large From conservation laws to a cavity solver}\\[6pt]
-{\large Numerical foundations for students new to CFD}\\[4pt]
-{\small Expanded edition: 27 pages, including pressure derivation}
+{\large Numerical foundations for students new to CFD}
 \end{center}
 \vspace{8pt}
 \textbf{The learning question.} How can a computer predict the recirculating flow in a box when only the wall motion, fluid properties, and geometry are given?
+
+\textbf{After Week 1, you should be able to}
+\begin{enumerate}
+\item Write continuity and both momentum components, and derive their nondimensional form.
+\item Define $\psi$ and $\omega$, explain their physical meaning, and prove $\nabla^2\psi=-\omega$.
+\item Explain why the vorticity equation needs velocities and how the coupled solve obtains them.
+\item Convert a derivative and the Poisson equation into finite differences, keeping array axes consistent.
+\item Distinguish inner Poisson iteration, outer time evolution, stability, convergence, and validation.
+\item Compare centerline profiles quantitatively and describe the limits of that evidence.
+\end{enumerate}
 
 A neural network can fit a field without ensuring that it conserves mass or satisfies a wall condition. This week establishes the physical and numerical language needed to judge both CFD solutions and later machine-learning predictions. We start with conservation of mass and momentum, derive a pressure-free formulation for two-dimensional incompressible flow, and connect each equation to the existing cavity notebook.
 
@@ -163,7 +172,7 @@ Vorticity measures local rotation; the local rigid-body angular velocity is $\om
 \checkpoint{For solid-body rotation $u=-\Omega y$, $v=\Omega x$, find $\omega$ and a compatible $\psi$. Answer: $2\Omega$ and $-\Omega(x^2+y^2)/2$ plus a constant.}
 \newpage
 \topic{5}{Proof of the streamfunction Poisson equation}
-\textbf{This is the proof requested for Eq.~(15) in the previous lecture.} Begin with the definitions; no new physical assumption is needed beyond those already stated:
+\textbf{Goal: prove that the streamfunction satisfies $\nabla^2\psi=-\omega$.} Begin with the definitions; no new physical assumption is needed beyond those already stated:
 \begin{align}
 \omega&=\frac{\partial v}{\partial x}-\frac{\partial u}{\partial y},\\
 v=-\psi_x&\quad\Longrightarrow\quad v_x=-\psi_{xx},\\
@@ -367,15 +376,8 @@ Under our assumptions, this is a consequence of momentum conservation, not merel
 \end{equation}
 One must handle discrete compatibility when using Neumann data. Pressure is then determined only up to an additive constant: set a reference value or subtract its mean. Subtracting the mean fixes the gauge; it does not repair an incorrect pressure boundary condition. Pressure reconstruction is an extension, not a prerequisite for the Week-1 velocity solve.
 
-\textbf{After Week 1, you should be able to}
-\begin{enumerate}
-\item Write continuity and both momentum components, and derive their nondimensional form.
-\item Define $\psi$ and $\omega$, explain their physical meaning, and prove $\nabla^2\psi=-\omega$.
-\item Explain why the vorticity equation needs velocities and how the coupled solve obtains them.
-\item Convert a derivative and the Poisson equation into finite differences, keeping array axes consistent.
-\item Distinguish inner Poisson iteration, outer time evolution, stability, convergence, and validation.
-\item Compare centerline profiles quantitatively and describe the limits of that evidence.
-\end{enumerate}
+\textbf{Summary.} The six outcomes listed on page~1 are the checklist for this week; test each against the checkpoints above before moving to the notebooks.
+
 \textbf{Optional derivation exercise.} Reproduce the curl-of-momentum calculation on page~7, identifying the exact use of incompressibility. Then derive the moving-wall vorticity formula from a Taylor expansion.
 
 \textbf{References and authorship scope}

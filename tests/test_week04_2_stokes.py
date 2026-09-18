@@ -2,7 +2,9 @@ from pathlib import Path
 import csv
 
 import nbformat
-from pypdf import PdfReader
+import pytest
+
+PdfReader = pytest.importorskip("pypdf", reason="PDF page checks need the optional pypdf dependency").PdfReader
 
 
 ROOT = Path(__file__).resolve().parents[1]

@@ -19,5 +19,5 @@ fig.text(.5,.02,'History ends at checkpoint 65711; supplied field is checkpoint 
 fig.subplots_adjust(bottom=.3)
 out=ROOT/'results/week13_deep_cavity/loss_continuation.png'
 fig.savefig(out,dpi=180,bbox_inches='tight')
-print(out)
+print(out.relative_to(ROOT).as_posix())
 print('rows',len(d),'last total',d[-1,1:].sum())

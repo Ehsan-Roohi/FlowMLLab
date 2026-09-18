@@ -10,6 +10,7 @@
 Research method and original solver/scripts: **Lars Davidson**. DNS:
 **Myoungkyu Lee and Robert D. Moser**. New explanations, plots, diagnostic
 utilities and classroom orchestration: FlowMLLab / Ehsan Roohi, AI-assisted.
+See [NOTICE.md](NOTICE.md) for the reuse boundary.
 
 ## Run
 
@@ -64,14 +65,8 @@ upstream cases, resetting only this generated `tmp/w14` run tree; do not run it
 during active simulations. The inverse mode runs the original long 200,000-epoch
 checkpoint-resume script. Read the validation status before claiming reproduction.
 
-The instructor reported permission to adapt materials in the shared chat.
-Exact written reuse terms are not available in this checkout; upstream code
-and checkpoints are kept outside the published materials. Do not relicense
-them under FlowMLLab's MIT license. This release contains attributed compact
-teaching data and independently generated results, relying on the instructor's
-reported permission and explicit publication request; it does not distribute
-the author's solver archive or pretrained checkpoints. Downstream users must
-check the original terms before further redistribution.
+Attribution, what is redistributed and what is not, and the licence
+boundary are recorded in [NOTICE.md](NOTICE.md).
 
 The assembled NN-5200 case is an explicit adaptation and did not converge.
 All four CFD run gates, including failures, are retained. This is a completed

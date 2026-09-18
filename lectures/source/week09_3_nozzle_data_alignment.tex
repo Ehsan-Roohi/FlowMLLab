@@ -9,16 +9,23 @@
 Extend the Week 4 branch--trunk data contract to moving-throat nozzle grids.
 This CPU exercise uses an ideal-gas, inviscid, isentropic, choked, shock-free
 quasi-one-dimensional reference. It does not train a neural model or validate
-multidimensional CFD. The exercise is independently written.
+multidimensional CFD.
 \section*{Three objects, one physical pairing}
 For nozzle $c$ and query $j$,
 \[
 B_c=[A_c(\xi_1)/A_t,\ldots,A_c(\xi_{41})/A_t,p_{0,c},T_{0,c}],
 \qquad (B_c,x_{cj})\mapsto q_c(x_{cj}).
 \]
-The sensor locations $\xi_i$ are fixed. The geometry values vary. Query grids
+Here $A_c(\xi)$ is the cross-sectional area of nozzle $c$ at axial position $\xi$,
+$A_t$ the throat area (so $A_c/A_t$ is the area ratio that the isentropic relation
+uses), $p_{0,c}$ and $T_{0,c}$ the stagnation pressure and temperature of the
+inflow, $x_{cj}$ the $j$-th axial query point of nozzle $c$, and $x_t$ the throat
+position, which moves between nozzles. The 41 sensor locations $\xi_i$ are the
+same for every nozzle: this fixed sampling is what lets one branch input vector
+describe every geometry in the family (the number 41 is a choice; what matters
+is that it never changes). The geometry values vary. Query grids
 may differ; here each includes its own throat exactly. Targets are
-$q=(M,p,T,\rho,u)$. The branch and target case IDs must agree, and the query
+$q=(M,p,T,\rho,u)$: Mach number, pressure, temperature, density and velocity. The branch and target case IDs must agree, and the query
 must equal the source target coordinate in the same units.
 \section*{Intentional failures}
 The notebook first repeats the first nozzle's query grid for every nozzle.

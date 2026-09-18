@@ -1,12 +1,8 @@
 # Start here
 
-Current advanced modules: [Week 13: deep-cavity PINNs](notebooks/week13/README.md), [Week 14: RANS and neural closures](notebooks/week14/README.md), and [Week 15: geometry-aware operators and OpenFOAM data](notebooks/week15/README.md).
-
-For Davidson-based turbulence closures, see the [Week 14 guide](notebooks/week14/README.md).
-This CPU module uses a complete checkout and an isolated PyTorch environment;
-it distinguishes source reproduction from classroom controls and retains failed gates.
-
 This page is the shortest reliable path from a fresh checkout to a meaningful scientific result.
+The course has a six-week core (Weeks 1 to 6) and extension weeks (7 to 15); the
+[course map](COURSE_MAP.md) shows how they fit together.
 
 ## 1. Choose your mode
 
@@ -23,21 +19,13 @@ This page is the shortest reliable path from a fresh checkout to a meaningful sc
 | Week 2.1 probabilistic ML | You want posterior prediction, proper scores, and CFD uncertainty calibration | `notebooks/week02_1/Probabilistic_UQ_CFD.ipynb` | [Open in Colab](https://colab.research.google.com/github/Ehsan-Roohi/FlowMLLab/blob/main/notebooks/week02_1/Probabilistic_UQ_CFD.ipynb) |
 | Instructor adoption | You are planning a course or workshop | `COURSE_MAP.md`, then `lectures/` |
 
-Do not begin with Track 6 unless you already understand case-wise splitting, scaling, offline versus closed-loop validation, and GPU troubleshooting.
+Project Track 6 (Weeks 5 to 6, Fokker-Planck closure, CUDA GPU) assumes case-wise splitting, scaling, offline versus closed-loop validation, and GPU troubleshooting; take it only after the earlier tracks.
 
 The complete [notebook launcher](notebooks/README.md) links directly to the
 Colab notebooks. Their first code cells obtain the repository and package, so a
 fresh Colab runtime does not require manual file uploads.
 
 ## 2. Create an environment
-
-New working-course extensions: [Week 11 feature identification](notebooks/week11/README.md)
-and [Week 12 noisy-moment reconstruction](notebooks/week12/README.md). Both run on
-CPU without TensorFlow and clearly separate synthetic exercises from research results.
-Week 11 now also includes [hydrofoil vapor-cloud detection](notebooks/week11/W11_Cavitation_Cloud_Detection.ipynb):
-replay the author's existing model on retained CFD fields, with an optional final-stage training run.
-The independent [Week 13 cavity-PINN audit](notebooks/week13/README.md) reads
-retained Unity A100 evidence; it does not retrain the research runs in Colab.
 
 Python 3.12 is the reference reproducibility target. The package and Colab
 entry points support Python 3.10 through 3.13.
@@ -99,6 +87,15 @@ Typical student runtimes are approximate:
 | Week 9 micro-step and micro-nozzle DeepONet cases | CPU | about 6–8 min for both labs, including the compact 2-D FlowMLLab nozzle run |
 | Week 10 DSMC cavity and shock reproduction | CPU | normally under 2 min from retained data; no TensorFlow required |
 | Week 2.1 probabilistic UQ | CPU | <1 min with retained evidence; no TensorFlow required |
+| Week 4.2 Stokes-to-Navier-Stokes lab and 51 x 51 addendum | CPU | <5 min reading retained evidence; full regeneration is an optional switch that needs PyTorch |
+| Week 7.2 sparse-sensor state estimation | CPU | a few minutes for the validation grid; no TensorFlow required |
+| Week 9 Lab 3 data-alignment audit | CPU | <2 min |
+| Week 10.1 collision-map surrogate | CPU | <5 min |
+| Week 11 shock/vortex, reconstruction and cavitation labs | CPU | 5 to 15 min each; PyTorch for the cavitation and reconstruction labs |
+| Week 12 moment reconstruction | CPU | about 2 min including the 20 s Noise2Noise fit |
+| Week 13 cavity PINNs | CPU | about 3 min; the training cell takes about a minute (PyTorch) |
+| Week 14 RANS closures | CPU, separate environment | 5 to 10 min for the notebook; the optional upstream solver runs take hours |
+| Week 15 geometry-aware operators | CPU, full checkout | <5 min |
 
 ## 5. Keep blind cases blind
 

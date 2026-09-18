@@ -6,6 +6,7 @@ from __future__ import annotations
 import ast
 import hashlib
 import json
+import re
 import subprocess
 import sys
 from pathlib import Path
@@ -450,8 +451,37 @@ def validate_notebooks() -> tuple[int, int]:
                 for cell in cells
             ), f"missing learner-edition marker: {path}"
         count += 1
-    assert count == 37, f"expected 37 notebooks, found {count}"
+    validate_notebook_index()
     return count, code_cells
+
+
+def _linked_paths(index: Path, suffix: str, base: Path) -> set[Path]:
+    """Return repository-relative paths with `suffix` that `index` links to."""
+    text = index.read_text(encoding="utf-8")
+    linked: set[Path] = set()
+    for target in re.findall(r"\(([^)\s]+" + re.escape(suffix) + r")\)", text):
+        if target.startswith(("http://", "https://")):
+            marker = "/blob/main/"
+            if marker not in target:
+                continue
+            linked.add(Path(target.split(marker, 1)[1]))
+        else:
+            linked.add((base / target).resolve().relative_to(ROOT))
+    return linked
+
+
+def validate_notebook_index() -> None:
+    """Every notebook must be reachable from the launcher page, and vice versa.
+
+    This replaces a hard-coded notebook count: adding a notebook without listing
+    it in notebooks/README.md (or listing one that no longer exists) fails the gate.
+    """
+    actual = {p.relative_to(ROOT) for p in (ROOT / "notebooks").rglob("*.ipynb")}
+    linked = _linked_paths(ROOT / "notebooks" / "README.md", ".ipynb", ROOT / "notebooks")
+    missing = sorted(str(p) for p in actual - linked)
+    stale = sorted(str(p) for p in linked - actual)
+    assert not missing, f"notebooks not linked from notebooks/README.md: {missing}"
+    assert not stale, f"notebooks/README.md links to missing notebooks: {stale}"
 
 
 def validate_article_alignment() -> dict[str, float]:
@@ -1118,7 +1148,13 @@ def validate_week01_1_results() -> dict[str, object]:
 
 def validate_pdfs() -> int:
     pdfs = sorted((ROOT / "lectures").glob("*.pdf"))
-    assert len(pdfs) == 22
+    actual = {p.relative_to(ROOT) for p in pdfs}
+    linked = _linked_paths(ROOT / "lectures" / "README.md", ".pdf", ROOT / "lectures")
+    linked = {p for p in linked if p.parent == Path("lectures")}
+    missing = sorted(str(p) for p in actual - linked)
+    stale = sorted(str(p) for p in linked - actual)
+    assert not missing, f"lecture PDFs not linked from lectures/README.md: {missing}"
+    assert not stale, f"lectures/README.md links to missing PDFs: {stale}"
     for path in pdfs:
         result = subprocess.run(
             ["pdfinfo", str(path)], check=True, capture_output=True, text=True

@@ -6,9 +6,19 @@ Learning outcomes: distinguish rotation from shear and compression; explain why 
 
 Suggested 90-minute class: 15 minutes of diagnostic controls, 20 minutes of physical framing, 30 minutes in the notebook, 15 minutes of evidence critique, and 10 minutes for the exit assessment. Prerequisites are velocity gradients, supervised learning, cylinder wakes and compressible-flow branches from Weeks 1, 2, 7 and 8.
 
-Research basis: Ehsan Roohi, Physics-audited joint neural segmentation of shocks and vortex cores: cross-solver transfer and controlled airfoil--cylinder studies (author-supplied research manuscript, 2026). The source describes joint detection in airfoil and cylinder fields. Do not describe the manuscript as a published JCP article or invent a journal DOI.
+Research basis: Ehsan Roohi, Physics-audited joint neural segmentation of shocks and vortex cores: cross-solver transfer and controlled airfoil--cylinder studies (author-supplied research manuscript, 2026). The source describes joint detection in airfoil and cylinder fields; it is a manuscript under review, not a published article.
 
 The executable lab starts with an original CPU teaching analog. Its final section reads real airfoil and cylinder research fields through retained figures and a provenance ledger: six fresh forward passes with the frozen task-preserving Harmonized Joint (HJ) shock-repair checkpoint. No new CFD or research-model training is claimed. The analytic warm-up and research evidence remain explicitly separate.
+
+## Definitions used in this lecture
+
+Segmentation: assigning every grid cell (pixel) a label, here shock, vortex core, or neither. A learned segmenter outputs, for each pixel, a number between 0 and 1 (through a sigmoid) or a set of numbers summing to 1 over classes (through a softmax); a threshold turns them into a mask. Binary cross-entropy (BCE) is the loss used for sigmoid outputs: for a logit z and label y in {0,1}, BCE = softplus(z) - y*z, whose gradient is sigmoid(z) - y.
+
+Dice and IoU measure the overlap between a predicted mask P and a reference mask R: Dice = 2|P and R| / (|P| + |R|), IoU = |P and R| / |P or R|. Worked example on a 4-by-4 grid: if R has 4 cells and P has 5 cells of which 3 coincide with R, then |P and R| = 3, Dice = 6/9 = 0.667 and IoU = 3/6 = 0.5. Both are 1 for a perfect mask and 0 for no overlap; Dice is always at least IoU. Neither measures the position error of a front: a shock predicted one cell to the side of a one-cell-wide reference scores zero on both.
+
+U-Net: a convolutional encoder-decoder. The encoder halves the spatial resolution several times while increasing the number of feature channels, the decoder doubles it back, and skip connections copy encoder features to the decoder at matching resolution so that fine detail survives. The research network of this week (Harmonized Joint, HJ) is a multi-branch encoder-decoder built on the same idea, not a standard U-Net.
+
+Swirling strength: lambda_ci, the imaginary part of the complex eigenvalue of the velocity-gradient tensor where one exists; in two dimensions lambda_ci = sqrt(max(Q_d, 0)) with Q_d defined in the next section. Schlieren: an image of the density-gradient magnitude, used here only as a visual background.
 
 ## Vorticity is necessary context, not a core label
 
@@ -76,7 +86,7 @@ The research repository is https://github.com/Ehsan-Roohi/ShockVortexML. Two aut
 
 ## Reconstruct the field before identifying structures
 
-The real-field companion asks a different question from both the manufactured classification exercise and the HJ research detector. Suppose a sensor or storage pipeline supplies a spatially coarsened velocity field. Can a learned reconstruction recover the velocity gradients needed to identify a vortex? Our independent adaptation of the supplied Ricardo-course super-resolution exercise compares three paths: interpolation followed by a physical diagnostic; U-Net velocity reconstruction followed by that same diagnostic; and direct U-Net mask prediction. U-Net is shared only between these two reconstruction/segmentation comparisons; it is not the principal HJ detector described above and not a separate rival to a so-called Ricardo algorithm.
+The real-field companion asks a different question from both the manufactured classification exercise and the HJ research detector. Suppose a sensor or storage pipeline supplies a spatially coarsened velocity field. Can a learned reconstruction recover the velocity gradients needed to identify a vortex? Our independent adaptation of a super-resolution exercise from Ricardo Vinuesa's KTH course on deep learning in fluid mechanics compares three paths: interpolation followed by a physical diagnostic; U-Net velocity reconstruction followed by that same diagnostic; and direct U-Net mask prediction. U-Net is shared only between these two reconstruction/segmentation comparisons; it is not the principal HJ detector described above, and the exercise is not a reproduction of that course's code or results.
 
 A U-Net contracts the spatial representation to learn broader context, then expands it while concatenating encoder features through skip connections. The original architecture is described by Ronneberger, Fischer and Brox (2015), https://lmb.informatik.uni-freiburg.de/people/ronneber/u-net/. The course archive illustrates single-component turbulent-field reconstruction. Here we independently implement a smaller two-level network with two velocity inputs and either two reconstructed velocity outputs or one mask logit. No archive source code, weights or figures are redistributed, and this is not an exact reproduction of its four-level network.
 

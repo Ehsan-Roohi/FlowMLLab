@@ -33,7 +33,20 @@ $$
 1-b^2/r_{\min}^2-V(r_{\min})/E=0.
 $$
 
-The scattering integral then determines the angle. The neural surrogate
+Symbols: $b$ is the impact parameter (the perpendicular offset of the two
+approach trajectories), $\chi$ the deflection angle of the relative velocity,
+$r_{\min}$ the closest approach, $V(r)$ the intermolecular potential, and
+$\sigma$ a cross-section (the effective target area for a given outcome).
+The scattering integral of classical mechanics then gives the angle,
+
+$$
+\chi(b,E)=\pi-2b\int_{r_{\min}}^{\infty}\frac{dr}{r^{2}\sqrt{1-b^{2}/r^{2}-V(r)/E}},
+$$
+
+which reduces, for hard spheres of diameter $d$, to $\cos\chi=2b^{2}/d^{2}-1$
+for $b<d$ and no deflection otherwise; that limit is the sanity check used in
+the CPU lab. DSMC needs $\chi$ for every simulated collision, so evaluating
+this integral is the cost that a surrogate removes. The neural surrogate
 learns $(E,b)\mapsto\cos\chi$, not the macroscopic flow field. The supplied
 DeepONet uses standardized log-energy in its branch and scaled impact
 parameter in its trunk, with latent products and smooth energy-band expert

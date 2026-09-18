@@ -1,63 +1,35 @@
 # Lectures and guides
 
-## Week 14 - Davidson-based turbulence closure module
+One row per lecture, in course order. The PDF is the authoritative rendered
+lecture for each release; editable sources live in `source/` where available.
+Page counts are those of the current files.
 
-[Lecture PDF](week14_rans_pinn_nn.pdf) / [editable notes](source/week14_rans_pinn_nn.md)
-/ [executed notebook and run guide](../notebooks/week14/README.md).
-Twelve pages: inverse PINN, three closure coefficients, original NN training,
-coupled RANS, and the limits found in the source-package audit. All figures are
-newly plotted from attributed data and retained executions.
-
-| File | Main topics | Companion notebooks |
-| --- | --- | --- |
-| [week01_numerical_foundations.pdf](week01_numerical_foundations.pdf) | Continuity and component momentum, nondimensionalization, streamfunction/vorticity derivations, finite differences, wall conditions, coupled iteration, convergence, Ghia validation | `notebooks/week01/` |
-| `week01_1_ai_assisted_scientific_software.pdf` | Specification, manufactured-solution verification, physical gates, provenance, adversarial axis tests, human-agent authority and disclosure | `notebooks/week01_1/W1_1_AI_Assisted_Scientific_Software.ipynb` |
-| `week02_supervised_learning_rarefaction.pdf` | Neurons, MLPs, losses, optimization, scaling, case-wise splits, rarefaction | `notebooks/week02/` |
-| `week02_1_probabilistic_uq.pdf` | Observation models, exact Bayesian regression, POD--Gaussian-process fields, proper scores, leakage-free calibration, retained blind under-coverage | `notebooks/week02_1/Probabilistic_UQ_CFD.ipynb` |
-| `week03_kinetic_dsmc.pdf` | Distribution functions, Maxwellian moments, sampling error, DSMC | `notebooks/week03/` |
-| `week04_cavity_surrogates_deeponet.pdf` | Data qualification, scalar/field surrogates, DeepONet, physical metrics | `notebooks/week04/` |
-| [week04_2_pinn_cavity.pdf](week04_2_pinn_cavity.pdf) | Historical PINN foundations reading, now preparatory material for Week 13 | Five assignments in the lecture; no new trained PINN claim |
-| [week04_2_stokes_to_navier_stokes.pdf](week04_2_stokes_to_navier_stokes.pdf) | Actual Stokes input, Reynolds-speed consistency, constant/diverse lids, POD correction network, validation-only selection and bounded regression evidence | `notebooks/week04/W4_Lab4_Stokes_to_Navier_Stokes.ipynb` |
-| [week04_2_grid51_validation.pdf](week04_2_grid51_validation.pdf) | Fresh 51 × 51 CFD and Stokes solves, retrained correction, 25-to-51 grid comparison, speed/streamline/vorticity plots | [51 × 51 validation notebook](../notebooks/week04/W4_Lab4_Grid51_Validation.ipynb) |
-| `week05_06_project_guide.pdf` | Six project tracks, frozen protocols, POD, uncertainty, rarefied cavity, FP closure | `notebooks/week05_06/P0_Project_Setup.ipynb` through `P6_FP_Cavity_Closure.ipynb` |
-| `week07_cylinder_lbm_neural_surrogate.pdf` | Circular-cylinder physics; concise D2Q9 BGK/TRT algorithm; curved-wall boundaries; force and gated Strouhal diagnostics; executed three-grid study with retained formal asymptotic/GCI failure; POD/CNN failure analysis; and leakage-controlled 277-frame phase-stable validation | `notebooks/week07/W7_Lattice_Boltzmann_Cylinder_Student.ipynb` |
-| `week07_1_hypersonic_rarefied_cylinder.pdf` | Rarefaction and DSMC cylinder fields; parameter-to-field operators; whole-case splitting; reviewed Fusion-DeepONet topology; strong Mach-field interpolation; deep-ensemble diagnostics; retained baseline win; and explicit claim boundaries | `notebooks/week07_1/W7_1_Hypersonic_Rarefied_Cylinder_DeepONet.ipynb` |
-| `week07_2_cylinder_state_estimation.pdf` | POD-space linear-Gaussian modeling; causal predict-update filtering; sparse sensors; matched information baselines; validation-only covariance inflation; retained interval under-coverage | `notebooks/week07_2/W7_2_Cylinder_Wake_State_Estimation.ipynb` |
-| `week08_gas_dynamics_sciml.pdf` | Exact Rayleigh, Fanno, oblique-shock, nozzle-shock, and shock-tube physics; branch-aware inversion; exact/interpolation/MLP decision rules; edge generalization; dimensional scaling; and a qualified SU2 CFD bridge | `notebooks/week08/W8_Lab1_Exact_Gas_Dynamics_Student.ipynb` and `W8_Lab2_Gas_Dynamics_SciML_Evidence_Student.ipynb` |
-| `week09_rarefied_deeponet_case_studies.pdf` | Independent DSMC verification; concise DSMC algorithm; DeepONet/POD-trunk formulation; micro-step Knudsen and height cases; fresh full-field nozzle back-pressure predictions; and a clearly bounded throat-location reference | `notebooks/week09/W9_Lab1_Microstep_Zonal_DeepONet_Student.ipynb` and `W9_Lab2_Shock_Aligned_Nozzle_DeepONet_Student.ipynb` |
-| `week10_dsmc_data_driven_surrogates.pdf` | Independent DSMC qualification; move--collide--sample algorithm; rarefied-cavity log-Knudsen synthesis; monatomic and diatomic shock operators; translational--rotational relaxation; interpolation/extrapolation; and complete article-result reproduction | `notebooks/week10/W10_DSMC_Data_Driven_Surrogates_Student.ipynb` |
-
-Editable sources are included in `source/` where they were available. The PDF is the authoritative rendered lecture for this release; Week 2.1 also includes an editable PPTX and its deterministic JavaScript builder.
-
-The Week-4 correction companion and executed Lab 4 are rebuilt together by
-[`../qa/build_week04_2_stokes_correction.py`](../qa/build_week04_2_stokes_correction.py).
-The builder reads retained numerical evidence, regenerates the plots, executes
-all notebook code cells sequentially and writes the ten-page Times-style PDF.
-The historical PINN reading remains at `source/week04_2_pinn_cavity.md` with its
-builder at `../qa/build_week04_2_lecture.py` for existing Week-13 references.
-
-## Weeks 11 through 13 (working course, after v1.4.1)
-
-| Lecture | Notebook | Editable source |
-| --- | --- | --- |
-| [Week 11: shock, vortex and vapor-cloud identification](week11_shock_vortex_identification.pdf) | [CPU controls](../notebooks/week11/W11_Shock_Vortex_Identification.ipynb) · [U-Net reconstruction comparison](../notebooks/week11/W11_Lab2_Reconstruction_and_Identification.ipynb) · [Hydrofoil vapor-cloud detection](../notebooks/week11/W11_Cavitation_Cloud_Detection.ipynb) | [Lecture notes](source/week11_shock_vortex_identification.md) |
-| [Week 12: DSMC moment reconstruction](week12_dsmc_moment_reconstruction.pdf) | [CPU lab](../notebooks/week12/W12_DSMC_Moment_Reconstruction.ipynb) | [Lecture notes](source/week12_dsmc_moment_reconstruction.md) |
-| [Week 13: rectangular-cavity PINN research audit](week13_rectangular_cavity_pinn.pdf) | [Evidence-audit notebook](../notebooks/week13/W13_Rectangular_Cavity_PINN_Research.ipynb) | [Continuous-text lecture](source/week13_rectangular_cavity_pinn.md) |
-| [Week 14: RANS and neural closures](week14_rans_pinn_nn.pdf) | [Executed lab](../notebooks/week14/README.md) | [Notes](source/week14_rans_pinn_nn.md) |
-| [Week 15: geometry-aware neural operators](week15_geometry_generalization.pdf) | [Executed lab and data](../notebooks/week15/README.md) | [Notes](source/week15_geometry_generalization.md) |
-
-Each has eight lecture-note pages, worked concepts, an executed classroom figure
-and assessment prompts. Research attribution and synthetic-teaching scope are
-explicit; neither notebook claims to reproduce the original research model.
-Week 13 is a separate final-course research module built from retained A100
-runs; its deep-cavity cases are not called field-validated without matched raw CFD.
-
-## Week 10.1 reading companion
-
-[Ab initio collision DeepONet](week10_1_abinitio_collision_deeponet.md) is a
-supplement to Lecture 10, with [colored research-field comparisons](../results/abinitio_deeponet_cylinder/README.md)
-and a citation to [Roohi et al., PoF 38, 057123](https://doi.org/10.1063/5.0328463).
-It is a Markdown reading note, not an additional PDF or training notebook.
+| Week | Lecture (pages) | Main topics | Companion notebooks | Editable source |
+| --- | --- | --- | --- | --- |
+| 1 | [Numerical foundations](week01_numerical_foundations.pdf) (27) | Continuity and momentum, nondimensionalization, streamfunction/vorticity derivations, finite differences, wall conditions, coupled iteration, convergence, Ghia validation | `notebooks/week01/` | [LaTeX](source/week01_numerical_foundations.tex), [code walkthrough](source/week01_code_walkthrough.tex), [pressure appendix](source/week01_pressure_derivation.tex) |
+| 1.1 | [AI-assisted scientific software](week01_1_ai_assisted_scientific_software.pdf) (9) | Specification, manufactured-solution verification, physical gates, provenance, adversarial axis tests, human-agent authority and disclosure | `notebooks/week01_1/W1_1_AI_Assisted_Scientific_Software.ipynb` | [Markdown](source/week01_1_ai_assisted_scientific_software.md) |
+| 2 | [Supervised learning and rarefaction](week02_supervised_learning_rarefaction.pdf) (21) | Neurons, MLPs, losses, optimization, scaling, case-wise splits, rarefaction | `notebooks/week02/` | [LaTeX](source/week02_lecture.tex) |
+| 2.1 | [Probabilistic UQ](week02_1_probabilistic_uq.pdf) (14) | Observation models, exact Bayesian regression, POD--Gaussian-process fields, proper scores, leakage-free calibration, retained blind under-coverage | `notebooks/week02_1/Probabilistic_UQ_CFD.ipynb` | [PPTX](source/week02_1_probabilistic_uq.pptx) and its [builder](source/build_week02_1_probabilistic_uq.mjs) |
+| 3 | [Kinetic theory and DSMC](week03_kinetic_dsmc.pdf) (34) | Distribution functions, Maxwellian moments, sampling error, DSMC | `notebooks/week03/` | [PPTX](source/week03_lecture.pptx) |
+| 4 | [Cavity surrogates and DeepONet](week04_cavity_surrogates_deeponet.pdf) (10) | Data qualification, scalar/field surrogates, DeepONet, physical metrics | `notebooks/week04/` | [LaTeX](source/week04_lecture.tex) |
+| 4.2 | [Stokes-to-Navier-Stokes correction](week04_2_stokes_to_navier_stokes.pdf) (10) and [51 x 51 addendum](week04_2_grid51_validation.pdf) (3) | Actual Stokes input, Reynolds-speed consistency, constant/diverse lids, POD correction network, validation-only selection, grid refinement | `notebooks/week04/W4_Lab4_Stokes_to_Navier_Stokes.ipynb`, `W4_Lab4_Grid51_Validation.ipynb` | built by [`qa/build_week04_2_stokes_correction.py`](../qa/build_week04_2_stokes_correction.py) and [`qa/build_week04_2_grid51.py`](../qa/build_week04_2_grid51.py) |
+| 5 to 6 | [Project guide](week05_06_project_guide.pdf) (60) | Six project tracks, frozen protocols, POD, uncertainty, rarefied cavity, FP closure | `notebooks/week05_06/P0` to `P6` | [LaTeX](source/weeks05_06_project_guide.tex) |
+| 5 (companion) | [Modal sensing](week05_modal_sensing.pdf) (4) | Gappy POD, sensor placement, SINDy bridge | `notebooks/week05_06/W5_Lab2_Sparse_Sensing_Dynamics.ipynb` | [Markdown](source/week05_modal_sensing.md) |
+| 7 | [Cylinder LBM and neural surrogates](week07_cylinder_lbm_neural_surrogate.pdf) (18) | Circular-cylinder physics; D2Q9 BGK/TRT algorithm; curved-wall boundaries; force and gated Strouhal diagnostics; three-grid study with retained formal GCI failure; POD/CNN failure analysis; 277-frame phase-stable validation | `notebooks/week07/W7_Lattice_Boltzmann_Cylinder_Student.ipynb` | [LaTeX](source/week07_cylinder_lbm_neural_surrogate.tex) |
+| 7 (companion) | [Modal forecasting](week07_modal_forecasting.pdf) (4) | POD coefficient forecasting and DMD baselines | `notebooks/week07/W7_Lab2_Modal_Forecasting.ipynb` | [Markdown](source/week07_modal_forecasting.md) |
+| 7.1 | [Rarefied hypersonic cylinder](week07_1_hypersonic_rarefied_cylinder.pdf) (16) | Rarefaction and DSMC cylinder fields; parameter-to-field operators; whole-case splitting; Fusion-DeepONet topology; strong Mach-field interpolation; ensemble diagnostics; retained baseline win | `notebooks/week07_1/W7_1_Hypersonic_Rarefied_Cylinder_DeepONet.ipynb` | [builder](source/build_week07_1_hypersonic_rarefied_cylinder.py) |
+| 7.2 | [Cylinder-wake state estimation](week07_2_cylinder_state_estimation.pdf) (3) | POD-space linear-Gaussian modeling; causal predict-update filtering; sparse sensors; matched information baselines; validation-only covariance inflation; retained interval under-coverage | `notebooks/week07_2/W7_2_Cylinder_Wake_State_Estimation.ipynb` | [Markdown](source/week07_2_cylinder_state_estimation.md) |
+| 8 | [Gas dynamics and SciML](week08_gas_dynamics_sciml.pdf) (12) | Exact Rayleigh, Fanno, oblique-shock, nozzle-shock and shock-tube physics; branch-aware inversion; exact/interpolation/MLP decision rules; edge generalization; dimensional scaling; qualified SU2 CFD bridge | `notebooks/week08/` | [LaTeX](source/week08_gas_dynamics_sciml.tex) |
+| 9 | [Rarefied DeepONet case studies](week09_rarefied_deeponet_case_studies.pdf) (18) | Independent DSMC verification; DSMC algorithm; DeepONet/POD-trunk formulation; micro-step Knudsen and height cases; full-field nozzle back-pressure predictions; bounded throat-location reference | `notebooks/week09/W9_Lab1_...`, `W9_Lab2_...` | [LaTeX](source/week09_rarefied_deeponet_case_studies.tex) |
+| 9.3 | [Nozzle data alignment](week09_3_nozzle_data_alignment.pdf) (2) | Branch/trunk data contract, silent coordinate-pairing bugs, isentropic reference checks | `notebooks/week09/W9_Lab3_Nozzle_Data_Alignment_Audit.ipynb` | [LaTeX](source/week09_3_nozzle_data_alignment.tex) |
+| 10 | [DSMC data-driven surrogates](week10_dsmc_data_driven_surrogates.pdf) (13) | Independent DSMC qualification; move--collide--sample algorithm; rarefied-cavity log-Knudsen synthesis; monatomic and diatomic shock operators; translational--rotational relaxation; article-result reproduction | `notebooks/week10/W10_DSMC_Data_Driven_Surrogates_Student.ipynb` | [LaTeX](source/week10_dsmc_data_driven_surrogates.tex) |
+| 10.1 | [Ab initio collision DeepONet](week10_1_abinitio_collision_deeponet.md) (reading note) | Collision-angle surrogates and DSMC cylinder contours; see [colored research-field comparisons](../results/abinitio_deeponet_cylinder/README.md) and [Roohi et al., PoF 38, 057123](https://doi.org/10.1063/5.0328463) | `notebooks/week10_1/W10_1_Collision_Map_Surrogate_Audit.ipynb` | Markdown note (no PDF) |
+| 11 | [Shock, vortex and vapor-cloud identification](week11_shock_vortex_identification.pdf) (17) | Velocity-gradient diagnostics, pixel classifiers and thresholds, U-Net reconstruction before identification, hydrofoil vapor-cloud detection | `notebooks/week11/` (three notebooks) | [Markdown](source/week11_shock_vortex_identification.md) |
+| 12 | [DSMC moment reconstruction](week12_dsmc_moment_reconstruction.pdf) (13) | Additive moments, prior-plus-observation reconstruction, Noise2Noise training on real DSMC, support monitoring | `notebooks/week12/W12_DSMC_Moment_Reconstruction.ipynb` | [Markdown](source/week12_dsmc_moment_reconstruction.md) |
+| 13 | [Rectangular-cavity PINNs](week13_rectangular_cavity_pinn.pdf) (12) | Streamfunction PINNs, hard wall constraints, Adam then SSBroyden2, deep-cavity fields, residual audits | `notebooks/week13/W13_Rectangular_Cavity_PINN_Research.ipynb` | [Markdown](source/week13_rectangular_cavity_pinn.md) |
+| 13 (preparatory) | [PINN foundations reading](week04_2_pinn_cavity.pdf) (12) | Nondimensional residuals, soft/hard constraints, streamfunction lifting, analytic checks; originally numbered 4.2 | Five assignments in the lecture; no trained-PINN claim | [Markdown](source/week04_2_pinn_cavity.md) |
+| 14 | [RANS, PINN and neural closures](week14_rans_pinn_nn.pdf) (7) | Inverse PINN, three closure coefficients, original NN training, coupled RANS, source-package audit limits | `notebooks/week14/W14_pyCALC_RANS_PINN_NN.ipynb` ([setup](../notebooks/week14/README.md)) | [Markdown](source/week14_rans_pinn_nn.md) |
+| 15 | [Geometry-aware neural operators](week15_geometry_generalization.pdf) (6) | Geometry generalization, Geo-DeepONet, FNO and U-FNO, whole-geometry and family holdouts | `notebooks/week15/W15_Geometry_Operators_Step_Audit.ipynb` ([data guide](../notebooks/week15/README.md)) | [Markdown](source/week15_geometry_generalization.md) |
 
 Recommended teaching pattern for each meeting:
 
@@ -67,47 +39,28 @@ Recommended teaching pattern for each meeting:
 4. benchmark/baseline/physical comparison; and
 5. an exit prompt asking what evidence would falsify the conclusion.
 
-## Rebuilding the Week-1 foundations lecture
+## Rebuilding lectures
 
-The expanded 27-page [editable LaTeX source](source/week01_numerical_foundations.tex)
-includes the proof of the original lecture's Eq. (15), an optional curl-of-momentum
-derivation, and the distinction between inner Poisson sweeps and outer time steps.
-The sign convention and wall formulas match the introductory Week-1 notebook.
-The [finite-difference and code companion source](source/week01_code_walkthrough.tex)
-is included in the same PDF: pages 14–17 cover worked finite differences and
-Poisson iteration, pages 18–21 explain the existing solver functions, page 22
-shows algorithm diagrams, and page 23 maps all sixteen original sections.
-See the [coverage audit](source/week01_coverage.md) for what was restored or
-clarified and an immutable link to the unchanged original PDF.
+The Week 4.2 companion and executed Lab 4 are rebuilt together by
+[`qa/build_week04_2_stokes_correction.py`](../qa/build_week04_2_stokes_correction.py):
+it reads the retained numerical evidence, regenerates the plots, executes the
+notebook code cells in order and writes the PDF. The historical PINN reading
+is built by [`qa/build_week04_2_lecture.py`](../qa/build_week04_2_lecture.py).
 
-From the repository root, regenerate the figure and numerical record with:
+The Week 1 foundations lecture is compiled from
+[`source/week01_numerical_foundations.tex`](source/week01_numerical_foundations.tex),
+which includes the code walkthrough and the pressure-derivation appendix. From
+`lectures/source`:
 
 ```bash
-python qa/build_week01_foundations_figure.py
-```
-
-This runs only the existing introductory Re=100 solver functions and benchmark
-arrays, without executing the notebook's separate retained pressure-validation
-demonstrations. It requires NumPy and Matplotlib. The figure and single-grid
-diagnostics are retained in `source/week01_assets/`; they are not a claim of
-grid independence or a new research validation.
-
-Compile with a standard LaTeX installation (including the packages named in the source):
-
-```bash
-cd lectures/source
 pdflatex -interaction=nonstopmode -halt-on-error -output-directory=/tmp week01_numerical_foundations.tex
 pdflatex -interaction=nonstopmode -halt-on-error -output-directory=/tmp week01_numerical_foundations.tex
 cp /tmp/week01_numerical_foundations.pdf ../week01_numerical_foundations.pdf
 ```
 
-### Explicitly named PDF editions
-
-- [23-page edition](versions/week01_23pages.pdf): the complete code and finite-difference revision.
-- [27-page edition with pressure derivation](versions/week01_27pages_pressure_derivation.pdf): includes the full 23-page material and four new pages on pressure elimination, Poisson derivation, wall data, compatibility, gauge, and method attribution.
-
-The main `week01_numerical_foundations.pdf` now matches the 27-page edition.
-The new appendix source is [week01_pressure_derivation.tex](source/week01_pressure_derivation.tex).
-It distinguishes curl-based pressure elimination from streamfunction-based
-continuity, and the notebook's Jacobi/Euler method from Ghia's CSI-MG method.
-Both named editions have been reopened and their page counts verified.
+Its figure and single-grid diagnostics are regenerated from the repository root with
+`python qa/build_week01_foundations_figure.py` (NumPy and Matplotlib only); the
+outputs are retained in `source/week01_assets/` and are not a claim of grid
+independence. The [coverage audit](source/week01_coverage.md) records what the
+rewrite restored or clarified. Earlier editions of this lecture are kept under
+[`versions/`](versions/) for reference only; the main PDF supersedes them.

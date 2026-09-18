@@ -140,6 +140,39 @@ def figures() -> tuple[pd.DataFrame, pd.DataFrame]:
     shifts.to_csv(R / "grid_shift.csv", index=False)
     return compare, shifts
 
+BOOTSTRAP_TEMPLATE = """# FLOWMLLAB_COLAB_BOOTSTRAP_V1
+# In Colab this cell obtains the complete repository and installs the tested package.
+# In a local checkout it leaves the active environment and working directory unchanged.
+from pathlib import Path as _FlowMLLabPath
+import os as _flowmllab_os
+import subprocess as _flowmllab_subprocess
+import sys as _flowmllab_sys
+
+if "google.colab" in _flowmllab_sys.modules or _flowmllab_os.environ.get("COLAB_RELEASE_TAG"):
+    _flowmllab_root = _FlowMLLabPath("/content/FlowMLLab")
+    if not (_flowmllab_root / ".git").is_dir():
+        _flowmllab_subprocess.run(
+            [
+                "git", "clone", "--depth", "1",
+                "https://github.com/Ehsan-Roohi/FlowMLLab.git", str(_flowmllab_root),
+            ],
+            check=True,
+        )
+    _flowmllab_subprocess.run(
+        [
+            _flowmllab_sys.executable, "-m", "pip", "install", "-q", "-e",
+            f"{_flowmllab_root}[test]",
+        ],
+        check=True,
+    )
+    _flowmllab_notebook_dir = _flowmllab_root / "{NOTEBOOK_DIR}"
+    _flowmllab_os.chdir(_flowmllab_notebook_dir)
+    for _flowmllab_path in (_flowmllab_root, _flowmllab_notebook_dir):
+        if str(_flowmllab_path) not in _flowmllab_sys.path:
+            _flowmllab_sys.path.insert(0, str(_flowmllab_path))
+    print("FlowMLLab ready:", _flowmllab_root)
+"""
+
 
 def notebook(compare: pd.DataFrame, shifts: pd.DataFrame) -> None:
     summary = "| Train | Test | 25 x 25 | 51 x 51 |\n|---|---|---:|---:|\n" + "\n".join(
@@ -148,15 +181,28 @@ def notebook(compare: pd.DataFrame, shifts: pd.DataFrame) -> None:
     shift = "| Family | Mean difference |\n|---|---:|\n" + "\n".join(
         f"| {family} | {100*value:.2f}% |" for family, value in
         shifts.groupby("family").velocity_grid_shift_rel_l2.mean().items())
+    colab = ("https://colab.research.google.com/github/Ehsan-Roohi/FlowMLLab/blob/main/"
+             "notebooks/week04/W4_Lab4_Grid51_Validation.ipynb")
+    bootstrap = BOOTSTRAP_TEMPLATE.replace("{NOTEBOOK_DIR}", "notebooks/week04")
     cells = [
-        nbf.v4.new_markdown_cell("# Week 4.2: 51 × 51 grid validation\n\nThis companion upgrades the numerical reference and retrains the Stokes-to-Navier–Stokes correction on 51 × 51 nodes. The original 25 × 25 experiment remains a baseline. The same previously inspected case manifest is used, so these are regression cases, not a new blind test."),
+        nbf.v4.new_markdown_cell(
+            f'<a href="{colab}" target="_parent"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open in Colab"/></a>\n\n'
+            "# Week 4.2 addendum: 51 × 51 grid validation\n\n"
+            "<!-- MIE690A article-aligned validation v4 -->\n\n"
+            "This addendum to Lab 4 (Stokes-to-Navier–Stokes correction) solves every case again on a 51 × 51 grid "
+            "and retrains the same correction network there. The original 25 × 25 experiment remains the baseline. "
+            "The case manifest is unchanged, so the test cases are regression cases, not a new blind test.\n\n"
+            "**Question to answer before reading the tables:** if the CFD labels themselves change by roughly 20% "
+            "when the grid is refined, what does a 0.1% surrogate error on the coarse grid measure, and what does it not measure?"),
+        nbf.v4.new_code_cell(bootstrap),
         nbf.v4.new_markdown_cell("## Mean velocity relative L2 error (%)\n\n" + summary + "\n\nErrors at 25 and 51 nodes are measured against their respective same-grid Navier–Stokes solutions. A lower surrogate error does not by itself establish mesh convergence."),
         nbf.v4.new_markdown_cell("## Change in the CFD reference under refinement\n\nThe 51-node CFD velocity is linearly sampled at the 25-node locations and compared with the original 25-node CFD velocity. Mean relative differences (%):\n\n" + shift + "\n\nThis is one refinement step, not an asymptotic convergence study."),
         nbf.v4.new_markdown_cell("## Retained figures\n\n![25 versus 51 grid error comparison](../../figures/Cavity_grid25_grid51_errors.png)\n\n![51-node constant-lid speed, streamlines and vorticity](../../figures/Cavity_constant_grid51_streamlines_vorticity.png)\n\n![51-node diverse-lid speed, streamlines and vorticity](../../figures/Cavity_diverse_grid51_streamlines_vorticity.png)"),
         nbf.v4.new_code_cell("""from pathlib import Path
 import pandas as pd
 from IPython.display import Image, display
-ROOT = Path.cwd()
+# Locate the repository root from any working directory (notebook folder or checkout root).
+ROOT = next(p for p in (Path.cwd(), *Path.cwd().parents) if (p / 'results/stokes_grid51').is_dir())
 R = ROOT / 'results/stokes_grid51'
 display(pd.read_csv(R/'grid_comparison.csv'))
 display(pd.read_csv(R/'grid_shift.csv').groupby('family').velocity_grid_shift_rel_l2.mean())
@@ -165,6 +211,19 @@ display(pd.read_csv(R/'vortex_metrics.csv'))"""),
              'Cavity_constant_grid51_streamlines_vorticity.png',
              'Cavity_diverse_grid51_streamlines_vorticity.png'):
     display(Image(filename=str(ROOT/'figures'/name)))"""),
+        nbf.v4.new_markdown_cell(
+            "## What this addendum establishes\n\n"
+            "Two different errors appear above and they must not be confused.\n\n"
+            "1. **Surrogate error** (first table): how far the trained correction is from the Navier–Stokes solution "
+            "*on the same grid*. It is about 0.1% (constant lids) and 0.8% (diverse lids) at 51 × 51, slightly better than at 25 × 25.\n"
+            "2. **Label change under refinement** (second table): how far the 25 × 25 CFD solution is from the 51 × 51 solution "
+            "sampled at the same nodes. It is about 18 to 20% for the two main families.\n\n"
+            "The surrogate error is therefore roughly one hundred times smaller than the discretization error of the labels it was trained on. "
+            "A surrogate cannot be more accurate than its labels: the 0.1% measures how well the network reproduces *this solver on this grid*, "
+            "not how close either is to the converged cavity flow. This is why Lab 4 calls its results same-grid regression evidence and why a "
+            "mesh-convergence study (at least three grids and an observed order) is required before any physical accuracy claim.\n\n"
+            "**Exercise.** Using `grid_shift.csv`, find the family whose labels changed least under refinement and the one that changed most. "
+            "Propose one reason for the difference that you could test with a third grid."),
         nbf.v4.new_markdown_cell("## Reproduce\n\nFrom the repository root, run `python qa/run_week04_2_grid51.py generate` and then `python qa/run_week04_2_grid51.py train`. The 51-node fields are solved afresh; the network uses the 25-node study's fixed selected architecture (POD rank 24, two tanh layers of width 96, seeds 7/17/27). Training and validation use separate complete cases. The plotted corner extrema are grid-resolved candidates and need finer-grid or independent CFD confirmation."),
     ]
     book = nbf.v4.new_notebook(cells=cells)
@@ -217,7 +276,14 @@ def pdf(compare: pd.DataFrame, shifts: pd.DataFrame) -> None:
 
 
 if __name__ == "__main__":
-    comp, diff = figures()
-    notebook(comp, diff)
-    pdf(comp, diff)
-    print(NB.relative_to(ROOT), PDF.relative_to(ROOT))
+    if "--notebook-only" in sys.argv:
+        # Rebuild the notebook from the retained CSV evidence without re-plotting or re-solving.
+        comp = pd.read_csv(R / "grid_comparison.csv")
+        diff = pd.read_csv(R / "grid_shift.csv")
+        notebook(comp, diff)
+        print(NB.relative_to(ROOT))
+    else:
+        comp, diff = figures()
+        notebook(comp, diff)
+        pdf(comp, diff)
+        print(NB.relative_to(ROOT), PDF.relative_to(ROOT))
