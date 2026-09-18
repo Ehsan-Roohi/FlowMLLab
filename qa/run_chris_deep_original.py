@@ -97,6 +97,8 @@ def main():
                    help="Keep deterministic collocation points across phases and restarts")
     p.add_argument("--refine-from", type=Path,
                    help="Complete checkpoint prefix used to start a separate refinement run")
+    p.add_argument("--adam-only", action="store_true",
+                   help="Run checkpointed Adam refinement and skip CPU-heavy SSB phases")
     p.add_argument("--lower-anchors", type=int, default=0,
                    help="Extra residual points biased toward the lower 60% of the cavity")
     p.add_argument("--refine-adam-lr", type=float, default=1e-4)
@@ -117,6 +119,8 @@ def main():
         p.error("Hidden width must be at least 8 and domain points at least 1000")
     if args.refine_adam_steps < 1:
         raise ValueError("--refine-adam-steps must be positive")
+    if args.adam_only and (not args.refine_from or args.ssb_phases != 1):
+        p.error("--adam-only requires --refine-from and --ssb-phases 1")
     archive = args.archive.resolve()
     out = args.output.resolve()
     out.mkdir(parents=True, exist_ok=True)
@@ -171,6 +175,8 @@ def main():
                            adam_steps=args.refine_adam_steps,
                            adam_lr=args.refine_adam_lr if args.refine_from else original['lr'],
                            lower_anchors=args.lower_anchors)
+    if args.adam_only:
+        training_config["optimizer_protocol"] = "adam_only"
     if args.hidden_width != 32 or args.num_domain != 100000:
         training_config["capacity"] = dict(hidden_width=args.hidden_width,
                                             hidden_layers=6,
@@ -287,6 +293,12 @@ def main():
     def train(model, *a, **kw):
         phase[0] += 1
         if phase[0] < state["phase"]:
+            return model.losshistory, model.train_state
+        if phase[0] > 0 and args.adam_only:
+            state["phase"] = phase[0] + 1
+            state["external_stop_reason"] = "Adam-only protocol: SSB not dispatched"
+            record()
+            print("Skipping SSB: Adam-only refinement protocol", flush=True)
             return model.losshistory, model.train_state
         if phase[0] > 0 and state.get("external_stalled"):
             state["phase"] = phase[0] + 1

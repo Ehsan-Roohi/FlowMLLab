@@ -1,0 +1,58 @@
+#!/usr/bin/env bash
+# Re=100, D/W=5 width-64 follow-up from the retained 20k-Adam checkpoint.
+# This is a controlled Adam continuation, not Chris's original SSB result.
+# SSB's dense CPU-side steps left an A100 idle, so this job never dispatches it.
+#SBATCH --job-name=chris-d5-w64-adam
+#SBATCH --account=pi_roohie_umass_edu
+#SBATCH --partition=gpu-preempt
+#SBATCH --gres=gpu:a100:1
+#SBATCH --cpus-per-task=4
+#SBATCH --mem=48G
+#SBATCH --time=01:55:00
+#SBATCH --signal=B:USR1@600
+#SBATCH --requeue
+#SBATCH --mail-type=NONE
+#SBATCH --output=chris-d5-w64-adam-%j.log
+set -euo pipefail
+: "${CHRIS_ENV_ROOT:?Set the existing private environment root}"
+: "${CHRIS_ADAM_CHECKPOINT:?Set the retained 20k-Adam checkpoint prefix}"
+: "${CHRIS_RUN_OUTPUT:?Set a new, dedicated output directory}"
+cd "${SLURM_SUBMIT_DIR:?}"
+python="$CHRIS_ENV_ROOT/venv/bin/python"
+archive="$CHRIS_ENV_ROOT/chris-deep-original-inputs.zip"
+test -x "$python"
+test -f "$archive"
+for suffix in .index .meta .data-00000-of-00001; do
+  test -f "$CHRIS_ADAM_CHECKPOINT$suffix"
+done
+export DDE_BACKEND=tensorflow.compat.v1 MPLBACKEND=Agg
+export OMP_NUM_THREADS=4 PYTHONUNBUFFERED=1
+site_packages="$($python -c 'import site; print(site.getsitepackages()[0])')"
+cuda_root="$site_packages/nvidia/cuda_nvcc"
+test -f "$cuda_root/nvvm/libdevice/libdevice.10.bc"
+export XLA_FLAGS="--xla_gpu_cuda_data_dir=$cuda_root"
+export LD_LIBRARY_PATH="$(find "$site_packages/nvidia" -type d -name lib -printf '%p:' | sed 's/:$//')${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
+child=""
+trap '[[ -n "$child" ]] && kill -USR1 "$child" 2>/dev/null || true' USR1 TERM
+set +e
+"$python" qa/run_chris_deep_original.py \
+  --archive "$archive" --output "$CHRIS_RUN_OUTPUT" \
+  --case-index 0 --hidden-width 64 --num-domain 100000 \
+  --refine-from "$CHRIS_ADAM_CHECKPOINT" \
+  --refine-adam-lr 1e-4 --refine-adam-steps 30000 \
+  --ssb-phases 1 --adam-only &
+child=$!
+while :; do
+  wait "$child"
+  status=$?
+  if (( status == 138 || status == 143 )) && kill -0 "$child" 2>/dev/null; then
+    continue
+  fi
+  break
+done
+set -e
+if (( status == 99 )); then
+  scontrol requeue "${SLURM_JOB_ID:?}"
+  exit 0
+fi
+exit "$status"
