@@ -17,6 +17,14 @@ roles, sizes and SHA-256 hashes.  Regenerate with:
 python qa/generate_week07_4_wakes.py --workers 4
 ```
 
+## Download
+
+The complete immutable dataset is published as GitHub release assets:
+[**week07-4-wakes-v1**](https://github.com/Ehsan-Roohi/FlowMLLab/releases/tag/week07-4-wakes-v1).
+Download all sixteen `re*.npz` files and `manifest.json` into this directory.
+The direct-download prefix is
+`https://github.com/Ehsan-Roohi/FlowMLLab/releases/download/week07-4-wakes-v1/`.
+
 These are quick educational LBM trajectories (D = 6 lattice nodes, periodic
 transverse boundary), not grid-independent DNS.  The attempted Re = 140 run
 became non-physical and was rejected by the solver gate; it is not part of the

@@ -1,0 +1,44 @@
+name: Week 7.4 diverse-wake dataset
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - '.github/workflows/week07-4-wakes-data.yml'
+      - 'qa/generate_week07_4_wakes.py'
+      - 'flowmllab/cylinder_lbm.py'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: week07-4-wakes-release-v1
+  cancel-in-progress: false
+
+jobs:
+  generate-and-publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 360
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install FlowMLLab
+        run: python -m pip install -e .
+      - name: Generate sixteen trajectory-split LBM cases
+        run: python qa/generate_week07_4_wakes.py --workers 4
+      - name: Publish durable GitHub release assets
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          tag=week07-4-wakes-v1
+          gh release view "$tag" >/dev/null 2>&1 || \
+            gh release create "$tag" --title "Week 7.4 diverse-wake dataset v1" \
+              --notes "Sixteen deterministic D2Q9-TRT trajectories for Week 7.4. The split and SHA-256 checksums are recorded in manifest.json."
+          gh release upload "$tag" data/week07_4_wakes/*.npz data/week07_4_wakes/manifest.json --clobber
+      - uses: actions/upload-artifact@v4
+        with:
+          name: week07-4-wakes-v1
+          path: data/week07_4_wakes/
+          retention-days: 90
