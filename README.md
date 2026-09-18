@@ -1,4 +1,4 @@
-# FlowMLLab
+<h1><img src="docs/assets/flowmllab-logo.png" alt="FlowMLLab — fluid-streamline F logo" width="520"></h1>
 
 **New in v1.6.1:** a repository-wide teaching-material audit improves definitions, worked examples, notebook reliability, figure readability, and release QA across Weeks 1–15. See the [v1.6.1 release notes](RELEASE_NOTES_v1.6.1.md).
 
