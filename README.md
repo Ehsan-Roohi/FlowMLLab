@@ -4,7 +4,7 @@
 
 **Week 14:** [RANS, PINN and neural turbulence closures](notebooks/week14/README.md)
 based on Lars Davidson's pyCALC-RANS workflow: an executed teaching notebook,
-[12-page lecture](lectures/week14_rans_pinn_nn.pdf), and a transparent reproduction
+[seven-page lecture](lectures/week14_rans_pinn_nn.pdf), and a transparent reproduction
 audit. Full paper-level numerical reproduction is not claimed.
 
 [![FlowMLLab CI](https://github.com/Ehsan-Roohi/FlowMLLab/actions/workflows/ci.yml/badge.svg)](https://github.com/Ehsan-Roohi/FlowMLLab/actions/workflows/ci.yml)
@@ -16,8 +16,8 @@ generate numerical data, compare transparent baselines with learned models, and
 check both prediction error and physical fidelity.
 
 Developed for **MIE 690A: AI in Fluid Mechanics**, University of Massachusetts
-Amherst. The v1.6.0 course includes **37 notebooks and 22 lecture PDFs**, with
-Weeks 14 and 15 in the main course table below.
+Amherst. The course now includes **40 notebooks and 24 lecture PDFs**; every module
+has a row in the course table below.
 
 ## Start here
 
@@ -520,7 +520,7 @@ ReLU coefficient-regression protocol, with a separately labeled interpolation co
 ![Week 14 classical and table-PINN channel profiles against DNS](results/week14_validation/profiles.png)
 
 [Executed notebook and CPU setup](notebooks/week14/README.md) ·
-[12-page lecture](lectures/week14_rans_pinn_nn.pdf) ·
+[Lecture](lectures/week14_rans_pinn_nn.pdf) ·
 [Run ledger](results/week14_validation/README.md) ·
 [Paper-claim alignment](docs/WEEK14_PAPER_ALIGNMENT.md).
 

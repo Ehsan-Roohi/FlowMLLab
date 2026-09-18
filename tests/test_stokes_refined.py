@@ -1,5 +1,7 @@
 import numpy as np
-import torch
+import pytest
+
+torch = pytest.importorskip("torch", reason="Week 4.2 regeneration tests need the optional PyTorch dependency")
 from common.w4utils import recover_pressure
 from flowmllab.stokes_refined import PODCorrection,gradient_metrics
 from flowmllab.stokes_correction import solve_stokes

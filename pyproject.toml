@@ -59,6 +59,7 @@ test = [
   "pytest>=8,<9",
   "nbformat>=5.10,<6",
   "reportlab>=4,<6",
+  "pypdf>=3,<7",
 ]
 demo = [
   "streamlit==1.62.0",

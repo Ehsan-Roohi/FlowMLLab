@@ -131,6 +131,7 @@ def build_notebook():
     code = lambda x: nbf.v4.new_code_cell(textwrap.dedent(x).strip())
     cells = [md('''
     # Week 11 - Machine vision for hydrofoil vapor clouds
+<!-- MIE690A article-aligned validation v4 -->
 
     **Run the existing detector, inspect its mistakes, and reproduce its evidence.**
     This extension uses the author's existing 2026-09-12 cavitation code and results.
