@@ -23,3 +23,6 @@ lectures/*.out
 lectures/*.toc
 tmp/
 .external/
+
+# builder scratch output (PDFs are copied into lectures/)
+output/

@@ -8,6 +8,16 @@ Can a neural operator trained on several separated-flow geometries predict veloc
 
 Learning outcomes: formulate DeepONet, Geo-DeepONet, FNO, and U-FNO; design whole-geometry and whole-family splits; read CFD/prediction contours with common scales; distinguish velocity, centered-pressure, and reverse-flow metrics; and recognize topology extrapolation failure.
 
+## 1.1 Definitions and notation
+
+Operator learning: learning a map from an input function or parameter set (here the geometry and the Reynolds number) to an output field (velocity and pressure everywhere in the channel), as opposed to a map from one vector to one number. Signed distance field (SDF): at each grid point, the distance to the nearest wall, negative inside the solid and positive in the fluid; it is one way to give a network the geometry as a field. Mask: a 0/1 field marking solid and fluid cells.
+
+DeepONet: q-hat(xi) = sum over k of b_k(a) t_k(xi) + c. The branch network turns the input a (a parameter vector, or a function sampled at fixed sensors) into p numbers b_k; the trunk network turns a query point xi = (x, y) into p numbers t_k; the prediction is their inner product. The rank p (48 in this project) is the number of terms. Worked example with p = 2 on a 2-by-2 grid: if the branch returns b = (1, 0.5) for one geometry and the trunk returns t = (x, y) at each of the four points (0,0), (1,0), (0,1), (1,1), the prediction is 1*x + 0.5*y, that is 0, 1, 0.5, 1.5 at the four points. The trunk therefore fixes a spatial basis that is the same for every input; only the coefficients b_k change with the geometry. That is the origin of the fixed-domain limitation discussed in Section 3.
+
+Fourier neural operator (FNO): a network whose layers act on a whole field v_l on a regular grid: v_(l+1) = sigma(W_l v_l + F^-1(R_l F(v_l))). F and F^-1 are the discrete Fourier transform and its inverse over the grid, R_l multiplies the lowest Fourier modes by learned complex weights (a learned convolution), W_l is a pointwise linear map across channels, and sigma is a nonlinearity. U-FNO adds a U-Net-style local branch beside the Fourier branch.
+
+Error metrics: velocity relative L2 error, 100 ||u-hat - u|| / ||u|| over fluid cells; centered-pressure error, the same quantity after the mean of each pressure field over the fluid has been removed separately; reverse-flow IoU, the intersection-over-union of the sets where u < 0 in prediction and CFD (1 is perfect agreement, 0 is no overlap). A relative error above 100% is possible whenever the denominator is small, which is the case for pressure fluctuations in low-speed separated flow: an error of 299% means the prediction error is three times the size of the pressure variation itself, not that a percentage was miscomputed. Vortex-region error is the velocity error restricted to the recirculation zone; the same remark applies.
+
 ## 2. Data and split discipline
 
 [SPLIT]
@@ -29,6 +39,8 @@ Geo-DeepONet supplies a mask, signed-distance field, or learned geometry represe
 FlowMLLab already contains the ordinary DeepONet implementation in `qa/step_architecture_v5.py`: step height enters a two-layer 128-wide tanh branch, normalized x/y enter a two-layer 128-wide tanh trunk, rank is 48, and the contraction returns u and v. The notebook prints and structurally verifies that exact builder instead of presenting only an equation.
 
 The retained V5 DSMC height experiment used three seeds and matched sampling schedules. Ordinary DeepONet reached mean terminal global errors of 14.01% (uniform) and 23.31% (zonal), with vortex-region errors of 190.44% and 93.41%; no seed passed the predeclared checkpoint ceiling. This is direct project evidence of the limitation, but it is a different rarefied-flow dataset and is not relabeled as an OpenFOAM result.
+
+Read Figure 2 carefully before drawing the lesson from it: on that DSMC height family the plain coordinate MLP, which receives eight known geometry features together with the coordinates, has the lowest global error of the three models, and Geo-DeepONet is not better than ordinary DeepONet on the zonal sampler. Two things follow. First, "geometry-aware" is a property of the inputs, not of the name: an MLP fed explicit geometry features is geometry-aware in the sense that matters here, and a branch/trunk operator fed only a scalar height is not. Second, the V5 study varies one parameter (step height) within one family, which is a task a coordinate MLP can interpolate; the OpenFOAM protocols of Sections 5 to 8 vary the mask itself, which is where the operator formulations are tested and where the MLP was not run. The figure supports the narrow claim that a height-only branch fails the checkpoint gate; it does not show that operator architectures beat simpler models, and this lecture does not claim it.
 
 ## 4. FNO and U-FNO
 

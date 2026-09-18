@@ -8,7 +8,19 @@ Suggested 90-minute class: 20 minutes of moment algebra, 15 minutes of the inver
 
 Research source: Ehsan Roohi, Geometry-native machine learning reconstruction of DSMC moment fields with support monitoring, arXiv:2609.01637 (2026), https://doi.org/10.48550/arXiv.2609.01637. The author confirms submission to Journal of Computational Physics. This lecture does not call it a published JCP article.
 
-The paper's cavity prior is a trained MambaIR restoration model; its cylinder estimator uses geometry-adapted, coupled heat-flux reconstruction. The notebook starts with a scalar spectral analog, then audits real author-supplied JCP2 cavity results. Archive method names are retained: this is not a claim that each archived stage equals the final paper estimator. No research model is retrained.
+The paper's cavity prior is a trained MambaIR restoration model (an image-restoration network built on the Mamba state-space architecture); its cylinder estimator uses geometry-adapted, coupled heat-flux reconstruction. The notebook starts with a scalar spectral analog, then audits real cavity results from the author's research archive (called "JCP2" in the file names). Archive method names are retained: this is not a claim that each archived stage equals the final paper estimator. No research model is retrained.
+
+## Definitions used in this lecture
+
+Moment: an average over the molecular velocity distribution weighted by a power of velocity; density, bulk velocity, temperature, pressure tensor and heat flux are the zeroth to third moments. Additive accumulators: sums over particles that can be pooled by simple addition across sampling blocks; central quantities (temperature, heat flux) are nonlinear in them and must be formed after pooling.
+
+Raw(B): the field estimated from B sampling blocks of the DSMC run. Reference: an independent, much longer DSMC run of the same case; it still contains sampling noise.
+
+Error metric: throughout this lecture and the notebook one quantity is used, the relative L2 error against the reference, sqrt(sum(A(estimate - reference)^2) / sum(A reference^2)) with cell areas A. The notebook and figures call it NRMSE (normalized root-mean-square error) or "reference NRMSE"; the three names denote the same number.
+
+DCT: the discrete cosine transform, an orthonormal change of basis from grid values to spatial-frequency coefficients; filtering in that basis (a gain between 0 and 1 per coefficient) is a linear smoother whose mean value is preserved when the zero-frequency gain is one. Prior: a field, or a set of coefficient statistics, estimated from development data before the current observation is seen.
+
+Noise2Noise: a training rule in which a network learns to map one noisy realization to another independent noisy realization of the same field; with zero-mean independent noise it has the same optimum as training on the clean field. Details follow in the section of that name.
 
 ## From molecular velocities to the moment hierarchy
 
@@ -54,7 +66,7 @@ Thus a small energy residual cannot uniquely identify heat flux. Use current obs
 
 [RESEARCH_FIGURE]
 
-Real DSMC cavity qy, Kn=0.085 and lid speed 350 m/s: independent reference, three-block observation and archived observation-conditioned estimator. The first archive seed is illustrated, not the best seed. A common color range includes all displayed values; no interpolation hides noise. Axes are normalized array positions; values use archive units.
+Real DSMC cavity qy, Kn=0.085 and lid speed 350 m/s: independent reference, three-block observation and archived observation-conditioned estimator. The first archive seed is illustrated, not the best seed. The colour limits are set at the 1st and 99th percentiles of the reference so that the interior is visible; values beyond them (the lid band) saturate but are not removed, and the full-range rendering is retained in results/week12_research/cavity_qy_hero.png. No interpolation hides noise. Axes are normalized array positions; values use archive units.
 
 Across eight seeds, mean qy relative L2 error is 17.61% for Raw(3), 9.80% for Raw(10), 12.63% for prior-only, and 4.34% for the conditioned estimator. Corresponding qx errors are 11.87%, 6.57%, 4.90%, and 3.15%. These are direct errors against a finite-budget reference, not noise-deconvolved scores. Raw(3) and Raw(10) are disjoint in this archive.
 

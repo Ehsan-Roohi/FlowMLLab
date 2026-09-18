@@ -430,7 +430,10 @@ def research_cells(week):
                                      & (real_metrics.seed==manifest['illustrated_seed'])].iloc[0]
                 np.testing.assert_allclose(error, saved.reference_nrmse, rtol=1e-7)
     from IPython.display import Image
+    # Full-range rendering (the lid band sets the limits), then the same arrays with limits at the
+    # 1st/99th percentile of the reference, which makes the interior visible (values beyond saturate).
     display(Image(filename=str(evidence / 'cavity_qy_hero.png'), width=1200))
+    display(Image(filename=str(evidence / 'cavity_qy_hero_robust.png'), width=1200))
     display(Image(filename=str(evidence / 'cavity_qy_audit.png'), width=1200))
     '''), md('''
         Shared color limits include every displayed value; no interpolation hides
@@ -546,7 +549,7 @@ def build_pdf(week):
                 if para.strip() == '[CAVITATION_METHODS_FIGURE]':
                     image = ROOT / 'results/week11_cavitation/methods_Plunging3.png'
                 if para.strip() == '[RESEARCH_FIGURE]':
-                    image = ROOT / 'results' / f'week{week}_research' / ('airfoil_2.png' if week == 11 else 'cavity_qy_hero.png')
+                    image = ROOT / 'results' / f'week{week}_research' / ('airfoil_2.png' if week == 11 else 'cavity_qy_hero_robust.png')
                 if para.strip() in ('[NOISE2NOISE_FIGURE]', '[NOISE2NOISE_AUDIT]'):
                     image = ROOT / 'results/week12_noise2noise' / ('qy_seed26082107.png' if para.strip() == '[NOISE2NOISE_FIGURE]' else 'profiles_and_errors.png')
                 if image.exists():

@@ -6,6 +6,12 @@ Data are prior FlowMLLab Re110 LBM transverse-velocity fields on a 32 x 78 wake 
 
 Prerequisites: POD, least squares, Gaussian conditioning and Week 7 modal forecasting. CPU runtime is about 15 seconds.
 
+Definitions and notation. POD (proper orthogonal decomposition): the singular value decomposition of the matrix of training snapshots; its left singular vectors Phi are the modes and the projection a_k = Phi^T (q_k - mean) gives the modal coefficients (the reduced state) of frame k. ROI: the region of interest, the 32 x 78 wake window on which all fields are stored. DMD (dynamic mode decomposition): a linear model of the coefficient dynamics, a_(k+1) = a_k A, fitted by least squares on training frames; "open-loop DMD" runs that model forward from the last training frame without ever looking at a measurement. H: the rows of Phi at the sensor locations, so that H a_k is the modal prediction of the sensor readings; q_mean,s: the entries of the mean field at those same sensor locations, which must be subtracted from a raw reading before it is compared with H a_k. Kalman filter: the recursion that combines the model forecast with each new measurement, weighting them by their covariances; the Kalman gain K is that weight. Relative L2 error: ||estimate - truth|| / ||truth|| over the ROI at each test frame, averaged over frames.
+
+Worked scalar example of one predict-update step. Suppose one mode, one sensor, F = 1, H = 1. After the previous update the estimate is x+ = 2.0 with variance P+ = 0.5, the process noise is Q = 0.5 and the sensor noise R = 1.0. Predict: x- = 2.0, P- = 0.5 + 0.5 = 1.0. A measurement y = 3.0 arrives: innovation r = 3.0 - 2.0 = 1.0, its variance S = P- + R = 2.0, gain K = P- / S = 0.5, update x+ = 2.0 + 0.5 * 1.0 = 2.5 and P+ = (1 - K) P- = 0.5. The estimate moves halfway towards the measurement because model and sensor are equally uncertain; a noisier sensor (larger R) would move it less. The matrix recursion on page 1 is this arithmetic with vectors and covariance matrices.
+
+Why persistence scores above 100%: the transverse velocity in the wake window oscillates about zero, so a frame frozen at the last training time is out of phase with the truth for most of the test window and its error can exceed the norm of the truth itself (131.8% here). An error above 100% is therefore possible for any estimate that is anti-correlated with the truth; it is not a bookkeeping mistake.
+
 ---
 # POD-space Gaussian model
 

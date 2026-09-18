@@ -12,6 +12,14 @@ Learning outcomes: explain a closure coefficient; reconstruct an inverse-physics
 
 Suggested format: 75-minute lecture plus a 90-minute computer lab. Prerequisites: Reynolds averaging, k-omega modeling, finite-volume residuals, neural regression and automatic differentiation.
 
+## 1.1 Definitions, symbols and wall units
+
+RANS: the Reynolds-averaged Navier-Stokes equations, obtained by averaging the flow over turbulent fluctuations; the averaging leaves an unknown Reynolds-stress term that a turbulence model (a closure) must express in terms of the mean flow. k-omega model: a two-equation eddy-viscosity closure that transports the turbulent kinetic energy k and the specific dissipation rate omega and sets the eddy viscosity nu_t = k/omega. DNS: direct numerical simulation, which resolves all turbulent scales and serves here as the reference truth (Lee and Moser, channel flow). PINN: a physics-informed neural network, a network trained by minimizing the residual of a differential equation; here it is used inversely, to infer an unknown coefficient function from reference data, not to solve the flow.
+
+Wall units: u_tau = sqrt(tau_w / rho) is the friction velocity, and Re_tau = u_tau delta / nu the friction Reynolds number, with delta the channel half-height. Distances and velocities are scaled as y+ = y u_tau / nu, U+ = U / u_tau, k+ = k / u_tau^2 and omega+ = omega nu / u_tau^2. In the channel used here delta = u_tau = 1 and nu = 1/5200, so Re_tau = 5200 and y+ = 5200 y. The run names nn5200 and nn10000 refer to Re_tau = 5200 and Re_tau = 10000. At Re_tau = 5200 the viscous sublayer (y+ below about 5) occupies y below 0.001 and the log layer begins near y+ = 30, that is y = 0.006; a stored profile therefore has most of its points very close to the wall, which is why unweighted and cell-width-weighted norms differ.
+
+Closure coefficients: sigma_k (turbulent diffusion of k), C_k (a multiplier on the destruction term 0.09 k omega, so C_k = 1 is the standard model) and C_omega2 (the coefficient of the omega destruction term, 0.075 in the standard model; here an absolute value, not a multiplier). Inverse PINN: the network that infers the diffusion coefficient a(y) from the k balance. Table-based PINN stage: the RANS run that uses the spatial correction tables produced by that inverse step, before any feature-based network is trained. PCHIP: a shape-preserving piecewise-cubic interpolant, used as a non-neural control.
+
 ## 2. What does a turbulence closure actually change?
 
 Reynolds averaging introduces the unresolved stress tensor. An eddy-viscosity closure relates its deviatoric part to the resolved strain. This makes the mean-flow equations solvable, but it does not make the turbulence model exact.
@@ -34,7 +42,7 @@ Use the actual unmodified channel case, not a table that happens to include RANS
 
 The figures distinguish archived source data from freshly executed results. A restarted simulation is a new numerical execution, but not a cold-start demonstration. Record the grid, initial fields, stopping criterion and achieved residual alongside every accuracy claim.
 
-These percentages describe the distributed table-based PINN stage, not a verified reproduction of the final PINN-NN curves in the paper's Figure 8. Section 5.1 reports good mean-velocity predictions and improved k for the final model. Do not attribute our particular velocity-error increase to that final-model claim.
+Against the DNS, the unmodified archive profile has a pointwise relative L2 error of 1.7% in U+ and 42.8% in k+; the PINN-corrected archive profile has 5.0% in U+ and 8.9% in k+ (cell-width-weighted values are in the notebook). The correction therefore buys a five-fold improvement in k at the price of a worse mean velocity. These percentages describe the distributed table-based PINN stage, not a verified reproduction of the final PINN-NN curves in the paper's Figure 8. Section 5.1 reports good mean-velocity predictions and improved k for the final model. Do not attribute our particular velocity-error increase to that final-model claim.
 
 All profile norms must identify their weighting. An unweighted Euclidean norm on a stretched grid emphasizes regions with many stored points. A cell-width-weighted norm answers a different question. Neither is an experimental uncertainty estimate.
 

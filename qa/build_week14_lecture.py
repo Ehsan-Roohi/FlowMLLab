@@ -70,16 +70,16 @@ def figure(key,number,heading=None):
 
 def results_table():
     summary=json.loads((E/'summary.json').read_text())
-    rows=[['Fresh run','Iterations','Residual','Original gate']]
+    rows=[['Fresh run','Iterations','Residual','Gate threshold','Original gate']]
     for name in ['baseline','pinn','nn10000','nn5200']:
         r=summary['runs'][name]
-        rows.append([name,str(r['iteration']+1),f"{r['residual']:.2e}",'PASS' if r['converged'] else 'NOT MET'])
-    table=Table([[para(v,'cell') for v in row] for row in rows],colWidths=[WIDTH/4]*4,repeatRows=1)
+        rows.append([name,str(r['iteration']+1),f"{r['residual']:.2e}",f"{r['threshold']:.0e}",'PASS' if r['converged'] else 'NOT MET'])
+    table=Table([[para(v,'cell') for v in row] for row in rows],colWidths=[WIDTH/5]*5,repeatRows=1)
     table.setStyle(TableStyle([('BACKGROUND',(0,0),(-1,0),colors.HexColor('#e8f0f4')),
       ('LINEABOVE',(0,0),(-1,0),.7,colors.HexColor('#29475b')),('LINEBELOW',(0,0),(-1,0),.55,colors.HexColor('#29475b')),
       ('LINEBELOW',(0,-1),(-1,-1),.7,colors.HexColor('#29475b')),('VALIGN',(0,0),(-1,-1),'TOP'),
       ('TOPPADDING',(0,0),(-1,-1),5),('BOTTOMPADDING',(0,0),(-1,-1),5)]))
-    return KeepTogether([para('Table 1. Actual iterations and original stopping gates.','caption'),table,Spacer(1,8)])
+    return KeepTogether([para('Table 1. Actual iterations, achieved residual and the original stopping gate of each run; the baseline gate (1e-14) is far stricter than the others (1e-6), so its NOT MET at 3e-13 is a tolerance statement, not a sign of a worse solve.','caption'),table,Spacer(1,8)])
 
 source=(ROOT/'lectures/source/week14_rans_pinn_nn.md').read_text(encoding='utf-8')
 story=[para('Learning Turbulence Closures without Losing the Physics','title'),
