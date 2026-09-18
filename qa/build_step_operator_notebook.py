@@ -462,12 +462,9 @@ hash, environment, split/scalers, checkpoints, histories and reference-solver re
 - Author-provided `wake_predictions.tgz`, SHA256 verified in cell 1; training protocol
   `wake_focused_geometry_holdout`. Individual member hashes and complete source
   metadata are exported to `generated/source_manifest.json`.
-- Original run identifier reported in the conversation: `64302321` (not independently
-  checked against the scheduler here).
-- Source discussion: [بررسی وضعیت ران‌ها](https://chatgpt.com/g/g-p-6a9cb70bca088191b3c56cff0bf4ffe4-jyw-dyp-nt-w-stp/c/6aa31405-950c-83e9-b04d-be4c383ca09f).
 - This is a teaching audit of the author's artifacts, not a replication of an external
   Geo-DeepONet paper or a claim of a new architecture. No new license for upstream data
-  or code is assigned by this notebook. Do not publish the private conversation itself.
+  or code is assigned by this notebook.
 """)
 md(r"""
 ## 9. The project's ordinary DeepONet — code and retained V5 evidence
@@ -787,7 +784,7 @@ summary={'status':'passed', 'mode':'dataset_and_retained_prediction_audit_not_tr
     'numpy':np.__version__,'python':platform.python_version()}
 (OUT/'execution_summary.json').write_text(json.dumps(summary,indent=2),encoding='utf-8')
 display(pd.DataFrame([summary]).drop(columns=['missing']))
-print('Audit complete. Outputs:',OUT)
+print('Audit complete. Outputs:', OUT.relative_to(ARCHIVE.parents[2]).as_posix())
 """)
 nb = nbf.v4.new_notebook(cells=cells, metadata={'kernelspec':{'display_name':'Python 3','language':'python','name':'python3'}})
 dest = ROOT/'notebooks/week15/W15_Geometry_Operators_Step_Audit.ipynb'

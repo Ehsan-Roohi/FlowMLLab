@@ -231,11 +231,9 @@ To repeat original-source operations, see `qa/prepare_week14_source.py` and
 `qa/run_week14_upstream.py`. External code is downloaded into an isolated local
 folder and pinned by SHA-256. Do not run arbitrary replacement archives.
 
-**Attribution and permission:** the instructor reported Davidson's permission
-in the shared conversation. The original written terms are not embedded here;
-no general license or permission date is invented. Do not apply FlowMLLab's
-license to upstream code, checkpoints or DNS. Derived teaching figures and
-orchestration are identified separately.
+**Attribution:** the method, solver and scripts are Lars Davidson's and the
+DNS is Lee and Moser's; see [NOTICE.md](NOTICE.md) for what is and is not
+covered by FlowMLLab's licence before reusing any of it.
 
 **Submit:** baseline/corrected metrics, the original NN result, the gap control,
 solver gates, and a bounded conclusion. Explain why a coefficient-fit improvement

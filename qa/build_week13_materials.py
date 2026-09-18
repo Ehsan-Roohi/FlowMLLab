@@ -332,7 +332,7 @@ def find_root(start=Path.cwd()):
 
 ROOT=find_root(); RESULT=ROOT/'results/week13_rectangular_pinn'
 CASES=[(100,1),(400,1),(100,2),(400,2)]
-print('FlowMLLab root:', ROOT)
+print('FlowMLLab checkout located; evidence folder:', RESULT.relative_to(ROOT).as_posix())
 """, "w13-01"),
         notebook_cell("markdown", """## 1. Physical-coordinate audit
 

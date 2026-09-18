@@ -52,7 +52,7 @@ for edge in [np.hypot(u[0],v[0]),np.hypot(u[:,0],v[:,0]),np.hypot(u[:,-1],v[:,-1
     assert edge.max()<1e-10
 XX,YY=np.meshgrid(x,y)
 away=~(((XX<.1)|(XX>.9))&(YY>2.1))
-print('Checkpoint:',deep_audit['checkpoint'])
+print('Checkpoint:', Path(deep_audit['checkpoint']).name, '(cluster path recorded in data/week13_deep_cavity/audit.json)')
 print({'FD_divergence_max_full':float(abs(div).max()),
        'FD_divergence_max_outside_top_corner_boxes':float(abs(div[away]).max()),
        'FD_divergence_RMS_full':float(np.sqrt(np.mean(div**2)))})
