@@ -1,6 +1,6 @@
 # FlowMLLab
 
-**New in v1.6.0:** [Week 15: geometry-aware operators](notebooks/week15/README.md), with OpenFOAM data and explicit held-out geometries; [Week 13: D/W=2.2 fields and continuation loss](notebooks/week13/README.md).
+**New in v1.6.1:** a repository-wide teaching-material audit improves definitions, worked examples, notebook reliability, figure readability, and release QA across Weeks 1–15. See the [v1.6.1 release notes](RELEASE_NOTES_v1.6.1.md).
 
 **Week 14:** [RANS, PINN and neural turbulence closures](notebooks/week14/README.md)
 based on Lars Davidson's pyCALC-RANS workflow: an executed teaching notebook,
@@ -571,9 +571,9 @@ Student submissions are not included.
 · [Citation metadata](CITATION.cff)
 · [Workshop, support, and consulting details](docs/RESULTS_GUIDE.md#workshops-support-and-consulting)
 
-Current release: **v1.6.0** · [GitHub release](https://github.com/Ehsan-Roohi/FlowMLLab/releases/tag/v1.6.0)
-· [Release notes](RELEASE_NOTES_v1.6.0.md).
-Version-specific v1.6.0 Zenodo DOI: [10.5281/zenodo.22784541](https://doi.org/10.5281/zenodo.22784541).
+Current release: **v1.6.1** · [GitHub release](https://github.com/Ehsan-Roohi/FlowMLLab/releases/tag/v1.6.1)
+· [Release notes](RELEASE_NOTES_v1.6.1.md).
+The archived v1.6.0 record remains available at [10.5281/zenodo.22784541](https://doi.org/10.5281/zenodo.22784541).
 For earlier versions and their archived records, see the
 [release history](https://github.com/Ehsan-Roohi/FlowMLLab/releases).
 The [all-versions DOI](https://doi.org/10.5281/zenodo.22074169) resolves to the latest published archive.
