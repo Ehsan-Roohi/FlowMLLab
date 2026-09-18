@@ -1,7 +1,7 @@
 {
   "title": "FlowMLLab: An Open-Source Framework for Reproducible CFD-to-Scientific-Machine-Learning Experiments",
-  "description": "FlowMLLab v1.6.0 extends the course through Week 15. Week 13 includes the retained Re=1000, D/W=2.2 cavity field at checkpoint 55118 and separately labelled continuation training loss through checkpoint 65711; matched CFD validation is not claimed. Week 14 teaches Davidson-based RANS, inverse PINN and neural closures, retaining the mixed velocity/turbulence-energy tradeoff and reproduction limitations. Week 15 includes 130 sampled OpenFOAM fields, explicit geometry splits, geometry-aware operator audits and separate ordinary-DeepONet DSMC evidence. Revised notebooks expose teaching algorithms rather than only helper calls. Upstream research sources and dataset permissions remain separately attributed.",
-  "version": "1.6.0",
+  "description": "FlowMLLab v1.6.1 is a teaching and reproducibility audit of the v1.6.0 course release (Weeks 1 to 15). It adds definitions, notation and worked examples to the Week 1, 7.2, 9.3, 10.1, 11, 12, 14 and 15 lectures; rebuilds the Week 13 rectangular-cavity PINN notebook in teaching order with a CPU training exercise judged by training loss, held-out residual and CFD field error; repairs the beginner notebook path (P0 dataset hash, Week 4 Lab 2 dataset fallback, Week 3 GPU batch runner); removes private and upload-era context from public notebooks; adds robust-scale Week 12 heat-flux figures beside the retained full-range evidence; and makes the release QA index-driven (every notebook and lecture PDF must be listed in the launcher pages). Retained scientific gates and limitations are preserved; matched CFD validation of the deep-cavity PINN cases is still not claimed. Upstream research sources and dataset permissions remain separately attributed.",
+  "version": "1.6.1",
   "creators": [
     {
       "name": "Roohi, Ehsan",
