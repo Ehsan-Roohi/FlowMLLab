@@ -87,9 +87,10 @@ without a verified mapping of potential, species, source code and producing runs
 ## Stable teaching series
 
 v1.4.0 and its [version DOI](https://doi.org/10.5281/zenodo.22315623) are immutable.
-The fall-2026 maintenance round fixes defects and clarifies existing material;
-the author-requested Week 10.1 companion is supplemental reading, not a new
-training notebook. These changes are consolidated in the separately requested
-v1.4.1 maintenance release. Unexecuted comparison designs are not scientific results.
+The v1.4.1 maintenance release fixed defects and clarified existing material;
+the Week 10.1 companion added there is supplemental reading, not a training
+notebook. Later releases (v1.5 and v1.6) added Weeks 11 to 15 and are listed in
+the [release history](https://github.com/Ehsan-Roohi/FlowMLLab/releases).
+Unexecuted comparison designs are not scientific results.
 Do not pursue external benchmark adoption until source-data integrity,
 fair-comparison and licensing gates are resolved.

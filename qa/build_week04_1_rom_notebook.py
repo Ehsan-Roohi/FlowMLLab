@@ -74,14 +74,14 @@ The top wall has (u=1,v=0); the other walls are no-slip. The ROM state contains 
     markdown(
         r"""## 2. Centered POD and Galerkin projection
 
-Let (q(t;Re)) denote the vector of interior vorticity values. Development snapshots are centered,
+Let $q(t;Re)$ denote the vector of interior vorticity values. Development snapshots are centered,
 
 \[
 q(t;Re)\approx \overline q+\Phi a(t;Re),
 \qquad \Phi^{T}\Phi=I,
 \]
 
-where the columns of (Phi) are retained left singular vectors. Substitution into the semi-discrete FOM (dot q=F(q;Re)) and Galerkin projection give
+where the columns of $\Phi$ are retained left singular vectors. Substitution into the semi-discrete FOM $\dot q=F(q;Re)$ and Galerkin projection give
 
 \[
 \dot a=\Phi^T F(\overline q+\Phi a;Re).
@@ -116,9 +116,9 @@ print("frozen evidence:", RESULTS)
     markdown(
         r"""## 3. Validate the added FOM path before reducing it
 
-The snapshot collector is not accepted merely because it uses familiar formulas. At (Re=100) and (400), it was run for exactly the time steps recorded in the fixed 65×65 FlowMLLab archive. Velocity and vorticity must match the already accepted Week-4 implementation to numerical round-off. Those two reproduced fields are then checked against the independent Ghia centerline data already used elsewhere in the course.
+The snapshot collector is not accepted merely because it uses familiar formulas. At $Re=100$ and (400), it was run for exactly the time steps recorded in the fixed 65×65 FlowMLLab archive. Velocity and vorticity must match the already accepted Week-4 implementation to numerical round-off. Those two reproduced fields are then checked against the independent Ghia centerline data already used elsewhere in the course.
 
-A second study uses (Re=275) at (t=5). Spatial errors on 25×25, 33×33, and 49×49 grids are measured against a 65×65 reference interpolated to each comparison grid. Temporal errors for (Delta t=0.004,0.002,0.001) are measured against (Delta t=0.0005) at fixed grid and final time. We require monotonic reduction; apparent agreement from one convenient grid is not a convergence study.
+A second study uses $Re=275$ at $t=5$. Spatial errors on 25×25, 33×33, and 49×49 grids are measured against a 65×65 reference interpolated to each comparison grid. Temporal errors for $\Delta t=0.004,0.002,0.001$ are measured against $\Delta t=0.0005$ at fixed grid and final time. We require monotonic reduction; apparent agreement from one convenient grid is not a convergence study.
 """
     ),
     code(
@@ -142,7 +142,7 @@ Write the full-order right-hand side as convection plus diffusion,
 F(q;Re)=g(q)+\frac{1}{Re}L(q).
 \]
 
-For this discretization, the wall treatment makes diffusion affine in the interior state. Its reduced offset and matrix are therefore assembled exactly once at unit viscosity and scaled by (1/Re) online. The nonlinear convection snapshots form a separate centered basis (U_g). QDEIM chooses interpolation indices (P), and the projected nonlinearity is approximated by
+For this discretization, the wall treatment makes diffusion affine in the interior state. Its reduced offset and matrix are therefore assembled exactly once at unit viscosity and scaled by (1/Re) online. The nonlinear convection snapshots form a separate centered basis $U_g$. QDEIM chooses interpolation indices $P$, and the projected nonlinearity is approximated by
 
 \[
 \Phi^Tg(q)\approx
@@ -150,13 +150,13 @@ For this discretization, the wall treatment makes diffusion affine in the interi
 \Phi^TU_g(P^TU_g)^{-1}P^T[g(q)-\overline g].
 \]
 
-The implementation does not reconstruct the entire nonlinear field online. At the selected points, affine maps provide (u,v,\partial_x\omega,partial_y\omega), after which only the sampled products (-u\partial_x\omega-v\partial_y\omega) are evaluated. The frozen model archive contains numeric arrays only and is loaded with `allow_pickle=False`.
+The implementation does not reconstruct the entire nonlinear field online. At the selected points, affine maps provide $(u,v,\partial_x\omega,\partial_y\omega)$, after which only the sampled products $(-u\,\partial_x\omega-v\,\partial_y\omega)$ are evaluated. The frozen model archive contains numeric arrays only and is loaded with `allow_pickle=False`.
 """
     ),
     markdown(
         r"""## 5. Leakage-free model selection
 
-Development Reynolds numbers are (100,150,200,225,250,350,400). Complete trajectories at (Re=300) are used for selection. The untouched blind cases are (175,275,375), matching the physical split used elsewhere in FlowMLLab. Candidate POD ranks are (4,8,12,16), with the DEIM dimension equal to rank. The predeclared rule selects the smallest candidate for which **both** standard POD–Galerkin and POD–DEIM have less than 1% maximum-in-time relative velocity error on (Re=300).
+Development Reynolds numbers are $Re \in \{100,150,200,225,250,350,400\}$. Complete trajectories at $Re=300$ are used for selection. The untouched blind cases are (175,275,375), matching the physical split used elsewhere in FlowMLLab. Candidate POD ranks are (4,8,12,16), with the DEIM dimension equal to rank. The predeclared rule selects the smallest candidate for which **both** standard POD–Galerkin and POD–DEIM have less than 1% maximum-in-time relative velocity error on $Re=300$.
 
 This table also demonstrates why cumulative POD energy is not an accuracy certificate. Rank 12 retains more than 99.9% energy yet fails the dynamical gate, especially after nonlinear hyper-reduction. The decision uses a-posteriori trajectory error, not a visually attractive singular-value threshold.
 """
@@ -197,7 +197,7 @@ assert blind["divergence_l2"].max() < 1e-12
     markdown(
         r"""## 6. Run a fresh blind query from the portable model
 
-The following cell does not read a stored prediction. It loads the frozen numeric model, independently reruns the (Re=275) FOM, integrates the POD–Galerkin baseline and POD–DEIM model to (t=5), and recomputes velocity error. This is a small but meaningful restart-and-run check of the public API. Because the FOM and ROM use the same forward-Euler time step, the comparison isolates state reduction and nonlinear approximation rather than mixing temporal schemes.
+The following cell does not read a stored prediction. It loads the frozen numeric model, independently reruns the $Re=275$ FOM, integrates the POD–Galerkin baseline and POD–DEIM model to $t=5$, and recomputes velocity error. This is a small but meaningful restart-and-run check of the public API. Because the FOM and ROM use the same forward-Euler time step, the comparison isolates state reduction and nonlinear approximation rather than mixing temporal schemes.
 """
     ),
     code(
@@ -230,7 +230,7 @@ plt.tight_layout()
     markdown(
         r"""## 7. Cost diagnosis and break-even point
 
-Timing covers a complete (t=0) to (5) query plus one final full-field reconstruction. Seven measurements follow one warm-up and the median is reported with Python, NumPy, SciPy, and platform metadata. Offline time includes the seven development FOM trajectories, the centered POD, nonlinear snapshot evaluation, and nonlinear SVD; selection sweeps and blind FOM runs are not hidden inside the online number.
+Timing covers a complete $t=0$ to $t=5$ query plus one final full-field reconstruction. Seven measurements follow one warm-up and the median is reported with Python, NumPy, SciPy, and platform metadata. Offline time includes the seven development FOM trajectories, the centered POD, nonlinear snapshot evaluation, and nonlinear SVD; selection sweeps and blind FOM runs are not hidden inside the online number.
 
 Standard POD–Galerkin is expected to be no faster—and can be slower—because it still performs the full Poisson and nonlinear work every step, then pays an additional projection cost. POD–DEIM removes that bottleneck. The break-even count is
 

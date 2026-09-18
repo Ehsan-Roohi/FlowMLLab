@@ -179,7 +179,7 @@ the exact DSMC export still needs repair.
 
 **FlowMLLab** is an open-source framework for reproducible CFD-to-scientific-machine-learning experiments. It integrates transparent continuum and particle solvers, case-wise data partitions, non-neural baselines, coordinate networks, POD-DeepONet models, physical diagnostics, machine-readable evidence, and release checks.
 
-The repository contains a cumulative lecture/laboratory path: the complete tutorial layer developed for the original six-week graduate course **MIE 690A: AI in Fluid Mechanics**, University of Massachusetts Amherst, Summer 2026, plus independently authored working-course increments. Week 1.1 adds accountable AI-assisted scientific software; later increments cover probabilistic UQ, cylinder flows, exact gas dynamics, rarefied DeepONet, DSMC reproduction, feature identification, and noisy-moment reconstruction. The reusable modules, datasets, validators, and figure builders are the software core; the notebooks are documented examples of that framework.
+The repository contains a cumulative lecture/laboratory path: the complete tutorial layer developed for the six-week core of the graduate course **MIE 690A: AI in Fluid Mechanics**, University of Massachusetts Amherst, Summer 2026, plus independently authored working-course increments. Week 1.1 adds accountable AI-assisted scientific software; later increments cover probabilistic UQ, cylinder flows, exact gas dynamics, rarefied DeepONet, DSMC reproduction, feature identification, and noisy-moment reconstruction. The reusable modules, datasets, validators, and figure builders are the software core; the notebooks are documented examples of that framework.
 
 The course treats scientific machine learning as a controlled computational-physics experiment:
 
@@ -200,7 +200,7 @@ Start with [START_HERE.md](../START_HERE.md). It gives the installation check, r
 | `demo/` | Read-only Streamlit explorer for the retained POD--DeepONet blind cases |
 | `pyproject.toml` | Versioned package metadata, bounded compatible dependencies, optional ML/test environments, and `flowmllab` entry point |
 | `lectures/` | Rendered lecture PDFs and editable sources, including the incremental Week-1.1 scientific-software contract and advanced working-course extensions |
-| `notebooks/week01`–`week04` | Eleven guided laboratories for Weeks 1–4, including the incremental Week-2.1 probabilistic-UQ and Week-4.1 classical-ROM labs |
+| `notebooks/week01`–`week04` | Fourteen guided laboratories for Weeks 1–4, including the incremental Week-2.1 probabilistic-UQ and Week-4.1 classical-ROM labs |
 | `notebooks/week01_1` | Executed vendor-neutral audit of an AI-proposed cavity diagnostic: analytic convergence, adversarial axis failure, real-field physical gates, provenance, and disclosure |
 | `notebooks/week05_06` | The original combined Weeks 5–6 project pack: seven expanded notebooks (`P0`–`P6`) with PINNs/physics-guided learning, POD, uncertainty, rarefied flow, FP closure, frozen decision gates, and final-project evidence |
 | `notebooks/week07` | The Week-7 cylinder-wake LBM and neural-surrogate extension |
