@@ -2,6 +2,8 @@ name: Publish FlowMLLab v1.6.1
 on:
   push:
     tags: [v1.6.1]
+    branches: [main]
+    paths: [.github/workflows/publish-v1.6.1.yml]
 permissions:
   contents: write
 jobs:
@@ -15,7 +17,6 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          ref: v1.6.1
           persist-credentials: false
       - uses: actions/setup-python@v5
         with:
@@ -40,8 +41,18 @@ jobs:
         run: |
           if gh release view v1.6.1 >/dev/null 2>&1; then
             echo 'Existing v1.6.1 left unchanged.'
-          else
+          elif [ "$GITHUB_REF_TYPE" = "tag" ]; then
             gh release create v1.6.1 --verify-tag --latest \
+              --title 'FlowMLLab v1.6.1 - Teaching and reproducibility audit' \
+              --notes-file RELEASE_NOTES_v1.6.1.md dist/* \
+              lectures/week01_numerical_foundations.pdf \
+              lectures/week11_shock_vortex_identification.pdf \
+              lectures/week12_dsmc_moment_reconstruction.pdf \
+              lectures/week13_rectangular_cavity_pinn.pdf \
+              lectures/week14_rans_pinn_nn.pdf \
+              lectures/week15_geometry_generalization.pdf
+          else
+            gh release create v1.6.1 --target "$GITHUB_SHA" --latest \
               --title 'FlowMLLab v1.6.1 - Teaching and reproducibility audit' \
               --notes-file RELEASE_NOTES_v1.6.1.md dist/* \
               lectures/week01_numerical_foundations.pdf \
