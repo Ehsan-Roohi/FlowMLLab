@@ -1,77 +1,77 @@
-# Week 13 — deep-cavity PINNs: learn, train and audit
+# Week 13 - Physics-informed neural networks for the lid-driven cavity
 
-The primary retained example is now **Re=1000, D/W=2.2**, checkpoint
-`restart-55118.ckpt`. The notebook reads the supplied raw field, checks its
-geometry and derived quantities, and regenerates speed/streamlines, mean-zero
-pressure, vorticity and lower-vortex details. Full color ranges are retained.
-A retained Nektar++ CFD field at t=120 is now mapped to the same 301-by-661
-grid and shown directly above the PINN with common speed and pressure scales.
-The notebook keeps only one additional visual case: the Re=100, D/W=1
-near-matched CFD/PINN qualification panel. The older four-case matrix remains
-as a numerical audit table rather than a repeated image gallery.
-A separate visible CPU PINN training exercise teaches the architecture,
-boundary lifting, residual loss and optimizer. It is not this author's model.
+[Notebook](W13_Rectangular_Cavity_PINN_Research.ipynb) ·
+[Open in Colab](https://colab.research.google.com/github/Ehsan-Roohi/FlowMLLab/blob/main/notebooks/week13/W13_Rectangular_Cavity_PINN_Research.ipynb) ·
+[Lecture](../../lectures/week13_rectangular_cavity_pinn.pdf) ·
+[PINN foundations reading](../../lectures/week04_2_pinn_cavity.pdf)
 
-Data and SHA-256 provenance are in `data/week13_deep_cavity`. The supplied
-export does not include model weights or matching CFD fields. The separately
-recovered `loss_continuation.dat` ends at checkpoint **65711**, not field 55118;
-it is a resumed training history, not independent test loss or CFD error.
-it is not labelled independently certified final convergence. Rebuild this
-addition with `python qa/add_week13_deep_case.py` after the base notebook builder.
+Prerequisites: Weeks 1 and 2 and the PINN foundations reading. Allow 75 minutes.
+CPU only; the one training cell takes about a minute.
 
-This independent final-course module develops the lid-driven-cavity PINN beyond
-the Week 4.2 foundations. The notebook audits a retained four-case Unity A100
-matrix rather than silently retraining it:
+## What the notebook does
 
-- Reynolds numbers 100 and 400;
-- depth-to-width ratios 1 and 2;
-- float64 Adam warm-up followed by SSBroyden2 continuation;
-- exact streamfunction wall constraints;
-- held-out full-domain and top-corner residuals; and
-- frozen CFD field gates for the two square cases only.
+| Part | Content | Evidence it reads |
+| --- | --- | --- |
+| A. Learn | Every component of a streamfunction PINN is built in one cell (network, hard wall constraints, autodiff residual, masked loss, Adam then L-BFGS). The trained field is checked three ways: training loss, held-out residual, and velocity error against the Week 1 CFD reference at Re = 100. The short run reaches a small training loss and a large field error, which is the point: the held-out residual and the field comparison are what judge a PINN. | `data/cavity_data.npz` |
+| B. Apply | The retained Re = 1000, D/W = 2.2 deep-cavity field (checkpoint `restart-55118.ckpt`, 301 x 661 grid) is hash-checked, its derived fields are rebuilt, the recovered continuation loss history is plotted, and the field is shown beside Nektar++ CFD at t = 120 on a common grid (velocity relative L2 difference about 3.6%, a near-matched comparison because the lid profiles differ). | `data/week13_deep_cavity/`, `results/week13_deep_cavity/` |
+| C. Audit | The four retained float64 A100 runs (Re = 100/400, depth-to-width ratio D = 1/2; Adam 1000 steps then SSBroyden2 to step 4000) are read through their optimizer histories, independent full-domain and top-corner residuals, exact-wall checks and, for the square cases, frozen CFD gates. | `results/week13_rectangular_pinn/` |
 
-[Open the audit notebook](W13_Rectangular_Cavity_PINN_Research.ipynb) after the
-retained results have been generated. The notebook displays optimizer histories,
-claim boundaries and geometry-faithful colored contours. It does not treat a
-low training loss or an attractive contour as proof of accuracy.
+Notation used throughout: L is the cavity width, H its depth, D = H/L the
+depth-to-width ratio (the lecture and older figure titles also write H/L, and
+the deep case of Part B is quoted as D/W = 2.2; all three mean the same ratio).
 
-The deep-cavity outputs are residual-audited hypotheses because the local archive
-does not contain a raw, matched CFD field at the same geometry and smoothed lid.
-The Cheng--Hung benchmark supports topology interpretation, not a reconstructed
-pointwise error computed from a publication figure.
+## What the evidence supports
 
-## Retained loss curves
+- The two square cases pass every frozen CFD gate (interior velocity error 3.3%
+  at Re = 100 and 10.6% at Re = 400 against the Week 1 reference).
+- The independent full-domain residual is two to three orders of magnitude
+  larger than the masked training residual in all four cases, and the Re = 100
+  case has both the largest residual and the smallest field error. Residual
+  magnitude and field error answer different questions; the notebook explains why.
+- The deep cases (D = 2) have no matched CFD field in this repository and are
+  residual-audited hypotheses. The Part B comparison at D/W = 2.2 is the closest
+  available field check and is near-matched, not matched.
+- The recovered `loss_continuation.dat` ends at checkpoint 65711, later than the
+  field's checkpoint 55118; it is a resumed training history, not an independent
+  test loss, a CFD error, or a certificate of final convergence.
 
-Each case is shown separately at full width. The plotted loss is momentum
-residual RMS, not squared loss or CFD solution error. Blue/orange distinguish
-Adam and SSBroyden2; black dashed and green dotted curves track the held-out
-full-domain and top-corner residuals. These are existing Unity training records,
-not new runs. A low masked training residual does not certify the full domain.
+## Retained loss curves of the four-case matrix
 
-### Re = 100, H/L = 1
+Each plot shows the momentum residual RMS (not squared loss, not CFD error).
+Blue/orange distinguish Adam and SSBroyden2; black dashed and green dotted
+curves track the held-out full-domain and top-corner residuals. A low masked
+training residual does not certify the full domain.
+
+### Re = 100, D = 1
 
 ![Re100 square cavity loss history](../../results/week13_rectangular_pinn/re100-d1/loss.png)
 
-### Re = 100, H/L = 2
+### Re = 100, D = 2
 
 ![Re100 deep cavity loss history](../../results/week13_rectangular_pinn/re100-d2/loss.png)
 
-### Re = 400, H/L = 1
+### Re = 400, D = 1
 
 ![Re400 square cavity loss history](../../results/week13_rectangular_pinn/re400-d1/loss.png)
 
-### Re = 400, H/L = 2
+### Re = 400, D = 2
 
 ![Re400 deep cavity loss history](../../results/week13_rectangular_pinn/re400-d2/loss.png)
 
-## Reproduction
+## Rebuilding and reproduction
 
-The exact training runner, restartable `gpu-preempt` batch file, harvest gate and
-protocol are in `qa/`. Optimizer checkpoints stay on Unity and are intentionally
-excluded from GitHub. The public evidence retains numerical histories, audits,
-figures, the dependency lock, upstream commit/digest and SLURM job identifiers.
+- `python qa/build_week13_notebook.py --execute` rebuilds and executes the
+  notebook (PyTorch required); `--keep-outputs` rewrites the text while keeping
+  the outputs of unchanged code cells.
+- `python qa/build_week13_materials.py` rebuilds the lecture PDF and calls the
+  notebook builder.
+- The training runner, restartable `gpu-preempt` batch file, harvest gate and
+  protocol for the four-case matrix are in `qa/` (`WEEK13_PINN_MATRIX_PROTOCOL.md`).
+  Optimizer checkpoints stay on the cluster; the public evidence retains
+  histories, audits, figures, the dependency lock, upstream commit/digest and
+  job identifiers.
 
-This four-case matrix is a feasibility pilot, not yet a publication comparison.
-A paper must add matched multi-aspect-ratio CFD/FEM references, several fixed
+The four-case matrix is a feasibility pilot, not a publication comparison. A
+paper must add matched multi-aspect-ratio CFD/FEM references, several fixed
 seeds and a factorial comparison between primitive/FOSLS and streamfunction
 representations at equal precision, capacity and residual-evaluation budget.

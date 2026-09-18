@@ -60,7 +60,7 @@ Weeks 5 and 6 share a project pack and lecture guide, but have separate learning
 | [10.1](#week-101--ab-initio-collision-deeponet) | Molecular scattering and DSMC cylinder contours | [CPU scattering lab](notebooks/week10_1/W10_1_Collision_Map_Surrogate_Audit.ipynb) · [Research fields](results/abinitio_deeponet_cylinder/README.md) | [Lecture companion](lectures/week10_1_abinitio_collision_deeponet.md) |
 | [11](#week-11--shock-and-vortex-identification) | Shock/vortex identification; alpha and pressure methods for vapor clouds | [Week 11 lab](notebooks/week11/README.md) | [Lecture 11](lectures/week11_shock_vortex_identification.pdf) |
 | [12](#week-12--dsmc-moment-reconstruction) | Additive moments, observation-conditioned reconstruction and support | [Week 12 lab](notebooks/week12/README.md) | [Lecture 12](lectures/week12_dsmc_moment_reconstruction.pdf) |
-| [13](#week-13--rectangular-cavity-pinn-research-audit) | Streamfunction PINNs across Reynolds number and cavity depth | [Week 13 audit](notebooks/week13/README.md) | [Lecture 13](lectures/week13_rectangular_cavity_pinn.pdf) |
+| [13](#week-13--rectangular-cavity-pinn-research-audit) | Streamfunction PINNs: build one on CPU, then audit deep-cavity and four-case research runs | [Week 13 lab](notebooks/week13/README.md) | [Lecture 13](lectures/week13_rectangular_cavity_pinn.pdf) |
 | [14](#week-14---rans-inverse-pinn-and-neural-turbulence-closures) | Davidson-based RANS, inverse PINN and neural closures | [Week 14 lab](notebooks/week14/README.md) | [Lecture 14](lectures/week14_rans_pinn_nn.pdf) |
 | [15](#week-15--geometry-aware-neural-operators) | Geometry generalization, Geo-DeepONet, FNO and U-FNO | [Week 15 lab](notebooks/week15/README.md) | [Lecture 15](lectures/week15_geometry_generalization.pdf) |
 
@@ -473,8 +473,10 @@ archived research reconstruction shown above.
 
 ### Week 13 — Rectangular-cavity PINN research audit
 
-The front page retains only two representative comparisons. Complete fields,
-loss histories and the four-case audit remain in the [Week 13 notebook](notebooks/week13/W13_Rectangular_Cavity_PINN_Research.ipynb).
+The front page retains only two representative comparisons. The notebook has three parts:
+build and train a small streamfunction PINN on CPU and judge it against the Week 1 CFD
+reference; inspect the deep-cavity field beside CFD; audit the four-case research matrix.
+Complete fields, loss histories and the audit tables are in the [Week 13 notebook](notebooks/week13/W13_Rectangular_Cavity_PINN_Research.ipynb).
 
 **Problem:** Solve square and deep lid-driven cavities.<br>
 **CFD / data:** Nektar++ CFD and PINN fields are shown in separate, labelled rows on a common grid. The square case retains a near-matched CFD/PINN validation panel.<br>

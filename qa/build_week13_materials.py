@@ -282,127 +282,12 @@ def build_pdf(records, outdir):
     return target
 
 
-def notebook_cell(kind, source, cell_id):
-    cell = {"cell_type": kind, "id": cell_id, "metadata": {}, "source": source.splitlines(True)}
-    if kind == "code": cell.update({"execution_count": None, "outputs": []})
-    return cell
-
-
 def build_notebook(target):
-    cells = [
-        notebook_cell("markdown", """# Week 13 — Rectangular-cavity PINNs as a research audit
-<!-- MIE690A article-aligned validation v4 -->
-
-This notebook audits the retained `gpu-preempt` matrix; it does **not** retrain the PINNs. It tests whether training, held-out residuals, top-corner behavior, exact walls and matched CFD evidence support the same conclusion. Deep cases are not labelled field-validated without raw matched CFD.
-
-[Open the published notebook in Colab](https://colab.research.google.com/github/Ehsan-Roohi/FlowMLLab/blob/main/notebooks/week13/W13_Rectangular_Cavity_PINN_Research.ipynb)
-
-Research contrast: streamfunction–pressure representation versus the primitive/FOSLS formulation studied by Służalec et al. (JCS 95, 2026, 102817). Both solve Navier–Stokes; the hypothesis concerns representation and constraint structure.
-""", "w13-00"),
-        notebook_cell("code", """# FLOWMLLAB_COLAB_BOOTSTRAP_V1
-# In Colab this cell obtains the complete public evidence tree. Locally it is a no-op.
-from pathlib import Path as _FlowMLLabPath
-import os as _flowmllab_os
-import subprocess as _flowmllab_subprocess
-import sys as _flowmllab_sys
-
-if "google.colab" in _flowmllab_sys.modules or _flowmllab_os.environ.get("COLAB_RELEASE_TAG"):
-    _flowmllab_root = _FlowMLLabPath("/content/FlowMLLab")
-    if not (_flowmllab_root / ".git").is_dir():
-        _flowmllab_subprocess.run(
-            ["git", "clone", "--depth", "1", "https://github.com/Ehsan-Roohi/FlowMLLab.git", str(_flowmllab_root)],
-            check=True,
-        )
-    _flowmllab_notebook_dir = _flowmllab_root / "notebooks/week13"
-    _flowmllab_os.chdir(_flowmllab_notebook_dir)
-    for _flowmllab_path in (_flowmllab_root, _flowmllab_notebook_dir):
-        if str(_flowmllab_path) not in _flowmllab_sys.path:
-            _flowmllab_sys.path.insert(0, str(_flowmllab_path))
-    print("FlowMLLab evidence ready:", _flowmllab_root)
-""", "w13-bootstrap"),
-        notebook_cell("code", """from pathlib import Path
-import hashlib, json
-import matplotlib.pyplot as plt
-import numpy as np
-
-def find_root(start=Path.cwd()):
-    for candidate in (start, *start.parents):
-        if (candidate/'qa/WEEK13_PINN_MATRIX_PROTOCOL.md').is_file(): return candidate
-    raise FileNotFoundError('Run inside a complete FlowMLLab checkout')
-
-ROOT=find_root(); RESULT=ROOT/'results/week13_rectangular_pinn'
-CASES=[(100,1),(400,1),(100,2),(400,2)]
-print('FlowMLLab checkout located; evidence folder:', RESULT.relative_to(ROOT).as_posix())
-""", "w13-01"),
-        notebook_cell("markdown", """## 1. Physical-coordinate audit
-
-The network sees `(x, eta)` on a unit square, while physical `y/L = D eta`. Therefore `∂y = D⁻¹∂eta`, `u = D⁻¹∂eta psi`, and every second y derivative carries `D⁻²`. The `D=1` reduction is a required implementation check.
-""", "w13-02"),
-        notebook_cell("code", """records=[]
-for Re,D in CASES:
-    folder=RESULT/f're{Re}-d{D}'
-    audit=json.loads((folder/'audit.json').read_text())
-    history=[json.loads(line) for line in (folder/'optimizer-history.jsonl').read_text().splitlines() if line]
-    files={p.name:hashlib.sha256(p.read_bytes()).hexdigest() for p in folder.iterdir() if p.is_file()}
-    records.append(dict(Re=Re,D=D,folder=folder,audit=audit,history=history,hashes=files))
-print('Loaded four immutable evidence packages.')
-""", "w13-03"),
-        notebook_cell("markdown", """## 2. Training loss is not the verdict
-
-Plot the masked collocation residual beside independent full-domain and corner-band residuals. Adam occupies steps 1–1000; SSBroyden2 continues the same weights. This is an optimizer trajectory, not a matched optimizer-comparison claim.
-""", "w13-04"),
-        notebook_cell("code", """fig,axs=plt.subplots(2,2,figsize=(11,8),constrained_layout=True)
-for ax,r in zip(axs.ravel(),records):
-    rows=list({q['global_step']:q for q in r['history']}.values()); rows.sort(key=lambda q:q['global_step'])
-    steps=[q['global_step'] for q in rows]
-    ax.semilogy(steps,[np.sqrt(q['train_rx_mse']+q['train_ry_mse']) for q in rows],label='masked train')
-    ax.semilogy(steps,[q['heldout_momentum_rms'] for q in rows],'k--',label='held-out full')
-    ax.semilogy(steps,[q['top_corner_momentum_rms'] for q in rows],':',color='#009E73',label='top corners')
-    ax.axvline(1000,color='#D55E00',lw=1); ax.set(title=f"Re={r['Re']}, D={r['D']}",xlabel='optimizer step',ylabel='residual RMS'); ax.grid(alpha=.2)
-axs[0,0].legend(frameon=False); plt.show()
-""", "w13-05"),
-        notebook_cell("markdown", """## 3. Independent evidence table
-
-The square cases are judged against frozen CFD gates. Deep cases report residuals and topology only; `n/a` is the scientifically correct result when the matched field is unavailable.
-""", "w13-06"),
-        notebook_cell("code", """rows=[]
-for r in records:
-    a=r['audit']; z=a['independent_residual']; c=a.get('cfd_comparison')
-    rows.append((r['Re'],r['D'],np.hypot(z['momentum_x_rms'],z['momentum_y_rms']),
-                 np.hypot(z['top_corner_momentum_x_rms'],z['top_corner_momentum_y_rms'])/np.sqrt(2),
-                 max(max(w.values()) for w in a['wall_error'].values()),None if c is None else c['all_pass'],a['claim_status']))
-print(f"{'Re':>5} {'D':>3} {'R_full':>11} {'R_corner':>11} {'wall max':>11} {'CFD gates':>10}  status")
-for row in rows: print(f"{row[0]:5d} {row[1]:3d} {row[2]:11.3e} {row[3]:11.3e} {row[4]:11.3e} {str(row[5]):>10}  {row[6]}")
-""", "w13-07"),
-        notebook_cell("markdown", """## 4. Geometry-faithful fields
-
-These are retained Unity renders. A contour is evidence of what the model represents, not proof that the representation is correct. Use the table above to determine which claims are actually available.
-""", "w13-08"),
-        notebook_cell("code", """fig,axs=plt.subplots(2,2,figsize=(13,9),constrained_layout=True)
-for ax,r in zip(axs.ravel(),records):
-    ax.imshow(plt.imread(r['folder']/'fields.png')); ax.axis('off'); ax.set_title(f"Re={r['Re']}, D={r['D']}")
-plt.show()
-""", "w13-09"),
-        notebook_cell("markdown", """## 5. Research decision
-
-Answer before extending the run:
-
-1. Did the held-out full residual fall with the masked training residual?
-2. Did the corner band improve, stagnate or deteriorate?
-3. Which square cases pass every frozen CFD gate?
-4. Which deep-case statements remain hypotheses because no matched raw field exists?
-5. What factorial comparison would distinguish representation from optimizer, budget and lid regularization?
-
-The next paper-quality experiment must compare primitive/FOSLS and streamfunction representations at matched physics, capacity and residual-evaluation budget, with several preregistered seeds. Failed seeds remain in the denominator.
-""", "w13-10"),
-    ]
-    notebook = {"cells": cells, "metadata": {"kernelspec": {"display_name": "Python 3", "language": "python", "name": "python3"},
-        "language_info": {"name": "python", "version": "3"}}, "nbformat": 4, "nbformat_minor": 5}
-    target.parent.mkdir(parents=True, exist_ok=True)
-    target.write_text(json.dumps(notebook, indent=1) + "\n", encoding="utf-8")
-    from improve_classroom_notebooks import revise, w13
-    revise(target, w13)
-    return target
+    """Delegate to build_week13_notebook.py, which assembles the notebook in teaching order."""
+    import sys
+    sys.path.insert(0, str(Path(__file__).resolve().parent))
+    from build_week13_notebook import build  # noqa: PLC0415
+    return build(target, keep_outputs=True)
 
 
 def main():
@@ -413,8 +298,6 @@ def main():
     records = load_cases()
     pdf = build_pdf(records, args.output_dir)
     notebook = build_notebook(ROOT / "notebooks/week13/W13_Rectangular_Cavity_PINN_Research.ipynb")
-    import subprocess, sys
-    subprocess.run([sys.executable, str(ROOT/'qa/add_week13_deep_case.py')], check=True)
     manifest = {"builder": str(Path(__file__).relative_to(ROOT)), "source": str(SOURCE.relative_to(ROOT)),
                 "pdf_sha256": hashlib.sha256(pdf.read_bytes()).hexdigest(),
                 "case_audits": {f"re{r['re']}-d{r['depth']}": hashlib.sha256((r['dir']/"audit.json").read_bytes()).hexdigest() for r in records}}
