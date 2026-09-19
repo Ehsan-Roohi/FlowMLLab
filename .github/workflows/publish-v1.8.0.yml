@@ -1,0 +1,61 @@
+name: Publish FlowMLLab v1.8.0
+on:
+  push:
+    tags: [v1.8.0]
+    branches: [main]
+    paths: [.github/workflows/publish-v1.8.0.yml]
+permissions:
+  contents: write
+jobs:
+  release:
+    if: github.repository == 'Ehsan-Roohi/FlowMLLab'
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      OPENBLAS_NUM_THREADS: '1'
+      OMP_NUM_THREADS: '1'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install test and packaging dependencies
+        run: |
+          sudo apt-get update && sudo apt-get install -y poppler-utils
+          python -m pip install -e '.[test,reconstruction]' build twine nbformat nbclient
+      - name: Restore the release-hosted Week 7.4 test trajectory
+        run: |
+          curl -L --fail --retry 3 \
+            -o data/week07_4_wakes/re095.npz \
+            https://github.com/Ehsan-Roohi/FlowMLLab/releases/download/week07-4-wakes-v1/re095.npz
+      - name: Test release
+        run: |
+          python -c "import flowmllab; assert flowmllab.__version__ == '1.8.0'"
+          python -m pytest -q tests qa
+          flowmllab smoke --root .
+          python qa/validate_course_release.py
+      - name: Build distributions
+        run: |
+          python -m build
+          python -m twine check dist/*
+      - name: Publish without modifying previous releases
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          if gh release view v1.8.0 >/dev/null 2>&1; then
+            echo 'Existing v1.8.0 left unchanged.'
+          elif [ "$GITHUB_REF_TYPE" = "tag" ]; then
+            gh release create v1.8.0 --verify-tag --latest \
+              --title 'FlowMLLab v1.8.0 - Geometry-aware neural operators' \
+              --notes-file RELEASE_NOTES_v1.8.0.md dist/* \
+              lectures/week15_geometry_generalization.pdf \
+              release_assets_v1.8.0_sha256.txt
+          else
+            gh release create v1.8.0 --target "$GITHUB_SHA" --latest \
+              --title 'FlowMLLab v1.8.0 - Geometry-aware neural operators' \
+              --notes-file RELEASE_NOTES_v1.8.0.md dist/* \
+              lectures/week15_geometry_generalization.pdf \
+              release_assets_v1.8.0_sha256.txt
+          fi
