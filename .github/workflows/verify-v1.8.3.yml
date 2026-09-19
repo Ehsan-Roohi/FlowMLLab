@@ -9,6 +9,7 @@ on:
       - results/week15_postaudit/**
       - lectures/week15_geometry_generalization.pdf
       - qa/test_release_integrity.py
+      - pyproject.toml
       - .github/workflows/verify-v1.8.3.yml
 
 permissions:
