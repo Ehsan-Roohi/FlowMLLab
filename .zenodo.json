@@ -1,7 +1,7 @@
 {
   "title": "FlowMLLab: An Open-Source Framework for Reproducible CFD-to-Scientific-Machine-Learning Experiments",
-  "description": "FlowMLLab v1.8.3 is the verified repair release for the complete 43-notebook, 26-lecture CFD-to-scientific-machine-learning course. It restores end-to-end execution of the Week 15 geometry-generalization notebook, synchronizes six comparison figures with their SHA-256 provenance, removes duplicated figure footers, aligns citation and release metadata, and prevents evidence workflows from rewriting the main branch. The scientific results and frozen Week 15 evidence archives are unchanged; no new CFD or model training is claimed.",
-  "version": "1.8.3",
+  "description": "FlowMLLab v1.8.4 is the review follow-up release of the complete 43-notebook, 26-lecture CFD-to-scientific-machine-learning course. It restores the axis label that the v1.8.3 figure repair removed from the six Week 15 comparison figures, refreshes their SHA-256 provenance, re-executes the Week 15 flagship notebook and rebuilds its lecture, adds a glossary, defines the quarantined g005 geometry, unifies the Week 9 lab labels, records the CI regeneration of the family-holdout evidence, and gives the CUDA-only Track 6 notebook a clear stop on CPU machines. The scientific results and the frozen Week 15 evidence archives are unchanged; no new CFD or model training is claimed.",
+  "version": "1.8.4",
   "creators": [
     {
       "name": "Roohi, Ehsan",
@@ -38,7 +38,7 @@
       "scheme": "url"
     },
     {
-      "identifier": "https://github.com/Ehsan-Roohi/FlowMLLab/releases/tag/v1.8.3",
+      "identifier": "https://github.com/Ehsan-Roohi/FlowMLLab/releases/tag/v1.8.4",
       "relation": "isVersionOf",
       "scheme": "url"
     }

@@ -1,0 +1,63 @@
+name: Publish FlowMLLab v1.8.4
+on:
+  push:
+    tags: [v1.8.4]
+    branches: [main]
+    paths: [.github/workflows/publish-v1.8.4.yml]
+permissions:
+  contents: write
+jobs:
+  release:
+    if: github.repository == 'Ehsan-Roohi/FlowMLLab'
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    env:
+      OPENBLAS_NUM_THREADS: '1'
+      OMP_NUM_THREADS: '1'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install test and packaging dependencies
+        run: |
+          sudo apt-get update && sudo apt-get install -y poppler-utils
+          python -m pip install -e '.[test]' build twine
+      - name: Test release
+        run: |
+          python -c "import flowmllab; assert flowmllab.__version__ == '1.8.4'"
+          python -m pytest -q tests qa
+          flowmllab smoke --root .
+          flowmllab qa --root .
+          python qa/validate_course_release.py
+          git diff --exit-code
+      - name: Build distributions and the asset hash list
+        run: |
+          python -m build
+          python -m twine check dist/*
+          rm -rf output
+          sha256sum dist/flowmllab-1.8.4-py3-none-any.whl dist/flowmllab-1.8.4.tar.gz \
+            lectures/week15_geometry_generalization.pdf | sed 's# dist/# #; s# lectures/# #' \
+            > release_assets_v1.8.4_sha256.txt
+          cat release_assets_v1.8.4_sha256.txt
+      - name: Publish without modifying previous releases
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          if gh release view v1.8.4 >/dev/null 2>&1; then
+            echo 'Existing v1.8.4 left unchanged.'
+          elif [ "$GITHUB_REF_TYPE" = "tag" ]; then
+            gh release create v1.8.4 --verify-tag --latest \
+              --title 'FlowMLLab v1.8.4 - Review follow-ups' \
+              --notes-file RELEASE_NOTES_v1.8.4.md dist/* \
+              lectures/week15_geometry_generalization.pdf \
+              release_assets_v1.8.4_sha256.txt
+          else
+            gh release create v1.8.4 --target "$GITHUB_SHA" --latest \
+              --title 'FlowMLLab v1.8.4 - Review follow-ups' \
+              --notes-file RELEASE_NOTES_v1.8.4.md dist/* \
+              lectures/week15_geometry_generalization.pdf \
+              release_assets_v1.8.4_sha256.txt
+          fi
