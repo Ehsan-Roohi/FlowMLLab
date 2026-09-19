@@ -26,7 +26,7 @@ mkdir -p "$CHRIS_OUTPUT"
 "$CHRIS_ENV_ROOT/venv/bin/python" qa/export_chris_tf_weights.py \
   --checkpoint "$CHRIS_CHECKPOINT" --output "$weights" --width 64
 module purge
-module load PyTorch/2.1.2-foss-2023a-CUDA-12.1.1
+module load all/PyTorch/2.1.2-foss-2023a-CUDA-12.1.1
 nvidia-smi --query-gpu=name,memory.total --format=csv,noheader
 exec python qa/run_chris_torch_lbfgs.py \
   --weights "$weights" --checkpoint-label "$CHRIS_CHECKPOINT" --output "$CHRIS_OUTPUT" \
