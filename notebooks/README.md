@@ -52,7 +52,7 @@ a local clone (see the linked setup pages).
 | Week 12 | Noisy DSMC moment reconstruction | [Open in Colab](https://colab.research.google.com/github/Ehsan-Roohi/FlowMLLab/blob/main/notebooks/week12/W12_DSMC_Moment_Reconstruction.ipynb) |
 | Week 13 | Rectangular-cavity PINNs | [Open in Colab](https://colab.research.google.com/github/Ehsan-Roohi/FlowMLLab/blob/main/notebooks/week13/W13_Rectangular_Cavity_PINN_Research.ipynb) |
 | Week 14 | RANS, inverse PINN and neural closures (local checkout) | [Notebook](week14/W14_pyCALC_RANS_PINN_NN.ipynb) and [setup](week14/README.md) |
-| Week 15 | Geometry-aware neural operators (local checkout) | [Notebook](week15/W15_Geometry_Operators_Step_Audit.ipynb) and [OpenFOAM data guide](week15/README.md) |
+| Week 15 | Geometry-aware neural operators (local checkout) | [Complete post-audit notebook](week15/W15_Complete_Geometry_Generalization.ipynb), [historical audit notebook](week15/W15_Geometry_Operators_Step_Audit.ipynb), and [OpenFOAM/evidence guide](week15/README.md) |
 
 ## Weekly laboratories
 
@@ -79,7 +79,9 @@ a local clone (see the linked setup pages).
 - `week12/`: additive-moment algebra, prior-plus-observation reconstruction on a synthetic analog, a fresh Noise2Noise-style fit on real DSMC cavity observations, and an audit of the archived research reconstruction.
 - `week13/`: streamfunction PINNs for square and deep cavities: a small CPU training exercise, the retained Re=1000, D/W=2.2 field beside Nektar++ CFD, and the four-case A100 residual audit.
 - `week14/`: Davidson-based RANS closure module (separate environment; see its README).
-- `week15/`: geometry-aware operator audit on 130 OpenFOAM step-flow fields with whole-geometry and family holdouts (see its README for data).
+- `week15/`: geometry-aware operator audit on 130 OpenFOAM step-flow fields,
+  historical and equal-budget neural-operator comparisons, a validation-only
+  learning-rate sweep, and a retrospective double-step test (see its README for data).
 
 The Week-9 evidence contract is intentionally asymmetric. Lab 1 uses real
 micro-step DSMC fields under a specific author publication permission, and its
