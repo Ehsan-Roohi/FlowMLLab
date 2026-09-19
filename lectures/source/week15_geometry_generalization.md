@@ -919,9 +919,9 @@ Students should submit:
 
 - `consolidated_results.csv`: nine-model global table;
 - `consolidated_results.json`: machine-readable equivalent;
-- `assets/figure_provenance.json`: hashes and inputs for the six seven-row contour figures;
+- `results/week15_postaudit/figure_provenance.json`: hashes and inputs for the six seven-row contour figures;
 - `W15_Complete_Geometry_Generalization.ipynb`: executable teaching and audit notebook;
-- `W15_NOTEBOOK_EXECUTION.json`: execution record;
+- `results/week15_postaudit/notebook_execution.json`: execution record;
 - post-audit LR-sweep package: weights, histories, 342 tuned fields, and independent metrics;
 - matched-budget package: six-model comparison at 19,200 updates;
 - family-holdout package: preserved unsuccessful transfer-selection experiment.

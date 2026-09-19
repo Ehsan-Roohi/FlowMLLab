@@ -42,7 +42,7 @@ provenance and the new plotting code are published, not the source archive.
 
 Week 11 is based on Ehsan Roohi's author-supplied 2026 manuscript,
 *Physics-audited joint neural segmentation of shocks and vortex cores:
-cross-solver transfer and controlled airfoil--cylinder studies*, and its
+cross-solver transfer and controlled airfoil–cylinder studies*, and its
 [ShockVortexML research repository](https://github.com/Ehsan-Roohi/ShockVortexML).
 Week 12 cites Ehsan Roohi, *Geometry-native machine learning reconstruction of
 DSMC moment fields with support monitoring*,

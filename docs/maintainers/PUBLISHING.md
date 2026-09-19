@@ -35,4 +35,4 @@ README's local demo link with the confirmed public URL.
 - Set the repository homepage to the confirmed public demo URL.
 - Pin FlowMLLab on the owner's GitHub profile.
 - Create scoped issues from the `Good first contributions` table in
-  [ROADMAP.md](ROADMAP.md).
+  [ROADMAP.md](../../ROADMAP.md).

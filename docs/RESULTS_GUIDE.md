@@ -34,7 +34,7 @@ qualitative comparisons, not synchronized error or speedup measurements.
 
 Start with a physics-checked circular-cylinder teaching wake, compare LBM with an
 autonomous phase-stable surrogate on a fresh unseen Reynolds case, and verify the evidence chain. Continue through the 20-minute cavity
-exercise to physics-checked POD--DeepONet benchmarks when ready.
+exercise to physics-checked POD–DeepONet benchmarks when ready.
 
 <p align="center">
   <a href="https://colab.research.google.com/github/Ehsan-Roohi/FlowMLLab/blob/main/notebooks/week05_06/P0_Project_Setup.ipynb"><img src="https://img.shields.io/badge/Run-20--minute_Colab-F9AB00?logo=googlecolab&logoColor=white" alt="Run the 20-minute FlowMLLab Colab"></a>
@@ -69,13 +69,13 @@ positive-order asymptotic/GCI sequence.
   </a>
 </p>
 
-<p align="center"><em>Three retained test cases from the versioned evidence. Velocity and zero-mean pressure are direct outputs of separate POD--DeepONet heads.</em></p>
+<p align="center"><em>Three retained test cases from the versioned evidence. Velocity and zero-mean pressure are direct outputs of separate POD–DeepONet heads.</em></p>
 
 ### New: DSMC cavity and mono/diatomic shock reproduction
 
 Week 10 turns the article data into a complete teaching experiment: students
 audit the particle-solver contract, parse 85 checksummed numerical files,
-test log-Knudsen synthesis between supplied rarefied-cavity fields, preserve translational--rotational
+test log-Knudsen synthesis between supplied rarefied-cavity fields, preserve translational–rotational
 nonequilibrium through a shock, and regenerate every retained metric.
 
 <p align="center">
@@ -197,7 +197,7 @@ Start with [START_HERE.md](../START_HERE.md). It gives the installation check, r
 | Resource | Contents |
 | --- | --- |
 | `flowmllab/` | Installable Python package, including cavity, cylinder LBM, learned-wake, rarefied hypersonic-cylinder, exact gas-dynamics, and probabilistic-UQ modules plus scientific asset checks and CLI |
-| `demo/` | Read-only Streamlit explorer for the retained POD--DeepONet blind cases |
+| `demo/` | Read-only Streamlit explorer for the retained POD–DeepONet blind cases |
 | `pyproject.toml` | Versioned package metadata, bounded compatible dependencies, optional ML/test environments, and `flowmllab` entry point |
 | `lectures/` | Rendered lecture PDFs and editable sources, including the incremental Week-1.1 scientific-software contract and advanced working-course extensions |
 | `notebooks/week01`–`week04` | Fourteen guided laboratories for Weeks 1–4, including the incremental Week-2.1 probabilistic-UQ and Week-4.1 classical-ROM labs |
@@ -206,14 +206,14 @@ Start with [START_HERE.md](../START_HERE.md). It gives the installation check, r
 | `notebooks/week07` | The Week-7 cylinder-wake LBM and neural-surrogate extension |
 | `notebooks/week07_1` | Incremental rarefied hypersonic-cylinder lab with author-released DSMC fields, whole-case splits, a strong field baseline, Fusion-DeepONet anatomy, and ensemble diagnostics |
 | `notebooks/week08` | Two CPU/Colab labs: exact branch-aware gas dynamics, then matched interpolation/MLP evidence and dimensional scaling |
-| `notebooks/week09` | Two CPU/Colab labs: micro-step zonal-loss validation and full-field/shock-aligned micro-nozzle POD--DeepONet using real public DSMC fields |
+| `notebooks/week09` | Three CPU/Colab labs: micro-step zonal-loss validation, full-field/shock-aligned micro-nozzle POD–DeepONet using real public DSMC fields, and the moving-throat data-alignment audit |
 | `notebooks/week10` | Complete CPU/Colab article-reproduction lab for rarefied cavity, monatomic shock, diatomic shock, and Maxwell equilibrium checks |
-| `notebooks/week02_1` | Incremental probabilistic-UQ lab: exact Bayesian regression, POD--Gaussian-process CFD uncertainty, proper scores, and blind calibration evidence |
+| `notebooks/week02_1` | Incremental probabilistic-UQ lab: exact Bayesian regression, POD–Gaussian-process CFD uncertainty, proper scores, and blind calibration evidence |
 | `common/` | Shared CFD, surrogate, POD, kinetic, and QA utilities |
 | `data/` | Fixed cavity and cylinder contracts, a compact 20-case hypersonic-cylinder DSMC derivative, and 85 source DSMC files for cavity, mono/diatomic shocks, SPARTA inputs, and relaxation |
 | `results/aescte_dsmc/` | Compact DSMC archives, SHA-256 manifest, field/profile metrics, and regenerated Week-10 figures |
-| `results/article_validation/` | Re=1000 pressure-recovery solutions and independent Botella--Peyret reference data |
-| `results/dsmc_validation/` | Four HS--NTC wall-pressure solutions and Mohammadzadeh Fig. 3 DSMC markers |
+| `results/article_validation/` | Re=1000 pressure-recovery solutions and independent Botella–Peyret reference data |
+| `results/dsmc_validation/` | Four HS–NTC wall-pressure solutions and Mohammadzadeh Fig. 3 DSMC markers |
 | `results/article_figures/` | Paper-ready PNG/PDF validation figures and machine-readable error summaries |
 | `results/pod_deeponet/` | Model-selection, blind-case, Ghia-centerline, timing, and full-field POD-DeepONet evidence |
 | `results/cavity_rom/` | FOM reproduction and refinement, leakage-free POD/DEIM selection, blind trajectories, portable model, timing, break-even count, and summary figure |
@@ -224,7 +224,7 @@ Start with [START_HERE.md](../START_HERE.md). It gives the installation check, r
 | `results/hypersonic_cylinder_week7_1/` | Frozen 20-case DSMC data contract, strong Mach-field interpolation evidence, deliberately limited CPU operator benchmark, coverage audit, and error localization |
 | `results/gas_dynamics_week8/` | Checksummed evidence snapshot, exact-physics maps, matched baselines, edge holdouts, high-dimensional scaling, timing, and source provenance |
 | `results/mahdavi_deeponet/` | Compact CC BY 4.0 full-field/centerline derivatives of 15 public nozzle DSMC snapshots, fresh FlowMLLab predictions, step evidence, source hashes, POD audit, licenses, and manifests |
-| `results/probabilistic_uq/` | Frozen complete-case POD--GP protocol, interpolation baseline, proper scores, blind coverage, and retained under-coverage result |
+| `results/probabilistic_uq/` | Frozen complete-case POD–GP protocol, interpolation baseline, proper scores, blind coverage, and retained under-coverage result |
 | `results/week01_1_scientific_software/` | Frozen diagnostic thresholds, exact cavity-data digest, seven gate outcomes, accept/reject JSON, and the course figure |
 | `advanced/fp_closure/` | Bounded educational workflow for exact and learned Fokker–Planck closure testing |
 | `references/` | Annotated reading guide and BibTeX database |
@@ -237,15 +237,15 @@ The recommended path is cumulative:
 - **Week 1 — Numerical foundations:** Python/NumPy/TensorFlow fundamentals, finite differences, residuals, and validation of lid-driven-cavity centerlines against Ghia et al.
 - **Week 1.1 — AI-assisted scientific software:** freeze axes, signs, stencil support, references, and thresholds before implementation; recover second-order convergence on an analytic streamfunction; reject an executable axis-swap bug; then audit the accepted `Re=100` cavity field with physical gates, provenance, manual review, disclosure, and a bounded claim.
 - **Week 2 — Supervised learning and model validity:** features, targets, scaling, losses, optimization, case-wise splits, interpolation versus extrapolation, and rarefied-flow nondimensionalization.
-- **Week 2.1 — Probabilistic UQ for CFD surrogates:** connect observation models to losses, compute an exact Bayesian posterior for noisy velocity measurements, propagate POD--GP coefficient uncertainty to cavity fields, compare proper scores and interpolation, and retain the failure of single-field interval scaling to reach nominal blind coverage.
+- **Week 2.1 — Probabilistic UQ for CFD surrogates:** connect observation models to losses, compute an exact Bayesian posterior for noisy velocity measurements, propagate POD–GP coefficient uncertainty to cavity fields, compare proper scores and interpolation, and retain the failure of single-field interval scaling to reach nominal blind coverage.
 - **Week 3 — Particle and kinetic descriptions:** Maxwellian sampling, macroscopic moments, sampling-error scaling, DSMC algorithmic structure, noisy labels, and averaging.
 - **Week 4 — Surrogates and operator learning:** audited CFD fields, scalar baselines, coordinate DNNs, and a restricted POD-DeepONet with complete-case selection, three-seed blind tests, Ghia validation, physical diagnostics, and measured inference cost.
 - **Week 4.1 — Classical and hyper-reduced ROM:** an additive notebook for the same cavity, with dynamic centered POD-Galerkin, nonlinear-cost diagnosis, POD-DEIM, convergence checks, frozen blind tests, and offline/online break-even accounting.
 - **Weeks 5–6 — Combined guided-project pack:** Week 5 covers POD, physics-guided objectives/PINNs, neural-operator extensions, project selection, and the frozen checkpoint. Week 6 continues the same selected track through Fokker–Planck/hybrid methods where assigned, a-posteriori testing, uncertainty, reproducibility, and the final report.
-- **Week 7 — Cylinder wakes with LBM and learned prediction:** derive the D2Q9 collide--stream--boundary loop, distinguish wake regimes, run a controlled `Re=100` three-grid study and retain its formal asymptotic failure, validate forces and gated Strouhal estimates, retain POD/CNN failure evidence, and audit a phase-stable decoder over 277 autonomous future fields on a fresh Reynolds test.
+- **Week 7 — Cylinder wakes with LBM and learned prediction:** derive the D2Q9 collide–stream–boundary loop, distinguish wake regimes, run a controlled `Re=100` three-grid study and retain its formal asymptotic failure, validate forces and gated Strouhal estimates, retain POD/CNN failure evidence, and audit a phase-stable decoder over 277 autonomous future fields on a fresh Reynolds test.
 - **Week 7.1 — Rarefied hypersonic-cylinder operators:** audit 20 author-supplied DSMC cases, distinguish freestream and local Mach, freeze whole-case interpolation/extrapolation splits, compare a 3x96 tanh teaching MLP with the stronger structured Mach-field interpolation baseline, and retain the neural analog's failure plus its uncalibrated ensemble spread.
 - **Week 8 — Gas dynamics before scientific ML:** derive and solve Rayleigh, Fanno, oblique-shock, nozzle-shock, and shock-tube relations; expose branch-hidden regression failure; compare exact roots, interpolation, and bounded MLPs; separate ordinary blind accuracy from edge generalization; and use the SU2 diamond-airfoil work only as a clearly qualified bridge to multidimensional CFD.
-- **Week 9 — Roohi--Mahdavi rarefied DeepONet case studies:** verify DSMC evidence independently, expose the target-derived patch boundary of the retained micro-step outputs, learn complete-geometry splitting and zonal-loss selection, reproduce shock-centered density POD from 15 public nozzle cases, and compare physical-coordinate with shock-aligned interpolation at 16, 25, and 30 kPa.
+- **Week 9 — Roohi–Mahdavi rarefied DeepONet case studies:** verify DSMC evidence independently, expose the target-derived patch boundary of the retained micro-step outputs, learn complete-geometry splitting and zonal-loss selection, reproduce shock-centered density POD from 15 public nozzle cases, and compare physical-coordinate with shock-aligned interpolation at 16, 25, and 30 kPa.
 - **Week 10 — DSMC data-driven article reproduction:** qualify particle-solver fields, test log-Knudsen field interpolation, build POD-polynomial shock-profile surrogates, preserve diatomic relaxation physics, compare interpolation and extrapolation, and regenerate every result from checksummed raw tables.
 
 The full module-to-evidence mapping is in [COURSE_MAP.md](../COURSE_MAP.md).
@@ -306,11 +306,11 @@ monotonically.
 
 A development-only rule at `Re=300` selects POD rank 16 and DEIM dimension 16.
 Across untouched `Re=175,275,375` trajectories, maximum-in-time velocity error
-is **0.4941%** for POD--Galerkin and **0.6338%** for POD--DEIM; final vorticity
+is **0.4941%** for POD–Galerkin and **0.6338%** for POD–DEIM; final vorticity
 error remains below **0.56%**, wall error is exactly zero, and discrete
-divergence is near round-off.  In the recorded CPU run, standard POD--Galerkin
+divergence is near round-off.  In the recorded CPU run, standard POD–Galerkin
 does not materially accelerate this efficient small-grid FOM because it still
-evaluates the full nonlinear field, whereas POD--DEIM is about **9.2x** faster.
+evaluates the full nonlinear field, whereas POD–DEIM is about **9.2x** faster.
 Including offline snapshot and basis cost gives a recorded break-even near
 **8 queries**.
 Exact values and environment metadata are in `results/cavity_rom/`.
@@ -318,7 +318,7 @@ Exact values and environment metadata are in `results/cavity_rom/`.
 ## Cylinder LBM teaching module
 
 Week 7 adds an installable D2Q9 cylinder solver with transparent BGK theory and
-a more robust TRT default, Zou--He inflow, a convective outlet, periodic
+a more robust TRT default, Zou–He inflow, a convective outlet, periodic
 transverse boundaries, Bouzidi interpolated bounce-back on an analytical
 circular wall, momentum-exchange forces, gauge
 pressure, vorticity, recirculation length, and Strouhal diagnostics.  The
@@ -426,7 +426,7 @@ reference; the other eight distributed cases remain unverified. Run
 `flowmllab gasdynamics --root .` to verify the retained evidence and source
 commits without retraining the research models.
 
-## Week 9 Roohi--Mahdavi DeepONet case studies
+## Week 9 Roohi–Mahdavi DeepONet case studies
 
 Week 9 contains a dedicated [lecture](../lectures/week09_rarefied_deeponet_case_studies.pdf)
 and two executable research-to-classroom labs built from the 2026 micro-step
@@ -542,7 +542,7 @@ using the version-specific Zenodo DOI below.
 
 FlowMLLab remains free and open source. Optional professional services are available for universities, research laboratories, instructors, and engineering teams:
 
-- **Live workshops:** a two-hour introduction, a one-day intensive, or a multi-session program covering validated CFD, scientific machine learning, POD--DeepONet, and DSMC.
+- **Live workshops:** a two-hour introduction, a one-day intensive, or a multi-session program covering validated CFD, scientific machine learning, POD–DeepONet, and DSMC.
 - **Technical onboarding and support:** environment setup, benchmark reproduction, dataset qualification, notebook adaptation, and troubleshooting.
 - **Research consulting:** design and review of CFD-to-SciML workflows, physical validation strategies, neural-operator studies, and rarefied-flow applications.
 - **Custom extensions:** integration of new physical cases, institutional datasets, validation targets, or research-lab workflows.
@@ -555,9 +555,10 @@ If FlowMLLab supports your teaching or research, you can also support its contin
 
 Use [CITATION.cff](../CITATION.cff) when citing the release.
 
-Version 1.8.3 is the current verified repair release. It synchronizes the
-Week 15 figures and provenance, release metadata, and executable notebook
-record. The large frozen Week 15 evidence archives remain at the v1.8.0 record,
+Version 1.8.4 is the current release: the review follow-ups after the v1.8.3
+repair, with the Week 15 figures, provenance, release metadata and executable
+notebook record kept synchronized. The large frozen Week 15 evidence archives
+remain at the v1.8.0 record,
 [10.5281/zenodo.22840293](https://doi.org/10.5281/zenodo.22840293).
 Version 1.5.1 remains archived at
 [10.5281/zenodo.22651906](https://doi.org/10.5281/zenodo.22651906).
