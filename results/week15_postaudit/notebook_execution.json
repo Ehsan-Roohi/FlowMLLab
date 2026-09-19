@@ -1,15 +1,15 @@
 {
   "code_cells": 15,
   "errors": 0,
-  "seconds": 4.846,
-  "method": "IPython InteractiveShell in a clean subprocess; all assertions passed",
+  "seconds": 7.4,
+  "method": "nbclient with a standard ipykernel (python3) from a fresh clone; all assertions passed",
   "portable_path_repair_direct_execution": {
     "verified": true,
     "code_cells": 15,
     "saved_fields_recomputed": 342,
-    "maximum_metric_difference": 0.0,
-    "environment": "CPU; no PyTorch; FLOWMLLAB_WEEK15_LR_DIR set to the hash-verified Zenodo package"
+    "maximum_metric_difference": 5.684341886080802e-14,
+    "environment": "CPU; no PyTorch; NumPy 2.1.3; FLOWMLLAB_WEEK15_LR_DIR set to the hash-verified Zenodo package"
   },
   "standard_jupyter_kernel_startup_verified": true,
-  "standard_jupyter_verification": "GitHub Actions fresh-clone v1.8.3 release check; 15 code cells; zero error outputs"
+  "standard_jupyter_verification": "review follow-up run, 19 September 2026: CPU, no PyTorch, FLOWMLLAB_WEEK15_LR_DIR set to the hash-verified Zenodo package; figure hashes refreshed after the footer repair"
 }

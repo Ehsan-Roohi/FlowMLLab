@@ -72,7 +72,9 @@ Each week has the same learning loop:
 
 Do not skip the interpretation cells. A notebook is complete only when you can explain why the output is credible, where it may fail, and which evidence would change your conclusion.
 
-Typical student runtimes are approximate:
+Typical compute times on a laptop CPU are approximate. Class time is longer,
+because every notebook asks for predictions and interpretation between the
+cells; each week's README states it (75 to 90 minutes for Weeks 11 to 13).
 
 | Unit | CPU/GPU | Typical runtime |
 | --- | --- | --- |
@@ -100,7 +102,7 @@ Typical student runtimes are approximate:
 | Week 9 Lab 3 data-alignment audit | CPU | <2 min |
 | Week 10.1 collision-map surrogate | CPU | <5 min |
 | Week 11 shock/vortex, reconstruction and cavitation labs | CPU | 5 to 15 min each; PyTorch for the cavitation and reconstruction labs |
-| Week 12 moment reconstruction | CPU | about 2 min including the 20 s Noise2Noise fit |
+| Week 12 moment reconstruction | CPU | about 2 min including the 15 s Noise2Noise fit |
 | Week 13 cavity PINNs | CPU | about 3 min; the training cell takes about a minute (PyTorch) |
 | Week 14 RANS closures | CPU, separate environment | 5 to 10 min for the notebook; the optional upstream solver runs take hours |
 | Week 15 geometry-aware operators | CPU, full checkout plus the 333 MB Zenodo LR evidence archive | about 5 min to verify retained fields; no PyTorch, CFD or retraining |

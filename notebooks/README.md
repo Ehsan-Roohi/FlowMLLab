@@ -62,16 +62,16 @@ archive. Read each module's setup page before launching it.
   `Re=100` cavity field, and requires a complete AI-use disclosure and bounded
   claim.
 - `week02/`: supervised-learning foundations and a rarefied-flow surrogate.
-- `week02_1/`: the incremental probabilistic-UQ lecture/lab pair. It connects Gaussian observation models, exact Bayesian regression, POD--Gaussian-process fields, proper scores, validation scaling, and blind under-coverage between Weeks 2 and 3.
+- `week02_1/`: the incremental probabilistic-UQ lecture/lab pair. It connects Gaussian observation models, exact Bayesian regression, POD–Gaussian-process fields, proper scores, validation scaling, and blind under-coverage between Weeks 2 and 3.
 - `week03/`: Maxwellian sampling/noise and a mini DSMC cavity.
 - `week04/`: CFD data production, scalar/field surrogates, a POD-DeepONet laboratory, the classical ROM lab, and a Stokes-to-Navier-Stokes correction lab (with a 51 x 51 addendum) using constant/diverse lid families, development-only selection, three-seed evidence, physical diagnostics, and explicit same-grid limitations.
 - `week05_06/`: the combined two-week guided-project pack (P0 to P6). Week 5 establishes the setup, baseline, controlled modification, and checkpoint; Week 6 completes the same selected track, physical validation, reproducibility package, and final report. The sparse-sensing companion lab uses the Week 7 cylinder wakes and can be taken after Week 7.
-- `week07/`: D2Q9 BGK/TRT cylinder flow, a concise collide--stream--boundary algorithm walkthrough, physically gated force and Strouhal diagnostics, an executed three-grid study with a retained formal asymptotic/GCI failure, Reynolds-regime classification, strong temporal baselines, and separate one-step/recursive audits of a four-frame multi-scale CNN on a retained held-out interpolation case.
+- `week07/`: D2Q9 BGK/TRT cylinder flow, a concise collide–stream–boundary algorithm walkthrough, physically gated force and Strouhal diagnostics, an executed three-grid study with a retained formal asymptotic/GCI failure, Reynolds-regime classification, strong temporal baselines, and separate one-step/recursive audits of a four-frame multi-scale CNN on a retained held-out interpolation case.
 - `week07_1/`: incremental rarefied hypersonic-cylinder operator lab using a compact author-released derivative of 20 DSMC Mach cases, frozen whole-case splits, a strong structured field-interpolation baseline, reviewed Fusion-DeepONet anatomy, a fast CPU teaching analog, and empirical ensemble-coverage checks.
 - `week07_2/`: causal POD-space Kalman filtering of the retained Re110 LBM wake with validation-selected sensors and covariance inflation, matched sensor-only/open-loop/persistence baselines, and an explicit marginal-coverage failure.
 - `week07_3/`: masked-autoencoder pretraining on the unlabelled Re90/Re100 LBM wakes (PyTorch, CPU), zero-shot, linear-probe, fine-tuned and from-scratch completion of the Re110 wake against the number of labelled frames, gappy-POD baselines with matched information, validation-only selection on Re105, and a retained classical-baseline win.
 - `week08/`: two CPU labs that start from exact branch-aware gas dynamics, then compare bracketed roots, interpolation, and physics-guided MLP evidence across five inverse problems, edge holdouts, dimensional scaling, and application workloads.
-- `week09/`: three CPU labs based on the Roohi--Mahdavi micro-step and micro-nozzle studies. Lab 1 uses two author-permitted, checksummed derivatives of nine real DSMC height fields with file-level case separation; Lab 2 reproduces shock-centered POD and fresh full-field predictions from checksummed derivatives of 15 public DSMC snapshots before evaluating three held-out pressures; Lab 3 is a short data-alignment audit on a quasi-1D moving-throat family.
+- `week09/`: three CPU labs based on the Roohi–Mahdavi micro-step and micro-nozzle studies. Lab 1 uses two author-permitted, checksummed derivatives of nine real DSMC height fields with file-level case separation; Lab 2 reproduces shock-centered POD and fresh full-field predictions from checksummed derivatives of 15 public DSMC snapshots before evaluating three held-out pressures; Lab 3 is a short data-alignment audit on a quasi-1D moving-throat family.
 - `week10/`: one complete CPU article-reproduction lab with 14 rarefied-cavity fields, mono/diatomic shock profiles, the DSMC algorithm, full provenance audit, log-Knudsen synthesis, POD-branch operators, physical interpretation, and retained numerical gates.
 - `week10_1/`: a CPU Lennard-Jones collision-map teaching model with analytic scattering checks, transport integrals and localized surrogate errors.
 - `week11/`: manufactured shock/vortex controls and a small pixel classifier; a matched U-Net reconstruction-then-identification comparison on retained LBM wakes; and hydrofoil vapor-cloud detection on retained CFD fields.
@@ -122,7 +122,7 @@ for full paper reproduction.
 
 The additive `week04/W4_1_Classical_ROM_Cavity.ipynb` lab comes after the
 original Week-4 sequence without modifying it. It implements dynamic centered
-POD--Galerkin and POD--DEIM for the same lid-driven cavity, validates the added
+POD–Galerkin and POD–DEIM for the same lid-driven cavity, validates the added
 snapshot FOM against the fixed 65x65 archive and Ghia centerlines, performs grid
 and time-step refinement, freezes rank on `Re=300`, opens `Re=175,275,375` once,
 and reports offline/online timing plus break-even query count. Its executed
@@ -135,7 +135,7 @@ Stokes field as a low-fidelity input. Its retained evidence is in
 `../results/stokes_refined/`; the original test cases are regression tests, not
 a newly blind benchmark.
 
-The Week-1 cavity notebook first reproduces the manuscript's Ghia velocity and Botella--Peyret pressure validations. The Week-3 DSMC notebook first validates the executed HS--NTC solver directly against Mohammadzadeh wall-pressure data. Both store paper-ready PNG/PDF files and metric JSON under `../results/article_figures/`. See [`../ARTICLE_FIGURE_MAP.md`](../ARTICLE_FIGURE_MAP.md) for every notebook-to-figure contract.
+The Week-1 cavity notebook first reproduces the manuscript's Ghia velocity and Botella–Peyret pressure validations. The Week-3 DSMC notebook first validates the executed HS–NTC solver directly against Mohammadzadeh wall-pressure data. Both store paper-ready PNG/PDF files and metric JSON under `../results/article_figures/`. See [`../ARTICLE_FIGURE_MAP.md`](../ARTICLE_FIGURE_MAP.md) for every notebook-to-figure contract.
 
 ## Research-project notebooks
 

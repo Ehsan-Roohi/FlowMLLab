@@ -34,7 +34,7 @@ disclosure](DATA_PROVENANCE.md).
 | Your goal | Open |
 | --- | --- |
 | Start the guided-project evidence chain after Week 4 | [Launch the 20-minute P0 Colab](https://colab.research.google.com/github/Ehsan-Roohi/FlowMLLab/blob/main/notebooks/week05_06/P0_Project_Setup.ipynb) |
-| Follow the course | [Course map](COURSE_MAP.md) · [All notebooks](notebooks/README.md) · [Lectures](lectures/README.md) |
+| Follow the course | [Course map](COURSE_MAP.md) · [All notebooks](notebooks/README.md) · [Lectures](lectures/README.md) · [Glossary](docs/GLOSSARY.md) |
 | Install and reproduce the results | [Setup and validation](START_HERE.md) |
 | Explore the scientific evidence | [Results and technical guide](docs/RESULTS_GUIDE.md) · [Interactive cavity demo](demo/README.md) |
 
@@ -533,7 +533,10 @@ mesh/steady-convergence claim: the retained lid profiles differ.
 [Notebook and results](notebooks/week13/README.md) ·
 [Reproduction protocol](qa/WEEK13_PINN_MATRIX_PROTOCOL.md)
 
-Preparatory reading covers [PINN residuals and hard boundary constraints](lectures/week04_2_pinn_cavity.pdf),
+Preparatory reading covers [PINN residuals and hard boundary constraints](lectures/week04_2_pinn_cavity.pdf)
+(this reading and its `results/week04_2_pinn_cavity/` evidence keep their original
+Week 4.2 file numbering; the Week 4.2 row of the course table is the
+Stokes-to-Navier-Stokes lab),
 including [McDevitt's DeepPlasma cavity code](https://github.com/cmcdevitt2/DeepPlasma/tree/fcb1566eaa3253d4a4108fbac9d49a38fd10ad6b/LDC),
 used with his permission. The earlier [Re=100 qualification and CFD comparison](results/week04_2_pinn_cavity/README.md)
 provides supporting evidence for this module.
@@ -582,7 +585,10 @@ not silently present saved solver fields as a fresh Run-All CFD calculation.
 [post-audit evidence summary](results/week15_postaudit/README.md).
 
 The frozen split contains 100 training, 8 validation and 19 retrospective
-double-step test cases, with three `g005` cases quarantined. The split was
+double-step test cases, with the three cases of geometry `g005` quarantined:
+its floor drops in two steps and then rises again, so it shares the test
+family's two-descending-step motif without belonging to the test family, and it
+is kept out of training, validation and the test alike. The split was
 reconstructed from the masks: no training or validation mask contains the two
 consecutive descending steps that define the test family. The enlarged training
 examples appear first inside the comparison figure, with solid gray, fluid white,
