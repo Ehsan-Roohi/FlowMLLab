@@ -1,6 +1,9 @@
 <h1><img src="docs/assets/flowmllab-logo.png" alt="FlowMLLab — fluid-streamline F logo" width="520"></h1>
 
-**New in v1.7.0:** self-supervised wake learning in Weeks 7.3 and 7.4: a retained gappy-POD win, followed by diverse-trajectory pretraining for label-efficient lift decoding. [Release notes](RELEASE_NOTES_v1.7.0.md).
+**New in v1.8.0:** a complete post-audit Week 15 comparison of geometry-aware
+neural operators, learning-rate sensitivity and double-step transfer. No new
+CFD is generated; the historically inspected double-step family is a
+retrospective test. [Release notes](RELEASE_NOTES_v1.8.0.md).
 
 **Week 14:** [RANS, PINN and neural turbulence closures](notebooks/week14/README.md)
 based on Lars Davidson's pyCALC-RANS workflow: an executed teaching notebook,
@@ -16,7 +19,7 @@ generate numerical data, compare transparent baselines with learned models, and
 check both prediction error and physical fidelity.
 
 Developed for **MIE 690A: AI in Fluid Mechanics**, University of Massachusetts
-Amherst. The course now includes **42 notebooks and 26 lecture PDFs**; every module
+Amherst. The course now includes **43 notebooks and 26 lecture PDFs**; every module
 has a row in the course table below.
 
 ## Start here
@@ -64,7 +67,7 @@ Weeks 5 and 6 share a project pack and lecture guide, but have separate learning
 | [12](#week-12--dsmc-moment-reconstruction) | Additive moments, observation-conditioned reconstruction and support | [Week 12 lab](notebooks/week12/README.md) | [Lecture 12](lectures/week12_dsmc_moment_reconstruction.pdf) |
 | [13](#week-13--rectangular-cavity-pinn-research-audit) | Streamfunction PINNs: build one on CPU, then audit deep-cavity and four-case research runs | [Week 13 lab](notebooks/week13/README.md) | [Lecture 13](lectures/week13_rectangular_cavity_pinn.pdf) |
 | [14](#week-14---rans-inverse-pinn-and-neural-turbulence-closures) | Davidson-based RANS, inverse PINN and neural closures | [Week 14 lab](notebooks/week14/README.md) | [Lecture 14](lectures/week14_rans_pinn_nn.pdf) |
-| [15](#week-15--geometry-aware-neural-operators) | Geometry generalization, Geo-DeepONet, FNO and U-FNO | [Week 15 lab](notebooks/week15/README.md) | [Lecture 15](lectures/week15_geometry_generalization.pdf) |
+| [15](#week-15--geometry-aware-neural-operators) | Geometry and topology generalization across DeepONet, Geom-DeepONet, Geo-FNO, SMART, GeoTransolver and DoMINO | [Complete Week 15 notebook](notebooks/week15/W15_Complete_Geometry_Generalization.ipynb) | [Expanded Lecture 15](lectures/week15_geometry_generalization.pdf) |
 
 ## Results gallery · in course order
 
@@ -567,29 +570,42 @@ not silently present saved solver fields as a fresh Run-All CFD calculation.
 
 ### Week 15 — Geometry-aware neural operators
 
-[Executed notebook and data guide](notebooks/week15/README.md) · [Lecture](lectures/week15_geometry_generalization.pdf).
-The geometry strip identifies four confirmed ordinary-DeepONet training shapes
-and the unseen g009 test shape at their original 5:1 physical aspect ratio.
-The historical Geo-DeepONet/FNO train-versus-validation identities were not retained.
-The full comparison below preserves the original CFD and model streamlines,
-speed fields, and centered-pressure fields.
+[Complete executed notebook](notebooks/week15/W15_Complete_Geometry_Generalization.ipynb) ·
+[data and reproduction guide](notebooks/week15/README.md) ·
+[24-page lecture](lectures/week15_geometry_generalization.pdf) ·
+[post-audit evidence summary](results/week15_postaudit/README.md).
 
-![Four training geometries and the held-out g009 geometry at physical aspect ratio](results/step_geometry_generalization/generated/geometry_training_strip.png)
+The frozen split contains 100 training, 8 validation and 19 retrospective
+double-step test cases, with three `g005` cases quarantined. The split was
+reconstructed from the masks: no training or validation mask contains the two
+consecutive descending steps that define the test family. The strip below shows
+all 39 training geometries, with solid gray and fluid white at the physical 5:1
+aspect ratio.
 
-![OpenFOAM CFD and three neural predictions with streamlines and centered pressure](results/step_geometry_generalization/generated/g009_Re100_medium_fields.png)
+![All Week 15 training geometries: solid gray, fluid white, physical 5:1 aspect ratio](results/week15_postaudit/week15_training_geometries_homepage.png)
 
-The detailed comparison uses common column scales and reports each model's errors.
+The difficult `g051/Re=25` comparison places the CFD field above historical
+ordinary DeepONet, historical Geom-DeepONet, historical Geo-FNO, and the
+validation-tuned Geom-DeepONet, SMART and DoMINO models. Every row uses its own
+streamlines, one shared banded speed scale, and no reverse-flow threshold overlay.
 
-The lab includes 130 sampled OpenFOAM fields across 51 masks and explicit
-geometry/family holdouts. U-FNO is included in the historical g011 audit.
-Ordinary DeepONet is trained on the same 107/11/12 OpenFOAM geometry-holdout
-split for three seeds. Its branch sees Reynolds number but no mask, SDF, or
-geometry ID, making the fixed-domain limitation directly visible. Across the 12
-unseen-geometry tests it reaches 28.96% mean velocity error, 299.57% mean
-centered-pressure error, and 0.406 reverse-flow IoU. In the displayed g009/Re=100
-case, its seed-17 velocity error is 46.69%, substantially larger than the
-10.25% Geo-DeepONet and 2.81% FNO errors; the exact per-model velocity and pressure errors are
-printed on the figure.
+![CFD and six neural-operator predictions for the retrospective g051/Re25 double-step case](results/week15_postaudit/core_g051_Re25.png)
+
+Historical Geom-DeepONet remains best in global velocity error (9.86%), while
+the learning-rate-selected Geom model is the strongest new global-field model
+(10.53%). DoMINO has the best mean reverse-flow IoU in the tuned suite (0.534).
+The main unresolved failure is Reynolds-stratified: historical Geom has only
+0.096 IoU at Re=25, increasing to 0.628 at Re=100. Tuned Geom, SMART and DoMINO
+improve the Re=25 IoU to 0.261, 0.299 and 0.357, respectively, but still
+overpredict reverse-flow magnitude. The training data contain no Re=25
+single-step case below 0.5H, so this regime extrapolates in both geometry and
+the Reynolds-number/step-height combination.
+
+The learning-rate sweep uses only non-double-step validation cases and selects
+`1e-3` over `3e-4` and `1e-4` for Geom, SMART and DoMINO. Company-inspired
+PhysicsX and LIFT variants are explicitly transparent proxies, not proprietary
+implementations. Negative zonal/fixed-context/common-scale ablations and failed
+vortex cases are retained rather than hidden.
 
 ## Reuse and contribute
 
@@ -604,10 +620,11 @@ Student submissions are not included.
 · [Citation metadata](CITATION.cff)
 · [Workshop, support, and consulting details](docs/RESULTS_GUIDE.md#workshops-support-and-consulting)
 
-Current release: **v1.7.0** · [GitHub release](https://github.com/Ehsan-Roohi/FlowMLLab/releases/tag/v1.7.0)
-· [Release notes](RELEASE_NOTES_v1.7.0.md).
-Previous v1.6.1 archive DOI: [10.5281/zenodo.22831809](https://doi.org/10.5281/zenodo.22831809);
-the archived v1.6.0 record remains available at [10.5281/zenodo.22784541](https://doi.org/10.5281/zenodo.22784541).
+Current release: **v1.8.0** · [GitHub release](https://github.com/Ehsan-Roohi/FlowMLLab/releases/tag/v1.8.0)
+· [Zenodo DOI 10.5281/zenodo.22840293](https://doi.org/10.5281/zenodo.22840293)
+· [Release notes](RELEASE_NOTES_v1.8.0.md).
+Previous v1.7.0 archive DOI: [10.5281/zenodo.22836172](https://doi.org/10.5281/zenodo.22836172);
+the archived v1.6.1 record remains available at [10.5281/zenodo.22831809](https://doi.org/10.5281/zenodo.22831809).
 For earlier versions and their archived records, see the
 [release history](https://github.com/Ehsan-Roohi/FlowMLLab/releases).
 The [all-versions DOI](https://doi.org/10.5281/zenodo.22074169) resolves to the latest published archive.
