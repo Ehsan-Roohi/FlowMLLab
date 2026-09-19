@@ -16,15 +16,20 @@ set -euo pipefail
 : "${CHRIS_OUTPUT:?Set a new output directory}"
 
 cd "${SLURM_SUBMIT_DIR:?}"
-python="$CHRIS_ENV_ROOT/venv/bin/python"
 export CUDA_VISIBLE_DEVICES="${CUDA_VISIBLE_DEVICES:-0}"
 export PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True
 for suffix in .index .meta .data-00000-of-00001; do
   test -f "$CHRIS_CHECKPOINT$suffix"
 done
+weights="$CHRIS_OUTPUT/tf_weights.npz"
+mkdir -p "$CHRIS_OUTPUT"
+"$CHRIS_ENV_ROOT/venv/bin/python" qa/export_chris_tf_weights.py \
+  --checkpoint "$CHRIS_CHECKPOINT" --output "$weights" --width 64
+module purge
+module load PyTorch/2.1.2-foss-2023a-CUDA-12.1.1
 nvidia-smi --query-gpu=name,memory.total --format=csv,noheader
-exec "$python" qa/run_chris_torch_lbfgs.py \
-  --checkpoint "$CHRIS_CHECKPOINT" --output "$CHRIS_OUTPUT" \
+exec python qa/run_chris_torch_lbfgs.py \
+  --weights "$weights" --checkpoint-label "$CHRIS_CHECKPOINT" --output "$CHRIS_OUTPUT" \
   --width 64 --re 100 --depth 5 --taper 0 \
   --points "${CHRIS_POINTS:-25000}" \
   --iterations "${CHRIS_ITERATIONS:-400}" \

@@ -15,38 +15,21 @@ from pathlib import Path
 import numpy as np
 
 
-def checkpoint_arrays(prefix: str, widths: list[int]) -> list[tuple[np.ndarray, np.ndarray]]:
-    import tensorflow as tf
-
-    reader = tf.train.load_checkpoint(prefix)
-    shapes = reader.get_variable_to_shape_map()
-    kernels = []
-    for name, shape in shapes.items():
-        if len(shape) != 2 or "Adam" in name or "optimizer" in name.lower():
-            continue
-        kernels.append((name, tuple(shape)))
+def checkpoint_arrays(path: Path, widths: list[int]) -> list[tuple[np.ndarray, np.ndarray]]:
+    data = np.load(path, allow_pickle=False)
     result = []
-    used = set()
-    for fan_in, fan_out in zip(widths[:-1], widths[1:]):
-        candidates = sorted((n for n, s in kernels if s == (fan_in, fan_out) and n not in used),
-                            key=lambda n: (n.count("/"), n))
-        if not candidates:
-            raise RuntimeError(f"Cannot identify checkpoint kernel {(fan_in, fan_out)}")
-        kernel_name = candidates[0]
-        used.add(kernel_name)
-        stem = kernel_name.rsplit("/", 1)[0]
-        bias_candidates = [n for n, s in shapes.items()
-                           if tuple(s) == (fan_out,) and n.startswith(stem + "/")
-                           and "Adam" not in n]
-        if len(bias_candidates) != 1:
-            raise RuntimeError(f"Cannot identify bias for {kernel_name}: {bias_candidates}")
-        result.append((reader.get_tensor(kernel_name), reader.get_tensor(bias_candidates[0])))
+    for index, (fan_in, fan_out) in enumerate(zip(widths[:-1], widths[1:])):
+        kernel, bias = data[f"kernel_{index}"], data[f"bias_{index}"]
+        if kernel.shape != (fan_in, fan_out) or bias.shape != (fan_out,):
+            raise ValueError(f"Layer {index} has incompatible exported shapes")
+        result.append((kernel, bias))
     return result
 
 
 def main() -> None:
     ap = argparse.ArgumentParser()
-    ap.add_argument("--checkpoint", required=True)
+    ap.add_argument("--weights", type=Path, required=True)
+    ap.add_argument("--checkpoint-label", required=True)
     ap.add_argument("--output", type=Path, required=True)
     ap.add_argument("--width", type=int, default=64)
     ap.add_argument("--re", type=float, default=100.0)
@@ -79,7 +62,7 @@ def main() -> None:
             return self.layers[-1](z)
 
     net = Net().to(device)
-    arrays = checkpoint_arrays(args.checkpoint, widths)
+    arrays = checkpoint_arrays(args.weights, widths)
     with torch.no_grad():
         for layer, (kernel, bias) in zip(net.layers, arrays):
             layer.weight.copy_(torch.as_tensor(kernel.T, device=device))
@@ -164,7 +147,8 @@ def main() -> None:
               "dtype": "float64", "points": count, "iterations": steps,
               "initial_loss": initial, "final_loss": rows[-1][1],
               "case": {"Re": args.re, "depth_over_width": args.depth, "taper": args.taper},
-              "checkpoint": args.checkpoint, "architecture": widths}
+              "checkpoint": args.checkpoint_label, "weights": str(args.weights),
+              "architecture": widths}
     (args.output / "run.json").write_text(json.dumps(report, indent=2) + "\n")
     print(json.dumps(report, indent=2), flush=True)
 
