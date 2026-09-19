@@ -589,7 +589,7 @@ ordinary DeepONet, historical Geom-DeepONet, historical Geo-FNO, and the
 validation-tuned Geom-DeepONet, SMART and DoMINO models. Every row uses its own
 streamlines, one shared banded speed scale, and no reverse-flow threshold overlay.
 
-![CFD and six neural-operator predictions for the retrospective g051/Re25 double-step case](results/week15_postaudit/core_g051_Re25.png)
+![CFD and six neural-operator predictions for the retrospective g049/Re100 double-step case, chosen for its larger recirculation vortex](results/week15_postaudit/core_g049_Re100.png)
 
 Historical Geom-DeepONet remains best in global velocity error (9.86%), while
 the learning-rate-selected Geom model is the strongest new global-field model
