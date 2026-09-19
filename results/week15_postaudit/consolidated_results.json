@@ -1,0 +1,101 @@
+[
+  {
+    "model": "Historical ordinary DeepONet",
+    "code_status": "historical bundled result",
+    "protocol": "historical checkpoint; seed 17",
+    "peak_lr": "historical",
+    "velocity_percent": 14.449829878018145,
+    "pressure_percent": 43.99747832014908,
+    "vorticity_percent": 29.669941351204383,
+    "reverse_iou_u_lt_minus_001": 0.37608375716876113,
+    "reverse_velocity_percent": 165.51767603910199
+  },
+  {
+    "model": "Historical Geom-DeepONet",
+    "code_status": "historical bundled result",
+    "protocol": "historical checkpoint; seed 17",
+    "peak_lr": "historical",
+    "velocity_percent": 9.86350486814871,
+    "pressure_percent": 36.21950940935156,
+    "vorticity_percent": 15.706847039781232,
+    "reverse_iou_u_lt_minus_001": 0.3562511355928118,
+    "reverse_velocity_percent": 147.48043998833168
+  },
+  {
+    "model": "Historical Geo-FNO",
+    "code_status": "historical bundled result",
+    "protocol": "historical checkpoint; seed 17",
+    "peak_lr": "historical",
+    "velocity_percent": 15.852042509494424,
+    "pressure_percent": 62.02203515531516,
+    "vorticity_percent": 29.407848518572745,
+    "reverse_iou_u_lt_minus_001": 0.3690416919144349,
+    "reverse_velocity_percent": 299.1991223525204
+  },
+  {
+    "model": "LR-tuned Geom-DeepONet",
+    "code_status": "author code / verified adapter",
+    "protocol": "validation-selected BEST; 3 seeds; 19,200-update ceiling",
+    "peak_lr": 0.001,
+    "velocity_percent": 10.525782381951915,
+    "pressure_percent": 32.71227650419256,
+    "vorticity_percent": 17.40337246865834,
+    "reverse_iou_u_lt_minus_001": 0.4635884014336347,
+    "reverse_velocity_percent": 127.59616246401113
+  },
+  {
+    "model": "LR-tuned academic SMART",
+    "code_status": "author code / verified adapter",
+    "protocol": "validation-selected BEST; 3 seeds; 19,200-update ceiling",
+    "peak_lr": 0.001,
+    "velocity_percent": 11.613677402462411,
+    "pressure_percent": 53.10549358722223,
+    "vorticity_percent": 21.532072945702023,
+    "reverse_iou_u_lt_minus_001": 0.5033947471905014,
+    "reverse_velocity_percent": 200.68209188234079
+  },
+  {
+    "model": "LR-tuned DoMINO planar",
+    "code_status": "author code / verified adapter",
+    "protocol": "validation-selected BEST; 3 seeds; 19,200-update ceiling",
+    "peak_lr": 0.001,
+    "velocity_percent": 15.59173364385578,
+    "pressure_percent": 71.8497335828921,
+    "vorticity_percent": 22.728107612958727,
+    "reverse_iou_u_lt_minus_001": 0.5341300614338163,
+    "reverse_velocity_percent": 165.96279563134263
+  },
+  {
+    "model": "Matched GeoTransolver",
+    "code_status": "author code / verified adapter",
+    "protocol": "matched-budget LAST; 3 seeds; 19,200 updates",
+    "peak_lr": 0.0003,
+    "velocity_percent": 24.97806698381632,
+    "pressure_percent": 111.80587615607567,
+    "vorticity_percent": 31.518640797024712,
+    "reverse_iou_u_lt_minus_001": 0.2999380637442836,
+    "reverse_velocity_percent": 160.6070552857603
+  },
+  {
+    "model": "PhysicsX-inspired proxy",
+    "code_status": "transparent idea proxy; not proprietary code",
+    "protocol": "matched-budget LAST; 3 seeds; 19,200 updates",
+    "peak_lr": 0.0003,
+    "velocity_percent": 40.62963833484155,
+    "pressure_percent": 263.6916648531269,
+    "vorticity_percent": 65.69953160921234,
+    "reverse_iou_u_lt_minus_001": 0.32400936016187637,
+    "reverse_velocity_percent": 265.801633320031
+  },
+  {
+    "model": "LIFT wall-feature proxy",
+    "code_status": "transparent idea proxy; not proprietary code",
+    "protocol": "matched-budget LAST; 3 seeds; 19,200 updates",
+    "peak_lr": 0.0003,
+    "velocity_percent": 41.7780251921574,
+    "pressure_percent": 283.90114383214666,
+    "vorticity_percent": 52.174260413839704,
+    "reverse_iou_u_lt_minus_001": 0.3322980753722609,
+    "reverse_velocity_percent": 197.5897567329147
+  }
+]

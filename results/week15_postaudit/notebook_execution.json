@@ -1,0 +1,9 @@
+{
+  "code_cells": 15,
+  "errors": 0,
+  "seconds": 5.712870622002811,
+  "method": "IPython InteractiveShell in a clean subprocess; rich output captured",
+  "nbclient_tcp": "blocked: kernel died, socket Operation not permitted",
+  "nbclient_ipc": "blocked: ZMQError Operation not permitted",
+  "standard_jupyter_kernel_startup_verified": false
+}
