@@ -578,11 +578,9 @@ not silently present saved solver fields as a fresh Run-All CFD calculation.
 The frozen split contains 100 training, 8 validation and 19 retrospective
 double-step test cases, with three `g005` cases quarantined. The split was
 reconstructed from the masks: no training or validation mask contains the two
-consecutive descending steps that define the test family. The strip below shows
-all 39 training geometries, with solid gray and fluid white at the physical 5:1
-aspect ratio.
-
-![All Week 15 training geometries: solid gray, fluid white, physical 5:1 aspect ratio](results/week15_postaudit/week15_training_geometries_homepage.png)
+consecutive descending steps that define the test family. The enlarged training
+examples appear first inside the comparison figure, with solid gray, fluid white,
+and the physical 5:1 aspect ratio.
 
 The difficult `g051/Re=25` comparison places the CFD field above historical
 ordinary DeepONet, historical Geom-DeepONet, historical Geo-FNO, and the
