@@ -76,6 +76,19 @@ the separate audit below. The other fields, raw arrays, model weights and
 regression metrics are unchanged. A zero boundary profile does not define a
 relative L2 denominator and is not assigned a learned accuracy percentage.
 
+## Full-height teaching visualisations
+
+`nozzle_P16_fields_full_domain.*`, `nozzle_P25_fields_full_domain.*` and
+`nozzle_P30_fields_full_domain.*` complete the displayed upper half by parity
+reflection about the stated `y = 92 micrometres` symmetry plane. Scalars and
+`U` are reflected evenly; `V` is reflected oddly and set to zero on the plane.
+They are derived visualisations only: the raw half-domain export, checkpoints,
+selection and all raw-label metrics remain unchanged. Regenerate them with:
+
+```bash
+python qa/build_week09_full_nozzle_fields.py
+```
+
 ![Boundary audit](symmetry_boundary_audit.png)
 
 ## Evidence and reproduction
