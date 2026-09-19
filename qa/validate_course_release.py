@@ -1210,26 +1210,46 @@ def main() -> None:
     for path in python_files:
         ast.parse(path.read_text(encoding="utf-8"), filename=str(path))
 
-    print("FLOWMLLAB_RELEASE_QA_PASS")
-    print("notebooks:", notebooks, "code cells parsed:", code_cells)
-    print("lecture PDFs:", pdfs)
-    print("Python files parsed:", len(python_files))
-    print("dataset SHA-256:", actual)
-    print("Re=275 interpolation metrics:", json.dumps(metrics, sort_keys=True))
-    print("POD-DeepONet release metrics:", json.dumps(deeponet_metrics, sort_keys=True))
-    print("Cavity ROM release metrics:", json.dumps(cavity_rom_metrics, sort_keys=True))
-    print("Cylinder LBM release metrics:", json.dumps(cylinder_metrics, sort_keys=True))
-    print("Cylinder grid-verification metrics:", json.dumps(cylinder_grid_metrics, sort_keys=True))
-    print(
-        "Hypersonic-cylinder Week-7.1 metrics:",
-        json.dumps(hypersonic_cylinder_metrics, sort_keys=True),
+    report = {
+        "status": "pass",
+        "notebooks": notebooks,
+        "code_cells": code_cells,
+        "lecture_pdfs": pdfs,
+        "python_files": len(python_files),
+        "dataset_sha256": actual,
+        "metrics": {
+            "cavity_interpolation": metrics,
+            "pod_deeponet": deeponet_metrics,
+            "cavity_rom": cavity_rom_metrics,
+            "cylinder_lbm": cylinder_metrics,
+            "cylinder_grid": cylinder_grid_metrics,
+            "hypersonic_cylinder": hypersonic_cylinder_metrics,
+            "week8_gas_dynamics": week8_metrics,
+            "week9_mahdavi": week9_metrics,
+            "week10_dsmc": week10_metrics,
+            "probabilistic_uq": uq_metrics,
+            "scientific_software": scientific_software_metrics,
+            "article_alignment": article_metrics,
+        },
+    }
+    report_path = ROOT / "output/qa/release_qa_report.json"
+    report_path.parent.mkdir(parents=True, exist_ok=True)
+    report_path.write_text(
+        json.dumps(report, indent=2, sort_keys=True) + "\n", encoding="utf-8"
     )
-    print("Week-8 gas-dynamics metrics:", json.dumps(week8_metrics, sort_keys=True))
-    print("Week-9 Roohi--Mahdavi metrics:", json.dumps(week9_metrics, sort_keys=True))
-    print("Week-10 DSMC reproduction metrics:", json.dumps(week10_metrics, sort_keys=True))
-    print("Probabilistic-UQ metrics:", json.dumps(uq_metrics, sort_keys=True))
-    print("Week-1.1 scientific-software metrics:", json.dumps(scientific_software_metrics, sort_keys=True))
-    print("Article-aligned validation metrics:", json.dumps(article_metrics, sort_keys=True))
+    source_check = week9_metrics["step_source_crosscheck"]
+    summaries = [
+        ("notebooks", "pass", f"{notebooks} notebooks; {code_cells} code cells parsed"),
+        ("lectures", "pass", f"{pdfs} PDFs"),
+        ("python", "pass", f"{len(python_files)} files parsed"),
+        ("core_dataset", "pass", actual),
+        ("week7_grid", "pass", "formal asymptotic failure retained"),
+        ("week9_upstream_source", source_check["status"], source_check["reason"]),
+        ("full_report", "written", str(report_path.relative_to(ROOT))),
+    ]
+    print("FLOWMLLAB_RELEASE_QA_PASS")
+    for name, status, detail in summaries:
+        print(f"{name}: {status} - {detail}")
 
 
 if __name__ == "__main__":

@@ -6,7 +6,7 @@ This guide retains the detailed evidence, figures, protocols, and limitations be
 
 [![FlowMLLab CI](https://github.com/Ehsan-Roohi/FlowMLLab/actions/workflows/ci.yml/badge.svg)](https://github.com/Ehsan-Roohi/FlowMLLab/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](../LICENSE)
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.22651906.svg)](https://doi.org/10.5281/zenodo.22651906)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.22840293.svg)](https://doi.org/10.5281/zenodo.22840293)
 
 ## Weeks 11 and 12: real research evidence and CPU controls
 
@@ -17,7 +17,7 @@ retains heat-flux contours, profiles and 80 recomputed eight-seed scores.
 Both have executed notebook extensions, PDF lectures and source attribution.
 No new solver run or neural training is claimed. The original
 [synthetic CPU controls](../results/week11_12_teaching/README.md) remain as warm-ups.
-These additions postdate v1.4.1 and are included in v1.5.1.
+These additions postdate v1.4.1 and remain included in the current v1.8 series.
 
 ## Week 10.1 companion: ab initio collision DeepONet
 
@@ -39,8 +39,8 @@ exercise to physics-checked POD--DeepONet benchmarks when ready.
 <p align="center">
   <a href="https://colab.research.google.com/github/Ehsan-Roohi/FlowMLLab/blob/main/notebooks/week05_06/P0_Project_Setup.ipynb"><img src="https://img.shields.io/badge/Run-20--minute_Colab-F9AB00?logo=googlecolab&logoColor=white" alt="Run the 20-minute FlowMLLab Colab"></a>
   <a href="../demo/README.md"><img src="https://img.shields.io/badge/Explore-blind--case_demo-146C94" alt="Explore the validated blind-case demo"></a>
-  <a href="../notebooks/README.md"><img src="https://img.shields.io/badge/Open-all_25_notebooks-315A7D" alt="Open all 25 FlowMLLab notebooks"></a>
-  <a href="../lectures/README.md"><img src="https://img.shields.io/badge/Open-all_12_lectures-6B4C9A" alt="Open all 12 FlowMLLab lectures"></a>
+  <a href="../notebooks/README.md"><img src="https://img.shields.io/badge/Open-all_43_notebooks-315A7D" alt="Open all 43 FlowMLLab notebooks"></a>
+  <a href="../lectures/README.md"><img src="https://img.shields.io/badge/Open-all_26_lectures-6B4C9A" alt="Open all 26 FlowMLLab lectures"></a>
 </p>
 
 ## Featured: circular-cylinder vortex shedding
@@ -165,7 +165,7 @@ the exact DSMC export still needs repair.
 | Week-10 DSMC article reproduction | primary cavity maximum/mean NRMSE: **1.281% / 0.672%**; shock maximum/mean relative $L_2$: **1.018% / 0.424%** |
 | Week-13 square-cavity PINN field gates | `Re=100`: **2.354% / 4.828% / 3.343%** centerline-$u$ / centerline-$v$ / interior-vector relative $L_2$; `Re=400`: **8.283% / 10.132% / 10.570%**; all frozen square-case gates pass |
 | Week-13 deep-cavity PINN audit | `D=2` full/corner momentum RMS: **0.370 / 1.923** at `Re=100`, **0.131 / 0.671** at `Re=400`; no matched raw field, so no field-accuracy claim |
-| Reproducible learning and research entry points | **33 Colab notebooks** and a continuous lecture sequence through Week 13 |
+| Reproducible learning and research entry points | **43 notebooks** and **26 lecture PDFs** through Week 15; optional-data and local-only requirements are stated in each setup page |
 
 ### Choose a starting point
 
@@ -225,7 +225,7 @@ Start with [START_HERE.md](../START_HERE.md). It gives the installation check, r
 | `results/gas_dynamics_week8/` | Checksummed evidence snapshot, exact-physics maps, matched baselines, edge holdouts, high-dimensional scaling, timing, and source provenance |
 | `results/mahdavi_deeponet/` | Compact CC BY 4.0 full-field/centerline derivatives of 15 public nozzle DSMC snapshots, fresh FlowMLLab predictions, step evidence, source hashes, POD audit, licenses, and manifests |
 | `results/probabilistic_uq/` | Frozen complete-case POD--GP protocol, interpolation baseline, proper scores, blind coverage, and retained under-coverage result |
-| `results/week01_1_scientific_software/` | Frozen diagnostic thresholds, exact cavity-data digest, six gate outcomes, accept/reject JSON, and the course figure |
+| `results/week01_1_scientific_software/` | Frozen diagnostic thresholds, exact cavity-data digest, seven gate outcomes, accept/reject JSON, and the course figure |
 | `advanced/fp_closure/` | Bounded educational workflow for exact and learned Fokker–Planck closure testing |
 | `references/` | Annotated reading guide and BibTeX database |
 | `qa/` | Release validator for notebook syntax, required assets, and reproducibility anchors |
@@ -243,7 +243,7 @@ The recommended path is cumulative:
 - **Week 4.1 — Classical and hyper-reduced ROM:** an additive notebook for the same cavity, with dynamic centered POD-Galerkin, nonlinear-cost diagnosis, POD-DEIM, convergence checks, frozen blind tests, and offline/online break-even accounting.
 - **Weeks 5–6 — Combined guided-project pack:** Week 5 covers POD, physics-guided objectives/PINNs, neural-operator extensions, project selection, and the frozen checkpoint. Week 6 continues the same selected track through Fokker–Planck/hybrid methods where assigned, a-posteriori testing, uncertainty, reproducibility, and the final report.
 - **Week 7 — Cylinder wakes with LBM and learned prediction:** derive the D2Q9 collide--stream--boundary loop, distinguish wake regimes, run a controlled `Re=100` three-grid study and retain its formal asymptotic failure, validate forces and gated Strouhal estimates, retain POD/CNN failure evidence, and audit a phase-stable decoder over 277 autonomous future fields on a fresh Reynolds test.
-- **Week 7.1 — Rarefied hypersonic-cylinder operators:** audit 20 author-supplied DSMC cases, distinguish freestream and local Mach, freeze whole-case interpolation/extrapolation splits, compare a Fusion-DeepONet-shaped teaching model with a sub-1% structured field baseline, and retain the neural analog's failure plus its uncalibrated ensemble spread.
+- **Week 7.1 — Rarefied hypersonic-cylinder operators:** audit 20 author-supplied DSMC cases, distinguish freestream and local Mach, freeze whole-case interpolation/extrapolation splits, compare a 3x96 tanh teaching MLP with the stronger structured Mach-field interpolation baseline, and retain the neural analog's failure plus its uncalibrated ensemble spread.
 - **Week 8 — Gas dynamics before scientific ML:** derive and solve Rayleigh, Fanno, oblique-shock, nozzle-shock, and shock-tube relations; expose branch-hidden regression failure; compare exact roots, interpolation, and bounded MLPs; separate ordinary blind accuracy from edge generalization; and use the SU2 diamond-airfoil work only as a clearly qualified bridge to multidimensional CFD.
 - **Week 9 — Roohi--Mahdavi rarefied DeepONet case studies:** verify DSMC evidence independently, expose the target-derived patch boundary of the retained micro-step outputs, learn complete-geometry splitting and zonal-loss selection, reproduce shock-centered density POD from 15 public nozzle cases, and compare physical-coordinate with shock-aligned interpolation at 16, 25, and 30 kPa.
 - **Week 10 — DSMC data-driven article reproduction:** qualify particle-solver fields, test log-Knudsen field interpolation, build POD-polynomial shock-profile surrogates, preserve diatomic relaxation physics, compare interpolation and extrapolation, and regenerate every result from checksummed raw tables.
@@ -555,7 +555,9 @@ If FlowMLLab supports your teaching or research, you can also support its contin
 
 Use [CITATION.cff](../CITATION.cff) when citing the release.
 
-Version 1.5.1 consolidates the course through Week 13 and is archived at
+Version 1.8.0 consolidates the course through Week 15 and is archived at
+[10.5281/zenodo.22840293](https://doi.org/10.5281/zenodo.22840293).
+Version 1.5.1 remains archived at
 [10.5281/zenodo.22651906](https://doi.org/10.5281/zenodo.22651906).
 Version 1.4.1 remains archived at [10.5281/zenodo.22348207](https://doi.org/10.5281/zenodo.22348207).
 The previous version 1.4.0 remains archived at:

@@ -1,9 +1,10 @@
 <h1><img src="docs/assets/flowmllab-logo.png" alt="FlowMLLab — fluid-streamline F logo" width="520"></h1>
 
-**New in v1.8.0:** a complete post-audit Week 15 comparison of geometry-aware
+**New in v1.8.1:** a portability and scientific-clarity update for the complete
+post-audit Week 15 comparison of geometry-aware
 neural operators, learning-rate sensitivity and double-step transfer. No new
 CFD is generated; the historically inspected double-step family is a
-retrospective test. [Release notes](RELEASE_NOTES_v1.8.0.md).
+retrospective test. [Release notes](RELEASE_NOTES_v1.8.1.md).
 
 **Week 14:** [RANS, PINN and neural turbulence closures](notebooks/week14/README.md)
 based on Lars Davidson's pyCALC-RANS workflow: an executed teaching notebook,
@@ -32,7 +33,7 @@ disclosure](DATA_PROVENANCE.md).
 
 | Your goal | Open |
 | --- | --- |
-| Run a first experiment in 20 minutes | [Launch the introductory Colab](https://colab.research.google.com/github/Ehsan-Roohi/FlowMLLab/blob/main/notebooks/week05_06/P0_Project_Setup.ipynb) |
+| Start the guided-project evidence chain after Week 4 | [Launch the 20-minute P0 Colab](https://colab.research.google.com/github/Ehsan-Roohi/FlowMLLab/blob/main/notebooks/week05_06/P0_Project_Setup.ipynb) |
 | Follow the course | [Course map](COURSE_MAP.md) · [All notebooks](notebooks/README.md) · [Lectures](lectures/README.md) |
 | Install and reproduce the results | [Setup and validation](START_HERE.md) |
 | Explore the scientific evidence | [Results and technical guide](docs/RESULTS_GUIDE.md) · [Interactive cavity demo](demo/README.md) |
@@ -214,6 +215,8 @@ change one modeling choice and evaluate complete unseen cases.
 Extend the project with the [sparse sensing lab](notebooks/week05_06/W5_Lab2_Sparse_Sensing_Dynamics.ipynb):
 reconstruct fields from limited measurements and inspect the
 [retained modal-method comparisons](results/modal_labs/README.md).
+This companion uses the Week 7 cylinder-wake data and should be taken after
+the Week 7 module.
 
 ### Week 6 — Physical validation and final evidence
 
@@ -543,7 +546,9 @@ retains the full range.
 
 **Selected case B — Re=100, D/W=1:** the PINN fields, pointwise velocity
 difference and CFD/PINN centreline profiles are kept as the compact square-case
-qualification. Interior velocity relative L2 is 3.10%.
+qualification. This selected near-matched run has 3.10% interior velocity
+relative L2; the separate frozen four-case matrix reports 3.343% for its
+`Re=100`, `D/W=1` checkpoint.
 
 ![Near-matched CFD validation of the Re=100, D/W=1 PINN](results/week04_2_pinn_cavity/qualified_validation.png)
 
@@ -583,16 +588,20 @@ consecutive descending steps that define the test family. The enlarged training
 examples appear first inside the comparison figure, with solid gray, fluid white,
 and the physical 5:1 aspect ratio.
 
-The difficult `g051/Re=25` comparison places the CFD field above historical
+The displayed `g049/Re=100` comparison, selected because its larger vortex is
+easier to inspect on the course homepage, places the CFD field above historical
 ordinary DeepONet, historical Geom-DeepONet, historical Geo-FNO, and the
 validation-tuned Geom-DeepONet, SMART and DoMINO models. Every row uses its own
 streamlines, one shared banded speed scale, and no reverse-flow threshold overlay.
 
 ![CFD and six neural-operator predictions for the retrospective g049/Re100 double-step case, chosen for its larger recirculation vortex](results/week15_postaudit/core_g049_Re100.png)
 
-Historical Geom-DeepONet remains best in global velocity error (9.86%), while
+The historical seed-17 Geom-DeepONet run remains best in global velocity error
+(9.86%), while
 the learning-rate-selected Geom model is the strongest new global-field model
-(10.53%). DoMINO has the best mean reverse-flow IoU in the tuned suite (0.534).
+(10.53%). DoMINO has the best mean reverse-flow IoU in the tuned suite (0.534),
+but its test velocity error is 15.59%, so this is a topology-localized gain rather
+than the best overall field reconstruction.
 The main unresolved failure is Reynolds-stratified: historical Geom has only
 0.096 IoU at Re=25, increasing to 0.628 at Re=100. Tuned Geom, SMART and DoMINO
 improve the Re=25 IoU to 0.261, 0.299 and 0.357, respectively, but still
@@ -601,10 +610,16 @@ single-step case below 0.5H, so this regime extrapolates in both geometry and
 the Reynolds-number/step-height combination.
 
 The learning-rate sweep uses only non-double-step validation cases and selects
-`1e-3` over `3e-4` and `1e-4` for Geom, SMART and DoMINO. Company-inspired
+`1e-3` over `3e-4` and `1e-4` for Geom, SMART and DoMINO within a three-point
+grid whose best point is its upper edge. At Re=25, tuned Geom's selected-seed
+IoUs are approximately 0.19, 0.24 and 0.36, so the seed-17 figures should not be
+read as the three-seed mean. Fresh single-stage training at either `3e-4` or
+`1e-3`, rather than learning-rate tuning alone, improves the historical footprint
+detection. Company-inspired
 PhysicsX and LIFT variants are explicitly transparent proxies, not proprietary
-implementations. Negative zonal/fixed-context/common-scale ablations and failed
-vortex cases are retained rather than hidden.
+implementations. The public LR archive retains the common-scale ablation and
+failed vortex cases; zonal and fixed-context ablations remain in the author's
+private complete handoff and are not claimed as public release assets.
 
 ## Reuse and contribute
 
@@ -619,9 +634,9 @@ Student submissions are not included.
 · [Citation metadata](CITATION.cff)
 · [Workshop, support, and consulting details](docs/RESULTS_GUIDE.md#workshops-support-and-consulting)
 
-Current release: **v1.8.0** · [GitHub release](https://github.com/Ehsan-Roohi/FlowMLLab/releases/tag/v1.8.0)
+Current release: **v1.8.1** · [GitHub release](https://github.com/Ehsan-Roohi/FlowMLLab/releases/tag/v1.8.1)
 · [Zenodo DOI 10.5281/zenodo.22840293](https://doi.org/10.5281/zenodo.22840293)
-· [Release notes](RELEASE_NOTES_v1.8.0.md).
+· [Release notes](RELEASE_NOTES_v1.8.1.md).
 Previous v1.7.0 archive DOI: [10.5281/zenodo.22836172](https://doi.org/10.5281/zenodo.22836172);
 the archived v1.6.1 record remains available at [10.5281/zenodo.22831809](https://doi.org/10.5281/zenodo.22831809).
 For earlier versions and their archived records, see the

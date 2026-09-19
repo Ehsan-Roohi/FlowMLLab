@@ -6,27 +6,27 @@
     "group": "core",
     "inputs": [
       {
-        "path": "/workspace/scratch/c5213034446c/week15_review/FlowMLLab_Week15_Claude_Handoff/results/week15_refinement/control/deeponet_seed17/predictions/g051_Re25.npz",
+        "path": "FlowMLLab_Week15_Complete_Handoff/results/week15_refinement/control/deeponet_seed17/predictions/g051_Re25.npz",
         "sha256": "ca8209784bdf20fa875a82afbf3f5b130ca17f42986b445ea805f6b4bb1cca0a"
       },
       {
-        "path": "/workspace/scratch/c5213034446c/week15_review/FlowMLLab_Week15_Claude_Handoff/results/week15_refinement/control/geom_seed17/predictions/g051_Re25.npz",
+        "path": "FlowMLLab_Week15_Complete_Handoff/results/week15_refinement/control/geom_seed17/predictions/g051_Re25.npz",
         "sha256": "a75b4979d534e865882c6edb1b5a8eeb258dc053ca13e1530a9dc8c377d50837"
       },
       {
-        "path": "/workspace/scratch/c5213034446c/week15_review/FlowMLLab_Week15_Claude_Handoff/results/week15_refinement/control/geofno_seed17/predictions/g051_Re25.npz",
+        "path": "FlowMLLab_Week15_Complete_Handoff/results/week15_refinement/control/geofno_seed17/predictions/g051_Re25.npz",
         "sha256": "e3b05e08817882ea424810b026c50bb8f7663dfe21611e10291eea93d374d46a"
       },
       {
-        "path": "/workspace/scratch/c5213034446c/week15_lr_sweep_work/runs/geom_author_fresh_lr1e-3_seed17/best_predictions/g051_Re25.npz",
+        "path": "FlowMLLab_Week15_PostAudit_LR_Sweep/runs/geom_author_fresh_lr1e-3_seed17/best_predictions/g051_Re25.npz",
         "sha256": "ccad976df4a2e673525b3a4b68eda7fc59545ef10abad38fdf30973f6ab170e8"
       },
       {
-        "path": "/workspace/scratch/c5213034446c/week15_lr_sweep_work/runs/smart_author_lr1e-3_seed17/best_predictions/g051_Re25.npz",
+        "path": "FlowMLLab_Week15_PostAudit_LR_Sweep/runs/smart_author_lr1e-3_seed17/best_predictions/g051_Re25.npz",
         "sha256": "4fbffea0447f4cf676cf9bc930701bbb8c73850aa74cde75f2f81d8f6ab3479d"
       },
       {
-        "path": "/workspace/scratch/c5213034446c/week15_lr_sweep_work/runs/domino_author_lr1e-3_seed17/best_predictions/g051_Re25.npz",
+        "path": "FlowMLLab_Week15_PostAudit_LR_Sweep/runs/domino_author_lr1e-3_seed17/best_predictions/g051_Re25.npz",
         "sha256": "aeffa92d673f581ec3a553970fcb46711ece3c86bf0ac68b3fe0463408fed667"
       }
     ],
@@ -48,27 +48,27 @@
     "group": "extended",
     "inputs": [
       {
-        "path": "/workspace/scratch/c5213034446c/week15_lr_sweep_work/runs/geom_author_fresh_lr1e-3_seed17/best_predictions/g051_Re25.npz",
+        "path": "FlowMLLab_Week15_PostAudit_LR_Sweep/runs/geom_author_fresh_lr1e-3_seed17/best_predictions/g051_Re25.npz",
         "sha256": "ccad976df4a2e673525b3a4b68eda7fc59545ef10abad38fdf30973f6ab170e8"
       },
       {
-        "path": "/workspace/scratch/c5213034446c/week15_lr_sweep_work/runs/smart_author_lr1e-3_seed17/best_predictions/g051_Re25.npz",
+        "path": "FlowMLLab_Week15_PostAudit_LR_Sweep/runs/smart_author_lr1e-3_seed17/best_predictions/g051_Re25.npz",
         "sha256": "4fbffea0447f4cf676cf9bc930701bbb8c73850aa74cde75f2f81d8f6ab3479d"
       },
       {
-        "path": "/workspace/scratch/c5213034446c/week15_lr_sweep_work/runs/domino_author_lr1e-3_seed17/best_predictions/g051_Re25.npz",
+        "path": "FlowMLLab_Week15_PostAudit_LR_Sweep/runs/domino_author_lr1e-3_seed17/best_predictions/g051_Re25.npz",
         "sha256": "aeffa92d673f581ec3a553970fcb46711ece3c86bf0ac68b3fe0463408fed667"
       },
       {
-        "path": "/workspace/scratch/c5213034446c/week15_matched_work/runs_v1/geotransolver_author_seed17/last_predictions/g051_Re25.npz",
+        "path": "FlowMLLab_Week15_Matched_Budget/runs_v1/geotransolver_author_seed17/last_predictions/g051_Re25.npz",
         "sha256": "2cd498ebae91e3f0a8c5b90e49a1f62dfb90fb4b8ba3a06882f5c692e92f3687"
       },
       {
-        "path": "/workspace/scratch/c5213034446c/week15_matched_work/runs_v1/px_context_proxy_seed17/last_predictions/g051_Re25.npz",
+        "path": "FlowMLLab_Week15_Matched_Budget/runs_v1/px_context_proxy_seed17/last_predictions/g051_Re25.npz",
         "sha256": "b72d29e46b1dd7e3155a7fa1baff0bc40185ff86ad6463bf26559f43e378459d"
       },
       {
-        "path": "/workspace/scratch/c5213034446c/week15_matched_work/runs_v1/lift_wall_proxy_seed17/last_predictions/g051_Re25.npz",
+        "path": "FlowMLLab_Week15_Matched_Budget/runs_v1/lift_wall_proxy_seed17/last_predictions/g051_Re25.npz",
         "sha256": "e709979937b915b98d96a70a55e5c334787b341fb59f2ca019dbcb22b4b93867"
       }
     ],
@@ -90,27 +90,27 @@
     "group": "core",
     "inputs": [
       {
-        "path": "/workspace/scratch/c5213034446c/week15_review/FlowMLLab_Week15_Claude_Handoff/results/week15_refinement/control/deeponet_seed17/predictions/g049_Re50.npz",
+        "path": "FlowMLLab_Week15_Complete_Handoff/results/week15_refinement/control/deeponet_seed17/predictions/g049_Re50.npz",
         "sha256": "7ea3f7a09bcd92a83745f953b58f0c3970953352c05c2553d165c159f1b04698"
       },
       {
-        "path": "/workspace/scratch/c5213034446c/week15_review/FlowMLLab_Week15_Claude_Handoff/results/week15_refinement/control/geom_seed17/predictions/g049_Re50.npz",
+        "path": "FlowMLLab_Week15_Complete_Handoff/results/week15_refinement/control/geom_seed17/predictions/g049_Re50.npz",
         "sha256": "107e53e44ba6695ee71d4bce47a43bfee68d4702ae7e88245cfe2c0ffa63369c"
       },
       {
-        "path": "/workspace/scratch/c5213034446c/week15_review/FlowMLLab_Week15_Claude_Handoff/results/week15_refinement/control/geofno_seed17/predictions/g049_Re50.npz",
+        "path": "FlowMLLab_Week15_Complete_Handoff/results/week15_refinement/control/geofno_seed17/predictions/g049_Re50.npz",
         "sha256": "452ea165c48995247551799fdfd7ba0c45711774f7fb0679ada9c2a8201f4f90"
       },
       {
-        "path": "/workspace/scratch/c5213034446c/week15_lr_sweep_work/runs/geom_author_fresh_lr1e-3_seed17/best_predictions/g049_Re50.npz",
+        "path": "FlowMLLab_Week15_PostAudit_LR_Sweep/runs/geom_author_fresh_lr1e-3_seed17/best_predictions/g049_Re50.npz",
         "sha256": "b38198d1863826f822b54e19a97624906621aedb506100b31b5efd65f9820af1"
       },
       {
-        "path": "/workspace/scratch/c5213034446c/week15_lr_sweep_work/runs/smart_author_lr1e-3_seed17/best_predictions/g049_Re50.npz",
+        "path": "FlowMLLab_Week15_PostAudit_LR_Sweep/runs/smart_author_lr1e-3_seed17/best_predictions/g049_Re50.npz",
         "sha256": "7bf50dae607a0e25c5f93d029a387ea80c650032accb1d00813f4b82147056bd"
       },
       {
-        "path": "/workspace/scratch/c5213034446c/week15_lr_sweep_work/runs/domino_author_lr1e-3_seed17/best_predictions/g049_Re50.npz",
+        "path": "FlowMLLab_Week15_PostAudit_LR_Sweep/runs/domino_author_lr1e-3_seed17/best_predictions/g049_Re50.npz",
         "sha256": "1bb24f0cd76e8ed2a6a81b73f73f9344eca017294a9868bde624c33f32fa2b87"
       }
     ],
@@ -132,27 +132,27 @@
     "group": "extended",
     "inputs": [
       {
-        "path": "/workspace/scratch/c5213034446c/week15_lr_sweep_work/runs/geom_author_fresh_lr1e-3_seed17/best_predictions/g049_Re50.npz",
+        "path": "FlowMLLab_Week15_PostAudit_LR_Sweep/runs/geom_author_fresh_lr1e-3_seed17/best_predictions/g049_Re50.npz",
         "sha256": "b38198d1863826f822b54e19a97624906621aedb506100b31b5efd65f9820af1"
       },
       {
-        "path": "/workspace/scratch/c5213034446c/week15_lr_sweep_work/runs/smart_author_lr1e-3_seed17/best_predictions/g049_Re50.npz",
+        "path": "FlowMLLab_Week15_PostAudit_LR_Sweep/runs/smart_author_lr1e-3_seed17/best_predictions/g049_Re50.npz",
         "sha256": "7bf50dae607a0e25c5f93d029a387ea80c650032accb1d00813f4b82147056bd"
       },
       {
-        "path": "/workspace/scratch/c5213034446c/week15_lr_sweep_work/runs/domino_author_lr1e-3_seed17/best_predictions/g049_Re50.npz",
+        "path": "FlowMLLab_Week15_PostAudit_LR_Sweep/runs/domino_author_lr1e-3_seed17/best_predictions/g049_Re50.npz",
         "sha256": "1bb24f0cd76e8ed2a6a81b73f73f9344eca017294a9868bde624c33f32fa2b87"
       },
       {
-        "path": "/workspace/scratch/c5213034446c/week15_matched_work/runs_v1/geotransolver_author_seed17/last_predictions/g049_Re50.npz",
+        "path": "FlowMLLab_Week15_Matched_Budget/runs_v1/geotransolver_author_seed17/last_predictions/g049_Re50.npz",
         "sha256": "3af4db20d7cdf61e3555b612dd11fce628a8007816b4f44d3f41385936e5ed4f"
       },
       {
-        "path": "/workspace/scratch/c5213034446c/week15_matched_work/runs_v1/px_context_proxy_seed17/last_predictions/g049_Re50.npz",
+        "path": "FlowMLLab_Week15_Matched_Budget/runs_v1/px_context_proxy_seed17/last_predictions/g049_Re50.npz",
         "sha256": "4fd625d329eb8cfc34ca4bafe7718e22904dffa363e9d275f95f65e01303c945"
       },
       {
-        "path": "/workspace/scratch/c5213034446c/week15_matched_work/runs_v1/lift_wall_proxy_seed17/last_predictions/g049_Re50.npz",
+        "path": "FlowMLLab_Week15_Matched_Budget/runs_v1/lift_wall_proxy_seed17/last_predictions/g049_Re50.npz",
         "sha256": "ac88acd1e1f98f68bc61fdcbd34f04df70572817ebf6bb8a49e75f1a2c054e49"
       }
     ],
@@ -174,27 +174,27 @@
     "group": "core",
     "inputs": [
       {
-        "path": "/workspace/scratch/c5213034446c/week15_review/FlowMLLab_Week15_Claude_Handoff/results/week15_refinement/control/deeponet_seed17/predictions/g049_Re100.npz",
+        "path": "FlowMLLab_Week15_Complete_Handoff/results/week15_refinement/control/deeponet_seed17/predictions/g049_Re100.npz",
         "sha256": "5e3d2ef694ea0a45bbb410d13ff5f5051944d7130d3283d21325503e182a209a"
       },
       {
-        "path": "/workspace/scratch/c5213034446c/week15_review/FlowMLLab_Week15_Claude_Handoff/results/week15_refinement/control/geom_seed17/predictions/g049_Re100.npz",
+        "path": "FlowMLLab_Week15_Complete_Handoff/results/week15_refinement/control/geom_seed17/predictions/g049_Re100.npz",
         "sha256": "707118259b1a040e251cb660df5a364f44e65eca514e88cc0b12f07be97fd84c"
       },
       {
-        "path": "/workspace/scratch/c5213034446c/week15_review/FlowMLLab_Week15_Claude_Handoff/results/week15_refinement/control/geofno_seed17/predictions/g049_Re100.npz",
+        "path": "FlowMLLab_Week15_Complete_Handoff/results/week15_refinement/control/geofno_seed17/predictions/g049_Re100.npz",
         "sha256": "bc071db6ba49f2c41e2d0336f9f213c8757363a83a51bacdcf69f62904ad71e3"
       },
       {
-        "path": "/workspace/scratch/c5213034446c/week15_lr_sweep_work/runs/geom_author_fresh_lr1e-3_seed17/best_predictions/g049_Re100.npz",
+        "path": "FlowMLLab_Week15_PostAudit_LR_Sweep/runs/geom_author_fresh_lr1e-3_seed17/best_predictions/g049_Re100.npz",
         "sha256": "693f7795827bd1c55ffa13a702645084cafc5f770acaa8ca5b203bcd9f44f2bf"
       },
       {
-        "path": "/workspace/scratch/c5213034446c/week15_lr_sweep_work/runs/smart_author_lr1e-3_seed17/best_predictions/g049_Re100.npz",
+        "path": "FlowMLLab_Week15_PostAudit_LR_Sweep/runs/smart_author_lr1e-3_seed17/best_predictions/g049_Re100.npz",
         "sha256": "a7ffc93d37ec7408f193a6125af098380bc62a9dd04e0a261371bb4b44baef68"
       },
       {
-        "path": "/workspace/scratch/c5213034446c/week15_lr_sweep_work/runs/domino_author_lr1e-3_seed17/best_predictions/g049_Re100.npz",
+        "path": "FlowMLLab_Week15_PostAudit_LR_Sweep/runs/domino_author_lr1e-3_seed17/best_predictions/g049_Re100.npz",
         "sha256": "91051a18ae3ff48922ee4806e14790587ebe63420c26e568c7570acb4e094f13"
       }
     ],
@@ -216,27 +216,27 @@
     "group": "extended",
     "inputs": [
       {
-        "path": "/workspace/scratch/c5213034446c/week15_lr_sweep_work/runs/geom_author_fresh_lr1e-3_seed17/best_predictions/g049_Re100.npz",
+        "path": "FlowMLLab_Week15_PostAudit_LR_Sweep/runs/geom_author_fresh_lr1e-3_seed17/best_predictions/g049_Re100.npz",
         "sha256": "693f7795827bd1c55ffa13a702645084cafc5f770acaa8ca5b203bcd9f44f2bf"
       },
       {
-        "path": "/workspace/scratch/c5213034446c/week15_lr_sweep_work/runs/smart_author_lr1e-3_seed17/best_predictions/g049_Re100.npz",
+        "path": "FlowMLLab_Week15_PostAudit_LR_Sweep/runs/smart_author_lr1e-3_seed17/best_predictions/g049_Re100.npz",
         "sha256": "a7ffc93d37ec7408f193a6125af098380bc62a9dd04e0a261371bb4b44baef68"
       },
       {
-        "path": "/workspace/scratch/c5213034446c/week15_lr_sweep_work/runs/domino_author_lr1e-3_seed17/best_predictions/g049_Re100.npz",
+        "path": "FlowMLLab_Week15_PostAudit_LR_Sweep/runs/domino_author_lr1e-3_seed17/best_predictions/g049_Re100.npz",
         "sha256": "91051a18ae3ff48922ee4806e14790587ebe63420c26e568c7570acb4e094f13"
       },
       {
-        "path": "/workspace/scratch/c5213034446c/week15_matched_work/runs_v1/geotransolver_author_seed17/last_predictions/g049_Re100.npz",
+        "path": "FlowMLLab_Week15_Matched_Budget/runs_v1/geotransolver_author_seed17/last_predictions/g049_Re100.npz",
         "sha256": "f23cdafe40ecc509fbcc32f023cd9d431c89a4445cccf3fd0e0a4ad1e53d6e7d"
       },
       {
-        "path": "/workspace/scratch/c5213034446c/week15_matched_work/runs_v1/px_context_proxy_seed17/last_predictions/g049_Re100.npz",
+        "path": "FlowMLLab_Week15_Matched_Budget/runs_v1/px_context_proxy_seed17/last_predictions/g049_Re100.npz",
         "sha256": "f8a347636be23832dbfaa310b8fd084552ecc579567fc7d5456927f1e4a7b0de"
       },
       {
-        "path": "/workspace/scratch/c5213034446c/week15_matched_work/runs_v1/lift_wall_proxy_seed17/last_predictions/g049_Re100.npz",
+        "path": "FlowMLLab_Week15_Matched_Budget/runs_v1/lift_wall_proxy_seed17/last_predictions/g049_Re100.npz",
         "sha256": "c660fdc60f6aff8e0eb18b7be2975b283d8a488d4e7cf4c43a236a1e881c98bc"
       }
     ],

@@ -1,7 +1,8 @@
 # Week 2.1 — Probabilistic uncertainty
 
-This incremental module follows Week 2 supervised regression and precedes the
-field-surrogate material in Week 4.
+This incremental module sits between Weeks 2 and 3. It follows supervised
+regression and introduces uncertainty before the particle/kinetic module; its
+POD--Gaussian-process field example also prepares the Week 4 surrogates.
 
 - `Probabilistic_UQ_CFD.ipynb` connects Gaussian observation models, exact
   Bayesian linear regression, POD--Gaussian-process fields, proper scores,

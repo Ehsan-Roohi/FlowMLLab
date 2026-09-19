@@ -19,6 +19,11 @@ def test_retained_split_is_disjoint_and_complete():
 
 
 def test_case_shapes_and_finite_values():
+    if not (DATA / "re095.npz").is_file():
+        pytest.skip(
+            "Week 7.4 data are optional; download release week07-4-wakes-v1 "
+            "or run dw.ensure_release_data(DATA)."
+        )
     fields, lift, times = dw.load_case(DATA, 95)
     assert fields.shape == (251, 32, 78) and lift.shape == times.shape == (251,)
     assert np.all(np.diff(times) > 0)

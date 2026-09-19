@@ -6,6 +6,7 @@ from __future__ import annotations
 import csv
 import json
 import sys
+import argparse
 from pathlib import Path
 
 import matplotlib.pyplot as plt
@@ -30,7 +31,7 @@ from flowmllab.aescte_dsmc import (  # noqa: E402
 )
 
 
-RESULTS = ROOT / "results" / "aescte_dsmc"
+SOURCE = ROOT / "results" / "aescte_dsmc"
 PALETTE = {"dsmc": "#14213D", "model": "#D1495B", "accent": "#1B998B"}
 
 
@@ -268,6 +269,10 @@ def draw_summary(cavity, cavity_predictions, diatomic, prediction_17, output):
 
 
 def main() -> None:
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--output-dir", type=Path, default=SOURCE)
+    args = parser.parse_args()
+    output = args.output_dir.resolve()
     plt.rcParams.update({
         "font.size": 12,
         "axes.titlesize": 14,
@@ -276,10 +281,10 @@ def main() -> None:
         "ytick.labelsize": 11,
         "legend.fontsize": 11,
     })
-    RESULTS.mkdir(parents=True, exist_ok=True)
-    cavity_path = RESULTS / "cavity_fields_14cases.npz"
-    diatomic_path = RESULTS / "diatomic_shock_6cases.npz"
-    monatomic_path = RESULTS / "monatomic_shock_7cases.npz"
+    output.mkdir(parents=True, exist_ok=True)
+    cavity_path = SOURCE / "cavity_fields_14cases.npz"
+    diatomic_path = SOURCE / "diatomic_shock_6cases.npz"
+    monatomic_path = SOURCE / "monatomic_shock_7cases.npz"
     for path in (cavity_path, diatomic_path, monatomic_path):
         if not path.is_file():
             raise FileNotFoundError(f"run qa/build_week10_aescte_dsmc_data.py first: {path}")
@@ -313,14 +318,14 @@ def main() -> None:
         "value": max(mb_errors),
         "normalization": "unit_integral",
     })
-    metrics_path = RESULTS / "week10_validation_metrics.csv"
+    metrics_path = output / "week10_validation_metrics.csv"
     write_csv(metrics_path, rows)
 
-    cavity_figure = RESULTS / "cavity_kn005_reproduction.png"
-    cavity_profiles = RESULTS / "cavity_validation_profiles.png"
-    diatomic_figure = RESULTS / "diatomic_shock_reproduction.png"
-    mono_figure = RESULTS / "monatomic_relaxation_reproduction.png"
-    summary_figure = RESULTS / "week10_dsmc_reproduction_summary.png"
+    cavity_figure = output / "cavity_kn005_reproduction.png"
+    cavity_profiles = output / "cavity_validation_profiles.png"
+    diatomic_figure = output / "diatomic_shock_reproduction.png"
+    mono_figure = output / "monatomic_relaxation_reproduction.png"
+    summary_figure = output / "week10_dsmc_reproduction_summary.png"
     draw_cavity_fields(cavity, cavity_predictions, cavity_figure)
     draw_cavity_profiles(cavity, cavity_predictions, cavity_profiles)
     draw_diatomic(diatomic, prediction_17, prediction_14, diatomic_figure)
@@ -338,14 +343,14 @@ def main() -> None:
         "shock_mean_relative_l2_percent": float(np.mean(shock_values)),
         "diatomic_mach_2_target_available": False,
         "cavity_100_ms_target_available": False,
-        "data_manifest_sha256": sha256(RESULTS / "data_manifest.json"),
+        "data_manifest_sha256": sha256(SOURCE / "data_manifest.json"),
         "metrics_sha256": sha256(metrics_path),
         "figures_sha256": {
             path.name: sha256(path)
             for path in (cavity_figure, cavity_profiles, diatomic_figure, mono_figure, summary_figure)
         },
     }
-    (RESULTS / "validation_summary.json").write_text(
+    (output / "validation_summary.json").write_text(
         json.dumps(summary, indent=2, sort_keys=True) + "\n", encoding="utf-8"
     )
     if summary["cavity_primary_max_nrmse_percent"] > 2.0:

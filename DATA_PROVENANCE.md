@@ -89,7 +89,8 @@ without a verified mapping of potential, species, source code and producing runs
 v1.4.0 and its [version DOI](https://doi.org/10.5281/zenodo.22315623) are immutable.
 The v1.4.1 maintenance release fixed defects and clarified existing material;
 the Week 10.1 companion added there is supplemental reading, not a training
-notebook. Later releases (v1.5 and v1.6) added Weeks 11 to 15 and are listed in
+notebook. Later releases added Weeks 11 to 15; v1.7 added the Week 7.3/7.4
+transfer modules and v1.8 rebuilt the Week 15 comparison. All are listed in
 the [release history](https://github.com/Ehsan-Roohi/FlowMLLab/releases).
 Unexecuted comparison designs are not scientific results.
 Do not pursue external benchmark adoption until source-data integrity,

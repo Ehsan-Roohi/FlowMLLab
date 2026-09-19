@@ -374,7 +374,7 @@ ax[1, 0].set(xlabel="Re", ylabel="St", title="Dominant shedding frequency")
 ax[1, 0].legend(loc="upper left", bbox_to_anchor=(1.02, 1), borderaxespad=0)
 
 ax[1, 1].plot(sweep.Re, sweep.Cd_mean, "o-", color="#C44E52", label=r"mean $C_D$")
-ax[1, 1].set(xlabel="Re", ylabel=r"$\overline C_D$", title="Mean drag diagnostic")
+ax[1, 1].set(xlabel="Re", ylabel=r"$\overline{C_D}$", title="Mean drag diagnostic")
 plt.show()
 """),
     md(r"""

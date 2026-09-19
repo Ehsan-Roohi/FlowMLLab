@@ -39,14 +39,20 @@ flowmllab smoke --root .
 flowmllab qa --root .
 ```
 
-For neural-network training, install `python -m pip install -e ".[ml,test]"`.
+For TensorFlow training, install `python -m pip install -e ".[ml,test]"`.
+For PyTorch notebooks, install
+`python -m pip install -e ".[reconstruction,test]"`; install both extras when a
+module compares TensorFlow and PyTorch implementations.
 If TensorFlow is unavailable on your platform, continue with the data-audit,
 interpolation, POD, and plotting sections. Use Google Colab for
 TensorFlow-specific cells.
 
 ## 3. Run the 20-minute evidence chain
 
-Open `notebooks/week05_06/P0_Project_Setup.ipynb` and run it top to bottom.
+After completing the Week 4 foundations, open
+`notebooks/week05_06/P0_Project_Setup.ipynb` and run it top to bottom. P0 is the
+20-minute evidence chain for the Weeks 5-6 project track, not the first notebook
+for a complete beginner.
 
 You should be able to answer all five questions before selecting a project:
 
@@ -97,7 +103,7 @@ Typical student runtimes are approximate:
 | Week 12 moment reconstruction | CPU | about 2 min including the 20 s Noise2Noise fit |
 | Week 13 cavity PINNs | CPU | about 3 min; the training cell takes about a minute (PyTorch) |
 | Week 14 RANS closures | CPU, separate environment | 5 to 10 min for the notebook; the optional upstream solver runs take hours |
-| Week 15 geometry-aware operators | CPU, full checkout | <5 min |
+| Week 15 geometry-aware operators | CPU, full checkout plus the 333 MB Zenodo LR evidence archive | about 5 min to verify retained fields; no PyTorch, CFD or retraining |
 
 ## 5. Keep blind cases blind
 

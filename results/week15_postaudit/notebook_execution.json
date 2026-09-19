@@ -3,6 +3,13 @@
   "errors": 0,
   "seconds": 5.712870622002811,
   "method": "IPython InteractiveShell in a clean subprocess; rich output captured",
+  "portable_path_repair_direct_execution": {
+    "verified": true,
+    "code_cells": 15,
+    "saved_fields_recomputed": 342,
+    "maximum_metric_difference": 6.854361345176585e-08,
+    "environment": "CPU; no PyTorch; FLOWMLLAB_WEEK15_LR_DIR set to the hash-verified Zenodo package"
+  },
   "nbclient_tcp": "blocked: kernel died, socket Operation not permitted",
   "nbclient_ipc": "blocked: ZMQError Operation not permitted",
   "standard_jupyter_kernel_startup_verified": false

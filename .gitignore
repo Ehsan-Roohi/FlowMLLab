@@ -26,3 +26,5 @@ tmp/
 
 # builder scratch output (PDFs are copied into lectures/)
 output/
+student_runs/
+*.part

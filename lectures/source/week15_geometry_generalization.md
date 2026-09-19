@@ -310,7 +310,7 @@ SMART improves reverse-flow overlap relative to tuned Geom but overshoots revers
 ### 8.5 Sources
 
 - Pinned author code: [jhagnberger/smart at commit 9e9b30e](https://github.com/jhagnberger/smart/tree/9e9b30e6bd8b76b993643542300d9ee7a1e0beb5)
-- Paper: [SMART: Scalable Multi-geometry Attention-based Representation and Transfer](https://arxiv.org/abs/2601.18707)
+- Paper: [SMART: Scalable Mesh-free Aerodynamic Simulations from Raw Geometries using a Transformer-based Surrogate Model](https://arxiv.org/abs/2601.18707)
 - Commercial-context article, not the tested code: [Luminary SMART](https://luminary.ai/resources/luminary-smart-the-new-state-of-the-art-model-architecture-for-large-physics-models/)
 
 ---
@@ -505,12 +505,14 @@ Learning-rate selection uses only the frozen non-double-step validation set. Tes
 
 The score combines geometry-balanced validation velocity, pressure, vorticity, reverse IoU, and reverse-region velocity error. Lower is better.
 
-![Validation-only learning-rate sweep](../week15_lr_sweep_work/report/LR_Validation_Sweep.png)
+![Validation-only learning-rate sweep](../../results/week15_postaudit/LR_Validation_Sweep.png)
 
 Three conclusions follow:
 
 1. the common $3\times10^{-4}$ rate was not neutral;
-2. all three author-code models preferred $10^{-3}$ on the frozen validation set;
+2. all three author-code models preferred $10^{-3}$ on the frozen validation set,
+   but that value is the upper edge of this three-point grid rather than a
+   demonstrated interior optimum;
 3. optimization settings materially affect the apparent architecture ranking.
 
 ---
@@ -548,7 +550,7 @@ This table must not be read as one clean architecture leaderboard. Historical an
 
 ---
 
-## 18. What improved after learning-rate tuning?
+## 18. What changed after fresh single-stage training and LR selection?
 
 Relative to the original equal-budget $3\times10^{-4}$ runs:
 
@@ -559,6 +561,12 @@ Relative to the original equal-budget $3\times10^{-4}$ runs:
 - Geom becomes much closer to the historical global-field baseline, though it does not surpass it in velocity or vorticity.
 
 This is precisely why multiple metrics must remain visible.
+
+The Re=25 footprint gain over the historical warm-start continuation is already
+present in the fresh $3\times10^{-4}$ runs. It should therefore be attributed to
+fresh single-stage training at either tested effective rate, not to learning-rate
+tuning alone. The historical 9.86% Geom value is one seed, whereas tuned values
+are reported as three-seed means.
 
 ---
 
@@ -571,7 +579,11 @@ This is precisely why multiple metrics must remain visible.
 | LR-tuned SMART | 0.299 | 0.604 | 0.710 |
 | LR-tuned DoMINO | **0.357** | **0.607** | **0.730** |
 
-![Reynolds-stratified reverse-flow IoU](../week15_lr_sweep_work/report/Re_Stratified_IoU.png)
+For tuned Geom at Re=25, the selected seed-17/29/43 overlaps are approximately
+0.19/0.24/0.36. Thus the seed-17 contour is visibly poorer than the 0.261
+three-seed mean and must not be presented as a representative mean field.
+
+![Reynolds-stratified reverse-flow IoU](../../results/week15_postaudit/Re_Stratified_IoU.png)
 
 The monotonic trend is not a minor reporting detail. It reveals that the dominant failure is tied to a missing training regime. Global velocity error changes much less with Reynolds number than reverse IoU, so a case-averaged velocity score hides the mechanism.
 
@@ -650,15 +662,15 @@ These figures answer the original teaching question with seven flow rows: CFD, t
 
 ### Re=25: the hardest missing-coverage regime
 
-![Core comparison at Re=25](assets/core_g051_Re25.png)
+![Core comparison at Re=25](../../results/week15_postaudit/core_g051_Re25.png)
 
 ### Re=50
 
-![Core comparison at Re=50](assets/core_g049_Re50.png)
+![Core comparison at Re=50](../../results/week15_postaudit/core_g049_Re50.png)
 
 ### Re=100
 
-![Core comparison at Re=100](assets/core_g049_Re100.png)
+![Core comparison at Re=100](../../results/week15_postaudit/core_g049_Re100.png)
 
 ---
 
@@ -668,15 +680,15 @@ These pages keep CFD and the three tuned models, then add GeoTransolver and the 
 
 ### Re=25
 
-![Extended comparison at Re=25](assets/extended_g051_Re25.png)
+![Extended comparison at Re=25](../../results/week15_postaudit/extended_g051_Re25.png)
 
 ### Re=50
 
-![Extended comparison at Re=50](assets/extended_g049_Re50.png)
+![Extended comparison at Re=50](../../results/week15_postaudit/extended_g049_Re50.png)
 
 ### Re=100
 
-![Extended comparison at Re=100](assets/extended_g049_Re100.png)
+![Extended comparison at Re=100](../../results/week15_postaudit/extended_g049_Re100.png)
 
 ---
 
@@ -719,7 +731,7 @@ Unsafe statements are:
 
 ## 26. Training, validation, and test ladder
 
-![Train-validation-test velocity ladder](../week15_lr_sweep_work/report/Train_Validation_Test_Ladder.png)
+![Train-validation-test velocity ladder](../../results/week15_postaudit/Train_Validation_Test_Ladder.png)
 
 At 3,840 updates, validation velocity error was negatively rank-correlated with test velocity error. That behavior was a symptom of severe undertraining. At 19,200 updates the independently recomputed Spearman correlation is positive:
 

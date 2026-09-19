@@ -4,9 +4,9 @@ FlowMLLab grows through small, testable changes that preserve the released
 scientific protocols. New examples are welcome, but reproducibility and physical
 validation take priority over increasing the number of methods.
 
-## Current state (v1.6 line)
+## Current state (v1.8 line)
 
-- Fifteen weekly modules with 41 notebooks and 25 lecture PDFs; every notebook
+- Fifteen weekly modules with 43 notebooks and 26 lecture PDFs; every notebook
   is listed in the [launcher](notebooks/README.md) and every lecture in the
   [lecture index](lectures/README.md), and the release gate checks both lists.
 - Weeks 1 to 10 are student-run laboratories; Weeks 11 to 15 combine a CPU
@@ -19,7 +19,8 @@ validation take priority over increasing the number of methods.
 Ordered by what most improves a student's experience:
 
 1. Execute Weeks 1 to 4 and P0 end to end in a fresh Colab runtime after every
-   change to `common/` and record the runtimes in `START_HERE.md`.
+   change to `common/`; until those measurements are refreshed, treat the
+   `START_HERE.md` runtimes as estimates rather than guarantees.
 2. Bring the remaining audit-style modules (Weeks 11, 12, 14 and 15) to the
    shape of Weeks 4.2 and 13: learning goals, definitions before use, one
    model the student trains, results, interpretation, claim boundary, exercise;

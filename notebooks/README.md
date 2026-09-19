@@ -3,9 +3,10 @@
 Every notebook below opens directly from GitHub in Google Colab. Each first
 code cell clones the repository and installs the tested package, so a fresh
 Colab runtime needs no manual uploads. Choose a Colab GPU runtime only for
-notebooks that explicitly require CUDA (Track 6). Weeks 14 and 15 are
-full-checkout CPU modules with their own data guides; their notebooks run from
-a local clone (see the linked setup pages).
+notebooks that explicitly require CUDA (Track 6). Week 14 includes a Colab
+bootstrap but its hosted Run All has not been independently validated. Week 15
+runs from a local clone plus its linked Zenodo evidence archive; see the module
+setup pages before launching either notebook.
 
 ## One-click launcher, in course order
 

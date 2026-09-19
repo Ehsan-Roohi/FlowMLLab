@@ -3,9 +3,35 @@ from __future__ import annotations
 
 import hashlib
 import json
+import urllib.request
 from pathlib import Path
 
 import numpy as np
+
+
+WEEK07_4_RELEASE_PREFIX = (
+    "https://github.com/Ehsan-Roohi/FlowMLLab/releases/download/"
+    "week07-4-wakes-v1/"
+)
+
+
+def ensure_release_data(data_dir: str | Path) -> dict:
+    """Download missing Week 7.4 assets and verify every frozen SHA-256."""
+    data_dir = Path(data_dir)
+    manifest = load_manifest(data_dir)
+    data_dir.mkdir(parents=True, exist_ok=True)
+    for case in manifest["cases"]:
+        target = data_dir / case["file"]
+        expected = case["sha256"]
+        if target.is_file() and sha256(target) == expected:
+            continue
+        partial = target.with_suffix(target.suffix + ".part")
+        urllib.request.urlretrieve(WEEK07_4_RELEASE_PREFIX + case["file"], partial)
+        if sha256(partial) != expected:
+            partial.unlink(missing_ok=True)
+            raise RuntimeError(f"SHA-256 mismatch for {case['file']}")
+        partial.replace(target)
+    return manifest
 
 
 def load_manifest(data_dir: str | Path) -> dict:

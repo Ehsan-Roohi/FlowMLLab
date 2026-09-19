@@ -27,5 +27,6 @@ and [colored cylinder contours and surface pressure/heat flux](../../results/abi
 This author-supplied research case learns molecular scattering, not the whole
 flow field. It is related to [Roohi et al., PoF 38, 057123 (2026)](https://doi.org/10.1063/5.0328463),
 but uses the later DeepONet package rather than the article's MLP. The plotted
-outputs have different times and sampling windows. This is supplemental
-reading; no new executable notebook is added.
+outputs have different times and sampling windows. Continue with the executable
+[`W10_1_Collision_Map_Surrogate_Audit.ipynb`](../week10_1/W10_1_Collision_Map_Surrogate_Audit.ipynb),
+a separately labelled CPU analog rather than a reproduction of the article model.
