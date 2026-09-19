@@ -31,7 +31,7 @@ Page counts are those of the current files.
 | 13 | [Rectangular-cavity PINNs](week13_rectangular_cavity_pinn.pdf) (12) | Streamfunction PINNs, hard wall constraints, Adam then SSBroyden2, deep-cavity fields, residual audits | `notebooks/week13/W13_Rectangular_Cavity_PINN_Research.ipynb` | [Markdown](source/week13_rectangular_cavity_pinn.md) |
 | 13 (preparatory) | [PINN foundations reading](week04_2_pinn_cavity.pdf) (12) | Nondimensional residuals, soft/hard constraints, streamfunction lifting, analytic checks; originally numbered 4.2 | Five assignments in the lecture; no trained-PINN claim | [Markdown](source/week04_2_pinn_cavity.md) |
 | 14 | [RANS, PINN and neural closures](week14_rans_pinn_nn.pdf) (7) | Inverse PINN, three closure coefficients, original NN training, coupled RANS, source-package audit limits | `notebooks/week14/W14_pyCALC_RANS_PINN_NN.ipynb` ([setup](../notebooks/week14/README.md)) | [Markdown](source/week14_rans_pinn_nn.md) |
-| 15 | [Geometry-aware neural operators](week15_geometry_generalization.pdf) (6) | Geometry generalization, Geo-DeepONet, FNO and U-FNO, whole-geometry and family holdouts | `notebooks/week15/W15_Geometry_Operators_Step_Audit.ipynb` ([data guide](../notebooks/week15/README.md)) | [Markdown](source/week15_geometry_generalization.md) |
+| 15 | [Geometry-aware neural operators](week15_geometry_generalization.pdf) (24) | DeepONet, Geom-DeepONet, Geo-FNO, SMART, GeoTransolver and DoMINO; learning-rate sensitivity; reverse-flow topology; retrospective double-step transfer | `notebooks/week15/W15_Complete_Geometry_Generalization.ipynb` ([data guide](../notebooks/week15/README.md)) | [Markdown](source/week15_geometry_generalization.md) |
 
 Recommended teaching pattern for each meeting:
 
