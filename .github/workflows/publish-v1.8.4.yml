@@ -33,6 +33,40 @@ jobs:
           flowmllab qa --root .
           python qa/validate_course_release.py
           git diff --exit-code
+      - name: Download and verify frozen Week 15 evidence
+        run: |
+          curl -L --fail --retry 3 \
+            -o ../FlowMLLab_Week15_PostAudit_LR_Sweep.zip \
+            https://zenodo.org/api/records/22840293/files/FlowMLLab_Week15_PostAudit_LR_Sweep.zip/content
+          echo 'e9f6e1c05bec59be4cee759f721bc8ccbc78119d22a00a31304932103f0ca9d9  ../FlowMLLab_Week15_PostAudit_LR_Sweep.zip' | sha256sum --check
+          unzip -q ../FlowMLLab_Week15_PostAudit_LR_Sweep.zip -d ..
+      - name: Execute Week 15 flagship with a real Jupyter kernel
+        env:
+          FLOWMLLAB_WEEK15_LR_DIR: ${{ github.workspace }}/../FlowMLLab_Week15_PostAudit_LR_Sweep
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import nbformat
+          from nbclient import NotebookClient
+
+          path = Path('notebooks/week15/W15_Complete_Geometry_Generalization.ipynb')
+          notebook = nbformat.read(path, as_version=4)
+          NotebookClient(
+              notebook,
+              timeout=600,
+              kernel_name='python3',
+              resources={'metadata': {'path': str(path.parent)}},
+          ).execute()
+          errors = [
+              output
+              for cell in notebook.cells if cell.cell_type == 'code'
+              for output in cell.get('outputs', []) if output.output_type == 'error'
+          ]
+          assert not errors
+          assert sum(cell.cell_type == 'code' for cell in notebook.cells) == 15
+          print('WEEK15_REAL_KERNEL_PASS: 15 code cells')
+          PY
+          git diff --exit-code
       - name: Build distributions and the asset hash list
         run: |
           python -m build
