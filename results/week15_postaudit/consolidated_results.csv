@@ -4,7 +4,7 @@ Historical Geom-DeepONet,historical bundled result,historical checkpoint; seed 1
 Historical Geo-FNO,historical bundled result,historical checkpoint; seed 17,historical,15.852042509494424,62.02203515531516,29.407848518572745,0.3690416919144349,299.1991223525204
 LR-tuned Geom-DeepONet,author code / verified adapter,"validation-selected BEST; 3 seeds; 19,200-update ceiling",0.001,10.525782381951915,32.71227650419256,17.40337246865834,0.4635884014336347,127.59616246401113
 LR-tuned academic SMART,author code / verified adapter,"validation-selected BEST; 3 seeds; 19,200-update ceiling",0.001,11.613677402462411,53.10549358722223,21.532072945702023,0.5033947471905014,200.68209188234079
-LR-tuned DoMINO planar,author code / verified adapter,"validation-selected BEST; 3 seeds; 19,200-update ceiling",0.001,15.59173364385578,71.8497335828921,22.728107612958727,0.5341300614338163,165.96279563134263
+LR-tuned DoMINO planar,author code / verified adapter,"validation-selected BEST; 3 seeds; 19,200 updates",0.001,15.59173364385578,71.8497335828921,22.728107612958727,0.5341300614338163,165.96279563134263
 Matched GeoTransolver,author code / verified adapter,"matched-budget LAST; 3 seeds; 19,200 updates",0.0003,24.97806698381632,111.80587615607567,31.518640797024712,0.2999380637442836,160.6070552857603
 PhysicsX-inspired proxy,transparent idea proxy; not proprietary code,"matched-budget LAST; 3 seeds; 19,200 updates",0.0003,40.62963833484155,263.6916648531269,65.69953160921234,0.32400936016187637,265.801633320031
 LIFT wall-feature proxy,transparent idea proxy; not proprietary code,"matched-budget LAST; 3 seeds; 19,200 updates",0.0003,41.7780251921574,283.90114383214666,52.174260413839704,0.3322980753722609,197.5897567329147
