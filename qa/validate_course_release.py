@@ -399,9 +399,16 @@ def validate_notebooks() -> tuple[int, int]:
             f"Ehsan-Roohi/FlowMLLab/blob/main/{relative}"
         )
         week14_lab = relative == 'notebooks/week14/W14_pyCALC_RANS_PINN_NN.ipynb'
-        week15_lab = relative == 'notebooks/week15/W15_Geometry_Operators_Step_Audit.ipynb'
-        assert week14_lab or colab_url in full_source, f"missing direct Colab launcher: {path}"
-        assert week14_lab or week15_lab or "FLOWMLLAB_COLAB_BOOTSTRAP_V1" in full_source, (
+        week15_local = relative.startswith('notebooks/week15/')
+        week15_audit = relative == 'notebooks/week15/W15_Geometry_Operators_Step_Audit.ipynb'
+        week15_complete = relative == 'notebooks/week15/W15_Complete_Geometry_Generalization.ipynb'
+        # Weeks 14 and 15 are documented full-checkout modules.  Week 15's
+        # evidence archives are release assets and cannot be bootstrapped by a
+        # fresh Colab clone alone.
+        assert week14_lab or week15_local or colab_url in full_source, (
+            f"missing direct Colab launcher: {path}"
+        )
+        assert week14_lab or week15_local or "FLOWMLLAB_COLAB_BOOTSTRAP_V1" in full_source, (
             f"missing Colab repository bootstrap: {path}"
         )
         reconstruction_lab = relative == 'notebooks/week11/W11_Lab2_Reconstruction_and_Identification.ipynb'
@@ -413,10 +420,20 @@ def validate_notebooks() -> tuple[int, int]:
             assert 'not a verified' in full_source
             assert len([c for c in cells if c.get('cell_type')=='code']) == 8
             assert all(c.get('execution_count') is not None for c in cells if c.get('cell_type')=='code')
-        if week15_lab:
+        if week15_audit:
             assert len([c for c in cells if c.get('cell_type')=='code']) == 13
             assert 'dataset.npz' in full_source and 'def diagnostics(' in full_source
-        assert week14_lab or week15_lab or reconstruction_lab or any(
+        if week15_complete:
+            code = [c for c in cells if c.get('cell_type') == 'code']
+            assert len(code) == 15
+            assert all(c.get('execution_count') is not None for c in code)
+            assert not any(
+                output.get('output_type') == 'error'
+                for cell in code for output in cell.get('outputs', [])
+            )
+            assert 'no double-step motif is used in training or validation' in full_source
+            assert 'Selection reads no double-step arrays.' in full_source
+        assert week14_lab or week15_local or reconstruction_lab or any(
             marker in full_source
             for marker in (
                 "MIE690A article-aligned validation v3",
