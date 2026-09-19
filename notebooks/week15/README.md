@@ -1,5 +1,31 @@
 # Week 15 — Geometry-aware neural operators
 
+## Complete post-audit edition
+
+Start with [`W15_Complete_Geometry_Generalization.ipynb`](W15_Complete_Geometry_Generalization.ipynb).
+It is the executed companion to the expanded
+[`Week 15 lecture`](../../lectures/week15_geometry_generalization.pdf) and brings
+the historical and new evidence into one reproducible narrative:
+
+- ordinary DeepONet, Geom-DeepONet and Geo-FNO historical baselines;
+- equal 19,200-update comparisons with SMART, GeoTransolver and DoMINO;
+- transparent PhysicsX- and LIFT-inspired proxies, never presented as proprietary code;
+- a validation-only sweep of peak learning rates `1e-3`, `3e-4` and `1e-4`;
+- the rejected common reverse-scale ablation and other negative results;
+- independent checks of 342 saved tuned prediction fields;
+- Reynolds-stratified and reverse-flow topology diagnostics; and
+- six seven-row CFD/model figures at the true 5:1 aspect ratio, with each
+  model's own streamlines and no orange threshold overlay.
+
+No new CFD is generated. No double-step motif enters training or validation,
+`g005` remains quarantined, and the historically inspected double-step family
+is described as a retrospective test. The original notebook and runs below
+remain available as historical records and were not overwritten.
+
+The compact repository retains the executed notebook, lecture, summary tables,
+figures and checksums. Full checkpoints and saved fields are distributed with
+the release/Zenodo evidence archive rather than duplicated in Git history.
+
 [`W15_Geometry_Operators_Step_Audit.ipynb`](W15_Geometry_Operators_Step_Audit.ipynb)
 is the executed companion to the Week 15 lecture. It includes:
 
