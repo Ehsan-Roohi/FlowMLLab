@@ -28,3 +28,16 @@ tmp/
 output/
 student_runs/
 *.part
+
+# Notebook downloads and generated student-side outputs
+data/week07_4_wakes/re*.npz
+notebooks/**/P*_results.csv
+notebooks/**/project_choice.json
+notebooks/**/week07_outputs/
+notebooks/**/case_outputs/
+notebooks/week03/week3_lab1_ml_noise_checks.csv
+notebooks/week03/week3_lab1_sampling_noise.csv
+notebooks/week03/week3_mini_cavity_dataset.csv
+notebooks/week04/predictions_coordinate_dnn.npz
+notebooks/week04/week4_scalar_results.csv
+notebooks/week05_06/P5_5A_cases_v12.npz

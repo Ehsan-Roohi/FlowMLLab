@@ -1,7 +1,7 @@
 {
   "title": "FlowMLLab: An Open-Source Framework for Reproducible CFD-to-Scientific-Machine-Learning Experiments",
-  "description": "FlowMLLab v1.7.0 adds paired self-supervised wake-learning modules. Week 7.3 retains the strong gappy-POD baseline on masked low-rank wake reconstruction and corrects linear-probe pooling and sample-standard-deviation reporting. Week 7.4 generates sixteen compact Reynolds trajectories and measures target-label efficiency for instantaneous lift using frozen pretrained, random and POD-32 representations. Full trajectory splits, source-label selection costs, per-case errors, data hashes and coarse-CFD limitations are disclosed. The course includes 42 notebooks and 26 PDF lectures through Week 15. This is a MAPA-inspired educational experiment, not a reproduction of its neuroscience benchmark.",
-  "version": "1.7.0",
+  "description": "FlowMLLab v1.8.3 is the verified repair release for the complete 43-notebook, 26-lecture CFD-to-scientific-machine-learning course. It restores end-to-end execution of the Week 15 geometry-generalization notebook, synchronizes six comparison figures with their SHA-256 provenance, removes duplicated figure footers, aligns citation and release metadata, and prevents evidence workflows from rewriting the main branch. The scientific results and frozen Week 15 evidence archives are unchanged; no new CFD or model training is claimed.",
+  "version": "1.8.3",
   "creators": [
     {
       "name": "Roohi, Ehsan",
@@ -35,6 +35,11 @@
     {
       "identifier": "https://github.com/Ehsan-Roohi/FlowMLLab",
       "relation": "isSupplementTo",
+      "scheme": "url"
+    },
+    {
+      "identifier": "https://github.com/Ehsan-Roohi/FlowMLLab/releases/tag/v1.8.3",
+      "relation": "isVersionOf",
       "scheme": "url"
     }
   ],

@@ -1,10 +1,10 @@
 <h1><img src="docs/assets/flowmllab-logo.png" alt="FlowMLLab — fluid-streamline F logo" width="520"></h1>
 
-**New in v1.8.1:** a portability and scientific-clarity update for the complete
-post-audit Week 15 comparison of geometry-aware
-neural operators, learning-rate sensitivity and double-step transfer. No new
-CFD is generated; the historically inspected double-step family is a
-retrospective test. [Release notes](RELEASE_NOTES_v1.8.1.md).
+**New in v1.8.3:** the verified repair release for the complete post-audit
+Week 15 comparison. It restores an end-to-end executable flagship notebook,
+synchronizes figure provenance and release metadata, removes the duplicated
+figure footers, and prevents evidence workflows from rewriting `main`.
+[Release notes](RELEASE_NOTES_v1.8.3.md).
 
 **Week 14:** [RANS, PINN and neural turbulence closures](notebooks/week14/README.md)
 based on Lars Davidson's pyCALC-RANS workflow: an executed teaching notebook,
@@ -634,9 +634,11 @@ Student submissions are not included.
 · [Citation metadata](CITATION.cff)
 · [Workshop, support, and consulting details](docs/RESULTS_GUIDE.md#workshops-support-and-consulting)
 
-Current release: **v1.8.1** · [GitHub release](https://github.com/Ehsan-Roohi/FlowMLLab/releases/tag/v1.8.1)
-· [Zenodo DOI 10.5281/zenodo.22840293](https://doi.org/10.5281/zenodo.22840293)
-· [Release notes](RELEASE_NOTES_v1.8.1.md).
+Current release: **v1.8.3** · [GitHub release](https://github.com/Ehsan-Roohi/FlowMLLab/releases/tag/v1.8.3)
+· [all-version Zenodo DOI 10.5281/zenodo.22074169](https://doi.org/10.5281/zenodo.22074169)
+· [Release notes](RELEASE_NOTES_v1.8.3.md).
+The frozen v1.8.0 evidence archive remains at
+[10.5281/zenodo.22840293](https://doi.org/10.5281/zenodo.22840293).
 Previous v1.7.0 archive DOI: [10.5281/zenodo.22836172](https://doi.org/10.5281/zenodo.22836172);
 the archived v1.6.1 record remains available at [10.5281/zenodo.22831809](https://doi.org/10.5281/zenodo.22831809).
 For earlier versions and their archived records, see the

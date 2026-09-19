@@ -6,7 +6,7 @@ This guide retains the detailed evidence, figures, protocols, and limitations be
 
 [![FlowMLLab CI](https://github.com/Ehsan-Roohi/FlowMLLab/actions/workflows/ci.yml/badge.svg)](https://github.com/Ehsan-Roohi/FlowMLLab/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](../LICENSE)
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.22840293.svg)](https://doi.org/10.5281/zenodo.22840293)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.22074169.svg)](https://doi.org/10.5281/zenodo.22074169)
 
 ## Weeks 11 and 12: real research evidence and CPU controls
 
@@ -555,7 +555,9 @@ If FlowMLLab supports your teaching or research, you can also support its contin
 
 Use [CITATION.cff](../CITATION.cff) when citing the release.
 
-Version 1.8.0 consolidates the course through Week 15 and is archived at
+Version 1.8.3 is the current verified repair release. It synchronizes the
+Week 15 figures and provenance, release metadata, and executable notebook
+record. The large frozen Week 15 evidence archives remain at the v1.8.0 record,
 [10.5281/zenodo.22840293](https://doi.org/10.5281/zenodo.22840293).
 Version 1.5.1 remains archived at
 [10.5281/zenodo.22651906](https://doi.org/10.5281/zenodo.22651906).

@@ -8,7 +8,7 @@ on:
       - "qa/run_cylinder_phase_stable.py"
 
 permissions:
-  contents: write
+  contents: read
 
 jobs:
   validate:
@@ -48,18 +48,14 @@ jobs:
       - name: Regenerate validation, spectra, and autoplay demo
         run: python qa/run_cylinder_phase_stable.py
 
-      - name: Commit reproducible evidence
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add -f results/cylinder_phase/phase_stable_metrics.json
-          git add -f results/cylinder_phase/phase_stable_validation.png
-          git add -f results/cylinder_phase/re095_phase_stable_lbm_vs_decoder.mp4
-          git add -f results/cylinder_phase/re095_phase_stable_lbm_vs_decoder.webp
-          git add -f results/cylinder_phase/re095_phase_stable_poster.png
-          if git diff --cached --quiet; then
-            echo "Evidence is already current."
-          else
-            git commit -m "Add autonomous cylinder validation evidence [skip ci]"
-            git push origin HEAD:main
-          fi
+      - name: Upload reproducible evidence for review
+        uses: actions/upload-artifact@v4
+        with:
+          name: cylinder-phase-stable-evidence
+          path: |
+            results/cylinder_phase/phase_stable_metrics.json
+            results/cylinder_phase/phase_stable_validation.png
+            results/cylinder_phase/re095_phase_stable_lbm_vs_decoder.mp4
+            results/cylinder_phase/re095_phase_stable_lbm_vs_decoder.webp
+            results/cylinder_phase/re095_phase_stable_poster.png
+          if-no-files-found: error

@@ -1,0 +1,3 @@
+c66d62808c7e32cfec61e0a8f5fb34fdf5de8c44d28848db9e25bb07341003bd  flowmllab-1.8.3-py3-none-any.whl
+769c6175c28a3f7a3161f28e46ef05ea0a546c4fdc9a83971e3ac18b4f341059  flowmllab-1.8.3.tar.gz
+78aced4ba230884d6a1c462dd7b900fb9c939749e1ee75ac642b0e69b7f29d5e  week15_geometry_generalization.pdf

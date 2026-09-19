@@ -26,8 +26,8 @@ run was overwritten.
 - `week15_training_geometries_homepage.png`: all 39 training masks.
 - `figure_provenance.json`: input paths and SHA-256 hashes used by the figures.
 - `notebook_execution.json`: archived execution record for the companion notebook;
-  it verifies the recorded cells but predates the portable-path repair and does
-  not claim that standard-kernel start-up was independently verified.
+  it records the portable direct execution and the fresh-clone real-kernel
+  release check used for v1.8.3.
 
 Every contour figure uses a shared banded speed scale within the figure, a true
 5:1 physical aspect ratio, and streamlines computed from the field in its own

@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: write
+  contents: read
 
 concurrency:
   group: cylinder-grid-independence
@@ -37,14 +37,9 @@ jobs:
           python qa/run_cylinder_grid_independence.py
           python -m unittest tests.test_cylinder_lbm -v
 
-      - name: Commit checksummed CFD evidence
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add -f results/cylinder_grid_convergence/
-          if git diff --cached --quiet; then
-            echo "Grid evidence is already current."
-          else
-            git commit -m "Regenerate cylinder grid-independence evidence"
-            git push origin HEAD:main
-          fi
+      - name: Upload checksummed CFD evidence for review
+        uses: actions/upload-artifact@v4
+        with:
+          name: cylinder-grid-convergence
+          path: results/cylinder_grid_convergence/
+          if-no-files-found: error

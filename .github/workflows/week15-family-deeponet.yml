@@ -6,7 +6,7 @@ on:
       - qa/train_week15_family_deeponet.py
       - .github/workflows/week15-family-deeponet.yml
 permissions:
-  contents: write
+  contents: read
 jobs:
   train:
     strategy:
@@ -28,20 +28,3 @@ jobs:
           name: family-deeponet-seed${{ matrix.seed }}
           path: family-deeponet-seed${{ matrix.seed }}/
           if-no-files-found: error
-  retain-evidence:
-    needs: train
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          ref: main
-      - uses: actions/download-artifact@v4
-        with:
-          pattern: family-deeponet-seed*
-          path: results/week15_family_deeponet
-      - run: |
-          git config user.name 'github-actions[bot]'
-          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add results/week15_family_deeponet
-          git commit -m 'Retain three-seed family-holdout DeepONet evidence'
-          git push

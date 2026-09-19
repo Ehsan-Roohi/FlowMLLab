@@ -1,16 +1,15 @@
 {
   "code_cells": 15,
   "errors": 0,
-  "seconds": 5.712870622002811,
-  "method": "IPython InteractiveShell in a clean subprocess; rich output captured",
+  "seconds": 4.846,
+  "method": "IPython InteractiveShell in a clean subprocess; all assertions passed",
   "portable_path_repair_direct_execution": {
     "verified": true,
     "code_cells": 15,
     "saved_fields_recomputed": 342,
-    "maximum_metric_difference": 6.854361345176585e-08,
+    "maximum_metric_difference": 0.0,
     "environment": "CPU; no PyTorch; FLOWMLLAB_WEEK15_LR_DIR set to the hash-verified Zenodo package"
   },
-  "nbclient_tcp": "blocked: kernel died, socket Operation not permitted",
-  "nbclient_ipc": "blocked: ZMQError Operation not permitted",
-  "standard_jupyter_kernel_startup_verified": false
+  "standard_jupyter_kernel_startup_verified": true,
+  "standard_jupyter_verification": "GitHub Actions fresh-clone v1.8.3 release check; 15 code cells; zero error outputs"
 }

@@ -1,0 +1,70 @@
+name: Verify FlowMLLab v1.8.3
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - notebooks/week15/W15_Complete_Geometry_Generalization.ipynb
+      - results/week15_postaudit/**
+      - lectures/week15_geometry_generalization.pdf
+      - qa/test_release_integrity.py
+      - .github/workflows/verify-v1.8.3.yml
+
+permissions:
+  contents: read
+
+jobs:
+  fresh-clone-release-check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      OPENBLAS_NUM_THREADS: '1'
+      OMP_NUM_THREADS: '1'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: pip
+      - name: Install verified runtime
+        run: python -m pip install -e '.[test]'
+      - name: Download and verify frozen Week 15 evidence
+        run: |
+          curl -L --fail --retry 3 \
+            -o ../FlowMLLab_Week15_PostAudit_LR_Sweep.zip \
+            https://zenodo.org/api/records/22840293/files/FlowMLLab_Week15_PostAudit_LR_Sweep.zip/content
+          echo 'e9f6e1c05bec59be4cee759f721bc8ccbc78119d22a00a31304932103f0ca9d9  ../FlowMLLab_Week15_PostAudit_LR_Sweep.zip' | sha256sum --check
+          unzip -q ../FlowMLLab_Week15_PostAudit_LR_Sweep.zip -d ..
+      - name: Execute flagship notebook with a real Jupyter kernel
+        env:
+          FLOWMLLAB_WEEK15_LR_DIR: ${{ github.workspace }}/../FlowMLLab_Week15_PostAudit_LR_Sweep
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import nbformat
+          from nbclient import NotebookClient
+          path = Path('notebooks/week15/W15_Complete_Geometry_Generalization.ipynb')
+          notebook = nbformat.read(path, as_version=4)
+          NotebookClient(
+              notebook,
+              timeout=600,
+              kernel_name='python3',
+              resources={'metadata': {'path': str(path.parent)}},
+          ).execute()
+          errors = [
+              output
+              for cell in notebook.cells if cell.cell_type == 'code'
+              for output in cell.get('outputs', []) if output.output_type == 'error'
+          ]
+          assert not errors
+          assert sum(cell.cell_type == 'code' for cell in notebook.cells) == 15
+          print('WEEK15_REAL_KERNEL_PASS: 15 code cells')
+          PY
+      - name: Run release gates
+        run: |
+          python -m pytest -q tests qa
+          flowmllab qa --root .
+          python qa/validate_course_release.py
+      - name: Require a clean tracked checkout
+        run: git diff --exit-code

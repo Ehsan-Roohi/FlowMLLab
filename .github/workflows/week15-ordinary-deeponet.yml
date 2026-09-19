@@ -8,7 +8,7 @@ on:
       - .github/workflows/week15-ordinary-deeponet.yml
 
 permissions:
-  contents: write
+  contents: read
 
 jobs:
   train:
@@ -41,20 +41,3 @@ jobs:
             run-seed${{ matrix.seed }}/case_metrics.csv
             run-seed${{ matrix.seed }}/predictions/
           if-no-files-found: error
-
-  publish-evidence:
-    needs: train
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/download-artifact@v4
-        with:
-          pattern: ordinary-deeponet-seed*
-          path: results/week15_ordinary_deeponet
-      - name: Record immutable training evidence
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add results/week15_ordinary_deeponet
-          git commit -m "Add Week 15 ordinary DeepONet OpenFOAM evidence"
-          git push
