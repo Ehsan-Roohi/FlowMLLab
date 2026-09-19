@@ -341,14 +341,15 @@ learned inverse maps under matched budgets.
 The independent H44 teaching model uses geometry and coordinates only.
 [Step evidence and provenance](results/mahdavi_deeponet/README.md)
 
-![Micro-nozzle 25-kPa DSMC fields, selected registered POD model and absolute errors](results/nozzle_transport/nozzle_P25_fields.png)
+![Micro-nozzle 25-kPa full-height parity-completed view: DSMC half-domain, selected registered-POD model and absolute differences](results/nozzle_transport/nozzle_P25_fields_full_domain.png)
 
 ![Micro-nozzle 25-kPa profiles comparing DSMC, interpolation and learned branches](results/nozzle_transport/nozzle_P25_profiles.png)
 
 The selected registered-POD polynomial model and trained neural branches are
 compared with the original interpolation baseline. The displayed transverse
 velocity on the symmetry plane is the prescribed **V = 0** boundary condition,
-not a learned accuracy result. Raw exports have a documented symmetry defect;
+not a learned accuracy result. The full-height field view is a parity-completed
+visualisation about that plane, not new CFD. Raw exports have a documented symmetry defect;
 these are historical-holdout regression results, not fresh blind validation.
 [Nozzle report](results/nozzle_transport/README.md)
 · [Raw boundary audit](results/nozzle_transport/symmetry_boundary_audit.png)
