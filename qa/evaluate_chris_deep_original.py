@@ -70,7 +70,19 @@ def main() -> None:
     parser.add_argument("--ny", type=int, default=661)
     parser.add_argument("--parameters", type=Path,
                         help="Training case-parameters.json for adapted parameter boxes")
+    parser.add_argument("--hidden-width", type=int, default=32,
+                        help="Width of each of the six hidden layers in the retained checkpoint")
+    parser.add_argument("--provenance", type=Path,
+                        help="Training provenance.json; verify architecture before restoring")
     args = parser.parse_args()
+
+    if args.hidden_width < 8:
+        parser.error("Hidden width must be at least 8")
+    architecture = [5] + [args.hidden_width] * 6 + [3]
+    if args.provenance:
+        provenance = json.loads(args.provenance.read_text())
+        if provenance.get("architecture") != architecture:
+            raise ValueError("Requested architecture does not match checkpoint provenance")
 
     src = load_source(args.source.resolve())
     if args.parameters:
@@ -90,7 +102,7 @@ def main() -> None:
     # A minimal PDE dataset builds the original graph without resampling the
     # 100,000 training points.  Network widths and the hard transform are exact.
     geom = dde.geometry.Rectangle([0, 0, 0, 0, 0], [1, 1, 1, 1, 1])
-    net = dde.maps.FNN([5] + [32] * 6 + [3], "tanh", "Glorot normal")
+    net = dde.maps.FNN(architecture, "tanh", "Glorot normal")
     net.apply_output_transform(src.output_transform_cavity_flow)
     data = dde.data.PDE(geom, src.pde, [], num_domain=2, num_boundary=0,
                         num_test=2, train_distribution="Hammersley")
@@ -122,6 +134,7 @@ def main() -> None:
     report = {
         "source": str(args.source),
         "checkpoint": str(args.checkpoint),
+        "architecture": architecture,
         "parameters": str(args.parameters) if args.parameters else None,
         "case": {"Re": args.re, "depth_over_width": args.depth, "tri": args.tri},
         "grid": {"nx": args.nx, "ny": args.ny},
