@@ -443,7 +443,7 @@
       "validation_mse_scaled": 0.7230814099311829
     }
   ],
-  "training_seconds": 116.82969097899996,
+  "training_seconds": 114.43852384999998,
   "tensorflow": "2.20.0",
   "numpy": "2.5.3",
   "branch_inputs": [
