@@ -41,6 +41,74 @@ historical global/vortex scores within 0.01 percentage points: uniform
 5.4451/87.9639%, zonal 7.3209/33.8113%. These use a different optimizer/batching
 protocol and are not extra controlled arms.
 
+## Vortex-aware sampling: relation to Roohi--Mahdavi and the negative result
+
+This experiment deliberately tested whether the vortex emphasis used in the
+Roohi--Mahdavi micro-step study transfers to the present architecture
+comparison. In that paper, the reference recirculation zone is defined by the
+streamwise-velocity condition $U_{\mathrm{DSMC}}<0$, and the objective balances
+separately normalized errors inside and outside that zone. The V5
+implementation expresses the same scientific idea through stratified sampling:
+for every zonal arm, 60% of the 60,000 optimizer draws come from training cells
+with $U_{\mathrm{DSMC}}<0$ and 40% from the remaining fluid cells. Uniform and
+zonal arms otherwise use the same development geometries, validation
+geometries, optimizer family, epoch budget and three seeds.
+
+The reference-derived mask is used only to prioritize **training labels**. It
+is never supplied as an inference input, and no H33/H58 validation velocity is
+used to construct a model input. This distinction is essential: using a
+target-derived vortex mask at inference would leak the answer and would not be
+a deployable vortex predictor.
+
+The controlled V5 result is mixed and does not support a general improvement
+claim:
+
+| Architecture | Uniform global % | Zonal global % | Change | Uniform $U<0$ % | Zonal $U<0$ % | Local interpretation |
+|---|---:|---:|---:|---:|---:|---|
+| MLP | 6.8611 | 10.2863 | +3.4252 points | 108.3983 | 44.3103 | large local reduction, but global degradation |
+| ordinary DeepONet | 14.0063 | 23.3082 | +9.3019 points | 190.4409 | 93.4109 | 50.95% relative local reduction, but still 93.41% error |
+| Geom-DeepONet | 10.5215 | 36.8317 | +26.3102 points | 104.3206 | 106.3438 | no local benefit and severe global degradation |
+
+These are terminal, three-seed, equally weighted H33/H58 validation means.
+They are not independent test scores. Most importantly, **zero of nine zonal
+fits** (three architectures times three seeds) produced a checkpoint satisfying
+the predeclared global-error ceiling. The apparent DeepONet vortex gain is
+therefore not an accepted model improvement: it trades away too much of the
+full field, remains inaccurate within the reverse-flow region, and fails the
+selection gate on every seed. Geom-DeepONet shows that the intervention is not
+even directionally reliable across architectures.
+
+This outcome does not contradict the article result. The retained
+Roohi--Mahdavi comparison changed the reported recirculation-zone error from
+14.6135% to 11.9413% (an 18.28% relative reduction), while the full-domain error
+changed only from 2.1739% to 2.2254%. V5 instead changes the sampling
+distribution of three newly controlled models, uses H33/H58 as repeatedly
+examined validation geometries, fixes $\alpha=0.6$ without an alpha sweep, and
+does not reproduce the article architecture, training history or model state.
+It is a transfer test of the idea, not a replication of the paper.
+
+Several mechanisms can explain the limited transfer without being claimed as
+proven causes. First, reverse-flow cells are a small and highly localized
+fraction of the domain, so repeated zonal draws reduce coverage of the main
+flow. Second, $U<0$ identifies reverse flow, not a vortex center, circulation,
+Q-criterion region or reattachment location; reducing error on those cells need
+not recover vortex topology. Third, Geom-DeepONet pools its sampled query
+cloud, so changing the sampling distribution also changes its global geometry
+context. Finally, validation geometries and training heights can differ in the
+size and position of their recirculation pockets, making a fixed sampling ratio
+an imperfect proxy for the target physics.
+
+The defensible conclusion is consequently narrow: vortex-aware sampling can
+redirect capacity toward reverse-flow cells, as the MLP and ordinary DeepONet
+local errors demonstrate, but it did not produce an acceptable overall model
+under the frozen V5 protocol. Future work should tune the zonal weight only on
+unopened validation data, retain a global-error guard, and report reverse-flow
+IoU, magnitude, component topology and reattachment diagnostics alongside the
+full-field error. The relevant source study is Roohi and Mahdavi, *Analysis of
+the rarefied flow at micro-step using a DeepONet surrogate model with a
+physics-guided zonal loss function*, Microfluidics and Nanofluidics 30, 44
+(2026), [doi:10.1007/s10404-026-02899-8](https://doi.org/10.1007/s10404-026-02899-8).
+
 Geom's query-cloud context sensitivity is non-negligible: the largest reported
 global/vortex shifts are 3.5037/13.1104% of the corresponding reference norm.
 These shifts are prediction changes, not model-error scores. Additional training
