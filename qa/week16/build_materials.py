@@ -28,7 +28,7 @@ def notebook():
 
 This complete worked lab uses newly generated Gmsh/SU2 data. You will inspect numerical verification, compare learned models, propose a fixed-volume shape, and examine fresh CFD checks.
 
-**Claim boundary:** the computed target is near-field peak pressure at $r/L=0.5$. This notebook does not compute atmospheric propagation or PLdB, and its axisymmetric body is not TMS-10. Read `ASSIGNMENT.md` for assessed extensions.
+**Claim boundary:** the computed target is near-field peak pressure at $r/L=0.5$. This notebook does not compute atmospheric propagation or PLdB, and its axisymmetric body is not TMS-10. Read [the assignment](ASSIGNMENT.md), [the model validation guide](MODEL_VALIDATION_GUIDE.md), and [the NASA reference walkthrough](NASA_REFERENCE_GUIDE.md) for assessed extensions and the distinction between analytical, experimental and learned-model checks.
 
 Run from a clone of FlowMLLab. Dependencies for the data-based lab: numpy, scipy, scikit-learn, pandas, matplotlib. Gmsh and SU2 are required only for regenerating CFD.''')
     code('''# FLOWMLLAB_COLAB_BOOTSTRAP_V1: sparse checkout for Week 16
@@ -45,7 +45,7 @@ if ROOT is None:
         target=Path('/content/FlowMLLab_week16')
         if not target.exists():
             subprocess.run(['git','clone','--depth','1','--filter=blob:none','--sparse','https://github.com/Ehsan-Roohi/FlowMLLab.git',str(target)],check=True)
-            subprocess.run(['git','-C',str(target),'sparse-checkout','set','qa/week16','results/week16_lowboom','notebooks/week16'],check=True)
+            subprocess.run(['git','-C',str(target),'sparse-checkout','set','qa/week16','results/week16_lowboom','notebooks/week16','cases/week16_lowboom/reference'],check=True)
         ROOT=target
     else:
         raise RuntimeError('Clone FlowMLLab, then open this notebook inside the checkout.')
@@ -87,6 +87,25 @@ cases = pd.read_csv(E/'case_metrics.csv')
 assert len(cases)==44 and cases['converged'].all()
 display(cases[['name','cells','iterations','residual_drop','drag_tail_relative_range']].head(8))
 display(Image(filename=str(E/'numerical_verification.png')))''')
+    md(r'''### NASA SEEB-ALR: read the independent reference first
+The NASA body is a separate validation geometry at Mach 1.6. Its original STEP geometry, two wind-tunnel records, coordinate-transform macros and NASA-hosted LAVA computation are retained under `cases/week16_lowboom/reference/`. See [the NASA guide](NASA_REFERENCE_GUIDE.md) for nose geometry, units, sampling position and mesh requirements.
+
+The following cell recomputes the **retained LAVA-versus-experiment** comparison. It is not a new SU2 result or experimental validation of the neural model. The pressure variable is $\Delta p/p_\infty$, related to $C_p$ by $\Delta p/p_\infty=\gamma M^2 C_p/2$. At Mach 1.6 this multiplier is 1.792. Source-prescribed shifts align the coordinates; no fit is used to improve agreement.''')
+    code('''from nasa_reference_data import report as nasa_report, load_reference
+nasa=nasa_report(write=False)
+print(nasa['comparison'])
+print('Fixed comparison window [inches]:',nasa['window_inches'])
+display(pd.DataFrame(nasa['metrics']).T)
+experiments,lava=load_reference()
+fig,ax=plt.subplots(figsize=(9,4))
+for label,curve in experiments.items():
+    line,=ax.plot(curve['x'],curve['pressure'],label=label)
+    ax.fill_between(curve['x'],curve['pressure']-curve['uncertainty'],curve['pressure']+curve['uncertainty'],color=line.get_color(),alpha=.15)
+ax.plot(lava['x'],lava['pressure'],'k--',label='NASA-hosted LAVA CFD')
+ax.set(xlim=(25,46),xlabel='Source-aligned x [inches]',ylabel='delta p / p infinity')
+ax.legend();fig.tight_layout();plt.show()
+print(nasa['alignment'])
+print(nasa['interpolation'])''')
     md(r'''## 3. Frozen geometry split
 POD and scalers are fitted on training cases only. Validation selects the design model. The test cases remain outside fitting and selection. Extrapolation extends parameter $b$ beyond the training interval. All splits belong to the same two-parameter geometry family.''')
     code('''display(pd.Series(data['splits']).value_counts().rename('Cases'))
@@ -101,7 +120,7 @@ assert len(np.unique(data['parameters'],axis=0))==44''')
 The POD expansion is $C_p(x;\theta)\approx\overline C_p(x)+\sum_{k=1}^{K}z_k(\theta)\phi_k(x)$.
 Each model predicts the same modal coefficients and log pressure drag. This notebook reruns model fitting, not the expensive CFD campaign.
 
-The MLP has two 32-neuron tanh hidden layers and a fixed seed. This is a teaching comparison, not a statistical architecture ranking. Record any optimizer warnings rather than suppressing them.''')
+The MLP has two 32-neuron tanh hidden layers and a fixed MLP seed. The PCA automatic solver is not seeded, so refitting can change the complete pipeline; see the model validation guide. This is a teaching comparison, not a statistical architecture ranking. Record any optimizer warnings rather than suppressing them.''')
     code('''train=data['splits']=='train'
 models={};scores=[]
 for kind in ['ridge','mlp','gp']:
@@ -128,6 +147,20 @@ for ax,i in zip(axs.flat,test[:4]):
         w,_=model.predict(data['parameters'][i]);ax.plot(data['x'],w[0],label=kind)
     ax.set(title=str(data['names'][i]),xlabel='x/L',ylabel='Cp')
 axs[0,0].legend();fig.tight_layout();plt.show()''')
+    md(r'''### Independent audit of the archived prediction snapshot
+The following comparison uses recovered **frozen predictions**, not the models refitted above. Eight held-out geometries were evaluated against archived finer-mesh CFD waveforms. The script verifies the original evidence hashes, geometry identities and coordinates, and exact equality of the two stored copies of the predictions.
+
+It reports the aggregate waveform error and the worst individual geometry separately. Passing an aggregate 10% threshold does not mean every geometry is below 10%. The compact arrays allow numerical comparisons to be checked; recovering them does not independently recover the original solver logs or prove the chronology of the runs. This is a refit of the published architecture, not the original author's full-aircraft neural network.''')
+    code('''from independent_audit_report import build_report
+audit=build_report(write=False)
+keys=['wave_relative_l2','peak_mean_relative_error','drag_mean_relative_error','worst_case_wave_relative_l2']
+display(pd.DataFrame({label:{key:100*audit[label][key] for key in keys} for label in ['paired_coarse_mesh','finer_mesh']}).rename_axis('Error [%]'))
+display(pd.DataFrame({'geometry':audit['names'],'finer_wave_error_percent':100*np.asarray(audit['finer_mesh']['per_case_wave_relative_l2'])}))
+print('Coarse/finer CFD waveform difference [%]:',100*audit['coarse_to_finer_wave_relative_l2'])
+print('Aggregate acceptance checks:',audit['checks'])
+assert audit['passed']
+display(Image(filename=str(E/'reference/independent_neural_test.png')))
+print('These archived predictions remain unchanged when the notebook refits its demonstration models.')''')
     md(r'''## 5. Propose a design with the surrogate
 The objective is minimum peak $C_p$ at $r/L=0.5$, with pressure drag at most 2% above baseline. Volume is enforced by parameterization. The retained optimization code uses a conservative search margin and checks feasibility explicitly after CFD. A predicted optimum is only a candidate.
 
@@ -202,6 +235,11 @@ def lecture():
         obj=Table([[para(str(v),'cell') for v in row] for row in rows],colWidths=[width/len(rows[0])]*len(rows[0]),repeatRows=1,hAlign='LEFT')
         obj.setStyle(TableStyle([('BACKGROUND',(0,0),(-1,0),colors.HexColor('#e8f0f4')),('LINEBELOW',(0,0),(-1,0),.5,colors.HexColor('#17384d')),('VALIGN',(0,0),(-1,-1),'TOP'),('TOPPADDING',(0,0),(-1,-1),5),('BOTTOMPADDING',(0,0),(-1,-1),5)]));return obj
     figs={'4.':('cfd_fields','Actual SU2 Cp fields in the meridional plane. The dashed line marks r/L=0.5; the body is shown at its true aspect ratio.'),'5.':('numerical_verification','Mesh sensitivity and density-residual convergence. Residuals and discretization differences support distinct claims.'),'7.':('dataset_learning','Frozen geometry identities and validation-selected model predictions. Extrapolation extends the second shape parameter.'),'8.':('design_shapes_signatures','Different volume-preserving shapes and their freshly recomputed pressure signatures. All curves in the lower panel are CFD.'),'9.':('condition_checks','Pressure signatures at three distances, and changes in peak Cp and pressure drag at independently recomputed Mach numbers.')}
+    reference_figures={
+        '11.':('reference/seeb_geometry','NASA SEEB-ALR as-built geometry. The nose and sting must be preserved when constructing the axisymmetric computational domain.'),
+        '12.':('reference/seeb_comparison','Original NASA wind-tunnel records and the independently submitted NASA-hosted LAVA prediction. This comparison does not represent a newly recovered SU2 calculation.'),
+        '13.':('reference/independent_neural_test','Recovered frozen neural predictions compared with eight finer-mesh CFD signatures. These predictions are not replaced by notebook refitting.')}
+    figs.update({key:value for key,value in reference_figures.items() if (E/(value[0]+'.png')).is_file()})
     summary=json.loads((E/'summary.json').read_text());val=summary['validation']
     source=(ROOT/'lectures/source/week16_supersonic_shape_optimization.md').read_text()
     story=[para('Supersonic Shape Optimization with Verified CFD','title'),para('FlowMLLab | Week 16 | Ehsan Roohi | MIE 690A','small'),para('Gmsh meshes, axisymmetric Euler simulations, learned models and independently recomputed designs.','body')]
@@ -220,7 +258,7 @@ def lecture():
                 fig=plt.figure(figsize=(7,.58));fig.text(.5,.5,eq,ha='center',va='center',fontsize=14);buf=BytesIO();fig.savefig(buf,format='png',dpi=220,bbox_inches='tight',pad_inches=.08);plt.close(fig);buf.seek(0)
                 im=Image(buf);factor=min(width/im.imageWidth,55/im.imageHeight);im.drawWidth*=factor;im.drawHeight*=factor;story.extend([Spacer(1,5),im,Spacer(1,5)])
         if key in figs:
-            name,caption=figs[key];im=Image(str(E/(name+'.png')));scale=min(width/im.imageWidth,250/im.imageHeight);im.drawWidth*=scale;im.drawHeight*=scale;nfig+=1
+            name,caption=figs[key];im=Image(str(E/(name+'.png')));scale=min(width/im.imageWidth,(360 if key in reference_figures else 250)/im.imageHeight);im.drawWidth*=scale;im.drawHeight*=scale;nfig+=1
             story.append(KeepTogether([Spacer(1,6),im,Spacer(1,4),para(f'Figure {nfig}. {caption}','small')]))
         if key=='5.':
             rows=[['Numerical check','Observed difference','Criterion'],['Cone pressure',f"{100*summary['benchmark']['relative_error']:.2f}%",'<3%'],['Baseline peak, mesh',f"{100*val['baseline_peak_mesh_difference']:.2f}%",'<5%'],['Baseline drag, mesh',f"{100*val['baseline_drag_mesh_difference']:.2f}%",'<3%'],['Baseline peak, domain',f"{100*val['baseline_domain_peak_difference']:.2f}%",'<1%']]

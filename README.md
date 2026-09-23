@@ -1,15 +1,10 @@
 <h1><img src="docs/assets/flowmllab-logo.png" alt="FlowMLLab — fluid-streamline F logo" width="520"></h1>
 
-**New in v1.8.4:** the review follow-up release. It restores the axis label
-that the v1.8.3 figure repair removed, refreshes the Week 15 provenance,
-notebook record and lecture, adds a [glossary](docs/GLOSSARY.md), defines the
-quarantined `g005` geometry, unifies the Week 9 lab labels, records the CI
-regeneration of the family-holdout evidence, and gives Track 6 a clear stop on
-CPU-only machines. [Release notes](RELEASE_NOTES_v1.8.4.md).
+**New in v1.9.0:** Week 16 now includes NASA SEEB-ALR original geometry and reference records, a frozen-prediction neural audit, and detailed guides that distinguish cone verification, experimental CFD validation and surrogate testing. The notebook runs from a clean checkout. [Release notes](RELEASE_NOTES_v1.9.0.md).
 
 **Week 16:** [Supersonic shape optimization](notebooks/week16/README.md):
 44 new Gmsh/SU2 axisymmetric Euler cases, an executed learning-and-design notebook,
-a seven-page lecture, and fresh CFD verification of the optimized geometry.
+an expanded lecture, and fresh CFD verification of the optimized geometry.
 On the finer mesh, peak near-field Cp decreases by 20.8% and pressure drag by 4.5%.
 These are near-field results; atmospheric propagation and ground loudness are not computed.
 
@@ -648,7 +643,7 @@ Student submissions are not included.
 · [Citation metadata](CITATION.cff)
 · [Workshop, support, and consulting details](docs/RESULTS_GUIDE.md#workshops-support-and-consulting)
 
-Current release: **v1.8.4** · [GitHub release](https://github.com/Ehsan-Roohi/FlowMLLab/releases/tag/v1.8.4)
+Current release: **v1.8.4** · [GitHub release](https://github.com/Ehsan-Roohi/FlowMLLab/releases/tag/v1.9.0)
 · [all-version Zenodo DOI 10.5281/zenodo.22074169](https://doi.org/10.5281/zenodo.22074169)
 · [Release notes](RELEASE_NOTES_v1.8.4.md).
 The frozen v1.8.0 evidence archive remains at

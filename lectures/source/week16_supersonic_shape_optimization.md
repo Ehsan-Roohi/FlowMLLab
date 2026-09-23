@@ -50,7 +50,7 @@ The campaign contains 24 training geometries, six validation geometries, eight t
 
 Fit all scalers and the POD basis on training data only. The pressure signature is represented by its mean plus a linear combination of up to 12 principal modes. A model maps the two shape parameters to the POD coefficients and log pressure-drag coefficient. The logarithm ensures a positive reconstructed drag. Ridge regression, a two-hidden-layer tanh MLP and a Matern Gaussian process use the same training cases and output representation.
 
-Architectures are fixed in advance. Select the design model by the sum of validation peak and drag mean relative errors. The test and extrapolation errors are reported after this decision. Report waveform relative L2, peak error and drag error separately because a visually good waveform can still have an important error at a shock peak. A single seed is a reproducible teaching experiment, not a statistical ranking of architecture families.
+Architectures are fixed in advance. Select the design model by the sum of validation peak and drag mean relative errors. The test and extrapolation errors are reported after this decision. Report waveform relative L2, peak error and drag error separately because a visually good waveform can still have an important error at a shock peak. A single fixed-architecture training experiment is not a statistical ranking of architecture families. Refit variability is discussed in Section 13.
 
 ## 8. Optimization and independent recomputation
 
@@ -76,6 +76,36 @@ A multi-solution inverse method should be assessed through forward recomputation
 
 The present module offers a reproducible educational experiment: new Gmsh meshes, actual SU2 data, independent pressure benchmarking, transparent learned baselines and freshly recomputed design proposals. It does not reproduce TMS-10 or the full Beihang aircraft, and it does not demonstrate community-level noise reduction.
 
+## 11. Reading the NASA geometry and pressure records
+
+The NASA SEEB-ALR benchmark serves a different purpose from both the Taylor-Maccoll cone and the design body. The cone has a similarity solution for wall pressure. SEEB-ALR has an as-built CAD geometry and off-body wind-tunnel pressure records. Our design body has two parameters chosen for a tractable learning exercise. The network is not trained on the NASA geometry.
+
+Start from NASA's original STEP file, not a traced silhouette. The file is imported in millimetres; the physical reference length is 17.667 inches, or 448.7418 mm. Divide all CAD coordinates by this length. Retain the finite nose and the downstream sting. Extending the sting to the computational outflow is a numerical domain choice that must be documented separately from the supplied model.
+
+The comparison condition is Mach 1.6 at zero incidence. The pressure extraction line is 21.2 inches from the axis, so r/L = 21.2/17.667. NASA provides pressure excess normalized by freestream pressure. Our design plots use Cp, normalized by dynamic pressure. The conversion is dp/p_inf = (gamma M_inf^2/2) Cp. Comparing these two quantities without conversion gives the wrong amplitude even if the CFD pressure is correct.
+
+The original NASA Tecplot macros specify longitudinal coordinate shifts. Preserve those shifts and show the comparison window. Do not shift a calculated shock onto a measured shock to reduce the error. A student should be able to regenerate every x coordinate from the distributed raw record and macro.
+
+## 12. Comparing CFD with experiment
+
+Plot three kinds of evidence distinctly: NASA wind-tunnel measurements, NASA's archived LAVA calculation, and our SU2 calculation. LAVA is a separate numerical solution, not an exact answer. Agreement between two solvers is useful, but agreement with an experiment addresses a different question. The NASA data files and their uncertainty columns are retained unchanged alongside a hash manifest.
+
+For a reference vector y and interpolated prediction y_hat at the same coordinates, the waveform error is norm(y_hat-y)/norm(y). Also report the relative error in the positive pressure peak. A small peak error can coexist with a large waveform error when the shock location or expansion width is wrong. Plot the signed difference as well as the pressure curves, and declare the comparison window before interpreting the error.
+
+Residual convergence concerns the algebraic solution on one mesh. Refine the mesh and compare the extracted waveforms to assess discretization sensitivity. An observed difference between the last two meshes is not a formal grid convergence index. Inspect the nose resolution, mesh alignment and shock region as well as the total cell count. A very small density residual cannot repair an incorrectly represented nose.
+
+The executable NASA report and its JSON output contain the current measured differences. Follow the NASA_REFERENCE_GUIDE.md reproduction instructions to regenerate the geometry, solve the flow and recompute the comparison. These comparisons assess the CFD benchmark within its stated assumptions; they do not experimentally validate the learned two-parameter model. The finite nose cap remains two cells across levels, so this is not uniform refinement of the entire domain.
+
+## 13. Auditing the learned model with frozen predictions
+
+The recovered audit contains eight test geometries, archived model predictions, and CFD waveforms recomputed on a finer mesh. The report verifies the original dataset and recovered file hashes, geometry ordering, coordinate equality, and exact equality of the prediction arrays before computing errors. No retraining occurs in the audit report.
+
+The aggregate relative waveform error is 7.15%, the mean relative positive-peak error is 3.45%, and the mean relative pressure-drag error is 1.69%. The largest individual waveform error is 15.80%. Thus the declared aggregate 10% thresholds pass, but a statement that every prediction is within 10% would be false. Against the original coarse CFD, the same frozen predictions have 5.05% aggregate waveform error; the coarse-to-finer CFD difference is 3.86%.
+
+This audit represents a refit of the published architecture. The original trained checkpoint was not retained. The PCA automatic solver can use randomized SVD, so a fixed MLP seed alone does not fix the whole fitted pipeline. Use the archived predictions for reproducing these audit numbers; treat a newly fitted model as a new realization. The recovered compact arrays support the numerical comparisons, while their original raw solver logs are not part of the recovered audit evidence.
+
+The Beihang journal study uses a full aircraft, 36 geometric descriptors, 3,480 samples, forward and inverse networks, and atmospheric propagation. This educational module does not implement that complete chain. Reproducing it faithfully requires the authors' geometry and data, as well as the propagation and training settings. A lower near-field pressure peak alone is not evidence of lower ground PLdB.
+
 ## References
 
 Zheng, Q., Liang, Y., Yang, Y. and Pan, C. (2026). Research on low-drag low-boom supersonic transport configuration using an MDO framework and deep learning methods. Aerospace Science and Technology 178, 113218. https://doi.org/10.1016/j.ast.2026.113218
@@ -89,3 +119,7 @@ Taylor, G. I. and Maccoll, J. W. (1933). The air pressure on a cone moving at hi
 AIAA/NASA Sonic Boom Prediction Workshop: https://lbpw.larc.nasa.gov/ . Workshop summary and data description: https://lbpw-ftp.larc.nasa.gov/lbpw1/presentations/21a_park-summary.pdf .
 
 scikit-learn documentation: https://scikit-learn.org/stable/ . See PCA, MLPRegressor and GaussianProcessRegressor for the fitted models and conventions.
+
+Earlier Chinese aerodynamic optimization article: https://doi.org/10.7638/kqdlxxb-2025.0081 . This is distinct from the 2026 neural-network article above.
+
+NASA SEEB-ALR test case and source files: https://lbpw.larc.nasa.gov/sbpw1/test-cases/seeb-alr/ and https://lbpw-ftp.larc.nasa.gov/lbpw1/ . See cases/week16_lowboom/reference/source_manifest.json for exact source URLs and hashes.
