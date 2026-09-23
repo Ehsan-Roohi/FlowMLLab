@@ -91,13 +91,13 @@ Report mesh sensitivity as the difference between named mesh levels. Two similar
 The implemented driver can be run from the repository root after installing the dependencies in `qa/week16/requirements.txt` and putting SU2 on PATH:
 
 ```bash
-python qa/week16/seeb_reference.py --level 1 --mesh-only
+python qa/week16/seeb_reference.py --level 1 --mesh-only --name mesh_preview
 python qa/week16/seeb_reference.py --level 1
 python qa/week16/seeb_reference.py --level 2
 python qa/week16/seeb_reference.py --level 2.5
 ```
 
-Alternatively set `SU2_CFD` to the absolute executable path. Each level writes its own `results/week16_lowboom/reference/seeb_level_*` folder. The driver retains the geometry through the original CAD sting endpoint at x/L≈1.656, then extends the cylindrical sting to the outlet. The finite nose cap has two cells at every level; this is an explicit limit of the refinement family. The extracted file uses keys `x_inches` and `dp_pinf`, so its normalization is visible without guessing from a plot.
+Alternatively set `SU2_CFD` to the absolute executable path. Fresh folder names are required: the driver refuses to overwrite evidence. The default settings are Roe flux, entropy fix 0.05, fixed CFL 5, limiter freeze at iteration 2000 and convergence checks starting at iteration 2500. A maximum of 8000 iterations is allowed; convergence must still meet the recorded residual and drag criteria. Each level writes its own `results/week16_lowboom/reference/seeb_level_*` folder. The driver retains the geometry through the original CAD sting endpoint at x/L≈1.656, then extends the cylindrical sting to the outlet. The finite nose cap has two cells at every level; this is an explicit limit of the refinement family. The extracted file uses keys `x_inches` and `dp_pinf`, so its normalization is visible without guessing from a plot.
 
 No independently checkable new SU2-versus-NASA error table is asserted by this guide alone. A release claiming such validation must include its actual run evidence and a script that recomputes the table from that evidence. The archived NASA files remain useful without a new solver run.
 

@@ -42,12 +42,13 @@ def check_su2_mesh(path, expected_cells=None, expected_nodes=None):
             if not line.startswith(key+'='):raise ValueError(f'Missing {key} in {path}')
             return int(line.split('=',1)[1].split()[0])
         if header('NDIME')!=2:raise ValueError('Expected axisymmetric 2D meridian mesh')
-        cells=header('NELEM')
+        cells=header('NELEM');used_nodes=set()
         for _ in range(cells):
             row=stream.readline().split()
             if len(row)<5 or row[0]!='9':raise ValueError('Truncated/non-quadrilateral element')
-            [int(v) for v in row]
+            [int(v) for v in row];used_nodes.update(int(v) for v in row[1:5])
         nodes=header('NPOIN')
+        if used_nodes!=set(range(nodes)):raise ValueError('Fluid connectivity does not cover exported node IDs')
         for _ in range(nodes):
             row=stream.readline().split()
             if len(row)!=3:raise ValueError('Truncated coordinate record')
@@ -125,9 +126,14 @@ def mesh(folder,level=1.,shear=1.,height=2.,end=3.5):
         for name,curves in [('body',[cap]+bottom[1:]),('axis',[axis]),('farfield',top+[radial[0],radial[-1]])]:
             t=gmsh.model.addPhysicalGroup(1,curves);gmsh.model.setPhysicalName(1,t,name)
         gmsh.model.addPhysicalGroup(2,surfaces,1);gmsh.model.mesh.generate(2)
-        _,tags,_=gmsh.model.mesh.getElements(2);tags=np.concatenate(tags)
-        quality=gmsh.model.mesh.getElementQualities(tags,'minSJ');nodes=gmsh.model.mesh.getNodes()[0]
-        result={'gmsh_version':gmsh.__version__,'cells':len(tags),'nodes':len(nodes),'min_scaled_jacobian':float(min(quality)),'nose_x_over_L':xn,'nose_radius_over_L':rn,'tail_x_over_L':xt,'tail_radius_over_L':rt,'height_over_L':height,'end_over_L':end,'nose_cap_cells':nc,'shear_dx_dr':shear,'level':level,'cad_sha256':hashlib.sha256(SOURCE.read_bytes()).hexdigest()}
+        _,tags,connectivity=gmsh.model.mesh.getElements(2);tags=np.concatenate(tags)
+        # getNodes() also includes the unused spline control-point entities.
+        # SU2 exports the physical fluid mesh, whose nodes are defined by its
+        # element connectivity; use that same set for all count checks.
+        nodes=np.unique(np.concatenate(connectivity))
+        all_gmsh_nodes=gmsh.model.mesh.getNodes()[0]
+        quality=gmsh.model.mesh.getElementQualities(tags,'minSJ')
+        result={'gmsh_version':gmsh.__version__,'cells':len(tags),'nodes':len(nodes),'gmsh_all_nodes':len(all_gmsh_nodes),'unused_geometry_nodes':len(all_gmsh_nodes)-len(nodes),'min_scaled_jacobian':float(min(quality)),'nose_x_over_L':xn,'nose_radius_over_L':rn,'tail_x_over_L':xt,'tail_radius_over_L':rt,'height_over_L':height,'end_over_L':end,'nose_cap_cells':nc,'shear_dx_dr':shear,'level':level,'cad_sha256':hashlib.sha256(SOURCE.read_bytes()).hexdigest()}
         if result['min_scaled_jacobian']<=0: raise ValueError('Invalid mesh')
         for attempt in range(3):
             temporary=folder/'mesh.partial.su2';gmsh.write(str(temporary))

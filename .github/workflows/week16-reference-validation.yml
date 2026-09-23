@@ -1,4 +1,5 @@
 name: Week 16 NASA reference validation
+# Physical fluid nodes exclude unused CAD/spline control points.
 on:
   push:
     branches: [week16-reference-recovery]

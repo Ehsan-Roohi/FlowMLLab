@@ -106,6 +106,14 @@ This audit represents a refit of the published architecture. The original traine
 
 The Beihang journal study uses a full aircraft, 36 geometric descriptors, 3,480 samples, forward and inverse networks, and atmospheric propagation. This educational module does not implement that complete chain. Reproducing it faithfully requires the authors' geometry and data, as well as the propagation and training settings. A lower near-field pressure peak alone is not evidence of lower ground PLdB.
 
+## 14. A portable checkpoint and its limits
+
+A separate later refit is distributed as model_checkpoint.npz, containing the training scalers, full-SVD POD basis and all network weights. The NumPy-only FrozenSurrogate class evaluates these arrays without retraining. The audit verifies the 24 training identities, scalers, POD training subspace, layer dimensions and eight test coordinates. It does not infer a training chronology from the arrays alone.
+
+On the retained finer-mesh cases this checkpoint has 6.39% aggregate waveform error, 1.93% mean peak error and 1.57% mean drag error; the worst waveform error is 14.63%. The comparison is retrospective because the finer references already existed. On six extrapolation geometries, waveform error rises to 34.16% and drag error to 22.14%. These failures matter when an optimizer searches beyond the training region.
+
+Keep the historical prediction audit, this portable refit and newly fitted notebook models distinct. A model that reproduces a pressure waveform within a two-parameter family has not thereby learned general aircraft aerodynamics. The historical design improvement belongs to the model that proposed that design; every new optimized candidate still needs fresh CFD.
+
 ## References
 
 Zheng, Q., Liang, Y., Yang, Y. and Pan, C. (2026). Research on low-drag low-boom supersonic transport configuration using an MDO framework and deep learning methods. Aerospace Science and Technology 178, 113218. https://doi.org/10.1016/j.ast.2026.113218

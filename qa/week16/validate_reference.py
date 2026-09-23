@@ -2,6 +2,15 @@
 import json,hashlib,sys
 from pathlib import Path
 import numpy as np
+from freeze_model import audit as checkpoint_report
+from seeb_reference import verify_run
+
+def same(a,b):
+    if isinstance(a,dict):return isinstance(b,dict) and a.keys()==b.keys() and all(same(a[k],b[k]) for k in a)
+    if isinstance(a,list):return isinstance(b,list) and len(a)==len(b) and all(same(x,y) for x,y in zip(a,b))
+    if isinstance(a,float):return isinstance(b,(float,int)) and bool(np.isclose(a,b,rtol=1e-10,atol=1e-12))
+    return a==b
+
 from independent_audit_report import build_report as neural_report
 from reference_report import build_report as cfd_report
 ROOT=Path(__file__).resolve().parents[2]
@@ -14,13 +23,19 @@ def validate():
         assert hashlib.sha256((src/row['file']).read_bytes()).hexdigest()==row['sha256']
     neural=neural_report(write=False)
     saved=json.loads((r/'neural_audit.json').read_text())
-    assert neural==saved,'Neural audit report is stale'
+    assert same(neural,saved),'Neural audit report is stale'
     assert neural['passed'] and all(neural['identity_checks'].values())
     cfd=cfd_report(write=False)
-    assert cfd==json.loads((r/'seeb_validation.json').read_text()),'CFD comparison is stale'
+    assert same(cfd,json.loads((r/'seeb_validation.json').read_text())),'CFD comparison is stale'
     assert cfd['passed'],cfd['checks']
+    checkpoint=checkpoint_report(write=False)
+    assert checkpoint['passed']
+    assert same(checkpoint,json.loads((r/'checkpoint_audit.json').read_text())), 'Checkpoint audit is stale'
     for row in cfd['runs']:
         d=r/f"seeb_level_{row['level']:g}";m=row['metadata']
+        verify_run(d)
+        assert m['fixed_cfl'] and m['max_cfl']==5 and m['entropy_fix_coeff']==.05
+        assert m['limiter_freeze_iteration']==2000 and m['convergence_start_iteration']==2500
         assert m['returncode']==0 and m['converged']
         assert m['density_residual_log10']<=-9 and m['residual_drop']>=5
         assert m['min_pressure']>0 and m['min_density']>0

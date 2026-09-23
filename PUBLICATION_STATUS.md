@@ -1,7 +1,7 @@
 # Week 16 publication status
 
-This is a recovery/development branch, not the completed v1.9.0 release. Main and the published release have not been updated with this reference extension.
+This is the recovery/development branch for v1.9.0. Main and the published release have not yet been updated with this reference extension.
 
-Retained here: NASA original source files, recovered frozen neural audit arrays and predictions, instructional guides and work-in-progress validation scripts. The portable model checkpoint was recovered from its previously uploaded Git blob. Its final inference script and audit report still need recovery before this checkpoint is a complete teaching deliverable.
+The NASA original geometry and pressure records, recovered frozen neural audit arrays, portable NumPy checkpoint with inference code, and instructional guides are retained here. The portable checkpoint passes the declared retrospective in-family numerical tests; extrapolation limitations are reported explicitly.
 
-Automated workspace maintenance removed the uncommitted working copy and reconstructed NASA run outputs before final publication. Do not treat the missing final NASA comparison or the incomplete release as validated/published. The version metadata in this branch describes the intended release only.
+Three new NASA mesh calculations are executed by `.github/workflows/week16-reference-validation.yml`. Raw results are retained as workflow artifacts. Publication requires convergence, physical fields, the declared experimental and mesh-sensitivity gates, notebook execution, PDF visual review and repository tests. A failed or unfinished gate is not a validated result. The version metadata describes the intended release only.
