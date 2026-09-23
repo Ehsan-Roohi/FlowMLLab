@@ -44,3 +44,7 @@ notebooks/week05_06/P5_5A_cases_v12.npz
 
 # Local binaries for reproducible Week 16 CFD
 .tools/
+
+# NASA raw solver fields are retained in workflow/release archives.
+results/week16_lowboom/reference/seeb_level_*/
+nasa-level-*.tar.gz

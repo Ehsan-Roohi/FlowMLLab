@@ -59,6 +59,60 @@ A rigorous independent CFD audit freezes predictions **before** the new referenc
 
 The recovered frozen-prediction audit can be recomputed with `python qa/week16/independent_audit_report.py`. It compares the same eight geometries and the same archived predictions against both original and finer-mesh CFD arrays. Its report, `results/week16_lowboom/reference/neural_audit.json`, verifies the original blob hashes and separates recoverable numerical evidence from unavailable solver-log evidence. Notebook refits do not replace those predictions.
 
+## 4a. Run the retained model without fitting it again
+
+The release also includes a **different, retained full-SVD refit** in `results/week16_lowboom/reference/model_checkpoint.npz`. This portable checkpoint stores the input and output scalers, training pressure mean, 12 POD modes, three weight matrices, three bias vectors, axial sampling coordinates and the 24 training geometry identifiers. It uses ordinary numeric arrays; loading it does not deserialize executable Python objects.
+
+From the repository root, run:
+
+```bash
+python qa/week16/freeze_model.py
+```
+
+This command **does not retrain or rewrite the checkpoint**. It regenerates `checkpoint_audit.json` using NumPy inference. It checks array shapes and finite values, independently recomputes the training scalers and POD subspace, confirms that the finer CFD samples have the same geometry identifiers and sampling coordinates, and compares batched with one-at-a-time predictions. All 24 training IDs are disjoint from the eight test IDs.
+
+To predict one geometry interactively:
+
+```python
+import sys
+sys.path.insert(0, "qa/week16")
+from freeze_model import FrozenSurrogate
+model = FrozenSurrogate()
+waveform, drag = model.predict([[0.0, 0.0]])
+x_over_L = model.arrays["x"]
+# waveform[0] is Cp on the teaching observation line r/L = 0.5.
+# drag[0] is the predicted pressure-drag coefficient, not total viscous drag.
+```
+
+Each inference follows these equations:
+
+$$h_0=(q-\mu_q)/s_q,\quad h_1=\tanh(h_0W_0+b_0),\quad h_2=\tanh(h_1W_1+b_1),$$
+$$z=(h_2W_2+b_2)s_z+\mu_z,\quad\widehat C_p=z_{1:12}\Phi+\overline C_p,\quad\widehat C_D=\exp(z_{13}).$$
+
+Here division and scaling are componentwise, `q=(a,b)`, and each row of `Phi` is a training POD mode. The final MLP layer is linear; applying `tanh` there would produce the wrong model.
+
+| Eight-case finer-CFD comparison | Historical frozen-prediction audit | Retained portable checkpoint |
+|---|---:|---:|
+| Aggregate waveform relative L2 | 7.1541% | 6.3903% |
+| Mean peak relative error | 3.4469% | 1.9271% |
+| Mean pressure-drag relative error | 1.6936% | 1.5708% |
+| Worst individual waveform relative L2 | 15.7984% | 14.6268% |
+
+These columns describe **two model identities**, not two implementations of identical weights. The historical column uses unchanged frozen predictions whose original weights were not retained. The portable column is a later refit, evaluated retrospectively on the already available finer CFD data. Do not describe the difference as a demonstrated improvement on a fresh blind test. Do not replace historical predictions with portable-model outputs while retaining the historical audit label.
+
+The same portable checkpoint has the following errors against the original CFD mesh:
+
+| Split | Geometries | Waveform relative L2 | Mean peak error | Mean drag error |
+|---|---:|---:|---:|---:|
+| Training | 24 | 0.2740% | 0.1188% | 0.1031% |
+| Validation | 6 | 2.8963% | 1.0569% | 1.6227% |
+| Test | 8 | 4.1000% | 1.7557% | 2.5784% |
+| Extrapolation | 6 | 34.1628% | 6.0284% | 22.1449% |
+
+The extrapolation errors are substantial. The aggregate interpolation pass does not authorize use beyond the training geometry range. This provides a useful classroom counterexample: positive drag and a reasonable pressure peak do not guarantee an accurate waveform or a reliable design constraint.
+
+The portable checkpoint's Git blob SHA is `11337027584a29e44c78ef52e8dfd9c3cc034109`; its SHA-256 is recorded in `checkpoint_audit.json`. The numerical comparison passes the inherited teaching thresholds of 10% for each **aggregate** metric. The worst individual waveform error exceeds 10%, which is why the report also gives all eight individual errors. Checking training statistics establishes consistency with the training subset; it cannot independently prove every historical model-selection decision. A new prospective generalization claim requires a new locked model and new reference cases.
+
 ## 5. Optimization needs its own final check
 
 A low average test error is not a guarantee at the optimizer's chosen geometry. The optimizer may deliberately reach regions where the surrogate is optimistic. For every proposed candidate:

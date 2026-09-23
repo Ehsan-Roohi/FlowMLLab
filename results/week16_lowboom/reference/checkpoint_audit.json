@@ -1,0 +1,186 @@
+{
+  "model_identity": "Retained portable full-SVD refit checkpoint; distinct from the historical frozen-prediction audit model.",
+  "checkpoint": {
+    "sha256": "9b7a0f22671950c9ab1c86b3fc0790ba4d992a606ca429c60a2a2f18b92a6f72",
+    "github_blob_sha": "11337027584a29e44c78ef52e8dfd9c3cc034109",
+    "bytes": 73536
+  },
+  "dataset": {
+    "sha256": "8148f318598ce3e48ca27cbcd39e7ad5cfd8d98a2bfe75d00e286aa79e662a2f",
+    "github_blob_sha": "7dff4070a20cd8771a1605ab1c4983df1a9bcec3",
+    "bytes": 169620
+  },
+  "finer_reference": {
+    "sha256": "997f05fae559329b882a5c8591061473859af85bdf62702f4edcbd6a0e37f367",
+    "github_blob_sha": "d3a595477981217e6878727045bbed7aa2146f76",
+    "bytes": 67642
+  },
+  "training_names": [
+    "train_000",
+    "train_001",
+    "train_002",
+    "train_003",
+    "train_004",
+    "train_005",
+    "train_006",
+    "train_007",
+    "train_008",
+    "train_009",
+    "train_010",
+    "train_011",
+    "train_012",
+    "train_013",
+    "train_014",
+    "train_015",
+    "train_016",
+    "train_017",
+    "train_018",
+    "train_019",
+    "train_020",
+    "train_021",
+    "train_022",
+    "train_023"
+  ],
+  "architecture": {
+    "input": 2,
+    "hidden": [
+      32,
+      32
+    ],
+    "hidden_activation": "tanh",
+    "output": 13,
+    "output_activation": "identity",
+    "pod_modes": 12,
+    "waveform_samples": 561,
+    "drag_transform": "log during fitting, exponential during inference"
+  },
+  "checks": {
+    "array_shapes_and_finiteness": true,
+    "training_ids_match": true,
+    "training_only_scalers_and_pod_mean": true,
+    "training_pod_subspace_matches": true,
+    "batch_and_single_inference_agree": true,
+    "finer_geometry_ids_and_coordinates_match": true
+  },
+  "pod_training_subspace_difference_frobenius": 0.0,
+  "original_mesh": {
+    "train": {
+      "cases": 24,
+      "wave_relative_l2": 0.002740163396778962,
+      "peak_mean_relative_error": 0.0011876216670411953,
+      "drag_mean_relative_error": 0.0010314651235813442,
+      "per_case_wave_relative_l2": [
+        0.002490794890918866,
+        0.0034275382940053877,
+        0.003840753445380277,
+        0.0021804667014070863,
+        0.0024172489418130454,
+        0.002411923167018312,
+        0.002863740969797136,
+        0.002778226712682573,
+        0.003645174854985034,
+        0.0037061076847048247,
+        0.001583233460819411,
+        0.0032014518438198566,
+        0.004493211162014928,
+        0.0010392444879247353,
+        0.0048118429745252315,
+        0.0024802085956558578,
+        0.0030158338679599113,
+        0.0021333821430479416,
+        0.0031444372755611693,
+        0.0014436602678946527,
+        0.0024180946005761704,
+        0.002647270479781006,
+        0.0024552184720351084,
+        0.0019100420744912494
+      ],
+      "worst_case_wave_relative_l2": 0.0048118429745252315
+    },
+    "validation": {
+      "cases": 6,
+      "wave_relative_l2": 0.028962835239031967,
+      "peak_mean_relative_error": 0.010569470882189144,
+      "drag_mean_relative_error": 0.01622652252017957,
+      "per_case_wave_relative_l2": [
+        0.005001262011243038,
+        0.029721923875881805,
+        0.035882245171146444,
+        0.02270164976446381,
+        0.014212532844571567,
+        0.05444030097209943
+      ],
+      "worst_case_wave_relative_l2": 0.05444030097209943
+    },
+    "test": {
+      "cases": 8,
+      "wave_relative_l2": 0.0410001435550755,
+      "peak_mean_relative_error": 0.017556615506555504,
+      "drag_mean_relative_error": 0.025784329340277024,
+      "per_case_wave_relative_l2": [
+        0.10629309375814454,
+        0.033417369236024334,
+        0.02595451590833382,
+        0.0445250359293436,
+        0.015578595121890729,
+        0.019177734351736364,
+        0.03770664346270726,
+        0.02837654522519379
+      ],
+      "worst_case_wave_relative_l2": 0.10629309375814454
+    },
+    "extrapolation": {
+      "cases": 6,
+      "wave_relative_l2": 0.3416284780228949,
+      "peak_mean_relative_error": 0.060283758813723144,
+      "drag_mean_relative_error": 0.22144945730365487,
+      "per_case_wave_relative_l2": [
+        0.16934735484705726,
+        0.2925472648605353,
+        0.31728844902439807,
+        0.3284033021493694,
+        0.4275275134688191,
+        0.42015559451079204
+      ],
+      "worst_case_wave_relative_l2": 0.4275275134688191
+    }
+  },
+  "finer_mesh": {
+    "wave_relative_l2": 0.06390341641193648,
+    "peak_mean_relative_error": 0.01927123657378478,
+    "drag_mean_relative_error": 0.015708156959249167,
+    "per_case_wave_relative_l2": [
+      0.1462675952111829,
+      0.05412300606668356,
+      0.037754608477133536,
+      0.07493809105616682,
+      0.016859663740945604,
+      0.030807697972643266,
+      0.07799365190777743,
+      0.058565719267289346
+    ],
+    "worst_case_wave_relative_l2": 0.1462675952111829
+  },
+  "thresholds": {
+    "wave_relative_l2": 0.1,
+    "peak_mean_relative_error": 0.1,
+    "drag_mean_relative_error": 0.1
+  },
+  "numerical_accuracy_checks": {
+    "wave_relative_l2": true,
+    "peak_mean_relative_error": true,
+    "drag_mean_relative_error": true
+  },
+  "passed": true,
+  "relative_difference_from_historical_frozen_wave_predictions": 0.024122565532231646,
+  "scope": "Reproducible inference and numerical evaluation on retained CFD arrays within the two-parameter teaching family.",
+  "limitations": [
+    "This checkpoint is a later refit. It is not the missing original historical checkpoint or a model from the Chinese paper.",
+    "The finer CFD labels existed before this checkpoint was retained. This is a retrospective evaluation, not a new prospective blind test.",
+    "Training scalers, POD and identifiers are verified against training data. Checkpoint arrays alone cannot independently establish the complete historical fitting procedure or absence of prior model selection.",
+    "The 10% aggregate thresholds are inherited teaching criteria, not experimental uncertainty limits; individual cases may exceed 10%.",
+    "Compact CFD arrays do not establish original solver convergence without the associated raw logs.",
+    "No experimental neural validation, NASA-geometry generalization, full-aircraft replication or ground-noise prediction is established.",
+    "Historical optimized designs belong to the model used to propose them; this refit does not retroactively validate its own optimized candidates."
+  ]
+}
