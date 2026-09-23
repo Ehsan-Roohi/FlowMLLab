@@ -7,6 +7,12 @@ quarantined `g005` geometry, unifies the Week 9 lab labels, records the CI
 regeneration of the family-holdout evidence, and gives Track 6 a clear stop on
 CPU-only machines. [Release notes](RELEASE_NOTES_v1.8.4.md).
 
+**Week 16:** [Supersonic shape optimization](notebooks/week16/README.md):
+44 new Gmsh/SU2 axisymmetric Euler cases, an executed learning-and-design notebook,
+a seven-page lecture, and fresh CFD verification of the optimized geometry.
+On the finer mesh, peak near-field Cp decreases by 20.8% and pressure drag by 4.5%.
+These are near-field results; atmospheric propagation and ground loudness are not computed.
+
 **Week 14:** [RANS, PINN and neural turbulence closures](notebooks/week14/README.md)
 based on Lars Davidson's pyCALC-RANS workflow: an executed teaching notebook,
 [seven-page lecture](lectures/week14_rans_pinn_nn.pdf), and a transparent reproduction
@@ -21,7 +27,7 @@ generate numerical data, compare transparent baselines with learned models, and
 check both prediction error and physical fidelity.
 
 Developed for **MIE 690A: AI in Fluid Mechanics**, University of Massachusetts
-Amherst. The course now includes **43 notebooks and 26 lecture PDFs**; every module
+Amherst. The course now includes **44 notebooks and 27 lecture PDFs**; every module
 has a row in the course table below.
 
 ## Start here
@@ -70,6 +76,7 @@ Weeks 5 and 6 share a project pack and lecture guide, but have separate learning
 | [13](#week-13--rectangular-cavity-pinn-research-audit) | Streamfunction PINNs: build one on CPU, then audit deep-cavity and four-case research runs | [Week 13 lab](notebooks/week13/README.md) | [Lecture 13](lectures/week13_rectangular_cavity_pinn.pdf) |
 | [14](#week-14---rans-inverse-pinn-and-neural-turbulence-closures) | Davidson-based RANS, inverse PINN and neural closures | [Week 14 lab](notebooks/week14/README.md) | [Lecture 14](lectures/week14_rans_pinn_nn.pdf) |
 | [15](#week-15--geometry-aware-neural-operators) | Geometry and topology generalization across DeepONet, Geom-DeepONet, Geo-FNO, SMART, GeoTransolver and DoMINO | [Complete Week 15 notebook](notebooks/week15/W15_Complete_Geometry_Generalization.ipynb) | [Expanded Lecture 15](lectures/week15_geometry_generalization.pdf) |
+| [16](#week-16--supersonic-shape-optimization) | Supersonic shape optimization with verified Gmsh/SU2 CFD | [Week 16 notebook](notebooks/week16/W16_Supersonic_Shape_Optimization.ipynb) | [Lecture 16](lectures/week16_supersonic_shape_optimization.pdf) |
 
 ## Results gallery · in course order
 
@@ -655,3 +662,14 @@ The [all-versions DOI](https://doi.org/10.5281/zenodo.22074169) resolves to the 
 **Ehsan Roohi** · University of Massachusetts Amherst · [roohie@umass.edu](mailto:roohie@umass.edu)
 
 Copyright © 2026 Ehsan Roohi. [MIT License](LICENSE).
+
+### Week 16 — Supersonic shape optimization
+
+**Problem:** Reduce near-field peak pressure at fixed body volume while constraining pressure drag.
+**CFD / data:** 44 new Gmsh/SU2 8.5.0 axisymmetric Euler cases at Mach 1.8, plus cone, mesh/domain and off-design checks.
+**Learning:** POD with ridge regression, MLP and Gaussian process; validation-selected MLP; fresh CFD design confirmation.
+
+![Computed baseline and optimized pressure fields](results/week16_lowboom/cfd_fields.png)
+
+The best design retains 20.8% peak-Cp reduction and 4.5% pressure-drag reduction on the finer mesh. One alternative violates the drag constraint after CFD despite its surrogate prediction. The complete evidence reports both outcomes and separates interpolation from extrapolation.
+[Notebook and assignment](notebooks/week16/README.md) · [Lecture](lectures/week16_supersonic_shape_optimization.pdf) · [Numerical evidence](results/week16_lowboom/README.md)

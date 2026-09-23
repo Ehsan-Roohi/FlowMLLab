@@ -1,0 +1,23 @@
+{
+  "scientific_checks": {
+    "cone_pressure_within_3pct": true,
+    "all_44_dataset_cases_converged": true,
+    "mesh_volume_within_0p2pct": true,
+    "baseline_peak_mesh_within_5pct": true,
+    "baseline_drag_mesh_within_3pct": true,
+    "domain_peak_within_1pct": true,
+    "optimized_peak_mesh_within_5pct": true,
+    "optimized_drag_mesh_within_3pct": true,
+    "design_recomputations_converged": true,
+    "optimized_drag_constraint_fine": true,
+    "optimized_drag_constraint_finer": true,
+    "peak_reduction_exceeds_5pct_both_meshes": true,
+    "selected_model_test_peak_error_below_10pct": true
+  },
+  "scientific_pass": true,
+  "notebook_executed": true,
+  "lecture_visual_review": true,
+  "release_ready": true,
+  "notebook_execution_method": "IPython in a fresh process; kernel sockets prohibited in execution environment",
+  "lecture_pages": 7
+}

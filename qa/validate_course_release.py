@@ -398,6 +398,7 @@ def validate_notebooks() -> tuple[int, int]:
             "https://colab.research.google.com/github/"
             f"Ehsan-Roohi/FlowMLLab/blob/main/{relative}"
         )
+        week16_lab = relative == 'notebooks/week16/W16_Supersonic_Shape_Optimization.ipynb'
         week14_lab = relative == 'notebooks/week14/W14_pyCALC_RANS_PINN_NN.ipynb'
         week15_local = relative.startswith('notebooks/week15/')
         week15_audit = relative == 'notebooks/week15/W15_Geometry_Operators_Step_Audit.ipynb'
@@ -415,6 +416,13 @@ def validate_notebooks() -> tuple[int, int]:
         if reconstruction_lab:
             assert 'FlowMLLab retained-LBM reconstruction audit v1' in full_source
             assert 'velocity-derived weak references' in full_source
+        if week16_lab:
+            code = [c for c in cells if c.get('cell_type') == 'code']
+            assert len(code) == 9
+            assert all(c.get('execution_count') is not None for c in code)
+            assert not any(o.get('output_type') == 'error' for c in code for o in c.get('outputs', []))
+            assert 'does not compute atmospheric propagation or PLdB' in full_source
+            assert 'write=False' in full_source
         if week14_lab:
             assert 'FlowMLLab teaching adaptation' in full_source
             assert 'not a verified' in full_source
@@ -433,7 +441,7 @@ def validate_notebooks() -> tuple[int, int]:
             )
             assert 'no double-step motif is used in training or validation' in full_source
             assert 'Selection reads no double-step arrays.' in full_source
-        assert week14_lab or week15_local or reconstruction_lab or any(
+        assert week14_lab or week15_local or reconstruction_lab or week16_lab or any(
             marker in full_source
             for marker in (
                 "MIE690A article-aligned validation v3",
@@ -1163,6 +1171,35 @@ def validate_week01_1_results() -> dict[str, object]:
     return report
 
 
+def validate_week16_results() -> dict:
+    import io, zipfile
+    evidence = ROOT / "results/week16_lowboom"
+    summary = json.loads((evidence / "summary.json").read_text())
+    report = json.loads((evidence / "release_check.json").read_text())
+    assert report["release_ready"] and all(report["scientific_checks"].values())
+    assert digest(evidence / "dataset.npz") == summary["dataset_sha256"]
+    with np.load(evidence / "dataset.npz") as data:
+        assert len(data["parameters"]) == len(np.unique(data["parameters"], axis=0)) == 44
+        assert {s: int(sum(data["splits"] == s)) for s in set(data["splits"])} == {"train":24,"validation":6,"test":8,"extrapolation":6}
+        assert np.isfinite(data["waveforms"]).all() and (data["cd"] > 0).all()
+        with zipfile.ZipFile(evidence / "numerical_evidence.zip") as archive:
+            assert archive.testzip() is None
+            for i, name in enumerate(data["names"]):
+                row = json.loads(archive.read(f"runs/{name}/metrics.json"))
+                assert row["converged"] and row["residual_drop"] >= 5
+                with np.load(io.BytesIO(archive.read(f"runs/{name}/extracted.npz"))) as pressure:
+                    assert np.array_equal(data["waveforms"][i], pressure["cp"][1])
+                assert data["cd"][i] == row["cd_pressure"]
+            pairs = [("baseline_fine_stable", "optimized_fine", "fine"), ("baseline_finer", "optimized_finer", "finer")]
+            for baseline, optimized, key in pairs:
+                base = json.loads(archive.read(f"runs/{baseline}/metrics.json"))
+                opt = json.loads(archive.read(f"runs/{optimized}/metrics.json"))
+                actual = 1 - opt["peak_cp"] / base["peak_cp"]
+                assert abs(actual - summary["validation"][f"peak_reduction_{key}"]) < 1e-12
+                assert actual > 0.05 and opt["cd_pressure"] <= 1.02 * base["cd_pressure"]
+    return {"status":"pass", "dataset_cases":44, "peak_reduction_finer":summary["validation"]["peak_reduction_finer"]}
+
+
 def validate_pdfs() -> int:
     pdfs = sorted((ROOT / "lectures").glob("*.pdf"))
     actual = {p.relative_to(ROOT) for p in pdfs}
@@ -1200,8 +1237,9 @@ def main() -> None:
     hypersonic_cylinder_metrics = validate_hypersonic_cylinder_results()
     scientific_software_metrics = validate_week01_1_results()
     article_metrics = validate_article_alignment()
+    week16_metrics = validate_week16_results()
     pdfs = validate_pdfs()
-    excluded_roots = {".external", ".git", ".venv", "tmp", "venv"}
+    excluded_roots = {".external", ".tools", ".git", ".venv", "tmp", "venv"}
     python_files = sorted(
         path
         for path in ROOT.rglob("*.py")
@@ -1230,6 +1268,7 @@ def main() -> None:
             "probabilistic_uq": uq_metrics,
             "scientific_software": scientific_software_metrics,
             "article_alignment": article_metrics,
+            "week16_supersonic_design": week16_metrics,
         },
     }
     report_path = ROOT / "output/qa/release_qa_report.json"

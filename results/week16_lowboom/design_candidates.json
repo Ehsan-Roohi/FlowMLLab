@@ -1,0 +1,30 @@
+{
+  "objective": "minimize max Cp at r/L=0.5, pressure drag <= 1.02 baseline",
+  "baseline_peak_cp": 0.03286841982706794,
+  "drag_limit": 0.0013453747390819112,
+  "candidates": [
+    {
+      "name": "optimized",
+      "a": 0.3249532654588658,
+      "b": 0.12237788693256269,
+      "predicted_peak_cp": 0.02610175294229222,
+      "predicted_cd": 0.0013184672443002745
+    },
+    {
+      "name": "alternative_1",
+      "a": 0.3196002566307667,
+      "b": 0.2404717370882234,
+      "predicted_peak_cp": 0.027836165196959365,
+      "predicted_cd": 0.0013298142322251078
+    },
+    {
+      "name": "alternative_2",
+      "a": 0.28647752677354127,
+      "b": 0.02165199221010422,
+      "predicted_peak_cp": 0.027868139811266665,
+      "predicted_cd": 0.0013373609377148815
+    }
+  ],
+  "de_success": true,
+  "surrogate_evaluations": 1005
+}

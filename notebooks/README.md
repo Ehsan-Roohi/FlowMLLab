@@ -52,6 +52,7 @@ archive. Read each module's setup page before launching it.
 | Week 13 | Rectangular-cavity PINNs | [Open in Colab](https://colab.research.google.com/github/Ehsan-Roohi/FlowMLLab/blob/main/notebooks/week13/W13_Rectangular_Cavity_PINN_Research.ipynb) |
 | Week 14 | RANS, inverse PINN and neural closures (local checkout) | [Notebook](week14/W14_pyCALC_RANS_PINN_NN.ipynb) and [setup](week14/README.md) |
 | Week 15 | Geometry-aware neural operators (local checkout) | [Complete post-audit notebook](week15/W15_Complete_Geometry_Generalization.ipynb), [historical audit notebook](week15/W15_Geometry_Operators_Step_Audit.ipynb), and [OpenFOAM/evidence guide](week15/README.md) |
+| Week 16 | Supersonic shape optimization with Gmsh/SU2 evidence | [Executed notebook](week16/W16_Supersonic_Shape_Optimization.ipynb) · [Assignment and guide](week16/README.md) |
 
 ## Weekly laboratories
 

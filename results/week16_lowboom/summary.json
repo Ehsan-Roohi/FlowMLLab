@@ -1,0 +1,178 @@
+{
+  "scope": "Axisymmetric Euler near-field pressure optimization; no atmospheric propagation or PLdB claim",
+  "validation": {
+    "baseline_peak_mesh_difference": 0.024568892802309228,
+    "baseline_drag_mesh_difference": 0.018995057211943833,
+    "baseline_wave_mesh_difference": 0.03857153554920631,
+    "baseline_domain_peak_difference": 0.0014254461101185223,
+    "optimized_peak_mesh_difference": 0.03315701908990276,
+    "optimized_drag_mesh_difference": 0.0266009608323009,
+    "peak_reduction_fine": 0.21539112396536186,
+    "peak_reduction_finer": 0.2084217191635508,
+    "drag_change_fine": -0.05282703866804084,
+    "drag_change_finer": -0.04542605924868681
+  },
+  "benchmark": {
+    "exact": {
+      "shock_angle_deg": 34.03574212191822,
+      "pressure_ratio": 1.140625717676995,
+      "cp": 0.06200428469003305
+    },
+    "cfd_cp_mean": 0.06138689816778536,
+    "relative_error": 0.009957159014640449,
+    "wall_seconds": 15.84138798713684,
+    "passed": true
+  },
+  "mach_stress_tests": {
+    "1.7": {
+      "peak_reduction": 0.21313547007186173,
+      "drag_change": -0.048787214152326674
+    },
+    "1.8": {
+      "peak_reduction": 0.21539112396536186,
+      "drag_change": -0.05282703866804084
+    },
+    "1.9": {
+      "peak_reduction": 0.2140683870206197,
+      "drag_change": -0.05745458983430951
+    }
+  },
+  "volume_relative_error": {
+    "baseline_fine_stable": 9.107402362540373e-05,
+    "optimized_fine": 9.898598824575888e-05
+  },
+  "models": {
+    "comparison": [
+      {
+        "model": "ridge",
+        "split": "validation",
+        "wave_relative_l2": 0.08661177714056886,
+        "peak_mean_relative_error": 0.050343455441275116,
+        "cd_mean_relative_error": 0.05394250436313277,
+        "training_seconds": 0.0009174346923828125,
+        "pod_retained_variance": 0.9999833210342606,
+        "warnings": []
+      },
+      {
+        "model": "ridge",
+        "split": "test",
+        "wave_relative_l2": 0.11268747869350786,
+        "peak_mean_relative_error": 0.06846095178751416,
+        "cd_mean_relative_error": 0.07994811760056585,
+        "training_seconds": 0.0009174346923828125,
+        "pod_retained_variance": 0.9999833210342606,
+        "warnings": []
+      },
+      {
+        "model": "ridge",
+        "split": "extrapolation",
+        "wave_relative_l2": 0.35410123085672707,
+        "peak_mean_relative_error": 0.030590686192072614,
+        "cd_mean_relative_error": 0.40426342662110226,
+        "training_seconds": 0.0009174346923828125,
+        "pod_retained_variance": 0.9999833210342606,
+        "warnings": []
+      },
+      {
+        "model": "mlp",
+        "split": "validation",
+        "wave_relative_l2": 0.03519657262728792,
+        "peak_mean_relative_error": 0.013753491683216783,
+        "cd_mean_relative_error": 0.015462546231033233,
+        "training_seconds": 0.14081788063049316,
+        "pod_retained_variance": 0.9999833210342609,
+        "warnings": []
+      },
+      {
+        "model": "mlp",
+        "split": "test",
+        "wave_relative_l2": 0.048297920792268655,
+        "peak_mean_relative_error": 0.02390255055101598,
+        "cd_mean_relative_error": 0.024241111061524975,
+        "training_seconds": 0.14081788063049316,
+        "pod_retained_variance": 0.9999833210342609,
+        "warnings": []
+      },
+      {
+        "model": "mlp",
+        "split": "extrapolation",
+        "wave_relative_l2": 0.32387217264024304,
+        "peak_mean_relative_error": 0.06463611812288174,
+        "cd_mean_relative_error": 0.21253889292169262,
+        "training_seconds": 0.14081788063049316,
+        "pod_retained_variance": 0.9999833210342609,
+        "warnings": []
+      },
+      {
+        "model": "gp",
+        "split": "validation",
+        "wave_relative_l2": 0.04454610823858344,
+        "peak_mean_relative_error": 0.019795017694513903,
+        "cd_mean_relative_error": 0.017193988057545777,
+        "training_seconds": 0.05301499366760254,
+        "pod_retained_variance": 0.9999833210342608,
+        "warnings": []
+      },
+      {
+        "model": "gp",
+        "split": "test",
+        "wave_relative_l2": 0.08796623353425716,
+        "peak_mean_relative_error": 0.02864385373518545,
+        "cd_mean_relative_error": 0.019914548921058456,
+        "training_seconds": 0.05301499366760254,
+        "pod_retained_variance": 0.9999833210342608,
+        "warnings": []
+      },
+      {
+        "model": "gp",
+        "split": "extrapolation",
+        "wave_relative_l2": 0.7028434048282418,
+        "peak_mean_relative_error": 0.26314259139693214,
+        "cd_mean_relative_error": 0.13742110405970706,
+        "training_seconds": 0.05301499366760254,
+        "pod_retained_variance": 0.9999833210342608,
+        "warnings": []
+      }
+    ],
+    "selected_model": "mlp",
+    "selection_rule": "minimum validation peak MARE + drag MARE; fixed architectures"
+  },
+  "designs": [
+    {
+      "name": "optimized",
+      "a": 0.3249532654588658,
+      "b": 0.12237788693256269,
+      "predicted_peak_cp": 0.02610175294229222,
+      "actual_peak_cp": 0.02578885393755039,
+      "predicted_cd": 0.0013184672443002745,
+      "actual_cd": 0.0012493162507033586,
+      "peak_reduction": 0.21539112396536186,
+      "constraint_pass": true
+    },
+    {
+      "name": "alternative_1",
+      "a": 0.3196002566307667,
+      "b": 0.2404717370882234,
+      "predicted_peak_cp": 0.027836165196959365,
+      "actual_peak_cp": 0.026967085415742827,
+      "predicted_cd": 0.0013298142322251078,
+      "actual_cd": 0.001355359874070602,
+      "peak_reduction": 0.17954420816011418,
+      "constraint_pass": false
+    },
+    {
+      "name": "alternative_2",
+      "a": 0.28647752677354127,
+      "b": 0.02165199221010422,
+      "predicted_peak_cp": 0.027868139811266665,
+      "actual_peak_cp": 0.027760124262633218,
+      "predicted_cd": 0.0013373609377148815,
+      "actual_cd": 0.001329638769509478,
+      "peak_reduction": 0.1554165241685247,
+      "constraint_pass": true
+    }
+  ],
+  "dataset_sha256": "8148f318598ce3e48ca27cbcd39e7ad5cfd8d98a2bfe75d00e286aa79e662a2f",
+  "dataset_count": 44,
+  "cfd_wall_seconds_sum": 1585.0173943042755
+}

@@ -95,3 +95,7 @@ the [release history](https://github.com/Ehsan-Roohi/FlowMLLab/releases).
 Unexecuted comparison designs are not scientific results.
 Do not pursue external benchmark adoption until source-data integrity,
 fair-comparison and licensing gates are resolved.
+
+## Week 16: new supersonic-shape CFD campaign
+
+All meshes and flow solutions were generated for this module using Gmsh 4.15.2 and the official SU2 8.5.0 Linux OpenMP binary. The 44-case dataset contains 24 training, six validation, eight test and six extrapolation geometries. Additional runs establish a Taylor-Maccoll cone benchmark, mesh and domain sensitivity, recomputed optimal shapes, and Mach 1.7/1.9 stress tests. This is an axisymmetric nonlifting teaching geometry, not the Beihang aircraft or TMS-10. The motivating paper is cited in the lecture; its PDF, figures, code and data are not redistributed. All module code and educational prose are independently authored with AI assistance and checked through retained computations and visual review. No restricted teaching material was incorporated. See `results/week16_lowboom/README.md`, the dataset SHA-256, and `numerical_evidence.zip`.

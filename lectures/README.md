@@ -32,6 +32,7 @@ Page counts are those of the current files.
 | 13 (preparatory) | [PINN foundations reading](week04_2_pinn_cavity.pdf) (12) | Nondimensional residuals, soft/hard constraints, streamfunction lifting, analytic checks; originally numbered 4.2 | Five assignments in the lecture; no trained-PINN claim | [Markdown](source/week04_2_pinn_cavity.md) |
 | 14 | [RANS, PINN and neural closures](week14_rans_pinn_nn.pdf) (8) | Inverse PINN, three closure coefficients, original NN training, coupled RANS, source-package audit limits | `notebooks/week14/W14_pyCALC_RANS_PINN_NN.ipynb` ([setup](../notebooks/week14/README.md)) | [Markdown](source/week14_rans_pinn_nn.md) |
 | 15 | [Geometry-aware neural operators](week15_geometry_generalization.pdf) (24) | DeepONet, Geom-DeepONet, Geo-FNO, SMART, GeoTransolver and DoMINO; learning-rate sensitivity; reverse-flow topology; retrospective double-step transfer | `notebooks/week15/W15_Complete_Geometry_Generalization.ipynb` ([data guide](../notebooks/week15/README.md)) | [Markdown](source/week15_geometry_generalization.md) |
+| 16 | [Supersonic shape optimization](week16_supersonic_shape_optimization.pdf) (7) | Gmsh/SU2 Euler data, learned surrogates, constrained design and fresh CFD verification | `notebooks/week16/W16_Supersonic_Shape_Optimization.ipynb` | [Markdown](source/week16_supersonic_shape_optimization.md) |
 
 Recommended teaching pattern for each meeting:
 

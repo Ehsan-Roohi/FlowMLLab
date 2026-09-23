@@ -1,0 +1,13 @@
+{
+  "pytest": {
+    "passed": 206,
+    "skipped": 13,
+    "subtests_passed": 259
+  },
+  "unittest_note": "Two optional PyTorch import skips are reported as errors by unittest; the pytest runner handles them correctly.",
+  "smoke": "pass",
+  "course_release_qa": "pass",
+  "course_notebooks": 44,
+  "course_lecture_pdfs": 27,
+  "upstream_week9_source": "not checked: no pinned upstream cache, unrelated existing module"
+}

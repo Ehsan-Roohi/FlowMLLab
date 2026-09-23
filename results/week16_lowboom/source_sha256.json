@@ -1,0 +1,14 @@
+{
+  "qa/week16/verify_designs.py": "fbf91a1a66f32a2cb58a88391aadae44cc0a2ca763b4d659b221d31179ffef77",
+  "qa/week16/benchmark.py": "29fe748ed91855c21359de609c6adae151149f24095d37e487ecab4da416f702",
+  "qa/week16/execute_inprocess.py": "0b04040a45afdbe5ef8c1b76e4f7db89e4e6cf68233ed661009d86fd6b9869e1",
+  "qa/week16/analyze.py": "c857329535b5c4d832ed53e218aedb7ea150f4bddf3883e6d3bcfc40fcef3baf",
+  "qa/week16/campaign.py": "a8d122279dadb31c549b496ba38a11d8366fa3e509649d7d43856f6fc1a421f9",
+  "qa/week16/install_su2.py": "c5f9f11ef79f31d09206c7a21ce267ff6540140cfd3e6a76758bb8a8d0fbc95c",
+  "qa/week16/build_materials.py": "a361d2c2f0779622759c30dc09395e522fd1835eb82d5322cb13923e3f8e0b9e",
+  "qa/week16/learning.py": "862bf87c57c0c62f3df9ca1cd337385fbaafd986d6c20c18bbd0d16212f6ee18",
+  "qa/week16/cfd.py": "0d90e2b36caa707dc54086eb62881d9c398685f93422ccd2565fec13809e36d3",
+  "qa/week16/report.py": "3cafd10163b8e2d9063971c317a37e53f4ec2f43a30cb8a2dd9f31bf1bca7bff",
+  "cases/week16_lowboom/README.md": "c8cd81c18d487cbf26e4c5b3ad90554ca7355e0e9e27e7480daecc9c00266348",
+  "lectures/source/week16_supersonic_shape_optimization.md": "7ca3c228de8a103d535ceeeb39330ef83bfccc34af16ff0a4c0c61fe6ddf881f"
+}

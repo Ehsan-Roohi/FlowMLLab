@@ -1,0 +1,3 @@
+# Full solver fields and meshes are retained in the external raw-CFD archive.
+runs/
+*.log

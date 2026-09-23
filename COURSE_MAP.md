@@ -56,6 +56,7 @@ Lettered rows are learning threads inside one notebook: 8A is Week 8 Lab 1, 8B a
 | [13](notebooks/week13/README.md) | Physics-informed neural networks: streamfunction formulation, hard wall constraints, autodiff residuals, Adam then quasi-Newton; residual versus field error | Build and train a small cavity PINN on CPU and judge it by training loss, held-out residual and the Week 1 CFD reference; inspect the retained Re=1000, D/W=2.2 field beside Nektar++; audit the four retained A100 cases (Re=100/400, D=1/2) | Exact walls and continuity by construction; a training loss that falls while the held-out residual does not; frozen square-case CFD gates (3.3% and 10.6% interior error); deep cases residual-audited only; the training/held-out residual gap interpreted |
 | [14](notebooks/week14/README.md) | RANS closure, inverse PINN and local-feature NN | Reproduce Davidson's small coefficient network; compare interpolation; inspect source solver restarts | Correct baseline identity, source hashes, residual gates and paper-stage distinction; full end-to-end paper reproduction is not established |
 | [15](notebooks/week15/README.md) | Geometry-aware neural operators: ordinary DeepONet, Geom-DeepONet, Geo-FNO, SMART, GeoTransolver and DoMINO | Audit the 100/8/19 post-audit split; verify 342 saved fields; compare equal-update, three-seed models and validation-only learning-rate selection on the retrospective double-step family | Hash-verified data and predictions; filtered reverse IoU stated with its threshold; Re- and seed-stratified failure analysis; historical protocols labelled separately; no prospective-blind claim |
+| [16](notebooks/week16/README.md) | Supersonic shape optimization | Generate Gmsh/SU2 data; compare POD-MLP, GP and ridge; optimize and recompute | Cone benchmark; mesh/domain sensitivity; frozen geometry splits; fresh optimized-shape CFD and Mach stress tests |
 
 Each includes a PDF lecture and an executed CPU notebook. Week 11 additionally
 audits frozen-checkpoint research masks; these are not new ground-truth accuracy
@@ -82,7 +83,7 @@ Use Modules 1C, 2A, 2C, and a short version of 4B. The learning objective is to 
 
 Use Weeks 1 to 6 in order. Weeks 5 and 6 form one combined guided-project pack: Week 5 establishes the controlled modification and checkpoint; Week 6 completes the selected track and final evidence. Advanced Track 6 remains instructor-approved. This is the sequence taught in Summer 2026.
 
-### Extended course (Weeks 7 to 15)
+### Extended course (Weeks 7 to 16)
 
 Take the extension weeks after the core; none replaces the Weeks 5 to 6 project.
 

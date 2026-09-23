@@ -1,0 +1,91 @@
+# Supersonic Shape Optimization with Verified CFD
+
+FlowMLLab | Week 16 | Ehsan Roohi | MIE 690A
+
+## 1. The engineering question
+
+A supersonic body produces compression and expansion waves. Their strength and location depend on how the body displaces the fluid along its length. This module asks whether a compact learned model can propose a quieter-looking near-field signature while preserving volume and controlling pressure drag. A complete sonic-boom prediction requires another step: propagation through the atmosphere, followed by a perceptual loudness calculation. Our computed evidence stops at the off-body pressure signature.
+
+The motivating study is Zheng et al., Aerospace Science and Technology 178 (2026), 113218, DOI 10.1016/j.ast.2026.113218. It combines CFD, atmospheric propagation and neural networks for a full aircraft configuration. Its sequential inverse networks illustrate an important difficulty: a far-field signature does not uniquely determine geometry, and errors can accumulate between learned stages. Our original teaching experiment uses a much smaller design space so that every proposed improvement can be recomputed with CFD.
+
+Learning outcomes: formulate a constrained geometric design problem; distinguish axisymmetric from planar flow; inspect numerical credibility; train and compare surrogates; and accept a design only after its forward calculation has been checked.
+
+## 2. Geometry with a meaningful constraint
+
+Set the length L=1 m and let s=x/L. Define an unnormalized radius shape f(s)=sin(pi*s)*exp[a*(2*s-1)+b*cos(2*pi*s)] on 0<=s<=1. The first parameter redistributes radius fore and aft; the second changes the balance between the central and end portions. The radius is r(s)=c*f(s), where c is chosen from V=pi*L*c^2*integral(f^2 ds). This fixes V=pi*(0.06 m)^2*L/2 for every design.
+
+The shape remains positive between its pointed endpoints. Volume normalization prevents an optimizer from obtaining a trivial pressure reduction merely by shrinking the body. The bounded design box is -0.45<=a<=0.45 and -0.25<=b<=0.25. A separate extrapolation set extends b to 0.30-0.40. Positive volume alone does not make a transport aircraft feasible: cabin arrangement, structural thickness, lift, trim and propulsion are not represented.
+
+## 3. Axisymmetric Euler equations
+
+For zero swirl, use U=(rho,rho*u,rho*v,rho*E), where u is axial and v radial velocity. In cylindrical coordinates, the conservation form is d(rU)/dt+d(rFx)/dx+d(rFr)/dr=(0,0,p,0). Axial flux is Fx=(rho*u,rho*u^2+p,rho*u*v,u*(rho*E+p)); radial flux is Fr=(rho*v,rho*u*v,rho*v^2+p,v*(rho*E+p)). Close the system with p=(gamma-1)*rho*(E-(u^2+v^2)/2), gamma=1.4.
+
+The factor r and the radial pressure source represent the three-dimensional spreading of an axisymmetric flow. Omitting them gives a planar body of infinite span. SU2 is explicitly configured with AXISYMMETRIC=YES. The solution has pressure drag but no skin friction or boundary-layer separation. The fixed reference values p_inf=101325 Pa and T_inf=288.15 K define this nondimensional teaching experiment; they are not a supersonic cruise atmosphere.
+
+## 4. Meshes, boundaries and pressure extraction
+
+Gmsh creates three connected transfinite quadrilateral blocks upstream of the body, alongside it and downstream. The default domain is -0.5<=x/L<=3 and 0<=r/L<=1.5. The body follows a spline through independently generated radius samples. Mesh lines cluster toward the body and axis. Physical groups identify the body, axis and farfield boundaries.
+
+The body has an inviscid slip condition; the exposed axis has the symmetry condition; outer boundaries use SU2's characteristic farfield treatment. The flow is initialized at M=1.8 and zero incidence. Roe fluxes, MUSCL reconstruction and the Venkatakrishnan limiter are used. The limiter is frozen after 300 iterations, and the convergence stop begins after 500. All solver settings are retained with each case.
+
+Dimensional pressure is reconstructed from conservative variables. Cp=(p-p_inf)/(0.5*gamma*p_inf*M^2). Interpolation extracts signatures on three lines at r/L=0.25, 0.5 and 0.75. The design objective is the maximum Cp on the middle line. A lower peak on this line does not guarantee lower noise at another distance or on the ground.
+
+## 5. Numerical credibility before learning
+
+An independently integrated Taylor-Maccoll ODE solution supplies the pressure on a 7-degree cone at M=1.8. The benchmark uses a separate cone mesh and measures its surface pressure away from the apex and outlet. This comparison tests the axisymmetric pressure solution; it does not independently validate an entire sonic-boom prediction chain.
+
+The shaped-body baseline is also checked on several meshes, and its outer domain is enlarged. The dataset uses approximately 45,000 cells per case. A refined calculation uses approximately 81,000 cells. We report actual differences in peak Cp, waveform norm and pressure drag. Residual convergence and spatial convergence answer different questions: one tests convergence of the discrete equations; the other tests sensitivity to discretization.
+
+A retained data label requires positive finite pressure and density, at least five orders of density-residual reduction, and a relative range of pressure drag below 1e-4 over the last 100 iterations. These are numerical acceptance criteria for this exercise. Their satisfaction is not proof of exact physical accuracy.
+
+## 6. Pressure drag and design objectives
+
+Pressure force is integrated on the surface of revolution. The axial contribution is Dp=2*pi*integral[(p-p_inf)*r*dr/dx dx]. Subtracting p_inf removes cancellation of a large constant pressure term without changing the closed-body force. Cp and CDp are dimensionless; CDp=Dp/(q_inf*L^2). Using frontal area instead would change the numerical coefficient, so the reference area must accompany every comparison.
+
+The primary design objective is min(max_x Cp(x,r/L=0.5)) subject to CDp<=1.02*CDp_baseline and the fixed-volume geometry. We use a penalty during numerical search and then check the constraint explicitly with CFD. A low objective from a learned model is a proposal. CFD establishes the achieved objective and whether the constraint was actually met.
+
+## 7. Dataset, POD and learned models
+
+The campaign contains 24 training geometries, six validation geometries, eight test geometries and six extrapolation geometries, with frozen Latin-hypercube seeds. All conditions except shape are fixed in the training campaign. The ordinary test set is unseen geometry inside the same parameter box. It is not unseen topology or a new geometry family.
+
+Fit all scalers and the POD basis on training data only. The pressure signature is represented by its mean plus a linear combination of up to 12 principal modes. A model maps the two shape parameters to the POD coefficients and log pressure-drag coefficient. The logarithm ensures a positive reconstructed drag. Ridge regression, a two-hidden-layer tanh MLP and a Matern Gaussian process use the same training cases and output representation.
+
+Architectures are fixed in advance. Select the design model by the sum of validation peak and drag mean relative errors. The test and extrapolation errors are reported after this decision. Report waveform relative L2, peak error and drag error separately because a visually good waveform can still have an important error at a shock peak. A single seed is a reproducible teaching experiment, not a statistical ranking of architecture families.
+
+## 8. Optimization and independent recomputation
+
+Differential evolution searches the bounded two-parameter box using the selected surrogate. This derivative-free choice is convenient because a maximum-over-samples objective can be nonsmooth. The search has a fixed seed and bounded evaluation budget. Additional candidates are selected only if the surrogate predicts comparable pressure peaks and compliance with the drag limit, while their shape parameters remain separated.
+
+Each accepted proposal is meshed again and solved independently using SU2. Compare predicted and achieved pressure signatures and drag, and refine the best candidate. An optimizer can exploit small surrogate errors, so ordinary test error is not an adequate substitute for this final check. If the proposed optimum violates its constraint after CFD, report failure and enrich the training set before another iteration.
+
+This forward-model optimization avoids requiring the network to identify a unique inverse geometry. It does not prove global uniqueness or provide a general solution to all inverse sonic-boom problems. Similar objective values also do not imply identical waveforms: inspect both.
+
+## 9. Changes in conditions and the route to ground noise
+
+Recompute the baseline and selected design at M=1.7 and M=1.9. These are direct CFD stress tests, not predictions by a network trained on Mach variation. Compare all extraction radii, noting that they are different physical observation locations. A single-point optimum may lose some benefit elsewhere.
+
+To extend the module to actual ground sonic boom, the next research stage must couple a suitable off-body signal to a validated propagation solver, account for geometric spreading and the atmosphere, and compute an appropriate loudness metric. The augmented Burgers framework can include nonlinear steepening, thermoviscous absorption and molecular relaxation. Wind, humidity, temperature profiles and ray geometry matter. No PLdB value is inferred from the present peak-Cp reduction.
+
+NASA's sonic-boom prediction workshops provide a useful independent validation route for near-field and propagation components. The public workshop material includes pressure signatures, grids, wind-tunnel data and propagated signals. Access and reuse conditions must be checked for each chosen dataset.
+
+## 10. Research extensions and evidence claims
+
+A research extension can ask how much CFD is needed to discover reliable low-boom designs. Compare active sampling with a fixed design-of-experiments budget, and include the cost of generating labels. Introduce additional shape families, a lift-producing configuration, realistic flight constraints and atmospheric scenarios only when the simpler components have been checked.
+
+A multi-solution inverse method should be assessed through forward recomputation, feasible-shape diversity, constraint satisfaction and performance under held-out conditions. An MLP-to-operator-model substitution alone does not establish scientific novelty. The useful claim is an observed improvement in reliability, sample efficiency or physical understanding under matched computational budgets.
+
+The present module offers a reproducible educational experiment: new Gmsh meshes, actual SU2 data, independent pressure benchmarking, transparent learned baselines and freshly recomputed design proposals. It does not reproduce TMS-10 or the full Beihang aircraft, and it does not demonstrate community-level noise reduction.
+
+## References
+
+Zheng, Q., Liang, Y., Yang, Y. and Pan, C. (2026). Research on low-drag low-boom supersonic transport configuration using an MDO framework and deep learning methods. Aerospace Science and Technology 178, 113218. https://doi.org/10.1016/j.ast.2026.113218
+
+SU2 8.5.0 source and configuration: https://github.com/su2code/SU2/tree/v8.5.0 . Governing equations: https://su2code.github.io/docs_v7/Theory/ . Supersonic wedge tutorial: https://su2code.github.io/tutorials/Inviscid_Wedge/ .
+
+Gmsh reference manual: https://gmsh.info/doc/texinfo/gmsh.html . Geometry and meshing implementation in this module is independently authored.
+
+Taylor, G. I. and Maccoll, J. W. (1933). The air pressure on a cone moving at high speeds. Proceedings of the Royal Society A, 139, 278-297. The cone ODE benchmark in this module is independently implemented.
+
+AIAA/NASA Sonic Boom Prediction Workshop: https://lbpw.larc.nasa.gov/ . Workshop summary and data description: https://lbpw-ftp.larc.nasa.gov/lbpw1/presentations/21a_park-summary.pdf .
+
+scikit-learn documentation: https://scikit-learn.org/stable/ . See PCA, MLPRegressor and GaussianProcessRegressor for the fitted models and conventions.
