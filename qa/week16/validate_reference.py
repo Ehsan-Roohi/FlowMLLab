@@ -34,6 +34,8 @@ def validate():
     for row in cfd['runs']:
         d=r/f"seeb_level_{row['level']:g}";m=row['metadata']
         verify_run(d)
+        for name,expected in m['source_sha256'].items():
+            assert hashlib.sha256((ROOT/'qa/week16'/name).read_bytes()).hexdigest()==expected, 'CFD generating source changed'
         assert m['fixed_cfl'] and m['max_cfl']==5 and m['entropy_fix_coeff']==.05
         assert m['limiter_freeze_iteration']==2000 and m['convergence_start_iteration']==2500
         assert m['returncode']==0 and m['converged']

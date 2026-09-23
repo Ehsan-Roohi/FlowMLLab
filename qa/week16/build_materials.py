@@ -192,8 +192,11 @@ checkpoint=checkpoint_audit(write=False)
 assert checkpoint['passed']
 wave,drag=frozen.predict(data['parameters'][test])
 print('Checkpoint identity:',checkpoint['checkpoint'])
-display(pd.DataFrame(checkpoint['original_mesh']).T)
-display(pd.Series(checkpoint['finer_mesh']))
+scalar_errors=['wave_relative_l2','peak_mean_relative_error','drag_mean_relative_error','worst_case_wave_relative_l2']
+error_table=pd.DataFrame({split:{key:100*values[key] for key in scalar_errors} for split,values in checkpoint['original_mesh'].items()}).T
+error_table.columns=[key+' [%]' for key in error_table.columns]
+display(error_table)
+display(pd.Series({key+' [%]':100*checkpoint['finer_mesh'][key] for key in scalar_errors},name='Retrospective finer-CFD evaluation'))
 fig,ax=plt.subplots(figsize=(9,3))
 ax.plot(data['x'],data['waveforms'][test[0]],'k',label='Original CFD test case')
 ax.plot(data['x'],wave[0],label='Retained checkpoint')

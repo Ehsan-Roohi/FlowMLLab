@@ -1,0 +1,82 @@
+name: Publish FlowMLLab v1.9.0
+on:
+  push:
+    branches: [main]
+    paths: [.github/workflows/publish-v1.9.0.yml]
+permissions:
+  contents: write
+  actions: read
+jobs:
+  release:
+    if: github.repository == 'Ehsan-Roohi/FlowMLLab'
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    env:
+      OPENBLAS_NUM_THREADS: '1'
+      OMP_NUM_THREADS: '1'
+      MPLBACKEND: Agg
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install validation dependencies
+        run: |
+          sudo apt-get update && sudo apt-get install -y poppler-utils
+          pip install -r qa/week16/requirements.txt pytest pytest-subtests jinja2 pypdf build twine
+          pip install --no-deps -e .
+      - name: Retrieve the actual three-mesh CFD evidence
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh run download 35935655513 --pattern 'nasa-level-*' --dir raw_artifacts
+          for archive in raw_artifacts/*/*.tar.gz; do tar -xzf "$archive"; done
+      - name: Recompute reference validation and check release
+        run: |
+          python qa/week16/validate_reference.py
+          python -m pytest -q tests qa
+          flowmllab smoke --root .
+          flowmllab qa --root .
+          python qa/validate_course_release.py
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          r=json.loads(Path('results/week16_lowboom/release_check.json').read_text())
+          assert r['release_ready'] and r['lecture_visual_review'] and r['notebook_executed']
+          assert r['reference_extension']['passed']
+          assert r['notebook_execution_method']=='nbclient with a real Jupyter kernel'
+          PY
+      - name: Execute the released Week 16 notebook in a real kernel
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import nbformat
+          from nbclient import NotebookClient
+          path=Path('notebooks/week16/W16_Supersonic_Shape_Optimization.ipynb')
+          nb=nbformat.read(path,as_version=4)
+          NotebookClient(nb,timeout=600,kernel_name='python3',resources={'metadata':{'path':str(Path.cwd())}}).execute()
+          assert not [o for c in nb.cells if c.cell_type=='code' for o in c.get('outputs',[]) if o.output_type=='error']
+          print('Week 16 real-kernel execution passed')
+          PY
+          git diff --exit-code
+      - name: Build distributions and evidence checksums
+        run: |
+          python -m build
+          python -m twine check dist/*
+          sha256sum dist/* lectures/week16_supersonic_shape_optimization.pdf results/week16_lowboom/reference/reference_evidence.zip raw_artifacts/*/*.tar.gz > release_assets_v1.9.0_sha256.txt
+      - name: Publish verified release and full NASA raw evidence
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          if gh release view v1.9.0 >/dev/null 2>&1; then
+            echo 'Existing v1.9.0 left unchanged.'
+          else
+            gh release create v1.9.0 --target "$GITHUB_SHA" --latest \
+              --title 'FlowMLLab v1.9.0 - Week 16 reference validation' \
+              --notes-file RELEASE_NOTES_v1.9.0.md \
+              dist/* lectures/week16_supersonic_shape_optimization.pdf \
+              results/week16_lowboom/reference/reference_evidence.zip \
+              raw_artifacts/*/*.tar.gz release_assets_v1.9.0_sha256.txt
+          fi

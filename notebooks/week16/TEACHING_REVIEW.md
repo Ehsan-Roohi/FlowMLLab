@@ -15,6 +15,12 @@ Two automated review agents inspected the Week 16 material independently: one fo
 | Mesh sensitivity could be overstated | Distinguish residual convergence, last-two-grid change and formal GCI; document fixed two-cell cap |
 | Chinese aircraft reproduction could be overstated | Add paper-by-paper comparison and missing input list |
 
+## Additional release review
+
+The portable-model reviewer checked the retained checkpoint identity, training-only scalers and POD subspace, all split IDs, batch/single inference agreement and original/finer CFD metrics. The guide now distinguishes its retrospective evaluation from the historical frozen snapshot, discloses poor extrapolation and prevents historical optimized-design claims from being transferred to the later refit.
+
+The NASA reviewer checked the stable solver settings, atomic file writes, source/output hashes, convergence and field checks, and complete mesh readback. An actual mesh-only run exposed unused Gmsh control points in the raw node count; counting physical fluid connectivity corrected this without changing the exported mesh or solver configuration. Three-mesh CFD and experimental gates are separate from that implementation review.
+
 ## Suggested 100-minute class
 
 1. 15 minutes: derive pressure normalization and compare the three geometries.

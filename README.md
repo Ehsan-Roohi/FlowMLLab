@@ -643,9 +643,9 @@ Student submissions are not included.
 · [Citation metadata](CITATION.cff)
 · [Workshop, support, and consulting details](docs/RESULTS_GUIDE.md#workshops-support-and-consulting)
 
-Current release: **v1.8.4** · [GitHub release](https://github.com/Ehsan-Roohi/FlowMLLab/releases/tag/v1.9.0)
+Current release: **v1.9.0** · [GitHub release](https://github.com/Ehsan-Roohi/FlowMLLab/releases/tag/v1.9.0)
 · [all-version Zenodo DOI 10.5281/zenodo.22074169](https://doi.org/10.5281/zenodo.22074169)
-· [Release notes](RELEASE_NOTES_v1.8.4.md).
+· [Release notes](RELEASE_NOTES_v1.9.0.md).
 The frozen v1.8.0 evidence archive remains at
 [10.5281/zenodo.22840293](https://doi.org/10.5281/zenodo.22840293).
 Previous v1.7.0 archive DOI: [10.5281/zenodo.22836172](https://doi.org/10.5281/zenodo.22836172);
