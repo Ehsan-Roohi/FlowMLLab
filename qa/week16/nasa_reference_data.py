@@ -56,6 +56,8 @@ def report(write=True):
         (OUTPUT / 'nasa_retained_reference.json').write_text(json.dumps(result, indent=2) + '\n')
         fig, ax = plt.subplots(figsize=(9, 4.5))
         for name, curve in experiments.items():
+            plot_mask=(curve['x']>=25)&(curve['x']<=46)
+            curve={key:value[plot_mask] for key,value in curve.items()}
             line, = ax.plot(curve['x'], curve['pressure'], label=name, linewidth=1.4)
             ax.fill_between(curve['x'], curve['pressure'] - curve['uncertainty'], curve['pressure'] + curve['uncertainty'], color=line.get_color(), alpha=.15)
         ax.plot(lava['x'], lava['pressure'], 'k--', label='NASA-hosted LAVA CFD, 330k', linewidth=1.5)

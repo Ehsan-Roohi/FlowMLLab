@@ -114,6 +114,18 @@ On the retained finer-mesh cases this checkpoint has 6.39% aggregate waveform er
 
 Keep the historical prediction audit, this portable refit and newly fitted notebook models distinct. A model that reproduces a pressure waveform within a two-parameter family has not thereby learned general aircraft aerodynamics. The historical design improvement belongs to the model that proposed that design; every new optimized candidate still needs fresh CFD.
 
+## 15. Reading convergence evidence
+
+The NASA run driver saves the complete iteration history and checks positive density and pressure, a final log10 density residual at or below -9, a residual decrease of at least five decades, and a relative drag range below 1e-4 over the final 100 iterations. A solver exit code of zero alone does not satisfy these conditions. The limiter is frozen at iteration 2000 and acceptance checks start at 2500, so an earlier residual reduction is not mistaken for the final discrete solution.
+
+The three meshes use the same Roe flux, entropy fix 0.05 and fixed CFL 5. Examine the drag as well as the density residual. Even if these algebraic checks pass, the experimental pressure and inter-mesh waveform criteria must be assessed separately. A numerical residual is not an error bar on the experimental comparison.
+
+## 16. Reading the actual mesh
+
+The figure shows the exported coarse computational grid, including the finite nose and the pressure-sampling line. Each inset uses equal physical coordinate scales. The outer blocks are sheared to provide resolution along the downstream propagation direction; this is a mesh choice, not an additional physical model. The radial axis ahead of the body uses symmetry, the body and sting use a slip wall, and the remaining outer boundaries use the prescribed farfield condition.
+
+Gmsh also stores unused geometric control points. They must not be counted as fluid nodes. The mesh audit reads all exported element, node and boundary records, verifies connectivity and compares physical node counts before launching SU2. These file-integrity checks prevent truncated meshes from being accepted as numerical evidence.
+
 ## References
 
 Zheng, Q., Liang, Y., Yang, Y. and Pan, C. (2026). Research on low-drag low-boom supersonic transport configuration using an MDO framework and deep learning methods. Aerospace Science and Technology 178, 113218. https://doi.org/10.1016/j.ast.2026.113218

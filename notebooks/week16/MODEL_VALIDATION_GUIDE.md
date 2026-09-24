@@ -14,6 +14,18 @@ NASA experiment and NASA-hosted CFD are different kinds of reference: label both
 
 The analytical cone model is **Taylor–Maccoll**. It is separate from the learned **surrogate model**. Neither is a ground-noise model.
 
+## 1a. Recompute the cone reference rather than copying a pressure value
+
+For steady inviscid conical flow, the velocity depends on polar angle $\theta$ alone. Normalize velocity by the maximum speed $\sqrt{2h_0}$, where $h_0$ is stagnation enthalpy. The radial and polar components satisfy
+
+$$\frac{dv_r}{d\theta}=v_\theta,\qquad
+\frac{dv_\theta}{d\theta}=\frac{v_\theta^2v_r-H(2v_r+v_\theta\cot\theta)}{H-v_\theta^2},
+\quad H=\frac{\gamma-1}{2}(1-v_r^2-v_\theta^2).$$
+
+For a guessed shock angle $\beta$, apply the normal-shock density ratio to the polar velocity at the shock. The radial component is unchanged. Integrate toward the cone half-angle $\theta_c$ and adjust $\beta$ until $v_\theta(\theta_c)=0$, the impermeable-wall condition. After the shock, pressure follows the isentropic relation along a streamline. `benchmark.cone_exact()` implements this shooting calculation with adaptive ODE integration and a bracketed scalar root search.
+
+At $M_\infty=1.8$, $\theta_c=7^\circ$ and $\gamma=1.4$, the computed shock angle is 34.035742 degrees, wall pressure ratio is 1.140626 and wall $C_p$ is 0.0620043. The retained SU2 wall value is 0.0613869, a 0.996% relative difference. Students should rerun the ODE, inspect its boundary condition, and compare wall pressure away from the apex and outlet. Do not apply this infinite-cone similarity solution to the finite NASA body or to ground propagation.
+
 ## 2. Follow one sample through the learned model
 
 The input is the pair `(a, b)` that controls the radius distribution. Volume normalization prevents improvement simply by shrinking the body. The CFD output is a pressure waveform sampled at fixed axial locations and an integrated pressure-drag coefficient.

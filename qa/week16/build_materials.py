@@ -106,6 +106,8 @@ display(pd.DataFrame(nasa['metrics']).T)
 experiments,lava=load_reference()
 fig,ax=plt.subplots(figsize=(9,4))
 for label,curve in experiments.items():
+    plot_mask=(curve['x']>=25)&(curve['x']<=46)
+    curve={key:value[plot_mask] for key,value in curve.items()}
     line,=ax.plot(curve['x'],curve['pressure'],label=label)
     ax.fill_between(curve['x'],curve['pressure']-curve['uncertainty'],curve['pressure']+curve['uncertainty'],color=line.get_color(),alpha=.15)
 ax.plot(lava['x'],lava['pressure'],'k--',label='NASA-hosted LAVA CFD')
@@ -123,6 +125,9 @@ for run in nasa_cfd['runs']:
                          wave_error_percent=100*metrics['wave_relative_l2'],
                          peak_error_percent=100*metrics['peak_relative_error']))
 display(pd.DataFrame(rows))
+display(pd.DataFrame([{key:run['metadata'][key] for key in ['level','cells','iterations','density_residual_log10','residual_drop','drag_tail_relative_range','min_pressure','min_density']} for run in nasa_cfd['runs']]))
+display(Image(filename=str(E/'reference/seeb_mesh.png')))
+display(Image(filename=str(E/'reference/seeb_convergence.png')))
 print('Last two mesh waveform difference [%]:',100*nasa_cfd['last_two_mesh_wave_relative_l2'])
 print('Declared gates:',nasa_cfd['checks'])
 assert nasa_cfd['passed']
@@ -279,6 +284,8 @@ def lecture():
     reference_figures={
         '11.':('reference/seeb_geometry','NASA SEEB-ALR as-built geometry. The nose and sting must be preserved when constructing the axisymmetric computational domain.'),
         '12.':('reference/seeb_validation','Actual SU2 results against unchanged NASA experiments and NASA-hosted LAVA. The lower panels show signed errors and three-mesh sensitivity, with no fitted alignment.'),
+        '15.':('reference/seeb_convergence','Actual residual and pressure-drag histories for the three NASA grids. Limiter freeze and residual acceptance are separate from experimental agreement.'),
+        '16.':('reference/seeb_mesh','The actual exported Gmsh mesh, with equal coordinate scales in each view. The finite cap is retained; the sampling inset shows the pressure extraction location.'),
         '13.':('reference/independent_neural_test','Recovered frozen neural predictions compared with eight finer-mesh CFD signatures. These predictions are not replaced by notebook refitting.')}
     figs.update({key:value for key,value in reference_figures.items() if (E/(value[0]+'.png')).is_file()})
     summary=json.loads((E/'summary.json').read_text());val=summary['validation']

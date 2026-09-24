@@ -31,6 +31,8 @@ def build_report(write=True):
     checks={'required_three_mesh_levels': [z['level'] for z in runs]==[1,2,2.5],'all_runs_converged':all(z['converged'] for z in runs),'both_experimental_wave_errors_below_20pct':all(v['wave_relative_l2']<.20 for v in last['experimental_metrics'].values()),'both_experimental_peak_errors_below_10pct':all(v['peak_relative_error']<.10 for v in last['experimental_metrics'].values()),'last_two_mesh_change_below_5pct':change is not None and change<.05}
     result={'case':'NASA SEEB-ALR','mach':1.6,'height_inches':21.2,'window_inches':[25,46],'normalization':'delta_p/p_infinity','alignment':'Original NASA macros only; no fitted position/amplitude/offset','runs':[{k:v for k,v in row.items() if k not in ['x','y']} for row in runs],'last_two_mesh_wave_relative_l2':change,'thresholds':{'experimental_wave_relative_l2_max':.20,'experimental_peak_relative_error_max':.10,'last_two_mesh_wave_relative_l2_max':.05},'checks':checks,'passed':all(checks.values()),'scope':'Axisymmetric Euler off-body CFD validation, not neural experimental validation or full-aircraft reproduction. Mesh change is observed sensitivity, not formal GCI. Nose cap has two cells at each level.','recovery_note':'These are new runs using the reconstructed script. They supersede the unavailable earlier raw NASA runs; no earlier numbers are substituted.'}
     if write:
+        from reference_figures import build as build_figures
+        build_figures(R,runs)
         # Geometry figure can be rebuilt from the retained CAD sampling alone.
         with np.load(R/f"seeb_level_{runs[0]['level']:g}"/'cad_meridian.npz') as cad:
             gx=cad['x'];gr=cad['r']
@@ -45,6 +47,8 @@ def build_report(write=True):
         (R/'seeb_validation.json').write_text(json.dumps(result,indent=2)+'\n')
         fig,axs=plt.subplots(3,1,figsize=(9,10),sharex=True,gridspec_kw={'height_ratios':[2,1,1]})
         for label,e in experiments.items():
+            plot_mask=(e['x']>=25)&(e['x']<=46)
+            e={key:value[plot_mask] for key,value in e.items()}
             line,=axs[0].plot(e['x'],e['pressure'],label=label,lw=1.2)
             axs[0].fill_between(e['x'],e['pressure']-e['uncertainty'],e['pressure']+e['uncertainty'],color=line.get_color(),alpha=.12)
             mask=(e['x']>=25)&(e['x']<=46);x=e['x'][mask]
