@@ -50,3 +50,4 @@ results/week16_lowboom/reference/seeb_level_*/
 nasa-level-*.tar.gz
 results/week16_lowboom/reference/mesh_node_count_smoke_v2/
 results/week16_lowboom/runs/checkpoint_test_*/
+raw_artifacts/

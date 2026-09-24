@@ -126,6 +126,14 @@ The figure shows the exported coarse computational grid, including the finite no
 
 Gmsh also stores unused geometric control points. They must not be counted as fluid nodes. The mesh audit reads all exported element, node and boundary records, verifies connectivity and compares physical node counts before launching SU2. These file-integrity checks prevent truncated meshes from being accepted as numerical evidence.
 
+## 17. Closing the raw-evidence gap for neural testing
+
+The retained checkpoint is also evaluated against eight newly recomputed level-2 CFD cases. The case identities and parameters are unchanged, and no training occurs. Predictions are written before each solver launch. Each case preserves its mesh, solver configuration, full restart and surface fields, pressure extraction, iteration history and hashes of the code, checkpoint and dataset. The audit independently rechecks physical fields and convergence from these raw files.
+
+The new report is separate from the historical frozen-prediction audit and from the checkpoint comparison using recovered arrays. Its purpose is to make the present numerical comparison traceable all the way to raw CFD. Earlier labels for these same geometries were already available, so rerunning them does not create a blind generalization test. Report the aggregate errors, every case and the worst case; a passed aggregate criterion does not mean every waveform is within ten percent.
+
+The Python command recompute_neural_cfd.py --report verifies all eight raw cases before writing the report. The student notebook recomputes its error table from the distributed compact arrays. The release workflow checks the full raw archive as well. This separation keeps classroom execution short while preserving the expensive numerical evidence for inspection.
+
 ## References
 
 Zheng, Q., Liang, Y., Yang, Y. and Pan, C. (2026). Research on low-drag low-boom supersonic transport configuration using an MDO framework and deep learning methods. Aerospace Science and Technology 178, 113218. https://doi.org/10.1016/j.ast.2026.113218

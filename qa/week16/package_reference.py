@@ -11,6 +11,8 @@ def package(raw=None):
     paths.extend(p for p in R.glob('*') if p.is_file() and p.suffix in ['.json','.npz','.png'] and p.name!='raw_archive.json')
     for d in R.glob('seeb_level_*'):
         paths.extend(p for p in d.iterdir() if p.name in ['flow.cfg','metadata.json','history.csv','solver.log','signature.npz','cad_meridian.npz'])
+    for d in (ROOT/'results/week16_lowboom/runs').glob('checkpoint_test_*'):
+        paths.extend(p for p in d.iterdir() if p.name in ['flow.cfg','metadata.json','metrics.json','history.csv','solver.log','extracted.npz','prediction.json','run_evidence.json'])
     target=R/'reference_evidence.zip'
     with zipfile.ZipFile(target,'w',zipfile.ZIP_DEFLATED,6) as z:
         for p in sorted(set(paths)):z.write(p,p.relative_to(ROOT))

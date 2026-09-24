@@ -4,6 +4,7 @@ from pathlib import Path
 import numpy as np
 from freeze_model import audit as checkpoint_report
 from seeb_reference import verify_run
+from recompute_neural_cfd import report as recomputed_checkpoint_report
 
 def same(a,b):
     if isinstance(a,dict):return isinstance(b,dict) and a.keys()==b.keys() and all(same(a[k],b[k]) for k in a)
@@ -31,6 +32,9 @@ def validate():
     checkpoint=checkpoint_report(write=False)
     assert checkpoint['passed']
     assert same(checkpoint,json.loads((r/'checkpoint_audit.json').read_text())), 'Checkpoint audit is stale'
+    recomputed=recomputed_checkpoint_report(write=False)
+    assert recomputed['passed']
+    assert same(recomputed,json.loads((r/'recomputed_checkpoint_audit.json').read_text())), 'Recomputed checkpoint audit is stale'
     for row in cfd['runs']:
         d=r/f"seeb_level_{row['level']:g}";m=row['metadata']
         verify_run(d)
@@ -45,6 +49,6 @@ def validate():
         assert 'AXISYMMETRIC= YES' in (d/'flow.cfg').read_text()
         assert 'MACH_NUMBER= 1.6' in (d/'flow.cfg').read_text()
         assert m['cad_sha256']==hashlib.sha256((ROOT/'cases/week16_lowboom/reference/SEEB-ALR-as-built.stp').read_bytes()).hexdigest()
-    return {'status':'pass','neural_cases':neural['cases'],'NASA_meshes':len(cfd['runs']),'finest_cells':cfd['runs'][-1]['cells']}
+    return {'status':'pass','neural_cases':neural['cases'],'recomputed_checkpoint_cases':recomputed['cases'],'NASA_meshes':len(cfd['runs']),'finest_cells':cfd['runs'][-1]['cells']}
 
 if __name__=='__main__':print(json.dumps(validate(),indent=2))

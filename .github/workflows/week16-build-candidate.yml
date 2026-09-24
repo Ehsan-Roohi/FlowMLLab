@@ -1,0 +1,89 @@
+name: Build verified Week 16 publication candidate
+on:
+  push:
+    branches: [week16-reference-recovery]
+    paths: ['.github/workflows/week16-build-candidate.yml']
+permissions:
+  contents: write
+  actions: read
+jobs:
+  candidate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    env:
+      OPENBLAS_NUM_THREADS: '1'
+      OMP_NUM_THREADS: '1'
+      MPLBACKEND: Agg
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Wait for the actual CFD and model-reference gates
+        run: |
+          gh run watch 35935655513 --exit-status --interval 60
+          gh run watch 35936740632 --exit-status --interval 60
+      - name: Install teaching and validation dependencies
+        run: |
+          sudo apt-get update && sudo apt-get install -y poppler-utils
+          pip install -r qa/week16/requirements.txt pytest pytest-subtests jinja2 pypdf
+      - name: Retrieve raw evidence
+        run: |
+          gh run download 35935655513 --pattern 'nasa-level-*' --dir raw_artifacts
+          gh run download 35936740632 --pattern 'neural-case-*' --dir raw_artifacts
+          for archive in raw_artifacts/*/*.tar.gz; do tar -xzf "$archive"; done
+      - name: Recompute every reference report and enforce scientific gates
+        run: |
+          python qa/week16/nasa_reference_data.py
+          python qa/week16/reference_report.py
+          python qa/week16/independent_audit_report.py
+          python qa/week16/freeze_model.py
+          python qa/week16/recompute_neural_cfd.py --report
+          python qa/week16/validate_reference.py
+      - name: Build lecture and execute notebook with a real Jupyter kernel
+        run: |
+          python qa/week16/build_materials.py
+          python -m pytest -q tests qa
+      - name: Record evidence and leave final visual approval incomplete
+        run: |
+          python - <<'PY'
+          import hashlib,json
+          from pathlib import Path
+          from pypdf import PdfReader
+          e=Path('results/week16_lowboom');r=e/'reference'
+          cfd=json.loads((r/'seeb_validation.json').read_text())
+          nn=json.loads((r/'recomputed_checkpoint_audit.json').read_text())
+          report=json.loads((e/'release_check.json').read_text())
+          report['reference_extension']={'passed':cfd['passed'] and nn['passed'],'NASA_meshes':len(cfd['runs']),'recomputed_checkpoint_cases':nn['cases'],'NASA_workflow_run':35935655513,'neural_workflow_run':35936740632}
+          report['lecture_visual_review']=False
+          report['release_ready']=False
+          report['lecture_pages']=len(PdfReader('lectures/week16_supersonic_shape_optimization.pdf').pages)
+          report['validation_candidate_commit']=__import__('os').environ['GITHUB_SHA']
+          (e/'release_check.json').write_text(json.dumps(report,indent=2)+'\n')
+          sources=sorted(set(Path('qa/week16').glob('*.py'))|set(Path('notebooks/week16').glob('*.md'))|{Path('lectures/source/week16_supersonic_shape_optimization.md')})
+          (r/'release_source_sha256.json').write_text(json.dumps({str(p):hashlib.sha256(p.read_bytes()).hexdigest() for p in sources},indent=2)+'\n')
+          PY
+          python qa/week16/package_reference.py
+      - uses: actions/upload-artifact@v4
+        with:
+          name: week16-publication-candidate
+          path: |
+            lectures/week16_supersonic_shape_optimization.pdf
+            notebooks/week16/W16_Supersonic_Shape_Optimization.ipynb
+            results/week16_lowboom/reference/*.json
+            results/week16_lowboom/reference/*.npz
+            results/week16_lowboom/reference/*.png
+            results/week16_lowboom/reference/reference_evidence.zip
+            results/week16_lowboom/release_check.json
+          retention-days: 90
+      - name: Preserve generated candidate on the development branch
+        run: |
+          git fetch origin week16-reference-recovery
+          test "$(git rev-parse origin/week16-reference-recovery)" = "$GITHUB_SHA"
+          git config user.name 'FlowMLLab validation'
+          git config user.email 'github-actions[bot]@users.noreply.github.com'
+          git add lectures/week16_supersonic_shape_optimization.pdf notebooks/week16/W16_Supersonic_Shape_Optimization.ipynb results/week16_lowboom/release_check.json
+          git add results/week16_lowboom/reference/*.json results/week16_lowboom/reference/*.npz results/week16_lowboom/reference/*.png results/week16_lowboom/reference/reference_evidence.zip
+          git commit -m 'Retain passed CFD reference evidence and executed Week 16 candidate; visual review pending'
+          git push origin HEAD:week16-reference-recovery

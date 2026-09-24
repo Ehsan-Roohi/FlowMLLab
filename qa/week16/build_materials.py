@@ -207,6 +207,24 @@ ax.plot(data['x'],data['waveforms'][test[0]],'k',label='Original CFD test case')
 ax.plot(data['x'],wave[0],label='Retained checkpoint')
 ax.set(xlabel='x/L',ylabel='Cp');ax.legend();plt.show()
 print('This cell loads fixed weights. It does not fit or select a model.')''')
+    md(r'''### Recomputed CFD with complete raw evidence
+The eight known test geometries were also solved again at mesh level 2 with the retained checkpoint unchanged. Each prediction was saved before its solver run, and the complete meshes, configurations, histories and fields are archived. These repeated known geometries strengthen numerical reproducibility; they are not a new blind generalization set. The following cell independently recomputes errors from the compact distributed arrays.''')
+    code('''from independent_audit_report import metrics as error_metrics
+recomputed=json.loads((E/'reference/recomputed_checkpoint_audit.json').read_text())
+path=E/'reference/recomputed_checkpoint_test.npz'
+assert hashlib.sha256(path.read_bytes()).hexdigest()==recomputed['compact_arrays_sha256']
+with np.load(path,allow_pickle=False) as labels:
+    assert list(labels['names'])==recomputed['names']
+    predicted,predicted_drag=frozen.predict(labels['parameters'])
+    np.testing.assert_allclose(predicted,labels['predicted'],rtol=1e-12,atol=1e-14)
+    measured=error_metrics(labels['predicted'],labels['actual'],labels['predicted_cd'],labels['actual_cd'])
+for key in scalar_errors:
+    assert np.isclose(measured[key],recomputed['metrics'][key],rtol=1e-10,atol=1e-12)
+display(pd.Series({key+' [%]':100*measured[key] for key in scalar_errors},name='New CFD / unchanged checkpoint'))
+display(pd.DataFrame([dict(case=row['name'],iterations=row['checks']['iterations'],residual_log10=row['checks']['density_residual_log10'],residual_drop=row['checks']['residual_drop']) for row in recomputed['run_evidence']]))
+assert recomputed['passed']
+display(Image(filename=str(E/'reference/recomputed_checkpoint_validation.png')))
+print(recomputed['scope'])''')
     md(r'''## 5. Propose a design with the surrogate
 The objective is minimum peak $C_p$ at $r/L=0.5$, with pressure drag at most 2% above baseline. Volume is enforced by parameterization. The retained optimization code uses a conservative search margin and checks feasibility explicitly after CFD. A predicted optimum is only a candidate.
 
@@ -263,7 +281,7 @@ For a new design, create a unique case name and use `cfd.py --a ... --b ... --le
         client.execute()
     nbf.write(nb,target)
     print('Executed notebook',len(cells),'cells')
-    report=json.loads((E/'release_check.json').read_text());report['notebook_executed']=True;(E/'release_check.json').write_text(json.dumps(report,indent=2))
+    report=json.loads((E/'release_check.json').read_text());report['notebook_executed']=True;report['notebook_execution_method']='IPython in-process' if os.environ.get('FLOWMLLAB_INPROCESS')=='1' else 'nbclient with a real Jupyter kernel';(E/'release_check.json').write_text(json.dumps(report,indent=2))
 
 
 def lecture():
@@ -285,6 +303,7 @@ def lecture():
         '11.':('reference/seeb_geometry','NASA SEEB-ALR as-built geometry. The nose and sting must be preserved when constructing the axisymmetric computational domain.'),
         '12.':('reference/seeb_validation','Actual SU2 results against unchanged NASA experiments and NASA-hosted LAVA. The lower panels show signed errors and three-mesh sensitivity, with no fitted alignment.'),
         '15.':('reference/seeb_convergence','Actual residual and pressure-drag histories for the three NASA grids. Limiter freeze and residual acceptance are separate from experimental agreement.'),
+        '17.':('reference/recomputed_checkpoint_validation','Unchanged retained neural checkpoint against eight newly recomputed CFD cases. Every raw mesh, solver configuration, field and history is retained separately.'),
         '16.':('reference/seeb_mesh','The actual exported Gmsh mesh, with equal coordinate scales in each view. The finite cap is retained; the sampling inset shows the pressure extraction location.'),
         '13.':('reference/independent_neural_test','Recovered frozen neural predictions compared with eight finer-mesh CFD signatures. These predictions are not replaced by notebook refitting.')}
     figs.update({key:value for key,value in reference_figures.items() if (E/(value[0]+'.png')).is_file()})
