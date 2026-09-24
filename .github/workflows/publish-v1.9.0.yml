@@ -25,7 +25,7 @@ jobs:
       - name: Install validation dependencies
         run: |
           sudo apt-get update && sudo apt-get install -y poppler-utils
-          pip install -r qa/week16/requirements.txt pytest pytest-subtests jinja2 pypdf build twine
+          pip install -r qa/week16/requirements.txt pytest==8.4.2 pytest-subtests jinja2 pypdf==6.10.0 build twine
           pip install --no-deps -e .
       - name: Retrieve the actual three-mesh CFD evidence
         env:

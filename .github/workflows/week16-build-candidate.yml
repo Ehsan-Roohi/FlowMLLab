@@ -5,7 +5,7 @@ on:
     paths: ['.github/workflows/week16-build-candidate.yml']
 permissions:
   contents: write
-  actions: read
+  actions: write
 jobs:
   candidate:
     runs-on: ubuntu-latest
@@ -20,6 +20,10 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
+      - name: Cancel superseded candidate builds only
+        run: |
+          gh run cancel 35937047117 || true
+          gh run cancel 35937961049 || true
       - name: Wait for the actual CFD and model-reference gates
         run: |
           gh run watch 35937834499 --exit-status --interval 60
@@ -27,7 +31,7 @@ jobs:
       - name: Install teaching and validation dependencies
         run: |
           sudo apt-get update && sudo apt-get install -y poppler-utils
-          pip install -r qa/week16/requirements.txt pytest pytest-subtests jinja2 pypdf
+          pip install -r qa/week16/requirements.txt pytest==8.4.2 pytest-subtests jinja2 pypdf==6.10.0
       - name: Retrieve raw evidence
         run: |
           gh run download 35935655513 --name nasa-level-1 --dir raw_artifacts/nasa-level-1
