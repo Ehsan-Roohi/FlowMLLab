@@ -1,0 +1,64 @@
+name: Week 16 retained-checkpoint CFD recomputation
+on:
+  push:
+    branches: [week16-reference-recovery]
+    paths: ['.github/workflows/week16-neural-recompute.yml']
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  cfd:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    strategy:
+      fail-fast: false
+      matrix:
+        case: [0,1,2,3,4,5,6,7]
+    env:
+      OPENBLAS_NUM_THREADS: '1'
+      OMP_NUM_THREADS: '1'
+      MPLBACKEND: Agg
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: sudo apt-get update && sudo apt-get install -y libglu1-mesa libxft2 libxinerama1 libxcursor1
+      - run: pip install -r qa/week16/requirements.txt
+      - run: python qa/week16/install_su2.py
+      - name: Recompute fixed test geometry with unchanged checkpoint
+        run: SU2_CFD="$PWD/.tools/week16_su2/bin/SU2_CFD" python qa/week16/recompute_neural_cfd.py --case-index ${{ matrix.case }}
+      - name: Archive complete numerical evidence
+        if: always()
+        run: tar -czf neural-case-${{ matrix.case }}.tar.gz results/week16_lowboom/runs/checkpoint_test_*
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: neural-case-${{ matrix.case }}
+          path: neural-case-${{ matrix.case }}.tar.gz
+          retention-days: 90
+  audit:
+    needs: cfd
+    runs-on: ubuntu-latest
+    env:
+      OPENBLAS_NUM_THREADS: '1'
+      MPLBACKEND: Agg
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install -r qa/week16/requirements.txt
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: neural-case-*
+          merge-multiple: true
+      - run: for archive in neural-case-*.tar.gz; do tar -xzf "$archive"; done
+      - run: python qa/week16/recompute_neural_cfd.py --report
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: recomputed-checkpoint-report
+          path: |
+            results/week16_lowboom/reference/recomputed_checkpoint_*
+          retention-days: 90

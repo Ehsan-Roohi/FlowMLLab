@@ -17,7 +17,7 @@ def build(root, runs):
         axs[1].plot(it,h['CD'],label=label)
     axs[0].axhline(-9,color='gray',ls='--',lw=.8,label='Residual criterion')
     axs[0].set(xlabel='Iteration',ylabel='log10 RMS density residual')
-    axs[1].set(xlabel='Iteration',ylabel='SU2 pressure drag coefficient')
+    axs[1].set(xlabel='Iteration',ylabel='SU2 reported CD (convergence monitor)')
     for ax in axs:
         ax.axvline(2000,color='gray',ls=':',lw=.8)
         ax.grid(alpha=.2);ax.legend(fontsize=8)

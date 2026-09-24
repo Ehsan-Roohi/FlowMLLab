@@ -49,3 +49,4 @@ notebooks/week05_06/P5_5A_cases_v12.npz
 results/week16_lowboom/reference/seeb_level_*/
 nasa-level-*.tar.gz
 results/week16_lowboom/reference/mesh_node_count_smoke_v2/
+results/week16_lowboom/runs/checkpoint_test_*/

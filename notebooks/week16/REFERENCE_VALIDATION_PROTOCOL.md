@@ -6,6 +6,12 @@ Keep geometry, Mach number, observation line and normalization fixed while evalu
 
 Use the archived predictions verbatim. Verify recovered Git blob hashes, dataset SHA-256, test case identities, shape parameters and sampling coordinates. Compute aggregate waveform relative L2, mean positive-peak relative error and mean pressure-drag relative error. Each aggregate threshold is 10%. Report all per-case waveform errors and the worst error, even when the aggregate passes. A test geometry must not be moved into training after its error is observed.
 
+## Recomputed checkpoint test cases
+
+Use the already retained portable checkpoint, with no training, weight changes or model selection. Recompute the same eight test geometries at mesh level 2 and Mach 1.8 using the original teaching-body generator. Save each prediction before launching its solver and retain the complete mesh, configuration, restart field, extracted signal and history. Require positive finite fields, density residual at or below -9 in log10 units, residual reduction of at least five decades and final-100-iteration relative drag range below 1e-4. Freeze the aggregate waveform, peak and drag thresholds at 10%; report per-case and worst waveform errors separately.
+
+These are repeated reference geometries whose earlier labels were already available. Fresh raw evidence closes the numerical reproducibility gap; it does not make this a blind test of new geometry generalization. Preserve the historical audit separately rather than replacing its values with the rerun.
+
 ## NASA CFD
 
 Use NASA SEEB-ALR as-built geometry, M=1.6, zero incidence, and H=21.2 inches. Compare dp/p_infinity within x=25–46 inches using only original NASA macro shifts. Interpolate CFD to measurement points. The finest accepted solution must meet both experiments independently: waveform relative L2 below 20%, positive-peak relative error below 10%. The last two mesh waveforms must differ by less than 5% in relative L2 over the same window. All included accepted mesh solutions must converge; retain failed pilots separately with explicit status. Mesh change is not a formal GCI. The finite nose cap is fixed at two cells and this limitation must be stated.
