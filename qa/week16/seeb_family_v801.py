@@ -23,7 +23,7 @@ def run(level,iterations=8000,mesh_only=False):
     sources={n:base.sha256(ROOT/'qa/week16'/n) for n in SOURCES}
     failure=None;meta={'level':level,'status':'meshing','converged':False,'source_sha256':sources}
     try:
-        generated=resolved.run(level=level,iterations=iterations,threads=1,mesh_only=True,name=name)
+        generated=resolved.run(level=level,iterations=iterations,threads=4,mesh_only=True,name=name)
         # Preserve original mesh-only generation provenance explicitly.
         base.atomic_json(folder/'mesh_generation.json',generated)
         meta=dict(generated)
@@ -31,16 +31,16 @@ def run(level,iterations=8000,mesh_only=False):
                     official_asset_url=URL,official_asset_sha256=ASSET_SHA256,
                     mesh_generation_mode='Fresh mesh and configuration only; no prior CFD solution',
                     mesh_generating_source_sha256=generated['source_sha256'],source_sha256=sources,
-                    threads=1,full_reference_validation_at_generation=False,
+                    threads=4,full_reference_validation_at_generation=False,
                     scope='Fine member of frozen resolved-cap family; full acceptance requires all three mesh levels and independent NASA comparison.')
         meta['sha256']['mesh_generation.json']=base.sha256(folder/'mesh_generation.json')
         if mesh_only:
             meta['status']='mesh_only';base.atomic_json(folder/'metadata.json',meta)
             return meta
         meta['status']='running';base.atomic_json(folder/'metadata.json',meta)
-        start=time.time();env={**os.environ,'OMP_NUM_THREADS':'1','OPENBLAS_NUM_THREADS':'1'}
+        start=time.time();env={**os.environ,'OMP_NUM_THREADS':'4','OPENBLAS_NUM_THREADS':'1'}
         with (folder/'solver.log').open('w') as log:
-            proc=subprocess.run([str(exe),'flow.cfg'],cwd=folder,env=env,stdout=log,stderr=subprocess.STDOUT)
+            proc=subprocess.run([str(exe),'flow.cfg','-t','4'],cwd=folder,env=env,stdout=log,stderr=subprocess.STDOUT)
             log.flush();os.fsync(log.fileno())
         meta.update(returncode=proc.returncode,wall_seconds=time.time()-start)
         if proc.returncode:raise RuntimeError(f'SU2 exited {proc.returncode}; see retained solver.log')

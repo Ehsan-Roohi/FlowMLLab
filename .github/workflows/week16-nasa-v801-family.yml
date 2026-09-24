@@ -11,7 +11,7 @@ on:
         type: string
 permissions:
   contents: read
-  actions: read
+  actions: write
 jobs:
   coarse_gate:
     runs-on: ubuntu-latest
@@ -20,6 +20,10 @@ jobs:
       OPENBLAS_NUM_THREADS: '1'
       OMP_NUM_THREADS: '1'
     steps:
+      - name: Stop superseded waiting controllers
+        run: |
+          gh run cancel 35944635654 || true
+          gh run cancel 35945740747 || true
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
@@ -59,7 +63,7 @@ jobs:
         level: ['1.5', '2']
     env:
       OPENBLAS_NUM_THREADS: '1'
-      OMP_NUM_THREADS: '1'
+      OMP_NUM_THREADS: '4'
       MPLBACKEND: Agg
     steps:
       - uses: actions/checkout@v4
