@@ -9,7 +9,7 @@ permissions:
 jobs:
   candidate:
     runs-on: ubuntu-latest
-    timeout-minutes: 210
+    timeout-minutes: 360
     env:
       OPENBLAS_NUM_THREADS: '1'
       OMP_NUM_THREADS: '1'
@@ -20,24 +20,16 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-      - name: Cancel superseded candidate builds only
+      - name: Wait for accepted reference and clean-model evidence
         run: |
-          gh run cancel 35937047117 || true
-          gh run cancel 35937961049 || true
-      - name: Wait for the actual CFD and model-reference gates
-        run: |
-          gh run watch 35937834499 --exit-status --interval 60
-          gh run watch 35936740632 --exit-status --interval 60
+          gh run watch 35944635654 --exit-status --interval 30
+          gh run watch 35944888983 --exit-status --interval 30
       - name: Install teaching and validation dependencies
         run: |
-          sudo apt-get update && sudo apt-get install -y poppler-utils
+          sudo apt-get update && sudo apt-get install -y poppler-utils libglu1-mesa
           pip install -r qa/week16/requirements.txt pytest==8.4.2 pytest-subtests jinja2 pypdf==6.10.0
-      - name: Retrieve raw evidence
-        run: |
-          gh run download 35935655513 --name nasa-level-1 --dir raw_artifacts/nasa-level-1
-          gh run download 35937834499 --pattern 'nasa-level-*' --dir raw_artifacts
-          gh run download 35936740632 --pattern 'neural-case-*' --dir raw_artifacts
-          for archive in raw_artifacts/*/*.tar.gz; do tar -xzf "$archive"; done
+      - name: Retrieve immutable raw and compact evidence
+        run: bash qa/week16/fetch_reference_evidence.sh
       - name: Recompute every reference report and enforce scientific gates
         run: |
           python qa/week16/nasa_reference_data.py
@@ -45,7 +37,14 @@ jobs:
           python qa/week16/independent_audit_report.py
           python qa/week16/freeze_model.py
           python qa/week16/recompute_neural_cfd.py --report
+          python qa/week16/weakwall_report.py --check-only
+          python qa/week16/weakwall_design_report.py --check-only
+          python qa/week16/cone_refinement_v801.py --report
+          python qa/week16/clean_campaign_v801.py --assemble --check-only
+          python qa/week16/clean_model_v801.py --check-only
+          python qa/week16/geometry_volume_audit.py
           python qa/week16/validate_reference.py
+          python qa/week16/clean_figures.py --raw-root results/week16_lowboom/runs
       - name: Build lecture and execute notebook with a real Jupyter kernel
         run: |
           python qa/week16/build_materials.py
@@ -58,9 +57,18 @@ jobs:
           from pypdf import PdfReader
           e=Path('results/week16_lowboom');r=e/'reference'
           cfd=json.loads((r/'seeb_validation.json').read_text())
-          nn=json.loads((r/'recomputed_checkpoint_audit.json').read_text())
+          nn=json.loads((r/'clean_model_audit_v801.json').read_text())
+          campaign=json.loads((r/'clean_campaign_audit.json').read_text())
+          design=json.loads((r/'weakwall_design_audit.json').read_text())
+          cone=json.loads((r/'cone_refinement_v801.json').read_text())
           report=json.loads((e/'release_check.json').read_text())
-          report['reference_extension']={'passed':cfd['passed'] and nn['passed'],'NASA_meshes':len(cfd['runs']),'recomputed_checkpoint_cases':nn['cases'],'NASA_workflow_run':35937834499,'NASA_coarse_workflow_run':35935655513,'neural_workflow_run':35936740632}
+          report.setdefault('historical_scientific_checks',report['scientific_checks'])
+          report['scientific_checks']={'clean_44_case_physical_and_numerical_checks':campaign['passed'],'new_clean_neural_model':nn['passed'],'retained_design_recomputation':design['passed'],'Taylor_Maccoll_refined_family':cone['passed'],'NASA_three_mesh_experimental_comparison':cfd['passed']}
+          report['scientific_checks']['actual_exported_wall_volume_within_0p2pct']=json.loads((r/'geometry_volume_audit.json').read_text())['passed']
+          report['scientific_pass']=all(report['scientific_checks'].values())
+          report['reference_extension']={'passed':report['scientific_pass'],'NASA_meshes':len(cfd['runs']),'clean_cases':44,'finer_neural_cases':8,'NASA_workflow_run':35944635654,'NASA_coarse_workflow_run':35944409924,'neural_workflow_run':35942843724,'clean_campaign_workflow_run':35944299803,'clean_model_workflow_run':35944888983,'design_workflow_run':35943668623,'cone_workflow_run':35943668572}
+          report['notebook_executed']=True
+          report['notebook_execution_method']='nbclient with a real Jupyter kernel'
           report['lecture_visual_review']=False
           report['release_ready']=False
           report['lecture_pages']=len(PdfReader('lectures/week16_supersonic_shape_optimization.pdf').pages)
@@ -79,6 +87,7 @@ jobs:
             results/week16_lowboom/reference/*.json
             results/week16_lowboom/reference/*.npz
             results/week16_lowboom/reference/*.png
+            results/week16_lowboom/reference/*.svg
             results/week16_lowboom/reference/reference_evidence.zip
             results/week16_lowboom/release_check.json
           retention-days: 90

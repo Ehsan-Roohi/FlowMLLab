@@ -1,5 +1,10 @@
 # Week 16: what has actually been validated?
 
+**Current primary teaching model:** `reference/clean_model_v801.npz`, trained once on 24 of the 44 newly regenerated SU2 8.0.1 cases. Every case passed numerical and full-field physical checks. Run `python qa/week16/clean_model_v801.py --check-only` to reload the weights and reproduce all metrics without fitting. Finer CFD waveform/peak/drag errors are 7.2036%/2.2373%/2.2740%; the worst waveform error is 15.3716%. Extrapolation waveform error is 34.2862% and drag error 22.3889%, so extrapolation reliability is not established. The fit used full-SVD POD, training-only statistics, 800 optimizer iterations and no warnings.
+
+The original data and older model identities described below remain historical comparisons. The eight old 8.5.0 refined fields later failed a full-field enthalpy check; their numerical prediction-error tables do not constitute physical acceptance. New data and weights have distinct filenames and hashes.
+
+
 Read this guide alongside the notebook. The learning sequence is **geometry → governing equations → numerical checks → data split → surrogate → optimization → fresh CFD**. A model can pass one check and fail the next.
 
 ## 1. Three different questions
@@ -8,7 +13,7 @@ Read this guide alongside the notebook. The learning sequence is **geometry → 
 |---|---|---|---|---|
 | Taylor–Maccoll cone | Axisymmetric 7° cone, Mach 1.8, zero incidence | Cone surface pressure versus an independently integrated Taylor–Maccoll solution | A check of the axisymmetric Euler pressure calculation | Accuracy of the full off-body waveform, atmospheric propagation, or a neural network |
 | NASA SEEB-ALR | NASA's reference body, with benchmark-specific conditions | Off-body pressure signature versus the original NASA experimental records and a separately identified computational reference | An independent physical comparison for near-field CFD when the geometry, coordinates and conditions match | Experimental validation of a neural network trained on a different two-parameter family |
-| Week 16 surrogate | Fixed-volume two-parameter bodies at Mach 1.8 | POD waveform coefficients and pressure drag versus held-out SU2 calculations | Interpolation within the stated family and the tested extrapolation range | Generalization to NASA geometry, a lifting aircraft, a new Mach number, or ground loudness |
+| Week 16 surrogate | Fixed-volume two-parameter bodies at Mach 1.8 | POD waveform coefficients and pressure drag versus held-out SU2 calculations | Measured interpolation and extrapolation errors within the stated study; extrapolation performs poorly | Generalization to NASA geometry, a lifting aircraft, a new Mach number, or ground loudness |
 
 NASA experiment and NASA-hosted CFD are different kinds of reference: label both explicitly. An agreement between two numerical solutions is not a wind-tunnel validation. The NASA exercise must retain the actual geometry, original data and their provenance before numerical claims can be checked. This guide supplies no additional measured NASA error or new validation pass.
 
@@ -24,7 +29,7 @@ $$\frac{dv_r}{d\theta}=v_\theta,\qquad
 
 For a guessed shock angle $\beta$, apply the normal-shock density ratio to the polar velocity at the shock. The radial component is unchanged. Integrate toward the cone half-angle $\theta_c$ and adjust $\beta$ until $v_\theta(\theta_c)=0$, the impermeable-wall condition. After the shock, pressure follows the isentropic relation along a streamline. `benchmark.cone_exact()` implements this shooting calculation with adaptive ODE integration and a bracketed scalar root search.
 
-At $M_\infty=1.8$, $\theta_c=7^\circ$ and $\gamma=1.4$, the computed shock angle is 34.035742 degrees, wall pressure ratio is 1.140626 and wall $C_p$ is 0.0620043. The retained SU2 wall value is 0.0613869, a 0.996% relative difference. Students should rerun the ODE, inspect its boundary condition, and compare wall pressure away from the apex and outlet. Do not apply this infinite-cone similarity solution to the finite NASA body or to ground propagation.
+At $M_\infty=1.8$, $\theta_c=7^\circ$ and $\gamma=1.4$, the computed shock angle is 34.035742 degrees, wall pressure ratio is 1.140626 and wall $C_p$ is 0.0620043. The historical SU2 8.5.0 wall value was 0.0613869 (0.996% error). The new official SU2 8.0.1 three-mesh study gives 4.5632%, 2.1563% and 1.1616% pressure error. The finest value is 0.0612840 and the last-two change is 1.0064%; the unchanged refined-family criterion passes while the coarse failure remains recorded. Students should rerun the ODE, inspect its boundary condition, and compare wall pressure away from the apex and outlet. Do not apply this infinite-cone similarity solution to the finite NASA body or to ground propagation.
 
 ## 2. Follow one sample through the learned model
 

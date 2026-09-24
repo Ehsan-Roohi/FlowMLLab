@@ -88,17 +88,22 @@ A residual converged run can still diffuse a shock or misrepresent a finite nose
 
 Report mesh sensitivity as the difference between named mesh levels. Two similar answers are not automatically grid independence, and a formal Grid Convergence Index requires additional assumptions and a suitable refinement sequence. A nose cap held at a fixed number of cells is not uniformly refined with the rest of the mesh; disclose that limitation.
 
-The replacement driver can be run from the repository root after installing the dependencies in `qa/week16/requirements.txt` and putting SU2 on PATH:
+The resolved geometry generator remains in `seeb_resolved.py`. Its initial SU2 8.5.0 coarse solve failed convergence and physical checks. The controlled version replay uses exactly that archived mesh/configuration with official SU2 8.0.1, before the two finer meshes are permitted. Consult the actual report and publication status; this sequence is not itself a claim of success.
 
 ```bash
-python qa/week16/seeb_resolved.py --level 1 --mesh-only --name resolved_mesh_preview
-python qa/week16/seeb_resolved.py --level 1 --iterations 8000
-# Run the finer cases only after the coarse pilot passes local physical checks.
-python qa/week16/seeb_resolved.py --level 1.5 --iterations 8000
-python qa/week16/seeb_resolved.py --level 2 --iterations 8000
+python qa/week16/install_su2_801.py
+export SU2_CFD="$PWD/.tools/week16_su2_801/bin/SU2_CFD"
+# Fresh checkout/output directories; keep the original failed reference intact.
+gh run download 35941629706 --name nasa-resolved-level-1 --dir nasa_original
+tar -xzf nasa_original/nasa-resolved-level-1.tar.gz
+python qa/week16/seeb_version_v801.py --reference-folder results/week16_lowboom/reference/seeb_resolved_level_1
+# Continue only if the coarse replay passes physical and numerical checks.
+python qa/week16/seeb_family_v801.py --level 1.5
+python qa/week16/seeb_family_v801.py --level 2
+python qa/week16/reference_report.py
 ```
 
-Alternatively set `SU2_CFD` to the absolute executable path. Fresh folder names are required. This family resolves the upstream nose region and refines its cap together with the full mesh. The original CAD sting ends at x/L≈1.656; a cylindrical extension reaches the outlet. Pressure extraction retains the explicit keys `x_inches` and `dp_pinf`.
+The three accepted-candidate levels are 1, 1.5 and 2, with 10, 15 and 20 cells on the finite nose cap. The original CAD sting ends at x/L≈1.656; a cylindrical extension reaches the outlet. Pressure extraction retains the keys `x_inches` and `dp_pinf`. All three meshes must converge and pass full-field thermodynamic checks; the finest must have waveform error below 20% and peak error below 10% against both records, with last-two waveform change below 5%. These thresholds are not relaxed when a run fails.
 
 The earlier `seeb_reference.py` mesh family is retained for provenance but rejected as validation evidence. Its residual-converged coarse solution had an incorrect local stagnation state. Increasing limiter-freeze time cannot by itself establish physical correctness on an underresolved nose. See [the nose physics audit](NOSE_PHYSICS_AUDIT.md) for the observed failure, analytical checks and predeclared acceptance allowances. Original pilot evidence is in GitHub Actions run 35935655513; the subsequent mesh-scaled-freeze attempt is 35937834499.
 
