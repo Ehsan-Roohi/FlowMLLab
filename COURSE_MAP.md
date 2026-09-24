@@ -1,5 +1,7 @@
 # Course map: concept → computation → evidence
 
+**Browse by week:** [Open the weekly pages](weeks/README.md) for each topic’s image, lecture, notebooks and guide.
+
 Every module links to its notebook. The [notebook launcher](notebooks/README.md) and the [lecture index](lectures/README.md) list the same modules with Colab links and page counts.
 
 | Module | Conceptual focus | Guided computation | Evidence required before moving on |

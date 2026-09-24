@@ -1,5 +1,7 @@
 # Notebook guide
 
+**Browse by week:** [Open the weekly pages](../weeks/README.md) for each topic’s image, lecture, notebooks and guide.
+
 Most notebooks below open directly from GitHub in Google Colab and bootstrap
 their documented dependencies. Exceptions are labelled explicitly: P6 needs
 CUDA, Week 14 uses a separate environment whose hosted Run All remains

@@ -1,5 +1,7 @@
 # Lectures and guides
 
+**Browse by week:** [Open the weekly pages](../weeks/README.md) for each topic’s image, lecture, notebooks and guide.
+
 One row per lecture, in course order. The PDF is the authoritative rendered
 lecture for each release; editable sources live in `source/` where available.
 Page counts are those of the current files.

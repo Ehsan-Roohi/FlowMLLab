@@ -25,42 +25,42 @@ disclosure](DATA_PROVENANCE.md).
 | Your goal | Open |
 | --- | --- |
 | Start the guided-project evidence chain after Week 4 | [Launch the 20-minute P0 Colab](https://colab.research.google.com/github/Ehsan-Roohi/FlowMLLab/blob/main/notebooks/week05_06/P0_Project_Setup.ipynb) |
-| Follow the course | [Course map](COURSE_MAP.md) · [All notebooks](notebooks/README.md) · [Lectures](lectures/README.md) · [Glossary](docs/GLOSSARY.md) |
+| Follow the course | [Weekly pages](weeks/README.md) · [Course map](COURSE_MAP.md) · [All notebooks](notebooks/README.md) · [Lectures](lectures/README.md) · [Glossary](docs/GLOSSARY.md) |
 | Install and reproduce the results | [Setup and validation](START_HERE.md) |
 | Explore the scientific evidence | [Results and technical guide](docs/RESULTS_GUIDE.md) · [Interactive cavity demo](demo/README.md) |
 
 ## Continue through the course
 
-Each week has its own row, including the incremental laboratories.
+Open any week number below for its own page with the topic image, lecture, notebooks and learning guide. Incremental laboratories also have dedicated pages.
 Weeks 5 and 6 share a project pack and lecture guide, but have separate learning goals.
 
 | Week | Topic | Notebook / lab | Lecture |
 | --- | --- | --- | --- |
-| [1](#week-1--numerical-foundations) | Python, numerical methods and CFD validation | [Week 1 labs](notebooks/week01/) | [Lecture 1](lectures/week01_numerical_foundations.pdf) |
-| [1.1](#week-11--ai-assisted-scientific-software) | Specification, verification, physical gates and accountable AI use | [Week 1.1 lab](notebooks/week01_1/W1_1_AI_Assisted_Scientific_Software.ipynb) | [Lecture 1.1](lectures/week01_1_ai_assisted_scientific_software.pdf) |
-| [2](#week-2--supervised-learning-and-rarefaction) | Features, scaling, baselines and model validity | [Week 2 lab](notebooks/week02/AI_in_Fluids_Week2_Colab_Expanded.ipynb) | [Lecture 2](lectures/week02_supervised_learning_rarefaction.pdf) |
-| [2.1](#week-21--probabilistic-uncertainty) | Bayesian prediction, calibration and uncertainty | [Week 2.1 lab](notebooks/week02_1/Probabilistic_UQ_CFD.ipynb) | [Lecture 2.1](lectures/week02_1_probabilistic_uq.pdf) |
-| [3](#week-3--kinetic-theory-and-dsmc) | Maxwellian sampling and particle simulation | [Week 3 labs](notebooks/week03/) | [Lecture 3](lectures/week03_kinetic_dsmc.pdf) |
-| [4](#week-4--cavity-surrogates-and-deeponet) | CFD datasets, field surrogates and operator learning | [Week 4 labs](notebooks/week04/) | [Lecture 4](lectures/week04_cavity_surrogates_deeponet.pdf) |
-| [4.1](#week-41--classical-reduced-order-models) | POD–Galerkin and POD–DEIM | [Week 4.1 lab](notebooks/week04/W4_1_Classical_ROM_Cavity.ipynb) | [Week 4 companion](lectures/week04_cavity_surrogates_deeponet.pdf); theory in lab |
-| [4.2](#week-42--stokes-to-navier-stokes-correction) | Matched Stokes input and learned Navier–Stokes correction | [Week 4.2 lab](notebooks/week04/W4_Lab4_Stokes_to_Navier_Stokes.ipynb) | [Week 4.2 companion](lectures/week04_2_stokes_to_navier_stokes.pdf) |
-| [5](#week-5--physics-guided-projects) | POD, physics-guided learning and frozen project protocols | [Week 5 project setup and tracks](notebooks/week05_06/README.md) | [Shared Weeks 5–6 guide](lectures/week05_06_project_guide.pdf) |
-| [6](#week-6--physical-validation-and-final-evidence) | Closure testing, physical validation and reproducibility | [Week 6 closure track](notebooks/week05_06/P6_FP_Cavity_Closure.ipynb) · [All tracks](notebooks/week05_06/README.md) | [Shared Weeks 5–6 guide](lectures/week05_06_project_guide.pdf) |
-| [7](#week-7--unsteady-cylinder-wakes) | LBM, vortex shedding and autonomous surrogates | [Week 7 lab](notebooks/week07/W7_Lattice_Boltzmann_Cylinder_Student.ipynb) | [Lecture 7](lectures/week07_cylinder_lbm_neural_surrogate.pdf) |
-| [7.1](#week-71--rarefied-hypersonic-cylinder) | DSMC fields and Mach-to-field operators | [Week 7.1 lab](notebooks/week07_1/W7_1_Hypersonic_Rarefied_Cylinder_DeepONet.ipynb) | [Lecture 7.1](lectures/week07_1_hypersonic_rarefied_cylinder.pdf) |
-| [7.2](#week-72--sparse-sensor-state-estimation) | Causal filtering of a cylinder wake from noisy sparse sensors | [Week 7.2 lab](notebooks/week07_2/README.md) | [Lecture 7.2](lectures/week07_2_cylinder_state_estimation.pdf) |
-| [7.3](#week-73--self-supervised-pretraining-and-label-efficiency) | Masked-autoencoder pretraining on unlabelled wakes; error versus number of labelled frames against gappy POD | [Week 7.3 lab](notebooks/week07_3/README.md) | [Lecture 7.3](lectures/week07_3_masked_pretraining.pdf) |
-| [7.4](#week-74--diverse-wake-pretraining) | Representation transfer and target-label efficiency for lift | [Week 7.4 lab](notebooks/week07_4/README.md) | [Lecture 7.4](lectures/week07_4_diverse_wake_pretraining.pdf) |
-| [8](#week-8--gas-dynamics-and-sciml) | Exact compressible-flow branches and learned inverse maps | [Week 8 labs](notebooks/week08/README.md) | [Lecture 8](lectures/week08_gas_dynamics_sciml.pdf) |
-| [9](#week-9--rarefied-micro-step-and-micro-nozzle) | Geometry-dependent and shock-aligned operators | [Week 9 labs](notebooks/week09/README.md) | [Lecture 9](lectures/week09_rarefied_deeponet_case_studies.pdf) |
-| [10](#week-10--dsmc-cavity-and-molecular-shocks) | Cavity and mono/diatomic shock reproduction | [Week 10 lab](notebooks/week10/README.md) | [Lecture 10](lectures/week10_dsmc_data_driven_surrogates.pdf) |
-| [10.1](#week-101--ab-initio-collision-deeponet) | Molecular scattering and DSMC cylinder contours | [CPU scattering lab](notebooks/week10_1/W10_1_Collision_Map_Surrogate_Audit.ipynb) · [Research fields](results/abinitio_deeponet_cylinder/README.md) | [Lecture companion](lectures/week10_1_abinitio_collision_deeponet.md) |
-| [11](#week-11--shock-and-vortex-identification) | Shock/vortex identification; alpha and pressure methods for vapor clouds | [Week 11 lab](notebooks/week11/README.md) | [Lecture 11](lectures/week11_shock_vortex_identification.pdf) |
-| [12](#week-12--dsmc-moment-reconstruction) | Additive moments, observation-conditioned reconstruction and support | [Week 12 lab](notebooks/week12/README.md) | [Lecture 12](lectures/week12_dsmc_moment_reconstruction.pdf) |
-| [13](#week-13--rectangular-cavity-pinn-research-audit) | Streamfunction PINNs: build one on CPU, then audit deep-cavity and four-case research runs | [Week 13 lab](notebooks/week13/README.md) | [Lecture 13](lectures/week13_rectangular_cavity_pinn.pdf) |
-| [14](#week-14---rans-inverse-pinn-and-neural-turbulence-closures) | Davidson-based RANS, inverse PINN and neural closures | [Week 14 lab](notebooks/week14/README.md) | [Lecture 14](lectures/week14_rans_pinn_nn.pdf) |
-| [15](#week-15--geometry-aware-neural-operators) | Geometry and topology generalization across DeepONet, Geom-DeepONet, Geo-FNO, SMART, GeoTransolver and DoMINO | [Complete Week 15 notebook](notebooks/week15/W15_Complete_Geometry_Generalization.ipynb) | [Expanded Lecture 15](lectures/week15_geometry_generalization.pdf) |
-| [16](#week-16--supersonic-shape-optimization) | Supersonic shape optimization with verified Gmsh/SU2 CFD | [Week 16 notebook](notebooks/week16/W16_Supersonic_Shape_Optimization.ipynb) | [Lecture 16](lectures/week16_supersonic_shape_optimization.pdf) |
+| [1](weeks/week01/README.md) | Python, numerical methods and CFD validation | [Week 1 labs](notebooks/week01/) | [Lecture 1](lectures/week01_numerical_foundations.pdf) |
+| [1.1](weeks/week01_1/README.md) | Specification, verification, physical gates and accountable AI use | [Week 1.1 lab](notebooks/week01_1/W1_1_AI_Assisted_Scientific_Software.ipynb) | [Lecture 1.1](lectures/week01_1_ai_assisted_scientific_software.pdf) |
+| [2](weeks/week02/README.md) | Features, scaling, baselines and model validity | [Week 2 lab](notebooks/week02/AI_in_Fluids_Week2_Colab_Expanded.ipynb) | [Lecture 2](lectures/week02_supervised_learning_rarefaction.pdf) |
+| [2.1](weeks/week02_1/README.md) | Bayesian prediction, calibration and uncertainty | [Week 2.1 lab](notebooks/week02_1/Probabilistic_UQ_CFD.ipynb) | [Lecture 2.1](lectures/week02_1_probabilistic_uq.pdf) |
+| [3](weeks/week03/README.md) | Maxwellian sampling and particle simulation | [Week 3 labs](notebooks/week03/) | [Lecture 3](lectures/week03_kinetic_dsmc.pdf) |
+| [4](weeks/week04/README.md) | CFD datasets, field surrogates and operator learning | [Week 4 labs](notebooks/week04/) | [Lecture 4](lectures/week04_cavity_surrogates_deeponet.pdf) |
+| [4.1](weeks/week04_1/README.md) | POD–Galerkin and POD–DEIM | [Week 4.1 lab](notebooks/week04/W4_1_Classical_ROM_Cavity.ipynb) | [Week 4 companion](lectures/week04_cavity_surrogates_deeponet.pdf); theory in lab |
+| [4.2](weeks/week04_2/README.md) | Matched Stokes input and learned Navier–Stokes correction | [Week 4.2 lab](notebooks/week04/W4_Lab4_Stokes_to_Navier_Stokes.ipynb) | [Week 4.2 companion](lectures/week04_2_stokes_to_navier_stokes.pdf) |
+| [5](weeks/week05/README.md) | POD, physics-guided learning and frozen project protocols | [Week 5 project setup and tracks](notebooks/week05_06/README.md) | [Shared Weeks 5–6 guide](lectures/week05_06_project_guide.pdf) |
+| [6](weeks/week06/README.md) | Closure testing, physical validation and reproducibility | [Week 6 closure track](notebooks/week05_06/P6_FP_Cavity_Closure.ipynb) · [All tracks](notebooks/week05_06/README.md) | [Shared Weeks 5–6 guide](lectures/week05_06_project_guide.pdf) |
+| [7](weeks/week07/README.md) | LBM, vortex shedding and autonomous surrogates | [Week 7 lab](notebooks/week07/W7_Lattice_Boltzmann_Cylinder_Student.ipynb) | [Lecture 7](lectures/week07_cylinder_lbm_neural_surrogate.pdf) |
+| [7.1](weeks/week07_1/README.md) | DSMC fields and Mach-to-field operators | [Week 7.1 lab](notebooks/week07_1/W7_1_Hypersonic_Rarefied_Cylinder_DeepONet.ipynb) | [Lecture 7.1](lectures/week07_1_hypersonic_rarefied_cylinder.pdf) |
+| [7.2](weeks/week07_2/README.md) | Causal filtering of a cylinder wake from noisy sparse sensors | [Week 7.2 lab](notebooks/week07_2/README.md) | [Lecture 7.2](lectures/week07_2_cylinder_state_estimation.pdf) |
+| [7.3](weeks/week07_3/README.md) | Masked-autoencoder pretraining on unlabelled wakes; error versus number of labelled frames against gappy POD | [Week 7.3 lab](notebooks/week07_3/README.md) | [Lecture 7.3](lectures/week07_3_masked_pretraining.pdf) |
+| [7.4](weeks/week07_4/README.md) | Representation transfer and target-label efficiency for lift | [Week 7.4 lab](notebooks/week07_4/README.md) | [Lecture 7.4](lectures/week07_4_diverse_wake_pretraining.pdf) |
+| [8](weeks/week08/README.md) | Exact compressible-flow branches and learned inverse maps | [Week 8 labs](notebooks/week08/README.md) | [Lecture 8](lectures/week08_gas_dynamics_sciml.pdf) |
+| [9](weeks/week09/README.md) | Geometry-dependent and shock-aligned operators | [Week 9 labs](notebooks/week09/README.md) | [Lecture 9](lectures/week09_rarefied_deeponet_case_studies.pdf) |
+| [10](weeks/week10/README.md) | Cavity and mono/diatomic shock reproduction | [Week 10 lab](notebooks/week10/README.md) | [Lecture 10](lectures/week10_dsmc_data_driven_surrogates.pdf) |
+| [10.1](weeks/week10_1/README.md) | Molecular scattering and DSMC cylinder contours | [CPU scattering lab](notebooks/week10_1/W10_1_Collision_Map_Surrogate_Audit.ipynb) · [Research fields](results/abinitio_deeponet_cylinder/README.md) | [Lecture companion](lectures/week10_1_abinitio_collision_deeponet.md) |
+| [11](weeks/week11/README.md) | Shock/vortex identification; alpha and pressure methods for vapor clouds | [Week 11 lab](notebooks/week11/README.md) | [Lecture 11](lectures/week11_shock_vortex_identification.pdf) |
+| [12](weeks/week12/README.md) | Additive moments, observation-conditioned reconstruction and support | [Week 12 lab](notebooks/week12/README.md) | [Lecture 12](lectures/week12_dsmc_moment_reconstruction.pdf) |
+| [13](weeks/week13/README.md) | Streamfunction PINNs: build one on CPU, then audit deep-cavity and four-case research runs | [Week 13 lab](notebooks/week13/README.md) | [Lecture 13](lectures/week13_rectangular_cavity_pinn.pdf) |
+| [14](weeks/week14/README.md) | Davidson-based RANS, inverse PINN and neural closures | [Week 14 lab](notebooks/week14/README.md) | [Lecture 14](lectures/week14_rans_pinn_nn.pdf) |
+| [15](weeks/week15/README.md) | Geometry and topology generalization across DeepONet, Geom-DeepONet, Geo-FNO, SMART, GeoTransolver and DoMINO | [Complete Week 15 notebook](notebooks/week15/W15_Complete_Geometry_Generalization.ipynb) | [Expanded Lecture 15](lectures/week15_geometry_generalization.pdf) |
+| [16](weeks/week16/README.md) | Supersonic shape optimization with verified Gmsh/SU2 CFD | [Week 16 notebook](notebooks/week16/W16_Supersonic_Shape_Optimization.ipynb) | [Lecture 16](lectures/week16_supersonic_shape_optimization.pdf) |
 
 ## Results gallery · in course order
 
@@ -69,6 +69,8 @@ Follow the captions for data provenance and validity limits; the
 [technical guide](docs/RESULTS_GUIDE.md) retains the detailed protocols and metrics.
 
 ### Week 1 — Numerical foundations
+
+**[Open Week 1: lecture, notebooks and guide](weeks/week01/README.md)**
 
 **Problem:** Lid-driven cavity benchmark.<br>
 **CFD / data:** FlowMLLab finite-difference streamfunction–vorticity Navier–Stokes solver.<br>
@@ -81,6 +83,8 @@ centerlines and Ghia comparisons establish what a useful training label means.
 [Figure contract](ARTICLE_FIGURE_MAP.md)
 
 ### Week 1.1 — AI-assisted scientific software
+
+**[Open Week 1.1: lecture, notebooks and guide](weeks/week01_1/README.md)**
 
 **Problem:** Verify cavity diagnostics and physical constraints.<br>
 **CFD / data:** Analytic manufactured solution and a retained FlowMLLab cavity field.<br>
@@ -99,6 +103,8 @@ decision. [Run the lab](notebooks/week01_1/W1_1_AI_Assisted_Scientific_Software.
 
 ### Week 2 — Supervised learning and rarefaction
 
+**[Open Week 2: lecture, notebooks and guide](weeks/week02/README.md)**
+
 **Problem:** Predict response across Knudsen number and accommodation.<br>
 **CFD / data:** Synthetic teaching equation; no CFD/DSMC run.<br>
 **Learning method:** Ridge regression, not a neural CFD model.
@@ -110,6 +116,8 @@ accommodation affect the learning problem. This is a teaching equation, not a
 CFD/DSMC result. [Run the lab](notebooks/week02/AI_in_Fluids_Week2_Colab_Expanded.ipynb)
 
 ### Week 2.1 — Probabilistic uncertainty
+
+**[Open Week 2.1: lecture, notebooks and guide](weeks/week02_1/README.md)**
 
 **Problem:** Predict cavity quantities and fields with uncertainty.<br>
 **CFD / data:** Retained FlowMLLab cavity CFD data.<br>
@@ -123,6 +131,8 @@ and blind coverage; the retained under-coverage is part of the lesson.
 
 ### Week 3 — Kinetic theory and DSMC
 
+**[Open Week 3: lecture, notebooks and guide](weeks/week03/README.md)**
+
 **Problem:** Predict wall pressure from molecular motion.<br>
 **CFD / data:** FlowMLLab hard-sphere DSMC with no-time-counter (HS–NTC) collisions.<br>
 **Learning method:** No network in the displayed particle-solver validation.
@@ -134,6 +144,8 @@ HS–NTC wall-pressure validation.
 [Validation contract](ARTICLE_FIGURE_MAP.md)
 
 ### Week 4 — Cavity surrogates and DeepONet
+
+**[Open Week 4: lecture, notebooks and guide](weeks/week04/README.md)**
 
 **Problem:** Map Reynolds number to cavity fields.<br>
 **CFD / data:** FlowMLLab finite-difference streamfunction–vorticity Navier–Stokes solver.<br>
@@ -147,6 +159,8 @@ centerlines and measured inference cost.
 
 ### Week 4.1 — Classical reduced-order models
 
+**[Open Week 4.1: lecture, notebooks and guide](weeks/week04_1/README.md)**
+
 **Problem:** Evolve cavity flow in a reduced state space.<br>
 **CFD / data:** The Week-4 cavity equations and finite-difference full-order model.<br>
 **Learning method:** POD–Galerkin and POD–DEIM; neither is a neural network.
@@ -157,6 +171,8 @@ Compare reduced dynamics, hyper-reduction, blind trajectories and the offline/on
 cost tradeoff. [Run the ROM lab](notebooks/week04/W4_1_Classical_ROM_Cavity.ipynb)
 
 ### Week 4.2 — Stokes-to-Navier-Stokes correction
+
+**[Open Week 4.2: lecture, notebooks and guide](weeks/week04_2/README.md)**
 
 **Problem:** Predict the nonlinear cavity-flow correction from a matched Stokes field.<br>
 **CFD / data:** Constant and spatially diverse lid conditions, solved independently on 25 × 25 and 51 × 51 grids.<br>
@@ -194,6 +210,8 @@ mesh-independent CFD accuracy.
 
 ### Week 5 — Physics-guided projects
 
+**[Open Week 5: lecture, notebooks and guide](weeks/week05/README.md)**
+
 **Problem:** Build a cavity surrogate or reconstruct a wake from sparse sensors.<br>
 **CFD / data:** FlowMLLab cavity CFD for the animation; D2Q9–TRT LBM for the wake extension.<br>
 **Learning method:** POD–DeepONet for the animation; gappy POD, sensor placement and SINDy in the extension.
@@ -212,6 +230,8 @@ the Week 7 module.
 
 ### Week 6 — Physical validation and final evidence
 
+**[Open Week 6: lecture, notebooks and guide](weeks/week06/README.md)**
+
 **Problem:** Recover and validate cavity pressure.<br>
 **CFD / data:** FlowMLLab cavity CFD with least-squares pressure-gradient reconstruction.<br>
 **Learning method:** No neural model in this pressure-recovery figure.
@@ -224,6 +244,8 @@ Week 6 completes the selected Week-5 track, including optional closure testing.
 [Project completion guide](notebooks/week05_06/README.md)
 
 ### Week 7 — Unsteady cylinder wakes
+
+**[Open Week 7: lecture, notebooks and guide](weeks/week07/README.md)**
 
 **Problem:** Predict future cylinder-wake vorticity.<br>
 **CFD / data:** FlowMLLab D2Q9–TRT lattice Boltzmann solver (LBM).<br>
@@ -250,6 +272,8 @@ reports 3.17% global vorticity error, with sampling and pressure limitations.
 
 ### Week 7.1 — Rarefied hypersonic cylinder
 
+**[Open Week 7.1: lecture, notebooks and guide](weeks/week07_1/README.md)**
+
 **Problem:** Predict cylinder fields as Mach number varies.<br>
 **CFD / data:** Author-supplied DSMC archives; exact source/checkpoint attribution remains subject to the linked audit.<br>
 **Learning method:** 3×96 tanh MLP versus Mach interpolation; separate from the article's Fusion-DeepONet.
@@ -271,6 +295,8 @@ These are new teaching runs, not the published model's accuracy.
 
 ### Week 7.2 — Sparse-sensor state estimation
 
+**[Open Week 7.2: lecture, notebooks and guide](weeks/week07_2/README.md)**
+
 **Problem:** Estimate a wake from noisy velocity sensors.<br>
 **CFD / data:** Retained FlowMLLab D2Q9–TRT LBM Re110 trajectory.<br>
 **Learning method:** POD–DMD dynamics and a Kalman filter; no neural network in this estimator.
@@ -285,6 +311,8 @@ the overconfidence is retained as a model failure.
 [Protocol, all baselines and limits](results/week07_2_state_estimation/README.md)
 
 ### Week 7.3 — Self-supervised pretraining and label efficiency
+
+**[Open Week 7.3: lecture, notebooks and guide](weeks/week07_3/README.md)**
 
 **Problem:** Complete a wake field from 25% of its patches for a new trajectory with few labelled frames.<br>
 **CFD / data:** The four retained FlowMLLab D2Q9–TRT LBM wakes (Re = 90, 100, 105, 110).<br>
@@ -304,6 +332,8 @@ label. The classical win is retained and explained: this periodic wake is low-ra
 
 ### Week 7.4 — Diverse-wake pretraining
 
+**[Open Week 7.4: lecture, notebooks and guide](weeks/week07_4/README.md)**
+
 **Problem:** Decode instantaneous lift on Reynolds trajectories excluded from pretraining.<br>
 **CFD / data:** Sixteen compact D2Q9-TRT LBM trajectories, Re60-135; eleven development cases, Re105 validation, four target cases.<br>
 **Learning method:** Frozen pretrained and random encoders plus ridge, compared with POD-32 plus ridge.
@@ -314,6 +344,8 @@ The retained pretrained encoder achieves **12.31% mean lift NRMSE with 32 target
 [Protocol, per-trajectory results and limitations](results/week07_4_diverse_pretraining/README.md)
 
 ### Week 8 — Gas dynamics and SciML
+
+**[Open Week 8: lecture, notebooks and guide](weeks/week08/README.md)**
 
 **Problem:** Predict and invert compressible-flow relations.<br>
 **CFD / data:** Exact gas-dynamics relations and numerical root finding; no spatial CFD run.<br>
@@ -326,6 +358,8 @@ learned inverse maps under matched budgets.
 [Benchmarks and validity limits](results/gas_dynamics_week8/README.md)
 
 ### Week 9 — Rarefied micro-step and micro-nozzle
+
+**[Open Week 9: lecture, notebooks and guide](weeks/week09/README.md)**
 
 **Problem:** Predict geometry-dependent step fields and pressure-dependent nozzle fields.<br>
 **CFD / data:** Author-supplied DSMC archives; the nozzle uses modified Bird-family exports with a documented boundary defect.<br>
@@ -368,6 +402,8 @@ This isolates the value of the pre-fit audit; it is not a DSMC accuracy claim.
 
 ### Week 10 — DSMC cavity and molecular shocks
 
+**[Open Week 10: lecture, notebooks and guide](weeks/week10/README.md)**
+
 **Problem:** Reconstruct rarefied cavity and mono/diatomic shock data.<br>
 **CFD / data:** Author-supplied article DSMC tables, not new particle-solver runs.<br>
 **Article learning method:** the cavity uses a family of coordinate MLP experts,
@@ -388,6 +424,8 @@ and regeneration workflow available for inspection.
 · [Data contract](data/aescte_dsmc/README.md)
 
 ### Week 10.1 — Ab initio collision DeepONet
+
+**[Open Week 10.1: lecture, notebooks and guide](weeks/week10_1/README.md)**
 
 **Problem:** Compute cylinder flow using a collision-angle surrogate.<br>
 **CFD / data:** Author-supplied DS2V-based DSMC research runs.<br>
@@ -411,6 +449,8 @@ separate from the Jäger research fields above; it does not reproduce the
 article's potential or network.
 
 ### Week 11 — Shock and vortex identification
+
+**[Open Week 11: lecture, notebooks and guide](weeks/week11/README.md)**
 
 **Problem:** Identify shocks/vortex cores and test reconstruction before detection.<br>
 **CFD / data:** Archived ShockVortexML compressible fields for the lead figure; FlowMLLab D2Q9–TRT LBM for the wake extension. The lead archive's exact producing-solver revision is not established here.<br>
@@ -485,6 +525,8 @@ input information, so this is not a blind or matched-input accuracy ranking.
 
 ### Week 12 — DSMC moment reconstruction
 
+**[Open Week 12: lecture, notebooks and guide](weeks/week12/README.md)**
+
 **Problem:** Reduce cavity heat-flux sampling noise.<br>
 **CFD / data:** Author-supplied multi-seed DSMC with an independent finite-sample reference.<br>
 **Learning method:** Archived observation-conditioned estimator in the lead figure; a separate 64×32 tanh patch MLP in the Noise2Noise lab.
@@ -504,6 +546,8 @@ held-out seeds. Its training results are documented separately from the
 archived research reconstruction shown above.
 
 ### Week 13 — Rectangular-cavity PINN research audit
+
+**[Open Week 13: lecture, notebooks and guide](weeks/week13/README.md)**
 
 The front page retains only two representative comparisons. The notebook has three parts:
 build and train a small streamfunction PINN on CPU and judge it against the Week 1 CFD
@@ -549,6 +593,8 @@ relative L2; the separate frozen four-case matrix reports 3.343% for its
 
 ### Week 14 - RANS, inverse PINN and neural turbulence closures
 
+**[Open Week 14: lecture, notebooks and guide](weeks/week14/README.md)**
+
 **Problem:** Improve turbulent kinetic energy without confusing a coefficient fit
 with a validated coupled flow solution.<br>
 **CFD / data:** Lars Davidson's pyCALC-RANS source-checkpoint channel restarts;
@@ -570,6 +616,8 @@ The notebook reruns the small NN fit and checks retained CFD evidence; it does
 not silently present saved solver fields as a fresh Run-All CFD calculation.
 
 ### Week 15 — Geometry-aware neural operators
+
+**[Open Week 15: lecture, notebooks and guide](weeks/week15/README.md)**
 
 Learn how geometry-aware neural operators generalize from single-step and other training geometries to a retrospective double-step family.
 Compare whole-field prediction errors with reverse-flow topology, using the same CFD references and clearly separated historical and newly trained models.
@@ -630,6 +678,8 @@ failed vortex cases; zonal and fixed-context ablations remain in the author's
 private complete handoff and are not claimed as public release assets.
 
 ### Week 16 — Supersonic shape optimization
+
+**[Open Week 16: lecture, notebooks and guide](weeks/week16/README.md)**
 
 Build a CFD-to-learning design workflow for a fixed-volume supersonic body of revolution.
 Use physically checked data to fit a pressure-signature surrogate, propose shapes, and assess retained designs with direct CFD.
