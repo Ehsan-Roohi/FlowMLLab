@@ -25,8 +25,10 @@ jobs:
         run: gh run watch 35944299803 --exit-status --interval 30
       - name: Retrieve actual clean labels and finer held-out reference
         run: |
-          gh run download 35944299803 --name clean-campaign-report --dir results/week16_lowboom/reference
-          gh run download 35942843724 --name weakwall-checkpoint-report --dir results/week16_lowboom/reference
+          gh run download 35944299803 --name clean-campaign-report --dir downloaded_clean
+          cp downloaded_clean/* results/week16_lowboom/reference/
+          gh run download 35942843724 --name weakwall-checkpoint-report --dir downloaded_finer
+          cp downloaded_finer/* results/week16_lowboom/reference/
       - name: Perform exactly one prespecified training fit
         run: python qa/week16/clean_model_v801.py --train
       - name: Reload portable weights and audit without fitting
