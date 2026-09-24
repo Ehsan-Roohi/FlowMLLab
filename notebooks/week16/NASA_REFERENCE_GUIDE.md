@@ -1,3 +1,5 @@
+> **Week 16 scope (24 September 2026):** the release covers the verified teaching-body CFD, neural model, design checks and Taylor–Maccoll study. NASA SEEB-ALR CFD failed convergence/physical checks and remains a deferred research extension; no successful NASA validation is claimed.
+
 # NASA SEEB-ALR: geometry, reference data and a reproducible comparison
 
 This guide adds an experimental reference to Week 16. Start with the retained NASA data; run new CFD only after the geometry, coordinates and pressure normalization agree. The original sources are in `cases/week16_lowboom/reference/`, with download locations and SHA-256 hashes in `source_manifest.json`.

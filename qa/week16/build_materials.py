@@ -26,7 +26,7 @@ def notebook():
 
 [Open in Colab](https://colab.research.google.com/github/Ehsan-Roohi/FlowMLLab/blob/main/notebooks/week16/W16_Supersonic_Shape_Optimization.ipynb)
 
-The main student dataset contains 44 newly computed SU2 8.0.1 cases with numerical and full-field physical checks. A separately identified neural model uses only its 24 training cases. Historical SU2 8.5.0 data and weights remain available for an audit lesson: their small residuals did not reveal local total-enthalpy defects. You will distinguish analytical verification, experimental CFD validation, neural prediction accuracy and direct design checks.
+The main student dataset contains 44 newly computed SU2 8.0.1 cases with numerical and full-field physical checks. A separately identified neural model uses only its 24 training cases. Historical SU2 8.5.0 data and weights remain available for an audit lesson: their small residuals did not reveal local total-enthalpy defects. You will distinguish analytical verification, neural prediction accuracy and direct design checks; the research appendix explains why attempted experimental CFD validation remains unaccepted.
 
 **Claim boundary:** the computed target is near-field peak pressure at $r/L=0.5$. This notebook does not compute atmospheric propagation or PLdB, and its axisymmetric body is not TMS-10. Read [the assignment](ASSIGNMENT.md), [the model validation guide](MODEL_VALIDATION_GUIDE.md), and [the NASA reference walkthrough](NASA_REFERENCE_GUIDE.md) for assessed extensions and the distinction between analytical, experimental and learned-model checks.
 
@@ -106,46 +106,6 @@ print('Last two mean-Cp change [%]:',100*cone['last_two_cp_relative_change'])
 print('Refined-family gates:',cone['checks'])
 assert cone['passed']
 print('Coarse-grid Cp failure, if present, is retained; acceptance uses the declared refined-family criteria.')''')
-    md(r'''### NASA SEEB-ALR: read the independent reference first
-The NASA body is a separate validation geometry at Mach 1.6. Its original STEP geometry, two wind-tunnel records, coordinate-transform macros and NASA-hosted LAVA computation are retained under `cases/week16_lowboom/reference/`. See [the NASA guide](NASA_REFERENCE_GUIDE.md) for nose geometry, units, sampling position and mesh requirements.
-
-The following cell recomputes the **retained LAVA-versus-experiment** comparison. It is not a new SU2 result or experimental validation of the neural model. The pressure variable is $\Delta p/p_\infty$, related to $C_p$ by $\Delta p/p_\infty=\gamma M^2 C_p/2$. At Mach 1.6 this multiplier is 1.792. Source-prescribed shifts align the coordinates; no fit is used to improve agreement.''')
-    code('''from nasa_reference_data import report as nasa_report, load_reference
-nasa=nasa_report(write=False)
-print(nasa['comparison'])
-print('Fixed comparison window [inches]:',nasa['window_inches'])
-display(pd.DataFrame(nasa['metrics']).T)
-experiments,lava=load_reference()
-fig,ax=plt.subplots(figsize=(9,4))
-for label,curve in experiments.items():
-    plot_mask=(curve['x']>=25)&(curve['x']<=46)
-    curve={key:value[plot_mask] for key,value in curve.items()}
-    line,=ax.plot(curve['x'],curve['pressure'],label=label)
-    ax.fill_between(curve['x'],curve['pressure']-curve['uncertainty'],curve['pressure']+curve['uncertainty'],color=line.get_color(),alpha=.15)
-ax.plot(lava['x'],lava['pressure'],'k--',label='NASA-hosted LAVA CFD')
-ax.set(xlim=(25,46),xlabel='Source-aligned x [inches]',ylabel='delta p / p infinity')
-ax.legend();fig.tight_layout();plt.show()
-print(nasa['alignment'])
-print(nasa['interpolation'])''')
-    md(r'''### Our SU2 calculation against the NASA measurements
-This result uses the supplied as-built meridian at Mach 1.6, independently generated Gmsh meshes, and axisymmetric Euler in SU2. The plotted pressure difference, three-mesh comparison and numerical gates come from the retained run evidence. This validates this CFD benchmark within the stated tolerances; the neural network has not been trained or experimentally validated on this geometry.''')
-    code('''nasa_cfd=json.loads((E/'reference/seeb_validation.json').read_text())
-rows=[]
-for run in nasa_cfd['runs']:
-    for label,metrics in run['experimental_metrics'].items():
-        rows.append(dict(level=run['level'],cells=run['cells'],experiment=label,
-                         wave_error_percent=100*metrics['wave_relative_l2'],
-                         peak_error_percent=100*metrics['peak_relative_error']))
-display(pd.DataFrame(rows))
-display(pd.DataFrame([{key:run['metadata'][key] for key in ['level','cells','iterations','density_residual_log10','residual_drop','drag_tail_relative_range','min_pressure','min_density']} for run in nasa_cfd['runs']]))
-display(Image(filename=str(E/'reference/seeb_mesh.png')))
-display(Image(filename=str(E/'reference/seeb_convergence.png')))
-print('Last two mesh waveform difference [%]:',100*nasa_cfd['last_two_mesh_wave_relative_l2'])
-print('Declared gates:',nasa_cfd['checks'])
-assert nasa_cfd['passed']
-display(Image(filename=str(E/'reference/seeb_geometry.png')))
-display(Image(filename=str(E/'reference/seeb_validation.png')))
-print(nasa_cfd['scope'])''')
     md(r'''## 3. Frozen geometry split
 POD and scalers are fitted on training cases only. Validation selects the design model. The test cases remain outside fitting and selection. Extrapolation extends parameter $b$ beyond the training interval. All splits belong to the same two-parameter geometry family.''')
     code('''display(pd.Series(data['splits']).value_counts().rename('Cases'))
@@ -343,6 +303,31 @@ For a new design, create a unique case name and use `cfd.py --a ... --b ... --le
 5. What additional equations and data are needed before claiming a quieter sonic boom on the ground?
 
 **References:** Zheng et al. (2026), DOI 10.1016/j.ast.2026.113218; SU2 8.0.1 and 8.5.0 official sources and governing-equation documentation; Gmsh reference manual; Taylor and Maccoll (1933); NASA/AIAA Sonic Boom Prediction Workshops. Detailed links and the independently authored theory are in the lecture source.''')
+    md(r'''## Research appendix: NASA SEEB-ALR reference and failed reproduction
+Our SU2 reproduction of the NASA benchmark has not passed acceptance. Further NASA runs are deferred. This appendix preserves the independent sources and the failure lesson; it is not part of the accepted CFD/model evidence for this release.
+
+The NASA body is a separate validation geometry at Mach 1.6. Its original STEP geometry, two wind-tunnel records, coordinate-transform macros and NASA-hosted LAVA computation are retained under `cases/week16_lowboom/reference/`. See [the NASA guide](NASA_REFERENCE_GUIDE.md) for nose geometry, units, sampling position and mesh requirements.
+
+The following cell recomputes the **retained LAVA-versus-experiment** comparison. It is not a new SU2 result or experimental validation of the neural model. The pressure variable is $\Delta p/p_\infty$, related to $C_p$ by $\Delta p/p_\infty=\gamma M^2 C_p/2$. At Mach 1.6 this multiplier is 1.792. Source-prescribed shifts align the coordinates; no fit is used to improve agreement.''')
+    code('''from nasa_reference_data import report as nasa_report, load_reference
+nasa=nasa_report(write=False)
+print(nasa['comparison'])
+print('Fixed comparison window [inches]:',nasa['window_inches'])
+display(pd.DataFrame(nasa['metrics']).T)
+experiments,lava=load_reference()
+fig,ax=plt.subplots(figsize=(9,4))
+for label,curve in experiments.items():
+    plot_mask=(curve['x']>=25)&(curve['x']<=46)
+    curve={key:value[plot_mask] for key,value in curve.items()}
+    line,=ax.plot(curve['x'],curve['pressure'],label=label)
+    ax.fill_between(curve['x'],curve['pressure']-curve['uncertainty'],curve['pressure']+curve['uncertainty'],color=line.get_color(),alpha=.15)
+ax.plot(lava['x'],lava['pressure'],'k--',label='NASA-hosted LAVA CFD')
+ax.set(xlim=(25,46),xlabel='Source-aligned x [inches]',ylabel='delta p / p infinity')
+ax.legend();fig.tight_layout();plt.show()
+print(nasa['alignment'])
+print(nasa['interpolation'])''')
+    md(r'''### Unaccepted SU2 research result
+The attempted NASA calculations did not establish an accepted physically checked, mesh-refined family. Earlier nose treatment produced unphysical stagnation behavior; numerical convergence alone could not establish physical validity. No successful NASA result is required or asserted by this notebook. The retained failure audits and `NASA_REFERENCE_GUIDE.md` document the investigation. Future work must pass geometry, numerical, full-field physical, mesh-sensitivity and experimental-comparison checks before being presented as validation. The accepted results in this release are the teaching-body CFD/model checks and the Taylor-Maccoll cone verification.''')
     nb.cells=cells;nb.metadata.kernelspec={'display_name':'Python 3','language':'python','name':'python3'}
     target=ROOT/'notebooks/week16/W16_Supersonic_Shape_Optimization.ipynb'
     nbf.write(nb,target)
@@ -374,10 +359,7 @@ def lecture():
     figs={'4.':('reference/clean_cfd_fields','Actual accepted SU2 8.0.1 pressure fields for the baseline and retained optimized geometry. Both panels use identical Cp limits, exported cell connectivity and equal physical coordinate scales.'),'5.':('numerical_verification','Historical SU2 8.5.0 mesh and residual comparisons. These numerical checks did not detect the later identified tip enthalpy defect.'),'7.':('reference/clean_model_learning','Clean SU2 8.0.1 geometry split and new retained neural model: aggregate split errors, including poor extrapolation. The waveform compares the actual clean test CFD with the saved model.'),'8.':('reference/weakwall_design_validation','New SU2 8.0.1 CFD at the original candidate geometries, both design meshes and two off-design Mach numbers. All plotted cases pass full-field physical and convergence checks.'),'9.':('condition_checks','Historical SU2 8.5.0 observation-line and Mach comparisons. Accepted new 8.0.1 off-design results are reported separately.')}
     reference_figures={
         '11.':('reference/seeb_geometry','NASA SEEB-ALR as-built geometry. The nose and sting must be preserved when constructing the axisymmetric computational domain.'),
-        '12.':('reference/seeb_validation','Actual SU2 results against unchanged NASA experiments and NASA-hosted LAVA. The lower panels show signed errors and three-mesh sensitivity, with no fitted alignment.'),
-        '15.':('reference/seeb_convergence','Actual residual and pressure-drag histories for the three NASA grids. Limiter freeze and residual acceptance are separate from experimental agreement.'),
         '17.':('reference/weakwall_checkpoint_validation','Unchanged retained neural checkpoint against eight physically checked SU2 8.0.1 calculations on the same archived meshes and configurations. The older 8.5.0 physical audit remains failed.'),
-        '16.':('reference/seeb_mesh','The actual exported Gmsh mesh, with equal coordinate scales in each view. The finite cap is retained; the sampling inset shows the pressure extraction location.'),
         '13.':('reference/independent_neural_test','Recovered frozen neural predictions compared with eight finer-mesh CFD signatures. These predictions are not replaced by notebook refitting.')}
     figs.update({key:value for key,value in reference_figures.items() if (E/(value[0]+'.png')).is_file()})
     summary=json.loads((E/'summary.json').read_text())

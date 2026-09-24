@@ -1,3 +1,5 @@
+> **Week 16 scope (24 September 2026):** the release covers the verified teaching-body CFD, neural model, design checks and Taylor–Maccoll study. NASA SEEB-ALR CFD failed convergence/physical checks and remains a deferred research extension; no successful NASA validation is claimed.
+
 # Week 16: retained computational evidence
 
 Publication status is recorded in [PUBLICATION_STATUS.md](../../PUBLICATION_STATUS.md); the complete reference release is blocked until all gates pass. New computations use Gmsh 4.15.2 and the checksum-pinned official SU2 8.0.1 executable. Original SU2 8.5.0 results are retained separately as historical and failure-analysis evidence. The scientific quantity is off-body pressure, with the primary objective at r/L=0.5. Ground loudness is not calculated.

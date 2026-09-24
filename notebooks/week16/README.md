@@ -1,3 +1,5 @@
+> **Week 16 scope (24 September 2026):** the release covers the verified teaching-body CFD, neural model, design checks and Taylor–Maccoll study. NASA SEEB-ALR CFD failed convergence/physical checks and remains a deferred research extension; no successful NASA validation is claimed.
+
 # Week 16: supersonic shape optimization with verified CFD
 
 Start with `W16_Supersonic_Shape_Optimization.ipynb`. The notebook uses independently generated Gmsh/SU2 Euler data, compares POD-based learned models, and inspects fresh CFD evaluations of optimized shapes.

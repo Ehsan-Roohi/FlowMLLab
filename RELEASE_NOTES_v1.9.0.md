@@ -1,8 +1,8 @@
 # FlowMLLab v1.9.0 — Week 16 reference validation
 
-Release candidate. Publication is conditional on the numerical and teaching-material gates; see `PUBLICATION_STATUS.md`.
+This release covers the physically checked teaching-body CFD, neural surrogate, retained design comparisons and Taylor–Maccoll verification. NASA validation is explicitly deferred and is not part of the accepted results.
 
-Week 16 adds the original NASA SEEB-ALR STEP geometry, wind-tunnel pressure records and coordinate macros, plus the NASA-hosted LAVA comparison. The Gmsh/SU2 driver creates an axisymmetric Euler calculation at Mach 1.6 and retains exact configuration, mesh, solution, residual history and provenance hashes for three mesh levels. Comparison uses source-prescribed coordinates and a fixed window, with no fitted alignment or pressure rescaling.
+Original NASA SEEB-ALR geometry, experimental records and LAVA reference remain available for study. The 8,000-iteration SU2 8.0.1 replay did not converge (density residual log10 −2.3811) and failed physical checks (41.24% stagnation-pressure error, 25.48% maximum total-enthalpy deviation). No NASA CFD agreement is claimed. Further NASA work is a separate research task.
 
 The notebook independently integrates the Taylor-Maccoll cone equations and distinguishes experimental CFD validation from neural testing. The new SU2 8.0.1 cone study has 1.1616% finest-grid pressure error and 1.0064% last-two pressure change. Ten fresh design checks give 20.6646% peak-pressure reduction and 3.5218% pressure-drag reduction on the finer mesh.
 

@@ -20,7 +20,6 @@ fetch_raw 35944299803 'clean-batch-*' clean_campaign
 fetch_raw 35935655513 'nasa-level-1' rejected_nasa_original
 fetch_raw 35941629706 'nasa-resolved-level-1' rejected_nasa_resolved
 fetch_raw 35944409924 'nasa-resolved-v801-level-1' nasa_coarse
-fetch_raw 35946027208 'nasa-resolved-v801-level-*' nasa_refinement
 while IFS= read -r -d '' archive; do tar -xzf "$archive"; done < <(find raw_artifacts -name '*.tar.gz' -print0)
 fetch_report 35942843724 weakwall-checkpoint-report
 fetch_report 35943668623 weakwall-design-report

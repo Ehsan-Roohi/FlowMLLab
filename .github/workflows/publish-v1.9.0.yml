@@ -33,7 +33,7 @@ jobs:
         run: bash qa/week16/fetch_reference_evidence.sh
       - name: Recompute reference validation and check release
         run: |
-          python qa/week16/validate_reference.py
+          python qa/week16/validate_reference.py --scope validated_core
           python -m pytest -q tests qa
           flowmllab smoke --root .
           flowmllab qa --root .
@@ -74,7 +74,7 @@ jobs:
             echo 'Existing v1.9.0 left unchanged.'
           else
             gh release create v1.9.0 --target "$GITHUB_SHA" --latest \
-              --title 'FlowMLLab v1.9.0 - Week 16 reference validation' \
+              --title 'FlowMLLab v1.9.0 - Week 16 validated educational core' \
               --notes-file RELEASE_NOTES_v1.9.0.md \
               dist/* lectures/week16_supersonic_shape_optimization.pdf \
               results/week16_lowboom/reference/reference_evidence.zip \

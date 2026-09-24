@@ -1,6 +1,8 @@
+> **Week 16 scope (24 September 2026):** the release covers the verified teaching-body CFD, neural model, design checks and Taylor–Maccoll study. NASA SEEB-ALR CFD failed convergence/physical checks and remains a deferred research extension; no successful NASA validation is claimed.
+
 <h1><img src="docs/assets/flowmllab-logo.png" alt="FlowMLLab — fluid-streamline F logo" width="520"></h1>
 
-**v1.9.0 development branch — final validation blocked:** See [the current status](PUBLICATION_STATUS.md). Planned extension: Week 16 now includes NASA SEEB-ALR original geometry and reference records, a frozen-prediction neural audit, and detailed guides that distinguish cone verification, experimental CFD validation and surrogate testing. The final executed notebook will be retained after all gates pass. [Release notes](RELEASE_NOTES_v1.9.0.md).
+**Week 16 validated educational core:** CFD data, portable neural model, design checks and Taylor–Maccoll verification. NASA reproduction is a deferred research appendix with failed checks disclosed. [Publication scope](PUBLICATION_STATUS.md) · [Release notes](RELEASE_NOTES_v1.9.0.md).
 
 **Week 16:** [Supersonic shape optimization](notebooks/week16/README.md):
 44 new Gmsh/SU2 axisymmetric Euler cases, an executed learning-and-design notebook,

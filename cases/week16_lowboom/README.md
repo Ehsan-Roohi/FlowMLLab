@@ -1,3 +1,5 @@
+> **Week 16 scope (24 September 2026):** the release covers the verified teaching-body CFD, neural model, design checks and Taylor–Maccoll study. NASA SEEB-ALR CFD failed convergence/physical checks and remains a deferred research extension; no successful NASA validation is claimed.
+
 # Week 16: fixed-volume body of revolution at Mach 1.8
 
 Status: development; release requires `results/week16_lowboom/release_check.json` to pass.

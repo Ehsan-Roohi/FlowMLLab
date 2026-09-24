@@ -76,7 +76,9 @@ A multi-solution inverse method should be assessed through forward recomputation
 
 The present module offers a reproducible educational experiment: new Gmsh meshes, actual SU2 data, independent pressure benchmarking, transparent learned baselines and freshly recomputed design proposals. It does not reproduce TMS-10 or the full Beihang aircraft, and it does not demonstrate community-level noise reduction.
 
-## 11. Reading the NASA geometry and pressure records
+## 11. Research appendix: NASA sources and unaccepted reproduction
+
+The attempted SU2 reproduction of NASA SEEB-ALR remains unaccepted. Further NASA runs are deferred. This release rests on the accepted teaching-body CFD/model checks and Taylor-Maccoll verification. The NASA material below preserves sources, methods and the failure lesson; it is not evidence of successful experimental validation.
 
 The NASA SEEB-ALR benchmark serves a different purpose from both the Taylor-Maccoll cone and the design body. The cone has a similarity solution for wall pressure. SEEB-ALR has an as-built CAD geometry and off-body wind-tunnel pressure records. Our design body has two parameters chosen for a tractable learning exercise. The network is not trained on the NASA geometry.
 
@@ -86,15 +88,15 @@ The comparison condition is Mach 1.6 at zero incidence. The pressure extraction 
 
 The original NASA Tecplot macros specify longitudinal coordinate shifts. Preserve those shifts and show the comparison window. Do not shift a calculated shock onto a measured shock to reduce the error. A student should be able to regenerate every x coordinate from the distributed raw record and macro.
 
-## 12. Comparing CFD with experiment
+## 12. Research appendix: requirements for experimental comparison
 
-Plot three kinds of evidence distinctly: NASA wind-tunnel measurements, NASA's archived LAVA calculation, and our SU2 calculation. LAVA is a separate numerical solution, not an exact answer. Agreement between two solvers is useful, but agreement with an experiment addresses a different question. The NASA data files and their uncertainty columns are retained unchanged alongside a hash manifest.
+Distinguish NASA wind-tunnel measurements from NASA's archived LAVA calculation. Any future SU2 result must be labeled separately; the attempted reproduction is not an accepted reference. LAVA is a separate numerical solution, not an exact answer. Agreement between two solvers is useful, but agreement with an experiment addresses a different question. The NASA data files and their uncertainty columns are retained unchanged alongside a hash manifest.
 
 For a reference vector y and interpolated prediction y_hat at the same coordinates, the waveform error is norm(y_hat-y)/norm(y). Also report the relative error in the positive pressure peak. A small peak error can coexist with a large waveform error when the shock location or expansion width is wrong. Plot the signed difference as well as the pressure curves, and declare the comparison window before interpreting the error.
 
 Residual convergence concerns the algebraic solution on one mesh. Refine the mesh and compare the extracted waveforms to assess discretization sensitivity. An observed difference between the last two meshes is not a formal grid convergence index. Inspect the nose resolution, mesh alignment and shock region as well as the total cell count. A very small density residual cannot repair an incorrectly represented nose.
 
-The executable NASA report and its JSON output contain the current measured differences. Follow the NASA_REFERENCE_GUIDE.md reproduction instructions to regenerate the geometry, solve the flow and recompute the comparison. These comparisons assess the CFD benchmark within its stated assumptions; they do not experimentally validate the learned two-parameter model. The original two-cell nose-cap family was rejected. The replacement uses local upstream resolution and refines the finite cap with the mesh. Acceptance additionally requires full-field thermodynamic checks; an unaccepted pilot is never experimental validation.
+The retained NASA sources and LAVA-versus-experiment comparison can be inspected without running SU2. The original two-cell nose-cap family was rejected for unphysical nose behavior. Subsequent attempts did not establish an accepted physically checked, mesh-refined family. The guide and failure audits retain this investigation. No successful NASA acceptance report is a prerequisite for the present release, and no experimental validation of the learned two-parameter model is claimed.
 
 ## 13. Auditing the learned model with frozen predictions
 
@@ -114,17 +116,17 @@ On the retained finer-mesh cases this checkpoint has 6.39% aggregate waveform er
 
 Keep the historical prediction audit, this portable refit and newly fitted notebook models distinct. A model that reproduces a pressure waveform within a two-parameter family has not thereby learned general aircraft aerodynamics. The historical design improvement belongs to the model that proposed that design; every new optimized candidate still needs fresh CFD.
 
-## 15. Reading convergence evidence
+## 15. Research appendix: convergence is insufficient
 
-The NASA run driver saves the complete iteration history and checks positive density and pressure, a final log10 density residual at or below -9, a residual decrease of at least five decades, and a relative drag range below 1e-4 over the final 100 iterations. A solver exit code of zero alone does not satisfy these conditions. The limiter freezes at iterations 2000, 4000 and 5000 for levels 1, 2 and 2.5, respectively. Acceptance checks start 500 iterations later. A fine-grid pilot freezing at 2000 diverged; the recovery scales freeze time with refinement while leaving flux and CFL unchanged. An earlier residual reduction is not mistaken for the final discrete solution.
+The NASA run driver records iteration history, density and pressure, residual reduction and drag stability. A solver exit code of zero does not establish convergence. Small residuals do not establish a physical solution either: the rejected nose treatment showed why thermodynamic and stagnation checks must accompany algebraic convergence. An unaccepted calculation remains a failed research result even if selected pressure plots look plausible.
 
-The three meshes use the same Roe flux, entropy fix 0.05 and fixed CFL 5. Examine the drag as well as the density residual. Even if these algebraic checks pass, the experimental pressure and inter-mesh waveform criteria must be assessed separately. A numerical residual is not an error bar on the experimental comparison.
+Future NASA recovery must retain complete configurations and histories, apply declared physical and numerical checks to every mesh, and then assess experimental agreement and mesh sensitivity separately. No additional NASA computation is part of this release.
 
-## 16. Reading the actual mesh
+## 16. Research appendix: auditing geometry and mesh
 
-The figure shows the exported coarse computational grid, including the finite nose and the pressure-sampling line. Each inset uses equal physical coordinate scales. The outer blocks are sheared to provide resolution along the downstream propagation direction; this is a mesh choice, not an additional physical model. The radial axis ahead of the body uses symmetry, the body and sting use a slip wall, and the remaining outer boundaries use the prescribed farfield condition.
+A NASA mesh must preserve the supplied finite nose, body and sting and resolve their relevant physical scales. Use equal coordinate scales when inspecting the mesh and show the pressure-sampling line. File integrity is necessary but cannot establish adequate nose or shock resolution.
 
-Gmsh also stores unused geometric control points. They must not be counted as fluid nodes. The mesh audit reads all exported element, node and boundary records, verifies connectivity and compares physical node counts before launching SU2. These file-integrity checks prevent truncated meshes from being accepted as numerical evidence.
+Gmsh can store unused geometric control points. They must not be counted as fluid nodes. The mesh audit reads exported element, node and boundary records and verifies connectivity. These checks prevent truncated meshes from becoming numerical evidence; they do not turn a rejected physical solution into an accepted one.
 
 ## 17. Closing the raw-evidence gap for neural testing
 
