@@ -11,20 +11,20 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 30
     env:
+      GH_TOKEN: ${{ github.token }}
       OPENBLAS_NUM_THREADS: '1'
       OMP_NUM_THREADS: '1'
       MPLBACKEND: Agg
-      GH_TOKEN: ${{ github.token }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
       - run: pip install -r qa/week16/requirements.txt
-      - name: Restore the historical diagnostic report
+      - name: Restore the historical numerical comparison needed by its audit cell
         run: |
-          gh run download 35936740632 --name recomputed-checkpoint-report --dir historical_report
-          cp historical_report/* results/week16_lowboom/reference/
+          gh run download 35936740632 --name recomputed-checkpoint-report --dir old_report
+          cp old_report/* results/week16_lowboom/reference/
       - name: Execute sixteen teaching cells; explicitly leave NASA CFD comparison untested
         run: |
           python - <<'PY'
