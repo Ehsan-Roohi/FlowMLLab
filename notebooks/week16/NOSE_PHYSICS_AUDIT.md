@@ -4,6 +4,10 @@ A small residual is a convergence diagnostic, not proof that a computed flow is 
 
 This finding is separate from the off-body waveform comparison: a tolerable pressure curve at H=21.2 inches cannot repair an incorrect local flow. The original meshes had no upstream axis node within one nose radius of the cap. Two cap cells were fixed across refinement. The replacement preserves the same original sampled CAD geometry and physical conditions, while resolving the upstream shock region, the leading body and the cap locally.
 
+![Actual old and replacement Gmsh meshes at the same physical scale](../../results/week16_lowboom/reference/nose_resolution.svg)
+
+The comparison is generated directly from exported mesh connectivity by `qa/week16/plot_nose_resolution.py`; its sidecar JSON records mesh hashes. It is a mesh inspection, not a flow-validation result.
+
 ## Independent physical checks
 
 For a calorically perfect gas, steady adiabatic flow preserves total specific enthalpy:
