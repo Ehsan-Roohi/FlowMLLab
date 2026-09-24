@@ -1,0 +1,67 @@
+name: Week 16 partial instructional execution while NASA is pending
+on:
+  push:
+    branches: [week16-instructional-audit]
+    paths: ['.github/workflows/week16-instructional-audit.yml']
+permissions:
+  contents: read
+jobs:
+  notebook_subset:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      OPENBLAS_NUM_THREADS: '1'
+      OMP_NUM_THREADS: '1'
+      MPLBACKEND: Agg
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install -r qa/week16/requirements.txt
+      - name: Execute sixteen teaching cells; explicitly leave NASA CFD comparison untested
+        run: |
+          python - <<'PY'
+          import sys,json
+          from pathlib import Path
+          from unittest.mock import patch
+          import nbformat
+          from nbclient import NotebookClient
+          sys.path.insert(0,'qa/week16')
+          import build_materials as b
+          report_path=Path('results/week16_lowboom/release_check.json')
+          original=report_path.read_bytes()
+          captured=[]
+          class CaptureOnly:
+              def __init__(self,nb,**kwargs): pass
+              def execute(self): pass
+          try:
+              with patch.object(b.nbf,'write',lambda nb,p:captured.append(nb)),patch.object(b,'NotebookClient',CaptureOnly):
+                  b.notebook()
+          finally:
+              report_path.write_bytes(original)
+          nb=captured[0]
+          omitted=[]
+          for i,cell in enumerate(nb.cells):
+              if cell.cell_type=='code' and cell.source.startswith('nasa_cfd=json.loads'):
+                  omitted.append(i)
+                  nb.cells[i]=nbformat.v4.new_markdown_cell('**NOT EXECUTED:** NASA three-mesh CFD comparison is pending. This partial audit is not a passed final notebook or release.')
+          assert len(omitted)==1
+          nb.cells.insert(0,nbformat.v4.new_markdown_cell('# PARTIAL INSTRUCTIONAL AUDIT\nNASA CFD comparison was not executed. All final publication gates remain active.'))
+          NotebookClient(nb,timeout=600,kernel_name='python3',resources={'metadata':{'path':str(Path.cwd())}}).execute()
+          code=[c for c in nb.cells if c.cell_type=='code']
+          assert len(code)==16 and all(c.execution_count is not None for c in code)
+          assert not [o for c in code for o in c.get('outputs',[]) if o.output_type=='error']
+          nbformat.write(nb,'week16_partial_instructional_audit.ipynb')
+          Path('partial_execution.json').write_text(json.dumps({'executed_code_cells':16,'omitted_code_cells':1,'omitted_reason':'NASA CFD reference comparison is pending','method':'Real Jupyter kernel through nbclient','final_notebook_passed':False,'release_ready':False},indent=2)+'\n')
+          assert report_path.read_bytes()==original
+          print('Sixteen teaching cells executed; NASA CFD and final-release gates remain untested.')
+          PY
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: partial-instructional-audit-not-a-release
+          path: |
+            week16_partial_instructional_audit.ipynb
+            partial_execution.json
+          retention-days: 30
