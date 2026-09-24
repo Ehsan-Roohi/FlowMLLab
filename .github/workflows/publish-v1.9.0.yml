@@ -63,11 +63,13 @@ jobs:
         run: |
           python -m build
           python -m twine check dist/*
-          sha256sum dist/* lectures/week16_supersonic_shape_optimization.pdf results/week16_lowboom/reference/reference_evidence.zip raw_artifacts/*/*/*.tar.gz > release_assets_v1.9.0_sha256.txt
+          mapfile -d '' raw_assets < <(find raw_artifacts -type f -name '*.tar.gz' -print0 | sort -z)
+          sha256sum dist/* lectures/week16_supersonic_shape_optimization.pdf results/week16_lowboom/reference/reference_evidence.zip "${raw_assets[@]}" > release_assets_v1.9.0_sha256.txt
       - name: Publish verified release and complete CFD raw evidence
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
+          mapfile -d '' raw_assets < <(find raw_artifacts -type f -name '*.tar.gz' -print0 | sort -z)
           if gh release view v1.9.0 >/dev/null 2>&1; then
             echo 'Existing v1.9.0 left unchanged.'
           else
@@ -76,5 +78,5 @@ jobs:
               --notes-file RELEASE_NOTES_v1.9.0.md \
               dist/* lectures/week16_supersonic_shape_optimization.pdf \
               results/week16_lowboom/reference/reference_evidence.zip \
-              raw_artifacts/*/*/*.tar.gz release_assets_v1.9.0_sha256.txt
+              "${raw_assets[@]}" release_assets_v1.9.0_sha256.txt
           fi
