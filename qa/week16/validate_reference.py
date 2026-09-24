@@ -41,7 +41,7 @@ def validate():
         for name,expected in m['source_sha256'].items():
             assert hashlib.sha256((ROOT/'qa/week16'/name).read_bytes()).hexdigest()==expected, 'CFD generating source changed'
         assert m['fixed_cfl'] and m['max_cfl']==5 and m['entropy_fix_coeff']==.05
-        assert m['limiter_freeze_iteration']==2000 and m['convergence_start_iteration']==2500
+        assert m['limiter_freeze_iteration']==round(2000*row['level']) and m['convergence_start_iteration']==round(2000*row['level'])+500
         assert m['returncode']==0 and m['converged']
         assert m['density_residual_log10']<=-9 and m['residual_drop']>=5
         assert m['min_pressure']>0 and m['min_density']>0
