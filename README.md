@@ -1,21 +1,6 @@
-Current release: **v1.9.0**
-
-> **Week 16 scope (24 September 2026):** the release covers the verified teaching-body CFD, neural model, design checks and Taylor–Maccoll study. NASA SEEB-ALR CFD failed convergence/physical checks and remains a deferred research extension; no successful NASA validation is claimed.
+Current release: **v1.9.1**
 
 <h1><img src="docs/assets/flowmllab-logo.png" alt="FlowMLLab — fluid-streamline F logo" width="520"></h1>
-
-**Week 16 validated educational core:** CFD data, portable neural model, design checks and Taylor–Maccoll verification. NASA reproduction is a deferred research appendix with failed checks disclosed. [Publication scope](PUBLICATION_STATUS.md) · [Release notes](RELEASE_NOTES_v1.9.0.md).
-
-**Week 16:** [Supersonic shape optimization](notebooks/week16/README.md):
-44 new Gmsh/SU2 axisymmetric Euler cases, an executed learning-and-design notebook,
-an expanded lecture, and fresh CFD verification of the optimized geometry.
-On the finer mesh, peak near-field Cp decreases by 20.8% and pressure drag by 4.5%.
-These are near-field results; atmospheric propagation and ground loudness are not computed.
-
-**Week 14:** [RANS, PINN and neural turbulence closures](notebooks/week14/README.md)
-based on Lars Davidson's pyCALC-RANS workflow: an executed teaching notebook,
-[seven-page lecture](lectures/week14_rans_pinn_nn.pdf), and a transparent reproduction
-audit. Full paper-level numerical reproduction is not claimed.
 
 [![FlowMLLab CI](https://github.com/Ehsan-Roohi/FlowMLLab/actions/workflows/ci.yml/badge.svg)](https://github.com/Ehsan-Roohi/FlowMLLab/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
@@ -586,6 +571,16 @@ not silently present saved solver fields as a fresh Run-All CFD calculation.
 
 ### Week 15 — Geometry-aware neural operators
 
+Learn how geometry-aware neural operators generalize from single-step and other training geometries to a retrospective double-step family.
+Compare whole-field prediction errors with reverse-flow topology, using the same CFD references and clearly separated historical and newly trained models.
+The notebook exposes the split, training choices and unresolved low-Reynolds-number failures.
+
+**Problem:** Predict velocity and pressure across changing channel geometry, including double-step cases excluded from training and validation.<br>
+**CFD / data:** Retained channel-flow CFD fields and geometry masks: 100 training, 8 validation and 19 retrospective test cases; three `g005` cases are quarantined. This update generates no new CFD.<br>
+**Learning method:** Compare DeepONet, Geom-DeepONet, Geo-FNO, SMART, GeoTransolver and DoMINO. The fresh suite uses a 19,200-update ceiling and three seeds; learning rates are selected using validation cases only.
+
+**Results:** Historical Geom-DeepONet has 9.86% global velocity error; tuned Geom-DeepONet has 10.53%. Tuned DoMINO has the largest mean reverse-flow IoU (0.534), but 15.59% velocity error. Low-Reynolds-number reverse-flow magnitude remains inaccurate.
+
 [Complete executed notebook](notebooks/week15/W15_Complete_Geometry_Generalization.ipynb) ·
 [data and reproduction guide](notebooks/week15/README.md) ·
 [24-page lecture](lectures/week15_geometry_generalization.pdf) ·
@@ -634,6 +629,24 @@ implementations. The public LR archive retains the common-scale ablation and
 failed vortex cases; zonal and fixed-context ablations remain in the author's
 private complete handoff and are not claimed as public release assets.
 
+### Week 16 — Supersonic shape optimization
+
+Build a CFD-to-learning design workflow for a fixed-volume supersonic body of revolution.
+Use physically checked data to fit a pressure-signature surrogate, propose shapes, and assess retained designs with direct CFD.
+The exercise distinguishes numerical verification, surrogate prediction error and the limits of near-field noise proxies.
+
+**Problem:** Reduce near-field peak pressure at fixed body volume while constraining pressure drag.<br>
+**CFD / data:** 44 Gmsh/SU2 **8.0.1** axisymmetric Euler cases at Mach 1.8, with 24 training, 6 validation, 8 test and 6 extrapolation cases. Eight finer-grid CFD references test the neural model; ten retained-design calculations and a three-grid Taylor–Maccoll study provide additional checks.<br>
+**Learning method:** Compare POD-based ridge regression, MLP and Gaussian-process surrogates. The separately retained clean-data model is a fixed 32–32 tanh MLP with 12 POD coefficients and log pressure drag, fitted on the 24 training cases; its saved weights are audited without refitting.
+
+**Results:** The retained model has 7.20% aggregate waveform error, 2.24% mean peak-pressure error and 2.27% mean drag error against the finer CFD references. Worst-case waveform error is 15.37%; extrapolation waveform error is 34.29%. Direct finer-grid CFD of the retained optimized geometry gives **20.66% peak-pressure reduction and 3.52% pressure-drag reduction**. These design gains belong to the directly checked retained geometry, not a newly verified optimum from the clean-data model. One alternative violates the drag constraint.
+
+![Physically checked SU2 8.0.1 baseline and retained optimized-body pressure fields](results/week16_lowboom/reference/clean_cfd_fields.png)
+
+[Executed notebook and assignment](notebooks/week16/README.md) · [Lecture](lectures/week16_supersonic_shape_optimization.pdf) · [Numerical evidence](results/week16_lowboom/README.md)
+
+The finest Taylor–Maccoll cone pressure error is 1.16%. Atmospheric propagation and ground-level PLdB are not computed. The NASA SEEB-ALR reproduction failed its numerical and physical checks and remains a clearly labeled deferred research appendix; no successful NASA validation is claimed.
+
 ## Reuse and contribute
 
 The installable Python package, numerical solvers, notebooks, and teaching
@@ -647,9 +660,9 @@ Student submissions are not included.
 · [Citation metadata](CITATION.cff)
 · [Workshop, support, and consulting details](docs/RESULTS_GUIDE.md#workshops-support-and-consulting)
 
-Current published release: **v1.8.4** · [GitHub release](https://github.com/Ehsan-Roohi/FlowMLLab/releases/tag/v1.8.4)
+Current published release: **v1.9.1** · [GitHub release](https://github.com/Ehsan-Roohi/FlowMLLab/releases/tag/v1.9.1)
 · [all-version Zenodo DOI 10.5281/zenodo.22074169](https://doi.org/10.5281/zenodo.22074169)
-· [Release notes](RELEASE_NOTES_v1.9.0.md).
+· [Release notes](RELEASE_NOTES_v1.9.1.md).
 The frozen v1.8.0 evidence archive remains at
 [10.5281/zenodo.22840293](https://doi.org/10.5281/zenodo.22840293).
 Previous v1.7.0 archive DOI: [10.5281/zenodo.22836172](https://doi.org/10.5281/zenodo.22836172);
@@ -661,14 +674,3 @@ The [all-versions DOI](https://doi.org/10.5281/zenodo.22074169) resolves to the 
 **Ehsan Roohi** · University of Massachusetts Amherst · [roohie@umass.edu](mailto:roohie@umass.edu)
 
 Copyright © 2026 Ehsan Roohi. [MIT License](LICENSE).
-
-### Week 16 — Supersonic shape optimization
-
-**Problem:** Reduce near-field peak pressure at fixed body volume while constraining pressure drag.
-**CFD / data:** 44 new Gmsh/SU2 8.5.0 axisymmetric Euler cases at Mach 1.8, plus cone, mesh/domain and off-design checks.
-**Learning:** POD with ridge regression, MLP and Gaussian process; validation-selected MLP; fresh CFD design confirmation.
-
-![Historical SU2 8.5.0 pressure fields; see the later physical audit](results/week16_lowboom/cfd_fields.png)
-
-The best design retains 20.8% peak-Cp reduction and 4.5% pressure-drag reduction on the finer mesh. One alternative violates the drag constraint after CFD despite its surrogate prediction. The complete evidence reports both outcomes and separates interpolation from extrapolation.
-[Notebook and assignment](notebooks/week16/README.md) · [Lecture](lectures/week16_supersonic_shape_optimization.pdf) · [Numerical evidence](results/week16_lowboom/README.md)

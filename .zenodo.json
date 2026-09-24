@@ -1,7 +1,7 @@
 {
   "title": "FlowMLLab: An Open-Source Framework for Reproducible CFD-to-Scientific-Machine-Learning Experiments",
-  "description": "FlowMLLab v1.9.0 publishes the Week 16 educational core: 44 physically checked SU2 8.0.1 teaching-body cases, a portable neural model tested against eight finer CFD references, retained design comparisons, Taylor-Maccoll verification, teaching guides and an executed notebook. Original NASA SEEB-ALR sources and failed reproduction diagnostics remain a deferred research appendix; NASA CFD validation is not claimed. Full Beihang aircraft reproduction, author neural weights, atmospheric propagation and ground PLdB are not claimed.",
-  "version": "1.9.0",
+  "description": "FlowMLLab v1.9.1 publishes the Week 16 educational core: 44 physically checked SU2 8.0.1 teaching-body cases, a portable neural model tested against eight finer CFD references, retained design comparisons, Taylor-Maccoll verification, teaching guides and an executed notebook. Original NASA SEEB-ALR sources and failed reproduction diagnostics remain a deferred research appendix; NASA CFD validation is not claimed. Full Beihang aircraft reproduction, author neural weights, atmospheric propagation and ground PLdB are not claimed. The homepage presents Weeks 15 and 16 with consistent problem, CFD/data, learning-method and results sections; reuse and license information appears after the complete course gallery.",
+  "version": "1.9.1",
   "creators": [
     {
       "name": "Roohi, Ehsan",
@@ -38,7 +38,7 @@
       "scheme": "url"
     },
     {
-      "identifier": "https://github.com/Ehsan-Roohi/FlowMLLab/releases/tag/v1.9.0",
+      "identifier": "https://github.com/Ehsan-Roohi/FlowMLLab/releases/tag/v1.9.1",
       "relation": "isVersionOf",
       "scheme": "url"
     },
