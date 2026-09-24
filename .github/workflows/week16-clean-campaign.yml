@@ -1,0 +1,91 @@
+name: Week 16 complete clean-label campaign SU2 8.0.1
+on:
+  push:
+    branches: [week16-reference-recovery]
+    paths: ['.github/workflows/week16-clean-campaign.yml']
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  design:
+    name: Clean label batch ${{ matrix.case }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    strategy:
+      fail-fast: false
+      matrix:
+        case: [0,1,2,3,4,5,6,7,8,9,10]
+    env:
+      OPENBLAS_NUM_THREADS: '1'
+      OMP_NUM_THREADS: '1'
+      MPLBACKEND: Agg
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install meshing and analysis dependencies
+        run: |
+          sudo apt-get update && sudo apt-get install -y libglu1-mesa libxft2 libxinerama1 libxcursor1
+          pip install -r qa/week16/requirements.txt
+      - name: Verify official solver asset and executable
+        run: python qa/week16/install_su2_801.py
+      - name: Recompute the fixed original geometries with physical checks
+        run: SU2_CFD="$PWD/.tools/week16_su2_801/bin/SU2_CFD" python qa/week16/clean_campaign_v801.py --batch ${{ matrix.case }}
+      - name: Retain complete raw evidence even when a numerical gate fails
+        if: always()
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import tarfile
+          paths=list(Path('results/week16_lowboom/runs').glob('clean_v801_*'))
+          manifest=Path('.tools/week16_su2_801/installation.json')
+          if manifest.is_file(): paths.append(manifest)
+          if paths:
+              with tarfile.open('clean-batch-${{ matrix.case }}.tar.gz','w:gz') as archive:
+                  for path in paths: archive.add(path,arcname=str(path))
+          else:
+              Path('clean-batch-${{ matrix.case }}-not-started.txt').write_text('No solver evidence was produced. Inspect the failed setup step; no validation result exists.\n')
+          PY
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: clean-batch-${{ matrix.case }}
+          path: |
+            clean-batch-${{ matrix.case }}.tar.gz
+            clean-batch-${{ matrix.case }}-not-started.txt
+          if-no-files-found: error
+          retention-days: 90
+  report:
+    needs: design
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    env:
+      OPENBLAS_NUM_THREADS: '1'
+      OMP_NUM_THREADS: '1'
+      MPLBACKEND: Agg
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install -r qa/week16/requirements.txt
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: clean-batch-*
+          merge-multiple: true
+      - name: Restore the actual 44-run evidence
+        run: |
+          test "$(find . -maxdepth 1 -name 'clean-batch-*.tar.gz' | wc -l)" -eq 11
+          for archive in clean-batch-*.tar.gz; do tar -xzf "$archive"; done
+      - name: Verify all raw fields and assemble separately versioned data
+        run: python qa/week16/clean_campaign_v801.py --assemble
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: clean-campaign-report
+          path: |
+            results/week16_lowboom/reference/clean_campaign_audit.json
+            results/week16_lowboom/reference/clean_dataset_v801.npz
+          if-no-files-found: warn
+          retention-days: 90
