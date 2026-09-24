@@ -1,6 +1,6 @@
 <h1><img src="docs/assets/flowmllab-logo.png" alt="FlowMLLab — fluid-streamline F logo" width="520"></h1>
 
-**New in v1.9.0:** Week 16 now includes NASA SEEB-ALR original geometry and reference records, a frozen-prediction neural audit, and detailed guides that distinguish cone verification, experimental CFD validation and surrogate testing. The notebook runs from a clean checkout. [Release notes](RELEASE_NOTES_v1.9.0.md).
+**v1.9.0 development branch — final validation blocked:** See [the current status](PUBLICATION_STATUS.md). Planned extension: Week 16 now includes NASA SEEB-ALR original geometry and reference records, a frozen-prediction neural audit, and detailed guides that distinguish cone verification, experimental CFD validation and surrogate testing. The notebook runs from a clean checkout. [Release notes](RELEASE_NOTES_v1.9.0.md).
 
 **Week 16:** [Supersonic shape optimization](notebooks/week16/README.md):
 44 new Gmsh/SU2 axisymmetric Euler cases, an executed learning-and-design notebook,
@@ -643,7 +643,7 @@ Student submissions are not included.
 · [Citation metadata](CITATION.cff)
 · [Workshop, support, and consulting details](docs/RESULTS_GUIDE.md#workshops-support-and-consulting)
 
-Current release: **v1.9.0** · [GitHub release](https://github.com/Ehsan-Roohi/FlowMLLab/releases/tag/v1.9.0)
+Current published release: **v1.8.4** · [GitHub release](https://github.com/Ehsan-Roohi/FlowMLLab/releases/tag/v1.8.4)
 · [all-version Zenodo DOI 10.5281/zenodo.22074169](https://doi.org/10.5281/zenodo.22074169)
 · [Release notes](RELEASE_NOTES_v1.9.0.md).
 The frozen v1.8.0 evidence archive remains at

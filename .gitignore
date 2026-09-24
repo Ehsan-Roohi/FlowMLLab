@@ -51,3 +51,7 @@ nasa-level-*.tar.gz
 results/week16_lowboom/reference/mesh_node_count_smoke_v2/
 results/week16_lowboom/runs/checkpoint_test_*/
 raw_artifacts/
+
+# Numerical reference pilots are archived separately, not as loose repository fields.
+results/week16_lowboom/reference/pilot_*/
+results/week16_lowboom/reference/seeb_resolved_*/

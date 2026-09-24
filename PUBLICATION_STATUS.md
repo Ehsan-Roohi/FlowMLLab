@@ -2,7 +2,7 @@
 
 This development branch contains the v1.9.0 reference extension. Main and the final release have not been updated.
 
-The eight fresh teaching-body CFD computations and retained-checkpoint audit passed their declared numerical and aggregate error gates. All eight retain their actual meshes, configurations, fields and solver histories in workflow 35936740632. This is a retrospective numerical test, not experimental neural validation.
+The eight fresh teaching-body CFD computations and retained-checkpoint audit passed their declared numerical and aggregate error gates. All eight retain their actual meshes, configurations, fields and solver histories in workflow 35936740632. This is a retrospective numerical comparison, not experimental neural validation. An additional raw-field audit found 17.15–18.70% maximum total-enthalpy deviation at the sharp trailing-tip/axis junction in these cases; only 2–7 nodes per case exceed 10%, but the stated maximum-field physical check still fails. The prediction-error metrics remain reproducible; complete physical validation is not established. See `results/week16_lowboom/reference/neural_physical_plausibility.json`.
 
 **NASA validation is blocked.** Read-only inspection of the residual-converged coarse field exposed an incorrect low-pressure stagnation region on the small flat nose cap. The failed medium-grid field also contains a severe near-axis density anomaly. Positivity and residual convergence alone were therefore insufficient. The existing mesh family does not adequately resolve the nose, and is excluded from accepted validation even if its off-body pressure curve meets a tolerance. Its original evidence remains retained as numerical pilot evidence.
 

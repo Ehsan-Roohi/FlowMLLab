@@ -23,6 +23,8 @@
   "reference_extension": {
     "passed": false,
     "status": "blocked: underresolved NASA nose invalidates existing reference family; original teaching campaign checks remain separate",
-    "neural_workflow_run": 35936740632
+    "neural_workflow_run": 35936740632,
+    "neural_full_field_thermodynamic_check_passed": false,
+    "neural_prediction_metrics_scope": "Reproducible comparison against numerical CFD labels; additional maximum-enthalpy physical criterion fails near sharp-tip/axis junction."
   }
 }

@@ -88,18 +88,19 @@ A residual converged run can still diffuse a shock or misrepresent a finite nose
 
 Report mesh sensitivity as the difference between named mesh levels. Two similar answers are not automatically grid independence, and a formal Grid Convergence Index requires additional assumptions and a suitable refinement sequence. A nose cap held at a fixed number of cells is not uniformly refined with the rest of the mesh; disclose that limitation.
 
-The implemented driver can be run from the repository root after installing the dependencies in `qa/week16/requirements.txt` and putting SU2 on PATH:
+The replacement driver can be run from the repository root after installing the dependencies in `qa/week16/requirements.txt` and putting SU2 on PATH:
 
 ```bash
-python qa/week16/seeb_reference.py --level 1 --mesh-only --name mesh_preview
-python qa/week16/seeb_reference.py --level 1
-python qa/week16/seeb_reference.py --level 2 --limiter-iter 4000 --iterations 16000
-python qa/week16/seeb_reference.py --level 2.5 --limiter-iter 5000 --iterations 16000
+python qa/week16/seeb_resolved.py --level 1 --mesh-only --name resolved_mesh_preview
+python qa/week16/seeb_resolved.py --level 1 --iterations 8000
+# Run the finer cases only after the coarse pilot passes local physical checks.
+python qa/week16/seeb_resolved.py --level 1.5 --iterations 8000
+python qa/week16/seeb_resolved.py --level 2 --iterations 8000
 ```
 
-Alternatively set `SU2_CFD` to the absolute executable path. Fresh folder names are required: the driver refuses to overwrite evidence. The default settings are Roe flux, entropy fix 0.05, fixed CFL 5, limiter freeze at 2000 times the mesh level and convergence checks starting 500 iterations later. The fine-grid commands above override the coarse driver default and allow at most 16000 iterations; convergence must still meet the recorded residual and drag criteria. Each level writes its own `results/week16_lowboom/reference/seeb_level_*` folder. The driver retains the geometry through the original CAD sting endpoint at x/L≈1.656, then extends the cylindrical sting to the outlet. The finite nose cap has two cells at every level; this is an explicit limit of the refinement family. The extracted file uses keys `x_inches` and `dp_pinf`, so its normalization is visible without guessing from a plot.
+Alternatively set `SU2_CFD` to the absolute executable path. Fresh folder names are required. This family resolves the upstream nose region and refines its cap together with the full mesh. The original CAD sting ends at x/L≈1.656; a cylindrical extension reaches the outlet. Pressure extraction retains the explicit keys `x_inches` and `dp_pinf`.
 
-A fine-grid pilot with limiter freeze at 2000 diverged. The recovery changes only the freeze time, scaling it with mesh level to allow comparable convective evolution at fixed CFL; Roe flux, entropy coefficient and physical settings are unchanged. This is a controlled numerical recovery hypothesis, not a proven diagnosis of the instability. Failed pilot evidence is retained in GitHub Actions run 35935655513.
+The earlier `seeb_reference.py` mesh family is retained for provenance but rejected as validation evidence. Its residual-converged coarse solution had an incorrect local stagnation state. Increasing limiter-freeze time cannot by itself establish physical correctness on an underresolved nose. See [the nose physics audit](NOSE_PHYSICS_AUDIT.md) for the observed failure, analytical checks and predeclared acceptance allowances. Original pilot evidence is in GitHub Actions run 35935655513; the subsequent mesh-scaled-freeze attempt is 35937834499.
 
 No independently checkable new SU2-versus-NASA error table is asserted by this guide alone. A release claiming such validation must include its actual run evidence and a script that recomputes the table from that evidence. The archived NASA files remain useful without a new solver run.
 
