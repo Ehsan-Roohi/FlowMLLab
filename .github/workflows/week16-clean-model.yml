@@ -1,0 +1,42 @@
+name: Week 16 fixed neural model on clean CFD labels
+on:
+  push:
+    branches: [week16-reference-recovery]
+    paths: ['.github/workflows/week16-clean-model.yml']
+permissions:
+  contents: read
+  actions: read
+jobs:
+  fit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    env:
+      OPENBLAS_NUM_THREADS: '1'
+      OMP_NUM_THREADS: '1'
+      MPLBACKEND: Agg
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install -r qa/week16/requirements.txt
+      - name: Wait for every clean-label physical and numerical gate
+        run: gh run watch 35944299803 --exit-status --interval 30
+      - name: Retrieve actual clean labels and finer held-out reference
+        run: |
+          gh run download 35944299803 --name clean-campaign-report --dir results/week16_lowboom/reference
+          gh run download 35942843724 --name weakwall-checkpoint-report --dir results/week16_lowboom/reference
+      - name: Perform exactly one prespecified training fit
+        run: python qa/week16/clean_model_v801.py --train
+      - name: Reload portable weights and audit without fitting
+        run: python qa/week16/clean_model_v801.py --check-only
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: clean-model-report
+          path: |
+            results/week16_lowboom/reference/clean_*.json
+            results/week16_lowboom/reference/clean_*.npz
+          if-no-files-found: warn
+          retention-days: 90
