@@ -1,35 +1,4 @@
-\newpage
-\topic{E1}{Why remove pressure, and why use a streamfunction?}\label{sec:pressure-why}
-\textbf{The original unknowns are $u,v,p$.} Both momentum components contain pressure gradients, while continuity constrains velocity. In this constant-density incompressible model, pressure adjusts to make the velocity compatible with incompressibility and the boundary conditions; there is no separate thermodynamic pressure evolution law.
-
-\textbf{Step 1: remove pressure by taking the curl of momentum.} Take $\partial_x$ of vertical momentum minus $\partial_y$ of horizontal momentum. The pressure terms cancel:
-\[
--\partial_xp_y+\partial_yp_x=-p_{yx}+p_{xy}=0.
-\]
-The result is the pressure-free vorticity equation derived on page~7:
-\[
-\omega_t+u\omega_x+v\omega_y=Re^{-1}\nabla^2\omega.
-\]
-The \emph{curl} eliminates pressure. Defining a streamfunction alone does not remove pressure from the original momentum equations.
-
-\textbf{Step 2: recover velocity from vorticity while satisfying continuity.} The transport equation still needs $u,v$. Define $u=\psi_y$, $v=-\psi_x$ to satisfy continuity identically; the vorticity definition then gives $\nabla^2\psi=-\omega$. The closed interior system is
-\[
-\boxed{\begin{aligned}
-\omega_t+\psi_y\omega_x-\psi_x\omega_y&=Re^{-1}\nabla^2\omega,\\
-\nabla^2\psi&=-\omega.
-\end{aligned}}
-\]
-With appropriate initial and boundary data, the two scalar unknowns are $\omega$ and $\psi$. Velocity follows from derivatives. Pressure is not an unknown in this main solve, but the equations still represent momentum conservation.
-
-\textbf{Why this helps here.} For a two-dimensional simply connected cavity, the method makes circulation visible, builds continuity into the velocity representation, and recovers velocity through one scalar Poisson equation. It gives students a compact way to connect flow physics with array operations.
-
-\textbf{Limitations.} A Poisson solve is still required; this transformation does not automatically make the algorithm faster or more accurate. No-slip walls require careful wall-vorticity conditions. A single scalar streamfunction is not a general representation of three-dimensional incompressible velocity. Pressure--velocity methods are valid alternatives, especially for more general geometries and boundary conditions.
-
-\textbf{Pressure is recovered afterward when needed.} To calculate pressure contours, pressure differences, or pressure forces, return to the original momentum equations. Their divergence gives a pressure Poisson equation, whose boundary conditions must also come from momentum. Removing pressure from the main solver does not mean $p=0$ or $\nabla p=0$.
-
-\checkpoint{Which operation removes pressure, and which representation automatically satisfies continuity? Answer: the curl of momentum, and the streamfunction representation, respectively.}
-\newpage
-\topic{E2}{Pressure Poisson equation: full interior derivation}\label{sec:pressure-proof}
+\topic{12}{Optional pressure recovery: full derivation}\label{sec:pressure-proof}
 Use dimensional variables on this page, omitting the subscript $d$ until the final scaling step. Assume constant $\rho,\nu$, smooth fields, no body force, and $u_x+v_y=0$ for all time:
 \begin{align*}
 u_t+uu_x+vu_y&=-p_x/\rho+\nu(u_{xx}+u_{yy}),\\
@@ -70,7 +39,7 @@ Since $v_y=-u_x$, an equivalent expression is
 \]
 There is no explicit $Re$ in this interior source, but the velocity gradients depend on the viscous solution. Pressure boundary data also depend on viscosity. The equation alone is not a complete pressure boundary-value problem.
 \newpage
-\topic{E3}{Pressure walls, compatibility, and the arbitrary constant}\label{sec:pressure-bc}
+\topic{12.1}{Pressure walls, compatibility, and the arbitrary constant}\label{sec:pressure-bc}
 Return to dimensionless variables. Rearrange momentum and project it onto the outward unit normal $\boldsymbol n$:
 \[
 \boxed{\partial_n p=\boldsymbol n\cdot
@@ -109,7 +78,7 @@ An exact velocity solution satisfies this relation. Discretization errors can ca
 
 \textbf{Body-force extension.} If momentum includes a force per unit mass $\boldsymbol f$, the dimensionless source gains $+\nabla\cdot\boldsymbol f$ and the wall data gain $+\boldsymbol n\cdot\boldsymbol f$. Constant gravity, for example, can affect boundary data even though its divergence is zero.
 \newpage
-\topic{E4}{Pressure recovery in practice and method references}\label{sec:pressure-references}
+\topic{12.2}{Pressure recovery in practice and method references}\label{sec:pressure-references}
 \textbf{Complete sequence.} Obtain the velocity field; calculate consistent gradients; form $S=-[u_x^2+2u_yv_x+v_y^2]$ and the momentum-based wall data; check compatibility; solve the Neumann problem with one gauge; check both pressure-Poisson and original momentum residuals. Unsteady momentum checks need the velocity time derivative from the time history.
 
 The interior Jacobi update for pressure on a rectangular grid would be
@@ -122,9 +91,4 @@ For an assembled all-Neumann system $A p=b$, $A\boldsymbol1=0$. If $z^TA=0$, com
 
 \textbf{Analytic checks.} Couette flow $u=y,v=0$ gives $S=0$ and constant pressure in the force-free model. Solid-body rotation $u=-\Omega y,v=\Omega x$ gives $S=2\Omega^2$ and $p=\Omega^2(x^2+y^2)/2+C$. The latter checks signs and factors; it is not a no-slip cavity solution.
 
-\textbf{Who should be cited?} Distinguish the formulation, historical numerical work, the cavity benchmark, and this teaching code. Crediting the entire formulation to a single modern cavity paper would be misleading.
-\begin{enumerate}[label={[\arabic*]},start=4]
-\item A. Thom (1933). \emph{The flow past circular cylinders at low speeds}. Proceedings of the Royal Society of London, Series A, 141(845), 651--669. A historical early numerical-flow reference, not an assertion of sole invention of the formulation. \href{https://doi.org/10.1098/rspa.1933.0146}{doi:10.1098/rspa.1933.0146}.
-\item U. Ghia, K. N. Ghia, and C. T. Shin (1982). \emph{High-Re solutions for incompressible flow using the Navier--Stokes equations and a multigrid method}. Journal of Computational Physics, 48(3), 387--411. The directly relevant cavity benchmark uses vorticity--streamfunction equations and coupled strongly implicit multigrid (CSI-MG). \href{https://doi.org/10.1016/0021-9991(82)90058-4}{doi:10.1016/0021-9991(82)90058-4}.
-\end{enumerate}
-\textbf{Attribution for this notebook.} The existing code uses centered finite differences, a Jacobi streamfunction solve, explicit Euler vorticity stepping, and wall vorticity obtained from a local Taylor expansion. It compares with Ghia's data; it does not implement CSI-MG. The derivations here are independently worked from the stated equations, not copied from either article. This appendix explains pressure recovery; it does not add a pressure solver to the notebook.
+\textbf{Attribution for this notebook.} The existing code uses centered finite differences, a Jacobi streamfunction solve, explicit Euler vorticity stepping, and wall vorticity obtained from a local Taylor expansion. It compares with Ghia's data; it does not implement CSI-MG. The derivations here are independently worked from the stated equations, not copied from either article. This section explains pressure recovery; it does not add a pressure solver to the notebook.

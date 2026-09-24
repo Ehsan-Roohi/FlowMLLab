@@ -44,23 +44,21 @@ All three are in \texttt{notebooks/week01/}. This lecture explains the introduct
 \textbf{Reading route}
 \begin{center}\begin{tabular}{p{.16\linewidth}p{.75\linewidth}}
 \toprule
-Pages & Topic\\\midrule
-2--3 & Fluid fields; continuity and both momentum components\\
-4 & Deriving the nondimensional equations and $1/Re$\\
-5--7 & Streamfunction, vorticity, proof of original Eq.~(15), optional transport derivation\\
-8--9 & Finite differences and wall boundary conditions\\
-10--11 & Coupled iteration, convergence, and stability\\
-12--13 & Benchmarks, optional pressure recovery, and assessment\\
-\pageref{sec:fd-slope}--\pageref{sec:fd-system} & Finite-difference tutorial: examples, stencils, algebraic system\\
-\pageref{sec:code-start}--\pageref{sec:visual-guide} & Code walkthrough and visual algorithm guide\\
-\pageref{sec:coverage} & Coverage map of all original lecture sections\\
-\pageref{sec:pressure-why}--\pageref{sec:pressure-references} & Pressure elimination, full pressure derivation, references\\\bottomrule
+Sections & Topic\\\midrule
+1--3 & Fluid fields, conservation laws, and nondimensional equations\\
+4--6 & Streamfunction, vorticity, and the pressure-free formulation\\
+7--7.3 & Finite differences: Taylor series, errors, stencils, and a coupled system\\
+8--10 & Wall conditions, time integration, convergence, and stability\\
+11 & Benchmark comparison and assessment\\
+12--12.2 & Optional pressure derivation, wall data, and recovery\\
+B1--B4 & Code applications of the preceding derivations\\
+C--D & Algorithm diagrams and topic coverage\\\bottomrule
 \end{tabular}\end{center}
 \textbf{Conventions.} A right-handed $(x,y,z)$ system is used, with $x$ rightward and $y$ upward. Positive $\omega=\omega_z$ means counterclockwise local rotation. Dimensional quantities have a subscript $d$ when scales are introduced. After nondimensionalization, unadorned variables are dimensionless.
 
 \textbf{Scope.} A constant-density, constant-viscosity Newtonian fluid; two-dimensional incompressible motion; no nonconservative body force. The cavity is a square with a uniformly translating top wall. This is a teaching model, not a model for rarefied or compressible flow.
 \newpage
-\topic{1}{Fluids, fields, and acceleration}
+\topic{1}{Fluids, fields, and acceleration}\label{sec:fields}
 A fluid continuously deforms under an applied shear stress. A solid can sustain a static shear deformation; a fluid keeps deforming under sustained shear. Air, water, oil, and gas mixtures are examples. Both liquids and gases are fluids, although their density and compressibility differ. In the continuum description, density, velocity, pressure, and temperature are fields rather than properties of individually tracked molecules. The approximation requires molecular length scales to be small compared with the relevant flow scales.
 
 \begin{center}\begin{tabular}{lll}\toprule
@@ -95,7 +93,7 @@ The first term describes change at a fixed point; the last two describe change a
 \end{itemize}
 \checkpoint{Can a particle accelerate when $\partial\boldsymbol{u}_d/\partial t_d=0$? Explain using a particle turning around a cavity vortex.}
 \newpage
-\topic{2}{Review: continuity and momentum}
+\topic{2}{Review: continuity and momentum}\label{sec:momentum}
 \textbf{Mass conservation.} The general continuity equation is
 \begin{equation}
 \frac{\partial\rho}{\partial t_d}+\nabla_d\cdot(\rho\boldsymbol{u}_d)=0.
@@ -121,7 +119,7 @@ Every term has units of acceleration. Pressure gradients push fluid from high to
 
 \checkpoint{Write the vertical convective acceleration. Why would using only the horizontal momentum equation leave the cavity problem incomplete?}
 \newpage
-\topic{3}{Deriving the nondimensional equations}
+\topic{3}{Deriving the nondimensional equations}\label{sec:scales}
 Let $L$ be the cavity side length and $U>0$ the lid-speed scale. Choose the convective time $L/U$ and dynamic pressure $\rho U^2$. Define
 \begin{equation}
 x=\frac{x_d}{L},\quad y=\frac{y_d}{L},\quad t=\frac{t_dU}{L},\quad
@@ -151,7 +149,7 @@ v_t+uv_x+vv_y&=-p_y+\frac{1}{Re}(v_{xx}+v_{yy}).
 \textbf{Two more scales.} Set $\psi=\psi_d/(UL)$ and $\omega=\omega_d L/U$. These choices preserve $u=\psi_y$, $v=-\psi_x$, and $\omega=v_x-u_y$. All equations on the following pages use dimensionless variables unless stated otherwise.
 \checkpoint{Which time in seconds corresponds to dimensionless $t=10$ for the example above? Answer: $100\,\mathrm{s}$.}
 \newpage
-\topic{4}{Streamfunction and vorticity: definitions}
+\topic{4}{Streamfunction and vorticity: definitions}\label{sec:streamfunction}
 For a sufficiently smooth, two-dimensional incompressible velocity field in this simply connected domain, introduce a scalar streamfunction $\psi$ through
 \begin{equation}\boxed{u=\psi_y,\qquad v=-\psi_x.}\label{eq:psi}\end{equation}
 Substitution into continuity gives
@@ -171,7 +169,7 @@ Vorticity measures local rotation; the local rigid-body angular velocity is $\om
 \textbf{A useful numerical distinction.} Central differences for $u= D_y\psi$ and $v=-D_x\psi$ give a zero discrete divergence wherever the same commuting stencils are used. Overwriting wall velocities or switching stencils near boundaries requires separate checks; the continuum identity is not a guarantee that every boundary discretization is consistent.
 \checkpoint{For solid-body rotation $u=-\Omega y$, $v=\Omega x$, find $\omega$ and a compatible $\psi$. Answer: $2\Omega$ and $-\Omega(x^2+y^2)/2$ plus a constant.}
 \newpage
-\topic{5}{Proof of the streamfunction Poisson equation}
+\topic{5}{Proof of the streamfunction Poisson equation}\label{sec:poissonproof}
 \textbf{Goal: prove that the streamfunction satisfies $\nabla^2\psi=-\omega$.} Begin with the definitions; no new physical assumption is needed beyond those already stated:
 \begin{align}
 \omega&=\frac{\partial v}{\partial x}-\frac{\partial u}{\partial y},\\
@@ -198,11 +196,12 @@ v&=-\pi\cos(\pi x)\sin(\pi y),\\
 \end{align}
 This verifies the sign and provides smooth fields for checking derivative code. It is a manufactured identity check, \emph{not} a no-slip cavity solution: although $\psi=0$ on the boundary, tangential velocities generally do not vanish there.
 
-\textbf{Why $\psi=0$ on the cavity walls?} Impermeability makes $\psi$ constant along each wall. The connected cavity boundary permits one common constant; choose zero because adding a constant leaves velocity unchanged. Tangential no-slip is additional information, enforced through the wall-vorticity relation on page~9. Specifying $\psi=0$ alone does not impose a stationary wall.
+\textbf{Why $\psi=0$ on the cavity walls?} Impermeability makes $\psi$ constant along each wall. The connected cavity boundary permits one common constant; choose zero because adding a constant leaves velocity unchanged. Tangential no-slip is additional information, enforced through the wall-vorticity relation on page~\pageref{sec:boundary}. Specifying $\psi=0$ alone does not impose a stationary wall.
 \checkpoint{Explain why solving the Poisson equation once cannot determine the flow if its right-hand side $\omega$ is still unknown.}
 \newpage
-\topic{6}{Optional derivation: vorticity transport}
-Use the dimensionless momentum equations from page~4. Take $\partial_x$ of vertical momentum and subtract $\partial_y$ of horizontal momentum. Smoothness allows mixed derivatives to commute.
+\topic{6}{Optional derivation: vorticity transport}\label{sec:transport}
+You may skip the product-rule steps on a first reading, but read the boxed transport equation and its physical interpretation: both are needed for the time update in Section~9.
+Use the dimensionless momentum equations from page~\pageref{sec:scales}. Take $\partial_x$ of vertical momentum and subtract $\partial_y$ of horizontal momentum. Smoothness allows mixed derivatives to commute.
 
 \textbf{Step 1: time and pressure.}
 \[
@@ -231,40 +230,14 @@ In dimensional variables the diffusion coefficient is $\nu$, not $1/Re$.
 
 \textbf{Physical reading.} Local vorticity changes through advection by the velocity field and diffusion by viscosity. Moving and stationary no-slip walls supply boundary vorticity. There is no vortex-stretching term for the strictly two-dimensional velocity field assumed here. Compressible, variable-property, three-dimensional, or forced flows can require additional terms.
 
-\textbf{Why solve this rather than momentum directly?} Taking the curl removes the pressure unknown from the interior evolution equation, while $\psi$ enforces incompressibility. This is a convenient reformulation for this geometry, not a claim that all CFD solvers should use it. Pressure--velocity methods remain suitable and often more convenient in general geometries and three dimensions.
-\checkpoint{Does the absence of $p$ from Eq.~\eqref{eq:transport} mean pressure forces have no effect on the original flow? No: the equations were transformed, not discarded.}
+\textbf{Why this formulation helps.}\label{sec:pressure-why} In the original equations, pressure adjusts the velocity to satisfy incompressibility and boundary conditions. Taking the curl removes its gradient from the transport equation above; defining a streamfunction then supplies the velocities while satisfying continuity. These are two distinct operations. The unknowns are now $\psi$ and $\omega$, coupled through Eq.~\eqref{eq:poisson}; the pressure is not assumed zero. When pressure contours or forces are needed, recover pressure afterward as described in Section~12.
+
+This is convenient for the simply connected two-dimensional cavity, but it still requires a Poisson solve and careful wall-vorticity data. It does not automatically improve speed or accuracy. A single scalar streamfunction is not a general three-dimensional velocity representation; pressure--velocity methods are useful alternatives for general geometries.
+\checkpoint{Which operation removes pressure, and which representation satisfies continuity? The curl of momentum removes pressure; the streamfunction satisfies continuity.}
 \newpage
-\topic{7}{Why finite differences are needed}
-The PDEs describe fields at infinitely many points. A computer stores finitely many values. Finite differences replace derivatives by algebraic combinations of nearby samples, converting the PDEs into equations we can calculate. Finite volume, finite element, and spectral methods are alternatives; finite differences are chosen here for a transparent structured-grid implementation.
-
-Use $x_i=i\Delta x$, $y_j=j\Delta y$, and $f_{j,i}=f(x_i,y_j)$. The first array index is $y$, the second is $x$. Taylor expansion gives
-\[
-f_{j,i\pm1}=f_{j,i}\pm\Delta x f_x+\tfrac12\Delta x^2 f_{xx}\pm\tfrac16\Delta x^3 f_{xxx}+\cdots.
-\]
-Subtract the expansions for the first derivative; add them for the second:
-\begin{align}
-(D_xf)_{j,i}&=\frac{f_{j,i+1}-f_{j,i-1}}{2\Delta x}=f_x+O(\Delta x^2),\\
-(D_{xx}f)_{j,i}&=\frac{f_{j,i+1}-2f_{j,i}+f_{j,i-1}}{\Delta x^2}=f_{xx}+O(\Delta x^2).
-\end{align}
-Analogous formulas use $j\pm1$ for $y$ derivatives. The rectangular-grid Laplacian is
-\begin{equation}
-(L_hf)_{j,i}=\frac{f_{j,i+1}-2f_{j,i}+f_{j,i-1}}{\Delta x^2}+\frac{f_{j+1,i}-2f_{j,i}+f_{j-1,i}}{\Delta y^2}.
-\end{equation}
-For equal spacing $h$, this is $(f_E+f_W+f_N+f_S-4f_C)/h^2$.
-
-\textbf{Poisson becomes a coupled algebraic system.} Substituting into $L_h\psi=-\omega$ and solving for one node gives the Jacobi iteration
-\begin{equation}
-\psi_{j,i}^{k+1}=\frac{(\psi^k_{j,i+1}+\psi^k_{j,i-1})\Delta y^2+(\psi^k_{j+1,i}+\psi^k_{j-1,i})\Delta x^2+\omega_{j,i}\Delta x^2\Delta y^2}{2(\Delta x^2+\Delta y^2)}.
-\end{equation}
-Here $k$ is an inner iteration index and $\omega$ is held fixed. At $h=0.1$, if all four neighbor values are zero and $\omega_C=-2$, the first update gives $\psi_C=-0.005$. Neighboring unknowns must also be updated, so one sweep is not the full solution.
-
-\textbf{Vorticity gets a time update.} Forward Euler with central spatial differences gives
-\begin{equation}
-\omega^{n+1}_{j,i}=\omega^n_{j,i}+\Delta t\left[-u^n_{j,i}(D_x\omega^n)_{j,i}-v^n_{j,i}(D_y\omega^n)_{j,i}+\frac{1}{Re}(L_h\omega^n)_{j,i}\right].
-\end{equation}
-The interior spatial formulas are second order for smooth fields; forward Euler is first order in time. Boundaries and corner singularities can limit the observed global accuracy.
+\input{week01_finite_differences.tex}
 \newpage
-\topic{8}{Boundary conditions: closing the system}
+\topic{8}{Boundary conditions: closing the system}\label{sec:boundary}
 No slip means that the fluid velocity equals the solid-wall velocity; impermeability means no flow through the wall. The square cavity has $u=1,v=0$ on the moving top lid away from corners and $u=v=0$ on the other walls. Set $\psi=0$ on the entire boundary to impose impermeability. The tangential velocity conditions are encoded in boundary values of $\omega$.
 
 \textbf{Derive the top-wall formula.} Let $P$ be the first interior point, a distance $h=\Delta y$ below the top wall $w$. Taylor expansion into the domain gives
@@ -287,7 +260,14 @@ The top uses $\psi_{N_y-2,i}$. These are the formulas in \texttt{apply\_vorticit
 
 \checkpoint{Initially $\psi=0$ and $\Delta y=1/64$. What top-wall vorticity is imposed away from corners? Answer: $\omega=-128$. Explain why this large boundary value is not the same as a large velocity.}
 \newpage
-\topic{9}{Why the solver must iterate}
+\topic{9}{Why the solver must iterate}\label{sec:iteration}
+\textbf{Vorticity gets a time update.} Forward Euler with central spatial differences gives
+\begin{equation}
+\omega^{n+1}_{j,i}=\omega^n_{j,i}+\Delta t\left[-u^n_{j,i}(D_x\omega^n)_{j,i}-v^n_{j,i}(D_y\omega^n)_{j,i}+\frac{1}{Re}(L_h\omega^n)_{j,i}\right].
+\end{equation}
+The interior spatial formulas are second order for smooth fields; forward Euler is first order in time. Boundaries and corner singularities can limit the observed global accuracy.
+
+
 Vorticity is transported by $u,v$, but those velocities are recovered from $\psi$, and $\psi$ is obtained from $\omega$. The fields are coupled:
 \[
 \omega\ \longrightarrow\ \underbrace{\nabla^2\psi=-\omega}_{\text{spatial solve}}\ \longrightarrow\ (u,v)\ \longrightarrow\ \underbrace{\omega_t=-u\omega_x-v\omega_y+Re^{-1}\nabla^2\omega}_{\text{time update}}.
@@ -316,7 +296,7 @@ A direct linear solver could replace the inner Jacobi loop. Thus iteration is no
 
 \checkpoint{If you increase the number of Poisson sweeps without taking any additional outer time steps, what error can decrease and what physical evolution has not occurred?}
 \newpage
-\topic{10}{Convergence and stability are different checks}
+\topic{10}{Convergence and stability are different checks}\label{sec:stability}
 \textbf{Iteration change.} The notebook reports
 \begin{equation}
 R_{\Delta\omega}=\frac{\|\omega^{n+1}-\omega^n\|_2}{\|\omega^{n+1}\|_2+10^{-30}}.
@@ -344,7 +324,7 @@ These checks do not by themselves prove stability of the coupled solver. Forward
 \textbf{Three practical comparisons.} First tighten the Poisson solve and increase integration time at a fixed grid. Next reduce $\Delta t$ to check temporal sensitivity. Then refine the grid and compare quantities of interest. Do not confuse a converged algebraic solve with an accurate continuum solution. A small ML loss has the same limitation: it certifies only what the chosen loss actually measures.
 \checkpoint{A run's reported update falls when $\Delta t$ is divided by ten. What additional evidence is needed before calling the flow steady?}
 \newpage
-\topic{11}{Benchmarks and the Ghia comparison}
+\topic{11}{Benchmarks and the Ghia comparison}\label{sec:benchmark}
 Couette flow gives a linear velocity profile for a simple shear-driven problem. Plane Poiseuille flow gives a parabolic profile for a fully developed pressure-driven channel. Both help isolate basic derivative and boundary-condition errors. The lid-driven cavity combines recirculation, walls, and nonlinear convection, making it a more demanding benchmark.
 
 \textbf{Compare quantities, not only pictures.} Ghia, Ghia, and Shin [1] tabulate $u/U$ on the vertical centerline $x/L=0.5$ and $v/U$ on the horizontal centerline $y/L=0.5$. The notebook interpolates the computed profiles to those sampling positions and calculates
@@ -363,30 +343,21 @@ These are errors at benchmark sample points, not full-domain errors. Use the sam
 \textbf{From fields to ML tensors.} A field of shape $(N_y,N_x)$ can become one channel of an array with channels $(u,v,\omega)$, and multiple cases add a batch dimension. Preserve axes, scales, boundary conventions, and parameter labels. Before using these arrays as training targets, qualify their numerical accuracy; a network trained on inaccurate CFD can reproduce its errors.
 \checkpoint{Why can a visually smooth predicted vortex still have a poor centerline error or violate the wall condition?}
 \newpage
-\topic{12}{Optional pressure recovery and exit questions}
-Taking the divergence of dimensionless momentum, using $\nabla\cdot\boldsymbol{u}=0$, gives
-\begin{equation}
-\boxed{\nabla^2p=-\left[u_x^2+2u_yv_x+v_y^2\right].}
-\end{equation}
-Under our assumptions, this is a consequence of momentum conservation, not merely an empirical approximation. For dimensional pressure the right-hand side carries a factor $\rho$ and uses dimensional velocity gradients.
-
-\textbf{The right-hand side is not the whole pressure problem.} Boundary conditions must also be supplied consistently with momentum. For outward wall normal $\boldsymbol{n}$,
-\begin{equation}
-\frac{\partial p}{\partial n}=\boldsymbol{n}\cdot\left[-\partial_t\boldsymbol{u}-(\boldsymbol{u}\cdot\nabla)\boldsymbol{u}+Re^{-1}\nabla^2\boldsymbol{u}\right].
-\end{equation}
-One must handle discrete compatibility when using Neumann data. Pressure is then determined only up to an additive constant: set a reference value or subtract its mean. Subtracting the mean fixes the gauge; it does not repair an incorrect pressure boundary condition. Pressure reconstruction is an extension, not a prerequisite for the Week-1 velocity solve.
-
+\input{week01_pressure_derivation.tex}
+\newpage
 \textbf{Summary.} The six outcomes listed on page~1 are the checklist for this week; test each against the checkpoints above before moving to the notebooks.
 
-\textbf{Optional derivation exercise.} Reproduce the curl-of-momentum calculation on page~7, identifying the exact use of incompressibility. Then derive the moving-wall vorticity formula from a Taylor expansion.
+\textbf{Optional derivation exercise.} Reproduce the curl-of-momentum calculation on page~\pageref{sec:transport}, identifying the exact use of incompressibility. Then derive the moving-wall vorticity formula from a Taylor expansion.
 
 \textbf{References and authorship scope}
 \begin{enumerate}[label={[\arabic*]}]
 \item U. Ghia, K. N. Ghia, and C. T. Shin (1982). High-Re solutions for incompressible flow using the Navier--Stokes equations and a multigrid method. \emph{Journal of Computational Physics}, 48, 387--411. Benchmark data used by the existing notebook.
 \item F. M. White and H. Xue (2022). \emph{Fluid Mechanics}, 9th ed. McGraw Hill. Background on conservation laws and incompressible flow.
 \item J. D. Anderson (1995). \emph{Computational Fluid Dynamics: The Basics with Applications}. McGraw Hill. Background on discretization and numerical solution.
+\item MIT OpenCourseWare, \emph{Notes on Numerical Methods in Ocean Modeling}, Lecture 1, pp.~4--12. Introductory Taylor expansions and finite-difference equations. \href{https://ocw.mit.edu/courses/12-950-atmospheric-and-oceanic-modeling-spring-2004/507424ba4dc53db72128cae0d5231e80_lec1.pdf}{Course notes (PDF)}.
+\item NASA Glenn Research Center, \emph{Examining Spatial (Grid) Convergence}. Guidance on refinement and observed order. \href{https://www.grc.nasa.gov/www/wind/valid/tutorial/spatconv.html}{NASA grid-convergence guide}.
+\item A. Thom (1933). \emph{The flow past circular cylinders at low speeds}. Proceedings of the Royal Society of London, Series A, 141, 651--669. Historical numerical-flow reference. \href{https://doi.org/10.1098/rspa.1933.0146}{doi:10.1098/rspa.1933.0146}.
 \end{enumerate}
 {\small Explanations and derivations were independently written for FlowMLLab's introductory cavity example, using the requested topic checklist. The figure is a fresh execution of FlowMLLab's own solver. No restricted course text, solution, figure, or code was incorporated. No ML split or calibration is involved in this numerical-foundations extension; its baseline is the stated Ghia centerline comparison.}
 \input{week01_code_walkthrough.tex}
-\input{week01_pressure_derivation.tex}
 \end{document}
