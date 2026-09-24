@@ -1,0 +1,126 @@
+name: Week 16 unchanged-checkpoint SU2 8.0.1 comparison
+on:
+  push:
+    branches: [week16-reference-recovery]
+    paths: ['.github/workflows/week16-weakwall-recompute.yml']
+permissions:
+  contents: read
+  actions: read
+jobs:
+  cfd:
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    strategy:
+      fail-fast: false
+      matrix:
+        case: [0,1,2,3,4,5,6,7]
+    env:
+      OPENBLAS_NUM_THREADS: '1'
+      OMP_NUM_THREADS: '1'
+      MPLBACKEND: Agg
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install -r qa/week16/requirements.txt
+      - run: python qa/week16/install_su2_801.py
+      - name: Retrieve the exact previously tested mesh and configuration
+        run: |
+          gh run download 35936740632 --name neural-case-${{ matrix.case }} --dir reference_artifact
+          tar -xzf reference_artifact/neural-case-${{ matrix.case }}.tar.gz
+      - name: Recompute unchanged geometry and checkpoint with official SU2 8.0.1
+        run: |
+          printf -v case_name '%03d' '${{ matrix.case }}'
+          SU2_CFD="$PWD/.tools/week16_su2_801/bin/SU2_CFD" python qa/week16/weakwall_cfd.py --case-index ${{ matrix.case }} --reference-folder "results/week16_lowboom/runs/checkpoint_test_$case_name"
+      - name: Preserve full raw evidence, including unsuccessful cases
+        if: always()
+        run: |
+          printf -v case_name '%03d' '${{ matrix.case }}'
+          tar -czf weakwall-case-${{ matrix.case }}.tar.gz "results/week16_lowboom/runs/checkpoint_v801_$case_name"
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: weakwall-case-${{ matrix.case }}
+          path: weakwall-case-${{ matrix.case }}.tar.gz
+          retention-days: 90
+  audit:
+    needs: cfd
+    runs-on: ubuntu-latest
+    env:
+      OPENBLAS_NUM_THREADS: '1'
+      OMP_NUM_THREADS: '1'
+      MPLBACKEND: Agg
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install -r qa/week16/requirements.txt
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: weakwall-case-*
+          merge-multiple: true
+      - run: for archive in weakwall-case-*.tar.gz; do tar -xzf "$archive"; done
+      - run: python qa/week16/weakwall_report.py
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: weakwall-checkpoint-report
+          path: |
+            results/week16_lowboom/reference/weakwall_checkpoint_audit.json
+            results/week16_lowboom/reference/weakwall_checkpoint_test.npz
+            results/week16_lowboom/reference/weakwall_checkpoint_validation.png
+          retention-days: 90
+  cone:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    env:
+      OPENBLAS_NUM_THREADS: '1'
+      OMP_NUM_THREADS: '1'
+      MPLBACKEND: Agg
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: sudo apt-get update && sudo apt-get install -y libglu1-mesa libxft2 libxinerama1 libxcursor1
+      - run: pip install -r qa/week16/requirements.txt
+      - run: python qa/week16/install_su2_801.py
+      - name: Independently verify SU2 8.0.1 against Taylor-Maccoll
+        run: SU2_CFD="$PWD/.tools/week16_su2_801/bin/SU2_CFD" python qa/week16/benchmark.py
+      - name: Check physical fields and residuals separately from cone pressure
+        run: |
+          python - <<'PY'
+          import sys,json,hashlib
+          from pathlib import Path
+          import numpy as np
+          sys.path.insert(0,'qa/week16')
+          from weakwall_cfd import physical_checks
+          from analyze import load_csv
+          from install_su2_801 import BINARY_SHA256
+          folder=Path('results/week16_lowboom/runs/cone_benchmark')
+          result=json.loads((folder/'benchmark.json').read_text())
+          h=load_csv(folder/'history.csv'); tail=h['CD'][-100:]
+          checks={'analytical_Cp_within_3pct':result['passed'],
+                  'density_residual_at_most_minus9':float(h['rms[Rho]'][-1])<=-9,
+                  'density_residual_drop_at_least5':float(h['rms[Rho]'][0]-h['rms[Rho]'][-1])>=5,
+                  'drag_tail_relative_range_below_1e_minus4':len(tail)==100 and abs(tail.mean())>0 and float(np.ptp(tail)/abs(tail.mean()))<1e-4}
+          physical=physical_checks(folder)
+          report={'solver_version':'8.0.1','binary_sha256':BINARY_SHA256,'analytical_comparison':result,'checks':checks,'physical':physical,'passed':all(checks.values()) and physical['passed'],
+                  'source_sha256':{p.name:hashlib.sha256(p.read_bytes()).hexdigest() for p in [Path('qa/week16/benchmark.py'),Path('qa/week16/cfd.py'),Path('qa/week16/analyze.py'),Path('qa/week16/weakwall_cfd.py')]},
+                  'raw_sha256':{p.name:hashlib.sha256(p.read_bytes()).hexdigest() for p in folder.iterdir() if p.is_file()}}
+          Path('results/week16_lowboom/reference/cone_verification_v801.json').write_text(json.dumps(report,indent=2)+'\n')
+          print(json.dumps(report,indent=2))
+          assert report['passed']
+          PY
+      - name: Retain cone raw evidence
+        if: always()
+        run: tar -czf cone-v801.tar.gz results/week16_lowboom/runs/cone_benchmark results/week16_lowboom/reference/cone_verification_v801.json
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: cone-v801
+          path: cone-v801.tar.gz
+          retention-days: 90

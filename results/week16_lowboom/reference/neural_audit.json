@@ -1,0 +1,90 @@
+{
+  "description": "Recomputed from recovered frozen audit outputs; no retraining or new CFD performed by this script.",
+  "names": [
+    "test_000",
+    "test_001",
+    "test_002",
+    "test_003",
+    "test_004",
+    "test_005",
+    "test_006",
+    "test_007"
+  ],
+  "cases": 8,
+  "finer_mesh": {
+    "wave_relative_l2": 0.07154136603418683,
+    "peak_mean_relative_error": 0.03446862921439289,
+    "drag_mean_relative_error": 0.016935826687041258,
+    "per_case_wave_relative_l2": [
+      0.1579842717036892,
+      0.059630565314110075,
+      0.06158425467409279,
+      0.06912807964262901,
+      0.01820338498379164,
+      0.03965769681976251,
+      0.07958370984906862,
+      0.07840149697555876
+    ],
+    "worst_case_wave_relative_l2": 0.1579842717036892
+  },
+  "paired_coarse_mesh": {
+    "wave_relative_l2": 0.0505108165056405,
+    "peak_mean_relative_error": 0.02207042123237453,
+    "drag_mean_relative_error": 0.022041964703127734,
+    "per_case_wave_relative_l2": [
+      0.118642808140105,
+      0.0384707709576668,
+      0.05095574476171432,
+      0.0410996835788434,
+      0.017831410093465203,
+      0.02489618398451566,
+      0.04491043762999872,
+      0.055283580277058327
+    ],
+    "worst_case_wave_relative_l2": 0.118642808140105
+  },
+  "coarse_to_finer_wave_relative_l2": 0.03863101291437738,
+  "thresholds": {
+    "wave_relative_l2_max": 0.1,
+    "peak_mean_relative_error_max": 0.1,
+    "drag_mean_relative_error_max": 0.1
+  },
+  "checks": {
+    "wave_relative_l2": true,
+    "peak_mean_relative_error": true,
+    "drag_mean_relative_error": true
+  },
+  "passed": true,
+  "identity_checks": {
+    "original_blob_hashes": true,
+    "original_dataset_hash": true,
+    "same_geometry_order_and_parameters": true,
+    "same_sampling_coordinates": true,
+    "frozen_predictions_exact": true
+  },
+  "provenance": {
+    "frozen_test_predictions.json": {
+      "github_blob_sha": "002791765d76c6357a27b9ce4b5e3060060ade44",
+      "sha256": "4b16e3430765209a62747d4346eb20dd9bd565466fb9e26393e982119e4e596e",
+      "bytes": 130429
+    },
+    "independent_test.npz": {
+      "github_blob_sha": "d3a595477981217e6878727045bbed7aa2146f76",
+      "sha256": "997f05fae559329b882a5c8591061473859af85bdf62702f4edcbd6a0e37f367",
+      "bytes": 67642
+    },
+    "independent_neural_test.png": {
+      "github_blob_sha": "7acc05116893f585d6673d5725056e16b64e16a5",
+      "sha256": "08d237def5ea0db1bea5beffeb11e0b5e3a7ab6efdfc1901b3bd01d139a08a2e",
+      "bytes": 295989
+    }
+  },
+  "scope": "Eight held-out geometries in the same two-parameter family; numerical CFD comparison, not experimental neural validation or full-aircraft reproduction.",
+  "limitations": [
+    "The audit uses a refit of the published architecture. It does not establish bitwise recovery of the original trained model.",
+    "The original PCA automatic solver can introduce refit variability; this report uses only archived predictions.",
+    "Recovered compact arrays establish the reported numerical differences. They do not independently establish solver convergence or mesh-cell counts without the original run logs.",
+    "The archived protocol records frozen predictions and thresholds. File contents alone do not independently prove the chronological order of CFD generation and prediction freezing.",
+    "Aggregate acceptance does not require every individual waveform error to be below 10%; the worst-case error is reported explicitly."
+  ]
+}

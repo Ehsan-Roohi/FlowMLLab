@@ -1,0 +1,56 @@
+{
+  "workflow_run": 35943668623,
+  "scope": "Actual SU2 8.0.1 axisymmetric Euler fields of retained historical geometries; no new optimization.",
+  "artifacts": [
+    {
+      "id": 10785828508,
+      "zip_sha256": "4f950536109a1f367a4dbd6877b5a67367b2aac4e6659ba1dff67c88463912c5",
+      "archive_verified_locally": false
+    },
+    {
+      "id": 10786076437,
+      "zip_sha256": "f1e9620bf11de8be7d83e0b689a26132b4f4f8db63d515a7886a957cbe3c0f70",
+      "archive_verified_locally": false
+    }
+  ],
+  "runs": [
+    {
+      "name": "design_v801_000_baseline",
+      "evidence_sha256": "249e32ae0bb50ea78020751bd6230f18644023332436504a5324ee0b8e44ef5f",
+      "raw_sha256": {
+        "mesh.su2": "eb3bfe516a9241d32a56cc885028f85cac3bc2bd6cfa38ed89c8cad166e9138c",
+        "flow.cfg": "f6009cfb89302445a06a9827c11209868e655b3b19ef2191039340412daf8a82",
+        "metadata.json": "ec19554aa854c539573aa3dfb02e1b28f02c670aac2f8c6683f844edb845eb0c",
+        "history.csv": "7744937102d706c2489c94e2b976009cc817f2e15831fffde8d8773faf033d04",
+        "solver.log": "2c7eb89e6491cbe09455a8c3fe82e0c728c6833560057ca3e1c48524b38dd6f2",
+        "restart_flow.csv": "29a6246235bed1b06d6c293f7960b9d55507c964269ab71d6cacf9eb12c0d36f",
+        "surface_flow.csv": "a2fdae2739d02480f4142a83fe1fc2dd19b04b7db701ed593f0cf522f4a30423",
+        "metrics.json": "18dd114101f4dab728257ea8ff3a74100aa78563395b5658072f2d91834a19ad",
+        "extracted.npz": "6d7b1a05cd6ee00b0553ae61fed5a456e7db1ef4f8bc18c0f7eeff48cc759265",
+        "design_frozen.json": "c85ae9d247c1a10642ed0132f02b7980cf7f5608da4616f98866777c3cd9ad4a"
+      },
+      "cp_min": -0.09851852772334677,
+      "cp_max": 0.39832668072098865
+    },
+    {
+      "name": "design_v801_001_optimized",
+      "evidence_sha256": "0b6e935749a46936a1a78e2bc70f3acc9b7eea691bacb20c5449467ee7e5924b",
+      "raw_sha256": {
+        "mesh.su2": "d02e1ef0227834e2e5a5ed5fb6b30167365f4a7e3b36639cc7a61363de956ac3",
+        "flow.cfg": "f6009cfb89302445a06a9827c11209868e655b3b19ef2191039340412daf8a82",
+        "metadata.json": "20c59e7fbfb605ccda2d534062160d55c5810a34f3445d47b6f9aa580ec37590",
+        "history.csv": "854d164185df201456d7d7acc6f4e4e25ac3a382b3faa57155a483543768bcc9",
+        "solver.log": "1ac89e159941c0683030fe6080b693777119f7a52dc35f6bfa82e74e55cb17f0",
+        "restart_flow.csv": "7d6c4ceba56deaeaaeb6b114d08893493a5c184d9ba26b2861c57f16c7ebdbbe",
+        "surface_flow.csv": "b35f2ae5eebfb27705de2590724144fd608fd47d101e56b358cba4fac45ac113",
+        "metrics.json": "48dcaf4a0a58b6e8e765f7adf81b96ca453d5bdee28754d6456a8aaeb6fd5f5b",
+        "extracted.npz": "b0d053ac654f3d457f2407122a7501ecffbdb26528a38587699fe75dac842433",
+        "design_frozen.json": "eefb2330a60856b3f83313bf016ac72215982412402ccf0ef57352023512132f"
+      },
+      "cp_min": -0.12800633853328572,
+      "cp_max": 0.565587940605002
+    }
+  ],
+  "figure_sha256": "fcbafb5b5e2349873ec602fdfc1ccc0743ff5cdf97c6edcecc949f19167e57a4",
+  "script_sha256": "df6aa65daceef16fa69b29018c0170b288e1802702284ecea5399a6c49df1232"
+}

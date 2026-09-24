@@ -1,0 +1,254 @@
+{
+  "case": "Mach1.8 seven-degree axisymmetric cone",
+  "solver_version": "8.0.1",
+  "solver_binary_sha256": "9d75d6b1b862e6d3470c80ecab2cfa09fac3d54943f6d6d610bc36cd7ef71351",
+  "levels": [
+    {
+      "level": 1,
+      "mesh": {
+        "cells": 24000,
+        "nodes": 24321
+      },
+      "numerical": {
+        "iterations": 501,
+        "density_residual_log10": -14.69249564,
+        "residual_drop": 13.312849138,
+        "drag_tail_relative_range": 0.0,
+        "checks": {
+          "density_residual_at_most_minus9": true,
+          "density_residual_drop_at_least5": true,
+          "drag_tail_relative_range_below_1e_minus4": true
+        },
+        "passed": true
+      },
+      "physical": {
+        "gamma": 1.4,
+        "gas_constant": 287.058,
+        "h0_freestream": 477104.51925360004,
+        "isentropic_stagnation_density": 4.270919170117962,
+        "fields": [
+          {
+            "file": "restart_flow.csv",
+            "points": 24321,
+            "max_h0_relative_deviation": 0.00707071825230976,
+            "min_h0_over_freestream": 0.9981831431397722,
+            "max_h0_over_freestream": 1.0070707182523098,
+            "max_density_over_stagnation_bound": 0.3857607635163709,
+            "max_h0_location": [
+              0.0,
+              0.0
+            ],
+            "nodes_above_10pct": 0,
+            "checks": {
+              "finite_positive_fields": true,
+              "h0_max_deviation_at_most_10pct": true,
+              "density_below_110pct_stagnation_bound": true
+            },
+            "passed": true
+          },
+          {
+            "file": "surface_flow.csv",
+            "points": 201,
+            "max_h0_relative_deviation": 0.00707071825230976,
+            "min_h0_over_freestream": 0.9981831431397722,
+            "max_h0_over_freestream": 1.0070707182523098,
+            "max_density_over_stagnation_bound": 0.3857607635163709,
+            "max_h0_location": [
+              0.0,
+              0.0
+            ],
+            "nodes_above_10pct": 0,
+            "checks": {
+              "finite_positive_fields": true,
+              "h0_max_deviation_at_most_10pct": true,
+              "density_below_110pct_stagnation_bound": true
+            },
+            "passed": true
+          }
+        ],
+        "passed": true
+      },
+      "analytical_comparison": {
+        "exact": {
+          "shock_angle_deg": 34.03574212191822,
+          "pressure_ratio": 1.1406257176769943,
+          "cp": 0.06200428469003275
+        },
+        "cfd_cp_mean": 0.05917488799247475,
+        "relative_error": 0.04563227705476347,
+        "passed": false,
+        "sampling": "Arithmetic mean at original surface nodes with 0.3<x<0.8; unchanged from benchmark.py",
+        "samples": 100
+      }
+    },
+    {
+      "level": 2,
+      "mesh": {
+        "cells": 96000,
+        "nodes": 96641
+      },
+      "numerical": {
+        "iterations": 501,
+        "density_residual_log10": -14.99695563,
+        "residual_drop": 13.16747608,
+        "drag_tail_relative_range": 0.0,
+        "checks": {
+          "density_residual_at_most_minus9": true,
+          "density_residual_drop_at_least5": true,
+          "drag_tail_relative_range_below_1e_minus4": true
+        },
+        "passed": true
+      },
+      "physical": {
+        "gamma": 1.4,
+        "gas_constant": 287.058,
+        "h0_freestream": 477104.51925360004,
+        "isentropic_stagnation_density": 4.270919170117962,
+        "fields": [
+          {
+            "file": "restart_flow.csv",
+            "points": 96641,
+            "max_h0_relative_deviation": 0.007075599078081085,
+            "min_h0_over_freestream": 0.9981822222692971,
+            "max_h0_over_freestream": 1.007075599078081,
+            "max_density_over_stagnation_bound": 0.38576440469747514,
+            "max_h0_location": [
+              0.0,
+              0.0
+            ],
+            "nodes_above_10pct": 0,
+            "checks": {
+              "finite_positive_fields": true,
+              "h0_max_deviation_at_most_10pct": true,
+              "density_below_110pct_stagnation_bound": true
+            },
+            "passed": true
+          },
+          {
+            "file": "surface_flow.csv",
+            "points": 401,
+            "max_h0_relative_deviation": 0.007075599078081085,
+            "min_h0_over_freestream": 0.9981822222692971,
+            "max_h0_over_freestream": 1.007075599078081,
+            "max_density_over_stagnation_bound": 0.38576440469747514,
+            "max_h0_location": [
+              0.0,
+              0.0
+            ],
+            "nodes_above_10pct": 0,
+            "checks": {
+              "finite_positive_fields": true,
+              "h0_max_deviation_at_most_10pct": true,
+              "density_below_110pct_stagnation_bound": true
+            },
+            "passed": true
+          }
+        ],
+        "passed": true
+      },
+      "analytical_comparison": {
+        "exact": {
+          "shock_angle_deg": 34.03574212191822,
+          "pressure_ratio": 1.1406257176769943,
+          "cp": 0.06200428469003275
+        },
+        "cfd_cp_mean": 0.060667258833799316,
+        "relative_error": 0.021563442960714663,
+        "passed": true,
+        "sampling": "Arithmetic mean at original surface nodes with 0.3<x<0.8; unchanged from benchmark.py",
+        "samples": 200
+      }
+    },
+    {
+      "level": 3,
+      "mesh": {
+        "cells": 216000,
+        "nodes": 216961
+      },
+      "numerical": {
+        "iterations": 501,
+        "density_residual_log10": -15.19411817,
+        "residual_drop": 13.101073434,
+        "drag_tail_relative_range": 4.820856284418551e-09,
+        "checks": {
+          "density_residual_at_most_minus9": true,
+          "density_residual_drop_at_least5": true,
+          "drag_tail_relative_range_below_1e_minus4": true
+        },
+        "passed": true
+      },
+      "physical": {
+        "gamma": 1.4,
+        "gas_constant": 287.058,
+        "h0_freestream": 477104.51925360004,
+        "isentropic_stagnation_density": 4.270919170117962,
+        "fields": [
+          {
+            "file": "restart_flow.csv",
+            "points": 216961,
+            "max_h0_relative_deviation": 0.007077195215685839,
+            "min_h0_over_freestream": 0.9981818289421187,
+            "max_h0_over_freestream": 1.0070771952156858,
+            "max_density_over_stagnation_bound": 0.3857655982161686,
+            "max_h0_location": [
+              0.0,
+              0.0
+            ],
+            "nodes_above_10pct": 0,
+            "checks": {
+              "finite_positive_fields": true,
+              "h0_max_deviation_at_most_10pct": true,
+              "density_below_110pct_stagnation_bound": true
+            },
+            "passed": true
+          },
+          {
+            "file": "surface_flow.csv",
+            "points": 601,
+            "max_h0_relative_deviation": 0.007077195215685839,
+            "min_h0_over_freestream": 0.9981818289421187,
+            "max_h0_over_freestream": 1.0070771952156858,
+            "max_density_over_stagnation_bound": 0.3857655982161686,
+            "max_h0_location": [
+              0.0,
+              0.0
+            ],
+            "nodes_above_10pct": 0,
+            "checks": {
+              "finite_positive_fields": true,
+              "h0_max_deviation_at_most_10pct": true,
+              "density_below_110pct_stagnation_bound": true
+            },
+            "passed": true
+          }
+        ],
+        "passed": true
+      },
+      "analytical_comparison": {
+        "exact": {
+          "shock_angle_deg": 34.03574212191822,
+          "pressure_ratio": 1.1406257176769943,
+          "cp": 0.06200428469003275
+        },
+        "cfd_cp_mean": 0.06128402544582954,
+        "relative_error": 0.011616281807037665,
+        "passed": true,
+        "sampling": "Arithmetic mean at original surface nodes with 0.3<x<0.8; unchanged from benchmark.py",
+        "samples": 300
+      }
+    }
+  ],
+  "last_two_cp_relative_change": 0.010064068206084114,
+  "checks": {
+    "all_three_levels_numerically_converged": true,
+    "all_three_levels_physically_admissible": true,
+    "finest_analytical_cp_error_below_3pct": true,
+    "last_two_mean_cp_change_below_3pct": true
+  },
+  "passed": true,
+  "thresholds": {
+    "finest_analytical_cp_error_max": 0.03,
+    "last_two_cp_relative_change_max": 0.03
+  },
+  "scope": "Independent Taylor-Maccoll pressure verification. Original coarse Cp failure retained; refinement sensitivity is not a formal GCI."
+}

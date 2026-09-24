@@ -1,7 +1,7 @@
 {
   "title": "FlowMLLab: An Open-Source Framework for Reproducible CFD-to-Scientific-Machine-Learning Experiments",
-  "description": "FlowMLLab v1.8.4 is the review follow-up release of the complete 43-notebook, 26-lecture CFD-to-scientific-machine-learning course. It restores the axis label that the v1.8.3 figure repair removed from the six Week 15 comparison figures, refreshes their SHA-256 provenance, re-executes the Week 15 flagship notebook and rebuilds its lecture, adds a glossary, defines the quarantined g005 geometry, unifies the Week 9 lab labels, records the CI regeneration of the family-holdout evidence, and gives the CUDA-only Track 6 notebook a clear stop on CPU machines. The scientific results and the frozen Week 15 evidence archives are unchanged; no new CFD or model training is claimed.",
-  "version": "1.8.4",
+  "description": "FlowMLLab v1.9.0 publishes the Week 16 educational core: 44 physically checked SU2 8.0.1 teaching-body cases, a portable neural model tested against eight finer CFD references, retained design comparisons, Taylor-Maccoll verification, teaching guides and an executed notebook. Original NASA SEEB-ALR sources and failed reproduction diagnostics remain a deferred research appendix; NASA CFD validation is not claimed. Full Beihang aircraft reproduction, author neural weights, atmospheric propagation and ground PLdB are not claimed.",
+  "version": "1.9.0",
   "creators": [
     {
       "name": "Roohi, Ehsan",
@@ -38,8 +38,23 @@
       "scheme": "url"
     },
     {
-      "identifier": "https://github.com/Ehsan-Roohi/FlowMLLab/releases/tag/v1.8.4",
+      "identifier": "https://github.com/Ehsan-Roohi/FlowMLLab/releases/tag/v1.9.0",
       "relation": "isVersionOf",
+      "scheme": "url"
+    },
+    {
+      "identifier": "10.1016/j.ast.2026.113218",
+      "relation": "references",
+      "scheme": "doi"
+    },
+    {
+      "identifier": "10.7638/kqdlxxb-2025.0081",
+      "relation": "references",
+      "scheme": "doi"
+    },
+    {
+      "identifier": "https://lbpw.larc.nasa.gov/sbpw1/test-cases/seeb-alr/",
+      "relation": "references",
       "scheme": "url"
     }
   ],

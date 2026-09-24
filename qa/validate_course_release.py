@@ -418,7 +418,9 @@ def validate_notebooks() -> tuple[int, int]:
             assert 'velocity-derived weak references' in full_source
         if week16_lab:
             code = [c for c in cells if c.get('cell_type') == 'code']
-            assert len(code) == 9
+            assert len(code) >= 16
+            assert 'clean_model_audit(write=False)' in full_source
+            assert 'clean_dataset_v801.npz' in full_source
             assert all(c.get('execution_count') is not None for c in code)
             assert not any(o.get('output_type') == 'error' for c in code for o in c.get('outputs', []))
             assert 'does not compute atmospheric propagation or PLdB' in full_source
@@ -1197,7 +1199,29 @@ def validate_week16_results() -> dict:
                 actual = 1 - opt["peak_cp"] / base["peak_cp"]
                 assert abs(actual - summary["validation"][f"peak_reduction_{key}"]) < 1e-12
                 assert actual > 0.05 and opt["cd_pressure"] <= 1.02 * base["cd_pressure"]
-    return {"status":"pass", "dataset_cases":44, "peak_reduction_finer":summary["validation"]["peak_reduction_finer"]}
+    # Historical archive identity above remains checked; acceptance uses the new evidence.
+    ref = evidence / "reference"
+    campaign = json.loads((ref / "clean_campaign_audit.json").read_text())
+    model = json.loads((ref / "clean_model_audit_v801.json").read_text())
+    design = json.loads((ref / "weakwall_design_audit.json").read_text())
+    cone = json.loads((ref / "cone_refinement_v801.json").read_text())
+    assert report["release_scope"] == "validated_core"
+    nasa = report["deferred_extensions"]["NASA"]
+    assert nasa["status"] == "failed_deferred"
+    assert nasa["passed"] is False and nasa["included_in_release"] is False
+    assert "NASA_three_mesh_experimental_comparison" not in report["scientific_checks"]
+    required = {"clean_44_case_physical_and_numerical_checks", "new_clean_neural_model",
+                "retained_design_recomputation", "Taylor_Maccoll_refined_family"}
+    assert required <= report["scientific_checks"].keys()
+    assert all(r["passed"] for r in [campaign, model, design, cone])
+    assert campaign["cases"] == 44 and all(r["checks"]["passed"] for r in campaign["runs"])
+    assert digest(ref / "clean_dataset_v801.npz") == campaign["dataset_sha256"] == model["dataset_sha256"]
+    assert digest(ref / "clean_model_v801.npz") == model["checkpoint_sha256"]
+    assert digest(ref / "weakwall_design_test.npz") == design["compact_arrays_sha256"]
+    assert report["reference_extension"]["passed"]
+    assert report["reference_extension"]["release_scope"] == "validated_core"
+    assert report["notebook_execution_method"] == "nbclient with a real Jupyter kernel"
+    return {"status":"pass", "release_scope":"validated_core", "NASA":nasa, "dataset_cases":44, "peak_reduction_finer":design["design_pairs"][1]["peak_reduction"], "clean_model_finer_wave_error":model["finer_mesh"]["wave_relative_l2"]}
 
 
 def validate_pdfs() -> int:

@@ -1,0 +1,66 @@
+name: Week 16 NASA reference validation
+# Physical fluid nodes exclude unused CAD/spline control points.
+on:
+  push:
+    branches: [week16-reference-recovery]
+    paths: ['.github/workflows/week16-reference-validation.yml']
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  nasa:
+    name: NASA mesh ${{ matrix.level }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    strategy:
+      fail-fast: false
+      matrix:
+        level: ['1', '2', '2.5']
+    env:
+      OMP_NUM_THREADS: '4'
+      OPENBLAS_NUM_THREADS: '1'
+      MPLBACKEND: Agg
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: sudo apt-get update && sudo apt-get install -y libglu1-mesa libxft2 libxinerama1 libxcursor1
+      - run: pip install -r qa/week16/requirements.txt
+      - run: python qa/week16/install_su2.py
+      - name: Generate Gmsh mesh and solve SU2 Euler equations
+        run: SU2_CFD="$PWD/.tools/week16_su2/bin/SU2_CFD" python qa/week16/seeb_reference.py --level ${{ matrix.level }} --threads 4 --iterations 8000
+      - name: Preserve raw numerical evidence
+        if: always()
+        run: tar -czf nasa-level-${{ matrix.level }}.tar.gz results/week16_lowboom/reference/seeb_level_${{ matrix.level }}
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: nasa-level-${{ matrix.level }}
+          path: nasa-level-${{ matrix.level }}.tar.gz
+          retention-days: 90
+  compare:
+    needs: nasa
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install -r qa/week16/requirements.txt
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: nasa-level-*
+          merge-multiple: true
+      - run: for archive in nasa-level-*.tar.gz; do tar -xzf "$archive"; done
+      - run: python qa/week16/reference_report.py
+      - run: python qa/week16/independent_audit_report.py && python qa/week16/freeze_model.py
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: reference-comparison
+          path: |
+            results/week16_lowboom/reference/*.json
+            results/week16_lowboom/reference/*.png
+          retention-days: 90
+      - run: python qa/week16/validate_reference.py

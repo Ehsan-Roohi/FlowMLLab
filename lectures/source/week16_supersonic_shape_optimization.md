@@ -36,7 +36,7 @@ An independently integrated Taylor-Maccoll ODE solution supplies the pressure on
 
 The shaped-body baseline is also checked on several meshes, and its outer domain is enlarged. The dataset uses approximately 45,000 cells per case. A refined calculation uses approximately 81,000 cells. We report actual differences in peak Cp, waveform norm and pressure drag. Residual convergence and spatial convergence answer different questions: one tests convergence of the discrete equations; the other tests sensitivity to discretization.
 
-A retained data label requires positive finite pressure and density, at least five orders of density-residual reduction, and a relative range of pressure drag below 1e-4 over the last 100 iterations. These are numerical acceptance criteria for this exercise. Their satisfaction is not proof of exact physical accuracy.
+A retained data label requires positive finite pressure and density, a final log10 density residual at most -9, at least five orders of density-residual reduction, and a relative range of pressure drag below 1e-4 over the last 100 iterations. Additional rejection checks bound maximum total-enthalpy deviation by 10% and density by 110% of the isentropic stagnation bound; no tip nodes are excluded. These thermodynamic allowances are plausibility checks, not uncertainty estimates. These are numerical acceptance criteria for this exercise. Their satisfaction is not proof of exact physical accuracy.
 
 ## 6. Pressure drag and design objectives
 
@@ -50,7 +50,7 @@ The campaign contains 24 training geometries, six validation geometries, eight t
 
 Fit all scalers and the POD basis on training data only. The pressure signature is represented by its mean plus a linear combination of up to 12 principal modes. A model maps the two shape parameters to the POD coefficients and log pressure-drag coefficient. The logarithm ensures a positive reconstructed drag. Ridge regression, a two-hidden-layer tanh MLP and a Matern Gaussian process use the same training cases and output representation.
 
-Architectures are fixed in advance. Select the design model by the sum of validation peak and drag mean relative errors. The test and extrapolation errors are reported after this decision. Report waveform relative L2, peak error and drag error separately because a visually good waveform can still have an important error at a shock peak. A single seed is a reproducible teaching experiment, not a statistical ranking of architecture families.
+Architectures are fixed in advance. Select the design model by the sum of validation peak and drag mean relative errors. The test and extrapolation errors are reported after this decision. Report waveform relative L2, peak error and drag error separately because a visually good waveform can still have an important error at a shock peak. A single fixed-architecture training experiment is not a statistical ranking of architecture families. Refit variability is discussed in Section 13.
 
 ## 8. Optimization and independent recomputation
 
@@ -76,6 +76,66 @@ A multi-solution inverse method should be assessed through forward recomputation
 
 The present module offers a reproducible educational experiment: new Gmsh meshes, actual SU2 data, independent pressure benchmarking, transparent learned baselines and freshly recomputed design proposals. It does not reproduce TMS-10 or the full Beihang aircraft, and it does not demonstrate community-level noise reduction.
 
+## 11. Research appendix: NASA sources and unaccepted reproduction
+
+The attempted SU2 reproduction of NASA SEEB-ALR remains unaccepted. Further NASA runs are deferred. This release rests on the accepted teaching-body CFD/model checks and Taylor-Maccoll verification. The NASA material below preserves sources, methods and the failure lesson; it is not evidence of successful experimental validation.
+
+The NASA SEEB-ALR benchmark serves a different purpose from both the Taylor-Maccoll cone and the design body. The cone has a similarity solution for wall pressure. SEEB-ALR has an as-built CAD geometry and off-body wind-tunnel pressure records. Our design body has two parameters chosen for a tractable learning exercise. The network is not trained on the NASA geometry.
+
+Start from NASA's original STEP file, not a traced silhouette. The file is imported in millimetres; the physical reference length is 17.667 inches, or 448.7418 mm. Divide all CAD coordinates by this length. Retain the finite nose and the downstream sting. Extending the sting to the computational outflow is a numerical domain choice that must be documented separately from the supplied model.
+
+The comparison condition is Mach 1.6 at zero incidence. The pressure extraction line is 21.2 inches from the axis, so r/L = 21.2/17.667. NASA provides pressure excess normalized by freestream pressure. Our design plots use Cp, normalized by dynamic pressure. The conversion is dp/p_inf = (gamma M_inf^2/2) Cp. Comparing these two quantities without conversion gives the wrong amplitude even if the CFD pressure is correct.
+
+The original NASA Tecplot macros specify longitudinal coordinate shifts. Preserve those shifts and show the comparison window. Do not shift a calculated shock onto a measured shock to reduce the error. A student should be able to regenerate every x coordinate from the distributed raw record and macro.
+
+## 12. Research appendix: requirements for experimental comparison
+
+Distinguish NASA wind-tunnel measurements from NASA's archived LAVA calculation. Any future SU2 result must be labeled separately; the attempted reproduction is not an accepted reference. LAVA is a separate numerical solution, not an exact answer. Agreement between two solvers is useful, but agreement with an experiment addresses a different question. The NASA data files and their uncertainty columns are retained unchanged alongside a hash manifest.
+
+For a reference vector y and interpolated prediction y_hat at the same coordinates, the waveform error is norm(y_hat-y)/norm(y). Also report the relative error in the positive pressure peak. A small peak error can coexist with a large waveform error when the shock location or expansion width is wrong. Plot the signed difference as well as the pressure curves, and declare the comparison window before interpreting the error.
+
+Residual convergence concerns the algebraic solution on one mesh. Refine the mesh and compare the extracted waveforms to assess discretization sensitivity. An observed difference between the last two meshes is not a formal grid convergence index. Inspect the nose resolution, mesh alignment and shock region as well as the total cell count. A very small density residual cannot repair an incorrectly represented nose.
+
+The retained NASA sources and LAVA-versus-experiment comparison can be inspected without running SU2. The original two-cell nose-cap family was rejected for unphysical nose behavior. Subsequent attempts did not establish an accepted physically checked, mesh-refined family. The guide and failure audits retain this investigation. No successful NASA acceptance report is a prerequisite for the present release, and no experimental validation of the learned two-parameter model is claimed.
+
+## 13. Auditing the learned model with frozen predictions
+
+The recovered audit contains eight test geometries, archived model predictions, and CFD waveforms recomputed on a finer mesh. The report verifies the original dataset and recovered file hashes, geometry ordering, coordinate equality, and exact equality of the prediction arrays before computing errors. No retraining occurs in the audit report.
+
+The aggregate relative waveform error is 7.15%, the mean relative positive-peak error is 3.45%, and the mean relative pressure-drag error is 1.69%. The largest individual waveform error is 15.80%. Thus the declared aggregate 10% thresholds pass, but a statement that every prediction is within 10% would be false. Against the original coarse CFD, the same frozen predictions have 5.05% aggregate waveform error; the coarse-to-finer CFD difference is 3.86%.
+
+This audit represents a refit of the published architecture. The original trained checkpoint was not retained. The PCA automatic solver can use randomized SVD, so a fixed MLP seed alone does not fix the whole fitted pipeline. Use the archived predictions for reproducing these audit numbers; treat a newly fitted model as a new realization. The recovered compact arrays support the numerical comparisons, while their original raw solver logs are not part of the recovered audit evidence.
+
+The Beihang journal study uses a full aircraft, 36 geometric descriptors, 3,480 samples, forward and inverse networks, and atmospheric propagation. This educational module does not implement that complete chain. Reproducing it faithfully requires the authors' geometry and data, as well as the propagation and training settings. A lower near-field pressure peak alone is not evidence of lower ground PLdB.
+
+## 14. A portable checkpoint and its limits
+
+A separate later refit is distributed as model_checkpoint.npz, containing the training scalers, full-SVD POD basis and all network weights. The NumPy-only FrozenSurrogate class evaluates these arrays without retraining. The audit verifies the 24 training identities, scalers, POD training subspace, layer dimensions and eight test coordinates. It does not infer a training chronology from the arrays alone.
+
+On the retained finer-mesh cases this checkpoint has 6.39% aggregate waveform error, 1.93% mean peak error and 1.57% mean drag error; the worst waveform error is 14.63%. The comparison is retrospective because the finer references already existed. On six extrapolation geometries, waveform error rises to 34.16% and drag error to 22.14%. These failures matter when an optimizer searches beyond the training region.
+
+Keep the historical prediction audit, this portable refit and newly fitted notebook models distinct. A model that reproduces a pressure waveform within a two-parameter family has not thereby learned general aircraft aerodynamics. The historical design improvement belongs to the model that proposed that design; every new optimized candidate still needs fresh CFD.
+
+## 15. Research appendix: convergence is insufficient
+
+The NASA run driver records iteration history, density and pressure, residual reduction and drag stability. A solver exit code of zero does not establish convergence. Small residuals do not establish a physical solution either: the rejected nose treatment showed why thermodynamic and stagnation checks must accompany algebraic convergence. An unaccepted calculation remains a failed research result even if selected pressure plots look plausible.
+
+Future NASA recovery must retain complete configurations and histories, apply declared physical and numerical checks to every mesh, and then assess experimental agreement and mesh sensitivity separately. No additional NASA computation is part of this release.
+
+## 16. Research appendix: auditing geometry and mesh
+
+A NASA mesh must preserve the supplied finite nose, body and sting and resolve their relevant physical scales. Use equal coordinate scales when inspecting the mesh and show the pressure-sampling line. File integrity is necessary but cannot establish adequate nose or shock resolution.
+
+Gmsh can store unused geometric control points. They must not be counted as fluid nodes. The mesh audit reads exported element, node and boundary records and verifies connectivity. These checks prevent truncated meshes from becoming numerical evidence; they do not turn a rejected physical solution into an accepted one.
+
+## 17. Closing the raw-evidence gap for neural testing
+
+The retained checkpoint is also evaluated against eight newly recomputed level-2 CFD cases. The case identities and parameters are unchanged, and no training occurs. Predictions are written before each solver launch. Each case preserves its mesh, solver configuration, full restart and surface fields, pressure extraction, iteration history and hashes of the code, checkpoint and dataset. The audit independently rechecks physical fields and convergence from these raw files.
+
+The new report is separate from the historical frozen-prediction audit and from the checkpoint comparison using recovered arrays. Its purpose is to make the present numerical comparison traceable all the way to raw CFD. Earlier labels for these same geometries were already available, so rerunning them does not create a blind generalization test. Report the aggregate errors, every case and the worst case; a passed aggregate criterion does not mean every waveform is within ten percent.
+
+The Python command recompute_neural_cfd.py --report verifies all eight raw cases before writing the report. The student notebook recomputes its error table from the distributed compact arrays. The release workflow checks the full raw archive as well. This separation keeps classroom execution short while preserving the expensive numerical evidence for inspection.
+
 ## References
 
 Zheng, Q., Liang, Y., Yang, Y. and Pan, C. (2026). Research on low-drag low-boom supersonic transport configuration using an MDO framework and deep learning methods. Aerospace Science and Technology 178, 113218. https://doi.org/10.1016/j.ast.2026.113218
@@ -89,3 +149,29 @@ Taylor, G. I. and Maccoll, J. W. (1933). The air pressure on a cone moving at hi
 AIAA/NASA Sonic Boom Prediction Workshop: https://lbpw.larc.nasa.gov/ . Workshop summary and data description: https://lbpw-ftp.larc.nasa.gov/lbpw1/presentations/21a_park-summary.pdf .
 
 scikit-learn documentation: https://scikit-learn.org/stable/ . See PCA, MLPRegressor and GaussianProcessRegressor for the fitted models and conventions.
+
+Earlier Chinese aerodynamic optimization article: https://doi.org/10.7638/kqdlxxb-2025.0081 . This is distinct from the 2026 neural-network article above.
+
+NASA SEEB-ALR test case and source files: https://lbpw.larc.nasa.gov/sbpw1/test-cases/seeb-alr/ and https://lbpw-ftp.larc.nasa.gov/lbpw1/ . See cases/week16_lowboom/reference/source_manifest.json for exact source URLs and hashes.
+
+
+## 18. Versioned evidence and failed physical checks
+
+The original teaching dataset and portable checkpoint used SU2 8.5.0. Its eight retained refined test fields were numerically converged but showed local total-enthalpy errors of 17.15-18.70% near pointed body/axis junctions. This failed the separately declared 10% full-field allowance. Preserve those failures: they demonstrate why a tiny residual and a small neural prediction error cannot establish a physically acceptable reference.
+
+A controlled replay kept each of those meshes, configurations and neural predictions unchanged and used the checksum-pinned official SU2 8.0.1 executable. All eight new reference fields passed numerical and full-field physical checks. The retained historical checkpoint had aggregate waveform, peak and drag errors of 7.1499%, 2.6343% and 2.0615%; its worst waveform error was 15.9701%. Thus aggregate acceptance is not a per-case 10% guarantee. The official versions have different inviscid wall implementations; changing a full release is not an isolated proof that one source-code change caused every discrepancy. See POINTED_BODY_PHYSICS_AUDIT.md for the primary-source mechanism and limits.
+
+Fresh 8.0.1 evaluations of the retained optimized geometry reduced near-field peak pressure by 21.1876% and 20.6646% on two meshes, with pressure drag changes of -3.7971% and -3.5218%. The optimized waveform changed by 5.3946% between those meshes. Its peak and drag mesh criteria passed, but those criteria do not imply a waveform change below 5%. These figures describe the historical candidate geometry, not a newly optimized full aircraft.
+
+The corresponding cone study retains all three resolutions: pressure errors are 4.5632%, 2.1563% and 1.1616%, and the last-two pressure change is 1.0064%. The coarse pressure test failed, while the declared refined-family criterion passed. All three passed numerical and physical checks.
+
+The replacement 44-case dataset is separately versioned and must pass the physical and numerical checks on every case before student training. Its original 24/6/8/6 geometry split is preserved. A newly fitted model must have a new checkpoint identity and independent reports; do not relabel historical weights as trained on the replacement data. Repeated previously examined geometries constitute a retrospective computational study, not a blind experiment.
+
+
+## 19. Clean-label neural model and its limits
+
+The separately regenerated 44-case SU2 8.0.1 campaign passed numerical and full-field physical rejection checks on every geometry. The largest total-enthalpy deviation was 7.4271%. A new model was fitted once on its 24 training cases, using 12 full-SVD POD modes, training-only scaling and a fixed 32-32 tanh MLP. It converged after 800 optimizer iterations without warnings. The saved portable weights are checked without retraining.
+
+Against the eight finer CFD references, its aggregate waveform error is 7.2036%, mean peak error 2.2373%, and mean drag error 2.2740%. Its worst individual waveform error is 15.3716%. On the six extrapolation geometries the aggregate waveform error rises to 34.2862% and drag error to 22.3889%. These results support a bounded same-family teaching example; they do not establish reliable extrapolation or general aircraft prediction.
+
+The original geometry split is unchanged, and the finer solutions already existed before this fit. Therefore this is an explicitly retrospective test. The historical optimizer used another fitted model. Its geometry can be independently checked with current CFD, but its predictions and design choices must not be attributed to the new checkpoint.

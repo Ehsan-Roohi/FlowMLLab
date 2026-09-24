@@ -1,0 +1,54 @@
+name: Retain accepted Week 16 evidence on development branch
+on:
+  push:
+    branches: [week16-reference-recovery]
+    paths: ['.github/workflows/week16-retain-accepted-evidence.yml']
+permissions:
+  contents: write
+  actions: read
+jobs:
+  retain:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    env:
+      GH_TOKEN: ${{ github.token }}
+      OPENBLAS_NUM_THREADS: '1'
+      OMP_NUM_THREADS: '1'
+      MPLBACKEND: Agg
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install -r qa/week16/requirements.txt
+      - name: Restore the accepted immutable compact reports
+        run: |
+          gh run download 35944888983 --name clean-model-report --dir staging/clean
+          gh run download 35942843724 --name weakwall-checkpoint-report --dir staging/checkpoint
+          gh run download 35943668623 --name weakwall-design-report --dir staging/design
+          gh run download 35943668572 --name cone-refinement-report --dir staging/cone
+          cp staging/clean/* staging/checkpoint/* staging/design/* staging/cone/* results/week16_lowboom/reference/
+          gh run download 35943668623 --name design-v801-0 --dir staging/raw0
+          gh run download 35943668623 --name design-v801-1 --dir staging/raw1
+          tar -xzf staging/raw0/design-v801-0.tar.gz
+          tar -xzf staging/raw1/design-v801-1.tar.gz
+      - name: Check unchanged trained weights and generate real-field teaching figures
+        run: |
+          python qa/week16/clean_model_v801.py --check-only
+          python qa/week16/clean_figures.py --raw-root results/week16_lowboom/runs
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          r=json.loads(Path('results/week16_lowboom/release_check.json').read_text())
+          assert not r['release_ready']
+          print('Accepted components retained; NASA and final educational release remain gated.')
+          PY
+      - name: Persist reviewable accepted components without declaring a final release
+        run: |
+          git fetch origin week16-reference-recovery
+          test "$(git rev-parse origin/week16-reference-recovery)" = "$GITHUB_SHA"
+          git config user.name 'FlowMLLab validation'
+          git config user.email 'github-actions[bot]@users.noreply.github.com'
+          git add results/week16_lowboom/reference/clean_* results/week16_lowboom/reference/weakwall_* results/week16_lowboom/reference/cone_refinement_v801.json
+          git commit -m 'Retain physically checked 44-case data, portable neural model, actual design and cone evidence; final release still gated'
+          git push origin HEAD:week16-reference-recovery

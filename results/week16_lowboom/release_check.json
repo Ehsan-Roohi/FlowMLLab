@@ -1,5 +1,32 @@
 {
   "scientific_checks": {
+    "clean_44_case_physical_and_numerical_checks": true,
+    "new_clean_neural_model": true,
+    "retained_design_recomputation": true,
+    "Taylor_Maccoll_refined_family": true,
+    "actual_exported_wall_volume_within_0p2pct": true
+  },
+  "scientific_pass": true,
+  "notebook_executed": true,
+  "lecture_visual_review": true,
+  "release_ready": true,
+  "notebook_execution_method": "nbclient with a real Jupyter kernel",
+  "lecture_pages": 14,
+  "reference_extension": {
+    "passed": true,
+    "release_scope": "validated_core",
+    "NASA_meshes": 0,
+    "clean_cases": 44,
+    "finer_neural_cases": 8,
+    "NASA_workflow_run": 35946027208,
+    "NASA_coarse_workflow_run": 35944409924,
+    "neural_workflow_run": 35942843724,
+    "clean_campaign_workflow_run": 35944299803,
+    "clean_model_workflow_run": 35944888983,
+    "design_workflow_run": 35943668623,
+    "cone_workflow_run": 35943668572
+  },
+  "historical_scientific_checks": {
     "cone_pressure_within_3pct": true,
     "all_44_dataset_cases_converged": true,
     "mesh_volume_within_0p2pct": true,
@@ -14,10 +41,21 @@
     "peak_reduction_exceeds_5pct_both_meshes": true,
     "selected_model_test_peak_error_below_10pct": true
   },
-  "scientific_pass": true,
-  "notebook_executed": true,
-  "lecture_visual_review": true,
-  "release_ready": true,
-  "notebook_execution_method": "IPython in a fresh process; kernel sockets prohibited in execution environment",
-  "lecture_pages": 7
+  "release_scope": "validated_core",
+  "deferred_extensions": {
+    "NASA": {
+      "status": "failed_deferred",
+      "passed": false,
+      "included_in_release": false,
+      "reason": "8000-iteration replay failed convergence and physical checks; retained as research evidence only."
+    }
+  },
+  "validation_candidate_commit": "6e8faa6e63383bd80fe64603c350f0dfdab25c4c",
+  "lecture_visual_review_details": "All 14 rendered pages reviewed for readable figures, tables, margins and explicit deferred NASA scope.",
+  "test_evidence": {
+    "workflow_run": 36002078532,
+    "passed": 242,
+    "skipped": 13,
+    "subtests_passed": 261
+  }
 }

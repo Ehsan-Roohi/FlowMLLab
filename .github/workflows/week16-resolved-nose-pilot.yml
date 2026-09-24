@@ -1,0 +1,34 @@
+name: Week 16 resolved-nose NASA pilot
+on:
+  push:
+    branches: [week16-reference-recovery]
+    paths: ['.github/workflows/week16-resolved-nose-pilot.yml']
+permissions:
+  contents: read
+jobs:
+  coarse:
+    runs-on: ubuntu-latest
+    timeout-minutes: 75
+    env:
+      OPENBLAS_NUM_THREADS: '1'
+      OMP_NUM_THREADS: '4'
+      MPLBACKEND: Agg
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: sudo apt-get update && sudo apt-get install -y libglu1-mesa libxft2 libxinerama1 libxcursor1
+      - run: pip install -r qa/week16/requirements.txt
+      - run: python qa/week16/install_su2.py
+      - name: Solve locally resolved original NASA nose geometry
+        run: SU2_CFD="$PWD/.tools/week16_su2/bin/SU2_CFD" python qa/week16/seeb_resolved.py --level 1 --threads 4 --iterations 8000
+      - name: Preserve raw pilot evidence even when a gate fails
+        if: always()
+        run: tar -czf nasa-resolved-level-1.tar.gz results/week16_lowboom/reference/seeb_resolved_level_1
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: nasa-resolved-level-1
+          path: nasa-resolved-level-1.tar.gz
+          retention-days: 90

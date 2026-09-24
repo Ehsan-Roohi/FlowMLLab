@@ -1,0 +1,523 @@
+{
+  "purpose": "Read-only physical-state diagnostic; no new runs, no acceptance thresholds selected",
+  "formulas": {
+    "pressure": "(gamma-1)*(rhoE-0.5*(rhou^2+rhov^2)/rho)",
+    "total_enthalpy": "gamma/(gamma-1)*p/rho+0.5*(u^2+v^2)",
+    "freestream_total_enthalpy": "gamma/(gamma-1)*R*Tinf+0.5*Uinf^2",
+    "isentropic_stagnation_density": "rhoinf*(1+(gamma-1)*M^2/2)^(1/(gamma-1))",
+    "normal_shock_then_stagnation_pressure_ratio": "[1+2*gamma/(gamma+1)*(M^2-1)]*[1+(gamma-1)*M2^2/2]^(gamma/(gamma-1))"
+  },
+  "freestream": {
+    "gamma": 1.4,
+    "gas_constant_J_kg_K": 287.058,
+    "gas_constant_evidence": "SU2 solver.log Gas Constant row:287.058; gamma standard-air1.4 also used by archived pressure extraction",
+    "p_Pa": 101325.0,
+    "T_K": 288.15,
+    "Mach": 1.6,
+    "rho_kg_m3": 1.2249781262066513,
+    "U_m_s": 544.4752460092194,
+    "T0_K": 435.6828,
+    "h0_J_kg": 437731.81620839995,
+    "isentropic_stagnation_density_kg_m3": 3.443561246877296,
+    "isentropic_stagnation_pressure_Pa": 430673.23394870316,
+    "normal_shock_stagnation_pressure_ratio": 3.80497203263092
+  },
+  "interpretation": [
+    "For a steady adiabatic no-work Euler solution fed by a uniform freestream, total enthalpy is conserved across shocks and along streamlines.",
+    "With nondecreasing entropy and fixed total enthalpy, isentropic stagnation density is an upper physical reference, not an experimentally fitted bound.",
+    "Discrete boundary and shock states have truncation error; displayed 5%/10% counts are descriptive bins, NOT adopted pass/fail tolerances.",
+    "State anomalies do not establish residual localization or prove the cause of instability.",
+    "The coarse result is numerically converged but its nose-axis stagnation state is severely under-resolved or otherwise incorrect."
+  ],
+  "cases": {
+    "failed_level2": {
+      "file": "/tmp/seeb_failed_level2_restart.csv",
+      "file_sha256": "65cd6bce9dd071065847ba57c94332f1ddb042cc9c1fdc77eb467eb136993029",
+      "nodes": 462963,
+      "extrema": {
+        "min_h0_normalized": {
+          "node_row": 66435,
+          "x_over_L": -0.01472972651675696,
+          "r_over_L": 0.0003130201184605667,
+          "rho_kg_m3": 1217.451838040942,
+          "rho_over_isentropic_stagnation_density": 353.54441253076493,
+          "p_Pa": 152286.22663753328,
+          "p_over_pinf": 1.5029482026896943,
+          "u_m_s": 62.95972740768215,
+          "v_m_s": -0.5940389133414107,
+          "h0_J_kg": 2419.9412110535136,
+          "h0_over_freestream": 0.005528364906199559
+        },
+        "max_h0_normalized": {
+          "node_row": 65472,
+          "x_over_L": -0.02221911572749229,
+          "r_over_L": 0.0003229698773127971,
+          "rho_kg_m3": 0.560782301913847,
+          "rho_over_isentropic_stagnation_density": 0.16284952167538125,
+          "p_Pa": 101733.91400744068,
+          "p_over_pinf": 1.0040356674802928,
+          "u_m_s": 487.86677435248225,
+          "v_m_s": 18.551845707385052,
+          "h0_J_kg": 754129.038210144,
+          "h0_over_freestream": 1.7228106577729556
+        },
+        "min_rho_normalized": {
+          "node_row": 65793,
+          "x_over_L": -0.01972265265724711,
+          "r_over_L": 0.0003196532910287075,
+          "rho_kg_m3": 0.3904216056376431,
+          "rho_over_isentropic_stagnation_density": 0.11337727940564055,
+          "p_Pa": 76153.83532208235,
+          "p_over_pinf": 0.7515799192902279,
+          "u_m_s": -31.202508249211707,
+          "v_m_s": -27.214733110049284,
+          "h0_J_kg": 683550.9551538206,
+          "h0_over_freestream": 1.561574758432429
+        },
+        "max_rho_normalized": {
+          "node_row": 66435,
+          "x_over_L": -0.01472972651675696,
+          "r_over_L": 0.0003130201184605667,
+          "rho_kg_m3": 1217.451838040942,
+          "rho_over_isentropic_stagnation_density": 353.54441253076493,
+          "p_Pa": 152286.22663753328,
+          "p_over_pinf": 1.5029482026896943,
+          "u_m_s": 62.95972740768215,
+          "v_m_s": -0.5940389133414107,
+          "h0_J_kg": 2419.9412110535136,
+          "h0_over_freestream": 0.005528364906199559
+        }
+      },
+      "descriptive_anomaly_bins": {
+        "rho_above_isentropic_stagnation": {
+          "count": 241,
+          "extent_x_over_L": [
+            -0.01472972651675696,
+            0.03096513210329692
+          ],
+          "extent_r_over_L": [
+            0.000306386945892449,
+            0.003724170848590033
+          ]
+        },
+        "rho_above_1p1_times_isentropic_stagnation": {
+          "count": 201,
+          "extent_x_over_L": [
+            -0.01472972651675696,
+            0.02419035833935738
+          ],
+          "extent_r_over_L": [
+            0.000306386945892449,
+            0.003001315885174717
+          ]
+        },
+        "absolute_h0_relative_error_above_5pct": {
+          "count": 1687,
+          "extent_x_over_L": [
+            -0.05716959871086138,
+            0.8653391728232708
+          ],
+          "extent_r_over_L": [
+            0.0,
+            0.04068870416104403
+          ]
+        },
+        "absolute_h0_relative_error_above_10pct": {
+          "count": 1134,
+          "extent_x_over_L": [
+            -0.05467313564062322,
+            0.4555541738719694
+          ],
+          "extent_r_over_L": [
+            0.0,
+            0.02835418083221139
+          ]
+        }
+      },
+      "nose_axis_node": {
+        "node_row": 5,
+        "x_over_L": 0.000249051904681023,
+        "r_over_L": 0.0,
+        "rho_kg_m3": 1.202327142868903,
+        "rho_over_isentropic_stagnation_density": 0.34915224579182447,
+        "p_Pa": 107061.47704132274,
+        "p_over_pinf": 1.0566146266106364,
+        "u_m_s": 0.0,
+        "v_m_s": 0.0,
+        "h0_J_kg": 311658.24698136013,
+        "h0_over_freestream": 0.7119844513038153
+      },
+      "nose_pressure_relative_to_normal_shock_stagnation": 0.27769313875351875,
+      "upstream_axis_last_dx_over_L": 0.0025012452595190838,
+      "nose_radius_over_L": 0.00029312060075612905,
+      "last_dx_over_nose_radius": 8.533160934669597,
+      "cap_cells": 2,
+      "largest_density_nodes": [
+        {
+          "node_row": 66435,
+          "x_over_L": -0.01472972651675696,
+          "r_over_L": 0.0003130201184605667,
+          "rho_kg_m3": 1217.451838040942,
+          "rho_over_isentropic_stagnation_density": 353.54441253076493,
+          "p_Pa": 152286.22663753328,
+          "p_over_pinf": 1.5029482026896943,
+          "u_m_s": 62.95972740768215,
+          "v_m_s": -0.5940389133414107,
+          "h0_J_kg": 2419.9412110535136,
+          "h0_over_freestream": 0.005528364906199559
+        },
+        {
+          "node_row": 67077,
+          "x_over_L": -0.009736800376266772,
+          "r_over_L": 0.000306386945892449,
+          "rho_kg_m3": 217.5014561484485,
+          "rho_over_isentropic_stagnation_density": 63.16177949373895,
+          "p_Pa": 81350.15007383477,
+          "p_over_pinf": 0.802863558587069,
+          "u_m_s": 128.45131192587223,
+          "v_m_s": -0.6736902368165572,
+          "h0_J_kg": 9559.17080759122,
+          "h0_over_freestream": 0.021837962089189762
+        },
+        {
+          "node_row": 66436,
+          "x_over_L": -0.01424242108582777,
+          "r_over_L": 0.0008003255493897469,
+          "rho_kg_m3": 17.6839218264003,
+          "rho_over_isentropic_stagnation_density": 5.135358589145614,
+          "p_Pa": 187135.51953001632,
+          "p_over_pinf": 1.8468839825316192,
+          "u_m_s": 102.80882295463408,
+          "v_m_s": 2.474348250896731,
+          "h0_J_kg": 42325.73113223915,
+          "h0_over_freestream": 0.09669329385024247
+        },
+        {
+          "node_row": 67078,
+          "x_over_L": -0.0092494933282048,
+          "r_over_L": 0.0007936939939544332,
+          "rho_kg_m3": 16.27978703462454,
+          "rho_over_isentropic_stagnation_density": 4.727601999060549,
+          "p_Pa": 82208.03889825905,
+          "p_over_pinf": 0.8113302629978688,
+          "u_m_s": 131.85462675041038,
+          "v_m_s": 0.11548988227274662,
+          "h0_J_kg": 26366.777603263323,
+          "h0_over_freestream": 0.06023500377845587
+        },
+        {
+          "node_row": 67399,
+          "x_over_L": -0.006753029449394211,
+          "r_over_L": 0.0007903782162367628,
+          "rho_kg_m3": 15.06836862091537,
+          "rho_over_isentropic_stagnation_density": 4.375809675108793,
+          "p_Pa": 95374.45134435063,
+          "p_over_pinf": 0.9412726508201394,
+          "u_m_s": 130.11066578839737,
+          "v_m_s": 3.9051272188399366,
+          "h0_J_kg": 30625.084689587333,
+          "h0_over_freestream": 0.06996312252296283
+        },
+        {
+          "node_row": 67720,
+          "x_over_L": -0.004256565570589675,
+          "r_over_L": 0.0007870624385190797,
+          "rho_kg_m3": 12.02107500836225,
+          "rho_over_isentropic_stagnation_density": 3.4908846239523834,
+          "p_Pa": 98222.56840328097,
+          "p_over_pinf": 0.9693813807380307,
+          "u_m_s": 134.36585703123748,
+          "v_m_s": 3.1709028000047605,
+          "h0_J_kg": 37630.14289851698,
+          "h0_over_freestream": 0.08596620466034761
+        },
+        {
+          "node_row": 66757,
+          "x_over_L": -0.01174595720701634,
+          "r_over_L": 0.0007970097716720966,
+          "rho_kg_m3": 11.15423209440907,
+          "rho_over_isentropic_stagnation_density": 3.2391560058715365,
+          "p_Pa": 100346.34618346543,
+          "p_over_pinf": 0.9903414377840161,
+          "u_m_s": 136.6400544118856,
+          "v_m_s": 4.513906705131922,
+          "h0_J_kg": 40832.34180414972,
+          "h0_over_freestream": 0.09328164024684427
+        },
+        {
+          "node_row": 68042,
+          "x_over_L": -0.001266738492033332,
+          "r_over_L": 0.001277109860557092,
+          "rho_kg_m3": 10.98624996042306,
+          "rho_over_isentropic_stagnation_density": 3.1903744910550538,
+          "p_Pa": 110371.54958025223,
+          "p_over_pinf": 1.089282502642509,
+          "u_m_s": 126.99858913043592,
+          "v_m_s": 6.665683181411017,
+          "h0_J_kg": 43248.70965065252,
+          "h0_over_freestream": 0.0988018417881286
+        },
+        {
+          "node_row": 333,
+          "x_over_L": 0.001229726205132995,
+          "r_over_L": 0.001273794901208101,
+          "rho_kg_m3": 9.868545029281988,
+          "rho_over_isentropic_stagnation_density": 2.865796285235531,
+          "p_Pa": 107540.77896251618,
+          "p_over_pinf": 1.0613449687887113,
+          "u_m_s": 126.69166740316047,
+          "v_m_s": 12.142762493692047,
+          "h0_J_kg": 46239.763080815916,
+          "h0_over_freestream": 0.10563491473236115
+        },
+        {
+          "node_row": 68680,
+          "x_over_L": 0.001578793727535143,
+          "r_over_L": 0.001315776955527245,
+          "rho_kg_m3": 9.791555626756344,
+          "rho_over_isentropic_stagnation_density": 2.8434387904776086,
+          "p_Pa": 102366.76744446726,
+          "p_over_pinf": 1.0102814452945201,
+          "u_m_s": 128.94036517837833,
+          "v_m_s": 8.334792883835968,
+          "h0_J_kg": 44938.63254491017,
+          "h0_over_freestream": 0.10266247707138408
+        }
+      ]
+    },
+    "converged_coarse": {
+      "file": "/workspace/scratch/318e52aa32f9/FlowMLLab/results/week16_lowboom/reference/seeb_level_1/restart_flow.csv",
+      "file_sha256": "5f1ad54f5b653a136940ad9c0bf048859bcd592f95133d30dde076d028aa6ddc",
+      "nodes": 116283,
+      "extrema": {
+        "min_h0_normalized": {
+          "node_row": 908,
+          "x_over_L": 0.0005981385799974336,
+          "r_over_L": 0.000335123503425228,
+          "rho_kg_m3": 0.5352406561244121,
+          "rho_over_isentropic_stagnation_density": 0.15543230329060684,
+          "p_Pa": 56000.09706052047,
+          "p_over_pinf": 0.5526779872738266,
+          "u_m_s": 326.71939279948026,
+          "v_m_s": 39.27275352981444,
+          "h0_J_kg": 420335.00884372543,
+          "h0_over_freestream": 0.9602569273685327
+        },
+        "max_h0_normalized": {
+          "node_row": 172,
+          "x_over_L": 0.001229726234396367,
+          "r_over_L": 0.001273794930471473,
+          "rho_kg_m3": 1.193881146120298,
+          "rho_over_isentropic_stagnation_density": 0.34669955331938357,
+          "p_Pa": 109566.50240746897,
+          "p_over_pinf": 1.0813373047862715,
+          "u_m_s": 501.1395544442861,
+          "v_m_s": 6.228367994168383,
+          "h0_J_kg": 446796.6361165784,
+          "h0_over_freestream": 1.0207086155781346
+        },
+        "min_rho_normalized": {
+          "node_row": 907,
+          "x_over_L": 0.000249051904681023,
+          "r_over_L": 0.0001465603003777025,
+          "rho_kg_m3": 0.382582847119234,
+          "rho_over_isentropic_stagnation_density": 0.11110092711903102,
+          "p_Pa": 47551.470680063954,
+          "p_over_pinf": 0.4692965278071942,
+          "u_m_s": 0.0,
+          "v_m_s": 58.41359365059069,
+          "h0_J_kg": 436723.34834648756,
+          "h0_over_freestream": 0.9976961513315443
+        },
+        "max_rho_normalized": {
+          "node_row": 23110,
+          "x_over_L": 0.01644088557293482,
+          "r_over_L": 0.003917159541805985,
+          "rho_kg_m3": 1.309383653019988,
+          "rho_over_isentropic_stagnation_density": 0.3802411396653301,
+          "p_Pa": 111197.06719975064,
+          "p_over_pinf": 1.097429728100179,
+          "u_m_s": 528.9754843918834,
+          "v_m_s": 32.60003853828394,
+          "h0_J_kg": 437670.159197269,
+          "h0_over_freestream": 0.9998591443234238
+        }
+      },
+      "descriptive_anomaly_bins": {
+        "rho_above_isentropic_stagnation": {
+          "count": 0,
+          "extent_x_over_L": null,
+          "extent_r_over_L": null
+        },
+        "rho_above_1p1_times_isentropic_stagnation": {
+          "count": 0,
+          "extent_x_over_L": null,
+          "extent_r_over_L": null
+        },
+        "absolute_h0_relative_error_above_5pct": {
+          "count": 0,
+          "extent_x_over_L": null,
+          "extent_r_over_L": null
+        },
+        "absolute_h0_relative_error_above_10pct": {
+          "count": 0,
+          "extent_x_over_L": null,
+          "extent_r_over_L": null
+        }
+      },
+      "nose_axis_node": {
+        "node_row": 5,
+        "x_over_L": 0.000249051904681023,
+        "r_over_L": 0.0,
+        "rho_kg_m3": 0.4350837916524707,
+        "rho_over_isentropic_stagnation_density": 0.12634704611309444,
+        "p_Pa": 54751.45235732543,
+        "p_over_pinf": 0.5403548221793775,
+        "u_m_s": 0.0,
+        "v_m_s": 0.0,
+        "h0_J_kg": 440444.0866960778,
+        "h0_over_freestream": 1.0061961922511626
+      },
+      "nose_pressure_relative_to_normal_shock_stagnation": 0.14201282362797107,
+      "upstream_axis_last_dx_over_L": 0.005002490519041196,
+      "nose_radius_over_L": 0.00029312060075612905,
+      "last_dx_over_nose_radius": 17.066321869349526,
+      "cap_cells": 2,
+      "largest_density_nodes": [
+        {
+          "node_row": 23110,
+          "x_over_L": 0.01644088557293482,
+          "r_over_L": 0.003917159541805985,
+          "rho_kg_m3": 1.309383653019988,
+          "rho_over_isentropic_stagnation_density": 0.3802411396653301,
+          "p_Pa": 111197.06719975064,
+          "p_over_pinf": 1.097429728100179,
+          "u_m_s": 528.9754843918834,
+          "v_m_s": 32.60003853828394,
+          "h0_J_kg": 437670.159197269,
+          "h0_over_freestream": 0.9998591443234238
+        },
+        {
+          "node_row": 22474,
+          "x_over_L": 0.01427334216557767,
+          "r_over_L": 0.003674903549867505,
+          "rho_kg_m3": 1.309375792649816,
+          "rho_over_isentropic_stagnation_density": 0.38023885703708316,
+          "p_Pa": 111206.5406911284,
+          "p_over_pinf": 1.0975232241907564,
+          "u_m_s": 529.0234562363232,
+          "v_m_s": 30.871688084205505,
+          "h0_J_kg": 437667.79282654024,
+          "h0_over_freestream": 0.9998537383404883
+        },
+        {
+          "node_row": 23746,
+          "x_over_L": 0.01874156204386377,
+          "r_over_L": 0.004172423926396728,
+          "rho_kg_m3": 1.308750975996546,
+          "rho_over_isentropic_stagnation_density": 0.38005741212918837,
+          "p_Pa": 111111.6931025936,
+          "p_over_pinf": 1.0965871512715875,
+          "u_m_s": 529.0486752839322,
+          "v_m_s": 33.99490545584437,
+          "h0_J_kg": 437670.694854931,
+          "h0_over_freestream": 0.9998603680353911
+        },
+        {
+          "node_row": 21838,
+          "x_over_L": 0.0122312315062298,
+          "r_over_L": 0.00344488242165222,
+          "rho_kg_m3": 1.308719039830532,
+          "rho_over_isentropic_stagnation_density": 0.38004813796104536,
+          "p_Pa": 111098.03288311369,
+          "p_over_pinf": 1.0964523353872557,
+          "u_m_s": 529.3671638737644,
+          "v_m_s": 28.792577469204673,
+          "h0_J_kg": 437646.6396612143,
+          "h0_over_freestream": 0.9998054138537988
+        },
+        {
+          "node_row": 24223,
+          "x_over_L": 0.0205593364257029,
+          "r_over_L": 0.004372897853308134,
+          "rho_kg_m3": 1.307982880297395,
+          "rho_over_isentropic_stagnation_density": 0.3798343594101906,
+          "p_Pa": 111031.54369293626,
+          "p_over_pinf": 1.0957961380995436,
+          "u_m_s": 529.0818772051169,
+          "v_m_s": 34.92848528087262,
+          "h0_J_kg": 437680.4591331983,
+          "h0_over_freestream": 0.9998826745662527
+        },
+        {
+          "node_row": 24700,
+          "x_over_L": 0.02246023559270613,
+          "r_over_L": 0.004581349133760432,
+          "rho_kg_m3": 1.30739078769927,
+          "rho_over_isentropic_stagnation_density": 0.3796624174711118,
+          "p_Pa": 110957.99935817756,
+          "p_over_pinf": 1.0950703119484586,
+          "u_m_s": 529.1488898404089,
+          "v_m_s": 35.787518014786734,
+          "h0_J_kg": 437683.9595727754,
+          "h0_over_freestream": 0.9998906713337882
+        },
+        {
+          "node_row": 25177,
+          "x_over_L": 0.0244480907968076,
+          "r_over_L": 0.004797864879948042,
+          "rho_kg_m3": 1.306624195876016,
+          "rho_over_isentropic_stagnation_density": 0.3794398014732261,
+          "p_Pa": 110870.32933691257,
+          "p_over_pinf": 1.0942050761106594,
+          "u_m_s": 529.2308613689033,
+          "v_m_s": 36.55377559211412,
+          "h0_J_kg": 437694.49091498094,
+          "h0_over_freestream": 0.9999147302251358
+        },
+        {
+          "node_row": 25654,
+          "x_over_L": 0.02652691103998862,
+          "r_over_L": 0.005022520645434248,
+          "rho_kg_m3": 1.30542986135214,
+          "rho_over_isentropic_stagnation_density": 0.37909297026034755,
+          "p_Pa": 110719.08224055593,
+          "p_over_pinf": 1.0927123833264833,
+          "u_m_s": 529.4388874179613,
+          "v_m_s": 37.163370137522854,
+          "h0_J_kg": 437693.2748537642,
+          "h0_over_freestream": 0.9999119521286582
+        },
+        {
+          "node_row": 26131,
+          "x_over_L": 0.02870086403102515,
+          "r_over_L": 0.005255630002061174,
+          "rho_kg_m3": 1.304728249485137,
+          "rho_over_isentropic_stagnation_density": 0.37888922424954574,
+          "p_Pa": 110642.67832675693,
+          "p_over_pinf": 1.0919583353245195,
+          "u_m_s": 529.480008049285,
+          "v_m_s": 37.82154903916172,
+          "h0_J_kg": 437694.39566720906,
+          "h0_over_freestream": 0.9999145126312384
+        },
+        {
+          "node_row": 26608,
+          "x_over_L": 0.03097429177401538,
+          "r_over_L": 0.0054976723476792,
+          "rho_kg_m3": 1.304106053145279,
+          "rho_over_isentropic_stagnation_density": 0.3787085402729148,
+          "p_Pa": 110571.44851821032,
+          "p_over_pinf": 1.0912553517711356,
+          "u_m_s": 529.5324151596727,
+          "v_m_s": 38.449014841805926,
+          "h0_J_kg": 437696.51254432584,
+          "h0_over_freestream": 0.9999193486450679
+        }
+      ]
+    }
+  },
+  "source_workflow_run": 35935655513,
+  "accepted_release_evidence": false,
+  "source_scope": "Rejected original NASA mesh family: converged coarse and failed medium. Diagnostic values refer to raw fields whose SHA256 is retained below."
+}

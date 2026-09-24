@@ -1,0 +1,375 @@
+{
+  "identity": {
+    "dataset_sha256": "8148f318598ce3e48ca27cbcd39e7ad5cfd8d98a2bfe75d00e286aa79e662a2f",
+    "checkpoint_sha256": "9b7a0f22671950c9ab1c86b3fc0790ba4d992a606ca429c60a2a2f18b92a6f72",
+    "source_sha256": {
+      "cfd.py": "0d90e2b36caa707dc54086eb62881d9c398685f93422ccd2565fec13809e36d3",
+      "analyze.py": "c857329535b5c4d832ed53e218aedb7ea150f4bddf3883e6d3bcfc40fcef3baf",
+      "freeze_model.py": "0fd8cd310c7ab4878282d3b2c1895fd92460a7f95fc4a5cb0454bd330667a93f",
+      "independent_audit_report.py": "d2d38273b2f36741b0f4c98e040034f534ad26062926259315a23cdd31b14306",
+      "seeb_reference.py": "1c78bf3658cd8be92c835d2ece46b04d43f19acbcf7c5792ec8a8a796d47cda3",
+      "recompute_neural_cfd.py": "5f53171030729afa081ca2f5546048a7b7249652cf285393b5b93df242ec22cc"
+    }
+  },
+  "cases": 8,
+  "names": [
+    "test_000",
+    "test_001",
+    "test_002",
+    "test_003",
+    "test_004",
+    "test_005",
+    "test_006",
+    "test_007"
+  ],
+  "metrics": {
+    "wave_relative_l2": 0.06390341640356913,
+    "peak_mean_relative_error": 0.019271236573373582,
+    "drag_mean_relative_error": 0.015708156459412786,
+    "per_case_wave_relative_l2": [
+      0.14626759522250074,
+      0.05412300606675778,
+      0.03775460847713351,
+      0.07493809100794893,
+      0.016859663741694533,
+      0.030807697973752234,
+      0.07799365190779212,
+      0.05856571923036503
+    ],
+    "worst_case_wave_relative_l2": 0.14626759522250074
+  },
+  "thresholds": {
+    "wave_relative_l2": 0.1,
+    "peak_mean_relative_error": 0.1,
+    "drag_mean_relative_error": 0.1
+  },
+  "checks": {
+    "wave_relative_l2": true,
+    "peak_mean_relative_error": true,
+    "drag_mean_relative_error": true
+  },
+  "passed": true,
+  "run_evidence": [
+    {
+      "name": "test_000",
+      "run": "checkpoint_test_000",
+      "checks": {
+        "mesh_integrity": {
+          "cells": 80640,
+          "nodes": 81399,
+          "boundary_edges": 1516
+        },
+        "density_residual_log10": -14.4455328,
+        "residual_drop": 12.884475753,
+        "drag_tail_relative_range": 0.0,
+        "positive_fields": {
+          "restart_flow.csv": {
+            "min_density": 0.6456170803328874,
+            "min_pressure": 71257.17628772312
+          },
+          "surface_flow.csv": {
+            "min_density": 0.6456170803328874,
+            "min_pressure": 71257.17628772312
+          }
+        },
+        "iterations": 501,
+        "passed": true
+      },
+      "run_evidence_sha256": "4786046a665bac4bf23f80814956641b491f190cbc3ac1c49523536f501cb0e2",
+      "raw_sha256": {
+        "mesh.su2": "eeb94a2956a4f44e859af9926cb2715d734b38169ada8824f2b23e7d49c9b5da",
+        "flow.cfg": "f6009cfb89302445a06a9827c11209868e655b3b19ef2191039340412daf8a82",
+        "metadata.json": "a3693060b24d0bb27c848d2fb644640d0be7d62ccea8350ad7407d838629ca93",
+        "history.csv": "215cf76ea02029d2675e99a261c94c4eb58a7af0b0302d7476ecec94c81ad0c1",
+        "solver.log": "6f9074a454e5784226242b4b93eed09c1c9231742d17c4b2d1d5cb93024f3c06",
+        "restart_flow.csv": "81603426fb0ce1e2482b9136fcfefbfc4736dd36fd95e5508c5da08edef2f624",
+        "surface_flow.csv": "fac16ca1a2af84af42d4b5dfb8bace89abd1987298e5daba7a369247bbae8061",
+        "metrics.json": "f59266b3305263f6afd3ae065df4c13d36a1c1ca48e14ebdcd7f28f007a91643",
+        "extracted.npz": "e0dac2b9784f6a3d4fbcec027efefa7d4bdd69a7c6b1bf37d306059745d23efd",
+        "prediction.json": "bd418d0f29b33138f9f3485277ef8707527113652d152cddfe96e18b660976fe"
+      }
+    },
+    {
+      "name": "test_001",
+      "run": "checkpoint_test_001",
+      "checks": {
+        "mesh_integrity": {
+          "cells": 80640,
+          "nodes": 81399,
+          "boundary_edges": 1516
+        },
+        "density_residual_log10": -14.37116281,
+        "residual_drop": 12.811195749,
+        "drag_tail_relative_range": 0.0,
+        "positive_fields": {
+          "restart_flow.csv": {
+            "min_density": 0.6574618081903585,
+            "min_pressure": 79582.94287532571
+          },
+          "surface_flow.csv": {
+            "min_density": 0.7093732084073787,
+            "min_pressure": 79582.94287532571
+          }
+        },
+        "iterations": 501,
+        "passed": true
+      },
+      "run_evidence_sha256": "165dd0db752e897ba285aaec4440a5a334e174912c19adc03fea4a129c888ecd",
+      "raw_sha256": {
+        "mesh.su2": "a0a091e99e01ee47ff03fd16c8490ce279d33f17723dad7ea4eb84e4a0e38c9c",
+        "flow.cfg": "f6009cfb89302445a06a9827c11209868e655b3b19ef2191039340412daf8a82",
+        "metadata.json": "4557bff4a960083326fc763cd14b915b48af8f83ecbe8901a9e6fd9714588e40",
+        "history.csv": "e1a9b569dc80df076b0eaf47e9dd91bd4c9c95df4e0e5d67206a524873bd24d0",
+        "solver.log": "2320a329d72100ff484f9a09a4724d503204813c7cbc0578abdd9280c6d984d8",
+        "restart_flow.csv": "17d179bd2a5bccc5e996a8d0722fe1b02f8b293819d7e83795a42b747c0dfa7b",
+        "surface_flow.csv": "c002ebf142b8a63d9bfa8ff52a504bac2a45e37f2e190067d9feb086310a2298",
+        "metrics.json": "5fad951949184404832a1694aa0a0679b5f1b6597715b8e4b021bb888c3bfebd",
+        "extracted.npz": "ecf6785acfb671bde19305ca18daadb2cb228bd826c3c34f8af39fa7f7b256a9",
+        "prediction.json": "7ae328c17822331e442d7a2d7ed85db18e4a53cf48adc2649f133f2b6dacbfb7"
+      }
+    },
+    {
+      "name": "test_002",
+      "run": "checkpoint_test_002",
+      "checks": {
+        "mesh_integrity": {
+          "cells": 80640,
+          "nodes": 81399,
+          "boundary_edges": 1516
+        },
+        "density_residual_log10": -14.4425134,
+        "residual_drop": 12.867395511,
+        "drag_tail_relative_range": 0.0,
+        "positive_fields": {
+          "restart_flow.csv": {
+            "min_density": 0.5461214903620819,
+            "min_pressure": 59874.8212184361
+          },
+          "surface_flow.csv": {
+            "min_density": 0.5461214903620819,
+            "min_pressure": 59874.8212184361
+          }
+        },
+        "iterations": 501,
+        "passed": true
+      },
+      "run_evidence_sha256": "c0a053a8d8ec5f5dec82ad20851b7565703e3ee82bddcf3343cd2c474e79d515",
+      "raw_sha256": {
+        "mesh.su2": "1d7cd426907778216cf563ba29029b0550deaaf0650c79d9df0fefd21eddaea2",
+        "flow.cfg": "f6009cfb89302445a06a9827c11209868e655b3b19ef2191039340412daf8a82",
+        "metadata.json": "47cd5ead26c2b19f07d81b4160d702b59776647141bdc85dfde54d58019791e4",
+        "history.csv": "03df86ed1661ab3bc1e350fdeac2034cd76b1c244ae22aea761b0f0eb071cec0",
+        "solver.log": "b26f5caed70b899fef30715a7839c01ebe2d00f3f693758306246f70c1cda6ba",
+        "restart_flow.csv": "08ddeead2b3e2e3457a4d5445a006d3b3a3b3c8b4fee499cf78eee501117770e",
+        "surface_flow.csv": "5eb32c04bdbe0533a0735676824b45ff221db1c9c1de0af177a7e2ac55b1a671",
+        "metrics.json": "1dc4b43760ad7ff6cecabb1eb6e6ca64ac4acaa5cfbc97fe5bfa262f99eae2d7",
+        "extracted.npz": "2637bdaca891a20372310a5728352b3830a0a46a945f22a2a8fac52d6315f1ab",
+        "prediction.json": "5f0b10592599c51aaff995842b3a751812ce78f22cebdfdc30c36eaffd99b474"
+      }
+    },
+    {
+      "name": "test_003",
+      "run": "checkpoint_test_003",
+      "checks": {
+        "mesh_integrity": {
+          "cells": 80640,
+          "nodes": 81399,
+          "boundary_edges": 1516
+        },
+        "density_residual_log10": -14.44080286,
+        "residual_drop": 12.868923548,
+        "drag_tail_relative_range": 0.0,
+        "positive_fields": {
+          "restart_flow.csv": {
+            "min_density": 0.4827389223695435,
+            "min_pressure": 53344.27728124205
+          },
+          "surface_flow.csv": {
+            "min_density": 0.4827389223695435,
+            "min_pressure": 53344.27728124205
+          }
+        },
+        "iterations": 501,
+        "passed": true
+      },
+      "run_evidence_sha256": "e6c4019889dab7d4693e5f04477b42ece6bab990b633ff1422fea59fec30444a",
+      "raw_sha256": {
+        "mesh.su2": "a4ea63a0a9e45d65029a9a4c7ba754d3f4f9d7627be493142869fedee9f4ad00",
+        "flow.cfg": "f6009cfb89302445a06a9827c11209868e655b3b19ef2191039340412daf8a82",
+        "metadata.json": "b0cd019af730185121689c288822d00274a72bebbea9c4b58873c26aa56b3d81",
+        "history.csv": "effccc3c058ed2055f60a9435f2b605cfc4b620521e4fab6ec0d3b9c626a3f04",
+        "solver.log": "aa21458018c9cf56bbb50107392dc710c86a7936ba3539e1c6b9b7c496a8eeed",
+        "restart_flow.csv": "b3b3fa7742d14c0fe5fb1dee97c33e2158fca0305d1b08ec89dfc0dc1647a9db",
+        "surface_flow.csv": "daaba94d239582a1d9115958c9ee5d6c092499dbbd3b073230b6eb1db93b7e55",
+        "metrics.json": "ef348ae08c3dabbb80b41b1e0f517fc720bfc794f7197e30915b4d51759a767f",
+        "extracted.npz": "a1d2ffc5a490119c64c3bf8a95737a134e6ee76fb7cbeaa583cf00282cea299b",
+        "prediction.json": "38318a38643d37b7a092391e3ec9f09b0fa7632122e2ba183904b2c24f6694fc"
+      }
+    },
+    {
+      "name": "test_004",
+      "run": "checkpoint_test_004",
+      "checks": {
+        "mesh_integrity": {
+          "cells": 80640,
+          "nodes": 81399,
+          "boundary_edges": 1516
+        },
+        "density_residual_log10": -14.44490056,
+        "residual_drop": 12.880639273,
+        "drag_tail_relative_range": 0.0,
+        "positive_fields": {
+          "restart_flow.csv": {
+            "min_density": 0.4850901955362164,
+            "min_pressure": 53247.1642078518
+          },
+          "surface_flow.csv": {
+            "min_density": 0.4850901955362164,
+            "min_pressure": 53247.1642078518
+          }
+        },
+        "iterations": 501,
+        "passed": true
+      },
+      "run_evidence_sha256": "3f9ab23f16b40586928526815315dd75d7efff22ecae483cad6e2b08a92bdefb",
+      "raw_sha256": {
+        "mesh.su2": "17e496708b9af2786cde129543ef383a5f3da12543c07da3737cf1dbdf4b480c",
+        "flow.cfg": "f6009cfb89302445a06a9827c11209868e655b3b19ef2191039340412daf8a82",
+        "metadata.json": "5b1050bc8444bd4bba1777643618b1be55c9a24167992d37f909659b73369714",
+        "history.csv": "c3a4ac20d3c210d1330dfe02f1a4a3faaf94860e7e2b92b0ed87a101183c6229",
+        "solver.log": "4ae6339e7989220badaa6013367572c621d23982ba1e159c0a9611478cf98d94",
+        "restart_flow.csv": "60f8c8a98d90d1b08cd947932b4e873edb83b6f017a7a73a58e39b8b5c38aabb",
+        "surface_flow.csv": "bd36fd4b3fc85c1a8683e7d280e68370186ced437fa94c7e0761b3f6c88bf98e",
+        "metrics.json": "c8e185b8c6ae64876a8bf96fa9f37154a024ec6ed68752438881492f739269be",
+        "extracted.npz": "154e24f7bff8272ed859e9697ab0cfa27a8c6548279c74c30604d294841dbe05",
+        "prediction.json": "963a1a8aee44699145f23e7466db882e485de5c1076207a81b6e5b3bea8eee91"
+      }
+    },
+    {
+      "name": "test_005",
+      "run": "checkpoint_test_005",
+      "checks": {
+        "mesh_integrity": {
+          "cells": 80640,
+          "nodes": 81399,
+          "boundary_edges": 1516
+        },
+        "density_residual_log10": -14.44170205,
+        "residual_drop": 12.864437009,
+        "drag_tail_relative_range": 0.0,
+        "positive_fields": {
+          "restart_flow.csv": {
+            "min_density": 0.5848770590700555,
+            "min_pressure": 64255.31749927477
+          },
+          "surface_flow.csv": {
+            "min_density": 0.5848770590700555,
+            "min_pressure": 64255.31749927477
+          }
+        },
+        "iterations": 501,
+        "passed": true
+      },
+      "run_evidence_sha256": "15bc943fdf9c2ffcd9c34b37ea4c35d6bffec62be9abc54e9dd165abc6ac7036",
+      "raw_sha256": {
+        "mesh.su2": "eb0f95ebd8b27b67bc53f08dc3ff7a08ac028a20b5d3f11309ce3b82097692f5",
+        "flow.cfg": "f6009cfb89302445a06a9827c11209868e655b3b19ef2191039340412daf8a82",
+        "metadata.json": "75dcd936839e02b8e16ad351c4faeb0cdf548bf45eb159f693af684c9e11bc0f",
+        "history.csv": "234349b0dd942d1af4506c2c3c61df3052c4902407da6e6b06ba579c34580b11",
+        "solver.log": "892b90d24b15f15ef732090ffccd07796c21cbd419a58438c36041e2639816a6",
+        "restart_flow.csv": "c6783f083f6223400297473c058e497c198fc5cec7d4c8c6801777fad5708caa",
+        "surface_flow.csv": "b80e231bf65faf3fa1088bae5a3e80c52a10302ceac932d936d138e5c3c26583",
+        "metrics.json": "1e3dee6974e5c6fcb9673fe129d494bb171d0b09ebe354e7419c396bfb4d2f87",
+        "extracted.npz": "a51a9e5649489d2048be7fcdf978012d5bf16da3a41de278fdcac26586424ccc",
+        "prediction.json": "aa75f905bc7b9728c011ecb3398f71c9d305bd96ab754efef7cec04a33358b56"
+      }
+    },
+    {
+      "name": "test_006",
+      "run": "checkpoint_test_006",
+      "checks": {
+        "mesh_integrity": {
+          "cells": 80640,
+          "nodes": 81399,
+          "boundary_edges": 1516
+        },
+        "density_residual_log10": -14.43310488,
+        "residual_drop": 12.861791454,
+        "drag_tail_relative_range": 0.0,
+        "positive_fields": {
+          "restart_flow.csv": {
+            "min_density": 0.5186210912813699,
+            "min_pressure": 56796.268820607176
+          },
+          "surface_flow.csv": {
+            "min_density": 0.5186210912813699,
+            "min_pressure": 56796.268820607176
+          }
+        },
+        "iterations": 501,
+        "passed": true
+      },
+      "run_evidence_sha256": "98aabcd71f053eeadbfe6b13ce5b8d114116e151b3d2d4e47331886a46a99ec1",
+      "raw_sha256": {
+        "mesh.su2": "f332a26b2dbaff522387cf05536852b024072c1680e6aa2c40fbd5b82844c3d1",
+        "flow.cfg": "f6009cfb89302445a06a9827c11209868e655b3b19ef2191039340412daf8a82",
+        "metadata.json": "3b0d51cbecfaac3789d05c614eecbb105c06583730f2a211269fa0c4ab4b5b23",
+        "history.csv": "7d8d78edf2782212dc991c82ec92afdd01794da5f883ee6d510e68401108b932",
+        "solver.log": "f2e6cc14f50b8f5d644363bcaf20a1a90226e4b5d3c9483ef64c25bcb2441a08",
+        "restart_flow.csv": "b0ab349db467b61c5745920a5ff43b220f656cbc36c8061cf10ff7c4883a1ebb",
+        "surface_flow.csv": "a081d2af47341b2e34ba95aa5a8c9648862cd8f4f1129cd32f055ce531269d2d",
+        "metrics.json": "641e9bbfb387365158bea20901e9ba2aec9dc22c7a3472d5737f7f4d474e517c",
+        "extracted.npz": "33c3cb2539c2572f40f60331ae7e6c70a3b89e00388b0b87929abe89b834b657",
+        "prediction.json": "ed6e1ef1fcb80f6de16ff2b4589ca8469387bf67f3d7d037a29091ea24682c3a"
+      }
+    },
+    {
+      "name": "test_007",
+      "run": "checkpoint_test_007",
+      "checks": {
+        "mesh_integrity": {
+          "cells": 80640,
+          "nodes": 81399,
+          "boundary_edges": 1516
+        },
+        "density_residual_log10": -14.44229867,
+        "residual_drop": 12.85944522,
+        "drag_tail_relative_range": 0.0,
+        "positive_fields": {
+          "restart_flow.csv": {
+            "min_density": 0.524336077413919,
+            "min_pressure": 57429.038580838314
+          },
+          "surface_flow.csv": {
+            "min_density": 0.524336077413919,
+            "min_pressure": 57429.038580838314
+          }
+        },
+        "iterations": 501,
+        "passed": true
+      },
+      "run_evidence_sha256": "8751ac128d4c42a16938352e8011aec545321071128d02c914e4ec452e749e26",
+      "raw_sha256": {
+        "mesh.su2": "5b1e3b3e10cc3b6ccf7f1b9edad1622ae4955ec03fcacda75b283ab20542fd0c",
+        "flow.cfg": "f6009cfb89302445a06a9827c11209868e655b3b19ef2191039340412daf8a82",
+        "metadata.json": "b6b0cb23a5f1c39cd40d585b520a83446f65b724be4b1ee6aa454d9b2d034469",
+        "history.csv": "3398b2386c24c7f2f5ead3d5f30d03f6e32bb75342738491704288568296cdd7",
+        "solver.log": "980baeb04e66e5b8e2af895e76a9dfae229668a1b7017e28ddd0c88b7cdca474",
+        "restart_flow.csv": "42f627cb0845e92b69c074b2db7800d245872f6c6c998c0747d539762004ab20",
+        "surface_flow.csv": "379b938f9048f0f0f52a1ee1f72de5bb8d89e61f7f5efe15d75de1ac7d4fe828",
+        "metrics.json": "7d41123abf547a4e8939bf3a32db8991d8894f2480a441df1d6ea1cf4c12392e",
+        "extracted.npz": "983609202715fbc28d1c282096b10855b53ffbd8ad092f0804373de2116de067",
+        "prediction.json": "7918544f52122ca1809d824a76d599f3692873f459d67924d7cfae7dec30bd7b"
+      }
+    }
+  ],
+  "scope": "Retained portable checkpoint versus eight newly rerun level-2 CFD solutions, with complete raw convergence/field evidence.",
+  "limitations": [
+    "These are the same eight known test geometries, not new unseen geometry tests.",
+    "Predictions were saved before each rerun, but earlier CFD labels were already available; this is retrospective repeated-label validation.",
+    "No training is performed, and neither the historical audit nor its predictions are replaced.",
+    "Passing aggregate criteria does not imply every case is below 10%.",
+    "No experimental neural validation, full-aircraft replication, atmospheric propagation or ground-noise result."
+  ],
+  "compact_arrays_sha256": "61d23d3c4cd9072af298cb7515e7b06ad30daae9632b6bb5e1f9e62bafc96c55"
+}

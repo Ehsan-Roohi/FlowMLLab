@@ -1,0 +1,100 @@
+name: Week 16 resolved NASA SU2 8.0.1 fine mesh family
+on:
+  push:
+    branches: [week16-reference-recovery]
+    paths: ['.github/workflows/week16-nasa-v801-family.yml']
+  workflow_dispatch:
+    inputs:
+      coarse_run_id:
+        description: Successful resolved-nose SU2 8.0.1 coarse replay run ID
+        required: true
+        type: string
+permissions:
+  contents: read
+  actions: write
+jobs:
+  coarse_gate:
+    runs-on: ubuntu-latest
+    env:
+      GH_TOKEN: ${{ github.token }}
+      OPENBLAS_NUM_THREADS: '1'
+      OMP_NUM_THREADS: '1'
+    steps:
+      - name: Stop superseded waiting controllers
+        run: |
+          gh run cancel 35944635654 || true
+          gh run cancel 35945740747 || true
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install -r qa/week16/requirements.txt
+      - name: Require physically and numerically accepted coarse replay before fine CFD
+        env:
+          COARSE_RUN_ID: ${{ inputs.coarse_run_id || '35944409924' }}
+        run: |
+          gh run watch "$COARSE_RUN_ID" --exit-status --interval 30
+          gh run download "$COARSE_RUN_ID" --name nasa-resolved-v801-level-1 --dir coarse_artifact
+          tar -xzf coarse_artifact/nasa-resolved-v801-level-1.tar.gz
+          python - <<'PY'
+          import sys,json,hashlib
+          from pathlib import Path
+          sys.path.insert(0,'qa/week16')
+          from seeb_reference import verify_run
+          from seeb_resolved import physical_audit
+          from install_su2_801 import BINARY_SHA256
+          p=Path('results/week16_lowboom/reference/seeb_resolved_v801_level_1')
+          m=verify_run(p)
+          assert m['solver_binary_sha256']==BINARY_SHA256 and m['returncode']==0
+          assert m['converged'] and m['density_residual_log10']<=-9 and m['residual_drop']>=5
+          assert m['drag_tail_relative_range']<1e-4
+          assert m['physical_plausibility_passed'] and physical_audit(p)['passed']
+          for name,expected in m['source_sha256'].items():
+              assert hashlib.sha256((Path('qa/week16')/name).read_bytes()).hexdigest()==expected, name
+          print('Coarse numerical, physical and source-identity gates pass')
+          PY
+  fine:
+    needs: coarse_gate
+    runs-on: ubuntu-latest
+    timeout-minutes: 240
+    strategy:
+      fail-fast: false
+      matrix:
+        level: ['1.5', '2']
+    env:
+      OPENBLAS_NUM_THREADS: '1'
+      OMP_NUM_THREADS: '4'
+      MPLBACKEND: Agg
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: sudo apt-get update && sudo apt-get install -y libglu1-mesa libxft2 libxinerama1 libxcursor1
+      - run: pip install -r qa/week16/requirements.txt
+      - run: python qa/week16/install_su2_801.py
+      - name: Generate frozen mesh family and run pinned SU2 8.0.1
+        env:
+          MESH_LEVEL: ${{ matrix.level }}
+        run: |
+          SU2_CFD="$PWD/.tools/week16_su2_801/bin/SU2_CFD" python qa/week16/seeb_family_v801.py --level "$MESH_LEVEL"
+      - name: Preserve full raw evidence, including failed cases
+        if: always()
+        env:
+          MESH_LEVEL: ${{ matrix.level }}
+        run: |
+          folder="results/week16_lowboom/reference/seeb_resolved_v801_level_$MESH_LEVEL"
+          if [ -d "$folder" ]; then
+            tar -czf "nasa-resolved-v801-level-$MESH_LEVEL.tar.gz" "$folder"
+          else
+            printf '%s\n' 'No output folder: inspect setup logs.' > "nasa-family-setup-failure-$MESH_LEVEL.txt"
+          fi
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: nasa-resolved-v801-level-${{ matrix.level }}
+          path: |
+            nasa-resolved-v801-level-${{ matrix.level }}.tar.gz
+            nasa-family-setup-failure-${{ matrix.level }}.txt
+          retention-days: 90
+          if-no-files-found: error

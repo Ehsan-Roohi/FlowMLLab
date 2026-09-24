@@ -1,0 +1,896 @@
+{
+  "workflow_run": 35936740632,
+  "artifact_commit": "e593da167777805bacc2d56f421059cc02b27fa4",
+  "scope": "Independent read-only physical plausibility audit of actual volume and surface fields in eight retained CFD runs. No new CFD or fitting.",
+  "criteria": {
+    "max_absolute_h0_relative_deviation": 0.1,
+    "max_density_over_isentropic_stagnation_density": 1.1
+  },
+  "equations": {
+    "pressure": "(gamma-1)*(rhoE-0.5*(rho*u^2+rho*v^2))",
+    "total_enthalpy": "gamma/(gamma-1)*p/rho+0.5*(u^2+v^2)",
+    "freestream_total_enthalpy": "gamma*R*T_inf/(gamma-1)*(1+(gamma-1)*M_inf^2/2)",
+    "density_bound": "rho_inf*(1+(gamma-1)*M_inf^2/2)^(1/(gamma-1))"
+  },
+  "interpretation": "Uniform-inflow steady inviscid adiabatic flow should preserve stagnation enthalpy; shocks conserve it. Isentropic stagnation density supplies an upper plausibility bound for nonnegative entropy production. Finite-volume error allowances are broad rejection checks, not accuracy estimates.",
+  "limitations": [
+    "No nose stagnation pressure check is imposed on these pointed teaching bodies.",
+    "Positive fields and these allowances do not establish experimental validity, formal conservation order, or grid independence.",
+    "Gamma and gas constant are SU2 standard-air defaults; Mach, pressure and temperature are read from every retained configuration."
+  ],
+  "runs": [
+    {
+      "case": "checkpoint_test_000",
+      "artifact_id": 10782909532,
+      "artifact_sha256": "bb14263110616dc89a8eeff7b076172db79ac867f83462716199015a7c09a20d",
+      "config_sha256": "f6009cfb89302445a06a9827c11209868e655b3b19ef2191039340412daf8a82",
+      "freestream": {
+        "gamma": 1.4,
+        "gas_constant_J_kg_K": 287.058,
+        "temperature_K": 288.15,
+        "pressure_Pa": 101325.0,
+        "mach": 1.8,
+        "density_kg_m3": 1.2249781262066513,
+        "total_enthalpy_J_kg": 477104.51925360004,
+        "isentropic_stagnation_density_kg_m3": 4.270919170117962
+      },
+      "fields": [
+        {
+          "diagnostics": {
+            "points_exceeding_10pct": 2,
+            "fraction_exceeding_10pct": 2.4570326416786447e-05,
+            "affected_x_range": [
+              0.0,
+              1.0
+            ],
+            "affected_r_range": [
+              0.0,
+              0.0
+            ],
+            "h0_absolute_relative_deviation_percentiles": {
+              "50": 9.535917175895747e-07,
+              "95": 0.00012215158807580282,
+              "99": 0.009768116126064348,
+              "99.9": 0.05312916442872792
+            }
+          },
+          "file": "restart_flow.csv",
+          "sha256": "81603426fb0ce1e2482b9136fcfefbfc4736dd36fd95e5508c5da08edef2f624",
+          "points": 81399,
+          "min_density": 0.6456170803328874,
+          "max_density": 2.426981855756376,
+          "max_density_over_stagnation_bound": 0.568257501274449,
+          "min_pressure": 71257.17628772311,
+          "max_pressure": 311528.90446615976,
+          "min_h0_over_freestream": 0.9838090148697556,
+          "max_h0_over_freestream": 1.1715151240710073,
+          "max_h0_relative_deviation": 0.17151512407100733,
+          "worst_h0_location": {
+            "x": 1.0,
+            "r": 0.0
+          },
+          "max_density_location": {
+            "x": 0.9945757714744407,
+            "r": 0.001434836413174391
+          },
+          "checks": {
+            "finite_positive_density_pressure": true,
+            "total_enthalpy_deviation_at_most_10pct": false,
+            "density_below_110pct_isentropic_stagnation_bound": true
+          },
+          "passed": false
+        },
+        {
+          "diagnostics": {
+            "points_exceeding_10pct": 2,
+            "fraction_exceeding_10pct": 0.011049723756906077,
+            "affected_x_range": [
+              0.0,
+              1.0
+            ],
+            "affected_r_range": [
+              0.0,
+              0.0
+            ],
+            "h0_absolute_relative_deviation_percentiles": {
+              "50": 0.0008294366788097474,
+              "95": 0.005217318525853276,
+              "99": 0.08225645830958926,
+              "99.9": 0.17019079177077115
+            }
+          },
+          "file": "surface_flow.csv",
+          "sha256": "fac16ca1a2af84af42d4b5dfb8bace89abd1987298e5daba7a369247bbae8061",
+          "points": 181,
+          "min_density": 0.6456170803328874,
+          "max_density": 2.426981855756376,
+          "max_density_over_stagnation_bound": 0.568257501274449,
+          "min_pressure": 71257.17628772311,
+          "max_pressure": 311528.90446615976,
+          "min_h0_over_freestream": 0.9900204338679459,
+          "max_h0_over_freestream": 1.1715151240710073,
+          "max_h0_relative_deviation": 0.17151512407100733,
+          "worst_h0_location": {
+            "x": 1.0,
+            "r": 0.0
+          },
+          "max_density_location": {
+            "x": 0.9945757714744407,
+            "r": 0.001434836413174391
+          },
+          "checks": {
+            "finite_positive_density_pressure": true,
+            "total_enthalpy_deviation_at_most_10pct": false,
+            "density_below_110pct_isentropic_stagnation_bound": true
+          },
+          "passed": false
+        }
+      ],
+      "passed": false
+    },
+    {
+      "case": "checkpoint_test_001",
+      "artifact_id": 10782959473,
+      "artifact_sha256": "b1bebf7f6b2c4c591e4470400a839176d3b074cb9191d090808191df9df8d2bc",
+      "config_sha256": "f6009cfb89302445a06a9827c11209868e655b3b19ef2191039340412daf8a82",
+      "freestream": {
+        "gamma": 1.4,
+        "gas_constant_J_kg_K": 287.058,
+        "temperature_K": 288.15,
+        "pressure_Pa": 101325.0,
+        "mach": 1.8,
+        "density_kg_m3": 1.2249781262066513,
+        "total_enthalpy_J_kg": 477104.51925360004,
+        "isentropic_stagnation_density_kg_m3": 4.270919170117962
+      },
+      "fields": [
+        {
+          "diagnostics": {
+            "points_exceeding_10pct": 5,
+            "fraction_exceeding_10pct": 6.142581604196611e-05,
+            "affected_x_range": [
+              0.0,
+              1.022222222222438
+            ],
+            "affected_r_range": [
+              0.0,
+              0.0
+            ],
+            "h0_absolute_relative_deviation_percentiles": {
+              "50": 7.506215431440921e-07,
+              "95": 8.2951186199276e-05,
+              "99": 0.015752690210376587,
+              "99.9": 0.06619272255700268
+            }
+          },
+          "file": "restart_flow.csv",
+          "sha256": "17d179bd2a5bccc5e996a8d0722fe1b02f8b293819d7e83795a42b747c0dfa7b",
+          "points": 81399,
+          "min_density": 0.6574618081903585,
+          "max_density": 2.182787554262734,
+          "max_density_over_stagnation_bound": 0.5110814481189178,
+          "min_pressure": 79582.94287532568,
+          "max_pressure": 273953.6289893126,
+          "min_h0_over_freestream": 0.9839252669200385,
+          "max_h0_over_freestream": 1.183622835305079,
+          "max_h0_relative_deviation": 0.18362283530507906,
+          "worst_h0_location": {
+            "x": 1.0,
+            "r": 0.0
+          },
+          "max_density_location": {
+            "x": 0.9944465018873524,
+            "r": 0.0008016583015578123
+          },
+          "checks": {
+            "finite_positive_density_pressure": true,
+            "total_enthalpy_deviation_at_most_10pct": false,
+            "density_below_110pct_isentropic_stagnation_bound": true
+          },
+          "passed": false
+        },
+        {
+          "diagnostics": {
+            "points_exceeding_10pct": 2,
+            "fraction_exceeding_10pct": 0.011049723756906077,
+            "affected_x_range": [
+              0.0,
+              1.0
+            ],
+            "affected_r_range": [
+              0.0,
+              0.0
+            ],
+            "h0_absolute_relative_deviation_percentiles": {
+              "50": 0.0009146040307075332,
+              "95": 0.00474683418562849,
+              "99": 0.0907081561554658,
+              "99.9": 0.17988820502921785
+            }
+          },
+          "file": "surface_flow.csv",
+          "sha256": "c002ebf142b8a63d9bfa8ff52a504bac2a45e37f2e190067d9feb086310a2298",
+          "points": 181,
+          "min_density": 0.7093732084073787,
+          "max_density": 2.182787554262734,
+          "max_density_over_stagnation_bound": 0.5110814481189178,
+          "min_pressure": 79582.94287532568,
+          "max_pressure": 273953.6289893126,
+          "min_h0_over_freestream": 0.9953912344951147,
+          "max_h0_over_freestream": 1.183622835305079,
+          "max_h0_relative_deviation": 0.18362283530507906,
+          "worst_h0_location": {
+            "x": 1.0,
+            "r": 0.0
+          },
+          "max_density_location": {
+            "x": 0.9944465018873524,
+            "r": 0.0008016583015578123
+          },
+          "checks": {
+            "finite_positive_density_pressure": true,
+            "total_enthalpy_deviation_at_most_10pct": false,
+            "density_below_110pct_isentropic_stagnation_bound": true
+          },
+          "passed": false
+        }
+      ],
+      "passed": false
+    },
+    {
+      "case": "checkpoint_test_002",
+      "artifact_id": 10782904522,
+      "artifact_sha256": "f798560411617f3b25265b8910a9fbf9ff6def4664546f9f77864ca97c0fe96e",
+      "config_sha256": "f6009cfb89302445a06a9827c11209868e655b3b19ef2191039340412daf8a82",
+      "freestream": {
+        "gamma": 1.4,
+        "gas_constant_J_kg_K": 287.058,
+        "temperature_K": 288.15,
+        "pressure_Pa": 101325.0,
+        "mach": 1.8,
+        "density_kg_m3": 1.2249781262066513,
+        "total_enthalpy_J_kg": 477104.51925360004,
+        "isentropic_stagnation_density_kg_m3": 4.270919170117962
+      },
+      "fields": [
+        {
+          "diagnostics": {
+            "points_exceeding_10pct": 7,
+            "fraction_exceeding_10pct": 8.599614245875257e-05,
+            "affected_x_range": [
+              0.0,
+              1.027777777778048
+            ],
+            "affected_r_range": [
+              0.0,
+              0.0
+            ],
+            "h0_absolute_relative_deviation_percentiles": {
+              "50": 1.2099930619680066e-06,
+              "95": 8.676259916557956e-05,
+              "99": 0.015981704744530173,
+              "99.9": 0.0683362736306732
+            }
+          },
+          "file": "restart_flow.csv",
+          "sha256": "08ddeead2b3e2e3457a4d5445a006d3b3a3b3c8b4fee499cf78eee501117770e",
+          "points": 81399,
+          "min_density": 0.5461214903620819,
+          "max_density": 2.207740707750123,
+          "max_density_over_stagnation_bound": 0.516924020289793,
+          "min_pressure": 59874.82121843608,
+          "max_pressure": 275503.6965672097,
+          "min_h0_over_freestream": 0.9836621474285733,
+          "max_h0_over_freestream": 1.1868028355120066,
+          "max_h0_relative_deviation": 0.1868028355120066,
+          "worst_h0_location": {
+            "x": 1.0,
+            "r": 0.0
+          },
+          "max_density_location": {
+            "x": 0.9944385360060971,
+            "r": 0.0007109825401112187
+          },
+          "checks": {
+            "finite_positive_density_pressure": true,
+            "total_enthalpy_deviation_at_most_10pct": false,
+            "density_below_110pct_isentropic_stagnation_bound": true
+          },
+          "passed": false
+        },
+        {
+          "diagnostics": {
+            "points_exceeding_10pct": 2,
+            "fraction_exceeding_10pct": 0.011049723756906077,
+            "affected_x_range": [
+              0.0,
+              1.0
+            ],
+            "affected_r_range": [
+              0.0,
+              0.0
+            ],
+            "h0_absolute_relative_deviation_percentiles": {
+              "50": 0.0007425748688854039,
+              "95": 0.004707187957976311,
+              "99": 0.091065344818364,
+              "99.9": 0.18241275869639773
+            }
+          },
+          "file": "surface_flow.csv",
+          "sha256": "5eb32c04bdbe0533a0735676824b45ff221db1c9c1de0af177a7e2ac55b1a671",
+          "points": 181,
+          "min_density": 0.5461214903620819,
+          "max_density": 2.207740707750123,
+          "max_density_over_stagnation_bound": 0.516924020289793,
+          "min_pressure": 59874.82121843608,
+          "max_pressure": 275503.6965672097,
+          "min_h0_over_freestream": 0.9842655350182618,
+          "max_h0_over_freestream": 1.1868028355120066,
+          "max_h0_relative_deviation": 0.1868028355120066,
+          "worst_h0_location": {
+            "x": 1.0,
+            "r": 0.0
+          },
+          "max_density_location": {
+            "x": 0.9944385360060971,
+            "r": 0.0007109825401112187
+          },
+          "checks": {
+            "finite_positive_density_pressure": true,
+            "total_enthalpy_deviation_at_most_10pct": false,
+            "density_below_110pct_isentropic_stagnation_bound": true
+          },
+          "passed": false
+        }
+      ],
+      "passed": false
+    },
+    {
+      "case": "checkpoint_test_003",
+      "artifact_id": 10783118397,
+      "artifact_sha256": "3807d3a7f568f07ed3eb467507bc82e3efbddc6a3a23b0053c6c4cc1b0aaf460",
+      "config_sha256": "f6009cfb89302445a06a9827c11209868e655b3b19ef2191039340412daf8a82",
+      "freestream": {
+        "gamma": 1.4,
+        "gas_constant_J_kg_K": 287.058,
+        "temperature_K": 288.15,
+        "pressure_Pa": 101325.0,
+        "mach": 1.8,
+        "density_kg_m3": 1.2249781262066513,
+        "total_enthalpy_J_kg": 477104.51925360004,
+        "isentropic_stagnation_density_kg_m3": 4.270919170117962
+      },
+      "fields": [
+        {
+          "diagnostics": {
+            "points_exceeding_10pct": 2,
+            "fraction_exceeding_10pct": 2.4570326416786447e-05,
+            "affected_x_range": [
+              0.0,
+              1.0
+            ],
+            "affected_r_range": [
+              0.0,
+              0.0
+            ],
+            "h0_absolute_relative_deviation_percentiles": {
+              "50": 4.3121448078942137e-07,
+              "95": 0.00010857046443334276,
+              "99": 0.010440850005974285,
+              "99.9": 0.05644414038954529
+            }
+          },
+          "file": "restart_flow.csv",
+          "sha256": "b3b3fa7742d14c0fe5fb1dee97c33e2158fca0305d1b08ec89dfc0dc1647a9db",
+          "points": 81399,
+          "min_density": 0.4827389223695435,
+          "max_density": 2.467814599240315,
+          "max_density_over_stagnation_bound": 0.5778181466197485,
+          "min_pressure": 53344.27728124204,
+          "max_pressure": 317032.52275945066,
+          "min_h0_over_freestream": 0.9773285787974566,
+          "max_h0_over_freestream": 1.1766840638735065,
+          "max_h0_relative_deviation": 0.17668406387350655,
+          "worst_h0_location": {
+            "x": 1.0,
+            "r": 0.0
+          },
+          "max_density_location": {
+            "x": 0.9945815686856494,
+            "r": 0.001444760679207048
+          },
+          "checks": {
+            "finite_positive_density_pressure": true,
+            "total_enthalpy_deviation_at_most_10pct": false,
+            "density_below_110pct_isentropic_stagnation_bound": true
+          },
+          "passed": false
+        },
+        {
+          "diagnostics": {
+            "points_exceeding_10pct": 2,
+            "fraction_exceeding_10pct": 0.011049723756906077,
+            "affected_x_range": [
+              0.0,
+              1.0
+            ],
+            "affected_r_range": [
+              0.0,
+              0.0
+            ],
+            "h0_absolute_relative_deviation_percentiles": {
+              "50": 0.0009886019911580224,
+              "95": 0.0036248166773975576,
+              "99": 0.08034780084855205,
+              "99.9": 0.170501110109526
+            }
+          },
+          "file": "surface_flow.csv",
+          "sha256": "daaba94d239582a1d9115958c9ee5d6c092499dbbd3b073230b6eb1db93b7e55",
+          "points": 181,
+          "min_density": 0.4827389223695435,
+          "max_density": 2.467814599240315,
+          "max_density_over_stagnation_bound": 0.5778181466197485,
+          "min_pressure": 53344.27728124204,
+          "max_pressure": 317032.52275945066,
+          "min_h0_over_freestream": 0.9773285787974566,
+          "max_h0_over_freestream": 1.1766840638735065,
+          "max_h0_relative_deviation": 0.17668406387350655,
+          "worst_h0_location": {
+            "x": 1.0,
+            "r": 0.0
+          },
+          "max_density_location": {
+            "x": 0.9945815686856494,
+            "r": 0.001444760679207048
+          },
+          "checks": {
+            "finite_positive_density_pressure": true,
+            "total_enthalpy_deviation_at_most_10pct": false,
+            "density_below_110pct_isentropic_stagnation_bound": true
+          },
+          "passed": false
+        }
+      ],
+      "passed": false
+    },
+    {
+      "case": "checkpoint_test_004",
+      "artifact_id": 10783168194,
+      "artifact_sha256": "0304629543f5822c4767945837a7197218262a9f0ce42e33f77b7e07fd1b980b",
+      "config_sha256": "f6009cfb89302445a06a9827c11209868e655b3b19ef2191039340412daf8a82",
+      "freestream": {
+        "gamma": 1.4,
+        "gas_constant_J_kg_K": 287.058,
+        "temperature_K": 288.15,
+        "pressure_Pa": 101325.0,
+        "mach": 1.8,
+        "density_kg_m3": 1.2249781262066513,
+        "total_enthalpy_J_kg": 477104.51925360004,
+        "isentropic_stagnation_density_kg_m3": 4.270919170117962
+      },
+      "fields": [
+        {
+          "diagnostics": {
+            "points_exceeding_10pct": 7,
+            "fraction_exceeding_10pct": 8.599614245875257e-05,
+            "affected_x_range": [
+              0.0,
+              1.027777777778048
+            ],
+            "affected_r_range": [
+              0.0,
+              0.0
+            ],
+            "h0_absolute_relative_deviation_percentiles": {
+              "50": 1.0629985034427136e-06,
+              "95": 0.00010151903294730562,
+              "99": 0.015647371976506466,
+              "99.9": 0.06777890151199815
+            }
+          },
+          "file": "restart_flow.csv",
+          "sha256": "60f8c8a98d90d1b08cd947932b4e873edb83b6f017a7a73a58e39b8b5c38aabb",
+          "points": 81399,
+          "min_density": 0.4850901955362164,
+          "max_density": 2.245810502519759,
+          "max_density_over_stagnation_bound": 0.5258377443040512,
+          "min_pressure": 53247.16420785178,
+          "max_pressure": 280983.89381917607,
+          "min_h0_over_freestream": 0.9811215682610029,
+          "max_h0_over_freestream": 1.1869613935474326,
+          "max_h0_relative_deviation": 0.18696139354743257,
+          "worst_h0_location": {
+            "x": 1.0,
+            "r": 0.0
+          },
+          "max_density_location": {
+            "x": 0.9944437945543119,
+            "r": 0.0007696810556811994
+          },
+          "checks": {
+            "finite_positive_density_pressure": true,
+            "total_enthalpy_deviation_at_most_10pct": false,
+            "density_below_110pct_isentropic_stagnation_bound": true
+          },
+          "passed": false
+        },
+        {
+          "diagnostics": {
+            "points_exceeding_10pct": 2,
+            "fraction_exceeding_10pct": 0.011049723756906077,
+            "affected_x_range": [
+              0.0,
+              1.0
+            ],
+            "affected_r_range": [
+              0.0,
+              0.0
+            ],
+            "h0_absolute_relative_deviation_percentiles": {
+              "50": 0.0008580917028793156,
+              "95": 0.0032781672418014107,
+              "99": 0.09074744727967529,
+              "99.9": 0.18204327999056594
+            }
+          },
+          "file": "surface_flow.csv",
+          "sha256": "bd36fd4b3fc85c1a8683e7d280e68370186ced437fa94c7e0761b3f6c88bf98e",
+          "points": 181,
+          "min_density": 0.4850901955362164,
+          "max_density": 2.245810502519759,
+          "max_density_over_stagnation_bound": 0.5258377443040512,
+          "min_pressure": 53247.16420785178,
+          "max_pressure": 280983.89381917607,
+          "min_h0_over_freestream": 0.9811215682610029,
+          "max_h0_over_freestream": 1.1869613935474326,
+          "max_h0_relative_deviation": 0.18696139354743257,
+          "worst_h0_location": {
+            "x": 1.0,
+            "r": 0.0
+          },
+          "max_density_location": {
+            "x": 0.9944437945543119,
+            "r": 0.0007696810556811994
+          },
+          "checks": {
+            "finite_positive_density_pressure": true,
+            "total_enthalpy_deviation_at_most_10pct": false,
+            "density_below_110pct_isentropic_stagnation_bound": true
+          },
+          "passed": false
+        }
+      ],
+      "passed": false
+    },
+    {
+      "case": "checkpoint_test_005",
+      "artifact_id": 10783481542,
+      "artifact_sha256": "c22002fe05c95ae6dcd153e6512b067de0f809bbcf240f7f1492bc18c50938e9",
+      "config_sha256": "f6009cfb89302445a06a9827c11209868e655b3b19ef2191039340412daf8a82",
+      "freestream": {
+        "gamma": 1.4,
+        "gas_constant_J_kg_K": 287.058,
+        "temperature_K": 288.15,
+        "pressure_Pa": 101325.0,
+        "mach": 1.8,
+        "density_kg_m3": 1.2249781262066513,
+        "total_enthalpy_J_kg": 477104.51925360004,
+        "isentropic_stagnation_density_kg_m3": 4.270919170117962
+      },
+      "fields": [
+        {
+          "diagnostics": {
+            "points_exceeding_10pct": 7,
+            "fraction_exceeding_10pct": 8.599614245875257e-05,
+            "affected_x_range": [
+              0.0,
+              1.027777777778048
+            ],
+            "affected_r_range": [
+              0.0,
+              0.0
+            ],
+            "h0_absolute_relative_deviation_percentiles": {
+              "50": 1.2095962420577422e-06,
+              "95": 8.750766177025786e-05,
+              "99": 0.016013522072271327,
+              "99.9": 0.06816098428657003
+            }
+          },
+          "file": "restart_flow.csv",
+          "sha256": "c6783f083f6223400297473c058e497c198fc5cec7d4c8c6801777fad5708caa",
+          "points": 81399,
+          "min_density": 0.5848770590700555,
+          "max_density": 2.193908930877629,
+          "max_density_over_stagnation_bound": 0.5136854254296351,
+          "min_pressure": 64255.31749927476,
+          "max_pressure": 273776.9814890167,
+          "min_h0_over_freestream": 0.9837073734884619,
+          "max_h0_over_freestream": 1.186381643449463,
+          "max_h0_relative_deviation": 0.18638164344946295,
+          "worst_h0_location": {
+            "x": 1.0,
+            "r": 0.0
+          },
+          "max_density_location": {
+            "x": 0.9944383244220215,
+            "r": 0.0007060184294346342
+          },
+          "checks": {
+            "finite_positive_density_pressure": true,
+            "total_enthalpy_deviation_at_most_10pct": false,
+            "density_below_110pct_isentropic_stagnation_bound": true
+          },
+          "passed": false
+        },
+        {
+          "diagnostics": {
+            "points_exceeding_10pct": 2,
+            "fraction_exceeding_10pct": 0.011049723756906077,
+            "affected_x_range": [
+              0.0,
+              1.0
+            ],
+            "affected_r_range": [
+              0.0,
+              0.0
+            ],
+            "h0_absolute_relative_deviation_percentiles": {
+              "50": 0.0007229360731197954,
+              "95": 0.005194782549182042,
+              "99": 0.09110506038659943,
+              "99.9": 0.18222787345983305
+            }
+          },
+          "file": "surface_flow.csv",
+          "sha256": "b80e231bf65faf3fa1088bae5a3e80c52a10302ceac932d936d138e5c3c26583",
+          "points": 181,
+          "min_density": 0.5848770590700555,
+          "max_density": 2.193908930877629,
+          "max_density_over_stagnation_bound": 0.5136854254296351,
+          "min_pressure": 64255.31749927476,
+          "max_pressure": 273776.9814890167,
+          "min_h0_over_freestream": 0.9867658459007602,
+          "max_h0_over_freestream": 1.186381643449463,
+          "max_h0_relative_deviation": 0.18638164344946295,
+          "worst_h0_location": {
+            "x": 1.0,
+            "r": 0.0
+          },
+          "max_density_location": {
+            "x": 0.9944383244220215,
+            "r": 0.0007060184294346342
+          },
+          "checks": {
+            "finite_positive_density_pressure": true,
+            "total_enthalpy_deviation_at_most_10pct": false,
+            "density_below_110pct_isentropic_stagnation_bound": true
+          },
+          "passed": false
+        }
+      ],
+      "passed": false
+    },
+    {
+      "case": "checkpoint_test_006",
+      "artifact_id": 10782854569,
+      "artifact_sha256": "28eda8cfaaec83561b6fd9be685b835a64574cc6cc7460e99c9589f2f870791d",
+      "config_sha256": "f6009cfb89302445a06a9827c11209868e655b3b19ef2191039340412daf8a82",
+      "freestream": {
+        "gamma": 1.4,
+        "gas_constant_J_kg_K": 287.058,
+        "temperature_K": 288.15,
+        "pressure_Pa": 101325.0,
+        "mach": 1.8,
+        "density_kg_m3": 1.2249781262066513,
+        "total_enthalpy_J_kg": 477104.51925360004,
+        "isentropic_stagnation_density_kg_m3": 4.270919170117962
+      },
+      "fields": [
+        {
+          "diagnostics": {
+            "points_exceeding_10pct": 2,
+            "fraction_exceeding_10pct": 2.4570326416786447e-05,
+            "affected_x_range": [
+              0.0,
+              1.0
+            ],
+            "affected_r_range": [
+              0.0,
+              0.0
+            ],
+            "h0_absolute_relative_deviation_percentiles": {
+              "50": 7.948902336352148e-07,
+              "95": 0.00010229452234125775,
+              "99": 0.0092061000469539,
+              "99.9": 0.05359629772249273
+            }
+          },
+          "file": "restart_flow.csv",
+          "sha256": "b0ab349db467b61c5745920a5ff43b220f656cbc36c8061cf10ff7c4883a1ebb",
+          "points": 81399,
+          "min_density": 0.5186210912813699,
+          "max_density": 2.532241560523048,
+          "max_density_over_stagnation_bound": 0.5929031807111227,
+          "min_pressure": 56796.26882060716,
+          "max_pressure": 325770.56131383416,
+          "min_h0_over_freestream": 0.9825377216902649,
+          "max_h0_over_freestream": 1.1796789391232039,
+          "max_h0_relative_deviation": 0.17967893912320387,
+          "worst_h0_location": {
+            "x": 1.0,
+            "r": 0.0
+          },
+          "max_density_location": {
+            "x": 0.9946203258652974,
+            "r": 0.001584184729269712
+          },
+          "checks": {
+            "finite_positive_density_pressure": true,
+            "total_enthalpy_deviation_at_most_10pct": false,
+            "density_below_110pct_isentropic_stagnation_bound": true
+          },
+          "passed": false
+        },
+        {
+          "diagnostics": {
+            "points_exceeding_10pct": 2,
+            "fraction_exceeding_10pct": 0.011049723756906077,
+            "affected_x_range": [
+              0.0,
+              1.0
+            ],
+            "affected_r_range": [
+              0.0,
+              0.0
+            ],
+            "h0_absolute_relative_deviation_percentiles": {
+              "50": 0.0008847406052669982,
+              "95": 0.004193992925761059,
+              "99": 0.07947689806006089,
+              "99.9": 0.17644747330515667
+            }
+          },
+          "file": "surface_flow.csv",
+          "sha256": "a081d2af47341b2e34ba95aa5a8c9648862cd8f4f1129cd32f055ce531269d2d",
+          "points": 181,
+          "min_density": 0.5186210912813699,
+          "max_density": 2.532241560523048,
+          "max_density_over_stagnation_bound": 0.5929031807111227,
+          "min_pressure": 56796.26882060716,
+          "max_pressure": 325770.56131383416,
+          "min_h0_over_freestream": 0.9825377216902649,
+          "max_h0_over_freestream": 1.1796789391232039,
+          "max_h0_relative_deviation": 0.17967893912320387,
+          "worst_h0_location": {
+            "x": 1.0,
+            "r": 0.0
+          },
+          "max_density_location": {
+            "x": 0.9946203258652974,
+            "r": 0.001584184729269712
+          },
+          "checks": {
+            "finite_positive_density_pressure": true,
+            "total_enthalpy_deviation_at_most_10pct": false,
+            "density_below_110pct_isentropic_stagnation_bound": true
+          },
+          "passed": false
+        }
+      ],
+      "passed": false
+    },
+    {
+      "case": "checkpoint_test_007",
+      "artifact_id": 10783531491,
+      "artifact_sha256": "e600184ff1a7926078cfa7bf053088b62efb163463444feefe3225179fb42344",
+      "config_sha256": "f6009cfb89302445a06a9827c11209868e655b3b19ef2191039340412daf8a82",
+      "freestream": {
+        "gamma": 1.4,
+        "gas_constant_J_kg_K": 287.058,
+        "temperature_K": 288.15,
+        "pressure_Pa": 101325.0,
+        "mach": 1.8,
+        "density_kg_m3": 1.2249781262066513,
+        "total_enthalpy_J_kg": 477104.51925360004,
+        "isentropic_stagnation_density_kg_m3": 4.270919170117962
+      },
+      "fields": [
+        {
+          "diagnostics": {
+            "points_exceeding_10pct": 2,
+            "fraction_exceeding_10pct": 2.4570326416786447e-05,
+            "affected_x_range": [
+              0.0,
+              1.0
+            ],
+            "affected_r_range": [
+              0.0,
+              0.0
+            ],
+            "h0_absolute_relative_deviation_percentiles": {
+              "50": 6.682366286980823e-07,
+              "95": 0.0001346211185894508,
+              "99": 0.011858637265948341,
+              "99.9": 0.060760013844901005
+            }
+          },
+          "file": "restart_flow.csv",
+          "sha256": "42f627cb0845e92b69c074b2db7800d245872f6c6c998c0747d539762004ab20",
+          "points": 81399,
+          "min_density": 0.524336077413919,
+          "max_density": 2.377633627537902,
+          "max_density_over_stagnation_bound": 0.5567030264054921,
+          "min_pressure": 57429.0385808383,
+          "max_pressure": 303861.0447753598,
+          "min_h0_over_freestream": 0.9829046390768944,
+          "max_h0_over_freestream": 1.1785975057632914,
+          "max_h0_relative_deviation": 0.17859750576329136,
+          "worst_h0_location": {
+            "x": 1.0,
+            "r": 0.0
+          },
+          "max_density_location": {
+            "x": 0.9945329605587414,
+            "r": 0.001236511320503962
+          },
+          "checks": {
+            "finite_positive_density_pressure": true,
+            "total_enthalpy_deviation_at_most_10pct": false,
+            "density_below_110pct_isentropic_stagnation_bound": true
+          },
+          "passed": false
+        },
+        {
+          "diagnostics": {
+            "points_exceeding_10pct": 2,
+            "fraction_exceeding_10pct": 0.011049723756906077,
+            "affected_x_range": [
+              0.0,
+              1.0
+            ],
+            "affected_r_range": [
+              0.0,
+              0.0
+            ],
+            "h0_absolute_relative_deviation_percentiles": {
+              "50": 0.0008190291512921721,
+              "95": 0.004399307544183717,
+              "99": 0.08813840549478252,
+              "99.9": 0.1755964660214704
+            }
+          },
+          "file": "surface_flow.csv",
+          "sha256": "379b938f9048f0f0f52a1ee1f72de5bb8d89e61f7f5efe15d75de1ac7d4fe828",
+          "points": 181,
+          "min_density": 0.524336077413919,
+          "max_density": 2.377633627537902,
+          "max_density_over_stagnation_bound": 0.5567030264054921,
+          "min_pressure": 57429.0385808383,
+          "max_pressure": 303861.0447753598,
+          "min_h0_over_freestream": 0.9829046390768944,
+          "max_h0_over_freestream": 1.1785975057632914,
+          "max_h0_relative_deviation": 0.17859750576329136,
+          "worst_h0_location": {
+            "x": 1.0,
+            "r": 0.0
+          },
+          "max_density_location": {
+            "x": 0.9945329605587414,
+            "r": 0.001236511320503962
+          },
+          "checks": {
+            "finite_positive_density_pressure": true,
+            "total_enthalpy_deviation_at_most_10pct": false,
+            "density_below_110pct_isentropic_stagnation_bound": true
+          },
+          "passed": false
+        }
+      ],
+      "passed": false
+    }
+  ],
+  "passed": false
+}

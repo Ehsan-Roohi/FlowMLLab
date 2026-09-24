@@ -1,0 +1,55 @@
+{
+  "retrieved_utc": "2026-09-23",
+  "license_statement_url": "https://lbpw-ftp.larc.nasa.gov/lbpw1/",
+  "license_statement": "NASA archive states all files within this FTP server are in the public domain.",
+  "archive_sha256": "a6cbe8202631e8846bdf981d21b59f8885cef18d15048864ff9b504977ca66a2",
+  "files": [
+    {
+      "file": "shiftavg_195_219-221.39.out",
+      "source_url": "https://lbpw-ftp.larc.nasa.gov/lbpw1/workshop/seeb.tgz",
+      "archive_member": "seeb/experiment/shiftavg_195_219-221.39.out",
+      "sha256": "1997858a1742402a5613434d76545736de05982ec9b2513e435d3a78dd36a112",
+      "bytes": 529893
+    },
+    {
+      "file": "shiftavg_195_219-221.39.mcr",
+      "source_url": "https://lbpw-ftp.larc.nasa.gov/lbpw1/workshop/seeb.tgz",
+      "archive_member": "seeb/experiment/shiftavg_195_219-221.39.mcr",
+      "sha256": "a47dc96f8eca887988aa81ec6dadcbfb69104668d48585383378fed003c372e3",
+      "bytes": 1152
+    },
+    {
+      "file": "shiftavg_553_578-580.out",
+      "source_url": "https://lbpw-ftp.larc.nasa.gov/lbpw1/workshop/seeb.tgz",
+      "archive_member": "seeb/experiment/shiftavg_553_578-580.out",
+      "sha256": "dba604e2935bc2e9152a591fc095fc317a5c4c55cd5b6be889cf2a13abdf7dc3",
+      "bytes": 529375
+    },
+    {
+      "file": "shiftavg_553_578-580.mcr",
+      "source_url": "https://lbpw-ftp.larc.nasa.gov/lbpw1/workshop/seeb.tgz",
+      "archive_member": "seeb/experiment/shiftavg_553_578-580.mcr",
+      "sha256": "288d4d2cd7d034c101682e756f84149fcc311c1c27878d81f1ae8e58d235ad3a",
+      "bytes": 1149
+    },
+    {
+      "file": "Sozer_LAVA_AUSMPWplus_minmod_inviscid_axisymmetric_curvilinear_330K_SEEB.plt",
+      "source_url": "https://lbpw-ftp.larc.nasa.gov/lbpw1/workshop/seeb.tgz",
+      "archive_member": "seeb/submission/Sozer_LAVA_AUSMPWplus_minmod_inviscid_axisymmetric_curvilinear_330K_SEEB.plt",
+      "sha256": "e798265b5a44e7bdf21578596954c1933f20cf3a1351d63f9b6d01f825ed02bd",
+      "bytes": 867161
+    },
+    {
+      "file": "SEEB-ALR-as-built.stp",
+      "source_url": "https://lbpw-ftp.larc.nasa.gov/lbpw1/seeb-alr/geometry/SEEB-ALR-as-built.stp",
+      "sha256": "36c2077cb3de119b249e272be88de70e394a31a2ffb7259deae0cc09aab55e3c",
+      "bytes": 46482
+    },
+    {
+      "file": "NASA_README.txt",
+      "source_url": "https://lbpw-ftp.larc.nasa.gov/lbpw1/seeb-alr/README",
+      "sha256": "9dbf1c6d46f65e8e4ed2473c51233323eeb6e16693439793e57d857b294c6d03",
+      "bytes": 1274
+    }
+  ]
+}

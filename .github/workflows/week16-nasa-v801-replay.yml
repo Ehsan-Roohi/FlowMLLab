@@ -1,0 +1,54 @@
+name: Week 16 resolved NASA mesh SU2 8.0.1 replay
+on:
+  workflow_dispatch:
+  push:
+    branches: [week16-reference-recovery]
+    paths:
+      - '.github/workflows/week16-nasa-v801-replay.yml'
+      - 'qa/week16/seeb_version_v801.py'
+permissions:
+  contents: read
+  actions: read
+jobs:
+  replay:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    env:
+      OMP_NUM_THREADS: '1'
+      OPENBLAS_NUM_THREADS: '1'
+      MPLBACKEND: Agg
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install pinned dependencies and verified official SU2 8.0.1
+        run: |
+          pip install -r qa/week16/requirements.txt
+          python qa/week16/install_su2_801.py
+      - name: Download the unchanged resolved-nose reference mesh and configuration
+        run: |
+          gh run download 35941629706 --name nasa-resolved-level-1 --dir reference_artifact
+          tar -xzf reference_artifact/nasa-resolved-level-1.tar.gz
+      - name: Replay with unchanged numerical and physical acceptance requirements
+        run: |
+          SU2_CFD="$PWD/.tools/week16_su2_801/bin/SU2_CFD" python qa/week16/seeb_version_v801.py --reference-folder results/week16_lowboom/reference/seeb_resolved_level_1
+      - name: Preserve raw replay evidence, including failures
+        if: always()
+        run: |
+          folder=results/week16_lowboom/reference/seeb_resolved_v801_level_1
+          if [ -d "$folder" ]; then
+            tar -czf nasa-resolved-v801-level-1.tar.gz "$folder"
+          else
+            printf '%s\n' 'Replay did not create an output folder; inspect workflow setup/download logs.' > nasa-replay-setup-failure.txt
+          fi
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: nasa-resolved-v801-level-1
+          path: |
+            nasa-resolved-v801-level-1.tar.gz
+            nasa-replay-setup-failure.txt
+          retention-days: 90
+          if-no-files-found: error

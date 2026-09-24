@@ -1,15 +1,14 @@
+Current release: **v1.9.0**
+
+> **Week 16 scope (24 September 2026):** the release covers the verified teaching-body CFD, neural model, design checks and Taylor–Maccoll study. NASA SEEB-ALR CFD failed convergence/physical checks and remains a deferred research extension; no successful NASA validation is claimed.
+
 <h1><img src="docs/assets/flowmllab-logo.png" alt="FlowMLLab — fluid-streamline F logo" width="520"></h1>
 
-**New in v1.8.4:** the review follow-up release. It restores the axis label
-that the v1.8.3 figure repair removed, refreshes the Week 15 provenance,
-notebook record and lecture, adds a [glossary](docs/GLOSSARY.md), defines the
-quarantined `g005` geometry, unifies the Week 9 lab labels, records the CI
-regeneration of the family-holdout evidence, and gives Track 6 a clear stop on
-CPU-only machines. [Release notes](RELEASE_NOTES_v1.8.4.md).
+**Week 16 validated educational core:** CFD data, portable neural model, design checks and Taylor–Maccoll verification. NASA reproduction is a deferred research appendix with failed checks disclosed. [Publication scope](PUBLICATION_STATUS.md) · [Release notes](RELEASE_NOTES_v1.9.0.md).
 
 **Week 16:** [Supersonic shape optimization](notebooks/week16/README.md):
 44 new Gmsh/SU2 axisymmetric Euler cases, an executed learning-and-design notebook,
-a seven-page lecture, and fresh CFD verification of the optimized geometry.
+an expanded lecture, and fresh CFD verification of the optimized geometry.
 On the finer mesh, peak near-field Cp decreases by 20.8% and pressure drag by 4.5%.
 These are near-field results; atmospheric propagation and ground loudness are not computed.
 
@@ -648,9 +647,9 @@ Student submissions are not included.
 · [Citation metadata](CITATION.cff)
 · [Workshop, support, and consulting details](docs/RESULTS_GUIDE.md#workshops-support-and-consulting)
 
-Current release: **v1.8.4** · [GitHub release](https://github.com/Ehsan-Roohi/FlowMLLab/releases/tag/v1.8.4)
+Current published release: **v1.8.4** · [GitHub release](https://github.com/Ehsan-Roohi/FlowMLLab/releases/tag/v1.8.4)
 · [all-version Zenodo DOI 10.5281/zenodo.22074169](https://doi.org/10.5281/zenodo.22074169)
-· [Release notes](RELEASE_NOTES_v1.8.4.md).
+· [Release notes](RELEASE_NOTES_v1.9.0.md).
 The frozen v1.8.0 evidence archive remains at
 [10.5281/zenodo.22840293](https://doi.org/10.5281/zenodo.22840293).
 Previous v1.7.0 archive DOI: [10.5281/zenodo.22836172](https://doi.org/10.5281/zenodo.22836172);
@@ -669,7 +668,7 @@ Copyright © 2026 Ehsan Roohi. [MIT License](LICENSE).
 **CFD / data:** 44 new Gmsh/SU2 8.5.0 axisymmetric Euler cases at Mach 1.8, plus cone, mesh/domain and off-design checks.
 **Learning:** POD with ridge regression, MLP and Gaussian process; validation-selected MLP; fresh CFD design confirmation.
 
-![Computed baseline and optimized pressure fields](results/week16_lowboom/cfd_fields.png)
+![Historical SU2 8.5.0 pressure fields; see the later physical audit](results/week16_lowboom/cfd_fields.png)
 
 The best design retains 20.8% peak-Cp reduction and 4.5% pressure-drag reduction on the finer mesh. One alternative violates the drag constraint after CFD despite its surrogate prediction. The complete evidence reports both outcomes and separates interpolation from extrapolation.
 [Notebook and assignment](notebooks/week16/README.md) · [Lecture](lectures/week16_supersonic_shape_optimization.pdf) · [Numerical evidence](results/week16_lowboom/README.md)

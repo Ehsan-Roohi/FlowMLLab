@@ -1,6 +1,7 @@
 """POD surrogates, untouched geometry tests, constrained near-field design."""
 from pathlib import Path
 import json,time,warnings
+from zipfile import ZipFile
 import numpy as np
 from scipy.optimize import differential_evolution, minimize
 from sklearn.decomposition import PCA
@@ -53,8 +54,17 @@ def train(data=None):
     report={'comparison':records,'selected_model':best,'selection_rule':'minimum validation peak MARE + drag MARE; fixed architectures'}
     (E/'learning_metrics.json').write_text(json.dumps(report,indent=2));return models[best],report
 
-def optimize(model,write=True):
-    baseline=json.loads((E/'runs/baseline_fine_stable/metrics.json').read_text());limit=1.02*baseline['cd_pressure'];pk0=baseline['peak_cp']
+def optimize(model,write=True,baseline=None):
+    # Raw runs are optional; the distributed archive contains identical metrics.
+    baseline_path=E/'runs/baseline_fine_stable/metrics.json'
+    if baseline is not None:
+        baseline=dict(baseline)
+    elif baseline_path.is_file():
+        baseline=json.loads(baseline_path.read_text())
+    else:
+        with ZipFile(E/'numerical_evidence.zip') as archive:
+            baseline=json.loads(archive.read('runs/baseline_fine_stable/metrics.json'))
+    limit=1.02*baseline['cd_pressure'];pk0=baseline['peak_cp']
     def objective(x):
         w,cd=model.predict(x);return float(w.max()/pk0+1000*max(cd[0]/(.98*limit)-1,0)**2)
     opt=differential_evolution(objective,[(-.45,.45),(-.25,.25)],seed=1616,popsize=12,maxiter=120,tol=1e-8,polish=True)
