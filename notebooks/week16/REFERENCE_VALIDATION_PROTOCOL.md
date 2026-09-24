@@ -16,6 +16,8 @@ These are repeated reference geometries whose earlier labels were already availa
 
 Use NASA SEEB-ALR as-built geometry, M=1.6, zero incidence, and H=21.2 inches. Compare dp/p_infinity within x=25–46 inches using only original NASA macro shifts. Interpolate CFD to measurement points. The finest accepted solution must meet both experiments independently: waveform relative L2 below 20%, positive-peak relative error below 10%. The last two mesh waveforms must differ by less than 5% in relative L2 over the same window. All included accepted mesh solutions must converge; retain failed pilots separately with explicit status. Mesh change is not a formal GCI. The finite nose cap is fixed at two cells and this limitation must be stated.
 
+The recovery protocol scales the limiter-freeze iteration as 2000 times mesh level, with convergence checks beginning 500 iterations later. It keeps the physical model, Roe flux, entropy fix 0.05, fixed CFL 5 and error thresholds unchanged. The original fine-grid freeze-at-2000 attempt is retained as a failed numerical pilot.
+
 A solver run completes only when return code is zero and physical fields are finite with positive density and pressure. The density residual must be at most 10^-9 with a drop of at least 5 orders. A small residual does not override a failed experimental comparison.
 
 If a threshold fails, preserve the result and report the failure. Numerical troubleshooting can change the mesh or solver settings, but record the change and rerun the entire comparison. Do not claim that the reconstructed implementation is bitwise identical to an earlier unavailable implementation.

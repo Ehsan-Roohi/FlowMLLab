@@ -9,7 +9,7 @@ permissions:
 jobs:
   candidate:
     runs-on: ubuntu-latest
-    timeout-minutes: 120
+    timeout-minutes: 210
     env:
       OPENBLAS_NUM_THREADS: '1'
       OMP_NUM_THREADS: '1'
@@ -22,7 +22,7 @@ jobs:
           python-version: '3.12'
       - name: Wait for the actual CFD and model-reference gates
         run: |
-          gh run watch 35935655513 --exit-status --interval 60
+          gh run watch 35937834499 --exit-status --interval 60
           gh run watch 35936740632 --exit-status --interval 60
       - name: Install teaching and validation dependencies
         run: |
@@ -30,7 +30,8 @@ jobs:
           pip install -r qa/week16/requirements.txt pytest pytest-subtests jinja2 pypdf
       - name: Retrieve raw evidence
         run: |
-          gh run download 35935655513 --pattern 'nasa-level-*' --dir raw_artifacts
+          gh run download 35935655513 --name nasa-level-1 --dir raw_artifacts/nasa-level-1
+          gh run download 35937834499 --pattern 'nasa-level-*' --dir raw_artifacts
           gh run download 35936740632 --pattern 'neural-case-*' --dir raw_artifacts
           for archive in raw_artifacts/*/*.tar.gz; do tar -xzf "$archive"; done
       - name: Recompute every reference report and enforce scientific gates
@@ -55,7 +56,7 @@ jobs:
           cfd=json.loads((r/'seeb_validation.json').read_text())
           nn=json.loads((r/'recomputed_checkpoint_audit.json').read_text())
           report=json.loads((e/'release_check.json').read_text())
-          report['reference_extension']={'passed':cfd['passed'] and nn['passed'],'NASA_meshes':len(cfd['runs']),'recomputed_checkpoint_cases':nn['cases'],'NASA_workflow_run':35935655513,'neural_workflow_run':35936740632}
+          report['reference_extension']={'passed':cfd['passed'] and nn['passed'],'NASA_meshes':len(cfd['runs']),'recomputed_checkpoint_cases':nn['cases'],'NASA_workflow_run':35937834499,'NASA_coarse_workflow_run':35935655513,'neural_workflow_run':35936740632}
           report['lecture_visual_review']=False
           report['release_ready']=False
           report['lecture_pages']=len(PdfReader('lectures/week16_supersonic_shape_optimization.pdf').pages)

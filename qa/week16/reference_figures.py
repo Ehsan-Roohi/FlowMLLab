@@ -13,15 +13,15 @@ def build(root, runs):
         d=root/f"seeb_level_{row['level']:g}"
         h=load_csv(d/'history.csv');it=np.arange(len(h))
         label=f"{row['cells']:,} cells"
-        axs[0].plot(it,h['rms[Rho]'],label=label)
+        line,=axs[0].plot(it,h['rms[Rho]'],label=label)
+        for ax in axs:ax.axvline(row['metadata']['limiter_freeze_iteration'],color=line.get_color(),ls=':',lw=.8)
         axs[1].plot(it,h['CD'],label=label)
     axs[0].axhline(-9,color='gray',ls='--',lw=.8,label='Residual criterion')
     axs[0].set(xlabel='Iteration',ylabel='log10 RMS density residual')
     axs[1].set(xlabel='Iteration',ylabel='SU2 reported CD (convergence monitor)')
     for ax in axs:
-        ax.axvline(2000,color='gray',ls=':',lw=.8)
         ax.grid(alpha=.2);ax.legend(fontsize=8)
-    fig.suptitle('NASA case: residual convergence and force history (limiter freezes at 2000)')
+    fig.suptitle('NASA case: convergence and force history (dotted lines: grid-specific limiter freeze)')
     fig.tight_layout();fig.savefig(root/'seeb_convergence.png',dpi=180);plt.close(fig)
     # Read the real coarse exported quadrilateral mesh, rather than reconstructing a sketch.
     folder=root/f"seeb_level_{runs[0]['level']:g}"

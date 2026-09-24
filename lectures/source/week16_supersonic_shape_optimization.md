@@ -116,7 +116,7 @@ Keep the historical prediction audit, this portable refit and newly fitted noteb
 
 ## 15. Reading convergence evidence
 
-The NASA run driver saves the complete iteration history and checks positive density and pressure, a final log10 density residual at or below -9, a residual decrease of at least five decades, and a relative drag range below 1e-4 over the final 100 iterations. A solver exit code of zero alone does not satisfy these conditions. The limiter is frozen at iteration 2000 and acceptance checks start at 2500, so an earlier residual reduction is not mistaken for the final discrete solution.
+The NASA run driver saves the complete iteration history and checks positive density and pressure, a final log10 density residual at or below -9, a residual decrease of at least five decades, and a relative drag range below 1e-4 over the final 100 iterations. A solver exit code of zero alone does not satisfy these conditions. The limiter freezes at iterations 2000, 4000 and 5000 for levels 1, 2 and 2.5, respectively. Acceptance checks start 500 iterations later. A fine-grid pilot freezing at 2000 diverged; the recovery scales freeze time with refinement while leaving flux and CFL unchanged. An earlier residual reduction is not mistaken for the final discrete solution.
 
 The three meshes use the same Roe flux, entropy fix 0.05 and fixed CFL 5. Examine the drag as well as the density residual. Even if these algebraic checks pass, the experimental pressure and inter-mesh waveform criteria must be assessed separately. A numerical residual is not an error bar on the experimental comparison.
 

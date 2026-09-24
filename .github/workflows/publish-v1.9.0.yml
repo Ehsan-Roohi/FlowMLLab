@@ -31,7 +31,8 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          gh run download 35935655513 --pattern 'nasa-level-*' --dir raw_artifacts
+          gh run download 35935655513 --name nasa-level-1 --dir raw_artifacts/nasa-level-1
+          gh run download 35937834499 --pattern 'nasa-level-*' --dir raw_artifacts
           gh run download 35936740632 --pattern 'neural-case-*' --dir raw_artifacts
           for archive in raw_artifacts/*/*.tar.gz; do tar -xzf "$archive"; done
       - name: Recompute reference validation and check release
