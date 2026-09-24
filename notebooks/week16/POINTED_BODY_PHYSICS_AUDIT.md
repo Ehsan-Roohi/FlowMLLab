@@ -67,3 +67,9 @@ Primary sources:
 - [Official Linux 64-bit binary asset](https://github.com/su2code/SU2/releases/download/v8.0.1/SU2-v8.0.1-linux64.zip).
 
 A **single-case comparison using that official binary with the same mesh, geometry, physical conditions and compatible configuration** is a defensible next experiment. Preserve both results and apply the same full-field thermodynamic and convergence gates. Record binary and configuration hashes, and disclose any required configuration compatibility changes. This compares released solver versions; since other code also changed between versions, an improved result would not isolate boundary treatment as the sole cause. It would not retroactively validate the old labels or authorize substituting a new dataset under the old model identity. No such comparison was launched during this source audit.
+
+## Actual single-case comparison
+
+The official v8.0.1 binary was run on case 000 with byte-identical archived mesh and configuration. It converged in 501 iterations to a log10 density residual of -14.485. Its maximum full-field enthalpy deviation was 4.77%, versus 17.15% in v8.5.0, with no nodes exceeding the unchanged 10% allowance. The waveform changed by 1.91%, its positive peak by 1.70%, and pressure drag by 3.18%. The record and input hashes are in `results/week16_lowboom/reference/solver_version_pilot_000.json`.
+
+This successful single-case check motivates an eight-case controlled comparison and an independent Taylor-Maccoll check with v8.0.1. Those results must be evaluated before any broader claim. No original training label, checkpoint weight, or failed v8.5.0 audit is replaced. Version changes include more than the boundary implementation, so this is not an isolated code-change causality experiment.

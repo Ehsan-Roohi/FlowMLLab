@@ -1,0 +1,125 @@
+{
+  "provenance": {
+    "asset_url": "https://github.com/su2code/SU2/releases/download/v8.0.1/SU2-v8.0.1-linux64.zip",
+    "asset_sha256": "844e3d1aa679431dad1e33622c95cd0774d7471a2ba955feb7650513864b4a38",
+    "binary_sha256": "9d75d6b1b862e6d3470c80ecab2cfa09fac3d54943f6d6d610bc36cd7ef71351",
+    "config_sha256": "f6009cfb89302445a06a9827c11209868e655b3b19ef2191039340412daf8a82",
+    "mesh_sha256": "eeb94a2956a4f44e859af9926cb2715d734b38169ada8824f2b23e7d49c9b5da",
+    "reference_workflow_run": 35936740632,
+    "reference_artifact_id": 10782909532,
+    "changes_to_config": [],
+    "case": "checkpoint_test_000",
+    "environment": {
+      "OMP_NUM_THREADS": "1",
+      "OPENBLAS_NUM_THREADS": "1"
+    },
+    "returncode": 0,
+    "version_banner": "Release 8.0.1 Harrier",
+    "solver_log_sha256": "3eaa6648d203a07424f8a8b67f156038a69800b9263d1e527bd8e82d2f00ee85",
+    "wall_seconds_from_solver_log_note": "See retained solver.log for actual elapsed time"
+  },
+  "v8_5_0": {
+    "fields": [
+      {
+        "file": "restart_flow.csv",
+        "sha256": "81603426fb0ce1e2482b9136fcfefbfc4736dd36fd95e5508c5da08edef2f624",
+        "positive_fields": true,
+        "max_h0_relative_deviation": 0.17151512407100733,
+        "min_h0_over_freestream": 0.9838090148697556,
+        "max_h0_over_freestream": 1.1715151240710073,
+        "max_rho_over_stagnation_bound": 0.5682575012744487,
+        "max_location": [
+          1.0,
+          0.0
+        ],
+        "nodes_above_10pct": 2,
+        "passed": false
+      },
+      {
+        "file": "surface_flow.csv",
+        "sha256": "fac16ca1a2af84af42d4b5dfb8bace89abd1987298e5daba7a369247bbae8061",
+        "positive_fields": true,
+        "max_h0_relative_deviation": 0.17151512407100733,
+        "min_h0_over_freestream": 0.9900204338679458,
+        "max_h0_over_freestream": 1.1715151240710073,
+        "max_rho_over_stagnation_bound": 0.5682575012744487,
+        "max_location": [
+          1.0,
+          0.0
+        ],
+        "nodes_above_10pct": 2,
+        "passed": false
+      }
+    ],
+    "convergence": {
+      "iterations": 501,
+      "density_residual_log10": -14.4455328,
+      "residual_drop": 12.884475753,
+      "drag_tail_relative_range": 0.0,
+      "passed": true
+    },
+    "physical_pass": false,
+    "cd_pressure": 0.0012365728538423133,
+    "peak_cp": 0.039815883843221815
+  },
+  "v8_0_1": {
+    "fields": [
+      {
+        "file": "restart_flow.csv",
+        "sha256": "fa7dec4008603215a67ce7cb000268c13a6928df904ad22678c0fbd358cd92af",
+        "positive_fields": true,
+        "max_h0_relative_deviation": 0.04766599293000051,
+        "min_h0_over_freestream": 0.9916764586109313,
+        "max_h0_over_freestream": 1.0476659929300005,
+        "max_rho_over_stagnation_bound": 0.48490491900548566,
+        "max_location": [
+          1.0,
+          0.0
+        ],
+        "nodes_above_10pct": 0,
+        "passed": true
+      },
+      {
+        "file": "surface_flow.csv",
+        "sha256": "0bb348d808977ef635e2d563b1377a0cb83ba2d84e1cf15412b5ac2dd1d25425",
+        "positive_fields": true,
+        "max_h0_relative_deviation": 0.04766599293000051,
+        "min_h0_over_freestream": 1.0002471285785877,
+        "max_h0_over_freestream": 1.0476659929300005,
+        "max_rho_over_stagnation_bound": 0.48490491900548566,
+        "max_location": [
+          1.0,
+          0.0
+        ],
+        "nodes_above_10pct": 0,
+        "passed": true
+      }
+    ],
+    "convergence": {
+      "iterations": 501,
+      "density_residual_log10": -14.48485433,
+      "residual_drop": 12.923797282999999,
+      "drag_tail_relative_range": 0.0,
+      "passed": true
+    },
+    "physical_pass": true,
+    "cd_pressure": 0.0012758529381140843,
+    "peak_cp": 0.040492236882148376
+  },
+  "wave_relative_difference_to_v850": 0.01910857232381578,
+  "drag_relative_difference_to_v850": 0.03176528107480192,
+  "peak_relative_difference_to_v850": 0.01698701557372817,
+  "limitations": [
+    "One controlled solver-version comparison; other implementation changes between versions prevent attributing results solely to wall treatment.",
+    "Existing configurations and mesh unchanged; no learned weights or historical data changed."
+  ],
+  "unchanged_checkpoint_vs_v801_single_case": {
+    "wave_relative_l2": 0.15970097026830576,
+    "peak_mean_relative_error": 0.04826481490076706,
+    "drag_mean_relative_error": 0.022914356252632828,
+    "per_case_wave_relative_l2": [
+      0.1597009702683058
+    ],
+    "worst_case_wave_relative_l2": 0.1597009702683058
+  }
+}
