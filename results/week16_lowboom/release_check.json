@@ -8,8 +8,8 @@
   },
   "scientific_pass": true,
   "notebook_executed": true,
-  "lecture_visual_review": false,
-  "release_ready": false,
+  "lecture_visual_review": true,
+  "release_ready": true,
   "notebook_execution_method": "nbclient with a real Jupyter kernel",
   "lecture_pages": 14,
   "reference_extension": {
@@ -50,5 +50,12 @@
       "reason": "8000-iteration replay failed convergence and physical checks; retained as research evidence only."
     }
   },
-  "validation_candidate_commit": "6e8faa6e63383bd80fe64603c350f0dfdab25c4c"
+  "validation_candidate_commit": "6e8faa6e63383bd80fe64603c350f0dfdab25c4c",
+  "lecture_visual_review_details": "All 14 rendered pages reviewed for readable figures, tables, margins and explicit deferred NASA scope.",
+  "test_evidence": {
+    "workflow_run": 36002078532,
+    "passed": 242,
+    "skipped": 13,
+    "subtests_passed": 261
+  }
 }

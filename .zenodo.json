@@ -1,6 +1,6 @@
 {
   "title": "FlowMLLab: An Open-Source Framework for Reproducible CFD-to-Scientific-Machine-Learning Experiments",
-  "description": "FlowMLLab v1.9.0 extends Week 16 supersonic shape optimization with NASA SEEB-ALR original geometry and pressure records, an executable reference CFD comparison, a recovered frozen-prediction neural audit, detailed teaching guides and an executed notebook. It fixes optimization from a clean checkout. The neural audit concerns a refit of our two-parameter architecture; NASA validates the CFD benchmark separately. Full Beihang aircraft reproduction, original author neural weights, atmospheric propagation and ground PLdB are not claimed.",
+  "description": "FlowMLLab v1.9.0 publishes the Week 16 educational core: 44 physically checked SU2 8.0.1 teaching-body cases, a portable neural model tested against eight finer CFD references, retained design comparisons, Taylor-Maccoll verification, teaching guides and an executed notebook. Original NASA SEEB-ALR sources and failed reproduction diagnostics remain a deferred research appendix; NASA CFD validation is not claimed. Full Beihang aircraft reproduction, author neural weights, atmospheric propagation and ground PLdB are not claimed.",
   "version": "1.9.0",
   "creators": [
     {
