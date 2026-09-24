@@ -1,0 +1,387 @@
+{
+  "target_volume_m3": 0.005654866776461627,
+  "threshold_relative_error": 0.002,
+  "method": "Sum exact frustum volumes between actual exported wall nodes; all 44 clean labels and ten retained-design runs.",
+  "runs": [
+    {
+      "name": "clean_v801_train_000",
+      "frustum_volume_m3": 0.005654324211584879,
+      "relative_error": 9.594653564737321e-05,
+      "passed": true,
+      "extracted_sha256": "81f6a59f70d87d199e58cccd7aa628e8b8bf3cd7d5d581b0b6c43755387e0e47"
+    },
+    {
+      "name": "clean_v801_train_001",
+      "frustum_volume_m3": 0.005654297786978535,
+      "relative_error": 0.00010061943200156964,
+      "passed": true,
+      "extracted_sha256": "91eb8cd83c577e67fece1796bb46e011b32cd7c3ec5c3b73a357efb937b2ed21"
+    },
+    {
+      "name": "clean_v801_train_002",
+      "frustum_volume_m3": 0.005654300809312709,
+      "relative_error": 0.00010008496597557759,
+      "passed": true,
+      "extracted_sha256": "4e5a15742ce02b2b2641e5cd190e23e3cecf7494c6a74efd39a45ccc484499bb"
+    },
+    {
+      "name": "clean_v801_train_003",
+      "frustum_volume_m3": 0.005654214187537388,
+      "relative_error": 0.00011540305899970793,
+      "passed": true,
+      "extracted_sha256": "edf5786921a21a14b8f20baa79c2e88954e68d5ef3b31380cf819b33cd49635f"
+    },
+    {
+      "name": "clean_v801_train_004",
+      "frustum_volume_m3": 0.0056543342242125995,
+      "relative_error": 9.417591431948313e-05,
+      "passed": true,
+      "extracted_sha256": "8ab35357eaff5d50cebc2d306979543d0add0260ec1e88dba8da5e33f2dbc745"
+    },
+    {
+      "name": "clean_v801_train_005",
+      "frustum_volume_m3": 0.005654304090144526,
+      "relative_error": 9.950478752984715e-05,
+      "passed": true,
+      "extracted_sha256": "da643fac4892b7f3aafe6f5fa3e9dae7647dced74ce62da35fba094e34e1fb72"
+    },
+    {
+      "name": "clean_v801_train_006",
+      "frustum_volume_m3": 0.005654348571269264,
+      "relative_error": 9.163879766727057e-05,
+      "passed": true,
+      "extracted_sha256": "cdbd7be2670e93b381405ba530f72810450ec485cd5962d568a621f210133bac"
+    },
+    {
+      "name": "clean_v801_train_007",
+      "frustum_volume_m3": 0.005654337244957143,
+      "relative_error": 9.364172940173887e-05,
+      "passed": true,
+      "extracted_sha256": "919c12138dfe555074518c4dc6823ff7032d0cbfb73f5d3f38bfa9c6c3894f6d"
+    },
+    {
+      "name": "clean_v801_train_008",
+      "frustum_volume_m3": 0.005654347940363358,
+      "relative_error": 9.175036632669276e-05,
+      "passed": true,
+      "extracted_sha256": "e03c1472b27e5234bdae35d5178d9e16e637b7251915b085943481a29db9b9d7"
+    },
+    {
+      "name": "clean_v801_train_009",
+      "frustum_volume_m3": 0.005654327085438481,
+      "relative_error": 9.543832675118491e-05,
+      "passed": true,
+      "extracted_sha256": "55076c7c16cc38fdb6e779c6f0e1c2d5b06fbe6c2fa734a2cc796c049dc59584"
+    },
+    {
+      "name": "clean_v801_train_010",
+      "frustum_volume_m3": 0.00565433896002835,
+      "relative_error": 9.333843822356691e-05,
+      "passed": true,
+      "extracted_sha256": "a392389ec07ed0243bb958568f31db0a3ae5354f0760a4bfd45662213ae86d98"
+    },
+    {
+      "name": "clean_v801_train_011",
+      "frustum_volume_m3": 0.005654327480107443,
+      "relative_error": 9.536853395542e-05,
+      "passed": true,
+      "extracted_sha256": "7f1482095cfcbde6c5c2386cde9de6c80df44b5b7b180291cf885b694685baa8"
+    },
+    {
+      "name": "clean_v801_train_012",
+      "frustum_volume_m3": 0.0056543269522636875,
+      "relative_error": 9.54618772253113e-05,
+      "passed": true,
+      "extracted_sha256": "d8b21bc92e4b1cf00cad5eac39f534d74fcf82141933d33eb2a13fa53ff97ba9"
+    },
+    {
+      "name": "clean_v801_train_013",
+      "frustum_volume_m3": 0.005654295968430529,
+      "relative_error": 0.00010094102189550647,
+      "passed": true,
+      "extracted_sha256": "d7d564fe20e773c00687f2b716549cbfbe5f2c6a61afaa32f1363620436a3f03"
+    },
+    {
+      "name": "clean_v801_train_014",
+      "frustum_volume_m3": 0.005654282442993965,
+      "relative_error": 0.0001033328442138215,
+      "passed": true,
+      "extracted_sha256": "f27b3e194fe26890f2ef64a95fad8d4bc7a28601c61f7de4ec881b4b374d7b14"
+    },
+    {
+      "name": "clean_v801_train_015",
+      "frustum_volume_m3": 0.005654330542534672,
+      "relative_error": 9.482697792062567e-05,
+      "passed": true,
+      "extracted_sha256": "8ec2174b7260f2c7b4621ac3f8bd76082d1b2cd2d33e86e2158fe3d67713070a"
+    },
+    {
+      "name": "clean_v801_train_016",
+      "frustum_volume_m3": 0.0056543431180662304,
+      "relative_error": 9.260313568770773e-05,
+      "passed": true,
+      "extracted_sha256": "87e3144b25bf325617eb03dbc5b7c2d36e3999fe1bf7aa0096b5856d62d3afde"
+    },
+    {
+      "name": "clean_v801_train_017",
+      "frustum_volume_m3": 0.005654313767849276,
+      "relative_error": 9.779339358684247e-05,
+      "passed": true,
+      "extracted_sha256": "073530c745a0a43b485f92dcc9cf4273703ce4caf1fa8f0897efdc5b16eadb7e"
+    },
+    {
+      "name": "clean_v801_train_018",
+      "frustum_volume_m3": 0.005654268558833038,
+      "relative_error": 0.00010578810292749541,
+      "passed": true,
+      "extracted_sha256": "1a1d8b30b8bbeea33546030499d5586088c1e47bd5babd5127bccfc9e4b2bd20"
+    },
+    {
+      "name": "clean_v801_train_019",
+      "frustum_volume_m3": 0.0056542951344668415,
+      "relative_error": 0.00010108849905454687,
+      "passed": true,
+      "extracted_sha256": "44c75075d6e9a794fe319b6d2832266ea549dc3a29d539ee2a534453676e617b"
+    },
+    {
+      "name": "clean_v801_train_020",
+      "frustum_volume_m3": 0.005654335073572491,
+      "relative_error": 9.402571451366804e-05,
+      "passed": true,
+      "extracted_sha256": "2d833e01d0bef91c72a6cd8a0196b0dc2870bc5ad3471775c10ad28132717738"
+    },
+    {
+      "name": "clean_v801_train_021",
+      "frustum_volume_m3": 0.00565433650637079,
+      "relative_error": 9.377234014507074e-05,
+      "passed": true,
+      "extracted_sha256": "b21b0082a1b1ea74b517deb7da6cd8c0748f15e11d4ca9bbb3de01f951c03cd3"
+    },
+    {
+      "name": "clean_v801_train_022",
+      "frustum_volume_m3": 0.005654337474377088,
+      "relative_error": 9.360115904810673e-05,
+      "passed": true,
+      "extracted_sha256": "237941c024410948073acc12c6ea104cbffa4fb9426856df4a2bd6eab9de7761"
+    },
+    {
+      "name": "clean_v801_train_023",
+      "frustum_volume_m3": 0.005654303196170418,
+      "relative_error": 9.966287686125064e-05,
+      "passed": true,
+      "extracted_sha256": "e8df9bb3dac3ca1807c28691a31f106fa81aa43fd217da56b57e7922a5cb62be"
+    },
+    {
+      "name": "clean_v801_validation_000",
+      "frustum_volume_m3": 0.005654333661785563,
+      "relative_error": 9.42753732560142e-05,
+      "passed": true,
+      "extracted_sha256": "32f554b46ee23ef954ee2ebf5d49393115c65e7258ac26abc2e78027ccb677a7"
+    },
+    {
+      "name": "clean_v801_validation_001",
+      "frustum_volume_m3": 0.005654319572219986,
+      "relative_error": 9.676695548666014e-05,
+      "passed": true,
+      "extracted_sha256": "2e7b80ce233722af6b10079ac4cfca37e562b53378c621abcf7ee9e320539720"
+    },
+    {
+      "name": "clean_v801_validation_002",
+      "frustum_volume_m3": 0.005654326247981423,
+      "relative_error": 9.558642167384335e-05,
+      "passed": true,
+      "extracted_sha256": "dd65de509c65da83d397f98bb0525a38aed3265f53edc61bd20fb62982ea68fe"
+    },
+    {
+      "name": "clean_v801_validation_003",
+      "frustum_volume_m3": 0.005654317876290896,
+      "relative_error": 9.706686159549616e-05,
+      "passed": true,
+      "extracted_sha256": "f6cc6a50e0092d5cd1dc9d9c5da7c3832c944a7563dcd842bd352630f99367f3"
+    },
+    {
+      "name": "clean_v801_validation_004",
+      "frustum_volume_m3": 0.005654328961269942,
+      "relative_error": 9.510660691847139e-05,
+      "passed": true,
+      "extracted_sha256": "5d54256803c19721620cfaf5d45329388c69d8d814ebfe7b7b37d3fb933eae25"
+    },
+    {
+      "name": "clean_v801_validation_005",
+      "frustum_volume_m3": 0.005654304792648088,
+      "relative_error": 9.938055762481746e-05,
+      "passed": true,
+      "extracted_sha256": "87e3cebb93af91f69c8565251abcf66ec0d0da3f5c8dcf6a278f44150625385e"
+    },
+    {
+      "name": "clean_v801_test_000",
+      "frustum_volume_m3": 0.005654286055339424,
+      "relative_error": 0.00010269404128504522,
+      "passed": true,
+      "extracted_sha256": "5cc53dd37cb2390f8e8a66062fd9cad29acad7d3c9511993879f880ff1f53efb"
+    },
+    {
+      "name": "clean_v801_test_001",
+      "frustum_volume_m3": 0.0056542834275403984,
+      "relative_error": 0.00010315873817878796,
+      "passed": true,
+      "extracted_sha256": "da619244efb3b7c74be69068a369bef37c513f333e72bebb10f69cd1a3a6d55c"
+    },
+    {
+      "name": "clean_v801_test_002",
+      "frustum_volume_m3": 0.005654328652207494,
+      "relative_error": 9.516126115882706e-05,
+      "passed": true,
+      "extracted_sha256": "603c4d543ad195620f25a087d06d575ad5e583c56febcf9a998d6f95abe2c412"
+    },
+    {
+      "name": "clean_v801_test_003",
+      "frustum_volume_m3": 0.005654318228026397,
+      "relative_error": 9.700466110251771e-05,
+      "passed": true,
+      "extracted_sha256": "a3fd6fd884368563380af018aa19ebb646ae59aff248146851a525b861b91c67"
+    },
+    {
+      "name": "clean_v801_test_004",
+      "frustum_volume_m3": 0.0056543014371944105,
+      "relative_error": 9.997393211280681e-05,
+      "passed": true,
+      "extracted_sha256": "5ebc6e99386d7399dbf61abd0b4eb2c429d89331088997aa31df7baa6b456580"
+    },
+    {
+      "name": "clean_v801_test_005",
+      "frustum_volume_m3": 0.005654333226755057,
+      "relative_error": 9.435230353993518e-05,
+      "passed": true,
+      "extracted_sha256": "b0bb8e9868fdb60a6d6e2b112d8f986a9403a635ec33e438749d7b023b73d123"
+    },
+    {
+      "name": "clean_v801_test_006",
+      "frustum_volume_m3": 0.005654314999932421,
+      "relative_error": 9.757551345024318e-05,
+      "passed": true,
+      "extracted_sha256": "eb0009b56464627a0e8fd2a69bac2897535a94573e9a3313c643fc7d46e5d2fb"
+    },
+    {
+      "name": "clean_v801_test_007",
+      "frustum_volume_m3": 0.005654345995375672,
+      "relative_error": 9.209431566503667e-05,
+      "passed": true,
+      "extracted_sha256": "abe617f605b7cc3231ad12f5b0b35f926ee60946c7af3ea36488b418f41ccbdf"
+    },
+    {
+      "name": "clean_v801_extrapolation_000",
+      "frustum_volume_m3": 0.005654241675221228,
+      "relative_error": 0.00011054216926942306,
+      "passed": true,
+      "extracted_sha256": "f074ef0adbf9128ba0713f44d24916d5f2b55316701a9ce68c91ef405ff5c6de"
+    },
+    {
+      "name": "clean_v801_extrapolation_001",
+      "frustum_volume_m3": 0.005654210812347142,
+      "relative_error": 0.00011599992367927747,
+      "passed": true,
+      "extracted_sha256": "9880ce8a564583a9dac90513c3115f196a44b25c2fe12f50b32d91b3a70d985f"
+    },
+    {
+      "name": "clean_v801_extrapolation_002",
+      "frustum_volume_m3": 0.005654170788666283,
+      "relative_error": 0.00012307766440067258,
+      "passed": true,
+      "extracted_sha256": "dece0aa3375237cc6e02d75a5d848641a406aa81f14026696e84cc764935aeac"
+    },
+    {
+      "name": "clean_v801_extrapolation_003",
+      "frustum_volume_m3": 0.005654132768015936,
+      "relative_error": 0.00012980119155892034,
+      "passed": true,
+      "extracted_sha256": "25a5a146ad68a17ba4cde3f686328417cf22930f0e2563482b7214ef253647a7"
+    },
+    {
+      "name": "clean_v801_extrapolation_004",
+      "frustum_volume_m3": 0.005654175954228007,
+      "relative_error": 0.00012216419253152644,
+      "passed": true,
+      "extracted_sha256": "dc87ba92185c652afa0eb0c4ec34e6b0fcb4b2605555115954a19d1a34ec1b21"
+    },
+    {
+      "name": "clean_v801_extrapolation_005",
+      "frustum_volume_m3": 0.005654129814286503,
+      "relative_error": 0.00013032352560315985,
+      "passed": true,
+      "extracted_sha256": "32a40840700fb87530d97bfd14967d28bfa1141ca26f961638efbbf402863cba"
+    },
+    {
+      "name": "design_v801_000_baseline",
+      "frustum_volume_m3": 0.005654351764991229,
+      "relative_error": 9.107402362540373e-05,
+      "passed": true,
+      "extracted_sha256": "6d7b1a05cd6ee00b0553ae61fed5a456e7db1ef4f8bc18c0f7eeff48cc759265"
+    },
+    {
+      "name": "design_v801_001_optimized",
+      "frustum_volume_m3": 0.0056543070238853615,
+      "relative_error": 9.898598824575888e-05,
+      "passed": true,
+      "extracted_sha256": "b0d053ac654f3d457f2407122a7501ecffbdb26528a38587699fe75dac842433"
+    },
+    {
+      "name": "design_v801_002_baseline",
+      "frustum_volume_m3": 0.005654577013910795,
+      "relative_error": 5.1241269208746054e-05,
+      "passed": true,
+      "extracted_sha256": "5c97fd6d18a3d08b20af7a7c369cf98fbf77ea2824094af9051f5359a2ffe90e"
+    },
+    {
+      "name": "design_v801_003_optimized",
+      "frustum_volume_m3": 0.005654551755944674,
+      "relative_error": 5.570785827613278e-05,
+      "passed": true,
+      "extracted_sha256": "22d3ab7f1d0ec76bab1ee0bb171c0abe283871bcbf38ccfe46ec4e4a945ae871"
+    },
+    {
+      "name": "design_v801_004_alternative_1",
+      "frustum_volume_m3": 0.005654250423612545,
+      "relative_error": 0.00010899511402251427,
+      "passed": true,
+      "extracted_sha256": "53e40623ea99b754b4722e7cda16ac50893d37cb4783e86403e9a7686dc6b2a3"
+    },
+    {
+      "name": "design_v801_005_alternative_2",
+      "frustum_volume_m3": 0.005654333764749949,
+      "relative_error": 9.425716515498728e-05,
+      "passed": true,
+      "extracted_sha256": "91e020e62e02c57cdc175bb7ff00595ff2c54e9f62c73c755951272d34bf5360"
+    },
+    {
+      "name": "design_v801_006_baseline",
+      "frustum_volume_m3": 0.005654351764991229,
+      "relative_error": 9.107402362540373e-05,
+      "passed": true,
+      "extracted_sha256": "c4b90369a7169cb28f05ea980d560516798d7e6f988a4e18d14f96b8a198de51"
+    },
+    {
+      "name": "design_v801_007_optimized",
+      "frustum_volume_m3": 0.0056543070238853615,
+      "relative_error": 9.898598824575888e-05,
+      "passed": true,
+      "extracted_sha256": "45c1b87a0be90ab33bb8efdcbef77b0e4960f1592035cf8a9943f57aedd68627"
+    },
+    {
+      "name": "design_v801_008_baseline",
+      "frustum_volume_m3": 0.005654351764991229,
+      "relative_error": 9.107402362540373e-05,
+      "passed": true,
+      "extracted_sha256": "74af3fac75a3192bdd8a7622aa0b112e494e6803bd44324bdfe32b52203330de"
+    },
+    {
+      "name": "design_v801_009_optimized",
+      "frustum_volume_m3": 0.0056543070238853615,
+      "relative_error": 9.898598824575888e-05,
+      "passed": true,
+      "extracted_sha256": "6682aff182ab9ccacc0fff75d1b14e332e24fd8cc4957edeabb5d83fe0690222"
+    }
+  ],
+  "passed": true,
+  "maximum_relative_error": 0.00013032352560315985
+}

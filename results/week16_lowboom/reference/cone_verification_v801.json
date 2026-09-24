@@ -1,0 +1,85 @@
+{
+  "solver_version": "8.0.1",
+  "binary_sha256": "9d75d6b1b862e6d3470c80ecab2cfa09fac3d54943f6d6d610bc36cd7ef71351",
+  "analytical_comparison": {
+    "exact": {
+      "shock_angle_deg": 34.03574212191822,
+      "pressure_ratio": 1.1406257176769943,
+      "cp": 0.06200428469003275
+    },
+    "cfd_cp_mean": 0.05917488799247475,
+    "relative_error": 0.04563227705476347,
+    "wall_seconds": 19.804905891418457,
+    "passed": false
+  },
+  "checks": {
+    "analytical_Cp_within_3pct": false,
+    "density_residual_at_most_minus9": true,
+    "density_residual_drop_at_least5": true,
+    "drag_tail_relative_range_below_1e_minus4": true
+  },
+  "physical": {
+    "gamma": 1.4,
+    "gas_constant": 287.058,
+    "h0_freestream": 477104.51925360004,
+    "isentropic_stagnation_density": 4.270919170117962,
+    "fields": [
+      {
+        "file": "restart_flow.csv",
+        "points": 24321,
+        "max_h0_relative_deviation": 0.00707071825230976,
+        "min_h0_over_freestream": 0.9981831431397722,
+        "max_h0_over_freestream": 1.0070707182523098,
+        "max_density_over_stagnation_bound": 0.3857607635163709,
+        "max_h0_location": [
+          0.0,
+          0.0
+        ],
+        "nodes_above_10pct": 0,
+        "checks": {
+          "finite_positive_fields": true,
+          "h0_max_deviation_at_most_10pct": true,
+          "density_below_110pct_stagnation_bound": true
+        },
+        "passed": true
+      },
+      {
+        "file": "surface_flow.csv",
+        "points": 201,
+        "max_h0_relative_deviation": 0.00707071825230976,
+        "min_h0_over_freestream": 0.9981831431397722,
+        "max_h0_over_freestream": 1.0070707182523098,
+        "max_density_over_stagnation_bound": 0.3857607635163709,
+        "max_h0_location": [
+          0.0,
+          0.0
+        ],
+        "nodes_above_10pct": 0,
+        "checks": {
+          "finite_positive_fields": true,
+          "h0_max_deviation_at_most_10pct": true,
+          "density_below_110pct_stagnation_bound": true
+        },
+        "passed": true
+      }
+    ],
+    "passed": true
+  },
+  "passed": false,
+  "source_sha256": {
+    "benchmark.py": "29fe748ed91855c21359de609c6adae151149f24095d37e487ecab4da416f702",
+    "cfd.py": "0d90e2b36caa707dc54086eb62881d9c398685f93422ccd2565fec13809e36d3",
+    "analyze.py": "c857329535b5c4d832ed53e218aedb7ea150f4bddf3883e6d3bcfc40fcef3baf",
+    "weakwall_cfd.py": "e2d7185e732331ec98b93ec165944495f8914feab1c446420bb0960800224a1f"
+  },
+  "raw_sha256": {
+    "solver.log": "7eb0938ed6b402a25a62159d33f3e8abd598904a33e69f29ad8d4a655b106fa0",
+    "flow.cfg": "e692c2ff7fbbb4e7a71a46e2b8878ee52ff2ad9e509bf550bf7408b1887c6202",
+    "benchmark.json": "285cd8395a9be5ee02d2b4a369f2411a14167d1450f14bca076d6b5ca3d3b62c",
+    "flow.vtu": "21f30864df28892c9f858977f7c258b1ccf0834d4c2d1fd061ef2a00a420af85",
+    "surface_flow.csv": "f3d5cf8f14b3e56389eb16f4d7612278af2186e78324717610644343434cd670",
+    "mesh.su2": "6b9779ed0d4774ebdeb2b314d6a8d44ebeba955813c8c1c43cceb01b7cdea398",
+    "history.csv": "fcbd3e75aa72822e072d5238c3c24afa0aa0045074d80f832497d788ee4cc53e",
+    "restart_flow.csv": "1d43fba8c77041d59ca5b2c753e3e31ca52b0ce98d0202cba657726a80cbae29"
+  }
+}

@@ -62,13 +62,13 @@
     "batch_and_single_inference_agree": true,
     "finer_geometry_ids_and_coordinates_match": true
   },
-  "pod_training_subspace_difference_frobenius": 0.0,
+  "pod_training_subspace_difference_frobenius": 1.3744753330079171e-14,
   "original_mesh": {
     "train": {
       "cases": 24,
-      "wave_relative_l2": 0.002740163396778962,
+      "wave_relative_l2": 0.002740163396778963,
       "peak_mean_relative_error": 0.0011876216670411953,
-      "drag_mean_relative_error": 0.0010314651235813442,
+      "drag_mean_relative_error": 0.0010314651235813395,
       "per_case_wave_relative_l2": [
         0.002490794890918866,
         0.0034275382940053877,
@@ -101,7 +101,7 @@
       "cases": 6,
       "wave_relative_l2": 0.028962835239031967,
       "peak_mean_relative_error": 0.010569470882189144,
-      "drag_mean_relative_error": 0.01622652252017957,
+      "drag_mean_relative_error": 0.01622652252017955,
       "per_case_wave_relative_l2": [
         0.005001262011243038,
         0.029721923875881805,
@@ -114,7 +114,7 @@
     },
     "test": {
       "cases": 8,
-      "wave_relative_l2": 0.0410001435550755,
+      "wave_relative_l2": 0.041000143555075495,
       "peak_mean_relative_error": 0.017556615506555504,
       "drag_mean_relative_error": 0.025784329340277024,
       "per_case_wave_relative_l2": [
@@ -133,7 +133,7 @@
       "cases": 6,
       "wave_relative_l2": 0.3416284780228949,
       "peak_mean_relative_error": 0.060283758813723144,
-      "drag_mean_relative_error": 0.22144945730365487,
+      "drag_mean_relative_error": 0.22144945730365484,
       "per_case_wave_relative_l2": [
         0.16934735484705726,
         0.2925472648605353,
@@ -172,7 +172,7 @@
     "drag_mean_relative_error": true
   },
   "passed": true,
-  "relative_difference_from_historical_frozen_wave_predictions": 0.024122565532231646,
+  "relative_difference_from_historical_frozen_wave_predictions": 0.024122565532231653,
   "scope": "Reproducible inference and numerical evaluation on retained CFD arrays within the two-parameter teaching family.",
   "limitations": [
     "This checkpoint is a later refit. It is not the missing original historical checkpoint or a model from the Chinese paper.",

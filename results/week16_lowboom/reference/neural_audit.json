@@ -12,7 +12,7 @@
   ],
   "cases": 8,
   "finer_mesh": {
-    "wave_relative_l2": 0.07154136603418684,
+    "wave_relative_l2": 0.07154136603418683,
     "peak_mean_relative_error": 0.03446862921439289,
     "drag_mean_relative_error": 0.016935826687041258,
     "per_case_wave_relative_l2": [
@@ -43,7 +43,7 @@
     ],
     "worst_case_wave_relative_l2": 0.118642808140105
   },
-  "coarse_to_finer_wave_relative_l2": 0.038631012914377386,
+  "coarse_to_finer_wave_relative_l2": 0.03863101291437738,
   "thresholds": {
     "wave_relative_l2_max": 0.1,
     "peak_mean_relative_error_max": 0.1,
