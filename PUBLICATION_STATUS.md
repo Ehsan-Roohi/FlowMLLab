@@ -1,7 +1,11 @@
 # Week 16 publication status
 
-This is the recovery/development branch for v1.9.0. Main and the published release have not yet been updated with this reference extension.
+This development branch contains the v1.9.0 reference extension. Main and the final release have not been updated.
 
-The NASA original geometry and pressure records, recovered frozen neural audit arrays, portable NumPy checkpoint with inference code, and instructional guides are retained here. The portable checkpoint passes the declared retrospective in-family numerical tests; extrapolation limitations are reported explicitly.
+The eight fresh teaching-body CFD computations and retained-checkpoint audit passed their declared numerical and aggregate error gates. All eight retain their actual meshes, configurations, fields and solver histories in workflow 35936740632. This is a retrospective numerical test, not experimental neural validation.
 
-Three new NASA mesh calculations are executed by `.github/workflows/week16-reference-validation.yml`. Raw results are retained as workflow artifacts. Publication requires convergence, physical fields, the declared experimental and mesh-sensitivity gates, notebook execution, PDF visual review and repository tests. A failed or unfinished gate is not a validated result. The version metadata describes the intended release only.
+**NASA validation is blocked.** Read-only inspection of the residual-converged coarse field exposed an incorrect low-pressure stagnation region on the small flat nose cap. The failed medium-grid field also contains a severe near-axis density anomaly. Positivity and residual convergence alone were therefore insufficient. The existing mesh family does not adequately resolve the nose, and is excluded from accepted validation even if its off-body pressure curve meets a tolerance. Its original evidence remains retained as numerical pilot evidence.
+
+A replacement mesh must resolve the upstream nose region and cap, scale cap resolution with refinement, pass local physical checks, and then pass the unchanged experimental and mesh-sensitivity thresholds. No failed or incomplete result is a validated release.
+
+Original NASA records, paper references, portable model and instructional sources remain available in this branch. Full Beihang aircraft reproduction and ground-level PLdB are not claimed.

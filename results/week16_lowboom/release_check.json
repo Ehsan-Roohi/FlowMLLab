@@ -16,8 +16,13 @@
   },
   "scientific_pass": true,
   "notebook_executed": true,
-  "lecture_visual_review": true,
-  "release_ready": true,
+  "lecture_visual_review": false,
+  "release_ready": false,
   "notebook_execution_method": "IPython in a fresh process; kernel sockets prohibited in execution environment",
-  "lecture_pages": 7
+  "lecture_pages": 7,
+  "reference_extension": {
+    "passed": false,
+    "status": "blocked: underresolved NASA nose invalidates existing reference family; original teaching campaign checks remain separate",
+    "neural_workflow_run": 35936740632
+  }
 }

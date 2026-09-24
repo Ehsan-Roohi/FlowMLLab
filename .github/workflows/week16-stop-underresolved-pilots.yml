@@ -1,0 +1,20 @@
+name: Preserve evidence and stop underresolved NASA pilots
+on:
+  push:
+    branches: [week16-reference-recovery]
+    paths: ['.github/workflows/week16-stop-underresolved-pilots.yml']
+permissions:
+  contents: read
+  actions: write
+jobs:
+  stop:
+    runs-on: ubuntu-latest
+    env:
+      GH_TOKEN: ${{ github.token }}
+      GH_REPO: ${{ github.repository }}
+    steps:
+      - name: Stop candidate and underresolved NASA family
+        run: |
+          gh run cancel 35938403275 || true
+          gh run cancel 35937834499 || true
+          echo 'These runs are excluded from accepted validation because the nose region is underresolved.'
