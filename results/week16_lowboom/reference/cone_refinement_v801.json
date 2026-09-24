@@ -13,7 +13,7 @@
         "iterations": 501,
         "density_residual_log10": -14.69249564,
         "residual_drop": 13.312849138,
-        "drag_tail_relative_range": 0,
+        "drag_tail_relative_range": 0.0,
         "checks": {
           "density_residual_at_most_minus9": true,
           "density_residual_drop_at_least5": true,
@@ -35,8 +35,8 @@
             "max_h0_over_freestream": 1.0070707182523098,
             "max_density_over_stagnation_bound": 0.3857607635163709,
             "max_h0_location": [
-              0,
-              0
+              0.0,
+              0.0
             ],
             "nodes_above_10pct": 0,
             "checks": {
@@ -54,8 +54,8 @@
             "max_h0_over_freestream": 1.0070707182523098,
             "max_density_over_stagnation_bound": 0.3857607635163709,
             "max_h0_location": [
-              0,
-              0
+              0.0,
+              0.0
             ],
             "nodes_above_10pct": 0,
             "checks": {
@@ -91,7 +91,7 @@
         "iterations": 501,
         "density_residual_log10": -14.99695563,
         "residual_drop": 13.16747608,
-        "drag_tail_relative_range": 0,
+        "drag_tail_relative_range": 0.0,
         "checks": {
           "density_residual_at_most_minus9": true,
           "density_residual_drop_at_least5": true,
@@ -113,8 +113,8 @@
             "max_h0_over_freestream": 1.007075599078081,
             "max_density_over_stagnation_bound": 0.38576440469747514,
             "max_h0_location": [
-              0,
-              0
+              0.0,
+              0.0
             ],
             "nodes_above_10pct": 0,
             "checks": {
@@ -132,8 +132,8 @@
             "max_h0_over_freestream": 1.007075599078081,
             "max_density_over_stagnation_bound": 0.38576440469747514,
             "max_h0_location": [
-              0,
-              0
+              0.0,
+              0.0
             ],
             "nodes_above_10pct": 0,
             "checks": {
@@ -169,7 +169,7 @@
         "iterations": 501,
         "density_residual_log10": -15.19411817,
         "residual_drop": 13.101073434,
-        "drag_tail_relative_range": 4.820856284418551e-9,
+        "drag_tail_relative_range": 4.820856284418551e-09,
         "checks": {
           "density_residual_at_most_minus9": true,
           "density_residual_drop_at_least5": true,
@@ -191,8 +191,8 @@
             "max_h0_over_freestream": 1.0070771952156858,
             "max_density_over_stagnation_bound": 0.3857655982161686,
             "max_h0_location": [
-              0,
-              0
+              0.0,
+              0.0
             ],
             "nodes_above_10pct": 0,
             "checks": {
@@ -210,8 +210,8 @@
             "max_h0_over_freestream": 1.0070771952156858,
             "max_density_over_stagnation_bound": 0.3857655982161686,
             "max_h0_location": [
-              0,
-              0
+              0.0,
+              0.0
             ],
             "nodes_above_10pct": 0,
             "checks": {

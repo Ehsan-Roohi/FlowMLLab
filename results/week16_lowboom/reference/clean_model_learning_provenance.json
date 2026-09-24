@@ -1,0 +1,11 @@
+{
+  "input_sha256": {
+    "clean_dataset_v801.npz": "03790fc0b8e2034aed66b3e7ec3ffbdd3a08306b487705b54bb839bfa869e58b",
+    "clean_model_v801.npz": "4e45d142558036397e179255b5141ac72dce135453e88fc3c2e7deb6df9a90e3",
+    "clean_model_audit_v801.json": "e4b5b609edfbd500d9a364e701efd0703ae6fadcde3e9c3c3352a0e50563a685",
+    "clean_model_training_v801.json": "290df5dbd6c103e6bc50c4bc5a012bc51981c0f8bd6e7d48d2a4a586e568edaa"
+  },
+  "figure_sha256": "82d1de7bafc4389c2b2e2a8e8ca2ab761cc348f92e55d236a33aaeb0659d2e53",
+  "script_sha256": "df6aa65daceef16fa69b29018c0170b288e1802702284ecea5399a6c49df1232",
+  "final_training_objective": 0.03567734249121284
+}
