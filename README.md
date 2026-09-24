@@ -1,6 +1,6 @@
 <h1><img src="docs/assets/flowmllab-logo.png" alt="FlowMLLab — fluid-streamline F logo" width="520"></h1>
 
-**v1.9.0 development branch — final validation blocked:** See [the current status](PUBLICATION_STATUS.md). Planned extension: Week 16 now includes NASA SEEB-ALR original geometry and reference records, a frozen-prediction neural audit, and detailed guides that distinguish cone verification, experimental CFD validation and surrogate testing. The notebook runs from a clean checkout. [Release notes](RELEASE_NOTES_v1.9.0.md).
+**v1.9.0 development branch — final validation blocked:** See [the current status](PUBLICATION_STATUS.md). Planned extension: Week 16 now includes NASA SEEB-ALR original geometry and reference records, a frozen-prediction neural audit, and detailed guides that distinguish cone verification, experimental CFD validation and surrogate testing. The final executed notebook will be retained after all gates pass. [Release notes](RELEASE_NOTES_v1.9.0.md).
 
 **Week 16:** [Supersonic shape optimization](notebooks/week16/README.md):
 44 new Gmsh/SU2 axisymmetric Euler cases, an executed learning-and-design notebook,
@@ -664,7 +664,7 @@ Copyright © 2026 Ehsan Roohi. [MIT License](LICENSE).
 **CFD / data:** 44 new Gmsh/SU2 8.5.0 axisymmetric Euler cases at Mach 1.8, plus cone, mesh/domain and off-design checks.
 **Learning:** POD with ridge regression, MLP and Gaussian process; validation-selected MLP; fresh CFD design confirmation.
 
-![Computed baseline and optimized pressure fields](results/week16_lowboom/cfd_fields.png)
+![Historical SU2 8.5.0 pressure fields; see the later physical audit](results/week16_lowboom/cfd_fields.png)
 
 The best design retains 20.8% peak-Cp reduction and 4.5% pressure-drag reduction on the finer mesh. One alternative violates the drag constraint after CFD despite its surrogate prediction. The complete evidence reports both outcomes and separates interpolation from extrapolation.
 [Notebook and assignment](notebooks/week16/README.md) · [Lecture](lectures/week16_supersonic_shape_optimization.pdf) · [Numerical evidence](results/week16_lowboom/README.md)

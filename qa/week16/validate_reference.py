@@ -35,9 +35,27 @@ def validate():
     recomputed=recomputed_checkpoint_report(write=False)
     assert recomputed['passed']
     assert same(recomputed,json.loads((r/'recomputed_checkpoint_audit.json').read_text())), 'Recomputed checkpoint audit is stale'
+    from geometry_volume_audit import report as volume_report
+    assert volume_report(write=False)['passed']
+    from clean_campaign_v801 import assemble as clean_campaign_report
+    from clean_model_v801 import audit as clean_model_report
+    assert clean_campaign_report(write=False)['passed']
+    assert clean_model_report(write=False)['passed']
+    from weakwall_report import report as weakwall_report
+    from weakwall_design_report import report as design_report
+    from cone_refinement_v801 import build_report as cone_report
+    for build,filename in [(weakwall_report,'weakwall_checkpoint_audit.json'),(design_report,'weakwall_design_audit.json'),(cone_report,'cone_refinement_v801.json')]:
+        actual=build(write=False)
+        assert actual['passed'],filename
+        assert same(actual,json.loads((r/filename).read_text())),f'Stale accepted report: {filename}'
     for row in cfd['runs']:
-        d=r/f"seeb_level_{row['level']:g}";m=row['metadata']
+        d=r/row['folder'];m=row['metadata']
         verify_run(d)
+        from seeb_resolved import physical_audit
+        assert physical_audit(d)['passed']
+        assert m['solver_version']=='8.0.1'
+        from install_su2_801 import BINARY_SHA256
+        assert m['solver_binary_sha256']==BINARY_SHA256
         for name,expected in m['source_sha256'].items():
             assert hashlib.sha256((ROOT/'qa/week16'/name).read_bytes()).hexdigest()==expected, 'CFD generating source changed'
         assert m['fixed_cfl'] and m['max_cfl']==5 and m['entropy_fix_coeff']==.05

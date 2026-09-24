@@ -54,10 +54,12 @@ def train(data=None):
     report={'comparison':records,'selected_model':best,'selection_rule':'minimum validation peak MARE + drag MARE; fixed architectures'}
     (E/'learning_metrics.json').write_text(json.dumps(report,indent=2));return models[best],report
 
-def optimize(model,write=True):
+def optimize(model,write=True,baseline=None):
     # Raw runs are optional; the distributed archive contains identical metrics.
     baseline_path=E/'runs/baseline_fine_stable/metrics.json'
-    if baseline_path.is_file():
+    if baseline is not None:
+        baseline=dict(baseline)
+    elif baseline_path.is_file():
         baseline=json.loads(baseline_path.read_text())
     else:
         with ZipFile(E/'numerical_evidence.zip') as archive:

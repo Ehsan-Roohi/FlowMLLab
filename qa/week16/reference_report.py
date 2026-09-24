@@ -10,7 +10,7 @@ R=ROOT/'results/week16_lowboom/reference'
 def build_report(write=True):
     experiments,lava=load_reference()
     runs=[]
-    for p in R.glob('seeb_level_*/signature.npz'):
+    for p in R.glob('seeb_resolved_v801_level_*/signature.npz'):
         m=json.loads((p.parent/'metadata.json').read_text())
         if 'converged' not in m:continue
         with np.load(p) as a: x=a['x_inches'].copy();y=a['dp_pinf'].copy()
@@ -21,20 +21,20 @@ def build_report(write=True):
             assert xx.min()>=x.min() and xx.max()<=x.max()
             pred=np.interp(xx,x,y)
             rows[label]={'wave_relative_l2':float(np.linalg.norm(pred-yy)/np.linalg.norm(yy)), 'peak_relative_error':float(abs(pred.max()/yy.max()-1)), 'fraction_in_supplied_uncertainty_band':float(np.mean(abs(pred-yy)<=unc)), 'points':len(xx)}
-        runs.append({'level':m['level'],'cells':m['cells'],'converged':m['converged'],'metadata':m,'experimental_metrics':rows,'signature_sha256':hashlib.sha256(p.read_bytes()).hexdigest(),'x':x,'y':y})
+        runs.append({'level':m['level'],'cells':m['cells'],'converged':m['converged'],'metadata':m,'experimental_metrics':rows,'folder':p.parent.name,'physical':__import__('seeb_resolved').physical_audit(p.parent),'signature_sha256':hashlib.sha256(p.read_bytes()).hexdigest(),'x':x,'y':y})
     runs.sort(key=lambda z:z['level'])
-    if not runs:raise RuntimeError('No completed SEEB-ALR runs. Execute seeb_reference.py first.')
+    if not runs:raise RuntimeError('No completed SEEB-ALR runs. Complete the resolved-nose SU2 8.0.1 mesh family first.')
     last=runs[-1];change=None
     if len(runs)>1:
         prev=runs[-2];mask=(last['x']>=25)&(last['x']<=46);yy=last['y'][mask]
         change=float(np.linalg.norm(np.interp(last['x'][mask],prev['x'],prev['y'])-yy)/np.linalg.norm(yy))
-    checks={'required_three_mesh_levels': [z['level'] for z in runs]==[1,2,2.5],'all_runs_converged':all(z['converged'] for z in runs),'both_experimental_wave_errors_below_20pct':all(v['wave_relative_l2']<.20 for v in last['experimental_metrics'].values()),'both_experimental_peak_errors_below_10pct':all(v['peak_relative_error']<.10 for v in last['experimental_metrics'].values()),'last_two_mesh_change_below_5pct':change is not None and change<.05}
-    result={'case':'NASA SEEB-ALR','mach':1.6,'height_inches':21.2,'window_inches':[25,46],'normalization':'delta_p/p_infinity','alignment':'Original NASA macros only; no fitted position/amplitude/offset','runs':[{k:v for k,v in row.items() if k not in ['x','y']} for row in runs],'last_two_mesh_wave_relative_l2':change,'thresholds':{'experimental_wave_relative_l2_max':.20,'experimental_peak_relative_error_max':.10,'last_two_mesh_wave_relative_l2_max':.05},'checks':checks,'passed':all(checks.values()),'scope':'Axisymmetric Euler off-body CFD validation, not neural experimental validation or full-aircraft reproduction. Mesh change is observed sensitivity, not formal GCI. Nose cap has two cells at each level.','recovery_note':'These are new runs using the reconstructed script. They supersede the unavailable earlier raw NASA runs; no earlier numbers are substituted.'}
+    checks={'required_three_mesh_levels': [z['level'] for z in runs]==[1,1.5,2],'all_runs_converged':all(z['converged'] for z in runs),'all_full_field_physical_checks':all(z['physical']['passed'] for z in runs),'both_experimental_wave_errors_below_20pct':all(v['wave_relative_l2']<.20 for v in last['experimental_metrics'].values()),'both_experimental_peak_errors_below_10pct':all(v['peak_relative_error']<.10 for v in last['experimental_metrics'].values()),'last_two_mesh_change_below_5pct':change is not None and change<.05}
+    result={'case':'NASA SEEB-ALR','mach':1.6,'height_inches':21.2,'window_inches':[25,46],'normalization':'delta_p/p_infinity','alignment':'Original NASA macros only; no fitted position/amplitude/offset','runs':[{k:v for k,v in row.items() if k not in ['x','y']} for row in runs],'last_two_mesh_wave_relative_l2':change,'thresholds':{'experimental_wave_relative_l2_max':.20,'experimental_peak_relative_error_max':.10,'last_two_mesh_wave_relative_l2_max':.05},'checks':checks,'passed':all(checks.values()),'scope':'Axisymmetric Euler off-body CFD validation, not neural experimental validation or full-aircraft reproduction. Mesh change is observed sensitivity, not formal GCI. The original finite cap is resolved and refined with the mesh (10, 15, 20 cap cells). All full-field physical gates are required.','recovery_note':'These are new runs using the reconstructed script. They supersede the unavailable earlier raw NASA runs; no earlier numbers are substituted.'}
     if write:
         from reference_figures import build as build_figures
         build_figures(R,runs)
         # Geometry figure can be rebuilt from the retained CAD sampling alone.
-        with np.load(R/f"seeb_level_{runs[0]['level']:g}"/'cad_meridian.npz') as cad:
+        with np.load(R/runs[0]['folder']/'cad_meridian.npz') as cad:
             gx=cad['x'];gr=cad['r']
         gf,ga=plt.subplots(2,1,figsize=(9,5),gridspec_kw={'height_ratios':[2,1]})
         ga[0].plot(gx,gr,color='black');ga[0].plot(gx,-gr,color='black')

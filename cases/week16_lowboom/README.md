@@ -8,24 +8,29 @@ The two shape parameters modify a smooth radius profile. Length is 1 m; volume i
 
 ## Reproduction
 
-Install Gmsh 4.15.2, NumPy, SciPy, scikit-learn, Matplotlib, pandas, meshio, nbformat and nbclient. Install official SU2 8.5.0 separately. Set `SU2_CFD` to its executable's absolute path. On Linux Gmsh may require libXft and other graphical shared libraries even in batch mode. No display is used.
-
-From the repository root:
+Install the pinned Python requirements and checksum-verified official SU2 8.0.1 executable. Gmsh creates the meshes; SU2 solves the actual axisymmetric Euler flow. On Ubuntu install `libglu1-mesa`, `libxft2`, `libxinerama1` and `libxcursor1` if needed. No display is used.
 
 ```bash
-python qa/week16/benchmark.py
-python qa/week16/cfd.py --name baseline_fine_stable --level 1.5
-python qa/week16/cfd.py --name baseline_finer --level 2
-python qa/week16/cfd.py --name baseline_large_domain --level 1.5 --height 2 --end 4
-python qa/week16/analyze.py baseline_fine_stable baseline_finer baseline_large_domain
-python qa/week16/campaign.py
-python qa/week16/learning.py
-python qa/week16/verify_designs.py
-python qa/week16/report.py
-python qa/week16/build_materials.py
+python -m pip install -r qa/week16/requirements.txt
+python qa/week16/install_su2_801.py
+export SU2_CFD="$PWD/.tools/week16_su2_801/bin/SU2_CFD"
+# In a fresh working copy/output directory:
+for batch in 0 1 2 3 4 5 6 7 8 9 10; do
+  python qa/week16/clean_campaign_v801.py --batch "$batch"
+done
+python qa/week16/clean_campaign_v801.py --assemble
+# Explicit one-time training; refuses to overwrite retained weights.
+python qa/week16/clean_model_v801.py --train
+python qa/week16/clean_model_v801.py --check-only
 ```
 
-The campaign uses three independent single-threaded SU2 processes. Reduce the worker count on a small laptop. A passing executable return code alone does not accept a label: the pressure and density must remain physical, the density residual must fall by at least five orders, and the drag range over the last 100 iterations must be below 1e-4 relative to its mean. The limiter is frozen after iteration 300 and convergence is checked only after iteration 500.
+The clean campaign preserves the original 24 training, six validation, eight test and six extrapolation geometry identities. It uses unique `clean_v801_*` run folders and separate `reference/clean_dataset_v801.npz`. The historical dataset and model remain unchanged. To retrain in a release checkout, first preserve the distributed clean-model files elsewhere and declare the new fit identity; never silently replace released evidence.
+
+The model comparison also requires the retained eight-case finer reference (`weakwall_checkpoint_test.npz` and its audit). Complete raw evidence is produced by the linked GitHub Actions workflows. The `weakwall_cfd.py` replay additionally requires each archived original mesh/configuration, so it can verify that the solver-version comparison kept these files identical. See the reference guides for exact scope and checks.
+
+Every new label must have finite positive pressure and density, final log10 density residual at most -9, a residual drop of at least five orders, drag variation below 1e-4 over its last 100 iterations, maximum total-enthalpy deviation at most 10%, and density below 110% of the isentropic stagnation bound. All exported fluid nodes are checked; tip nodes are not removed. These are rejection criteria, not physical uncertainty bounds. The limiter freezes after iteration 300 and convergence starts after 500.
+
+Independent solver verification uses the Taylor-Maccoll cone and a three-mesh study. Retained candidate geometries have ten new design-point, alternative and off-design CFD checks. The NASA SEEB-ALR experimental benchmark has its own mesh family and acceptance report; the complete release remains blocked until it passes.
 
 Pressure signatures are extracted at r/L=0.25, 0.5 and 0.75. The design target is the maximum Cp at r/L=0.5, subject to a pressure-drag constraint. Ground noise, PLdB and acoustic certification are outside this module's computed results. A smaller near-field peak does not establish a smaller ground sonic boom.
 
@@ -37,10 +42,14 @@ All geometry, Gmsh meshes and SU2 data are generated independently for FlowMLLab
 
 ```bash
 python -m pip install -r qa/week16/requirements.txt
-python qa/week16/install_su2.py
-export SU2_CFD="$PWD/.tools/week16_su2/bin/SU2_CFD"
+python qa/week16/install_su2_801.py
+export SU2_CFD="$PWD/.tools/week16_su2_801/bin/SU2_CFD"
 ```
 
 The helper verifies the official binary SHA-256 recorded during this experiment. On Ubuntu, install Gmsh runtime libraries if absent (`libxft2`, `libglu1-mesa`, `libxinerama1`, `libxcursor1`). The helper's `.tools` directory is a local runtime and must not be committed. It supports Linux x86-64 only; use the corresponding official SU2 release for other systems.
 
 The repository's `numerical_evidence.zip` preserves configurations, histories, pressure profiles and per-case checks. Extract it into `results/week16_lowboom` to inspect these records under `runs/`. Complete meshes and volume fields belong to the separately retained raw-CFD archive. They can also be regenerated from the case parameters. Figure regeneration that reads `flow.vtu`, `mesh.msh` or `restart_flow.csv` needs that raw archive or a new solver run.
+
+## Historical evidence
+
+SU2 8.5.0 results remain as diagnostic evidence. The eight historical refined test fields failed the added full-field enthalpy allowance despite tiny residuals. `POINTED_BODY_PHYSICS_AUDIT.md` explains the failure and controlled version comparison. Historical domain studies and plots are explicitly labelled; they do not establish new-version domain independence. New clean training labels and a new model identity are used for the main student exercise.

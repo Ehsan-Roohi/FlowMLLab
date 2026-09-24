@@ -1,0 +1,252 @@
+{
+  "model_identity": "Clean-label fixed-architecture SU2 8.0.1 refit; separate from both historical models.",
+  "solver_version": "8.0.1",
+  "settings": {
+    "hidden_layer_sizes": [
+      32,
+      32
+    ],
+    "activation": "tanh",
+    "solver": "lbfgs",
+    "alpha": 0.01,
+    "max_iter": 3000,
+    "max_fun": 15000,
+    "random_state": 16,
+    "tol": 1e-07,
+    "pod_modes": 12,
+    "pca_svd_solver": "full"
+  },
+  "dataset_sha256": "03790fc0b8e2034aed66b3e7ec3ffbdd3a08306b487705b54bb839bfa869e58b",
+  "checkpoint_sha256": "4e45d142558036397e179255b5141ac72dce135453e88fc3c2e7deb6df9a90e3",
+  "training_log_sha256": "290df5dbd6c103e6bc50c4bc5a012bc51981c0f8bd6e7d48d2a4a586e568edaa",
+  "campaign_audit_sha256": "ae30dfefb1e1f890860323a48af50ccc597e6066b9722791ef12360a61c3bf74",
+  "finer_reference_sha256": "68c4d0c3b5beed04c00df40e3e5536a3cbb35b4711993a96534540c2439db8e4",
+  "finer_audit_sha256": "29f967706f2f33bf457b6f5b5731d5ab4125e0a86731dcfc91ebd2b155b3d8be",
+  "source_sha256": {
+    "clean_model_v801.py": "c3f4c082346d1ebef1aac2918df36222952078fcdd378c04dcb33363766d6e4b",
+    "freeze_model.py": "0fd8cd310c7ab4878282d3b2c1895fd92460a7f95fc4a5cb0454bd330667a93f",
+    "independent_audit_report.py": "d2d38273b2f36741b0f4c98e040034f534ad26062926259315a23cdd31b14306"
+  },
+  "training_names": [
+    "train_000",
+    "train_001",
+    "train_002",
+    "train_003",
+    "train_004",
+    "train_005",
+    "train_006",
+    "train_007",
+    "train_008",
+    "train_009",
+    "train_010",
+    "train_011",
+    "train_012",
+    "train_013",
+    "train_014",
+    "train_015",
+    "train_016",
+    "train_017",
+    "train_018",
+    "train_019",
+    "train_020",
+    "train_021",
+    "train_022",
+    "train_023"
+  ],
+  "training_log": {
+    "model_identity": "Clean-label fixed-architecture SU2 8.0.1 refit; separate from both historical models.",
+    "dataset_sha256": "03790fc0b8e2034aed66b3e7ec3ffbdd3a08306b487705b54bb839bfa869e58b",
+    "checkpoint_sha256": "4e45d142558036397e179255b5141ac72dce135453e88fc3c2e7deb6df9a90e3",
+    "campaign_audit_sha256": "ae30dfefb1e1f890860323a48af50ccc597e6066b9722791ef12360a61c3bf74",
+    "source_sha256": {
+      "clean_model_v801.py": "c3f4c082346d1ebef1aac2918df36222952078fcdd378c04dcb33363766d6e4b",
+      "freeze_model.py": "0fd8cd310c7ab4878282d3b2c1895fd92460a7f95fc4a5cb0454bd330667a93f",
+      "independent_audit_report.py": "d2d38273b2f36741b0f4c98e040034f534ad26062926259315a23cdd31b14306"
+    },
+    "settings": {
+      "hidden_layer_sizes": [
+        32,
+        32
+      ],
+      "activation": "tanh",
+      "solver": "lbfgs",
+      "alpha": 0.01,
+      "max_iter": 3000,
+      "max_fun": 15000,
+      "random_state": 16,
+      "tol": 1e-07,
+      "pod_modes": 12,
+      "pca_svd_solver": "full"
+    },
+    "training_names": [
+      "train_000",
+      "train_001",
+      "train_002",
+      "train_003",
+      "train_004",
+      "train_005",
+      "train_006",
+      "train_007",
+      "train_008",
+      "train_009",
+      "train_010",
+      "train_011",
+      "train_012",
+      "train_013",
+      "train_014",
+      "train_015",
+      "train_016",
+      "train_017",
+      "train_018",
+      "train_019",
+      "train_020",
+      "train_021",
+      "train_022",
+      "train_023"
+    ],
+    "training_cases": 24,
+    "fit_calls": 1,
+    "training_seconds": 0.31632249599999795,
+    "iterations": 800,
+    "final_training_objective": 0.03567734249121284,
+    "warnings": [],
+    "optimizer_converged_without_warning": true,
+    "pod_retained_training_variance": 0.9999836739841615,
+    "portable_vs_sklearn_training_inference_agrees": true,
+    "environment": {
+      "python": "3.12.14",
+      "numpy": "2.3.5",
+      "scipy": "1.17.0",
+      "scikit_learn": "1.8.0",
+      "OPENBLAS_NUM_THREADS": "1",
+      "OMP_NUM_THREADS": "1"
+    },
+    "scope": "One fixed fit uses only the 24 training geometries; no hyperparameter search, test tuning or optimization is performed. Complete fitting may vary slightly with libraries/BLAS; saved arrays establish model identity."
+  },
+  "identity_checks": {
+    "all_44_campaign_physical_checks_pass": true,
+    "finer_eight_physical_checks_pass": true,
+    "geometry_split_and_coordinates_preserved": true,
+    "training_only_statistics_and_pod_verified": true,
+    "saved_weights_match_training_log": true
+  },
+  "pod_training_subspace_error": 0.0,
+  "same_mesh": {
+    "train": {
+      "cases": 24,
+      "wave_relative_l2": 0.003131552156784597,
+      "peak_mean_relative_error": 0.0018864653827419299,
+      "drag_mean_relative_error": 0.001115257534869185,
+      "per_case_wave_relative_l2": [
+        0.002811902992416999,
+        0.003799682819320964,
+        0.0021024445763336737,
+        0.002701757376173541,
+        0.002527232585374775,
+        0.002448143577049044,
+        0.0037103003572300764,
+        0.0029115057255436542,
+        0.0047293579291859756,
+        0.004713889026794558,
+        0.002324811199100601,
+        0.0029883168859729543,
+        0.004029718882236808,
+        0.0014275221062440115,
+        0.0031624550414551776,
+        0.002356361630358421,
+        0.006477148367128377,
+        0.002556068683520883,
+        0.002380946853442804,
+        0.002279283560032543,
+        0.0023002184718990794,
+        0.004694594985268965,
+        0.002497241130246569,
+        0.0018907443875211003
+      ],
+      "worst_case_wave_relative_l2": 0.006477148367128377
+    },
+    "validation": {
+      "cases": 6,
+      "wave_relative_l2": 0.03935298530222281,
+      "peak_mean_relative_error": 0.016022477256710466,
+      "drag_mean_relative_error": 0.022541119657999893,
+      "per_case_wave_relative_l2": [
+        0.008433351713330678,
+        0.0420021601448485,
+        0.060893147759508374,
+        0.03382331003452215,
+        0.009850769477617536,
+        0.0634327348285526
+      ],
+      "worst_case_wave_relative_l2": 0.0634327348285526
+    },
+    "test": {
+      "cases": 8,
+      "wave_relative_l2": 0.053693306945874916,
+      "peak_mean_relative_error": 0.014056336780347872,
+      "drag_mean_relative_error": 0.025594920469466306,
+      "per_case_wave_relative_l2": [
+        0.11775113231022362,
+        0.03562123305317585,
+        0.06688121059695298,
+        0.04620305162927962,
+        0.011978303927723906,
+        0.0379735593429281,
+        0.05876784348130916,
+        0.03414825716275513
+      ],
+      "worst_case_wave_relative_l2": 0.11775113231022362
+    },
+    "extrapolation": {
+      "cases": 6,
+      "wave_relative_l2": 0.3428624796794072,
+      "peak_mean_relative_error": 0.06831285620883126,
+      "drag_mean_relative_error": 0.22388922071753306,
+      "per_case_wave_relative_l2": [
+        0.18070385883345208,
+        0.2892524399801932,
+        0.32850031659251655,
+        0.2926375753353587,
+        0.4318995346663865,
+        0.43127754255728296
+      ],
+      "worst_case_wave_relative_l2": 0.4318995346663865
+    }
+  },
+  "finer_mesh": {
+    "wave_relative_l2": 0.07203598068437592,
+    "peak_mean_relative_error": 0.022373236615804787,
+    "drag_mean_relative_error": 0.022739591220750116,
+    "per_case_wave_relative_l2": [
+      0.15371588757597937,
+      0.055188775623532714,
+      0.07112095231010394,
+      0.07551666717365284,
+      0.012938498993398261,
+      0.047305341924313266,
+      0.09053904726909848,
+      0.055476790316797656
+    ],
+    "worst_case_wave_relative_l2": 0.15371588757597937
+  },
+  "thresholds": {
+    "wave_relative_l2_max": 0.1,
+    "peak_mean_relative_error_max": 0.1,
+    "drag_mean_relative_error_max": 0.1
+  },
+  "checks": {
+    "wave_relative_l2": true,
+    "peak_mean_relative_error": true,
+    "drag_mean_relative_error": true,
+    "fixed_fit_optimizer_converged_without_warning": true
+  },
+  "passed": true,
+  "scope": "New model fitted once on 24 physically checked SU2 8.0.1 training labels, tested on the preserved same-family geometries and existing finer 8.0.1 CFD labels.",
+  "limitations": [
+    "Retrospective known-geometry study; finer reference solutions already existed before this fit, so no new prospective blind-generalization claim.",
+    "Physical checks are broad rejection criteria, not proof of CFD accuracy or continuum mesh independence.",
+    "Every original geometry is retained; extrapolation and worst-case errors are reported even when aggregate tests pass.",
+    "A new fitted model does not inherit the historical optimizer candidate or its predictions. No clean-model optimization is performed here.",
+    "No experimental neural validation, full Chinese-aircraft reproduction, atmospheric propagation or ground-noise calculation."
+  ]
+}

@@ -24,17 +24,13 @@ jobs:
           python-version: '3.12'
       - name: Install validation dependencies
         run: |
-          sudo apt-get update && sudo apt-get install -y poppler-utils
+          sudo apt-get update && sudo apt-get install -y poppler-utils libglu1-mesa
           pip install -r qa/week16/requirements.txt pytest==8.4.2 pytest-subtests jinja2 pypdf==6.10.0 build twine
           pip install --no-deps -e .
-      - name: Retrieve the actual three-mesh CFD evidence
+      - name: Retrieve every accepted and diagnostic raw reference
         env:
           GH_TOKEN: ${{ github.token }}
-        run: |
-          gh run download 35935655513 --name nasa-level-1 --dir raw_artifacts/nasa-level-1
-          gh run download 35937834499 --pattern 'nasa-level-*' --dir raw_artifacts
-          gh run download 35936740632 --pattern 'neural-case-*' --dir raw_artifacts
-          for archive in raw_artifacts/*/*.tar.gz; do tar -xzf "$archive"; done
+        run: bash qa/week16/fetch_reference_evidence.sh
       - name: Recompute reference validation and check release
         run: |
           python qa/week16/validate_reference.py
@@ -67,8 +63,8 @@ jobs:
         run: |
           python -m build
           python -m twine check dist/*
-          sha256sum dist/* lectures/week16_supersonic_shape_optimization.pdf results/week16_lowboom/reference/reference_evidence.zip raw_artifacts/*/*.tar.gz > release_assets_v1.9.0_sha256.txt
-      - name: Publish verified release and full NASA raw evidence
+          sha256sum dist/* lectures/week16_supersonic_shape_optimization.pdf results/week16_lowboom/reference/reference_evidence.zip raw_artifacts/*/*/*.tar.gz > release_assets_v1.9.0_sha256.txt
+      - name: Publish verified release and complete CFD raw evidence
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
@@ -80,5 +76,5 @@ jobs:
               --notes-file RELEASE_NOTES_v1.9.0.md \
               dist/* lectures/week16_supersonic_shape_optimization.pdf \
               results/week16_lowboom/reference/reference_evidence.zip \
-              raw_artifacts/*/*.tar.gz release_assets_v1.9.0_sha256.txt
+              raw_artifacts/*/*/*.tar.gz release_assets_v1.9.0_sha256.txt
           fi

@@ -1,5 +1,25 @@
 {
   "scientific_checks": {
+    "clean_44_case_physical_and_numerical_checks": true,
+    "new_clean_neural_model": true,
+    "retained_design_recomputation": true,
+    "Taylor_Maccoll_refined_family": true,
+    "NASA_three_mesh_experimental_comparison": false
+  },
+  "scientific_pass": false,
+  "notebook_executed": false,
+  "lecture_visual_review": false,
+  "release_ready": false,
+  "notebook_execution_method": "Pending execution of revised clean-label notebook",
+  "lecture_pages": 7,
+  "reference_extension": {
+    "passed": false,
+    "status": "blocked: NASA resolved-family experimental validation and final educational execution remain incomplete",
+    "neural_workflow_run": 35936740632,
+    "neural_full_field_thermodynamic_check_passed": false,
+    "neural_prediction_metrics_scope": "Reproducible comparison against numerical CFD labels; additional maximum-enthalpy physical criterion fails near sharp-tip/axis junction."
+  },
+  "historical_scientific_checks": {
     "cone_pressure_within_3pct": true,
     "all_44_dataset_cases_converged": true,
     "mesh_volume_within_0p2pct": true,
@@ -13,18 +33,5 @@
     "optimized_drag_constraint_finer": true,
     "peak_reduction_exceeds_5pct_both_meshes": true,
     "selected_model_test_peak_error_below_10pct": true
-  },
-  "scientific_pass": true,
-  "notebook_executed": true,
-  "lecture_visual_review": false,
-  "release_ready": false,
-  "notebook_execution_method": "IPython in a fresh process; kernel sockets prohibited in execution environment",
-  "lecture_pages": 7,
-  "reference_extension": {
-    "passed": false,
-    "status": "blocked: underresolved NASA nose invalidates existing reference family; original teaching campaign checks remain separate",
-    "neural_workflow_run": 35936740632,
-    "neural_full_field_thermodynamic_check_passed": false,
-    "neural_prediction_metrics_scope": "Reproducible comparison against numerical CFD labels; additional maximum-enthalpy physical criterion fails near sharp-tip/axis junction."
   }
 }

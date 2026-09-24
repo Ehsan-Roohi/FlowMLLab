@@ -1,0 +1,70 @@
+{
+  "model_identity": "Clean-label fixed-architecture SU2 8.0.1 refit; separate from both historical models.",
+  "dataset_sha256": "03790fc0b8e2034aed66b3e7ec3ffbdd3a08306b487705b54bb839bfa869e58b",
+  "checkpoint_sha256": "4e45d142558036397e179255b5141ac72dce135453e88fc3c2e7deb6df9a90e3",
+  "campaign_audit_sha256": "ae30dfefb1e1f890860323a48af50ccc597e6066b9722791ef12360a61c3bf74",
+  "source_sha256": {
+    "clean_model_v801.py": "c3f4c082346d1ebef1aac2918df36222952078fcdd378c04dcb33363766d6e4b",
+    "freeze_model.py": "0fd8cd310c7ab4878282d3b2c1895fd92460a7f95fc4a5cb0454bd330667a93f",
+    "independent_audit_report.py": "d2d38273b2f36741b0f4c98e040034f534ad26062926259315a23cdd31b14306"
+  },
+  "settings": {
+    "hidden_layer_sizes": [
+      32,
+      32
+    ],
+    "activation": "tanh",
+    "solver": "lbfgs",
+    "alpha": 0.01,
+    "max_iter": 3000,
+    "max_fun": 15000,
+    "random_state": 16,
+    "tol": 1e-07,
+    "pod_modes": 12,
+    "pca_svd_solver": "full"
+  },
+  "training_names": [
+    "train_000",
+    "train_001",
+    "train_002",
+    "train_003",
+    "train_004",
+    "train_005",
+    "train_006",
+    "train_007",
+    "train_008",
+    "train_009",
+    "train_010",
+    "train_011",
+    "train_012",
+    "train_013",
+    "train_014",
+    "train_015",
+    "train_016",
+    "train_017",
+    "train_018",
+    "train_019",
+    "train_020",
+    "train_021",
+    "train_022",
+    "train_023"
+  ],
+  "training_cases": 24,
+  "fit_calls": 1,
+  "training_seconds": 0.31632249599999795,
+  "iterations": 800,
+  "final_training_objective": 0.03567734249121284,
+  "warnings": [],
+  "optimizer_converged_without_warning": true,
+  "pod_retained_training_variance": 0.9999836739841615,
+  "portable_vs_sklearn_training_inference_agrees": true,
+  "environment": {
+    "python": "3.12.14",
+    "numpy": "2.3.5",
+    "scipy": "1.17.0",
+    "scikit_learn": "1.8.0",
+    "OPENBLAS_NUM_THREADS": "1",
+    "OMP_NUM_THREADS": "1"
+  },
+  "scope": "One fixed fit uses only the 24 training geometries; no hyperparameter search, test tuning or optimization is performed. Complete fitting may vary slightly with libraries/BLAS; saved arrays establish model identity."
+}

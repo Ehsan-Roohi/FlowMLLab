@@ -10,7 +10,7 @@ def build(root, runs):
     root=Path(root)
     fig,axs=plt.subplots(1,2,figsize=(10,3.8))
     for row in runs:
-        d=root/f"seeb_level_{row['level']:g}"
+        d=root/row['folder']
         h=load_csv(d/'history.csv');it=np.arange(len(h))
         label=f"{row['cells']:,} cells"
         line,=axs[0].plot(it,h['rms[Rho]'],label=label)
@@ -24,7 +24,7 @@ def build(root, runs):
     fig.suptitle('NASA case: convergence and force history (dotted lines: grid-specific limiter freeze)')
     fig.tight_layout();fig.savefig(root/'seeb_convergence.png',dpi=180);plt.close(fig)
     # Read the real coarse exported quadrilateral mesh, rather than reconstructing a sketch.
-    folder=root/f"seeb_level_{runs[0]['level']:g}"
+    folder=root/runs[0]['folder']
     with (folder/'mesh.su2').open() as f:
         assert f.readline().strip()=='NDIME= 2'
         n=int(f.readline().split('=')[1]);cells=np.array([[int(v) for v in f.readline().split()[1:5]] for _ in range(n)])
@@ -33,7 +33,7 @@ def build(root, runs):
     fig,axs=plt.subplots(3,1,figsize=(10,10))
     windows=[(-.5,5.5,0,2),(-.001,.018,0,.015),(1.35,1.65,1.17,1.23)]
     names=['Actual coarse Gmsh mesh: body wall, exposed axis and outer farfield',
-           'Nose inset: as-built finite cap, two cells across the cap',
+           'Nose inset: as-built finite cap with local refinement',
            'Observation-line inset: H/L = 21.2/17.667']
     with np.load(folder/'cad_meridian.npz') as a:gx=a['x'];gr=a['r']
     for ax,window,title in zip(axs,windows,names):
