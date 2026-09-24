@@ -1,4 +1,5 @@
 name: Build verified Week 16 publication candidate
+# Educational-core publication; NASA remains deferred.
 on:
   push:
     branches: [week16-reference-recovery]

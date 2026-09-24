@@ -2,7 +2,7 @@
 
 # Week 16: retained computational evidence
 
-Publication status is recorded in [PUBLICATION_STATUS.md](../../PUBLICATION_STATUS.md); the complete reference release is blocked until all gates pass. New computations use Gmsh 4.15.2 and the checksum-pinned official SU2 8.0.1 executable. Original SU2 8.5.0 results are retained separately as historical and failure-analysis evidence. The scientific quantity is off-body pressure, with the primary objective at r/L=0.5. Ground loudness is not calculated.
+Publication status is recorded in [PUBLICATION_STATUS.md](../../PUBLICATION_STATUS.md); the educational core is released separately from the failed NASA research extension. New computations use Gmsh 4.15.2 and the checksum-pinned official SU2 8.0.1 executable. Original SU2 8.5.0 results are retained separately as historical and failure-analysis evidence. The scientific quantity is off-body pressure, with the primary objective at r/L=0.5. Ground loudness is not calculated.
 
 ## Current acceptance evidence
 
@@ -11,7 +11,7 @@ Publication status is recorded in [PUBLICATION_STATUS.md](../../PUBLICATION_STAT
 - `reference/weakwall_checkpoint_audit.json`: unchanged historical portable weights versus eight new finer CFD references. Wave/peak/drag errors are 7.1499%/2.6343%/2.0615%, with worst-case waveform error 15.9701%.
 - `reference/weakwall_design_audit.json`: ten fresh fixed-geometry evaluations. Peak reductions on levels 1.5 and 2 are 21.1876% and 20.6646%; drag changes are -3.7971% and -3.5218%. Optimized waveform mesh change is 5.3946%; the declared mesh gates apply to peak and drag.
 - `reference/cone_refinement_v801.json`: 24,000/96,000/216,000-cell cone pressure errors 4.5632%/2.1563%/1.1616%. The coarse failure is preserved; the last-two Cp change is 1.0064% and the refined-family criterion passes.
-- `reference/seeb_validation.json`: required three-mesh NASA experimental comparison. Failed pilot evidence cannot substitute for accepted results.
+- NASA three-mesh experimental comparison: deferred. The retained coarse replay failed, and no accepted NASA comparison report is claimed.
 
 Read each report's `passed`, `checks`, provenance and limitations. The clean dataset/model files appear only after their actual runs and audit finish. A historical optimizer's geometry is not attributed to the new clean model.
 

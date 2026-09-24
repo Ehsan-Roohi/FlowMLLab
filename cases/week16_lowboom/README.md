@@ -32,7 +32,7 @@ The model comparison also requires the retained eight-case finer reference (`wea
 
 Every new label must have finite positive pressure and density, final log10 density residual at most -9, a residual drop of at least five orders, drag variation below 1e-4 over its last 100 iterations, maximum total-enthalpy deviation at most 10%, and density below 110% of the isentropic stagnation bound. All exported fluid nodes are checked; tip nodes are not removed. These are rejection criteria, not physical uncertainty bounds. The limiter freezes after iteration 300 and convergence starts after 500.
 
-Independent solver verification uses the Taylor-Maccoll cone and a three-mesh study. Retained candidate geometries have ten new design-point, alternative and off-design CFD checks. The NASA SEEB-ALR experimental benchmark has its own mesh family and acceptance report; the complete release remains blocked until it passes.
+Independent solver verification uses the Taylor-Maccoll cone and a three-mesh study. Retained candidate geometries have ten new design-point, alternative and off-design CFD checks. The NASA SEEB-ALR experimental benchmark remains a deferred research extension: its coarse replay failed and is excluded from the accepted educational results.
 
 Pressure signatures are extracted at r/L=0.25, 0.5 and 0.75. The design target is the maximum Cp at r/L=0.5, subject to a pressure-drag constraint. Ground noise, PLdB and acoustic certification are outside this module's computed results. A smaller near-field peak does not establish a smaller ground sonic boom.
 

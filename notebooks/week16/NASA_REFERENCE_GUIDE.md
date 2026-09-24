@@ -105,7 +105,7 @@ python qa/week16/seeb_family_v801.py --level 2
 python qa/week16/reference_report.py
 ```
 
-The three accepted-candidate levels are 1, 1.5 and 2, with 10, 15 and 20 cells on the finite nose cap. The original CAD sting ends at x/L≈1.656; a cylindrical extension reaches the outlet. Pressure extraction retains the keys `x_inches` and `dp_pinf`. All three meshes must converge and pass full-field thermodynamic checks; the finest must have waveform error below 20% and peak error below 10% against both records, with last-two waveform change below 5%. These thresholds are not relaxed when a run fails.
+The three planned research levels are 1, 1.5 and 2, with 10, 15 and 20 cells on the finite nose cap. The original CAD sting ends at x/L≈1.656; a cylindrical extension reaches the outlet. Pressure extraction retains the keys `x_inches` and `dp_pinf`. All three meshes must converge and pass full-field thermodynamic checks; the finest must have waveform error below 20% and peak error below 10% against both records, with last-two waveform change below 5%. These thresholds are not relaxed when a run fails.
 
 The earlier `seeb_reference.py` mesh family is retained for provenance but rejected as validation evidence. Its residual-converged coarse solution had an incorrect local stagnation state. Increasing limiter-freeze time cannot by itself establish physical correctness on an underresolved nose. See [the nose physics audit](NOSE_PHYSICS_AUDIT.md) for the observed failure, analytical checks and predeclared acceptance allowances. Original pilot evidence is in GitHub Actions run 35935655513; the subsequent mesh-scaled-freeze attempt is 35937834499.
 

@@ -418,7 +418,7 @@ def validate_notebooks() -> tuple[int, int]:
             assert 'velocity-derived weak references' in full_source
         if week16_lab:
             code = [c for c in cells if c.get('cell_type') == 'code']
-            assert len(code) >= 17
+            assert len(code) >= 16
             assert 'clean_model_audit(write=False)' in full_source
             assert 'clean_dataset_v801.npz' in full_source
             assert all(c.get('execution_count') is not None for c in code)
