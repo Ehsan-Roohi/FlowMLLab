@@ -5,6 +5,7 @@ on:
     paths: ['.github/workflows/week16-instructional-audit.yml']
 permissions:
   contents: read
+  actions: read
 jobs:
   notebook_subset:
     runs-on: ubuntu-latest
@@ -13,12 +14,17 @@ jobs:
       OPENBLAS_NUM_THREADS: '1'
       OMP_NUM_THREADS: '1'
       MPLBACKEND: Agg
+      GH_TOKEN: ${{ github.token }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
       - run: pip install -r qa/week16/requirements.txt
+      - name: Restore the historical diagnostic report
+        run: |
+          gh run download 35936740632 --name recomputed-checkpoint-report --dir historical_report
+          cp historical_report/* results/week16_lowboom/reference/
       - name: Execute sixteen teaching cells; explicitly leave NASA CFD comparison untested
         run: |
           python - <<'PY'
