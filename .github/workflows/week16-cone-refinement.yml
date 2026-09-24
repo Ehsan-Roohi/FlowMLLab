@@ -1,0 +1,68 @@
+name: Week 16 Taylor-Maccoll mesh refinement SU2 8.0.1
+on:
+  push:
+    branches: [week16-reference-recovery]
+    paths: ['.github/workflows/week16-cone-refinement.yml']
+permissions:
+  contents: read
+  actions: read
+jobs:
+  cone:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    strategy:
+      fail-fast: false
+      matrix:
+        level: [2,3]
+    env:
+      OPENBLAS_NUM_THREADS: '1'
+      OMP_NUM_THREADS: '1'
+      MPLBACKEND: Agg
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: sudo apt-get update && sudo apt-get install -y libglu1-mesa libxft2 libxinerama1 libxcursor1
+      - run: pip install -r qa/week16/requirements.txt
+      - run: python qa/week16/install_su2_801.py
+      - run: python qa/week16/cone_refinement_v801.py --level ${{ matrix.level }}
+      - name: Retain complete raw evidence
+        if: always()
+        run: tar -czf cone-level-${{ matrix.level }}.tar.gz results/week16_lowboom/runs/cone_v801_level_${{ matrix.level }}
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: cone-level-${{ matrix.level }}
+          path: cone-level-${{ matrix.level }}.tar.gz
+          retention-days: 90
+  audit:
+    needs: cone
+    runs-on: ubuntu-latest
+    env:
+      GH_TOKEN: ${{ github.token }}
+      OPENBLAS_NUM_THREADS: '1'
+      OMP_NUM_THREADS: '1'
+      MPLBACKEND: Agg
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: sudo apt-get update && sudo apt-get install -y libglu1-mesa
+      - run: pip install -r qa/week16/requirements.txt
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: cone-level-*
+          merge-multiple: true
+      - run: |
+          for archive in cone-level-*.tar.gz; do tar -xzf "$archive"; done
+          gh run download 35942843724 --name cone-v801 --dir coarse_artifact
+          tar -xzf coarse_artifact/cone-v801.tar.gz
+      - run: python qa/week16/cone_refinement_v801.py --report
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: cone-refinement-report
+          path: results/week16_lowboom/reference/cone_refinement_v801.json
+          retention-days: 90
