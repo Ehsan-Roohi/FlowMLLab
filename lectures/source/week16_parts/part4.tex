@@ -1,0 +1,72 @@
+\topic{15}{Off-design robustness at Mach 1.7 and 1.9}
+The surrogate training campaign fixes Mach number at 1.8. To test the \emph{geometry}, rather than asking the network to extrapolate in Mach number, the baseline and retained candidate were solved directly with CFD at $M=1.7$ and $M=1.9$.
+
+At $M=1.7$, the optimized geometry reduces peak pressure by 21.01\% and pressure drag by 3.23\%. At $M=1.9$, the peak reduction is 21.17\% and drag reduction is 4.31\%. These are direct CFD stress tests of the fixed geometry. They do not establish robustness over a complete flight envelope.
+
+\keyidea{A geometry can be tested outside the training operating condition without pretending that the neural network was trained to predict those new conditions.}
+
+\topic{16}{NASA SEEB-ALR: an independent reference, not a successful Week 16 validation}
+The NASA SEEB-ALR benchmark serves a different purpose from the Taylor--Maccoll cone and from the two-parameter learning body. The public reference includes as-built geometry, wind-tunnel pressure records, coordinate-alignment information, and a NASA-hosted LAVA CFD solution. The comparison condition is $M=1.6$ at zero incidence.
+
+NASA reports pressure excess normalized by $p_\infty$, while our design-body plots use $\Cp$. Section 3 showed the required conversion. The experimental curves also carry coordinate shifts defined by the original processing macros; those shifts must be preserved rather than tuned to align shocks visually.
+
+\begin{figure}[H]\centering
+\includegraphics[width=.92\linewidth]{seeb_comparison.png}
+\caption{Retained NASA SEEB-ALR reference comparison. The LAVA result is an independent numerical solution, not an exact answer. Experimental agreement and solver-to-solver agreement answer different questions.}
+\end{figure}
+
+\topic{17}{The failed NASA reproduction is scientifically useful}
+The attempted SU2 NASA replay did not establish an accepted mesh-refined, physically admissible family. Earlier nose treatment produced unphysical stagnation-region behavior; later recovery runs still failed the declared convergence/physical gates. Those failures are retained rather than hidden.
+
+This is an important lesson for scientific machine learning: a visually plausible pressure trace or a solver exit code is not enough. A reference CFD label must first survive geometry, numerical, and physical checks before it can be used to validate a learned model.
+
+In the release record, NASA is explicitly marked \texttt{failed/deferred}; the accepted Week 16 core rests on the 44-case teaching-body campaign, the Taylor--Maccoll verification, the clean neural model, and the independently recomputed retained design.
+
+\checkpoint{Would agreement between SU2 and LAVA, without comparison to experiment, constitute experimental validation? Why not?}
+
+\topic{18}{What is still required before claiming a quieter ground boom?}
+A complete low-boom prediction chain would require, at minimum:
+\begin{enumerate}
+\item a realistic aircraft geometry with volume and lift distributions, including wings and propulsion integration;
+\item near-field CFD verified for mesh, numerical convergence, and physical consistency;
+\item validation against an appropriate measured near-field dataset;
+\item transfer of the near-field signature to a validated propagation solver;
+\item atmospheric profiles for temperature, humidity, wind, and molecular relaxation;
+\item ground-waveform prediction under several operating/atmospheric conditions;
+\item calculation of an accepted psychoacoustic metric such as PLdB with its assumptions and uncertainty.
+\end{enumerate}
+Consequently,
+\begin{equation}
+ \boxed{\text{lower near-field peak}\;\not\Rightarrow\;\text{automatically lower ground PLdB}.}
+\end{equation}
+The Week 16 result is intentionally narrower: within the verified axisymmetric Euler teaching problem, the retained design reduces the off-body peak pressure while satisfying the pressure-drag constraint on both design meshes.
+
+\topic{19}{Reproducibility, provenance, and final takeaways}
+The clean campaign uses SU2 8.0.1 and contains 44 accepted cases. Model fitting uses only the 24 training geometries, 12 full-SVD POD modes, and a fixed 32--32 tanh MLP. The retained design is not accepted on surrogate prediction alone; it is recomputed with CFD on two meshes and at two nearby Mach numbers. Raw/compact evidence, hashes, and audit reports are retained separately from classroom-friendly arrays.
+
+\textbf{The scientific workflow to remember is}
+\begin{equation}
+ \boxed{
+ \text{physics}\rightarrow\text{verified CFD}\rightarrow\text{POD}\rightarrow
+ \text{surrogate}\rightarrow\text{optimization}\rightarrow\text{fresh CFD verification}
+ }.
+\end{equation}
+
+\textbf{Five final lessons.}
+\begin{enumerate}
+\item A small residual is not the same as an accurate or physically admissible CFD solution.
+\item A small average neural error can hide a poor individual waveform.
+\item Good interpolation does not imply safe extrapolation.
+\item Optimizers exploit model error; recompute the proposed optimum with the governing equations.
+\item Near-field pressure shaping and ground sonic-boom loudness are distinct stages of the physics.
+\end{enumerate}
+
+\textbf{Questions for discussion.}
+\begin{enumerate}
+\item Why is fixed volume necessary for a fair geometry optimization?
+\item What does a POD mode represent physically, and why must it be fitted on the training set only?
+\item Why can the peak error be small while waveform $L_2$ error is large?
+\item Which evidence in this module is verification, which is ML validation, and which is experimental reference evidence?
+\item What would you add first if the goal changed from ``reduce near-field peak'' to ``minimize ground PLdB''?
+\end{enumerate}
+
