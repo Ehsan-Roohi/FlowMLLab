@@ -1,0 +1,104 @@
+\topic{5}{The fixed-volume body family}
+We need a shape parameterization that changes the longitudinal distribution without allowing the optimizer to reduce the objective by simply shrinking the body. Let $s=x/L$, $0\le s\le1$. Define
+\begin{equation}
+ f(s;a,b)=\sin(\pi s)\exp\left[a(2s-1)+b\cos(2\pi s)\right],
+\end{equation}
+and
+\begin{equation}
+ r(s)=c f(s;a,b).
+\end{equation}
+For a body of revolution,
+\begin{equation}
+ V=\pi L\int_0^1 r(s)^2\,\dd s
+ =\pi L c^2\int_0^1f(s)^2\,\dd s.
+\end{equation}
+Solving for $c$ gives the volume-preserving scale factor
+\begin{equation}
+ \boxed{c=\sqrt{\frac{V}{\pi L\int_0^1f(s)^2\,\dd s}}}.
+\end{equation}
+Thus $a$ and $b$ redistribute volume, while $c$ restores the prescribed total volume.
+
+\begin{figure}[H]\centering
+\includegraphics[width=.88\linewidth]{geometry_family.png}
+\caption{Examples from the fixed-volume two-parameter family. The retained optimizer candidate is geometrically distinct from the baseline but has the same target volume.}
+\end{figure}
+
+The teaching configuration uses $L=1$ and $V=\pi(0.06)^2/2$. The exported-wall volume audit requires the realized mesh geometry to remain within 0.2\% of the target.
+
+\topic{6}{Axisymmetric compressible Euler equations}
+The physical body is three-dimensional and axisymmetric. The meridional mesh is a computational representation of the axisymmetric equations; it is not a planar two-dimensional airfoil calculation.
+
+For conservative variables
+\begin{equation}
+ \mathbf{U}=\begin{bmatrix}\rho&\rho u&\rho v&\rho E\end{bmatrix}^{T},
+\end{equation}
+the axisymmetric Euler equations can be written schematically as
+\begin{equation}
+ \boxed{
+ \frac{\partial(r\mathbf U)}{\partial t}
+ +\frac{\partial(r\mathbf F_x)}{\partial x}
+ +\frac{\partial(r\mathbf F_r)}{\partial r}
+ =\mathbf S_r
+ },
+\end{equation}
+where $\mathbf S_r$ is the radial geometric source term. The ideal-gas closure is
+\begin{equation}
+ p=(\gamma-1)\left[\rho E-\frac{\rho}{2}(u^2+v^2)\right].
+\end{equation}
+
+The model is inviscid, so pressure drag is the relevant aerodynamic constraint. It does not include skin friction, viscous heating, turbulence, propulsion, wings, lift, or angle of attack. The freestream is $p_\infty=101325$ Pa, $T_\infty=288.15$ K, and $M_\infty=1.8$. These values define a nondimensional teaching problem; they are not intended as a cruise-altitude atmospheric condition.
+
+\topic{7}{CFD workflow: Gmsh, SU2, extraction, and acceptance gates}
+The computational pipeline is
+\begin{equation}
+ (a,b)\rightarrow \text{body profile}\rightarrow \text{Gmsh mesh}\rightarrow
+ \text{SU2 Euler solve}\rightarrow \text{physical/numerical audit}\rightarrow
+ \Cp(x,r/L)\text{ extraction}.
+\end{equation}
+Pressure signatures are extracted at $r/L=0.25$, $0.5$, and $0.75$; the primary design line is $r/L=0.5$.
+
+For every clean label, acceptance requires finite positive pressure and density, final density residual $\log_{10}R_\rho\le -9$, residual drop of at least five orders of magnitude, pressure-drag variation below $10^{-4}$ over the last 100 iterations, maximum total-enthalpy deviation no larger than 10\%, and density below 110\% of the isentropic stagnation bound. These are rejection gates, not uncertainty bounds.
+
+\begin{figure}[H]\centering
+\includegraphics[width=.96\linewidth]{clean_cfd_fields.png}
+\caption{Accepted SU2 8.0.1 pressure fields for the baseline and retained optimizer geometry. The dashed line is the primary sampling location $r/L=0.5$. Shared color limits make redistribution of the compression/expansion field directly visible.}
+\end{figure}
+
+\checkpoint{Why can a run have a very small algebraic residual and still be rejected physically?}
+
+\topic{8}{Independent verification with Taylor--Maccoll cone flow}
+Before trusting the teaching-body campaign, we ask whether the numerical method reproduces an independent supersonic solution. Axisymmetric conical flow provides a classical verification problem. An oblique shock turns the freestream toward the cone, and the post-shock flow between shock and surface is governed by the Taylor--Maccoll ordinary differential equations. The shock angle is adjusted until the polar velocity becomes tangent to the cone surface.
+
+The benchmark is independent of the SU2 discretization used for the production data. Therefore agreement tests the numerical chain rather than simply comparing SU2 against itself.
+
+Three SU2 8.0.1 meshes contain approximately 24,000, 96,000, and 216,000 cells. The mean cone-pressure errors are 4.563\%, 2.156\%, and 1.162\%, respectively. The last-two-grid mean-$\Cp$ change is 1.006\%. All three solutions pass numerical and physical checks; the coarse accuracy gate is intentionally retained as a failure, while the declared refined-family criteria pass.
+
+\begin{figure}[H]\centering
+\includegraphics[width=.70\linewidth]{cone_refinement.png}
+\caption{Taylor--Maccoll verification. Refinement reduces the analytical cone-pressure error; the finest result is within the declared 3\% criterion.}
+\end{figure}
+
+\keyidea{Verification asks whether the equations are solved correctly. Experimental validation asks whether the chosen equations/model describe reality for the intended quantity. They are not interchangeable.}
+
+\newpage
+\topic{9}{The 44-case clean CFD campaign}
+The final clean-label campaign uses the checksum-pinned official SU2 8.0.1 executable. All 44 original geometries were recomputed and passed the declared numerical and full-field physical gates. The split is frozen:
+\begin{center}
+\begin{tabular}{lrrrr}
+\toprule
+Split & Train & Validation & Test & Extrapolation\\\midrule
+Cases & 24 & 6 & 8 & 6\\\bottomrule
+\end{tabular}
+\end{center}
+All four groups come from the same two-parameter body family. The test set measures interpolation to withheld geometries. The extrapolation set extends a shape parameter beyond the training range; it is still not a new aircraft topology.
+
+\begin{figure}[H]\centering
+\includegraphics[width=.70\linewidth]{split_map.png}
+\caption{Frozen geometry split in $(a,b)$ space. No validation, test, or extrapolation geometry is used to fit the training-only preprocessing or neural weights.}
+\end{figure}
+
+\begin{figure}[H]\centering
+\includegraphics[width=.88\linewidth]{waveforms_by_split.png}
+\caption{Representative accepted CFD pressure signatures from each split. Shock location and amplitude both change with geometry.}
+\end{figure}
+
