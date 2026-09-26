@@ -1,0 +1,133 @@
+\topic{10}{POD: compressing a pressure waveform into a few coordinates}
+Each CFD case contains a vector of pressure samples
+\begin{equation}
+ \mathbf y_i=[\Cp(x_1),\ldots,\Cp(x_m)].
+\end{equation}
+Stack the 24 training waveforms into $\mathbf Y$ and subtract the training mean $\bar{\mathbf y}$. Singular-value decomposition gives
+\begin{equation}
+ \mathbf Y' = \mathbf U\mathbf\Sigma\mathbf V^T.
+\end{equation}
+The rows of $\mathbf V^T$ are orthonormal spatial modes $\phi_k(x)$. A waveform is approximated by
+\begin{equation}
+ \boxed{
+ \Cp(x;\boldsymbol\theta)\approx\bar{\Cp}(x)+\sum_{k=1}^{K}z_k(\boldsymbol\theta)\phi_k(x)
+ },
+\end{equation}
+with $\boldsymbol\theta=(a,b)$. The retained energy is
+\begin{equation}
+ E_K=\frac{\sum_{k=1}^{K}\sigma_k^2}{\sum_j\sigma_j^2}.
+\end{equation}
+The released clean model uses $K=12$ full-SVD POD modes. Critically, the mean, basis, input scaling, and output scaling are all fitted on the 24 training cases only.
+
+\begin{figure}[H]\centering
+\includegraphics[width=.68\linewidth]{pod_energy.png}
+\caption{Cumulative POD energy from the training set only.}
+\end{figure}
+
+\begin{figure}[H]\centering
+\includegraphics[width=.80\linewidth]{pod_modes.png}
+\caption{The first three training pressure modes. The modes encode coherent changes in amplitude and wave position across the geometry family.}
+\end{figure}
+
+\topic{11}{The neural surrogate}
+The surrogate does not directly predict 561 independent pressure samples. It predicts the compact latent vector plus pressure drag:
+\begin{equation}
+ (a,b)\longrightarrow [z_1,\ldots,z_{12},\log \CDp].
+\end{equation}
+The released clean-label model uses two tanh hidden layers of 32 neurons each, L-BFGS optimization, $\alpha=0.01$, maximum 3000 iterations, random seed 16, and a full-SVD PCA/POD basis. The logarithm ensures positive reconstructed drag.
+
+If $\mathbf z$ is the predicted modal vector, the pressure signature is reconstructed by the same POD expansion. This separation is useful pedagogically: the neural network learns a low-dimensional geometry-to-coefficient map, while the POD basis stores the spatial structure.
+
+\begin{figure}[H]\centering
+\includegraphics[width=.82\linewidth]{model_metrics_lines.png}
+\caption{Retained clean-label model errors across the frozen splits. Extrapolation degrades sharply even though interpolation errors remain modest.}
+\end{figure}
+
+\topic{12}{Error metrics and what they do not say}
+Three errors are reported because they answer different questions.
+
+Whole-waveform relative error:
+\begin{equation}
+ \epsilon_{\mathrm{wave}}=
+ \frac{\|\hat{\mathbf y}-\mathbf y\|_2}{\|\mathbf y\|_2}.
+\end{equation}
+Mean relative positive-peak error:
+\begin{equation}
+ \epsilon_{\mathrm{peak}}=
+ \left|\frac{\max \hat\Cp-\max\Cp}{\max\Cp}\right|.
+\end{equation}
+Pressure-drag error:
+\begin{equation}
+ \epsilon_D=\left|\frac{\widehat{\CDp}-\CDp}{\CDp}\right|.
+\end{equation}
+A shifted shock can give a modest peak error and a large waveform error. Conversely, aggregate $L_2$ error can conceal one poor geometry.
+
+For the clean retained model, same-mesh aggregate waveform errors are 0.31\% on training, 3.94\% on validation, 5.37\% on test, and 34.29\% on extrapolation. The test worst-case waveform error is 11.78\%; extrapolation worst-case error reaches 43.19\%. Against the eight finer CFD references, aggregate waveform error is 7.20\%, mean peak error 2.24\%, mean drag error 2.27\%, and worst-case waveform error 15.37\%.
+
+\begin{center}
+\begin{tabular}{lrrrr}
+\toprule
+Split & Wave $L_2$ & Mean peak & Mean drag & Worst wave\\\midrule
+Validation & 3.94\% & 1.60\% & 2.25\% & 6.34\%\\
+Test & 5.37\% & 1.41\% & 2.56\% & 11.78\%\\
+Extrapolation & 34.29\% & 6.83\% & 22.39\% & 43.19\%\\
+Finer CFD test & 7.20\% & 2.24\% & 2.27\% & 15.37\%\\\bottomrule
+\end{tabular}
+\end{center}
+
+\begin{figure}[H]\centering
+\includegraphics[width=.80\linewidth]{finer_case_errors.png}
+\caption{Individual waveform errors against the eight finer CFD references. Aggregate acceptance does not mean every case lies below 10\%.}
+\end{figure}
+
+\keyidea{The interpolation result is useful within the known two-parameter family. The extrapolation failure is equally important evidence: the model has not learned general supersonic aerodynamics.}
+
+\newpage
+\topic{13}{Constrained shape optimization}
+The engineering objective is to reduce the maximum positive pressure coefficient on the $r/L=0.5$ sampling line while limiting pressure drag. The optimization problem is
+\begin{align}
+ \min_{a,b}\quad & J(a,b)=\max_x\Cp(x;a,b),\\
+ \text{subject to}\quad & \CDp(a,b)\le1.02\,\CDp^{\mathrm{baseline}},
+\end{align}
+with volume already enforced by the parameterization.
+
+A derivative-free optimizer is appropriate because the sampled maximum can be nonsmooth and the neural model is cheap to evaluate. But a cheap optimizer may exploit local surrogate errors. Therefore a neural optimum is a \emph{proposal}, not a verified aerodynamic result.
+
+The retained historical candidate has
+\begin{equation}
+ a=0.3249533,\qquad b=0.1223779.
+\end{equation}
+Its historical surrogate predictions are preserved for provenance, but acceptance is based on fresh SU2 8.0.1 recomputation of the fixed geometry.
+
+\checkpoint{Why is ordinary test-set accuracy not sufficient evidence that an optimizer-selected point is trustworthy?}
+
+\topic{14}{Fresh CFD recomputation of the retained design}
+The retained baseline and optimized geometries were recomputed at two design mesh levels. At level 1.5,
+\begin{align}
+ {\Cp}^{\max}_{\rm base}&=0.0333075, & {\CDp}_{\rm base}&=0.00135423,\\
+ {\Cp}^{\max}_{\rm opt}&=0.0262504, & {\CDp}_{\rm opt}&=0.00130281.
+\end{align}
+This corresponds to a 21.19\% peak reduction and a 3.80\% drag reduction. At level 2,
+\begin{align}
+ {\Cp}^{\max}_{\rm base}&=0.0341276, & {\CDp}_{\rm base}&=0.00136763,\\
+ {\Cp}^{\max}_{\rm opt}&=0.0270753, & {\CDp}_{\rm opt}&=0.00131947,
+\end{align}
+which gives a 20.66\% peak reduction and a 3.52\% drag reduction.
+
+Observed level-1.5-to-level-2 changes are 2.40\% in baseline peak and 0.98\% in baseline drag; 3.05\% in optimized peak and 1.26\% in optimized drag. The optimized waveform $L_2$ mesh change is 5.39\%. The declared peak and drag mesh gates pass; that does not mean the entire waveform is converged to below 5\%.
+
+\begin{figure}[H]\centering
+\includegraphics[width=.95\linewidth]{weakwall_design_validation.png}
+\caption{Independent SU2 8.0.1 recomputation of the retained candidate, including design-point mesh comparison and off-design Mach-number checks.}
+\end{figure}
+
+\begin{center}
+\begin{tabular}{lrr}
+\toprule
+Quantity & Mesh 1.5 & Mesh 2\\\midrule
+Peak reduction & 21.19\% & 20.66\%\\
+Pressure-drag change & -3.80\% & -3.52\%\\
+Drag-ratio constraint & 0.9620 & 0.9648\\\bottomrule
+\end{tabular}
+\end{center}
+
