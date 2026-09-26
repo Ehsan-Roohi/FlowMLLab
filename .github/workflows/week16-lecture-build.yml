@@ -22,8 +22,8 @@ jobs:
           python -m pip install numpy matplotlib
       - name: Recover canonical lecture source
         run: |
-          cat lectures/source/week16_source_parts/*.b64 > /tmp/week16_source.b64
-          base64 -d /tmp/week16_source.b64 > lectures/source/week16_supersonic_shape_optimization.tex
+          cat lectures/source/week16_source_parts/part*.gz.b64 > /tmp/week16_source.gz.b64
+          base64 -d /tmp/week16_source.gz.b64 | gzip -d > lectures/source/week16_supersonic_shape_optimization.tex
       - name: Build and validate lecture
         run: |
           python qa/week16/build_week16_lecture.py
