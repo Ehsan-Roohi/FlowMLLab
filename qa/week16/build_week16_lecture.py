@@ -1,115 +1,229 @@
-"""Build the curated Week 16 Times-style lecture from retained evidence."""
+"""Build the Week 16 educational LaTeX lecture from retained numerical evidence.
+
+This generator intentionally uses line/scatter plots rather than bar charts. The PDF
+is compiled with XeLaTeX; Times New Roman is used when installed, with Tinos as
+the metric-compatible fallback on Linux CI.
+"""
 from pathlib import Path
-import json, subprocess
+import json
+import subprocess
+import shutil
 import numpy as np
-import matplotlib
-matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 
-ROOT=Path(__file__).resolve().parents[2]
-R=ROOT/"results/week16_lowboom/reference"
-SRC=ROOT/"lectures/source"
-OUT=SRC/"week16_generated"
-OUT.mkdir(parents=True,exist_ok=True)
+ROOT = Path(__file__).resolve().parents[2]
+R = ROOT / "results/week16_lowboom/reference"
+ASSETS = ROOT / "lectures/source/week16_tex_assets"
+TEX = ROOT / "lectures/source/week16_supersonic_shape_optimization.tex"
+PDF = ROOT / "lectures/week16_supersonic_shape_optimization.pdf"
 
-plt.rcParams.update({
-    "font.family":"serif",
-    "font.serif":["Tinos","Times New Roman","DejaVu Serif"],
-    "font.size":11,
-    "axes.titlesize":12,
-    "axes.labelsize":11,
-    "legend.fontsize":9,
-})
 
-with np.load(R/"clean_dataset_v801.npz",allow_pickle=False) as z:
-    data={k:z[k].copy() for k in z.files}
+def build_figures():
+    ASSETS.mkdir(parents=True, exist_ok=True)
+    data = np.load(R / "clean_dataset_v801.npz", allow_pickle=False)
 
-V=np.pi*0.06**2/2
-s=np.linspace(0,1,2001)
-def radius(s,a,b):
-    f=np.sin(np.pi*s)*np.exp(a*(2*s-1)+b*np.cos(2*np.pi*s))
-    c=np.sqrt(V/(np.pi*np.trapezoid(f*f,s)))
-    return c*f
+    # Mach cone schematic.
+    M = 1.8
+    mu = np.arcsin(1.0 / M)
+    x = np.linspace(0.0, 6.0, 200)
+    y = np.tan(mu) * (6.0 - x)
+    fig, ax = plt.subplots(figsize=(7, 3.5))
+    ax.plot([0, 6], [0, 0], lw=1)
+    ax.plot(x, y, lw=2)
+    ax.plot(x, -y, lw=2)
+    ax.scatter([6], [0], s=80, zorder=3)
+    ax.annotate("supersonic body", xy=(6, 0), xytext=(4.8, 0.75),
+                arrowprops=dict(arrowstyle="->"))
+    ax.text(2.4, 0.55, rf"$\mu=\sin^{{-1}}(1/M)={np.degrees(mu):.1f}^\circ$")
+    ax.set_xlim(0, 6.4)
+    ax.set_ylim(-2.7, 2.7)
+    ax.set_aspect("equal")
+    ax.axis("off")
+    fig.tight_layout()
+    fig.savefig(ASSETS / "mach_cone.png", dpi=220, bbox_inches="tight")
+    plt.close(fig)
 
-fig,ax=plt.subplots(figsize=(7.6,3.6))
-for a,b,label in [(0,0,"baseline"),(.325,.122,"retained optimized"),(.3,-.15,"comparison")]:
-    r=radius(s,a,b); line,=ax.plot(s,r,label=label); ax.plot(s,-r,color=line.get_color())
-ax.set(xlabel="$x/L$",ylabel="$r/L$"); ax.set_aspect("equal",adjustable="box"); ax.grid(alpha=.2); ax.legend(ncol=3,loc="upper center")
-fig.tight_layout(); fig.savefig(OUT/"geometry_profiles.pdf",bbox_inches="tight"); plt.close(fig)
+    # Conceptual N-wave.
+    xi = np.linspace(0, 1, 500)
+    p = np.zeros_like(xi)
+    mid = (xi >= 0.15) & (xi <= 0.85)
+    p[mid] = 0.9 - 1.8 * (xi[mid] - 0.15) / 0.70
+    fig, ax = plt.subplots(figsize=(7.5, 3.2))
+    ax.plot(xi, p, lw=2)
+    ax.axhline(0, lw=0.8)
+    ax.axvline(0.15, ls="--", lw=0.8)
+    ax.axvline(0.85, ls="--", lw=0.8)
+    ax.set_xlabel("retarded time")
+    ax.set_ylabel("overpressure")
+    ax.set_title("Conceptual far-field N-wave")
+    ax.text(0.18, 0.72, "compression shock")
+    ax.text(0.60, -0.72, "expansion region")
+    fig.tight_layout()
+    fig.savefig(ASSETS / "n_wave.png", dpi=220)
+    plt.close(fig)
 
-fig,ax=plt.subplots(figsize=(7.6,3.6))
-r0=radius(s,0,0); r1=radius(s,.3249532654588658,.12237788693256269)
-ax.plot(s,r0,label="baseline upper surface"); ax.plot(s,r1,label="optimized upper surface")
-mu=np.arcsin(1/1.8)
-for x0 in [0.12,0.42,0.72]:
-    xx=np.array([x0,min(1.2,x0+.35)])
-    yy=np.interp(x0,s,r0)+np.tan(mu)*(xx-x0)*.12
-    ax.plot(xx,yy,ls=":",lw=1)
-ax.set(xlim=(0,1.1),ylim=(0,.11),xlabel="$x/L$",ylabel="$r/L$"); ax.grid(alpha=.2); ax.legend()
-fig.tight_layout(); fig.savefig(OUT/"geometry_wave_concept.pdf",bbox_inches="tight"); plt.close(fig)
+    # Fixed-volume geometry family.
+    s = np.linspace(0, 1, 1500)
+    volume = np.pi * 0.06**2 / 2
 
-markers={"train":"o","validation":"s","test":"^","extrapolation":"x"}
-fig,ax=plt.subplots(figsize=(6.2,4.4))
-for split in ["train","validation","test","extrapolation"]:
-    m=data["splits"]==split
-    ax.scatter(data["parameters"][m,0],data["parameters"][m,1],marker=markers[split],s=42,label=f"{split} ({m.sum()})")
-ax.set(xlabel="shape parameter $a$",ylabel="shape parameter $b$"); ax.grid(alpha=.2); ax.legend()
-fig.tight_layout(); fig.savefig(OUT/"split_map.pdf",bbox_inches="tight"); plt.close(fig)
+    def radius(a, b):
+        f = np.sin(np.pi * s) * np.exp(a * (2 * s - 1) + b * np.cos(2 * np.pi * s))
+        c = np.sqrt(volume / (np.pi * np.trapezoid(f * f, s)))
+        return c * f
 
-fig,ax=plt.subplots(figsize=(7.6,4.0))
-for split in ["train","validation","test","extrapolation"]:
-    idx=np.where(data["splits"]==split)[0]; i=idx[len(idx)//2]
-    ax.plot(data["x"],data["waveforms"][i],label=f"{split}: {data['names'][i]}")
-ax.axhline(0,lw=.7); ax.set(xlabel="$x/L$",ylabel="$C_p$"); ax.grid(alpha=.2); ax.legend()
-fig.tight_layout(); fig.savefig(OUT/"representative_waveforms.pdf",bbox_inches="tight"); plt.close(fig)
+    fig, ax = plt.subplots(figsize=(8, 3.2))
+    for a, b, label in [
+        (0.0, 0.0, "baseline"),
+        (0.3249532654588658, 0.12237788693256269, "retained candidate"),
+        (-0.25, 0.12, "example"),
+    ]:
+        rr = radius(a, b)
+        line, = ax.plot(s, rr, label=label)
+        ax.plot(s, -rr, color=line.get_color())
+    ax.set_aspect("equal")
+    ax.set_xlabel("x/L")
+    ax.set_ylabel("r/L")
+    ax.legend(ncol=3)
+    ax.set_title("Fixed-volume two-parameter body family")
+    fig.tight_layout()
+    fig.savefig(ASSETS / "geometry_family.png", dpi=220)
+    plt.close(fig)
 
-train=data["splits"]=="train"; Y=data["waveforms"][train]; Yc=Y-Y.mean(axis=0)
-_,S,_=np.linalg.svd(Yc,full_matrices=False); energy=np.cumsum(S**2)/np.sum(S**2)
-fig,ax=plt.subplots(figsize=(6.4,4.0))
-ax.plot(np.arange(1,len(S)+1),energy,"o-"); ax.axvline(12,ls="--",lw=1)
-ax.set(xlabel="number of POD modes $K$",ylabel="cumulative retained energy",ylim=(0,1.01)); ax.grid(alpha=.2)
-fig.tight_layout(); fig.savefig(OUT/"pod_energy.pdf",bbox_inches="tight"); plt.close(fig)
+    # Split map.
+    fig, ax = plt.subplots(figsize=(6, 4.5))
+    markers = {"train": "o", "validation": "s", "test": "^", "extrapolation": "x"}
+    for split, marker in markers.items():
+        mask = data["splits"] == split
+        ax.scatter(data["parameters"][mask, 0], data["parameters"][mask, 1],
+                   marker=marker, s=45, label=split)
+    ax.set_xlabel("a")
+    ax.set_ylabel("b")
+    ax.set_title("Frozen geometry split")
+    ax.legend()
+    ax.grid(alpha=0.2)
+    fig.tight_layout()
+    fig.savefig(ASSETS / "split_map.png", dpi=220)
+    plt.close(fig)
 
-cone=json.loads((R/"cone_refinement_v801.json").read_text())
-cells=np.array([row["mesh"]["cells"] for row in cone["levels"]])
-err=100*np.array([row["analytical_comparison"]["relative_error"] for row in cone["levels"]])
-fig,ax=plt.subplots(figsize=(6.4,4.0))
-ax.plot(cells,err,"o-"); ax.set_xscale("log")
-ax.set(xlabel="fluid cells",ylabel="Taylor-Maccoll wall-$C_p$ error [%]"); ax.grid(alpha=.2,which="both")
-fig.tight_layout(); fig.savefig(OUT/"cone_refinement.pdf",bbox_inches="tight"); plt.close(fig)
+    # Representative pressure waveforms.
+    fig, ax = plt.subplots(figsize=(8, 4))
+    for split in ["train", "validation", "test", "extrapolation"]:
+        ids = np.where(data["splits"] == split)[0]
+        i = ids[len(ids) // 2]
+        ax.plot(data["x"], data["waveforms"][i], label=split)
+    ax.set_xlabel("x/L")
+    ax.set_ylabel("Cp")
+    ax.set_title("Representative near-field CFD signatures")
+    ax.legend()
+    ax.grid(alpha=0.2)
+    fig.tight_layout()
+    fig.savefig(ASSETS / "waveforms_by_split.png", dpi=220)
+    plt.close(fig)
 
-ma=json.loads((R/"clean_model_audit_v801.json").read_text())
-splits=["train","validation","test","extrapolation"]; x=np.arange(len(splits))
-metrics=[("wave_relative_l2","waveform $L_2$"),("peak_mean_relative_error","mean peak"),("drag_mean_relative_error","mean drag"),("worst_case_wave_relative_l2","worst waveform")]
-fig,ax=plt.subplots(figsize=(7.2,4.2))
-for key,label in metrics:
-    ax.plot(x,[100*ma["same_mesh"][sp][key] for sp in splits],"o-",label=label)
-ax.set_xticks(x,splits); ax.set_ylabel("relative error [%]"); ax.set_yscale("log"); ax.grid(alpha=.2,which="both"); ax.legend(ncol=2)
-fig.tight_layout(); fig.savefig(OUT/"model_errors.pdf",bbox_inches="tight"); plt.close(fig)
+    # Training-only POD.
+    train = data["splits"] == "train"
+    Y = data["waveforms"][train]
+    mean = Y.mean(axis=0)
+    _, singular_values, vt = np.linalg.svd(Y - mean, full_matrices=False)
+    energy = np.cumsum(singular_values**2) / np.sum(singular_values**2)
 
-design=json.loads((R/"weakwall_design_audit.json").read_text())
-with np.load(R/"weakwall_design_test.npz",allow_pickle=False) as ev:
-    xv=ev["x"]; w=ev["waveforms"]
-fig,ax=plt.subplots(figsize=(7.6,4.1))
-ax.plot(xv,w[0],label="baseline, mesh level 1.5"); ax.plot(xv,w[1],label="optimized, mesh level 1.5")
-ax.plot(xv,w[2],ls="--",label="baseline, mesh level 2"); ax.plot(xv,w[3],ls="--",label="optimized, mesh level 2")
-ax.set(xlabel="$x/L$",ylabel="$C_p$"); ax.grid(alpha=.2); ax.legend()
-fig.tight_layout(); fig.savefig(OUT/"design_waveforms.pdf",bbox_inches="tight"); plt.close(fig)
+    fig, ax = plt.subplots(figsize=(7, 3.5))
+    ax.plot(np.arange(1, len(singular_values) + 1), energy, "o-")
+    ax.axvline(12, ls="--", lw=1)
+    ax.set_ylim(0, 1.005)
+    ax.set_xlabel("number of POD modes")
+    ax.set_ylabel("cumulative retained energy")
+    ax.set_title("Training-only POD compression")
+    ax.grid(alpha=0.25)
+    fig.tight_layout()
+    fig.savefig(ASSETS / "pod_energy.png", dpi=220)
+    plt.close(fig)
 
-od=design["offdesign_pairs"]
-M=np.array([1.7,1.8,1.9])
-peak=np.array([100*od[0]["peak_reduction"],100*design["design_pairs"][0]["peak_reduction"],100*od[1]["peak_reduction"]])
-drag=np.array([-100*od[0]["drag_change"],-100*design["design_pairs"][0]["drag_change"],-100*od[1]["drag_change"]])
-fig,ax=plt.subplots(figsize=(6.4,4.0))
-ax.plot(M,peak,"o-",label="peak-pressure reduction"); ax.plot(M,drag,"s-",label="pressure-drag reduction")
-ax.set(xlabel="Mach number",ylabel="reduction relative to baseline [%]"); ax.grid(alpha=.2); ax.legend()
-fig.tight_layout(); fig.savefig(OUT/"offdesign.pdf",bbox_inches="tight"); plt.close(fig)
+    fig, ax = plt.subplots(figsize=(8, 4))
+    for k in range(3):
+        ax.plot(data["x"], vt[k], label=f"mode {k + 1}")
+    ax.set_xlabel("x/L")
+    ax.set_ylabel("POD mode amplitude")
+    ax.set_title("First three pressure-signature POD modes")
+    ax.legend()
+    ax.grid(alpha=0.2)
+    fig.tight_layout()
+    fig.savefig(ASSETS / "pod_modes.png", dpi=220)
+    plt.close(fig)
 
-tex=SRC/"week16_supersonic_shape_optimization.tex"
-assert tex.is_file()
-cmd=["xelatex","-interaction=nonstopmode","-halt-on-error","-output-directory=..",tex.name]
-for _ in range(2):
-    subprocess.run(cmd,cwd=SRC,check=True)
-pdf=ROOT/"lectures/week16_supersonic_shape_optimization.pdf"
-assert pdf.is_file() and pdf.stat().st_size>100_000
-print("Built",pdf)
+    # Taylor-Maccoll refinement.
+    cone = json.loads((R / "cone_refinement_v801.json").read_text())
+    cells = [row["mesh"]["cells"] for row in cone["levels"]]
+    errors = [100 * row["analytical_comparison"]["relative_error"] for row in cone["levels"]]
+    fig, ax = plt.subplots(figsize=(6.5, 4))
+    ax.plot(cells, errors, "o-")
+    ax.set_xscale("log")
+    ax.set_xlabel("fluid cells")
+    ax.set_ylabel("cone Cp error [%]")
+    ax.set_title("Taylor-Maccoll verification under mesh refinement")
+    ax.grid(alpha=0.25)
+    fig.tight_layout()
+    fig.savefig(ASSETS / "cone_refinement.png", dpi=220)
+    plt.close(fig)
+
+    # Clean retained model: lines, no bars.
+    audit = json.loads((R / "clean_model_audit_v801.json").read_text())
+    splits = ["train", "validation", "test", "extrapolation"]
+    xx = range(len(splits))
+    fig, ax = plt.subplots(figsize=(7.6, 4.2))
+    for key, label in [
+        ("wave_relative_l2", "wave L2"),
+        ("peak_mean_relative_error", "mean peak error"),
+        ("drag_mean_relative_error", "mean drag error"),
+    ]:
+        yy = [100 * audit["same_mesh"][s][key] for s in splits]
+        ax.plot(xx, yy, "o-", label=label)
+    ax.set_xticks(list(xx), splits)
+    ax.set_ylabel("relative error [%]")
+    ax.set_title("Clean retained model: interpolation vs extrapolation")
+    ax.legend()
+    ax.grid(alpha=0.25)
+    fig.tight_layout()
+    fig.savefig(ASSETS / "model_metrics_lines.png", dpi=220)
+    plt.close(fig)
+
+    errs = [100 * value for value in audit["finer_mesh"]["per_case_wave_relative_l2"]]
+    fig, ax = plt.subplots(figsize=(7.6, 3.8))
+    ax.plot(range(1, len(errs) + 1), errs, "o-")
+    ax.axhline(10, ls="--", lw=1, label="10% reference line")
+    ax.set_xlabel("finer-mesh test case")
+    ax.set_ylabel("waveform relative L2 error [%]")
+    ax.set_title("Finer-CFD audit: individual waveform errors")
+    ax.legend()
+    ax.grid(alpha=0.25)
+    fig.tight_layout()
+    fig.savefig(ASSETS / "finer_case_errors.png", dpi=220)
+    plt.close(fig)
+
+
+def compile_pdf():
+    for _ in range(2):
+        subprocess.run([
+            "xelatex", "-interaction=nonstopmode", "-halt-on-error",
+            "-output-directory=lectures", str(TEX)
+        ], cwd=ROOT, check=True)
+
+    if not PDF.is_file():
+        raise RuntimeError("Week 16 lecture PDF was not generated.")
+
+    # PDF must be a full lecture, not the old short handout.
+    from pypdf import PdfReader
+    pages = len(PdfReader(str(PDF)).pages)
+    if pages < 20:
+        raise RuntimeError(f"Week 16 lecture unexpectedly short: {pages} pages")
+
+    for suffix in [".aux", ".log", ".out", ".toc"]:
+        p = ROOT / "lectures" / ("week16_supersonic_shape_optimization" + suffix)
+        p.unlink(missing_ok=True)
+
+    print(f"Built {PDF} ({pages} pages)")
+
+
+if __name__ == "__main__":
+    build_figures()
+    compile_pdf()
