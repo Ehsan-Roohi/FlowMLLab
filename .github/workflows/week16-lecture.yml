@@ -1,0 +1,54 @@
+name: Build Week 16 educational lecture
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'lectures/source/week16_supersonic_shape_optimization.tex'
+      - 'lectures/source/week16_parts/**'
+      - 'qa/week16/build_week16_lecture.py'
+      - '.github/workflows/week16-lecture.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      MPLBACKEND: Agg
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install LaTeX and fonts
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y texlive-xetex texlive-latex-extra texlive-fonts-recommended fonts-croscore fonts-stix poppler-utils
+      - name: Install plotting/PDF dependencies
+        run: python -m pip install numpy matplotlib pypdf
+      - name: Build 20+ page Week 16 lecture
+        run: python qa/week16/build_week16_lecture.py
+      - name: Check PDF and fonts
+        run: |
+          pdfinfo lectures/week16_supersonic_shape_optimization.pdf | grep Pages
+          pdffonts lectures/week16_supersonic_shape_optimization.pdf | head -20
+      - uses: actions/upload-artifact@v4
+        with:
+          name: week16-educational-lecture
+          path: lectures/week16_supersonic_shape_optimization.pdf
+          retention-days: 90
+      - name: Commit rebuilt lecture PDF
+        run: |
+          git config user.name 'FlowMLLab lecture builder'
+          git config user.email 'github-actions[bot]@users.noreply.github.com'
+          git add lectures/week16_supersonic_shape_optimization.pdf
+          if git diff --cached --quiet; then
+            echo 'PDF unchanged'
+          else
+            git commit -m 'Rebuild Week 16 educational lecture PDF [skip ci]'
+            git push
+          fi
