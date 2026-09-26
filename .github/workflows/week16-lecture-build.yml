@@ -3,9 +3,7 @@ on:
   push:
     branches: [main]
     paths:
-      - 'lectures/source/week16_source_parts/**'
-      - 'qa/week16/build_week16_lecture.py'
-      - '.github/workflows/week16-lecture-build.yml'
+      - 'lectures/source/week16_source_parts/READY'
 permissions:
   contents: write
 jobs:
