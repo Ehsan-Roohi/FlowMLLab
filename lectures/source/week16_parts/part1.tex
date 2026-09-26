@@ -1,0 +1,120 @@
+
+
+\begin{center}
+{\color{accent}\LARGE\bfseries AI in Thermal-Fluids: Week 16}\\[7pt]
+{\Large Supersonic Shape Optimization and Sonic-Boom Physics}\\[5pt]
+{\large From verified CFD to POD surrogates and independently recomputed designs}
+\end{center}
+
+\vspace{6pt}
+\textbf{The learning question.} How can we change the shape of a supersonic body to reshape its pressure signature, accelerate the search with machine learning, and still make a scientifically defensible claim after the optimizer has finished?
+
+\textbf{After Week 16, you should be able to}
+\begin{enumerate}
+\item Explain Mach waves, shock formation, near-field pressure signatures, the idealized N-wave, and why near-field peak pressure is not the same quantity as ground loudness.
+\item Derive the conversion between $\Cp$ and $\Delta p/p_\infty$, and explain why the normalization matters when comparing CFD with sonic-boom reference data.
+\item Derive the fixed-volume two-parameter axisymmetric body family used in the computational experiment.
+\item State the axisymmetric Euler model, its assumptions, and the boundary/observation quantities used by the SU2 calculations.
+\item Distinguish iterative convergence, mesh sensitivity, analytical verification, experimental validation, and machine-learning validation.
+\item Explain how POD compresses the pressure waveform and how a small neural network maps geometry to POD coefficients and pressure drag.
+\item Use validation data to select a surrogate, quantify waveform/peak/drag errors, and explain why extrapolation is much harder than interpolation.
+\item Explain why an optimizer-selected geometry must be recomputed with CFD, then interpret the retained Week 16 design results and their mesh/off-design checks.
+\end{enumerate}
+
+\textbf{Scope.} The accepted teaching problem is a fixed-volume body of revolution at zero incidence, $M_\infty=1.8$, solved with axisymmetric compressible Euler CFD. The design target is the off-body pressure signature at $r/L=0.5$. The module does \emph{not} calculate atmospheric propagation or PLdB. NASA SEEB-ALR is retained as a reference/failure-analysis extension; the attempted SU2 reproduction did not pass acceptance and is not presented as successful validation.
+
+\textbf{Reading route.}
+\begin{center}
+\begin{tabularx}{0.96\linewidth}{p{.15\linewidth}X}
+\toprule
+Sections & Purpose\\\midrule
+1--4 & Supersonic waves, sonic-boom signatures, pressure measures, propagation\\
+5--8 & Geometry, governing equations, numerical model, Taylor--Maccoll verification\\
+9--12 & CFD campaign, POD reduction, neural surrogate, error metrics\\
+13--15 & Optimization, independent CFD recomputation, off-design robustness\\
+16--18 & NASA reference lesson, what failed, and what would be required for ground noise\\
+19 & Reproducibility checklist and final takeaways\\\bottomrule
+\end{tabularx}
+\end{center}
+
+\newpage
+\tableofcontents
+\newpage
+
+\topic{1}{Mach waves and the Mach cone}
+The local speed of sound is the speed at which an infinitesimal pressure disturbance propagates relative to the gas. For a calorically perfect gas,
+\begin{equation}
+ a=\sqrt{\gamma R T}.
+\end{equation}
+The Mach number compares the body speed $U$ with $a$:
+\begin{equation}
+ \boxed{M=\frac{U}{a}}.
+\end{equation}
+When $M<1$, acoustic information can propagate ahead of the body. When $M>1$, the body outruns infinitesimal disturbances. The envelope of emitted wavelets forms a Mach cone. Geometry gives
+\begin{equation}
+ \boxed{\mu=\sin^{-1}\!\left(\frac{1}{M}\right)},
+\end{equation}
+where $\mu$ is the Mach angle. At $M=1.8$, $\mu\approx 33.75^\circ$.
+
+\begin{figure}[H]\centering
+\includegraphics[width=.70\linewidth]{mach_cone.png}
+\caption{Schematic Mach cone for $M=1.8$. The angle is set by kinematics; finite-amplitude compression waves can steepen into shocks.}
+\end{figure}
+
+A slender body does not generate one isolated wave. Every change of surface slope and cross-sectional area creates compression or expansion disturbances. Close to the body, individual waves remain distinguishable. Farther away, nonlinear propagation causes compression waves to steepen and disturbances to interact.
+
+\checkpoint{Why does the Mach cone become narrower as $M$ increases? What happens to $\mu$ as $M\rightarrow 1^+$?}
+
+\topic{2}{From compression waves to a sonic-boom pressure history}
+A supersonic body creates a spatial pressure pattern. An observer samples that pattern in time as the vehicle passes. The pressure perturbation is
+\begin{equation}
+ p'(t)=p(t)-p_\infty.
+\end{equation}
+Compression raises pressure; expansion lowers it. In the far field of a conventional slender configuration, many disturbances may merge into an idealized N-shaped signature: a rapid positive jump, a gradual decrease through ambient pressure, and a final jump back toward ambient.
+
+\begin{figure}[H]\centering
+\includegraphics[width=.75\linewidth]{n_wave.png}
+\caption{Conceptual N-wave. This is a teaching schematic, not a waveform computed in Week 16.}
+\end{figure}
+
+The two sharp changes are shocks. Their finite rise time and amplitude at the ground depend on propagation distance, geometry, altitude, atmosphere, humidity, winds, and nonlinear effects. A ``low-boom'' vehicle aims to distribute volume and lift so that the individual near-field disturbances do not coalesce into a strong conventional N-wave.
+
+\keyidea{The geometry controls how compression and expansion disturbances are launched. Atmospheric propagation controls how the near-field signature evolves before reaching an observer. These are related but distinct modeling stages.}
+
+\topic{3}{Pressure coefficient and sonic-boom normalization}
+Aerodynamic CFD commonly reports the pressure coefficient
+\begin{equation}
+ \boxed{\Cp=\frac{p-p_\infty}{q_\infty}},\qquad q_\infty=\frac12\rho_\infty U_\infty^2.
+\end{equation}
+Using $U_\infty=M_\infty a_\infty$ and $a_\infty^2=\gamma p_\infty/\rho_\infty$,
+\begin{align}
+ q_\infty&=\frac12\rho_\infty M_\infty^2\frac{\gamma p_\infty}{\rho_\infty}
+ =\frac12\gamma p_\infty M_\infty^2,\\
+\therefore\quad
+ \boxed{\frac{\Delta p}{p_\infty}=\frac{\gamma M_\infty^2}{2}\Cp}.
+\end{align}
+At $M_\infty=1.8$ with $\gamma=1.4$, the multiplier is $2.268$. At the NASA SEEB-ALR condition $M_\infty=1.6$, it is $1.792$.
+
+This conversion is essential. Two curves with the same physical pressure cannot be compared numerically if one is normalized by $q_\infty$ and the other by $p_\infty$.
+
+\checkpoint{If $\Cp=0.03$ at $M=1.8$, what is $\Delta p/p_\infty$? Why would copying the same number directly onto a NASA $\Delta p/p_\infty$ plot be wrong?}
+
+\topic{4}{Equivalent area, Whitham theory, and propagation: where Week 16 fits}
+Classical sonic-boom theory connects body shape and lift distribution to an equivalent area distribution. In slender-body theory, the longitudinal evolution of that equivalent area determines the strength and spacing of disturbances. Whitham's $F$-function reformulates the source distribution so that weak nonlinear propagation can be treated efficiently. The exact full-aircraft construction is beyond the present two-parameter teaching body, but the conceptual chain is important:
+\begin{equation}
+ \text{geometry and lift}\rightarrow \text{equivalent area}\rightarrow F\text{-function}\rightarrow
+ \text{near-field signature}\rightarrow \text{atmospheric propagation}\rightarrow \text{ground waveform}.
+\end{equation}
+
+A frequently used weak-shock propagation model is a generalized Burgers-type equation. In schematic form,
+\begin{equation}
+ \frac{\partial p'}{\partial s}
+ +\beta p'\frac{\partial p'}{\partial\tau}
+ =\delta\frac{\partial^2p'}{\partial\tau^2}
+ +\mathcal{G}[p']+\mathcal{A}[p'],
+\end{equation}
+where $s$ is propagation distance and $\tau$ is retarded time. The nonlinear term steepens compression waves; the diffusion-like term represents absorption; $\mathcal{G}$ represents spreading; and $\mathcal{A}$ can include atmospheric stratification, relaxation, wind, and humidity effects.
+
+Week 16 stops \emph{before} this propagation stage. We optimize a near-field $\Cp$ signature, so the strongest defensible statement is about near-field pressure shaping. We do not infer a PLdB value.
+
+\newpage
