@@ -1,0 +1,41 @@
+name: Build Week 16 Times-style lecture
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'lectures/source/week16_source_parts/**'
+      - 'qa/week16/build_week16_lecture.py'
+      - '.github/workflows/week16-lecture-build.yml'
+permissions:
+  contents: write
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install LaTeX and fonts
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y texlive-xetex texlive-latex-extra texlive-fonts-recommended texlive-science fonts-tinos fonts-stix poppler-utils
+          python -m pip install numpy matplotlib
+      - name: Recover canonical lecture source
+        run: |
+          cat lectures/source/week16_source_parts/*.b64 > /tmp/week16_source.b64
+          base64 -d /tmp/week16_source.b64 > lectures/source/week16_supersonic_shape_optimization.tex
+      - name: Build and validate lecture
+        run: |
+          python qa/week16/build_week16_lecture.py
+          test "$(pdfinfo lectures/week16_supersonic_shape_optimization.pdf | awk '/Pages:/ {print $2}')" -ge 18
+          ! grep -q 'Overfull' lectures/week16_supersonic_shape_optimization.log || { cat lectures/week16_supersonic_shape_optimization.log; exit 1; }
+      - name: Commit curated source and PDF
+        run: |
+          git config user.name 'FlowMLLab lecture build'
+          git config user.email 'github-actions[bot]@users.noreply.github.com'
+          git rm -r lectures/source/week16_source_parts
+          git add lectures/source/week16_supersonic_shape_optimization.tex lectures/week16_supersonic_shape_optimization.pdf
+          git commit -m 'Rebuild Week 16 as a complete Times-style teaching lecture'
+          git push
