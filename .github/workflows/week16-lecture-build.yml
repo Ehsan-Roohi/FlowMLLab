@@ -18,7 +18,7 @@ jobs:
       - name: Install LaTeX and fonts
         run: |
           sudo apt-get update
-          sudo apt-get install -y texlive-xetex texlive-latex-extra texlive-fonts-recommended texlive-science fonts-tinos fonts-stix poppler-utils
+          sudo apt-get install -y texlive-xetex texlive-latex-extra texlive-fonts-recommended texlive-science fonts-croscore fonts-stix poppler-utils
           python -m pip install numpy matplotlib
       - name: Recover canonical lecture source
         run: |
