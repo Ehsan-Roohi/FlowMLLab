@@ -69,3 +69,9 @@ outputs are retained in `source/week01_assets/` and are not a claim of grid
 independence. The [coverage audit](source/week01_coverage.md) records what the
 rewrite restored or clarified. Earlier editions of this lecture are kept under
 [`versions/`](versions/) for reference only; the main PDF supersedes them.
+
+
+<!-- transformer-course-v3 -->
+## Weeks 17-22: active Transformer laboratories
+
+[Course guide and setup](../docs/TRANSFORMER_COURSE.md). Six distinct laboratories extend Weeks 7.3, 7.4 and 15 with required language modeling, coding exercises, separate instructor solutions, matched baselines and explicit transfer audits.

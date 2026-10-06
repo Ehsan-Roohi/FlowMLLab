@@ -1,0 +1,43 @@
+{
+  "rank": 8,
+  "context": 4,
+  "width": 24,
+  "branch_width": 208,
+  "history_mlp_width": 250,
+  "seeds": [
+    17,
+    29,
+    43
+  ],
+  "sensor_count": 16,
+  "noise_fraction": 0.01,
+  "train_re": [
+    90,
+    110
+  ],
+  "validation_re": 100,
+  "evaluation_re": 105,
+  "train_end": 160,
+  "validation_end": 210,
+  "test_end": 281,
+  "max_steps": 1200,
+  "eval_every": 30,
+  "patience": 240,
+  "learning_rate": 0.003,
+  "ridge": 1e-06,
+  "source_re": 90,
+  "target_res": [
+    100,
+    105,
+    110
+  ],
+  "transfer_blocks": [
+    4,
+    8,
+    15
+  ],
+  "block_length": 10,
+  "pretrain_steps": 300,
+  "adaptation_steps": 300,
+  "threads": 2
+}

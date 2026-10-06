@@ -170,3 +170,9 @@ Run notebooks in order. Restart and run all before submission. A notebook with s
 - [Week 5 sparse sensing](week05_06/W5_Lab2_Sparse_Sensing_Dynamics.ipynb)
 - [Week 7 modal forecasting](week07/W7_Lab2_Modal_Forecasting.ipynb)
 - [Retained protocol, metrics and figures](../results/modal_labs/README.md)
+
+
+<!-- transformer-course-v3 -->
+## Weeks 17-22: active Transformer laboratories
+
+[Course guide and setup](../docs/TRANSFORMER_COURSE.md). Six distinct laboratories extend Weeks 7.3, 7.4 and 15 with required language modeling, coding exercises, separate instructor solutions, matched baselines and explicit transfer audits.

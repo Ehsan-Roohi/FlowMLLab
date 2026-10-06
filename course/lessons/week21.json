@@ -1,0 +1,49 @@
+{
+  "week": 21,
+  "title": "Autonomous prediction: representation, phase and dynamics",
+  "question": "After removing the POD floor, what advantage remains over a four-frame MLP and DMD?",
+  "prerequisites": "Week 7 modal forecasting, Week 18 all-position causal learning; no reset at the evaluation boundary.",
+  "demos": [
+    {
+      "title": "Rescore full trajectories and compare matched-information models",
+      "prose": "The primary trajectory starts at frame 160 from frames 156:160. The evaluation boundary at 210 is not an assimilation event. Additional-start metrics in the record are a separate observed-initialization protocol.",
+      "code": "record=json.loads((EVIDENCE/'forecast.json').read_text());display(pd.DataFrame([{'model':r['method'],'seed':r['seed'],**{k:v for k,v in r['metrics'].items() if k!='per_frame_relative_l2'}} for r in record['rows']]))\nprint('Earlier Week 7 MLP reference:',record['legacy_MLP_reference'])\nretained=np.load(EVIDENCE/'predictions.npz',allow_pickle=False)\ntruth=cases[110]['omega'][210:].reshape(71,-1)\nfig,ax=plt.subplots(figsize=(9,4))\nfor row in record['rows']:\n    if row['seed'] in (None,17):\n        pred=lab.prediction(retained,'forecast__'+row['key'])[50:]\n        curve=np.linalg.norm(pred-truth,axis=1)/np.linalg.norm(truth,axis=1)\n        ax.plot(np.arange(51,122),curve,label=row['key'])\nax.set_xlabel('steps since observed initialization');ax.set_ylabel('field relative L2');ax.legend(fontsize=8);plt.show()"
+    },
+    {
+      "title": "Phase and amplitude from the full rollout",
+      "prose": "A 71-frame FFT cannot resolve small frequency differences. Fit frequency, amplitude and phase over the 121-frame rollout instead. This remains a local scalar probe, not lift or drag; the fit residual checks whether the sinusoidal model is plausible.",
+      "code": "display(pd.DataFrame(record['spectral_fit']).T)\nreference=record['spectral_fit']['reference']\nprint('Observation duration:',reference['duration'],'D/U; sinusoidal-fit residual:',reference['residual_mse'])\nrep=lab.Representation.fit(cases[110]['omega'][:160],8)\nrow=next(r for r in record['rows'] if r['method']=='Causal-Transformer')\npred=lab.prediction(retained,'forecast__'+row['key'])[50:]\nparts=lab.error_components(pred,truth,rep)\nassert abs(parts['pythagorean_residual'])<1e-8\nprint('Squared-error decomposition residual:',parts['pythagorean_residual'])"
+    }
+  ],
+  "tasks": [
+    {
+      "title": "Autonomous state update",
+      "prompt": "Roll a history window forward by dropping its oldest token and appending the prediction. Do not read a future observed state.",
+      "starter": "def advance(history,next_state):\n    raise NotImplementedError",
+      "solution": "def advance(history,next_state):\n    return np.concatenate([history[1:],next_state[None]],axis=0)",
+      "checks": "h=np.arange(32).reshape(4,8);n=np.ones(8)*99\na=advance(h,n)\nnp.testing.assert_array_equal(a[:3],h[1:]);np.testing.assert_array_equal(a[-1],n)"
+    },
+    {
+      "title": "Separate representation and dynamics",
+      "prompt": "Compute the squared total error, representation error and in-subspace error for an orthogonal projector.",
+      "starter": "def decompose(pred,truth,oracle):\n    raise NotImplementedError",
+      "solution": "def decompose(pred,truth,oracle):\n    norm=np.sum(truth**2)\n    return np.sum((pred-truth)**2)/norm,np.sum((oracle-truth)**2)/norm,np.sum((pred-oracle)**2)/norm",
+      "checks": "oracle=rep.decode(rep.encode(truth));total,floor,dynamic=decompose(pred,truth,oracle)\nassert abs(total-floor-dynamic)<1e-8"
+    },
+    {
+      "title": "Frequency-fit diagnostic",
+      "prompt": "Measure relative frequency error using the continuous fitted frequency, not the closest FFT bin.",
+      "starter": "def frequency_error(t,y,fref):\n    raise NotImplementedError",
+      "solution": "def frequency_error(t,y,fref):\n    return abs(lab.spectral_fit(t,y)[\"frequency\"]/fref-1)",
+      "checks": "t=np.arange(121)*.1041667\nassert frequency_error(t,np.sin(2*np.pi*.185*t),.185)<1e-4"
+    },
+    {
+      "title": "Report phase drift",
+      "prompt": "Convert a frequency discrepancy to accumulated phase drift over a duration in D/U.",
+      "starter": "def phase_drift(f,reference,duration):\n    raise NotImplementedError",
+      "solution": "def phase_drift(f,reference,duration):\n    return 2*np.pi*(f-reference)*duration",
+      "checks": "assert np.isclose(phase_drift(.2,.1,10),2*np.pi)"
+    }
+  ],
+  "duration_minutes": 120
+}

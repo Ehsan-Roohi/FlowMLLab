@@ -1,0 +1,19 @@
+test_actual_experiments_reject_evaluation_leakage (test_transformer_course.CourseContracts.test_actual_experiments_reject_evaluation_leakage) ... ok
+test_all_positions_have_gradients (test_transformer_course.CourseContracts.test_all_positions_have_gradients) ... ok
+test_attention_rows_and_mask (test_transformer_course.CourseContracts.test_attention_rows_and_mask) ... ok
+test_causal_prefix_and_unmasked_counterexample (test_transformer_course.CourseContracts.test_causal_prefix_and_unmasked_counterexample) ... ok
+test_checkpoint_roundtrip_needs_no_new_basis (test_transformer_course.CourseContracts.test_checkpoint_roundtrip_needs_no_new_basis) ... ok
+test_constant_probe_has_no_identifiable_frequency (test_transformer_course.CourseContracts.test_constant_probe_has_no_identifiable_frequency) ... ok
+test_frequency_fit_detects_sub_bin_change (test_transformer_course.CourseContracts.test_frequency_fit_detects_sub_bin_change) ... ok
+test_heldout_poison_cannot_change_fitted_state (test_transformer_course.CourseContracts.test_heldout_poison_cannot_change_fitted_state) ... ok
+test_label_accounting_and_fixed_initialization (test_transformer_course.CourseContracts.test_label_accounting_and_fixed_initialization) ... ok
+test_nonfinite_rollout_rejects_checkpoint (test_transformer_course.CourseContracts.test_nonfinite_rollout_rejects_checkpoint) ... ok
+test_projection_error_decomposition (test_transformer_course.CourseContracts.test_projection_error_decomposition) ... ok
+test_sensor_permutation_and_cardinality (test_transformer_course.CourseContracts.test_sensor_permutation_and_cardinality) ... ok
+test_shifted_windows (test_transformer_course.CourseContracts.test_shifted_windows) ... ok
+test_storage_roundtrip (test_transformer_course.CourseContracts.test_storage_roundtrip) ... ok
+
+----------------------------------------------------------------------
+Ran 14 tests in 29.089s
+
+OK

@@ -123,3 +123,18 @@ original proposal history, including additional sampling diagnostics.
 PINN verification is covered in the final [Week 13 module](notebooks/week13/README.md).
 Use the current course tables above to distinguish available modules from
 future proposals, and the linked results reports to assess their validation status.
+
+
+<!-- transformer-course-v3 -->
+## Weeks 17-22: mechanisms, experiments and claim audits
+
+| Week | Investigation | Required evidence |
+| --- | --- | --- |
+| [17](notebooks/week17/README.md) | Attention as a learned kernel on a wake | Attention algebra, permutation and interpretation counterexample |
+| [18](notebooks/week18/README.md) | From next-character likelihood to causal wake decoding | Shifted likelihood, causal prefix and all-position supervision |
+| [19](notebooks/week19/README.md) | Tokenization and noise-aware sensor design | Exact patch inverse, POD floor and noise-conditioned sensing |
+| [20](notebooks/week20/README.md) | Sensor-to-field learning with missing observations | All/drop-half controls, learning curves and budget accounting |
+| [21](notebooks/week21/README.md) | Autonomous prediction: representation, phase and dynamics | MLP/DMD comparison, representation decomposition and phase drift |
+| [22](notebooks/week22/README.md) | Audit transfer before calling it a foundation model | Three retained targets, full label budget, matched steps and transfer rescoring |
+
+These extend existing Weeks 7.3, 7.4 and 15. See the [data-role and prerequisite contract](docs/TRANSFORMER_COURSE.md).

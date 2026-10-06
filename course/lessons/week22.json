@@ -1,0 +1,49 @@
+{
+  "week": 22,
+  "title": "Audit transfer before calling it a foundation model",
+  "question": "Does source training improve target dynamics after matching labels, representation and optimizer budget?",
+  "prerequisites": "Week 7.4 already introduces diverse pretraining. This capstone audits mechanisms and claims rather than repeating that introduction.",
+  "demos": [
+    {
+      "title": "Count every target label and fix the forecast start",
+      "prose": "Budgets name ten-frame blocks, not deceptively small counts of training-only labels. The total includes validation frames and four observed initialization frames. All arms forecast frames 160:281 and are scored on 210:281. The three targets were inspected in prior course work.",
+      "code": "for blocks in (4,8,15):\n    train,val,labels=lab.transfer_indices(blocks)\n    print(blocks,'blocks:',len(labels['training_frames']),'training +',len(labels['validation_frames']),'validation +',len(labels['initialization_frames']),'initialization =',labels['total_target_labels'])\nrecord=json.loads((EVIDENCE/'transfer.json').read_text())\nrows=record['rows'];display(pd.DataFrame([{'Re':r['target_re'],'labels':r['labels']['total_target_labels'],'arm':r['arm'],'seed':r['seed'],'field':r['metrics']['field_relative_l2'],'floor':r['metrics']['representation_floor'],'subspace':r['metrics']['in_subspace_relative_l2'],'steps':r.get('total_optimizer_steps')} for r in rows]))"
+    },
+    {
+      "title": "Recompute transfer metrics from stored predictions",
+      "prose": "Source-POD arms isolate initialization of dynamics. The target-POD MLP is a representation control, not the same architecture. Matched steps are reported alongside measured fit seconds; steps are not FLOPs. Source pretraining is reused and its amortization depends on the number of deployments.",
+      "code": "retained=np.load(EVIDENCE/'predictions.npz',allow_pickle=False)\nrow=next(r for r in rows if r['arm']=='pretrained' and r['target_re']==110)\npred=lab.prediction(retained,'transfer__'+row['key'])[50:]\ntruth=cases[110]['omega'][210:].reshape(71,-1)\nscore=np.linalg.norm(pred-truth)/np.linalg.norm(truth)\nassert abs(score-row['metrics']['field_relative_l2'])<1e-7\nprint('Recomputed W22 transfer metric:',score)\nfig,axes=plt.subplots(1,2,figsize=(11,4))\nfor arm in ('scratch','pretrained','matched-steps','target-POD-MLP','DMD'):\n    subset=[r for r in rows if r['arm']==arm and r['target_re']==110]\n    for j,key in enumerate(('field_relative_l2','in_subspace_relative_l2')):\n        groups={n:[r['metrics'][key] for r in subset if r['labels']['total_target_labels']==n] for n in (44,84,154)}\n        axes[j].plot(list(groups),[np.mean(v) for v in groups.values()],marker='o',label=arm)\nfloor=next(r['metrics']['representation_floor'] for r in rows if r['target_re']==110 and r['arm']=='pretrained')\naxes[0].axhline(floor,color='black',linestyle='--',label='source-POD floor')\nfor ax,title in zip(axes,['Field error','In-subspace error']):ax.set_title(title);ax.set_xlabel('all target labels');ax.legend(fontsize=7)\nplt.show()"
+    }
+  ],
+  "tasks": [
+    {
+      "title": "Audit information budgets",
+      "prompt": "Return the cardinality of the union of all target frames used before scoring.",
+      "starter": "def label_count(record):\n    raise NotImplementedError",
+      "solution": "def label_count(record):\n    return len(set(record[\"training_frames\"])|set(record[\"validation_frames\"])|set(record[\"initialization_frames\"]))",
+      "checks": "assert label_count(lab.transfer_indices(4)[2])==44"
+    },
+    {
+      "title": "Match compute accounting",
+      "prompt": "Count source pretraining and target adaptation steps for each learned arm, without charging source cost to a source-free arm.",
+      "starter": "def total_steps(adapt,pretrain=None):\n    raise NotImplementedError",
+      "solution": "def total_steps(adapt,pretrain=None):\n    return adapt[\"executed_steps\"]+(pretrain[\"executed_steps\"] if pretrain else 0)",
+      "checks": "assert total_steps({\"executed_steps\":300},{\"executed_steps\":300})==600"
+    },
+    {
+      "title": "Detect a representation-limited result",
+      "prompt": "Flag cases where the squared representation error explains more than 95% of squared field error. Do not subtract unsquared norms.",
+      "starter": "def representation_limited(metrics):\n    raise NotImplementedError",
+      "solution": "def representation_limited(metrics):\n    return metrics[\"representation_floor\"]**2/max(metrics[\"field_relative_l2\"]**2,1e-20)>.95",
+      "checks": "assert representation_limited({\"representation_floor\":.2559,\"field_relative_l2\":.256})"
+    },
+    {
+      "title": "Write a bounded comparative claim",
+      "prompt": "Compute the relative reduction in in-subspace error against the matched-step control. A negative value is negative transfer and must be retained.",
+      "starter": "def transfer_gain(pretrained,control):\n    raise NotImplementedError",
+      "solution": "def transfer_gain(pretrained,control):\n    return 1-pretrained/control",
+      "checks": "assert transfer_gain(.02,.01)==-1\nassert transfer_gain(.01,.02)==.5"
+    }
+  ],
+  "duration_minutes": 120
+}

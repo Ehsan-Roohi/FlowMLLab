@@ -1,0 +1,59 @@
+{
+  "interpretation": "Budget sensitivity, not a proof of convergence; test metrics do not select checkpoints.",
+  "rows": [
+    {
+      "key": "Causal-Transformer-17",
+      "base_validation_mse": 4.670452779111548e-05,
+      "audit_validation_mse": 3.6271562694156046e-05,
+      "selected_step": 1530,
+      "at_budget_boundary": false,
+      "base_field_relative_l2": 0.054915430296852245,
+      "audit_field_relative_l2": 0.054875760970182784
+    },
+    {
+      "key": "History-MLP-17",
+      "base_validation_mse": 3.279849676108452e-05,
+      "audit_validation_mse": 3.0931804070247266e-05,
+      "selected_step": 2070,
+      "at_budget_boundary": false,
+      "base_field_relative_l2": 0.05528714800042543,
+      "audit_field_relative_l2": 0.05521974670784664
+    },
+    {
+      "key": "Causal-Transformer-29",
+      "base_validation_mse": 3.092228084077373e-05,
+      "audit_validation_mse": 1.6161451193863284e-05,
+      "selected_step": 2310,
+      "at_budget_boundary": false,
+      "base_field_relative_l2": 0.05487399196185194,
+      "audit_field_relative_l2": 0.05459102594615253
+    },
+    {
+      "key": "History-MLP-29",
+      "base_validation_mse": 3.093120056387328e-05,
+      "audit_validation_mse": 2.1160290380731732e-05,
+      "selected_step": 2400,
+      "at_budget_boundary": true,
+      "base_field_relative_l2": 0.054885984727126566,
+      "audit_field_relative_l2": 0.054843275941480266
+    },
+    {
+      "key": "Causal-Transformer-43",
+      "base_validation_mse": 4.498415208770942e-05,
+      "audit_validation_mse": 2.3725357440119174e-05,
+      "selected_step": 2160,
+      "at_budget_boundary": false,
+      "base_field_relative_l2": 0.055864386986100086,
+      "audit_field_relative_l2": 0.05483815388251585
+    },
+    {
+      "key": "History-MLP-43",
+      "base_validation_mse": 3.192540120823696e-05,
+      "audit_validation_mse": 2.7955038304042893e-05,
+      "selected_step": 2370,
+      "at_budget_boundary": false,
+      "base_field_relative_l2": 0.05515718246699479,
+      "audit_field_relative_l2": 0.05492165955996525
+    }
+  ]
+}

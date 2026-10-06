@@ -1,0 +1,13 @@
+{
+  "source_hashes": {
+    "flowmllab/transformer_course.py": "1c87a4deed9a2304f2e2b01d0a91fac9c31e0f22a494e0218fb7c3b4d7a9b0e2",
+    "qa/audit_transformer_budget.py": "3655bc75a5a327dbe84bb9d922bafae852c78744fb54b102649d2b906d601613"
+  },
+  "files": {
+    "checkpoints.pt": "908ff328f29a7830695422676d199a81d5669a883447f68e40c9123d0e030e91",
+    "forecast.json": "56eb7769e79fff6862a4befd4784631453f191c3cd0b0487bcb722bae3baaabb",
+    "plan.json": "7ccea2ae7cd1d5bbc84b7d4f4eeb3d7a882b6bd92c17419cb87559c8e6a2d519",
+    "predictions.npz": "53cbf8b384a192ea6d798d1916e20443f5fa590310f79e4d658a69b0850d9ea4",
+    "summary.json": "f00e06e50d2aaeddcacdff2c072463891abe2d84f8675bee993dd7972388458a"
+  }
+}

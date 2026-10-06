@@ -724,3 +724,9 @@ The [all-versions DOI](https://doi.org/10.5281/zenodo.22074169) resolves to the 
 **Ehsan Roohi** · University of Massachusetts Amherst · [roohie@umass.edu](mailto:roohie@umass.edu)
 
 Copyright © 2026 Ehsan Roohi. [MIT License](LICENSE).
+
+
+<!-- transformer-course-v3 -->
+## Weeks 17-22: active Transformer laboratories
+
+[Course guide and setup](docs/TRANSFORMER_COURSE.md). Six distinct laboratories extend Weeks 7.3, 7.4 and 15 with required language modeling, coding exercises, separate instructor solutions, matched baselines and explicit transfer audits.

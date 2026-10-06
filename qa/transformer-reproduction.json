@@ -1,0 +1,3847 @@
+{
+  "relative_tolerance": 0.02,
+  "absolute_tolerance": 1e-05,
+  "passed": true,
+  "comparisons": [
+    {
+      "experiment": "sensors",
+      "key": "Sensor-set-17-all",
+      "metric": "field_relative_l2",
+      "reference": 0.1355423993507347,
+      "candidate": 0.1355423993507347,
+      "passed": true
+    },
+    {
+      "experiment": "sensors",
+      "key": "Sensor-set-17-all",
+      "metric": "representation_floor",
+      "reference": 0.04049210488973712,
+      "candidate": 0.04049210488973712,
+      "passed": true
+    },
+    {
+      "experiment": "sensors",
+      "key": "Sensor-set-17-all",
+      "metric": "in_subspace_relative_l2",
+      "reference": 0.1293527404555181,
+      "candidate": 0.1293527404555181,
+      "passed": true
+    },
+    {
+      "experiment": "sensors",
+      "key": "Sensor-set-17-drop-half",
+      "metric": "field_relative_l2",
+      "reference": 0.27158700285468784,
+      "candidate": 0.27158700285468784,
+      "passed": true
+    },
+    {
+      "experiment": "sensors",
+      "key": "Sensor-set-17-drop-half",
+      "metric": "representation_floor",
+      "reference": 0.04049210488973712,
+      "candidate": 0.04049210488973712,
+      "passed": true
+    },
+    {
+      "experiment": "sensors",
+      "key": "Sensor-set-17-drop-half",
+      "metric": "in_subspace_relative_l2",
+      "reference": 0.26855146538641506,
+      "candidate": 0.26855146538641506,
+      "passed": true
+    },
+    {
+      "experiment": "sensors",
+      "key": "POD-DeepONet-17-all",
+      "metric": "field_relative_l2",
+      "reference": 0.040889796409989555,
+      "candidate": 0.040889796409989555,
+      "passed": true
+    },
+    {
+      "experiment": "sensors",
+      "key": "POD-DeepONet-17-all",
+      "metric": "representation_floor",
+      "reference": 0.04049210488973712,
+      "candidate": 0.04049210488973712,
+      "passed": true
+    },
+    {
+      "experiment": "sensors",
+      "key": "POD-DeepONet-17-all",
+      "metric": "in_subspace_relative_l2",
+      "reference": 0.005689015033283063,
+      "candidate": 0.005689015033283063,
+      "passed": true
+    },
+    {
+      "experiment": "sensors",
+      "key": "POD-DeepONet-17-drop-half",
+      "metric": "field_relative_l2",
+      "reference": 0.48159617199844074,
+      "candidate": 0.48159617199844074,
+      "passed": true
+    },
+    {
+      "experiment": "sensors",
+      "key": "POD-DeepONet-17-drop-half",
+      "metric": "representation_floor",
+      "reference": 0.04049210488973712,
+      "candidate": 0.04049210488973712,
+      "passed": true
+    },
+    {
+      "experiment": "sensors",
+      "key": "POD-DeepONet-17-drop-half",
+      "metric": "in_subspace_relative_l2",
+      "reference": 0.47989088585338974,
+      "candidate": 0.47989088585338974,
+      "passed": true
+    },
+    {
+      "experiment": "sensors",
+      "key": "Sensor-set-29-all",
+      "metric": "field_relative_l2",
+      "reference": 0.14432036940725998,
+      "candidate": 0.14432036940725998,
+      "passed": true
+    },
+    {
+      "experiment": "sensors",
+      "key": "Sensor-set-29-all",
+      "metric": "representation_floor",
+      "reference": 0.04049210488973712,
+      "candidate": 0.04049210488973712,
+      "passed": true
+    },
+    {
+      "experiment": "sensors",
+      "key": "Sensor-set-29-all",
+      "metric": "in_subspace_relative_l2",
+      "reference": 0.13852349427965874,
+      "candidate": 0.13852349427965874,
+      "passed": true
+    },
+    {
+      "experiment": "sensors",
+      "key": "Sensor-set-29-drop-half",
+      "metric": "field_relative_l2",
+      "reference": 0.24989609463005724,
+      "candidate": 0.24989609463005724,
+      "passed": true
+    },
+    {
+      "experiment": "sensors",
+      "key": "Sensor-set-29-drop-half",
+      "metric": "representation_floor",
+      "reference": 0.04049210488973712,
+      "candidate": 0.04049210488973712,
+      "passed": true
+    },
+    {
+      "experiment": "sensors",
+      "key": "Sensor-set-29-drop-half",
+      "metric": "in_subspace_relative_l2",
+      "reference": 0.24659368919936533,
+      "candidate": 0.24659368919936533,
+      "passed": true
+    },
+    {
+      "experiment": "sensors",
+      "key": "POD-DeepONet-29-all",
+      "metric": "field_relative_l2",
+      "reference": 0.04115925541697252,
+      "candidate": 0.04115925541697252,
+      "passed": true
+    },
+    {
+      "experiment": "sensors",
+      "key": "POD-DeepONet-29-all",
+      "metric": "representation_floor",
+      "reference": 0.04049210488973712,
+      "candidate": 0.04049210488973712,
+      "passed": true
+    },
+    {
+      "experiment": "sensors",
+      "key": "POD-DeepONet-29-all",
+      "metric": "in_subspace_relative_l2",
+      "reference": 0.007380633311451557,
+      "candidate": 0.007380633311451557,
+      "passed": true
+    },
+    {
+      "experiment": "sensors",
+      "key": "POD-DeepONet-29-drop-half",
+      "metric": "field_relative_l2",
+      "reference": 0.4833288398836344,
+      "candidate": 0.4833288398836344,
+      "passed": true
+    },
+    {
+      "experiment": "sensors",
+      "key": "POD-DeepONet-29-drop-half",
+      "metric": "representation_floor",
+      "reference": 0.04049210488973712,
+      "candidate": 0.04049210488973712,
+      "passed": true
+    },
+    {
+      "experiment": "sensors",
+      "key": "POD-DeepONet-29-drop-half",
+      "metric": "in_subspace_relative_l2",
+      "reference": 0.48162968856255034,
+      "candidate": 0.48162968856255034,
+      "passed": true
+    },
+    {
+      "experiment": "sensors",
+      "key": "Sensor-set-43-all",
+      "metric": "field_relative_l2",
+      "reference": 0.11609417924431703,
+      "candidate": 0.11609417924431703,
+      "passed": true
+    },
+    {
+      "experiment": "sensors",
+      "key": "Sensor-set-43-all",
+      "metric": "representation_floor",
+      "reference": 0.04049210488973712,
+      "candidate": 0.04049210488973712,
+      "passed": true
+    },
+    {
+      "experiment": "sensors",
+      "key": "Sensor-set-43-all",
+      "metric": "in_subspace_relative_l2",
+      "reference": 0.10880371269405395,
+      "candidate": 0.10880371269405395,
+      "passed": true
+    },
+    {
+      "experiment": "sensors",
+      "key": "Sensor-set-43-drop-half",
+      "metric": "field_relative_l2",
+      "reference": 0.2262008547214791,
+      "candidate": 0.2262008547214791,
+      "passed": true
+    },
+    {
+      "experiment": "sensors",
+      "key": "Sensor-set-43-drop-half",
+      "metric": "representation_floor",
+      "reference": 0.04049210488973712,
+      "candidate": 0.04049210488973712,
+      "passed": true
+    },
+    {
+      "experiment": "sensors",
+      "key": "Sensor-set-43-drop-half",
+      "metric": "in_subspace_relative_l2",
+      "reference": 0.2225471098853598,
+      "candidate": 0.2225471098853598,
+      "passed": true
+    },
+    {
+      "experiment": "sensors",
+      "key": "POD-DeepONet-43-all",
+      "metric": "field_relative_l2",
+      "reference": 0.04088082890911667,
+      "candidate": 0.04088082890911667,
+      "passed": true
+    },
+    {
+      "experiment": "sensors",
+      "key": "POD-DeepONet-43-all",
+      "metric": "representation_floor",
+      "reference": 0.04049210488973712,
+      "candidate": 0.04049210488973712,
+      "passed": true
+    },
+    {
+      "experiment": "sensors",
+      "key": "POD-DeepONet-43-all",
+      "metric": "in_subspace_relative_l2",
+      "reference": 0.005624198955851368,
+      "candidate": 0.005624198955851368,
+      "passed": true
+    },
+    {
+      "experiment": "sensors",
+      "key": "POD-DeepONet-43-drop-half",
+      "metric": "field_relative_l2",
+      "reference": 0.4385527746298942,
+      "candidate": 0.4385527746298942,
+      "passed": true
+    },
+    {
+      "experiment": "sensors",
+      "key": "POD-DeepONet-43-drop-half",
+      "metric": "representation_floor",
+      "reference": 0.04049210488973712,
+      "candidate": 0.04049210488973712,
+      "passed": true
+    },
+    {
+      "experiment": "sensors",
+      "key": "POD-DeepONet-43-drop-half",
+      "metric": "in_subspace_relative_l2",
+      "reference": 0.4366794311359057,
+      "candidate": 0.4366794311359057,
+      "passed": true
+    },
+    {
+      "experiment": "sensors",
+      "key": "Ridge-imputation-all",
+      "metric": "field_relative_l2",
+      "reference": 0.041595786508600255,
+      "candidate": 0.041595786508600255,
+      "passed": true
+    },
+    {
+      "experiment": "sensors",
+      "key": "Ridge-imputation-all",
+      "metric": "representation_floor",
+      "reference": 0.04049210488973712,
+      "candidate": 0.04049210488973712,
+      "passed": true
+    },
+    {
+      "experiment": "sensors",
+      "key": "Ridge-imputation-all",
+      "metric": "in_subspace_relative_l2",
+      "reference": 0.009518345279909633,
+      "candidate": 0.009518345279909633,
+      "passed": true
+    },
+    {
+      "experiment": "sensors",
+      "key": "Gappy-POD-variable-all",
+      "metric": "field_relative_l2",
+      "reference": 0.04421900517324932,
+      "candidate": 0.04421900517324932,
+      "passed": true
+    },
+    {
+      "experiment": "sensors",
+      "key": "Gappy-POD-variable-all",
+      "metric": "representation_floor",
+      "reference": 0.04049210488973712,
+      "candidate": 0.04049210488973712,
+      "passed": true
+    },
+    {
+      "experiment": "sensors",
+      "key": "Gappy-POD-variable-all",
+      "metric": "in_subspace_relative_l2",
+      "reference": 0.017768226138542335,
+      "candidate": 0.017768226138542335,
+      "passed": true
+    },
+    {
+      "experiment": "sensors",
+      "key": "Ridge-imputation-drop-half",
+      "metric": "field_relative_l2",
+      "reference": 0.636149921392252,
+      "candidate": 0.636149921392252,
+      "passed": true
+    },
+    {
+      "experiment": "sensors",
+      "key": "Ridge-imputation-drop-half",
+      "metric": "representation_floor",
+      "reference": 0.04049210488973712,
+      "candidate": 0.04049210488973712,
+      "passed": true
+    },
+    {
+      "experiment": "sensors",
+      "key": "Ridge-imputation-drop-half",
+      "metric": "in_subspace_relative_l2",
+      "reference": 0.6348599152009584,
+      "candidate": 0.6348599152009584,
+      "passed": true
+    },
+    {
+      "experiment": "sensors",
+      "key": "Gappy-POD-variable-drop-half",
+      "metric": "field_relative_l2",
+      "reference": 0.28982918345828473,
+      "candidate": 0.28982918345828473,
+      "passed": true
+    },
+    {
+      "experiment": "sensors",
+      "key": "Gappy-POD-variable-drop-half",
+      "metric": "representation_floor",
+      "reference": 0.04049210488973712,
+      "candidate": 0.04049210488973712,
+      "passed": true
+    },
+    {
+      "experiment": "sensors",
+      "key": "Gappy-POD-variable-drop-half",
+      "metric": "in_subspace_relative_l2",
+      "reference": 0.2869866634979657,
+      "candidate": 0.2869866634979657,
+      "passed": true
+    },
+    {
+      "experiment": "forecast",
+      "key": "Causal-Transformer-17",
+      "metric": "field_relative_l2",
+      "reference": 0.054915430296852245,
+      "candidate": 0.054915430296852245,
+      "passed": true
+    },
+    {
+      "experiment": "forecast",
+      "key": "Causal-Transformer-17",
+      "metric": "representation_floor",
+      "reference": 0.054518713700223445,
+      "candidate": 0.054518713700223445,
+      "passed": true
+    },
+    {
+      "experiment": "forecast",
+      "key": "Causal-Transformer-17",
+      "metric": "in_subspace_relative_l2",
+      "reference": 0.0065889559993603415,
+      "candidate": 0.0065889559993603415,
+      "passed": true
+    },
+    {
+      "experiment": "forecast",
+      "key": "History-MLP-17",
+      "metric": "field_relative_l2",
+      "reference": 0.05528714800042543,
+      "candidate": 0.05528714800042543,
+      "passed": true
+    },
+    {
+      "experiment": "forecast",
+      "key": "History-MLP-17",
+      "metric": "representation_floor",
+      "reference": 0.054518713700223445,
+      "candidate": 0.054518713700223445,
+      "passed": true
+    },
+    {
+      "experiment": "forecast",
+      "key": "History-MLP-17",
+      "metric": "in_subspace_relative_l2",
+      "reference": 0.009185781975096906,
+      "candidate": 0.009185781975096906,
+      "passed": true
+    },
+    {
+      "experiment": "forecast",
+      "key": "Causal-Transformer-29",
+      "metric": "field_relative_l2",
+      "reference": 0.05487399196185194,
+      "candidate": 0.05487399196185194,
+      "passed": true
+    },
+    {
+      "experiment": "forecast",
+      "key": "Causal-Transformer-29",
+      "metric": "representation_floor",
+      "reference": 0.054518713700223445,
+      "candidate": 0.054518713700223445,
+      "passed": true
+    },
+    {
+      "experiment": "forecast",
+      "key": "Causal-Transformer-29",
+      "metric": "in_subspace_relative_l2",
+      "reference": 0.006234167971947842,
+      "candidate": 0.006234167971947842,
+      "passed": true
+    },
+    {
+      "experiment": "forecast",
+      "key": "History-MLP-29",
+      "metric": "field_relative_l2",
+      "reference": 0.054885984727126566,
+      "candidate": 0.054885984727126566,
+      "passed": true
+    },
+    {
+      "experiment": "forecast",
+      "key": "History-MLP-29",
+      "metric": "representation_floor",
+      "reference": 0.054518713700223445,
+      "candidate": 0.054518713700223445,
+      "passed": true
+    },
+    {
+      "experiment": "forecast",
+      "key": "History-MLP-29",
+      "metric": "in_subspace_relative_l2",
+      "reference": 0.006338862353722414,
+      "candidate": 0.006338862353722414,
+      "passed": true
+    },
+    {
+      "experiment": "forecast",
+      "key": "Causal-Transformer-43",
+      "metric": "field_relative_l2",
+      "reference": 0.055864386986100086,
+      "candidate": 0.055864386986100086,
+      "passed": true
+    },
+    {
+      "experiment": "forecast",
+      "key": "Causal-Transformer-43",
+      "metric": "representation_floor",
+      "reference": 0.054518713700223445,
+      "candidate": 0.054518713700223445,
+      "passed": true
+    },
+    {
+      "experiment": "forecast",
+      "key": "Causal-Transformer-43",
+      "metric": "in_subspace_relative_l2",
+      "reference": 0.012187681888112343,
+      "candidate": 0.012187681888112343,
+      "passed": true
+    },
+    {
+      "experiment": "forecast",
+      "key": "History-MLP-43",
+      "metric": "field_relative_l2",
+      "reference": 0.05515718246699479,
+      "candidate": 0.05515718246699479,
+      "passed": true
+    },
+    {
+      "experiment": "forecast",
+      "key": "History-MLP-43",
+      "metric": "representation_floor",
+      "reference": 0.054518713700223445,
+      "candidate": 0.054518713700223445,
+      "passed": true
+    },
+    {
+      "experiment": "forecast",
+      "key": "History-MLP-43",
+      "metric": "in_subspace_relative_l2",
+      "reference": 0.008368072309105985,
+      "candidate": 0.008368072309105985,
+      "passed": true
+    },
+    {
+      "experiment": "forecast",
+      "key": "DMD-r8",
+      "metric": "field_relative_l2",
+      "reference": 0.06436782761189369,
+      "candidate": 0.06436782761189369,
+      "passed": true
+    },
+    {
+      "experiment": "forecast",
+      "key": "DMD-r8",
+      "metric": "representation_floor",
+      "reference": 0.054518713700223445,
+      "candidate": 0.054518713700223445,
+      "passed": true
+    },
+    {
+      "experiment": "forecast",
+      "key": "DMD-r8",
+      "metric": "in_subspace_relative_l2",
+      "reference": 0.03421881190146057,
+      "candidate": 0.03421881190146057,
+      "passed": true
+    },
+    {
+      "experiment": "forecast",
+      "key": "Persistence",
+      "metric": "field_relative_l2",
+      "reference": 1.1312669515609741,
+      "candidate": 1.1312669515609741,
+      "passed": true
+    },
+    {
+      "experiment": "forecast",
+      "key": "Persistence",
+      "metric": "representation_floor",
+      "reference": 0.054518713700223445,
+      "candidate": 0.054518713700223445,
+      "passed": true
+    },
+    {
+      "experiment": "forecast",
+      "key": "Persistence",
+      "metric": "in_subspace_relative_l2",
+      "reference": 1.1299579039863468,
+      "candidate": 1.1299579039863468,
+      "passed": true
+    },
+    {
+      "experiment": "forecast",
+      "key": "POD-oracle",
+      "metric": "field_relative_l2",
+      "reference": 0.054518713700223445,
+      "candidate": 0.054518713700223445,
+      "passed": true
+    },
+    {
+      "experiment": "forecast",
+      "key": "POD-oracle",
+      "metric": "representation_floor",
+      "reference": 0.054518713700223445,
+      "candidate": 0.054518713700223445,
+      "passed": true
+    },
+    {
+      "experiment": "forecast",
+      "key": "POD-oracle",
+      "metric": "in_subspace_relative_l2",
+      "reference": 7.70951451262939e-17,
+      "candidate": 7.70951451262939e-17,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re100-B4-scratch-17",
+      "metric": "field_relative_l2",
+      "reference": 0.9639463984468564,
+      "candidate": 0.9639463984468564,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re100-B4-scratch-17",
+      "metric": "representation_floor",
+      "reference": 0.1477579989094447,
+      "candidate": 0.1477579989094447,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re100-B4-scratch-17",
+      "metric": "in_subspace_relative_l2",
+      "reference": 0.9525545826024575,
+      "candidate": 0.9525545826024575,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re100-B4-pretrained-17",
+      "metric": "field_relative_l2",
+      "reference": 0.4089936570599425,
+      "candidate": 0.4089936570599425,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re100-B4-pretrained-17",
+      "metric": "representation_floor",
+      "reference": 0.1477579989094447,
+      "candidate": 0.1477579989094447,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re100-B4-pretrained-17",
+      "metric": "in_subspace_relative_l2",
+      "reference": 0.38137040429684965,
+      "candidate": 0.38137040429684965,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re100-B4-matched-steps-17",
+      "metric": "field_relative_l2",
+      "reference": 0.9639463984468564,
+      "candidate": 0.9639463984468564,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re100-B4-matched-steps-17",
+      "metric": "representation_floor",
+      "reference": 0.1477579989094447,
+      "candidate": 0.1477579989094447,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re100-B4-matched-steps-17",
+      "metric": "in_subspace_relative_l2",
+      "reference": 0.9525545826024575,
+      "candidate": 0.9525545826024575,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re100-B4-target-POD-MLP-17",
+      "metric": "field_relative_l2",
+      "reference": 0.9736168255327327,
+      "candidate": 0.9736168255327327,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re100-B4-target-POD-MLP-17",
+      "metric": "representation_floor",
+      "reference": 0.538692849981999,
+      "candidate": 0.538692849981999,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re100-B4-target-POD-MLP-17",
+      "metric": "in_subspace_relative_l2",
+      "reference": 0.8110115512979555,
+      "candidate": 0.8110115512979555,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re100-B4-DMD-17",
+      "metric": "field_relative_l2",
+      "reference": 1.151185224976601,
+      "candidate": 1.151185224976601,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re100-B4-DMD-17",
+      "metric": "representation_floor",
+      "reference": 0.1477579989094447,
+      "candidate": 0.1477579989094447,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re100-B4-DMD-17",
+      "metric": "in_subspace_relative_l2",
+      "reference": 1.141663258567387,
+      "candidate": 1.141663258567387,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re100-B8-scratch-17",
+      "metric": "field_relative_l2",
+      "reference": 1.0056120541258327,
+      "candidate": 1.0056120541258327,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re100-B8-scratch-17",
+      "metric": "representation_floor",
+      "reference": 0.1477579989094447,
+      "candidate": 0.1477579989094447,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re100-B8-scratch-17",
+      "metric": "in_subspace_relative_l2",
+      "reference": 0.9946975304892707,
+      "candidate": 0.9946975304892707,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re100-B8-pretrained-17",
+      "metric": "field_relative_l2",
+      "reference": 0.15633321810063147,
+      "candidate": 0.15633321810063147,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re100-B8-pretrained-17",
+      "metric": "representation_floor",
+      "reference": 0.1477579989094447,
+      "candidate": 0.1477579989094447,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re100-B8-pretrained-17",
+      "metric": "in_subspace_relative_l2",
+      "reference": 0.05106514310149487,
+      "candidate": 0.05106514310149487,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re100-B8-matched-steps-17",
+      "metric": "field_relative_l2",
+      "reference": 0.9804995067991614,
+      "candidate": 0.9804995067991614,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re100-B8-matched-steps-17",
+      "metric": "representation_floor",
+      "reference": 0.1477579989094447,
+      "candidate": 0.1477579989094447,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re100-B8-matched-steps-17",
+      "metric": "in_subspace_relative_l2",
+      "reference": 0.9693022524433106,
+      "candidate": 0.9693022524433106,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re100-B8-target-POD-MLP-17",
+      "metric": "field_relative_l2",
+      "reference": 0.2584912257547941,
+      "candidate": 0.2584912257547941,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re100-B8-target-POD-MLP-17",
+      "metric": "representation_floor",
+      "reference": 0.0537464463319253,
+      "candidate": 0.0537464463319253,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re100-B8-target-POD-MLP-17",
+      "metric": "in_subspace_relative_l2",
+      "reference": 0.25284191365140746,
+      "candidate": 0.25284191365140746,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re100-B8-DMD-17",
+      "metric": "field_relative_l2",
+      "reference": 0.15514550595208915,
+      "candidate": 0.15514550595208915,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re100-B8-DMD-17",
+      "metric": "representation_floor",
+      "reference": 0.1477579989094447,
+      "candidate": 0.1477579989094447,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re100-B8-DMD-17",
+      "metric": "in_subspace_relative_l2",
+      "reference": 0.04730435260529711,
+      "candidate": 0.04730435260529711,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re100-B15-scratch-17",
+      "metric": "field_relative_l2",
+      "reference": 0.21578554376602713,
+      "candidate": 0.21578554376602713,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re100-B15-scratch-17",
+      "metric": "representation_floor",
+      "reference": 0.1477579989094447,
+      "candidate": 0.1477579989094447,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re100-B15-scratch-17",
+      "metric": "in_subspace_relative_l2",
+      "reference": 0.1572608490905367,
+      "candidate": 0.1572608490905367,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re100-B15-pretrained-17",
+      "metric": "field_relative_l2",
+      "reference": 0.14810247476809074,
+      "candidate": 0.14810247476809074,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re100-B15-pretrained-17",
+      "metric": "representation_floor",
+      "reference": 0.1477579989094447,
+      "candidate": 0.1477579989094447,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re100-B15-pretrained-17",
+      "metric": "in_subspace_relative_l2",
+      "reference": 0.010095384624148603,
+      "candidate": 0.010095384624148603,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re100-B15-matched-steps-17",
+      "metric": "field_relative_l2",
+      "reference": 0.15029980406368115,
+      "candidate": 0.15029980406368115,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re100-B15-matched-steps-17",
+      "metric": "representation_floor",
+      "reference": 0.1477579989094447,
+      "candidate": 0.1477579989094447,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re100-B15-matched-steps-17",
+      "metric": "in_subspace_relative_l2",
+      "reference": 0.02752462279228334,
+      "candidate": 0.02752462279228334,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re100-B15-target-POD-MLP-17",
+      "metric": "field_relative_l2",
+      "reference": 0.050332874213547055,
+      "candidate": 0.050332874213547055,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re100-B15-target-POD-MLP-17",
+      "metric": "representation_floor",
+      "reference": 0.048108103038210705,
+      "candidate": 0.048108103038210705,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re100-B15-target-POD-MLP-17",
+      "metric": "in_subspace_relative_l2",
+      "reference": 0.014798940795261596,
+      "candidate": 0.014798940795261596,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re100-B15-DMD-17",
+      "metric": "field_relative_l2",
+      "reference": 0.15093310895996925,
+      "candidate": 0.15093310895996925,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re100-B15-DMD-17",
+      "metric": "representation_floor",
+      "reference": 0.1477579989094447,
+      "candidate": 0.1477579989094447,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re100-B15-DMD-17",
+      "metric": "in_subspace_relative_l2",
+      "reference": 0.03079573247381032,
+      "candidate": 0.03079573247381032,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re105-B4-scratch-17",
+      "metric": "field_relative_l2",
+      "reference": 0.9075548793824942,
+      "candidate": 0.9075548793824942,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re105-B4-scratch-17",
+      "metric": "representation_floor",
+      "reference": 0.2036447773833187,
+      "candidate": 0.2036447773833187,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re105-B4-scratch-17",
+      "metric": "in_subspace_relative_l2",
+      "reference": 0.8844120440922727,
+      "candidate": 0.8844120440922727,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re105-B4-pretrained-17",
+      "metric": "field_relative_l2",
+      "reference": 0.4179863407771377,
+      "candidate": 0.4179863407771377,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re105-B4-pretrained-17",
+      "metric": "representation_floor",
+      "reference": 0.2036447773833187,
+      "candidate": 0.2036447773833187,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re105-B4-pretrained-17",
+      "metric": "in_subspace_relative_l2",
+      "reference": 0.3650224455026842,
+      "candidate": 0.3650224455026842,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re105-B4-matched-steps-17",
+      "metric": "field_relative_l2",
+      "reference": 0.9075548793824942,
+      "candidate": 0.9075548793824942,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re105-B4-matched-steps-17",
+      "metric": "representation_floor",
+      "reference": 0.2036447773833187,
+      "candidate": 0.2036447773833187,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re105-B4-matched-steps-17",
+      "metric": "in_subspace_relative_l2",
+      "reference": 0.8844120440922727,
+      "candidate": 0.8844120440922727,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re105-B4-target-POD-MLP-17",
+      "metric": "field_relative_l2",
+      "reference": 0.9797029183674745,
+      "candidate": 0.9797029183674745,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re105-B4-target-POD-MLP-17",
+      "metric": "representation_floor",
+      "reference": 0.5324716762670116,
+      "candidate": 0.5324716762670116,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re105-B4-target-POD-MLP-17",
+      "metric": "in_subspace_relative_l2",
+      "reference": 0.8223695776420414,
+      "candidate": 0.8223695776420414,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re105-B4-DMD-17",
+      "metric": "field_relative_l2",
+      "reference": 0.6646605836554396,
+      "candidate": 0.6646605836554396,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re105-B4-DMD-17",
+      "metric": "representation_floor",
+      "reference": 0.2036447773833187,
+      "candidate": 0.2036447773833187,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re105-B4-DMD-17",
+      "metric": "in_subspace_relative_l2",
+      "reference": 0.6326946310106387,
+      "candidate": 0.6326946310106387,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re105-B8-scratch-17",
+      "metric": "field_relative_l2",
+      "reference": 0.6887837502193919,
+      "candidate": 0.6887837502193919,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re105-B8-scratch-17",
+      "metric": "representation_floor",
+      "reference": 0.2036447773833187,
+      "candidate": 0.2036447773833187,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re105-B8-scratch-17",
+      "metric": "in_subspace_relative_l2",
+      "reference": 0.6579907744116086,
+      "candidate": 0.6579907744116086,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re105-B8-pretrained-17",
+      "metric": "field_relative_l2",
+      "reference": 0.22121369197557678,
+      "candidate": 0.22121369197557678,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re105-B8-pretrained-17",
+      "metric": "representation_floor",
+      "reference": 0.2036447773833187,
+      "candidate": 0.2036447773833187,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re105-B8-pretrained-17",
+      "metric": "in_subspace_relative_l2",
+      "reference": 0.0863961929830471,
+      "candidate": 0.0863961929830471,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re105-B8-matched-steps-17",
+      "metric": "field_relative_l2",
+      "reference": 0.5847981382468262,
+      "candidate": 0.5847981382468262,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re105-B8-matched-steps-17",
+      "metric": "representation_floor",
+      "reference": 0.2036447773833187,
+      "candidate": 0.2036447773833187,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re105-B8-matched-steps-17",
+      "metric": "in_subspace_relative_l2",
+      "reference": 0.548194917106546,
+      "candidate": 0.548194917106546,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re105-B8-target-POD-MLP-17",
+      "metric": "field_relative_l2",
+      "reference": 0.5302440762978744,
+      "candidate": 0.5302440762978744,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re105-B8-target-POD-MLP-17",
+      "metric": "representation_floor",
+      "reference": 0.05482225480568664,
+      "candidate": 0.05482225480568664,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re105-B8-target-POD-MLP-17",
+      "metric": "in_subspace_relative_l2",
+      "reference": 0.5274024088179787,
+      "candidate": 0.5274024088179787,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re105-B8-DMD-17",
+      "metric": "field_relative_l2",
+      "reference": 0.2088435632709307,
+      "candidate": 0.2088435632709307,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re105-B8-DMD-17",
+      "metric": "representation_floor",
+      "reference": 0.2036447773833187,
+      "candidate": 0.2036447773833187,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re105-B8-DMD-17",
+      "metric": "in_subspace_relative_l2",
+      "reference": 0.0463080831410433,
+      "candidate": 0.0463080831410433,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re105-B15-scratch-17",
+      "metric": "field_relative_l2",
+      "reference": 0.2815163755195646,
+      "candidate": 0.2815163755195646,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re105-B15-scratch-17",
+      "metric": "representation_floor",
+      "reference": 0.2036447773833187,
+      "candidate": 0.2036447773833187,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re105-B15-scratch-17",
+      "metric": "in_subspace_relative_l2",
+      "reference": 0.19437148538345608,
+      "candidate": 0.19437148538345608,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re105-B15-pretrained-17",
+      "metric": "field_relative_l2",
+      "reference": 0.2041109821061659,
+      "candidate": 0.2041109821061659,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re105-B15-pretrained-17",
+      "metric": "representation_floor",
+      "reference": 0.2036447773833187,
+      "candidate": 0.2036447773833187,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re105-B15-pretrained-17",
+      "metric": "in_subspace_relative_l2",
+      "reference": 0.013787590828064607,
+      "candidate": 0.013787590828064607,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re105-B15-matched-steps-17",
+      "metric": "field_relative_l2",
+      "reference": 0.21589301624852386,
+      "candidate": 0.21589301624852386,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re105-B15-matched-steps-17",
+      "metric": "representation_floor",
+      "reference": 0.2036447773833187,
+      "candidate": 0.2036447773833187,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re105-B15-matched-steps-17",
+      "metric": "in_subspace_relative_l2",
+      "reference": 0.07168402269253558,
+      "candidate": 0.07168402269253558,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re105-B15-target-POD-MLP-17",
+      "metric": "field_relative_l2",
+      "reference": 0.05645767262473922,
+      "candidate": 0.05645767262473922,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re105-B15-target-POD-MLP-17",
+      "metric": "representation_floor",
+      "reference": 0.05098439886248296,
+      "candidate": 0.05098439886248296,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re105-B15-target-POD-MLP-17",
+      "metric": "in_subspace_relative_l2",
+      "reference": 0.02424994579032086,
+      "candidate": 0.02424994579032086,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re105-B15-DMD-17",
+      "metric": "field_relative_l2",
+      "reference": 0.20597351564956665,
+      "candidate": 0.20597351564956665,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re105-B15-DMD-17",
+      "metric": "representation_floor",
+      "reference": 0.2036447773833187,
+      "candidate": 0.2036447773833187,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re105-B15-DMD-17",
+      "metric": "in_subspace_relative_l2",
+      "reference": 0.030885171094569615,
+      "candidate": 0.030885171094569615,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re110-B4-scratch-17",
+      "metric": "field_relative_l2",
+      "reference": 0.8762720636219115,
+      "candidate": 0.8762720636219115,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re110-B4-scratch-17",
+      "metric": "representation_floor",
+      "reference": 0.25587482095371045,
+      "candidate": 0.25587482095371045,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re110-B4-scratch-17",
+      "metric": "in_subspace_relative_l2",
+      "reference": 0.8380816222099787,
+      "candidate": 0.8380816222099787,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re110-B4-pretrained-17",
+      "metric": "field_relative_l2",
+      "reference": 0.6183250005205071,
+      "candidate": 0.6183250005205071,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re110-B4-pretrained-17",
+      "metric": "representation_floor",
+      "reference": 0.25587482095371045,
+      "candidate": 0.25587482095371045,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re110-B4-pretrained-17",
+      "metric": "in_subspace_relative_l2",
+      "reference": 0.5628977547215763,
+      "candidate": 0.5628977547215763,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re110-B4-matched-steps-17",
+      "metric": "field_relative_l2",
+      "reference": 0.8762720636219115,
+      "candidate": 0.8762720636219115,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re110-B4-matched-steps-17",
+      "metric": "representation_floor",
+      "reference": 0.25587482095371045,
+      "candidate": 0.25587482095371045,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re110-B4-matched-steps-17",
+      "metric": "in_subspace_relative_l2",
+      "reference": 0.8380816222099787,
+      "candidate": 0.8380816222099787,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re110-B4-target-POD-MLP-17",
+      "metric": "field_relative_l2",
+      "reference": 0.9885085943430023,
+      "candidate": 0.9885085943430023,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re110-B4-target-POD-MLP-17",
+      "metric": "representation_floor",
+      "reference": 0.5259403634080828,
+      "candidate": 0.5259403634080828,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re110-B4-target-POD-MLP-17",
+      "metric": "in_subspace_relative_l2",
+      "reference": 0.8369802717078542,
+      "candidate": 0.8369802717078542,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re110-B4-DMD-17",
+      "metric": "field_relative_l2",
+      "reference": 1.0117320437911734,
+      "candidate": 1.0117320437911734,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re110-B4-DMD-17",
+      "metric": "representation_floor",
+      "reference": 0.25587482095371045,
+      "candidate": 0.25587482095371045,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re110-B4-DMD-17",
+      "metric": "in_subspace_relative_l2",
+      "reference": 0.9788410516706842,
+      "candidate": 0.9788410516706842,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re110-B8-scratch-17",
+      "metric": "field_relative_l2",
+      "reference": 0.6400931033459726,
+      "candidate": 0.6400931033459726,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re110-B8-scratch-17",
+      "metric": "representation_floor",
+      "reference": 0.25587482095371045,
+      "candidate": 0.25587482095371045,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re110-B8-scratch-17",
+      "metric": "in_subspace_relative_l2",
+      "reference": 0.5867258788846669,
+      "candidate": 0.5867258788846669,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re110-B8-pretrained-17",
+      "metric": "field_relative_l2",
+      "reference": 0.2956428174370008,
+      "candidate": 0.2956428174370008,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re110-B8-pretrained-17",
+      "metric": "representation_floor",
+      "reference": 0.25587482095371045,
+      "candidate": 0.25587482095371045,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re110-B8-pretrained-17",
+      "metric": "in_subspace_relative_l2",
+      "reference": 0.14809710160565073,
+      "candidate": 0.14809710160565073,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re110-B8-matched-steps-17",
+      "metric": "field_relative_l2",
+      "reference": 0.4792866246054564,
+      "candidate": 0.4792866246054564,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re110-B8-matched-steps-17",
+      "metric": "representation_floor",
+      "reference": 0.25587482095371045,
+      "candidate": 0.25587482095371045,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re110-B8-matched-steps-17",
+      "metric": "in_subspace_relative_l2",
+      "reference": 0.40526996499567847,
+      "candidate": 0.40526996499567847,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re110-B8-target-POD-MLP-17",
+      "metric": "field_relative_l2",
+      "reference": 0.15373393625669407,
+      "candidate": 0.15373393625669407,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re110-B8-target-POD-MLP-17",
+      "metric": "representation_floor",
+      "reference": 0.05657722139484008,
+      "candidate": 0.05657722139484008,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re110-B8-target-POD-MLP-17",
+      "metric": "in_subspace_relative_l2",
+      "reference": 0.14294453881214497,
+      "candidate": 0.14294453881214497,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re110-B8-DMD-17",
+      "metric": "field_relative_l2",
+      "reference": 0.26159909145637494,
+      "candidate": 0.26159909145637494,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re110-B8-DMD-17",
+      "metric": "representation_floor",
+      "reference": 0.25587482095371045,
+      "candidate": 0.25587482095371045,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re110-B8-DMD-17",
+      "metric": "in_subspace_relative_l2",
+      "reference": 0.054425735205943314,
+      "candidate": 0.054425735205943314,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re110-B15-scratch-17",
+      "metric": "field_relative_l2",
+      "reference": 0.4346264482789216,
+      "candidate": 0.4346264482789216,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re110-B15-scratch-17",
+      "metric": "representation_floor",
+      "reference": 0.25587482095371045,
+      "candidate": 0.25587482095371045,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re110-B15-scratch-17",
+      "metric": "in_subspace_relative_l2",
+      "reference": 0.3513235340045651,
+      "candidate": 0.3513235340045651,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re110-B15-pretrained-17",
+      "metric": "field_relative_l2",
+      "reference": 0.261473828956049,
+      "candidate": 0.261473828956049,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re110-B15-pretrained-17",
+      "metric": "representation_floor",
+      "reference": 0.25587482095371045,
+      "candidate": 0.25587482095371045,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re110-B15-pretrained-17",
+      "metric": "in_subspace_relative_l2",
+      "reference": 0.05382043506739594,
+      "candidate": 0.05382043506739594,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re110-B15-matched-steps-17",
+      "metric": "field_relative_l2",
+      "reference": 0.3037760844690366,
+      "candidate": 0.3037760844690366,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re110-B15-matched-steps-17",
+      "metric": "representation_floor",
+      "reference": 0.25587482095371045,
+      "candidate": 0.25587482095371045,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re110-B15-matched-steps-17",
+      "metric": "in_subspace_relative_l2",
+      "reference": 0.1637314432149362,
+      "candidate": 0.1637314432149362,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re110-B15-target-POD-MLP-17",
+      "metric": "field_relative_l2",
+      "reference": 0.07489115092885867,
+      "candidate": 0.07489115092885867,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re110-B15-target-POD-MLP-17",
+      "metric": "representation_floor",
+      "reference": 0.054003105490576735,
+      "candidate": 0.054003105490576735,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re110-B15-target-POD-MLP-17",
+      "metric": "in_subspace_relative_l2",
+      "reference": 0.051887851032997985,
+      "candidate": 0.051887851032997985,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re110-B15-DMD-17",
+      "metric": "field_relative_l2",
+      "reference": 0.2584697415726102,
+      "candidate": 0.2584697415726102,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re110-B15-DMD-17",
+      "metric": "representation_floor",
+      "reference": 0.25587482095371045,
+      "candidate": 0.25587482095371045,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re110-B15-DMD-17",
+      "metric": "in_subspace_relative_l2",
+      "reference": 0.03653331781427079,
+      "candidate": 0.03653331781427079,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re100-B4-scratch-29",
+      "metric": "field_relative_l2",
+      "reference": 0.8333721716705785,
+      "candidate": 0.8333721716705785,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re100-B4-scratch-29",
+      "metric": "representation_floor",
+      "reference": 0.1477579989094447,
+      "candidate": 0.1477579989094447,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re100-B4-scratch-29",
+      "metric": "in_subspace_relative_l2",
+      "reference": 0.8201687328063737,
+      "candidate": 0.8201687328063737,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re100-B4-pretrained-29",
+      "metric": "field_relative_l2",
+      "reference": 0.3882564506249718,
+      "candidate": 0.3882564506249718,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re100-B4-pretrained-29",
+      "metric": "representation_floor",
+      "reference": 0.1477579989094447,
+      "candidate": 0.1477579989094447,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re100-B4-pretrained-29",
+      "metric": "in_subspace_relative_l2",
+      "reference": 0.3590412862195347,
+      "candidate": 0.3590412862195347,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re100-B4-matched-steps-29",
+      "metric": "field_relative_l2",
+      "reference": 0.8333721716705785,
+      "candidate": 0.8333721716705785,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re100-B4-matched-steps-29",
+      "metric": "representation_floor",
+      "reference": 0.1477579989094447,
+      "candidate": 0.1477579989094447,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re100-B4-matched-steps-29",
+      "metric": "in_subspace_relative_l2",
+      "reference": 0.8201687328063737,
+      "candidate": 0.8201687328063737,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re100-B4-target-POD-MLP-29",
+      "metric": "field_relative_l2",
+      "reference": 0.9730775717525079,
+      "candidate": 0.9730775717525079,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re100-B4-target-POD-MLP-29",
+      "metric": "representation_floor",
+      "reference": 0.538692849981999,
+      "candidate": 0.538692849981999,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re100-B4-target-POD-MLP-29",
+      "metric": "in_subspace_relative_l2",
+      "reference": 0.8103640996651061,
+      "candidate": 0.8103640996651061,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re100-B4-DMD-29",
+      "metric": "field_relative_l2",
+      "reference": 1.151185224976601,
+      "candidate": 1.151185224976601,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re100-B4-DMD-29",
+      "metric": "representation_floor",
+      "reference": 0.1477579989094447,
+      "candidate": 0.1477579989094447,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re100-B4-DMD-29",
+      "metric": "in_subspace_relative_l2",
+      "reference": 1.141663258567387,
+      "candidate": 1.141663258567387,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re100-B8-scratch-29",
+      "metric": "field_relative_l2",
+      "reference": 1.3261930405237883,
+      "candidate": 1.3261930405237883,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re100-B8-scratch-29",
+      "metric": "representation_floor",
+      "reference": 0.1477579989094447,
+      "candidate": 0.1477579989094447,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re100-B8-scratch-29",
+      "metric": "in_subspace_relative_l2",
+      "reference": 1.3179360965130318,
+      "candidate": 1.3179360965130318,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re100-B8-pretrained-29",
+      "metric": "field_relative_l2",
+      "reference": 0.1818262181742934,
+      "candidate": 0.1818262181742934,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re100-B8-pretrained-29",
+      "metric": "representation_floor",
+      "reference": 0.1477579989094447,
+      "candidate": 0.1477579989094447,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re100-B8-pretrained-29",
+      "metric": "in_subspace_relative_l2",
+      "reference": 0.10596389655841407,
+      "candidate": 0.10596389655841407,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re100-B8-matched-steps-29",
+      "metric": "field_relative_l2",
+      "reference": 0.8885192591344642,
+      "candidate": 0.8885192591344642,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re100-B8-matched-steps-29",
+      "metric": "representation_floor",
+      "reference": 0.1477579989094447,
+      "candidate": 0.1477579989094447,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re100-B8-matched-steps-29",
+      "metric": "in_subspace_relative_l2",
+      "reference": 0.8761472750691713,
+      "candidate": 0.8761472750691713,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re100-B8-target-POD-MLP-29",
+      "metric": "field_relative_l2",
+      "reference": 0.3615914758001163,
+      "candidate": 0.3615914758001163,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re100-B8-target-POD-MLP-29",
+      "metric": "representation_floor",
+      "reference": 0.0537464463319253,
+      "candidate": 0.0537464463319253,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re100-B8-target-POD-MLP-29",
+      "metric": "in_subspace_relative_l2",
+      "reference": 0.3575747682345536,
+      "candidate": 0.3575747682345536,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re100-B8-DMD-29",
+      "metric": "field_relative_l2",
+      "reference": 0.15514550595208915,
+      "candidate": 0.15514550595208915,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re100-B8-DMD-29",
+      "metric": "representation_floor",
+      "reference": 0.1477579989094447,
+      "candidate": 0.1477579989094447,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re100-B8-DMD-29",
+      "metric": "in_subspace_relative_l2",
+      "reference": 0.04730435260529711,
+      "candidate": 0.04730435260529711,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re100-B15-scratch-29",
+      "metric": "field_relative_l2",
+      "reference": 0.152150299791798,
+      "candidate": 0.152150299791798,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re100-B15-scratch-29",
+      "metric": "representation_floor",
+      "reference": 0.1477579989094447,
+      "candidate": 0.1477579989094447,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re100-B15-scratch-29",
+      "metric": "in_subspace_relative_l2",
+      "reference": 0.03629445529293079,
+      "candidate": 0.03629445529293079,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re100-B15-pretrained-29",
+      "metric": "field_relative_l2",
+      "reference": 0.14809855061073907,
+      "candidate": 0.14809855061073907,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re100-B15-pretrained-29",
+      "metric": "representation_floor",
+      "reference": 0.1477579989094447,
+      "candidate": 0.1477579989094447,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re100-B15-pretrained-29",
+      "metric": "in_subspace_relative_l2",
+      "reference": 0.010037651681452951,
+      "candidate": 0.010037651681452951,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re100-B15-matched-steps-29",
+      "metric": "field_relative_l2",
+      "reference": 0.1521635100738403,
+      "candidate": 0.1521635100738403,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re100-B15-matched-steps-29",
+      "metric": "representation_floor",
+      "reference": 0.1477579989094447,
+      "candidate": 0.1477579989094447,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re100-B15-matched-steps-29",
+      "metric": "in_subspace_relative_l2",
+      "reference": 0.03634979444602452,
+      "candidate": 0.03634979444602452,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re100-B15-target-POD-MLP-29",
+      "metric": "field_relative_l2",
+      "reference": 0.049856174439839536,
+      "candidate": 0.049856174439839536,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re100-B15-target-POD-MLP-29",
+      "metric": "representation_floor",
+      "reference": 0.048108103038210705,
+      "candidate": 0.048108103038210705,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re100-B15-target-POD-MLP-29",
+      "metric": "in_subspace_relative_l2",
+      "reference": 0.013086196996859499,
+      "candidate": 0.013086196996859499,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re100-B15-DMD-29",
+      "metric": "field_relative_l2",
+      "reference": 0.15093310895996925,
+      "candidate": 0.15093310895996925,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re100-B15-DMD-29",
+      "metric": "representation_floor",
+      "reference": 0.1477579989094447,
+      "candidate": 0.1477579989094447,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re100-B15-DMD-29",
+      "metric": "in_subspace_relative_l2",
+      "reference": 0.03079573247381032,
+      "candidate": 0.03079573247381032,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re105-B4-scratch-29",
+      "metric": "field_relative_l2",
+      "reference": 0.8791910496331176,
+      "candidate": 0.8791910496331176,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re105-B4-scratch-29",
+      "metric": "representation_floor",
+      "reference": 0.2036447773833187,
+      "candidate": 0.2036447773833187,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re105-B4-scratch-29",
+      "metric": "in_subspace_relative_l2",
+      "reference": 0.855281068654908,
+      "candidate": 0.855281068654908,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re105-B4-pretrained-29",
+      "metric": "field_relative_l2",
+      "reference": 0.43576371097051814,
+      "candidate": 0.43576371097051814,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re105-B4-pretrained-29",
+      "metric": "representation_floor",
+      "reference": 0.2036447773833187,
+      "candidate": 0.2036447773833187,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re105-B4-pretrained-29",
+      "metric": "in_subspace_relative_l2",
+      "reference": 0.38525162743756947,
+      "candidate": 0.38525162743756947,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re105-B4-matched-steps-29",
+      "metric": "field_relative_l2",
+      "reference": 0.8791910496331176,
+      "candidate": 0.8791910496331176,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re105-B4-matched-steps-29",
+      "metric": "representation_floor",
+      "reference": 0.2036447773833187,
+      "candidate": 0.2036447773833187,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re105-B4-matched-steps-29",
+      "metric": "in_subspace_relative_l2",
+      "reference": 0.855281068654908,
+      "candidate": 0.855281068654908,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re105-B4-target-POD-MLP-29",
+      "metric": "field_relative_l2",
+      "reference": 0.9814317446933427,
+      "candidate": 0.9814317446933427,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re105-B4-target-POD-MLP-29",
+      "metric": "representation_floor",
+      "reference": 0.5324716762670116,
+      "candidate": 0.5324716762670116,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re105-B4-target-POD-MLP-29",
+      "metric": "in_subspace_relative_l2",
+      "reference": 0.8244283980220612,
+      "candidate": 0.8244283980220612,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re105-B4-DMD-29",
+      "metric": "field_relative_l2",
+      "reference": 0.6646605836554396,
+      "candidate": 0.6646605836554396,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re105-B4-DMD-29",
+      "metric": "representation_floor",
+      "reference": 0.2036447773833187,
+      "candidate": 0.2036447773833187,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re105-B4-DMD-29",
+      "metric": "in_subspace_relative_l2",
+      "reference": 0.6326946310106387,
+      "candidate": 0.6326946310106387,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re105-B8-scratch-29",
+      "metric": "field_relative_l2",
+      "reference": 0.9348512204648812,
+      "candidate": 0.9348512204648812,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re105-B8-scratch-29",
+      "metric": "representation_floor",
+      "reference": 0.2036447773833187,
+      "candidate": 0.2036447773833187,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re105-B8-scratch-29",
+      "metric": "in_subspace_relative_l2",
+      "reference": 0.9124010132881138,
+      "candidate": 0.9124010132881138,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re105-B8-pretrained-29",
+      "metric": "field_relative_l2",
+      "reference": 0.22711277095861657,
+      "candidate": 0.22711277095861657,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re105-B8-pretrained-29",
+      "metric": "representation_floor",
+      "reference": 0.2036447773833187,
+      "candidate": 0.2036447773833187,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re105-B8-pretrained-29",
+      "metric": "in_subspace_relative_l2",
+      "reference": 0.10054359938354883,
+      "candidate": 0.10054359938354883,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re105-B8-matched-steps-29",
+      "metric": "field_relative_l2",
+      "reference": 0.8082383164870763,
+      "candidate": 0.8082383164870763,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re105-B8-matched-steps-29",
+      "metric": "representation_floor",
+      "reference": 0.2036447773833187,
+      "candidate": 0.2036447773833187,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re105-B8-matched-steps-29",
+      "metric": "in_subspace_relative_l2",
+      "reference": 0.782162375010689,
+      "candidate": 0.782162375010689,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re105-B8-target-POD-MLP-29",
+      "metric": "field_relative_l2",
+      "reference": 0.3672151350551528,
+      "candidate": 0.3672151350551528,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re105-B8-target-POD-MLP-29",
+      "metric": "representation_floor",
+      "reference": 0.05482225480568664,
+      "candidate": 0.05482225480568664,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re105-B8-target-POD-MLP-29",
+      "metric": "in_subspace_relative_l2",
+      "reference": 0.3630998151908018,
+      "candidate": 0.3630998151908018,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re105-B8-DMD-29",
+      "metric": "field_relative_l2",
+      "reference": 0.2088435632709307,
+      "candidate": 0.2088435632709307,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re105-B8-DMD-29",
+      "metric": "representation_floor",
+      "reference": 0.2036447773833187,
+      "candidate": 0.2036447773833187,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re105-B8-DMD-29",
+      "metric": "in_subspace_relative_l2",
+      "reference": 0.0463080831410433,
+      "candidate": 0.0463080831410433,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re105-B15-scratch-29",
+      "metric": "field_relative_l2",
+      "reference": 0.21091779055824134,
+      "candidate": 0.21091779055824134,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re105-B15-scratch-29",
+      "metric": "representation_floor",
+      "reference": 0.2036447773833187,
+      "candidate": 0.2036447773833187,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re105-B15-scratch-29",
+      "metric": "in_subspace_relative_l2",
+      "reference": 0.05491009942140635,
+      "candidate": 0.05491009942140635,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re105-B15-pretrained-29",
+      "metric": "field_relative_l2",
+      "reference": 0.20410102708177458,
+      "candidate": 0.20410102708177458,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re105-B15-pretrained-29",
+      "metric": "representation_floor",
+      "reference": 0.2036447773833187,
+      "candidate": 0.2036447773833187,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re105-B15-pretrained-29",
+      "metric": "in_subspace_relative_l2",
+      "reference": 0.013639424486899664,
+      "candidate": 0.013639424486899664,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re105-B15-matched-steps-29",
+      "metric": "field_relative_l2",
+      "reference": 0.20418176103334834,
+      "candidate": 0.20418176103334834,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re105-B15-matched-steps-29",
+      "metric": "representation_floor",
+      "reference": 0.2036447773833187,
+      "candidate": 0.2036447773833187,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re105-B15-matched-steps-29",
+      "metric": "in_subspace_relative_l2",
+      "reference": 0.014798519627920073,
+      "candidate": 0.014798519627920073,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re105-B15-target-POD-MLP-29",
+      "metric": "field_relative_l2",
+      "reference": 0.05297509974767305,
+      "candidate": 0.05297509974767305,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re105-B15-target-POD-MLP-29",
+      "metric": "representation_floor",
+      "reference": 0.05098439886248296,
+      "candidate": 0.05098439886248296,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re105-B15-target-POD-MLP-29",
+      "metric": "in_subspace_relative_l2",
+      "reference": 0.014385835599893466,
+      "candidate": 0.014385835599893466,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re105-B15-DMD-29",
+      "metric": "field_relative_l2",
+      "reference": 0.20597351564956665,
+      "candidate": 0.20597351564956665,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re105-B15-DMD-29",
+      "metric": "representation_floor",
+      "reference": 0.2036447773833187,
+      "candidate": 0.2036447773833187,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re105-B15-DMD-29",
+      "metric": "in_subspace_relative_l2",
+      "reference": 0.030885171094569615,
+      "candidate": 0.030885171094569615,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re110-B4-scratch-29",
+      "metric": "field_relative_l2",
+      "reference": 0.9141583044119606,
+      "candidate": 0.9141583044119606,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re110-B4-scratch-29",
+      "metric": "representation_floor",
+      "reference": 0.25587482095371045,
+      "candidate": 0.25587482095371045,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re110-B4-scratch-29",
+      "metric": "in_subspace_relative_l2",
+      "reference": 0.8776180726986298,
+      "candidate": 0.8776180726986298,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re110-B4-pretrained-29",
+      "metric": "field_relative_l2",
+      "reference": 0.5420008724247026,
+      "candidate": 0.5420008724247026,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re110-B4-pretrained-29",
+      "metric": "representation_floor",
+      "reference": 0.25587482095371045,
+      "candidate": 0.25587482095371045,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re110-B4-pretrained-29",
+      "metric": "in_subspace_relative_l2",
+      "reference": 0.4778001901538399,
+      "candidate": 0.4778001901538399,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re110-B4-matched-steps-29",
+      "metric": "field_relative_l2",
+      "reference": 0.9141583044119606,
+      "candidate": 0.9141583044119606,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re110-B4-matched-steps-29",
+      "metric": "representation_floor",
+      "reference": 0.25587482095371045,
+      "candidate": 0.25587482095371045,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re110-B4-matched-steps-29",
+      "metric": "in_subspace_relative_l2",
+      "reference": 0.8776180726986298,
+      "candidate": 0.8776180726986298,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re110-B4-target-POD-MLP-29",
+      "metric": "field_relative_l2",
+      "reference": 0.990620166345805,
+      "candidate": 0.990620166345805,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re110-B4-target-POD-MLP-29",
+      "metric": "representation_floor",
+      "reference": 0.5259403634080828,
+      "candidate": 0.5259403634080828,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re110-B4-target-POD-MLP-29",
+      "metric": "in_subspace_relative_l2",
+      "reference": 0.8394730776559579,
+      "candidate": 0.8394730776559579,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re110-B4-DMD-29",
+      "metric": "field_relative_l2",
+      "reference": 1.0117320437911734,
+      "candidate": 1.0117320437911734,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re110-B4-DMD-29",
+      "metric": "representation_floor",
+      "reference": 0.25587482095371045,
+      "candidate": 0.25587482095371045,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re110-B4-DMD-29",
+      "metric": "in_subspace_relative_l2",
+      "reference": 0.9788410516706842,
+      "candidate": 0.9788410516706842,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re110-B8-scratch-29",
+      "metric": "field_relative_l2",
+      "reference": 1.269891254103611,
+      "candidate": 1.269891254103611,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re110-B8-scratch-29",
+      "metric": "representation_floor",
+      "reference": 0.25587482095371045,
+      "candidate": 0.25587482095371045,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re110-B8-scratch-29",
+      "metric": "in_subspace_relative_l2",
+      "reference": 1.2438455986378487,
+      "candidate": 1.2438455986378487,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re110-B8-pretrained-29",
+      "metric": "field_relative_l2",
+      "reference": 0.25777846113361175,
+      "candidate": 0.25777846113361175,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re110-B8-pretrained-29",
+      "metric": "representation_floor",
+      "reference": 0.25587482095371045,
+      "candidate": 0.25587482095371045,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re110-B8-pretrained-29",
+      "metric": "in_subspace_relative_l2",
+      "reference": 0.031269970040273695,
+      "candidate": 0.031269970040273695,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re110-B8-matched-steps-29",
+      "metric": "field_relative_l2",
+      "reference": 0.8739176190138895,
+      "candidate": 0.8739176190138895,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re110-B8-matched-steps-29",
+      "metric": "representation_floor",
+      "reference": 0.25587482095371045,
+      "candidate": 0.25587482095371045,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re110-B8-matched-steps-29",
+      "metric": "in_subspace_relative_l2",
+      "reference": 0.835619579009978,
+      "candidate": 0.835619579009978,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re110-B8-target-POD-MLP-29",
+      "metric": "field_relative_l2",
+      "reference": 0.19986430663011237,
+      "candidate": 0.19986430663011237,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re110-B8-target-POD-MLP-29",
+      "metric": "representation_floor",
+      "reference": 0.05657722139484008,
+      "candidate": 0.05657722139484008,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re110-B8-target-POD-MLP-29",
+      "metric": "in_subspace_relative_l2",
+      "reference": 0.19168922526833593,
+      "candidate": 0.19168922526833593,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re110-B8-DMD-29",
+      "metric": "field_relative_l2",
+      "reference": 0.26159909145637494,
+      "candidate": 0.26159909145637494,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re110-B8-DMD-29",
+      "metric": "representation_floor",
+      "reference": 0.25587482095371045,
+      "candidate": 0.25587482095371045,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re110-B8-DMD-29",
+      "metric": "in_subspace_relative_l2",
+      "reference": 0.054425735205943314,
+      "candidate": 0.054425735205943314,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re110-B15-scratch-29",
+      "metric": "field_relative_l2",
+      "reference": 0.26082875079212076,
+      "candidate": 0.26082875079212076,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re110-B15-scratch-29",
+      "metric": "representation_floor",
+      "reference": 0.25587482095371045,
+      "candidate": 0.25587482095371045,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re110-B15-scratch-29",
+      "metric": "in_subspace_relative_l2",
+      "reference": 0.050593608703914696,
+      "candidate": 0.050593608703914696,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re110-B15-pretrained-29",
+      "metric": "field_relative_l2",
+      "reference": 0.25598956467097184,
+      "candidate": 0.25598956467097184,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re110-B15-pretrained-29",
+      "metric": "representation_floor",
+      "reference": 0.25587482095371045,
+      "candidate": 0.25587482095371045,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re110-B15-pretrained-29",
+      "metric": "in_subspace_relative_l2",
+      "reference": 0.007663760326387558,
+      "candidate": 0.007663760326387558,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re110-B15-matched-steps-29",
+      "metric": "field_relative_l2",
+      "reference": 0.2582005361986449,
+      "candidate": 0.2582005361986449,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re110-B15-matched-steps-29",
+      "metric": "representation_floor",
+      "reference": 0.25587482095371045,
+      "candidate": 0.25587482095371045,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re110-B15-matched-steps-29",
+      "metric": "in_subspace_relative_l2",
+      "reference": 0.03457734656063637,
+      "candidate": 0.03457734656063637,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re110-B15-target-POD-MLP-29",
+      "metric": "field_relative_l2",
+      "reference": 0.056384395977473,
+      "candidate": 0.056384395977473,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re110-B15-target-POD-MLP-29",
+      "metric": "representation_floor",
+      "reference": 0.054003105490576735,
+      "candidate": 0.054003105490576735,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re110-B15-target-POD-MLP-29",
+      "metric": "in_subspace_relative_l2",
+      "reference": 0.016213102945397965,
+      "candidate": 0.016213102945397965,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re110-B15-DMD-29",
+      "metric": "field_relative_l2",
+      "reference": 0.2584697415726102,
+      "candidate": 0.2584697415726102,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re110-B15-DMD-29",
+      "metric": "representation_floor",
+      "reference": 0.25587482095371045,
+      "candidate": 0.25587482095371045,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re110-B15-DMD-29",
+      "metric": "in_subspace_relative_l2",
+      "reference": 0.03653331781427079,
+      "candidate": 0.03653331781427079,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re100-B4-scratch-43",
+      "metric": "field_relative_l2",
+      "reference": 0.9895118089219461,
+      "candidate": 0.9895118089219461,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re100-B4-scratch-43",
+      "metric": "representation_floor",
+      "reference": 0.1477579989094447,
+      "candidate": 0.1477579989094447,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re100-B4-scratch-43",
+      "metric": "in_subspace_relative_l2",
+      "reference": 0.9784176990193191,
+      "candidate": 0.9784176990193191,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re100-B4-pretrained-43",
+      "metric": "field_relative_l2",
+      "reference": 0.3174292059610207,
+      "candidate": 0.3174292059610207,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re100-B4-pretrained-43",
+      "metric": "representation_floor",
+      "reference": 0.1477579989094447,
+      "candidate": 0.1477579989094447,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re100-B4-pretrained-43",
+      "metric": "in_subspace_relative_l2",
+      "reference": 0.2809428314716728,
+      "candidate": 0.2809428314716728,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re100-B4-matched-steps-43",
+      "metric": "field_relative_l2",
+      "reference": 0.9895118089219461,
+      "candidate": 0.9895118089219461,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re100-B4-matched-steps-43",
+      "metric": "representation_floor",
+      "reference": 0.1477579989094447,
+      "candidate": 0.1477579989094447,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re100-B4-matched-steps-43",
+      "metric": "in_subspace_relative_l2",
+      "reference": 0.9784176990193191,
+      "candidate": 0.9784176990193191,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re100-B4-target-POD-MLP-43",
+      "metric": "field_relative_l2",
+      "reference": 0.9665110349987406,
+      "candidate": 0.9665110349987406,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re100-B4-target-POD-MLP-43",
+      "metric": "representation_floor",
+      "reference": 0.538692849981999,
+      "candidate": 0.538692849981999,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re100-B4-target-POD-MLP-43",
+      "metric": "in_subspace_relative_l2",
+      "reference": 0.8024671919478188,
+      "candidate": 0.8024671919478188,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re100-B4-DMD-43",
+      "metric": "field_relative_l2",
+      "reference": 1.151185224976601,
+      "candidate": 1.151185224976601,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re100-B4-DMD-43",
+      "metric": "representation_floor",
+      "reference": 0.1477579989094447,
+      "candidate": 0.1477579989094447,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re100-B4-DMD-43",
+      "metric": "in_subspace_relative_l2",
+      "reference": 1.141663258567387,
+      "candidate": 1.141663258567387,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re100-B8-scratch-43",
+      "metric": "field_relative_l2",
+      "reference": 0.7844105437358647,
+      "candidate": 0.7844105437358647,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re100-B8-scratch-43",
+      "metric": "representation_floor",
+      "reference": 0.1477579989094447,
+      "candidate": 0.1477579989094447,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re100-B8-scratch-43",
+      "metric": "in_subspace_relative_l2",
+      "reference": 0.770368402053376,
+      "candidate": 0.770368402053376,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re100-B8-pretrained-43",
+      "metric": "field_relative_l2",
+      "reference": 0.15620374532913864,
+      "candidate": 0.15620374532913864,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re100-B8-pretrained-43",
+      "metric": "representation_floor",
+      "reference": 0.1477579989094447,
+      "candidate": 0.1477579989094447,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re100-B8-pretrained-43",
+      "metric": "in_subspace_relative_l2",
+      "reference": 0.05066738411569065,
+      "candidate": 0.05066738411569065,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re100-B8-matched-steps-43",
+      "metric": "field_relative_l2",
+      "reference": 0.6120078794170263,
+      "candidate": 0.6120078794170263,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re100-B8-matched-steps-43",
+      "metric": "representation_floor",
+      "reference": 0.1477579989094447,
+      "candidate": 0.1477579989094447,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re100-B8-matched-steps-43",
+      "metric": "in_subspace_relative_l2",
+      "reference": 0.593903374486795,
+      "candidate": 0.593903374486795,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re100-B8-target-POD-MLP-43",
+      "metric": "field_relative_l2",
+      "reference": 0.1535492847348112,
+      "candidate": 0.1535492847348112,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re100-B8-target-POD-MLP-43",
+      "metric": "representation_floor",
+      "reference": 0.0537464463319253,
+      "candidate": 0.0537464463319253,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re100-B8-target-POD-MLP-43",
+      "metric": "in_subspace_relative_l2",
+      "reference": 0.1438356782904066,
+      "candidate": 0.1438356782904066,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re100-B8-DMD-43",
+      "metric": "field_relative_l2",
+      "reference": 0.15514550595208915,
+      "candidate": 0.15514550595208915,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re100-B8-DMD-43",
+      "metric": "representation_floor",
+      "reference": 0.1477579989094447,
+      "candidate": 0.1477579989094447,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re100-B8-DMD-43",
+      "metric": "in_subspace_relative_l2",
+      "reference": 0.04730435260529711,
+      "candidate": 0.04730435260529711,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re100-B15-scratch-43",
+      "metric": "field_relative_l2",
+      "reference": 0.1584930482122218,
+      "candidate": 0.1584930482122218,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re100-B15-scratch-43",
+      "metric": "representation_floor",
+      "reference": 0.1477579989094447,
+      "candidate": 0.1477579989094447,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re100-B15-scratch-43",
+      "metric": "in_subspace_relative_l2",
+      "reference": 0.05733777192983876,
+      "candidate": 0.05733777192983876,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re100-B15-pretrained-43",
+      "metric": "field_relative_l2",
+      "reference": 0.14900379371489708,
+      "candidate": 0.14900379371489708,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re100-B15-pretrained-43",
+      "metric": "representation_floor",
+      "reference": 0.1477579989094447,
+      "candidate": 0.1477579989094447,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re100-B15-pretrained-43",
+      "metric": "in_subspace_relative_l2",
+      "reference": 0.01922769616225907,
+      "candidate": 0.01922769616225907,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re100-B15-matched-steps-43",
+      "metric": "field_relative_l2",
+      "reference": 0.15260640236792436,
+      "candidate": 0.15260640236792436,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re100-B15-matched-steps-43",
+      "metric": "representation_floor",
+      "reference": 0.1477579989094447,
+      "candidate": 0.1477579989094447,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re100-B15-matched-steps-43",
+      "metric": "in_subspace_relative_l2",
+      "reference": 0.03816133910068371,
+      "candidate": 0.03816133910068371,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re100-B15-target-POD-MLP-43",
+      "metric": "field_relative_l2",
+      "reference": 0.053394814144379577,
+      "candidate": 0.053394814144379577,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re100-B15-target-POD-MLP-43",
+      "metric": "representation_floor",
+      "reference": 0.048108103038210705,
+      "candidate": 0.048108103038210705,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re100-B15-target-POD-MLP-43",
+      "metric": "in_subspace_relative_l2",
+      "reference": 0.023164986500702745,
+      "candidate": 0.023164986500702745,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re100-B15-DMD-43",
+      "metric": "field_relative_l2",
+      "reference": 0.15093310895996925,
+      "candidate": 0.15093310895996925,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re100-B15-DMD-43",
+      "metric": "representation_floor",
+      "reference": 0.1477579989094447,
+      "candidate": 0.1477579989094447,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re100-B15-DMD-43",
+      "metric": "in_subspace_relative_l2",
+      "reference": 0.03079573247381032,
+      "candidate": 0.03079573247381032,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re105-B4-scratch-43",
+      "metric": "field_relative_l2",
+      "reference": 0.8772831842293836,
+      "candidate": 0.8772831842293836,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re105-B4-scratch-43",
+      "metric": "representation_floor",
+      "reference": 0.2036447773833187,
+      "candidate": 0.2036447773833187,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re105-B4-scratch-43",
+      "metric": "in_subspace_relative_l2",
+      "reference": 0.8533197466226509,
+      "candidate": 0.8533197466226509,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re105-B4-pretrained-43",
+      "metric": "field_relative_l2",
+      "reference": 0.3727042543824407,
+      "candidate": 0.3727042543824407,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re105-B4-pretrained-43",
+      "metric": "representation_floor",
+      "reference": 0.2036447773833187,
+      "candidate": 0.2036447773833187,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re105-B4-pretrained-43",
+      "metric": "in_subspace_relative_l2",
+      "reference": 0.312149428766528,
+      "candidate": 0.312149428766528,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re105-B4-matched-steps-43",
+      "metric": "field_relative_l2",
+      "reference": 0.8772831842293836,
+      "candidate": 0.8772831842293836,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re105-B4-matched-steps-43",
+      "metric": "representation_floor",
+      "reference": 0.2036447773833187,
+      "candidate": 0.2036447773833187,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re105-B4-matched-steps-43",
+      "metric": "in_subspace_relative_l2",
+      "reference": 0.8533197466226509,
+      "candidate": 0.8533197466226509,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re105-B4-target-POD-MLP-43",
+      "metric": "field_relative_l2",
+      "reference": 0.9863581791941873,
+      "candidate": 0.9863581791941873,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re105-B4-target-POD-MLP-43",
+      "metric": "representation_floor",
+      "reference": 0.5324716762670116,
+      "candidate": 0.5324716762670116,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re105-B4-target-POD-MLP-43",
+      "metric": "in_subspace_relative_l2",
+      "reference": 0.8302869212728065,
+      "candidate": 0.8302869212728065,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re105-B4-DMD-43",
+      "metric": "field_relative_l2",
+      "reference": 0.6646605836554396,
+      "candidate": 0.6646605836554396,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re105-B4-DMD-43",
+      "metric": "representation_floor",
+      "reference": 0.2036447773833187,
+      "candidate": 0.2036447773833187,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re105-B4-DMD-43",
+      "metric": "in_subspace_relative_l2",
+      "reference": 0.6326946310106387,
+      "candidate": 0.6326946310106387,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re105-B8-scratch-43",
+      "metric": "field_relative_l2",
+      "reference": 0.4248869139005714,
+      "candidate": 0.4248869139005714,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re105-B8-scratch-43",
+      "metric": "representation_floor",
+      "reference": 0.2036447773833187,
+      "candidate": 0.2036447773833187,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re105-B8-scratch-43",
+      "metric": "in_subspace_relative_l2",
+      "reference": 0.372904403632419,
+      "candidate": 0.372904403632419,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re105-B8-pretrained-43",
+      "metric": "field_relative_l2",
+      "reference": 0.2097223810211496,
+      "candidate": 0.2097223810211496,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re105-B8-pretrained-43",
+      "metric": "representation_floor",
+      "reference": 0.2036447773833187,
+      "candidate": 0.2036447773833187,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re105-B8-pretrained-43",
+      "metric": "in_subspace_relative_l2",
+      "reference": 0.050122666984896175,
+      "candidate": 0.050122666984896175,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re105-B8-matched-steps-43",
+      "metric": "field_relative_l2",
+      "reference": 0.3180437989038147,
+      "candidate": 0.3180437989038147,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re105-B8-matched-steps-43",
+      "metric": "representation_floor",
+      "reference": 0.2036447773833187,
+      "candidate": 0.2036447773833187,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re105-B8-matched-steps-43",
+      "metric": "in_subspace_relative_l2",
+      "reference": 0.2442962600320944,
+      "candidate": 0.2442962600320944,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re105-B8-target-POD-MLP-43",
+      "metric": "field_relative_l2",
+      "reference": 0.36875149577867766,
+      "candidate": 0.36875149577867766,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re105-B8-target-POD-MLP-43",
+      "metric": "representation_floor",
+      "reference": 0.05482225480568664,
+      "candidate": 0.05482225480568664,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re105-B8-target-POD-MLP-43",
+      "metric": "in_subspace_relative_l2",
+      "reference": 0.3646535150208105,
+      "candidate": 0.3646535150208105,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re105-B8-DMD-43",
+      "metric": "field_relative_l2",
+      "reference": 0.2088435632709307,
+      "candidate": 0.2088435632709307,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re105-B8-DMD-43",
+      "metric": "representation_floor",
+      "reference": 0.2036447773833187,
+      "candidate": 0.2036447773833187,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re105-B8-DMD-43",
+      "metric": "in_subspace_relative_l2",
+      "reference": 0.0463080831410433,
+      "candidate": 0.0463080831410433,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re105-B15-scratch-43",
+      "metric": "field_relative_l2",
+      "reference": 0.20929788675383795,
+      "candidate": 0.20929788675383795,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re105-B15-scratch-43",
+      "metric": "representation_floor",
+      "reference": 0.2036447773833187,
+      "candidate": 0.2036447773833187,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re105-B15-scratch-43",
+      "metric": "in_subspace_relative_l2",
+      "reference": 0.04831573288403016,
+      "candidate": 0.04831573288403016,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re105-B15-pretrained-43",
+      "metric": "field_relative_l2",
+      "reference": 0.20396501608698858,
+      "candidate": 0.20396501608698858,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re105-B15-pretrained-43",
+      "metric": "representation_floor",
+      "reference": 0.2036447773833187,
+      "candidate": 0.2036447773833187,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re105-B15-pretrained-43",
+      "metric": "in_subspace_relative_l2",
+      "reference": 0.011425079074740944,
+      "candidate": 0.011425079074740944,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re105-B15-matched-steps-43",
+      "metric": "field_relative_l2",
+      "reference": 0.20437444166306026,
+      "candidate": 0.20437444166306026,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re105-B15-matched-steps-43",
+      "metric": "representation_floor",
+      "reference": 0.2036447773833187,
+      "candidate": 0.2036447773833187,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re105-B15-matched-steps-43",
+      "metric": "in_subspace_relative_l2",
+      "reference": 0.017254479116628665,
+      "candidate": 0.017254479116628665,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re105-B15-target-POD-MLP-43",
+      "metric": "field_relative_l2",
+      "reference": 0.06550258437170778,
+      "candidate": 0.06550258437170778,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re105-B15-target-POD-MLP-43",
+      "metric": "representation_floor",
+      "reference": 0.05098439886248296,
+      "candidate": 0.05098439886248296,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re105-B15-target-POD-MLP-43",
+      "metric": "in_subspace_relative_l2",
+      "reference": 0.04112395447915915,
+      "candidate": 0.04112395447915915,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re105-B15-DMD-43",
+      "metric": "field_relative_l2",
+      "reference": 0.20597351564956665,
+      "candidate": 0.20597351564956665,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re105-B15-DMD-43",
+      "metric": "representation_floor",
+      "reference": 0.2036447773833187,
+      "candidate": 0.2036447773833187,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re105-B15-DMD-43",
+      "metric": "in_subspace_relative_l2",
+      "reference": 0.030885171094569615,
+      "candidate": 0.030885171094569615,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re110-B4-scratch-43",
+      "metric": "field_relative_l2",
+      "reference": 0.909049759253773,
+      "candidate": 0.909049759253773,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re110-B4-scratch-43",
+      "metric": "representation_floor",
+      "reference": 0.25587482095371045,
+      "candidate": 0.25587482095371045,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re110-B4-scratch-43",
+      "metric": "in_subspace_relative_l2",
+      "reference": 0.8722955581689323,
+      "candidate": 0.8722955581689323,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re110-B4-pretrained-43",
+      "metric": "field_relative_l2",
+      "reference": 0.4132806049321854,
+      "candidate": 0.4132806049321854,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re110-B4-pretrained-43",
+      "metric": "representation_floor",
+      "reference": 0.25587482095371045,
+      "candidate": 0.25587482095371045,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re110-B4-pretrained-43",
+      "metric": "in_subspace_relative_l2",
+      "reference": 0.3245441948564475,
+      "candidate": 0.3245441948564475,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re110-B4-matched-steps-43",
+      "metric": "field_relative_l2",
+      "reference": 0.909049759253773,
+      "candidate": 0.909049759253773,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re110-B4-matched-steps-43",
+      "metric": "representation_floor",
+      "reference": 0.25587482095371045,
+      "candidate": 0.25587482095371045,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re110-B4-matched-steps-43",
+      "metric": "in_subspace_relative_l2",
+      "reference": 0.8722955581689323,
+      "candidate": 0.8722955581689323,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re110-B4-target-POD-MLP-43",
+      "metric": "field_relative_l2",
+      "reference": 0.9922480780922076,
+      "candidate": 0.9922480780922076,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re110-B4-target-POD-MLP-43",
+      "metric": "representation_floor",
+      "reference": 0.5259403634080828,
+      "candidate": 0.5259403634080828,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re110-B4-target-POD-MLP-43",
+      "metric": "in_subspace_relative_l2",
+      "reference": 0.8413934766896253,
+      "candidate": 0.8413934766896253,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re110-B4-DMD-43",
+      "metric": "field_relative_l2",
+      "reference": 1.0117320437911734,
+      "candidate": 1.0117320437911734,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re110-B4-DMD-43",
+      "metric": "representation_floor",
+      "reference": 0.25587482095371045,
+      "candidate": 0.25587482095371045,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re110-B4-DMD-43",
+      "metric": "in_subspace_relative_l2",
+      "reference": 0.9788410516706842,
+      "candidate": 0.9788410516706842,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re110-B8-scratch-43",
+      "metric": "field_relative_l2",
+      "reference": 0.3197652754111458,
+      "candidate": 0.3197652754111458,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re110-B8-scratch-43",
+      "metric": "representation_floor",
+      "reference": 0.25587482095371045,
+      "candidate": 0.25587482095371045,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re110-B8-scratch-43",
+      "metric": "in_subspace_relative_l2",
+      "reference": 0.19177566936572688,
+      "candidate": 0.19177566936572688,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re110-B8-pretrained-43",
+      "metric": "field_relative_l2",
+      "reference": 0.25819660173064374,
+      "candidate": 0.25819660173064374,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re110-B8-pretrained-43",
+      "metric": "representation_floor",
+      "reference": 0.25587482095371045,
+      "candidate": 0.25587482095371045,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re110-B8-pretrained-43",
+      "metric": "in_subspace_relative_l2",
+      "reference": 0.03454795431222051,
+      "candidate": 0.03454795431222051,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re110-B8-matched-steps-43",
+      "metric": "field_relative_l2",
+      "reference": 0.302012203668018,
+      "candidate": 0.302012203668018,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re110-B8-matched-steps-43",
+      "metric": "representation_floor",
+      "reference": 0.25587482095371045,
+      "candidate": 0.25587482095371045,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re110-B8-matched-steps-43",
+      "metric": "in_subspace_relative_l2",
+      "reference": 0.1604351805755803,
+      "candidate": 0.1604351805755803,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re110-B8-target-POD-MLP-43",
+      "metric": "field_relative_l2",
+      "reference": 0.14008662611083905,
+      "candidate": 0.14008662611083905,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re110-B8-target-POD-MLP-43",
+      "metric": "representation_floor",
+      "reference": 0.05657722139484008,
+      "candidate": 0.05657722139484008,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re110-B8-target-POD-MLP-43",
+      "metric": "in_subspace_relative_l2",
+      "reference": 0.12815334890028143,
+      "candidate": 0.12815334890028143,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re110-B8-DMD-43",
+      "metric": "field_relative_l2",
+      "reference": 0.26159909145637494,
+      "candidate": 0.26159909145637494,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re110-B8-DMD-43",
+      "metric": "representation_floor",
+      "reference": 0.25587482095371045,
+      "candidate": 0.25587482095371045,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re110-B8-DMD-43",
+      "metric": "in_subspace_relative_l2",
+      "reference": 0.054425735205943314,
+      "candidate": 0.054425735205943314,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re110-B15-scratch-43",
+      "metric": "field_relative_l2",
+      "reference": 0.2922077024979769,
+      "candidate": 0.2922077024979769,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re110-B15-scratch-43",
+      "metric": "representation_floor",
+      "reference": 0.25587482095371045,
+      "candidate": 0.25587482095371045,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re110-B15-scratch-43",
+      "metric": "in_subspace_relative_l2",
+      "reference": 0.14111490850031683,
+      "candidate": 0.14111490850031683,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re110-B15-pretrained-43",
+      "metric": "field_relative_l2",
+      "reference": 0.2563800787423903,
+      "candidate": 0.2563800787423903,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re110-B15-pretrained-43",
+      "metric": "representation_floor",
+      "reference": 0.25587482095371045,
+      "candidate": 0.25587482095371045,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re110-B15-pretrained-43",
+      "metric": "in_subspace_relative_l2",
+      "reference": 0.016087907814904948,
+      "candidate": 0.016087907814904948,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re110-B15-matched-steps-43",
+      "metric": "field_relative_l2",
+      "reference": 0.25737563568433763,
+      "candidate": 0.25737563568433763,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re110-B15-matched-steps-43",
+      "metric": "representation_floor",
+      "reference": 0.25587482095371045,
+      "candidate": 0.25587482095371045,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re110-B15-matched-steps-43",
+      "metric": "in_subspace_relative_l2",
+      "reference": 0.027754168080191165,
+      "candidate": 0.027754168080191165,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re110-B15-target-POD-MLP-43",
+      "metric": "field_relative_l2",
+      "reference": 0.05655526030069071,
+      "candidate": 0.05655526030069071,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re110-B15-target-POD-MLP-43",
+      "metric": "representation_floor",
+      "reference": 0.054003105490576735,
+      "candidate": 0.054003105490576735,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re110-B15-target-POD-MLP-43",
+      "metric": "in_subspace_relative_l2",
+      "reference": 0.016797680347372546,
+      "candidate": 0.016797680347372546,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re110-B15-DMD-43",
+      "metric": "field_relative_l2",
+      "reference": 0.2584697415726102,
+      "candidate": 0.2584697415726102,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re110-B15-DMD-43",
+      "metric": "representation_floor",
+      "reference": 0.25587482095371045,
+      "candidate": 0.25587482095371045,
+      "passed": true
+    },
+    {
+      "experiment": "transfer",
+      "key": "Re110-B15-DMD-43",
+      "metric": "in_subspace_relative_l2",
+      "reference": 0.03653331781427079,
+      "candidate": 0.03653331781427079,
+      "passed": true
+    }
+  ]
+}

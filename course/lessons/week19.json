@@ -1,0 +1,49 @@
+{
+  "week": 19,
+  "title": "Tokenization and noise-aware sensor design",
+  "question": "How do representation loss, token count and observation conditioning constrain the model before training?",
+  "prerequisites": "Weeks 5 and 7.3: QR sensing, POD and patch masks. Extend those ideas with matched diagnostics.",
+  "demos": [
+    {
+      "title": "Compare three tokenizations of one simulated field",
+      "prose": "Flattening, patching and POD are different information contracts. Patching itself can be exactly invertible; truncating POD generally cannot. Attention storage scales with the square of token count, not the number of raw physical scalars alone.",
+      "code": "field=cases[110]['v'][100];h,w=field.shape\n# 4 by 6 patches exactly tile the 32 by 78 ROI.\npatches=field.reshape(h//4,4,w//6,6).transpose(0,2,1,3).reshape(-1,24)\nrestored=patches.reshape(h//4,w//6,4,6).transpose(0,2,1,3).reshape(h,w)\nnp.testing.assert_array_equal(restored,field)\nrepresentation=lab.Representation.fit(cases[90]['v'][:160],8)\nreduced=representation.decode(representation.encode(field[None])).reshape(h,w)\ncounts={'point':h*w,'patch':len(patches),'POD-vector':1}\nprint('Tokens / pairwise scores:',{k:(n,n*n) for k,n in counts.items()})\nprint('POD-vector means one entire coefficient vector per TIME token; it is not eight spatial tokens.')\nfig,axes=plt.subplots(1,3,figsize=(12,3))\nbound=abs(field).max();axes[0].imshow(field,cmap='RdBu_r',vmin=-bound,vmax=bound);axes[0].set_title('CFD reference')\naxes[1].imshow(reduced,cmap='RdBu_r',vmin=-bound,vmax=bound);axes[1].set_title('Source-POD reconstruction')\nim=axes[2].imshow(abs(reduced-field),cmap='magma');axes[2].set_title('Absolute error');fig.colorbar(im,ax=axes[2]);plt.show()"
+    },
+    {
+      "title": "QR/D-optimal sensors under matched noise",
+      "prose": "Fit the sensing basis on source training data, then freeze locations. Compare 16 selected sensors against a 16-sensor geometry lattice under the same noise realization. This diagnostic builds directly on Week 5.",
+      "code": "qr_ids=lab.qr_sensors(representation,16)\ngy,gx=np.meshgrid(np.linspace(2,29,4,dtype=int),np.linspace(2,75,4,dtype=int),indexing='ij')\ngrid_ids=np.ravel_multi_index((gy.ravel(),gx.ravel()),field.shape)\nrng=np.random.default_rng(1903);noise=rng.normal(size=16)*.01*cases[90]['v'][:160].std()\nfor name,sensors in [('QR/D-opt',qr_ids),('lattice',grid_ids)]:\n    observed=field.ravel()[sensors]+noise\n    coefficient=np.linalg.lstsq(representation.modes[sensors],observed-representation.mean[sensors],rcond=None)[0]\n    reconstruction=coefficient@representation.modes.T+representation.mean\n    print(name,'condition',np.linalg.cond(representation.modes[sensors]),'relative error',np.linalg.norm(reconstruction-field.ravel())/np.linalg.norm(field))"
+    }
+  ],
+  "tasks": [
+    {
+      "title": "Invert patching",
+      "prompt": "Implement the inverse of the demonstrated 4x6 patch layout.",
+      "starter": "def unpatch(tokens,shape):\n    raise NotImplementedError",
+      "solution": "def unpatch(tokens,shape):\n    h,w=shape\n    return tokens.reshape(h//4,w//6,4,6).transpose(0,2,1,3).reshape(h,w)",
+      "checks": "np.testing.assert_array_equal(unpatch(patches,field.shape),field)"
+    },
+    {
+      "title": "Representation floor",
+      "prompt": "Compute the relative error of projecting a field into the frozen basis. Do not fit a new basis on the evaluation field.",
+      "starter": "def representation_floor(rep,field):\n    raise NotImplementedError",
+      "solution": "def representation_floor(rep,field):\n    approx=rep.decode(rep.encode(field[None]))[0]\n    return np.linalg.norm(approx-field.ravel())/np.linalg.norm(field)",
+      "checks": "assert 0<=representation_floor(representation,field)<1"
+    },
+    {
+      "title": "Gappy solve",
+      "prompt": "Recover modal coefficients from a supplied subset of observations using least squares, not matrix inversion.",
+      "starter": "def gappy(rep,ids,values):\n    raise NotImplementedError",
+      "solution": "def gappy(rep,ids,values):\n    a=np.linalg.lstsq(rep.modes[ids],values-rep.mean[ids],rcond=None)[0]\n    return rep.mean+rep.modes@a",
+      "checks": "a=np.arange(8)*.1;synthetic=representation.mean+representation.modes@a\nnp.testing.assert_allclose(gappy(representation,qr_ids,synthetic[qr_ids]),synthetic,atol=1e-8)"
+    },
+    {
+      "title": "Memory accounting",
+      "prompt": "Return float32 attention-score memory for B batches, H heads and N tokens; show the point/patch ratio.",
+      "starter": "def attention_bytes(batch,heads,tokens):\n    raise NotImplementedError",
+      "solution": "def attention_bytes(batch,heads,tokens):\n    return 4*batch*heads*tokens*tokens",
+      "checks": "assert attention_bytes(1,4,2496)/attention_bytes(1,4,104)==576"
+    }
+  ],
+  "duration_minutes": 120
+}

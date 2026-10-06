@@ -1,0 +1,49 @@
+{
+  "week": 17,
+  "title": "Attention as a learned kernel on a wake",
+  "question": "Which properties follow from the attention algebra, and which require physical validation?",
+  "prerequisites": "Weeks 7.3 and 15 introduced applications. Here we open the mechanism and audit it.",
+  "demos": [
+    {
+      "title": "Build Q, K and V from actual CFD sensors",
+      "prose": "Coordinates are geometric features, not a sequence order. Use the first retained Re110 snapshot only as a worked example; these random weights are not a learned physical law.",
+      "code": "rep=lab.Representation.fit(cases[90]['v'][:160],8)\nids=lab.qr_sensors(rep,16)\ntokens=lab.sensor_tokens(cases[110]['v'][100:103],ids,cases[90],0.,1.)\nX=torch.tensor(tokens,dtype=torch.float32)\nWq,Wk,Wv=[torch.randn(3,8)/np.sqrt(3) for _ in range(3)]\nQ,K,V=X@Wq,X@Wk,X@Wv\nA,weights=lab.attention(Q,K,V)\nprint('X, Q, attention, output:',X.shape,Q.shape,weights.shape,A.shape)\nassert torch.allclose(weights.sum(-1),torch.ones(3,16))\nplt.figure(figsize=(6,4));plt.imshow(weights[0].numpy(),vmin=0,cmap='viridis');plt.colorbar(label='row-normalized weight');plt.xlabel('key sensor');plt.ylabel('query sensor');plt.show()"
+    },
+    {
+      "title": "Separate a kernel picture from a trained interpretation",
+      "prose": "A spatial-distance kernel supplies a geometry-only comparator. Neither picture is evidence of causal influence. Change a sensor value and recompute both kernels.",
+      "code": "xy=tokens[0,:,1:]\ndistance=((xy[:,None]-xy[None,:])**2).sum(-1)\ngeometry=np.exp(-distance/.1);geometry/=geometry.sum(1,keepdims=True)\norder=torch.randperm(16)\npermuted,_=lab.attention(Q[:,order],K[:,order],V[:,order])\ntorch.testing.assert_close(permuted,A[:,order])\nfig,axes=plt.subplots(1,2,figsize=(10,4))\naxes[0].imshow(geometry);axes[0].set_title('Geometry-only kernel')\naxes[1].imshow(weights[0].numpy());axes[1].set_title('Random Q/K kernel')\nplt.show()"
+    }
+  ],
+  "tasks": [
+    {
+      "title": "Scaled attention",
+      "prompt": "Implement row-stable scaled dot-product attention without calling lab.attention. Explain the square-root scaling.",
+      "starter": "def student_attention(q,k,v):\n    raise NotImplementedError",
+      "solution": "def student_attention(q,k,v):\n    score=q@k.transpose(-2,-1)/np.sqrt(q.shape[-1])\n    return score.softmax(-1)@v",
+      "checks": "torch.testing.assert_close(student_attention(Q,K,V),A)"
+    },
+    {
+      "title": "Permutation experiment",
+      "prompt": "Write a function returning the largest equivariance error after consistently permuting all sensor tokens.",
+      "starter": "def permutation_error(q,k,v,order):\n    raise NotImplementedError",
+      "solution": "def permutation_error(q,k,v,order):\n    base=student_attention(q,k,v)\n    changed=student_attention(q[:,order],k[:,order],v[:,order])\n    return float((changed-base[:,order]).abs().max())",
+      "checks": "assert permutation_error(Q,K,V,order)<1e-5"
+    },
+    {
+      "title": "Temperature limit",
+      "prompt": "Implement temperature-scaled weights; verify that large temperature moves them toward uniform weights.",
+      "starter": "def temperature_weights(q,k,temperature):\n    raise NotImplementedError",
+      "solution": "def temperature_weights(q,k,temperature):\n    if temperature<=0: raise ValueError(\"temperature must be positive\")\n    return (q@k.transpose(-2,-1)/np.sqrt(q.shape[-1])/temperature).softmax(-1)",
+      "checks": "uniform=torch.full_like(weights,1/16)\nassert torch.linalg.norm(temperature_weights(Q,K,100)-uniform)<torch.linalg.norm(weights-uniform)"
+    },
+    {
+      "title": "Report the counterexample",
+      "prompt": "Construct a value matrix with every row equal. Show that highly nonuniform attention need not create a nonuniform output.",
+      "starter": "def constant_value_output(q,k):\n    raise NotImplementedError",
+      "solution": "def constant_value_output(q,k):\n    return student_attention(q,k,torch.ones_like(q))",
+      "checks": "torch.testing.assert_close(constant_value_output(Q,K),torch.ones_like(Q))"
+    }
+  ],
+  "duration_minutes": 120
+}

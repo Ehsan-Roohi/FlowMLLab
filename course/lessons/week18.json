@@ -1,0 +1,49 @@
+{
+  "week": 18,
+  "title": "From next-character likelihood to causal wake decoding",
+  "question": "Why must parallel next-token training hide future inputs, even when deployment is autoregressive?",
+  "prerequisites": "Week 17 mechanics; cross-entropy and MSE. This is a required language-model laboratory.",
+  "demos": [
+    {
+      "title": "Train a small language model from scratch",
+      "prose": "Train a small character model on actual FlowMLLab documentation, with a separate document for validation. This is an instructional language model, not a pretrained LLM. Vocabulary is fitted on training documents only; unseen validation characters map to an explicit unknown token. Perplexity and generated text do not establish physical correctness.",
+      "code": "train_paths=[ROOT/'data/modal_labs/README.md',ROOT/'docs/RESULTS_GUIDE.md',ROOT/'notebooks/week07_3/README.md']\nvalidation_path=ROOT/'notebooks/week07_4/README.md'\ntext='\\n'.join(p.read_text(encoding='utf-8').lower() for p in train_paths)\nvalidation_text=validation_path.read_text(encoding='utf-8').lower()\nvocab=sorted(set(text))+['?UNK?'];stoi={c:i for i,c in enumerate(vocab)};unknown=len(vocab)-1\nids_text=np.array([stoi[c] for c in text]);validation_ids=np.array([stoi.get(c,unknown) for c in validation_text]);context=24\nprint('Corpus provenance:',[(p.relative_to(ROOT).as_posix(),lab.canonical_digest(p)) for p in train_paths+[validation_path]])\ndef text_windows(a):\n    starts=np.arange(0,len(a)-context,4)\n    return torch.tensor(np.stack([a[s:s+context] for s in starts])),torch.tensor(np.stack([a[s+1:s+context+1] for s in starts]))\ntx,ty=text_windows(ids_text);vx,vy=text_windows(validation_ids)\nlanguage=lab.TinyLM(len(vocab),context);opt=torch.optim.Adam(language.parameters(),lr=.004)\ncurve=[]\nfor step in range(160):\n    batch=torch.randint(len(tx),(32,));opt.zero_grad()\n    logits=language(tx[batch]);loss=torch.nn.functional.cross_entropy(logits.reshape(-1,len(vocab)),ty[batch].reshape(-1));loss.backward();opt.step()\n    if step%20==0:curve.append((step,float(loss.detach())))\nwith torch.no_grad():\n    heldout=float(torch.nn.functional.cross_entropy(language(vx[:64]).reshape(-1,len(vocab)),vy[:64].reshape(-1)))\nprint('Vocabulary:',len(vocab),'held-out cross-entropy:',heldout,'perplexity:',np.exp(heldout))\nprint('Validation uses a separate course document; shared domain and short context limit generalization claims.')\nsample=[stoi[c] for c in 'the ']\nwith torch.no_grad():\n    for _ in range(100):\n        logits=language(torch.tensor([sample[-context:]]))[:,-1]/.8\n        sample.append(int(torch.multinomial(logits.softmax(-1),1)))\nprint('Sample:', ''.join(vocab[i] for i in sample))\nplt.plot(*np.array(curve).T);plt.xlabel('training step');plt.ylabel('next-character cross-entropy');plt.show()"
+    },
+    {
+      "title": "Expose the causal-mask mechanism on POD tokens",
+      "prose": "Every output position predicts its next state. Perturb future inputs while holding a prefix fixed. The masked prefix must stay unchanged; the unmasked control must react. A one-block, last-token-only predictor cannot demonstrate this mechanism.",
+      "code": "representation=lab.Representation.fit(cases[110]['omega'][:160],8)\nz=representation.encode(cases[110]['omega']);xx,yy=lab.sequence_windows(z[:160])\ndecoder=lab.CausalDecoder();x=torch.tensor(xx[:3],dtype=torch.float32);changed=x.clone();changed[:,2:]+=10\nwith torch.no_grad():\n    masked=float((decoder(x)[:,:2]-decoder(changed)[:,:2]).abs().max())\n    for block in decoder.blocks:block.causal=False\n    unmasked=float((decoder(x)[:,:2]-decoder(changed)[:,:2]).abs().max())\nprint('Masked prefix change:',masked,'unmasked:',unmasked)\nassert masked<1e-6 and unmasked>1e-3\nfor block in decoder.blocks:block.causal=True\nprint('Inputs:',xx.shape,'all-position shifted targets:',yy.shape)"
+    }
+  ],
+  "tasks": [
+    {
+      "title": "Shift targets",
+      "prompt": "Build next-character input/target windows without allowing a window to cross the provided sequence boundary.",
+      "starter": "def shifted(a,k):\n    raise NotImplementedError",
+      "solution": "def shifted(a,k):\n    return np.stack([a[i:i+k] for i in range(len(a)-k)]),np.stack([a[i+1:i+k+1] for i in range(len(a)-k)])",
+      "checks": "a,b=shifted(np.arange(10),4)\nnp.testing.assert_array_equal(b[0],np.arange(1,5))"
+    },
+    {
+      "title": "Cross-entropy and perplexity",
+      "prompt": "Compute negative log likelihood from logits using log_softmax; average over all positions.",
+      "starter": "def sequence_nll(logits,targets):\n    raise NotImplementedError",
+      "solution": "def sequence_nll(logits,targets):\n    return -logits.log_softmax(-1).gather(-1,targets[...,None]).mean()",
+      "checks": "example=torch.randn(2,4,7);target=torch.randint(7,(2,4))\ntorch.testing.assert_close(sequence_nll(example,target),torch.nn.functional.cross_entropy(example.reshape(-1,7),target.reshape(-1)))"
+    },
+    {
+      "title": "Causal prefix invariant",
+      "prompt": "Return whether future perturbation leaves the prefix unchanged. Test both the masked model and its deliberately broken control.",
+      "starter": "def prefix_is_invariant(model,x,prefix):\n    raise NotImplementedError",
+      "solution": "def prefix_is_invariant(model,x,prefix):\n    changed=x.clone();changed[:,prefix:]+=10\n    with torch.no_grad():return bool(torch.allclose(model(x)[:,:prefix],model(changed)[:,:prefix],atol=1e-6))",
+      "checks": "assert prefix_is_invariant(decoder,x,2)\nfor block in decoder.blocks:block.causal=False\nassert not prefix_is_invariant(decoder,x,2)\nfor block in decoder.blocks:block.causal=True"
+    },
+    {
+      "title": "All-position supervision",
+      "prompt": "Write the sequence MSE and show that an error at an intermediate position is penalized even when the last prediction is exact.",
+      "starter": "def all_position_mse(pred,target):\n    raise NotImplementedError",
+      "solution": "def all_position_mse(pred,target):\n    return ((pred-target)**2).mean()",
+      "checks": "target=torch.zeros(2,4,8);pred=target.clone();pred[:,1]=1\nassert all_position_mse(pred,target)>0 and ((pred[:,-1]-target[:,-1])**2).mean()==0"
+    }
+  ],
+  "duration_minutes": 120
+}

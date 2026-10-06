@@ -48,6 +48,14 @@ dependencies = [
 ]
 
 [project.optional-dependencies]
+transformer = [
+  "torch>=2.6,<3",
+  "nbformat>=5.10,<6",
+  "nbclient>=0.10,<1",
+  "ipykernel>=6,<8",
+  "reportlab>=4,<6",
+  "pypdf>=3,<7",
+]
 reconstruction = [
   "torch>=2.6,<3",
 ]
