@@ -1,6 +1,6 @@
 # Week 16 — Supersonic shape optimization
 
-[Course home](../../README.md) · [All weeks](../README.md) · [← Week 15](../week15/README.md)
+[Course home](../../README.md) · [All weeks](../README.md) · [← Week 15](../week15/README.md) · [Week 17 →](../week17/README.md)
 
 Supersonic shape optimization with verified Gmsh/SU2 CFD.
 
@@ -42,4 +42,4 @@ The finest Taylor–Maccoll cone pressure error is 1.16%. Atmospheric propagatio
 
 ---
 
-[Course home](../../README.md) · [All weeks](../README.md) · [← Week 15](../week15/README.md)
+[Course home](../../README.md) · [All weeks](../README.md) · [← Week 15](../week15/README.md) · [Week 17 →](../week17/README.md)

@@ -6,7 +6,8 @@ Most notebooks below open directly from GitHub in Google Colab and bootstrap
 their documented dependencies. Exceptions are labelled explicitly: P6 needs
 CUDA, Week 14 uses a separate environment whose hosted Run All remains
 unverified, and Week 15 runs from a local clone plus its linked Zenodo evidence
-archive. Read each module's setup page before launching it.
+archive. Weeks 17–22 use their documented CPU local/ZIP setup; their
+interactive Colab acceptance is still open. Read each module's setup page before launching it.
 
 ## One-click launcher, in course order
 
@@ -177,13 +178,13 @@ Run notebooks in order. Restart and run all before submission. A notebook with s
 
 [Course guide and setup](../docs/TRANSFORMER_COURSE.md). Six distinct laboratories extend Weeks 7.3, 7.4 and 15 with required language modeling, coding exercises, separate instructor solutions, matched baselines and explicit transfer audits.
 
-| Week | Student notebook |
-| --- | --- |
-| 17 | [Attention as a learned kernel on a wake](week17/W17_CFD_Transformer.ipynb) |
-| 18 | [From next-character likelihood to causal wake decoding](week18/W18_CFD_Transformer.ipynb) |
-| 19 | [Tokenization and noise-aware sensor design](week19/W19_CFD_Transformer.ipynb) |
-| 20 | [Sensor-to-field learning with missing observations](week20/W20_CFD_Transformer.ipynb) |
-| 21 | [Autonomous prediction: representation, phase and dynamics](week21/W21_CFD_Transformer.ipynb) |
-| 22 | [Audit transfer before calling it a foundation model](week22/W22_CFD_Transformer.ipynb) |
+| Module | Laboratory | Read / setup |
+| --- | --- | --- |
+| Week 17 | Attention as a learned kernel | [Open student notebook](week17/W17_CFD_Transformer.ipynb) · [Setup](week17/README.md) |
+| Week 18 | Language modeling and causal decoding | [Open student notebook](week18/W18_CFD_Transformer.ipynb) · [Setup](week18/README.md) |
+| Week 19 | Tokenization and sensor design | [Open student notebook](week19/W19_CFD_Transformer.ipynb) · [Setup](week19/README.md) |
+| Week 20 | Learning with missing sensors | [Open student notebook](week20/W20_CFD_Transformer.ipynb) · [Setup](week20/README.md) |
+| Week 21 | Autonomous prediction and phase | [Open student notebook](week21/W21_CFD_Transformer.ipynb) · [Setup](week21/README.md) |
+| Week 22 | Transfer and information budgets | [Open student notebook](week22/W22_CFD_Transformer.ipynb) · [Setup](week22/README.md) |
 
 Separate solutions are in the [instructor directory](../instructor/).
