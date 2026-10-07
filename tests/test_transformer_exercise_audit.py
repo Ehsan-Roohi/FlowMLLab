@@ -6,6 +6,12 @@ from pathlib import Path
 import tempfile
 import unittest
 from unittest.mock import patch
+try:
+    import torch
+except ModuleNotFoundError as exc:
+    if exc.name != 'torch':
+        raise
+    raise unittest.SkipTest('Exercise auditor requires the optional .[transformer,test] environment') from exc
 from qa import audit_transformer_exercises as audit
 
 

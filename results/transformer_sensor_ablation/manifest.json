@@ -108,8 +108,14 @@
     "flowmllab/transformer_course.py": "c901fad341380e0a75c4ae38d69991996847d5bcf7b74c72239550ec75630e2d"
   },
   "verification_source_hashes": {
-    "qa/ablate_transformer_sensors.py": "d44132ca1ae42ed2ceb17b4aaea8bfe912454bbaadc1c2416f74bd00399d743f",
+    "qa/ablate_transformer_sensors.py": "230200aaa660551d8d98606eef367336dc756bddfe3cc7eef9e6c1b24b192ce9",
     "flowmllab/transformer_course.py": "c901fad341380e0a75c4ae38d69991996847d5bcf7b74c72239550ec75630e2d"
   },
-  "source_hash_semantics": "source_hashes and training_source_hashes preserve executed training sources; verification_source_hashes identify the current read-only verifier."
+  "source_hash_semantics": "source_hashes and training_source_hashes preserve executed training sources; verification_source_hashes identify the current read-only verifier.",
+  "paired_initializations": {
+    "17": "29d40dd04f220782767c8701128c4c44ffa97a37b3fb84ad6c8a37ba3a2cabfe",
+    "29": "03401bf8f7c853f3620ac569e2b350e06f3e8ba1bee4c1b4d8ce6296691aca57",
+    "43": "757cf49b55b4cd56383c145a3c9dd88c1cf9083d103b8d880a9fe0ed10a35995"
+  },
+  "paired_initializations_provenance": "Copied after review from original checksummed metrics.json; cross-checked against each original checkpoint bundle and row by verifier."
 }

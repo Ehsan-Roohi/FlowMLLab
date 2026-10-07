@@ -4,7 +4,12 @@ import tempfile
 import unittest
 from pathlib import Path
 import numpy as np
-import torch
+try:
+    import torch
+except ModuleNotFoundError as exc:
+    if exc.name != 'torch':
+        raise
+    raise unittest.SkipTest('Transformer contracts require the optional .[transformer,test] environment') from exc
 from flowmllab.transformer_course import (
     Protocol, Representation, CausalDecoder, SensorSet, attention, sequence_windows,
     seed_all, fit, safe_rollout_loss, error_components, transfer_indices,

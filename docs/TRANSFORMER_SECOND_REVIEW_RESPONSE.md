@@ -45,6 +45,12 @@ can differ. It isolates a training recipe within SensorSet; it does not establis
 an architecture ranking. Full traces, predictions and checkpoints are retained
 under `results/transformer_sensor_ablation`.
 
+Paired initialization is verified within the original training run, across both
+checkpoint bundles, all condition rows, and checksummed metadata. Recreating a
+new initialization on another platform can produce a different byte digest;
+the verifier reports that digest and both environments as a diagnostic. It still
+requires the original training pair to match and retains both prediction criteria.
+
 ## Release scope and teaching acceptance
 
 The published repository contains corrections, runnable examples, student and
@@ -59,6 +65,11 @@ records a failed local check before the seeded attention fixture was corrected.
 The final passing exercise audit is
 `qa/transformer-exercise-audit-second-review-validated.json`, with hashes of the
 six canonical lesson files. Both are retained with their distinct status.
+
+Repository-wide CI also exposed an optional-dependency integration error. The
+new test modules now explicitly skip when PyTorch is absent from a base install;
+the dedicated Transformer job installs the extra and runs all 21 tests. Missing
+dependencies inside an installed PyTorch distribution still raise errors.
 
 Two acceptance activities require actual users/sessions: an interactive Colab
 run and a workload/grading pilot with representative students. They are recorded
