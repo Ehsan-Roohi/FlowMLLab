@@ -1,0 +1,505 @@
+{
+  "renderer": "qa/plot_transformer_homepage.py",
+  "renderer_sha256": "d3fad3f3d5cf75c4cc58ac3f2558e3b7700aa9dfd7e43ed50becd4def050ab40",
+  "environment": {
+    "python": "3.12.14",
+    "platform": "Windows-11-10.0.26200-SP0",
+    "packages": {
+      "numpy": "2.2.6",
+      "scipy": "1.15.3",
+      "torch": "2.14.1"
+    },
+    "torch_threads": 8,
+    "torch_build": "PyTorch built with:\n  - C++ Version: 202002\n  - MSVC 194234444\n  - Intel(R) oneAPI Math Kernel Library Version 2026.1-Product Build 20260612 for Intel(R) 64 architecture applications\n  - Intel(R) MKL-DNN v3.12.0 (Git Hash 80afa71049cd69a3df32adcccb623b12cd7baa22)\n  - OpenMP 2019\n  - LAPACK is enabled (usually provided by MKL)\n  - CPU capability usage: AVX2\n  - Build settings: BLAS_INFO=mkl, BUILD_TYPE=Release, COMMIT_SHA=5c4886908584029761b579af026dcfb627c84070, CUDA_FLAGS= -DLIBCUDACXX_ENABLE_SIMPLIFIED_COMPLEX_OPERATIONS -Xcompiler /Zc:__cplusplus -Xcompiler /Zc:preprocessor -Xcompiler /w -w -Xcompiler /FS -Xfatbin -compress-all  -Xcompiler=/wd4819,/wd4503,/wd4190,/wd4244,/wd4251,/wd4275,/wd4522 -Wno-deprecated-gpu-targets --expt-extended-lambda -DCUB_WRAPPED_NAMESPACE=at_cuda_detail -DDISABLE_CUSPARSE_DEPRECATED -DCUDA_HAS_FP16=1 -D__CUDA_NO_HALF_OPERATORS__ -D__CUDA_NO_HALF_CONVERSIONS__ -D__CUDA_NO_HALF2_OPERATORS__ -D__CUDA_NO_BFLOAT16_CONVERSIONS__, CXX_COMPILER=C:/actions-runner/_work/pytorch/pytorch/.ci/pytorch/windows/tmp_bin/sccache-cl.exe, CXX_FLAGS=/DWIN32 /D_WINDOWS /EHsc /Zc:__cplusplus /bigobj /FS /utf-8 -DUSE_PTHREADPOOL -DNDEBUG -DUSE_KINETO -DSYMBOLICATE_MOBILE_DEBUG_HANDLE /wd4624 /wd4068 /wd4067 /wd4267 /wd4661 /wd4717 /wd4244 /wd4804 /wd4273, LAPACK_INFO=mkl, PERF_WITH_AVX=1, PERF_WITH_AVX2=1, TORCH_VERSION=2.14.1, USE_CUDA=0, USE_CUDNN=OFF, USE_CUSPARSELT=OFF, USE_GFLAGS=OFF, USE_GLOG=OFF, USE_GLOO=ON, USE_HIPSPARSELT=OFF, USE_MKL=ON, USE_MKLDNN=ON, USE_MPI=OFF, USE_NCCL=OFF, USE_NNPACK=OFF, USE_OPENMP=ON, USE_ROCM=OFF, USE_ROCM_KERNEL_ASSERT=OFF, USE_XCCL=OFF, USE_XPU=OFF, \n",
+    "matplotlib": "3.10.9"
+  },
+  "input_sha256": {
+    "data/modal_labs/re090.npz": "ced6cdb9fbf2017a93b2ed836b971dfc156c9ef5d28c83a4592d5c6295f98723",
+    "data/modal_labs/re100.npz": "1f822cf0a8db62658eca3af6fbefed6664eada5c253a7c67cb1ef0885024e048",
+    "data/modal_labs/re105.npz": "c31ed83e13ea3c668a4ac8243d553321171f713a110b05069238223d822d8b80",
+    "data/modal_labs/re110.npz": "da8f7c821f23334c84b8dcef6493277673c4fa6c66d5a18228a8774f51b2dd77",
+    "results/transformer_course_v3/checkpoints.pt": "418b39049f4c10e54b9f459c9d62f90d6d4d9e13aad1a2c2ab5d9522d249704c",
+    "results/transformer_course_v3/forecast.json": "cde541367fd1607e5e1bbc44ecd3fcae1e40e318735423bd1f28e8c93aa9c5ac",
+    "results/transformer_course_v3/manifest.json": "f61bd2d98015f11ac746c4660a07dbf726da483c00786136441b05fbd443083a",
+    "results/transformer_course_v3/plan.json": "455ee0a1ddf0076eb2dd5eb7999d5d40f052ab0863f91bfad0d005a0c41a3994",
+    "results/transformer_course_v3/predictions.npz": "de131cc3c635e3b137f8200035e231d92b87d1a4722682b032803e38524ef98a",
+    "results/transformer_course_v3/sensors.json": "bae6a7b280de388dbbd7edd86799dee6d02fba5789d1e2d77101f91eb3126fe8",
+    "results/transformer_course_v3/transfer.json": "0092aba8a954e7292b5293d258bc6432973d135f890dda38374fb2d6ed094fa1",
+    "results/transformer_course_v3/week17.png": "656065dca088775621698395c0d00ab73a8998440deeee042b008d9c3bd16d68",
+    "results/transformer_course_v3/week18.png": "a065117c4e3a3b5c15fc73e68f379d8367ce1427d674b024c42da43a1cf0306f",
+    "results/transformer_course_v3/week19.png": "3440dd8883c0b047d22ee0466101b06707787d445c1cd8104855d98ea38c0486",
+    "results/transformer_course_v3/week20.png": "c87472d0e8865fda803367c5225d9a4ae8c352abe9fd0e8d67ee57461eae9800",
+    "results/transformer_course_v3/week21.png": "358b20e009bf3eb0c5a41205f0287fcc6818f24901de3b55c2cbd81edc8c742a",
+    "results/transformer_course_v3/week22.png": "74b779ee7ad925728480d07595fa5069cadd5e8f0f8bc543e55ea4ff40e8bcab"
+  },
+  "data_source": "https://github.com/Ehsan-Roohi/FlowMLLab/releases/download/cylinder-cfd-v1/",
+  "fixed_selection": {
+    "sensing_frame": 140,
+    "forecast_frames": [
+      210,
+      245
+    ],
+    "transfer_re": 105,
+    "transfer_blocks": 8,
+    "transfer_frame": 245,
+    "neural_seed": 17
+  },
+  "operations": [
+    "Reconstruct saved low-rank prediction storage",
+    "Read retained CFD arrays",
+    "Project one truth snapshot into its saved training basis for a labeled diagnostic",
+    "Compute instantaneous field-relative-L2 and absolute error",
+    "Native-grid contour display"
+  ],
+  "fitting_performed": false,
+  "checkpoint_inference_performed": false,
+  "snapshot_metric": "float64 ||prediction - CFD||_2 / ||CFD||_2 over all native-grid cells in the displayed frame; labels rounded to one decimal percent",
+  "original_inputs_and_instructional_figures_unchanged": true,
+  "display": "81 shared signed field levels and 61 shared absolute-error levels per figure. No field regridding or smoothing; contour level crossings interpolate only for display. Equal x/D and y/D aspect.",
+  "scope": "Previously inspected coarse LBM wake ROI; no new blind evaluation, grid-independence claim, full-domain CFD or language-model-generated CFD claim.",
+  "reconstructed_prediction_keys": [
+    "forecast__Causal-Transformer-17",
+    "forecast__DMD-r8",
+    "forecast__History-MLP-17",
+    "sensors__Gappy-POD-variable-all",
+    "sensors__Gappy-POD-variable-drop-half",
+    "sensors__Sensor-set-17-all",
+    "sensors__Sensor-set-17-drop-half",
+    "transfer__Re105-B8-matched-steps-17",
+    "transfer__Re105-B8-pretrained-17",
+    "transfer__Re105-B8-target-POD-MLP-17"
+  ],
+  "figures": [
+    {
+      "week": 17,
+      "title": "Attention models reconstruct a wake from sparse sensors",
+      "file": "week17.png",
+      "sha256": "22643723d111faac9089a572488384e71dd55ec13127bc45fd60ebc74d4f4484",
+      "shared_field_range": [
+        -0.671005368232727,
+        0.671005368232727
+      ],
+      "shared_absolute_error_range": [
+        0,
+        0.12351374471268672
+      ],
+      "grid_shape": [
+        32,
+        78
+      ],
+      "x_over_D": [
+        1.0,
+        13.833333333333334
+      ],
+      "y_over_D": [
+        -2.625,
+        2.5416666666666665
+      ],
+      "panels": [
+        {
+          "title": "CFD reference + 16 sensors",
+          "re": 105,
+          "frame": 140,
+          "source": "data/modal_labs/re105.npz:v",
+          "array_sha256": "de3ec4d9026fe431310649930e29666fe4ac47ec7abdf52f4b4cf3de33d49333",
+          "sensor_indices": [
+            1425,
+            1109,
+            1116,
+            1041,
+            1499,
+            1034,
+            1325,
+            1317,
+            1509,
+            1506,
+            1243,
+            1029,
+            1419,
+            1236,
+            1423,
+            1115
+          ]
+        },
+        {
+          "title": "SensorSet | L2 12.0%",
+          "re": 105,
+          "frame": 140,
+          "prediction_key": "sensors__Sensor-set-17-all",
+          "array_sha256": "64e689ee6048f74b4938a4fa9bd2773ac3dfd832fad1f63f5bb0a6c4943972ff"
+        },
+        {
+          "title": "Reconstruction error",
+          "re": 105,
+          "frame": 140,
+          "error": true,
+          "array_sha256": "9dfbbb33b11115de8a84cfa58f1017b246a189243190eb679082ded87262f32d"
+        }
+      ]
+    },
+    {
+      "week": 18,
+      "title": "Causal wake decoding, seen as flow-field contours",
+      "file": "week18.png",
+      "sha256": "e20ed56be66d7231d59595d077ab5e75b99b600e91b909c348b4a8c1bfa7c0a2",
+      "shared_field_range": [
+        -3.495818614959717,
+        3.495818614959717
+      ],
+      "shared_absolute_error_range": [
+        0,
+        0.22437829423227995
+      ],
+      "grid_shape": [
+        32,
+        78
+      ],
+      "x_over_D": [
+        1.0,
+        13.833333333333334
+      ],
+      "y_over_D": [
+        -2.625,
+        2.5416666666666665
+      ],
+      "panels": [
+        {
+          "title": "CFD reference | frame 210",
+          "re": 110,
+          "frame": 210,
+          "source": "data/modal_labs/re110.npz:omega",
+          "array_sha256": "03d177acf48ea29dd7bde18732b1390771ec4b3d4e334c060b19eb9814a80d0f"
+        },
+        {
+          "title": "Causal decoder | L2 4.9%",
+          "re": 110,
+          "frame": 210,
+          "prediction_key": "forecast__Causal-Transformer-17",
+          "array_sha256": "59295718a6b5f00fbabf8a7374f0d0091951126f45ccc875ec39c387c091e547"
+        },
+        {
+          "title": "Decoding error",
+          "re": 110,
+          "frame": 210,
+          "error": true,
+          "array_sha256": "7a75c2443033ff62d7be7d8a694041bb27eb0ed50c7d855b49d77c78564a8de8"
+        },
+        {
+          "title": "CFD reference | frame 245",
+          "re": 110,
+          "frame": 245,
+          "source": "data/modal_labs/re110.npz:omega",
+          "array_sha256": "6ef8cc3d98a621e0ca950b237703e0188674e041e5a225a16853d7cb2135b777"
+        },
+        {
+          "title": "Causal decoder | L2 5.5%",
+          "re": 110,
+          "frame": 245,
+          "prediction_key": "forecast__Causal-Transformer-17",
+          "array_sha256": "92703c16545400bea2f5a49f853cc4c476e63b4e5b3f27e2b8653af8bc19cc97"
+        },
+        {
+          "title": "Decoding error",
+          "re": 110,
+          "frame": 245,
+          "error": true,
+          "array_sha256": "bcdfa853d8eb04eb3e24c55331d71992f7be424f5bbe7d34b5fed0064b150a6d"
+        }
+      ]
+    },
+    {
+      "week": 19,
+      "title": "Sensor placement and the representation limit",
+      "file": "week19.png",
+      "sha256": "0179eab6126cf57e6b1aa8dfbfd3f9b36d296648e037a638f1e86bc4be9f6342",
+      "shared_field_range": [
+        -0.671005368232727,
+        0.671005368232727
+      ],
+      "shared_absolute_error_range": [
+        0,
+        0.05860246307018227
+      ],
+      "grid_shape": [
+        32,
+        78
+      ],
+      "x_over_D": [
+        1.0,
+        13.833333333333334
+      ],
+      "y_over_D": [
+        -2.625,
+        2.5416666666666665
+      ],
+      "panels": [
+        {
+          "title": "CFD reference + 16 sensors",
+          "re": 105,
+          "frame": 140,
+          "source": "data/modal_labs/re105.npz:v",
+          "array_sha256": "de3ec4d9026fe431310649930e29666fe4ac47ec7abdf52f4b4cf3de33d49333",
+          "sensor_indices": [
+            1425,
+            1109,
+            1116,
+            1041,
+            1499,
+            1034,
+            1325,
+            1317,
+            1509,
+            1506,
+            1243,
+            1029,
+            1419,
+            1236,
+            1423,
+            1115
+          ]
+        },
+        {
+          "title": "POD projection | L2 4.2%",
+          "re": 105,
+          "frame": 140,
+          "operation": "Truth projected into the saved training basis; diagnostic, not a predictor",
+          "array_sha256": "84fa55610accb63d4798cb66d7347af1fb7c8be46ac837b0043e01f95f2341b6"
+        },
+        {
+          "title": "Gappy POD | L2 4.7%",
+          "re": 105,
+          "frame": 140,
+          "prediction_key": "sensors__Gappy-POD-variable-all",
+          "array_sha256": "0cee9666be935c40a236341e965d0e6dd12d361f3de48848491d2e1bb06c4a41"
+        },
+        {
+          "title": "Gappy reconstruction error",
+          "re": 105,
+          "frame": 140,
+          "error": true,
+          "array_sha256": "524b7ae7481d0738d4551abb1f89d4200007248c34a685c7dfc104983d8760bc"
+        }
+      ]
+    },
+    {
+      "week": 20,
+      "title": "Missing observations: compare the fields and the errors",
+      "file": "week20.png",
+      "sha256": "18eac0e353dd602c263f97e7d62f42053b070f16c369d19c111703b400e13da5",
+      "shared_field_range": [
+        -0.671005368232727,
+        0.671005368232727
+      ],
+      "shared_absolute_error_range": [
+        0,
+        0.20464727501758384
+      ],
+      "grid_shape": [
+        32,
+        78
+      ],
+      "x_over_D": [
+        1.0,
+        13.833333333333334
+      ],
+      "y_over_D": [
+        -2.625,
+        2.5416666666666665
+      ],
+      "panels": [
+        {
+          "title": "CFD reference + 8 sensors",
+          "re": 105,
+          "frame": 140,
+          "source": "data/modal_labs/re105.npz:v",
+          "array_sha256": "de3ec4d9026fe431310649930e29666fe4ac47ec7abdf52f4b4cf3de33d49333",
+          "sensor_indices": [
+            1425,
+            1116,
+            1499,
+            1325,
+            1509,
+            1243,
+            1419,
+            1423
+          ]
+        },
+        {
+          "title": "SensorSet, 8 | L2 14.5%",
+          "re": 105,
+          "frame": 140,
+          "prediction_key": "sensors__Sensor-set-17-drop-half",
+          "array_sha256": "d43d79f83395c91474370ac3c18fee1129515e776c79edd8d83a987e49566d73"
+        },
+        {
+          "title": "Gappy POD, 8 | L2 9.0%",
+          "re": 105,
+          "frame": 140,
+          "prediction_key": "sensors__Gappy-POD-variable-drop-half",
+          "array_sha256": "a02fd4cf323e90fa7c0d8052bc6eaf1d67c68df352ec9a867b694993c716823c"
+        },
+        {
+          "title": "SensorSet, 16 control | L2 12.0%",
+          "re": 105,
+          "frame": 140,
+          "prediction_key": "sensors__Sensor-set-17-all",
+          "array_sha256": "64e689ee6048f74b4938a4fa9bd2773ac3dfd832fad1f63f5bb0a6c4943972ff"
+        },
+        {
+          "title": "SensorSet error, 8",
+          "re": 105,
+          "frame": 140,
+          "error": true,
+          "array_sha256": "fa4c1fb8a9a23631ebb5239df13d0a0b5a516f017647902504b1688331b6db53"
+        },
+        {
+          "title": "Gappy POD error, 8",
+          "re": 105,
+          "frame": 140,
+          "error": true,
+          "array_sha256": "5c3df2acf1be03a9afe43fd99955b248d76d1a91a06659f1e91ad635e55ff6ad"
+        }
+      ]
+    },
+    {
+      "week": 21,
+      "title": "Autonomous prediction: CFD, neural models and DMD",
+      "file": "week21.png",
+      "sha256": "951c3234414c48a7b5894e37931b8e88b83af88211664a25efba50bb19cffd3c",
+      "shared_field_range": [
+        -3.407707691192627,
+        3.407707691192627
+      ],
+      "shared_absolute_error_range": [
+        0,
+        0.21791801732476257
+      ],
+      "grid_shape": [
+        32,
+        78
+      ],
+      "x_over_D": [
+        1.0,
+        13.833333333333334
+      ],
+      "y_over_D": [
+        -2.625,
+        2.5416666666666665
+      ],
+      "panels": [
+        {
+          "title": "CFD reference",
+          "re": 110,
+          "frame": 245,
+          "source": "data/modal_labs/re110.npz:omega",
+          "array_sha256": "6ef8cc3d98a621e0ca950b237703e0188674e041e5a225a16853d7cb2135b777"
+        },
+        {
+          "title": "Transformer | L2 5.5%",
+          "re": 110,
+          "frame": 245,
+          "prediction_key": "forecast__Causal-Transformer-17",
+          "array_sha256": "92703c16545400bea2f5a49f853cc4c476e63b4e5b3f27e2b8653af8bc19cc97"
+        },
+        {
+          "title": "History-MLP | L2 5.5%",
+          "re": 110,
+          "frame": 245,
+          "prediction_key": "forecast__History-MLP-17",
+          "array_sha256": "8e1a0047b1a01945cd1a17d67e8c51e5eb29e5a029a507ece6397420d2b13e32"
+        },
+        {
+          "title": "DMD | L2 6.6%",
+          "re": 110,
+          "frame": 245,
+          "prediction_key": "forecast__DMD-r8",
+          "array_sha256": "ce39d66ff63d5d89791ae7df5400baeacf47aa01b640c1ffdf4aa6c6b7037b58"
+        },
+        {
+          "title": "Transformer error",
+          "re": 110,
+          "frame": 245,
+          "error": true,
+          "array_sha256": "bcdfa853d8eb04eb3e24c55331d71992f7be424f5bbe7d34b5fed0064b150a6d"
+        },
+        {
+          "title": "History-MLP error",
+          "re": 110,
+          "frame": 245,
+          "error": true,
+          "array_sha256": "089c21967b97f5be68f43f3b7c6a558a0c5fe83ddfe8b4d285837bdd02858a07"
+        }
+      ]
+    },
+    {
+      "week": 22,
+      "title": "Transfer auditing: pretraining, compute and representation",
+      "file": "week22.png",
+      "sha256": "ba0d98f8d2890b287b327c90a628addcfc40d2f880a2d98e64624ecb59b772e2",
+      "shared_field_range": [
+        -4.212354842917506,
+        4.212354842917506
+      ],
+      "shared_absolute_error_range": [
+        0,
+        1.8978199091273285
+      ],
+      "grid_shape": [
+        32,
+        78
+      ],
+      "x_over_D": [
+        1.0,
+        13.833333333333334
+      ],
+      "y_over_D": [
+        -2.625,
+        2.5416666666666665
+      ],
+      "panels": [
+        {
+          "title": "CFD reference",
+          "re": 105,
+          "frame": 245,
+          "source": "data/modal_labs/re105.npz:omega",
+          "array_sha256": "9701f448ea7c1e2fc77af68437704f889a7657e4cc7ba581e484ae323df91dc4"
+        },
+        {
+          "title": "Pretrained | L2 21.7%",
+          "re": 105,
+          "frame": 245,
+          "prediction_key": "transfer__Re105-B8-pretrained-17",
+          "array_sha256": "860450bb4ec6d5339b8b9a3b36512ec438aeaf10dc6ab4d0356d452fef7f775f"
+        },
+        {
+          "title": "Matched steps | L2 48.3%",
+          "re": 105,
+          "frame": 245,
+          "prediction_key": "transfer__Re105-B8-matched-steps-17",
+          "array_sha256": "604ebcd67289a9cd71c6301cb20b4bc32b04137e66d1a0b02308e267600a9c45"
+        },
+        {
+          "title": "Target-POD-MLP | L2 51.0%",
+          "re": 105,
+          "frame": 245,
+          "prediction_key": "transfer__Re105-B8-target-POD-MLP-17",
+          "array_sha256": "53443eeb7594f0d9fae918f8c7ceaa2d39c72e267df7ddac07e89af6e3414c56"
+        },
+        {
+          "title": "Pretrained error",
+          "re": 105,
+          "frame": 245,
+          "error": true,
+          "array_sha256": "91744fd25f9627926220695e0a86cecba7178a6fea21ea7a4c55af9263371076"
+        },
+        {
+          "title": "Matched-step error",
+          "re": 105,
+          "frame": 245,
+          "error": true,
+          "array_sha256": "fe46193ed5a34876291ba6c25b0874180804b7d6c8e8fd33baf0341ada9410e7"
+        }
+      ]
+    }
+  ]
+}

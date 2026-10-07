@@ -4,7 +4,7 @@
 
 Patch inversion, POD representation floors and noise-aware sensing.
 
-![Sixteen training-selected wake sensors and attention score counts for three tokenizations](../../results/transformer_course_v3/week19.png)
+![Velocity contours with sensor positions, the training-basis POD projection, gappy-POD reconstruction and its absolute error](../../docs/assets/transformer-contours/week19.png)
 
 ## Lecture and notebooks
 
@@ -28,7 +28,7 @@ Read the lecture, then work through the notebooks in the listed order. Read each
 **CFD / data:** The retained 32 by 78 fluid-region wake fields and 16 sensors selected from the training representation.<br>
 **Learning method:** Invert patches, compute the POD floor and solve noise-conditioned gappy reconstruction.
 
-Point, patch and single-state tokenizations create different attention-matrix sizes. Pairwise score counts illustrate quadratic storage; they are not measured runtime or a ranking of predictive accuracy.
+At Re105 frame 140, white markers locate the 16 sensors. Velocity contours compare the CFD reference, its projection into the saved training POD basis and noisy-observation gappy-POD reconstruction. The projection is a truth-dependent representation diagnostic. The notebook also compares point, patch and single-state token storage.
 
 
 

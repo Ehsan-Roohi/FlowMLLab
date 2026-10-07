@@ -4,7 +4,7 @@
 
 Sensor-to-field reconstruction, baselines and validation-only selection.
 
-![Retained reconstruction error with all sensors and a fixed half-sensor subset](../../results/transformer_course_v3/week20.png)
+![Eight-sensor velocity reconstruction: CFD, SensorSet, gappy POD, sixteen-sensor control and two absolute-error contours](../../docs/assets/transformer-contours/week20.png)
 
 ## Lecture and notebooks
 
@@ -28,7 +28,7 @@ Read the lecture, then work through the notebooks in the listed order. Read each
 **CFD / data:** Re90/Re110 fitting, Re100 selection and previously inspected Re105 retained evaluation.<br>
 **Learning method:** Compare SensorSet, POD-DeepONet, ridge imputation and variable-sensor gappy POD using the same observations.
 
-The all-sensor and fixed half-sensor panels show the retained recipe tradeoff; the dashed line is the POD representation floor. A separate [paired three-seed augmentation ablation](../../results/transformer_sensor_ablation/README.md) helps distinguish training-recipe effects from architecture claims.
+The fixed Re105 snapshot compares SensorSet and gappy POD using the same stored noisy observations from 8 of 16 sensors; the 16-sensor SensorSet prediction is a control. Shared field and error scales expose spatial differences. This snapshot does not rank architectures; the [paired three-seed augmentation ablation](../../results/transformer_sensor_ablation/README.md) separates training-recipe effects from architecture claims.
 
 
 
