@@ -11,8 +11,23 @@ generate numerical data, compare transparent baselines with learned models, and
 check both prediction error and physical fidelity.
 
 Developed for **MIE 690A: AI in Fluid Mechanics**, University of Massachusetts
-Amherst. The course now includes **44 notebooks and 27 lecture PDFs**; every module
+Amherst. The course now includes **50 notebooks and 33 lecture PDFs**; every module
 has a row in the course table below.
+
+## New: Weeks 17–22 — Transformers and language modeling
+
+Six CPU laboratories connect Q/K/V attention and a small next-character language
+model to sensor reconstruction, autonomous wake prediction and transfer audits.
+Each week has four coding exercises, an executed student notebook, separate
+instructor solutions and a five-page lecture.
+
+[17 · Attention](weeks/week17/README.md) · [18 · Language modeling](weeks/week18/README.md) · [19 · Sensors and tokens](weeks/week19/README.md) · [20 · Missing observations](weeks/week20/README.md) · [21 · Autonomous prediction](weeks/week21/README.md) · [22 · Transfer audits](weeks/week22/README.md)
+
+![Week 19 preview: training-selected wake sensors and attention storage by tokenization](results/transformer_course_v3/week19.png)
+
+*Week 19 preview: real retained wake data, sensor positions and the attention-matrix size of different tokenizations.*
+
+[Setup and prerequisites](docs/TRANSFORMER_COURSE.md) · [Six figures and experiments](#transformer-labs) · [Review corrections and validation](docs/TRANSFORMER_SECOND_REVIEW_RESPONSE.md). Interactive Colab and student workload acceptance remain open; these additions are available on GitHub and are not yet part of the existing archived version DOI.
 
 ## Start here
 
@@ -61,6 +76,12 @@ Weeks 5 and 6 share a project pack and lecture guide, but have separate learning
 | [14](weeks/week14/README.md) | Davidson-based RANS, inverse PINN and neural closures | [Week 14 lab](notebooks/week14/README.md) | [Lecture 14](lectures/week14_rans_pinn_nn.pdf) |
 | [15](weeks/week15/README.md) | Geometry and topology generalization across DeepONet, Geom-DeepONet, Geo-FNO, SMART, GeoTransolver and DoMINO | [Complete Week 15 notebook](notebooks/week15/W15_Complete_Geometry_Generalization.ipynb) | [Expanded Lecture 15](lectures/week15_geometry_generalization.pdf) |
 | [16](weeks/week16/README.md) | Supersonic shape optimization with verified Gmsh/SU2 CFD | [Week 16 notebook](notebooks/week16/W16_Supersonic_Shape_Optimization.ipynb) | [Lecture 16](lectures/week16_supersonic_shape_optimization.pdf) |
+| [17](weeks/week17/README.md) | Q/K/V algebra, permutation tests and attention interpretation | [Week 17 student notebook](notebooks/week17/W17_CFD_Transformer.ipynb) | [Lecture 17](lectures/week17_cfd_transformer.pdf) |
+| [18](weeks/week18/README.md) | Next-character likelihood, perplexity and causal prefix invariance | [Week 18 student notebook](notebooks/week18/W18_CFD_Transformer.ipynb) | [Lecture 18](lectures/week18_cfd_transformer.pdf) |
+| [19](weeks/week19/README.md) | Patch inversion, POD representation floors and noise-aware sensing | [Week 19 student notebook](notebooks/week19/W19_CFD_Transformer.ipynb) | [Lecture 19](lectures/week19_cfd_transformer.pdf) |
+| [20](weeks/week20/README.md) | Sensor-to-field reconstruction, baselines and validation-only selection | [Week 20 student notebook](notebooks/week20/W20_CFD_Transformer.ipynb) | [Lecture 20](lectures/week20_cfd_transformer.pdf) |
+| [21](weeks/week21/README.md) | History-MLP/DMD comparisons, representation error and rollout diagnostics | [Week 21 student notebook](notebooks/week21/W21_CFD_Transformer.ipynb) | [Lecture 21](lectures/week21_cfd_transformer.pdf) |
+| [22](weeks/week22/README.md) | Target-label accounting, matched updates and representation controls | [Week 22 student notebook](notebooks/week22/W22_CFD_Transformer.ipynb) | [Lecture 22](lectures/week22_cfd_transformer.pdf) |
 
 ## Results gallery · in course order
 
@@ -697,6 +718,98 @@ The exercise distinguishes numerical verification, surrogate prediction error an
 
 The finest Taylor–Maccoll cone pressure error is 1.16%. Atmospheric propagation and ground-level PLdB are not computed. The NASA SEEB-ALR reproduction failed its numerical and physical checks and remains a clearly labeled deferred research appendix; no successful NASA validation is claimed.
 
+### Week 17 — Attention as a learned kernel
+
+**[Open Week 17: lecture, notebooks and guide](weeks/week17/README.md)**
+
+<a id="transformer-labs"></a>
+
+**Problem:** Which attention properties follow from the algebra, and which need physical evidence?<br>
+**CFD / data:** Retained simulated wake observations; the figure inspects the saved SensorSet checkpoint on three Re110 frames.<br>
+**Learning method:** Build Q, K and V, test permutation equivariance and vary temperature/key masks.
+
+The four trained heads change with sensor content. Attention weights describe model computations; they do not establish causal physical influence.
+
+![Trained sensor attention weights across four heads and three wake frames](results/transformer_course_v3/week17.png)
+
+[Student notebook](notebooks/week17/W17_CFD_Transformer.ipynb) · [Lecture](lectures/week17_cfd_transformer.pdf) · [Setup and assignment](notebooks/week17/README.md)
+
+
+### Week 18 — Language modeling and causal decoding
+
+**[Open Week 18: lecture, notebooks and guide](weeks/week18/README.md)**
+
+**Problem:** Train next-token predictors without revealing future inputs.<br>
+**Data:** A small character model uses training-only vocabulary from course documents, with a separate validation document; wake coefficients provide the next-state example.<br>
+**Learning method:** Shift targets, implement cross-entropy/perplexity and test every output position.
+
+This mechanism experiment changes future inputs: masked earlier outputs stay invariant, while unmasked outputs change. The figure tests a decoder mechanism, rather than language-model quality; the required notebook trains a small instructional language model.
+
+![Causal attention mask and response to deliberately changed future tokens](results/transformer_course_v3/week18.png)
+
+[Student notebook](notebooks/week18/W18_CFD_Transformer.ipynb) · [Lecture](lectures/week18_cfd_transformer.pdf) · [Setup and assignment](notebooks/week18/README.md)
+
+
+### Week 19 — Tokenization and sensor design
+
+**[Open Week 19: lecture, notebooks and guide](weeks/week19/README.md)**
+
+**Problem:** How do observation design and tokenization constrain reconstruction?<br>
+**CFD / data:** The retained 32 by 78 fluid-region wake fields and 16 sensors selected from the training representation.<br>
+**Learning method:** Invert patches, compute the POD floor and solve noise-conditioned gappy reconstruction.
+
+Point, patch and single-state tokenizations create different attention-matrix sizes. Pairwise score counts illustrate quadratic storage; they are not measured runtime or a ranking of predictive accuracy.
+
+![Sixteen training-selected wake sensors and attention score counts for three tokenizations](results/transformer_course_v3/week19.png)
+
+[Student notebook](notebooks/week19/W19_CFD_Transformer.ipynb) · [Lecture](lectures/week19_cfd_transformer.pdf) · [Setup and assignment](notebooks/week19/README.md)
+
+
+### Week 20 — Learning with missing sensors
+
+**[Open Week 20: lecture, notebooks and guide](weeks/week20/README.md)**
+
+**Problem:** Reconstruct a velocity field when some observations are unavailable.<br>
+**CFD / data:** Re90/Re110 fitting, Re100 selection and previously inspected Re105 retained evaluation.<br>
+**Learning method:** Compare SensorSet, POD-DeepONet, ridge imputation and variable-sensor gappy POD using the same observations.
+
+The all-sensor and fixed half-sensor panels show the retained recipe tradeoff; the dashed line is the POD representation floor. A separate [paired three-seed augmentation ablation](results/transformer_sensor_ablation/README.md) helps distinguish training-recipe effects from architecture claims.
+
+![Retained reconstruction error with all sensors and a fixed half-sensor subset](results/transformer_course_v3/week20.png)
+
+[Student notebook](notebooks/week20/W20_CFD_Transformer.ipynb) · [Lecture](lectures/week20_cfd_transformer.pdf) · [Setup and assignment](notebooks/week20/README.md)
+
+
+### Week 21 — Autonomous prediction and phase
+
+**[Open Week 21: lecture, notebooks and guide](weeks/week21/README.md)**
+
+**Problem:** Forecast an uninterrupted wake trajectory without subsequent observation resets.<br>
+**CFD / data:** Re110 fitting frames 0–159, autonomous validation 160–209 and retained evaluation 210–280.<br>
+**Learning method:** Compare a causal Transformer, History-MLP, DMD and persistence; separate representation error from dynamics and inspect frequency/phase fits.
+
+The left panel is a zoomed retained interval; persistence exceeds its vertical range. The right panel shows means and individual seeds. POD-oracle is a truth-dependent diagnostic, and the floor limits interpretation of small model differences.
+
+![Autonomous wake rollout errors and individual-seed errors within the POD subspace](results/transformer_course_v3/week21.png)
+
+[Student notebook](notebooks/week21/W21_CFD_Transformer.ipynb) · [Lecture](lectures/week21_cfd_transformer.pdf) · [Setup and assignment](notebooks/week21/README.md)
+
+
+### Week 22 — Transfer and information budgets
+
+**[Open Week 22: lecture, notebooks and guide](weeks/week22/README.md)**
+
+**Problem:** Audit a transfer benefit before attributing it to pretraining.<br>
+**CFD / data:** Re90 source and Re100/Re105/Re110 retained targets; budgets of 44, 84 and 154 target frames include validation and initialization observations.<br>
+**Learning method:** Compare scratch, pretrained, matched-update, target-POD-MLP and DMD controls under fixed rollout initialization.
+
+Separate full-field and in-subspace error exposes the source-POD floor. Shading is the range across three seeds, not a confidence interval. Source access, representation fitting and selected/executed updates remain part of the comparison.
+
+![Transfer errors across three Reynolds numbers and three fully counted target-label budgets](results/transformer_course_v3/week22.png)
+
+[Student notebook](notebooks/week22/W22_CFD_Transformer.ipynb) · [Lecture](lectures/week22_cfd_transformer.pdf) · [Setup and assignment](notebooks/week22/README.md)
+
+
 ## Reuse and contribute
 
 The installable Python package, numerical solvers, notebooks, and teaching
@@ -724,16 +837,3 @@ The [all-versions DOI](https://doi.org/10.5281/zenodo.22074169) resolves to the 
 **Ehsan Roohi** · University of Massachusetts Amherst · [roohie@umass.edu](mailto:roohie@umass.edu)
 
 Copyright © 2026 Ehsan Roohi. [MIT License](LICENSE).
-
-
-<!-- transformer-course-v3 -->
-## Weeks 17-22: active Transformer laboratories
-
-[Course guide and setup](docs/TRANSFORMER_COURSE.md). Six distinct laboratories extend Weeks 7.3, 7.4 and 15 with required language modeling, coding exercises, separate instructor solutions, matched baselines and explicit transfer audits.
-
-[Second review corrections and acceptance evidence](docs/TRANSFORMER_SECOND_REVIEW_RESPONSE.md)
-include synchronized worksheets, semantic exercise checks, numerical provenance
-and a paired three-seed sensor augmentation ablation. These six labs are published
-for use and review; interactive Colab and student workload acceptance remain open.
-This extension is available in GitHub; the existing version DOI describes its
-archived release and does not yet archive these additional laboratories.

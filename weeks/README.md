@@ -31,3 +31,9 @@ Each page brings the topic image, lecture, notebooks and learning guide together
 | [Week 14](week14/README.md) | RANS, inverse PINN and neural turbulence closures |
 | [Week 15](week15/README.md) | Geometry-aware neural operators |
 | [Week 16](week16/README.md) | Supersonic shape optimization |
+| [Week 17](week17/README.md) | Attention as a learned kernel |
+| [Week 18](week18/README.md) | Language modeling and causal decoding |
+| [Week 19](week19/README.md) | Tokenization and sensor design |
+| [Week 20](week20/README.md) | Learning with missing sensors |
+| [Week 21](week21/README.md) | Autonomous prediction and phase |
+| [Week 22](week22/README.md) | Transfer and information budgets |
