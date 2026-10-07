@@ -4,7 +4,7 @@
 
 Q/K/V algebra, permutation tests and attention interpretation.
 
-![Trained sensor attention weights across four heads and three wake frames](../../results/transformer_course_v3/week17.png)
+![Re105 velocity contours: CFD reference with sixteen sensors, SensorSet reconstruction and absolute error](../../docs/assets/transformer-contours/week17.png)
 
 ## Lecture and notebooks
 
@@ -27,10 +27,10 @@ Read the lecture, then work through the notebooks in the listed order. Read each
 <a id="transformer-labs"></a>
 
 **Problem:** Which attention properties follow from the algebra, and which need physical evidence?<br>
-**CFD / data:** Retained simulated wake observations; the figure inspects the saved SensorSet checkpoint on three Re110 frames.<br>
+**CFD / data:** Retained simulated wake observations; the contour preview uses Re105 frame 140 and the saved seed-17 SensorSet prediction.<br>
 **Learning method:** Build Q, K and V, test permutation equivariance and vary temperature/key masks.
 
-The four trained heads change with sensor content. Attention weights describe model computations; they do not establish causal physical influence.
+The velocity contours compare the CFD reference, reconstruction from 16 sensors and absolute spatial error. The notebook separately inspects trained attention heads: their weights describe model computations and do not establish causal physical influence.
 
 
 

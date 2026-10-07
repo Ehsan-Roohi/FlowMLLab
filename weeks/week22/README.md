@@ -4,7 +4,7 @@
 
 Target-label accounting, matched updates and representation controls.
 
-![Transfer errors across three Reynolds numbers and three fully counted target-label budgets](../../results/transformer_course_v3/week22.png)
+![Re105 transfer contours: CFD, pretrained model, matched-update scratch, target-POD-MLP and absolute spatial errors](../../docs/assets/transformer-contours/week22.png)
 
 ## Lecture and notebooks
 
@@ -28,7 +28,7 @@ Read the lecture, then work through the notebooks in the listed order. Read each
 **CFD / data:** Re90 source and Re100/Re105/Re110 retained targets; budgets of 44, 84 and 154 target frames include validation and initialization observations.<br>
 **Learning method:** Compare scratch, pretrained, matched-update, target-POD-MLP and DMD controls under fixed rollout initialization.
 
-Separate full-field and in-subspace error exposes the source-POD floor. Shading is the range across three seeds, not a confidence interval. Source access, representation fitting and selected/executed updates remain part of the comparison.
+This fixed Re105 frame-245 example uses 84 total target labels and seed 17. Vorticity contours compare pretrained, matched-update scratch and target-POD-MLP predictions with CFD; shared error scales show the pretrained and matched-update residuals. Matched update ceilings do not equal FLOPs or source access, and target-POD-MLP changes the representation. The notebook and retained evidence cover all three Reynolds numbers, budgets and seeds.
 
 
 

@@ -4,7 +4,7 @@
 
 Next-character likelihood, perplexity and causal prefix invariance.
 
-![Causal attention mask and response to deliberately changed future tokens](../../results/transformer_course_v3/week18.png)
+![Re110 vorticity contours at two fixed frames: CFD reference, causal wake decoder and absolute error](../../docs/assets/transformer-contours/week18.png)
 
 ## Lecture and notebooks
 
@@ -28,7 +28,7 @@ Read the lecture, then work through the notebooks in the listed order. Read each
 **Data:** A small character model uses training-only vocabulary from course documents, with a separate validation document; wake coefficients provide the next-state example.<br>
 **Learning method:** Shift targets, implement cross-entropy/perplexity and test every output position.
 
-This mechanism experiment changes future inputs: masked earlier outputs stay invariant, while unmasked outputs change. The figure tests a decoder mechanism, rather than language-model quality; the required notebook trains a small instructional language model.
+Vorticity contours show the continuous-state CFD decoder at fixed frames 210 and 245 of an uninterrupted Re110 forecast, with reference and absolute error. This is the CFD branch; the required notebook separately trains a small character language model and tests causal prefix invariance.
 
 
 

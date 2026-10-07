@@ -23,9 +23,11 @@ instructor solutions and a five-page lecture.
 
 [17 · Attention](weeks/week17/README.md) · [18 · Language modeling](weeks/week18/README.md) · [19 · Sensors and tokens](weeks/week19/README.md) · [20 · Missing observations](weeks/week20/README.md) · [21 · Autonomous prediction](weeks/week21/README.md) · [22 · Transfer audits](weeks/week22/README.md)
 
-![Week 19 preview: training-selected wake sensors and attention storage by tokenization](results/transformer_course_v3/week19.png)
+![Week 17 contour preview: CFD velocity reference with sixteen sensors, SensorSet prediction and absolute reconstruction error](docs/assets/transformer-contours/week17.png)
 
-*Week 19 preview: real retained wake data, sensor positions and the attention-matrix size of different tokenizations.*
+*From sparse sensors to a flow field: the retained CFD reference, SensorSet prediction and spatial error at one fixed Re105 snapshot. Field panels share a color scale; the error has its own scale.*
+
+[Contour sources and reproduction](docs/assets/transformer-contours/README.md)
 
 [Setup and prerequisites](docs/TRANSFORMER_COURSE.md) · [Six figures and experiments](#transformer-labs) · [Review corrections and validation](docs/TRANSFORMER_SECOND_REVIEW_RESPONSE.md). Interactive Colab and student workload acceptance remain open; these additions are available on GitHub and are not yet part of the existing archived version DOI.
 
@@ -725,12 +727,12 @@ The finest Taylor–Maccoll cone pressure error is 1.16%. Atmospheric propagatio
 <a id="transformer-labs"></a>
 
 **Problem:** Which attention properties follow from the algebra, and which need physical evidence?<br>
-**CFD / data:** Retained simulated wake observations; the figure inspects the saved SensorSet checkpoint on three Re110 frames.<br>
+**CFD / data:** Retained simulated wake observations; the contour preview uses Re105 frame 140 and the saved seed-17 SensorSet prediction.<br>
 **Learning method:** Build Q, K and V, test permutation equivariance and vary temperature/key masks.
 
-The four trained heads change with sensor content. Attention weights describe model computations; they do not establish causal physical influence.
+The velocity contours compare the CFD reference, reconstruction from 16 sensors and absolute spatial error. The notebook separately inspects trained attention heads: their weights describe model computations and do not establish causal physical influence.
 
-![Trained sensor attention weights across four heads and three wake frames](results/transformer_course_v3/week17.png)
+![Re105 velocity contours: CFD reference with sixteen sensors, SensorSet reconstruction and absolute error](docs/assets/transformer-contours/week17.png)
 
 [Student notebook](notebooks/week17/W17_CFD_Transformer.ipynb) · [Lecture](lectures/week17_cfd_transformer.pdf) · [Setup and assignment](notebooks/week17/README.md)
 
@@ -743,9 +745,9 @@ The four trained heads change with sensor content. Attention weights describe mo
 **Data:** A small character model uses training-only vocabulary from course documents, with a separate validation document; wake coefficients provide the next-state example.<br>
 **Learning method:** Shift targets, implement cross-entropy/perplexity and test every output position.
 
-This mechanism experiment changes future inputs: masked earlier outputs stay invariant, while unmasked outputs change. The figure tests a decoder mechanism, rather than language-model quality; the required notebook trains a small instructional language model.
+Vorticity contours show the continuous-state CFD decoder at fixed frames 210 and 245 of an uninterrupted Re110 forecast, with reference and absolute error. This is the CFD branch; the required notebook separately trains a small character language model and tests causal prefix invariance.
 
-![Causal attention mask and response to deliberately changed future tokens](results/transformer_course_v3/week18.png)
+![Re110 vorticity contours at two fixed frames: CFD reference, causal wake decoder and absolute error](docs/assets/transformer-contours/week18.png)
 
 [Student notebook](notebooks/week18/W18_CFD_Transformer.ipynb) · [Lecture](lectures/week18_cfd_transformer.pdf) · [Setup and assignment](notebooks/week18/README.md)
 
@@ -758,9 +760,9 @@ This mechanism experiment changes future inputs: masked earlier outputs stay inv
 **CFD / data:** The retained 32 by 78 fluid-region wake fields and 16 sensors selected from the training representation.<br>
 **Learning method:** Invert patches, compute the POD floor and solve noise-conditioned gappy reconstruction.
 
-Point, patch and single-state tokenizations create different attention-matrix sizes. Pairwise score counts illustrate quadratic storage; they are not measured runtime or a ranking of predictive accuracy.
+At Re105 frame 140, white markers locate the 16 sensors. Velocity contours compare the CFD reference, its projection into the saved training POD basis and noisy-observation gappy-POD reconstruction. The projection is a truth-dependent representation diagnostic. The notebook also compares point, patch and single-state token storage.
 
-![Sixteen training-selected wake sensors and attention score counts for three tokenizations](results/transformer_course_v3/week19.png)
+![Velocity contours with sensor positions, the training-basis POD projection, gappy-POD reconstruction and its absolute error](docs/assets/transformer-contours/week19.png)
 
 [Student notebook](notebooks/week19/W19_CFD_Transformer.ipynb) · [Lecture](lectures/week19_cfd_transformer.pdf) · [Setup and assignment](notebooks/week19/README.md)
 
@@ -773,9 +775,9 @@ Point, patch and single-state tokenizations create different attention-matrix si
 **CFD / data:** Re90/Re110 fitting, Re100 selection and previously inspected Re105 retained evaluation.<br>
 **Learning method:** Compare SensorSet, POD-DeepONet, ridge imputation and variable-sensor gappy POD using the same observations.
 
-The all-sensor and fixed half-sensor panels show the retained recipe tradeoff; the dashed line is the POD representation floor. A separate [paired three-seed augmentation ablation](results/transformer_sensor_ablation/README.md) helps distinguish training-recipe effects from architecture claims.
+The fixed Re105 snapshot compares SensorSet and gappy POD using the same stored noisy observations from 8 of 16 sensors; the 16-sensor SensorSet prediction is a control. Shared field and error scales expose spatial differences. This snapshot does not rank architectures; the [paired three-seed augmentation ablation](results/transformer_sensor_ablation/README.md) separates training-recipe effects from architecture claims.
 
-![Retained reconstruction error with all sensors and a fixed half-sensor subset](results/transformer_course_v3/week20.png)
+![Eight-sensor velocity reconstruction: CFD, SensorSet, gappy POD, sixteen-sensor control and two absolute-error contours](docs/assets/transformer-contours/week20.png)
 
 [Student notebook](notebooks/week20/W20_CFD_Transformer.ipynb) · [Lecture](lectures/week20_cfd_transformer.pdf) · [Setup and assignment](notebooks/week20/README.md)
 
@@ -788,9 +790,9 @@ The all-sensor and fixed half-sensor panels show the retained recipe tradeoff; t
 **CFD / data:** Re110 fitting frames 0–159, autonomous validation 160–209 and retained evaluation 210–280.<br>
 **Learning method:** Compare a causal Transformer, History-MLP, DMD and persistence; separate representation error from dynamics and inspect frequency/phase fits.
 
-The left panel is a zoomed retained interval; persistence exceeds its vertical range. The right panel shows means and individual seeds. POD-oracle is a truth-dependent diagnostic, and the floor limits interpretation of small model differences.
+Vorticity contours compare the CFD reference, causal Transformer, History-MLP and DMD at frame 245, 86 forecast updates after the last observed frame 159. The two spatial-error panels share a scale. Panel L2 values describe this snapshot; full-trajectory, representation and multi-seed comparisons remain in the notebook and retained evidence.
 
-![Autonomous wake rollout errors and individual-seed errors within the POD subspace](results/transformer_course_v3/week21.png)
+![Autonomous Re110 vorticity prediction: CFD, Transformer, History-MLP, DMD and neural-model absolute-error contours](docs/assets/transformer-contours/week21.png)
 
 [Student notebook](notebooks/week21/W21_CFD_Transformer.ipynb) · [Lecture](lectures/week21_cfd_transformer.pdf) · [Setup and assignment](notebooks/week21/README.md)
 
@@ -803,9 +805,9 @@ The left panel is a zoomed retained interval; persistence exceeds its vertical r
 **CFD / data:** Re90 source and Re100/Re105/Re110 retained targets; budgets of 44, 84 and 154 target frames include validation and initialization observations.<br>
 **Learning method:** Compare scratch, pretrained, matched-update, target-POD-MLP and DMD controls under fixed rollout initialization.
 
-Separate full-field and in-subspace error exposes the source-POD floor. Shading is the range across three seeds, not a confidence interval. Source access, representation fitting and selected/executed updates remain part of the comparison.
+This fixed Re105 frame-245 example uses 84 total target labels and seed 17. Vorticity contours compare pretrained, matched-update scratch and target-POD-MLP predictions with CFD; shared error scales show the pretrained and matched-update residuals. Matched update ceilings do not equal FLOPs or source access, and target-POD-MLP changes the representation. The notebook and retained evidence cover all three Reynolds numbers, budgets and seeds.
 
-![Transfer errors across three Reynolds numbers and three fully counted target-label budgets](results/transformer_course_v3/week22.png)
+![Re105 transfer contours: CFD, pretrained model, matched-update scratch, target-POD-MLP and absolute spatial errors](docs/assets/transformer-contours/week22.png)
 
 [Student notebook](notebooks/week22/W22_CFD_Transformer.ipynb) · [Lecture](lectures/week22_cfd_transformer.pdf) · [Setup and assignment](notebooks/week22/README.md)
 

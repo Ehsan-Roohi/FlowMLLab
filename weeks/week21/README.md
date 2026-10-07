@@ -4,7 +4,7 @@
 
 History-MLP/DMD comparisons, representation error and rollout diagnostics.
 
-![Autonomous wake rollout errors and individual-seed errors within the POD subspace](../../results/transformer_course_v3/week21.png)
+![Autonomous Re110 vorticity prediction: CFD, Transformer, History-MLP, DMD and neural-model absolute-error contours](../../docs/assets/transformer-contours/week21.png)
 
 ## Lecture and notebooks
 
@@ -28,7 +28,7 @@ Read the lecture, then work through the notebooks in the listed order. Read each
 **CFD / data:** Re110 fitting frames 0–159, autonomous validation 160–209 and retained evaluation 210–280.<br>
 **Learning method:** Compare a causal Transformer, History-MLP, DMD and persistence; separate representation error from dynamics and inspect frequency/phase fits.
 
-The left panel is a zoomed retained interval; persistence exceeds its vertical range. The right panel shows means and individual seeds. POD-oracle is a truth-dependent diagnostic, and the floor limits interpretation of small model differences.
+Vorticity contours compare the CFD reference, causal Transformer, History-MLP and DMD at frame 245, 86 forecast updates after the last observed frame 159. The two spatial-error panels share a scale. Panel L2 values describe this snapshot; full-trajectory, representation and multi-seed comparisons remain in the notebook and retained evidence.
 
 
 
