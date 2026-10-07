@@ -75,3 +75,12 @@ rewrite restored or clarified. Earlier editions of this lecture are kept under
 ## Weeks 17-22: active Transformer laboratories
 
 [Course guide and setup](../docs/TRANSFORMER_COURSE.md). Six distinct laboratories extend Weeks 7.3, 7.4 and 15 with required language modeling, coding exercises, separate instructor solutions, matched baselines and explicit transfer audits.
+
+| Week | Lecture PDF (5 pages each) | Editable source |
+| --- | --- | --- |
+| 17 | [Attention as a learned kernel on a wake](week17_cfd_transformer.pdf) | [Markdown](source/week17_transformer_course.md) |
+| 18 | [From next-character likelihood to causal wake decoding](week18_cfd_transformer.pdf) | [Markdown](source/week18_transformer_course.md) |
+| 19 | [Tokenization and noise-aware sensor design](week19_cfd_transformer.pdf) | [Markdown](source/week19_transformer_course.md) |
+| 20 | [Sensor-to-field learning with missing observations](week20_cfd_transformer.pdf) | [Markdown](source/week20_transformer_course.md) |
+| 21 | [Autonomous prediction: representation, phase and dynamics](week21_cfd_transformer.pdf) | [Markdown](source/week21_transformer_course.md) |
+| 22 | [Audit transfer before calling it a foundation model](week22_cfd_transformer.pdf) | [Markdown](source/week22_transformer_course.md) |

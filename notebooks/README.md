@@ -176,3 +176,14 @@ Run notebooks in order. Restart and run all before submission. A notebook with s
 ## Weeks 17-22: active Transformer laboratories
 
 [Course guide and setup](../docs/TRANSFORMER_COURSE.md). Six distinct laboratories extend Weeks 7.3, 7.4 and 15 with required language modeling, coding exercises, separate instructor solutions, matched baselines and explicit transfer audits.
+
+| Week | Student notebook |
+| --- | --- |
+| 17 | [Attention as a learned kernel on a wake](week17/W17_CFD_Transformer.ipynb) |
+| 18 | [From next-character likelihood to causal wake decoding](week18/W18_CFD_Transformer.ipynb) |
+| 19 | [Tokenization and noise-aware sensor design](week19/W19_CFD_Transformer.ipynb) |
+| 20 | [Sensor-to-field learning with missing observations](week20/W20_CFD_Transformer.ipynb) |
+| 21 | [Autonomous prediction: representation, phase and dynamics](week21/W21_CFD_Transformer.ipynb) |
+| 22 | [Audit transfer before calling it a foundation model](week22/W22_CFD_Transformer.ipynb) |
+
+Separate solutions are in the [instructor directory](../instructor/).
