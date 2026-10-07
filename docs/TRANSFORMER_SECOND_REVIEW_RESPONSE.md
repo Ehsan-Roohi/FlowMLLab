@@ -71,6 +71,13 @@ new test modules now explicitly skip when PyTorch is absent from a base install;
 the dedicated Transformer job installs the extra and runs all 21 tests. Missing
 dependencies inside an installed PyTorch distribution still raise errors.
 
+The repository notebook validator now recognizes the exact portable setup of
+these six laboratories and checks it against canonical lesson prompts/starters,
+student metadata, temporary experiment output and incomplete-task reporting.
+The separate documented Colab setup remains an open interactive acceptance check.
+Week 16's existing custom Colab bootstrap is validated by its actual setup
+contract rather than requiring the older bootstrap marker used by other weeks.
+
 Two acceptance activities require actual users/sessions: an interactive Colab
 run and a workload/grading pilot with representative students. They are recorded
 as open classroom checks, not silently treated as completed. The new engineering

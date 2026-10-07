@@ -384,6 +384,67 @@ def parse_notebook_code(source: str, label: str) -> None:
         ast.parse(cleaned, filename=label)
 
 
+def validate_week16_bootstrap(cells: list[dict], label: str) -> None:
+    """Week 16 ships its own sparse Colab bootstrap instead of the V1 marker."""
+    setup = next(("".join(c.get("source", [])) for c in cells
+                  if c.get("cell_type") == "code"), "")
+    # Validate the actual release contract instead of demanding an unrelated marker.
+    for fragment in (
+        'importlib.util.find_spec("google.colab")',
+        'if ROOT is None',
+        'Path("/content/FlowMLLab_week16")',
+        '"git","clone","--depth","1","--filter=blob:none","--sparse"',
+        'https://github.com/Ehsan-Roohi/FlowMLLab.git',
+        '"sparse-checkout","set"',
+        '"results/week16_lowboom","notebooks/week16","qa/week16"',
+        'check=True',
+        'ROOT = target',
+        'raise RuntimeError("Open this notebook from a clone of FlowMLLab.")',
+    ):
+        assert fragment in setup, f"missing Week 16 bootstrap contract {fragment!r}: {label}"
+
+
+def validate_transformer_notebook(notebook: dict, week: int, label: str) -> None:
+    """Check the six exact portable/full-checkout student notebook editions."""
+    metadata = notebook.get("metadata", {}).get("course", {})
+    assert metadata.get("week") == week and metadata.get("edition") == "student", label
+    cells = notebook["cells"]
+    code = ["".join(c.get("source", [])) for c in cells if c.get("cell_type") == "code"]
+    markdown = ["".join(c.get("source", [])) for c in cells if c.get("cell_type") == "markdown"]
+    assert code and "RUN_EXERCISES=False" in code, f"student exercise default missing: {label}"
+    for fragment in (
+        "Path.cwd()", "Path.cwd().parents", "p/'flowmllab/transformer_course.py'",
+        "if ROOT is None:", "raise RuntimeError(", "docs/TRANSFORMER_COURSE.md",
+        "sys.path.insert(0,str(ROOT))", "lab.load_data(ROOT)",
+        "tempfile.TemporaryDirectory(", "RUN_OUTPUT=Path(workspace.name)",
+        "task_status={i:None for i in range(1,5)}",
+    ):
+        assert fragment in code[0], f"missing portable setup contract {fragment!r}: {label}"
+    spec = json.loads((ROOT / f"course/lessons/week{week}.json").read_text(encoding="utf-8"))
+    assert len(spec["tasks"]) == 4, label
+    for index, task in enumerate(spec["tasks"], 1):
+        prompt = f'## Task {index}: {task["title"]}\n\n{task["prompt"]}'
+        assert markdown.count(prompt) == 1, f"canonical task prompt mismatch: {label}, task {index}"
+        assert code.count(task["starter"]) == 1, f"canonical starter mismatch: {label}, task {index}"
+        checks = "\n".join("        " + line for line in task["checks"].splitlines())
+        expected = (f"if RUN_EXERCISES:\n    try:\n{checks}\n"
+                    f"        task_status[{index}]=True\n"
+                    f"    except NotImplementedError:\n        task_status[{index}]=None\n"
+                    f"    except Exception as exc:\n        task_status[{index}]=False\n"
+                    f'        print("Task {index} check failed:",type(exc).__name__,str(exc))\n'
+                    f"else:\n    task_status[{index}]=None\n"
+                    f'print("Task {index}:","PASS" if task_status[{index}] is True else "NOT SUBMITTED" if task_status[{index}] is None else "FAILED")')
+        assert code.count(expected) == 1, f"canonical task/status check mismatch: {label}, task {index}"
+    assert code[-1] == ('print("Coding tasks passed:",sum(v is True for v in task_status.values()),"/",len(task_status))\n'
+                        'workspace.cleanup()'), f"student completion report mismatch: {label}"
+    assert all(c.get("id") for c in cells), f"missing transformer cell id: {label}"
+    assert not any(o.get("output_type") == "error" for c in cells if c.get("cell_type") == "code"
+                   for o in c.get("outputs", [])), f"saved transformer error: {label}"
+    guide = ROOT / "docs/TRANSFORMER_COURSE.md"
+    assert guide.is_file() and (ROOT / "qa/colab_transformer_bootstrap.py").is_file(), label
+    assert "qa/colab_transformer_bootstrap.py" in guide.read_text(encoding="utf-8"), label
+
+
 def validate_notebooks() -> tuple[int, int]:
     count = 0
     code_cells = 0
@@ -398,6 +459,9 @@ def validate_notebooks() -> tuple[int, int]:
             "https://colab.research.google.com/github/"
             f"Ehsan-Roohi/FlowMLLab/blob/main/{relative}"
         )
+        transformer_week = {f'notebooks/week{w}/W{w}_CFD_Transformer.ipynb': w for w in range(17, 23)}.get(relative)
+        if transformer_week is not None:
+            validate_transformer_notebook(notebook, transformer_week, relative)
         week16_lab = relative == 'notebooks/week16/W16_Supersonic_Shape_Optimization.ipynb'
         week14_lab = relative == 'notebooks/week14/W14_pyCALC_RANS_PINN_NN.ipynb'
         week15_local = relative.startswith('notebooks/week15/')
@@ -405,11 +469,12 @@ def validate_notebooks() -> tuple[int, int]:
         week15_complete = relative == 'notebooks/week15/W15_Complete_Geometry_Generalization.ipynb'
         # Weeks 14 and 15 are documented full-checkout modules.  Week 15's
         # evidence archives are release assets and cannot be bootstrapped by a
-        # fresh Colab clone alone.
-        assert week14_lab or week15_local or colab_url in full_source, (
+        # fresh Colab clone alone. Weeks 17-22 have an exact portable contract
+        # checked above; their documented Colab upload/clone step is external.
+        assert week14_lab or week15_local or transformer_week is not None or colab_url in full_source, (
             f"missing direct Colab launcher: {path}"
         )
-        assert week14_lab or week15_local or "FLOWMLLAB_COLAB_BOOTSTRAP_V1" in full_source, (
+        assert week14_lab or week15_local or week16_lab or transformer_week is not None or "FLOWMLLAB_COLAB_BOOTSTRAP_V1" in full_source, (
             f"missing Colab repository bootstrap: {path}"
         )
         reconstruction_lab = relative == 'notebooks/week11/W11_Lab2_Reconstruction_and_Identification.ipynb'
@@ -417,6 +482,7 @@ def validate_notebooks() -> tuple[int, int]:
             assert 'FlowMLLab retained-LBM reconstruction audit v1' in full_source
             assert 'velocity-derived weak references' in full_source
         if week16_lab:
+            validate_week16_bootstrap(cells, relative)
             code = [c for c in cells if c.get('cell_type') == 'code']
             assert len(code) >= 16
             assert 'clean_model_audit(write=False)' in full_source
@@ -443,7 +509,7 @@ def validate_notebooks() -> tuple[int, int]:
             )
             assert 'no double-step motif is used in training or validation' in full_source
             assert 'Selection reads no double-step arrays.' in full_source
-        assert week14_lab or week15_local or reconstruction_lab or week16_lab or any(
+        assert week14_lab or week15_local or reconstruction_lab or week16_lab or transformer_week is not None or any(
             marker in full_source
             for marker in (
                 "MIE690A article-aligned validation v3",
@@ -1317,3 +1383,4 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
+

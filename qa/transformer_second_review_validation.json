@@ -156,5 +156,33 @@
     "modules_skipped": 2,
     "errors": 0,
     "runtime": "bundled artifact Python"
+  },
+  "ubuntu_transformer_ci": {
+    "commit": "564043b9b5c963ada547228f4b11208c0f7625d8",
+    "workflow_run": 37565183922,
+    "workflow_url": "https://github.com/Ehsan-Roohi/FlowMLLab/actions/runs/37565183922",
+    "conclusion": "success",
+    "unit_tests": 21,
+    "unit_test_seconds": 7.384,
+    "fresh_independent_notebook_kernels": 12,
+    "checkpoint_predictions": 126,
+    "checkpoint_scientific_passed": true,
+    "checkpoint_strict_passed": false,
+    "paired_ablation_rows": 12,
+    "paired_ablation_strict_passed": true,
+    "paired_ablation_scientific_passed": true,
+    "new_initializations_byte_exact": 0,
+    "new_initializations_checked": 3,
+    "new_initialization_matching": "diagnostic only; original paired training matching verified",
+    "artifact_url": "https://github.com/Ehsan-Roohi/FlowMLLab/actions/runs/37565183922/artifacts/11458247846",
+    "scope": "Validates course scientific/teaching assets before later repository-wide notebook-validator integration; final published commit has its own Actions checks."
+  },
+  "ubuntu_base_package_tests": {
+    "commit": "564043b9b5c963ada547228f4b11208c0f7625d8",
+    "python": "3.12.15",
+    "passed": 242,
+    "skipped": 15,
+    "seconds": 19.41,
+    "full_release_qa": "Failed at existing Week16 custom bootstrap contract; subsequent validator integration recognizes actual Week16 and new course contracts. Final Actions result is authoritative for publication."
   }
 }
