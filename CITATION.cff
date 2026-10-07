@@ -1,5 +1,5 @@
 cff-version: 1.2.0
-message: "If you use FlowMLLab, please cite this v1.9.1 software release and the relevant research-case articles."
+message: "If you use FlowMLLab, please cite this v1.10.0 software release and the relevant research-case articles."
 title: "FlowMLLab: An Open-Source Framework for Reproducible CFD-to-Scientific-Machine-Learning Experiments"
 type: software
 authors:
@@ -7,7 +7,7 @@ authors:
     given-names: Ehsan
     orcid: "https://orcid.org/0000-0001-5739-3210"
 repository-code: "https://github.com/Ehsan-Roohi/FlowMLLab"
-url: "https://github.com/Ehsan-Roohi/FlowMLLab/releases/tag/v1.9.1"
+url: "https://github.com/Ehsan-Roohi/FlowMLLab/releases/tag/v1.10.0"
 license: MIT
 abstract: >-
   FlowMLLab integrates transparent continuum and particle solvers, case-wise
@@ -16,7 +16,10 @@ abstract: >-
   cylinder-wake module, exact and learned gas-dynamics inverse benchmarks,
   physical diagnostics,
   machine-readable validation evidence, and release-quality assurance for
-  reproducible scientific machine learning in fluid mechanics.
+  reproducible scientific machine learning in fluid mechanics. Weeks 17-22
+  add CPU laboratories on Q/K/V attention, a small character language model,
+  sparse sensor reconstruction, autonomous wake prediction and controlled
+  transfer comparisons, with separate student and instructor notebooks.
 keywords:
   - computational fluid dynamics
   - scientific machine learning
@@ -29,6 +32,9 @@ keywords:
   - compressible flow
   - direct simulation Monte Carlo
   - reproducibility
-version: "1.9.1"
+  - transformers
+  - attention
+  - language modeling
+version: "1.10.0"
 doi: "10.5281/zenodo.22074169"
-date-released: "2026-09-24"
+date-released: "2026-10-07"

@@ -555,10 +555,13 @@ If FlowMLLab supports your teaching or research, you can also support its contin
 
 Use [CITATION.cff](../CITATION.cff) when citing the release.
 
-Version 1.8.4 is the current release: the review follow-ups after the v1.8.3
-repair, with the Week 15 figures, provenance, release metadata and executable
-notebook record kept synchronized. The large frozen Week 15 evidence archives
-remain at the v1.8.0 record,
+Version 1.10.0 is the current release: [six new Transformer/language-modeling
+laboratories, review corrections and CFD contour previews](../RELEASE_NOTES_v1.10.0.md).
+Use the [GitHub release](https://github.com/Ehsan-Roohi/FlowMLLab/releases/tag/v1.10.0)
+for the versioned source, Python distributions and portable Weeks 17–22 package.
+The preceding v1.9.1 archive remains at
+[10.5281/zenodo.22941037](https://doi.org/10.5281/zenodo.22941037).
+The large frozen Week 15 evidence archives remain at the v1.8.0 record,
 [10.5281/zenodo.22840293](https://doi.org/10.5281/zenodo.22840293).
 Version 1.5.1 remains archived at
 [10.5281/zenodo.22651906](https://doi.org/10.5281/zenodo.22651906).

@@ -1,0 +1,117 @@
+name: Publish FlowMLLab v1.10.0
+
+on:
+  workflow_dispatch:
+    inputs:
+      expected_sha:
+        description: Tested main commit to release
+        required: true
+        type: string
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    if: github.repository == 'Ehsan-Roohi/FlowMLLab' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      PYTHONUTF8: '1'
+      PYTHONDONTWRITEBYTECODE: '1'
+      OPENBLAS_NUM_THREADS: '1'
+      OMP_NUM_THREADS: '1'
+      MKL_NUM_THREADS: '1'
+      MPLBACKEND: Agg
+      EXPECTED_RELEASE_SHA: ${{ inputs.expected_sha }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Require the reviewed revision
+        run: test "$GITHUB_SHA" = "$EXPECTED_RELEASE_SHA"
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: pip
+      - name: Install release validation and build dependencies
+        run: |
+          sudo apt-get update && sudo apt-get install -y poppler-utils
+          python -m pip install -e '.[transformer,test]' -c qa/transformer-environment.lock.txt
+          python -m pip install build twine
+      - name: Verify package, release tree and retained course evidence
+        run: |
+          python -m pytest -q tests qa
+          python qa/validate_course_release.py
+          python qa/verify_transformer_course.py
+          python qa/verify_transformer_curriculum.py
+          python qa/build_transformer_course.py --check
+      - name: Build distributions and the portable six-week package
+        run: |
+          python -m build
+          python -m twine check dist/*
+          python qa/package_transformer_course.py --output build/FlowMLLab_Weeks_17-22_v1.10.0.zip
+      - name: Verify the isolated wheel version and CLI
+        run: |
+          python -m venv /tmp/flowmllab-v1-10-0-wheel
+          /tmp/flowmllab-v1-10-0-wheel/bin/python -m pip install dist/*.whl
+          cd /tmp
+          /tmp/flowmllab-v1-10-0-wheel/bin/python - <<'PY'
+          import importlib.metadata
+          import flowmllab
+          assert flowmllab.__version__ == importlib.metadata.version('flowmllab') == '1.10.0'
+          PY
+          /tmp/flowmllab-v1-10-0-wheel/bin/flowmllab --version
+          /tmp/flowmllab-v1-10-0-wheel/bin/flowmllab smoke
+      - name: Record release provenance and asset checksums
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import hashlib, json, os, subprocess
+          assets = [*sorted(Path('dist').iterdir()), Path('build/FlowMLLab_Weeks_17-22_v1.10.0.zip'),
+                    *[Path(f'lectures/week{week}_cfd_transformer.pdf') for week in range(17, 23)]]
+          contour = json.loads(Path('docs/assets/transformer-contours/manifest.json').read_text())
+          for name, digest in contour['input_sha256'].items():
+              assert hashlib.sha256(Path(name).read_bytes()).hexdigest() == digest, name
+          for figure in contour['figures']:
+              path = Path('docs/assets/transformer-contours') / figure['file']
+              assert hashlib.sha256(path.read_bytes()).hexdigest() == figure['sha256'], path
+          record = {'version': '1.10.0', 'source_commit': os.environ['GITHUB_SHA'],
+                    'source_tree': subprocess.check_output(['git', 'rev-parse', 'HEAD^{tree}'], text=True).strip(),
+                    'workflow_run': f"https://github.com/{os.environ['GITHUB_REPOSITORY']}/actions/runs/{os.environ['GITHUB_RUN_ID']}",
+                    'release_checks_passed': True, 'isolated_wheel_checked': True,
+                    'portable_archive_crc_and_file_hashes_checked': True,
+                    'contour_and_scientific_input_hashes_checked': True,
+                    'open_classroom_checks': ['interactive Colab', 'representative student workload/grading pilot'],
+                    'assets': {p.name: {'bytes': p.stat().st_size, 'sha256': hashlib.sha256(p.read_bytes()).hexdigest()} for p in assets}}
+          report = Path('build/release_validation_v1.10.0.json')
+          report.write_text(json.dumps(record, indent=2) + '\n')
+          assets.append(report)
+          Path('build/release_assets_v1.10.0_sha256.txt').write_text(''.join(
+              hashlib.sha256(p.read_bytes()).hexdigest() + '  ' + p.name + '\n' for p in assets))
+          PY
+          git diff --exit-code
+      - name: Publish the verified release without replacing older versions
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          if gh release view v1.10.0 >/dev/null 2>&1; then
+            echo 'v1.10.0 already exists; refusing to replace its files or tag.'
+            exit 1
+          fi
+          gh release create v1.10.0 --target "$GITHUB_SHA" --latest \
+            --title 'FlowMLLab v1.10.0 - Transformer and language-modeling laboratories' \
+            --notes-file RELEASE_NOTES_v1.10.0.md \
+            dist/* build/FlowMLLab_Weeks_17-22_v1.10.0.zip \
+            lectures/week{17..22}_cfd_transformer.pdf \
+            build/release_validation_v1.10.0.json build/release_assets_v1.10.0_sha256.txt
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: flowmllab-v1.10.0-release
+          path: |
+            dist/*
+            build/FlowMLLab_Weeks_17-22_v1.10.0.zip
+            build/release_validation_v1.10.0.json
+            build/release_assets_v1.10.0_sha256.txt
+          if-no-files-found: warn

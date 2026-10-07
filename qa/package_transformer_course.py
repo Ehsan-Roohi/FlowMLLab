@@ -9,14 +9,27 @@ for pattern in ('flowmllab/**/*.py','course/lessons/*.json','data/modal_labs/*',
                 'results/transformer_course_v3/*','results/transformer_budget_audit/*','results/transformer_sensor_ablation/*',
                 'lectures/source/week*_transformer_course.md','lectures/week*_cfd_transformer.pdf',
                 'notebooks/week1[789]/*','notebooks/week2[012]/*','instructor/week*/*.ipynb',
-                'qa/*transformer*','tests/test_transformer*.py','docs/TRANSFORMER*.md'):
+                'qa/*transformer*','tests/test_transformer*.py','docs/TRANSFORMER*.md',
+                'docs/assets/transformer-contours/*','weeks/week1[789]/*','weeks/week2[012]/*',
+                'RELEASE_NOTES_v*.md'):
     paths.update(p for p in root.glob(pattern) if p.is_file())
-for name in ('pyproject.toml','LICENSE','README.md','COURSE_MAP.md','START_HERE.md',
+for name in ('pyproject.toml','LICENSE','README.md','COURSE_MAP.md','START_HERE.md','CITATION.cff','.zenodo.json',
              'docs/RESULTS_GUIDE.md','notebooks/week07_3/README.md','notebooks/week07_4/README.md',
              'data/modal_labs/README.md','results/modal_labs/metrics.json','notebook_execution.json'):
     p=root/name
     if not p.is_file():raise FileNotFoundError(p)
     paths.add(p)
+# A sparse checkout must not silently produce an incomplete teaching package.
+for week in range(17,23):
+    for name in (f'course/lessons/week{week}.json',
+                 f'notebooks/week{week}/W{week}_CFD_Transformer.ipynb',
+                 f'instructor/week{week}/W{week}_Solutions.ipynb',
+                 f'lectures/week{week}_cfd_transformer.pdf',
+                 f'weeks/week{week}/README.md',
+                 f'docs/assets/transformer-contours/week{week}.png'):
+        p=root/name
+        if not p.is_file():raise FileNotFoundError(p)
+        paths.add(p)
 readme='''# Portable FlowMLLab Weeks 17-22
 
 Start with docs/TRANSFORMER_COURSE.md. This archive contains the redesigned six

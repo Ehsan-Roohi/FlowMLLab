@@ -1,7 +1,8 @@
 {
   "title": "FlowMLLab: An Open-Source Framework for Reproducible CFD-to-Scientific-Machine-Learning Experiments",
-  "description": "FlowMLLab v1.9.1 publishes the Week 16 educational core: 44 physically checked SU2 8.0.1 teaching-body cases, a portable neural model tested against eight finer CFD references, retained design comparisons, Taylor-Maccoll verification, teaching guides and an executed notebook. Original NASA SEEB-ALR sources and failed reproduction diagnostics remain a deferred research appendix; NASA CFD validation is not claimed. Full Beihang aircraft reproduction, author neural weights, atmospheric propagation and ground PLdB are not claimed. The homepage presents Weeks 15 and 16 with consistent problem, CFD/data, learning-method and results sections; reuse and license information appears after the complete course gallery.",
-  "version": "1.9.1",
+  "description": "FlowMLLab v1.10.0 adds six CPU teaching laboratories for Weeks 17-22: Q/K/V attention, next-character language modeling, tokenization and sensor design, missing-observation reconstruction, autonomous wake prediction and transfer/information-budget audits. The course includes 50 notebooks and 33 lecture PDFs. The six new weeks contain 24 coding exercises, executed student notebooks, separate instructor solutions, editable lectures, frozen prediction/checkpoint evidence and reproducibility checks. The homepage and weekly pages show native-grid velocity/vorticity contours, sensor locations and spatial errors with shared scales and recorded provenance. Previously inspected coarse LBM wakes are retained evaluation cases, not new blind tests; the character language model and continuous-state CFD decoder are separate experiments. Equal optimizer-update ceilings do not establish equal FLOPs or source information. Linux numerical tolerances and remaining interactive Colab and student workload/grading acceptance checks are documented. The earlier Week 16 SU2 8.0.1 educational core and its evidence remain available. NASA SEEB-ALR reproduction remains a failed, deferred research appendix; NASA CFD validation, full Beihang aircraft reproduction, atmospheric propagation and ground PLdB are not claimed. Data provenance, case-specific reuse limits and AI-assistance disclosure remain part of the repository.",
+  "version": "1.10.0",
+  "publication_date": "2026-10-07",
   "creators": [
     {
       "name": "Roohi, Ehsan",
@@ -24,7 +25,12 @@
     "rarefied cavity",
     "reproducible software",
     "physics-informed neural networks",
-    "lid-driven cavity"
+    "lid-driven cavity",
+    "transformers",
+    "attention",
+    "language modeling",
+    "sparse sensor reconstruction",
+    "transfer learning"
   ],
   "related_identifiers": [
     {
@@ -38,7 +44,7 @@
       "scheme": "url"
     },
     {
-      "identifier": "https://github.com/Ehsan-Roohi/FlowMLLab/releases/tag/v1.9.1",
+      "identifier": "https://github.com/Ehsan-Roohi/FlowMLLab/releases/tag/v1.10.0",
       "relation": "isVersionOf",
       "scheme": "url"
     },
