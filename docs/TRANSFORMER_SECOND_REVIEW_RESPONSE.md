@@ -77,6 +77,10 @@ student metadata, temporary experiment output and incomplete-task reporting.
 The separate documented Colab setup remains an open interactive acceptance check.
 Week 16's existing custom Colab bootstrap is validated by its actual setup
 contract rather than requiring the older bootstrap marker used by other weeks.
+Its current artifact is an unexecuted student lesson reading the versioned
+44-case dataset and retained audit reports. The validator checks that contract,
+near-field scope, splits and read-only evidence access; the separate Week 16
+scientific results/provenance/hash gate remains unchanged.
 
 Two acceptance activities require actual users/sessions: an interactive Colab
 run and a workload/grading pilot with representative students. They are recorded

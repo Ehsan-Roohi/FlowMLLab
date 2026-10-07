@@ -484,13 +484,34 @@ def validate_notebooks() -> tuple[int, int]:
         if week16_lab:
             validate_week16_bootstrap(cells, relative)
             code = [c for c in cells if c.get('cell_type') == 'code']
-            assert len(code) >= 16
-            assert 'clean_model_audit(write=False)' in full_source
-            assert 'clean_dataset_v801.npz' in full_source
-            assert all(c.get('execution_count') is not None for c in code)
-            assert not any(o.get('output_type') == 'error' for c in code for o in c.get('outputs', []))
-            assert 'does not compute atmospheric propagation or PLdB' in full_source
-            assert 'write=False' in full_source
+            # The retained Week 16 artifact is an unexecuted student lesson,
+            # not the older executed audit notebook. Scientific evidence and
+            # dataset/checkpoint hashes remain gated by validate_week16_results.
+            assert len(code) == 16, f"unexpected Week 16 student cell count: {path}"
+            assert all(c.get('execution_count') is None for c in code), path
+            assert all(not c.get('outputs', []) for c in code), path
+            for fragment in (
+                'np.load(R / "clean_dataset_v801.npz", allow_pickle=False)',
+                '"clean_campaign_audit.json"', '"weakwall_design_audit.json"',
+                '"clean_model_audit_v801.json"',
+                'assert campaign["passed"] and campaign["cases"] == 44',
+                'assert design["passed"]', 'assert model_audit["passed"]',
+                'model_audit["checkpoint_sha256"]',
+                'assert split_counts.to_dict() ==',
+                '"train":24, "test":8, "validation":6, "extrapolation":6',
+                'train = data["splits"] == "train"',
+                'Selected using validation only:',
+                'We do **not** propagate the waveform through the atmosphere and do **not** compute PLdB.',
+                '["Ground PLdB", "not computed",',
+            ):
+                assert fragment in full_source, f"missing Week 16 student contract {fragment!r}: {path}"
+            # The student analysis reads retained data/audits; it must not save
+            # arrays or overwrite evidence while fitting classroom baselines.
+            forbidden_writes = {"write_text", "write_bytes", "save", "savez", "savez_compressed", "to_csv", "to_json"}
+            for cell in code:
+                tree = ast.parse("".join(cell.get("source", [])))
+                assert not any(isinstance(node, ast.Call) and isinstance(node.func, ast.Attribute)
+                               and node.func.attr in forbidden_writes for node in ast.walk(tree)), path
         if week14_lab:
             assert 'FlowMLLab teaching adaptation' in full_source
             assert 'not a verified' in full_source
