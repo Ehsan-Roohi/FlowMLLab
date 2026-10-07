@@ -1,4 +1,4 @@
-Current release: **v1.9.1**
+Current release: **v1.10.0**
 
 <h1><img src="docs/assets/flowmllab-logo.png" alt="FlowMLLab — fluid-streamline F logo" width="520"></h1>
 
@@ -29,7 +29,7 @@ instructor solutions and a five-page lecture.
 
 [Contour sources and reproduction](docs/assets/transformer-contours/README.md)
 
-[Setup and prerequisites](docs/TRANSFORMER_COURSE.md) · [Six figures and experiments](#transformer-labs) · [Review corrections and validation](docs/TRANSFORMER_SECOND_REVIEW_RESPONSE.md). Interactive Colab and student workload acceptance remain open; these additions are available on GitHub and are not yet part of the existing archived version DOI.
+[Setup and prerequisites](docs/TRANSFORMER_COURSE.md) · [Six figures and experiments](#transformer-labs) · [Review corrections and validation](docs/TRANSFORMER_SECOND_REVIEW_RESPONSE.md) · [Version 1.10.0 changes](RELEASE_NOTES_v1.10.0.md). Interactive Colab and student workload acceptance remain open. Release assets and archival status are linked below.
 
 ## Start here
 
@@ -825,9 +825,10 @@ Student submissions are not included.
 · [Citation metadata](CITATION.cff)
 · [Workshop, support, and consulting details](docs/RESULTS_GUIDE.md#workshops-support-and-consulting)
 
-Current published release: **v1.9.1** · [GitHub release](https://github.com/Ehsan-Roohi/FlowMLLab/releases/tag/v1.9.1)
+Current published release: **v1.10.0** · [GitHub release](https://github.com/Ehsan-Roohi/FlowMLLab/releases/tag/v1.10.0)
 · [all-version Zenodo DOI 10.5281/zenodo.22074169](https://doi.org/10.5281/zenodo.22074169)
-· [Release notes](RELEASE_NOTES_v1.9.1.md).
+· [Release notes](RELEASE_NOTES_v1.10.0.md).
+Previous v1.9.1 archive: [10.5281/zenodo.22941037](https://doi.org/10.5281/zenodo.22941037).
 The frozen v1.8.0 evidence archive remains at
 [10.5281/zenodo.22840293](https://doi.org/10.5281/zenodo.22840293).
 Previous v1.7.0 archive DOI: [10.5281/zenodo.22836172](https://doi.org/10.5281/zenodo.22836172);
