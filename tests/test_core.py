@@ -16,7 +16,8 @@ ROOT = Path(__file__).resolve().parents[1]
 
 class FlowMLLabCoreTests(unittest.TestCase):
     def test_version(self) -> None:
-        self.assertEqual(flowmllab.__version__, "1.9.0")
+        from importlib.metadata import version
+        self.assertEqual(flowmllab.__version__, version("flowmllab"))
 
     def test_package_metadata_supports_colab_python_313(self) -> None:
         metadata = (ROOT / "pyproject.toml").read_text(encoding="utf-8")
