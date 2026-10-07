@@ -1,0 +1,49 @@
+{
+  "week": 17,
+  "title": "Attention as a learned kernel on a wake",
+  "question": "Which properties follow from the attention algebra, and which require physical validation?",
+  "prerequisites": "Weeks 7.3 and 15 introduced applications. Here we open the mechanism and audit it.",
+  "demos": [
+    {
+      "title": "Build Q, K and V from actual CFD sensors",
+      "prose": "Coordinates are geometric features, not a sequence order. Use the first retained Re110 snapshot only as a worked example; these random weights are not a learned physical law.",
+      "code": "rep=lab.Representation.fit(cases[90]['v'][:160],8)\nids=lab.qr_sensors(rep,16)\ntokens=lab.sensor_tokens(cases[110]['v'][100:103],ids,cases[90],0.,1.)\nX=torch.tensor(tokens,dtype=torch.float32)\nWq,Wk,Wv=[torch.randn(3,8)/np.sqrt(3) for _ in range(3)]\nQ,K,V=X@Wq,X@Wk,X@Wv\nA,weights=lab.attention(Q,K,V)\nprint('X, Q, attention, output:',X.shape,Q.shape,weights.shape,A.shape)\nassert torch.allclose(weights.sum(-1),torch.ones(3,16))\nplt.figure(figsize=(6,4));plt.imshow(weights[0].numpy(),vmin=0,cmap='viridis');plt.colorbar(label='row-normalized weight');plt.xlabel('key sensor');plt.ylabel('query sensor');plt.show()"
+    },
+    {
+      "title": "Separate a kernel picture from a trained interpretation",
+      "prose": "A spatial-distance kernel supplies a geometry-only comparator. Neither picture is evidence of causal influence. Change a sensor value and recompute both kernels.",
+      "code": "xy=tokens[0,:,1:]\ndistance=((xy[:,None]-xy[None,:])**2).sum(-1)\ngeometry=np.exp(-distance/.1);geometry/=geometry.sum(1,keepdims=True)\norder=torch.randperm(16)\npermuted,_=lab.attention(Q[:,order],K[:,order],V[:,order])\ntorch.testing.assert_close(permuted,A[:,order])\nfig,axes=plt.subplots(1,2,figsize=(10,4))\naxes[0].imshow(geometry);axes[0].set_title('Geometry-only kernel')\naxes[1].imshow(weights[0].numpy());axes[1].set_title('Random Q/K kernel')\nplt.show()"
+    }
+  ],
+  "tasks": [
+    {
+      "title": "Scaled attention",
+      "prompt": "Implement row-stable scaled dot-product attention without calling lab.attention. Explain the square-root scaling.\n\nInterface contract: Inputs are floating Torch tensors q,k:[N,d], v:[N,d_v] with matching N. Return a [N,d_v] tensor; normalize over keys.",
+      "starter": "def student_attention(q,k,v):\n    \"\"\"Inputs are floating Torch tensors q,k:[N,d], v:[N,d_v] with matching N. Return a [N,d_v] tensor; normalize over keys.\"\"\"\n    raise NotImplementedError",
+      "solution": "def student_attention(q,k,v):\n    score=q@k.transpose(-2,-1)/np.sqrt(q.shape[-1])\n    return score.softmax(-1)@v",
+      "checks": "g=torch.Generator().manual_seed(1701)\nfor b,n,d in [(2,5,3),(1,9,6)]:\n    q,k,v=[torch.randn(b,n,d,generator=g) for _ in range(3)]\n    expected=(q@k.transpose(-2,-1)/np.sqrt(d)).softmax(-1)@v\n    torch.testing.assert_close(student_attention(q,k,v),expected)\n    torch.testing.assert_close(student_attention(q,k,2*v),2*expected)"
+    },
+    {
+      "title": "Permutation experiment",
+      "prompt": "Write a function returning the largest equivariance error after consistently permuting all sensor tokens.\n\nInterface contract: Inputs q,k,v have the Task 1 shapes. order is a length-N Torch permutation. attention_fn is an explicit callable returning the attended tensor, not a weights/output tuple. Return a Python float: maximum absolute equivariance discrepancy. Do not consult a global attention function.",
+      "starter": "def permutation_error(q,k,v,order,attention_fn):\n    \"\"\"Inputs q,k,v have the Task 1 shapes. order is a length-N Torch permutation. attention_fn is an explicit callable returning the attended tensor, not a weights/output tuple. Return a Python float: maximum absolute equivariance discrepancy. Do not consult a global attention function.\"\"\"\n    raise NotImplementedError",
+      "solution": "def permutation_error(q,k,v,order,attention_fn):\n    before=attention_fn(q,k,v)\n    after=attention_fn(q[order],k[order],v[order])\n    return float((after-before[order]).abs().max())",
+      "checks": "for n,d in ((5,3),(9,2)):\n    q=torch.randn(n,d);k=torch.randn(n,d);v=torch.randn(n,4);order=torch.randperm(n)\n    assert permutation_error(q,k,v,order,student_attention)<1e-5\ndef order_biased_attention(q,k,v):\n    return torch.arange(q.shape[0],dtype=q.dtype)[:,None].expand(q.shape[0],v.shape[-1])\nq=torch.randn(5,3);k=torch.randn(5,3);v=torch.randn(5,2);order=torch.arange(4,-1,-1)\nassert permutation_error(q,k,v,order,order_biased_attention)>1"
+    },
+    {
+      "title": "Temperature limit",
+      "prompt": "Implement temperature-scaled weights; verify that large temperature moves them toward uniform weights.\n\nInterface contract: Return a [N,N] Torch tensor for q,k:[N,d]. Divide scaled scores by the finite temperature; nonpositive temperature must raise ValueError.",
+      "starter": "def temperature_weights(q,k,temperature):\n    \"\"\"Return a [N,N] Torch tensor for q,k:[N,d]. Divide scaled scores by the finite temperature; nonpositive temperature must raise ValueError.\"\"\"\n    raise NotImplementedError",
+      "solution": "def temperature_weights(q,k,temperature):\n    if temperature<=0: raise ValueError(\"temperature must be positive\")\n    return (q@k.transpose(-2,-1)/np.sqrt(q.shape[-1])/temperature).softmax(-1)",
+      "checks": "for temperature in (.3,2.5):\n    expected=(Q@K.transpose(-2,-1)/np.sqrt(Q.shape[-1])/temperature).softmax(-1)\n    torch.testing.assert_close(temperature_weights(Q,K,temperature),expected)\ntry:\n    temperature_weights(Q,K,0)\n    raise AssertionError('zero temperature was accepted')\nexcept ValueError:\n    pass"
+    },
+    {
+      "title": "Build an attention investigation",
+      "prompt": "Implement attention over several temperatures and optional key masks. Return weights, output and mean entropy for each temperature. Reject a mask with an empty row. Then vary the temperature and remove half the keys; plot entropy and output change, explaining why constant values hide changes in attention.\n\nInterface contract: Inputs q:[Nq,d], k:[Nk,d], v:[Nk,d_v] are 2-D floating Torch tensors. temperatures is a nonempty sequence of positive scalars. mask is None or a Boolean tensor broadcastable to [Nq,Nk]: True ALLOWS a key (the opposite of torch MultiheadAttention blocking-mask semantics). Invalid tensor dimensions, mismatched widths/counts, nonpositive temperature or a query with no allowed key must raise ValueError. Return a list in temperature order of dictionaries with keys temperature (float), weights ([Nq,Nk] tensor), output ([Nq,d_v] tensor), entropy (float, mean over queries of natural-log entropy).",
+      "starter": "def attention_investigation(q,k,v,temperatures,mask=None):\n    \"\"\"Inputs q:[Nq,d], k:[Nk,d], v:[Nk,d_v] are 2-D floating Torch tensors. temperatures is a nonempty sequence of positive scalars. mask is None or a Boolean tensor broadcastable to [Nq,Nk]: True ALLOWS a key (the opposite of torch MultiheadAttention blocking-mask semantics). Invalid tensor dimensions, mismatched widths/counts, nonpositive temperature or a query with no allowed key must raise ValueError. Return a list in temperature order of dictionaries with keys temperature (float), weights ([Nq,Nk] tensor), output ([Nq,d_v] tensor), entropy (float, mean over queries of natural-log entropy).\"\"\"\n    raise NotImplementedError",
+      "solution": "def attention_investigation(q,k,v,temperatures,mask=None):\n    if q.ndim!=2 or k.ndim!=2 or v.ndim!=2:\n        raise ValueError('expected two-dimensional tensors')\n    if q.shape[-1]!=k.shape[-1] or k.shape[-2]!=v.shape[-2]:\n        raise ValueError('incompatible feature or token dimensions')\n    scores=q@k.transpose(-2,-1)/np.sqrt(q.shape[-1])\n    if mask is not None:\n        mask=torch.broadcast_to(mask.bool(),scores.shape)\n        if not bool(mask.any(-1).all()):\n            raise ValueError('every query must retain a key')\n    if len(temperatures)==0:raise ValueError(\"no temperatures\")\n    result=[]\n    for temperature in temperatures:\n        if temperature<=0:\n            raise ValueError('temperature must be positive')\n        scaled=scores/temperature\n        if mask is not None:\n            scaled=scaled.masked_fill(~mask,float('-inf'))\n        weights=scaled.softmax(-1)\n        entropy=-(weights*weights.clamp_min(1e-30).log()).sum(-1).mean()\n        result.append({'temperature':temperature,'weights':weights,'output':weights@v,'entropy':float(entropy)})\n    return result",
+      "checks": "g=torch.Generator().manual_seed(1704)\nq,k,v=[torch.randn(5,3,generator=g) for _ in range(3)]\nmask=torch.ones(5,5,dtype=torch.bool);mask[:,-2:]=False\nfor use_mask in (None,mask):\n    result=attention_investigation(q,k,v,[.5,3.],use_mask)\n    assert len(result)==2\n    for r in result:\n        scores=q@k.transpose(-2,-1)/np.sqrt(3)/r['temperature']\n        if use_mask is not None:scores=scores.masked_fill(~use_mask,float('-inf'))\n        expected=scores.softmax(-1)\n        torch.testing.assert_close(r['weights'],expected)\n        torch.testing.assert_close(r['output'],expected@v)\n        assert np.isclose(r['entropy'],float(-(expected*expected.clamp_min(1e-30).log()).sum(-1).mean()))\n    assert result[0]['entropy']<result[1]['entropy']\ntry:\n    attention_investigation(q,k,v,[1.],torch.zeros(5,5,dtype=torch.bool))\n    raise AssertionError('empty mask accepted')\nexcept ValueError:pass\nfor temp in (0.,-1.):\n    try:\n        attention_investigation(q,k,v,[temp])\n        raise AssertionError(\"nonpositive temperature accepted\")\n    except ValueError:pass\n"
+    }
+  ],
+  "duration_minutes": 120
+}

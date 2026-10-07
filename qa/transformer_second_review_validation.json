@@ -1,0 +1,188 @@
+{
+  "timestamp_utc": "2026-10-07T02:53:33.777692+00:00",
+  "scope": "Final local Windows checks; Ubuntu outcomes are recorded by GitHub Actions for the published commit. Interactive Colab and student workload pilot remain open.",
+  "base_commit": "37c1fcf791a41e5eca9d473a214954bed1d2f83a",
+  "unit_tests": {
+    "passed": 21,
+    "failed": 0,
+    "seconds": 8.202,
+    "command": "python -m unittest discover -s tests -p 'test_transformer*.py' -v",
+    "note": "Repeated after optional-dependency CI integration fix; all 21 tests passed in the Transformer environment."
+  },
+  "exercises": {
+    "reference_passes": 24,
+    "checks": 24,
+    "frozen_result_rejections": 24,
+    "semantic_mutations": 5,
+    "semantic_rejections": 5,
+    "notebook_semantic_rejections": 5
+  },
+  "exercise_report": "qa/transformer-exercise-audit-second-review-validated.json",
+  "fresh_independent_kernel_runs": [
+    {
+      "notebook": "notebooks/week17/W17_CFD_Transformer.ipynb",
+      "seconds": 23.411493699997663,
+      "code_cells": 13
+    },
+    {
+      "notebook": "instructor/week17/W17_Solutions.ipynb",
+      "seconds": 27.264640599954873,
+      "code_cells": 13
+    },
+    {
+      "notebook": "notebooks/week18/W18_CFD_Transformer.ipynb",
+      "seconds": 22.00161619996652,
+      "code_cells": 13
+    },
+    {
+      "notebook": "instructor/week18/W18_Solutions.ipynb",
+      "seconds": 19.708992599975318,
+      "code_cells": 13
+    },
+    {
+      "notebook": "notebooks/week19/W19_CFD_Transformer.ipynb",
+      "seconds": 22.69734509999398,
+      "code_cells": 13
+    },
+    {
+      "notebook": "instructor/week19/W19_Solutions.ipynb",
+      "seconds": 23.609829999972135,
+      "code_cells": 13
+    },
+    {
+      "notebook": "notebooks/week20/W20_CFD_Transformer.ipynb",
+      "seconds": 21.297289500012994,
+      "code_cells": 13
+    },
+    {
+      "notebook": "instructor/week20/W20_Solutions.ipynb",
+      "seconds": 20.861068799975328,
+      "code_cells": 13
+    },
+    {
+      "notebook": "notebooks/week21/W21_CFD_Transformer.ipynb",
+      "seconds": 17.60244029999012,
+      "code_cells": 13
+    },
+    {
+      "notebook": "instructor/week21/W21_Solutions.ipynb",
+      "seconds": 20.098960499977693,
+      "code_cells": 13
+    },
+    {
+      "notebook": "notebooks/week22/W22_CFD_Transformer.ipynb",
+      "seconds": 69.89609979995294,
+      "code_cells": 13
+    },
+    {
+      "notebook": "instructor/week22/W22_Solutions.ipynb",
+      "seconds": 168.9229619000107,
+      "code_cells": 13
+    }
+  ],
+  "retained_prediction_rows_independently_rescored": 160,
+  "checkpoint_reconstructions": {
+    "rows": 126,
+    "strict_passed": true,
+    "scientific_passed": true,
+    "report": "qa/transformer-checkpoint-audit-dual-criteria.json"
+  },
+  "paired_sensor_ablation": {
+    "seeds": [
+      17,
+      29,
+      43
+    ],
+    "fits": 6,
+    "rows": 12,
+    "verified": true,
+    "directory": "results/transformer_sensor_ablation",
+    "within_training_run_pair_matched": true,
+    "current_environment_initializations_byte_exact": 3,
+    "initialization_recreation_policy": "Diagnostic only across platforms; original paired initialization is enforced across bundles, rows and checksummed metadata."
+  },
+  "curriculum_alignment": {
+    "tasks": 24,
+    "passed": true,
+    "command": "python qa/verify_transformer_curriculum.py"
+  },
+  "pdf_visual_review": {
+    "documents": 6,
+    "pages": 30,
+    "rendered_with": "Poppler",
+    "inspected": true,
+    "defects_remaining": 0
+  },
+  "builder_source_and_primary_evidence_preserved": true,
+  "original_prediction_and_checkpoint_archives_unchanged_from_first_redesign_commit": {
+    "transformer_course_v3/predictions.npz": "de131cc3c635e3b137f8200035e231d92b87d1a4722682b032803e38524ef98a",
+    "transformer_course_v3/checkpoints.pt": "418b39049f4c10e54b9f459c9d62f90d6d4d9e13aad1a2c2ab5d9522d249704c",
+    "transformer_budget_audit/predictions.npz": "53cbf8b384a192ea6d798d1916e20443f5fa590310f79e4d658a69b0850d9ea4",
+    "transformer_budget_audit/checkpoints.pt": "908ff328f29a7830695422676d199a81d5669a883447f68e40c9123d0e030e91"
+  },
+  "source_sha256": {
+    "course/lessons/week17.json": "1c42a04e6f50729495f0a55a193dabf736f50ad0d78251c85ba7f7472997ad97",
+    "course/lessons/week18.json": "9a1ff04f5da510e7726e417589cf20ffaf188ed9cb1a578bb707e0848274fcb7",
+    "course/lessons/week19.json": "725d730534f3844bc74f07e6dff64f6ab48a4edcb617a0ae4b5917a43afa8b3d",
+    "course/lessons/week20.json": "a24dc8f7076a1b52c44ebeeb77ec268e6edea5b9cb84c29cbd46e86647f608ab",
+    "course/lessons/week21.json": "3a80282ce2351ab3422339f8dc78f002f32ce8e3feeeaa4fb9cc560063cd82ac",
+    "course/lessons/week22.json": "19636ba85cd5174335584175c4032ac337e838ffdfbf7f3047bce299fbdc8d74",
+    "lectures/source/week17_transformer_course.md": "8dca1d2e981186c8153aef9560c01298f86e021a647340bf4ddd207815599de0",
+    "lectures/source/week18_transformer_course.md": "cef0ba87dab3dcec2b39b725ba1830a41718cb0a171f7c124c3e0e8d2d419533",
+    "lectures/source/week19_transformer_course.md": "3ee3ff4f108b6f246e7309bd579312cc0055026e6b88422e1c56e1dd11206f14",
+    "lectures/source/week20_transformer_course.md": "d13b32be1118438888f42d2e3d581cfcc2e355a74d240579d64ebd2e01408880",
+    "lectures/source/week21_transformer_course.md": "5cd01b753e93a234fe2a5724a3e0c38c0b8aa6e04fddc806e630464972b69f42",
+    "lectures/source/week22_transformer_course.md": "376109b5c059bbf7048475bd7bfff8d5f6dbbbb29cc50719ebad351d3ea2c50b",
+    "flowmllab/transformer_course.py": "c901fad341380e0a75c4ae38d69991996847d5bcf7b74c72239550ec75630e2d"
+  },
+  "classroom_acceptance_open": [
+    "Interactive Colab session",
+    "Representative student workload/grading pilot"
+  ],
+  "environment": {
+    "python": "3.12.14",
+    "platform": "Windows-11-10.0.26200-SP0",
+    "packages": {
+      "numpy": "2.2.6",
+      "scipy": "1.15.3",
+      "torch": "2.14.1"
+    },
+    "torch_threads": 2,
+    "torch_build": "PyTorch built with:\n  - C++ Version: 202002\n  - MSVC 194234444\n  - Intel(R) oneAPI Math Kernel Library Version 2026.1-Product Build 20260612 for Intel(R) 64 architecture applications\n  - Intel(R) MKL-DNN v3.12.0 (Git Hash 80afa71049cd69a3df32adcccb623b12cd7baa22)\n  - OpenMP 2019\n  - LAPACK is enabled (usually provided by MKL)\n  - CPU capability usage: AVX2\n  - Build settings: BLAS_INFO=mkl, BUILD_TYPE=Release, COMMIT_SHA=5c4886908584029761b579af026dcfb627c84070, CUDA_FLAGS= -DLIBCUDACXX_ENABLE_SIMPLIFIED_COMPLEX_OPERATIONS -Xcompiler /Zc:__cplusplus -Xcompiler /Zc:preprocessor -Xcompiler /w -w -Xcompiler /FS -Xfatbin -compress-all  -Xcompiler=/wd4819,/wd4503,/wd4190,/wd4244,/wd4251,/wd4275,/wd4522 -Wno-deprecated-gpu-targets --expt-extended-lambda -DCUB_WRAPPED_NAMESPACE=at_cuda_detail -DDISABLE_CUSPARSE_DEPRECATED -DCUDA_HAS_FP16=1 -D__CUDA_NO_HALF_OPERATORS__ -D__CUDA_NO_HALF_CONVERSIONS__ -D__CUDA_NO_HALF2_OPERATORS__ -D__CUDA_NO_BFLOAT16_CONVERSIONS__, CXX_COMPILER=C:/actions-runner/_work/pytorch/pytorch/.ci/pytorch/windows/tmp_bin/sccache-cl.exe, CXX_FLAGS=/DWIN32 /D_WINDOWS /EHsc /Zc:__cplusplus /bigobj /FS /utf-8 -DUSE_PTHREADPOOL -DNDEBUG -DUSE_KINETO -DSYMBOLICATE_MOBILE_DEBUG_HANDLE /wd4624 /wd4068 /wd4067 /wd4267 /wd4661 /wd4717 /wd4244 /wd4804 /wd4273, LAPACK_INFO=mkl, PERF_WITH_AVX=1, PERF_WITH_AVX2=1, TORCH_VERSION=2.14.1, USE_CUDA=0, USE_CUDNN=OFF, USE_CUSPARSELT=OFF, USE_GFLAGS=OFF, USE_GLOG=OFF, USE_GLOO=ON, USE_HIPSPARSELT=OFF, USE_MKL=ON, USE_MKLDNN=ON, USE_MPI=OFF, USE_NCCL=OFF, USE_NNPACK=OFF, USE_OPENMP=ON, USE_ROCM=OFF, USE_ROCM_KERNEL_ASSERT=OFF, USE_XCCL=OFF, USE_XPU=OFF, \n"
+  },
+  "optional_dependency_base_install": {
+    "command": "python -m unittest discover -s tests -p 'test_transformer*.py' -v",
+    "torch_installed": false,
+    "modules_skipped": 2,
+    "errors": 0,
+    "runtime": "bundled artifact Python"
+  },
+  "ubuntu_transformer_ci": {
+    "commit": "564043b9b5c963ada547228f4b11208c0f7625d8",
+    "workflow_run": 37565183922,
+    "workflow_url": "https://github.com/Ehsan-Roohi/FlowMLLab/actions/runs/37565183922",
+    "conclusion": "success",
+    "unit_tests": 21,
+    "unit_test_seconds": 7.384,
+    "fresh_independent_notebook_kernels": 12,
+    "checkpoint_predictions": 126,
+    "checkpoint_scientific_passed": true,
+    "checkpoint_strict_passed": false,
+    "paired_ablation_rows": 12,
+    "paired_ablation_strict_passed": true,
+    "paired_ablation_scientific_passed": true,
+    "new_initializations_byte_exact": 0,
+    "new_initializations_checked": 3,
+    "new_initialization_matching": "diagnostic only; original paired training matching verified",
+    "artifact_url": "https://github.com/Ehsan-Roohi/FlowMLLab/actions/runs/37565183922/artifacts/11458247846",
+    "scope": "Validates course scientific/teaching assets before later repository-wide notebook-validator integration; final published commit has its own Actions checks."
+  },
+  "ubuntu_base_package_tests": {
+    "commit": "564043b9b5c963ada547228f4b11208c0f7625d8",
+    "python": "3.12.15",
+    "passed": 242,
+    "skipped": 15,
+    "seconds": 19.41,
+    "full_release_qa": "Failed at existing Week16 custom bootstrap contract; subsequent validator integration recognizes actual Week16 and new course contracts. Final Actions result is authoritative for publication."
+  }
+}

@@ -1,0 +1,247 @@
+{
+  "scope": "Synthetic fixtures, instructor functions and actual builder check cells; full notebook execution is separate.",
+  "reference_passes": 24,
+  "checks": 24,
+  "frozen_result_rejections": 24,
+  "limitation": "Finite mutation testing cannot certify all possible constant or tailored solutions; surviving mutations are explicitly listed.",
+  "rows": [
+    {
+      "week": 17,
+      "task": 1,
+      "function": "student_attention",
+      "reference_pass": true,
+      "reference_error": null,
+      "frozen_result_rejected": true,
+      "mutation_error": "AssertionError"
+    },
+    {
+      "week": 17,
+      "task": 2,
+      "function": "permutation_error",
+      "reference_pass": true,
+      "reference_error": null,
+      "frozen_result_rejected": true,
+      "mutation_error": "AssertionError"
+    },
+    {
+      "week": 17,
+      "task": 3,
+      "function": "temperature_weights",
+      "reference_pass": true,
+      "reference_error": null,
+      "frozen_result_rejected": true,
+      "mutation_error": "AssertionError"
+    },
+    {
+      "week": 17,
+      "task": 4,
+      "function": "attention_investigation",
+      "reference_pass": true,
+      "reference_error": null,
+      "frozen_result_rejected": true,
+      "mutation_error": "AssertionError"
+    },
+    {
+      "week": 18,
+      "task": 1,
+      "function": "shifted",
+      "reference_pass": true,
+      "reference_error": null,
+      "frozen_result_rejected": true,
+      "mutation_error": "AssertionError"
+    },
+    {
+      "week": 18,
+      "task": 2,
+      "function": "sequence_nll",
+      "reference_pass": true,
+      "reference_error": null,
+      "frozen_result_rejected": true,
+      "mutation_error": "AssertionError"
+    },
+    {
+      "week": 18,
+      "task": 3,
+      "function": "prefix_is_invariant",
+      "reference_pass": true,
+      "reference_error": null,
+      "frozen_result_rejected": true,
+      "mutation_error": "AssertionError"
+    },
+    {
+      "week": 18,
+      "task": 4,
+      "function": "language_metrics",
+      "reference_pass": true,
+      "reference_error": null,
+      "frozen_result_rejected": true,
+      "mutation_error": "AssertionError"
+    },
+    {
+      "week": 19,
+      "task": 1,
+      "function": "unpatch",
+      "reference_pass": true,
+      "reference_error": null,
+      "frozen_result_rejected": true,
+      "mutation_error": "AssertionError"
+    },
+    {
+      "week": 19,
+      "task": 2,
+      "function": "representation_floor",
+      "reference_pass": true,
+      "reference_error": null,
+      "frozen_result_rejected": true,
+      "mutation_error": "AssertionError"
+    },
+    {
+      "week": 19,
+      "task": 3,
+      "function": "gappy",
+      "reference_pass": true,
+      "reference_error": null,
+      "frozen_result_rejected": true,
+      "mutation_error": "AssertionError"
+    },
+    {
+      "week": 19,
+      "task": 4,
+      "function": "sensor_audit",
+      "reference_pass": true,
+      "reference_error": null,
+      "frozen_result_rejected": true,
+      "mutation_error": "AssertionError"
+    },
+    {
+      "week": 20,
+      "task": 1,
+      "function": "drop_half",
+      "reference_pass": true,
+      "reference_error": null,
+      "frozen_result_rejected": true,
+      "mutation_error": "AssertionError"
+    },
+    {
+      "week": 20,
+      "task": 2,
+      "function": "parameter_count",
+      "reference_pass": true,
+      "reference_error": null,
+      "frozen_result_rejected": true,
+      "mutation_error": "AssertionError"
+    },
+    {
+      "week": 20,
+      "task": 3,
+      "function": "boundary_flag",
+      "reference_pass": true,
+      "reference_error": null,
+      "frozen_result_rejected": true,
+      "mutation_error": "AssertionError"
+    },
+    {
+      "week": 20,
+      "task": 4,
+      "function": "fit_with_validation",
+      "reference_pass": true,
+      "reference_error": null,
+      "frozen_result_rejected": true,
+      "mutation_error": "AssertionError"
+    },
+    {
+      "week": 21,
+      "task": 1,
+      "function": "advance",
+      "reference_pass": true,
+      "reference_error": null,
+      "frozen_result_rejected": true,
+      "mutation_error": "AssertionError"
+    },
+    {
+      "week": 21,
+      "task": 2,
+      "function": "decompose",
+      "reference_pass": true,
+      "reference_error": null,
+      "frozen_result_rejected": true,
+      "mutation_error": "AssertionError"
+    },
+    {
+      "week": 21,
+      "task": 3,
+      "function": "frequency_error",
+      "reference_pass": true,
+      "reference_error": null,
+      "frozen_result_rejected": true,
+      "mutation_error": "AssertionError"
+    },
+    {
+      "week": 21,
+      "task": 4,
+      "function": "rollout_audit",
+      "reference_pass": true,
+      "reference_error": null,
+      "frozen_result_rejected": true,
+      "mutation_error": "AssertionError"
+    },
+    {
+      "week": 22,
+      "task": 1,
+      "function": "label_count",
+      "reference_pass": true,
+      "reference_error": null,
+      "frozen_result_rejected": true,
+      "mutation_error": "AssertionError"
+    },
+    {
+      "week": 22,
+      "task": 2,
+      "function": "total_steps",
+      "reference_pass": true,
+      "reference_error": null,
+      "frozen_result_rejected": true,
+      "mutation_error": "AssertionError"
+    },
+    {
+      "week": 22,
+      "task": 3,
+      "function": "representation_limited",
+      "reference_pass": true,
+      "reference_error": null,
+      "frozen_result_rejected": true,
+      "mutation_error": "AssertionError"
+    },
+    {
+      "week": 22,
+      "task": 4,
+      "function": "audit_transfer_comparisons",
+      "reference_pass": true,
+      "reference_error": null,
+      "frozen_result_rejected": true,
+      "mutation_error": "AssertionError"
+    }
+  ],
+  "builder_status_checks": [
+    {
+      "mode": "partial",
+      "status": {
+        "1": true,
+        "2": true,
+        "3": null,
+        "4": null
+      },
+      "output": "Task 1: PASS\nTask 2: PASS\nTask 3: NOT SUBMITTED\nTask 4: NOT SUBMITTED\nCoding tasks passed: 2 / 4\n"
+    },
+    {
+      "mode": "failed",
+      "status": {
+        "1": false,
+        "2": false,
+        "3": null,
+        "4": null
+      },
+      "output": "Task 1 check failed: AssertionError The values for attribute 'shape' do not match: torch.Size([]) != torch.Size([2, 5, 3]).\nTask 1: FAILED\nTask 2 check failed: IndexError too many indices for tensor of dimension 0\nTask 2: FAILED\nTask 3: NOT SUBMITTED\nTask 4: NOT SUBMITTED\nCoding tasks passed: 0 / 4\n"
+    }
+  ]
+}

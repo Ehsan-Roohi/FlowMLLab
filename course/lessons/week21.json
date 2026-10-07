@@ -1,0 +1,49 @@
+{
+  "week": 21,
+  "title": "Autonomous prediction: representation, phase and dynamics",
+  "question": "After removing the POD floor, what advantage remains over a four-frame MLP and DMD?",
+  "prerequisites": "Week 7 modal forecasting, Week 18 all-position causal learning; no reset at the evaluation boundary.",
+  "demos": [
+    {
+      "title": "Rescore full trajectories and compare matched-information models",
+      "prose": "The primary trajectory starts at frame 160 from frames 156:160. The evaluation boundary at 210 is not an assimilation event. Additional-start metrics in the record are a separate observed-initialization protocol.",
+      "code": "record=json.loads((EVIDENCE/'forecast.json').read_text());display(pd.DataFrame([{'model':r['method'],'seed':r['seed'],**{k:v for k,v in r['metrics'].items() if k!='per_frame_relative_l2'}} for r in record['rows']]))\nprint('Earlier Week 7 MLP reference:',record['legacy_MLP_reference'])\nretained=np.load(EVIDENCE/'predictions.npz',allow_pickle=False)\ntruth=cases[110]['omega'][210:].reshape(71,-1)\nfig,ax=plt.subplots(figsize=(9,4))\nfor row in record['rows']:\n    if row['seed'] in (None,17):\n        pred=lab.prediction(retained,'forecast__'+row['key'])[50:]\n        curve=np.linalg.norm(pred-truth,axis=1)/np.linalg.norm(truth,axis=1)\n        ax.plot(np.arange(51,122),curve,label=row['key'])\nax.set_xlabel('steps since observed initialization');ax.set_ylabel('field relative L2');ax.legend(fontsize=8);plt.show()"
+    },
+    {
+      "title": "Phase and amplitude from the full rollout",
+      "prose": "A 71-frame FFT cannot resolve small frequency differences. Fit frequency, amplitude and phase over the 121-frame rollout instead. This remains a local scalar probe, not lift or drag; the fit residual checks whether the sinusoidal model is plausible. Initial phase is defined at the first sample of the rollout, using t-t[0]. Constant signals have no identifiable frequency or phase.",
+      "code": "display(pd.DataFrame(record['spectral_fit']).T)\nreference=record['spectral_fit']['reference']\nprint('Observation duration:',reference['duration'],'D/U; sinusoidal-fit residual:',reference['residual_mse'])\nrep=lab.Representation.fit(cases[110]['omega'][:160],8)\nrow=next(r for r in record['rows'] if r['method']=='Causal-Transformer')\npred=lab.prediction(retained,'forecast__'+row['key'])[50:]\nparts=lab.error_components(pred,truth,rep)\nassert abs(parts['pythagorean_residual'])<1e-8\nprint('Squared-error decomposition residual:',parts['pythagorean_residual'])"
+    }
+  ],
+  "tasks": [
+    {
+      "title": "Autonomous state update",
+      "prompt": "Roll a history window forward by dropping its oldest token and appending the prediction. Do not read a future observed state.\n\nInterface contract: history:[context,features] and next_state:[features] are NumPy arrays. Return a new [context,features] array in chronological order without changing the inputs.",
+      "starter": "def advance(history,next_state):\n    \"\"\"history:[context,features] and next_state:[features] are NumPy arrays. Return a new [context,features] array in chronological order without changing the inputs.\"\"\"\n    raise NotImplementedError",
+      "solution": "def advance(history,next_state):\n    return np.concatenate([history[1:],next_state[None]],axis=0)",
+      "checks": "for context,width in ((4,8),(2,3)):\n    h=np.arange(context*width).reshape(context,width)*3+7\n    n=np.arange(width)*-2-3\n    result=advance(h,n)\n    np.testing.assert_array_equal(result[:-1],h[1:])\n    np.testing.assert_array_equal(result[-1],n)\n    assert result.shape==h.shape\n"
+    },
+    {
+      "title": "Separate representation and dynamics",
+      "prompt": "Compute the squared total error, representation error and in-subspace error for an orthogonal projector.\n\nInterface contract: pred,truth,oracle have identical shapes; truth is nonzero, oracle is an orthogonal affine projection and pred is in that affine span. Return a tuple of three scalar squared relative errors (total,floor,dynamic), each divided by sum(truth**2).",
+      "starter": "def decompose(pred,truth,oracle):\n    \"\"\"pred,truth,oracle have identical shapes; truth is nonzero, oracle is an orthogonal affine projection and pred is in that affine span. Return a tuple of three scalar squared relative errors (total,floor,dynamic), each divided by sum(truth**2).\"\"\"\n    raise NotImplementedError",
+      "solution": "def decompose(pred,truth,oracle):\n    norm=np.sum(truth**2)\n    return np.sum((pred-truth)**2)/norm,np.sum((oracle-truth)**2)/norm,np.sum((pred-oracle)**2)/norm",
+      "checks": "for y,projection,prediction in [(np.array([[1.,2.,3.]]),np.array([[1.,2.,0.]]),np.array([[2.,1.,0.]])),(np.array([[2.,1.,1.]]),np.array([[2.,1.,0.]]),np.array([[2.,3.,0.]]))]:\n    total,floor,dynamic=decompose(prediction,y,projection)\n    expected=[np.sum((prediction-y)**2)/np.sum(y*y),np.sum((projection-y)**2)/np.sum(y*y),np.sum((prediction-projection)**2)/np.sum(y*y)]\n    np.testing.assert_allclose([total,floor,dynamic],expected)\n    assert abs(total-floor-dynamic)<1e-12\n"
+    },
+    {
+      "title": "Frequency-fit diagnostic",
+      "prompt": "Measure relative frequency error using the continuous fitted frequency, not the closest FFT bin.\n\nInterface contract: t,y are one-dimensional equal-length NumPy arrays, and fref>0. Return a scalar abs(fitted_frequency/fref-1), using lab.spectral_fit. Only an oscillatory signal with an identifiable fit is supplied.",
+      "starter": "def frequency_error(t,y,fref):\n    \"\"\"t,y are one-dimensional equal-length NumPy arrays, and fref>0. Return a scalar abs(fitted_frequency/fref-1), using lab.spectral_fit. Only an oscillatory signal with an identifiable fit is supplied.\"\"\"\n    raise NotImplementedError",
+      "solution": "def frequency_error(t,y,fref):\n    return abs(lab.spectral_fit(t,y)[\"frequency\"]/fref-1)",
+      "checks": "t=np.arange(121)*.1041667+79.17\nfor f,fref in ((.18537,.17),(.19321,.21)):\n    assert np.isclose(frequency_error(t,np.sin(2*np.pi*f*(t-t[0])+.3),fref),abs(f/fref-1),atol=1e-4)"
+    },
+    {
+      "title": "Implement an autonomous rollout audit",
+      "prompt": "Roll a history forward using only a supplied next-state function. Return predictions, per-step relative errors and one global relative error. Truth is used only after generating the trajectory. Validate dimensions and reject zero reference norms. Compare a stable and unstable predictor, then repeat from a different observed initialization without resetting at the evaluation boundary.\n\nInterface contract: predict_next accepts a copy of history:[context,features] and returns one [features] vector. truth:[steps,features] sets the horizon and is used only for scoring after prediction. Return dictionary predictions ([steps,features] array), per_step_error (length-steps array), field_error (float GLOBAL Frobenius relative L2, not the mean of per-step ratios). Invalid dimensions/state width, nonfinite predictions or any zero per-step truth norm must raise ValueError.",
+      "starter": "def rollout_audit(predict_next,history,truth):\n    \"\"\"predict_next accepts a copy of history:[context,features] and returns one [features] vector. truth:[steps,features] sets the horizon and is used only for scoring after prediction. Return dictionary predictions ([steps,features] array), per_step_error (length-steps array), field_error (float GLOBAL Frobenius relative L2, not the mean of per-step ratios). Invalid dimensions/state width, nonfinite predictions or any zero per-step truth norm must raise ValueError.\"\"\"\n    raise NotImplementedError",
+      "solution": "def rollout_audit(predict_next,history,truth):\n    history=np.asarray(history,dtype=np.float64).copy()\n    truth=np.asarray(truth,dtype=np.float64)\n    if history.ndim!=2 or truth.ndim!=2 or history.shape[1]!=truth.shape[1]:\n        raise ValueError('incompatible trajectory shapes')\n    predictions=[]\n    for _ in range(len(truth)):\n        next_state=np.asarray(predict_next(history.copy()),dtype=np.float64)\n        if next_state.shape!=history.shape[1:] or not np.isfinite(next_state).all():\n            raise ValueError('invalid predicted state')\n        predictions.append(next_state.copy())\n        history=np.concatenate([history[1:],next_state[None]],axis=0)\n    predictions=np.asarray(predictions)\n    norms=np.linalg.norm(truth,axis=1)\n    if np.any(norms==0):raise ValueError('zero reference norm')\n    errors=np.linalg.norm(predictions-truth,axis=1)/norms\n    return {'predictions':predictions,'per_step_error':errors,'field_error':float(np.linalg.norm(predictions-truth)/np.linalg.norm(truth))}",
+      "checks": "for context in (2,4):\n    h=np.ones((context,2));truth=np.ones((6,2))\n    for factor in (1.,1.1):\n        r=rollout_audit(lambda window:window[-1]*factor,h,truth)\n        expected=np.repeat((factor**np.arange(1,7))[:,None],2,axis=1)\n        np.testing.assert_allclose(r['predictions'],expected)\n        np.testing.assert_allclose(r['per_step_error'],abs(factor**np.arange(1,7)-1))\n    changed=rollout_audit(lambda window:window[-1]*1.1,h,truth*20)\n    np.testing.assert_allclose(changed['predictions'],r['predictions'])\ntry:\n    rollout_audit(lambda window:np.zeros(3),h,truth)\n    raise AssertionError('wrong state width accepted')\nexcept ValueError:pass\ntruth=np.array([[1.,2.],[20.,4.],[.2,.1],[5.,8.]])\nh=np.ones((3,2))\nr=rollout_audit(lambda window:window[-1]*1.2,h,truth)\nexpected_global=np.linalg.norm(r['predictions']-truth)/np.linalg.norm(truth)\nassert not np.isclose(expected_global,np.mean(r['per_step_error']))\nassert np.isclose(r['field_error'],expected_global)\ntry:\n    rollout_audit(lambda window:window[-1],h,np.zeros((3,2)))\n    raise AssertionError('zero reference norm accepted')\nexcept ValueError:pass\n"
+    }
+  ],
+  "duration_minutes": 120
+}

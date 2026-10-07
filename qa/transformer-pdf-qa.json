@@ -1,0 +1,9 @@
+{
+  "passed": true,
+  "method": "Rendered every final PDF page with pdftoppm and visually inspected all six contact sheets after pagination corrections.",
+  "page_counts": {"17": 5, "18": 5, "19": 5, "20": 4, "21": 4, "22": 5},
+  "pages_inspected": 28,
+  "checks": ["No clipped text or equations", "No headings isolated from their following content", "Tables fit within page margins", "Figures and captions stay together", "Larger plot labels and consistent equation scale", "Headers and page numbers present"],
+  "renderer_warnings": "Poppler reported unavailable Symbol/ArialUnicode display fonts; the rendered pages were inspected and showed no missing mathematical glyphs. Display equations are embedded raster images.",
+  "scope": "Layout inspection; this is not an independent scientific or student-pilot evaluation."
+}

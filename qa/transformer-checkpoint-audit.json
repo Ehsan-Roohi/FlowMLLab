@@ -1,0 +1,636 @@
+{
+  "passed": true,
+  "basis_refitted": false,
+  "checks": [
+    {
+      "key": "sensors__Sensor-set-17-all",
+      "max_absolute_error": 5.1736392947532295e-14,
+      "passed": true
+    },
+    {
+      "key": "sensors__Sensor-set-17-drop-half",
+      "max_absolute_error": 1.2934098236883074e-14,
+      "passed": true
+    },
+    {
+      "key": "sensors__POD-DeepONet-17-all",
+      "max_absolute_error": 2.615685446016869e-13,
+      "passed": true
+    },
+    {
+      "key": "sensors__POD-DeepONet-17-drop-half",
+      "max_absolute_error": 3.5360603334311236e-14,
+      "passed": true
+    },
+    {
+      "key": "sensors__Sensor-set-29-all",
+      "max_absolute_error": 4.085620730620576e-14,
+      "passed": true
+    },
+    {
+      "key": "sensors__Sensor-set-29-drop-half",
+      "max_absolute_error": 2.864375403532904e-14,
+      "passed": true
+    },
+    {
+      "key": "sensors__POD-DeepONet-29-all",
+      "max_absolute_error": 1.1252110354575962e-13,
+      "passed": true
+    },
+    {
+      "key": "sensors__POD-DeepONet-29-drop-half",
+      "max_absolute_error": 2.5250634916318404e-14,
+      "passed": true
+    },
+    {
+      "key": "sensors__Sensor-set-43-all",
+      "max_absolute_error": 1.2989609388114332e-14,
+      "passed": true
+    },
+    {
+      "key": "sensors__Sensor-set-43-drop-half",
+      "max_absolute_error": 1.0380585280245214e-14,
+      "passed": true
+    },
+    {
+      "key": "sensors__POD-DeepONet-43-all",
+      "max_absolute_error": 1.053046538856961e-13,
+      "passed": true
+    },
+    {
+      "key": "sensors__POD-DeepONet-43-drop-half",
+      "max_absolute_error": 5.815486980864648e-14,
+      "passed": true
+    },
+    {
+      "key": "forecast__Causal-Transformer-17",
+      "max_absolute_error": 2.0872192862952943e-14,
+      "passed": true
+    },
+    {
+      "key": "forecast__History-MLP-17",
+      "max_absolute_error": 1.3322676295501878e-14,
+      "passed": true
+    },
+    {
+      "key": "forecast__Causal-Transformer-29",
+      "max_absolute_error": 1.8762769116165146e-14,
+      "passed": true
+    },
+    {
+      "key": "forecast__History-MLP-29",
+      "max_absolute_error": 1.0658141036401503e-14,
+      "passed": true
+    },
+    {
+      "key": "forecast__Causal-Transformer-43",
+      "max_absolute_error": 1.509903313490213e-14,
+      "passed": true
+    },
+    {
+      "key": "forecast__History-MLP-43",
+      "max_absolute_error": 1.3322676295501878e-14,
+      "passed": true
+    },
+    {
+      "key": "transfer__Re100-B4-scratch-17",
+      "max_absolute_error": 5.88418203051333e-15,
+      "passed": true
+    },
+    {
+      "key": "transfer__Re100-B4-pretrained-17",
+      "max_absolute_error": 1.554312234475219e-14,
+      "passed": true
+    },
+    {
+      "key": "transfer__Re100-B4-matched-steps-17",
+      "max_absolute_error": 5.88418203051333e-15,
+      "passed": true
+    },
+    {
+      "key": "transfer__Re100-B4-target-POD-MLP-17",
+      "max_absolute_error": 5.10702591327572e-15,
+      "passed": true
+    },
+    {
+      "key": "transfer__Re100-B8-scratch-17",
+      "max_absolute_error": 2.731148640577885e-14,
+      "passed": true
+    },
+    {
+      "key": "transfer__Re100-B8-pretrained-17",
+      "max_absolute_error": 8.43769498715119e-15,
+      "passed": true
+    },
+    {
+      "key": "transfer__Re100-B8-matched-steps-17",
+      "max_absolute_error": 1.509903313490213e-14,
+      "passed": true
+    },
+    {
+      "key": "transfer__Re100-B8-target-POD-MLP-17",
+      "max_absolute_error": 2.19824158875781e-14,
+      "passed": true
+    },
+    {
+      "key": "transfer__Re100-B15-scratch-17",
+      "max_absolute_error": 1.2656542480726785e-14,
+      "passed": true
+    },
+    {
+      "key": "transfer__Re100-B15-pretrained-17",
+      "max_absolute_error": 1.1546319456101628e-14,
+      "passed": true
+    },
+    {
+      "key": "transfer__Re100-B15-matched-steps-17",
+      "max_absolute_error": 1.199040866595169e-14,
+      "passed": true
+    },
+    {
+      "key": "transfer__Re100-B15-target-POD-MLP-17",
+      "max_absolute_error": 1.6653345369377348e-14,
+      "passed": true
+    },
+    {
+      "key": "transfer__Re105-B4-scratch-17",
+      "max_absolute_error": 2.220446049250313e-15,
+      "passed": true
+    },
+    {
+      "key": "transfer__Re105-B4-pretrained-17",
+      "max_absolute_error": 7.993605777301127e-15,
+      "passed": true
+    },
+    {
+      "key": "transfer__Re105-B4-matched-steps-17",
+      "max_absolute_error": 2.220446049250313e-15,
+      "passed": true
+    },
+    {
+      "key": "transfer__Re105-B4-target-POD-MLP-17",
+      "max_absolute_error": 8.965050923848139e-15,
+      "passed": true
+    },
+    {
+      "key": "transfer__Re105-B8-scratch-17",
+      "max_absolute_error": 1.4210854715202004e-14,
+      "passed": true
+    },
+    {
+      "key": "transfer__Re105-B8-pretrained-17",
+      "max_absolute_error": 1.8318679906315083e-14,
+      "passed": true
+    },
+    {
+      "key": "transfer__Re105-B8-matched-steps-17",
+      "max_absolute_error": 7.771561172376096e-15,
+      "passed": true
+    },
+    {
+      "key": "transfer__Re105-B8-target-POD-MLP-17",
+      "max_absolute_error": 2.7533531010703882e-14,
+      "passed": true
+    },
+    {
+      "key": "transfer__Re105-B15-scratch-17",
+      "max_absolute_error": 1.3100631690576847e-14,
+      "passed": true
+    },
+    {
+      "key": "transfer__Re105-B15-pretrained-17",
+      "max_absolute_error": 1.4405143744511406e-14,
+      "passed": true
+    },
+    {
+      "key": "transfer__Re105-B15-matched-steps-17",
+      "max_absolute_error": 1.554312234475219e-14,
+      "passed": true
+    },
+    {
+      "key": "transfer__Re105-B15-target-POD-MLP-17",
+      "max_absolute_error": 1.609823385706477e-14,
+      "passed": true
+    },
+    {
+      "key": "transfer__Re110-B4-scratch-17",
+      "max_absolute_error": 1.509903313490213e-14,
+      "passed": true
+    },
+    {
+      "key": "transfer__Re110-B4-pretrained-17",
+      "max_absolute_error": 1.865174681370263e-14,
+      "passed": true
+    },
+    {
+      "key": "transfer__Re110-B4-matched-steps-17",
+      "max_absolute_error": 1.509903313490213e-14,
+      "passed": true
+    },
+    {
+      "key": "transfer__Re110-B4-target-POD-MLP-17",
+      "max_absolute_error": 5.773159728050814e-15,
+      "passed": true
+    },
+    {
+      "key": "transfer__Re110-B8-scratch-17",
+      "max_absolute_error": 9.992007221626409e-15,
+      "passed": true
+    },
+    {
+      "key": "transfer__Re110-B8-pretrained-17",
+      "max_absolute_error": 1.4654943925052066e-14,
+      "passed": true
+    },
+    {
+      "key": "transfer__Re110-B8-matched-steps-17",
+      "max_absolute_error": 1.199040866595169e-14,
+      "passed": true
+    },
+    {
+      "key": "transfer__Re110-B8-target-POD-MLP-17",
+      "max_absolute_error": 3.019806626980426e-14,
+      "passed": true
+    },
+    {
+      "key": "transfer__Re110-B15-scratch-17",
+      "max_absolute_error": 1.5765166949677223e-14,
+      "passed": true
+    },
+    {
+      "key": "transfer__Re110-B15-pretrained-17",
+      "max_absolute_error": 1.3211653993039363e-14,
+      "passed": true
+    },
+    {
+      "key": "transfer__Re110-B15-matched-steps-17",
+      "max_absolute_error": 1.554312234475219e-14,
+      "passed": true
+    },
+    {
+      "key": "transfer__Re110-B15-target-POD-MLP-17",
+      "max_absolute_error": 1.0658141036401503e-14,
+      "passed": true
+    },
+    {
+      "key": "transfer__Re100-B4-scratch-29",
+      "max_absolute_error": 2.6645352591003757e-15,
+      "passed": true
+    },
+    {
+      "key": "transfer__Re100-B4-pretrained-29",
+      "max_absolute_error": 1.0769163338864018e-14,
+      "passed": true
+    },
+    {
+      "key": "transfer__Re100-B4-matched-steps-29",
+      "max_absolute_error": 2.6645352591003757e-15,
+      "passed": true
+    },
+    {
+      "key": "transfer__Re100-B4-target-POD-MLP-29",
+      "max_absolute_error": 2.6645352591003757e-15,
+      "passed": true
+    },
+    {
+      "key": "transfer__Re100-B8-scratch-29",
+      "max_absolute_error": 1.5765166949677223e-14,
+      "passed": true
+    },
+    {
+      "key": "transfer__Re100-B8-pretrained-29",
+      "max_absolute_error": 1.021405182655144e-14,
+      "passed": true
+    },
+    {
+      "key": "transfer__Re100-B8-matched-steps-29",
+      "max_absolute_error": 1.354472090042691e-14,
+      "passed": true
+    },
+    {
+      "key": "transfer__Re100-B8-target-POD-MLP-29",
+      "max_absolute_error": 3.4638958368304884e-14,
+      "passed": true
+    },
+    {
+      "key": "transfer__Re100-B15-scratch-29",
+      "max_absolute_error": 1.6542323066914832e-14,
+      "passed": true
+    },
+    {
+      "key": "transfer__Re100-B15-pretrained-29",
+      "max_absolute_error": 8.659739592076221e-15,
+      "passed": true
+    },
+    {
+      "key": "transfer__Re100-B15-matched-steps-29",
+      "max_absolute_error": 1.0436096431476471e-14,
+      "passed": true
+    },
+    {
+      "key": "transfer__Re100-B15-target-POD-MLP-29",
+      "max_absolute_error": 9.769962616701378e-15,
+      "passed": true
+    },
+    {
+      "key": "transfer__Re105-B4-scratch-29",
+      "max_absolute_error": 8.798517470154366e-15,
+      "passed": true
+    },
+    {
+      "key": "transfer__Re105-B4-pretrained-29",
+      "max_absolute_error": 1.1657341758564144e-14,
+      "passed": true
+    },
+    {
+      "key": "transfer__Re105-B4-matched-steps-29",
+      "max_absolute_error": 8.798517470154366e-15,
+      "passed": true
+    },
+    {
+      "key": "transfer__Re105-B4-target-POD-MLP-29",
+      "max_absolute_error": 3.552713678800501e-15,
+      "passed": true
+    },
+    {
+      "key": "transfer__Re105-B8-scratch-29",
+      "max_absolute_error": 1.4210854715202004e-14,
+      "passed": true
+    },
+    {
+      "key": "transfer__Re105-B8-pretrained-29",
+      "max_absolute_error": 1.6653345369377348e-14,
+      "passed": true
+    },
+    {
+      "key": "transfer__Re105-B8-matched-steps-29",
+      "max_absolute_error": 9.103828801926284e-15,
+      "passed": true
+    },
+    {
+      "key": "transfer__Re105-B8-target-POD-MLP-29",
+      "max_absolute_error": 1.915134717478395e-14,
+      "passed": true
+    },
+    {
+      "key": "transfer__Re105-B15-scratch-29",
+      "max_absolute_error": 1.3600232051658168e-14,
+      "passed": true
+    },
+    {
+      "key": "transfer__Re105-B15-pretrained-29",
+      "max_absolute_error": 1.0436096431476471e-14,
+      "passed": true
+    },
+    {
+      "key": "transfer__Re105-B15-matched-steps-29",
+      "max_absolute_error": 1.0436096431476471e-14,
+      "passed": true
+    },
+    {
+      "key": "transfer__Re105-B15-target-POD-MLP-29",
+      "max_absolute_error": 1.1546319456101628e-14,
+      "passed": true
+    },
+    {
+      "key": "transfer__Re110-B4-scratch-29",
+      "max_absolute_error": 2.0539125955565396e-14,
+      "passed": true
+    },
+    {
+      "key": "transfer__Re110-B4-pretrained-29",
+      "max_absolute_error": 9.71445146547012e-15,
+      "passed": true
+    },
+    {
+      "key": "transfer__Re110-B4-matched-steps-29",
+      "max_absolute_error": 2.0539125955565396e-14,
+      "passed": true
+    },
+    {
+      "key": "transfer__Re110-B4-target-POD-MLP-29",
+      "max_absolute_error": 1.454392162258955e-14,
+      "passed": true
+    },
+    {
+      "key": "transfer__Re110-B8-scratch-29",
+      "max_absolute_error": 1.1435297153639112e-14,
+      "passed": true
+    },
+    {
+      "key": "transfer__Re110-B8-pretrained-29",
+      "max_absolute_error": 1.4654943925052066e-14,
+      "passed": true
+    },
+    {
+      "key": "transfer__Re110-B8-matched-steps-29",
+      "max_absolute_error": 1.3100631690576847e-14,
+      "passed": true
+    },
+    {
+      "key": "transfer__Re110-B8-target-POD-MLP-29",
+      "max_absolute_error": 1.9761969838327786e-14,
+      "passed": true
+    },
+    {
+      "key": "transfer__Re110-B15-scratch-29",
+      "max_absolute_error": 1.9539925233402755e-14,
+      "passed": true
+    },
+    {
+      "key": "transfer__Re110-B15-pretrained-29",
+      "max_absolute_error": 1.8207657603852567e-14,
+      "passed": true
+    },
+    {
+      "key": "transfer__Re110-B15-matched-steps-29",
+      "max_absolute_error": 1.1102230246251565e-14,
+      "passed": true
+    },
+    {
+      "key": "transfer__Re110-B15-target-POD-MLP-29",
+      "max_absolute_error": 2.042810365310288e-14,
+      "passed": true
+    },
+    {
+      "key": "transfer__Re100-B4-scratch-43",
+      "max_absolute_error": 8.254508188088039e-14,
+      "passed": true
+    },
+    {
+      "key": "transfer__Re100-B4-pretrained-43",
+      "max_absolute_error": 1.4432899320127035e-14,
+      "passed": true
+    },
+    {
+      "key": "transfer__Re100-B4-matched-steps-43",
+      "max_absolute_error": 8.254508188088039e-14,
+      "passed": true
+    },
+    {
+      "key": "transfer__Re100-B4-target-POD-MLP-43",
+      "max_absolute_error": 5.440092820663267e-15,
+      "passed": true
+    },
+    {
+      "key": "transfer__Re100-B8-scratch-43",
+      "max_absolute_error": 1.2434497875801753e-14,
+      "passed": true
+    },
+    {
+      "key": "transfer__Re100-B8-pretrained-43",
+      "max_absolute_error": 1.687538997430238e-14,
+      "passed": true
+    },
+    {
+      "key": "transfer__Re100-B8-matched-steps-43",
+      "max_absolute_error": 1.7763568394002505e-14,
+      "passed": true
+    },
+    {
+      "key": "transfer__Re100-B8-target-POD-MLP-43",
+      "max_absolute_error": 3.0753177782116836e-14,
+      "passed": true
+    },
+    {
+      "key": "transfer__Re100-B15-scratch-43",
+      "max_absolute_error": 1.2878587085651816e-14,
+      "passed": true
+    },
+    {
+      "key": "transfer__Re100-B15-pretrained-43",
+      "max_absolute_error": 1.2545520178264269e-14,
+      "passed": true
+    },
+    {
+      "key": "transfer__Re100-B15-matched-steps-43",
+      "max_absolute_error": 1.709743457922741e-14,
+      "passed": true
+    },
+    {
+      "key": "transfer__Re100-B15-target-POD-MLP-43",
+      "max_absolute_error": 1.1823875212257917e-14,
+      "passed": true
+    },
+    {
+      "key": "transfer__Re105-B4-scratch-43",
+      "max_absolute_error": 2.6645352591003757e-15,
+      "passed": true
+    },
+    {
+      "key": "transfer__Re105-B4-pretrained-43",
+      "max_absolute_error": 1.3766765505351941e-14,
+      "passed": true
+    },
+    {
+      "key": "transfer__Re105-B4-matched-steps-43",
+      "max_absolute_error": 2.6645352591003757e-15,
+      "passed": true
+    },
+    {
+      "key": "transfer__Re105-B4-target-POD-MLP-43",
+      "max_absolute_error": 3.1086244689504383e-15,
+      "passed": true
+    },
+    {
+      "key": "transfer__Re105-B8-scratch-43",
+      "max_absolute_error": 1.9095836023552692e-14,
+      "passed": true
+    },
+    {
+      "key": "transfer__Re105-B8-pretrained-43",
+      "max_absolute_error": 1.7763568394002505e-14,
+      "passed": true
+    },
+    {
+      "key": "transfer__Re105-B8-matched-steps-43",
+      "max_absolute_error": 1.0547118733938987e-14,
+      "passed": true
+    },
+    {
+      "key": "transfer__Re105-B8-target-POD-MLP-43",
+      "max_absolute_error": 3.3306690738754696e-14,
+      "passed": true
+    },
+    {
+      "key": "transfer__Re105-B15-scratch-43",
+      "max_absolute_error": 2.042810365310288e-14,
+      "passed": true
+    },
+    {
+      "key": "transfer__Re105-B15-pretrained-43",
+      "max_absolute_error": 1.6653345369377348e-14,
+      "passed": true
+    },
+    {
+      "key": "transfer__Re105-B15-matched-steps-43",
+      "max_absolute_error": 9.547918011776346e-15,
+      "passed": true
+    },
+    {
+      "key": "transfer__Re105-B15-target-POD-MLP-43",
+      "max_absolute_error": 1.2212453270876722e-14,
+      "passed": true
+    },
+    {
+      "key": "transfer__Re110-B4-scratch-43",
+      "max_absolute_error": 2.275957200481571e-15,
+      "passed": true
+    },
+    {
+      "key": "transfer__Re110-B4-pretrained-43",
+      "max_absolute_error": 1.6653345369377348e-14,
+      "passed": true
+    },
+    {
+      "key": "transfer__Re110-B4-matched-steps-43",
+      "max_absolute_error": 2.275957200481571e-15,
+      "passed": true
+    },
+    {
+      "key": "transfer__Re110-B4-target-POD-MLP-43",
+      "max_absolute_error": 6.217248937900877e-15,
+      "passed": true
+    },
+    {
+      "key": "transfer__Re110-B8-scratch-43",
+      "max_absolute_error": 1.1102230246251565e-14,
+      "passed": true
+    },
+    {
+      "key": "transfer__Re110-B8-pretrained-43",
+      "max_absolute_error": 1.709743457922741e-14,
+      "passed": true
+    },
+    {
+      "key": "transfer__Re110-B8-matched-steps-43",
+      "max_absolute_error": 1.021405182655144e-14,
+      "passed": true
+    },
+    {
+      "key": "transfer__Re110-B8-target-POD-MLP-43",
+      "max_absolute_error": 1.5987211554602254e-14,
+      "passed": true
+    },
+    {
+      "key": "transfer__Re110-B15-scratch-43",
+      "max_absolute_error": 1.1102230246251565e-14,
+      "passed": true
+    },
+    {
+      "key": "transfer__Re110-B15-pretrained-43",
+      "max_absolute_error": 1.27675647831893e-14,
+      "passed": true
+    },
+    {
+      "key": "transfer__Re110-B15-matched-steps-43",
+      "max_absolute_error": 7.993605777301127e-15,
+      "passed": true
+    },
+    {
+      "key": "transfer__Re110-B15-target-POD-MLP-43",
+      "max_absolute_error": 1.099120794378905e-14,
+      "passed": true
+    }
+  ]
+}

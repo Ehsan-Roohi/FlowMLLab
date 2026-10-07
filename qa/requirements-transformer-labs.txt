@@ -1,0 +1,3 @@
+# Compatibility entry point. Install the package extra with the validated lock.
+-e .[transformer,test]
+-c qa/transformer-environment.lock.txt

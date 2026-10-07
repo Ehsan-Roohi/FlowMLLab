@@ -1,0 +1,190 @@
+{
+  "passed": true,
+  "rows": 12,
+  "basis_refitted": false,
+  "environment": {
+    "python": "3.12.14",
+    "platform": "Windows-11-10.0.26200-SP0",
+    "packages": {
+      "numpy": "2.2.6",
+      "scipy": "1.15.3",
+      "torch": "2.14.1"
+    },
+    "torch_threads": 2,
+    "torch_build": "PyTorch built with:\n  - C++ Version: 202002\n  - MSVC 194234444\n  - Intel(R) oneAPI Math Kernel Library Version 2026.1-Product Build 20260612 for Intel(R) 64 architecture applications\n  - Intel(R) MKL-DNN v3.12.0 (Git Hash 80afa71049cd69a3df32adcccb623b12cd7baa22)\n  - OpenMP 2019\n  - LAPACK is enabled (usually provided by MKL)\n  - CPU capability usage: AVX2\n  - Build settings: BLAS_INFO=mkl, BUILD_TYPE=Release, COMMIT_SHA=5c4886908584029761b579af026dcfb627c84070, CUDA_FLAGS= -DLIBCUDACXX_ENABLE_SIMPLIFIED_COMPLEX_OPERATIONS -Xcompiler /Zc:__cplusplus -Xcompiler /Zc:preprocessor -Xcompiler /w -w -Xcompiler /FS -Xfatbin -compress-all  -Xcompiler=/wd4819,/wd4503,/wd4190,/wd4244,/wd4251,/wd4275,/wd4522 -Wno-deprecated-gpu-targets --expt-extended-lambda -DCUB_WRAPPED_NAMESPACE=at_cuda_detail -DDISABLE_CUSPARSE_DEPRECATED -DCUDA_HAS_FP16=1 -D__CUDA_NO_HALF_OPERATORS__ -D__CUDA_NO_HALF_CONVERSIONS__ -D__CUDA_NO_HALF2_OPERATORS__ -D__CUDA_NO_BFLOAT16_CONVERSIONS__, CXX_COMPILER=C:/actions-runner/_work/pytorch/pytorch/.ci/pytorch/windows/tmp_bin/sccache-cl.exe, CXX_FLAGS=/DWIN32 /D_WINDOWS /EHsc /Zc:__cplusplus /bigobj /FS /utf-8 -DUSE_PTHREADPOOL -DNDEBUG -DUSE_KINETO -DSYMBOLICATE_MOBILE_DEBUG_HANDLE /wd4624 /wd4068 /wd4067 /wd4267 /wd4661 /wd4717 /wd4244 /wd4804 /wd4273, LAPACK_INFO=mkl, PERF_WITH_AVX=1, PERF_WITH_AVX2=1, TORCH_VERSION=2.14.1, USE_CUDA=0, USE_CUDNN=OFF, USE_CUSPARSELT=OFF, USE_GFLAGS=OFF, USE_GLOG=OFF, USE_GLOO=ON, USE_HIPSPARSELT=OFF, USE_MKL=ON, USE_MKLDNN=ON, USE_MPI=OFF, USE_NCCL=OFF, USE_NNPACK=OFF, USE_OPENMP=ON, USE_ROCM=OFF, USE_ROCM_KERNEL_ASSERT=OFF, USE_XCCL=OFF, USE_XPU=OFF, \n"
+  },
+  "criteria": {
+    "checkpoint": "Original strict allclose rtol1e-5 atol1e-6",
+    "rescored_error_absolute_drift_max": 1e-08
+  },
+  "checks": [
+    {
+      "key": "cardinality-augmented-17-all",
+      "checkpoint": {
+        "passed": true,
+        "strict_passed": true,
+        "max_absolute_error": 5.1736392947532295e-14,
+        "truth_normalized_prediction_difference": 5.4471126696401285e-15,
+        "reference_field_relative_l2": 0.13554225729591124,
+        "reloaded_field_relative_l2": 0.13554225729591143,
+        "field_relative_l2_absolute_drift": 1.942890293094024e-16,
+        "scientific_passed": true
+      },
+      "score_absolute_drift": 1.942890293094024e-16
+    },
+    {
+      "key": "cardinality-augmented-17-drop-half",
+      "checkpoint": {
+        "passed": true,
+        "strict_passed": true,
+        "max_absolute_error": 1.2934098236883074e-14,
+        "truth_normalized_prediction_difference": 2.2901811472036875e-15,
+        "reference_field_relative_l2": 0.27158671821870767,
+        "reloaded_field_relative_l2": 0.2715867182187077,
+        "field_relative_l2_absolute_drift": 5.551115123125783e-17,
+        "scientific_passed": true
+      },
+      "score_absolute_drift": 5.551115123125783e-17
+    },
+    {
+      "key": "all-sensors-only-17-all",
+      "checkpoint": {
+        "passed": true,
+        "strict_passed": true,
+        "max_absolute_error": 3.3084646133829665e-14,
+        "truth_normalized_prediction_difference": 5.6383313535555105e-15,
+        "reference_field_relative_l2": 0.06078094544422402,
+        "reloaded_field_relative_l2": 0.06078094544422401,
+        "field_relative_l2_absolute_drift": 1.3877787807814457e-17,
+        "scientific_passed": true
+      },
+      "score_absolute_drift": 1.3877787807814457e-17
+    },
+    {
+      "key": "all-sensors-only-17-drop-half",
+      "checkpoint": {
+        "passed": true,
+        "strict_passed": true,
+        "max_absolute_error": 1.1879386363489175e-14,
+        "truth_normalized_prediction_difference": 1.7073085193891043e-15,
+        "reference_field_relative_l2": 0.6046055909004167,
+        "reloaded_field_relative_l2": 0.6046055909004165,
+        "field_relative_l2_absolute_drift": 1.1102230246251565e-16,
+        "scientific_passed": true
+      },
+      "score_absolute_drift": 1.1102230246251565e-16
+    },
+    {
+      "key": "cardinality-augmented-29-all",
+      "checkpoint": {
+        "passed": true,
+        "strict_passed": true,
+        "max_absolute_error": 4.085620730620576e-14,
+        "truth_normalized_prediction_difference": 5.230421227313855e-15,
+        "reference_field_relative_l2": 0.1443202181527102,
+        "reloaded_field_relative_l2": 0.14432021815271037,
+        "field_relative_l2_absolute_drift": 1.6653345369377348e-16,
+        "scientific_passed": true
+      },
+      "score_absolute_drift": 1.6653345369377348e-16
+    },
+    {
+      "key": "cardinality-augmented-29-drop-half",
+      "checkpoint": {
+        "passed": true,
+        "strict_passed": true,
+        "max_absolute_error": 2.864375403532904e-14,
+        "truth_normalized_prediction_difference": 2.7026405599729598e-15,
+        "reference_field_relative_l2": 0.24989583272717122,
+        "reloaded_field_relative_l2": 0.2498958327271713,
+        "field_relative_l2_absolute_drift": 8.326672684688674e-17,
+        "scientific_passed": true
+      },
+      "score_absolute_drift": 8.326672684688674e-17
+    },
+    {
+      "key": "all-sensors-only-29-all",
+      "checkpoint": {
+        "passed": true,
+        "strict_passed": true,
+        "max_absolute_error": 9.720696469983636e-14,
+        "truth_normalized_prediction_difference": 1.068458184597142e-14,
+        "reference_field_relative_l2": 0.046497585970767814,
+        "reloaded_field_relative_l2": 0.046497585970767856,
+        "field_relative_l2_absolute_drift": 4.163336342344337e-17,
+        "scientific_passed": true
+      },
+      "score_absolute_drift": 4.163336342344337e-17
+    },
+    {
+      "key": "all-sensors-only-29-drop-half",
+      "checkpoint": {
+        "passed": true,
+        "strict_passed": true,
+        "max_absolute_error": 1.4502288259166107e-14,
+        "truth_normalized_prediction_difference": 2.1963838610621398e-15,
+        "reference_field_relative_l2": 0.39407339717186995,
+        "reloaded_field_relative_l2": 0.39407339717187034,
+        "field_relative_l2_absolute_drift": 3.885780586188048e-16,
+        "scientific_passed": true
+      },
+      "score_absolute_drift": 3.885780586188048e-16
+    },
+    {
+      "key": "cardinality-augmented-43-all",
+      "checkpoint": {
+        "passed": true,
+        "strict_passed": true,
+        "max_absolute_error": 1.2989609388114332e-14,
+        "truth_normalized_prediction_difference": 2.171404695920197e-15,
+        "reference_field_relative_l2": 0.1160940575721452,
+        "reloaded_field_relative_l2": 0.11609405757214514,
+        "field_relative_l2_absolute_drift": 6.938893903907228e-17,
+        "scientific_passed": true
+      },
+      "score_absolute_drift": 6.938893903907228e-17
+    },
+    {
+      "key": "cardinality-augmented-43-drop-half",
+      "checkpoint": {
+        "passed": true,
+        "strict_passed": true,
+        "max_absolute_error": 1.0380585280245214e-14,
+        "truth_normalized_prediction_difference": 1.894249620010844e-15,
+        "reference_field_relative_l2": 0.22620061765232177,
+        "reloaded_field_relative_l2": 0.2262006176523215,
+        "field_relative_l2_absolute_drift": 2.7755575615628914e-16,
+        "scientific_passed": true
+      },
+      "score_absolute_drift": 2.7755575615628914e-16
+    },
+    {
+      "key": "all-sensors-only-43-all",
+      "checkpoint": {
+        "passed": true,
+        "strict_passed": true,
+        "max_absolute_error": 3.122502256758253e-14,
+        "truth_normalized_prediction_difference": 4.798663483960794e-15,
+        "reference_field_relative_l2": 0.05733993631620889,
+        "reloaded_field_relative_l2": 0.05733993631620891,
+        "field_relative_l2_absolute_drift": 2.0816681711721685e-17,
+        "scientific_passed": true
+      },
+      "score_absolute_drift": 2.0816681711721685e-17
+    },
+    {
+      "key": "all-sensors-only-43-drop-half",
+      "checkpoint": {
+        "passed": true,
+        "strict_passed": true,
+        "max_absolute_error": 8.43769498715119e-15,
+        "truth_normalized_prediction_difference": 1.394551879213747e-15,
+        "reference_field_relative_l2": 0.36887668225602527,
+        "reloaded_field_relative_l2": 0.368876682256025,
+        "field_relative_l2_absolute_drift": 2.7755575615628914e-16,
+        "scientific_passed": true
+      },
+      "score_absolute_drift": 2.7755575615628914e-16
+    }
+  ]
+}

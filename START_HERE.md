@@ -134,3 +134,9 @@ A defensible project contains:
 - a notebook that restarts and runs in order.
 
 Use the checklist at the end of each project notebook before writing the one-slide research summary.
+
+
+<!-- transformer-course-v3 -->
+## Weeks 17-22: active Transformer laboratories
+
+[Course guide and setup](docs/TRANSFORMER_COURSE.md). Six distinct laboratories extend Weeks 7.3, 7.4 and 15 with required language modeling, coding exercises, separate instructor solutions, matched baselines and explicit transfer audits.

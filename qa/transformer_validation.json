@@ -1,0 +1,195 @@
+{
+  "timestamp_utc": "2026-10-06T18:36:24.012340+00:00",
+  "base_commit": "37c1fcf791a41e5eca9d473a214954bed1d2f83a",
+  "scope": "Local Windows validation; no public publication or remote CI run",
+  "unit_tests": {
+    "passed": 14,
+    "failed": 0,
+    "seconds": 29.089,
+    "log": "qa/transformer-unit-tests.txt"
+  },
+  "independently_rescored_rows": 160,
+  "checkpoint_predictions": 126,
+  "fresh_training_reproduction": {
+    "comparisons": 480,
+    "passed": true,
+    "relative_tolerance": 0.02,
+    "absolute_tolerance": 1e-05,
+    "maximum_absolute_metric_difference": 0.0,
+    "environment_relation": "Two independent trainings in the same clean installed environment"
+  },
+  "notebooks": [
+    {
+      "notebook": "notebooks/week17/W17_CFD_Transformer.ipynb",
+      "seconds": 227.36,
+      "code_cells": 13,
+      "timing_source": "Recovered from builder stdout after later kernel-start timeout"
+    },
+    {
+      "notebook": "instructor/week17/W17_Solutions.ipynb",
+      "seconds": 172.96,
+      "code_cells": 13,
+      "timing_source": "Recovered from builder stdout after later kernel-start timeout"
+    },
+    {
+      "notebook": "notebooks/week18/W18_CFD_Transformer.ipynb",
+      "seconds": 64.47,
+      "code_cells": 13,
+      "timing_source": "Recovered from builder stdout after later kernel-start timeout"
+    },
+    {
+      "notebook": "instructor/week18/W18_Solutions.ipynb",
+      "seconds": 24.11,
+      "code_cells": 13,
+      "timing_source": "Recovered from builder stdout after later kernel-start timeout"
+    },
+    {
+      "notebook": "notebooks/week19/W19_CFD_Transformer.ipynb",
+      "seconds": 29.15,
+      "code_cells": 13,
+      "timing_source": "Recovered from builder stdout after later kernel-start timeout"
+    },
+    {
+      "notebook": "instructor/week19/W19_Solutions.ipynb",
+      "seconds": 26.47,
+      "code_cells": 13,
+      "timing_source": "Recovered from builder stdout after later kernel-start timeout"
+    },
+    {
+      "notebook": "notebooks/week20/W20_CFD_Transformer.ipynb",
+      "seconds": 240.25,
+      "code_cells": 13,
+      "timing_source": "Recovered from builder stdout after later kernel-start timeout"
+    },
+    {
+      "notebook": "instructor/week20/W20_Solutions.ipynb",
+      "seconds": 34.48,
+      "code_cells": 13,
+      "timing_source": "Recovered from builder stdout after later kernel-start timeout"
+    },
+    {
+      "notebook": "notebooks/week21/W21_CFD_Transformer.ipynb",
+      "seconds": 34.12073169997893,
+      "code_cells": 13
+    },
+    {
+      "notebook": "instructor/week21/W21_Solutions.ipynb",
+      "seconds": 38.625775400025304,
+      "code_cells": 13
+    },
+    {
+      "notebook": "notebooks/week22/W22_CFD_Transformer.ipynb",
+      "seconds": 35.93652069999371,
+      "code_cells": 13
+    },
+    {
+      "notebook": "instructor/week22/W22_Solutions.ipynb",
+      "seconds": 377.67522819997976,
+      "code_cells": 13
+    }
+  ],
+  "instructor_exercises_passed": 24,
+  "builder_checks": {
+    "canonical_inputs_match": true,
+    "source_and_evidence_preserved": true,
+    "compatibility_entry_point_pdfs_identical": true,
+    "pdf_sha256": {
+      "week17_cfd_transformer.pdf": "78926bab42a117eca1e0ebc5c899e02a4fb4d21886f55e851dbc42008b6c9744",
+      "week18_cfd_transformer.pdf": "c710376174535ba319268bd9539594a0b7c65a8b1d751f69f28a47be4e16cd72",
+      "week19_cfd_transformer.pdf": "b198f6eb8f596c905fb2c83b78c2c23c6be6e57d3f3cefee4ead3e75e1a8525b",
+      "week20_cfd_transformer.pdf": "0abb9c0c7a84c2f9719ea5217bd83006af4507e1b7aed43794e80c8880460f49",
+      "week21_cfd_transformer.pdf": "15c24c5c0a1385456b8073ccd63e37b9ccb2417a9392f57a7b849a999b8b4ff2",
+      "week22_cfd_transformer.pdf": "f53a8e30763c45da3f9e689dc8744e0a8b5339c6582be80d8112f3f50cd39a6b"
+    }
+  },
+  "visual_qa": {
+    "passed": true,
+    "method": "Rendered every final PDF page with pdftoppm and visually inspected all six contact sheets after pagination corrections.",
+    "page_counts": {
+      "17": 5,
+      "18": 5,
+      "19": 5,
+      "20": 4,
+      "21": 4,
+      "22": 5
+    },
+    "pages_inspected": 28,
+    "checks": [
+      "No clipped text or equations",
+      "No headings isolated from their following content",
+      "Tables fit within page margins",
+      "Figures and captions stay together",
+      "Larger plot labels and consistent equation scale",
+      "Headers and page numbers present"
+    ],
+    "renderer_warnings": "Poppler reported unavailable Symbol/ArialUnicode display fonts; the rendered pages were inspected and showed no missing mathematical glyphs. Display equations are embedded raster images.",
+    "scope": "Layout inspection; this is not an independent scientific or student-pilot evaluation."
+  },
+  "recovered_failure": "One kernel startup timed out at 60 seconds before Week 21 execution. Startup allowance increased to 180 seconds; only Weeks 21-22 rerun in fresh kernels. Earlier successful timings recovered from stdout.",
+  "budget_audit": {
+    "interpretation": "Budget sensitivity, not a proof of convergence; test metrics do not select checkpoints.",
+    "rows": [
+      {
+        "key": "Causal-Transformer-17",
+        "base_validation_mse": 4.670452779111548e-05,
+        "audit_validation_mse": 3.6271562694156046e-05,
+        "selected_step": 1530,
+        "at_budget_boundary": false,
+        "base_field_relative_l2": 0.054915430296852245,
+        "audit_field_relative_l2": 0.054875760970182784
+      },
+      {
+        "key": "History-MLP-17",
+        "base_validation_mse": 3.279849676108452e-05,
+        "audit_validation_mse": 3.0931804070247266e-05,
+        "selected_step": 2070,
+        "at_budget_boundary": false,
+        "base_field_relative_l2": 0.05528714800042543,
+        "audit_field_relative_l2": 0.05521974670784664
+      },
+      {
+        "key": "Causal-Transformer-29",
+        "base_validation_mse": 3.092228084077373e-05,
+        "audit_validation_mse": 1.6161451193863284e-05,
+        "selected_step": 2310,
+        "at_budget_boundary": false,
+        "base_field_relative_l2": 0.05487399196185194,
+        "audit_field_relative_l2": 0.05459102594615253
+      },
+      {
+        "key": "History-MLP-29",
+        "base_validation_mse": 3.093120056387328e-05,
+        "audit_validation_mse": 2.1160290380731732e-05,
+        "selected_step": 2400,
+        "at_budget_boundary": true,
+        "base_field_relative_l2": 0.054885984727126566,
+        "audit_field_relative_l2": 0.054843275941480266
+      },
+      {
+        "key": "Causal-Transformer-43",
+        "base_validation_mse": 4.498415208770942e-05,
+        "audit_validation_mse": 2.3725357440119174e-05,
+        "selected_step": 2160,
+        "at_budget_boundary": false,
+        "base_field_relative_l2": 0.055864386986100086,
+        "audit_field_relative_l2": 0.05483815388251585
+      },
+      {
+        "key": "History-MLP-43",
+        "base_validation_mse": 3.192540120823696e-05,
+        "audit_validation_mse": 2.7955038304042893e-05,
+        "selected_step": 2370,
+        "at_budget_boundary": false,
+        "base_field_relative_l2": 0.05515718246699479,
+        "audit_field_relative_l2": 0.05492165955996525
+      }
+    ]
+  },
+  "remaining_limits": [
+    "No Linux or interactive Colab execution",
+    "No globally converged-model claim; fixed-budget transfer and one extended MLP still select at the ceiling",
+    "Lecture notes are compact and do not satisfy the former review's 8-10-page target",
+    "No student pilot or independent scientific re-review",
+    "No optimizer state for exact training resumption"
+  ]
+}

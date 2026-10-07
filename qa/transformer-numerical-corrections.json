@@ -1,0 +1,26 @@
+{
+  "date": "2026-10-06",
+  "scope": "Post-Claude numerical corrections on Windows; no retraining",
+  "unit_tests": {
+    "passed": 17,
+    "failed": 0,
+    "runtime_seconds": 15.841
+  },
+  "checkpoint_audit": {
+    "passed": true,
+    "predictions": 126,
+    "report": "qa/transformer-checkpoint-audit-corrected.json"
+  },
+  "evidence_verifier": {
+    "passed": true,
+    "rows": 160,
+    "notebooks_checked": false
+  },
+  "rescored_rows": {
+    "primary": 160,
+    "budget_audit": 9
+  },
+  "cross_platform_revalidation": "not run after corrections",
+  "original_sandbox_attempt": "Temp directory access denied; all 17 tests passed under authorized isolated-runtime rerun",
+  "tolerances_changed": false
+}

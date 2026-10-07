@@ -1,0 +1,48 @@
+name: Transformer course verification
+on:
+  push:
+    branches: [main, codex/llm-course-redesign]
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  ubuntu-course:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    env:
+      PYTHONUTF8: '1'
+      PYTHONDONTWRITEBYTECODE: '1'
+      MPLBACKEND: Agg
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: pip
+      - name: Install recorded numerical environment
+        run: python -m pip install -e '.[transformer,test]' -c qa/transformer-environment.lock.txt
+      - name: Protocol and report safety tests
+        run: python -m unittest discover -s tests -p 'test_transformer*.py' -v
+      - name: Exercises and semantic mutation checks
+        run: python qa/audit_transformer_exercises.py --report exercise-ci.json
+      - name: Stored evidence and curriculum consistency
+        run: |
+          python qa/verify_transformer_course.py
+          python qa/verify_transformer_curriculum.py
+          python qa/build_transformer_course.py --check
+      - name: Checkpoint inference with both criteria reported
+        run: python qa/audit_transformer_checkpoints.py --criterion scientific --report checkpoint-ci.json
+      - name: Paired augmentation evidence
+        run: python qa/ablate_transformer_sensors.py --verify --criterion scientific --report ablation-ci.json
+      - name: Twelve fresh notebook kernels
+        run: python qa/build_transformer_course.py --execute --output build/ci-course
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: ubuntu-course-validation
+          path: |
+            exercise-ci.json
+            checkpoint-ci.json
+            ablation-ci.json
+            build/ci-course/notebook_execution.json

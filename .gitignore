@@ -57,3 +57,5 @@ results/week16_lowboom/reference/pilot_*/
 results/week16_lowboom/reference/seeb_resolved_*/
 
 results/week16_lowboom/runs/checkpoint_v801_*/
+
+*.pyc
