@@ -56,7 +56,7 @@ The comparison uses a fixed field for illustration. A scientific estimate requir
 
 ## Laboratory deliverables
 
-The four tasks invert patching, calculate a frozen-basis representation floor, implement the gappy solve and compute attention storage. The noiseless gappy test reconstructs a synthetic vector lying exactly in the training subspace; that controlled case separates an implementation bug from unavoidable approximation error on CFD.
+The four tasks invert patching, calculate a frozen-basis representation floor, implement the gappy solve and audit noisy sensor designs with reconstruction, representation floor, rank and condition diagnostics. The noiseless gappy test reconstructs a synthetic vector lying exactly in the training subspace; that controlled case separates an implementation bug from unavoidable approximation error on CFD.
 
 Submit an exact patch round trip, a three-panel reference/reconstruction/error figure with a separate error color scale, a sensor-condition table and a memory calculation. Explain why improving retained energy need not improve conditioning, and why the evaluation field cannot be used to choose the rank or sensors after its score is seen.
 
@@ -72,25 +72,27 @@ Week 20 keeps this information contract visible while adding learned models. A T
 
 Implement the inverse of the demonstrated 4x6 patch layout.
 
-Draw the index mapping from a 32 by 78 array into 4 by 6 patches and back. Test an array containing unique consecutive integers before trying a smooth field, because smoothness can hide a transposition. Explain which information is lost only after a learned embedding or rank truncation is added.
+Interface contract: Input tokens:[patches,24] uses the demonstrated row-major 4-by-6 layout; shape is (height,width), both divisible by those patch sizes. Return the NumPy field in its original spatial order.
 
 ### Task 2: Representation floor
 
 Compute the relative error of projecting a field into the frozen basis. Do not fit a new basis on the evaluation field.
 
-Freeze the training mean and basis before projecting the retained field. Compare the full reconstruction norm with the discarded orthogonal component. Explain why fitting a new basis on the evaluation field would change this diagnostic into an optimistic representation study rather than the original model floor.
+Interface contract: rep is a fitted lab.Representation; field is one spatial NumPy vector or a two-dimensional field of the fitted spatial size. Return the scalar global Frobenius relative L2 error of its orthogonal reconstruction, using the same truth norm.
 
 ### Task 3: Gappy solve
 
 Recover modal coefficients from a supplied subset of observations using least squares, not matrix inversion.
 
-Report the smallest singular value and condition number of the observed basis. Perturb observations by the declared noise scale and compare coefficient error with field error. A least-squares solution can be mathematically well-defined but practically fragile; sensor count alone does not establish reliable observability.
+Interface contract: y is a vector of sampled values at ids. Return a full spatial vector from a least-squares solve of representation.modes[ids] against y-representation.mean[ids], then decode in the original affine basis.
 
-### Task 4: Memory accounting
+### Task 4: Audit sensor reconstruction against its floor
 
-Return float32 attention-score memory for B batches, H heads and N tokens; show the point/patch ratio.
+Given a representation, flattened truth field, sensor-index designs and optional observed sensor values, return reconstruction, relative field error, representation floor, sensor matrix rank and condition number for each design. Compare full-rank and rank-deficient designs and repeat with noisy observations; report observation error separately from representation error.
 
-Compute the actual byte totals before converting units. State whether MB means one million bytes or MiB means 2 to the twentieth bytes. Include batch and head dimensions, and identify which activations are excluded. A quadratic score estimate is not a measured peak-memory or wall-time benchmark.
+Interface contract: representation is fitted; truth is a nonzero spatial vector. designs is a list of nonempty unique integer sensor-index arrays. observations is None (use truth at sensors) or a parallel list of sampled vectors including any noise. Return a list in design order of dictionaries: prediction (full spatial NumPy vector), field_error (relative L2 to truth), floor (relative L2 of truth projection), rank (rank of sensed mode matrix), condition (2-norm condition number of that same sensed matrix). Duplicate/empty sensor designs and zero truth norm must raise ValueError.
+
+For the integrated fourth task, compare at least two controlled settings and explain a result that the implementation alone cannot justify. Include the requested plot or table and retain unsuccessful outcomes.
 
 ## Before submitting
 

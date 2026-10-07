@@ -8,12 +8,12 @@ smaller pretraining demonstration.
 
 | Week | Distinct investigation | Required coding work |
 | --- | --- | --- |
-| 17 | Attention as a learned kernel | Q/K/V, normalization, permutation, temperature, counterexample |
-| 18 | Next-character and next-state training | Shifted targets, cross-entropy, causal prefix, all-position loss |
-| 19 | Information and observation design | Patch inversion, POD floor, gappy solve, token memory |
-| 20 | Learning with missing sensors | Token dropout, capacity, budget diagnosis, validation selection |
-| 21 | Autonomous dynamics | History update, error decomposition, frequency, phase drift |
-| 22 | Transfer claim audit | Total labels, compute accounting, representation ceiling, signed gain |
+| 17 | Attention as a learned kernel | Scaled attention; Permutation experiment; Temperature limit; Build an attention investigation |
+| 18 | Next-character and next-state training | Shift targets; Cross-entropy and perplexity; Causal prefix invariant; Evaluate a language model by position |
+| 19 | Information and observation design | Invert patching; Representation floor; Gappy solve; Audit sensor reconstruction against its floor |
+| 20 | Learning with missing sensors | Cardinality-preserving token dropout; Capacity accounting; Training budget diagnosis; Implement validation-only checkpoint selection |
+| 21 | Autonomous dynamics | Autonomous state update; Separate representation and dynamics; Frequency-fit diagnostic; Implement an autonomous rollout audit |
+| 22 | Transfer claim audit | Audit information budgets; Match compute accounting; Detect a representation-limited result; Build a defensible transfer comparison |
 
 Each week has a student notebook at `notebooks/weekXX/WXX_CFD_Transformer.ipynb`,
 a separate instructor solution at `instructor/weekXX/WXX_Solutions.ipynb`, an
@@ -31,8 +31,11 @@ optional extra; the core package's numerical constraints still apply:
 python -m venv .venv
 # Activate .venv using the command appropriate to your operating system.
 python -m pip install -e ".[transformer,test]" -c qa/transformer-environment.lock.txt
-python -m unittest discover -s tests -p test_transformer_course.py -v
+python -m unittest discover -s tests -p 'test_transformer*.py' -v
 python qa/verify_transformer_course.py
+python qa/audit_transformer_exercises.py
+python qa/verify_transformer_curriculum.py
+python qa/audit_transformer_checkpoints.py --criterion scientific
 ```
 
 The lock records the actual authoring environment. Cross-platform numerical
@@ -118,11 +121,35 @@ checkpoint round trips, error decomposition, all-row rescoring, independent note
 kernels, and builder source preservation. See `docs/TRANSFORMER_REVIEW_RESPONSE.md`
 and `qa/transformer_validation.json` for measured outcomes and any remaining limits.
 
-## Colab without publishing the unpublished branch
+## Published notebooks and Colab
 
-This local redesign has no public notebook URL. To run it in a fresh Colab session,
-upload the supplied portable course ZIP, extract it under `/content/course`, change
-to its root and run `pip install -e ".[transformer]"` before opening/executing the
-chosen notebook. The package and data are included; no access token is needed.
+The corrected package is published on the `codex/llm-course-redesign` branch of
+[FlowMLLab](https://github.com/Ehsan-Roohi/FlowMLLab/tree/codex/llm-course-redesign).
+For a fresh Colab session, clone that branch, change to the repository root and
+install the Transformer extra before opening the chosen notebook. Alternatively,
+upload the portable ZIP and extract under `/content/course`. The package and data
+are included; no access token is needed.
 `qa/colab_transformer_bootstrap.py` checks archive paths before extraction.
 This upload path is documented; an interactive Colab session is not claimed tested.
+
+
+## Post review correction status on 6 October 2026
+
+Numerical scoring uses float64 inputs; phase is relative to the rollout start and
+constant signals have no identifiable frequency. Each integrated task has a
+declared interface, and task titles/contracts agree across JSON, both notebooks,
+the printable worksheet, PDF and this guide. Five specifically reported incorrect
+implementations are rejected in both direct and notebook contexts. The reference
+sinusoidal fit has R-squared about 0.698; the probe is not a lift measurement.
+See [the second-review response](TRANSFORMER_SECOND_REVIEW_RESPONSE.md) for current
+checks and distinctions between stored prediction rescoring and fresh inference.
+
+The independent Linux review reported 478/480 retraining comparisons within the
+original tolerance and 75 checkpoint mismatches under the original pointwise
+tolerance. Those failures remain historical evidence. The strict audit criterion
+is unchanged. A separately named scientific criterion introduced after that review
+checks normalized field difference and metric drift at 1e-5; every report includes
+both statuses and its environment. Windows repetition establishes same-environment
+repeatability. Ubuntu CI checks the published revision; interactive Colab and a
+representative student workload pilot remain separate classroom acceptance checks.
+The 2400-step selection pattern describes the retained Windows run.

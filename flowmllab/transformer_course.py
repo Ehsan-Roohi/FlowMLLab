@@ -289,8 +289,9 @@ def fit(model, x, y, validation, protocol, steps=None, early_stop=True, augment=
 
 
 def error_components(prediction, truth, representation):
-    p = np.asarray(prediction).reshape(len(truth), -1)
-    y = np.asarray(truth).reshape(len(truth), -1)
+    # Promote before subtraction and norm accumulation on large CFD arrays.
+    p = np.asarray(prediction, dtype=np.float64).reshape(len(truth), -1)
+    y = np.asarray(truth, dtype=np.float64).reshape(len(truth), -1)
     oracle = representation.decode(representation.encode(y))
     norm = max(float(np.linalg.norm(y)), 1e-14)
     total = float(np.linalg.norm(p-y) / norm)
@@ -302,13 +303,54 @@ def error_components(prediction, truth, representation):
             'per_frame_relative_l2': (np.linalg.norm(p-y, axis=1)/np.maximum(np.linalg.norm(y, axis=1), 1e-14)).tolist()}
 
 
+def runtime_environment():
+    """Current scoring/inference environment, distinct from training provenance."""
+    return {'python':platform.python_version(),'platform':platform.platform(),
+            'packages':{name:importlib.metadata.version(name) for name in ('numpy','scipy','torch')},
+            'torch_threads':torch.get_num_threads(),'torch_build':torch.__config__.show()}
+
+
+def checkpoint_agreement(actual, expected, truth):
+    """Separate historical elementwise fidelity from field-level scientific drift.
+
+    The scientific threshold was introduced after external review, not before
+    the original experiment: 1e-5 of truth field norm and 1e-5 absolute drift in
+    relative-L2 error (0.001 percentage point). It is much smaller than a 1%
+    reconstruction error. It is not evidence that an untested platform passes.
+    """
+    actual, expected, truth = [np.asarray(a,dtype=np.float64).reshape(len(truth),-1)
+                               for a in (actual,expected,truth)]
+    norm=max(float(np.linalg.norm(truth)),1e-14)
+    difference=float(np.linalg.norm(actual-expected)/norm)
+    original_error=float(np.linalg.norm(expected-truth)/norm)
+    restored_error=float(np.linalg.norm(actual-truth)/norm)
+    strict=bool(np.allclose(actual,expected,rtol=1e-5,atol=1e-6))
+    drift=abs(restored_error-original_error)
+    return {'passed':strict,'strict_passed':strict,
+            'max_absolute_error':float(np.max(abs(actual-expected))),
+            'truth_normalized_prediction_difference':difference,
+            'reference_field_relative_l2':original_error,
+            'reloaded_field_relative_l2':restored_error,
+            'field_relative_l2_absolute_drift':drift,
+            'scientific_passed':bool(difference<=1e-5 and drift<=1e-5)}
+
+
 def spectral_fit(t, signal, bounds=(.1, .3)):
-    """Frequency fitted on full rollout; no claim of force-derived Strouhal."""
-    t, y = np.asarray(t), np.asarray(signal)
-    if float(np.std(y))<1e-12:
-        return {'frequency':None,'amplitude':0.,'phase':None,'residual_mse':0.,'duration':float(t[-1]-t[0])}
+    """Full-rollout frequency and phase at the first sample, not absolute zero.
+
+    This probe fit is not force-derived Strouhal.
+    """
+    t, y = np.asarray(t, dtype=np.float64), np.asarray(signal, dtype=np.float64)
+    if t.ndim != 1 or y.shape != t.shape or len(t) < 3:
+        raise ValueError('Spectrum requires matching one-dimensional samples')
+    if not np.isfinite(t).all() or not np.isfinite(y).all() or np.any(np.diff(t) <= 0):
+        raise ValueError('Spectrum requires finite samples and increasing time')
+    elapsed = t - t[0]
+    # A float32 mean can differ from a repeated constant through rounding.
+    if float(np.ptp(y)) == 0. or float(np.std(y)) < 1e-12:
+        return {'frequency':None,'amplitude':0.,'phase':None,'residual_mse':0.,'r_squared':None,'duration':float(t[-1]-t[0])}
     def solve(f):
-        design = np.c_[np.ones(len(t)), np.sin(2*np.pi*f*t), np.cos(2*np.pi*f*t)]
+        design = np.c_[np.ones(len(t)), np.sin(2*np.pi*f*elapsed), np.cos(2*np.pi*f*elapsed)]
         coef = np.linalg.lstsq(design, y, rcond=None)[0]
         return coef, float(np.mean((design @ coef-y)**2))
     grid = np.linspace(*bounds, 201)
@@ -318,6 +360,7 @@ def spectral_fit(t, signal, bounds=(.1, .3)):
     coef, mse = solve(fit_.x)
     return {'frequency': float(fit_.x), 'amplitude': float(np.hypot(coef[1],coef[2])),
             'phase': float(np.arctan2(coef[2],coef[1])), 'residual_mse': mse,
+            'r_squared': float(1. - mse / np.mean((y-y.mean())**2)),
             'duration': float(t[-1]-t[0])}
 
 
@@ -336,7 +379,8 @@ def qr_sensors(representation, count=16):
 def sensor_tokens(fields, ids, case, mean, scale):
     yy, xx = np.meshgrid(case['y'], case['x'], indexing='ij')
     coords = np.c_[xx.ravel(), yy.ravel()][ids]
-    # Geometry-only nondimensional rescaling to approximately [-1,1].
+    # Coordinates use (coordinate - grid mean) / full grid span.
+    # Uniform symmetric grid endpoints are -0.5 and +0.5, not -1 and +1.
     coords = (coords - np.array([case['x'].mean(), case['y'].mean()])) / np.array([np.ptp(case['x']), np.ptp(case['y'])])
     values = (np.asarray(fields).reshape(len(fields), -1)[:, ids] - mean) / scale
     return np.concatenate([values[...,None], np.broadcast_to(coords, (len(values),len(ids),2))], axis=-1)
@@ -497,7 +541,7 @@ def transfer_experiment(cases,p):
                     def validation(m):
                         return np.mean([safe_rollout_loss(m,z[s:s+p.context],z[s+p.context:s+p.block_length]) for s in valblocks])
                     record=fit(model,x,y[:,-1] if arm=='target-POD-MLP' else y,validation,p,steps=steps,early_stop=False)
-                    prediction=representation.decode(rollout(model,z[156:160],p.test_end-160))
+                    prediction=representation.decode(rollout(model,z[160-p.context:160],p.test_end-160))
                     key=f'Re{target_re}-B{budget}-{arm}-{seed}';fields[key]=prediction
                     rows.append({'key':key,'target_re':target_re,'block_budget':budget,'arm':arm,'seed':seed,
                                  'labels':labels,'training':record,'pretraining':pre_record if arm=='pretrained' else None,
@@ -514,7 +558,7 @@ def transfer_experiment(cases,p):
                 prediction=rep.decode(pred);key=f'Re{target_re}-B{budget}-DMD-{seed}';fields[key]=prediction
                 rows.append({'key':key,'target_re':target_re,'block_budget':budget,'arm':'DMD','seed':seed,'labels':labels,
                              'metrics':error_components(prediction[p.validation_end-160:],field[p.validation_end:p.test_end],rep)})
-    return {'rows':rows,'source_re':p.source_re,'initialization':'All arms observe frames 156:160; predict 160:281 without resets.',
+    return {'rows':rows,'source_re':p.source_re,'initialization':f'All arms observe frames {160-p.context}:160; predict 160:{p.test_end} without resets.',
             'scope':'Retained-case audit extending Week 7.4. Equal optimizer steps are not equal FLOPs or source-data access.'},fields,states
 
 

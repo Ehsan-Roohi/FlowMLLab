@@ -52,7 +52,7 @@ A physical influence study instead needs an intervention contract: what is pertu
 
 ## Laboratory and assessment
 
-The worked example builds Q, K and V directly from three actual CFD frames. The four coding tasks implement scaled attention, permutation testing, temperature scaling and the constant-value counterexample. The student notebook leaves those functions incomplete and reports unsubmitted work. The instructor notebook contains separate solutions and runs every assertion in a fresh kernel.
+The worked example builds Q, K and V directly from three actual CFD frames. The four coding tasks implement scaled attention, an explicit-callable permutation test, temperature scaling and a masked attention investigation. The constant-value counterexample remains part of the written interpretation. The student notebook leaves those functions incomplete and reports unsubmitted work. The instructor notebook contains separate solutions and runs every assertion in a fresh kernel.
 
 Submit tensor dimensions, two kernel plots, the four passing checks, and a paragraph describing one physical statement the plots do not justify. Code correctness earns 40%, dimensional and normalization reasoning 25%, experimental interpretation 25%, and reproducibility 10%. A visually attractive heatmap cannot substitute for the counterexample or the invariance test.
 
@@ -68,25 +68,27 @@ Next week changes the token axis from a spatial observation set to an ordered se
 
 Implement row-stable scaled dot-product attention without calling lab.attention. Explain the square-root scaling.
 
-For the two-sensor numerical example, write the score vector, its maximum-subtracted exponential and its row sum before coding. Repeat with scores offset by 1000: the normalized result should stay unchanged and remain finite. Explain why normalization along the query axis would answer a different question.
+Interface contract: Inputs are floating Torch tensors q,k:[N,d], v:[N,d_v] with matching N. Return a [N,d_v] tensor; normalize over keys.
 
 ### Task 2: Permutation experiment
 
 Write a function returning the largest equivariance error after consistently permuting all sensor tokens.
 
-Use one permutation for velocities and their coordinates. Compare the complete attended tensor before pooling, then compare the pooled prediction. As a deliberately different intervention, permute values alone. Explain why that second experiment is not a symmetry test and should not be expected to preserve the prediction.
+Interface contract: Inputs q,k,v have the Task 1 shapes. order is a length-N Torch permutation. attention_fn is an explicit callable returning the attended tensor, not a weights/output tuple. Return a Python float: maximum absolute equivariance discrepancy. Do not consult a global attention function.
 
 ### Task 3: Temperature limit
 
 Implement temperature-scaled weights; verify that large temperature moves them toward uniform weights.
 
-Record entropy and the largest weight at three finite temperatures. Explain why the infinite-temperature limit is uniform only when the unscaled scores remain finite. Connect the concentrated low-temperature limit to the softmax Jacobian: a sharply selected key can coexist with very small local derivatives.
+Interface contract: Return a [N,N] Torch tensor for q,k:[N,d]. Divide scaled scores by the finite temperature; nonpositive temperature must raise ValueError.
 
-### Task 4: Report the counterexample
+### Task 4: Build an attention investigation
 
-Construct a value matrix with every row equal. Show that highly nonuniform attention need not create a nonuniform output.
+Implement attention over several temperatures and optional key masks. Return weights, output and mean entropy for each temperature. Reject a mask with an empty row. Then vary the temperature and remove half the keys; plot entropy and output change, explaining why constant values hide changes in attention.
 
-First prove the constant-value statement using the row-sum identity; then verify it numerically with two visibly different weight matrices. State exactly which output is invariant. Adding positional values, a residual branch or a different output projection changes the object under study and must be analyzed separately.
+Interface contract: Inputs q:[Nq,d], k:[Nk,d], v:[Nk,d_v] are 2-D floating Torch tensors. temperatures is a nonempty sequence of positive scalars. mask is None or a Boolean tensor broadcastable to [Nq,Nk]: True ALLOWS a key (the opposite of torch MultiheadAttention blocking-mask semantics). Invalid tensor dimensions, mismatched widths/counts, nonpositive temperature or a query with no allowed key must raise ValueError. Return a list in temperature order of dictionaries with keys temperature (float), weights ([Nq,Nk] tensor), output ([Nq,d_v] tensor), entropy (float, mean over queries of natural-log entropy).
+
+For the integrated fourth task, compare at least two controlled settings and explain a result that the implementation alone cannot justify. Include the requested plot or table and retain unsuccessful outcomes.
 
 ## Before submitting
 

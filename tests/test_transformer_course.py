@@ -8,7 +8,7 @@ import torch
 from flowmllab.transformer_course import (
     Protocol, Representation, CausalDecoder, SensorSet, attention, sequence_windows,
     seed_all, fit, safe_rollout_loss, error_components, transfer_indices,
-    pack_prediction, prediction, spectral_fit, checkpoint_model,
+    pack_prediction, prediction, spectral_fit, checkpoint_model, checkpoint_agreement,
 )
 
 class CourseContracts(unittest.TestCase):
@@ -63,17 +63,19 @@ class CourseContracts(unittest.TestCase):
             self.assertEqual(record['initialization_frames'],[156,157,158,159])
             self.assertLess(max(record['validation_frames']),160)
 
-    def test_heldout_poison_cannot_change_fitted_state(self):
-        rng=np.random.default_rng(6);data=rng.normal(size=(50,4));poisoned=data.copy();poisoned[40:]+=50
-        outputs=[]
-        for a in (data,poisoned):
-            seed_all(17);model=torch.nn.Linear(4,2)
-            rep=Representation.fit(a[:30],2);x=a[:30];y=rep.encode(x)
-            vx=a[30:40];vy=rep.encode(vx)
-            record=fit(model,x,y,lambda m:np.mean((m(torch.tensor(vx,dtype=torch.float32)).detach().numpy()-vy)**2),replace(Protocol(),max_steps=30))
-            outputs.append((record['selected_step'],copy_state(model)))
-        self.assertEqual(outputs[0][0],outputs[1][0])
-        for key in outputs[0][1]: torch.testing.assert_close(outputs[0][1][key],outputs[1][1][key],rtol=0,atol=0)
+    def test_validation_changes_checkpoint_selection(self):
+        # Identical training data; a reversed validation target must change
+        # selection, proving the callback is not ignored or replaced by train loss.
+        records=[]
+        for sign in (1.,-1.):
+            model=torch.nn.Linear(1,1,bias=False)
+            model.weight.data.zero_()
+            x=np.ones((8,1));y=np.ones((8,1))
+            record=fit(model,x,y,lambda m:float(((m(torch.ones(8,1))-sign)**2).mean()),
+                       replace(Protocol(),max_steps=12,eval_every=1))
+            records.append(record)
+        self.assertGreater(records[0]['selected_step'],0)
+        self.assertEqual(records[1]['selected_step'],0)
 
     def test_nonfinite_rollout_rejects_checkpoint(self):
         class Bad(torch.nn.Module):
@@ -87,12 +89,63 @@ class CourseContracts(unittest.TestCase):
 
     def test_frequency_fit_detects_sub_bin_change(self):
         t=np.arange(121)*.1041667
-        actual=spectral_fit(t,1.7*np.sin(2*np.pi*.185*t+.3)+.2)
-        self.assertLess(abs(actual['frequency']-.185),1e-5)
+        actual=spectral_fit(t,1.7*np.sin(2*np.pi*.18537*t+.3)+.2)
+        self.assertLess(abs(actual['frequency']-.18537),1e-5)
         self.assertLess(abs(actual['amplitude']-1.7),1e-4)
 
     def test_constant_probe_has_no_identifiable_frequency(self):
         self.assertIsNone(spectral_fit(np.arange(121),np.ones(121))['frequency'])
+
+    def test_initial_phase_uses_common_nonzero_start_time(self):
+        t = 137.5 + np.arange(121) * .1041667
+        phase = .43
+        fits = [spectral_fit(t, np.sin(2*np.pi*f*(t-t[0])+phase)) for f in (.185, .217)]
+        for result in fits:
+            self.assertLess(abs(result['phase']-phase), 1e-5)
+        self.assertLess(abs(fits[0]['phase']-fits[1]['phase']), 1e-5)
+        shifted = spectral_fit(t+71.3, np.sin(2*np.pi*.185*(t-t[0])+phase))
+        self.assertLess(abs(shifted['phase']-fits[0]['phase']), 1e-5)
+
+    def test_float32_constant_probe_has_no_spurious_spectrum(self):
+        for value in (.1, 12345.67, -.037):
+            result = spectral_fit(np.arange(121), np.full(121, value, dtype=np.float32))
+            self.assertIsNone(result['frequency'])
+            self.assertIsNone(result['phase'])
+            self.assertIsNone(result['r_squared'])
+            self.assertEqual(result['amplitude'], 0.)
+
+    def test_error_reductions_promote_before_subtraction(self):
+        rng = np.random.default_rng(42)
+        truth = rng.normal(size=(121, 4096)).astype(np.float32)
+        # Exact orthonormal basis keeps this a test of reduction precision.
+        rep = Representation(np.zeros(4096), np.eye(4096, 8), np.ones(8), .1)
+        pred = rng.normal(size=truth.shape).astype(np.float32)
+        actual = error_components(pred, truth, rep)
+        reference = error_components(pred.astype(np.float64), truth.astype(np.float64), rep)
+        self.assertEqual(actual, reference)
+        projected = rep.decode(rep.encode(truth))
+        self.assertLess(abs(error_components(projected, truth, rep)['pythagorean_residual']), 1e-12)
+
+    def test_sinusoid_r_squared_reports_model_mismatch(self):
+        t=27.3+np.arange(301)*.1
+        exact=np.sin(2*np.pi*.18537*(t-t[0])+.4)
+        pure=spectral_fit(t,exact)
+        mixed=spectral_fit(t,exact+.6*np.sin(2*np.pi*.431*(t-t[0])))
+        self.assertGreater(pure['r_squared'],1-1e-10)
+        self.assertLess(mixed['r_squared'],.9)
+        self.assertGreater(mixed['r_squared'],0.)
+        self.assertAlmostEqual(mixed['r_squared'],1-mixed['residual_mse']/np.var(exact+.6*np.sin(2*np.pi*.431*(t-t[0]))))
+
+    def test_checkpoint_criteria_preserve_strict_failure(self):
+        truth=np.ones((4,8));reference=np.zeros_like(truth)
+        close=checkpoint_agreement(reference+2e-6,reference,truth)
+        self.assertFalse(close['strict_passed'])
+        self.assertFalse(close['passed'])
+        self.assertTrue(close['scientific_passed'])
+        bad=checkpoint_agreement(reference+2e-4,reference,truth)
+        self.assertFalse(bad['scientific_passed'])
+        exact=checkpoint_agreement(reference,reference,truth)
+        self.assertTrue(exact['strict_passed'] and exact['scientific_passed'])
 
     def test_actual_experiments_reject_evaluation_leakage(self):
         from flowmllab.transformer_course import load_data,sensor_experiment,forecast_experiment,transfer_experiment
@@ -106,6 +159,9 @@ class CourseContracts(unittest.TestCase):
             seed_all();a,pa,sa=experiment(cases,p)
             seed_all();b,pb,sb=experiment(altered,p)
             self.assertEqual(list(sa),list(sb))
+            # The poisoned retained truth must actually affect scoring while
+            # leaving the fitted states unchanged; this detects a vacuous test.
+            self.assertNotEqual(a['rows'][0]['metrics']['field_relative_l2'],b['rows'][0]['metrics']['field_relative_l2'])
             for key in sa:
                 for parameter in sa[key]['state']:
                     torch.testing.assert_close(sa[key]['state'][parameter],sb[key]['state'][parameter],rtol=0,atol=0)

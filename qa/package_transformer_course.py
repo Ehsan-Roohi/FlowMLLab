@@ -6,10 +6,10 @@ root=Path(__file__).resolve().parents[1]
 parser=argparse.ArgumentParser();parser.add_argument('--output',type=Path,required=True);args=parser.parse_args()
 paths=set()
 for pattern in ('flowmllab/**/*.py','course/lessons/*.json','data/modal_labs/*',
-                'results/transformer_course_v3/*','results/transformer_budget_audit/*',
+                'results/transformer_course_v3/*','results/transformer_budget_audit/*','results/transformer_sensor_ablation/*',
                 'lectures/source/week*_transformer_course.md','lectures/week*_cfd_transformer.pdf',
                 'notebooks/week1[789]/*','notebooks/week2[012]/*','instructor/week*/*.ipynb',
-                'qa/*transformer*','tests/test_transformer_course.py','docs/TRANSFORMER*.md'):
+                'qa/*transformer*','tests/test_transformer*.py','docs/TRANSFORMER*.md'):
     paths.update(p for p in root.glob(pattern) if p.is_file())
 for name in ('pyproject.toml','LICENSE','README.md','COURSE_MAP.md','START_HERE.md',
              'docs/RESULTS_GUIDE.md','notebooks/week07_3/README.md','notebooks/week07_4/README.md',
@@ -30,12 +30,14 @@ Then run:
     python qa/verify_transformer_course.py
     python qa/build_transformer_course.py --check
 
-The recorded lock and validation were produced on Windows. Linux/Colab execution
-is not certified. Instructor solutions are in instructor/. Students should start
+The recorded lock and local validation were produced on Windows. GitHub Actions
+checks Ubuntu; consult the linked workflow result for the published revision.
+Interactive Colab and student workload acceptance remain open. Instructor solutions
+are in instructor/. Students should start
 with notebooks/week17/W17_CFD_Transformer.ipynb and complete the coding tasks.
 Retained models need not be trained to read the course. Fresh training writes to
 a NEW empty directory with qa/run_transformer_course.py --output NEW_EMPTY_DIR.
-See docs/TRANSFORMER_REVIEW_RESPONSE.md for limitations and issue-by-issue response.
+See docs/TRANSFORMER_SECOND_REVIEW_RESPONSE.md for current correction status and remaining classroom acceptance checks. The earlier review responses and validation JSON are historical.
 '''
 manifest={p.relative_to(root).as_posix():hashlib.sha256(p.read_bytes()).hexdigest() for p in sorted(paths)}
 args.output.parent.mkdir(parents=True,exist_ok=True)

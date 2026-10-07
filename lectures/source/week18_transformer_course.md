@@ -64,7 +64,7 @@ With a fixed isotropic Gaussian observation model, minimizing squared error corr
 
 One-step accuracy is measured under observed histories. Autonomous rollout is measured under histories partly or entirely produced by the model. Their input distributions differ. Scheduled sampling mixes predicted and observed inputs during training, but it changes the fitting procedure and should be studied as a declared ablation, not silently added to one model only.
 
-The required exercise implements all-position MSE and constructs a tensor where only an intermediate prediction is wrong. The sequence loss must be positive although final-position loss is zero. This small check directly distinguishes the new objective from the earlier last-token-only task.
+The integrated exercise computes language-model NLL and accuracy at every position, alongside overall NLL and perplexity. A predictor that is correct only at the final token must still show errors at earlier positions. The worked wake example supplies shifted all-position regression targets; the coding task diagnoses supervision with an explicit language likelihood rather than a final-token score.
 
 ## Deliverables and reading
 
@@ -78,25 +78,27 @@ Primary architecture reference: Vaswani et al. (2017), https://arxiv.org/abs/170
 
 Build next-character input/target windows without allowing a window to cross the provided sequence boundary.
 
-Write every input/target pair for a six-token sequence with context four before constructing the general array. Mark which tokens appear in both arrays at different positions. Test that a split boundary never lies inside one window; a causal mask alone cannot repair a window built from the wrong split.
+Interface contract: Input a is a one-dimensional NumPy array, with 1<=k<len(a). Return a pair of arrays with shape [len(a)-k,k], including every stride-one window.
 
 ### Task 2: Cross-entropy and perplexity
 
 Compute negative log likelihood from logits using log_softmax; average over all positions.
 
-Reproduce the 0.8, 0.5 and 0.25 example by hand. Compare averaging negative log probabilities with taking the negative log of the average probability. They are different objectives. State the vocabulary and tokenization when reporting perplexity, and explain why a lower score cannot certify factual correctness.
+Interface contract: Inputs logits:[batch,time,vocabulary] and integer targets:[batch,time] are Torch tensors. Return one scalar Torch tensor containing mean natural-log NLL.
 
 ### Task 3: Causal prefix invariant
 
 Return whether future perturbation leaves the prefix unchanged. Test both the masked model and its deliberately broken control.
 
-Perturb only future inputs while keeping parameters, evaluation mode and past inputs fixed. Compare every earlier output position, not merely the final forecast. Then disable the mask as a negative control. A degenerate model that ignores all inputs could pass invariance, so the unmasked counterexample is essential.
+Interface contract: model returns a [batch,time,feature] tensor and is already in evaluation mode. x has that shape; 0<prefix<time. Add 10 to all future input positions, hold the prefix fixed, and return a Python bool comparing every prefix output at atol=1e-6.
 
-### Task 4: All-position supervision
+### Task 4: Evaluate a language model by position
 
-Write the sequence MSE and show that an error at an intermediate position is penalized even when the last prediction is exact.
+Return per-position negative log likelihood, token accuracy, overall NLL and perplexity for [batch,time,vocabulary] logits. Validate dimensions and targets. Compare a correct predictor with one that is correct only at the final position; report why final-token accuracy can hide training failures.
 
-Construct a target tensor with an error at one intermediate position and an exact final prediction. The all-position objective must be positive. Inspect the resulting gradient at each supervised output and explain how this differs from a final-token-only regressor, even when both deploy their last output.
+Interface contract: Return a dictionary with position_nll and position_accuracy as length-time Torch tensors averaged over batch, nll and perplexity as Python floats averaged over all tokens. Use natural logs. Non-3-D logits, mismatched target shape, empty targets or tokens outside [0,vocabulary) must raise ValueError. Targets are integer token IDs.
+
+For the integrated fourth task, compare at least two controlled settings and explain a result that the implementation alone cannot justify. Include the requested plot or table and retain unsuccessful outcomes.
 
 ## Before submitting
 

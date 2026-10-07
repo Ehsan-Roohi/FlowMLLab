@@ -53,7 +53,9 @@ The equality relies on orthogonality in the metric being used. Here the spatial 
 
 The notebook trains a short 120-step model as an interactive exercise and labels that budget explicitly. It then loads the full retained comparison, reconstructs a stored predicted field and independently recomputes its relative error. The short classroom run must not be mistaken for the release evidence.
 
-Four tasks implement consistent token dropout, count trainable parameters, diagnose a selected-at-ceiling record and select a validation winner under a time budget. The parameter-count check uses a 16-64-8 branch with biases: 16 times 64 plus 64 plus 64 times 8 plus 8, giving 1608 parameters. The selection task intentionally contains no evaluation score.
+Four tasks implement consistent token dropout, count trainable parameters, diagnose a selected-at-ceiling record and train a model with validation-only checkpoint selection under a fixed update ceiling. The retained branch has widths 16-208-8, including biases; calculate its trainable capacity from the instantiated model rather than relying on an outdated small example. The selection task intentionally contains no evaluation score.
+
+The separate three-seed paired SensorSet ablation holds architecture, initialization, observations, POD basis, optimizer, validation objective and budget ceiling fixed. With all sensors, augmented/plain errors are 13.55/6.08%, 14.43/4.65% and 11.61/5.73%; with the fixed half-sensor subset they are 27.16/60.46%, 24.99/39.41% and 22.62/36.89%. Augmentation improves missing-sensor error in these three pairs while sacrificing full-sensor accuracy. The selection objective uses all-sensor validation; actual early-stopped budgets differ. This isolates the training recipe within SensorSet and does not rank architectures or establish statistical significance. Full traces and paired evidence are in results/transformer_sensor_ablation.
 
 ## Reporting and reading
 
@@ -67,25 +69,27 @@ Course background: the Week 4/5 POD-DeepONet and modal-sensing laboratories. Arc
 
 Remove every other sensor from values and coordinates together; never reinterpret a missing value as an observed zero.
 
-Show the retained indices and verify that coordinates and observations use exactly the same subset. Explain why a missing normalized observation imputed as zero corresponds to the training mean, not physical zero velocity. Distinguish that fixed-vector baseline from dropping a token in the set model.
+Interface contract: Input tokens:[batch,sensors,features] is a NumPy array. Return tokens[:,::2,:], preserving all features for every retained sensor.
 
 ### Task 2: Capacity accounting
 
-Count trainable parameters; compare the attention model with the 16-64-8 branch network.
+Count trainable parameters; compare the attention model with the retained 16-208-8 branch network (Protocol.branch_width=208).
 
-Count biases as well as weights, and distinguish all parameters from trainable parameters. Verify the illustrative 16-64-8 branch count of 1608. Then inspect the release models: their approximately matched parameter counts use a wider branch. Parameter matching alone does not match training augmentation or FLOPs.
+Interface contract: Input is a torch.nn.Module. Return a Python integer counting only parameters with requires_grad=True, including biases.
 
 ### Task 3: Training budget diagnosis
 
 Flag a record whose selected checkpoint reaches its ceiling. This diagnoses an unresolved budget limit, not proof of convergence or its absence.
 
-Plot training and validation losses against executed steps, marking the selected checkpoint and the ceiling separately. A selected step of zero means adaptation was rejected by validation; it is a legitimate outcome to report. Examine the separate doubled-budget audit before claiming that a small field-error change proves convergence.
+Interface contract: record is a dictionary with integer selected_step and ceiling. Return True exactly when selected_step==ceiling; a near-ceiling checkpoint is False.
 
-### Task 4: Compute-aware ranking
+### Task 4: Implement validation-only checkpoint selection
 
-Select the best validation record under a wall-time budget; evaluation metrics must not enter selection.
+Train a supplied small model using full-batch SGD and mean squared error. Evaluate validation at step zero and after each update; retain and restore the best state. Return selected step, executed steps and validation trace. Neither evaluation data nor evaluation loss is an input. Compare two learning rates and explain any step-zero selection.
 
-Choose the eligible checkpoint using only validation scores and the stated time budget. Report hardware and timing conditions. Do not compare an isolated process with a heavily contended run as if their speed difference came from the architecture. Retained test scores may describe the chosen model but cannot choose it.
+Interface contract: steps is a nonnegative integer, lr a positive scalar. Inputs are dimension-compatible Torch tensors. Use full-batch SGD with mean MSE. Evaluate step zero and every update; select the earliest minimum validation loss; restore it and leave model in evaluation mode. Return dictionary selected_step (int), executed_steps (steps), validation_mse (float minimum), trace (list of dictionaries with step and validation_mse for 0..steps). Negative steps or nonpositive lr must raise ValueError.
+
+For the integrated fourth task, compare at least two controlled settings and explain a result that the implementation alone cannot justify. Include the requested plot or table and retain unsuccessful outcomes.
 
 ## Before submitting
 

@@ -1,13 +1,115 @@
 {
   "source_hashes": {
+    "flowmllab/transformer_course.py": "c901fad341380e0a75c4ae38d69991996847d5bcf7b74c72239550ec75630e2d",
+    "qa/audit_transformer_budget.py": "3655bc75a5a327dbe84bb9d922bafae852c78744fb54b102649d2b906d601613",
+    "qa/plot_transformer_course.py": "95e9f5ad7da07265c5f87e4abb6e4ccebd05eead23ad7b95962683f83e4f61d4"
+  },
+  "files": {
+    "checkpoints.pt": "908ff328f29a7830695422676d199a81d5669a883447f68e40c9123d0e030e91",
+    "forecast.json": "ba6433603c50f6c8a136a3e2ab121bae9e447a5c0c3642c1ab57a5321105f95c",
+    "plan.json": "7ccea2ae7cd1d5bbc84b7d4f4eeb3d7a882b6bd92c17419cb87559c8e6a2d519",
+    "predictions.npz": "53cbf8b384a192ea6d798d1916e20443f5fa590310f79e4d658a69b0850d9ea4",
+    "summary.json": "7f654f5d162202cd6b130d15bf8e870f60dfe2f0484c84e2da53b87d30724f18"
+  },
+  "training_source_hashes": {
     "flowmllab/transformer_course.py": "1c87a4deed9a2304f2e2b01d0a91fac9c31e0f22a494e0218fb7c3b4d7a9b0e2",
     "qa/audit_transformer_budget.py": "3655bc75a5a327dbe84bb9d922bafae852c78744fb54b102649d2b906d601613"
   },
-  "files": {
+  "pre_rescoring_files": {
     "checkpoints.pt": "908ff328f29a7830695422676d199a81d5669a883447f68e40c9123d0e030e91",
     "forecast.json": "56eb7769e79fff6862a4befd4784631453f191c3cd0b0487bcb722bae3baaabb",
     "plan.json": "7ccea2ae7cd1d5bbc84b7d4f4eeb3d7a882b6bd92c17419cb87559c8e6a2d519",
     "predictions.npz": "53cbf8b384a192ea6d798d1916e20443f5fa590310f79e4d658a69b0850d9ea4",
     "summary.json": "f00e06e50d2aaeddcacdff2c072463891abe2d84f8675bee993dd7972388458a"
+  },
+  "rescoring": {
+    "script": "qa/rescore_transformer_evidence.py",
+    "script_sha256": "7ceaf15825d36eff6e2083f4eec4a47e048a2f324db1debccc0a9d13f39f5b53",
+    "prediction_sha256": "53cbf8b384a192ea6d798d1916e20443f5fa590310f79e4d658a69b0850d9ea4",
+    "checkpoint_sha256": "908ff328f29a7830695422676d199a81d5669a883447f68e40c9123d0e030e91",
+    "basis_refitted": false,
+    "training_repeated": false,
+    "rows": 9,
+    "environment": {
+      "python": "3.12.14",
+      "platform": "Windows-11-10.0.26200-SP0",
+      "packages": {
+        "numpy": "2.2.6",
+        "scipy": "1.15.3",
+        "torch": "2.14.1"
+      },
+      "torch_threads": 2,
+      "torch_build": "PyTorch built with:\n  - C++ Version: 202002\n  - MSVC 194234444\n  - Intel(R) oneAPI Math Kernel Library Version 2026.1-Product Build 20260612 for Intel(R) 64 architecture applications\n  - Intel(R) MKL-DNN v3.12.0 (Git Hash 80afa71049cd69a3df32adcccb623b12cd7baa22)\n  - OpenMP 2019\n  - LAPACK is enabled (usually provided by MKL)\n  - CPU capability usage: AVX2\n  - Build settings: BLAS_INFO=mkl, BUILD_TYPE=Release, COMMIT_SHA=5c4886908584029761b579af026dcfb627c84070, CUDA_FLAGS= -DLIBCUDACXX_ENABLE_SIMPLIFIED_COMPLEX_OPERATIONS -Xcompiler /Zc:__cplusplus -Xcompiler /Zc:preprocessor -Xcompiler /w -w -Xcompiler /FS -Xfatbin -compress-all  -Xcompiler=/wd4819,/wd4503,/wd4190,/wd4244,/wd4251,/wd4275,/wd4522 -Wno-deprecated-gpu-targets --expt-extended-lambda -DCUB_WRAPPED_NAMESPACE=at_cuda_detail -DDISABLE_CUSPARSE_DEPRECATED -DCUDA_HAS_FP16=1 -D__CUDA_NO_HALF_OPERATORS__ -D__CUDA_NO_HALF_CONVERSIONS__ -D__CUDA_NO_HALF2_OPERATORS__ -D__CUDA_NO_BFLOAT16_CONVERSIONS__, CXX_COMPILER=C:/actions-runner/_work/pytorch/pytorch/.ci/pytorch/windows/tmp_bin/sccache-cl.exe, CXX_FLAGS=/DWIN32 /D_WINDOWS /EHsc /Zc:__cplusplus /bigobj /FS /utf-8 -DUSE_PTHREADPOOL -DNDEBUG -DUSE_KINETO -DSYMBOLICATE_MOBILE_DEBUG_HANDLE /wd4624 /wd4068 /wd4067 /wd4267 /wd4661 /wd4717 /wd4244 /wd4804 /wd4273, LAPACK_INFO=mkl, PERF_WITH_AVX=1, PERF_WITH_AVX2=1, TORCH_VERSION=2.14.1, USE_CUDA=0, USE_CUDNN=OFF, USE_CUSPARSELT=OFF, USE_GFLAGS=OFF, USE_GLOG=OFF, USE_GLOO=ON, USE_HIPSPARSELT=OFF, USE_MKL=ON, USE_MKLDNN=ON, USE_MPI=OFF, USE_NCCL=OFF, USE_NNPACK=OFF, USE_OPENMP=ON, USE_ROCM=OFF, USE_ROCM_KERNEL_ASSERT=OFF, USE_XCCL=OFF, USE_XPU=OFF, \n"
+    },
+    "main_prediction_source": "Unchanged stored predictions.npz",
+    "additional_observed_initializations_source": "Fresh fixed-checkpoint inference in this rescoring environment",
+    "fresh_reset_inferences": [
+      {
+        "checkpoint": "Causal-Transformer-17",
+        "start_frame": 210,
+        "steps": 71
+      },
+      {
+        "checkpoint": "Causal-Transformer-17",
+        "start_frame": 230,
+        "steps": 51
+      },
+      {
+        "checkpoint": "History-MLP-17",
+        "start_frame": 210,
+        "steps": 71
+      },
+      {
+        "checkpoint": "History-MLP-17",
+        "start_frame": 230,
+        "steps": 51
+      },
+      {
+        "checkpoint": "Causal-Transformer-29",
+        "start_frame": 210,
+        "steps": 71
+      },
+      {
+        "checkpoint": "Causal-Transformer-29",
+        "start_frame": 230,
+        "steps": 51
+      },
+      {
+        "checkpoint": "History-MLP-29",
+        "start_frame": 210,
+        "steps": 71
+      },
+      {
+        "checkpoint": "History-MLP-29",
+        "start_frame": 230,
+        "steps": 51
+      },
+      {
+        "checkpoint": "Causal-Transformer-43",
+        "start_frame": 210,
+        "steps": 71
+      },
+      {
+        "checkpoint": "Causal-Transformer-43",
+        "start_frame": 230,
+        "steps": 51
+      },
+      {
+        "checkpoint": "History-MLP-43",
+        "start_frame": 210,
+        "steps": 71
+      },
+      {
+        "checkpoint": "History-MLP-43",
+        "start_frame": 230,
+        "steps": 51
+      }
+    ],
+    "changes": [
+      "float64 metric reductions",
+      "phase at first rollout sample",
+      "constant probe identification",
+      "single-sinusoid R squared; constant signals undefined"
+    ]
   }
 }

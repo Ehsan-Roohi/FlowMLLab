@@ -56,16 +56,16 @@ print('Loaded checksummed simulated wake fields. No retained files will be rewri
 
 def notebook(spec,solutions=False):
     cells=[nbf.v4.new_markdown_cell(f'# Week {spec["week"]}: {spec["title"]}\n\n{spec["question"]}\n\n**Prerequisites:** {spec["prerequisites"]}\n\nAllow 120 minutes plus the written analysis. '+('Instructor solution edition.' if solutions else 'Student edition: worked examples run immediately; set RUN_EXERCISES=True after completing the four functions. Incomplete tasks are reported, never counted as passes.')),
-           nbf.v4.new_code_cell(SETUP),nbf.v4.new_code_cell('RUN_EXERCISES='+str(solutions))]
+           nbf.v4.new_code_cell(SETUP+f'\ntask_status={{i:None for i in range(1,{len(spec["tasks"])+1})}}\n'),nbf.v4.new_code_cell('RUN_EXERCISES='+str(solutions))]
     for demo in spec['demos']:
         cells += [nbf.v4.new_markdown_cell('## '+demo['title']+'\n\n'+demo['prose']),nbf.v4.new_code_cell(demo['code'])]
     for i,task in enumerate(spec['tasks'],1):
         cells.append(nbf.v4.new_markdown_cell(f'## Task {i}: {task["title"]}\n\n{task["prompt"]}'))
         cells.append(nbf.v4.new_code_cell(task['solution'] if solutions else task['starter']))
-        checks='\n'.join('    '+line for line in task['checks'].splitlines())
-        cells.append(nbf.v4.new_code_cell(f'if RUN_EXERCISES:\n{checks}\n    task_status[{i}]=True\nelse:\n    task_status[{i}]=False\nprint("Task {i}:","PASS" if task_status[{i}] else "NOT SUBMITTED")'))
+        checks='\n'.join('        '+line for line in task['checks'].splitlines())
+        cells.append(nbf.v4.new_code_cell(f'if RUN_EXERCISES:\n    try:\n{checks}\n        task_status[{i}]=True\n    except NotImplementedError:\n        task_status[{i}]=None\n    except Exception as exc:\n        task_status[{i}]=False\n        print("Task {i} check failed:",type(exc).__name__,str(exc))\nelse:\n    task_status[{i}]=None\nprint("Task {i}:","PASS" if task_status[{i}] is True else "NOT SUBMITTED" if task_status[{i}] is None else "FAILED")'))
     cells += [nbf.v4.new_markdown_cell('## Interpretation and submission\n\nSubmit the four completed functions, the requested plots/tables, and a 300-word claim ledger. Distinguish observations, fitted quantities, independent evaluation and unsupported extrapolation. Retain failed seeds. Use the lecture source for the rubric and assumptions.'),
-              nbf.v4.new_code_cell('print("Coding tasks passed:",sum(task_status.values()),"/",len(task_status))\n'+('assert all(task_status.values())\n' if solutions else '')+'workspace.cleanup()')]
+              nbf.v4.new_code_cell('print("Coding tasks passed:",sum(v is True for v in task_status.values()),"/",len(task_status))\n'+('assert all(v is True for v in task_status.values())\n' if solutions else '')+'workspace.cleanup()')]
     nb=nbf.v4.new_notebook(cells=cells,metadata={'kernelspec':{'display_name':'Python 3','language':'python','name':'python3'},'language_info':{'name':'python'},'course':{'week':spec['week'],'edition':'instructor' if solutions else 'student'}})
     for i,c in enumerate(nb.cells):c['id']=f'w{spec["week"]}-{i:02d}'
     return nb

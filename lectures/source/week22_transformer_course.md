@@ -44,6 +44,8 @@ The laboratory flags representation-dominated rows when this ratio exceeds 0.95.
 
 The error decomposition uses squared norms. Subtracting 25.59% from 25.60% does not recover a dynamics norm. The actual in-subspace error must be measured against the projected truth or obtained from the square root of a nonnegative squared-error difference when the orthogonality assumptions hold.
 
+In the retained 44-label regime, 34 of 36 neural fits selected step zero. All fresh-initialization arms, including target-POD-MLP, are flagged as untrained if they select zero; a pretrained step-zero arm instead retains source weights without target adaptation. All three source fits selected 300/300. Their 50-step validation criterion therefore did not change the final source checkpoint in these runs. Source and target window coverage, six-step target validation and update budgets differ; the experiment does not isolate which difference causes a gain.
+
 ## A bounded transfer statement
 
 Define relative gain as one minus pretrained in-subspace error divided by matched-control in-subspace error. Positive gain means lower error in that particular comparison; negative gain is negative transfer and remains in the table. A denominator near zero makes the ratio unstable, so absolute errors should accompany it.
@@ -62,7 +64,7 @@ The manifest records all local scientific implementation hashes, input hashes, t
 
 ## Capstone submission and research reading
 
-Submit a label-accounting table, compute table, three-target comparison, field/subspace plots and a claim ledger listing supported, unsupported and unresolved statements. The four coding tasks count label unions, account for updates, detect floor-dominated errors and compute signed transfer gain. The written component should identify the next control that would most reduce uncertainty, rather than merely recommending a larger model.
+Submit a label-accounting table, compute table, three-target comparison, field/subspace plots and a claim ledger listing supported, unsupported and unresolved statements. The four coding tasks count label unions, account for updates, detect floor-dominated errors and audit paired transfer comparisons, including separate checkpoint and boundary flags. The written component should identify the next control that would most reduce uncertainty, rather than merely recommending a larger model.
 
 Herde et al., Poseidon: Efficient Foundation Models for PDEs (2024), https://arxiv.org/abs/2405.19101, is a research reading for comparing scope, pretraining distributions and downstream evidence. Wu et al., Transolver (2024), https://arxiv.org/abs/2402.02366, supports an architectural comparison with Week 15. Neither published model is reproduced by this course experiment. Students should explain what additional datasets, controls and resource accounting would be required before making a comparable claim.
 
@@ -72,25 +74,27 @@ Herde et al., Poseidon: Efficient Foundation Models for PDEs (2024), https://arx
 
 Return the cardinality of the union of all target frames used before scoring.
 
-List the union of training, validation and initialization frame IDs for each budget. Count overlapping frames once, but do not discard validation labels merely because no gradient was computed from them. Explain why all arms must use the same forecast start before their errors are compared.
+Interface contract: record has training_frames, validation_frames and initialization_frames, each an iterable of integer frame IDs. Return an integer cardinality of their union, counting every overlap once.
 
 ### Task 2: Match compute accounting
 
 Count source pretraining and target adaptation steps for each learned arm, without charging source cost to a source-free arm.
 
-Build a ledger for source updates, target updates, batch sizes, parameter counts and measured times. Show both one-time source cost and any stated amortization over targets. A scratch model using the source POD still receives source information; matching optimizer steps does not make it source-free or FLOP-matched.
+Interface contract: adaptation is a dictionary with executed_steps (nonnegative integer). pretraining is None or a dictionary with executed_steps. Return their sum when pretraining is supplied, otherwise adaptation executed_steps.
 
 ### Task 3: Detect a representation-limited result
 
 Flag cases where the squared representation error explains more than 95% of squared field error. Do not subtract unsquared norms.
 
-Compute the ratio of squared representation floor to squared total error. Compare two nearly equal field errors whose in-subspace errors differ substantially. State which control changes the representation and which changes initialization. The target-POD MLP changes two factors, so it cannot identify a pure architecture effect.
+Interface contract: metrics is a dictionary with representation_floor (floor) and field_relative_l2 (field), both nonnegative scalar relative L2 errors. Return a bool for floor**2/max(field**2,1e-20)>0.95. At zero/zero return False; use a strict threshold.
 
-### Task 4: Write a bounded comparative claim
+### Task 4: Build a defensible transfer comparison
 
-Compute the relative reduction in in-subspace error against the matched-step control. A negative value is negative transfer and must be retained.
+For records with key (target, labels, seed), pair pretrained and matched-steps arms. Reject missing or duplicate arms and nonpositive control error. Return signed relative gain, selected-step flags and budget-boundary flags. Treat step-zero scratch/matched results as untrained controls. Apply the audit to a normalized copy of the retained table; explain why this does not isolate representation or validation-horizon effects.
 
-Report signed relative gain and both absolute errors for every seed. Keep negative gains and selected-step-zero outcomes. Flag a near-zero denominator instead of presenting an unstable percentage as a large benefit. End with one supported claim and one additional control needed to support a stronger claim.
+Interface contract: Each input dictionary has target, labels (integer total target labels), seed, arm, error (in-subspace relative L2), selected_step, ceiling. Pair pretrained with matched-steps per (target,labels,seed), rejecting duplicates/missing arms or nonpositive control error with ValueError. Return a list sorted by group key of dictionaries: key (tuple), gain (1-pretrained_error/control_error), control_untrained (control selected step==0), pretrained_selected_step, control_selected_step, pretrained_boundary and control_boundary (each arm selected step==its own ceiling). Keep negative gains.
+
+For the integrated fourth task, compare at least two controlled settings and explain a result that the implementation alone cannot justify. Include the requested plot or table and retain unsuccessful outcomes.
 
 ## Before submitting
 

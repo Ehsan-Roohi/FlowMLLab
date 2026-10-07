@@ -10,5 +10,6 @@ Worked examples run on CPU. Tasks report NOT SUBMITTED until the student fills
 the functions and enables RUN_EXERCISES. [Instructor solutions](../../instructor/week20/W20_Solutions.ipynb)
 are distributed separately for assessment. Do not grade a skipped task as passed.
 
-This unpublished local edition supports the documented ZIP-upload route to Colab;
-no unverified public notebook URL is advertised.
+This published edition includes a complete local/ZIP setup route. Interactive
+Colab and student workload acceptance remain separate checks; see the
+[second-review response](../../docs/TRANSFORMER_SECOND_REVIEW_RESPONSE.md).

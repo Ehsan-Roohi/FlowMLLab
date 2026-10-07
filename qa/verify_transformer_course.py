@@ -23,6 +23,8 @@ def verify(evidence=None,notebooks=True):
             if experiment=='sensors':truth=cases[105]['v'].reshape(281,-1)
             else:
                 truth=cases[row.get('target_re',110)]['omega'][210:].reshape(71,-1);pred=pred[50:]
+            # Independent scoring must promote before reduction, as in the metric definition.
+            pred=np.asarray(pred,dtype=np.float64);truth=np.asarray(truth,dtype=np.float64)
             actual=float(np.linalg.norm(pred-truth)/np.linalg.norm(truth))
             assert np.isclose(actual,row['metrics']['field_relative_l2'],rtol=1e-6,atol=1e-8),(experiment,row['key'])
             if row.get('method')!='Persistence':assert abs(row['metrics']['pythagorean_residual'])<1e-7

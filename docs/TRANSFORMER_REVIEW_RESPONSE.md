@@ -1,3 +1,5 @@
+> Historical first-redesign report. For the corrections following independent Linux review, current validation and remaining release conditions, read TRANSFORMER_POST_REVIEW.md. Numeric evidence has been rescored; original training provenance is retained.
+
 # پاسخ به بازبینی هفته‌های ۱۷ تا ۲۲
 
 این نسخه بازطراحی مستقل بر پایهٔ main عمومی در commit

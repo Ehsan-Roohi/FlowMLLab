@@ -56,9 +56,14 @@ forecast=json.loads((OUT/'forecast.json').read_text());fig,axes=plt.subplots(1,2
 for row in forecast['rows']:
     if row['seed'] in (None,17):
         axes[0].plot(np.arange(51,122),row['metrics']['per_frame_relative_l2'],label=row['key'])
-        axes[1].scatter(row['metrics']['representation_floor'],row['metrics']['in_subspace_relative_l2'],label=row['key'])
-axes[0].set_ylim(0,.16);axes[0].set_xlabel('steps since initialization');axes[0].set_ylabel('field relative L2');axes[0].set_title('Persistence exceeds this zoomed range')
-axes[1].set_xlabel('representation floor');axes[1].set_ylabel('in-subspace error');axes[1].legend(fontsize=11);fig.tight_layout();save(fig,21)
+
+axes[0].legend(fontsize=9,loc='upper left');axes[0].set_ylim(0,.16);axes[0].set_xlabel('steps since initialization');axes[0].set_ylabel('field relative L2');axes[0].set_title('Persistence exceeds this zoomed range')
+names=[name for name in dict.fromkeys(r['method'] for r in forecast['rows']) if name!='Persistence']
+for i,name in enumerate(names):
+    values=[r['metrics']['in_subspace_relative_l2'] for r in forecast['rows'] if r['method']==name]
+    axes[1].bar(i,np.mean(values),color='steelblue',alpha=.6)
+    axes[1].scatter([i]*len(values),values,color='black',s=18)
+axes[1].set_xticks(range(len(names)),names,rotation=20,ha='right');axes[1].set_title('Mean and individual seeds; Persistence excluded');axes[1].set_ylabel('in-subspace error');fig.tight_layout();save(fig,21)
 
 transfer=json.loads((OUT/'transfer.json').read_text());fig,axes=plt.subplots(2,3,figsize=(12,7))
 for j,reynolds in enumerate((100,105,110)):
@@ -70,7 +75,8 @@ for j,reynolds in enumerate((100,105,110)):
             axes[i,j].plot([44,84,154],means,marker='o',label=arm);axes[i,j].fill_between([44,84,154],lo,hi,alpha=.12)
     floor=next(r['metrics']['representation_floor'] for r in transfer['rows'] if r['target_re']==reynolds and r['arm']=='scratch')
     axes[0,j].axhline(floor,c='black',ls='--',label='source-POD floor');axes[0,j].set_title(f'Re = {reynolds}');axes[1,j].set_xlabel('total target labels')
-axes[0,0].set_ylabel('field relative L2');axes[1,0].set_ylabel('in-subspace relative L2');axes[1,2].legend(fontsize=12);fig.suptitle('Fixed-start transfer: mean and seed range, not confidence intervals');fig.tight_layout();save(fig,22)
+axes[0,0].set_ylabel('field relative L2');axes[1,0].set_ylabel('in-subspace relative L2');axes[1,2].legend(fontsize=12);fig.suptitle('Fixed-start transfer: mean and seed range, not confidence intervals');fig.text(.5,.015,'44 labels: 25 fresh-initialization fits selected step 0; 9 pretrained fits used no target adaptation.',ha='center',fontsize=10)
+fig.tight_layout(rect=(0,.05,1,.96));save(fig,22)
 
 manifest=json.loads((OUT/'manifest.json').read_text())
 manifest.setdefault('training_source_hashes',dict(manifest['source_hashes']))

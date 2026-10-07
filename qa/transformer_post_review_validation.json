@@ -1,0 +1,105 @@
+{
+  "date": "2026-10-06",
+  "platform": "Windows",
+  "scope": "Post-independent-review correction release; no training repeated",
+  "unit_tests": {
+    "passed": 17,
+    "failed": 0,
+    "runtime_seconds": 15.841
+  },
+  "checkpoint_predictions": 126,
+  "evidence_rows": 160,
+  "notebooks_executed_in_independent_kernels": 12,
+  "notebook_execution": [
+    {
+      "notebook": "notebooks/week17/W17_CFD_Transformer.ipynb",
+      "seconds": 51.372141500003636,
+      "code_cells": 13
+    },
+    {
+      "notebook": "instructor/week17/W17_Solutions.ipynb",
+      "seconds": 31.406283300020732,
+      "code_cells": 13
+    },
+    {
+      "notebook": "notebooks/week18/W18_CFD_Transformer.ipynb",
+      "seconds": 32.37317420000909,
+      "code_cells": 13
+    },
+    {
+      "notebook": "instructor/week18/W18_Solutions.ipynb",
+      "seconds": 26.63625260000117,
+      "code_cells": 13
+    },
+    {
+      "notebook": "notebooks/week19/W19_CFD_Transformer.ipynb",
+      "seconds": 38.159866000001784,
+      "code_cells": 13
+    },
+    {
+      "notebook": "instructor/week19/W19_Solutions.ipynb",
+      "seconds": 37.59056600002805,
+      "code_cells": 13
+    },
+    {
+      "notebook": "notebooks/week20/W20_CFD_Transformer.ipynb",
+      "seconds": 40.9812514000223,
+      "code_cells": 13
+    },
+    {
+      "notebook": "instructor/week20/W20_Solutions.ipynb",
+      "seconds": 41.53843910002615,
+      "code_cells": 13
+    },
+    {
+      "notebook": "notebooks/week21/W21_CFD_Transformer.ipynb",
+      "seconds": 38.8902972000069,
+      "code_cells": 13
+    },
+    {
+      "notebook": "instructor/week21/W21_Solutions.ipynb",
+      "seconds": 38.57227160001639,
+      "code_cells": 13
+    },
+    {
+      "notebook": "notebooks/week22/W22_CFD_Transformer.ipynb",
+      "seconds": 33.98872060002759,
+      "code_cells": 13
+    },
+    {
+      "notebook": "instructor/week22/W22_Solutions.ipynb",
+      "seconds": 38.842851000023074,
+      "code_cells": 13
+    }
+  ],
+  "instructor_tasks_passed": 24,
+  "frozen_result_mutations_rejected": 24,
+  "partial_submission_denominator": 4,
+  "canonical_notebook_check": "PASS",
+  "source_preservation_final_render": "PASS",
+  "full_evidence_and_notebook_verifier": "PASS",
+  "pdf_visual_review": {
+    "passed": true,
+    "lecture_pages": 30,
+    "lecture_count": 6,
+    "week21_legend_corrected_and_rechecked": true
+  },
+  "remaining": [
+    "corrected Linux and interactive Colab validation",
+    "multi-seed augmentation control",
+    "student workload pilot",
+    "new LLM application labs for proposed course"
+  ],
+  "historical_record": "qa/transformer_validation.json is the prior release, not overwritten",
+  "initial_build_note": "All 12 kernels passed. End-of-run source guard detected concurrent author edits to W20/W21 specifications. A subsequent stable-source render, canonical input check and full verifier all passed.",
+  "source_snapshot": {
+    "flowmllab/transformer_course.py": "b5d40ad7443e99dd03eeeec50f1fb7af2c56a726f7e93dc5381d5ac21dcc3f5c",
+    "qa/build_transformer_course.py": "d05e97b2d6332b448042e84cf00fc0f699438569d752e8e04bf8b07a44c54e4e",
+    "course/lessons/week17.json": "a8fe372a2b314f0a9d79c6f5dfc09064120d68b13251c4b75b42842efca3918c",
+    "course/lessons/week18.json": "9f363e8878a70bbb59fbb7ce5c164dfd512156b7ac236d8fd1ca7ee5f1fd092e",
+    "course/lessons/week19.json": "d7401a8c5d2c1bf31607b03b9c6ea8752f086135f7abd3f40ccd2cec1eb9af32",
+    "course/lessons/week20.json": "911753c7d0784ca6513f2c19e4578a907ff72197df112498804b7ef8887c8e74",
+    "course/lessons/week21.json": "ea6a4e9b45b41e250527f72ea48ee4684cba7b40868dcc69c4cafddd61095dac",
+    "course/lessons/week22.json": "40a99ac2b5d3041de8272f5f2a98d5529fe85217126548bcccf6a61509ddfc17"
+  }
+}

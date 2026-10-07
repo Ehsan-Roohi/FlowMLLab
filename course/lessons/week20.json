@@ -11,38 +11,38 @@
     },
     {
       "title": "Audit the retained all-sensor and dropout comparisons",
-      "prose": "The set model was trained with cardinality augmentation. Fixed-input networks and ridge use declared training-mean imputation under dropout. Gappy POD solves directly on the available coordinates. This is a system comparison, not a perfectly capacity-matched architecture ablation.",
-      "code": "record=json.loads((EVIDENCE/'sensors.json').read_text())\ntable=[{'method':r['method'],'seed':r['seed'],'condition':r['condition'],'field':r['metrics']['field_relative_l2'],'floor':r['metrics']['representation_floor'],'subspace':r['metrics']['in_subspace_relative_l2'],'boundary':r.get('training',{}).get('at_budget_boundary')} for r in record['rows']]\ndisplay(pd.DataFrame(table))\nretained=np.load(EVIDENCE/'predictions.npz',allow_pickle=False)\nrow=record['rows'][0];pred=lab.prediction(retained,'sensors__'+row['key'])\nrecomputed=np.linalg.norm(pred-cases[105]['v'].reshape(281,-1))/np.linalg.norm(cases[105]['v'])\nassert abs(recomputed-row['metrics']['field_relative_l2'])<1e-7\nprint('Rescored retained prediction:',recomputed)"
+      "prose": "The set model was trained with cardinality augmentation. Fixed-input networks and ridge use declared training-mean imputation under dropout. Gappy POD solves directly on the available coordinates. This is a system comparison, not a perfectly capacity-matched architecture ablation. A separate three-seed paired ablation keeps SensorSet, initialization, observations and selection protocol fixed while changing cardinality augmentation. It shows a tradeoff: better fixed half-sensor error but worse all-sensor error in all three pairs. This is a training-recipe effect, not an architecture-superiority claim.",
+      "code": "record=json.loads((EVIDENCE/'sensors.json').read_text())\ntable=[{'method':r['method'],'seed':r['seed'],'condition':r['condition'],'field':r['metrics']['field_relative_l2'],'floor':r['metrics']['representation_floor'],'subspace':r['metrics']['in_subspace_relative_l2'],'boundary':r.get('training',{}).get('at_budget_boundary')} for r in record['rows']]\ndisplay(pd.DataFrame(table))\nretained=np.load(EVIDENCE/'predictions.npz',allow_pickle=False)\nrow=record['rows'][0];pred=lab.prediction(retained,'sensors__'+row['key'])\ntruth64=np.asarray(cases[105]['v'],dtype=np.float64).reshape(281,-1)\nrecomputed=np.linalg.norm(np.asarray(pred,dtype=np.float64)-truth64)/np.linalg.norm(truth64)\nassert np.isclose(recomputed,row['metrics']['field_relative_l2'],rtol=1e-6,atol=1e-9)\nprint('Rescored retained prediction:',recomputed)\nablation=json.loads((ROOT/\"results/transformer_sensor_ablation/metrics.json\").read_text())\ndisplay(pd.DataFrame(ablation[\"rows\"]))\nprint(\"Three paired seeds are descriptive; selection uses all-sensor validation and executed budgets can differ.\")"
     }
   ],
   "tasks": [
     {
       "title": "Cardinality-preserving token dropout",
-      "prompt": "Remove every other sensor from values and coordinates together; never reinterpret a missing value as an observed zero.",
-      "starter": "def drop_half(tokens):\n    raise NotImplementedError",
+      "prompt": "Remove every other sensor from values and coordinates together; never reinterpret a missing value as an observed zero.\n\nInterface contract: Input tokens:[batch,sensors,features] is a NumPy array. Return tokens[:,::2,:], preserving all features for every retained sensor.",
+      "starter": "def drop_half(tokens):\n    \"\"\"Input tokens:[batch,sensors,features] is a NumPy array. Return tokens[:,::2,:], preserving all features for every retained sensor.\"\"\"\n    raise NotImplementedError",
       "solution": "def drop_half(tokens):\n    return tokens[:,::2,:]",
-      "checks": "d=drop_half(x)\nassert d.shape==(len(x),8,3)\nnp.testing.assert_array_equal(d[:,:,1:],x[:,::2,1:])"
+      "checks": "for n in (5,16):\n    tokens=np.arange(2*n*3).reshape(2,n,3)\n    np.testing.assert_array_equal(drop_half(tokens),tokens[:,::2,:])"
     },
     {
       "title": "Capacity accounting",
-      "prompt": "Count trainable parameters; compare the attention model with the 16-64-8 branch network.",
-      "starter": "def parameter_count(model):\n    raise NotImplementedError",
+      "prompt": "Count trainable parameters; compare the attention model with the retained 16-208-8 branch network (Protocol.branch_width=208).\n\nInterface contract: Input is a torch.nn.Module. Return a Python integer counting only parameters with requires_grad=True, including biases.",
+      "starter": "def parameter_count(model):\n    \"\"\"Input is a torch.nn.Module. Return a Python integer counting only parameters with requires_grad=True, including biases.\"\"\"\n    raise NotImplementedError",
       "solution": "def parameter_count(model):\n    return sum(p.numel() for p in model.parameters() if p.requires_grad)",
-      "checks": "branch=torch.nn.Sequential(torch.nn.Linear(16,64),torch.nn.Tanh(),torch.nn.Linear(64,8))\nassert parameter_count(branch)==1608\nassert parameter_count(model)>0"
+      "checks": "for a,b in ((3,2),(7,4)):\n    net=torch.nn.Linear(a,b)\n    assert parameter_count(net)==a*b+b\n    net.bias.requires_grad_(False)\n    assert parameter_count(net)==a*b"
     },
     {
       "title": "Training budget diagnosis",
-      "prompt": "Flag a record whose selected checkpoint reaches its ceiling. This diagnoses an unresolved budget limit, not proof of convergence or its absence.",
-      "starter": "def boundary_flag(record):\n    raise NotImplementedError",
+      "prompt": "Flag a record whose selected checkpoint reaches its ceiling. This diagnoses an unresolved budget limit, not proof of convergence or its absence.\n\nInterface contract: record is a dictionary with integer selected_step and ceiling. Return True exactly when selected_step==ceiling; a near-ceiling checkpoint is False.",
+      "starter": "def boundary_flag(record):\n    \"\"\"record is a dictionary with integer selected_step and ceiling. Return True exactly when selected_step==ceiling; a near-ceiling checkpoint is False.\"\"\"\n    raise NotImplementedError",
       "solution": "def boundary_flag(record):\n    return record[\"selected_step\"]==record[\"ceiling\"]",
-      "checks": "assert boundary_flag({\"selected_step\":120,\"ceiling\":120})\nassert not boundary_flag({\"selected_step\":90,\"ceiling\":120})"
+      "checks": "assert boundary_flag({\"selected_step\":120,\"ceiling\":120})\nassert not boundary_flag({\"selected_step\":90,\"ceiling\":120})\nfor step in (0,99,100,101,119):\n    assert not boundary_flag({'selected_step':step,'ceiling':120})\nassert boundary_flag({'selected_step':0,'ceiling':0})\n"
     },
     {
-      "title": "Compute-aware ranking",
-      "prompt": "Select the best validation record under a wall-time budget; evaluation metrics must not enter selection.",
-      "starter": "def select_under_budget(records,seconds):\n    raise NotImplementedError",
-      "solution": "def select_under_budget(records,seconds):\n    eligible=[r for r in records if r[\"seconds\"]<=seconds and r[\"validation_mse\"] is not None]\n    return min(eligible,key=lambda r:r[\"validation_mse\"])",
-      "checks": "rs=[{\"seconds\":1.,\"validation_mse\":.2},{\"seconds\":3.,\"validation_mse\":.1}]\nassert select_under_budget(rs,2.) is rs[0]"
+      "title": "Implement validation-only checkpoint selection",
+      "prompt": "Train a supplied small model using full-batch SGD and mean squared error. Evaluate validation at step zero and after each update; retain and restore the best state. Return selected step, executed steps and validation trace. Neither evaluation data nor evaluation loss is an input. Compare two learning rates and explain any step-zero selection.\n\nInterface contract: steps is a nonnegative integer, lr a positive scalar. Inputs are dimension-compatible Torch tensors. Use full-batch SGD with mean MSE. Evaluate step zero and every update; select the earliest minimum validation loss; restore it and leave model in evaluation mode. Return dictionary selected_step (int), executed_steps (steps), validation_mse (float minimum), trace (list of dictionaries with step and validation_mse for 0..steps). Negative steps or nonpositive lr must raise ValueError.",
+      "starter": "def fit_with_validation(model,train_x,train_y,val_x,val_y,steps,lr):\n    \"\"\"steps is a nonnegative integer, lr a positive scalar. Inputs are dimension-compatible Torch tensors. Use full-batch SGD with mean MSE. Evaluate step zero and every update; select the earliest minimum validation loss; restore it and leave model in evaluation mode. Return dictionary selected_step (int), executed_steps (steps), validation_mse (float minimum), trace (list of dictionaries with step and validation_mse for 0..steps). Negative steps or nonpositive lr must raise ValueError.\"\"\"\n    raise NotImplementedError",
+      "solution": "def fit_with_validation(model,train_x,train_y,val_x,val_y,steps,lr):\n    import copy\n    if steps<0 or lr<=0:raise ValueError('invalid budget or learning rate')\n    optimizer=torch.optim.SGD(model.parameters(),lr=lr)\n    best_state=None\n    best_loss=float('inf')\n    selected=0\n    trace=[]\n    for step in range(steps+1):\n        model.eval()\n        with torch.no_grad():\n            loss=float(((model(val_x)-val_y)**2).mean())\n        trace.append({'step':step,'validation_mse':loss})\n        if loss<best_loss:\n            best_loss=loss\n            selected=step\n            best_state=copy.deepcopy(model.state_dict())\n        if step==steps:break\n        model.train()\n        optimizer.zero_grad()\n        train_loss=((model(train_x)-train_y)**2).mean()\n        train_loss.backward()\n        optimizer.step()\n    model.load_state_dict(best_state)\n    model.eval()\n    return {'selected_step':selected,'executed_steps':steps,'validation_mse':best_loss,'trace':trace}",
+      "checks": "for val_sign in (1.,-1.):\n    net=torch.nn.Linear(1,1,bias=False);net.weight.data.zero_()\n    xx=torch.ones(4,1);yy=torch.ones(4,1)\n    result=fit_with_validation(net,xx,yy,xx,val_sign*yy,8,.1)\n    assert len(result['trace'])==9 and result['executed_steps']==8\n    assert result['selected_step']==(8 if val_sign==1 else 0)\n    with torch.no_grad():actual=float(((net(xx)-val_sign*yy)**2).mean())\n    assert np.isclose(actual,result['validation_mse'])\n    assert np.isclose(actual,min(r['validation_mse'] for r in result['trace']))\ntry:\n    fit_with_validation(net,xx,yy,xx,yy,-1,.1)\n    raise AssertionError('negative budget accepted')\nexcept ValueError:pass"
     }
   ],
   "duration_minutes": 120

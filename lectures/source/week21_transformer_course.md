@@ -40,9 +40,9 @@ A single aggregate norm hides when the forecast drifts. Plot per-frame error aga
 
 The old 71-frame FFT window has coarse frequency resolution, approximately reciprocal to its observation duration. Identical peak bins do not show identical frequencies. The new diagnostic fits a constant plus sine and cosine over the complete 121-frame rollout, searching continuously within a declared physically relevant interval.
 
-$$ y(t)=c+a\sin(2\pi f t)+b\cos(2\pi f t) $$
+$$ y(t)=c+a\sin(2\pi f(t-t_0))+b\cos(2\pi f(t-t_0)) $$
 
-Amplitude is the square root of a squared plus b squared. Phase is atan2(b,a). Report fit residual as well as frequency: a low residual supports the single-frequency approximation, while a large one signals that a more complex signal model is needed. A local vorticity probe frequency is not a force-derived Strouhal number.
+Here t_0 is the first rollout sample, so phase is measured relative to that origin. Constant signals have no identifiable frequency or phase. R-squared and residual MSE describe the adequacy of the sinusoidal approximation; neither validates lift-derived Strouhal. Amplitude is the square root of a squared plus b squared. Phase is atan2(b,a). Report fit residual as well as frequency: a low residual supports the single-frequency approximation, while a large one signals that a more complex signal model is needed. A local vorticity probe frequency is not a force-derived Strouhal number.
 
 ## A numerical phase example
 
@@ -54,7 +54,7 @@ Initial phase error should be wrapped to a principal interval before comparison.
 
 ## Laboratory and assessment
 
-The notebook independently reconstructs stored trajectories, recomputes per-frame errors, shows the matched MLP beside the Transformer and DMD, and checks the error decomposition. Four coding tasks implement the history update, decomposition, continuous-frequency diagnostic and phase accumulation.
+The notebook independently reconstructs stored trajectories, recomputes per-frame errors, shows the matched MLP beside the Transformer and DMD, and checks the error decomposition. Four coding tasks implement history update, decomposition, a continuous-frequency diagnostic and an autonomous rollout audit with both per-step and global errors. The written interpretation keeps initial phase and accumulated phase drift separate.
 
 Submit a horizon plot, the model-comparison table, a probe-fit table and one bounded conclusion. Explain whether an apparent advantage comes from dynamics or representation. Do not claim statistical significance from three training seeds or treat nearby errors as proof of equivalence; report the range and the limited case coverage.
 
@@ -68,25 +68,27 @@ Schmid, Dynamic mode decomposition of numerical and experimental data (2010), ht
 
 Roll a history window forward by dropping its oldest token and appending the prediction. Do not read a future observed state.
 
-Mark the four initial observed frames, then trace two prediction steps by hand. At step two, at least one context entry must be a model prediction. Add an assertion on history length and chronological order. Explain why inserting a true later frame silently changes the autonomous experiment into assimilation.
+Interface contract: history:[context,features] and next_state:[features] are NumPy arrays. Return a new [context,features] array in chronological order without changing the inputs.
 
 ### Task 2: Separate representation and dynamics
 
 Compute the squared total error, representation error and in-subspace error for an orthogonal projector.
 
-Verify the squared-norm identity using a synthetic orthonormal basis and a vector with both parallel and orthogonal components. Normalize every component with the same truth norm. Repeat with persistence outside the affine decoder span and explain why the simple two-term identity is not guaranteed for that control.
+Interface contract: pred,truth,oracle have identical shapes; truth is nonzero, oracle is an orthogonal affine projection and pred is in that affine span. Return a tuple of three scalar squared relative errors (total,floor,dynamic), each divided by sum(truth**2).
 
 ### Task 3: Frequency-fit diagnostic
 
 Measure relative frequency error using the continuous fitted frequency, not the closest FFT bin.
 
-Fit the reference and predicted signals over the same full time interval. Report residual amplitude alongside fitted frequency. Inspect whether a nearly constant signal makes frequency unidentifiable, and explain why matching a coarse FFT bin does not imply equal frequencies or equal long-horizon phase.
+Interface contract: t,y are one-dimensional equal-length NumPy arrays, and fref>0. Return a scalar abs(fitted_frequency/fref-1), using lab.spectral_fit. Only an oscillatory signal with an identifiable fit is supplied.
 
-### Task 4: Report phase drift
+### Task 4: Implement an autonomous rollout audit
 
-Convert a frequency discrepancy to accumulated phase drift over a duration in D/U.
+Roll a history forward using only a supplied next-state function. Return predictions, per-step relative errors and one global relative error. Truth is used only after generating the trajectory. Validate dimensions and reject zero reference norms. Compare a stable and unstable predictor, then repeat from a different observed initialization without resetting at the evaluation boundary.
 
-Calculate the phase drift from a 0.002 frequency discrepancy over 20 nondimensional time units. Keep initial wrapped phase error separate from accumulated unwrapped drift. Name the time and frequency units. A local wake probe is not a lift measurement and should not be labeled a force-based Strouhal validation.
+Interface contract: predict_next accepts a copy of history:[context,features] and returns one [features] vector. truth:[steps,features] sets the horizon and is used only for scoring after prediction. Return dictionary predictions ([steps,features] array), per_step_error (length-steps array), field_error (float GLOBAL Frobenius relative L2, not the mean of per-step ratios). Invalid dimensions/state width, nonfinite predictions or any zero per-step truth norm must raise ValueError.
+
+For the integrated fourth task, compare at least two controlled settings and explain a result that the implementation alone cannot justify. Include the requested plot or table and retain unsuccessful outcomes.
 
 ## Before submitting
 

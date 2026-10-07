@@ -730,3 +730,10 @@ Copyright © 2026 Ehsan Roohi. [MIT License](LICENSE).
 ## Weeks 17-22: active Transformer laboratories
 
 [Course guide and setup](docs/TRANSFORMER_COURSE.md). Six distinct laboratories extend Weeks 7.3, 7.4 and 15 with required language modeling, coding exercises, separate instructor solutions, matched baselines and explicit transfer audits.
+
+[Second review corrections and acceptance evidence](docs/TRANSFORMER_SECOND_REVIEW_RESPONSE.md)
+include synchronized worksheets, semantic exercise checks, numerical provenance
+and a paired three-seed sensor augmentation ablation. These six labs are published
+for use and review; interactive Colab and student workload acceptance remain open.
+This extension is available in GitHub; the existing version DOI describes its
+archived release and does not yet archive these additional laboratories.

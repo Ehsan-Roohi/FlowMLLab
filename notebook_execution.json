@@ -1,70 +1,62 @@
 [
   {
     "notebook": "notebooks/week17/W17_CFD_Transformer.ipynb",
-    "seconds": 227.36,
-    "code_cells": 13,
-    "timing_source": "Recovered from builder stdout after later kernel-start timeout"
+    "seconds": 23.411493699997663,
+    "code_cells": 13
   },
   {
     "notebook": "instructor/week17/W17_Solutions.ipynb",
-    "seconds": 172.96,
-    "code_cells": 13,
-    "timing_source": "Recovered from builder stdout after later kernel-start timeout"
+    "seconds": 27.264640599954873,
+    "code_cells": 13
   },
   {
     "notebook": "notebooks/week18/W18_CFD_Transformer.ipynb",
-    "seconds": 64.47,
-    "code_cells": 13,
-    "timing_source": "Recovered from builder stdout after later kernel-start timeout"
+    "seconds": 22.00161619996652,
+    "code_cells": 13
   },
   {
     "notebook": "instructor/week18/W18_Solutions.ipynb",
-    "seconds": 24.11,
-    "code_cells": 13,
-    "timing_source": "Recovered from builder stdout after later kernel-start timeout"
+    "seconds": 19.708992599975318,
+    "code_cells": 13
   },
   {
     "notebook": "notebooks/week19/W19_CFD_Transformer.ipynb",
-    "seconds": 29.15,
-    "code_cells": 13,
-    "timing_source": "Recovered from builder stdout after later kernel-start timeout"
+    "seconds": 22.69734509999398,
+    "code_cells": 13
   },
   {
     "notebook": "instructor/week19/W19_Solutions.ipynb",
-    "seconds": 26.47,
-    "code_cells": 13,
-    "timing_source": "Recovered from builder stdout after later kernel-start timeout"
+    "seconds": 23.609829999972135,
+    "code_cells": 13
   },
   {
     "notebook": "notebooks/week20/W20_CFD_Transformer.ipynb",
-    "seconds": 240.25,
-    "code_cells": 13,
-    "timing_source": "Recovered from builder stdout after later kernel-start timeout"
+    "seconds": 21.297289500012994,
+    "code_cells": 13
   },
   {
     "notebook": "instructor/week20/W20_Solutions.ipynb",
-    "seconds": 34.48,
-    "code_cells": 13,
-    "timing_source": "Recovered from builder stdout after later kernel-start timeout"
+    "seconds": 20.861068799975328,
+    "code_cells": 13
   },
   {
     "notebook": "notebooks/week21/W21_CFD_Transformer.ipynb",
-    "seconds": 34.12073169997893,
+    "seconds": 17.60244029999012,
     "code_cells": 13
   },
   {
     "notebook": "instructor/week21/W21_Solutions.ipynb",
-    "seconds": 38.625775400025304,
+    "seconds": 20.098960499977693,
     "code_cells": 13
   },
   {
     "notebook": "notebooks/week22/W22_CFD_Transformer.ipynb",
-    "seconds": 35.93652069999371,
+    "seconds": 69.89609979995294,
     "code_cells": 13
   },
   {
     "notebook": "instructor/week22/W22_Solutions.ipynb",
-    "seconds": 377.67522819997976,
+    "seconds": 168.9229619000107,
     "code_cells": 13
   }
 ]

@@ -1,0 +1,115 @@
+{
+  "input_manifest": {
+    "source_release": "https://github.com/Ehsan-Roohi/FlowMLLab/releases/download/cylinder-cfd-v1/",
+    "cases": [
+      {
+        "file": "re090.npz",
+        "sha256": "ced6cdb9fbf2017a93b2ed836b971dfc156c9ef5d28c83a4592d5c6295f98723",
+        "source_file": "cylinder_cfd_re090.npz",
+        "source_sha256": "9f7e26f56a22d2e4b2b97e22e290a1cbd7541362dacadf47b53ece5ee8353c3c",
+        "source_role": "development",
+        "reynolds": 90
+      },
+      {
+        "file": "re100.npz",
+        "sha256": "1f822cf0a8db62658eca3af6fbefed6664eada5c253a7c67cb1ef0885024e048",
+        "source_file": "cylinder_cfd_re100.npz",
+        "source_sha256": "79b486281e0f57e52317891d96b9127e91bcf41fafa12e5917db41888398eaaa",
+        "source_role": "validation",
+        "reynolds": 100
+      },
+      {
+        "file": "re105.npz",
+        "sha256": "c31ed83e13ea3c668a4ac8243d553321171f713a110b05069238223d822d8b80",
+        "source_file": "cylinder_cfd_re105.npz",
+        "source_sha256": "fd6bed163b1fcb94d1157b9046db60a214841ad86d91346627fe7a5106b647ee",
+        "source_role": "retained_test",
+        "reynolds": 105
+      },
+      {
+        "file": "re110.npz",
+        "sha256": "da8f7c821f23334c84b8dcef6493277673c4fa6c66d5a18228a8774f51b2dd77",
+        "source_file": "cylinder_cfd_re110.npz",
+        "source_sha256": "4e58cfc41aec09736c221635ad516e127a34c92991a010ce640061433f0e2655",
+        "source_role": "development",
+        "reynolds": 110
+      }
+    ],
+    "transform": "Native central differences for omega*D/U, then every second point of a fluid-only rectangular wake ROI. No filtering or interpolation.",
+    "spatial_scope": "Wake ROI, x/D=1..13.833, y/D=-2.625..2.542, D=12 native lattice cells; not full-domain/wall CFD.",
+    "forecast_protocol": {
+      "case": 110,
+      "train": [
+        0,
+        160
+      ],
+      "validation": [
+        160,
+        210
+      ],
+      "test": [
+        210,
+        281
+      ],
+      "rollout": "Initialize only at frame159; advance autonomously through validation AND test without resetting."
+    },
+    "sensor_protocol": {
+      "train": [
+        90,
+        110
+      ],
+      "validation": [
+        100
+      ],
+      "test": [
+        105
+      ],
+      "rank": 8,
+      "budgets": [
+        8,
+        16,
+        32
+      ],
+      "noise_rms_fraction": 0.01,
+      "random_seeds": [
+        10,
+        11,
+        12,
+        13,
+        14
+      ]
+    },
+    "status": "New teaching experiments on previously inspected CFD; no new blind research claim. Source remains coarse educational LBM, not grid-independent CFD."
+  },
+  "environment": {
+    "python": "3.12.14",
+    "platform": "Windows-11-10.0.26200-SP0",
+    "packages": {
+      "numpy": "2.2.6",
+      "scipy": "1.15.3",
+      "torch": "2.14.1"
+    },
+    "torch_threads": 2,
+    "torch_build": "PyTorch built with:\n  - C++ Version: 202002\n  - MSVC 194234444\n  - Intel(R) oneAPI Math Kernel Library Version 2026.1-Product Build 20260612 for Intel(R) 64 architecture applications\n  - Intel(R) MKL-DNN v3.12.0 (Git Hash 80afa71049cd69a3df32adcccb623b12cd7baa22)\n  - OpenMP 2019\n  - LAPACK is enabled (usually provided by MKL)\n  - CPU capability usage: AVX2\n  - Build settings: BLAS_INFO=mkl, BUILD_TYPE=Release, COMMIT_SHA=5c4886908584029761b579af026dcfb627c84070, CUDA_FLAGS= -DLIBCUDACXX_ENABLE_SIMPLIFIED_COMPLEX_OPERATIONS -Xcompiler /Zc:__cplusplus -Xcompiler /Zc:preprocessor -Xcompiler /w -w -Xcompiler /FS -Xfatbin -compress-all  -Xcompiler=/wd4819,/wd4503,/wd4190,/wd4244,/wd4251,/wd4275,/wd4522 -Wno-deprecated-gpu-targets --expt-extended-lambda -DCUB_WRAPPED_NAMESPACE=at_cuda_detail -DDISABLE_CUSPARSE_DEPRECATED -DCUDA_HAS_FP16=1 -D__CUDA_NO_HALF_OPERATORS__ -D__CUDA_NO_HALF_CONVERSIONS__ -D__CUDA_NO_HALF2_OPERATORS__ -D__CUDA_NO_BFLOAT16_CONVERSIONS__, CXX_COMPILER=C:/actions-runner/_work/pytorch/pytorch/.ci/pytorch/windows/tmp_bin/sccache-cl.exe, CXX_FLAGS=/DWIN32 /D_WINDOWS /EHsc /Zc:__cplusplus /bigobj /FS /utf-8 -DUSE_PTHREADPOOL -DNDEBUG -DUSE_KINETO -DSYMBOLICATE_MOBILE_DEBUG_HANDLE /wd4624 /wd4068 /wd4067 /wd4267 /wd4661 /wd4717 /wd4244 /wd4804 /wd4273, LAPACK_INFO=mkl, PERF_WITH_AVX=1, PERF_WITH_AVX2=1, TORCH_VERSION=2.14.1, USE_CUDA=0, USE_CUDNN=OFF, USE_CUSPARSELT=OFF, USE_GFLAGS=OFF, USE_GLOG=OFF, USE_GLOO=ON, USE_HIPSPARSELT=OFF, USE_MKL=ON, USE_MKLDNN=ON, USE_MPI=OFF, USE_NCCL=OFF, USE_NNPACK=OFF, USE_OPENMP=ON, USE_ROCM=OFF, USE_ROCM_KERNEL_ASSERT=OFF, USE_XCCL=OFF, USE_XPU=OFF, \n"
+  },
+  "source_hashes": {
+    "qa/ablate_transformer_sensors.py": "f6f5b51860779656de85cfbf92b4a216592168be503c2c8842d5ba1c49b3dee5",
+    "flowmllab/transformer_course.py": "c901fad341380e0a75c4ae38d69991996847d5bcf7b74c72239550ec75630e2d"
+  },
+  "files": {
+    "checkpoints.pt": "6a026de6cc7846a33a92cdf2ed645ef728c4b371b5f2a6b6289d06d479a75504",
+    "metrics.json": "56842bbcffce60b067c32df338a19e8cfbd3c40b2a496603fb3672859b6369e4",
+    "plan.json": "f0300b6baf6d1bb8afd0a9eab64c1abef2a7d15b11ccc1ba4765ea4a98d3fe86",
+    "predictions.npz": "5ad888100401da630066dc256cb83b86e7b00a696938fa2848b58d74fcdf2a9a",
+    "README.md": "cc4048210e5c3785e09448fe251be9c8016ccaa5c93c7fdb666a12e5a246074c"
+  },
+  "training_source_hashes": {
+    "qa/ablate_transformer_sensors.py": "f6f5b51860779656de85cfbf92b4a216592168be503c2c8842d5ba1c49b3dee5",
+    "flowmllab/transformer_course.py": "c901fad341380e0a75c4ae38d69991996847d5bcf7b74c72239550ec75630e2d"
+  },
+  "verification_source_hashes": {
+    "qa/ablate_transformer_sensors.py": "d44132ca1ae42ed2ceb17b4aaea8bfe912454bbaadc1c2416f74bd00399d743f",
+    "flowmllab/transformer_course.py": "c901fad341380e0a75c4ae38d69991996847d5bcf7b74c72239550ec75630e2d"
+  },
+  "source_hash_semantics": "source_hashes and training_source_hashes preserve executed training sources; verification_source_hashes identify the current read-only verifier."
+}
