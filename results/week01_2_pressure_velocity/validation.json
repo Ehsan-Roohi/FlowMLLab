@@ -1,0 +1,46 @@
+{
+  "date": "2026-10-09",
+  "baseline_commit": "b7a75d8e7000349646add60e65380f807ead9926",
+  "python": "3.12.14",
+  "numpy": "2.2.6",
+  "scipy": "1.15.3",
+  "unit_tests": {
+    "count": 5,
+    "failures": 0,
+    "command": "python -m unittest discover -s tests -p test_pressure_velocity.py -v"
+  },
+  "recorded_runs": 8,
+  "field_checksums_verified": true,
+  "source_checksums_verified": true,
+  "default_notebook": {
+    "executed_code_cells": 4,
+    "errors": 0,
+    "png_outputs": 6
+  },
+  "fresh_all_three_n32_notebook": {
+    "executed_code_cells": 4,
+    "errors": 0,
+    "png_outputs": 12
+  },
+  "notebook_sha256": "acedd9460beebb445be8ffd9ed07293d982c7691a7dac8b6c1efbd6582ba92c1",
+  "pdf": {
+    "pages": 11,
+    "sha256": "0dd02be3542010e7f92961f45940494219a608fbd30999e33dfc584454b2f875",
+    "fonts": [
+      "/AAAAAA+TimesNewRomanPS-BoldMT",
+      "/AAAAAA+TimesNewRomanPS-ItalicMT",
+      "/AAAAAA+TimesNewRomanPSMT",
+      "/Helvetica"
+    ],
+    "text_within_page_bounds": true,
+    "visual_review": {
+      "all_pages_reviewed": 11,
+      "result": "No clipping, overlap or missing glyphs in final rendered pages; Times New Roman body and mathematical symbols checked."
+    }
+  },
+  "preserved_week1_baseline_sha256": {
+    "notebooks/week01/03_cavity_ghia.ipynb": "97c4492758f9596918d7aacda1791f4e478d2986e7a20903ac9fa70404d82c58",
+    "common/w4utils.py": "443204009292c51a36f63ec734c982b7a14741c0b8af0335ae30b506ea523b55"
+  },
+  "qualification": "Local CPU notebook execution; hosted Colab execution was not tested. Re=100 steady results only. FV benchmark refinement trend is nonmonotone."
+}

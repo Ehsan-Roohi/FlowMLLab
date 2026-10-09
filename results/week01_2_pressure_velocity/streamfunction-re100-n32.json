@@ -1,0 +1,26 @@
+{
+  "Re": 100.0,
+  "N": 33,
+  "dt": 0.001,
+  "U": 1.0,
+  "steps": 19000,
+  "converged": true,
+  "final_residual": 4.907015573321943e-09,
+  "solver": "streamfunction-vorticity + DST Poisson; pressure recovered from momentum",
+  "pressure_grad_rel_residual": 0.5860817275083523,
+  "pressure_lsqr_iterations": 214,
+  "runtime_seconds": 8.106372299982468,
+  "config": {
+    "method": "streamfunction-vorticity",
+    "cells": 32,
+    "nodes": 33,
+    "reynolds": 100,
+    "dt": 0.001,
+    "space": "central finite difference"
+  },
+  "ghia_u_relative_l2": 0.010230232935258625,
+  "ghia_v_relative_l2": 0.036957717908430776,
+  "ghia_u_linf": 0.008898739920499776,
+  "ghia_v_linf": 0.008575016209559583,
+  "field_sha256": "fad7cd2e641caba50031e30f90f576d71a28a830df9e3cac64d6f82c2ff1f1c5"
+}
