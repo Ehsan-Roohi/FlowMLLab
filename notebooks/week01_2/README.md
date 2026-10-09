@@ -6,6 +6,12 @@ An independent extension after Week 1 (and optionally Week 1.1). All original
 Week-1 notebooks, source modules and retained results remain unchanged.
 The initial qualified case is **Re=100 only**.
 
+[Expanded comparison and teaching supplement](COMPARISON_AND_TEACHING.md)
+adds three algorithm flowcharts, a primary-source literature review, a measured
+15-configuration one-step coupling experiment, and a staged higher-Re and
+transient-accuracy plan. The lecture now contains 18 pages. A smaller nonlinear
+step defect is distinguished explicitly from a smaller physical time error.
+
 ## Learning outcomes
 
 - Derive a pressure equation from finite-volume continuity and momentum.

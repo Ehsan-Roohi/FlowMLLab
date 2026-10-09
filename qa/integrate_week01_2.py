@@ -25,7 +25,7 @@ def main():
     insert_after('notebooks/README.md','| Week 1.1 |',
         f'| Week 1.2 | Cavity pressure-velocity coupling: SIMPLE, PISO and PIMPLE (Re=100) | [Open in Colab]({COLAB}) |')
     insert_after('lectures/README.md','| 1.1 |',
-        f'| 1.2 | [Pressure-velocity coupling](week01_2_pressure_velocity.pdf) (11) | Shared MAC FV operators, SIMPLE/PISO/PIMPLE loops, Re=100 benchmark and measured cost | `{NOTE}` | [Algorithm/source guide](../notebooks/week01_2/README.md) |')
+        f'| 1.2 | [Pressure-velocity coupling](week01_2_pressure_velocity.pdf) (18) | Shared MAC FV operators, three algorithm flowcharts, comparative literature, Re=100 steady benchmark and one-step coupling study, higher-Re teaching plan | `{NOTE}` | [Algorithm/source guide](../notebooks/week01_2/README.md), [teaching supplement](../notebooks/week01_2/COMPARISON_AND_TEACHING.md) |')
     insert_after('START_HERE.md','| AI-assisted research-software ready |',
         f'| Pressure-velocity coupling ready | You have completed the original cavity lab and want SIMPLE/PISO/PIMPLE at Re=100 | `{NOTE}` | [Open in Colab]({COLAB}) |')
     directory=ROOT/'weeks/week01_2';directory.mkdir(parents=True,exist_ok=True)
@@ -45,6 +45,12 @@ streamfunction-vorticity notebook remains unchanged.
 3. Trace SIMPLE, PISO and PIMPLE on the same momentum equations.
 4. Check conservation, pressure gauge and algorithm limits.
 5. Recompute one method and explain its measured cost and benchmark error.
+6. Use the three flowcharts to distinguish frozen inner corrections from
+   outer coefficient updates. Inspect the measured one-step coupling study.
+7. Discuss the comparative papers and design a matched-error transient test
+   before expanding the Reynolds-number qualification.
+
+[Expanded comparison, flowcharts and teaching plan](../../notebooks/week01_2/COMPARISON_AND_TEACHING.md)
 
 ## Student output
 

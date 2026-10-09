@@ -14,6 +14,12 @@ streamfunction-vorticity notebook remains unchanged.
 3. Trace SIMPLE, PISO and PIMPLE on the same momentum equations.
 4. Check conservation, pressure gauge and algorithm limits.
 5. Recompute one method and explain its measured cost and benchmark error.
+6. Use the three flowcharts to distinguish frozen inner corrections from
+   outer coefficient updates. Inspect the measured one-step coupling study.
+7. Discuss the comparative papers and design a matched-error transient test
+   before expanding the Reynolds-number qualification.
+
+[Expanded comparison, flowcharts and teaching plan](../../notebooks/week01_2/COMPARISON_AND_TEACHING.md)
 
 ## Student output
 

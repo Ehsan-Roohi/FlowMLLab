@@ -1,6 +1,6 @@
 {
   "date": "2026-10-09",
-  "baseline_commit": "b7a75d8e7000349646add60e65380f807ead9926",
+  "baseline_commit": "7163b5edfab919413dbe2f2b6ea3a8e314822e67",
   "python": "3.12.14",
   "numpy": "2.2.6",
   "scipy": "1.15.3",
@@ -22,10 +22,19 @@
     "errors": 0,
     "png_outputs": 12
   },
-  "notebook_sha256": "acedd9460beebb445be8ffd9ed07293d982c7691a7dac8b6c1efbd6582ba92c1",
+  "one_step_coupling_study": {
+    "configurations": 15,
+    "sha256": "b713c8e1cc6b014e5bc059f93b9484c84baf03b19f3ed952265a97329337f78c",
+    "source_matches_retained_solver": true,
+    "continuity_gate_passed": true,
+    "frozen_PISO_defect_decreases": true,
+    "scope": "Within-step algebraic consistency only; not temporal truncation error or higher-Re validation."
+  },
+  "flowchart_count": 3,
+  "notebook_sha256": "41978d63edcc0549cf6a4511fab866ab5d669baaa18d627c1ea4840e8670e30a",
   "pdf": {
-    "pages": 11,
-    "sha256": "0dd02be3542010e7f92961f45940494219a608fbd30999e33dfc584454b2f875",
+    "pages": 18,
+    "sha256": "ad75b3745d35b51a3d298d8f5b5efe3b0c102cc039570360a05fe6c98a83896d",
     "fonts": [
       "/AAAAAA+TimesNewRomanPS-BoldMT",
       "/AAAAAA+TimesNewRomanPS-ItalicMT",
@@ -34,13 +43,14 @@
     ],
     "text_within_page_bounds": true,
     "visual_review": {
-      "all_pages_reviewed": 11,
-      "result": "No clipping, overlap or missing glyphs in final rendered pages; Times New Roman body and mathematical symbols checked."
+      "all_pages_reviewed": 18,
+      "flowcharts_reviewed": 3,
+      "result": "Final rendered pages reviewed: no clipping, overlap or missing Times New Roman glyphs. Literature, higher-Re plan and measured-study table checked."
     }
   },
   "preserved_week1_baseline_sha256": {
     "notebooks/week01/03_cavity_ghia.ipynb": "97c4492758f9596918d7aacda1791f4e478d2986e7a20903ac9fa70404d82c58",
     "common/w4utils.py": "443204009292c51a36f63ec734c982b7a14741c0b8af0335ae30b506ea523b55"
   },
-  "qualification": "Local CPU notebook execution; hosted Colab execution was not tested. Re=100 steady results only. FV benchmark refinement trend is nonmonotone."
+  "qualification": "Local CPU notebook execution; hosted Colab execution was not tested. Only Re=100 steady flow accuracy is benchmark-qualified; the added one-step study measures algebraic consistency. No higher-Re or temporal-accuracy qualification. FV benchmark refinement trend is nonmonotone."
 }

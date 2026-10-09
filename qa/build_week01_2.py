@@ -14,9 +14,11 @@ from pypdf import PdfReader
 ROOT=Path(__file__).resolve().parents[1]
 sys.path.insert(0,str(ROOT))
 from flowmllab.pressure_velocity_lab import load_results,figures,write_report,LABELS
+from week01_2_teaching import flowchart,experiment,experiment_figure
 OUT=ROOT/'results/week01_2_pressure_velocity'
 NOTE=ROOT/'notebooks/week01_2/W1_2_Cavity_Pressure_Velocity.ipynb'
 PDF=ROOT/'lectures/week01_2_pressure_velocity.pdf'
+LECTURE_PAGES=18
 
 
 def notebook():
@@ -114,6 +116,27 @@ Repeat this outer loop three times, preserving the same old-time fields througho
 One outer loop reproduces the implemented PISO limit exactly.
 Additional outer loops cost more; they can improve nonlinear consistency within a step.
 A larger stable dt does not establish accurate startup dynamics.''')
+    md('''## Algorithm flowcharts and what the literature compares
+
+The [expanded teaching report](https://github.com/Ehsan-Roohi/FlowMLLab/blob/main/notebooks/week01_2/COMPARISON_AND_TEACHING.md) explains the pressure algebra, actual counters, frozen coefficients and immutable old-time fields. It includes primary paper references, limits of higher-Re claims and a classroom experiment sequence.
+
+### SIMPLE: steady iteration
+![SIMPLE control flow](https://raw.githubusercontent.com/Ehsan-Roohi/FlowMLLab/main/results/week01_2_pressure_velocity/flowcharts/simple.png)
+
+### PISO: inner coupling corrections
+![PISO control flow](https://raw.githubusercontent.com/Ehsan-Roohi/FlowMLLab/main/results/week01_2_pressure_velocity/flowcharts/piso.png)
+
+### PIMPLE: outer momentum loops and inner corrections
+![PIMPLE control flow](https://raw.githubusercontent.com/Ehsan-Roohi/FlowMLLab/main/results/week01_2_pressure_velocity/flowcharts/pimple.png)
+
+### A measured advantage at Re=100
+Fifteen startup configurations measure the full nonlinear backward-Euler momentum defect after one physical step. At dt=0.05, PISO with two corrections leaves about 1.11; PIMPLE with three outer/two inner loops leaves about 0.00343, at extra solve cost. All satisfy continuity to pressure-solve precision.
+
+![Within-step coupling experiment](https://raw.githubusercontent.com/Ehsan-Roohi/FlowMLLab/main/results/week01_2_pressure_velocity/figures/coupling_step_study.png)
+
+Extra PISO corrections can improve the frozen matrix defect while plateauing in the full nonlinear defect. PIMPLE rebuilds that matrix. This is **algebraic coupling evidence**, not a physical time-error estimate or proof that larger dt is accurate. [Raw measurements](https://github.com/Ehsan-Roohi/FlowMLLab/blob/main/results/week01_2_pressure_velocity/coupling_step_study.json).
+
+The released solver remains qualified at Re=100. Re=400/1000, a variable lid and a matched temporal-error study are proposed extensions. High-Re spatial under-resolution cannot be fixed solely by adding pressure corrections.''')
     md('''## 6. Fresh student run
 The default notebook displays executed results quickly. Set RUN_NEW=True to actually compute one or all algorithms.
 Fresh outputs are compared visibly with the retained evidence. For the exact full comparison, run `python qa/run_week01_2.py`.
@@ -178,9 +201,11 @@ def lecture(manifest):
             ('BOX',(0,0),(-1,-1),.6,colors.black),('LEFTPADDING',(0,0),(-1,-1),10),
             ('RIGHTPADDING',(0,0),(-1,-1),10),('BOTTOMPADDING',(0,-1),(-1,-1),7)]))
         story.extend([t,Spacer(1,12)])
-    def fig(name,maxheight=430):
-        im=Image(str(OUT/'figures'/f'{name}.png'));r=min(width/im.imageWidth,maxheight/im.imageHeight)
+    def graphic(path,maxheight=430):
+        im=Image(str(path));r=min(width/im.imageWidth,maxheight/im.imageHeight)
         im.drawWidth=im.imageWidth*r;im.drawHeight=im.imageHeight*r;story.extend([im,Spacer(1,12)])
+    def fig(name,maxheight=430):graphic(OUT/'figures'/f'{name}.png',maxheight)
+    def diagram(method):graphic(OUT/'flowcharts'/f'{method}.png',545)
     story.append(Spacer(1,50));add('FlowMLLab - Week 1.2','center')
     story.append(HRFlowable(width=width,color=colors.black,thickness=.8,spaceAfter=20))
     add('Pressure-Velocity Coupling<br/>in a Lid-Driven Cavity','cover')
@@ -207,18 +232,27 @@ def lecture(manifest):
     box('Recorded settings','α<sub>u</sub>=0.7; α<sub>p</sub>=0.3. Steady momentum Linf &lt; 10<super>-7</super>; continuity uses the same declared tolerance.')
     add('<b>Advantage:</b> transparent steady pressure coupling and useful relaxation experiments.<br/><b>Limitation:</b> sensitivity to relaxation; iteration count is not physical time or a fair cost measure.')
     box('Worked mass correction','If a tentative field has a nonzero cell divergence, pressure correction changes shared face fluxes until the corrected net flux vanishes. Independent velocity clipping would generally destroy that conservation property.')
+    heading('3.1 SIMPLE control flow')
+    diagram('simple')
+    add('Equation relaxation modifies A and b; pressure relaxation modifies the pressure update. The conservative velocity correction is applied fully. Reassemble the next iteration using corrected face velocities. Monitor the unrelaxed momentum equations, not only the update size.','small')
     heading('4. PISO: corrections inside a physical step')
     for s in ['1. Keep old-time velocities fixed.','2. Assemble and solve backward-Euler momentum for tentative velocity.','3. Recompute H from the current velocity; solve Lp=-D(dH).','4. Correct q=d(H-Gp).','5. Re-evaluate off-diagonal momentum contributions and repeat the pressure/velocity correction.']:add(s)
     box('Recorded settings','Δt=0.05; two pressure corrections per physical step. The old-time source remains fixed within both corrections.')
     add('<b>Advantage:</b> additional pressure-momentum consistency without a complete nonlinear outer loop.<br/><b>Limitation:</b> more pressure solves per step; temporal accuracy still depends on Δt and the time discretization.')
     box('Do not mislabel a solver','Two Jacobi/LU iterations on a single pressure system are not two PISO corrections. The extra correction must update the momentum coupling using the corrected velocity.')
     add('Backward Euler has first-order temporal accuracy. Marching to steady state does not validate startup trajectories.')
+    heading('4.1 PISO control flow')
+    diagram('piso')
+    add('The second correction changes H through neighbor velocities while keeping A fixed. This improves coupling with the frozen predictor equations. It cannot fully remove error from lagged nonlinear convection coefficients. The old-time source must not change inside the correction loop.','small')
     heading('5. PIMPLE: outer momentum iteration plus PISO')
     add('Inside one physical time step, repeat momentum assembly and prediction, then the PISO correction loop. The new velocity changes nonlinear convection coefficients for the next outer loop.')
     box('Recorded settings','Three outer loops; two pressure corrections in each; Δt=0.05. Old-time velocities remain immutable across all six pressure corrections.')
     add('<b>Advantage:</b> additional nonlinear consistency within each time step; useful when a single PISO pass is insufficient.<br/><b>Limitation:</b> repeated momentum and pressure solves increase cost. Larger stable steps do not guarantee accurate transient dynamics.')
     box('An exact implementation check','Set the number of outer loops to one. With identical settings, the resulting PIMPLE step must match this PISO step exactly.')
     add('For this simple steady Re=100 cavity, extra outer loops need not be economical. A time-dependent lid and a matched temporal-error target are better tests of potential PIMPLE benefits.')
+    heading('5.1 PIMPLE control flow')
+    diagram('pimple')
+    add('The inner loop updates pressure and velocity for a fixed predictor matrix. The outer loop rebuilds that matrix and solves momentum again. This release uses fixed counts, not adaptive residual-based loops. One outer loop gives the implemented PISO limit.','small')
     heading('6. Benchmark velocity and two-grid evidence')
     fig('centerlines',350)
     add('Ghia, Ghia and Shin (1982) velocity markers are compared at their stated coordinates, including wall endpoints. MAC face locations and FD nodes are interpolated only for the declared centerline diagnostics.')
@@ -233,11 +267,46 @@ def lecture(manifest):
     add('The plotted steady FV momentum defect has units U²/L, with U=L=1. Continuity is the maximum cell divergence. The elapsed-time axis includes actual numerical work, so differences in loop cost remain visible.')
     add('The FD reference uses a vorticity-update stopping norm and is not overlaid as if it were the same FV residual. A small under-relaxed update is not a substitute for a momentum-equation residual.')
     box('Measured conclusion','All six new FV runs reach the declared steady tolerance. On each grid, the three methods agree within 2×10<super>-6</super> in u, v and zero-mean p. Timings are one local CPU solve per method, not a universal speed ranking.')
-    heading('9. Exercises and the next experiment')
+    heading('9. What comparative studies actually show')
+    add('Different studies answer different questions. None of these sources is a controlled comparison of our three Python implementations. There is no universal fastest coupling method.')
+    box('Issa (1986): the transient motivation','PISO approximates the implicitly discretized equations through staged pressure/velocity corrections. Its companion study reports lower effort for time-evolving flows at sufficiently small splitting error. These publisher abstracts do not justify arbitrary large steps or universal steady superiority.')
+    add('<link href="https://doi.org/10.1016/0021-9991(86)90099-9" color="black">JCP 62, 40-65</link>; <link href="https://doi.org/10.1016/0021-9991(86)90100-2" color="black">companion paper, 66-82</link>.','small')
+    box('Pascau and Garcia (2010): ranking depends on the case','Their collocated-grid cavity study favored standard PISO among the tested variants at Re=1000. At Re=5000, a SIMPLEC-based variant performed better over a broader relaxation range. This is not a PIMPLE test and does not transfer as a MAC-grid ranking.')
+    add('<link href="https://congress2.cimne.com/eccomas/proceedings/cfd2010/papers/01330.pdf" color="black">Enhancement of PISO Scheme in Collocated Grids, ECCOMAS CFD 2010</link>.','small')
+    box('Brogi et al. (2024): coupling and time-step accuracy','A modern OpenFOAM precision study discusses PISO/PIMPLE time-step choices in a compressible shock tube. Extra coupling can make larger steps useful, but increasing dt still affects accuracy. This is not an incompressible-cavity speed comparison.')
+    add('<link href="https://doi.org/10.1016/j.future.2023.10.006" color="black">On floating point precision in CFD using OpenFOAM, FGCS 152, 1-16</link>. The 2022 preprint is an earlier version with different settings.','small')
+    add('Our assessment rule: compare measured cost at a specified field-error and equation-defect target; retain failures. An iteration count alone is insufficient.')
+    heading('10. Higher Reynolds number: separate the causes')
+    add('There is no universal Reynolds-number limit of SIMPLE, PISO or PIMPLE. Increasing Re can change spatial resolution requirements, nonlinear coupling and the physical/model behavior simultaneously.')
+    box('A. Spatial convection and mesh resolution','For our central coefficients: a<sub>E</sub> = ν/h<super>2</super> - u<sub>E</sub>/(2h). Large local Pe<sub>h</sub>=|u<sub>E</sub>|h/ν can make a neighbor coefficient negative. Pe<sub>h</sub>≤2 is a sufficient positivity condition, not a universal solver-failure threshold. Near unit advective speed, Re/N is about 15.6 for Re=1000 on 64 cells. Pressure corrections alone cannot resolve missing boundary-layer or vortex scales.')
+    box('B. Nonlinear equation consistency','Reducing viscosity strengthens convection relative to diffusion. Relaxation, smaller physical steps or outer coefficient updates can improve discrete equation convergence. Measure these changes at the same spatial scheme and accuracy target.')
+    box('C. Physical/model behavior','A real higher-Re cavity can develop unsteady or three-dimensional motion. A 2D steady solver does not establish that physical state. Nonconvergence alone does not prove an algorithm bug or the need for a turbulence model.')
+    add('<link href="https://doi.org/10.1016/j.jcp.2004.12.024" color="black">Albensoeder and Kuhlmann (2005), Accurate three-dimensional lid-driven cavity flow</link>.','small')
+    box('Release boundary','The public solver still rejects Re other than 100. Re=400 and 1000 are proposed qualification studies, not newly validated cases. No numerical source or original Week-1 asset was changed for this supplement.')
+    heading('11. A measured within-step PIMPLE advantage')
+    fig('coupling_step_study',260)
+    add('Fifteen configurations start from rest at Re=100 on 32 cells per side. Each takes one backward-Euler step. The full nonlinear step defect rebuilds convection from the final velocity, unlike the frozen PISO predictor defect. Each panel has its own logarithmic y range.')
+    study=json.loads((OUT/'coupling_step_study.json').read_text())
+    values=[r for r in study['rows'] if r['dt']==.05]
+    table=[[p('dt=0.05 configuration','small'),p('Nonlinear Linf','small'),p('Pressure solves','small'),p('Momentum solves','small')]]
+    for r in values:
+        label=f'PISO {r["inner"]} inner' if r['method']=='piso' else f'PIMPLE {r["outer"]} x {r["inner"]}'
+        table.append([p(label,'small'),p(f'{r["full_nonlinear_step_momentum_linf"]:.3e}','small'),p(str(r['pressure_solves']),'small'),p(str(r['momentum_system_solves']),'small')])
+    t=Table(table,colWidths=[width*.4,width*.2,width*.2,width*.2]);t.setStyle(TableStyle([('LINEBELOW',(0,0),(-1,0),.7,colors.black),('LINEBELOW',(0,-1),(-1,-1),.5,colors.black),('VALIGN',(0,0),(-1,-1),'TOP')]))
+    story.extend([t,Spacer(1,12)])
+    add('All fifteen cell-divergence defects are below 10<super>-9</super>. Extra inner corrections can plateau in the nonlinear defect because the predictor coefficients remain frozen. PIMPLE updates those coefficients, at higher solve cost.')
+    box('What this establishes','A demonstrated reduction in within-step algebraic error. It is not a physical time-error estimate, proof of an accurate larger dt, or a universal wall-time advantage.')
+    heading('12. Classroom experiment and assessment plan')
+    box('A. Already executed: common steady state','Re=100, 32/64 cells. Show that all three FV methods reach the same discrete steady field. SIMPLE is cheaper on the coarse grid; PISO is cheaper with the selected fine-grid settings. Keep the nonmonotone FV Ghia errors visible.')
+    box('B. Already executed: one-step consistency','Re=100, 32 cells; vary inner and outer counts at each fixed dt. Compare the full nonlinear momentum defect, frozen predictor defect, mass balance and solve counts. More pressure corrections and more coefficient updates address different errors.')
+    box('C. Proposed next: temporal accuracy at Re=100','Compare startup at matched final times; halve dt. Then add a smooth ramped/oscillating lid and a verified temporal reference. Compare field error, energy, amplitude/phase and cost. Use the same time scheme. Transient SIMPLE needs an outer solve inside every physical step; the current steady iteration is not a trajectory.')
+    box('D. Proposed later: higher-Re qualification','Test Re=400, then 1000 with refined 64/128/256 meshes and independently validated convection. Inspect secondary vortices, centerlines and lid-wall stress. Separate spatial errors from coupling errors and physical unsteadiness.')
+    add('Assess cost versus error, not a preferred winner. Keep the mesh, linear solver, initial fields and spatial equations fixed for a coupling comparison. Repeat wall-time measurements and retain failed configurations. A dt-refined numerical reference has its own error; document its refinement.')
+    heading('13. Exercises and the next experiment')
     for s in ['1. Sum cell divergence and cancel shared interior face terms.','2. Add a pressure constant; verify unchanged velocity.','3. Compare one and two PISO corrections using the one-step momentum defect.','4. Check PIMPLE with one outer loop against PISO.','5. Change SIMPLE relaxation at fixed final residual tolerance.','6. Change only convection interpolation; separate spatial error from coupling effects.','7. Design a Δt-halving startup experiment before claiming a PIMPLE speedup.']:add(s)
     box('Next qualification','Start with a ramped or oscillating lid. Use the same temporal scheme and matched final times. Refine Δt; measure field and phase errors. Any transient streamfunction pressure reconstruction must include acceleration terms.')
     add('Only Re=100 steady behavior is qualified in this release. Higher-Re behavior, transient accuracy and stretched grids remain separate tasks.')
-    heading('10. Reading, attribution and reproducibility')
+    heading('14. Reading, attribution and reproducibility')
     for title,url in [
         ('PySIMPLE: educational MAC finite-volume SIMPLE','https://github.com/VishalKandala/PySIMPLE'),
         ('NIST FiPy: pressure-correction derivation (Stokes example)','https://pages.nist.gov/fipy/en/latest/generated/examples.flow.stokesCavity.html'),
@@ -246,7 +315,7 @@ def lecture(manifest):
         ('Ghia, Ghia and Shin (1982): benchmark tables','https://doi.org/10.1016/0021-9991(82)90058-4')]:
         add(f'<link href="{url}" color="black">{title}</link>')
     add('This independently written module uses original implementation and explanations. External examples inform derivation and organization; their validation claims are not inherited. The audited CFD-Python PISO-titled notebook had a commented-out second correction, illustrating why source inspection matters.')
-    box('Reproduce and audit','qa/run_week01_2.py executes all cases; qa/build_week01_2.py builds figures and the notebook. tests/test_pressure_velocity.py checks flux cancellation, pressure nullspace, PISO correction behavior, PIMPLE limits and the common steady solution. Results retain source and field hashes and runtime versions.')
+    box('Reproduce and audit','qa/run_week01_2.py executes the steady cases; qa/week01_2_teaching.py executes the one-step sweep and draws flowcharts; qa/build_week01_2.py builds the figures and notebook. tests/test_pressure_velocity.py checks conservation, pressure gauge, PISO behavior, PIMPLE limits and the common steady solution. The expanded teaching supplement provides full source links and study boundaries.')
     add('Lecture and code are English. Typography: Times New Roman. Prepared 09 October 2026.','small')
     def footer(c,doc):
         c.saveState();c.setFont('TNR',9);c.setLineWidth(.4)
@@ -259,7 +328,7 @@ def lecture(manifest):
         title='FlowMLLab Week 1.2 - Pressure-Velocity Coupling',author='Ehsan Roohi').build(story,onFirstPage=footer,onLaterPages=footer)
     shutil.copy2(target,PDF)
     pages=len(PdfReader(PDF).pages)
-    assert pages==11,('Lecture overflow',pages)
+    assert pages==LECTURE_PAGES,('Lecture overflow',pages)
     return pages
 
 
@@ -269,9 +338,14 @@ def main():
     import matplotlib.pyplot as plt
     for name,fig in figures(rows).items():
         fig.savefig(target/(name+'.png'),dpi=180,facecolor='white');plt.close(fig)
+    study_path=OUT/'coupling_step_study.json'
+    study=json.loads(study_path.read_text()) if study_path.exists() else experiment()
+    assert study['source_sha256']==hashlib.sha256((ROOT/'flowmllab/pressure_velocity.py').read_bytes()).hexdigest()
+    for method in ['simple','piso','pimple']:flowchart(method)
+    experiment_figure(study)
     write_report(OUT,manifest,rows)
     notebook();pages=lecture(manifest)
-    print(json.dumps({'figures':6,'lecture_pages':pages,'notebook':str(NOTE)},indent=2))
+    print(json.dumps({'physical_figures':7,'flowcharts':3,'lecture_pages':pages,'notebook':str(NOTE)},indent=2))
 
 
 if __name__=='__main__':main()

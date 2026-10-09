@@ -116,3 +116,31 @@ def write_report(directory,manifest,rows):
         '[Executed field/configuration manifest](manifest.json) records hashes, Python/NumPy/SciPy versions, stopping conditions and all measured quantities.','',
         '[Notebook](../../notebooks/week01_2/W1_2_Cavity_Pressure_Velocity.ipynb) | [Lecture](../../lectures/week01_2_pressure_velocity.pdf) | [Algorithm and source notes](../../notebooks/week01_2/README.md)']
     (directory/'README.md').write_text('\n'.join(lines)+'\n')
+    study_path=directory/'coupling_step_study.json'
+    if study_path.exists():
+        study=json.loads(study_path.read_text())
+        extra=['','## Literature, algorithm flowcharts and classroom value','',
+            '[Detailed teaching supplement](../../notebooks/week01_2/COMPARISON_AND_TEACHING.md) explains the shared algebra, actual inner/outer loops, source evidence and the proposed higher-Re qualification.','',
+            'The literature does not establish a universal fastest method. For example, [Pascau and Garcia (2010)](https://congress2.cimne.com/eccomas/proceedings/cfd2010/papers/01330.pdf) found different preferred variants at Re=1000 and 5000 on collocated grids. Those findings do not transfer as a speed ranking to our MAC solver.','',
+            'A Reynolds-number increase can introduce spatial under-resolution, harder nonlinear coupling or genuinely unsteady/three-dimensional behavior. More pressure corrections address only part of this problem. The released code remains qualified at Re=100.','']
+        for method in ['simple','piso','pimple']:
+            extra += [f'### {method.upper()} control flow','',f'![{method.upper()} flowchart](flowcharts/{method}.png)','',f'[Vector version](flowcharts/{method}.svg)','']
+        extra += ['## Newly measured within-step coupling experiment','',
+            'Fifteen configurations start from rest at Re=100 on 32 MAC cells/side. Each executes one backward-Euler step at dt=0.01, 0.05 or 0.2. The full nonlinear step defect rebuilds convection from the final velocity. It is different from the steady defect in the original report and is not a physical time-error estimate.','',
+            '![Nonlinear coupling defect versus solve count](figures/coupling_step_study.png)','',
+            '### Matched-step example: dt=0.05','',
+            '| Configuration | Full nonlinear step momentum Linf | Frozen predictor momentum Linf | Pressure solves | Scalar momentum solves |',
+            '| --- | ---: | ---: | ---: | ---: |']
+        for r in study['rows']:
+            if r['dt']!=.05:continue
+            name=f'PISO {r["inner"]} inner' if r['method']=='piso' else f'PIMPLE {r["outer"]} outer x {r["inner"]} inner'
+            frozen=r['frozen_predictor_momentum_linf']
+            extra.append(f'| {name} | {r["full_nonlinear_step_momentum_linf"]:.4e} | '+(f'{frozen:.4e}' if frozen is not None else 'not the PISO frozen matrix')+f' | {r["pressure_solves"]} | {r["momentum_system_solves"]} |')
+        extra += ['','Extra PISO corrections improve the frozen predictor coupling, but can plateau in the full nonlinear defect. PIMPLE outer loops rebuild the coefficients and reduce that defect at extra cost. All fifteen continuity defects are below 1e-9. This is a demonstrated algebraic benefit, not a temporal-accuracy or universal speed claim.','',
+            '[Raw configurations and measurements](coupling_step_study.json). Reproduce with `python qa/week01_2_teaching.py`. Short single-run wall times are illustrative; count solves for the teaching comparison.','',
+            '## Proposed next experiments (not yet executed)','',
+            '1. Compare SIMPLE relaxation settings at the same final unrelaxed steady residual and field accuracy.',
+            '2. Re=100: compare startup to the same final times, refine dt, then implement a smooth changing lid. Rank PISO/PIMPLE by cost at matched temporal error.',
+            '3. Qualify a separate higher-Re branch: Re=400 then 1000, refined meshes and independently validated convection. Do not attribute spatial oscillations solely to the pressure-coupling method.',
+            '4. For a three-way transient test, implement transient SIMPLE with converged outer iterations inside each physical step. The current steady SIMPLE has no physical-time trajectory.','']
+        with (directory/'README.md').open('a',encoding='utf-8',newline='\n') as stream:stream.write('\n'.join(extra))

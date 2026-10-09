@@ -66,7 +66,13 @@ def main():
     nbformat.write(fresh,ROOT/'tmp/week01_2_fresh_audit.ipynb')
     print('Fresh SIMPLE/PISO/PIMPLE 32-cell branch executed:',check,flush=True)
     pdf=ROOT/'lectures/week01_2_pressure_velocity.pdf'
-    reader=PdfReader(pdf);assert len(reader.pages)==11
+    reader=PdfReader(pdf);assert len(reader.pages)==18
+    study=json.loads((OUT/'coupling_step_study.json').read_text())
+    assert study['source_sha256']==manifest['source_sha256'] and len(study['rows'])==15
+    assert all(np.isfinite(r['full_nonlinear_step_momentum_linf']) and r['continuity_linf']<1e-9 for r in study['rows'])
+    for dt in [.01,.05,.2]:
+        chosen=[r for r in study['rows'] if r['dt']==dt and r['method']=='piso']
+        assert all(chosen[i+1]['frozen_predictor_momentum_linf']<chosen[i]['frozen_predictor_momentum_linf'] for i in [0,1])
     fonts=set()
     for page in reader.pages:
         for f in page['/Resources']['/Font'].values():
@@ -89,10 +95,14 @@ def main():
         'unit_tests':{'count':5,'failures':0,'command':'python -m unittest discover -s tests -p test_pressure_velocity.py -v'},
         'recorded_runs':8,'field_checksums_verified':True,'source_checksums_verified':True,
         'default_notebook':cached,'fresh_all_three_n32_notebook':check,
-        'notebook_sha256':digest(NOTE),'pdf':{'pages':11,'sha256':digest(pdf),'fonts':sorted(fonts),
+        'one_step_coupling_study':{'configurations':15,'sha256':digest(OUT/'coupling_step_study.json'),
+            'source_matches_retained_solver':True,'continuity_gate_passed':True,'frozen_PISO_defect_decreases':True,
+            'scope':'Within-step algebraic consistency only; not temporal truncation error or higher-Re validation.'},
+        'flowchart_count':3,
+        'notebook_sha256':digest(NOTE),'pdf':{'pages':18,'sha256':digest(pdf),'fonts':sorted(fonts),
             'text_within_page_bounds':True},
         'preserved_week1_baseline_sha256':preserved,
-        'qualification':'Local CPU notebook execution; hosted Colab execution was not tested. Re=100 steady results only. FV benchmark refinement trend is nonmonotone.'}
+        'qualification':'Local CPU notebook execution; hosted Colab execution was not tested. Only Re=100 steady flow accuracy is benchmark-qualified; the added one-step study measures algebraic consistency. No higher-Re or temporal-accuracy qualification. FV benchmark refinement trend is nonmonotone.'}
     (OUT/'validation.json').write_text(json.dumps(validation,indent=2)+'\n')
     print('Evidence and PDF structural checks passed.',flush=True)
 
