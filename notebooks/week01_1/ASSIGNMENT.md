@@ -74,3 +74,26 @@ Explain observed results, corrections, retained failures and the claim limits.
 If no correction was necessary, document the checks supporting that conclusion
 instead of fabricating an error. Submission requires a genuine implementation
 diff and all four evidence levels, not merely a successful notebook run.
+
+## Submission checklist and folder map
+
+1. Run and interpret Part A; no new solver is required.
+2. Fork the repository, create a branch, complete the specification and commit it.
+3. Ask your coding assistant; save its exact first patch and interaction.
+4. Save your candidate, add independent tests, and retain all test outcomes.
+5. Review each changed line, correct real problems and rerun checks.
+6. Submit a PR in your fork with this layout (never include credentials):
+
+```text
+flowmllab/student_mass_balance.py
+tests/test_student_mass_balance.py
+submissions/week01_1/
+    SPEC.md
+    PROCESS_LOG.md
+    LINE_REVIEW.md
+    REPORT.md
+    evidence/         # commands, exit codes, failures, prompts and diffs
+```
+
+The derivative convergence plots are preparation; the assessed new feature is
+boundary flux. The notebook's final opt-in cell runs checks on your own file.

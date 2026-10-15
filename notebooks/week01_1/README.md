@@ -1,5 +1,9 @@
 # Week 1.1 - AI-Assisted Scientific Software: Specification, Verification, and Trust
 
+Start with the student roadmap at the top of the notebook. Part A is a worked
+derivative example; Part B is your new boundary-flux implementation. Run all
+alone is preparation, not submission.
+
 This incremental module sits between numerical foundations and supervised
 learning. It teaches students to turn a scientific change request into an
 executable specification and to audit code proposed by either a person or a

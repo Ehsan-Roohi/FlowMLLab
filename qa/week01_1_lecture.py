@@ -13,6 +13,8 @@ from reportlab.lib.pagesizes import A4
 from reportlab.lib.styles import ParagraphStyle
 from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, Image, Table, TableStyle, KeepTogether
 from reportlab.pdfgen.canvas import Canvas
+from reportlab.pdfbase import pdfmetrics
+from reportlab.pdfbase.ttfonts import TTFont
 
 EQUATIONS = {
     'operators': [r'$\nabla\cdot\mathbf{u}=\partial_xu+\partial_yv,\qquad\omega_z=\partial_xv-\partial_yu$'],
@@ -29,14 +31,16 @@ EQUATIONS = {
 def build_lecture(output, lecture, verification, cavity, record, faulty_error, root):
     """Keep the legacy builder interface; only the lecture is reformatted."""
     from flowmllab.scientific_software import load_cavity_case, differential_diagnostics
+    for name, filename in [("TNR", "times.ttf"), ("TNR-Bold", "timesbd.ttf")]:
+        pdfmetrics.registerFont(TTFont(name, "C:/Windows/Fonts/" + filename))
     output.parent.mkdir(parents=True, exist_ok=True)
     styles = {
-        'body': ParagraphStyle('body',fontName='Times-Roman',fontSize=11,leading=15,spaceAfter=8,alignment=4),
-        'h1': ParagraphStyle('h1',fontName='Times-Bold',fontSize=22,leading=27,spaceAfter=8,keepWithNext=True),
-        'h2': ParagraphStyle('h2',fontName='Times-Bold',fontSize=16,leading=21,spaceAfter=8,keepWithNext=True),
-        'h3': ParagraphStyle('h3',fontName='Times-Bold',fontSize=13,leading=17,spaceBefore=12,spaceAfter=7,keepWithNext=True),
-        'caption': ParagraphStyle('caption',fontName='Times-Roman',fontSize=9.5,leading=12,spaceAfter=10),
-        'cell': ParagraphStyle('cell',fontName='Times-Roman',fontSize=9.5,leading=12),
+        'body': ParagraphStyle('body',fontName='TNR',fontSize=11,leading=15,spaceAfter=8,alignment=4),
+        'h1': ParagraphStyle('h1',fontName='TNR-Bold',fontSize=22,leading=27,spaceAfter=8,keepWithNext=True),
+        'h2': ParagraphStyle('h2',fontName='TNR-Bold',fontSize=16,leading=21,spaceAfter=8,keepWithNext=True),
+        'h3': ParagraphStyle('h3',fontName='TNR-Bold',fontSize=13,leading=17,spaceBefore=12,spaceAfter=7,keepWithNext=True),
+        'caption': ParagraphStyle('caption',fontName='TNR',fontSize=9.5,leading=12,spaceAfter=10),
+        'cell': ParagraphStyle('cell',fontName='TNR',fontSize=9.5,leading=12),
         'code': ParagraphStyle('code',fontName='Courier',fontSize=9,leading=13,backColor=colors.HexColor('#f1f4f6'),borderPadding=8,spaceBefore=8,spaceAfter=12),
     }
     story=[]; width=A4[0]-104
@@ -116,7 +120,7 @@ def build_lecture(output, lecture, verification, cavity, record, faulty_error, r
         else: story.append(para(block.replace('\n',' ')))
     def footer(c,doc):
         c.saveState(); c.setStrokeColor(colors.HexColor('#b7c3cd')); c.setLineWidth(.4)
-        c.line(52,43,A4[0]-52,43); c.setFont('Times-Roman',9)
+        c.line(52,43,A4[0]-52,43); c.setFont('TNR',9)
         c.drawString(52,29,'FlowMLLab | Week 1.1 | Ehsan Roohi')
         c.drawRightString(A4[0]-52,29,str(doc.page)); c.restoreState()
     doc=SimpleDocTemplate(str(output),pagesize=A4,leftMargin=52,rightMargin=52,topMargin=48,bottomMargin=58,

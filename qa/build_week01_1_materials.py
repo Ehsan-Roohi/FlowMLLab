@@ -431,6 +431,8 @@ def build_notebook() -> Path:
         require?
         """
     )
+    from week01_1_student_guide import improve_cells
+    cells = improve_cells(cells)
     nb["cells"] = cells
     nb["metadata"] = {
         "kernelspec": {"display_name": "Python 3", "language": "python", "name": "python3"},

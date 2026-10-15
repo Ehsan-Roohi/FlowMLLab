@@ -144,3 +144,15 @@ comparison. Refine with `--cells 64 --methods simple`, then decide whether
 128 cells are justified. Central/upwind comparisons must use the same mesh.
 This is a 2D steady experimental study, not a turbulence or transient-accuracy
 qualification. There is no universal maximum Re for a coupling algorithm.
+
+## Before running higher Reynolds numbers
+
+**Runtime and hardware warning.** Higher Reynolds numbers generally need finer meshes
+and more iterations to resolve the flow. These runs can take substantially longer
+and use more memory; a stronger CPU and more RAM may be needed. Doubling cells per
+side quadruples the number of 2-D cells, and total work can grow by more than four
+times because convergence and linear solves also change. Start at 32 cells, run
+one method, measure its time, then decide whether to refine. Do not launch every
+128-cell case at once. Cached figures below require no new CFD solve. Fresh runs
+are opt-in; there is no guaranteed completion time on a student's computer.
+

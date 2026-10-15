@@ -10,7 +10,15 @@ Week 1 introduced velocity fields, conservation of mass, finite differences and 
 
 We study a small but scientifically meaningful component: a post-processor that computes divergence and out-of-plane vorticity from two velocity arrays. Its size allows us to examine every mathematical assumption and connect it to executable evidence. We first construct an analytic reference field, then measure finite-difference error across four grids, and finally audit the retained Week-1 cavity at Reynolds number 100. The accompanying notebook includes an intentionally incorrect proposal that must be rejected.
 
-After working through the lecture, you should be able to specify array and derivative conventions, distinguish mathematical verification from physical validation, interpret a convergence study, and explain exactly what a passed acceptance test establishes. You should also be able to use an AI assistant within a reproducible development process while retaining responsibility for the scientific interpretation. No particular AI service is required to complete the laboratory.
+After working through the lecture, you should be able to specify array and derivative conventions, distinguish mathematical verification from physical validation, interpret a convergence study, and explain exactly what a passed acceptance test establishes. You should also be able to use an AI assistant within a reproducible development process while retaining responsibility for the scientific interpretation. Use any accessible coding assistant. The assessed implementation requires a real recorded interaction; ask the instructor for an alternative if none is accessible.
+
+### Student roadmap
+
+Part A is the completed derivative example: run it, explain the grid-error trend and inspect the deliberately rejected axis bug. Part B is your assessed new function net_volume_flux. You are not writing another cavity solver. SCIENTIFIC_SPEC.md describes Part A; SPEC.md is the template you complete for Part B.
+
+Begin with the four boundary edges: outward flow is right minus left for u and top minus bottom for v. Constant velocity has zero total flux. On the unit square, u=x and v=y give flux 2. Predict these values by hand before asking an assistant. Zero total flux does not guarantee zero local divergence.
+
+Follow six steps: run the example; derive expected fluxes; complete and commit your specification; save the first agent patch; test and review your changes; submit code and evidence in your fork. See ASSIGNMENT.md for the exact folder map.
 
 ### 2. What does it mean for scientific code to be correct?
 
@@ -162,7 +170,7 @@ Exercise 3. Introduce the axis swap in a copy of the diagnostic. Predict which e
 
 Exercise 4. Propose a verification study for stretched Cartesian coordinates. State how you would refine the mesh, define a suitable norm and distinguish interior from boundary accuracy. Explain why API support for nonuniform coordinates is not itself evidence of convergence.
 
-Submit the specification, convergence study, cavity interpretation, one reviewed failure and exact reproduction information. Assessment assigns 20% to specification, 25% to verification, 20% to the physical consistency audit, 15% to manual scientific review, 10% to provenance and 10% to the limits of the claim. Explain what each result means and what it cannot establish.
+Exercises 1-4 are preparation or optional extensions. The assessed submission is the new boundary-flux function, independent tests, specification-first commit, recorded agent interaction, retained test outcomes, line review and report required by ASSIGNMENT.md. Allocate 20% to specification, 25% to verification of the flux function, 20% to physical and analytic flux checks, 15% to scientific line review, 10% to reproducibility evidence and 10% to claim limits. Retain genuine failures; do not manufacture an error when no correction was needed.
 
 ### 14. Guidance for interpreting the exercises
 

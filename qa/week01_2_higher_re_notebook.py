@@ -12,6 +12,15 @@ Use the experimental wrapper below; the qualified `CavityConfig` still accepts
 only Re=100. No external CFD solver is called. A small momentum residual proves
 discrete equation convergence, not mesh independence or physical accuracy.
 
+**Runtime and hardware warning.** Higher Reynolds numbers generally need finer meshes
+and more iterations to resolve the flow. These runs can take substantially longer
+and use more memory; a stronger CPU and more RAM may be needed. Doubling cells per
+side quadruples the number of 2-D cells, and total work can grow by more than four
+times because convergence and linear solves also change. Start at 32 cells, run
+one method, measure its time, then decide whether to refine. Do not launch every
+128-cell case at once. Cached figures below require no new CFD solve. Fresh runs
+are opt-in; there is no guaranteed completion time on a student's computer.
+
 **Required sequence and deliverables**
 1. Reproduce the retained Re=100 baseline before running this extension.
 2. Run SIMPLE, PISO and PIMPLE at Re=400 on 32 cells, then repeat at Re=1000.
