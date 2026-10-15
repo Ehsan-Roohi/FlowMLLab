@@ -15,6 +15,7 @@ ROOT=Path(__file__).resolve().parents[1]
 sys.path.insert(0,str(ROOT))
 from flowmllab.pressure_velocity_lab import load_results,figures,write_report,LABELS
 from week01_2_teaching import flowchart,experiment,experiment_figure
+from week01_2_math import Equation
 OUT=ROOT/'results/week01_2_pressure_velocity'
 NOTE=ROOT/'notebooks/week01_2/W1_2_Cavity_Pressure_Velocity.ipynb'
 PDF=ROOT/'lectures/week01_2_pressure_velocity.pdf'
@@ -201,6 +202,15 @@ def lecture(manifest):
             ('BOX',(0,0),(-1,-1),.6,colors.black),('LEFTPADDING',(0,0),(-1,-1),10),
             ('RIGHTPADDING',(0,0),(-1,-1),10),('BOTTOMPADDING',(0,-1),(-1,-1),7)]))
         story.extend([t,Spacer(1,12)])
+    def eq(expression):
+        story.append(Equation(expression,width))
+    def mathbox(label,*expressions):
+        rows=[[p(label,'sub')]]+[[Equation(s,width-24)] for s in expressions]
+        t=Table(rows,colWidths=[width])
+        t.setStyle(TableStyle([('BOX',(0,0),(-1,-1),.6,colors.black),
+            ('LEFTPADDING',(0,0),(-1,-1),10),('RIGHTPADDING',(0,0),(-1,-1),10),
+            ('BOTTOMPADDING',(0,-1),(-1,-1),7)]))
+        story.extend([t,Spacer(1,12)])
     def graphic(path,maxheight=430):
         im=Image(str(path));r=min(width/im.imageWidth,maxheight/im.imageHeight)
         im.drawWidth=im.imageWidth*r;im.drawHeight=im.imageHeight*r;story.extend([im,Spacer(1,12)])
@@ -211,33 +221,37 @@ def lecture(manifest):
     add('Pressure-Velocity Coupling<br/>in a Lid-Driven Cavity','cover')
     add('SIMPLE, PISO and PIMPLE<br/>A shared finite-volume Python implementation','center')
     story.append(HRFlowable(width=width,color=colors.black,thickness=.8,spaceAfter=20))
-    add('Ehsan Roohi<br/>09 October 2026','center')
+    add('Ehsan Roohi<br/>Revised 15 October 2026','center')
     box('The central question','How does pressure enforce incompressibility, and how can different coupling loops reach the same flow with different computational costs?')
     add('Initial qualified case: Re=100. Two uniform grids. Executed fields, benchmark comparisons, momentum and continuity checks. An independent extension; Week 1 remains unchanged.')
     heading('1. One physical problem, two formulations')
-    box('Governing equations','∂u/∂t + div(u u<super>T</super>) = -grad(p) + Re<super>-1</super>Laplacian(u)<br/>div(u) = 0')
+    mathbox('Governing equations',r'\frac{\partial\mathbf{u}}{\partial t}+\nabla\cdot(\mathbf{u}\mathbf{u}^{T})=-\nabla p+\frac{1}{\mathrm{Re}}\nabla^{2}\mathbf{u}',r'\nabla\cdot\mathbf{u}=0')
     add('Use a unit square, unit lid speed and density, and viscosity 0.01. All walls are impermeable; tangential velocities are zero except for the moving lid.')
-    add('Week 1 solves streamfunction and vorticity: u=∂ψ/∂y, v=-∂ψ/∂x and Laplacian(ψ)=-ω. Pressure is recovered separately from steady momentum. Week 1.2 solves velocity and pressure together.')
+    add('Week 1 solves streamfunction and vorticity using the relations below. Pressure is recovered separately from steady momentum. Week 1.2 solves velocity and pressure together.')
+    eq(r'u=\frac{\partial\psi}{\partial y},\qquad v=-\frac{\partial\psi}{\partial x},\qquad\nabla^{2}\psi=-\omega')
     box('Why add this extension?','Students can inspect pressure as the continuity constraint, shared-face mass budgets, under-relaxation, and physical-time versus coupling iterations. The pressure-velocity formulation also provides a route toward three-dimensional solvers.')
     add('Learning outcomes: derive the pressure operator; distinguish the three loops; verify mass and gauge invariance; compare measured errors and cost; state the limits of a steady benchmark.')
     heading('2. Shared MAC finite-volume operators')
     add('Pressure p is stored at cell centers. Horizontal velocity u lies on vertical faces; vertical velocity v lies on horizontal faces. Arrays use y-first, x-second indexing.')
-    box('Momentum and pressure algebra','Aq = b-Gp; d = 1/diag(A)<br/>H(q) = b-offdiag(A)q; q = d(H-Gp)<br/>L = -D d G; Lp = -D(dH)')
+    mathbox('Momentum and pressure algebra',r'Aq=b-Gp,\qquad d_i=\frac{1}{A_{ii}}',r'H(q)=b-\mathrm{offdiag}(A)q,\qquad q=d\left(H-Gp\right)',r'L=-DdG,\qquad Lp=-D\left(dH\right)')
+    add('Here d denotes the diagonal operator with entries d<sub>i</sub>. D and G are the shared discrete divergence and pressure-gradient operators.','small')
     add('D computes the net velocity flux divided by cell volume. A shared face contributes with opposite signs to its two neighbors. This gives exact interior flux cancellation.')
     add('Normal wall velocities are zero. Tangential wall diffusion uses half-cell distances. The lid-corner discontinuity is retained. Central convection and diffusion use the same frozen advecting face velocities for every coupling method.')
     box('Gauge and compatibility','L has a constant nullspace. The closed-cavity RHS must sum to zero. Pin one cell during the sparse solve; shift reported pressure to zero mean. A pressure constant cannot change any velocity correction.')
     add('Sparse LU is a linear solver, independent of the pressure-coupling algorithm. No multigrid or packaged CFD solver is used.')
     heading('3. SIMPLE: steady correction and relaxation')
-    for s in ['1. Build and under-relax steady momentum using the current velocities.','2. Predict face velocities from the current pressure.','3. Solve Lp′=-Dq*.','4. Correct velocity fully: q=q*-dGp′.','5. Update pressure p←p+α<sub>p</sub>p′; repeat until momentum and continuity pass.']:add(s)
-    box('Recorded settings','α<sub>u</sub>=0.7; α<sub>p</sub>=0.3. Steady momentum Linf &lt; 10<super>-7</super>; continuity uses the same declared tolerance.')
+    for s in ['1. Build and under-relax steady momentum using the current velocities.','2. Predict face velocities from the current pressure.','3. Solve for the pressure correction.','4. Correct face velocities fully.','5. Relax pressure; repeat until momentum and continuity pass.']:add(s)
+    mathbox('Predict, enforce continuity, and update',r'Aq^{*}=b-Gp^{k},\qquad Lp^{\prime}=-Dq^{*}',r'q^{k+1}=q^{*}-dGp^{\prime}',r'p^{k+1}=p^{k}+\alpha_p p^{\prime}')
+    eq(r'\alpha_u=0.7,\qquad\alpha_p=0.3,\qquad\|r_{\mathrm{mom}}\|_{\infty}<10^{-7}')
     add('<b>Advantage:</b> transparent steady pressure coupling and useful relaxation experiments.<br/><b>Limitation:</b> sensitivity to relaxation; iteration count is not physical time or a fair cost measure.')
     box('Worked mass correction','If a tentative field has a nonzero cell divergence, pressure correction changes shared face fluxes until the corrected net flux vanishes. Independent velocity clipping would generally destroy that conservation property.')
     heading('3.1 SIMPLE control flow')
     diagram('simple')
     add('Equation relaxation modifies A and b; pressure relaxation modifies the pressure update. The conservative velocity correction is applied fully. Reassemble the next iteration using corrected face velocities. Monitor the unrelaxed momentum equations, not only the update size.','small')
     heading('4. PISO: corrections inside a physical step')
-    for s in ['1. Keep old-time velocities fixed.','2. Assemble and solve backward-Euler momentum for tentative velocity.','3. Recompute H from the current velocity; solve Lp=-D(dH).','4. Correct q=d(H-Gp).','5. Re-evaluate off-diagonal momentum contributions and repeat the pressure/velocity correction.']:add(s)
-    box('Recorded settings','Δt=0.05; two pressure corrections per physical step. The old-time source remains fixed within both corrections.')
+    for s in ['1. Keep old-time velocities fixed.','2. Assemble and solve backward-Euler momentum for tentative velocity.','3. Recompute the off-diagonal momentum contribution H.','4. Solve absolute pressure and correct velocity using the relations below.','5. Repeat the pressure/velocity correction with the updated H.']:add(s)
+    mathbox('Pressure and velocity correction',r'H^{(m)}=b-\mathrm{offdiag}(A)q^{(m)}',r'Lp^{(m+1)}=-D\left(dH^{(m)}\right)',r'q^{(m+1)}=d\left(H^{(m)}-Gp^{(m+1)}\right)')
+    add('Recorded settings: two pressure corrections per physical step, with Δt=0.05. The old-time source remains fixed within both corrections.')
     add('<b>Advantage:</b> additional pressure-momentum consistency without a complete nonlinear outer loop.<br/><b>Limitation:</b> more pressure solves per step; temporal accuracy still depends on Δt and the time discretization.')
     box('Do not mislabel a solver','Two Jacobi/LU iterations on a single pressure system are not two PISO corrections. The extra correction must update the momentum coupling using the corrected velocity.')
     add('Backward Euler has first-order temporal accuracy. Marching to steady state does not validate startup trajectories.')
@@ -278,7 +292,8 @@ def lecture(manifest):
     add('Our assessment rule: compare measured cost at a specified field-error and equation-defect target; retain failures. An iteration count alone is insufficient.')
     heading('10. Higher Reynolds number: separate the causes')
     add('There is no universal Reynolds-number limit of SIMPLE, PISO or PIMPLE. Increasing Re can change spatial resolution requirements, nonlinear coupling and the physical/model behavior simultaneously.')
-    box('A. Spatial convection and mesh resolution','For our central coefficients: a<sub>E</sub> = ν/h<super>2</super> - u<sub>E</sub>/(2h). Large local Pe<sub>h</sub>=|u<sub>E</sub>|h/ν can make a neighbor coefficient negative. Pe<sub>h</sub>≤2 is a sufficient positivity condition, not a universal solver-failure threshold. Near unit advective speed, Re/N is about 15.6 for Re=1000 on 64 cells. Pressure corrections alone cannot resolve missing boundary-layer or vortex scales.')
+    mathbox('A. Spatial convection and mesh resolution',r'a_E=\frac{\nu}{h^2}-\frac{u_E}{2h},\qquad\mathrm{Pe}_h=\frac{|u_E|h}{\nu}',r'\mathrm{Pe}_h\leq2\quad\Longrightarrow\quad a_E\geq0')
+    add('The displayed bound is a sufficient positivity condition for this central neighbor coefficient, not a universal solver-failure threshold. Near unit advective speed, Re/N is about 15.6 for Re=1000 on 64 cells. Pressure corrections alone cannot resolve missing boundary-layer or vortex scales.')
     box('B. Nonlinear equation consistency','Reducing viscosity strengthens convection relative to diffusion. Relaxation, smaller physical steps or outer coefficient updates can improve discrete equation convergence. Measure these changes at the same spatial scheme and accuracy target.')
     box('C. Physical/model behavior','A real higher-Re cavity can develop unsteady or three-dimensional motion. A 2D steady solver does not establish that physical state. Nonconvergence alone does not prove an algorithm bug or the need for a turbulence model.')
     add('<link href="https://doi.org/10.1016/j.jcp.2004.12.024" color="black">Albensoeder and Kuhlmann (2005), Accurate three-dimensional lid-driven cavity flow</link>.','small')
@@ -316,7 +331,7 @@ def lecture(manifest):
         add(f'<link href="{url}" color="black">{title}</link>')
     add('This independently written module uses original implementation and explanations. External examples inform derivation and organization; their validation claims are not inherited. The audited CFD-Python PISO-titled notebook had a commented-out second correction, illustrating why source inspection matters.')
     box('Reproduce and audit','qa/run_week01_2.py executes the steady cases; qa/week01_2_teaching.py executes the one-step sweep and draws flowcharts; qa/build_week01_2.py builds the figures and notebook. tests/test_pressure_velocity.py checks conservation, pressure gauge, PISO behavior, PIMPLE limits and the common steady solution. The expanded teaching supplement provides full source links and study boundaries.')
-    add('Lecture and code are English. Typography: Times New Roman. Prepared 09 October 2026.','small')
+    add('Lecture and code are English. Typography: Times New Roman with vector mathematical notation. Prepared 09 October 2026; equation typography revised 15 October 2026.','small')
     def footer(c,doc):
         c.saveState();c.setFont('TNR',9);c.setLineWidth(.4)
         if doc.page>1:

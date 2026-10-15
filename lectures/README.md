@@ -6,6 +6,10 @@ One row per lecture, in course order. The PDF is the authoritative rendered
 lecture for each release; editable sources live in `source/` where available.
 Page counts are those of the current files.
 
+Week 1.2 uses vector mathematical typesetting, revised 15 October 2026.
+Its editable PDF builder is [qa/build_week01_2.py](../qa/build_week01_2.py),
+with the equation renderer in [qa/week01_2_math.py](../qa/week01_2_math.py).
+
 | Week | Lecture (pages) | Main topics | Companion notebooks | Editable source |
 | --- | --- | --- | --- | --- |
 | 1 | [Numerical foundations](week01_numerical_foundations.pdf) (27) | Continuity and momentum, nondimensionalization, streamfunction/vorticity derivations, finite differences, wall conditions, coupled iteration, convergence, Ghia validation | `notebooks/week01/` | [LaTeX](source/week01_numerical_foundations.tex), [code walkthrough](source/week01_code_walkthrough.tex), [pressure appendix](source/week01_pressure_derivation.tex) |

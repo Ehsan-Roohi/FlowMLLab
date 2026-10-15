@@ -34,7 +34,7 @@
   "notebook_sha256": "41978d63edcc0549cf6a4511fab866ab5d669baaa18d627c1ea4840e8670e30a",
   "pdf": {
     "pages": 18,
-    "sha256": "ad75b3745d35b51a3d298d8f5b5efe3b0c102cc039570360a05fe6c98a83896d",
+    "sha256": "0a263b298f43215133a35710b4157b4e578d9e63dcbabdedf890115e55ba9197",
     "fonts": [
       "/AAAAAA+TimesNewRomanPS-BoldMT",
       "/AAAAAA+TimesNewRomanPS-ItalicMT",
@@ -46,6 +46,22 @@
       "all_pages_reviewed": 18,
       "flowcharts_reviewed": 3,
       "result": "Final rendered pages reviewed: no clipping, overlap or missing Times New Roman glyphs. Literature, higher-Re plan and measured-study table checked."
+    },
+    "vector_equations": true,
+    "typography_revision": {
+      "date": "2026-10-15",
+      "previous_pdf_sha256": "ad75b3745d35b51a3d298d8f5b5efe3b0c102cc039570360a05fe6c98a83896d",
+      "pages": 18,
+      "vector_equation_paths_by_page": {
+        "2": 56,
+        "3": 75,
+        "4": 81,
+        "6": 69,
+        "14": 34
+      },
+      "text_images_and_vector_paths_within_page_bounds": true,
+      "visual_review": "All 18 pages rendered and reviewed; equation and flowchart pages additionally inspected.",
+      "scope": "Typesetting only. Numerical solver, retained fields and executed notebook are unchanged; historical numerical checks were not rerun."
     }
   },
   "preserved_week1_baseline_sha256": {

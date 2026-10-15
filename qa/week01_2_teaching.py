@@ -32,24 +32,24 @@ def flowchart(method):
     if method=='simple':
         nodes=[('Initialize q, p; choose relaxation','box'),
             ('Assemble steady momentum A, b\nApply equation relaxation to A and b','box'),
-            ('Predict q*: solve A q* = b - Gp','box'),
-            ("Solve pressure correction\nL p' = -D q*; L = -D d G",'box'),
-            ("Correct face velocity fully\nq = q* - d G p'",'box'),
-            ("Relax pressure: p = p + alpha_p p'\nSet pressure mean to zero",'box'),
+            (r'Predict $q^{*}$: solve $Aq^{*}=b-Gp$','box'),
+            ("Solve pressure correction\n"+r"$Lp^{\prime}=-Dq^{*};\quad L=-DdG$",'box'),
+            ("Correct face velocity fully\n"+r"$q=q^{*}-dGp^{\prime}$",'box'),
+            (r"Relax pressure: $p\leftarrow p+\alpha_p p^{\prime}$"+"\nSet pressure mean to zero",'box'),
             ('Momentum AND continuity\nbelow tolerances?','decision'),
             ('Accept steady solution','end')]
         loops=[(6,1,.95,'No')]
         title='SIMPLE: a steady coupling iteration'
-        caption='The iteration index is not physical time. d = 1 / diag(A).'
+        caption=r'The iteration index is not physical time. $d_i=1/A_{ii}$.'
     elif method=='piso':
         nodes=[('Initialize q, p, physical time','box'),
             ('Store immutable old-time velocities\nChoose dt; keep them fixed within this step','box'),
-            ('Assemble BE A, b; predict A q* = b - Gp\nReset the inner counter; keep A fixed','box'),
-            ('Recompute H(q) = b - offdiag(A) q\nKeep the predictor matrix A fixed','box'),
-            ('Solve absolute pressure\nL p = -D(d H); L = -D d G','box'),
-            ('Correct q = d(H - Gp)\nIncrement inner correction counter','box'),
+            (r'Assemble BE $A,b$; predict $Aq^{*}=b-Gp$'+'\nReset the inner counter; keep A fixed','box'),
+            (r'Recompute $H(q)=b-\mathrm{offdiag}(A)q$'+'\nKeep the predictor matrix A fixed','box'),
+            ('Solve absolute pressure\n'+r'$Lp=-D(dH);\quad L=-DdG$','box'),
+            (r'Correct $q=d(H-Gp)$'+'\nIncrement inner correction counter','box'),
             ('All pressure corrections\ncompleted?','decision'),
-            ('Accept the physical step; t = t + dt','box'),
+            (r'Accept the physical step; $t\leftarrow t+\Delta t$','box'),
             ('Requested end time or\nsteady target reached?','decision'),
             ('Finish and report residuals','end')]
         loops=[(6,3,.95,'No'),(8,1,.05,'No')]
@@ -59,11 +59,11 @@ def flowchart(method):
         nodes=[('Initialize q, p, physical time','box'),
             ('Store immutable old-time velocities\nReset the outer counter; choose dt','box'),
             ('Rebuild backward-Euler A, b\nPredict q; reset the inner counter','box'),
-            ('H update; L p = -D(dH); q = d(H - Gp)\nIncrement inner correction counter','box'),
+            (r'$H$ update; $Lp=-D(dH);\quad q=d(H-Gp)$'+'\nIncrement inner correction counter','box'),
             ('All inner pressure\ncorrections completed?','decision'),
             ('Increment the outer counter','box'),
             ('All outer momentum\nloops completed?','decision'),
-            ('Accept the physical step; t = t + dt','box'),
+            (r'Accept the physical step; $t\leftarrow t+\Delta t$','box'),
             ('Requested end time or\nsteady target reached?','decision'),
             ('Finish and report residuals','end')]
         loops=[(4,3,.86,'No'),(6,2,.96,'No'),(8,1,.04,'No')]
