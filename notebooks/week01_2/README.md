@@ -129,3 +129,18 @@ This is an independently written educational solver with explicit attribution:
 
 No external implementation is copied into this module. Validation records
 retain configuration, stopping condition, source hashes and field hashes.
+
+## Higher-Re experimental investigation
+
+The notebook now includes a separate, opt-in Re=400/1000 investigation with
+explicit student deliverables, error targets, refinement, coupling controls,
+retained evidence and failure reporting. It uses
+`flowmllab.pressure_velocity_experiments.ExperimentalConfig`; the original
+Re=100 configuration, solver and retained results remain unchanged.
+
+See [measured higher-Re results](../../results/week01_2_higher_re/README.md).
+Run `python qa/run_week01_2_higher_re.py --cells 32` to reproduce the first
+comparison. Refine with `--cells 64 --methods simple`, then decide whether
+128 cells are justified. Central/upwind comparisons must use the same mesh.
+This is a 2D steady experimental study, not a turbulence or transient-accuracy
+qualification. There is no universal maximum Re for a coupling algorithm.

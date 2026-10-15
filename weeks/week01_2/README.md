@@ -18,6 +18,9 @@ streamfunction-vorticity notebook remains unchanged.
    outer coefficient updates. Inspect the measured one-step coupling study.
 7. Discuss the comparative papers and design a matched-error transient test
    before expanding the Reynolds-number qualification.
+8. Use the notebook's separate experimental Re=400/1000 section: reproduce the
+   retained runs, refine 32 to 64 cells, and compare central/upwind errors.
+   [Measured higher-Re study](../../results/week01_2_higher_re/README.md).
 
 [Expanded comparison, flowcharts and teaching plan](../../notebooks/week01_2/COMPARISON_AND_TEACHING.md)
 
@@ -27,6 +30,8 @@ Velocity and pressure fields, Ghia centerlines, momentum and continuity
 residuals, grid/refinement evidence and one scientifically bounded method choice.
 Distinguish steady iteration from physical time. Only Re=100 steady behavior
 is qualified; the next experiment is temporal refinement for a changing lid.
+The new higher-Re section is an experimental 2D steady study with explicit
+accuracy gates and student deliverables, rather than a turbulence qualification.
 
 [Source](../../flowmllab/pressure_velocity.py) | [Tests](../../tests/test_pressure_velocity.py) | [Retained configurations and field hashes](../../results/week01_2_pressure_velocity/manifest.json)
 

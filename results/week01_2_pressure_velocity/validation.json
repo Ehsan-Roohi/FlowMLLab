@@ -13,9 +13,9 @@
   "field_checksums_verified": true,
   "source_checksums_verified": true,
   "default_notebook": {
-    "executed_code_cells": 4,
+    "executed_code_cells": 6,
     "errors": 0,
-    "png_outputs": 6
+    "png_outputs": 9
   },
   "fresh_all_three_n32_notebook": {
     "executed_code_cells": 4,
@@ -31,7 +31,7 @@
     "scope": "Within-step algebraic consistency only; not temporal truncation error or higher-Re validation."
   },
   "flowchart_count": 3,
-  "notebook_sha256": "41978d63edcc0549cf6a4511fab866ab5d669baaa18d627c1ea4840e8670e30a",
+  "notebook_sha256": "cffed29b737906be533f2137a9369ae3b5fe657b262ef8b1465a9b454e5eff33",
   "pdf": {
     "pages": 18,
     "sha256": "0a263b298f43215133a35710b4157b4e578d9e63dcbabdedf890115e55ba9197",
@@ -68,5 +68,22 @@
     "notebooks/week01/03_cavity_ghia.ipynb": "97c4492758f9596918d7aacda1791f4e478d2986e7a20903ac9fa70404d82c58",
     "common/w4utils.py": "443204009292c51a36f63ec734c982b7a14741c0b8af0335ae30b506ea523b55"
   },
-  "qualification": "Local CPU notebook execution; hosted Colab execution was not tested. Only Re=100 steady flow accuracy is benchmark-qualified; the added one-step study measures algebraic consistency. No higher-Re or temporal-accuracy qualification. FV benchmark refinement trend is nonmonotone."
+  "qualification": "Local CPU notebook execution; hosted Colab execution was not tested. Only Re=100 steady flow accuracy is benchmark-qualified; the added one-step study measures algebraic consistency. No higher-Re or temporal-accuracy qualification. FV benchmark refinement trend is nonmonotone.",
+  "higher_re_notebook_extension": {
+    "date": "2026-10-15",
+    "default_execution": {
+      "executed_code_cells": 6,
+      "errors": 0,
+      "png_outputs": 9
+    },
+    "fresh_interactive_branch_integration_test": {
+      "cells": 8,
+      "executed_code_cells": 2,
+      "errors": 0,
+      "png_outputs": 3,
+      "accuracy_claim": false
+    },
+    "unit_tests_passed": 7,
+    "scope": "Experimental extension only; original Re=100 source and fields unchanged."
+  }
 }

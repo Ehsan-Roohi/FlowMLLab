@@ -179,6 +179,8 @@ Independent implementation informed by [PySIMPLE](https://github.com/VishalKanda
 ''')
     nb=nbf.v4.new_notebook(cells=cells,metadata={'kernelspec':{'name':'python3','display_name':'Python 3','language':'python'},
         'language_info':{'name':'python','version':'3.12'},'course_module':'1.2','reynolds':100})
+    from week01_2_higher_re_notebook import append_higher_re
+    append_higher_re(nb)
     nbf.write(nb,NOTE)
 
 

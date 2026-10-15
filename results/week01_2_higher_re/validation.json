@@ -1,0 +1,67 @@
+{
+  "date": "2026-10-15",
+  "retained_runs": 9,
+  "converged": 9,
+  "field_hashes_verified": true,
+  "reference_entries_visually_checked": true,
+  "benchmark_diagnostics_verified": true,
+  "coupling_comparisons": [
+    {
+      "Re": 400,
+      "method": "pimple",
+      "all_converged": true,
+      "linf_vs_simple": {
+        "u": 2.5498249862643263e-06,
+        "v": 1.9944749000133655e-06,
+        "p": 9.261913690022938e-07
+      }
+    },
+    {
+      "Re": 400,
+      "method": "piso",
+      "all_converged": true,
+      "linf_vs_simple": {
+        "u": 1.2171354965562209e-06,
+        "v": 9.760884870368969e-07,
+        "p": 4.671123188804138e-07
+      }
+    },
+    {
+      "Re": 1000,
+      "method": "pimple",
+      "all_converged": true,
+      "linf_vs_simple": {
+        "u": 9.042003154879907e-06,
+        "v": 9.083306753421283e-06,
+        "p": 3.6136871696887396e-06
+      }
+    },
+    {
+      "Re": 1000,
+      "method": "piso",
+      "all_converged": true,
+      "linf_vs_simple": {
+        "u": 8.189491406906946e-06,
+        "v": 8.225823817153977e-06,
+        "p": 3.2770751814820143e-06
+      }
+    }
+  ],
+  "scope": "Experimental 2D steady study; local overlapping jobs; no controlled wall-time ranking.",
+  "notebook_checks": {
+    "date": "2026-10-15",
+    "default_execution": {
+      "executed_code_cells": 6,
+      "errors": 0,
+      "png_outputs": 9
+    },
+    "fresh_interactive_branch_integration_test": {
+      "cells": 8,
+      "executed_code_cells": 2,
+      "errors": 0,
+      "png_outputs": 3,
+      "accuracy_claim": false
+    },
+    "unit_tests_passed": 7
+  }
+}
