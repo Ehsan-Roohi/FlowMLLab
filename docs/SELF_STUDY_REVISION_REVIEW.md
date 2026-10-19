@@ -55,6 +55,12 @@ do not require Microsoft font installation. The inventory uses portable POSIX
 paths on Windows as well as Linux. PDF authoring still requires genuine locally
 installed Times New Roman, with no font binaries redistributed.
 
+Execution verification targets the freshly executed output tree using
+`qa/verify_transformer_course.py --notebook-root build/ci-course`; source notebooks
+are allowed to have cleared stale outputs. Retained-evidence checks run separately
+with `--evidence-only`, followed by all original execution/answer assertions on
+the new notebook outputs.
+
 ## Evidence boundaries
 
 The upstream review reports 50 regression tests and 338 sequential Python cell

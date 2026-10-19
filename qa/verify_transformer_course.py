@@ -7,7 +7,7 @@ import nbformat
 from flowmllab import transformer_course as lab
 
 ROOT=Path(__file__).resolve().parents[1]
-def verify(evidence=None,notebooks=True):
+def verify(evidence=None,notebooks=True,notebook_root=None):
     out=Path(evidence) if evidence else ROOT/'results/transformer_course_v3'
     manifest=json.loads((out/'manifest.json').read_text())
     for name,digest in manifest['source_hashes'].items():
@@ -33,8 +33,9 @@ def verify(evidence=None,notebooks=True):
                 assert len(union)==labels['total_target_labels'] and max(union)<160
             checked+=1
     if notebooks:
+        notebook_root=Path(notebook_root) if notebook_root else ROOT
         for w in range(17,23):
-            for p in (ROOT/f'notebooks/week{w}/W{w}_CFD_Transformer.ipynb',ROOT/f'instructor/week{w}/W{w}_Solutions.ipynb'):
+            for p in (notebook_root/f'notebooks/week{w}/W{w}_CFD_Transformer.ipynb',notebook_root/f'instructor/week{w}/W{w}_Solutions.ipynb'):
                 nb=nbformat.read(p,as_version=4);nbformat.validate(nb)
                 cells=[c for c in nb.cells if c.cell_type=='code']
                 assert [c.execution_count for c in cells]==list(range(1,len(cells)+1)),p
@@ -48,5 +49,5 @@ def verify(evidence=None,notebooks=True):
     return checked
 
 if __name__=='__main__':
-    parser=argparse.ArgumentParser();parser.add_argument('--evidence',type=Path);parser.add_argument('--evidence-only',action='store_true');args=parser.parse_args()
-    verify(args.evidence,not args.evidence_only)
+    parser=argparse.ArgumentParser();parser.add_argument('--evidence',type=Path);parser.add_argument('--evidence-only',action='store_true');parser.add_argument('--notebook-root',type=Path,help='Check fresh executed notebooks from this output tree instead of source notebooks');args=parser.parse_args()
+    verify(args.evidence,not args.evidence_only,args.notebook_root)

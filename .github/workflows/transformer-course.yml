@@ -28,7 +28,7 @@ jobs:
         run: python qa/audit_transformer_exercises.py --report exercise-ci.json
       - name: Stored evidence and curriculum consistency
         run: |
-          python qa/verify_transformer_course.py
+          python qa/verify_transformer_course.py --evidence-only
           python qa/verify_transformer_curriculum.py
           python qa/build_transformer_course.py --check
       - name: Checkpoint inference with both criteria reported
@@ -37,6 +37,8 @@ jobs:
         run: python qa/ablate_transformer_sensors.py --verify --criterion scientific --report ablation-ci.json
       - name: Twelve fresh notebook kernels
         run: python qa/build_transformer_course.py --execute --notebooks-only --output build/ci-course
+      - name: Verify fresh executed notebooks and instructor answers
+        run: python qa/verify_transformer_course.py --notebook-root build/ci-course
       - uses: actions/upload-artifact@v4
         if: always()
         with:
