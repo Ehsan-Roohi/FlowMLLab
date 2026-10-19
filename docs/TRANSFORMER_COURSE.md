@@ -11,7 +11,7 @@ smaller pretraining demonstration.
 | 17 | Attention as a learned kernel | Scaled attention; Permutation experiment; Temperature limit; Build an attention investigation |
 | 18 | Next-character and next-state training | Shift targets; Cross-entropy and perplexity; Causal prefix invariant; Evaluate a language model by position |
 | 19 | Information and observation design | Invert patching; Representation floor; Gappy solve; Audit sensor reconstruction against its floor |
-| 20 | Learning with missing sensors | Cardinality-preserving token dropout; Capacity accounting; Training budget diagnosis; Implement validation-only checkpoint selection |
+| 20 | Learning with missing sensors | Consistent sensor-token dropout; Capacity accounting; Training budget diagnosis; Implement validation-only checkpoint selection |
 | 21 | Autonomous dynamics | Autonomous state update; Separate representation and dynamics; Frequency-fit diagnostic; Implement an autonomous rollout audit |
 | 22 | Transfer claim audit | Audit information budgets; Match compute accounting; Detect a representation-limited result; Build a defensible transfer comparison |
 

@@ -99,3 +99,6 @@ rewrite restored or clarified. Earlier editions of this lecture are kept under
 See the [separate supplement inventory](../docs/COURSE_INVENTORY.md#optional-self-study)
 for available notes and PDFs. These do not increase the numbered course length
 or replace its required assessments.
+
+- [Geometry/time operator evaluation PDF](optional_geometry_time_bridge.pdf)
+  · [Editable lecture](source/optional_geometry_time_bridge.md).

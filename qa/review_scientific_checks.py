@@ -54,6 +54,7 @@ class ScientificChecks(unittest.TestCase):
                 np.testing.assert_array_equal(loaded['u'][index], predictions[re][0])
                 expected = deeponet.field_report(data, re, predictions[re])
                 self.assertAlmostEqual(a.iloc[index].relative_L2_uv, expected['relative_L2_uv'])
+            loaded.close()  # Release the archive before TemporaryDirectory cleanup on Windows.
             self.assertEqual(protocol['dataset_sha256'], contracts.dataset_fingerprint(data))
             with self.assertRaises(FileExistsError):
                 deeponet.evaluate_fresh_operator(data, [bundle], chosen, Path(directory)/'first')

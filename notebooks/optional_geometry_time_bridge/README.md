@@ -17,10 +17,10 @@ you implement them and enable `RUN_EXERCISES`.
 ## Run locally
 
 Use Python 3.10–3.13 in a full repository checkout or extracted ZIP. In the
-repository root, install the minimal notebook dependencies:
+repository root, install the package and notebook dependencies:
 
 ```bash
-python -m pip install numpy matplotlib jupyterlab
+python -m pip install -e . jupyterlab
 python -m jupyter lab notebooks/optional_geometry_time_bridge/Geometry_Time_Operator_Bridge.ipynb
 ```
 

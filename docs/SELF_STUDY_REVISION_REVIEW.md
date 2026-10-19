@@ -35,6 +35,9 @@ Independent integration checks confirmed:
 - The generated inventory and 316 primary-document targets passed validation:
   34 active lecture PDFs, 51 student notebooks, one historical student companion,
   and one separately listed optional geometry/time module.
+- An independent Windows/Python 3.12 package/QA run passed 284 tests, with 11
+  optional-runtime tests skipped. Revised Week 14 and Week 15 notebooks also
+  completed in separate fresh Jupyter kernels (8 and 17 code cells).
 
 ## Substantive changes
 
@@ -60,6 +63,16 @@ Execution verification targets the freshly executed output tree using
 are allowed to have cleared stale outputs. Retained-evidence checks run separately
 with `--evidence-only`, followed by all original execution/answer assertions on
 the new notebook outputs.
+
+The general notebook CI gate now includes Weeks 1.2, 4 DeepONet, 14, 15, 16
+and both optional bridge editions, in addition to its previous six lessons.
+Week 14's strict executed-cell check targets the fresh output notebook. Source
+validation accepts cleared stale outputs; scientific hashes and negative gates
+are still checked in both modes. The Week 16 source contract now includes the
+added Taylor–Maccoll cell. Missing optional notebook/PDF index links, the old
+Week 20 task title and the optional module's incomplete installation command
+were corrected during integration. A NumPy archive handle in the scientific
+check was closed explicitly for Windows temporary-directory cleanup.
 
 ## Evidence boundaries
 

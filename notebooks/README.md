@@ -202,3 +202,6 @@ Separate solutions are in the [instructor directory](../instructor/).
 The [separate inventory](../docs/COURSE_INVENTORY.md#optional-self-study) records
 available optional notebooks and their prerequisites. They are not required
 units in the Weeks 1–22 sequence.
+
+- [Geometry/time operator evaluation](optional_geometry_time_bridge/Geometry_Time_Operator_Bridge.ipynb)
+  · [Local setup and prerequisites](optional_geometry_time_bridge/README.md).
