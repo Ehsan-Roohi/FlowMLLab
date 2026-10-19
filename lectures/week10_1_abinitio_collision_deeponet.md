@@ -1,6 +1,6 @@
 # Week 10.1 — Ab initio collision DeepONet
 
-Supplemental reading after Week 10; no new executable training notebook.
+Supplemental reading after Week 10. The [collision-map teaching notebook](../notebooks/week10_1/W10_1_Collision_Map_Surrogate_Audit.ipynb) trains a small Lennard-Jones analog; it is separate from the retained ab initio research evidence.
 [Retained colored fields and surface profiles](../results/abinitio_deeponet_cylinder/README.md).
 
 ## Research source

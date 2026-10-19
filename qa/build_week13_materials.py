@@ -34,9 +34,6 @@ RESULTS = ROOT / "results/week13_rectangular_pinn"
 CASES = ((100, 1), (400, 1), (100, 2), (400, 2))
 NAME = "week13_rectangular_cavity_pinn"
 
-pdfmetrics.registerFont(TTFont("FlowSerif", font_manager.findfont("DejaVu Serif")))
-pdfmetrics.registerFont(TTFont("FlowSerifBold", font_manager.findfont(
-    font_manager.FontProperties(family="DejaVu Serif", weight="bold"))))
 
 EQUATIONS = {
     "mapping": [r"$D=H/L,\qquad x=X/L,\qquad \eta=Y/H,\qquad y/L=D\eta$",
@@ -90,28 +87,34 @@ def result_rows(records):
 
 
 def build_pdf(records, outdir):
+    if __package__:
+        from .lecture_typography import register_reportlab, configure_matplotlib, black_paragraph_styles
+    else:
+        from lecture_typography import register_reportlab, configure_matplotlib, black_paragraph_styles
+    register_reportlab("CourseTNR")
+    configure_matplotlib()
     outdir.mkdir(parents=True, exist_ok=True)
     width = A4[0] - 104
     styles = {
-        "body": ParagraphStyle("body", fontName="FlowSerif", fontSize=9.7, leading=12.8,
+        "body": ParagraphStyle("body", fontName="CourseTNR", fontSize=9.7, leading=12.8,
                                alignment=4, spaceAfter=5.5),
-        "title": ParagraphStyle("title", fontName="FlowSerifBold", fontSize=23, leading=27,
-                                textColor=colors.HexColor("#17384d"), spaceAfter=8, keepWithNext=True),
-        "subtitle": ParagraphStyle("subtitle", fontName="FlowSerif", fontSize=16, leading=20,
+        "title": ParagraphStyle("title", fontName="CourseTNRB", fontSize=23, leading=27,
+                                textColor=colors.black, spaceAfter=8, keepWithNext=True),
+        "subtitle": ParagraphStyle("subtitle", fontName="CourseTNR", fontSize=16, leading=20,
                                    spaceAfter=11, keepWithNext=True),
-        "heading": ParagraphStyle("heading", fontName="FlowSerifBold", fontSize=12.5, leading=15.5,
-                                  textColor=colors.HexColor("#17384d"), spaceBefore=9, spaceAfter=5,
+        "heading": ParagraphStyle("heading", fontName="CourseTNRB", fontSize=12.5, leading=15.5,
+                                  textColor=colors.black, spaceBefore=9, spaceAfter=5,
                                   keepWithNext=True),
-        "caption": ParagraphStyle("caption", fontName="FlowSerif", fontSize=8.8, leading=11.1,
+        "caption": ParagraphStyle("caption", fontName="CourseTNR", fontSize=8.8, leading=11.1,
                                   spaceAfter=8),
-        "cell": ParagraphStyle("cell", fontName="FlowSerif", fontSize=8.0, leading=9.8),
-        "reference": ParagraphStyle("reference", fontName="FlowSerif", fontSize=7.7, leading=9.3,
+        "cell": ParagraphStyle("cell", fontName="CourseTNR", fontSize=8.0, leading=9.8),
+        "reference": ParagraphStyle("reference", fontName="CourseTNR", fontSize=7.7, leading=9.3,
                                     spaceAfter=2.5),
     }
 
     def para(text, style="body"):
         value = escape(text)
-        value = re.sub(r"(https://[^\s]+)", r'<link href="\1" color="#14648a">\1</link>', value)
+        value = re.sub(r"(https://[^\s]+)", r'<link href="\1" color="#000000">\1</link>', value)
         return Paragraph(value, styles[style])
 
     def raster(fig, max_height=245):
@@ -222,7 +225,7 @@ def build_pdf(records, outdir):
                 ax.set(title=f"Re={record['re']}, D={record['depth']}", xlabel="optimizer step", ylabel="residual RMS")
                 ax.grid(which="both", alpha=.2)
             axes[0, 0].legend(frameon=False, fontsize=8)
-            fig.savefig(RESULTS / "week13_optimizer_history.png", dpi=260,
+            fig.savefig(outdir / "week13_optimizer_history.png", dpi=260,
                         bbox_inches="tight", facecolor="white")
             caption = "Figure 3. Adam (left of the orange line) followed by SSBroyden2. Held-out full-domain and top-corner residuals prevent masked training loss from being mistaken for global accuracy."
         else:
@@ -241,7 +244,7 @@ def build_pdf(records, outdir):
                     c0, c1 = max(0, cols.min()-pad), min(field.shape[1], cols.max()+pad+1)
                     field = field[r0:r1, c0:c1]
                 ax.imshow(field); ax.axis("off"); ax.set_title(f"Re={record['re']}, D={record['depth']}", fontsize=10)
-            fig.savefig(RESULTS / "week13_matrix.png", dpi=260,
+            fig.savefig(outdir / "week13_matrix.png", dpi=260,
                         bbox_inches="tight", facecolor="white")
             caption = "Figure 4. Retained case renders from the exact Unity jobs. These panels preserve geometric aspect ratio inside each source render. Square cases have CFD gates; deep cases are residual-audited hypotheses, not field validations."
         image = raster(fig, max_height=(325 if key == "losses" else 225) if key in ("losses", "fields") else (165 if key == "geometry" else 220))
@@ -249,10 +252,20 @@ def build_pdf(records, outdir):
 
     story = []; equation_number = 0; references = False
     for block in SOURCE.read_text(encoding="utf-8").strip().split("\n\n"):
+        block=block.strip()
         if block.startswith("@equation "):
             equation_number += 1; story.append(equation(block.split()[1], equation_number))
         elif block.startswith("@table "):
             story.append(make_table(block.split()[1]))
+        elif block.startswith("|"):
+            rows=[]
+            for line in block.splitlines():
+                values=[v.strip() for v in line.strip().strip("|").split("|")]
+                if all(set(v)<=set("-: ") for v in values):continue
+                rows.append([para(v,"cell") for v in values])
+            table=Table(rows,colWidths=[width*f for f in (.22,.07,.07,.29,.35)],repeatRows=1)
+            table.setStyle(TableStyle([("VALIGN",(0,0),(-1,-1),"TOP"),("BACKGROUND",(0,0),(-1,0),colors.HexColor("#eeeeee")),("GRID",(0,0),(-1,-1),.3,colors.grey),("TOPPADDING",(0,0),(-1,-1),5),("BOTTOMPADDING",(0,0),(-1,-1),5)]))
+            story.append(table)
         elif block.startswith("@figure "):
             story.append(figure(block.split()[1]))
         elif block.startswith("### "):
@@ -267,7 +280,7 @@ def build_pdf(records, outdir):
 
     def footer(canvas, document):
         canvas.saveState(); canvas.setStrokeColor(colors.HexColor("#b7c3cd")); canvas.setLineWidth(.4)
-        canvas.line(52, 43, A4[0]-52, 43); canvas.setFont("FlowSerif", 8.5)
+        canvas.line(52, 43, A4[0]-52, 43); canvas.setFont("CourseTNR", 8.5)
         canvas.drawString(52, 29, "FlowMLLab | Week 13 | Rectangular-cavity PINNs")
         canvas.drawRightString(A4[0]-52, 29, str(document.page)); canvas.restoreState()
 

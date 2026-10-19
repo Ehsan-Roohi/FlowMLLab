@@ -66,6 +66,22 @@ def model() -> object:
 
 
 def main() -> None:
+    import argparse
+    import tempfile
+    global OUT_DIR, OUT, OUT_SVG, METRICS
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--output', type=Path, help='Fresh output directory (default: temporary)')
+    args = parser.parse_args()
+    OUT_DIR = args.output or Path(tempfile.mkdtemp(prefix='flowmllab-nozzle-alignment-'))
+    retained = (ROOT/'results/nozzle_alignment_audit').resolve()
+    if OUT_DIR.resolve() == retained or retained in OUT_DIR.resolve().parents:
+        parser.error('Choose a fresh output directory; retained evidence is read-only.')
+    if OUT_DIR.exists() and any(OUT_DIR.iterdir()):
+        parser.error('Output directory must be empty or absent.')
+    OUT = OUT_DIR/'nozzle_alignment_impact.png'
+    OUT_SVG = OUT.with_suffix('.svg')
+    METRICS = OUT_DIR/'alignment_impact_metrics.json'
+    print('Fresh alignment-study output:', OUT_DIR)
     rng = np.random.default_rng(TRAINING_CASE_SEED)
     training_cases = list(zip(rng.uniform(0.28, 0.52, 24), rng.uniform(1.7, 4.0, 24)))
     records = [reference(*case) for case in training_cases]

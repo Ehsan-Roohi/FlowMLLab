@@ -257,7 +257,7 @@ Predict before running:
 The solver returns direct `u`, `v`, `p`, vorticity, force histories, density history, and sparse time snapshots. No field is synthesized by ML at this stage.
 """),
     code(r"""
-case100 = cases[100]
+case100 = cases[100]  # retained mapping is never mutated
 row100 = sweep.loc[sweep.Re == 100].iloc[0]
 print(json.dumps({k: case100["metadata"][k] for k in
                   ("relaxation_time", "lattice_mach", "blockage_ratio")}, indent=2))
@@ -280,9 +280,9 @@ if RUN_LIVE_CONTINUATION:
             statistics_start=0, perturbation=0.0, collision_model="trt",
             cylinder_boundary="bouzidi", restart_state=restart,
         )
-        for name in ("rho", "u", "v", "p", "vorticity"):
-            case100[name] = live[name]
-        print("Continued the saturated checkpoint by 1200 lattice steps.")
+        case100 = live  # fields, absolute times, force history and metadata from ONE run
+        print("Continued by 1200 lattice steps; figure uses continuation-only histories.")
+        print("Absolute lattice-time window:", case100['time'][[0, -1]])
     else:
         print("Checkpoint not present; displaying the retained saturated field.")
 """),

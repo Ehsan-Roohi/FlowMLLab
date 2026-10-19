@@ -95,3 +95,11 @@ is a spatial reconstruction experiment, not temporal forecasting. Before
 research claims, repeat across independent higher-resolution flows, degradation
 operators and physically justified diagnostic thresholds, with an independent
 structure reference and shock-containing compressible fields where appropriate.
+
+
+## Notebook execution modes
+
+Default Run All audits retained evidence without training. `RUN_SMALL_TRAINING`
+opts into a distinct 30-epoch seed-11 classroom run (Adam 0.003, batch 8, every
+12th frame); it must not be reported as reproducing the three-seed protocol above.
+`RETRAIN` separately opts into that full protocol and writes to a fresh path.

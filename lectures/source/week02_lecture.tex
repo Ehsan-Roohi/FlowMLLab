@@ -74,9 +74,9 @@
   frame=single,
   framerule=0.3pt,
   backgroundcolor=\color{lightgraybox},
-  keywordstyle=\color{fluidblue}\bfseries,
-  commentstyle=\color{fluidgreen!70!black},
-  stringstyle=\color{fluidred!70!black},
+  keywordstyle=\color{black}\bfseries,
+  commentstyle=\color{black},
+  stringstyle=\color{black},
   showstringspaces=false,
   tabsize=2
 }
@@ -85,6 +85,9 @@
 Neural Networks for Fluid Surrogates and Rarefied-Flow Variables}
 \author{Instructor: Ehsan Roohi\\M\&I-ENG 690A: AI in Fluid Mechanics}
 \date{Summer Online Course}
+
+\input{lectures/source/lecture_typography.tex}
+\tcbset{coltitle=black,colbacktitle=black!5}
 
 \begin{document}
 \maketitle
@@ -145,12 +148,12 @@ After reading this lecture and completing the lab, students should be able to:
 \begin{tikzpicture}[node distance=5mm,>=Latex,every node/.style={font=\small}]
 \tikzstyle{week}=[draw,rounded corners,align=center,minimum width=2.55cm,minimum height=1.05cm,fill=lightgraybox]
 \tikzstyle{thisweek}=[draw=fluidblue,very thick,rounded corners,align=center,minimum width=2.85cm,minimum height=1.15cm,fill=lightblue]
-\node[week] (w1) {Week 1\\Fluids + Python\\CFD field};
-\node[thisweek,right=of w1] (w2) {Week 2\\Neural networks\\Rarefied variables};
-\node[week,right=of w2] (w3) {Week 3\\Kinetic theory\\DSMC};
-\node[week,below=of w3] (w4) {Week 4\\Surrogates\\CFD/rarefied};
-\node[week,left=of w4] (w5) {Week 5\\PINNs\\DeepONet};
-\node[week,left=of w5] (w6) {Week 6\\Fokker-Planck\\Projects};
+\node[week,text=black] (w1) {Week 1\\Fluids + Python\\CFD field};
+\node[thisweek,right=of w1,text=black] (w2) {Week 2\\Neural networks\\Rarefied variables};
+\node[week,right=of w2,text=black] (w3) {Week 3\\Kinetic theory\\DSMC};
+\node[week,below=of w3,text=black] (w4) {Week 4\\Surrogates\\CFD/rarefied};
+\node[week,left=of w4,text=black] (w5) {Week 5\\PINNs\\DeepONet};
+\node[week,left=of w5,text=black] (w6) {Week 6\\Fokker-Planck\\Projects};
 \draw[->,thick] (w1)--(w2);
 \draw[->,thick] (w2)--(w3);
 \draw[->,thick] (w3)--(w4);
@@ -292,17 +295,17 @@ Here $w_1$, $w_2$, and $b$ are the same parameters used in Eq.~\eqref{eq:linear_
 
 \begin{center}
 \begin{tikzpicture}[scale=0.9,>=Latex]
-\draw[->] (-4.2,0) -- (2.2,0) node[right] {$x_1=\log_{10}(\kn)$};
-\draw[->] (0,-0.2) -- (0,3.1) node[above] {$x_2=\alpha$};
-\draw[thick,fluidblue] (-3.5,2.7) -- (1.8,0.6) node[right] {$w_1x_1+w_2x_2+b=0$};
-\fill[fluidgreen] (-3,2.0) circle (2pt) node[above left] {0};
-\fill[fluidgreen] (-2.4,1.2) circle (2pt) node[left] {0};
-\fill[fluidgreen] (-1.9,2.5) circle (2pt) node[above] {0};
-\fill[fluidred] (-0.3,1.0) circle (2pt) node[below] {1};
-\fill[fluidred] (0.6,1.5) circle (2pt) node[right] {1};
-\fill[fluidred] (1.2,0.8) circle (2pt) node[right] {1};
-\node[align=center] at (-2.8,0.45) {continuum-like\\class 0};
-\node[align=center] at (1.05,2.45) {rarefied\\class 1};
+\draw[->] (-4.2,0) -- (2.2,0) node[right,text=black] {$x_1=\log_{10}(\kn)$};
+\draw[->] (0,-0.2) -- (0,3.1) node[above,text=black] {$x_2=\alpha$};
+\draw[thick,fluidblue] (-3.5,2.7) -- (1.8,0.6) node[right,text=black] {$w_1x_1+w_2x_2+b=0$};
+\fill[fluidgreen] (-3,2.0) circle (2pt) node[above left,text=black] {0};
+\fill[fluidgreen] (-2.4,1.2) circle (2pt) node[left,text=black] {0};
+\fill[fluidgreen] (-1.9,2.5) circle (2pt) node[above,text=black] {0};
+\fill[fluidred] (-0.3,1.0) circle (2pt) node[below,text=black] {1};
+\fill[fluidred] (0.6,1.5) circle (2pt) node[right,text=black] {1};
+\fill[fluidred] (1.2,0.8) circle (2pt) node[right,text=black] {1};
+\node[align=center,text=black] at (-2.8,0.45) {continuum-like\\class 0};
+\node[align=center,text=black] at (1.05,2.45) {rarefied\\class 1};
 \end{tikzpicture}
 \end{center}
 
@@ -332,15 +335,15 @@ Here $o$ is the neuron output and $\phi$ is the activation function.  The activa
 \node (x2) at (0,0.45) {$x_2$};
 \node (xd) at (0,-0.25) {$\vdots$};
 \node (xm) at (0,-1.05) {$x_m$};
-\node[circle,draw,minimum size=1.15cm,fill=lightblue] (sum) at (2.5,0.15) {$\sum$};
-\node[rectangle,draw,rounded corners,minimum width=1.2cm,minimum height=0.8cm,fill=lightgreen] (act) at (4.4,0.15) {$\phi$};
+\node[circle,draw,minimum size=1.15cm,fill=lightblue,text=black] (sum) at (2.5,0.15) {$\sum$};
+\node[rectangle,draw,rounded corners,minimum width=1.2cm,minimum height=0.8cm,fill=lightgreen,text=black] (act) at (4.4,0.15) {$\phi$};
 \node (out) at (6.0,0.15) {$o$};
-\draw[->] (x1) -- node[above] {$w_1$} (sum);
-\draw[->] (x2) -- node[above] {$w_2$} (sum);
-\draw[->] (xm) -- node[below] {$w_m$} (sum);
+\draw[->] (x1) -- node[above,text=black] {$w_1$} (sum);
+\draw[->] (x2) -- node[above,text=black] {$w_2$} (sum);
+\draw[->] (xm) -- node[below,text=black] {$w_m$} (sum);
 \node (b) at (2.5,-1.75) {$b$};
 \draw[->] (b) -- (sum);
-\draw[->] (sum) -- node[above] {$z$} (act);
+\draw[->] (sum) -- node[above,text=black] {$z$} (act);
 \draw[->] (act) -- (out);
 \end{tikzpicture}
 \end{center}
@@ -566,14 +569,14 @@ The learning rate $\eta$ in Eqs.~\eqref{eq:gd_w} and \eqref{eq:gd_b} controls ho
 
 \begin{center}
 \begin{tikzpicture}[scale=0.95,>=Latex,every node/.style={font=\small}]
-\draw[->] (0,0) -- (10,0) node[right] {training step};
-\draw[->] (0,0) -- (0,3.0) node[above] {loss};
+\draw[->] (0,0) -- (10,0) node[right,text=black] {training step};
+\draw[->] (0,0) -- (0,3.0) node[above,text=black] {loss};
 \draw[fluidgreen,thick] plot[smooth] coordinates {(0.3,2.7) (1.5,1.8) (2.8,1.15) (4.2,0.75) (6.2,0.45) (9.2,0.25)};
 \draw[fluidblue,thick,dashed] plot[smooth] coordinates {(0.3,2.7) (1.7,2.45) (3.0,2.25) (5.0,2.0) (7.2,1.82) (9.2,1.68)};
 \draw[fluidred,thick,dotted] plot[smooth] coordinates {(0.3,2.4) (1.3,0.6) (2.3,2.7) (3.4,0.5) (4.5,2.8) (5.5,0.4) (6.8,2.9) (8.2,0.6) (9.2,2.6)};
-\node[fluidgreen] at (8.0,0.65) {reasonable $\eta$};
-\node[fluidblue] at (7.9,1.95) {too small};
-\node[fluidred] at (7.4,2.75) {too large};
+\node[fluidgreen,text=black] at (8.0,0.65) {reasonable $\eta$};
+\node[fluidblue,text=black] at (7.9,1.95) {too small};
+\node[fluidred,text=black] at (7.4,2.75) {too large};
 \end{tikzpicture}
 \end{center}
 
@@ -615,13 +618,13 @@ Here $\widehat{\by}$ is the model prediction, $L$ is the index of the output lay
 \begin{center}
 \begin{tikzpicture}[>=Latex,node distance=1cm,every node/.style={font=\small}]
 \tikzstyle{neuron}=[circle,draw,minimum size=6.5mm,fill=white]
-\node[neuron,fill=lightblue] (x1) at (0,1) {$x_1$};
-\node[neuron,fill=lightblue] (x2) at (0,0) {$x_2$};
-\node[neuron,fill=lightblue] (x3) at (0,-1) {$x_3$};
-\foreach \i/\y in {1/1.5,2/0.5,3/-0.5,4/-1.5}{\node[neuron,fill=lightgreen] (h1\i) at (2.3,\y) {};}
-\foreach \i/\y in {1/1.1,2/0.0,3/-1.1}{\node[neuron,fill=lightgreen] (h2\i) at (4.5,\y) {};}
-\node[neuron,fill=lightred] (y1) at (6.7,0.45) {$\hat y_1$};
-\node[neuron,fill=lightred] (y2) at (6.7,-0.45) {$\hat y_2$};
+\node[neuron,fill=lightblue,text=black] (x1) at (0,1) {$x_1$};
+\node[neuron,fill=lightblue,text=black] (x2) at (0,0) {$x_2$};
+\node[neuron,fill=lightblue,text=black] (x3) at (0,-1) {$x_3$};
+\foreach \i/\y in {1/1.5,2/0.5,3/-0.5,4/-1.5}{\node[neuron,fill=lightgreen,text=black] (h1\i) at (2.3,\y) {};}
+\foreach \i/\y in {1/1.1,2/0.0,3/-1.1}{\node[neuron,fill=lightgreen,text=black] (h2\i) at (4.5,\y) {};}
+\node[neuron,fill=lightred,text=black] (y1) at (6.7,0.45) {$\hat y_1$};
+\node[neuron,fill=lightred,text=black] (y2) at (6.7,-0.45) {$\hat y_2$};
 \foreach \a in {x1,x2,x3}{\foreach \b in {h11,h12,h13,h14}{\draw[->,thin] (\a)--(\b);}}
 \foreach \a in {h11,h12,h13,h14}{\foreach \b in {h21,h22,h23}{\draw[->,thin] (\a)--(\b);}}
 \foreach \a in {h21,h22,h23}{\foreach \b in {y1,y2}{\draw[->,thin] (\a)--(\b);}}
@@ -754,14 +757,14 @@ Overfitting occurs when the model performs well on training data but poorly on u
 
 \begin{center}
 \begin{tikzpicture}[scale=0.9,>=Latex,every node/.style={font=\small}]
-\draw[->] (0,0) -- (10,0) node[right] {epoch};
-\draw[->] (0,0) -- (0,3.2) node[above] {loss};
+\draw[->] (0,0) -- (10,0) node[right,text=black] {epoch};
+\draw[->] (0,0) -- (0,3.2) node[above,text=black] {loss};
 \draw[fluidblue,thick] plot[smooth] coordinates {(0.5,2.8) (1.5,2.0) (2.5,1.45) (3.8,1.05) (5.2,0.75) (6.8,0.55) (9.2,0.38)};
 \draw[fluidred,thick] plot[smooth] coordinates {(0.5,2.9) (1.5,2.1) (2.5,1.55) (3.8,1.22) (5.2,1.15) (6.8,1.35) (9.2,1.95)};
 \draw[dashed] (5.2,0) -- (5.2,3.0);
-\node[fluidblue] at (8.1,0.65) {training};
-\node[fluidred] at (8.3,2.15) {validation};
-\node[align=center] at (5.2,3.15) {early stopping\\region};
+\node[fluidblue,text=black] at (8.1,0.65) {training};
+\node[fluidred,text=black] at (8.3,2.15) {validation};
+\node[align=center,text=black] at (5.2,3.15) {early stopping\\region};
 \end{tikzpicture}
 \end{center}
 
@@ -851,8 +854,8 @@ Here $\kn$ is the Knudsen number defined in Eq.~\eqref{eq:knudsen}.  The boundar
 
 \begin{center}
 \begin{tikzpicture}[xscale=1.1,yscale=0.9,>=Latex,every node/.style={font=\small}]
-\draw[->] (0,0) -- (10.5,0) node[right] {$\log_{10}\kn$};
-\foreach \x/\lab in {1/$-3$,4/$-1$,7/$1$}{\draw (\x,0.1)--(\x,-0.1) node[below] {\lab};}
+\draw[->] (0,0) -- (10.5,0) node[right,text=black] {$\log_{10}\kn$};
+\foreach \x/\lab in {1/$-3$,4/$-1$,7/$1$}{\draw (\x,0.1)--(\x,-0.1) node[below,text=black] {\lab};}
 \fill[fluidgreen!25] (0,0.15) rectangle (1,1.0);
 \fill[fluidblue!20] (1,0.15) rectangle (4,1.0);
 \fill[orange!30] (4,0.15) rectangle (7,1.0);
@@ -863,9 +866,9 @@ Here $\kn$ is the Knudsen number defined in Eq.~\eqref{eq:knudsen}.  The boundar
 \node at (2.5,0.58) {slip};
 \node at (5.5,0.58) {transition};
 \node at (8.5,0.58) {free molecular};
-\node[below] at (1,-0.35) {$\kn=10^{-3}$};
-\node[below] at (4,-0.35) {$\kn=10^{-1}$};
-\node[below] at (7,-0.35) {$\kn=10^{1}$};
+\node[below,text=black] at (1,-0.35) {$\kn=10^{-3}$};
+\node[below,text=black] at (4,-0.35) {$\kn=10^{-1}$};
+\node[below,text=black] at (7,-0.35) {$\kn=10^{1}$};
 \end{tikzpicture}
 \end{center}
 

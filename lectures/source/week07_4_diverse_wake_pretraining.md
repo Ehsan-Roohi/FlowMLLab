@@ -70,3 +70,8 @@ initial perturbation together with Reynolds number, so initial-condition
 generalization is not isolated. Mean improvements do not establish statistical
 significance or superiority on every trajectory. These test cases are now
 inspected retained evidence and cannot be reused for future model selection.
+
+
+Execution contract: prepare and verify the 37.1 MB release data before opting
+into full training. The default notebook reads retained evidence and inspects
+data; RUN_FULL creates a fresh output directory. Retained results are not overwritten.

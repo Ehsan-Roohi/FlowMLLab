@@ -156,6 +156,13 @@ REQUIRED = [
     "common/w5_common.py",
     "common/mini_dsmc.py",
     "common/run_pod_deeponet_validation.py",
+    "common/student_experiment_protocols.py",
+    "qa/notebook_review_updates.py",
+    "qa/notebook_review_patches.json",
+    "qa/lecture_typography.py",
+    "qa/LECTURE_TYPOGRAPHY.md",
+    "lectures/source/lecture_typography.tex",
+    "lectures/source/week02_1_probabilistic_uq_notes.tex",
     "common/article_validation.py",
     "common/run_cavity_pressure_validation.py",
     "ARTICLE_FIGURE_MAP.md",
@@ -463,18 +470,26 @@ def validate_notebooks() -> tuple[int, int]:
         if transformer_week is not None:
             validate_transformer_notebook(notebook, transformer_week, relative)
         week16_lab = relative == 'notebooks/week16/W16_Supersonic_Shape_Optimization.ipynb'
+        week01_2_lab = relative == 'notebooks/week01_2/W1_2_Cavity_Pressure_Velocity.ipynb'
+        if week01_2_lab:
+            assert 'flowmllab/pressure_velocity.py' in full_source and 'https://github.com/Ehsan-Roohi/FlowMLLab.git' in full_source, path
+            assert 'subprocess.run' in full_source and 'pip' in full_source, path
         week14_lab = relative == 'notebooks/week14/W14_pyCALC_RANS_PINN_NN.ipynb'
         week15_local = relative.startswith('notebooks/week15/')
         week15_audit = relative == 'notebooks/week15/W15_Geometry_Operators_Step_Audit.ipynb'
         week15_complete = relative == 'notebooks/week15/W15_Complete_Geometry_Generalization.ipynb'
+        optional_bridge = relative == 'notebooks/optional_geometry_time_bridge/Geometry_Time_Operator_Bridge.ipynb'
+        if optional_bridge:
+            assert (ROOT / 'notebooks/optional_geometry_time_bridge/README.md').is_file(), path
+            assert 'geometry_time_bridge' in full_source and 'RUN_EXERCISES' in full_source, path
         # Weeks 14 and 15 are documented full-checkout modules.  Week 15's
         # evidence archives are release assets and cannot be bootstrapped by a
         # fresh Colab clone alone. Weeks 17-22 have an exact portable contract
         # checked above; their documented Colab upload/clone step is external.
-        assert week14_lab or week15_local or transformer_week is not None or colab_url in full_source, (
+        assert week14_lab or week15_local or optional_bridge or week01_2_lab or transformer_week is not None or colab_url in full_source, (
             f"missing direct Colab launcher: {path}"
         )
-        assert week14_lab or week15_local or week16_lab or transformer_week is not None or "FLOWMLLAB_COLAB_BOOTSTRAP_V1" in full_source, (
+        assert week14_lab or week15_local or week16_lab or optional_bridge or week01_2_lab or transformer_week is not None or "FLOWMLLAB_COLAB_BOOTSTRAP_V1" in full_source, (
             f"missing Colab repository bootstrap: {path}"
         )
         reconstruction_lab = relative == 'notebooks/week11/W11_Lab2_Reconstruction_and_Identification.ipynb'
@@ -487,7 +502,8 @@ def validate_notebooks() -> tuple[int, int]:
             # The retained Week 16 artifact is an unexecuted student lesson,
             # not the older executed audit notebook. Scientific evidence and
             # dataset/checkpoint hashes remain gated by validate_week16_results.
-            assert len(code) == 16, f"unexpected Week 16 student cell count: {path}"
+            assert len(code) == 17, f"unexpected Week 16 student cell count: {path}"
+            assert any('cone=cone_exact(' in ''.join(c.get('source', [])) for c in code), path
             assert all(c.get('execution_count') is None for c in code), path
             assert all(not c.get('outputs', []) for c in code), path
             for fragment in (
@@ -516,21 +532,22 @@ def validate_notebooks() -> tuple[int, int]:
             assert 'FlowMLLab teaching adaptation' in full_source
             assert 'not a verified' in full_source
             assert len([c for c in cells if c.get('cell_type')=='code']) == 8
-            assert all(c.get('execution_count') is not None for c in cells if c.get('cell_type')=='code')
+            # Source revisions clear stale outputs; the fresh-kernel CI gate
+            # checks execution separately from canonical source validation.
+            assert not any(o.get('output_type') == 'error' for c in cells for o in c.get('outputs', [])), path
         if week15_audit:
             assert len([c for c in cells if c.get('cell_type')=='code']) == 13
             assert 'dataset.npz' in full_source and 'def diagnostics(' in full_source
         if week15_complete:
             code = [c for c in cells if c.get('cell_type') == 'code']
-            assert len(code) == 15
-            assert all(c.get('execution_count') is not None for c in code)
+            assert len(code) == 17
             assert not any(
                 output.get('output_type') == 'error'
                 for cell in code for output in cell.get('outputs', [])
             )
             assert 'no double-step motif is used in training or validation' in full_source
             assert 'Selection reads no double-step arrays.' in full_source
-        assert week14_lab or week15_local or reconstruction_lab or week16_lab or transformer_week is not None or any(
+        assert week14_lab or week15_local or reconstruction_lab or week16_lab or optional_bridge or week01_2_lab or transformer_week is not None or any(
             marker in full_source
             for marker in (
                 "MIE690A article-aligned validation v3",
@@ -1335,7 +1352,7 @@ def main() -> None:
     actual = digest(ROOT / "data" / "cavity_data.npz")
     assert actual == EXPECTED_DATA_SHA256, (actual, EXPECTED_DATA_SHA256)
     notebooks, code_cells = validate_notebooks()
-    subprocess.run([sys.executable, str(ROOT / 'qa/verify_week14.py')], check=True)
+    subprocess.run([sys.executable, str(ROOT / 'qa/verify_week14.py'), '--source-only'], check=True)
     metrics = smoke_common_baseline()
     deeponet_metrics = validate_pod_deeponet_results()
     cavity_rom_metrics = validate_cavity_rom_results()

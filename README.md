@@ -11,15 +11,31 @@ generate numerical data, compare transparent baselines with learned models, and
 check both prediction error and physical fidelity.
 
 Developed for **MIE 690A: AI in Fluid Mechanics**, University of Massachusetts
-Amherst. The course now includes **50 notebooks and 33 lecture PDFs**; every module
-has a row in the course table below.
+Amherst.
 
-## New: Weeks 17–22 — Transformers and language modeling
+<!-- course-counts:start -->
+The current checkout contains **51 student notebooks** (including 1 historical audit companion) and **34 active lecture PDFs / 453 pages** across Weeks 1–22 and their incremental units. Optional self-study supplements are counted separately.
+
+[Inventory and counting rules](docs/COURSE_INVENTORY.md) · [Choose a learning path](START_HERE.md)
+<!-- course-counts:end -->
+
+## Choose your first step
+
+- **New to Python:** [begin with the Week 1 Python lab](notebooks/week01/01_python_for_cfd_ai_fluids.ipynb), then validate the cavity solver.
+- **Python-ready:** [start with cavity and Ghia validation](notebooks/week01/03_cavity_ghia.ipynb); continue through the Weeks 1–6 core before selecting a project.
+- **Research or teaching:** [compare prerequisites, execution modes and resource needs](START_HERE.md) or [plan a course](COURSE_MAP.md#suggested-adoption-modes).
+
+Reading retained evidence, executing a compact teaching model and regenerating the
+full scientific protocol are different operations. The setup guide labels their
+requirements; a Colab link alone does not certify hosted execution.
+
+## Weeks 17–22 — Transformers and language modeling
 
 Six CPU laboratories connect Q/K/V attention and a small next-character language
 model to sensor reconstruction, autonomous wake prediction and transfer audits.
 Each week has four coding exercises, an executed student notebook, separate
-instructor solutions and a five-page lecture.
+instructor solutions and a lecture. Current PDF page counts are listed in the
+[lecture inventory](docs/COURSE_INVENTORY.md#lecture-files).
 
 [17 · Attention](weeks/week17/README.md) · [18 · Language modeling](weeks/week18/README.md) · [19 · Sensors and tokens](weeks/week19/README.md) · [20 · Missing observations](weeks/week20/README.md) · [21 · Autonomous prediction](weeks/week21/README.md) · [22 · Transfer audits](weeks/week22/README.md)
 
@@ -44,7 +60,7 @@ disclosure](DATA_PROVENANCE.md).
 | Start the guided-project evidence chain after Week 4 | [Launch the 20-minute P0 Colab](https://colab.research.google.com/github/Ehsan-Roohi/FlowMLLab/blob/main/notebooks/week05_06/P0_Project_Setup.ipynb) |
 | Follow the course | [Weekly pages](weeks/README.md) · [Course map](COURSE_MAP.md) · [All notebooks](notebooks/README.md) · [Lectures](lectures/README.md) · [Glossary](docs/GLOSSARY.md) |
 | Install and reproduce the results | [Setup and validation](START_HERE.md) |
-| Explore the scientific evidence | [Results and technical guide](docs/RESULTS_GUIDE.md) · [Interactive cavity demo](demo/README.md) |
+| Explore the scientific evidence | [Results and technical guide](docs/RESULTS_GUIDE.md) · [Run the cavity evidence explorer locally](demo/README.md) |
 
 ## Continue through the course
 

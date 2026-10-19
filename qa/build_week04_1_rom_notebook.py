@@ -8,6 +8,8 @@ from pathlib import Path
 
 
 ROOT = Path(__file__).resolve().parents[1]
+import sys
+sys.path.insert(0, str(ROOT))
 OUTPUT = ROOT / "notebooks" / "week04" / "W4_1_Classical_ROM_Cavity.ipynb"
 
 
@@ -308,4 +310,6 @@ for index, cell in enumerate(notebook["cells"]):
     cell["id"] = f"w41-{index:03d}"
 
 OUTPUT.write_text(json.dumps(notebook, indent=1, ensure_ascii=False), encoding="utf-8")
+from qa.notebook_review_updates import review_notebook_file
+review_notebook_file(OUTPUT)
 print(OUTPUT)

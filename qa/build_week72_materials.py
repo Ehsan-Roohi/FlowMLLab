@@ -52,9 +52,22 @@ Comparing filtering with sensor-only is essential: otherwise improvement over
 open-loop could be caused merely by receiving new data.'''),
         md(r'''## 2. Reduced state and observation models
 
-With row-vector modal coefficients,
-$q_k=\bar q+\Phi a_k$, $a_{k+1}=a_kA+w_k$, and
-$y_k=\bar q_s+Ha_k+v_k$. Fit POD, $A$, residual covariance and sensor positions
+Stored modal coefficients are rows: $a_k\in\mathbb{R}^{1\times r}$,
+$q_k=\bar q+a_k\Phi^T$ and $a_{k+1}=a_kA+w_k$.
+The filter uses the column state $x_k=a_k^T$, so $F=A^T$,
+$x_{k+1}=Fx_k+w_k^T$ and $y_k=\bar q_s+Hx_k+v_k$.
+
+| Object | Shape | Meaning |
+|---|---|---|
+| $\Phi$ | $n\times r$ | POD spatial modes |
+| $a_k$, $x_k$ | $1\times r$, $r\times1$ | same state, transposed |
+| $H=\Phi[\mathrm{sensors},:]$ | $m\times r$ | sensor operator |
+| $F$, $P$ | $r\times r$ | column transition and covariance |
+
+For example, $a=[2,3]$ and $A=[[1,0.1],[0,1]]$ give
+$aA=[2,3.2]$; $A^Ta^T=[2,3.2]^T$ gives the identical prediction.
+The gain $K=PH^T(HPH^T+R)^{-1}$ has shape $r\times m$.
+Fit POD, $A$, residual covariance and sensor positions
 on training only. The implementation uses QR-seeded D-optimal oversampling.
 
 Derive the predict/update equations. Explain why explicitly forming the
@@ -155,17 +168,27 @@ def make_pdf():
     out = ROOT/'output/pdf/week07_2_cylinder_state_estimation.pdf'; out.parent.mkdir(parents=True,exist_ok=True)
     evidence = json.loads((ROOT/'results/week07_2_state_estimation/metrics.json').read_text())
     styles = getSampleStyleSheet()
-    ink = colors.HexColor('#173b56'); muted = colors.HexColor('#506070')
-    styles.add(ParagraphStyle(name='Title72', fontName='Helvetica-Bold', fontSize=23, leading=27, textColor=ink, spaceAfter=12))
-    styles.add(ParagraphStyle(name='Heading72', fontName='Helvetica-Bold', fontSize=12, leading=16, textColor=ink, spaceBefore=10, spaceAfter=6, keepWithNext=True))
-    styles.add(ParagraphStyle(name='Body72', fontName='Helvetica', fontSize=10.2, leading=14.4, spaceAfter=7))
-    styles.add(ParagraphStyle(name='Small72', fontName='Helvetica', fontSize=8.8, leading=12, textColor=muted, spaceAfter=7))
-    math_font = Path('C:/Windows/Fonts/timesi.ttf')
-    if not math_font.is_file():
-        from matplotlib.font_manager import FontProperties, findfont
-        math_font = Path(findfont(FontProperties(family='DejaVu Serif', style='italic')))
-    pdfmetrics.registerFont(TTFont('Equation72Embedded', str(math_font)))
+    ink = colors.black; muted = colors.black
+    styles.add(ParagraphStyle(name='Title72', fontName='TNRB', fontSize=23, leading=27, textColor=ink, spaceAfter=12))
+    styles.add(ParagraphStyle(name='Heading72', fontName='TNRB', fontSize=12, leading=16, textColor=ink, spaceBefore=10, spaceAfter=6, keepWithNext=True))
+    styles.add(ParagraphStyle(name='Body72', fontName='TNR', fontSize=10.2, leading=14.4, spaceAfter=7))
+    styles.add(ParagraphStyle(name='Small72', fontName='TNR', fontSize=8.8, leading=12, textColor=muted, spaceAfter=7))
+    try:
+        from .lecture_typography import font_paths
+    except ImportError:  # direct script execution
+        from lecture_typography import font_paths
+    pdfmetrics.registerFont(TTFont('Equation72Embedded', str(font_paths()['italic'])))
     styles.add(ParagraphStyle(name='Equation72', fontName='Equation72Embedded', fontSize=12, leading=18, leftIndent=12, spaceAfter=4))
+    try:
+        from .lecture_typography import register_legacy_reportlab_aliases, black_paragraph_styles
+    except ImportError:  # direct script execution
+        from lecture_typography import register_legacy_reportlab_aliases, black_paragraph_styles
+    register_legacy_reportlab_aliases()
+    black_paragraph_styles(styles)
+    # Explicit names also work in a fresh builder process (no cached aliases).
+    for style in styles.byName.values():
+        style.fontName = {"Helvetica": "TNR", "Helvetica-Bold": "TNRB",
+                          "Helvetica-Oblique": "TNRI", "Helvetica-BoldOblique": "TNRBI"}.get(style.fontName, style.fontName)
     sections = [page.strip().split('\n\n') for page in source.read_text(encoding='utf-8').split('\n---\n')]
     story = []
     def paragraph(text, style='Body72'):
@@ -177,13 +200,13 @@ def make_pdf():
             paragraph(html.escape(block).replace('\n', ' '))
     def table(rows, widths, header=True):
         obj = Table(rows, colWidths=widths, hAlign='LEFT')
-        settings = [('FONTNAME',(0,0),(-1,-1),'Helvetica'), ('FONTSIZE',(0,0),(-1,-1),9.4),
+        settings = [('FONTNAME',(0,0),(-1,-1),'TNR'), ('FONTSIZE',(0,0),(-1,-1),9.4),
                     ('TOPPADDING',(0,0),(-1,-1),9), ('BOTTOMPADDING',(0,0),(-1,-1),9),
                     ('LINEBELOW',(0,0),(-1,0),.7,ink), ('VALIGN',(0,0),(-1,-1),'MIDDLE'),
                     ('ROWBACKGROUNDS',(0,1),(-1,-1),[colors.HexColor('#f0f5f7'),colors.white])]
         if header:
-            settings += [('BACKGROUND',(0,0),(-1,0),ink), ('TEXTCOLOR',(0,0),(-1,0),colors.white),
-                         ('FONTNAME',(0,0),(-1,0),'Helvetica-Bold')]
+            settings += [('BACKGROUND',(0,0),(-1,0),colors.HexColor('#eeeeee')), ('TEXTCOLOR',(0,0),(-1,0),colors.black),
+                         ('FONTNAME',(0,0),(-1,0),'TNRB')]
         obj.setStyle(TableStyle(settings)); story.extend([obj, Spacer(1,8)])
 
     # Page 1: concept, measurement model and the full causal update in one place.
@@ -236,7 +259,7 @@ def make_pdf():
     for block in sections[6][2:]: paragraph(html.escape(block), 'Small72')
     def footer(canvas, doc):
         canvas.setStrokeColor(colors.HexColor('#d4dfe6')); canvas.line(42,39,553,39)
-        canvas.setFont('Helvetica',8); canvas.setFillColor(muted)
+        canvas.setFont('TNR',8); canvas.setFillColor(colors.black)
         canvas.drawString(42,25,'FlowMLLab  /  Ehsan Roohi  /  Week 7.2')
         canvas.drawRightString(553,25,str(doc.page))
     SimpleDocTemplate(str(out), pagesize=(595,842), rightMargin=42,leftMargin=42,

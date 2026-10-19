@@ -5,7 +5,7 @@ Each CFD case contains a vector of pressure samples
 \end{equation}
 Stack the 24 training waveforms into $\mathbf Y$ and subtract the training mean $\bar{\mathbf y}$. Singular-value decomposition gives
 \begin{equation}
- \mathbf Y' = \mathbf U\mathbf\Sigma\mathbf V^T.
+ \mathbf Y' = \mathbf U\Sigma\mathbf V^T.
 \end{equation}
 The rows of $\mathbf V^T$ are orthonormal spatial modes $\phi_k(x)$. A waveform is approximated by
 \begin{equation}
@@ -42,6 +42,13 @@ If $\mathbf z$ is the predicted modal vector, the pressure signature is reconstr
 \includegraphics[width=.82\linewidth]{model_metrics_lines.png}
 \caption{Retained clean-label model errors across the frozen splits. Extrapolation degrades sharply even though interpolation errors remain modest.}
 \end{figure}
+
+The notebook also fits ridge and a fixed-kernel POD--GP on the same 24 standardized training inputs and targets. For the GP,
+\[
+ m(X_*)=K(X_*,X)[K(X,X)+10^{-6}I]^{-1}T,\qquad
+ K(x,x')=\exp[-\|x-x'\|^2/2].
+\]
+The kernel is fixed before validation and test access. Validation selects among the three models; test and extrapolation only assess the selected protocol. GP variance would describe kernel assumptions, not establish CFD uncertainty.
 
 \topic{12}{Error metrics and what they do not say}
 Three errors are reported because they answer different questions.

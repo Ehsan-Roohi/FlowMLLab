@@ -5,7 +5,7 @@
 \usetikzlibrary{arrows.meta,positioning}
 \usepackage[most]{tcolorbox}
 \usepackage{enumitem,fancyhdr,hyperref,microtype}
-\graphicspath{{../../results/aescte_dsmc/}}
+\graphicspath{{results/aescte_dsmc/}}
 \definecolor{navy}{HTML}{17365D}
 \definecolor{blue}{HTML}{2F75B5}
 \definecolor{teal}{HTML}{2A9D8F}
@@ -25,15 +25,18 @@
 \newcommand{\Kn}{\mathrm{Kn}}
 \newcommand{\RelLtwo}{\varepsilon_{L_2}}
 
+\input{lectures/source/lecture_typography.tex}
+\tcbset{coltitle=black,colbacktitle=black!6}
+\tikzset{every node/.append style={text=black}}
 \begin{document}
 \hypersetup{pageanchor=false}
 \begin{titlepage}
 \centering\vspace*{0.75cm}
-{\color{navy}\rule{\textwidth}{2pt}}\\[0.45cm]
+{\color{black}\rule{\textwidth}{2pt}}\\[0.45cm]
 {\Huge\bfseries DSMC Data-Driven Surrogates\\[0.16cm]from Particles to Reproducible Fields\par}
 \vspace{0.32cm}{\Large Rarefied cavity, monatomic shock, and diatomic relaxation\par}
 \vspace{0.32cm}{\large Week 10 Extension Lecture Notes\par}
-\vspace{0.48cm}{\color{navy}\rule{\textwidth}{2pt}}\\[0.8cm]
+\vspace{0.48cm}{\color{black}\rule{\textwidth}{2pt}}\\[0.8cm]
 {\Large M\&I-ENG 690A -- AI in Fluid Mechanics\par}
 \vspace{0.2cm}{\large Summer 2026\par}
 \vfill
@@ -259,7 +262,7 @@ The teaching profile surrogate uses POD modes and polynomial Mach coefficients:
 \end{equation}
 The modes $\phi_k(x)$ are learned only from development profiles; a polynomial
 maps Mach number to modal coefficients. With only five source profiles and a
-degree-three coefficient fit, this is a compact POD-polynomial interpolator,
+degree-three coefficient fit for interpolation (degree two for one-sided extrapolation), this is a compact POD-polynomial surrogate,
 not a trained neural branch--trunk operator. Mach 1.7 is retained for interpolation.
 Mach 1.4 is then retained while Mach 1.5--1.9 train a one-sided extrapolation.
 

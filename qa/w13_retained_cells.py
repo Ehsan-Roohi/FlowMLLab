@@ -48,9 +48,8 @@ ax.grid(alpha=.2,which='both')
 ax.legend(loc='upper center',bbox_to_anchor=(.5,-.18),ncol=3,frameon=False)
 fig.text(.5,.02,'History ends at checkpoint 65711; supplied field is checkpoint 55118.\nNot a from-scratch history, CFD error, or independent test loss.',ha='center',fontsize=10)
 fig.subplots_adjust(bottom=.3)
-out=ROOT/'results/week13_deep_cavity/loss_continuation.png'
-fig.savefig(out,dpi=180,bbox_inches='tight')
-print(out.relative_to(ROOT).as_posix())
+# Display the recomputed plot only; retained result images are immutable.
+print('Displayed continuation; no retained file written.')
 print('rows',len(d),'last total',d[-1,1:].sum())
 
 plt.show()

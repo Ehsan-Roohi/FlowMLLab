@@ -17,7 +17,7 @@
   ],
   "tasks": [
     {
-      "title": "Cardinality-preserving token dropout",
+      "title": "Consistent sensor-token dropout",
       "prompt": "Remove every other sensor from values and coordinates together; never reinterpret a missing value as an observed zero.\n\nInterface contract: Input tokens:[batch,sensors,features] is a NumPy array. Return tokens[:,::2,:], preserving all features for every retained sensor.",
       "starter": "def drop_half(tokens):\n    \"\"\"Input tokens:[batch,sensors,features] is a NumPy array. Return tokens[:,::2,:], preserving all features for every retained sensor.\"\"\"\n    raise NotImplementedError",
       "solution": "def drop_half(tokens):\n    return tokens[:,::2,:]",
@@ -45,5 +45,21 @@
       "checks": "for val_sign in (1.,-1.):\n    net=torch.nn.Linear(1,1,bias=False);net.weight.data.zero_()\n    xx=torch.ones(4,1);yy=torch.ones(4,1)\n    result=fit_with_validation(net,xx,yy,xx,val_sign*yy,8,.1)\n    assert len(result['trace'])==9 and result['executed_steps']==8\n    assert result['selected_step']==(8 if val_sign==1 else 0)\n    with torch.no_grad():actual=float(((net(xx)-val_sign*yy)**2).mean())\n    assert np.isclose(actual,result['validation_mse'])\n    assert np.isclose(actual,min(r['validation_mse'] for r in result['trace']))\ntry:\n    fit_with_validation(net,xx,yy,xx,yy,-1,.1)\n    raise AssertionError('negative budget accepted')\nexcept ValueError:pass"
     }
   ],
-  "duration_minutes": 120
+  "duration_minutes": 120,
+  "assessment": {
+    "coding_weights": [
+      5,
+      5,
+      5,
+      25
+    ],
+    "derivation_points": 25,
+    "interpretation_points": 25,
+    "reproducibility_points": 10,
+    "derivation": "derive permutation invariance of pooled sensor attention and distinguish cardinality dropout from mean imputation",
+    "full_credit_example": "An attention set is equivariant before pooling and invariant afterward. Dropping tokens reduces cardinality, whereas replacing their values with zero retains a different input. Compare actual parameter counts, selection steps and validation criteria before attributing accuracy to architecture.",
+    "misconception": "A model that reaches its update ceiling is necessarily converged, and equal update caps guarantee equal compute.",
+    "partial_credit": "An accurate numerical observation without its split, representation, or causal limitation earns at most half of interpretation points.",
+    "human_validation": "Instructor marking and a timed student pilot are still required; automated checks establish interface/behavior only."
+  }
 }

@@ -172,15 +172,20 @@ def collision_weighted_audit(fitted, reduced_temperature, count=4000, seed=1, po
 
     The historical function name is retained. Gamma(3/2) samples random pairs,
     without the relative-speed weighting required for collision-event sampling."""
+    if len(energy_bounds) != 2 or not 0 < energy_bounds[0] < energy_bounds[1]:
+        raise ValueError("energy_bounds must be positive and increasing")
     energies, impact = sample_collision_states(reduced_temperature, count, seed, b_max)
     keep = (energies >= energy_bounds[0]) & (energies <= energy_bounds[1])
     energies, impact = energies[keep], impact[keep]
+    if not len(energies):
+        raise ValueError("No sampled pairs lie inside energy_bounds; increase count or revise the domain")
     exact = np.array([np.cos(deflection_angle(float(b), float(e), potential)) for e, b in zip(energies, impact)])
     scaler, model = fitted
     pred = np.clip(model.predict(scaler.transform(np.column_stack([np.log(energies), impact]))), -1.0, 1.0)
     err = pred - exact
     return {
         "reduced_temperature": float(reduced_temperature),
+        "energy_bounds": [float(v) for v in energy_bounds],
         "states": int(energies.size),
         "discarded_out_of_range": int(np.count_nonzero(~keep)),
         "rms_cos_error": float(np.sqrt(np.mean(err ** 2))),

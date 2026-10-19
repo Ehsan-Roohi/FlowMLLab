@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import json
+import sys
 from pathlib import Path
 
 from reportlab.lib import colors
@@ -16,6 +17,8 @@ from reportlab.platypus import Paragraph
 
 
 ROOT = Path(__file__).resolve().parents[2]
+sys.path.insert(0,str(ROOT/"qa"))
+from lecture_typography import register_legacy_reportlab_aliases, black_paragraph_styles
 OUTPUT = ROOT / "output" / "pdf" / "week07_1_hypersonic_rarefied_cylinder.pdf"
 METRICS = ROOT / "results" / "hypersonic_cylinder_week7_1" / "mlp_metrics.json"
 FIELD_FIGURE = (
@@ -36,18 +39,19 @@ LIGHT = colors.HexColor("#F5F8FA")
 GREEN = colors.HexColor("#2F855A")
 
 BODY = ParagraphStyle(
-    "body", fontName="Helvetica", fontSize=17, leading=22, textColor=INK,
+    "body", fontName="TNR", fontSize=17, leading=22, textColor=INK,
 )
 SMALL = ParagraphStyle(
-    "small", fontName="Helvetica", fontSize=12.5, leading=16.5, textColor=INK,
+    "small", fontName="TNR", fontSize=12.5, leading=16.5, textColor=INK,
 )
 TINY = ParagraphStyle(
-    "tiny", fontName="Helvetica", fontSize=9.5, leading=12.5, textColor=MUTED,
+    "tiny", fontName="TNR", fontSize=9.5, leading=12.5, textColor=MUTED,
 )
 CENTER = ParagraphStyle(
     "center", parent=BODY, alignment=TA_CENTER,
 )
 
+black_paragraph_styles({"body":BODY,"small":SMALL,"tiny":TINY,"center":CENTER})
 
 class Deck:
     def __init__(self, target: Path):
@@ -65,17 +69,21 @@ class Deck:
         c = self.canvas
         c.setFillColor(colors.white)
         c.rect(0, 0, WIDTH, HEIGHT, fill=1, stroke=0)
-        c.setFillColor(NAVY)
+        c.setFillColor(LIGHT)
         c.rect(0, HEIGHT - 0.78 * inch, WIDTH, 0.78 * inch, fill=1, stroke=0)
         c.setFillColor(TEAL)
         c.rect(0, HEIGHT - 0.84 * inch, WIDTH, 0.06 * inch, fill=1, stroke=0)
-        c.setFont("Helvetica-Bold", 11)
+        c.setFont("TNRB", 11)
+        c.setFillColor(colors.black)
         c.drawString(0.55 * inch, HEIGHT - 0.47 * inch, kicker)
-        c.setFont("Helvetica-Bold", 25)
+        c.setFont("TNRB", 25)
+        c.setFillColor(colors.black)
         c.drawString(1.75 * inch, HEIGHT - 0.52 * inch, title)
         c.setFillColor(MUTED)
-        c.setFont("Helvetica", 9)
+        c.setFont("TNR", 9)
+        c.setFillColor(colors.black)
         c.drawString(0.55 * inch, 0.25 * inch, "FlowMLLab | MIE 690A - AI in Fluid Mechanics")
+        c.setFillColor(colors.black)
         c.drawRightString(WIDTH - 0.55 * inch, 0.25 * inch, str(self.page))
 
     def paragraph(
@@ -87,7 +95,7 @@ class Deck:
         height: float,
         style: ParagraphStyle = BODY,
     ) -> None:
-        paragraph = Paragraph(text, style)
+        paragraph = Paragraph(text, ParagraphStyle(style.name + "Black", parent=style, textColor=colors.black))
         _, used = paragraph.wrap(width, height)
         paragraph.drawOn(self.canvas, x, y_top - used)
 
@@ -109,10 +117,11 @@ class Deck:
 
     def label(self, text: str, x: float, y: float, *, color=TEAL) -> None:
         c = self.canvas
-        c.setFillColor(color)
+        c.setFillColor(LIGHT)
         c.roundRect(x, y - 0.25 * inch, 1.15 * inch, 0.34 * inch, 7, fill=1, stroke=0)
         c.setFillColor(colors.white)
-        c.setFont("Helvetica-Bold", 10)
+        c.setFont("TNRB", 10)
+        c.setFillColor(colors.black)
         c.drawCentredString(x + 0.575 * inch, y - 0.14 * inch, text)
 
     def end(self) -> None:
@@ -123,7 +132,7 @@ class Deck:
 
 
 def bullet_list(items: list[str]) -> str:
-    return "<br/>".join(f"<font color='#16A6A1'>&bull;</font> {item}" for item in items)
+    return "<br/>".join(f"<font color='#000000'>&bull;</font> {item}" for item in items)
 
 
 def draw_arrow(c: canvas.Canvas, x1: float, y1: float, x2: float, y2: float, color=TEAL) -> None:
@@ -146,7 +155,7 @@ def draw_arrow(c: canvas.Canvas, x1: float, y1: float, x2: float, y2: float, col
 def title_slide(deck: Deck) -> None:
     deck.page += 1
     c = deck.canvas
-    c.setFillColor(NAVY)
+    c.setFillColor(LIGHT)
     c.rect(0, 0, WIDTH, HEIGHT, fill=1, stroke=0)
     c.setFillColor(TEAL)
     c.circle(WIDTH - 1.25 * inch, HEIGHT - 1.15 * inch, 0.7 * inch, fill=1, stroke=0)
@@ -154,24 +163,31 @@ def title_slide(deck: Deck) -> None:
     c.setLineWidth(8)
     c.arc(WIDTH - 2.2 * inch, -0.7 * inch, WIDTH + 0.5 * inch, 2.0 * inch, 40, 115)
     c.setFillColor(colors.white)
-    c.setFont("Helvetica-Bold", 16)
+    c.setFont("TNRB", 16)
+    c.setFillColor(colors.black)
     c.drawString(0.75 * inch, HEIGHT - 0.8 * inch, "FLOWMLLAB | INCREMENTAL LECTURE 7.1")
-    c.setFont("Helvetica-Bold", 38)
+    c.setFont("TNRB", 38)
+    c.setFillColor(colors.black)
     c.drawString(0.75 * inch, HEIGHT - 2.15 * inch, "Rarefied hypersonic cylinder")
     c.setFillColor(colors.HexColor("#BFE9E7"))
-    c.setFont("Helvetica-Bold", 28)
+    c.setFont("TNRB", 28)
+    c.setFillColor(colors.black)
     c.drawString(0.75 * inch, HEIGHT - 2.75 * inch, "Operator learning, baselines, and honest UQ")
     c.setFillColor(colors.white)
-    c.setFont("Helvetica", 17)
+    c.setFont("TNR", 17)
+    c.setFillColor(colors.black)
     c.drawString(0.78 * inch, HEIGHT - 3.55 * inch, "From author-supplied DSMC fields to a leakage-controlled teaching experiment")
     c.setFillColor(colors.HexColor("#D9E2EC"))
-    c.setFont("Helvetica", 12)
+    c.setFont("TNR", 12)
+    c.setFillColor(colors.black)
     c.drawString(0.78 * inch, 0.78 * inch, "Ehsan Roohi | MIE 690A - AI in Fluid Mechanics | University of Massachusetts Amherst")
+    c.setFillColor(colors.black)
     c.drawString(0.78 * inch, 0.50 * inch, "Companion: notebooks/week07_1/W7_1_Hypersonic_Rarefied_Cylinder_DeepONet.ipynb")
     deck.end()
 
 
 def build() -> None:
+    register_legacy_reportlab_aliases()  # resolve fonts only when authoring the PDF
     metrics = json.loads(METRICS.read_text(encoding="utf-8"))
     deck = Deck(OUTPUT)
     title_slide(deck)
@@ -201,7 +217,7 @@ def build() -> None:
     deck.paragraph(
         "If a transparent baseline wins, retain that result. Complexity is not evidence.",
         7.15 * inch, 2.38 * inch, 5.15 * inch, 1.0 * inch,
-        ParagraphStyle("rule", parent=BODY, fontName="Helvetica-Bold", fontSize=21, leading=26, textColor=RED),
+        ParagraphStyle("rule", parent=BODY, fontName="TNRB", fontSize=21, leading=26, textColor=RED),
     )
     deck.end()
 
@@ -215,7 +231,8 @@ def build() -> None:
     c.arc(1.75 * inch, cy - 1.25 * inch, 4.25 * inch, cy + 1.25 * inch, 105, 150)
     draw_arrow(c, 0.75 * inch, cy, 1.75 * inch, cy, color=BLUE)
     c.setFillColor(INK)
-    c.setFont("Helvetica-Bold", 17)
+    c.setFont("TNRB", 17)
+    c.setFillColor(colors.black)
     c.drawString(0.75 * inch, cy + 0.3 * inch, "U_inf")
     deck.box(5.0 * inch, 4.35 * inch, 7.55 * inch, 1.55 * inch, fill=PALE)
     deck.paragraph(
@@ -259,7 +276,7 @@ def build() -> None:
     deck.paragraph(
         "<b>G_theta: M_inf -> q(x,y)</b><br/><br/>q = [ local Mach, source TOV, source P ]",
         4.65 * inch, 4.95 * inch, 3.95 * inch, 1.4 * inch,
-        ParagraphStyle("operator", parent=CENTER, fontName="Helvetica-Bold", fontSize=20, leading=28),
+        ParagraphStyle("operator", parent=CENTER, fontName="TNRB", fontSize=20, leading=28),
     )
     draw_arrow(deck.canvas, 9.0 * inch, 4.22 * inch, 10.0 * inch, 4.22 * inch)
     deck.box(10.05 * inch, 3.45 * inch, 2.55 * inch, 1.55 * inch, fill=colors.HexColor("#EDF2F7"))
@@ -268,7 +285,7 @@ def build() -> None:
     deck.paragraph(
         "A field surrogate must be judged at unseen <b>flow cases</b>, not merely unseen grid points from a case already used during training.",
         1.1 * inch, 1.77 * inch, 11.15 * inch, 0.7 * inch,
-        ParagraphStyle("statement", parent=CENTER, fontName="Helvetica-Bold", fontSize=21, leading=25, textColor=NAVY),
+        ParagraphStyle("statement", parent=CENTER, fontName="TNRB", fontSize=21, leading=25, textColor=NAVY),
     )
     deck.end()
 
@@ -336,7 +353,7 @@ def build() -> None:
     deck.paragraph(
         "q_hat(M_q) = q(M_a) + [(M_q - M_a)/(M_b - M_a)] [q(M_b) - q(M_a)]",
         1.1 * inch, 5.12 * inch, 11.15 * inch, 0.65 * inch,
-        ParagraphStyle("equation", parent=CENTER, fontName="Helvetica-Bold", fontSize=22, leading=26, textColor=NAVY),
+        ParagraphStyle("equation", parent=CENTER, fontName="TNRB", fontSize=22, leading=26, textColor=NAVY),
     )
     interp = metrics["splits"]["interpolation"]["linear_case_baseline_relative_l2"]
     extra = metrics["splits"]["extrapolation"]["linear_case_baseline_relative_l2"]
@@ -348,29 +365,34 @@ def build() -> None:
     x_positions = [1.0, 4.45, 7.0, 9.75]
     for x, header in zip(x_positions, headers):
         deck.canvas.setFillColor(NAVY)
-        deck.canvas.setFont("Helvetica-Bold", 14)
+        deck.canvas.setFont("TNRB", 14)
+        deck.canvas.setFillColor(colors.black)
         deck.canvas.drawString(x * inch, 3.45 * inch, header)
     for row_index, row in enumerate(rows):
         y = (2.78 - row_index * 0.7) * inch
         deck.canvas.setFillColor(LIGHT if row_index == 0 else colors.white)
         deck.canvas.rect(0.8 * inch, y - 0.18 * inch, 11.55 * inch, 0.55 * inch, fill=1, stroke=0)
         deck.canvas.setFillColor(INK)
-        deck.canvas.setFont("Helvetica-Bold" if row_index == 0 else "Helvetica", 14)
+        deck.canvas.setFont("TNRB" if row_index == 0 else "TNR", 14)
+        deck.canvas.setFillColor(colors.black)
         deck.canvas.drawString(x_positions[0] * inch, y, row[0])
         for x, value in zip(x_positions[1:], row[1:]):
+            deck.canvas.setFillColor(colors.black)
             deck.canvas.drawString(x * inch, y, f"{100 * value:.3f}%")
     deck.paragraph(
         "Result: a neural operator must beat a sub-1% structured baseline here, or justify itself through a different deployment constraint.",
         0.95 * inch, 1.35 * inch, 11.4 * inch, 0.55 * inch,
-        ParagraphStyle("baseline_result", parent=CENTER, fontName="Helvetica-Bold", fontSize=18, leading=22, textColor=GREEN),
+        ParagraphStyle("baseline_result", parent=CENTER, fontName="TNRB", fontSize=18, leading=22, textColor=GREEN),
     )
     deck.end()
 
-    deck.begin("Reviewed Fusion-DeepONet topology")
+    deck.begin("Educational multi-output Fusion-DeepONet")
     c = deck.canvas
-    c.setFont("Helvetica-Bold", 13)
+    c.setFont("TNRB", 13)
     c.setFillColor(INK)
+    c.setFillColor(colors.black)
     c.drawString(0.7 * inch, 5.75 * inch, "M_inf")
+    c.setFillColor(colors.black)
     c.drawString(0.7 * inch, 2.65 * inch, "(x,y)")
     branch_y, trunk_y = 5.25 * inch, 2.2 * inch
     previous_branch = 1.45 * inch
@@ -380,8 +402,10 @@ def build() -> None:
         deck.box(x, branch_y - 0.42 * inch, 1.25 * inch, 0.82 * inch, fill=colors.HexColor("#FFF4E5"), stroke=ORANGE)
         deck.box(x, trunk_y - 0.42 * inch, 1.25 * inch, 0.82 * inch, fill=PALE, stroke=TEAL)
         c.setFillColor(INK)
-        c.setFont("Helvetica-Bold", 11)
+        c.setFont("TNRB", 11)
+        c.setFillColor(colors.black)
         c.drawCentredString(x + 0.625 * inch, branch_y, f"B{layer + 1}: 256 tanh")
+        c.setFillColor(colors.black)
         c.drawCentredString(x + 0.625 * inch, trunk_y, f"T{layer + 1}: 256 tanh")
         draw_arrow(c, previous_branch, branch_y, x, branch_y, color=ORANGE)
         draw_arrow(c, previous_trunk, trunk_y, x, trunk_y, color=TEAL)
@@ -390,18 +414,21 @@ def build() -> None:
         previous_trunk = x + 1.25 * inch
     deck.box(9.25 * inch, 3.2 * inch, 1.35 * inch, 1.15 * inch, fill=colors.HexColor("#EDF2F7"), stroke=BLUE)
     c.setFillColor(INK)
-    c.drawCentredString(9.925 * inch, 3.78 * inch, "inner product")
+    c.setFillColor(colors.black)
+    c.drawCentredString(9.925 * inch, 3.78 * inch, "latent product")
     draw_arrow(c, previous_branch, branch_y, 9.25 * inch, 4.05 * inch, color=ORANGE)
     draw_arrow(c, previous_trunk, trunk_y, 9.25 * inch, 3.48 * inch, color=TEAL)
     deck.box(11.1 * inch, 3.2 * inch, 1.55 * inch, 1.15 * inch, fill=colors.HexColor("#FDECEC"), stroke=RED)
     c.setFillColor(INK)
-    c.setFont("Helvetica-Bold", 11)
+    c.setFont("TNRB", 11)
+    c.setFillColor(colors.black)
     c.drawCentredString(11.875 * inch, 3.85 * inch, "Dense(3)")
-    c.setFont("Helvetica", 10)
+    c.setFont("TNR", 10)
+    c.setFillColor(colors.black)
     c.drawCentredString(11.875 * inch, 3.55 * inch, "M, TOV, P")
     draw_arrow(c, 10.6 * inch, 3.78 * inch, 11.1 * inch, 3.78 * inch, color=RED)
     deck.paragraph(
-        "Each block includes dropout in the reviewed stored model. Branch state is added to the matching trunk depth before the final branch-trunk combination.",
+        "The corrected teaching head keeps the latent product vector before Dense(3). The legacy scalar-dot head forces three outputs onto one affine line; legacy_scalar is compatibility-only. This builder does not verify paper-checkpoint equivalence.",
         1.2 * inch, 1.18 * inch, 11.0 * inch, 0.55 * inch, SMALL,
     )
     deck.end()
@@ -416,13 +443,15 @@ def build() -> None:
     ]
     for index, (number, title, detail) in enumerate(items):
         y = (5.65 - index * 1.02) * inch
-        deck.canvas.setFillColor(TEAL if index < 4 else ORANGE)
+        deck.canvas.setFillColor(LIGHT)
         deck.canvas.circle(0.95 * inch, y, 0.22 * inch, fill=1, stroke=0)
         deck.canvas.setFillColor(colors.white)
-        deck.canvas.setFont("Helvetica-Bold", 12)
+        deck.canvas.setFont("TNRB", 12)
+        deck.canvas.setFillColor(colors.black)
         deck.canvas.drawCentredString(0.95 * inch, y - 4, number)
         deck.canvas.setFillColor(NAVY)
-        deck.canvas.setFont("Helvetica-Bold", 16)
+        deck.canvas.setFont("TNRB", 16)
+        deck.canvas.setFillColor(colors.black)
         deck.canvas.drawString(1.35 * inch, y + 0.06 * inch, title)
         deck.paragraph(detail, 3.5 * inch, y + 0.22 * inch, 8.85 * inch, 0.55 * inch, SMALL)
     deck.end()
@@ -440,7 +469,7 @@ def build() -> None:
     deck.paragraph(
         "Low coverage means overconfidence. High coverage can also be uninformative if intervals are too wide. Report coverage <b>and</b> interval width, by target and by split.",
         1.2 * inch, 2.12 * inch, 10.85 * inch, 0.9 * inch,
-        ParagraphStyle("uq", parent=CENTER, fontName="Helvetica-Bold", fontSize=19, leading=25, textColor=NAVY),
+        ParagraphStyle("uq", parent=CENTER, fontName="TNRB", fontSize=19, leading=25, textColor=NAVY),
     )
     deck.end()
 
@@ -460,7 +489,8 @@ def build() -> None:
         y = chart_y + chart_h * tick / 10
         c.line(chart_x, y, chart_x + chart_w, y)
         c.setFillColor(MUTED)
-        c.setFont("Helvetica", 10)
+        c.setFont("TNR", 10)
+        c.setFillColor(colors.black)
         c.drawRightString(chart_x - 0.12 * inch, y - 3, f"{tick}%")
     group_width = chart_w / 3
     for index, (label, key) in enumerate(zip(labels, keys)):
@@ -473,7 +503,8 @@ def build() -> None:
             c.setFillColor(color)
             c.rect(center + dx - 0.18 * inch, chart_y, 0.36 * inch, height, fill=1, stroke=0)
         c.setFillColor(INK)
-        c.setFont("Helvetica-Bold", 11)
+        c.setFont("TNRB", 11)
+        c.setFillColor(colors.black)
         c.drawCentredString(center, chart_y - 0.28 * inch, label)
     deck.box(8.85 * inch, 3.65 * inch, 3.65 * inch, 1.75 * inch, fill=PALE, stroke=TEAL)
     deck.paragraph(

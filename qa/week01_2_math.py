@@ -9,12 +9,14 @@ class Equation(Flowable):
     """Draw MathText outlines directly into PDF, including fraction rules."""
     def __init__(self, expression, max_width, size=13):
         super().__init__()
-        for filename in ('times.ttf', 'timesi.ttf', 'timesbd.ttf'):
-            font_manager.fontManager.addfont('C:/Windows/Fonts/' + filename)
+        from qa.lecture_typography import font_paths
+        for font_path in font_paths().values():
+            font_manager.fontManager.addfont(str(font_path))
         with rc_context({'mathtext.fontset': 'custom',
                          'mathtext.rm': 'Times New Roman',
                          'mathtext.it': 'Times New Roman:italic',
                          'mathtext.bf': 'Times New Roman:bold',
+                         'mathtext.cal': 'Times New Roman',
                          'mathtext.fallback': 'stix'}):
             self.outline = TextPath((0, 0), '$' + expression + '$', size=size)
         self.bounds = self.outline.get_extents()

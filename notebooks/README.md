@@ -9,7 +9,14 @@ unverified, and Week 15 runs from a local clone plus its linked Zenodo evidence
 archive. Weeks 17–22 use their documented CPU local/ZIP setup; their
 interactive Colab acceptance is still open. Read each module's setup page before launching it.
 
-## One-click launcher, in course order
+## Notebook entry points, in course order
+
+A launch link is not a hosted-execution certificate. Read the setup exceptions
+above before starting. **Read/rescore**, **compact teaching fit**, and **full
+regeneration** are distinct modes; [choose your mode](../START_HERE.md#2-create-an-environment)
+and check the module guide. The [generated inventory](../docs/COURSE_INVENTORY.md)
+counts the historical Week 15 audit companion explicitly and keeps optional
+self-study notebooks separate.
 
 | Module | Notebook | Launch |
 | --- | --- | --- |
@@ -189,3 +196,12 @@ Run notebooks in order. Restart and run all before submission. A notebook with s
 | Week 22 | Transfer and information budgets | [Open student notebook](week22/W22_CFD_Transformer.ipynb) · [Setup](week22/README.md) |
 
 Separate solutions are in the [instructor directory](../instructor/).
+
+## Optional self-study supplements
+
+The [separate inventory](../docs/COURSE_INVENTORY.md#optional-self-study) records
+available optional notebooks and their prerequisites. They are not required
+units in the Weeks 1–22 sequence.
+
+- [Geometry/time operator evaluation](optional_geometry_time_bridge/Geometry_Time_Operator_Bridge.ipynb)
+  · [Local setup and prerequisites](optional_geometry_time_bridge/README.md).

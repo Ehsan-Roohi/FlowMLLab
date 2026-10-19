@@ -61,7 +61,10 @@ Lettered rows are learning threads inside one notebook: 8A is Week 8 Lab 1, 8B a
 | [15](notebooks/week15/README.md) | Geometry-aware neural operators: ordinary DeepONet, Geom-DeepONet, Geo-FNO, SMART, GeoTransolver and DoMINO | Audit the 100/8/19 post-audit split; verify 342 saved fields; compare equal-update, three-seed models and validation-only learning-rate selection on the retrospective double-step family | Hash-verified data and predictions; filtered reverse IoU stated with its threshold; Re- and seed-stratified failure analysis; historical protocols labelled separately; no prospective-blind claim |
 | [16](notebooks/week16/README.md) | Supersonic shape optimization | Generate Gmsh/SU2 data; compare POD-MLP, GP and ridge; optimize and recompute | Cone benchmark; mesh/domain sensitivity; frozen geometry splits; fresh optimized-shape CFD and Mach stress tests |
 
-Each includes a PDF lecture and an executed CPU notebook. Week 11 additionally
+Each includes a PDF lecture and a CPU notebook entry point. Stored outputs and
+historical execution records are not proof that every cell of this checkout has
+been freshly executed; Week 16's full CFD/optimization route is an optional
+research workflow. Consult each lesson's execution-mode notes. Week 11 additionally
 audits frozen-checkpoint research masks; these are not new ground-truth accuracy
 measurements. Week 12 follows
 Week 11 because noise-sensitive derivatives connect feature detection to field
@@ -95,11 +98,18 @@ Take the extension weeks after the core; none replaces the Weeks 5 to 6 project.
 - Week 9 (Labs 1 to 3): geometry-dependent and shock-aligned rarefied-flow operators, and the data-alignment audit that precedes any operator fit.
 - Weeks 10 and 10.1: an end-to-end DSMC article reproduction and the collision-map surrogate companion.
 - Weeks 11 and 12: feature identification (shocks, vortices, vapour clouds) and noisy-moment reconstruction.
+- Week 16: data-based supersonic shape optimization; new CFD needs Gmsh/SU2. NASA reference convergence/physical checks remain a separate deferred extension.
 - Weeks 13 to 15: physics-informed networks for the cavity, RANS closures, and geometry-aware neural operators. Week 14 needs a separate environment (see its README); Week 15 runs from a full checkout.
 
-### Full semester
+### Semester planning
 
-Expand each row into a lecture/lab pair. Add grid/time-step studies, multi-parameter or geometry-varying data, a dedicated neural-operator unit (Weeks 9 and 15), the Week 2.1 probabilistic-UQ increment, and a research-resolution final project.
+Select a bounded route from the six-week core and extensions; the complete
+22-unit catalog is not a measured one-semester workload. Add grid/time-step
+studies, geometry-varying data, Weeks 9/15 operators and Week 2.1 uncertainty
+only when their prerequisites and class budget fit. Weeks 17–22 form a further
+sequence after Weeks 7.3, 7.4 and 15; representative student-workload acceptance
+remains open. Use [execution modes and compute estimates](START_HERE.md) to
+separate class time, retained-evidence replay and full research regeneration.
 
 ## Assessment philosophy
 
@@ -139,3 +149,11 @@ future proposals, and the linked results reports to assess their validation stat
 | [22](notebooks/week22/README.md) | Audit transfer before calling it a foundation model | Three retained targets, full label budget, matched steps and transfer rescoring |
 
 These extend existing Weeks 7.3, 7.4 and 15. See the [data-role and prerequisite contract](docs/TRANSFORMER_COURSE.md).
+
+## Optional supplements and catalog maintenance
+
+[Current file inventory and optional self-study](docs/COURSE_INVENTORY.md)
+separate numbered units, historical companions and optional additions. The
+geometry–time bridge is optional after Weeks 15 and 21 (Week 18 causality helpful);
+it must not replace the required Weeks 17–22 progression. Its manufactured-array
+exercises establish evaluation mechanics, not validated geometry-conditioned CFD.

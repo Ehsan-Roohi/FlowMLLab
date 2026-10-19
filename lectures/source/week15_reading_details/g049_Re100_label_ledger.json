@@ -1,0 +1,185 @@
+{
+  "purpose": "Searchable teaching labels for occluded retained-image text; no new CFD, training, or field rescoring.",
+  "source_url": "https://zenodo.org/records/22840293/files/FlowMLLab_Week15_Matched_Budget.zip?download=1",
+  "archive_sha256": "c470676fc130b367e89cde5f0b90ec99dfabae08b9d8b4efd3c595961014c2eb",
+  "archive_verification": "Matches release_assets_v1.8.0_sha256.txt byte-for-byte",
+  "member": "FlowMLLab_Week15_Matched_Budget/report/all_case_metrics.csv",
+  "member_sha256": "7ec24eec6c15324a808358bb471ecbcd16d9cd3caba7f256f52e1104eee5f642",
+  "member_verification": "Matches archive MANIFEST_SHA256.json",
+  "case": "g049_Re100",
+  "checkpoint_state": "last",
+  "updates": 19200,
+  "seeds": [
+    17,
+    29,
+    43
+  ],
+  "averaging": "Unweighted arithmetic mean of the three per-seed case metrics; not the global 19-case means.",
+  "records": [
+    {
+      "model": "geotransolver_author",
+      "label": "GeoTransolver",
+      "seed_rows": [
+        {
+          "model": "geotransolver_author",
+          "seed": "17",
+          "state": "last",
+          "epoch": "600",
+          "updates": "19200",
+          "case": "g049_Re100",
+          "geometry": "49",
+          "Re": "100",
+          "velocity_percent": "33.33157561741432",
+          "pressure_percent": "120.45436991153159",
+          "vorticity_percent": "38.268846754292596",
+          "reverse_iou_u_lt_minus_001": "0.5148923621350634",
+          "reverse_velocity_percent": "42.40002622796448"
+        },
+        {
+          "model": "geotransolver_author",
+          "seed": "29",
+          "state": "last",
+          "epoch": "600",
+          "updates": "19200",
+          "case": "g049_Re100",
+          "geometry": "49",
+          "Re": "100",
+          "velocity_percent": "24.970864750887888",
+          "pressure_percent": "102.30101886393729",
+          "vorticity_percent": "30.166682998315835",
+          "reverse_iou_u_lt_minus_001": "0.6126292466765141",
+          "reverse_velocity_percent": "41.53062580681353"
+        },
+        {
+          "model": "geotransolver_author",
+          "seed": "43",
+          "state": "last",
+          "epoch": "600",
+          "updates": "19200",
+          "case": "g049_Re100",
+          "geometry": "49",
+          "Re": "100",
+          "velocity_percent": "31.43187575263064",
+          "pressure_percent": "121.55789869334178",
+          "vorticity_percent": "34.51832217538054",
+          "reverse_iou_u_lt_minus_001": "0.5215087281795511",
+          "reverse_velocity_percent": "38.03870253263626"
+        }
+      ],
+      "arithmetic_means": {
+        "velocity_percent": 29.911438706977616,
+        "reverse_iou_u_lt_minus_001": 0.5496767789970428
+      }
+    },
+    {
+      "model": "px_context_proxy",
+      "label": "PhysicsX-inspired proxy",
+      "seed_rows": [
+        {
+          "model": "px_context_proxy",
+          "seed": "17",
+          "state": "last",
+          "epoch": "600",
+          "updates": "19200",
+          "case": "g049_Re100",
+          "geometry": "49",
+          "Re": "100",
+          "velocity_percent": "71.53847049606439",
+          "pressure_percent": "504.1715949751854",
+          "vorticity_percent": "128.11652150037798",
+          "reverse_iou_u_lt_minus_001": "0.33576199149969643",
+          "reverse_velocity_percent": "432.9299298748744"
+        },
+        {
+          "model": "px_context_proxy",
+          "seed": "29",
+          "state": "last",
+          "epoch": "600",
+          "updates": "19200",
+          "case": "g049_Re100",
+          "geometry": "49",
+          "Re": "100",
+          "velocity_percent": "66.95682337318443",
+          "pressure_percent": "365.854326389576",
+          "vorticity_percent": "89.67358823965465",
+          "reverse_iou_u_lt_minus_001": "0.36909609120521175",
+          "reverse_velocity_percent": "48.48913223764571"
+        },
+        {
+          "model": "px_context_proxy",
+          "seed": "43",
+          "state": "last",
+          "epoch": "600",
+          "updates": "19200",
+          "case": "g049_Re100",
+          "geometry": "49",
+          "Re": "100",
+          "velocity_percent": "14.67812150544837",
+          "pressure_percent": "30.735759525694306",
+          "vorticity_percent": "26.252791177900047",
+          "reverse_iou_u_lt_minus_001": "0.7418546365914787",
+          "reverse_velocity_percent": "78.28548597531118"
+        }
+      ],
+      "arithmetic_means": {
+        "velocity_percent": 51.05780512489906,
+        "reverse_iou_u_lt_minus_001": 0.4822375730987956
+      }
+    },
+    {
+      "model": "lift_wall_proxy",
+      "label": "LIFT wall-feature proxy",
+      "seed_rows": [
+        {
+          "model": "lift_wall_proxy",
+          "seed": "17",
+          "state": "last",
+          "epoch": "600",
+          "updates": "19200",
+          "case": "g049_Re100",
+          "geometry": "49",
+          "Re": "100",
+          "velocity_percent": "58.28259022992958",
+          "pressure_percent": "442.072476788921",
+          "vorticity_percent": "95.15972349685437",
+          "reverse_iou_u_lt_minus_001": "0.47275267815556593",
+          "reverse_velocity_percent": "399.6085460335198"
+        },
+        {
+          "model": "lift_wall_proxy",
+          "seed": "29",
+          "state": "last",
+          "epoch": "600",
+          "updates": "19200",
+          "case": "g049_Re100",
+          "geometry": "49",
+          "Re": "100",
+          "velocity_percent": "50.01015684447684",
+          "pressure_percent": "317.20970102831467",
+          "vorticity_percent": "60.95597422294917",
+          "reverse_iou_u_lt_minus_001": "0.5108370702541106",
+          "reverse_velocity_percent": "69.39558717275524"
+        },
+        {
+          "model": "lift_wall_proxy",
+          "seed": "43",
+          "state": "last",
+          "epoch": "600",
+          "updates": "19200",
+          "case": "g049_Re100",
+          "geometry": "49",
+          "Re": "100",
+          "velocity_percent": "36.41632971786655",
+          "pressure_percent": "185.83471239109133",
+          "vorticity_percent": "43.07063305618173",
+          "reverse_iou_u_lt_minus_001": "0.5637583892617449",
+          "reverse_velocity_percent": "44.189050669016176"
+        }
+      ],
+      "arithmetic_means": {
+        "velocity_percent": 48.23635893075766,
+        "reverse_iou_u_lt_minus_001": 0.5157827125571405
+      }
+    }
+  ]
+}

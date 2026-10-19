@@ -5,7 +5,7 @@
 \usetikzlibrary{arrows.meta,positioning,shapes.geometric}
 \usepackage[most]{tcolorbox}
 \usepackage{enumitem,fancyhdr,hyperref,microtype}
-\graphicspath{{../../results/gas_dynamics_week8/}}
+\graphicspath{{results/gas_dynamics_week8/}}
 \definecolor{navy}{HTML}{17365D}
 \definecolor{blue}{HTML}{2F75B5}
 \definecolor{teal}{HTML}{2A9D8F}
@@ -26,15 +26,18 @@
 \newcommand{\Rey}{\mathrm{Re}}
 \newcommand{\RelLtwo}{\varepsilon_{L_2}}
 
+\input{lectures/source/lecture_typography.tex}
+\tcbset{coltitle=black,colbacktitle=black!6}
+\tikzset{every node/.append style={text=black}}
 \begin{document}
 \hypersetup{pageanchor=false}
 \begin{titlepage}
 \centering\vspace*{0.9cm}
-{\color{navy}\rule{\textwidth}{2pt}}\\[0.5cm]
+{\color{black}\rule{\textwidth}{2pt}}\\[0.5cm]
 {\Huge\bfseries Gas Dynamics Before\\[0.18cm]Scientific Machine Learning\par}
 \vspace{0.35cm}{\Large Exact Relations, Branch-Aware Inversion, and Evidence-Based Surrogates\par}
 \vspace{0.35cm}{\large Week 8 Extension Lecture Notes\par}
-\vspace{0.5cm}{\color{navy}\rule{\textwidth}{2pt}}\\[0.9cm]
+\vspace{0.5cm}{\color{black}\rule{\textwidth}{2pt}}\\[0.9cm]
 {\Large M\&I-ENG 690A -- AI in Fluid Mechanics\par}
 \vspace{0.25cm}{\large Summer 2026\par}
 \vfill
@@ -184,6 +187,30 @@ The isentropic area relation is
 \left[\frac{2}{\gamma+1}
 \left(1+\frac{\gamma-1}{2}\Ma^2\right)\right]^{\frac{\gamma+1}{2(\gamma-1)}}.
 \end{equation}
+\paragraph{Worked inverse: branch before regressor.}
+For $\gamma=1.4$ and $A/A^*=1.6875$, define the dimensionless residual
+\[
+F(M)=\frac{1}{M}\left[\frac56(1+0.2M^2)\right]^3-1.6875.
+\]
+On the supersonic bracket $[1,3]$, $F(1)=-0.6875$ and
+$F(3)\simeq2.54707$. Its first bisection midpoint is $M=2$, and
+\[
+\frac{A}{A^*}=\frac12\left[\frac56(1+0.2\times4)\right]^3
+=\frac12(1.5)^3=1.6875.
+\]
+Thus the forward residual is zero. This convenient exact midpoint is specific
+to the chosen example; an arbitrary target requires further iterations.
+On the subsonic bracket $[0.1,0.9]$, the residual changes from $4.13433$
+to $-0.678637$, giving the second root $M\simeq0.3722444862$.
+Both roots have the same area ratio. The flow region and shock or boundary
+conditions select the branch; averaging the roots does not solve the inverse.
+This is one isentropic segment, not the complete internal-shock calculation.
+
+\textbf{Self-check (10 points):} bracket signs and midpoint substitution (4),
+both roots and physical branch information (4), residual plus branch check (2).
+For $A/A^*=1$ the branches meet at $M=1$: an endpoint root need not have a
+sign-changing bracket on an open branch. All quantities here are dimensionless.
+
 It also has subsonic and supersonic branches. An internal normal shock maps
 $A_s/A_t$ to $p_b/p_{01}$ through upstream isentropic acceleration, the normal
 shock jump, and downstream subsonic diffusion. The inverse is bracketed inside

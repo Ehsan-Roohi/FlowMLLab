@@ -13,3 +13,6 @@ are distributed separately for assessment. Do not grade a skipped task as passed
 This published edition includes a complete local/ZIP setup route. Interactive
 Colab and student workload acceptance remain separate checks; see the
 [second-review response](../../docs/TRANSFORMER_SECOND_REVIEW_RESPONSE.md).
+
+
+Optional extension after Weeks 15 and 21: [geometry–time operator bridge](../optional_geometry_time_bridge/README.md). This separate manufactured-data exercise connects shape-conditioned fields to genuine autonomous rollout, SDF masks, split-before-window construction and phase diagnostics. It adds no required workload to the 22-week core and is not new CFD evidence.

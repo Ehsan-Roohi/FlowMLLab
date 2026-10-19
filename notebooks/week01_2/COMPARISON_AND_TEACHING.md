@@ -1,8 +1,9 @@
 # Pressure-velocity coupling: evidence, flowcharts and teaching experiments
 
 This supplement belongs to Week 1.2. All measured runs below are **Re=100**.
-The higher-Re and time-dependent-lid studies are proposals, not completed
-validation. The problem is a **lid-driven cavity**, not cavitation.
+The time-dependent-lid study remains a proposal. A separate retained
+Re=400/1000 experimental investigation is linked in README.md; it does not
+extend the original Re=100 qualification. The problem is a **lid-driven cavity**, not cavitation.
 
 ## What the comparative literature actually says
 
@@ -177,7 +178,7 @@ the table below does not silently expand the released claim.
 | B | Re=100 single-step inner/outer correction sweep | Mass conservation is distinct from momentum consistency; PIMPLE reduces nonlinear step defects at extra cost | 15 configurations executed; not temporal-accuracy validation |
 | C | Re=100 SIMPLE relaxation sweep, e.g. `(alpha_u,alpha_p)=(0.5,0.5),(0.7,0.3),(0.9,0.1)` | Robustness versus speed; accept only the same unrelaxed final residual and fields | Proposed; these pairs are trials, not assured optimal/stable settings |
 | D | Re=100 startup to matched final times, then a smooth ramped/oscillating lid; halve dt | PISO/PIMPLE cost at matched time error, and phase/amplitude errors; a large stable dt can be inaccurate | Proposed; variable-lid boundary API and temporal reference still required |
-| E | Re=400, then 1000 on 64/128/256 cells with independently validated convection and benchmark tables | Separate mesh error, numerical boundedness and coupling failures; inspect secondary vortices and lid-wall stress | Proposed; public solver has not been extended or run at these Re values |
+| E | Re=400, then 1000 on 64/128/256 cells with independently validated convection and benchmark tables | Separate mesh error, numerical boundedness and coupling failures; inspect secondary vortices and lid-wall stress | Separate experimental Re=400/1000 investigation now exists; see README.md and results/week01_2_higher_re. This is not the original Re=100 qualified package |
 
 Keep spatial equations, grid, initial fields, physical final time and linear
 solver settings fixed in a coupling comparison. For transient studies, SIMPLE

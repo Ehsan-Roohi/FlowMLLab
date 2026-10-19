@@ -5,7 +5,7 @@
 \usetikzlibrary{arrows.meta,positioning,shapes.geometric}
 \usepackage[most]{tcolorbox}
 \usepackage{enumitem,fancyhdr,hyperref,microtype}
-\graphicspath{{../../results/mahdavi_deeponet/}}
+\graphicspath{{results/mahdavi_deeponet/}}
 \definecolor{navy}{HTML}{17365D}
 \definecolor{blue}{HTML}{2F75B5}
 \definecolor{teal}{HTML}{2A9D8F}
@@ -25,15 +25,18 @@
 \newcommand{\RelLtwo}{\varepsilon_{L_2}}
 \newcommand{\Kn}{\mathrm{Kn}}
 
+\input{lectures/source/lecture_typography.tex}
+\tcbset{coltitle=black,colbacktitle=black!6}
+\tikzset{every node/.append style={text=black}}
 \begin{document}
 \hypersetup{pageanchor=false}
 \begin{titlepage}
 \centering\vspace*{0.8cm}
-{\color{navy}\rule{\textwidth}{2pt}}\\[0.45cm]
+{\color{black}\rule{\textwidth}{2pt}}\\[0.45cm]
 {\Huge\bfseries Rarefied-Flow CFD and\\[0.16cm]DeepONet Case Studies\par}
 \vspace{0.32cm}{\Large Micro-Step and Micro-Nozzle: from DSMC verification to held-out fields\par}
 \vspace{0.32cm}{\large Week 9 Extension Lecture Notes\par}
-\vspace{0.48cm}{\color{navy}\rule{\textwidth}{2pt}}\\[0.8cm]
+\vspace{0.48cm}{\color{black}\rule{\textwidth}{2pt}}\\[0.8cm]
 {\Large M\&I-ENG 690A -- AI in Fluid Mechanics\par}
 \vspace{0.2cm}{\large Summer 2026\par}
 \vfill

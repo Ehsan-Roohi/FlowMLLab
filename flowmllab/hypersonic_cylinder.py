@@ -358,19 +358,48 @@ def ensemble_predict(
     return np.mean(predictions, axis=0), np.std(predictions, axis=0, ddof=ddof)
 
 
+def masked_structured_field(x, y, values):
+    """Restore a rectangular coordinate lattice, masking every absent node.
+
+    No interpolation is performed. Duplicate coordinates are rejected because
+    silently overwriting them could conceal a mixed-case input. Coordinates and
+    values remain in their stored source units.
+    """
+    x, y, values = (np.asarray(a).reshape(-1) for a in (x, y, values))
+    if not (len(x) == len(y) == len(values)) or not len(x):
+        raise ValueError("x, y and values must have equal nonzero length")
+    if not (np.isfinite(x).all() and np.isfinite(y).all()):
+        raise ValueError("coordinates must be finite")
+    xs, ix = np.unique(x, return_inverse=True)
+    ys, iy = np.unique(y, return_inverse=True)
+    if len(np.unique(iy * len(xs) + ix)) != len(x):
+        raise ValueError("duplicate coordinate pairs; select one case first")
+    grid = np.full((len(ys), len(xs)), np.nan)
+    grid[iy, ix] = values
+    return xs, ys, np.ma.masked_invalid(grid)
+
+
 def build_fusion_deeponet(
     *,
     latent_dim: int = 256,
     hidden_layers: int = 4,
     dropout_rate: float = 0.2,
+    output_mode: str = "vector",
 ):
-    """Build the reviewed Fusion-DeepONet topology when TensorFlow is installed.
+    """Build an educational multi-output Fusion-DeepONet when TensorFlow is installed.
+
+    The default ``vector`` head retains every latent product before Dense(3).
+    ``legacy_scalar`` explicitly reconstructs the old scalar-dot head for
+    historical weight compatibility; its three outputs lie on one affine line.
+    Neither mode establishes equivalence to an unavailable paper checkpoint.
 
     This constructs the architecture only.  The full paper protocol additionally
     requires the original 50,000-point case sampling, five independent fits, and
     the frozen validation/test design; the classroom notebook does not claim that
     reproduction.
     """
+    if output_mode not in {"vector", "legacy_scalar"}:
+        raise ValueError("output_mode must be vector or legacy_scalar")
     try:
         import tensorflow as tf
         from tensorflow import keras
@@ -407,11 +436,18 @@ def build_fusion_deeponet(
             [trunk, branch_state]
         )
 
-    dot = keras.layers.Lambda(
-        lambda values: tf.reduce_sum(values[0] * values[1], axis=-1, keepdims=True),
-        name="branch_trunk_dot",
-    )([branch_layers[-1], trunk])
-    output = keras.layers.Dense(3, name="ma_temperature_pressure")(dot)
+    if output_mode == "legacy_scalar":
+        import warnings
+        warnings.warn("Legacy scalar head restricts all outputs to an affine line; "
+                      "use only for historical architecture/weight inspection.", UserWarning)
+        features = keras.layers.Lambda(
+            lambda values: tf.reduce_sum(values[0] * values[1], axis=-1, keepdims=True),
+            name="branch_trunk_dot",
+        )([branch_layers[-1], trunk])
+    else:
+        features = keras.layers.Multiply(name="branch_trunk_product")(
+            [branch_layers[-1], trunk])
+    output = keras.layers.Dense(3, name="ma_temperature_pressure")(features)
     return keras.Model([branch_input, trunk_input], output, name="fusion_deeponet")
 
 

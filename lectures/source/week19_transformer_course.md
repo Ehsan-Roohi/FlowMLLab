@@ -92,8 +92,18 @@ Given a representation, flattened truth field, sensor-index designs and optional
 
 Interface contract: representation is fitted; truth is a nonzero spatial vector. designs is a list of nonempty unique integer sensor-index arrays. observations is None (use truth at sensors) or a parallel list of sampled vectors including any noise. Return a list in design order of dictionaries: prediction (full spatial NumPy vector), field_error (relative L2 to truth), floor (relative L2 of truth projection), rank (rank of sensed mode matrix), condition (2-norm condition number of that same sensed matrix). Duplicate/empty sensor designs and zero truth norm must raise ValueError.
 
-For the integrated fourth task, compare at least two controlled settings and explain a result that the implementation alone cannot justify. Include the requested plot or table and retain unsuccessful outcomes.
-
 ## Before submitting
 
 Restart the kernel and run the worked examples and completed tasks. Confirm that all four coding checks pass and that no retained data or results file changed. Include the requested interpretation, identify every quantity fitted from training data, and separate test observations from decisions made using validation. Record unresolved budget or representation limits rather than removing inconvenient runs.
+
+
+## Assessment and worked interpretation
+
+Coding: Tasks 1–3 carry 5 points each; the integrated Task 4 carries 25. Derivation (25): derive the orthogonal representation floor and the gappy least-squares solve. Interpretation (25): give evidence and limitations. Reproducibility (10): identify inputs, split, checkpoint, environment and every failed seed. Total 100. Passing function checks earns only the coding allocation.
+
+Worked full-credit reasoning: A lower POD floor does not guarantee better reconstruction from noisy sparse sensors. More retained modes can make the sampled basis ill conditioned; compare the floor, noise amplification and field error with frozen sensor coordinates.
+
+Misconception to reject: “Adding POD modes always improves a noisy sparse-sensor reconstruction.” Explain the failure in one equation or counterexample. An observation without protocol and limitation earns at most half of interpretation credit. Instructor judgment and a timed student pilot remain necessary.
+
+
+Timing estimate: a 120-minute guided lab and roughly 3–5 hours including preparation and written analysis. This is an editorial estimate; a timed student pilot remains open.

@@ -1,12 +1,18 @@
 \documentclass[11pt]{article}
 \usepackage[a4paper,margin=21mm,headheight=15pt]{geometry}
 \usepackage{fontspec,unicode-math}
-\IfFontExistsTF{Times New Roman}{\setmainfont{Times New Roman}}{\setmainfont{Tinos}}
-\IfFontExistsTF{Times New Roman}{\setsansfont{Arial}}{\setsansfont{Arimo}}
-\setmathfont{STIX Math}
+\setmainfont{Times New Roman}
+\setsansfont{Times New Roman}
+\setmonofont{Times New Roman}
+\setmathfont{Latin Modern Math}
+\setmathfont[range=up/{latin,Latin,greek,Greek,num}]{Times New Roman}
+\setmathfont[range=it/{latin,Latin,greek,Greek}]{Times New Roman Italic}
+\setmathfont[range=bfup/{latin,Latin,greek,Greek,num}]{Times New Roman Bold}
+% TNR lacks these Unicode mathematical Greek variants; use explicit operator font.
+\setmathfont[range={\mitphi,\mitepsilon,\mupphi,\mupepsilon}]{Latin Modern Math}
 \usepackage{graphicx,booktabs,array,longtable,tabularx,xcolor,fancyhdr,enumitem,hyperref,amsmath,caption,float,tikz}
 \usetikzlibrary{arrows.meta,positioning,shapes.geometric}
-\definecolor{accent}{HTML}{176578}
+\definecolor{accent}{HTML}{000000}
 \definecolor{soft}{HTML}{EAF3F5}
 \hypersetup{colorlinks=true,linkcolor=accent,urlcolor=accent,citecolor=accent}
 \pagestyle{fancy}\fancyhf{}\lhead{FlowMLLab | AI in Thermal-Fluids}\rhead{Week 16: Supersonic shape optimization}\cfoot{\thepage}

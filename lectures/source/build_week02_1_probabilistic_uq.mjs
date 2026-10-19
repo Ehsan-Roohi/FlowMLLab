@@ -12,7 +12,7 @@ const H = 720;
 const C = {
   canvas: "#FFFFFF",
   ink: "#000000",
-  muted: "#5B616B",
+  muted: "#000000",
   panel: "#EDEDED",
   rule: "#B8BCC4",
   accent: "#6DCBF4",
@@ -21,7 +21,7 @@ const C = {
   warn: "#D97706",
   warnPale: "#FFF3D6",
 };
-const FONT = "Arial";
+const FONT = "Times New Roman";
 
 function addText(slide, text, position, fontSize = 26, options = {}) {
   const box = slide.shapes.add({
@@ -35,7 +35,7 @@ function addText(slide, text, position, fontSize = 26, options = {}) {
   box.text.style = {
     fontSize,
     typeface: FONT,
-    color: options.color ?? C.ink,
+    color: "#000000",
     bold: options.bold ?? false,
     italic: options.italic ?? false,
     alignment: options.alignment ?? "left",
@@ -156,13 +156,13 @@ async function main() {
     addText(slide, "One best guess", { left: 84, top: 370, width: 220, height: 40 }, 25, { alignment: "center", color: C.muted });
     addLine(slide, 395, 183, 0.01, C.rule, 1);
     addRect(slide, { left: 474, top: 226, width: 680, height: 94 }, C.paleBlue);
-    addLine(slide, 500, 273, 628, C.accentStrong, 5);
+    addLine(slide, 657, 273, 314, C.accentStrong, 5);
     addDot(slide, 805, 263, C.ink, 20);
-    addText(slide, "narrow distribution", { left: 474, top: 330, width: 320, height: 40 }, 24, { color: C.muted });
+    addText(slide, "narrow interval (same scale)", { left: 474, top: 330, width: 320, height: 40 }, 24, { color: C.muted });
     addRect(slide, { left: 474, top: 430, width: 680, height: 94 }, "#F6F6F6");
     addLine(slide, 500, 477, 628, C.warn, 5);
     addDot(slide, 805, 467, C.ink, 20);
-    addText(slide, "wide distribution", { left: 474, top: 534, width: 320, height: 40 }, 24, { color: C.muted });
+    addText(slide, "wide interval (twice the width)", { left: 474, top: 534, width: 320, height: 40 }, 24, { color: C.muted });
     addText(slide, "The mean can be identical while the decision should change.", { left: 474, top: 595, width: 680, height: 48 }, 28, { bold: true });
     setNotes(slide, "Ask students which prediction they would trust near a wall or operating limit. Emphasize that RMSE alone does not communicate the width or calibration of a predictive distribution.", [
       "https://doi.org/10.1198/016214506000001437",
@@ -216,8 +216,8 @@ async function main() {
     addText(slide, "ε ~ 𝒩(0, σ²)", { left: 66, top: 312, width: 500, height: 80 }, 50, { color: C.accentStrong });
     addRect(slide, { left: 610, top: 174, width: 568, height: 288 }, C.panel);
     addKicker(slide, "Gaussian observation model", 646, 212, 450);
-    addText(slide, "−log p(y | θ, σ²)\n= constant + Σ(y − fθ(x))² / 2σ²", { left: 646, top: 275, width: 492, height: 130 }, 34, { bold: true });
-    addText(slide, "MSE is therefore not neutral: it encodes constant-variance Gaussian residuals.", { left: 66, top: 520, width: 1080, height: 82 }, 31, { bold: true });
+    addText(slide, "−log p(y | θ, σ²)\n= n log σ + constant + SSE / 2σ²", { left: 646, top: 275, width: 492, height: 130 }, 30, { bold: true });
+    addText(slide, "For known fixed σ, minimizing NLL in θ is equivalent to MSE. If σ is learned, retain n log σ.", { left: 66, top: 520, width: 1080, height: 82 }, 31, { bold: true });
     setNotes(slide, "Derive the negative log likelihood up to an additive constant. Ask when constant variance is implausible in a CFD field—for example, near steep gradients or sparse operating regimes.", [
       "https://gaussianprocess.org/gpml/",
     ]);

@@ -9,7 +9,7 @@ The initial qualified case is **Re=100 only**.
 [Expanded comparison and teaching supplement](COMPARISON_AND_TEACHING.md)
 adds three algorithm flowcharts, a primary-source literature review, a measured
 15-configuration one-step coupling experiment, and a staged higher-Re and
-transient-accuracy plan. The lecture now contains 18 pages. A smaller nonlinear
+transient-accuracy plan. The lecture now contains 19 pages. A smaller nonlinear
 step defect is distinguished explicitly from a smaller physical time error.
 
 ## Learning outcomes

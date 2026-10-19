@@ -7,12 +7,12 @@
     {
       "title": "Rescore full trajectories and compare matched-information models",
       "prose": "The primary trajectory starts at frame 160 from frames 156:160. The evaluation boundary at 210 is not an assimilation event. Additional-start metrics in the record are a separate observed-initialization protocol.",
-      "code": "record=json.loads((EVIDENCE/'forecast.json').read_text());display(pd.DataFrame([{'model':r['method'],'seed':r['seed'],**{k:v for k,v in r['metrics'].items() if k!='per_frame_relative_l2'}} for r in record['rows']]))\nprint('Earlier Week 7 MLP reference:',record['legacy_MLP_reference'])\nretained=np.load(EVIDENCE/'predictions.npz',allow_pickle=False)\ntruth=cases[110]['omega'][210:].reshape(71,-1)\nfig,ax=plt.subplots(figsize=(9,4))\nfor row in record['rows']:\n    if row['seed'] in (None,17):\n        pred=lab.prediction(retained,'forecast__'+row['key'])[50:]\n        curve=np.linalg.norm(pred-truth,axis=1)/np.linalg.norm(truth,axis=1)\n        ax.plot(np.arange(51,122),curve,label=row['key'])\nax.set_xlabel('steps since observed initialization');ax.set_ylabel('field relative L2');ax.legend(fontsize=8);plt.show()"
+      "code": "record=json.loads((EVIDENCE/'forecast.json').read_text());display(pd.DataFrame([{'model':r['method'],'seed':r['seed'],**{k:v for k,v in r['metrics'].items() if k!='per_frame_relative_l2'}} for r in record['rows']]))\nprint('Earlier Week 7 MLP reference:',record['legacy_MLP_reference'])\nretained=np.load(EVIDENCE/'predictions.npz',allow_pickle=False)\ntruth_full=cases[110]['omega'][160:281].reshape(121,-1)\ntruth=truth_full[50:]\nfig,ax=plt.subplots(figsize=(9,4))\nfor row in record['rows']:\n    if row['seed'] in (None,17):\n        pred=lab.prediction(retained,'forecast__'+row['key'])\n        curve=np.linalg.norm(pred-truth_full,axis=1)/np.linalg.norm(truth_full,axis=1)\n        ax.plot(np.arange(1,122),curve,label=row['key'])\nfloor_row=next(r for r in record['rows'] if r['method']=='POD-oracle')\nfloor_prediction=lab.prediction(retained,'forecast__'+floor_row['key'])\nfloor_curve=np.linalg.norm(floor_prediction-truth_full,axis=1)/np.linalg.norm(truth_full,axis=1)\nax.plot(np.arange(1,122),floor_curve,color='black',linestyle=':',linewidth=2,label='exact retained POD representation floor')\nax.set_title('Observed initialization frames 156:160; predict 160:281 without reset')\nax.axvline(50.5,color='black',linestyle='--',label='validation / test; no reset')\nax.set_xlabel('steps since observed initialization; frames 160–280');ax.set_ylabel('field relative L2');ax.legend(fontsize=8);plt.show()"
     },
     {
       "title": "Phase and amplitude from the full rollout",
       "prose": "A 71-frame FFT cannot resolve small frequency differences. Fit frequency, amplitude and phase over the 121-frame rollout instead. This remains a local scalar probe, not lift or drag; the fit residual checks whether the sinusoidal model is plausible. Initial phase is defined at the first sample of the rollout, using t-t[0]. Constant signals have no identifiable frequency or phase.",
-      "code": "display(pd.DataFrame(record['spectral_fit']).T)\nreference=record['spectral_fit']['reference']\nprint('Observation duration:',reference['duration'],'D/U; sinusoidal-fit residual:',reference['residual_mse'])\nrep=lab.Representation.fit(cases[110]['omega'][:160],8)\nrow=next(r for r in record['rows'] if r['method']=='Causal-Transformer')\npred=lab.prediction(retained,'forecast__'+row['key'])[50:]\nparts=lab.error_components(pred,truth,rep)\nassert abs(parts['pythagorean_residual'])<1e-8\nprint('Squared-error decomposition residual:',parts['pythagorean_residual'])"
+      "code": "display(pd.DataFrame(record['spectral_fit']).T)\nreference=record['spectral_fit']['reference']\nprint('Observation duration:',reference['duration'],'D/U; sinusoidal-fit residual:',reference['residual_mse'])\nrow=next(r for r in record['rows'] if r['method']=='Causal-Transformer')\nbundles=torch.load(EVIDENCE/'checkpoints.pt',map_location='cpu',weights_only=True)\n_,rep=lab.checkpoint_model(bundles['forecast__'+row['key']])\nprint('Exact saved representation, checkpoint SHA-256:',lab.digest(EVIDENCE/'checkpoints.pt'))\npred=lab.prediction(retained,'forecast__'+row['key'])[50:]\nparts=lab.error_components(pred,truth,rep)\nassert abs(parts['pythagorean_residual'])<1e-8\nprint('Squared-error decomposition residual:',parts['pythagorean_residual'])"
     }
   ],
   "tasks": [
@@ -45,5 +45,21 @@
       "checks": "for context in (2,4):\n    h=np.ones((context,2));truth=np.ones((6,2))\n    for factor in (1.,1.1):\n        r=rollout_audit(lambda window:window[-1]*factor,h,truth)\n        expected=np.repeat((factor**np.arange(1,7))[:,None],2,axis=1)\n        np.testing.assert_allclose(r['predictions'],expected)\n        np.testing.assert_allclose(r['per_step_error'],abs(factor**np.arange(1,7)-1))\n    changed=rollout_audit(lambda window:window[-1]*1.1,h,truth*20)\n    np.testing.assert_allclose(changed['predictions'],r['predictions'])\ntry:\n    rollout_audit(lambda window:np.zeros(3),h,truth)\n    raise AssertionError('wrong state width accepted')\nexcept ValueError:pass\ntruth=np.array([[1.,2.],[20.,4.],[.2,.1],[5.,8.]])\nh=np.ones((3,2))\nr=rollout_audit(lambda window:window[-1]*1.2,h,truth)\nexpected_global=np.linalg.norm(r['predictions']-truth)/np.linalg.norm(truth)\nassert not np.isclose(expected_global,np.mean(r['per_step_error']))\nassert np.isclose(r['field_error'],expected_global)\ntry:\n    rollout_audit(lambda window:window[-1],h,np.zeros((3,2)))\n    raise AssertionError('zero reference norm accepted')\nexcept ValueError:pass\n"
     }
   ],
-  "duration_minutes": 120
+  "duration_minutes": 120,
+  "assessment": {
+    "coding_weights": [
+      5,
+      5,
+      5,
+      25
+    ],
+    "derivation_points": 25,
+    "interpretation_points": 25,
+    "reproducibility_points": 10,
+    "derivation": "derive recursive rollout and distinguish one-step from trajectory error",
+    "full_credit_example": "The curve covers all 121 steps from one observed history. Crossing frame 210 does not reset the model; a low one-step error does not bound accumulated phase drift.",
+    "misconception": "Restarting with test truth every step is an autonomous forecast.",
+    "partial_credit": "An accurate numerical observation without its split, representation, or causal limitation earns at most half of interpretation points.",
+    "human_validation": "Instructor marking and a timed student pilot are still required; automated checks establish interface/behavior only."
+  }
 }

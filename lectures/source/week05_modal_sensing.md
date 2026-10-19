@@ -72,3 +72,22 @@ Evaluation inspiration: https://github.com/pdebench/PDEBench
 Data: https://github.com/Ehsan-Roohi/FlowMLLab/releases/tag/cylinder-cfd-v1
 
 Executable companion: notebooks/week05_06/W5_Lab2_Sparse_Sensing_Dynamics.ipynb
+
+
+---
+# Worked sensor sensitivity example
+
+For centered q=Φa with Φ=[[1,0],[0,1],[0,0]], the first two sensors give
+CΦ=I and a=(y1,y2); measurement noise (.01,−.01) has the same coefficient
+norm √2×.01. To isolate conditioning from basis error, consider a local sensor
+system A=[[1,0],[1,.01]]. With true a=(1,2), y=(1,1.02). A noise increment
+(0,.01) changes recovered a to (1,3): a 0.01 observation error becomes a unit
+coefficient error. This A is an algebraic local example, not an orthonormal full
+POD basis. Its nearly parallel rows explain the amplification.
+
+**Exercise:** replace .01 by .1; the same noise gives coefficient error .1.
+Then add a component outside the retained POD span. Even exact, well-conditioned
+sensors cannot remove that representation residual. In the real wake experiment,
+compare sensor layouts at the same budget and use paired noise as implemented.
+Study this lab after Week 7's modal dynamics; its directory does not impose an
+additional mandatory pre-project dynamics unit.

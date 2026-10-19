@@ -98,8 +98,20 @@ Return per-position negative log likelihood, token accuracy, overall NLL and per
 
 Interface contract: Return a dictionary with position_nll and position_accuracy as length-time Torch tensors averaged over batch, nll and perplexity as Python floats averaged over all tokens. Use natural logs. Non-3-D logits, mismatched target shape, empty targets or tokens outside [0,vocabulary) must raise ValueError. Targets are integer token IDs.
 
-For the integrated fourth task, compare at least two controlled settings and explain a result that the implementation alone cannot justify. Include the requested plot or table and retain unsuccessful outcomes.
-
 ## Before submitting
 
 Restart the kernel and run the worked examples and completed tasks. Confirm that all four coding checks pass and that no retained data or results file changed. Include the requested interpretation, identify every quantity fitted from training data, and separate test observations from decisions made using validation. Record unresolved budget or representation limits rather than removing inconvenient runs.
+
+
+## Assessment and worked interpretation
+
+Coding: Tasks 1–3 carry 5 points each; the integrated Task 4 carries 25. Derivation (25): trace a 4-head causal Block and shifted targets. Interpretation (25): give evidence and limitations. Reproducibility (10): identify inputs, split, checkpoint, environment and every failed seed. Total 100. Passing function checks earns only the coding allocation.
+
+Worked full-credit reasoning: Masking blocks access to future tokens; the poisoned-prefix test establishes a dependency property, not forecast accuracy. Window CE covers every validation window and includes repeated characters.
+
+Misconception to reject: “Low character perplexity proves a stable CFD rollout.” Explain the failure in one equation or counterexample. An observation without protocol and limitation earns at most half of interpretation credit. Instructor judgment and a timed student pilot remain necessary.
+
+The language-model validation metric sums next-token cross-entropy over every held-out window and divides by evaluated tokens. Overlap repeats characters; it is not a unique-character document likelihood. The vocabulary embedding, position vectors, four width-6 causal heads and feed-forward residual are traced in the notebook; the continuous CFD experiment is separate.
+
+
+Timing estimate: a 120-minute guided lab and roughly 3–5 hours including preparation and written analysis. This is an editorial estimate; a timed student pilot remains open.

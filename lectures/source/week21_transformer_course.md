@@ -88,8 +88,20 @@ Roll a history forward using only a supplied next-state function. Return predict
 
 Interface contract: predict_next accepts a copy of history:[context,features] and returns one [features] vector. truth:[steps,features] sets the horizon and is used only for scoring after prediction. Return dictionary predictions ([steps,features] array), per_step_error (length-steps array), field_error (float GLOBAL Frobenius relative L2, not the mean of per-step ratios). Invalid dimensions/state width, nonfinite predictions or any zero per-step truth norm must raise ValueError.
 
-For the integrated fourth task, compare at least two controlled settings and explain a result that the implementation alone cannot justify. Include the requested plot or table and retain unsuccessful outcomes.
-
 ## Before submitting
 
 Restart the kernel and run the worked examples and completed tasks. Confirm that all four coding checks pass and that no retained data or results file changed. Include the requested interpretation, identify every quantity fitted from training data, and separate test observations from decisions made using validation. Record unresolved budget or representation limits rather than removing inconvenient runs.
+
+
+## Assessment and worked interpretation
+
+Coding: Tasks 1–3 carry 5 points each; the integrated Task 4 carries 25. Derivation (25): derive recursive rollout and distinguish one-step from trajectory error. Interpretation (25): give evidence and limitations. Reproducibility (10): identify inputs, split, checkpoint, environment and every failed seed. Total 100. Passing function checks earns only the coding allocation.
+
+Worked full-credit reasoning: The curve covers all 121 steps from one observed history. Crossing frame 210 does not reset the model; a low one-step error does not bound accumulated phase drift.
+
+Misconception to reject: “Restarting with test truth every step is an autonomous forecast.” Explain the failure in one equation or counterexample. An observation without protocol and limitation earns at most half of interpretation credit. Instructor judgment and a timed student pilot remain necessary.
+
+The core trajectory plot includes frames 160–280 (121 predictions), with a boundary at frame 210 and no reset. Error decomposition reloads the exact saved representation; it does not refit a nominally similar basis.
+
+
+Timing estimate: a 120-minute guided lab and roughly 3–5 hours including preparation and written analysis. This is an editorial estimate; a timed student pilot remains open.

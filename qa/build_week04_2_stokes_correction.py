@@ -28,7 +28,7 @@ from reportlab.platypus import Paragraph, Table, TableStyle
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 
-from execute_cavity_lesson import execute
+from qa.execute_cavity_lesson import execute
 from flowmllab.cavity_diversity import fields, lid_profile
 
 
@@ -455,6 +455,8 @@ def _p(c: canvas.Canvas, text: str, x: float, y: float, width: float, style: Par
 
 
 def build_pdf(figures: dict[str, Path]) -> None:
+    from qa.lecture_typography import register_legacy_reportlab_aliases, black_paragraph_styles
+    register_legacy_reportlab_aliases()
     comparison = pd.read_csv(RESULTS / "comparison.csv")
     pressure = pd.read_csv(RESULTS / "pressure_metrics.csv")
     selection = pd.read_csv(RESULTS / "expanded/selection.csv")
@@ -463,30 +465,32 @@ def build_pdf(figures: dict[str, Path]) -> None:
     c = canvas.Canvas(str(PDF), pagesize=A4, pageCompression=1)
     c.setTitle("FlowMLLab Week 4.2 - Stokes-to-Navier-Stokes Correction")
 
-    body = ParagraphStyle("body", fontName="Times-Roman", fontSize=10.2, leading=13.3,
+    body = ParagraphStyle("body", fontName="TNR", fontSize=10.2, leading=13.3,
                           textColor=TEXT, alignment=TA_LEFT, spaceAfter=4)
     small = ParagraphStyle("small", parent=body, fontSize=8.7, leading=11)
-    note = ParagraphStyle("note", parent=body, fontName="Times-Italic", fontSize=9.2,
+    note = ParagraphStyle("note", parent=body, fontName="TNRI", fontSize=9.2,
                           leading=12, textColor=NAVY)
-    equation = ParagraphStyle("equation", parent=body, fontName="Times-Italic", fontSize=11,
+    equation = ParagraphStyle("equation", parent=body, fontName="TNRI", fontSize=11,
                               leading=15, alignment=TA_CENTER, borderColor=MID,
                               borderWidth=0.5, borderPadding=7, backColor=LIGHT)
-    h1 = ParagraphStyle("h1", fontName="Times-Bold", fontSize=19, leading=22, textColor=NAVY)
-    h2 = ParagraphStyle("h2", fontName="Times-Bold", fontSize=13.5, leading=17, textColor=NAVY)
+    h1 = ParagraphStyle("h1", fontName="TNRB", fontSize=19, leading=22, textColor=NAVY)
+    h2 = ParagraphStyle("h2", fontName="TNRB", fontSize=13.5, leading=17, textColor=NAVY)
     center = ParagraphStyle("center", parent=body, alignment=TA_CENTER)
 
+    black_paragraph_styles({k:v for k,v in locals().copy().items() if isinstance(v, ParagraphStyle)})
+
     def header(page: int, title: str) -> float:
-        c.setFillColor(NAVY); c.rect(0, height - 23*mm, width, 23*mm, fill=1, stroke=0)
-        c.setFillColor(colors.white); c.setFont("Times-Bold", 15)
+        c.setFillColor(LIGHT); c.rect(0, height - 23*mm, width, 23*mm, fill=1, stroke=0)
+        c.setFillColor(colors.black); c.setFont("TNRB", 15)
         c.drawString(16*mm, height - 14*mm, title)
-        c.setFont("Times-Roman", 8.5)
+        c.setFont("TNR", 8.5)
         c.drawRightString(width - 16*mm, height - 14*mm, f"FlowMLLab | Week 4.2 | {page}/10")
-        c.setFillColor(TEXT)
+        c.setFillColor(colors.black)
         return height - 31*mm
 
     def footer() -> None:
         c.setStrokeColor(MID); c.line(16*mm, 14*mm, width - 16*mm, 14*mm)
-        c.setFillColor(colors.HexColor("#5A6873")); c.setFont("Times-Roman", 7.5)
+        c.setFillColor(colors.black); c.setFont("TNR", 7.5)
         c.drawString(16*mm, 9.5*mm, "Stokes input + Reynolds number -> learned streamfunction correction -> recovered velocity and pressure")
 
     def finish() -> None:
@@ -506,8 +510,8 @@ def build_pdf(figures: dict[str, Path]) -> None:
     for i, (value, label) in enumerate(metrics):
         x = 16*mm + i*(boxw+1.7*mm)
         c.setFillColor(LIGHT); c.roundRect(x, y-25*mm, boxw, 23*mm, 2*mm, fill=1, stroke=0)
-        c.setFillColor(TEAL if i < 3 else RED); c.setFont("Times-Bold", 15); c.drawCentredString(x+boxw/2, y-10*mm, value)
-        c.setFillColor(TEXT); c.setFont("Times-Roman", 7.8); c.drawCentredString(x+boxw/2, y-17*mm, label)
+        c.setFillColor(colors.black); c.setFont("TNRB", 15); c.drawCentredString(x+boxw/2, y-10*mm, value)
+        c.setFillColor(colors.black); c.setFont("TNR", 7.8); c.drawCentredString(x+boxw/2, y-17*mm, label)
     y -= 31*mm
     y = _p(c, "<b>Evidence boundary.</b> These are mean velocity relative L2 errors on unchanged, previously inspected n=25 regression tests. They demonstrate surrogate improvement against same-grid numerical labels, not mesh-independent CFD accuracy or a new neural architecture.", 16*mm, y, width-32*mm, note) - 5*mm
     stages = [("Stokes", "matched low-fidelity field"), ("MLP", "POD correction coefficients"),
@@ -515,9 +519,9 @@ def build_pdf(figures: dict[str, Path]) -> None:
     sw = (width-43*mm)/4
     for i, (title, detail) in enumerate(stages):
         x = 16*mm + i*(sw+3.7*mm)
-        c.setFillColor(NAVY if i in (0,2) else BLUE); c.roundRect(x, y-22*mm, sw, 20*mm, 2*mm, fill=1, stroke=0)
-        c.setFillColor(colors.white); c.setFont("Times-Bold", 10); c.drawCentredString(x+sw/2, y-9*mm, title)
-        c.setFont("Times-Roman", 6.7); c.drawCentredString(x+sw/2, y-15*mm, detail)
+        c.setFillColor(LIGHT); c.roundRect(x, y-22*mm, sw, 20*mm, 2*mm, fill=1, stroke=0)
+        c.setFillColor(colors.black); c.setFont("TNRB", 10); c.drawCentredString(x+sw/2, y-9*mm, title)
+        c.setFont("TNR", 6.7); c.drawCentredString(x+sw/2, y-15*mm, detail)
     finish()
 
     # Page 2
@@ -538,8 +542,8 @@ def build_pdf(figures: dict[str, Path]) -> None:
             ["Incompressibility", "streamfunction", "streamfunction", "by construction"],
             ["Pressure", "not used as target", "not predicted", "recovered afterwards"]]
     table = Table(data, colWidths=[32*mm, 41*mm, 45*mm, 42*mm], rowHeights=8*mm)
-    table.setStyle(TableStyle([("FONT",(0,0),(-1,-1),"Times-Roman",8.6), ("FONT",(0,0),(-1,0),"Times-Bold",8.6),
-                               ("BACKGROUND",(0,0),(-1,0),NAVY), ("TEXTCOLOR",(0,0),(-1,0),colors.white),
+    table.setStyle(TableStyle([("FONT",(0,0),(-1,-1),"TNR",8.6), ("FONT",(0,0),(-1,0),"TNRB",8.6),
+                               ("BACKGROUND",(0,0),(-1,0),LIGHT), ("TEXTCOLOR",(0,0),(-1,0),colors.black),
                                ("GRID",(0,0),(-1,-1),0.35,MID), ("ALIGN",(1,1),(-1,-1),"CENTER"),
                                ("ROWBACKGROUNDS",(0,1),(-1,-1),[colors.white,LIGHT])]))
     table.wrapOn(c, width-32*mm, 45*mm); table.drawOn(c, 16*mm, y-42*mm)
@@ -558,8 +562,8 @@ def build_pdf(figures: dict[str, Path]) -> None:
             ["shape OOD", "0", "0", "6", "Five modes, larger amplitude"],
             ["Re OOD", "0", "0", "6", "450 < Re < 600"]]
     table = Table(data, colWidths=[26*mm, 20*mm, 24*mm, 17*mm, 68*mm], rowHeights=8*mm)
-    table.setStyle(TableStyle([("FONT",(0,0),(-1,-1),"Times-Roman",9), ("FONT",(0,0),(-1,0),"Times-Bold",9),
-                               ("BACKGROUND",(0,0),(-1,0),NAVY), ("TEXTCOLOR",(0,0),(-1,0),colors.white),
+    table.setStyle(TableStyle([("FONT",(0,0),(-1,-1),"TNR",9), ("FONT",(0,0),(-1,0),"TNRB",9),
+                               ("BACKGROUND",(0,0),(-1,0),LIGHT), ("TEXTCOLOR",(0,0),(-1,0),colors.black),
                                ("GRID",(0,0),(-1,-1),0.35,MID), ("VALIGN",(0,0),(-1,-1),"MIDDLE"),
                                ("ROWBACKGROUNDS",(0,1),(-1,-1),[colors.white,LIGHT])]))
     table.wrapOn(c, width-32*mm, 50*mm); table.drawOn(c, 16*mm, y-40*mm)
@@ -584,10 +588,10 @@ def build_pdf(figures: dict[str, Path]) -> None:
     ]
     for number, title, detail in boxes:
         c.setFillColor(LIGHT); c.roundRect(18*mm, y-25*mm, width-36*mm, 22*mm, 2*mm, fill=1, stroke=0)
-        c.setFillColor(BLUE); c.circle(28*mm, y-14*mm, 6*mm, fill=1, stroke=0)
-        c.setFillColor(colors.white); c.setFont("Times-Bold", 11); c.drawCentredString(28*mm, y-16*mm, number)
-        c.setFillColor(NAVY); c.setFont("Times-Bold", 10.5); c.drawString(39*mm, y-10*mm, title)
-        c.setFillColor(TEXT); c.setFont("Times-Roman", 9); c.drawString(39*mm, y-17*mm, detail)
+        c.setFillColor(LIGHT); c.circle(28*mm, y-14*mm, 6*mm, fill=1, stroke=0)
+        c.setFillColor(colors.black); c.setFont("TNRB", 11); c.drawCentredString(28*mm, y-16*mm, number)
+        c.setFillColor(colors.black); c.setFont("TNRB", 10.5); c.drawString(39*mm, y-10*mm, title)
+        c.setFillColor(colors.black); c.setFont("TNR", 9); c.drawString(39*mm, y-17*mm, detail)
         y -= 27*mm
     y -= 1*mm
     audit = json.loads((ROOT / "results/stokes_correction/solver_audit.json").read_text())
@@ -600,8 +604,8 @@ def build_pdf(figures: dict[str, Path]) -> None:
             ["One cached Stokes solve", f"{timing['Stokes_cached_solve_seconds']*1e3:.3f} ms", "single CPU case"],
             ["Unmodified Stokes velocity error", f"{100*audit['stokes_unmodified_velocity_error']:.2f}%", "correction is necessary"]]
     table = Table(data, colWidths=[59*mm, 48*mm, 55*mm], rowHeights=7.2*mm)
-    table.setStyle(TableStyle([("FONT",(0,0),(-1,-1),"Times-Roman",8.2), ("FONT",(0,0),(-1,0),"Times-Bold",8.4),
-                               ("BACKGROUND",(0,0),(-1,0),NAVY), ("TEXTCOLOR",(0,0),(-1,0),colors.white),
+    table.setStyle(TableStyle([("FONT",(0,0),(-1,-1),"TNR",8.2), ("FONT",(0,0),(-1,0),"TNRB",8.4),
+                               ("BACKGROUND",(0,0),(-1,0),LIGHT), ("TEXTCOLOR",(0,0),(-1,0),colors.black),
                                ("GRID",(0,0),(-1,-1),0.3,MID), ("ALIGN",(1,1),(1,-1),"CENTER"),
                                ("ROWBACKGROUNDS",(0,1),(-1,-1),[colors.white,LIGHT])]))
     table.wrapOn(c, width-32*mm, 46*mm); table.drawOn(c, 16*mm, y-44*mm)
@@ -620,8 +624,8 @@ def build_pdf(figures: dict[str, Path]) -> None:
         [r.family, str(int(r.seed)), f"{r.validation:.5f}", str(int(r.chosen_step)), f"{r.seconds:.2f}"] for r in selected.itertuples()
     ]
     table = Table(data, colWidths=[36*mm, 24*mm, 35*mm, 34*mm, 34*mm], rowHeights=6.5*mm)
-    table.setStyle(TableStyle([("FONT",(0,0),(-1,-1),"Times-Roman",8.3), ("FONT",(0,0),(-1,0),"Times-Bold",8.3),
-                               ("BACKGROUND",(0,0),(-1,0),NAVY), ("TEXTCOLOR",(0,0),(-1,0),colors.white),
+    table.setStyle(TableStyle([("FONT",(0,0),(-1,-1),"TNR",8.3), ("FONT",(0,0),(-1,0),"TNRB",8.3),
+                               ("BACKGROUND",(0,0),(-1,0),LIGHT), ("TEXTCOLOR",(0,0),(-1,0),colors.black),
                                ("GRID",(0,0),(-1,-1),0.3,MID), ("ALIGN",(1,1),(-1,-1),"CENTER"),
                                ("ROWBACKGROUNDS",(0,1),(-1,-1),[colors.white,LIGHT])]))
     table.wrapOn(c, width-32*mm, 60*mm); table.drawOn(c, 16*mm, y-48*mm)
@@ -634,8 +638,8 @@ def build_pdf(figures: dict[str, Path]) -> None:
     for i, (title, detail) in enumerate(items):
         x = 16*mm + i*(bw+3.5*mm)
         c.setFillColor(LIGHT); c.roundRect(x, y-26*mm, bw, 24*mm, 2*mm, fill=1, stroke=0)
-        c.setFillColor(NAVY); c.setFont("Times-Bold", 9.5); c.drawCentredString(x+bw/2, y-10*mm, title)
-        c.setFillColor(TEXT); c.setFont("Times-Roman", 7.4); c.drawCentredString(x+bw/2, y-17*mm, detail)
+        c.setFillColor(colors.black); c.setFont("TNRB", 9.5); c.drawCentredString(x+bw/2, y-10*mm, title)
+        c.setFillColor(colors.black); c.setFont("TNR", 7.4); c.drawCentredString(x+bw/2, y-17*mm, detail)
     finish()
 
     # Page 6
@@ -648,8 +652,8 @@ def build_pdf(figures: dict[str, Path]) -> None:
     for train in ["constant", "diverse"]:
         data.append([train] + [f"{expanded.loc[train,t]:.3f}%" for t in ["constant","diverse","ood_shape","ood_re"]])
     table = Table(data, colWidths=[40*mm, 30*mm, 30*mm, 32*mm, 30*mm], rowHeights=9*mm)
-    table.setStyle(TableStyle([("FONT",(0,0),(-1,-1),"Times-Roman",9), ("FONT",(0,0),(-1,0),"Times-Bold",9),
-                               ("BACKGROUND",(0,0),(-1,0),NAVY), ("TEXTCOLOR",(0,0),(-1,0),colors.white),
+    table.setStyle(TableStyle([("FONT",(0,0),(-1,-1),"TNR",9), ("FONT",(0,0),(-1,0),"TNRB",9),
+                               ("BACKGROUND",(0,0),(-1,0),LIGHT), ("TEXTCOLOR",(0,0),(-1,0),colors.black),
                                ("GRID",(0,0),(-1,-1),0.4,MID), ("ALIGN",(1,1),(-1,-1),"CENTER"),
                                ("ROWBACKGROUNDS",(0,1),(-1,-1),[colors.white,LIGHT])]))
     table.wrapOn(c, width-32*mm, 35*mm); table.drawOn(c, 16*mm, y-27*mm)
@@ -662,8 +666,8 @@ def build_pdf(figures: dict[str, Path]) -> None:
     for train in ["constant", "diverse"]:
         data.append([train] + [f"{worst.loc[train,t]:.2f}%" for t in ["constant","diverse","ood_shape","ood_re"]])
     table = Table(data, colWidths=[40*mm, 30*mm, 30*mm, 32*mm, 30*mm], rowHeights=8*mm)
-    table.setStyle(TableStyle([("FONT",(0,0),(-1,-1),"Times-Roman",8.3), ("FONT",(0,0),(-1,0),"Times-Bold",8.3),
-                               ("BACKGROUND",(0,0),(-1,0),BLUE), ("TEXTCOLOR",(0,0),(-1,0),colors.white),
+    table.setStyle(TableStyle([("FONT",(0,0),(-1,-1),"TNR",8.3), ("FONT",(0,0),(-1,0),"TNRB",8.3),
+                               ("BACKGROUND",(0,0),(-1,0),LIGHT), ("TEXTCOLOR",(0,0),(-1,0),colors.black),
                                ("GRID",(0,0),(-1,-1),0.35,MID), ("ALIGN",(1,1),(-1,-1),"CENTER"),
                                ("ROWBACKGROUNDS",(0,1),(-1,-1),[colors.white,LIGHT])]))
     table.wrapOn(c, width-32*mm, 28*mm); table.drawOn(c, 16*mm, y-24*mm)
@@ -709,10 +713,10 @@ def build_pdf(figures: dict[str, Path]) -> None:
                   ["Lower-right local maximum", f"{corner}/6 matched", "small recirculation candidate"],
                   ["Interior vorticity relative L2", f"{mean_omega:.2f}% mean; {worst_omega:.2f}% worst", "same-grid comparison"]]
         table = Table(values, colWidths=[59*mm, 47*mm, 58*mm], rowHeights=9*mm)
-        table.setStyle(TableStyle([("FONT",(0,0),(-1,-1),"Times-Roman",8.4),
-                                   ("FONT",(0,0),(-1,0),"Times-Bold",8.4),
-                                   ("BACKGROUND",(0,0),(-1,0),NAVY),
-                                   ("TEXTCOLOR",(0,0),(-1,0),colors.white),
+        table.setStyle(TableStyle([("FONT",(0,0),(-1,-1),"TNR",8.4),
+                                   ("FONT",(0,0),(-1,0),"TNRB",8.4),
+                                   ("BACKGROUND",(0,0),(-1,0),LIGHT),
+                                   ("TEXTCOLOR",(0,0),(-1,0),colors.black),
                                    ("GRID",(0,0),(-1,-1),0.35,MID),
                                    ("VALIGN",(0,0),(-1,-1),"MIDDLE"),
                                    ("ROWBACKGROUNDS",(0,1),(-1,-1),[colors.white,LIGHT])]))

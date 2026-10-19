@@ -271,6 +271,30 @@ assert beta_weak < beta_peak < beta_strong
         md(r"""
 ## 3. Nozzle shock location: bounded inverse design
 
+### Worked inverse: an area ratio needs a branch
+
+Before locating the shock, solve the isentropic area relation by hand. For
+$\gamma=1.4$, define the dimensionless residual
+$F(M)=M^{-1}[(5/6)(1+0.2M^2)]^3-1.6875$.
+On the supersonic bracket $[1,3]$, $F(1)=-0.6875$ and
+$F(3)=2.54707$. The first bisection midpoint is $M=2$:
+$A/A^*=(1/2)[(5/6)(1+0.2\times4)]^3=(1/2)(1.5)^3=1.6875$,
+so its forward-substitution residual is zero. This convenient exact midpoint
+is specific to the chosen target, not a guarantee that root finding takes one step.
+
+There is also a subsonic root: $F(0.1)=4.13433$, $F(0.9)=-0.678637$;
+bisection on that bracket gives $M\approx0.3722444862$. Both roots satisfy the
+same dimensionless area ratio. Their average is not a valid inverse prediction.
+The flow region and shock/boundary conditions select the relevant branch;
+the area ratio alone cannot. This calculation is one isentropic segment of
+the nozzle construction, not the complete shock-location solution below.
+
+**Self-check (10 points):** show the signs and midpoint substitution (4),
+identify both roots and state the physical branch information (4), and explain
+why both residual and branch are required (2). Repeat for $A/A^*=1$: the
+branches meet at $M=1$, so a sign-changing bracket on either open branch is
+not required at this endpoint. Units: $M$, $\gamma$ and $A/A^*$ are dimensionless.
+
 For a fixed exit-to-throat area ratio, an internal normal shock maps its area
 location $A_s/A_t$ to a back-pressure ratio. The inverse must remain in
 $1 < A_s/A_t < A_e/A_t$. A generic unconstrained regressor can violate that

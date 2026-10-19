@@ -120,7 +120,7 @@ lid; comparison with a smoothed-lid PINN is an approximate diagnostic.
 
 def unet():
     return [md(r'''
-## Train a two-level U-Net yourself
+## Optional small training: a two-level U-Net
 An encoder converts two velocity channels into features with 8, 16, and 32
 channels. Pooling enlarges the receptive field; the decoder interpolates and
 concatenates encoder features through skip connections. A linear 1x1 head
@@ -128,63 +128,78 @@ returns u and v. Reconstruction minimizes mean squared velocity error.
 Segmentation instead uses a one-channel logit and BCEWithLogitsLoss; sigmoid
 converts that logit to a probability. Here we train the reconstruction path
 on small subsets of Re90/Re110, select the checkpoint on Re100, and evaluate
-on Re105 after selection. The grid is the actual retained LBM grid.
+on Re105 after selection. The grid is the actual retained LBM grid. Default `RUN_SMALL_TRAINING=False`
+performs no fresh training. Install `pip install -e ".[test,reconstruction]"`
+before opting in locally.
+
+| Mode | Seeds | Epochs | Learning rate | Batch / frames |
+|---|---|---|---|---|
+| Audit (default) | retained | no optimizer steps | none | retained files |
+| Small teaching run | 11 | 30 | 0.003 | 8 / every 12th frame |
+| Full retained protocol | 17,29,43 | 60 | 0.001 | 32 / protocol split |
+
+The small model is a different protocol, not a reproduction of the retained
+three-seed table. `RETRAIN` below separately opts into full reproduction.
 '''),code('''
-import copy, torch
-import numpy as np
-import matplotlib.pyplot as plt
-from torch import nn
-from torch.nn import functional as F
-torch.set_num_threads(1); torch.manual_seed(11)
-class ClassroomUNet(nn.Module):
-    def __init__(self):
-        super().__init__()
-        def block(a,b):
-            return nn.Sequential(nn.Conv2d(a,b,3,padding=1),nn.ReLU(),nn.Conv2d(b,b,3,padding=1),nn.ReLU())
-        self.e1=block(2,8); self.e2=block(8,16); self.bridge=block(16,32)
-        self.d2=block(48,16); self.d1=block(24,8); self.head=nn.Conv2d(8,2,1)
-    def forward(self,x):
-        a=self.e1(x); b=self.e2(F.max_pool2d(a,2)); c=self.bridge(F.max_pool2d(b,2))
-        c=self.d2(torch.cat((F.interpolate(c,size=b.shape[-2:],mode='bilinear',align_corners=False),b),1))
-        c=self.d1(torch.cat((F.interpolate(c,size=a.shape[-2:],mode='bilinear',align_corners=False),a),1))
-        return self.head(c)
-def velocity_batch(re):
-    return torch.tensor(np.stack((cases[re]['u'][::12],cases[re]['v'][::12]),axis=1),dtype=torch.float32)
-def coarse(a):
-    return F.interpolate(F.interpolate(a,size=(8,19),mode='area'),size=a.shape[-2:],mode='bilinear',align_corners=False)
-training=torch.cat((velocity_batch(90),velocity_batch(110)))
-validation=velocity_batch(100)
-mean=training.mean((0,2,3),keepdim=True); scale=training.std((0,2,3),keepdim=True).clamp_min(1e-8)
-xt=(coarse(training)-mean)/scale; yt=(training-mean)/scale
-xv=(coarse(validation)-mean)/scale; yv=(validation-mean)/scale
-model=ClassroomUNet(); optimizer=torch.optim.Adam(model.parameters(),lr=.003)
-training_loss=[]; validation_loss=[]; best=float('inf'); selected=None
-for epoch in range(30):
-    model.train(); total=0.
-    for ids in torch.randperm(len(xt)).split(8):
-        optimizer.zero_grad(); loss=F.mse_loss(model(xt[ids]),yt[ids]); loss.backward(); optimizer.step()
-        total+=loss.item()*len(ids)
-    model.eval()
-    with torch.no_grad(): value=F.mse_loss(model(xv),yv).item()
-    training_loss.append(total/len(xt)); validation_loss.append(value)
-    if value<best: best=value; selected=copy.deepcopy(model.state_dict())
-model.load_state_dict(selected)
-evaluation=velocity_batch(105)
-with torch.no_grad(): estimate=model((coarse(evaluation)-mean)/scale)*scale+mean
-err=lambda a: float(torch.linalg.vector_norm(a-evaluation)/torch.linalg.vector_norm(evaluation))
-print(model)
-print({'selected_validation_MSE':best,'test_velocity_relative_L2':err(estimate),
-       'interpolation_relative_L2':err(coarse(evaluation))})
-assert np.isfinite(training_loss).all() and np.isfinite(validation_loss).all()
-fig,ax=plt.subplots(); ax.semilogy(training_loss,label='train'); ax.semilogy(validation_loss,label='validation')
-ax.set(xlabel='Epoch',ylabel='Standardized velocity MSE'); ax.legend(); plt.show()
-fig,axs=plt.subplots(3,1,figsize=(10,7),layout='constrained')
-arrays=[evaluation[0].numpy(),coarse(evaluation)[0].numpy(),estimate[0].numpy()]
-limit=max(np.hypot(*a).max() for a in arrays)
-for ax,a,title in zip(axs,arrays,['LBM reference','Interpolation','Fresh classroom U-Net']):
-    ax.imshow(np.hypot(*a),origin='lower',cmap='viridis',vmin=0,vmax=limit)
-    ax.set_title(title)
-plt.show()
+RUN_SMALL_TRAINING = False
+if not RUN_SMALL_TRAINING:
+    print('Audit mode: small teaching training skipped; retained results follow.')
+else:
+    import copy, torch
+    import numpy as np
+    import matplotlib.pyplot as plt
+    from torch import nn
+    from torch.nn import functional as F
+    torch.set_num_threads(1); torch.manual_seed(11)
+    class ClassroomUNet(nn.Module):
+        def __init__(self):
+            super().__init__()
+            def block(a,b):
+                return nn.Sequential(nn.Conv2d(a,b,3,padding=1),nn.ReLU(),nn.Conv2d(b,b,3,padding=1),nn.ReLU())
+            self.e1=block(2,8); self.e2=block(8,16); self.bridge=block(16,32)
+            self.d2=block(48,16); self.d1=block(24,8); self.head=nn.Conv2d(8,2,1)
+        def forward(self,x):
+            a=self.e1(x); b=self.e2(F.max_pool2d(a,2)); c=self.bridge(F.max_pool2d(b,2))
+            c=self.d2(torch.cat((F.interpolate(c,size=b.shape[-2:],mode='bilinear',align_corners=False),b),1))
+            c=self.d1(torch.cat((F.interpolate(c,size=a.shape[-2:],mode='bilinear',align_corners=False),a),1))
+            return self.head(c)
+    def velocity_batch(re):
+        return torch.tensor(np.stack((cases[re]['u'][::12],cases[re]['v'][::12]),axis=1),dtype=torch.float32)
+    def coarse(a):
+        return F.interpolate(F.interpolate(a,size=(8,19),mode='area'),size=a.shape[-2:],mode='bilinear',align_corners=False)
+    training=torch.cat((velocity_batch(90),velocity_batch(110)))
+    validation=velocity_batch(100)
+    mean=training.mean((0,2,3),keepdim=True); scale=training.std((0,2,3),keepdim=True).clamp_min(1e-8)
+    xt=(coarse(training)-mean)/scale; yt=(training-mean)/scale
+    xv=(coarse(validation)-mean)/scale; yv=(validation-mean)/scale
+    model=ClassroomUNet(); optimizer=torch.optim.Adam(model.parameters(),lr=.003)
+    training_loss=[]; validation_loss=[]; best=float('inf'); selected=None
+    for epoch in range(30):
+        model.train(); total=0.
+        for ids in torch.randperm(len(xt)).split(8):
+            optimizer.zero_grad(); loss=F.mse_loss(model(xt[ids]),yt[ids]); loss.backward(); optimizer.step()
+            total+=loss.item()*len(ids)
+        model.eval()
+        with torch.no_grad(): value=F.mse_loss(model(xv),yv).item()
+        training_loss.append(total/len(xt)); validation_loss.append(value)
+        if value<best: best=value; selected=copy.deepcopy(model.state_dict())
+    model.load_state_dict(selected)
+    evaluation=velocity_batch(105)
+    with torch.no_grad(): estimate=model((coarse(evaluation)-mean)/scale)*scale+mean
+    err=lambda a: float(torch.linalg.vector_norm(a-evaluation)/torch.linalg.vector_norm(evaluation))
+    print(model)
+    print({'selected_validation_MSE':best,'test_velocity_relative_L2':err(estimate),
+           'interpolation_relative_L2':err(coarse(evaluation))})
+    assert np.isfinite(training_loss).all() and np.isfinite(validation_loss).all()
+    fig,ax=plt.subplots(); ax.semilogy(training_loss,label='train'); ax.semilogy(validation_loss,label='validation')
+    ax.set(xlabel='Epoch',ylabel='Standardized velocity MSE'); ax.legend(); plt.show()
+    fig,axs=plt.subplots(3,1,figsize=(10,7),layout='constrained')
+    arrays=[evaluation[0].numpy(),coarse(evaluation)[0].numpy(),estimate[0].numpy()]
+    limit=max(np.hypot(*a).max() for a in arrays)
+    for ax,a,title in zip(axs,arrays,['LBM reference','Interpolation','Fresh classroom U-Net']):
+        ax.imshow(np.hypot(*a),origin='lower',cmap='viridis',vmin=0,vmax=limit)
+        ax.set_title(title)
+    plt.show()
 ''')]
 
 def inverse():
@@ -194,7 +209,7 @@ In the k equation, $0.09 C_k k\omega$ is modeled destruction: $C_k$ changes
 how quickly turbulent kinetic energy is removed. The inverse stage first
 infers diffusion from a known k profile, production P and dissipation epsilon:
 $r=a'k'+(\nu+a)k''+P-\epsilon$. The following manufactured problem has known
-$k(y)=y(1-y)$ and $a(y)=0.1+0.2y$. Thus $P-\epsilon=2\nu+0.8y$ makes r zero.
+$k(y)=y(1-y)$. First set $a(y)=0.1+0.2y$: $P-\epsilon=2\nu+0.8y$ makes r zero, so the lifting alone solves this warm-up. The required fit instead uses $a(y)=0.1+0.2y+\alpha y(1-y)$ with $\alpha=0.4$. Its endpoints are unchanged; the network must infer a nonzero correction.
 Training sees k and the forcing, not a labels; boundary values make the inverse
 problem identifiable. This teaches the same differential operation used by
 the research method, with an analytic answer for validation.
@@ -204,7 +219,14 @@ from torch import nn
 torch.manual_seed(14)
 inverse_net=nn.Sequential(nn.Linear(1,16),nn.Tanh(),nn.Linear(16,16),nn.Tanh(),nn.Linear(16,1)).double()
 yin=torch.linspace(0,1,96,dtype=torch.float64)[:,None].requires_grad_(True)
-nu_demo=.01
+nu_demo=.01; alpha_demo=.4
+def manufactured_forcing(y):
+    true_a=.1+.2*y+alpha_demo*y*(1-y)
+    true_da=.2+alpha_demo*(1-2*y)
+    return 2*(nu_demo+true_a)-true_da*(1-2*y)
+# The linear lifting solves alpha=0 but fails the nonlinear manufactured PDE.
+linear_residual=.2*(1-2*yin)-2*(nu_demo+.1+.2*yin)+manufactured_forcing(yin)
+assert float(linear_residual.detach().square().mean())>1e-3
 def coefficient(y):
     # Exact boundary lifting a(0)=.1, a(1)=.3.
     return .1+.2*y+y*(1-y)*inverse_net(y)
@@ -214,7 +236,7 @@ for epoch in range(1200):
     opt_inverse.zero_grad()
     a=coefficient(yin)
     da=torch.autograd.grad(a,yin,torch.ones_like(a),create_graph=True)[0]
-    residual=da*(1-2*yin)-2*(nu_demo+a)+2*nu_demo+.8*yin
+    residual=da*(1-2*yin)-2*(nu_demo+a)+manufactured_forcing(yin)
     loss=residual.square().mean()
     if loss.item()<best_inverse:
         best_inverse=loss.item(); best_weights=copy.deepcopy(inverse_net.state_dict())
@@ -222,7 +244,8 @@ for epoch in range(1200):
 inverse_net.load_state_dict(best_weights)
 yg=torch.linspace(0,1,201,dtype=torch.float64)[:,None]
 with torch.no_grad(): ahat=coefficient(yg).numpy().ravel()
-atrue=.1+.2*yg.numpy().ravel()
+ytrue=yg.numpy().ravel()
+atrue=.1+.2*ytrue+alpha_demo*ytrue*(1-ytrue)
 inverse_error=np.linalg.norm(ahat-atrue)/np.linalg.norm(atrue)
 print({'best_loss':best_inverse,'final_training_loss':inverse_history[-1],
        'loaded_checkpoint':'minimum training residual','independent_grid_relative_L2':inverse_error})
@@ -232,6 +255,9 @@ axs[0].semilogy(inverse_history); axs[0].set(xlabel='Adam step',ylabel='Inverse 
 axs[1].plot(yg,atrue,label='Analytic diffusion'); axs[1].plot(yg,ahat,'--',label='Inferred diffusion')
 axs[1].set(xlabel='y',ylabel='a(y)'); axs[1].legend(); plt.show()
 '''),md('''
+### From channel balance to inverse identifiability
+For a fully developed channel, mean momentum gives d[(nu+nu_t)U_y]/dy = -G, with pressure-gradient magnitude G. The steady k balance is d[(nu+a)k_y]/dy + P - epsilon = 0; expanding the flux gives the residual above. The unknown a is a diffusion coefficient, not directly the destruction correction C_k. Integrating once gives (nu+a)k_y = C - integral(P-epsilon)dy. Dividing by k_y near zero amplifies forcing or flux error: for flux uncertainty 0.001, k_y=0.1 gives coefficient uncertainty 0.01, while k_y=0.001 gives 1. At y=0.5 the local division is undefined. Global residual fitting, boundary information and smoothness couple nearby points; noisy differentiated k still needs regularization and a sensitivity study. Plot k_y and identify where inference is least conditioned. Boundary values alone are not a universal identifiability guarantee for arbitrary profiles.
+
 ### Reading the long research run
 The archived inverse run reached about 1.24 at its best iteration and about
 231 at the final iteration. That increase indicates optimizer instability or
