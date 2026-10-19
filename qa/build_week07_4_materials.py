@@ -43,17 +43,27 @@ def build_notebook() -> None:
 
 This independent extension asks the MAPA question on fluid data: can unlabelled
 pretraining across many trajectories reduce the labels needed on a new one?
-The default path reads frozen evidence; set `RUN_FULL=True` to regenerate it."""),
-        code(bootstrap('notebooks/week07_4') + """from pathlib import Path
+The default path reads frozen evidence and inspects the verified 37.1 MB teaching
+data (downloaded once if absent; network access required). Set `RUN_FULL=True`
+only for an explicitly budgeted new training run; its outputs use a fresh directory.
+For a local environment install `pip install -e ".[test,reconstruction]"`."""),
+        code(bootstrap('notebooks/week07_4').replace('[test]', '[test,reconstruction]') + """from pathlib import Path
 import json, subprocess, sys
 import numpy as np
 import pandas as pd
 from IPython.display import Image, display
 ROOT = next(p for p in (Path.cwd(), *Path.cwd().parents) if (p/'flowmllab').is_dir())
 RESULTS = ROOT/'results/week07_4_diverse_pretraining'
+from flowmllab import diverse_wake_pretraining as dw
+import tempfile
+data_root = ROOT/'data/week07_4_wakes'
+manifest = dw.ensure_release_data(data_root)  # download and verify BEFORE any runner
 RUN_FULL = False
 if RUN_FULL:
-    subprocess.run([sys.executable, str(ROOT/'qa/run_week07_4_protocol.py')], check=True)
+    RESULTS = Path(tempfile.mkdtemp(prefix='flowmllab-week74-student-'))
+    subprocess.run([sys.executable, str(ROOT/'qa/run_week07_4_protocol.py'),
+                    '--data', str(data_root), '--output', str(RESULTS)], check=True)
+    print('Fresh student run:', RESULTS)
 metrics = json.loads((RESULTS/'metrics.json').read_text())
 print('development', metrics['protocol']['development'])
 print('validation', metrics['protocol']['validation'])
@@ -73,7 +83,7 @@ closed-form solver of the task."""),
 display(pd.Series({k: protocol[k] for k in ('label_pool','test_window','mask_ratio','pretrain_steps','field','downstream_label')}))
 from flowmllab import diverse_wake_pretraining as dw
 data_root = ROOT/'data/week07_4_wakes'
-manifest = dw.load_manifest(data_root)
+manifest = dw.load_manifest(data_root)  # already verified above
 for case in manifest['cases']:
     assert dw.sha256(data_root/case['file']) == case['sha256'] == metrics['data_hashes'][case['file']]
 print('All 16 dataset hashes match the retained run.')"""),
@@ -160,6 +170,16 @@ def build_pdf() -> None:
                               textColor=colors.HexColor("#17324D"), alignment=TA_CENTER, spaceAfter=18))
     styles.add(ParagraphStyle(name="H174", parent=styles["Heading1"], textColor=colors.HexColor("#17324D"), spaceAfter=10))
     styles.add(ParagraphStyle(name="Body74", parent=styles["BodyText"], fontSize=10.5, leading=15, spaceAfter=9))
+    try:
+        from .lecture_typography import register_legacy_reportlab_aliases, black_paragraph_styles
+    except ImportError:  # direct script execution
+        from lecture_typography import register_legacy_reportlab_aliases, black_paragraph_styles
+    register_legacy_reportlab_aliases()
+    black_paragraph_styles(styles)
+    # Explicit names also work in a fresh builder process (no cached aliases).
+    for style in styles.byName.values():
+        style.fontName = {"Helvetica": "TNR", "Helvetica-Bold": "TNRB",
+                          "Helvetica-Oblique": "TNRI", "Helvetica-BoldOblique": "TNRBI"}.get(style.fontName, style.fontName)
     story = [Spacer(1, .65*inch), Paragraph("Week 7.4", styles["Title74"]),
              Paragraph("Diverse-wake pretraining and label-efficient force decoding", styles["Title74"]),
              Paragraph("A trajectory-split, MAPA-inspired experiment on 16 educational LBM wakes", styles["Body74"]),
@@ -179,7 +199,7 @@ def build_pdf() -> None:
     for k in metrics["protocol"]["ks"]:
         table.append([str(k)] + [f"{metrics['curves'][m][str(k)]['mean']:.2f}" for m in methods])
     tab = Table(table, colWidths=[.7*inch, 1.25*inch, 1.25*inch, 1.25*inch])
-    tab.setStyle(TableStyle([("BACKGROUND",(0,0),(-1,0),colors.HexColor("#17324D")),("TEXTCOLOR",(0,0),(-1,0),colors.white),
+    tab.setStyle(TableStyle([("BACKGROUND",(0,0),(-1,0),colors.HexColor("#eeeeee")),("TEXTCOLOR",(0,0),(-1,0),colors.black),
                              ("GRID",(0,0),(-1,-1),.5,colors.HexColor("#AAB7C4")),("ALIGN",(0,0),(-1,-1),"CENTER"),
                              ("ROWBACKGROUNDS",(0,1),(-1,-1),[colors.white,colors.HexColor("#EEF3F7")]),("BOTTOMPADDING",(0,0),(-1,-1),7)]))
     story += [Paragraph("Lift NRMSE (%), mean across four unseen trajectories", styles["Body74"]), tab, Spacer(1,.2*inch),
@@ -188,7 +208,7 @@ def build_pdf() -> None:
               Paragraph("Scope and reproducibility", styles["H174"]),
               Paragraph("Ridge selection uses 2761 development and 251 validation lift labels in addition to the reported target-label budget. Only one encoder initialization is retained; the three seeds are label draws. POD rank 32 is fixed, not rank-optimized. One run per Reynolds number confounds Reynolds and initial-condition variation. The test cases are now inspected retained evidence; future tuning needs fresh tests. Mean differences are not statistical significance claims.", styles["Body74"]),
               Paragraph("The retained success is representation transfer for an external force label, not a claim that transformers universally beat POD. The solver uses D=6 quick D2Q9-TRT trajectories and periodic transverse boundaries; the data are not grid-independent DNS. Re140 was rejected after the solver became non-physical. The histories do not support a validated Strouhal claim.", styles["Body74"]),
-              Paragraph("Reproduce: generate data with qa/generate_week07_4_wakes.py; train and score with qa/run_week07_4_protocol.py; inspect hashes and every record in results/week07_4_diverse_pretraining/metrics.json.", styles["Body74"]),
+              Paragraph("Execution: the notebook verifies the 37.1 MB release before optional training. RUN_FULL uses a fresh output directory. The runner also defaults to a temporary directory and refuses retained evidence paths. For data regeneration use qa/generate_week07_4_wakes.py; inspect hashes and every retained record in results/week07_4_diverse_pretraining/metrics.json.", styles["Body74"]),
               Paragraph("References", styles["H174"]),
               Paragraph("Tang, Spalding and Cogan (2026), Pretraining for Sample-Efficient Neural Interfaces (MAPA), arXiv:2609.13507. He et al. (2022), Masked Autoencoders Are Scalable Vision Learners. Everson and Sirovich (1995), Karhunen-Loeve procedure for gappy data.", styles["Body74"])]
     PDF.parent.mkdir(parents=True, exist_ok=True)
@@ -196,8 +216,8 @@ def build_pdf() -> None:
                             topMargin=.55*inch, bottomMargin=.55*inch,
                             title="Week 7.4 - Diverse-wake pretraining")
     def footer(canvas, document):
-        canvas.setFont('Helvetica', 8)
-        canvas.setFillColor(colors.HexColor('#526878'))
+        canvas.setFont('TNR', 8)
+        canvas.setFillColor(colors.black)
         canvas.drawString(47, 24, 'FlowMLLab / Ehsan Roohi / Week 7.4')
         canvas.drawRightString(565, 24, str(document.page))
     doc.build(story, onFirstPage=footer, onLaterPages=footer)

@@ -13,29 +13,34 @@
       "title": "Separate a kernel picture from a trained interpretation",
       "prose": "A spatial-distance kernel supplies a geometry-only comparator. Neither picture is evidence of causal influence. Change a sensor value and recompute both kernels.",
       "code": "xy=tokens[0,:,1:]\ndistance=((xy[:,None]-xy[None,:])**2).sum(-1)\ngeometry=np.exp(-distance/.1);geometry/=geometry.sum(1,keepdims=True)\norder=torch.randperm(16)\npermuted,_=lab.attention(Q[:,order],K[:,order],V[:,order])\ntorch.testing.assert_close(permuted,A[:,order])\nfig,axes=plt.subplots(1,2,figsize=(10,4))\naxes[0].imshow(geometry);axes[0].set_title('Geometry-only kernel')\naxes[1].imshow(weights[0].numpy());axes[1].set_title('Random Q/K kernel')\nplt.show()"
+    },
+    {
+      "title": "Inspect the retained trained heads",
+      "prose": "Read-only inspection of Sensor-set seed 17, Re=110 frames 80, 120, 160. Full width is 24, four heads have width 6; the softmax scale uses head width. Values use the saved training mean/scale. These clean-input attention maps differ from the noisy evaluation experiment and are not causal explanations. The earlier random projection demonstration is a separate mechanism example.",
+      "code": "states=torch.load(EVIDENCE/'checkpoints.pt',map_location='cpu',weights_only=True)\nbundle=states['sensors__Sensor-set-17'];trained_sensor,trained_rep=lab.checkpoint_model(bundle)\nframes=[80,120,160]\ntrained_tokens=lab.sensor_tokens(cases[110]['v'][frames],bundle['sensor_ids'].numpy(),cases[90],bundle['value_mean'],bundle['value_scale'])\nwith torch.no_grad():\n    embedded=trained_sensor.embed(torch.tensor(trained_tokens,dtype=torch.float32))\n    b,n,width=embedded.shape;heads=trained_sensor.block.heads\n    q,k,v=trained_sensor.block.qkv(trained_sensor.block.norm(embedded)).reshape(b,n,3,heads,width//heads).permute(2,0,3,1,4).unbind(0)\n    _,trained_weights=lab.attention(q,k,v)\n    torch.testing.assert_close(trained_weights.sum(-1),torch.ones(b,heads,n))\nprint({'checkpoint_sha256':lab.digest(EVIDENCE/'checkpoints.pt'),'case_Re':110,'seed':17,'frames':frames,'full_width':width,'head_width':width//heads})\nfig,axes=plt.subplots(3,heads,figsize=(11,7),sharex=True,sharey=True)\nfor i,frame in enumerate(frames):\n    for head in range(heads):\n        axes[i,head].imshow(trained_weights[i,head].numpy(),vmin=0,vmax=float(trained_weights.max()),cmap='viridis')\n        axes[i,head].set_title(f'frame {frame}, head {head+1}')\nfig.supxlabel('key sensor');fig.supylabel('query sensor');fig.tight_layout();plt.show()"
     }
   ],
   "tasks": [
     {
       "title": "Scaled attention",
-      "prompt": "Implement row-stable scaled dot-product attention without calling lab.attention. Explain the square-root scaling.\n\nInterface contract: Inputs are floating Torch tensors q,k:[N,d], v:[N,d_v] with matching N. Return a [N,d_v] tensor; normalize over keys.",
-      "starter": "def student_attention(q,k,v):\n    \"\"\"Inputs are floating Torch tensors q,k:[N,d], v:[N,d_v] with matching N. Return a [N,d_v] tensor; normalize over keys.\"\"\"\n    raise NotImplementedError",
+      "prompt": "Implement row-stable scaled dot-product attention without calling lab.attention. Explain the square-root scaling.\n\nInterface contract: Inputs are floating Torch tensors q,k:[...,N,d], v:[...,N,d_v] with identical optional batch axes and matching N (2-D or 3-D). Return a [...,N,d_v] tensor; normalize over keys.",
+      "starter": "def student_attention(q,k,v):\n    \"\"\"Inputs are floating Torch tensors q,k:[...,N,d], v:[...,N,d_v] with identical optional batch axes and matching N (2-D or 3-D). Return a [...,N,d_v] tensor; normalize over keys.\"\"\"\n    raise NotImplementedError",
       "solution": "def student_attention(q,k,v):\n    score=q@k.transpose(-2,-1)/np.sqrt(q.shape[-1])\n    return score.softmax(-1)@v",
-      "checks": "g=torch.Generator().manual_seed(1701)\nfor b,n,d in [(2,5,3),(1,9,6)]:\n    q,k,v=[torch.randn(b,n,d,generator=g) for _ in range(3)]\n    expected=(q@k.transpose(-2,-1)/np.sqrt(d)).softmax(-1)@v\n    torch.testing.assert_close(student_attention(q,k,v),expected)\n    torch.testing.assert_close(student_attention(q,k,2*v),2*expected)"
+      "checks": "g=torch.Generator().manual_seed(1701)\nfor shape in [(5,3),(2,5,3),(1,9,6)]:\n    q,k=[torch.randn(*shape,generator=g) for _ in range(2)]\n    v=torch.randn(*shape[:-1],4,generator=g)\n    expected=(q@k.transpose(-2,-1)/np.sqrt(shape[-1])).softmax(-1)@v\n    result=student_attention(q,k,v)\n    assert result.shape==(*shape[:-1],4)\n    torch.testing.assert_close(result,expected)\n    torch.testing.assert_close(student_attention(q,k,2*v),2*expected)"
     },
     {
       "title": "Permutation experiment",
-      "prompt": "Write a function returning the largest equivariance error after consistently permuting all sensor tokens.\n\nInterface contract: Inputs q,k,v have the Task 1 shapes. order is a length-N Torch permutation. attention_fn is an explicit callable returning the attended tensor, not a weights/output tuple. Return a Python float: maximum absolute equivariance discrepancy. Do not consult a global attention function.",
-      "starter": "def permutation_error(q,k,v,order,attention_fn):\n    \"\"\"Inputs q,k,v have the Task 1 shapes. order is a length-N Torch permutation. attention_fn is an explicit callable returning the attended tensor, not a weights/output tuple. Return a Python float: maximum absolute equivariance discrepancy. Do not consult a global attention function.\"\"\"\n    raise NotImplementedError",
+      "prompt": "Write a function returning the largest equivariance error after consistently permuting all sensor tokens.\n\nInterface contract: Inputs q,k:[N,d], v:[N,d_v] are the unbatched (2-D) Task 1 shapes. order is a length-N Torch permutation. attention_fn is an explicit callable returning the attended tensor, not a weights/output tuple. Return a Python float: maximum absolute equivariance discrepancy. Do not consult a global attention function.",
+      "starter": "def permutation_error(q,k,v,order,attention_fn):\n    \"\"\"Inputs q,k:[N,d], v:[N,d_v] are the unbatched (2-D) Task 1 shapes. order is a length-N Torch permutation. attention_fn is an explicit callable returning the attended tensor, not a weights/output tuple. Return a Python float: maximum absolute equivariance discrepancy. Do not consult a global attention function.\"\"\"\n    raise NotImplementedError",
       "solution": "def permutation_error(q,k,v,order,attention_fn):\n    before=attention_fn(q,k,v)\n    after=attention_fn(q[order],k[order],v[order])\n    return float((after-before[order]).abs().max())",
       "checks": "for n,d in ((5,3),(9,2)):\n    q=torch.randn(n,d);k=torch.randn(n,d);v=torch.randn(n,4);order=torch.randperm(n)\n    assert permutation_error(q,k,v,order,student_attention)<1e-5\ndef order_biased_attention(q,k,v):\n    return torch.arange(q.shape[0],dtype=q.dtype)[:,None].expand(q.shape[0],v.shape[-1])\nq=torch.randn(5,3);k=torch.randn(5,3);v=torch.randn(5,2);order=torch.arange(4,-1,-1)\nassert permutation_error(q,k,v,order,order_biased_attention)>1"
     },
     {
       "title": "Temperature limit",
-      "prompt": "Implement temperature-scaled weights; verify that large temperature moves them toward uniform weights.\n\nInterface contract: Return a [N,N] Torch tensor for q,k:[N,d]. Divide scaled scores by the finite temperature; nonpositive temperature must raise ValueError.",
-      "starter": "def temperature_weights(q,k,temperature):\n    \"\"\"Return a [N,N] Torch tensor for q,k:[N,d]. Divide scaled scores by the finite temperature; nonpositive temperature must raise ValueError.\"\"\"\n    raise NotImplementedError",
-      "solution": "def temperature_weights(q,k,temperature):\n    if temperature<=0: raise ValueError(\"temperature must be positive\")\n    return (q@k.transpose(-2,-1)/np.sqrt(q.shape[-1])/temperature).softmax(-1)",
-      "checks": "for temperature in (.3,2.5):\n    expected=(Q@K.transpose(-2,-1)/np.sqrt(Q.shape[-1])/temperature).softmax(-1)\n    torch.testing.assert_close(temperature_weights(Q,K,temperature),expected)\ntry:\n    temperature_weights(Q,K,0)\n    raise AssertionError('zero temperature was accepted')\nexcept ValueError:\n    pass"
+      "prompt": "Implement temperature-scaled weights; verify that large temperature moves them toward uniform weights.\n\nInterface contract: Return a [...,N,N] Torch tensor for q,k:[...,N,d] with identical optional batch axes (2-D or 3-D). Divide scaled scores by the finite temperature; nonfinite or nonpositive temperature must raise ValueError.",
+      "starter": "def temperature_weights(q,k,temperature):\n    \"\"\"Return a [...,N,N] Torch tensor for q,k:[...,N,d] with identical optional batch axes (2-D or 3-D). Divide scaled scores by the finite temperature; nonfinite or nonpositive temperature must raise ValueError.\"\"\"\n    raise NotImplementedError",
+      "solution": "def temperature_weights(q,k,temperature):\n    if not np.isfinite(temperature) or temperature<=0: raise ValueError(\"temperature must be positive\")\n    return (q@k.transpose(-2,-1)/np.sqrt(q.shape[-1])/temperature).softmax(-1)",
+      "checks": "for shape in [(5,3),(2,7,4)]:\n    q,k=[torch.randn(*shape) for _ in range(2)]\n    for temperature in (.3,2.5,1e6):\n        expected=(q@k.transpose(-2,-1)/np.sqrt(shape[-1])/temperature).softmax(-1)\n        torch.testing.assert_close(temperature_weights(q,k,temperature),expected)\n    torch.testing.assert_close(temperature_weights(q,k,1e6),torch.full((*shape[:-1],shape[-2]),1/shape[-2]),atol=1e-5,rtol=1e-5)\nfor temperature in (0.,-1.,float('nan'),float('inf')):\n    try:\n        temperature_weights(q,k,temperature)\n        raise AssertionError('invalid temperature accepted')\n    except ValueError:pass"
     },
     {
       "title": "Build an attention investigation",
@@ -45,5 +50,21 @@
       "checks": "g=torch.Generator().manual_seed(1704)\nq,k,v=[torch.randn(5,3,generator=g) for _ in range(3)]\nmask=torch.ones(5,5,dtype=torch.bool);mask[:,-2:]=False\nfor use_mask in (None,mask):\n    result=attention_investigation(q,k,v,[.5,3.],use_mask)\n    assert len(result)==2\n    for r in result:\n        scores=q@k.transpose(-2,-1)/np.sqrt(3)/r['temperature']\n        if use_mask is not None:scores=scores.masked_fill(~use_mask,float('-inf'))\n        expected=scores.softmax(-1)\n        torch.testing.assert_close(r['weights'],expected)\n        torch.testing.assert_close(r['output'],expected@v)\n        assert np.isclose(r['entropy'],float(-(expected*expected.clamp_min(1e-30).log()).sum(-1).mean()))\n    assert result[0]['entropy']<result[1]['entropy']\ntry:\n    attention_investigation(q,k,v,[1.],torch.zeros(5,5,dtype=torch.bool))\n    raise AssertionError('empty mask accepted')\nexcept ValueError:pass\nfor temp in (0.,-1.):\n    try:\n        attention_investigation(q,k,v,[temp])\n        raise AssertionError(\"nonpositive temperature accepted\")\n    except ValueError:pass\n"
     }
   ],
-  "duration_minutes": 120
+  "duration_minutes": 120,
+  "assessment": {
+    "coding_weights": [
+      5,
+      5,
+      5,
+      25
+    ],
+    "derivation_points": 25,
+    "interpretation_points": 25,
+    "reproducibility_points": 10,
+    "derivation": "derive row normalization and square-root scaling",
+    "full_credit_example": "Attention weights depend on content but do not identify causal influence. Equal values make output invariant even when weights change.",
+    "misconception": "The bright head proves this sensor causes shedding.",
+    "partial_credit": "An accurate numerical observation without its split, representation, or causal limitation earns at most half of interpretation points.",
+    "human_validation": "Instructor marking and a timed student pilot are still required; automated checks establish interface/behavior only."
+  }
 }

@@ -5,7 +5,7 @@
 \usetikzlibrary{arrows.meta,positioning}
 \usepackage[most]{tcolorbox}
 \usepackage{enumitem,fancyhdr,hyperref,microtype}
-\graphicspath{{../../results/cylinder_lbm/}{../../results/cylinder_grid_convergence/}{../../results/cylinder_cnn/}{../../results/cylinder_ml/}{../../results/cylinder_phase/}}
+\graphicspath{{results/cylinder_lbm/}{results/cylinder_grid_convergence/}{results/cylinder_cnn/}{results/cylinder_ml/}{results/cylinder_phase/}}
 \definecolor{navy}{HTML}{17365D}
 \definecolor{blue}{HTML}{2F75B5}
 \definecolor{cyan}{HTML}{2A9D8F}
@@ -25,14 +25,17 @@
 \newcommand{\Ma}{\mathrm{Ma}}
 \newcommand{\St}{\mathrm{St}}
 
+\input{lectures/source/lecture_typography.tex}
+\tcbset{coltitle=black,colbacktitle=black!6}
+\tikzset{every node/.append style={text=black}}
 \begin{document}
 \hypersetup{pageanchor=false}
 \begin{titlepage}
 \centering\vspace*{1.0cm}
-{\color{navy}\rule{\textwidth}{2pt}}\\[0.5cm]
+{\color{black}\rule{\textwidth}{2pt}}\\[0.5cm]
 {\Huge\bfseries Circular-Cylinder Wakes\\[0.18cm]with Lattice Boltzmann and Learned Prediction\par}
 \vspace{0.35cm}{\Large Week 7 Extension Lecture Notes\par}
-\vspace{0.5cm}{\color{navy}\rule{\textwidth}{2pt}}\\[0.9cm]
+\vspace{0.5cm}{\color{black}\rule{\textwidth}{2pt}}\\[0.9cm]
 {\Large M\&I-ENG 690A -- AI in Fluid Mechanics\par}
 \vspace{0.25cm}{\large Summer 2026\par}
 \vfill
@@ -193,9 +196,9 @@ The computational domain must provide sufficient upstream distance, downstream w
 \foreach \y in {0.7,1.4,2.1,2.8,3.5}{\draw[->,blue,thick] (-0.2,\y)--(1.2,\y);}
 \draw[->,red,thick] (3.7,2.35) .. controls (5,3.2) and (6,1.0) .. (7.3,2.5);
 \draw[->,cyan,thick] (3.7,1.65) .. controls (5,0.8) and (6,3.0) .. (7.3,1.5);
-\node[blue] at (0.5,3.8) {$U_\infty$};
-\node[navy] at (3,1.05) {diameter $D$};
-\node[red] at (8.6,2.6) {alternating wake};
+\node[black] at (0.5,3.8) {$U_\infty$};
+\node[black] at (3,1.05) {diameter $D$};
+\node[black] at (8.6,2.6) {alternating wake};
 \end{tikzpicture}
 \end{center}
 

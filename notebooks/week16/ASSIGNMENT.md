@@ -39,3 +39,10 @@ No new NASA computation or successful NASA comparison is required for this assig
 ## Submission
 
 One executed notebook, a two-page engineering memo, and a small CSV of baseline/predicted/recomputed metrics. State unsuccessful designs and failed checks explicitly. Do not upload the paper PDF or claim reproduction of the Beihang aircraft.
+
+
+## Notebook route and evidence map
+
+Core sessions (150 minutes): Sections 1–4 (30 min) derive Cp and the explicit weighted source [0,0,p,0], verify independent Gauss–Legendre volume quadrature, and execute the Taylor–Maccoll ODE/root solve (15 min). Sections 5–9 (45 min) fit ridge, POD-MLP and fixed-kernel POD-GP to 24 geometries; validation selects the model. Section 10 (20 min) computes current dataset/checkpoint hashes and loads the portable weights for independent NumPy inference and metric comparison. Sections 11–15 (40 min) perform surrogate proposal/constraint checks and interpret retained CFD/design/off-design evidence.
+
+Independent work completes derivations, plots, the label-budget sensitivity and memo. New CFD confirmation is a research extension requiring an available solver and new output directory; the core grades the retained candidate's actual recomputation and a clearly unvalidated student proposal separately. The existing historical candidate does not become a new clean-model result. A student unable to run the extension can earn the core design credit by correctly reconciling the retained predicted/recomputed objectives and identifying why their own proposal remains unvalidated. Record skipped research computation explicitly.

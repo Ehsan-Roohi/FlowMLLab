@@ -33,22 +33,25 @@
 \newtcolorbox{researchbox}{colback=green!5,colframe=green,title=Research-level interpretation,fonttitle=\bfseries}
 \newtcolorbox{selfcheck}{colback=white,colframe=navy,title=Self-check,fonttitle=\bfseries}
 \lstset{basicstyle=\ttfamily\small,frame=single,breaklines=true,showstringspaces=false,
-        keywordstyle=\color{blue}\bfseries,commentstyle=\color{green!60!black},stringstyle=\color{red}}
+        keywordstyle=\color{black}\bfseries,commentstyle=\color{black},stringstyle=\color{black}}
 \newcommand{\Rey}{\mathrm{Re}}
 \newcommand{\Ltwo}{L_2}
 \newcommand{\vect}[1]{\bm{#1}}
+
+\input{lectures/source/lecture_typography.tex}
+\tcbset{coltitle=black,colbacktitle=black!5}
 
 \begin{document}
 \begin{titlepage}
 \centering
 \vspace*{1.1cm}
-{\color{navy}\rule{\textwidth}{2pt}}\\[0.5cm]
+{\color{black}\rule{\textwidth}{2pt}}\\[0.5cm]
 {\Huge\bfseries Data-Driven Surrogate Modeling\\[0.18cm]
 for Lid-Driven Cavity Flows\par}
 \vspace{0.35cm}
 {\Large Week 4 Lecture Notes\par}
 \vspace{0.5cm}
-{\color{navy}\rule{\textwidth}{2pt}}\\[1.0cm]
+{\color{black}\rule{\textwidth}{2pt}}\\[1.0cm]
 {\Large M\&I-ENG 690A -- AI in Fluid Mechanics\par}
 \vspace{0.3cm}
 {\large Summer 2026\par}
@@ -66,7 +69,16 @@ for Lid-Driven Cavity Flows\par}
 \section{Where Week 4 Fits in the Course}
 Week 1 introduced Python, TensorFlow, and a finite-difference lid-driven-cavity solver. Week 2 developed data-driven thinking and neural-network foundations. Week 3 introduced kinetic descriptions, DSMC, particle sampling, and statistical noise. Week 4 now connects these ideas: a numerical solver produces data, and a surrogate learns a map from physical inputs to quantities or fields of interest.
 
-The week deliberately remains \emph{data-driven}. Physics-informed neural networks (PINNs) are introduced in Week 5, after students understand what a supervised surrogate can and cannot do.
+\paragraph{Lab2 scope and stopping rule.}
+The released coordinate baseline in Lab2 predicts $u,v$. Direct zero-mean pressure
+prediction is implemented in Lab3 and the project notebooks. Lab2's fixed
+architectures stop on training loss for numerical convergence; this is not
+validation-based early stopping. A model-selection study must reserve complete
+validation cases before point expansion and fit scalers only on selection-training
+cases. Public held-out cases seen in earlier lessons are regression tests, not
+new untouched student evidence.
+
+The week deliberately remains \emph{data-driven}. Weeks 5--6 offer boundary-weighted and divergence-regularized project variants. The dedicated cavity PINN study appears later in Week 13, after students understand supervised surrogates and physical residuals.
 
 \begin{learningbox}
 By the end of Week 4 you should be able to:
@@ -231,6 +243,24 @@ The scalar output is commonly written
 \end{tikzpicture}
 \end{center}
 
+\subsection{Worked POD prerequisite: representation versus prediction}
+Take centered snapshots
+\[
+S=\begin{bmatrix}-1&0\\0&0\\1&0\end{bmatrix},\qquad
+S^TS=\begin{bmatrix}2&0\\0&0\end{bmatrix}.
+\]
+The first singular value is $\sqrt2$, and one valid first mode is
+$\phi=(1,0)^T$. Its sign is arbitrary. For a query field $q=(2,.5)^T$,
+the exact coefficient is $a=\phi^Tq=2$ and the rank-one reconstruction is
+$(2,0)^T$. Its representation error norm is $.5$. A coefficient network that
+predicts $1.8$ instead gives norm $\sqrt{.2^2+.5^2}=\sqrt{.29}$.
+An exact regressor cannot recover a component omitted from the basis.
+\textbf{Exercise:} change the query to $(2,0)^T$. The representation error is
+zero, while the same predicted coefficient still gives error $.2$. Explain
+why cumulative training energy cannot alone establish physical fidelity at a
+new case. Classical Galerkin/DEIM dynamics are developed separately in the
+optional Week 4.1 notebook, with a hand-worked nonlinear sampling example.
+
 \subsection{What we implement in Week 4}
 The class notebook uses scalar Reynolds number in the velocity branch and
 $\log\Rey$ in the pressure branch, with separate fixed POD spatial trunks:
@@ -330,7 +360,7 @@ Week 4 trains
 \begin{equation}
 \mathcal{L}=\mathcal{L}_{data}.
 \end{equation}
-Week 5 introduces
+The Week-5 project can add a boundary emphasis or divergence penalty. A fuller PINN objective, studied in the later dedicated module, is
 \begin{equation}
 \mathcal{L}=\lambda_d\mathcal{L}_{data}+\lambda_{bc}\mathcal{L}_{bc}
 +\lambda_{mom}\mathcal{L}_{momentum}+\lambda_{div}\mathcal{L}_{divergence}.

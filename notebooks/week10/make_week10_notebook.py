@@ -88,7 +88,7 @@ A defensible dataset requires cell size relative to mean free path, time step re
     load_cavity_archive, load_shock_archive,
     logarithmic_kn_prediction, maxwell_speed_pdf,
     normalized_rmse, predict_pod_polynomial_operator,
-    relative_l2, sha256,
+    relative_l2, sha256, linear_profile_prediction, SHOCK_RELATIVE_L2_GATE_PERCENT,
 )
 
 manifest = json.loads((RESULTS / "data_manifest.json").read_text())
@@ -154,7 +154,13 @@ coefficients $b_k(M)$:
 
 $$\widehat q(M,x)=\bar q(x)+\sum_{k=1}^{r} b_k(M)t_k(x).$$
 
-Mach 1.7 is removed for interpolation. Mach 1.4 is then removed and predicted from Mach 1.5--1.9 to demonstrate one-sided extrapolation."""),
+Mach 1.7 is removed for interpolation (rank 4, degree 3). Mach 1.4 is then
+removed and predicted from Mach 1.5--1.9 for extrapolation (rank 4, degree 2).
+These are the fixed retained demonstration settings, not an optimality claim.
+The shared diatomic acceptance gate is 1.5% profile-relative L2. The linear
+neighbor baseline uses exactly the same training cases; compare both per field.
+Explain why a lower polynomial degree can reduce extrapolation instability,
+then propose a development-only selection protocol before trying alternatives."""),
     code("""diatomic = load_shock_archive(RESULTS / "diatomic_shock_6cases.npz")
 shock_fields = ["rotational_temperature", "translational_temperature", "normalized_velocity"]
 
@@ -177,11 +183,22 @@ for mach, pred, kind in ((1.7, pred_17, "interpolation"), (1.4, pred_14, "extrap
                      "relative_L2_percent": relative_l2(diatomic[field][target], pred[field])})
 shock_metrics = pd.DataFrame(rows)
 display(shock_metrics)
-assert shock_metrics.relative_L2_percent.max() < 1.1"""),
+assert shock_metrics.relative_L2_percent.max() < SHOCK_RELATIVE_L2_GATE_PERCENT
+# Matched-data control: the same permitted Mach profiles, no fitted POD basis.
+linear_rows = []
+for mach, training_mach, kind in [(1.7, [1.4,1.5,1.6,1.8,1.9], 'interpolation'),
+                                  (1.4, [1.5,1.6,1.7,1.8,1.9], 'extrapolation')]:
+    train = np.flatnonzero(np.isin(np.round(diatomic['mach'],8), training_mach))
+    target = int(np.flatnonzero(np.isclose(diatomic['mach'],mach))[0])
+    for field in shock_fields:
+        estimate = linear_profile_prediction(diatomic['mach'][train], diatomic[field][train], mach)
+        linear_rows.append({'task':kind, 'Mach':mach, 'field':field,
+                            'linear_relative_L2_percent':relative_l2(diatomic[field][target], estimate)})
+display(shock_metrics.merge(pd.DataFrame(linear_rows), on=['task','Mach','field']))"""),
     code("""display(Image(filename=str(RESULTS / "diatomic_shock_reproduction.png")))"""),
     markdown(r"""The translational-temperature overshoot is the key nonequilibrium feature: translational energy rises rapidly at the shock and then relaxes into the rotational mode. Matching only upstream and downstream plateaus would miss this physics.
 
-The result is strongest for interpolation. Mach-1.4 extrapolation remains below 1.1% profile-relative $L_2$, but the Mach-2 article case is marked unavailable because the target table is absent."""),
+The result is strongest for interpolation. Mach-1.4 retained extrapolation was below 1.1% (the fixed acceptance gate is 1.5%) profile-relative $L_2$, but the Mach-2 article case is marked unavailable because the target table is absent."""),
     markdown("""## 4. Monatomic shock and Maxwell equilibrium checks
 
 The second shock archive covers Mach 1.4--2.0. We remove Mach 1.7 and predict density, velocity, and temperature. Separately, the Maxwell speed PDF must integrate to one before it is used as an equilibrium target."""),

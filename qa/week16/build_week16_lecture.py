@@ -1,8 +1,7 @@
 """Build the Week 16 educational LaTeX lecture from retained numerical evidence.
 
 This generator intentionally uses line/scatter plots rather than bar charts. The PDF
-is compiled with XeLaTeX; Times New Roman is used when installed, with Tinos as
-the metric-compatible fallback on Linux CI.
+is compiled with XeLaTeX; genuine Times New Roman is required; specialized operators use Latin Modern Math.
 """
 from pathlib import Path
 import json
@@ -11,6 +10,9 @@ import shutil
 import numpy as np
 import matplotlib.pyplot as plt
 
+import sys
+sys.path.insert(0,str(Path(__file__).resolve().parents[1]))
+from lecture_typography import configure_matplotlib
 ROOT = Path(__file__).resolve().parents[2]
 R = ROOT / "results/week16_lowboom/reference"
 ASSETS = ROOT / "lectures/source/week16_tex_assets"
@@ -19,6 +21,7 @@ PDF = ROOT / "lectures/week16_supersonic_shape_optimization.pdf"
 
 
 def build_figures():
+    configure_matplotlib()
     ASSETS.mkdir(parents=True, exist_ok=True)
     data = np.load(R / "clean_dataset_v801.npz", allow_pickle=False)
 
@@ -202,6 +205,10 @@ def build_figures():
 
 
 def compile_pdf():
+    configure_matplotlib()
+    # A failed TeX run can leave a truncated auxiliary file. Rebuild it from source.
+    for suffix in (".aux", ".out", ".toc"):
+        (ROOT/"lectures"/("week16_supersonic_shape_optimization"+suffix)).unlink(missing_ok=True)
     for _ in range(2):
         subprocess.run([
             "xelatex", "-interaction=nonstopmode", "-halt-on-error",

@@ -16,7 +16,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 
 from flowmllab.aescte_dsmc import (  # noqa: E402
-    CAVITY_LID_SPEEDS_MS,
+    CAVITY_LID_SPEEDS_MS, SHOCK_RELATIVE_L2_GATE_PERCENT,
     CAVITY_TEST_KNUDSEN,
     cavity_case,
     fit_pod_polynomial_operator,
@@ -355,7 +355,7 @@ def main() -> None:
     )
     if summary["cavity_primary_max_nrmse_percent"] > 2.0:
         raise SystemExit("cavity primary-variable gate failed")
-    if summary["shock_max_relative_l2_percent"] > 1.5:
+    if summary["shock_max_relative_l2_percent"] >= SHOCK_RELATIVE_L2_GATE_PERCENT:
         raise SystemExit("shock profile gate failed")
     print(json.dumps(summary, indent=2))
 

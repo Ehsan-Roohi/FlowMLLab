@@ -436,7 +436,10 @@ def research_cells(week):
     display(Image(filename=str(evidence / 'cavity_qy_hero_robust.png'), width=1200))
     display(Image(filename=str(evidence / 'cavity_qy_audit.png'), width=1200))
     '''), md('''
-        Shared color limits include every displayed value; no interpolation hides
+        The first figure includes the full shared value range. The second uses shared
+        reference 1st/99th-percentile limits: values outside those limits saturate,
+        revealing the interior but hiding extreme magnitude. Neither figure changes
+        the arrays or metric calculations. No interpolation hides
         sampling noise. Coordinates are normalized array positions and field units
         are the stored archive units. The illustrated seed is the first in the
         archive, not the best-scoring one; all eight seed errors are shown.
@@ -507,11 +510,17 @@ def build_pdf(week):
     title, *sections = text.split('\n## ')
     out = ROOT / 'output' / 'pdf' / (stem+'.pdf')
     out.parent.mkdir(parents=True, exist_ok=True)
-    body = ParagraphStyle('body', fontName='Helvetica', fontSize=11.5, leading=17,
+    body = ParagraphStyle('body', fontName='TNR', fontSize=11.5, leading=17,
                           spaceAfter=13, textColor=colors.HexColor('#243746'), alignment=TA_LEFT)
-    heading = ParagraphStyle('heading', parent=body, fontName='Helvetica-Bold',
+    heading = ParagraphStyle('heading', parent=body, fontName='TNRB',
                              fontSize=23, leading=29, spaceAfter=22, keepWithNext=True)
     small = ParagraphStyle('small', parent=body, fontSize=9, leading=13, keepWithNext=True)
+    try:
+        from .lecture_typography import register_legacy_reportlab_aliases, black_paragraph_styles
+    except ImportError:  # direct script execution
+        from lecture_typography import register_legacy_reportlab_aliases, black_paragraph_styles
+    register_legacy_reportlab_aliases()
+    black_paragraph_styles({'body':body,'heading':heading,'small':small})
     story = []
     cavitation_started = False
     for i, section in enumerate(sections):
@@ -533,7 +542,7 @@ def build_pdf(week):
                         vals.append('N/A' if key not in group[0] else f"{sum(r[key] for r in group)/len(group)*(1 if key=='dice' else 100):.3f}")
                     data.append([label,*vals])
                 table=Table(data,colWidths=[170,105,110,90],hAlign='LEFT')
-                table.setStyle(TableStyle([('FONTNAME',(0,0),(-1,0),'Helvetica-Bold'),('FONTSIZE',(0,0),(-1,-1),9),('BACKGROUND',(0,0),(-1,0),colors.HexColor('#e7f0f5')),('BOTTOMPADDING',(0,0),(-1,-1),10),('TOPPADDING',(0,0),(-1,-1),10),('LINEBELOW',(0,0),(-1,0),.7,colors.HexColor('#168aad'))]))
+                table.setStyle(TableStyle([('FONTNAME',(0,0),(-1,0),'TNRB'),('FONTSIZE',(0,0),(-1,-1),9),('BACKGROUND',(0,0),(-1,0),colors.HexColor('#e7f0f5')),('BOTTOMPADDING',(0,0),(-1,-1),10),('TOPPADDING',(0,0),(-1,-1),10),('LINEBELOW',(0,0),(-1,0),.7,colors.HexColor('#168aad'))]))
                 story.append(table)
                 continue
             if para.strip() == '[RECONSTRUCTION_LOSS]':
@@ -563,7 +572,7 @@ def build_pdf(week):
     def footer(canvas, doc):
         canvas.setStrokeColor(colors.HexColor('#168aad'))
         canvas.line(50, 47, 545, 47)
-        canvas.setFont('Helvetica', 9)
+        canvas.setFont('TNR', 9)
         canvas.drawString(50, 31, f'Ehsan Roohi | FlowMLLab | Week {week} | Teaching analogs clearly labelled')
         canvas.drawRightString(545, 31, str(doc.page))
     SimpleDocTemplate(str(out), pagesize=(595,842), leftMargin=60, rightMargin=60,

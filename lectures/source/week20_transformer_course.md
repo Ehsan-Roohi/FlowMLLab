@@ -65,7 +65,7 @@ Course background: the Week 4/5 POD-DeepONet and modal-sensing laboratories. Arc
 
 ## Printable laboratory worksheet
 
-### Task 1: Cardinality-preserving token dropout
+### Task 1: Consistent sensor-token dropout
 
 Remove every other sensor from values and coordinates together; never reinterpret a missing value as an observed zero.
 
@@ -89,8 +89,18 @@ Train a supplied small model using full-batch SGD and mean squared error. Evalua
 
 Interface contract: steps is a nonnegative integer, lr a positive scalar. Inputs are dimension-compatible Torch tensors. Use full-batch SGD with mean MSE. Evaluate step zero and every update; select the earliest minimum validation loss; restore it and leave model in evaluation mode. Return dictionary selected_step (int), executed_steps (steps), validation_mse (float minimum), trace (list of dictionaries with step and validation_mse for 0..steps). Negative steps or nonpositive lr must raise ValueError.
 
-For the integrated fourth task, compare at least two controlled settings and explain a result that the implementation alone cannot justify. Include the requested plot or table and retain unsuccessful outcomes.
-
 ## Before submitting
 
 Restart the kernel and run the worked examples and completed tasks. Confirm that all four coding checks pass and that no retained data or results file changed. Include the requested interpretation, identify every quantity fitted from training data, and separate test observations from decisions made using validation. Record unresolved budget or representation limits rather than removing inconvenient runs.
+
+
+## Assessment and worked interpretation
+
+Coding: Tasks 1–3 carry 5 points each; the integrated Task 4 carries 25. Derivation (25): derive permutation invariance of pooled sensor attention and distinguish cardinality dropout from mean imputation. Interpretation (25): give evidence and limitations. Reproducibility (10): identify inputs, split, checkpoint, environment and every failed seed. Total 100. Passing function checks earns only the coding allocation.
+
+Worked full-credit reasoning: An attention set is equivariant before pooling and invariant afterward. Dropping tokens reduces cardinality, whereas replacing their values with zero retains a different input. Compare actual parameter counts, selection steps and validation criteria before attributing accuracy to architecture.
+
+Misconception to reject: “A model that reaches its update ceiling is necessarily converged, and equal update caps guarantee equal compute.” Explain the failure in one equation or counterexample. An observation without protocol and limitation earns at most half of interpretation credit. Instructor judgment and a timed student pilot remain necessary.
+
+
+Timing estimate: a 120-minute guided lab and roughly 3–5 hours including preparation and written analysis. This is an editorial estimate; a timed student pilot remains open.

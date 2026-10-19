@@ -32,7 +32,7 @@ For conservative variables
 \begin{equation}
  \mathbf{U}=\begin{bmatrix}\rho&\rho u&\rho v&\rho E\end{bmatrix}^{T},
 \end{equation}
-the axisymmetric Euler equations can be written schematically as
+the axisymmetric Euler equations for no swirl can be written as
 \begin{equation}
  \boxed{
  \frac{\partial(r\mathbf U)}{\partial t}
@@ -41,7 +41,7 @@ the axisymmetric Euler equations can be written schematically as
  =\mathbf S_r
  },
 \end{equation}
-where $\mathbf S_r$ is the radial geometric source term. The ideal-gas closure is
+where $\mathbf S_r=[0,0,p,0]^T$. For radial momentum, multiplying by $r$ and using $\partial_r(rp)=r\partial_r p+p$ gives the pressure source $p$ (not $p/r$ in this weighted form). Uniform stagnant pressure therefore balances exactly. The ideal-gas closure is
 \begin{equation}
  p=(\gamma-1)\left[\rho E-\frac{\rho}{2}(u^2+v^2)\right].
 \end{equation}
@@ -68,6 +68,12 @@ For every clean label, acceptance requires finite positive pressure and density,
 
 \topic{8}{Independent verification with Taylor--Maccoll cone flow}
 Before trusting the teaching-body campaign, we ask whether the numerical method reproduces an independent supersonic solution. Axisymmetric conical flow provides a classical verification problem. An oblique shock turns the freestream toward the cone, and the post-shock flow between shock and surface is governed by the Taylor--Maccoll ordinary differential equations. The shock angle is adjusted until the polar velocity becomes tangent to the cone surface.
+With velocities normalized by maximum adiabatic speed, define $h=(\gamma-1)(1-v_r^2-v_\theta^2)/2$. The shooting system is
+\begin{align*}
+\frac{\dd v_r}{\dd\theta}&=v_\theta,\\
+\frac{\dd v_\theta}{\dd\theta}&=\frac{v_\theta^2v_r-h(2v_r+v_\theta\cot\theta)}{h-v_\theta^2}.
+\end{align*}
+Start at a trial shock angle using oblique-shock jump velocities, integrate toward the cone half-angle, and adjust the shock angle until $v_\theta(\theta_c)=0$. The notebook executes this ODE and root solve without launching CFD. At $M=1.8$ and $\theta_c=7^\circ$, it gives approximately $34.04^\circ$ shock angle and $C_p=0.0620$.
 
 The benchmark is independent of the SU2 discretization used for the production data. Therefore agreement tests the numerical chain rather than simply comparing SU2 against itself.
 

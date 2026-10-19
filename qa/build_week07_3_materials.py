@@ -328,7 +328,11 @@ pool for k <= 8, random otherwise) and every method is refitted:
 | `mae_finetune` | yes (pretrained) | yes | the pretrained MAE, the same 300 steps at a lower learning rate (5e-4), early stopping on Re = 105 |
 
 `mae_scratch` and `mae_finetune` receive identical labelled data and identical
-downstream compute; the only difference is the starting point. A separate
+downstream update count and labelled frames. This is a comparison of two pipelines,
+not an isolated initialization intervention: scratch uses LR 2e-3 and mask seed
+400+seed; fine-tuning uses LR 5e-4 and mask seed 500+seed. Architecture and
+300-step budget match, but learning rate and mask trajectory differ. A causal
+initialization ablation must also match those factors and reselect on validation. A separate
 control at the end gives the from-scratch model the full pretraining budget on
 the 128 labelled frames, to answer the objection that it merely needed longer.
 
@@ -592,7 +596,7 @@ Data: FlowMLLab cylinder-cfd-v1 (`data/modal_labs`). Code in
 def build_cells() -> list[dict]:
     cells = [
         cell("markdown", TITLE + badge(NOTEBOOK.relative_to(ROOT).as_posix())),
-        cell("code", bootstrap(NOTEBOOK.parent.relative_to(ROOT).as_posix()) + SETUP),
+        cell("code", bootstrap(NOTEBOOK.parent.relative_to(ROOT).as_posix()).replace('[test]', '[test,reconstruction]') + SETUP),
         cell("markdown", DEFINITIONS),
         cell("markdown", CONTRACT),
         cell("code", MASK_FIGURE),
@@ -733,16 +737,26 @@ def make_pdf() -> Path:
     out = ROOT / "output/pdf" / PDF.name
     out.parent.mkdir(parents=True, exist_ok=True)
     styles = getSampleStyleSheet()
-    ink, muted = colors.HexColor("#173b56"), colors.HexColor("#506070")
-    styles.add(ParagraphStyle(name="Title73", fontName="Helvetica-Bold", fontSize=22, leading=26, textColor=ink, spaceAfter=12))
-    styles.add(ParagraphStyle(name="Heading73", fontName="Helvetica-Bold", fontSize=12, leading=16, textColor=ink,
+    ink = muted = colors.black
+    styles.add(ParagraphStyle(name="Title73", fontName="TNRB", fontSize=22, leading=26, textColor=ink, spaceAfter=12))
+    styles.add(ParagraphStyle(name="Heading73", fontName="TNRB", fontSize=12, leading=16, textColor=ink,
                               spaceBefore=10, spaceAfter=6, keepWithNext=True))
-    styles.add(ParagraphStyle(name="Body73", fontName="Helvetica", fontSize=10.2, leading=14.4, spaceAfter=7))
-    styles.add(ParagraphStyle(name="Small73", fontName="Helvetica", fontSize=8.8, leading=12, textColor=muted, spaceAfter=7))
-    styles.add(ParagraphStyle(name="Bullet73", fontName="Helvetica", fontSize=10.2, leading=14.4, leftIndent=14,
+    styles.add(ParagraphStyle(name="Body73", fontName="TNR", fontSize=10.2, leading=14.4, spaceAfter=7))
+    styles.add(ParagraphStyle(name="Small73", fontName="TNR", fontSize=8.8, leading=12, textColor=muted, spaceAfter=7))
+    styles.add(ParagraphStyle(name="Bullet73", fontName="TNR", fontSize=10.2, leading=14.4, leftIndent=14,
                               bulletIndent=2, spaceAfter=3))
     styles.add(ParagraphStyle(name="Equation73", fontName="Courier", fontSize=9.6, leading=13, leftIndent=14, spaceAfter=6))
 
+    try:
+        from .lecture_typography import register_legacy_reportlab_aliases, black_paragraph_styles
+    except ImportError:  # direct script execution
+        from lecture_typography import register_legacy_reportlab_aliases, black_paragraph_styles
+    register_legacy_reportlab_aliases()
+    black_paragraph_styles(styles)
+    # Explicit names also work in a fresh builder process (no cached aliases).
+    for style in styles.byName.values():
+        style.fontName = {"Helvetica": "TNR", "Helvetica-Bold": "TNRB",
+                          "Helvetica-Oblique": "TNRI", "Helvetica-BoldOblique": "TNRBI"}.get(style.fontName, style.fontName)
     sections = [page.strip().split("\n\n") for page in SOURCE.read_text(encoding="utf-8").split("\n---\n")]
     story: list = []
 
@@ -780,12 +794,12 @@ def make_pdf() -> Path:
     def table(rows, widths) -> None:
         obj = Table(rows, colWidths=widths, hAlign="LEFT")
         obj.setStyle(TableStyle([
-            ("FONTNAME", (0, 0), (-1, -1), "Helvetica"), ("FONTSIZE", (0, 0), (-1, -1), 8.8),
+            ("FONTNAME", (0, 0), (-1, -1), "TNR"), ("FONTSIZE", (0, 0), (-1, -1), 8.8),
             ("TOPPADDING", (0, 0), (-1, -1), 5), ("BOTTOMPADDING", (0, 0), (-1, -1), 5),
             ("LINEBELOW", (0, 0), (-1, 0), .7, ink), ("VALIGN", (0, 0), (-1, -1), "MIDDLE"),
             ("ROWBACKGROUNDS", (0, 1), (-1, -1), [colors.HexColor("#f0f5f7"), colors.white]),
-            ("BACKGROUND", (0, 0), (-1, 0), ink), ("TEXTCOLOR", (0, 0), (-1, 0), colors.white),
-            ("FONTNAME", (0, 0), (-1, 0), "Helvetica-Bold")]))
+            ("BACKGROUND", (0, 0), (-1, 0), colors.HexColor("#eeeeee")), ("TEXTCOLOR", (0, 0), (-1, 0), colors.black),
+            ("FONTNAME", (0, 0), (-1, 0), "TNRB")]))
         story.extend([obj, Spacer(1, 8)])
 
     def figure(name: str, width: float, caption: str) -> None:
@@ -851,7 +865,7 @@ def make_pdf() -> Path:
 
     def footer(canvas, doc):
         canvas.setStrokeColor(colors.HexColor("#d4dfe6")); canvas.line(42, 39, 553, 39)
-        canvas.setFont("Helvetica", 8); canvas.setFillColor(muted)
+        canvas.setFont("TNR", 8); canvas.setFillColor(colors.black)
         canvas.drawString(42, 25, "FlowMLLab  /  Ehsan Roohi  /  Week 7.3")
         canvas.drawRightString(553, 25, str(doc.page))
 

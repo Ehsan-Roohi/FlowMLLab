@@ -9,6 +9,8 @@ import textwrap
 
 
 ROOT = Path(__file__).resolve().parents[1]
+import sys
+sys.path.insert(0, str(ROOT))
 OUTPUT = ROOT / "notebooks" / "week02_1" / "Probabilistic_UQ_CFD.ipynb"
 
 
@@ -507,6 +509,8 @@ def main() -> None:
         encoding="utf-8",
         newline="\n",
     )
+    from qa.notebook_review_updates import review_notebook_file
+    review_notebook_file(OUTPUT)
     print(OUTPUT)
 
 

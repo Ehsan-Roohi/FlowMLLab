@@ -14,12 +14,12 @@ from pypdf import PdfReader
 ROOT=Path(__file__).resolve().parents[1]
 sys.path.insert(0,str(ROOT))
 from flowmllab.pressure_velocity_lab import load_results,figures,write_report,LABELS
-from week01_2_teaching import flowchart,experiment,experiment_figure
-from week01_2_math import Equation
+from qa.week01_2_teaching import flowchart,experiment,experiment_figure
+from qa.week01_2_math import Equation
 OUT=ROOT/'results/week01_2_pressure_velocity'
 NOTE=ROOT/'notebooks/week01_2/W1_2_Cavity_Pressure_Velocity.ipynb'
 PDF=ROOT/'lectures/week01_2_pressure_velocity.pdf'
-LECTURE_PAGES=18
+LECTURE_PAGES=19
 
 
 def notebook():
@@ -179,14 +179,16 @@ Independent implementation informed by [PySIMPLE](https://github.com/VishalKanda
 ''')
     nb=nbf.v4.new_notebook(cells=cells,metadata={'kernelspec':{'name':'python3','display_name':'Python 3','language':'python'},
         'language_info':{'name':'python','version':'3.12'},'course_module':'1.2','reynolds':100})
-    from week01_2_higher_re_notebook import append_higher_re
+    from qa.week01_2_higher_re_notebook import append_higher_re
     append_higher_re(nb)
     nbf.write(nb,NOTE)
+    from qa.notebook_review_updates import review_notebook_file
+    review_notebook_file(NOTE)
 
 
 def lecture(manifest):
-    for name,file in [('TNR','times.ttf'),('TNRB','timesbd.ttf'),('TNRI','timesi.ttf')]:
-        pdfmetrics.registerFont(TTFont(name,'C:/Windows/Fonts/'+file))
+    from qa.lecture_typography import register_reportlab
+    register_reportlab()
     pdfmetrics.registerFontFamily('TNR',normal='TNR',bold='TNRB',italic='TNRI',boldItalic='TNRB')
     W,H=A4;width=W-100;story=[]
     styles={'body':ParagraphStyle('body',fontName='TNR',fontSize=11,leading=15,spaceAfter=9),
@@ -334,6 +336,14 @@ def lecture(manifest):
     add('This independently written module uses original implementation and explanations. External examples inform derivation and organization; their validation claims are not inherited. The audited CFD-Python PISO-titled notebook had a commented-out second correction, illustrating why source inspection matters.')
     box('Reproduce and audit','qa/run_week01_2.py executes the steady cases; qa/week01_2_teaching.py executes the one-step sweep and draws flowcharts; qa/build_week01_2.py builds the figures and notebook. tests/test_pressure_velocity.py checks conservation, pressure gauge, PISO behavior, PIMPLE limits and the common steady solution. The expanded teaching supplement provides full source links and study boundaries.')
     add('Lecture and code are English. Typography: Times New Roman with vector mathematical notation. Prepared 09 October 2026; equation typography revised 15 October 2026.','small')
+    heading('Worked example: a conservative two-cell correction')
+    add('Use two unit-volume cells, impermeable external faces and one shared face velocity q, positive to the right. Unit spacing and d=1 isolate the signs from mesh factors.')
+    eq(r'D_1=1,\quad D_2=-1,\quad G_1=-1,\quad G_2=1')
+    add('For q*=1 the two cell defects are +1 and -1. Their sum vanishes because the shared face enters with opposite signs; neither cell yet satisfies continuity.')
+    eq(r'L=-DdG,\qquad Lp^{\prime}=-Dq^{*}')
+    add('Here L has rows (1,-1) and (-1,1). Pin p2\'=0. The first row gives p1\'=-1; then Gp\'=1 and q_new=1-1=0. Adding the same constant to both pressures changes no face gradient. This is the constant pressure nullspace.')
+    box('Exercise with solution','Change q*=2 and d=0.5. L becomes half the previous matrix. With p2\'=0, p1\'=-4, Gp\'=4 and q_new=2-0.5(4)=0. Applying only alpha_p of the face correction would leave a cell mass defect. In SIMPLE, alpha_p relaxes the pressure update, while the velocity correction remains conservative.')
+    add('This is a nondimensional sign-and-conservation control, not a resolved cavity. Before using the sparse solver, write the same cancellation for three cells and verify D times a constant internal through-flux at the impermeable ends.')
     def footer(c,doc):
         c.saveState();c.setFont('TNR',9);c.setLineWidth(.4)
         if doc.page>1:

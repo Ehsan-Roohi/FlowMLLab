@@ -1,0 +1,205 @@
+#!/usr/bin/env python3
+"""Generate/check the public course inventory from the actual checkout.
+
+Default is read-only validation. Use --write after an intentional curriculum or
+PDF change. Requires Python 3.11+ and Poppler's pdfinfo; no ML imports or network.
+Editorial routes live in course/catalog.json. Counts are never edited by hand.
+"""
+from __future__ import annotations
+import argparse
+import html
+from html.parser import HTMLParser
+import json
+import re
+import subprocess
+import sys
+import tomllib
+from pathlib import Path
+from urllib.parse import unquote, urlparse
+
+ROOT = Path(__file__).resolve().parents[1]
+REPO = 'https://github.com/Ehsan-Roohi/FlowMLLab/blob/main/'
+PRIMARY_DOCS = ['README.md', 'START_HERE.md', 'COURSE_MAP.md', 'lectures/README.md', 'notebooks/README.md', 'docs/COURSE_INVENTORY.md', 'docs/index.html']
+
+
+def pdf_pages(path: Path) -> int:
+    result = subprocess.run(['pdfinfo', str(path)], check=True, capture_output=True, text=True)
+    match = re.search(r'^Pages:\s+(\d+)', result.stdout, re.M)
+    if not match:
+        raise ValueError(f'No page count from pdfinfo: {path}')
+    return int(match[1])
+
+
+def inventory() -> dict:
+    catalog = json.loads((ROOT / 'course/catalog.json').read_text())
+    version = tomllib.loads((ROOT / 'pyproject.toml').read_text())['project']['version']
+    lectures = [{'path': p.relative_to(ROOT).as_posix(), 'pages': pdf_pages(p)} for p in sorted((ROOT / 'lectures').glob('week*.pdf'))]
+    notebooks = []
+    for p in sorted((ROOT / 'notebooks').glob('week*/*.ipynb')):
+        # Parsing catches corrupt inventory members without executing their code.
+        document = json.loads(p.read_text())
+        if document.get('nbformat') != 4:
+            raise ValueError(f'Unsupported notebook format: {p}')
+        role = 'historical audit companion' if p.name == 'W15_Geometry_Operators_Step_Audit.ipynb' else 'student'
+        notebooks.append({'path': p.relative_to(ROOT).as_posix(), 'role': role})
+    optional = []
+    for item in catalog.get('optional_modules', []):
+        available = {key: (ROOT / item[key]).is_file() for key in ('page','notebook','lecture_source','lecture_pdf')}
+        optional.append({**item, 'available': available, 'lecture_pages': pdf_pages(ROOT/item['lecture_pdf']) if available['lecture_pdf'] else None})
+    for module in catalog['modules']:
+        for key in ('page', 'setup'):
+            if not (ROOT / module[key]).is_file():
+                raise ValueError(f'Missing {module["id"]} {key}: {module[key]}')
+    return {
+        'schema_version': 1, 'course_version': version,
+        'scope': 'Current working-tree assets for numbered Weeks 1–22, including incremental and preparatory material. This is not a new published release or proof of execution.',
+        'rules': {
+            'active_lecture_pdfs': 'lectures/week*.pdf only; exclude lectures/versions, lectures/source figure PDFs and separately listed optional supplements.',
+            'student_notebooks': 'notebooks/week*/*.ipynb; includes the explicitly labelled historical Week 15 audit companion; excludes instructor solutions and optional supplements.',
+            'page_counts': 'Read from actual PDF files with pdfinfo, not filenames or historical release notes.',
+            'historical_baseline': 'At review base c9562b8: 34 active PDFs / 444 pages; 51 student notebooks including one historical companion. Current counts below are regenerated and may change.'
+        },
+        'counts': {'active_lecture_pdfs': len(lectures), 'lecture_pages': sum(p['pages'] for p in lectures), 'student_notebooks': len(notebooks), 'historical_student_companions': sum(n['role'] != 'student' for n in notebooks), 'optional_notebooks': sum(i['available']['notebook'] for i in optional), 'optional_pdfs': sum(i['available']['lecture_pdf'] for i in optional)},
+        'lecture_pdfs': lectures, 'student_notebooks': notebooks,
+        'modules': catalog['modules'], 'optional_modules': optional,
+    }
+
+
+def replace_block(text: str, name: str, body: str) -> str:
+    pattern = re.compile(rf'<!-- {name}:start -->.*?<!-- {name}:end -->', re.S)
+    if not pattern.search(text):
+        raise ValueError(f'Missing generated block {name}')
+    return pattern.sub(lambda _: f'<!-- {name}:start -->\n{body}\n<!-- {name}:end -->', text)
+
+
+def generated_readme(inv: dict) -> str:
+    c = inv['counts']
+    return (f'The current checkout contains **{c["student_notebooks"]} student notebooks** '
+            f'(including {c["historical_student_companions"]} historical audit companion) and '
+            f'**{c["active_lecture_pdfs"]} active lecture PDFs / {c["lecture_pages"]} pages** '
+            'across Weeks 1–22 and their incremental units. Optional self-study supplements are counted separately.\n\n'
+            '[Inventory and counting rules](docs/COURSE_INVENTORY.md) · [Choose a learning path](START_HERE.md)')
+
+
+def inventory_md(inv: dict) -> str:
+    c = inv['counts']
+    lines = ['# Course inventory', '', '<!-- Generated by qa/update_course_inventory.py; do not edit by hand. -->', '',
+             f'Course version **v{inv["course_version"]}**. These counts describe the current checkout; they do not announce a new release or assert that every notebook has passed a hosted Run All.', '',
+             '| Asset | Count |', '| --- | ---: |', f'| Active lecture PDFs | {c["active_lecture_pdfs"]} |', f'| Pages in those PDFs | {c["lecture_pages"]} |', f'| Student notebooks, including historical companion | {c["student_notebooks"]} |', f'| Historical student audit companion (included above) | {c["historical_student_companions"]} |', f'| Optional self-study notebooks (separate) | {c["optional_notebooks"]} |', f'| Optional self-study PDFs (separate) | {c["optional_pdfs"]} |', '', '## Counting rules', '']
+    lines += [f'- **{k.replace("_", " ")}:** {v}' for k,v in inv['rules'].items()]
+    lines += ['', '## Lecture files', '', '| File | Pages |', '| --- | ---: |']
+    lines += [f'| [{Path(p["path"]).name}](../{p["path"]}) | {p["pages"]} |' for p in inv['lecture_pdfs']]
+    lines += ['', '## Student notebooks', '', 'The historical Week 15 audit remains available for provenance; use the complete Week 15 notebook for the current route.', '', '| Notebook | Role |', '| --- | --- |']
+    lines += [f'| [{Path(n["path"]).name}](../{n["path"]}) | {n["role"]} |' for n in inv['student_notebooks']]
+    lines += ['', '## Unit prerequisites and execution status', '', 'Compute planning estimates are not measurements of this revision or classroom workload. The setup guide takes precedence for dependencies and data.', '', '| Unit | Prerequisites | Execution status |', '| --- | --- | --- |']
+    lines += [f'| [Week {m["id"]}: {m["title"]}](../{m["page"]}) | {m["prerequisites"]} | {m["execution_status"]} [Setup](../{m["setup"]}) |' for m in inv['modules']]
+    lines += ['', '## Optional self-study', '']
+    for item in inv['optional_modules']:
+        lines += [f'### {item["title"]}', '', item['status'], '', f'Prerequisites: {item["prerequisites"]}', '', f'{item["mode"]} {item["study_estimate"]}', '']
+        for key, label in [('page','Guide'),('notebook','Notebook'),('lecture_source','Lecture source'),('lecture_pdf','Lecture PDF')]:
+            lines.append(f'- [{label}](../{item[key]})' if item['available'][key] else f'- {label}: not present in this checkout; no working link advertised.')
+        lines.append('')
+    lines += ['## Updating and checking', '', 'Editorial route metadata lives in `course/catalog.json`; `docs/course_inventory.json` is the generated machine-readable inventory. File discovery and PDF inspection supply all current counts.', '', '```sh', 'python qa/update_course_inventory.py --write', 'python qa/update_course_inventory.py', '```', '', 'Run from the repository root. Python 3.11+ and Poppler `pdfinfo` are required. The check validates generated counts, rendered lecture page labels, local primary-document links and repository/Colab link targets against this checkout. It does not contact remote hosts, authenticate Colab, execute notebooks or validate scientific results.', '']
+    return '\n'.join(lines)
+
+
+def site_modules(inv: dict) -> str:
+    esc=html.escape
+    cards=[]
+    for m in inv['modules']:
+        route=REPO+m['page'];setup=REPO+m['setup']
+        cards.append(f'''<article class="module" data-search="{esc((m['id']+' '+m['title']+' '+m['mode']+' '+m['prerequisites']+' '+m.get('keywords','')).lower(), quote=True)}">
+<h3><span class="eyebrow">Week {esc(m['id'])}</span><a href="{route}">{esc(m['title'])}</a></h3>
+<p class="mode">{esc(m['mode'])}</p>
+<details><summary>Prerequisites, time and setup</summary><p><strong>Before this unit:</strong> {esc(m['prerequisites'])}</p><p><strong>Compute planning estimate:</strong> {esc(m['compute_estimate'])} Not a timing measurement of this revision; study and discussion take longer.</p><p>{esc(m['execution_status'])}</p><p><a href="{setup}">Read the setup guide</a></p></details></article>''')
+    return '\n'.join(cards)
+
+
+def desired_files(inv: dict) -> dict[Path,str]:
+    out={ROOT/'docs/course_inventory.json':json.dumps(inv,indent=2,ensure_ascii=False)+'\n', ROOT/'docs/COURSE_INVENTORY.md':inventory_md(inv)}
+    readme=(ROOT/'README.md').read_text()
+    out[ROOT/'README.md']=replace_block(readme,'course-counts',generated_readme(inv))
+    runtime = ['| Unit | Mode / resources | Compute planning estimate |', '| --- | --- | --- |']
+    runtime += [f'| [Week {m["id"]}]({m["page"]}) | {m["mode"]} | {m["compute_estimate"]} |' for m in inv['modules']]
+    start=(ROOT/'START_HERE.md').read_text()
+    out[ROOT/'START_HERE.md']=replace_block(start,'course-runtime','\n'.join(runtime))
+    lecture=(ROOT/'lectures/README.md').read_text()
+    counts={Path(p['path']).name:p['pages'] for p in inv['lecture_pdfs']}
+    def fix_pages(match):
+        name=match.group(2)
+        if name not in counts: raise ValueError(f'Uninventoried lecture PDF: {name}')
+        return f'{match.group(1)} ({counts[name]} pages)'
+    lecture=re.sub(r'(\[[^\]]+\]\((week[^)]+\.pdf)\))\s*\(\d+(?: pages)?\)',fix_pages,lecture)
+    out[ROOT/'lectures/README.md']=lecture
+    site=(ROOT/'docs/index.html').read_text()
+    c=inv['counts']
+    site=replace_block(site,'course-summary',f'<p class="release">Current course version v{inv["course_version"]} · Weeks 1–22</p>\n<p>{c["student_notebooks"]} student notebooks, including {c["historical_student_companions"]} historical companion · {c["active_lecture_pdfs"]} active lecture PDFs · {c["lecture_pages"]} pages. Optional supplements are separate.</p>')
+    site=replace_block(site,'course-modules',site_modules(inv))
+    out[ROOT/'docs/index.html']=site
+    return out
+
+
+class SiteStructure(HTMLParser):
+    def __init__(self):
+        super().__init__()
+        self.ids = []
+        self.anchors = []
+        self.images = []
+    def handle_starttag(self, tag, attrs):
+        attrs = dict(attrs)
+        if 'id' in attrs: self.ids.append(attrs['id'])
+        if tag == 'a' and attrs.get('href', '').startswith('#'):
+            self.anchors.append(attrs['href'][1:])
+        if tag == 'img': self.images.append(attrs)
+
+
+def link_errors(files: dict[Path,str]) -> list[str]:
+    errors=[]
+    targets=set()
+    for relative in PRIMARY_DOCS:
+        file=ROOT/relative
+        text=files.get(file,file.read_text() if file.exists() else '')
+        urls=re.findall(r'\]\(([^)\s]+)(?:\s+"[^"]*")?\)',text) if file.suffix=='.md' else re.findall(r'(?:href|src)="([^"]+)"',text)
+        for url in urls:
+            u=urlparse(html.unescape(url));path=unquote(u.path)
+            if not path or u.scheme in ('mailto','data'):continue
+            if u.scheme or u.netloc:
+                prefixes=['/Ehsan-Roohi/FlowMLLab/blob/main/','/Ehsan-Roohi/FlowMLLab/tree/main/'] if u.netloc=='github.com' else ['/github/Ehsan-Roohi/FlowMLLab/blob/main/'] if u.netloc=='colab.research.google.com' else []
+                prefix=next((p for p in prefixes if path.startswith(p)),None)
+                if prefix is None:continue
+                target=ROOT/path[len(prefix):]
+            else:
+                target=(file.parent/path).resolve()
+            targets.add(str(target))
+            if not target.exists() and target not in files:errors.append(f'{relative}: missing target {url}')
+    structure=SiteStructure()
+    structure.feed(files[ROOT/'docs/index.html'])
+    if len(structure.ids)!=len(set(structure.ids)):errors.append('docs/index.html: duplicate HTML ids')
+    errors += [f'docs/index.html: missing fragment #{a}' for a in structure.anchors if a not in structure.ids]
+    errors += ['docs/index.html: image without alternative text' for image in structure.images if not image.get('alt')]
+    print(f'Checked {len(targets)} distinct local/repository/Colab file targets, site fragments and image alt text (no network).')
+    return errors
+
+
+def main() -> int:
+    parser=argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--write',action='store_true',help='Regenerate inventory, summary blocks and PDF page labels.')
+    args=parser.parse_args()
+    inv=inventory();out=desired_files(inv)
+    errors=link_errors(out)
+    if errors:
+        print('\n'.join(errors),file=sys.stderr);return 1
+    stale=[p for p,body in out.items() if not p.exists() or p.read_text()!=body]
+    if args.write:
+        for path in stale:path.write_text(out[path])
+        print(f'Updated {len(stale)} generated files/blocks.')
+    elif stale:
+        print('Stale generated files: '+', '.join(str(p.relative_to(ROOT)) for p in stale),file=sys.stderr)
+        print('Run python qa/update_course_inventory.py --write after reviewing the source changes.',file=sys.stderr)
+        return 1
+    print(json.dumps(inv['counts'],sort_keys=True))
+    print('Inventory and primary-document file targets: PASS. Scientific execution and hosted readiness are not checked.')
+    return 0
+
+if __name__=='__main__':
+    raise SystemExit(main())

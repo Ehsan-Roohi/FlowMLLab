@@ -155,3 +155,8 @@ L. Davidson, Using Physics Informed Neural Network (PINN) and Neural Network (NN
 L. Davidson, pyCALC-RANS: A Python Code for Two-Dimensional Turbulent Steady Flow (2026). Report and source distribution: cfd-sweden.se/lada/pyCALC-RANS.html. The PINN-NN distribution page records the September 2026 initialization fixes.
 
 M. Lee and R. D. Moser, Direct numerical simulation of turbulent channel flow up to Re_tau approximately 5200, Journal of Fluid Mechanics 774, 395-415 (2015). DOI: 10.1017/jfm.2015.268.
+
+
+## Worked inverse problem and conditioning
+
+The notebook first identifies the trivial linear warm-up a=0.1+0.2y: the boundary lifting already contains the answer. The required manufactured fit uses a=0.1+0.2y+0.4y(1-y), k=y(1-y), and forcing f=2(nu+a)-a'(1-2y). The zero correction must fail; the trained correction is compared with the analytic nonlinear coefficient on 201 independent points. Expanding d[(nu+a)k']/dy+f=0 yields a'k'+(nu+a)k''+f=0. Integrating yields (nu+a)k'=C-integral(f)dy: when k' approaches zero, dividing noisy flux by k' is ill conditioned. A flux error 0.001 produces coefficient error 0.01 at k'=0.1 but 1 at k'=0.001. Explain how global regularized residual fitting differs from pointwise division, and why diffusion a and destruction correction C_k are distinct inverse quantities.

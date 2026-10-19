@@ -205,3 +205,8 @@ The final short report should state: what physical problem was specified, what t
 Local pedagogical resources consulted: Ricardo Vinuesa's 1_Time_PINNs.pdf; the Mastering CFD PINNs series, particularly the Stokes, Navier-Stokes, and exact-validation progression; and the PINNs from Scratch in PyTorch notebook in the instructor's teaching collection. These informed topic selection, not copied text, code, or figures. Authorship and redistribution rights for the locally supplied worksheet collection were not established, so those files are not included. The local Burgers dissertation was screened but is not used as an accuracy authority for cavity flow.
 
 Figure 1 uses the existing accepted Re=100 field in FlowMLLab data/cavity_data.npz; it is conventional CFD, not a newly trained PINN. Figures 2 and 3 are original explanatory graphics generated from the stated construction. The companion build script records the CFD archive hash and evaluates analytic preflight identities. Those checks validate the illustrated formulas, not the convergence of an upstream training run. This working-course lecture does not create a new software release or DOI.
+
+
+## Executable derivative preflight
+
+The Week 13 core notebook now performs the required analytic Kovasznay test before training: exact first derivatives and steady momentum balance at Re=40, metric checks at D=1 and D=2.2, a deliberately omitted metric factor that fails at D=2.2, and all four cavity walls with random untrained weights. Read the analytic formulas, predict the failure, then run each gate. The sampler recomputes the corner mask if Adam points change; L-BFGS keeps a fixed objective. A passed preflight verifies implementation, not the learned cavity solution.

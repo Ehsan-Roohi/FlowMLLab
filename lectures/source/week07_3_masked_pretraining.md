@@ -61,6 +61,11 @@ Trajectories and roles: Re = 90 and 100 are unlabelled pretraining data; Re = 10
 - `mae_scratch`: the architecture from random weights, 300 AdamW steps with fresh masks, early stopping on Re = 105.
 - `mae_finetune`: the pretrained model, the same 300 steps at learning rate 5e-4, early stopping on Re = 105.
 
+Protocol attribution: the 300-step scratch and fine-tuning pipelines share labelled
+frames and architecture but use learning rates 2e-3 versus 5e-4 and mask seeds
+400+seed versus 500+seed. Their difference is not an isolated initialization effect.
+A matched-rate, matched-mask ablation would be a separate validation-selected study.
+
 Zero-shot entries: gappy POD with the transferred basis and the pretrained MAE. Budget control: the architecture from scratch on the seed-0 frames at k = 2, 8 and 128 for the full pretraining budget of 5000 steps. All errors are hidden-pixel relative L2 averaged over the 71 test frames; the tables report mean and sample SD over the three seeds, which are repeated draws on one CFD trajectory and not independent flows.
 
 ---
@@ -68,7 +73,7 @@ Zero-shot entries: gappy POD with the transferred basis and the pretrained MAE. 
 
 Three findings, each bounded by the data it was measured on.
 
-**Pretraining helps the network, most where labels are fewest.** With identical labelled frames and identical downstream compute, the fine-tuned model is never worse than its zero-shot starting point (early stopping on Re = 105 may keep the pretrained weights), improves on it from k = 4 (about 10%) and settles near 8% from k = 8 upwards, while the from-scratch model never leaves the mean-field plateau (about 100%) at any k. The budget control addresses the objection that it only needed more steps: with the full pretraining budget on the target frames the from-scratch model still fails at k = 2, comes within about a percentage point at k = 8, and at k = 128 is at least as good as the 300-step fine-tuned model. This is the MAPA result reproduced on a wake: the benefit of pretraining is concentrated in the low-label regime, and with enough labels and compute the unlabelled trajectories add nothing on this data.
+**Pretraining helps the network, most where labels are fewest.** With identical labelled frames and identical downstream update count, the fine-tuned model is never worse than its zero-shot starting point (early stopping on Re = 105 may keep the pretrained weights), improves on it from k = 4 (about 10%) and settles near 8% from k = 8 upwards, while the from-scratch model never leaves the mean-field plateau (about 100%) at any k. The budget control addresses the objection that it only needed more steps: with the full pretraining budget on the target frames the from-scratch model still fails at k = 2, comes within about a percentage point at k = 8, and at k = 128 is at least as good as the 300-step fine-tuned model. This MAPA-inspired teaching comparison on a wake shows that, for these two pipelines, the benefit of pretraining is concentrated in the low-label regime, and with enough labels and compute the unlabelled trajectories add nothing on this data.
 
 **The classical method wins.** Gappy POD with the transferred basis and zero labels is already an order of magnitude more accurate than the fine-tuned network, and the pooled basis improves with every labelled frame down to a fraction of a percent. The wake at Re = 90 to 110 is periodic and low-rank: 64 modes fitted on the other Reynolds numbers span the target field almost exactly, and 624 visible pixels overdetermine the coefficients. A transformer with 90 thousand weights and 562 training frames cannot beat a subspace that is nearly the truth. The target-only basis, by contrast, is poor for k below 8 because a rank of k - 1 cannot represent the wake, and from k = 64 it is the most accurate method of all: labels are worth more to POD than to the network on this data.
 

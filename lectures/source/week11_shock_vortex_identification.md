@@ -106,6 +106,11 @@ These wakes contain vortices but no shocks. The comparison cannot establish shoc
 
 Run notebooks/week11/W11_Lab2_Reconstruction_and_Identification.ipynb to audit the retained comparison and view loss histories. Its optional retraining cell runs all six fits into a fresh scratch directory, never into retained results. The synthetic warm-up and the separate research-image gallery remain available and retain their original evidence limitations.
 
+Lab 2 execution modes: the default is retained-evidence audit with no new optimizer
+steps. Optional small training uses seed 11, 30 epochs, learning rate 0.003, batch
+8 and every twelfth frame. The retained full protocol uses seeds 17/29/43, 60
+epochs, learning rate 0.001 and batch 32; the small run does not reproduce that table.
+
 ## Read the retained reconstruction comparison
 
 [RECONSTRUCTION_TABLE]

@@ -358,10 +358,14 @@ for row, height in enumerate(STEP_HEIGHT_HELD_OUT_PERCENT):
     prediction = predict_case(final_zonal, height, case)
     panels = [case["u"], prediction[:, 0], np.abs(prediction[:, 0] - case["u"])]
     titles = ["DSMC target U", "independent prediction U", "absolute U error"]
+    shared_min = min(np.min(panels[0]), np.min(panels[1]))
+    shared_max = max(np.max(panels[0]), np.max(panels[1]))
     for axis, values, title in zip(axes[row], panels, titles):
         gx, gy, field = on_parent_grid(case, values)
         artist = axis.pcolormesh(gx * 1e9, gy * 1e9, np.ma.masked_invalid(field),
-                                 shading="nearest", cmap="coolwarm" if "error" not in title else "magma")
+                                 shading="nearest", cmap="coolwarm" if "error" not in title else "magma",
+                                 vmin=0 if "error" in title else shared_min,
+                                 vmax=max(float(np.max(panels[2])), 1e-15) if "error" in title else shared_max)
         axis.set_title(f"H{int(height)} — {title}")
         axis.set(xlabel="x (nm)", ylabel="y (nm)")
         axis.set_aspect("equal", adjustable="box")
@@ -507,6 +511,9 @@ is high-rank in laboratory coordinates and low-rank in shock-centered coordinate
   from the public Tecplot DSMC files at pinned commit
   `e1b234ba499408d3b6224633972f939f3b2301d6` and remain CC BY 4.0.
 - The POD spectrum is directly reproducible from those data.
+- Field units follow the source manifest. Unverified density/pressure exports
+  retain source units; the inlet-pressure parameter in kPa is not proof of the
+  target-column units. Jump-normalized density below is explicitly dimensionless.
 - The notebook first predicts jump-normalized centerline density, then compares
   physical-coordinate and shock-aligned interpolation baselines for density,
   $U$, $V$, temperature, Mach, and pressure. Both use the same 12 development
@@ -534,8 +541,8 @@ from flowmllab.mahdavi_deeponet import (
     validate_week9_evidence,
 )
 
-warnings.filterwarnings("ignore", category=ConvergenceWarning)
-warnings.filterwarnings("ignore", category=DataConversionWarning)
+# Warnings are recorded per fit below; no process-wide suppression.
+fit_diagnostics = []
 report = validate_week9_evidence(REPO_ROOT)
 public_report = {
     "status": report["status"],
@@ -706,7 +713,17 @@ def fit_predict_pod_branch(matrix, train_indices, query_indices, rank):
     rank = min(rank, len(train_indices) - 1)
     coefficients = (train_matrix - mean) @ modes[:rank].T
     target = coefficients.ravel() if rank == 1 else coefficients
-    branch = make_branch().fit(pressure[train_indices, None], target)
+    branch = make_branch()
+    with warnings.catch_warnings(record=True) as caught:
+        warnings.simplefilter("always")
+        branch.fit(pressure[train_indices, None], target)
+    estimator = branch.steps[-1][1]
+    diagnostic = {"rank": rank, "query_pressure": pressure[query_indices].tolist(),
+                  "n_iter": int(estimator.n_iter_), "max_iter": estimator.max_iter,
+                  "warnings": "; ".join(str(item.message) for item in caught)}
+    fit_diagnostics.append(diagnostic)
+    if caught:
+        print("Fit warning:", diagnostic)
     predicted_coefficients = np.asarray(
         branch.predict(pressure[query_indices, None])
     ).reshape(len(query_indices), rank)
@@ -743,6 +760,8 @@ selected_rank = (
     .set_index("coordinate")["rank"].astype(int).to_dict()
 )
 print("selected ranks:", selected_rank)
+display(pd.DataFrame(fit_diagnostics))
+# A budget stop is not evidence of convergence; final held-out fits also append here.
 """),
         md(r"""
 ## Stop: held-out pressure gate
@@ -772,6 +791,7 @@ for coordinate in ("physical", "shock_centered"):
         })
 blind_metrics = pd.DataFrame(blind_rows)
 display(blind_metrics)
+display(pd.DataFrame(fit_diagnostics))  # includes selection and final held-out fits
 
 fig, axes = plt.subplots(1, 3, figsize=(13, 3.7), constrained_layout=True, sharey=True)
 for axis, local_index, case_index in zip(axes, range(3), held_out_indices):

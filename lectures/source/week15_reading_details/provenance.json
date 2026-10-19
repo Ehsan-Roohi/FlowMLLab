@@ -1,0 +1,218 @@
+[
+  {
+    "source": "results/week15_postaudit/core_g049_Re100.png",
+    "source_sha256": "4acf28fb4b79af751ad6c1a8baee2a61de0ba7b5aadf7fb1488cadd9bc6bc329",
+    "output": "lectures/source/week15_reading_details/core_g049_Re100_rows_1_3.png",
+    "bounds_pixels": [
+      420,
+      1605,
+      2800,
+      2910
+    ],
+    "transformation": "lossless pixel crop; original scientific colors and aspect ratio preserved"
+  },
+  {
+    "source": "results/week15_postaudit/core_g049_Re100.png",
+    "source_sha256": "4acf28fb4b79af751ad6c1a8baee2a61de0ba7b5aadf7fb1488cadd9bc6bc329",
+    "output": "lectures/source/week15_reading_details/core_g049_Re100_rows_4_7.png",
+    "bounds_pixels": [
+      420,
+      2910,
+      2800,
+      4665
+    ],
+    "transformation": "lossless pixel crop; original scientific colors and aspect ratio preserved"
+  },
+  {
+    "source": "results/week15_postaudit/core_g049_Re100.png",
+    "source_sha256": "4acf28fb4b79af751ad6c1a8baee2a61de0ba7b5aadf7fb1488cadd9bc6bc329",
+    "output": "lectures/source/week15_reading_details/core_g049_Re100_cfd_wake.png",
+    "bounds_pixels": [
+      440,
+      1605,
+      2180,
+      2050
+    ],
+    "transformation": "lossless pixel crop; original scientific colors and aspect ratio preserved"
+  },
+  {
+    "source": "results/week15_postaudit/core_g049_Re50.png",
+    "source_sha256": "c7f601801f84732eb3747dff33ceef2a8aede3869b96cbb4d9baab175c34bb66",
+    "output": "lectures/source/week15_reading_details/core_g049_Re50_rows_1_3.png",
+    "bounds_pixels": [
+      420,
+      1605,
+      2800,
+      2910
+    ],
+    "transformation": "lossless pixel crop; original scientific colors and aspect ratio preserved"
+  },
+  {
+    "source": "results/week15_postaudit/core_g049_Re50.png",
+    "source_sha256": "c7f601801f84732eb3747dff33ceef2a8aede3869b96cbb4d9baab175c34bb66",
+    "output": "lectures/source/week15_reading_details/core_g049_Re50_rows_4_7.png",
+    "bounds_pixels": [
+      420,
+      2910,
+      2800,
+      4665
+    ],
+    "transformation": "lossless pixel crop; original scientific colors and aspect ratio preserved"
+  },
+  {
+    "source": "results/week15_postaudit/core_g049_Re50.png",
+    "source_sha256": "c7f601801f84732eb3747dff33ceef2a8aede3869b96cbb4d9baab175c34bb66",
+    "output": "lectures/source/week15_reading_details/core_g049_Re50_cfd_wake.png",
+    "bounds_pixels": [
+      440,
+      1605,
+      2180,
+      2050
+    ],
+    "transformation": "lossless pixel crop; original scientific colors and aspect ratio preserved"
+  },
+  {
+    "source": "results/week15_postaudit/core_g051_Re25.png",
+    "source_sha256": "133cadd8048c9edcb110f44d545d5685af469477e36188c9f279736eac5f912a",
+    "output": "lectures/source/week15_reading_details/core_g051_Re25_rows_1_3.png",
+    "bounds_pixels": [
+      420,
+      1605,
+      2800,
+      2910
+    ],
+    "transformation": "lossless pixel crop; original scientific colors and aspect ratio preserved"
+  },
+  {
+    "source": "results/week15_postaudit/core_g051_Re25.png",
+    "source_sha256": "133cadd8048c9edcb110f44d545d5685af469477e36188c9f279736eac5f912a",
+    "output": "lectures/source/week15_reading_details/core_g051_Re25_rows_4_7.png",
+    "bounds_pixels": [
+      420,
+      2910,
+      2800,
+      4665
+    ],
+    "transformation": "lossless pixel crop; original scientific colors and aspect ratio preserved"
+  },
+  {
+    "source": "results/week15_postaudit/core_g051_Re25.png",
+    "source_sha256": "133cadd8048c9edcb110f44d545d5685af469477e36188c9f279736eac5f912a",
+    "output": "lectures/source/week15_reading_details/core_g051_Re25_cfd_wake.png",
+    "bounds_pixels": [
+      440,
+      1605,
+      2180,
+      2050
+    ],
+    "transformation": "lossless pixel crop; original scientific colors and aspect ratio preserved"
+  },
+  {
+    "source": "results/week15_postaudit/extended_g049_Re100.png",
+    "source_sha256": "3ab78c068d1958ad763cf9f1d24a6abddb4989e4b1dc6f18a46030c213be826d",
+    "output": "lectures/source/week15_reading_details/extended_g049_Re100_rows_1_3.png",
+    "bounds_pixels": [
+      420,
+      1605,
+      2800,
+      2910
+    ],
+    "transformation": "lossless pixel crop; original scientific colors and aspect ratio preserved"
+  },
+  {
+    "source": "results/week15_postaudit/extended_g049_Re100.png",
+    "source_sha256": "3ab78c068d1958ad763cf9f1d24a6abddb4989e4b1dc6f18a46030c213be826d",
+    "output": "lectures/source/week15_reading_details/extended_g049_Re100_rows_4_7.png",
+    "bounds_pixels": [
+      420,
+      2910,
+      2800,
+      4665
+    ],
+    "transformation": "lossless pixel crop; original scientific colors and aspect ratio preserved"
+  },
+  {
+    "source": "results/week15_postaudit/extended_g049_Re100.png",
+    "source_sha256": "3ab78c068d1958ad763cf9f1d24a6abddb4989e4b1dc6f18a46030c213be826d",
+    "output": "lectures/source/week15_reading_details/extended_g049_Re100_cfd_wake.png",
+    "bounds_pixels": [
+      440,
+      1605,
+      2180,
+      2050
+    ],
+    "transformation": "lossless pixel crop; original scientific colors and aspect ratio preserved"
+  },
+  {
+    "source": "results/week15_postaudit/extended_g049_Re50.png",
+    "source_sha256": "17873d467b6b3f50a7c8ea209bb89865f374e99e5d50024635fe2c48e814e239",
+    "output": "lectures/source/week15_reading_details/extended_g049_Re50_rows_1_3.png",
+    "bounds_pixels": [
+      420,
+      1605,
+      2800,
+      2910
+    ],
+    "transformation": "lossless pixel crop; original scientific colors and aspect ratio preserved"
+  },
+  {
+    "source": "results/week15_postaudit/extended_g049_Re50.png",
+    "source_sha256": "17873d467b6b3f50a7c8ea209bb89865f374e99e5d50024635fe2c48e814e239",
+    "output": "lectures/source/week15_reading_details/extended_g049_Re50_rows_4_7.png",
+    "bounds_pixels": [
+      420,
+      2910,
+      2800,
+      4665
+    ],
+    "transformation": "lossless pixel crop; original scientific colors and aspect ratio preserved"
+  },
+  {
+    "source": "results/week15_postaudit/extended_g049_Re50.png",
+    "source_sha256": "17873d467b6b3f50a7c8ea209bb89865f374e99e5d50024635fe2c48e814e239",
+    "output": "lectures/source/week15_reading_details/extended_g049_Re50_cfd_wake.png",
+    "bounds_pixels": [
+      440,
+      1605,
+      2180,
+      2050
+    ],
+    "transformation": "lossless pixel crop; original scientific colors and aspect ratio preserved"
+  },
+  {
+    "source": "results/week15_postaudit/extended_g051_Re25.png",
+    "source_sha256": "efcbaa8202140a0571b690efaf9984e7b53f1fc0845bcd9f6e92a65b3309792f",
+    "output": "lectures/source/week15_reading_details/extended_g051_Re25_rows_1_3.png",
+    "bounds_pixels": [
+      420,
+      1605,
+      2800,
+      2910
+    ],
+    "transformation": "lossless pixel crop; original scientific colors and aspect ratio preserved"
+  },
+  {
+    "source": "results/week15_postaudit/extended_g051_Re25.png",
+    "source_sha256": "efcbaa8202140a0571b690efaf9984e7b53f1fc0845bcd9f6e92a65b3309792f",
+    "output": "lectures/source/week15_reading_details/extended_g051_Re25_rows_4_7.png",
+    "bounds_pixels": [
+      420,
+      2910,
+      2800,
+      4665
+    ],
+    "transformation": "lossless pixel crop; original scientific colors and aspect ratio preserved"
+  },
+  {
+    "source": "results/week15_postaudit/extended_g051_Re25.png",
+    "source_sha256": "efcbaa8202140a0571b690efaf9984e7b53f1fc0845bcd9f6e92a65b3309792f",
+    "output": "lectures/source/week15_reading_details/extended_g051_Re25_cfd_wake.png",
+    "bounds_pixels": [
+      440,
+      1605,
+      2180,
+      2050
+    ],
+    "transformation": "lossless pixel crop; original scientific colors and aspect ratio preserved"
+  }
+]

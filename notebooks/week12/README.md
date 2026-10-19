@@ -9,7 +9,7 @@ reference is excluded from fitting and selection. Training takes about 14
 seconds on the tested machine; allow another 20-30 classroom minutes.
 
 Use a current complete checkout or the main-branch Colab link below.
-No new release or DOI has been created. The lecture now has 12 pages.
+No new release or DOI has been created. The lecture includes the synthetic controls and the retained research audit.
 
 [Fresh fit, all scores and failures](../../results/week12_noise2noise/README.md) ·
 [Source data and independence limits](../../data/week12_noise2noise/README.md).
@@ -43,3 +43,11 @@ recomputed scores and large common-scale contours. The notebook checks retained
 hashes and recomputes first-seed errors. This is archive re-evaluation, not new
 neural training or a newly blind trial. Full comparisons and profiles retain
 the prior-only and Raw(10) baselines alongside the conditioned estimator.
+
+Archive metadata boundary: qx/qy remain in stored archive units; array-index
+gradients and normalized display coordinates are not verified physical-space
+derivatives. The source records seed/block identities, but the course does not
+independently reconstruct RNG streams, simulation chronology or correlation
+time. Distinct files alone cannot prove independent particle sampling. A source
+unit conversion and block-lineage record are required before physical integral
+or variance-unbiasedness claims; these missing records cannot be invented.

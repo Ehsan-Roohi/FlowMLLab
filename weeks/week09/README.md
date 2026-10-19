@@ -73,3 +73,8 @@ This isolates the value of the pre-fit audit; it is not a DSMC accuracy claim.
 ---
 
 [Course home](../../README.md) · [All weeks](../README.md) · [← Week 8](../week08/README.md) · [Week 10 →](../week10/README.md)
+
+
+Lab 3 itself is a pre-fit data audit with no neural training. The headline
+6.72% to 1.63% comparison belongs to the separate retained two-MLP alignment
+study; the notebook now links its protocol and a fresh-output reproduction command.

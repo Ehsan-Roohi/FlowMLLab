@@ -36,7 +36,7 @@ jobs:
       - name: Paired augmentation evidence
         run: python qa/ablate_transformer_sensors.py --verify --criterion scientific --report ablation-ci.json
       - name: Twelve fresh notebook kernels
-        run: python qa/build_transformer_course.py --execute --output build/ci-course
+        run: python qa/build_transformer_course.py --execute --notebooks-only --output build/ci-course
       - uses: actions/upload-artifact@v4
         if: always()
         with:

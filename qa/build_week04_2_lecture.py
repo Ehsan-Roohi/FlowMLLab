@@ -114,12 +114,18 @@ def analytic_preflight():
 
 
 def build(outdir: Path):
+    if __package__:
+        from .lecture_typography import register_legacy_reportlab_aliases, configure_matplotlib, black_paragraph_styles
+    else:
+        from lecture_typography import register_legacy_reportlab_aliases, configure_matplotlib, black_paragraph_styles
+    register_legacy_reportlab_aliases()
+    configure_matplotlib()
     outdir.mkdir(parents=True, exist_ok=True)
     evidence = analytic_preflight()
     width = A4[0]-104
     styles = {
         'body':ParagraphStyle('body',fontName='Times-Roman',fontSize=10.8,leading=14.4,spaceAfter=7,alignment=4),
-        'title':ParagraphStyle('title',fontName='Times-Bold',fontSize=24,leading=28,spaceAfter=9,keepWithNext=True,textColor=colors.HexColor('#16354a')),
+        'title':ParagraphStyle('title',fontName='Times-Bold',fontSize=24,leading=28,spaceAfter=9,keepWithNext=True,textColor=colors.black),
         'subtitle':ParagraphStyle('subtitle',fontName='Times-Roman',fontSize=17,leading=21,spaceAfter=12,keepWithNext=True),
         'heading':ParagraphStyle('heading',fontName='Times-Bold',fontSize=13,leading=17,spaceBefore=12,spaceAfter=7,keepWithNext=True),
         'caption':ParagraphStyle('caption',fontName='Times-Roman',fontSize=9.5,leading=12,spaceAfter=9),
@@ -129,7 +135,7 @@ def build(outdir: Path):
     }
     def paragraph(t, style='body'):
         t = escape(t)
-        t = re.sub(r'(https://[^\s]+)',r'<link href="\1" color="#14648a">\1</link>',t)
+        t = re.sub(r'(https://[^\s]+)',r'<link href="\1" color="#000000">\1</link>',t)
         return Paragraph(t, styles[style])
     plt.rcParams.update({'font.family':'DejaVu Serif','font.size':10,'axes.spines.top':False,'axes.spines.right':False})
     def raster(fig, maxw=width, maxh=235):
@@ -200,6 +206,7 @@ def build(outdir: Path):
         return KeepTogether([raster(fig),Spacer(1,5),paragraph(cap,'caption')])
     story=[]; number=0; in_references=False
     for block in (ROOT/'lectures/source'/f'{NAME}.md').read_text(encoding='utf-8').strip().split('\n\n'):
+        block=block.strip()
         if block.startswith('@equation '):
             number+=1; story.append(equation(block.split()[1],number))
         elif block.startswith('@figure '): story.append(figure(block.split()[1]))

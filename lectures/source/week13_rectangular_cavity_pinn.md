@@ -12,11 +12,11 @@ Week 13 builds on the verified Re=100 square-cavity pilot in Week 4.2 and on Chr
 
 ### Primary retained example: Re=1000, D/W=2.2
 
-The updated notebook begins with the supplied deep-cavity field exported from restart-55118.ckpt on a 301 by 661 physical grid. It checks hashes, geometry, finite values, stationary-wall velocity, integrated streamfunction and finite-difference vorticity before plotting. The short CPU PINN later in the notebook teaches the algorithm; it does not reproduce this author-model checkpoint. The older four-case matrix below remains a secondary feasibility audit.
+The updated notebook begins with a small CPU PINN, including an analytic derivative preflight, and then inspects the supplied deep-cavity field exported from restart-55118.ckpt on a 301 by 661 physical grid. It checks hashes, geometry, finite values, stationary-wall velocity, integrated streamfunction and finite-difference vorticity before plotting. The short CPU PINN at the start of the notebook teaches the algorithm; it does not reproduce this author-model checkpoint. The older four-case matrix below remains a secondary feasibility audit.
 
 @figure deep_fields
 
-Pressure is shown after removal of its physical-area-weighted mean. Pressure and vorticity use explicitly labelled symmetric-log scales without percentile clipping. Stationary-wall speeds vanish in the export. The full-grid finite-difference divergence maximum is about 4.33; sharp boundary variations can amplify finite-difference error even for a streamfunction model. This is not an autodifferentiated momentum audit and is not sufficient evidence of convergence. Matching raw CFD fields and model weights are not included in this export, so no new CFD error or final-convergence claim is made.
+Pressure is shown after removal of its physical-area-weighted mean. Pressure and vorticity use explicitly labelled symmetric-log scales without percentile clipping. Stationary-wall speeds vanish in the export. The full-grid finite-difference divergence maximum is about 4.33; sharp boundary variations can amplify finite-difference error even for a streamfunction model. This is not an autodifferentiated momentum audit and is not sufficient evidence of convergence. The notebook also reads the retained Nektar++ t=120 comparison with checkpoint 55118: about 3.59% interior velocity error under near-matched conditions. This is an approximate comparison, not an exactly matched lid or continuum-converged reference; it does not establish final convergence.
 
 @figure deep_streamfunction
 
@@ -24,7 +24,7 @@ The recovered Unity training/data/loss.dat contains a later continuation history
 
 @figure deep_loss
 
-Exercise: explain why these small training residuals cannot by themselves validate the earlier field. Identify the missing matched-checkpoint residual and CFD evidence, then compare the full-grid and corner-excluded finite-difference diagnostics printed by the notebook. Distinguish observation, numerical consistency and physical validation in the conclusion.
+Exercise: explain why these small training residuals cannot by themselves validate the earlier field. Identify the missing matched-checkpoint residual and exactly matched, converged CFD evidence, then compare the full-grid and corner-excluded finite-difference diagnostics printed by the notebook. Distinguish observation, numerical consistency and physical validation in the conclusion.
 
 ### Geometry and governing equations
 
@@ -160,7 +160,7 @@ Negative outcomes remain publishable when the design isolates a mechanism. A bro
 
 ### 13. Research notebook workflow
 
-The companion notebook is an audit notebook, not an interactive replacement for the GPU runner. It verifies hashes and metadata, loads retained JSON and loss histories, redraws convergence curves, assembles the case table, checks frozen gates and displays geometrically faithful fields. It never modifies the retained results directory.
+After the bounded CPU teaching section, the retained-evidence section is an audit of completed research runs. It verifies hashes and metadata, loads retained JSON and loss histories, redraws convergence curves, assembles the case table, checks frozen gates and displays geometrically faithful fields. It never modifies the retained results directory.
 
 Students first identify which claims are available for each case. They then compare the Adam endpoint with the final quasi-Newton endpoint, inspect whether held-out and corner residuals follow the training objective, and decide whether each square case passes the frozen CFD gates. For deep cases they record topology observations as hypotheses until matched raw references exist.
 
@@ -187,3 +187,17 @@ The Week 13 pilot is intentionally modest. It demonstrates a restartable multi-g
 [6] M. Raissi, P. Perdikaris, and G. E. Karniadakis, Physics-informed neural networks: A deep learning framework for solving forward and inverse problems involving nonlinear partial differential equations, Journal of Computational Physics 378 (2019), 686–707. https://doi.org/10.1016/j.jcp.2018.10.045 .
 
 The FlowMLLab figures are generated from the retained Unity artifacts of the exact public code commit recorded in each audit. Local cavity files supplied by the instructor were used to locate provenance and design checks; unpublished files and private correspondence are not redistributed. The JCS comparison above is based on the published article, not on an inferred description from email.
+
+
+### Worked verification and case ledger
+
+Before any optimizer update, the notebook differentiates exact Kovasznay flow at Re=40 using y=D eta. Its analytic velocity derivatives and momentum residual vanish to float64 tolerance at D=1 and D=2.2; deliberately omitting the metric fails only the nonsquare case. Random untrained cavity weights must satisfy all walls at both depths. These are code-verification gates, not cavity validation. The network/lifting, preflight, sampler, Adam and fixed-objective L-BFGS occupy separate cells. Optional Adam resampling recomputes the corner mask and resets best-state comparison for the new point set. Never resample inside a line-search closure.
+
+| Evidence | Re | D | Identity | Interpretation |
+|---|---:|---:|---|---|
+| Earlier square qualification | 100 | 1 | Week 4.2 qualified-validation archive | About 3.10%; separate run |
+| Four-case matrix square case | 100 | 1 | Week 13 A100 matrix | About 3.34%; not the earlier qualification |
+| Deep retained field | 1000 | 2.2 | restart-55118 versus Nektar++ t=120 | About 3.59%; near-matched lid/reference only |
+| Later continuation history | 1000 | 2.2 | restart-65711, 74 logged rows | Training residual history, not matched to field 55118 |
+
+Residuals test equation consistency on the sampled support. Velocity comparison tests agreement with its stated reference. Neither alone establishes a continuum solution or the physically realized branch. Students must preserve checkpoint identity, lid smoothing, grid/support and pressure gauge when comparing rows.

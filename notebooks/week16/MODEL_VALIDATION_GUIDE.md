@@ -156,3 +156,7 @@ Discuss these questions in the submitted report:
 5. What additional calculations would justify a ground-noise claim?
 
 For the motivating full-aircraft study, cite Zheng et al., *Aerospace Science and Technology* 178 (2026), 113218, [doi:10.1016/j.ast.2026.113218](https://doi.org/10.1016/j.ast.2026.113218). This teaching geometry and its learned model do not reproduce that aircraft. Consult the [NASA Sonic Boom Prediction Workshop](https://lbpw.larc.nasa.gov/) for the benchmark's original geometry, conditions and data, and the repository's reference documentation for the exact files used.
+
+
+## Current classroom verification
+The notebook now hashes the actual clean dataset and portable checkpoint against the retained identities before use. Reading a historical `passed` field remains a report inspection, not a new check. Section 10 loads `FrozenSurrogate`, performs NumPy-only inference on every preserved split, and recomputes metrics before comparing with the retained report. The separate current classroom tests also reject tampered temporary copies. These checks neither rerun CFD nor turn the retrospective finer-reference study into a new blind evaluation. The notebook also executes the Taylor–Maccoll ODE/root solve, includes a fixed-kernel 24-case POD-GP baseline, and checks volume using Gauss–Legendre quadrature independent of the normalization grid.

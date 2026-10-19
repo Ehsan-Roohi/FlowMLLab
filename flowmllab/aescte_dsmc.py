@@ -22,6 +22,8 @@ CAVITY_KNUDSEN = np.array([0.001, 0.01, 0.05, 0.1, 0.5, 1.0, 10.0])
 CAVITY_TRAIN_KNUDSEN = np.array([0.001, 0.01, 0.1, 1.0, 10.0])
 CAVITY_TEST_KNUDSEN = np.array([0.05, 0.5])
 CAVITY_LID_SPEEDS_MS = np.array([10.0, 30.0])
+SHOCK_RELATIVE_L2_GATE_PERCENT = 1.5
+
 DIATOMIC_MACH = np.array([1.4, 1.5, 1.6, 1.7, 1.8, 1.9])
 MONATOMIC_MACH = np.array([1.4, 1.5, 1.6, 1.7, 1.8, 1.9, 2.0])
 CAVITY_COLUMNS = (
@@ -301,10 +303,32 @@ def validate_aescte_evidence(root: str | Path) -> dict[str, object]:
         raise ValueError("Week-10 result gates did not pass")
     if summary["cavity_primary_max_nrmse_percent"] >= 2.0:
         raise ValueError("Week-10 cavity gate failed")
-    if summary["shock_max_relative_l2_percent"] >= 1.5:
+    if summary["shock_max_relative_l2_percent"] >= SHOCK_RELATIVE_L2_GATE_PERCENT:
         raise ValueError("Week-10 shock gate failed")
     return {
         **summary,
         "raw_source_file_count": len(manifest["source_file_sha256"]),
         "article_doi": ARTICLE_DOI,
     }
+
+
+def linear_profile_prediction(parameters, profiles, query):
+    """Two-neighbor linear profile interpolation, or nearest-pair extrapolation.
+
+    The caller supplies training cases only. This baseline does not fit POD,
+    normalize against the test target, or search hyperparameters.
+    """
+    parameters = np.asarray(parameters, dtype=float)
+    profiles = np.asarray(profiles, dtype=float)
+    if parameters.ndim != 1 or len(parameters) < 2 or profiles.shape[0] != len(parameters):
+        raise ValueError("at least two parameters and matching profiles required")
+    order = np.argsort(parameters)
+    p, q = parameters[order], profiles[order]
+    if not np.isfinite(p).all() or np.any(np.diff(p) <= 0):
+        raise ValueError("parameters must be finite and distinct")
+    if not np.isfinite(query):
+        raise ValueError("query must be finite")
+    right = int(np.clip(np.searchsorted(p, query), 1, len(p)-1))
+    left = right-1
+    weight = (query-p[left])/(p[right]-p[left])
+    return (1-weight)*q[left]+weight*q[right]

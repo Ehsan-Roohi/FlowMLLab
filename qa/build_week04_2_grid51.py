@@ -231,17 +231,21 @@ display(pd.read_csv(R/'vortex_metrics.csv'))"""),
                           "language_info": {"name":"python"}})
     NB.parent.mkdir(parents=True, exist_ok=True)
     nbf.write(book, NB)
+    from qa.notebook_review_updates import review_notebook_file
+    review_notebook_file(NB)
 
 
 def pdf(compare: pd.DataFrame, shifts: pd.DataFrame) -> None:
+    from qa.lecture_typography import register_legacy_reportlab_aliases
+    register_legacy_reportlab_aliases()
     c = canvas.Canvas(str(PDF), pagesize=A4)
     w, h = A4
     c.setTitle("FlowMLLab Week 4.2 - 51 x 51 Grid Validation")
     def title(text: str, page: int):
-        c.setFont("Helvetica-Bold", 16); c.drawString(17*mm, h-22*mm, text)
-        c.setFont("Helvetica", 8); c.drawRightString(w-17*mm, h-22*mm, f"Week 4.2 | {page}/3")
+        c.setFont("TNRB", 16); c.drawString(17*mm, h-22*mm, text)
+        c.setFont("TNR", 8); c.drawRightString(w-17*mm, h-22*mm, f"Week 4.2 | {page}/3")
     title("51 x 51 numerical refinement", 1)
-    c.setFont("Helvetica", 10)
+    c.setFont("TNR", 10)
     lines = ["Matched Stokes fields and Navier-Stokes labels were solved again on 51 x 51 nodes.",
              "The retained case manifest is unchanged; tests are regression cases, not fresh blind data.",
              "The selected POD-MLP architecture was retrained from scratch at 51 x 51."]
@@ -249,15 +253,15 @@ def pdf(compare: pd.DataFrame, shifts: pd.DataFrame) -> None:
     c.drawImage(str(F/"Cavity_grid25_grid51_errors.png"), 18*mm, h-156*mm,
                 width=w-36*mm, height=89*mm, preserveAspectRatio=True, anchor="c")
     y = h-169*mm
-    c.setFont("Helvetica-Bold", 9)
+    c.setFont("TNRB", 9)
     c.drawString(18*mm,y,"Train -> test"); c.drawString(80*mm,y,"25 x 25"); c.drawString(119*mm,y,"51 x 51")
-    c.setFont("Helvetica", 9)
+    c.setFont("TNR", 9)
     for j, row in enumerate(compare.itertuples()):
         yy=y-(j+1)*7*mm
         c.drawString(18*mm,yy,f"{row.train} -> {row.test}")
         c.drawString(80*mm,yy,f"{row.error_25_percent:.3f}%")
         c.drawString(119*mm,yy,f"{row.error_51_percent:.3f}%")
-    c.setFont("Helvetica", 8)
+    c.setFont("TNR", 8)
     c.drawString(17*mm, 20*mm, "Errors compare models with separate numerical labels on each grid.")
     c.showPage()
     for page, family in ((2,"constant"),(3,"diverse")):
@@ -266,11 +270,13 @@ def pdf(compare: pd.DataFrame, shifts: pd.DataFrame) -> None:
                     12*mm, 108*mm, width=w-24*mm, height=130*mm,
                     preserveAspectRatio=True, anchor="c")
         group = shifts[shifts.family == family]
-        c.setFont("Helvetica", 8.5)
+        c.setFont("TNR", 8.5)
         c.drawString(17*mm, 91*mm,
                      f"Mean CFD 25-to-51 velocity change at coarse nodes: {100*group.velocity_grid_shift_rel_l2.mean():.2f}%")
         c.drawString(17*mm, 82*mm, "Vortex positions are measured on 51-node arrays; display contours do not add resolution.")
         c.drawString(17*mm, 73*mm, "One refinement step does not establish mesh-independent vortex capture.")
+        c.drawString(17*mm, 64*mm, "Inter-grid differences are not estimates of either grid's true error without further assumptions.")
+        c.drawString(17*mm, 55*mm, "Small same-grid surrogate error establishes label fidelity, not independent physical accuracy.")
         c.showPage()
     c.save()
 

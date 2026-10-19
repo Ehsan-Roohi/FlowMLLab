@@ -28,9 +28,14 @@ def main() -> int:
     parser.add_argument("--quick", action="store_true")
     args = parser.parse_args()
     if args.output is None:
-        args.output = (Path(tempfile.mkdtemp(prefix="flowmllab-week74-quick-")) if args.quick
-                       else ROOT / "results/week07_4_diverse_pretraining")
+        args.output = Path(tempfile.mkdtemp(prefix="flowmllab-week74-"))
+    retained = (ROOT / "results/week07_4_diverse_pretraining").resolve()
+    if args.output.resolve() == retained or retained in args.output.resolve().parents:
+        parser.error("Use a fresh --output directory; retained course evidence is read-only.")
+    if args.output.exists() and any(args.output.iterdir()):
+        parser.error("--output must be empty or absent to preserve previous runs.")
     args.output.mkdir(parents=True, exist_ok=True)
+    print(f"Fresh output directory: {args.output}")
     torch.set_num_threads(min(2, __import__("os").cpu_count() or 1))
     manifest = dw.load_manifest(args.data); split = manifest["split_contract"]
     for case in manifest['cases']:

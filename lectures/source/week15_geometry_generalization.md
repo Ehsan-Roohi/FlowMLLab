@@ -664,13 +664,40 @@ These figures answer the original teaching question with seven flow rows: CFD, t
 
 ![Core comparison at Re=25](../../results/week15_postaudit/core_g051_Re25.png)
 
+[Open the full-resolution original, including the shared speed color scale](../../results/week15_postaudit/core_g051_Re25.png). The following enlarged panels retain the original axes, speed colors and streamline coordinates. They remove the repeated training-geometry strip only; they are lossless display crops, not new predictions. Read the common color scale in the complete figure above; any legend segment visible in a detail is a crop of that same scale, not a rescaled colorbar.
+
+![Enlarged CFD and first two comparison rows](week15_reading_details/core_g051_Re25_rows_1_3.png){width=100%}
+
+![Enlarged remaining four comparison rows](week15_reading_details/core_g051_Re25_rows_4_7.png){width=100%}
+
+![CFD wake detail: inspect the two recirculation regions before judging the surrogate](week15_reading_details/core_g051_Re25_cfd_wake.png){width=100%}
+
+
 ### Re=50
 
 ![Core comparison at Re=50](../../results/week15_postaudit/core_g049_Re50.png)
 
+[Open the full-resolution original, including the shared speed color scale](../../results/week15_postaudit/core_g049_Re50.png). The following enlarged panels retain the original axes, speed colors and streamline coordinates. They remove the repeated training-geometry strip only; they are lossless display crops, not new predictions. Read the common color scale in the complete figure above; any legend segment visible in a detail is a crop of that same scale, not a rescaled colorbar.
+
+![Enlarged CFD and first two comparison rows](week15_reading_details/core_g049_Re50_rows_1_3.png){width=100%}
+
+![Enlarged remaining four comparison rows](week15_reading_details/core_g049_Re50_rows_4_7.png){width=100%}
+
+![CFD wake detail: inspect the two recirculation regions before judging the surrogate](week15_reading_details/core_g049_Re50_cfd_wake.png){width=100%}
+
+
 ### Re=100
 
 ![Core comparison at Re=100](../../results/week15_postaudit/core_g049_Re100.png)
+
+[Open the full-resolution original, including the shared speed color scale](../../results/week15_postaudit/core_g049_Re100.png). The following enlarged panels retain the original axes, speed colors and streamline coordinates. They remove the repeated training-geometry strip only; they are lossless display crops, not new predictions. Read the common color scale in the complete figure above; any legend segment visible in a detail is a crop of that same scale, not a rescaled colorbar.
+
+![Enlarged CFD and first two comparison rows](week15_reading_details/core_g049_Re100_rows_1_3.png){width=100%}
+
+![Enlarged remaining four comparison rows](week15_reading_details/core_g049_Re100_rows_4_7.png){width=100%}
+
+![CFD wake detail: inspect the two recirculation regions before judging the surrogate](week15_reading_details/core_g049_Re100_cfd_wake.png){width=100%}
+
 
 ---
 
@@ -682,13 +709,57 @@ These pages keep CFD and the three tuned models, then add GeoTransolver and the 
 
 ![Extended comparison at Re=25](../../results/week15_postaudit/extended_g051_Re25.png)
 
+[Open the full-resolution original, including the shared speed color scale](../../results/week15_postaudit/extended_g051_Re25.png). The following enlarged panels retain the original axes, speed colors and streamline coordinates. They remove the repeated training-geometry strip only; they are lossless display crops, not new predictions. Read the common color scale in the complete figure above; any legend segment visible in a detail is a crop of that same scale, not a rescaled colorbar.
+
+![Enlarged CFD and first two comparison rows](week15_reading_details/extended_g051_Re25_rows_1_3.png){width=100%}
+
+![Enlarged remaining four comparison rows](week15_reading_details/extended_g051_Re25_rows_4_7.png){width=100%}
+
+![CFD wake detail: inspect the two recirculation regions before judging the surrogate](week15_reading_details/extended_g051_Re25_cfd_wake.png){width=100%}
+
+
 ### Re=50
 
 ![Extended comparison at Re=50](../../results/week15_postaudit/extended_g049_Re50.png)
 
+[Open the full-resolution original, including the shared speed color scale](../../results/week15_postaudit/extended_g049_Re50.png). The following enlarged panels retain the original axes, speed colors and streamline coordinates. They remove the repeated training-geometry strip only; they are lossless display crops, not new predictions. Read the common color scale in the complete figure above; any legend segment visible in a detail is a crop of that same scale, not a rescaled colorbar.
+
+![Enlarged CFD and first two comparison rows](week15_reading_details/extended_g049_Re50_rows_1_3.png){width=100%}
+
+![Enlarged remaining four comparison rows](week15_reading_details/extended_g049_Re50_rows_4_7.png){width=100%}
+
+![CFD wake detail: inspect the two recirculation regions before judging the surrogate](week15_reading_details/extended_g049_Re50_cfd_wake.png){width=100%}
+
+
 ### Re=100
 
 ![Extended comparison at Re=100](../../results/week15_postaudit/extended_g049_Re100.png)
+
+[Open the full-resolution original, including the shared speed color scale](../../results/week15_postaudit/extended_g049_Re100.png). The following enlarged panels retain the original axes, speed colors and streamline coordinates. They remove the repeated training-geometry strip only; they are lossless display crops, not new predictions. Read the common color scale in the complete figure above; any legend segment visible in a detail is a crop of that same scale, not a rescaled colorbar.
+
+![Enlarged CFD and first two comparison rows](week15_reading_details/extended_g049_Re100_rows_1_3.png){width=100%}
+
+![Enlarged remaining four comparison rows](week15_reading_details/extended_g049_Re100_rows_4_7.png){width=100%}
+
+![CFD wake detail: inspect the two recirculation regions before judging the surrogate](week15_reading_details/extended_g049_Re100_cfd_wake.png){width=100%}
+
+\clearpage
+
+### Searchable companion labels: g049 at Re=100
+
+The retained image's colorbar covers the final digits of two row titles. This table supplies the complete values from the frozen matched-budget archive. It describes the **three matched-budget LAST rows** (GeoTransolver, PhysicsX-inspired proxy and LIFT wall-feature proxy), each after 19,200 updates. The separate LR-tuned DoMINO row uses BEST selection and is not included in this LAST-only table.
+
+Velocity is joint velocity relative L2 error in **percent**. Reverse IoU is **dimensionless**, using the retained u < -0.01 threshold, four-connected components and eight-cell minimum. The three-seed columns are arithmetic means for this single g049/Re100 case over seeds 17, 29 and 43. They are not global averages across the 19 test cases.
+
+| Model | Seed 17 velocity [%] | Seed 17 IoU | Three-seed velocity [%] | Three-seed IoU |
+|---|---:|---:|---:|---:|
+| GeoTransolver | 33.331576 | 0.514892 | 29.911439 | 0.549677 |
+| PhysicsX-inspired proxy | 71.538470 | 0.335762 | 51.057805 | 0.482238 |
+| LIFT wall-feature proxy | 58.282590 | 0.472753 | 48.236359 | 0.515783 |
+
+Source: `report/all_case_metrics.csv` inside `FlowMLLab_Week15_Matched_Budget.zip`, from the [frozen Zenodo record](https://doi.org/10.5281/zenodo.22840293). The complete ZIP matches the repository's release SHA-256; the CSV matches the archive manifest. [The label ledger](week15_reading_details/g049_Re100_label_ledger.json) retains the exact per-seed rows, means and both hashes. This is a read-only recovery of existing labels, not a new field audit or training result. The original figure is preserved unchanged.
+
+
 
 ---
 
@@ -927,3 +998,8 @@ Students should submit:
 - family-holdout package: preserved unsuccessful transfer-selection experiment.
 
 The lecture and notebook are new versioned artifacts. Original Week 15 files and runs remain unchanged.
+
+
+## Self-contained classroom route
+
+Allow 60–90 minutes for the complete notebook's manufactured two-step geometry/SDF example, explicit branch–trunk contraction, Fourier mode filter, and query-set-dependence counterexample, followed by the local retained tables and figures. These small arrays teach the operators; they are not new CFD or new evidence of generalization. An optional extension loads the full external LR archive and reconstructs all 342 prediction fields. Missing archive cells report SKIPPED and do not interrupt the core or count as passed checks. For the worked contraction, [1,0.2,0.5] dotted with [1,0.8,0.3] gives 1.31. Explain why this pointwise output is invariant to adding unrelated queries, and why a query-mean-normalized trunk need not be.

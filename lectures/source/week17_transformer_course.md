@@ -68,19 +68,19 @@ Next week changes the token axis from a spatial observation set to an ordered se
 
 Implement row-stable scaled dot-product attention without calling lab.attention. Explain the square-root scaling.
 
-Interface contract: Inputs are floating Torch tensors q,k:[N,d], v:[N,d_v] with matching N. Return a [N,d_v] tensor; normalize over keys.
+Interface contract: Inputs are floating Torch tensors q,k:[...,N,d], v:[...,N,d_v] with identical optional batch axes and matching N (2-D or 3-D). Return a [...,N,d_v] tensor; normalize over keys.
 
 ### Task 2: Permutation experiment
 
 Write a function returning the largest equivariance error after consistently permuting all sensor tokens.
 
-Interface contract: Inputs q,k,v have the Task 1 shapes. order is a length-N Torch permutation. attention_fn is an explicit callable returning the attended tensor, not a weights/output tuple. Return a Python float: maximum absolute equivariance discrepancy. Do not consult a global attention function.
+Interface contract: Inputs q,k:[N,d], v:[N,d_v] are the unbatched (2-D) Task 1 shapes. order is a length-N Torch permutation. attention_fn is an explicit callable returning the attended tensor, not a weights/output tuple. Return a Python float: maximum absolute equivariance discrepancy. Do not consult a global attention function.
 
 ### Task 3: Temperature limit
 
 Implement temperature-scaled weights; verify that large temperature moves them toward uniform weights.
 
-Interface contract: Return a [N,N] Torch tensor for q,k:[N,d]. Divide scaled scores by the finite temperature; nonpositive temperature must raise ValueError.
+Interface contract: Return a [...,N,N] Torch tensor for q,k:[...,N,d] with identical optional batch axes (2-D or 3-D). Divide scaled scores by the finite temperature; nonfinite or nonpositive temperature must raise ValueError.
 
 ### Task 4: Build an attention investigation
 
@@ -88,8 +88,20 @@ Implement attention over several temperatures and optional key masks. Return wei
 
 Interface contract: Inputs q:[Nq,d], k:[Nk,d], v:[Nk,d_v] are 2-D floating Torch tensors. temperatures is a nonempty sequence of positive scalars. mask is None or a Boolean tensor broadcastable to [Nq,Nk]: True ALLOWS a key (the opposite of torch MultiheadAttention blocking-mask semantics). Invalid tensor dimensions, mismatched widths/counts, nonpositive temperature or a query with no allowed key must raise ValueError. Return a list in temperature order of dictionaries with keys temperature (float), weights ([Nq,Nk] tensor), output ([Nq,d_v] tensor), entropy (float, mean over queries of natural-log entropy).
 
-For the integrated fourth task, compare at least two controlled settings and explain a result that the implementation alone cannot justify. Include the requested plot or table and retain unsuccessful outcomes.
-
 ## Before submitting
 
 Restart the kernel and run the worked examples and completed tasks. Confirm that all four coding checks pass and that no retained data or results file changed. Include the requested interpretation, identify every quantity fitted from training data, and separate test observations from decisions made using validation. Record unresolved budget or representation limits rather than removing inconvenient runs.
+
+
+## Assessment and worked interpretation
+
+Coding: Tasks 1–3 carry 5 points each; the integrated Task 4 carries 25. Derivation (25): derive row normalization and square-root scaling. Interpretation (25): give evidence and limitations. Reproducibility (10): identify inputs, split, checkpoint, environment and every failed seed. Total 100. Passing function checks earns only the coding allocation.
+
+Worked full-credit reasoning: Attention weights depend on content but do not identify causal influence. Equal values make output invariant even when weights change.
+
+Misconception to reject: “The bright head proves this sensor causes shedding.” Explain the failure in one equation or counterexample. An observation without protocol and limitation earns at most half of interpretation credit. Instructor judgment and a timed student pilot remain necessary.
+
+Task 1 and Task 3 accept both [N,d] and [B,N,d] Q/K tensors; values may have a distinct width d_v. Task 2 and Task 4 explicitly use unbatched tensors. Notebook checks cover both declared modes. The trained-head demonstration reads the saved Sensor-set checkpoint (seed 17) at Re=110 frames 80, 120, 160, with width 24 and four width-6 heads.
+
+
+Timing estimate: a 120-minute guided lab and roughly 3–5 hours including preparation and written analysis. This is an editorial estimate; a timed student pilot remains open.

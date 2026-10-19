@@ -94,8 +94,23 @@ For records with key (target, labels, seed), pair pretrained and matched-steps a
 
 Interface contract: Each input dictionary has target, labels (integer total target labels), seed, arm, error (in-subspace relative L2), selected_step, ceiling. Pair pretrained with matched-steps per (target,labels,seed), rejecting duplicates/missing arms or nonpositive control error with ValueError. Return a list sorted by group key of dictionaries: key (tuple), gain (1-pretrained_error/control_error), control_untrained (control selected step==0), pretrained_selected_step, control_selected_step, pretrained_boundary and control_boundary (each arm selected step==its own ceiling). Keep negative gains.
 
-For the integrated fourth task, compare at least two controlled settings and explain a result that the implementation alone cannot justify. Include the requested plot or table and retain unsuccessful outcomes.
-
 ## Before submitting
 
 Restart the kernel and run the worked examples and completed tasks. Confirm that all four coding checks pass and that no retained data or results file changed. Include the requested interpretation, identify every quantity fitted from training data, and separate test observations from decisions made using validation. Record unresolved budget or representation limits rather than removing inconvenient runs.
+
+
+## Assessment and worked interpretation
+
+Coding: Tasks 1–3 carry 5 points each; the integrated Task 4 carries 25. Derivation (25): derive each target-label budget including initialization. Interpretation (25): give evidence and limitations. Reproducibility (10): identify inputs, split, checkpoint, environment and every failed seed. Total 100. Passing function checks earns only the coding allocation.
+
+Worked full-credit reasoning: A pretrained step-zero selection uses source dynamics without target adaptation, although target validation selected it. Compare paired seeds and report negative gains with target and source floors.
+
+Misconception to reject: “Matched update caps prove equal compute and information.” Explain the failure in one equation or counterexample. An observation without protocol and limitation earns at most half of interpretation credit. Instructor judgment and a timed student pilot remain necessary.
+
+The notebook compares all three target Reynolds numbers with seed ranges, source-basis floors and label-dependent target-basis floors, plus recorded parameter counts, selected/executed updates and times. Update matching does not match FLOPs or source information.
+
+
+Interpretation (25 points): 10 for source-information accounting, including source-POD access by scratch and matched-steps controls even without source neural pretraining; 10 for separating optimizer updates from FLOPs, measured adaptation/pretraining time and amortization across targets; 5 for paired-seed signed gains, negative transfer and the retained-case scope.
+
+
+Timing estimate: a 120-minute guided lab and roughly 3–5 hours including preparation and written analysis. This is an editorial estimate; a timed student pilot remains open.

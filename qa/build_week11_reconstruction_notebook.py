@@ -73,7 +73,7 @@ if RETRAIN:
 Do not select a seed, frame or probability threshold using the retained test.
 ''')]
 cells[0].source += badge('notebooks/week11/W11_Lab2_Reconstruction_and_Identification.ipynb')
-cells[1].source = bootstrap('notebooks/week11') + cells[1].source
+cells[1].source = bootstrap('notebooks/week11').replace('[test]', '[test,reconstruction]') + cells[1].source
 for i,c in enumerate(cells): c.id=f'w11-reconstruction-{i:02d}'
 nb=nbf.v4.new_notebook(cells=cells,metadata={'kernelspec':{'display_name':'Python 3','language':'python','name':'python3'}})
 nbf.validate(nb)

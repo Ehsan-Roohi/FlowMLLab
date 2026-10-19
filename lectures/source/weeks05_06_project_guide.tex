@@ -1,8 +1,6 @@
 
 \documentclass[11pt]{article}
 \usepackage[letterpaper,margin=0.78in,headheight=15pt]{geometry}
-\usepackage[T1]{fontenc}
-\usepackage{lmodern}
 \usepackage{microtype}
 \usepackage{amsmath,amssymb,mathtools}
 \usepackage{booktabs,tabularx,longtable,array,multirow}
@@ -17,7 +15,6 @@
 \usepackage{tikz}
 \usetikzlibrary{arrows.meta,positioning,shapes.multipart,fit}
 \usepackage{pdflscape}
-\usepackage{siunitx}
 \usepackage{titlesec}
 \usepackage{parskip}
 
@@ -32,9 +29,9 @@
 \pagestyle{fancy}\fancyhf{}
 \lhead{MIE 690A - AI in Fluid Mechanics}\rhead{Weeks 5-6 Guided Final Project}\cfoot{\thepage}
 \setlist{itemsep=3pt,topsep=4pt,leftmargin=1.5em}
-\titleformat{\section}{\Large\bfseries\color{navy}}{\thesection}{0.6em}{}
-\titleformat{\subsection}{\large\bfseries\color{blue2}}{\thesubsection}{0.6em}{}
-\titleformat{\subsubsection}{\normalsize\bfseries\color{navy}}{\thesubsubsection}{0.6em}{}
+\titleformat{\section}{\Large\bfseries\color{black}}{\thesection}{0.6em}{}
+\titleformat{\subsection}{\large\bfseries\color{black}}{\thesubsection}{0.6em}{}
+\titleformat{\subsubsection}{\normalsize\bfseries\color{black}}{\thesubsubsection}{0.6em}{}
 \newcolumntype{Y}{>{\raggedright\arraybackslash}X}
 \newtcolorbox{summarybox}{colback=lightblue,colframe=blue2,title=Central message,fonttitle=\bfseries,breakable}
 \newtcolorbox{definitionbox}[1]{colback=white,colframe=blue2,title=#1,fonttitle=\bfseries,breakable}
@@ -46,22 +43,25 @@
 \newtcolorbox{codeguide}[1]{colback=graybg,colframe=navy,title=#1,fonttitle=\bfseries,breakable}
 \lstset{basicstyle=\ttfamily\small,frame=single,backgroundcolor=\color{graybg},
         breaklines=true,showstringspaces=false,columns=fullflexible,
-        keywordstyle=\color{blue2}\bfseries,commentstyle=\color{green!45!black},
-        stringstyle=\color{red!65!black},upquote=true}
+        keywordstyle=\color{black}\bfseries,commentstyle=\color{black},
+        stringstyle=\color{black},upquote=true}
 \urlstyle{tt}
 \newcommand{\file}[1]{\path{#1}}
 \newcommand{\variant}[1]{\textbf{#1}}
+
+\input{lectures/source/lecture_typography.tex}
+\tcbset{coltitle=black,colbacktitle=black!5}
 
 \begin{document}
 \begin{titlepage}
 \centering
 \vspace*{1.0cm}
-{\color{navy}\rule{\textwidth}{2pt}}\\[0.45cm]
+{\color{black}\rule{\textwidth}{2pt}}\\[0.45cm]
 {\Huge\bfseries Guided Final Projects in\\[0.15cm]AI for Fluid and Kinetic Flows\par}
 \vspace{0.35cm}
 {\Large Weeks 5-6 Project Guide and Notebook Map (Expanded self-study edition v1.4.2)\par}
 \vspace{0.45cm}
-{\color{navy}\rule{\textwidth}{2pt}}\\[0.9cm]
+{\color{black}\rule{\textwidth}{2pt}}\\[0.9cm]
 {\Large MIE 690A - AI in Fluid Mechanics\par}
 \vspace{0.2cm}
 {\large Summer 2026\par}
@@ -77,6 +77,22 @@ You are not being asked to invent an entire AI-CFD project from nothing. You wil
 \newpage
 
 \section{Executive Summary}
+\begin{warningbox}
+\textbf{Public-case assessment and an untouched final test.}
+The reusable cavity cases, especially $Re=175,275,375$, have already been displayed
+in earlier lessons. Their exclusion from fitting remains important, but does not
+make them unseen to a continuing student. In these notebooks they are public
+held-out regression tests. Historical tables labelled ``blind'' describe the
+original author protocol and do not establish a new blind student experiment.
+Record prior exposure, candidates, seeds, thresholds and source/data hashes
+before evaluation. An instructor-held new case family can support a new
+untouched assessment only after this record is frozen. Without such cases,
+report a reproducible public-case comparison and its limitations.
+The P0 setup uses a development $Re=250$ demonstration, temporarily omitted
+from its interpolation neighbors. Track 6A is the eleventh, instructor-assigned
+option and uses its own FP case manifest rather than cavity data for training.
+\end{warningbox}
+
 Week 4 taught a common workflow on the lid-driven cavity:
 \[
 \text{fixed CFD solver}\rightarrow\text{quality-checked fields}\rightarrow
@@ -396,7 +412,7 @@ Run \file{P0_Project_Setup.ipynb} and submit:
 \begin{itemize}
 \item \file{project_choice.json};
 \item the dataset audit;
-\item the Re=275 interpolation baseline table;
+\item the development Re=250 local interpolation demonstration table;
 \item the selected track notebook filename.
 \end{itemize}
 
@@ -436,7 +452,18 @@ project_folder/
 \end{lstlisting}
 Track 5 additionally requires \file{mini_dsmc.py}. Track 6 uses the supplied \file{Track6_FP_Cavity} files and should be unpacked as one flat folder on a GPU runtime. Do not upload unrelated Colab sample datasets such as MNIST or California Housing.
 
-To reduce Windows path-length problems and Colab upload friction, the instructor also provides one \textbf{flat ZIP} for setup and one for each track: \file{P0_Setup_v1_4_2.zip}, \file{Track1_Re_v1_4_2.zip}, \file{Track2_Physics_v1_4_2.zip}, \file{Track3_POD_v1_4_2.zip}, \file{Track4_Uncertainty_v1_4_2.zip}, \file{Track5_Kinetic_v1_4_2.zip}, and \file{Track6_FP_Closure_v1_4_2.zip}. Each track ZIP includes the required notebook and helper/data files; the Track-6 ZIP contains the separate FP reference solver and wrappers rather than the Week-4 continuum dataset.
+To reduce Windows path-length problems and Colab upload friction, the instructor
+provides a flat ZIP for setup and each track:
+\begin{itemize}
+\item \file{P0_Setup_v1_4_2.zip}; \file{Track1_Re_v1_4_2.zip}.
+\item \file{Track2_Physics_v1_4_2.zip}; \file{Track3_POD_v1_4_2.zip}.
+\item \file{Track4_Uncertainty_v1_4_2.zip}; \file{Track5_Kinetic_v1_4_2.zip}.
+\item \file{Track6_FP_Closure_v1_4_2.zip}.
+\end{itemize}
+Each archive includes its notebook and required helpers/data. Track 6 contains
+the separate FP reference solver and wrappers rather than the Week-4 continuum
+dataset. For revised classroom source, use the current repository and verify the
+archive manifest before substituting a historical ZIP.
 
 \section{Common Numerical and Physical Evidence}
 Every track uses the same philosophy: one scalar score is not enough. The final claim should be supported by global numerical error, local profile evidence, and physical checks related to the chosen research question.
@@ -1083,7 +1110,7 @@ The cumulative energy captured by the first $r$ modes is
 A value such as $\eta_r=0.999$ means that the retained modes explain 99.9\% of the squared variation in the development snapshots. It does \emph{not} guarantee that the model preserves a weak corner vortex, a wall gradient, or a pressure feature. A small-amplitude feature may contribute little to total energy but still be physically important.
 
 \begin{warningbox}
-Do not select the rank from cumulative energy alone. The selected rank must also satisfy blind or validation field metrics and at least one structure-sensitive physical check.
+Do not select the rank from cumulative energy alone. The selected rank must also satisfy validation field metrics before selection is frozen; blind metrics are only a post-selection assessment and at least one structure-sensitive physical check.
 \end{warningbox}
 
 \subsection{Step 5: the branch model predicts coefficients}
@@ -1244,7 +1271,7 @@ Use a deliberately low rank and identify the first important feature that disapp
 \subsection{Optional Stretch Extensions (advanced / prize track)}
 Complete the required Track-3 study first. With instructor approval, choose at most one:
 \begin{enumerate}
-\item compare linear interpolation of POD coefficients in $Re$ with the neural branch under identical modes;
+\item extend the mandatory linear coefficient-interpolation baseline to another validation-selected interpolation rule;
 \item add a matched-storage benchmark against coarse-grid bilinear reconstruction or per-field truncated SVD;
 \item define a structure-aware rank rule using wall, centerline, weak-vortex, or pressure-gradient criteria;
 \item extend the dataset and examine how archive compression changes as the number of stored physical cases grows.
@@ -1725,6 +1752,24 @@ where $F(\mathbf V,\mathbf x,t)$ is the velocity distribution, $A_i$ is the drif
 
 The supplied reference uses a cubic drift model. Its local stress and heat-flux relaxation depend on nine state-dependent coefficients: six symmetric coefficients $C_{ij}$ and three coefficients $\Gamma_i$. These coefficients are not arbitrary trainable constants. In the exact solver, every cell and time step requires high-order particle moments, assembly of a dense local $9\times9$ system, and a direct solve. This repeated closure calculation is the target of the neural surrogate.
 
+\subsection{Readiness example: a one-component relaxation}
+For constant $U$, the Ornstein--Uhlenbeck equation
+\[
+\partial_t f=\gamma\partial_v[(v-U)f]+D\partial_{vv}f
+\]
+has moment balances $d\langle v-U\rangle/dt=-\gamma\langle v-U\rangle$
+and $dV/dt=-2\gamma V+2D$, assuming decay at velocity-space boundaries.
+The second result follows by integrating twice by parts. The stationary
+variance is $D/\gamma$. With $\gamma=2\,\mathrm{s}^{-1}$,
+$D=8\,\mathrm{m}^2\mathrm{s}^{-3}$ and $V(0)=9\,\mathrm{m}^2\mathrm{s}^{-2}$,
+$V(t)=4+5e^{-4t}$, so $V(0.5)\simeq4.6767$.
+Pressure is $\rho V$ and one-component temperature is $mV/k_B$; they are not
+raw velocity variance. A forward Euler step $\Delta t=.01$ gives $V_1=8.8$,
+versus exact $8.80395$. Explain the units and the time-discretization error
+before interpreting the full nine closure coefficients. This scalar control
+teaches moment relaxation; it does not replace the nonlinear cavity closure.
+
+
 \subsection{What the neural network learns}
 The neural network uses only low-order quantities already available in the inexpensive online path. Its input is
 \[
@@ -1953,11 +1998,12 @@ The first option is already scaffolded in the notebook by changing the density s
 \item modifying the supplied closure equations without instructor approval.
 \end{itemize}
 
-\begin{summarybox}
+\noindent\begin{minipage}{\textwidth}
+\begin{tcolorbox}[colback=lightblue,colframe=blue2,title=Central message,fonttitle=\bfseries,unbreakable]
 \textbf{Software compatibility target:} Tracks 1--5 target Google Colab/Python 3.12 with Keras 3. Track 6 additionally requires an NVIDIA GPU and CuPy. The reference continuum dataset hash is recorded in \file{reproducibility.txt}; Track-5 cached files and Track-6 generated datasets are versioned by their metadata and complete case definitions.
-\end{summarybox}
+\end{tcolorbox}
+\end{minipage}
 
-\clearpage
 \section{Week-5 Checkpoint Template}
 Use the following headings in a one- to two-page checkpoint note.
 \begin{enumerate}

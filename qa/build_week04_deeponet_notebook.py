@@ -8,6 +8,8 @@ from pathlib import Path
 
 
 ROOT = Path(__file__).resolve().parents[1]
+import sys
+sys.path.insert(0, str(ROOT))
 OUTPUT = ROOT / "notebooks" / "week04" / "W4_Lab3_DeepONet_Cavity_Student.ipynb"
 
 
@@ -442,5 +444,7 @@ notebook = {
 }
 
 OUTPUT.write_text(json.dumps(notebook, indent=1, ensure_ascii=False) + "\n", encoding="utf-8")
+from qa.notebook_review_updates import review_notebook_file
+review_notebook_file(OUTPUT)
 print(f"wrote {OUTPUT} with {len(cells)} cells")
 

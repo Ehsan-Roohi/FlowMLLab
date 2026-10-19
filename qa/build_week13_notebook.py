@@ -15,8 +15,7 @@ The notebook has three parts:
   Nektar++ CFD;
 * Part C audits the retained four-case A100 matrix (Re = 100/400, D = 1/2).
 
-The retained evidence under results/ and data/ is read, never regenerated, except
-for the figures that the notebook itself draws from that evidence.
+The retained evidence under results/ and data/ is read, never regenerated. Recomputed figures are displayed without writing to results/.
 """
 from __future__ import annotations
 
@@ -117,8 +116,10 @@ def cavity_residual(points):
 # 4. Collocation points (training) and an independent held-out set (never used by the optimizer)
 train_xy=torch.rand(192,2,dtype=dtype)
 heldout_xy=torch.rand(384,2,dtype=dtype)
-x,e=train_xy[:,0:1],train_xy[:,1:2]
-mask=(1-torch.exp(-(x*x+(1-e)**2)/.0001))*(1-torch.exp(-((1-x)**2+(1-e)**2)/.0001))   # down-weights the two lid corners
+def corner_mask(points):
+    x,e=points[:,0:1],points[:,1:2]
+    return (1-torch.exp(-(x*x+(1-e)**2)/.0001))*(1-torch.exp(-((1-x)**2+(1-e)**2)/.0001))
+mask=corner_mask(train_xy)   # down-weights the two lid corners
 gauge=torch.tensor([[.5,.5]],dtype=dtype)
 
 def training_loss():
@@ -134,7 +135,12 @@ def heldout_rms():
 started=time.perf_counter()
 optimizer=torch.optim.Adam(cpu_pinn.parameters(),lr=1e-3)
 cpu_history=[]; best_loss=float('inf'); best_state=None
+RESAMPLE_ADAM_EVERY=0  # Optional experiment: e.g. 100; never resample inside L-BFGS.
 for step in range(ADAM_STEPS):
+    if RESAMPLE_ADAM_EVERY and step and step%RESAMPLE_ADAM_EVERY==0:
+        train_xy=torch.rand(192,2,dtype=dtype);mask=corner_mask(train_xy)
+        # Losses on different point sets cannot select a global best iterate.
+        best_loss=float('inf');best_state=None
     optimizer.zero_grad()
     loss=training_loss()
     if loss.item()<best_loss:
@@ -165,6 +171,8 @@ fig,ax=plt.subplots(figsize=(7,3.6)); ax.semilogy(cpu_history)
 ax.axvline(ADAM_STEPS,color='#D55E00',lw=1); ax.text(ADAM_STEPS,max(cpu_history),'  L-BFGS starts',va='top')
 ax.set(xlabel='optimizer step (Adam, then L-BFGS function evaluations)',ylabel='masked training loss'); ax.grid(alpha=.2); plt.show()
 '''
+
+CPU_PREFLIGHT = "# Analytic Kovasznay flow: exact steady Navier–Stokes at Re=40.\n# AD acts on (x,eta); physical y=D*eta. The D=2.2 check catches missing metric factors.\ndef kovasznay_check(D, wrong_metric=False):\n    re=40.; lam=re/2-(re**2/4+4*torch.pi**2)**.5\n    points=torch.tensor([[.17,.21],[.39,.43],[.73,.67]],dtype=dtype,requires_grad=True)\n    x,e=points[:,0:1],points[:,1:2]; y=D*e\n    u=1-torch.exp(lam*x)*torch.cos(2*torch.pi*y)\n    v=lam/(2*torch.pi)*torch.exp(lam*x)*torch.sin(2*torch.pi*y)\n    p=(1-torch.exp(2*lam*x))/2\n    gu,gv,gp=[derivative(z,points) for z in (u,v,p)]\n    np.testing.assert_allclose(gu[:,0:1].detach(),(-lam*torch.exp(lam*x)*torch.cos(2*torch.pi*y)).detach(),atol=1e-12)\n    np.testing.assert_allclose(gu[:,1:2].detach(),(2*torch.pi*D*torch.exp(lam*x)*torch.sin(2*torch.pi*y)).detach(),atol=1e-12)\n    metric=1. if wrong_metric else D\n    def lap(g):return derivative(g[:,0:1],points)[:,0:1]+derivative(g[:,1:2],points)[:,1:2]/metric**2\n    rx=u*gu[:,0:1]+v*gu[:,1:2]/metric+gp[:,0:1]-lap(gu)/re\n    ry=u*gv[:,0:1]+v*gv[:,1:2]/metric+gp[:,1:2]/metric-lap(gv)/re\n    return max(float(z.detach().abs().max()) for z in (rx,ry,gu[:,0:1]+gv[:,1:2]/metric))\nfor depth in (1.,2.2):assert kovasznay_check(depth)<1e-10\nassert kovasznay_check(2.2,wrong_metric=True)>1e-2\n# Boundary constraints must hold for an untrained network, at both depths.\nsaved_depth=D_CPU\nfor D_CPU in (1.,2.2):\n    line=torch.linspace(0,1,17,dtype=dtype)[:,None]\n    for side in ('bottom','top','left','right'):\n        q=torch.cat((line,torch.zeros_like(line) if side=='bottom' else torch.ones_like(line)),1) if side in ('bottom','top') else torch.cat((torch.zeros_like(line) if side=='left' else torch.ones_like(line),line),1)\n        u,v,_,_=cavity_fields(q.requires_grad_(True))\n        expected=(1-torch.exp(-line**2/.001))*(1-torch.exp(-(1-line)**2/.001)) if side=='top' else torch.zeros_like(line)\n        torch.testing.assert_close(u,expected,atol=1e-10,rtol=1e-10)\n        assert float(v.detach().abs().max())<1e-10\nD_CPU=saved_depth\nprint('Preflight passed: analytic derivatives, D=1/D=2.2 residual, deliberate missing-metric failure, and untrained walls.')\n"
 
 CPU_EVAL = r'''# Evaluate the learned field on the 65 x 65 grid of the Week 1 reference and compare.
 gx=np.linspace(0,1,65); ge=np.linspace(0,1,65); XX,EE=np.meshgrid(gx,ge)
@@ -269,8 +277,8 @@ that uses an estimate of the inverse Hessian and a line search: L-BFGS here, SSB
 (Part C). The second stage is where most of the residual reduction happens in PINN practice.
 
 **Three checks, always.** (i) the training loss; (ii) the residual on an independent set of points the optimizer
-never saw (the *held-out residual*); (iii) where a reference exists, the field error against it. Only (iii) speaks
-about the flow; (i) and (ii) speak about the optimization. Keep this in mind while reading the numbers below.
+never saw (the *held-out residual*); (iii) where a reference exists, the field error against it. The held-out residual tests equation consistency on its stated support; (iii) tests reference agreement. Neither alone certifies
+the physical flow. The training loss also diagnoses optimization. Keep these roles distinct while reading the numbers below.
 '''
 
 PART_A_EVAL = r'''### Evaluate the field and compare with the Week 1 CFD reference
@@ -278,15 +286,14 @@ PART_A_EVAL = r'''### Evaluate the field and compare with the Week 1 CFD referen
 The next cell evaluates the trained network on the same 65 x 65 grid as the Week 1 finite-difference reference at
 Re = 100, checks the wall constraints, and reports (a) the interior velocity relative $L_2$ error and (b) the
 position of the primary vortex (the streamfunction minimum) for both. The reference uses the classical lid
-(velocity jump at the corners); the PINN uses the smoothed lid, so a few percent of difference near the top
-corners is expected even for a converged PINN.
+(velocity jump at the corners); the PINN uses the smoothed lid, so differences near the top corners remain possible even for a converged PINN; no fixed percentage is guaranteed.
 '''
 
 PART_A_READING = r'''### What the short run shows
 
 Read your printed numbers against these expectations (the retained execution had a training loss falling from
 about 17 to about 0.2, a held-out residual that did **not** fall with it, and an interior velocity error of
-roughly 50%; your values differ slightly with the PyTorch build):
+roughly 50%; values can differ materially with the PyTorch build; use your current printed values):
 
 * **The walls are exact and continuity is exact** (`continuity_max` at machine precision). These are properties
   of the representation, not achievements of training. A PINN paper that reports them as accuracy has reported nothing.
@@ -299,8 +306,9 @@ roughly 50%; your values differ slightly with the PyTorch build):
   network produces a lid-driven recirculation of the right sense but the wrong shape and strength; compare the
   streamline patterns in the figure.
 
-The remedies are known and you should try at least one: more collocation points, resampling the points every
-step, a wider network, many more quasi-Newton iterations (the research runs in Part C use 4000 optimizer steps
+Your current printed metrics are authoritative for your execution; historical example values are not accuracy targets. Full diagnostic credit requires reporting the actual field comparison and held-out behavior, including failure or worsening when observed, explaining why a small masked training loss cannot rescue a failed field result, and proposing one controlled change. A successful accuracy threshold is not required for this bounded teaching run.
+
+The remedies are known and you should try at least one: more collocation points, resampling only between Adam updates (freeze points and masks throughout every quasi-Newton line-search stage), a wider network, many more quasi-Newton iterations (the research runs in Part C use 4000 optimizer steps
 in float64 on an A100 and still leave a measurable held-out residual), or curriculum in Reynolds number. What does
 not change with any of them is the method of judgement: report the held-out residual and a field comparison next
 to every training curve. Parts B and C apply exactly that discipline to research-scale runs.
@@ -457,7 +465,12 @@ def build_cells() -> list[dict]:
         cell("code", BOOTSTRAP, "w13-bootstrap"),
         cell("code", SETUP, "w13-setup"),
         cell("markdown", PART_A, "w13-a-theory"),
-        cell("code", CPU_TRAIN, "w13-a-train"),
+        cell("code", CPU_TRAIN.split("# 4. Collocation")[0], "w13-a-network"),
+        cell("markdown", "### Derivative preflight before any update\nKovasznay is a manufactured verification problem, not cavity data. Predict which metric bug is invisible at D=1. The deliberately wrong D=2.2 residual must fail. Walls are checked before training; none of these checks proves cavity accuracy.", "w13-a-preflight-md"),
+        cell("code", CPU_PREFLIGHT, "w13-a-preflight"),
+        cell("code", "# 4. Collocation"+CPU_TRAIN.split("# 4. Collocation")[1].split("# 5. Stage")[0], "w13-a-sampling"),
+        cell("code", "# 5. Stage"+CPU_TRAIN.split("# 5. Stage")[1].split("# 6. Stage")[0], "w13-a-adam"),
+        cell("code", "# 6. Stage"+CPU_TRAIN.split("# 6. Stage")[1], "w13-a-lbfgs"),
         cell("markdown", PART_A_EVAL, "w13-a-eval-md"),
         cell("code", CPU_EVAL, "w13-a-eval"),
         cell("markdown", PART_A_READING, "w13-a-reading"),

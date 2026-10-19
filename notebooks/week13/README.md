@@ -75,3 +75,9 @@ The four-case matrix is a feasibility pilot, not a publication comparison. A
 paper must add matched multi-aspect-ratio CFD/FEM references, several fixed
 seeds and a factorial comparison between primitive/FOSLS and streamfunction
 representations at equal precision, capacity and residual-evaluation budget.
+
+
+### Core verification and identity ledger
+The CPU route now separates the network/lifting, analytic Kovasznay preflight, collocation/mask, Adam, and fixed-objective L-BFGS. Before training, derivatives and residuals pass at D=1 and D=2.2, an intentionally missing metric factor fails at D=2.2, and random network weights satisfy all four walls. Adam resampling is optional and refreshes the mask; L-BFGS never resamples. The continuation plot is display-only and does not overwrite the retained image.
+
+Keep three near-matched error records distinct: the earlier Re=100 qualification (about 3.10%), the Re=100 square row of the A100 matrix (about 3.34%), and the Re=1000, D=2.2 checkpoint 55118 versus Nektar++ t=120 comparison (about 3.59%). Checkpoint 65711 supplies later training history only. Residual consistency and reference agreement are complementary evidence.

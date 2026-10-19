@@ -121,14 +121,18 @@ checkpoint round trips, error decomposition, all-row rescoring, independent note
 kernels, and builder source preservation. See `docs/TRANSFORMER_REVIEW_RESPONSE.md`
 and `qa/transformer_validation.json` for measured outcomes and any remaining limits.
 
-## Published notebooks and Colab
+## Checkout, review bundle and Colab
 
-The corrected package is published on the `codex/llm-course-redesign` branch of
-[FlowMLLab](https://github.com/Ehsan-Roohi/FlowMLLab/tree/codex/llm-course-redesign).
-For a fresh Colab session, clone that branch, change to the repository root and
-install the Transformer extra before opening the chosen notebook. Alternatively,
-upload the portable ZIP and extract under `/content/course`. The package and data
-are included; no access token is needed.
+The course is part of [FlowMLLab main](https://github.com/Ehsan-Roohi/FlowMLLab/tree/main).
+Record the checkout commit before running a lesson. For a fresh Colab session,
+clone the repository, check out the revision you intend to study, change to its
+root and install the Transformer extra before opening the chosen notebook.
+The October 2026 review edits are local review material until owner approval;
+cloning public `main` does not retrieve those unpublished edits.
+Alternatively, upload a **complete portable course bundle** and extract under
+`/content/course`. A changed-files review ZIP is not a complete runtime bundle:
+apply its files to its documented base checkout first. No access token is needed
+for public repository files.
 `qa/colab_transformer_bootstrap.py` checks archive paths before extraction.
 This upload path is documented; an interactive Colab session is not claimed tested.
 

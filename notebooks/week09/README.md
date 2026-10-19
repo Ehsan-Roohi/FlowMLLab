@@ -29,3 +29,14 @@ The full evidence and licensing contract is in
 ## Lab 3: pre-fit coordinate audit
 
 [Moving-throat nozzle audit](W9_Lab3_Nozzle_Data_Alignment_Audit.ipynb) extends the Week 4 branch/trunk data contract with an independent quasi-1D isentropic reference. Run all cells on CPU; the two intentional failures are caught, then the repaired pairs and reference physics pass. This is a debugging exercise, not a trained nozzle surrogate. [Companion notes](../../lectures/week09_3_nozzle_data_alignment.pdf).
+
+
+Lab 3 itself is a pre-fit data audit with no neural training. The headline
+6.72% to 1.63% comparison belongs to the separate retained two-MLP alignment
+study; the notebook now links its protocol and a fresh-output reproduction command.
+
+Field-unit note: use each archive manifest's verified units. In particular,
+source density/pressure columns without a documented dimensional conversion
+remain **source units**, not inferred SI or freestream-normalized quantities.
+Inlet pressure in kPa is a case parameter; it does not establish the unit of
+every exported target column. Include a verified/unknown field card in submissions.

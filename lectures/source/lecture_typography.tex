@@ -1,0 +1,13 @@
+% Include at the END of the preamble. Compile with XeLaTeX, from repository root.
+% The exact Times New Roman family is mandatory: no silent fallback is allowed.
+\usepackage{fontspec}
+\IfFontExistsTF{Times New Roman}{}{\PackageError{FlowMLLab}{Times New Roman is required}{Install licensed Times New Roman; see qa/LECTURE_TYPOGRAPHY.md.}}
+\setmainfont{Times New Roman}
+\setsansfont{Times New Roman}
+% Explicit code-only exception: preserve alignment in literal source listings.
+\setmonofont{DejaVu Sans Mono}[Scale=MatchLowercase]
+% mathastext preserves the existing TeX math-symbol machinery (including bm),
+% while making Latin letters/digits and common punctuation use genuine TNR.
+% Specialized mathematical symbols remain in the explicitly required math font.
+\usepackage[italic]{mathastext}
+\AtBeginDocument{\color{black}\hypersetup{colorlinks=true,allcolors=black}}

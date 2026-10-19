@@ -533,3 +533,39 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
+
+
+def evaluate_fresh_operator(data, bundles, selected, output_dir):
+    """Evaluate these in-memory bundles; never read or replace retained metrics.
+
+    No CFD is run here. Timing measures full ensemble prediction only, and does
+    not claim a new speedup against a historical CFD timing on another machine.
+    """
+    from student_experiment_protocols import dataset_fingerprint
+    from datetime import datetime, timezone
+    import uuid
+    output_dir = Path(output_dir)
+    if ROOT / "results" in output_dir.resolve().parents or output_dir.resolve() == (ROOT / "results").resolve():
+        raise ValueError("Fresh student experiments must not write into retained results/")
+    output_dir.mkdir(parents=True, exist_ok=False)
+    run_id = uuid.uuid4().hex
+    rows, predictions = [], {}
+    shape = data["u"].shape[1:]
+    for re_value in data["Re"][data["split"].astype(str) == "test"]:
+        started = time.perf_counter()
+        prediction = ensemble_predict(bundles, float(re_value), shape)
+        elapsed = time.perf_counter() - started
+        predictions[float(re_value)] = prediction
+        rows.append({"run_id": run_id, "source": "fresh in-memory bundles", "Re": float(re_value),
+                     "prediction_seconds": elapsed, **field_report(data, float(re_value), prediction)})
+    metrics = pd.DataFrame(rows)
+    metrics.to_csv(output_dir / "metrics.csv", index=False)
+    protocol = {"run_id": run_id, "created_utc": datetime.now(timezone.utc).isoformat(),
+                "dataset_sha256": dataset_fingerprint(data), "selected": selected,
+                "seeds": [int(b["seed"]) for b in bundles],
+                "assessment": "public held-out regression cases, previously exposed in the course",
+                "timing": "ensemble inference and reconstruction only; no fresh CFD speedup claim"}
+    (output_dir / "protocol.json").write_text(json.dumps(protocol, indent=2))
+    np.savez_compressed(output_dir / "predictions.npz", Re=np.asarray(list(predictions)),
+                        **{q: np.stack([p[j] for p in predictions.values()]) for j, q in enumerate(("u", "v", "p"))})
+    return metrics, predictions, protocol

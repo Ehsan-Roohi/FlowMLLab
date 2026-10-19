@@ -109,7 +109,8 @@ The committed NPZ contains 44,500 deterministic points from 20 cases; the
 
 This lab does **not** report the published full-resolution accuracy. Its default
 MLP is a newly trained classroom baseline, not the paper model. The optional TensorFlow builder exposes
-the reviewed Fusion-DeepONet topology, but full reproduction requires the
+a corrected educational multi-output topology (with an explicit legacy option).
+Full reproduction would additionally require the
 original 50,000-point sampling, five trained networks, frozen protocol, and
 adequate compute.
 '''),
@@ -137,6 +138,17 @@ The legacy NPZ names `temperature_ratio` and `pressure_ratio` are retained only
 for file compatibility; no verified division by freestream values is recorded.
 Do not infer units or nondimensionalization from those names.
 
+### Field and coordinate contract
+| Stored key | Display name | Units / normalization status |
+|---|---|---|
+| local_mach | Local Mach (MA) | dimensionless |
+| temperature_ratio | Source temperature (TOV) | legacy key; ratio and physical unit unverified |
+| pressure_ratio | Source pressure (P) | legacy key; ratio and physical unit unverified |
+| x,y | Source coordinates | source convention retained; physical length conversion unverified |
+Absent lattice nodes denote excluded solid/sentinel support and remain masked.
+Do not label TOV as T/T-infinity or P as P/P-infinity without source documentation.
+
+
 $$q(x,y;M_\infty)=\left[M(x,y),\;TOV(x,y),\;P(x,y)\right].$$
 
 At high Mach, hypersonic Mach-number independence can make appropriately
@@ -151,12 +163,14 @@ the freestream, inside the shock layer, or near the surface? Record your reason
 before plotting.
 '''),
     code(r'''
+from flowmllab.hypersonic_cylinder import masked_structured_field
 case = np.isclose(data.mach_inf, 8.5)
 fig, axes = plt.subplots(1, 3, figsize=(13, 3.6), constrained_layout=True)
 labels = (r"local $M$", "source temperature (TOV)", "source pressure (P)")
 for j, (axis, label) in enumerate(zip(axes, labels)):
-    artist = axis.tricontourf(data.x[case], data.y[case], data.targets[case, j],
-                              levels=28, cmap="viridis")
+    xs, ys, grid = masked_structured_field(data.x[case], data.y[case], data.targets[case, j])
+    axis.set_facecolor("0.8")  # absent solid/sentinel support stays gray
+    artist = axis.contourf(xs, ys, grid, levels=28, cmap="viridis", corner_mask=False)
     axis.set(title=rf"$M_\infty=8.5$: {label}", xlabel="x", ylabel="y", aspect="equal")
     fig.colorbar(artist, ax=axis, shrink=0.82)
 plt.show()
@@ -215,8 +229,14 @@ display(pd.DataFrame(baseline_rows).style.format({name: "{:.3%}" for name in TAR
 The scalar branch sees $M_\infty$; the trunk sees $(x,y)$. Four 256-unit tanh
 layers form each path. In the reviewed stored topology, branch features are
 injected into the corresponding trunk layer, dropout regularizes both paths,
-the final branch/trunk states are combined by an inner product, and a linear
-three-output head returns the standardized targets.
+the final states were reduced to one scalar inner product before Dense(3).
+That historical head yields q_j=w_j*s+b_j, so centered output rank is at most
+one regardless of latent width. It cannot represent three independent fields.
+
+The corrected optional builder keeps the elementwise latent product vector
+and applies Dense(3) directly: q=W*(b elementwise t)+c. Its output can have rank
+three. Select `output_mode="legacy_scalar"` only to inspect compatible historical
+weights; new head weights have a different shape. The CPU 3x96 MLP is unchanged.
 
 Only training cases may fit input and output scalers. The research workflow
 uses Adam, early stopping, learning-rate reduction, and five independent fits.
@@ -228,7 +248,8 @@ $$L=\operatorname{MSE}(M_s)+\operatorname{MSE}(TOV_s)+5\operatorname{MSE}(P_s),$
 where the subscript denotes training-set standardization, not physical nondimensionalization.
 
 Because historical archive scripts disagree in several settings, this notebook
-records the reviewed topology and avoids presenting any one script filename as
+records this historical limitation and the educational correction; it avoids
+presenting any one script filename as
 the canonical paper release.
 '''),
     markdown(r'''
@@ -282,11 +303,15 @@ operator = predictions["interpolation"][case_positions]
 
 fig, axes = plt.subplots(2, 3, figsize=(12.5, 7), constrained_layout=True)
 for j, label in enumerate(labels):
+    error_max = max(np.abs(baseline[:, j]-truth[:, j]).max(), np.abs(operator[:, j]-truth[:, j]).max(), 1e-15)
+    shared_levels = np.linspace(0, error_max, 25)
     for row, (title, estimate) in enumerate((("Mach interpolation", baseline),
                                              ("teaching operator", operator))):
         error = np.abs(estimate[:, j] - truth[:, j])
-        artist = axes[row, j].tricontourf(data.x[mask], data.y[mask], error,
-                                          levels=25, cmap="magma")
+        xs, ys, grid = masked_structured_field(data.x[mask], data.y[mask], error)
+        axes[row, j].set_facecolor("0.8")
+        artist = axes[row, j].contourf(xs, ys, grid, levels=shared_levels,
+                                     cmap="magma", corner_mask=False)
         axes[row, j].set(title=f"{title}: |error| {label}", xlabel="x", ylabel="y",
                          aspect="equal")
         fig.colorbar(artist, ax=axes[row, j], shrink=0.8)
@@ -296,7 +321,11 @@ plt.show()
 ## 7. Optional full topology - not the default runtime
 
 If TensorFlow is available through `pip install -e ".[ml]"`, the following
-constructs the reviewed architecture. Keep it disabled unless you have defined
+constructs an educational vector-product head with three independent outputs.
+The former scalar-dot + Dense(3) head constrained all fields to one affine line;
+`output_mode="legacy_scalar"` is available only for historical compatibility.
+The default CPU MLP above is a separate architecture and is unaffected. Neither
+head is a verified reproduction of the paper checkpoint. Keep it disabled unless you have defined
 a full training budget and frozen the validation protocol.
 '''),
     code(r'''

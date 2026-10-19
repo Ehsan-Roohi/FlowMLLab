@@ -12,8 +12,11 @@ for pattern in ('flowmllab/**/*.py','course/lessons/*.json','data/modal_labs/*',
                 'qa/*transformer*','tests/test_transformer*.py','docs/TRANSFORMER*.md',
                 'docs/assets/transformer-contours/*','weeks/week1[789]/*','weeks/week2[012]/*',
                 'RELEASE_NOTES_v*.md'):
-    paths.update(p for p in root.glob(pattern) if p.is_file())
+    # Interrupted writes and editor temporaries are not retained evidence.
+    paths.update(p for p in root.glob(pattern) if p.is_file()
+                 and not any(part.startswith('.') for part in p.relative_to(root).parts))
 for name in ('pyproject.toml','LICENSE','README.md','COURSE_MAP.md','START_HERE.md','CITATION.cff','.zenodo.json',
+             'qa/lecture_typography.py','qa/audit_lecture_pdfs.py','qa/LECTURE_TYPOGRAPHY.md','lectures/source/lecture_typography.tex',
              'docs/RESULTS_GUIDE.md','notebooks/week07_3/README.md','notebooks/week07_4/README.md',
              'data/modal_labs/README.md','results/modal_labs/metrics.json','notebook_execution.json'):
     p=root/name
@@ -33,9 +36,12 @@ for week in range(17,23):
 readme='''# Portable FlowMLLab Weeks 17-22
 
 Start with docs/TRANSFORMER_COURSE.md. This archive contains the redesigned six
-weeks, their inputs, executed student and instructor notebooks, editable lecture
+weeks, their inputs, student and instructor notebooks, editable lecture
 sources, six PDFs, retained model checkpoints and numerical validation records.
 It is a course subset; links to earlier weeks refer to the full public repository.
+Historical execution records are not proof of a fresh execution of this archive.
+Rebuilding lecture PDFs requires locally installed genuine Times New Roman;
+see qa/LECTURE_TYPOGRAPHY.md. Font binaries are not included.
 
 Use an isolated Python 3.12 environment. Install with:
     python -m pip install -e ".[transformer,test]" -c qa/transformer-environment.lock.txt

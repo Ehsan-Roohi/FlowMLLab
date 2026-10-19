@@ -45,5 +45,21 @@
       "checks": "synthetic=representation.mean+representation.modes@(np.arange(8)*.1)\nresults=sensor_audit(representation,synthetic,[qr_ids,qr_ids[:2]])\nassert results[0]['field_error']<1e-8 and results[0]['rank']==8\nassert results[1]['rank']<=2 and results[1]['field_error']>results[0]['field_error']\nnoisy=sensor_audit(representation,synthetic,[qr_ids],[synthetic[qr_ids]+.01])\nassert noisy[0]['field_error']>results[0]['field_error']+1e-6\ntry:\n    sensor_audit(representation,synthetic,[[0,0]])\n    raise AssertionError('duplicate sensors accepted')\nexcept ValueError:pass\n# Off-subspace truth makes a fabricated zero floor detectable.\nrng=np.random.default_rng(1907)\ny=rng.normal(size=representation.modes.shape[0])\nids_a=np.arange(0,len(y),2);ids_b=np.arange(1,len(y),3)\nobserved=[y[ids_a]+.2,y[ids_b]-.1]\nfor row,ids,obs in zip(sensor_audit(representation,y,[ids_a,ids_b],observed),[ids_a,ids_b],observed):\n    matrix=representation.modes[ids]\n    coef=np.linalg.lstsq(matrix,obs-representation.mean[ids],rcond=None)[0]\n    expected=representation.mean+representation.modes@coef\n    oracle=representation.decode(representation.encode(y[None]))[0]\n    np.testing.assert_allclose(row['prediction'],expected)\n    assert np.isclose(row['floor'],np.linalg.norm(oracle-y)/np.linalg.norm(y))\n    assert row['floor']>0\n    assert np.isclose(row['condition'],np.linalg.cond(matrix))\n    assert np.isclose(row['field_error'],np.linalg.norm(expected-y)/np.linalg.norm(y))\n"
     }
   ],
-  "duration_minutes": 120
+  "duration_minutes": 120,
+  "assessment": {
+    "coding_weights": [
+      5,
+      5,
+      5,
+      25
+    ],
+    "derivation_points": 25,
+    "interpretation_points": 25,
+    "reproducibility_points": 10,
+    "derivation": "derive the orthogonal representation floor and the gappy least-squares solve",
+    "full_credit_example": "A lower POD floor does not guarantee better reconstruction from noisy sparse sensors. More retained modes can make the sampled basis ill conditioned; compare the floor, noise amplification and field error with frozen sensor coordinates.",
+    "misconception": "Adding POD modes always improves a noisy sparse-sensor reconstruction.",
+    "partial_credit": "An accurate numerical observation without its split, representation, or causal limitation earns at most half of interpretation points.",
+    "human_validation": "Instructor marking and a timed student pilot are still required; automated checks establish interface/behavior only."
+  }
 }

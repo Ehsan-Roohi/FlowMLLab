@@ -7,8 +7,9 @@ import shutil
 import sys
 import nbformat as nbf
 ROOT=Path(__file__).resolve().parents[1]
+sys.path.insert(0,str(ROOT))
 sys.path.insert(0,str(ROOT/'qa'))
-from add_colab_entrypoints import badge,bootstrap
+from qa.add_colab_entrypoints import badge,bootstrap
 
 
 def md(s):return nbf.v4.new_markdown_cell(s.strip())
@@ -233,10 +234,15 @@ assert after == before, 'Notebook modified retained data/evidence'
 print('PASS: retained data and evidence unchanged.')'''))
     for i,c in enumerate(cells):c.id=hashlib.sha256((kind+str(i)+c.source).encode()).hexdigest()[:12]
     nb=nbf.v4.new_notebook(cells=cells,metadata={'kernelspec':{'display_name':'Python 3','language':'python','name':'python3'},'language_info':{'name':'python'}})
-    nbf.write(nb,path);print(path)
+    nbf.write(nb,path)
+    from qa.notebook_review_updates import review_notebook_file
+    review_notebook_file(path)
+    print(path)
 
 
 def make_pdf(kind):
+    from qa.lecture_typography import register_legacy_reportlab_aliases, black_paragraph_styles
+    register_legacy_reportlab_aliases()
     from reportlab.lib import colors
     from reportlab.lib.styles import getSampleStyleSheet,ParagraphStyle
     from reportlab.platypus import SimpleDocTemplate,Paragraph,Spacer,PageBreak
@@ -245,8 +251,12 @@ def make_pdf(kind):
     source=ROOT/'lectures/source'/f'{name}.md'
     out=ROOT/'output/pdf'/f'{name}.pdf';out.parent.mkdir(parents=True,exist_ok=True)
     styles=getSampleStyleSheet()
-    styles.add(ParagraphStyle(name='CourseTitle',fontName='Helvetica-Bold',fontSize=21,leading=25,textColor=colors.HexColor('#173b56'),spaceAfter=16))
-    styles.add(ParagraphStyle(name='CourseBody',fontName='Helvetica',fontSize=10.5,leading=15,spaceAfter=10,alignment=TA_LEFT))
+    styles.add(ParagraphStyle(name='CourseTitle',fontName='TNRB',fontSize=21,leading=25,textColor=colors.HexColor('#173b56'),spaceAfter=16))
+    styles.add(ParagraphStyle(name='CourseBody',fontName='TNR',fontSize=10.5,leading=15,spaceAfter=10,alignment=TA_LEFT))
+    for style in styles.byName.values():
+        if getattr(style, "fontName", "").startswith("Helvetica"):
+            style.fontName = "TNRB" if "Bold" in style.fontName else "TNR"
+    black_paragraph_styles(styles)
     story=[]
     for pi,page in enumerate(source.read_text().split('\n---\n')):
         if pi:story.append(PageBreak())
@@ -260,7 +270,7 @@ def make_pdf(kind):
                 story.append(Paragraph(html.escape(block).replace('\n','<br/>'),styles['CourseBody']))
     def footer(canvas,doc):
         canvas.setStrokeColor(colors.HexColor('#c7d5df'));canvas.line(42,38,553,38)
-        canvas.setFont('Helvetica',8);canvas.setFillColor(colors.HexColor('#506070'))
+        canvas.setFont('TNR',8);canvas.setFillColor(colors.black)
         canvas.drawString(42,25,'FlowMLLab | Original teaching companion | Development branch')
         canvas.drawRightString(553,25,str(doc.page))
     SimpleDocTemplate(str(out),pagesize=(595,842),rightMargin=42,leftMargin=42,topMargin=38,bottomMargin=52,
