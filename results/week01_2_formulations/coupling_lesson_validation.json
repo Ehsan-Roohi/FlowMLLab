@@ -1,9 +1,15 @@
 {
+  "notation": {
+    "continuity_residual": "r_c,P; distinct from pressure correction",
+    "pressure_correction": "Delta p = p_corr - p_k = p_prime",
+    "stored_pressure_change": "alpha_p p_prime",
+    "spatial_pressure_difference": "p_E - p_P"
+  },
   "notebook": {
     "code_cells": 8,
     "png_outputs": 14,
     "errors": 0,
-    "sha256": "e63c259e2f12c898fb2c28201b4f95aee02b15dd2160bf268be0021c53a11b59"
+    "sha256": "975b942023269bb93d980aec67a8a5f86fd950be61a3b408ff4a53b9d7a24e16"
   },
   "examples": {
     "two_cell_conservation": true,
@@ -13,8 +19,8 @@
   },
   "lesson_update_idempotent": true,
   "pdf": {
-    "pages": 25,
-    "sha256": "8edba8373004d6f11d846c0c10404149e0fdf14228068f10143ca18a14a88325",
+    "pages": 26,
+    "sha256": "496cf68afefb03a1b7c0e8ec7435aad1e22b60dca2be312c1a02724e3fc1d2a4",
     "times_new_roman_present": true,
     "all_pages_rendered_and_reviewed": true,
     "text_within_horizontal_page_bounds": true

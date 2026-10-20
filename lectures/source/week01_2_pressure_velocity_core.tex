@@ -12,7 +12,7 @@ Conservation of horizontal and vertical momentum gives
 \end{align*}
 The left sides contain local and convective acceleration. Pressure gradients and viscous diffusion provide the right-side accelerations. These two equations and continuity form the incompressible Navier--Stokes system.
 
-\textbf{Scales.} Let $L$ be cavity side length and $U$ the lid speed. Define $x=x_d/L$, $y=y_d/L$, $t=t_dU/L$, $u=u_d/U$, $v=v_d/U$, and $p=(p_d-p_{\rm ref})/(\rho U^2)$. Then $Re=UL/\nu$ and
+\textbf{Scales.} Let $L$ be cavity side length and $U$ the lid speed. Define $x=x_d/L$, $y=y_d/L$, $t=t_dU/L$, $u=u_d/U$, $v=v_d/U$, and $p=(p_d-p_{\rm ref})/(\rho U^2)$. Here $p_{\rm ref}$ is a fixed arbitrary reference pressure. Then $Re=UL/\nu$ and
 \begin{align*}
 \frac{\partial u}{\partial x}+\frac{\partial v}{\partial y}&=0,\\
 \frac{\partial u}{\partial t}+u\frac{\partial u}{\partial x}+v\frac{\partial u}{\partial y}
@@ -29,21 +29,21 @@ Pressure is stored at the center of each square pressure cell. Horizontal veloci
 \begin{center}\includegraphics[width=.83\linewidth]{week01_2_assets/mac_grid.pdf}\end{center}
 Capital $P,E,W,N,S$ label pressure-cell centers; lowercase $e,w,n,s$ label the four faces of cell $P$. All horizontal velocity components are positive rightward; all vertical components are positive upward. The outward normal at the west or south face points in the negative coordinate direction.
 
-Integrating continuity over one cell and using the divergence theorem gives the net outward volume flux per unit depth:
+Let $V$ denote the pressure-cell area $h^2$, $\partial V$ its perimeter, $\boldsymbol u=(u,v)$ the velocity vector, $\boldsymbol n$ its outward unit normal and $\mathrm dS$ a boundary-length element. Integrating continuity gives the net outward volume flux per unit depth:
 \[
 \int_{\partial V}\boldsymbol u\cdot\boldsymbol n\,\mathrm dS
 =h u_e-h u_w+h v_n-h v_s=0.
 \]
-Dividing by the cell area $h^2$ gives the discrete divergence
+Define $r_{c,P}$ as the continuity residual of cell $P$: net outward volume flux divided by cell area. The subscript $c$ means continuity, and $P$ is a cell label. It is not a pressure change. Dividing by $h^2$ gives
 \[
-\boxed{\delta_P=\frac{u_e-u_w+v_n-v_s}{h}=0.}
+\boxed{r_{c,P}=\frac{u_e-u_w+v_n-v_s}{h}=0.}
 \]
 Density is constant, so zero volume imbalance also means zero mass imbalance. A shared face enters one cell with a plus sign and its neighbor with a minus sign. Summing all cell balances cancels internal fluxes; an impermeable boundary has zero total outward flux.
 
-\textbf{Why pressure is needed.} A guessed pressure can satisfy the momentum equations for a tentative velocity yet leave $\delta_P\ne0$. The coupling algorithms adjust pressure gradients and face velocities together so that each cell satisfies continuity. Pressure is not prescribed independently throughout an incompressible cavity.
+\textbf{Why pressure is needed.} A guessed pressure can satisfy the momentum equations for a tentative velocity yet leave $r_{c,P}\ne0$. The coupling algorithms adjust pressure gradients and face velocities together so that each cell satisfies continuity. Pressure is not prescribed independently throughout an incompressible cavity.
 \newpage
 \topic{3}{Finite-volume momentum at one velocity face}
-The velocity $u_e$ lies between pressure centers $P$ and $E$. Its momentum control volume is centered on that velocity face. Integrating horizontal momentum over this control volume gives
+The velocity $u_e$ lies between pressure centers $P$ and $E$. Its momentum control volume is centered on that velocity face. Here $V_e$ is the velocity control volume, $\partial V_e$ its boundary, $\boldsymbol n$ the outward unit normal, $\mathrm dV$ an area element, and $\mathrm dS$ a boundary-length element, all per unit depth. Integrating horizontal momentum over this volume gives
 \[
 \frac{\mathrm d}{\mathrm dt}\int_{V_e}u\,\mathrm dV
 +\int_{\partial V_e}u(\boldsymbol u\cdot\boldsymbol n)\,\mathrm dS
@@ -59,7 +59,11 @@ On the uniform interior grid, the volume-normalized pressure term is $-(p_E-p_P)
 \]
 Here $a_e$ is the center momentum coefficient, $a_{\rm NB}$ are neighbor coefficients, and $b_e$ contains known wall and time sources. All coefficients are normalized by control-volume area; no extra face area belongs in the pressure-gradient term.
 
-Let $\beta=1/(Re\,h^2)$. Let $c_{\rm E},c_{\rm W}$ be the advecting horizontal velocities at the east/west boundaries of this momentum volume, and $c_{\rm N},c_{\rm S}$ the advecting vertical velocities at its north/south boundaries. The interior central scheme uses
+Let $\beta=1/(Re\,h^2)$. Let $c_{\rm E},c_{\rm W}$ be the advecting horizontal velocities at the east/west boundaries of this momentum volume, and $c_{\rm N},c_{\rm S}$ the advecting vertical velocities at its north/south boundaries. Central interpolation gives $c_{\rm E}=(u_e+u_{\rm E})/2$ and $c_{\rm W}=(u_{\rm W}+u_e)/2$. For the top and bottom boundaries,
+\[
+c_{\rm N}=\frac{v_{n,P}+v_{n,E}}{2},\qquad c_{\rm S}=\frac{v_{s,P}+v_{s,E}}{2}.
+\]
+Here $v_{n,P},v_{n,E}$ are the vertical velocities at the top faces of pressure cells $P,E$; $v_{s,P},v_{s,E}$ are their bottom-face velocities. The interior central scheme uses
 \begin{align*}
 a_{\rm E}&=\beta-\frac{c_{\rm E}}{2h},&a_{\rm W}&=\beta+\frac{c_{\rm W}}{2h},\\
 a_{\rm N}&=\beta-\frac{c_{\rm N}}{2h},&a_{\rm S}&=\beta+\frac{c_{\rm S}}{2h},\\
@@ -69,7 +73,7 @@ a_e&=a_{\rm E}+a_{\rm W}+a_{\rm N}+a_{\rm S}
 For example, east-face convection contributes $c_{\rm E}(u_e+u_{\rm E})/(2h)$ on the left, and diffusion contributes $\beta(u_{\rm E}-u_e)$ on the right. Moving the convective neighbor term to the right leaves $(\beta-c_{\rm E}/(2h))u_{\rm E}$, which explains $a_{\rm E}$. Other faces follow from their outward-normal signs. Time and wall terms modify the diagonal and source. The vertical component has an analogous row.
 \newpage
 \topic{4}{Momentum coefficients and matrix notation}
-For a face labeled $f$, collect the known source and neighbor contribution into
+For a velocity location labeled $f$, let $\mathrm{NB}(f)$ be the neighboring velocity locations in its momentum row. The index $g$ labels one such location; $a_{fg}$ is the coefficient multiplying its velocity $q_g$. These are velocity-control-volume neighbors, rather than the pressure neighbors labeled $E,W,N,S$. Collect the source and neighbor contributions into
 \[
 H_f=b_f+\sum_{g\in\mathrm{NB}(f)}a_{fg}q_g,
 \qquad d_f=\frac{1}{a_f}.
@@ -82,11 +86,15 @@ The vector $q$ collects all unknown interior horizontal and vertical face veloci
 \[
 Aq=b-Gp.
 \]
+The product $Dq$ collects the cell residuals: $(Dq)_P=r_{c,P}$. The product $Gp$ collects face pressure gradients. Multiplication by $d$ scales each face entry by its own $1/a_f$.
+
+For $N$ cells per side, $p$ has $N^2$ entries and $q$ has $2N(N-1)$ unknown interior face velocities. Thus $A$ is $2N(N-1)$ square, $D$ has $N^2$ rows and $2N(N-1)$ columns, $G$ has the reverse shape, and $L=-DdG$ is $N^2$ square. The operator $\operatorname{diag}(a_f)$ places the coefficients on the diagonal and zeros elsewhere.
+
 The diagonal of $A$ contains the center coefficients $a_f$; its off-diagonal entries are $-a_{fg}$. With $R=A-\operatorname{diag}(a_f)$ and $d=\operatorname{diag}(1/a_f)$,
 \[
 H(q)=b-Rq,\qquad q=d\left[H(q)-Gp\right].
 \]
-Thus $H$ is computed from current neighbor velocities; it is not another fluid property. In this lesson $d$ is an inverse diagonal matrix, while $h$ is the mesh spacing.
+Thus $H$ is computed from current neighbor velocities; it is not another fluid property. Here $d$ is an inverse diagonal matrix, while $h$ is mesh spacing. In operator formulas $L$ denotes the pressure matrix; the $L$ used earlier in dimensional scaling denotes cavity length.
 
 \begin{center}\begin{tabular}{lll}\toprule
 Symbol & Meaning & Location or role\\\midrule
@@ -103,11 +111,22 @@ $L=-DdG$ & Pressure operator & Cell-center system\\\bottomrule
 The notation abbreviates the scalar equations; it does not introduce additional physics. Each occurrence of $A,b,d$ refers to the current assembly, including any wall, transient or relaxation modifications.
 \newpage
 \topic{5}{Pressure correction from the momentum equations}
-A star denotes a tentative velocity. A prime denotes a correction, not differentiation. Hold the momentum coefficients fixed while deriving one pressure correction. Given a pressure guess $p^k$, the predictor satisfies
+A star denotes a tentative velocity. The superscript $k$ labels the current steady coupling iteration, not a power or a physical time level. Given the current pressure estimate $p^k$, solve momentum for $q^*$ while holding its coefficients fixed:
+
 \[
 Aq^*=b-Gp^k.
 \]
-Write $q=q^*+q'$ and $p=p^k+p'$. Substituting these into the same momentum system and subtracting the predictor gives
+\textbf{Pressure correction and pressure differences.} Let $p_{\rm corr}$ be the pressure targeted by the current correction solve. Define
+\[
+p'=p_{\rm corr}-p^k,\qquad q'=q_{\rm corr}-q^*.
+\]
+A prime is an additive correction, not a derivative. The unrelaxed pressure change at that cell is
+\[
+\boxed{\Delta p=p_{\rm corr}-p^k=p'.}
+\]
+It is a change at a fixed cell during coupling. By contrast, $p_E-p_P$ is a spatial pressure difference between neighboring cells at the same iteration. Neither is the continuity residual $r_{c,P}$.
+
+Write $q_{\rm corr}=q^*+q'$ and $p_{\rm corr}=p^k+p'$. Substituting these into the same momentum system and subtracting the predictor gives
 \[
 Aq'=-Gp'.
 \]
@@ -127,17 +146,31 @@ v'_s&=-d_s\frac{p'_P-p'_S}{h}.
 \end{align*}
 The corrected velocity must satisfy cell continuity. Substituting the four face corrections gives
 \[
-0=\delta_P^*+\frac{u'_e-u'_w+v'_n-v'_s}{h},
-\qquad\delta_P^*=\frac{u_e^*-u_w^*+v_n^*-v_s^*}{h}.
+0=r_{c,P}^*+\frac{u'_e-u'_w+v'_n-v'_s}{h},
+\qquad r_{c,P}^*=\frac{u_e^*-u_w^*+v_n^*-v_s^*}{h}.
 \]
 This equation determines pressure corrections from the predictor's cell imbalance. Neglecting neighbor corrections is an approximation to momentum coupling, not permission to violate continuity. Repeated coupling iterations are required to recover the target steady momentum solution.
 \newpage
 \topic{6}{The cell pressure equation and its boundary data}
-For an interior cell, insert the four gradient expressions into corrected continuity and collect coefficients of pressure:
+At each face, the corrected velocity is tentative velocity plus its correction:
+\begin{align*}
+u_e&=u_e^*-\frac{d_e}{h}(p'_E-p'_P),&
+u_w&=u_w^*-\frac{d_w}{h}(p'_P-p'_W),\\
+v_n&=v_n^*-\frac{d_n}{h}(p'_N-p'_P),&
+v_s&=v_s^*-\frac{d_s}{h}(p'_P-p'_S).
+\end{align*}
+Insert these into $(u_e-u_w+v_n-v_s)/h=0$. The west and south terms change sign because their velocities enter cell outflow with minus signs:
+\begin{align*}
+0=r_{c,P}^*&-\frac{d_e}{h^2}(p'_E-p'_P)
++\frac{d_w}{h^2}(p'_P-p'_W)\\
+&-\frac{d_n}{h^2}(p'_N-p'_P)
++\frac{d_s}{h^2}(p'_P-p'_S).
+\end{align*}
+Collect the coefficients of each pressure correction and move the tentative residual to the right:
 \begin{align*}
 &\frac{d_e+d_w+d_n+d_s}{h^2}p'_P\\
 &\quad-\frac{d_ep'_E+d_wp'_W+d_np'_N+d_sp'_S}{h^2}
-=-\delta_P^*.
+=-r_{c,P}^*.
 \end{align*}
 The center coefficient is the sum of four face weights; each neighbor has a negative coefficient. The right side is the negative cell divergence of the tentative velocity. The same face weight must be shared by its two adjacent pressure cells.
 
@@ -149,17 +182,33 @@ Lp'&=-Dq^*.
 \end{align*}
 The positive-diagonal convention for $L$ explains the minus sign on the right. Once pressure is solved, the face correction $-dGp'$ cancels the computed cell imbalance, up to linear-solve error.
 
-\textbf{Impermeable walls.} The normal wall velocity is prescribed and is not an unknown interior face velocity. Its normal correction is zero. A prescribed wall-normal face contributes zero correction weight, so that face coefficient is omitted from the boundary-cell pressure row. Pressure assembly therefore has no correction flux across the external wall. This is equivalent to the appropriate homogeneous normal pressure-correction condition for a predictor that already satisfies wall-normal velocity.
+\newpage
+\topic{6 continued}{Boundary cells and pressure reference}
+\textbf{Impermeable walls.} The normal wall velocity is prescribed and is not an unknown interior face velocity. Its normal correction is zero. A prescribed wall-normal face contributes zero correction weight, so that face coefficient is omitted from the boundary-cell pressure row. Pressure assembly therefore has no correction flux across the external wall. For a cell adjacent to a stationary west wall, $u_w^*=u'_w=0$, so its row is
+\[
+\frac{d_e+d_n+d_s}{h^2}p'_P
+-\frac{d_ep'_E+d_np'_N+d_sp'_S}{h^2}=-r_{c,P}^*.
+\]
+There is no west pressure-neighbor term. At a corner, omit both prescribed wall-normal face weights. Zero normal correction does not mean zero pressure at every wall.
 
-\textbf{Pressure reference.} Adding a constant to every cell pressure changes no pressure gradient: $G\boldsymbol 1=0$. Consequently $L\boldsymbol 1=0$ and the closed-cavity pressure system has one arbitrary constant. The implementation pins one pressure cell during the solve and removes the mean afterward. The reported zero-mean pressure is a gauge choice, not an extra boundary force.
+\textbf{Pressure reference.} The vector $\boldsymbol 1$ contains one in every pressure entry. Adding a constant to every cell pressure changes no pressure gradient: $G\boldsymbol 1=0$. Consequently $L\boldsymbol 1=0$ and the closed-cavity pressure system has one arbitrary constant. Pinning means temporarily prescribing one pressure unknown, for example $p_{\rm ref\ cell}=0$, to make the linear solve unique. The implementation then removes the arithmetic cell mean:
+\[
+\overline p=\frac{1}{N^2}\sum_Pp_P,\qquad
+\widetilde p_P=p_P-\overline p.
+\]
+The same constant is subtracted from every cell, so
+\[
+\widetilde p_E-\widetilde p_P=(p_E-\overline p)-(p_P-\overline p)=p_E-p_P.
+\]
+The gradient and corrected velocity are unchanged. The reported zero-mean pressure is a gauge choice, not an extra boundary force.
 
 Tangential no-slip is enforced in momentum through wall diffusion. On the staggered grid it is distinct from the zero normal correction used in the cell mass balance.
 \newpage
 \topic{7}{Two-cell pressure-correction example}
-Consider two closed square cells with one shared vertical face. This is an algebraic conservation example, not a resolved cavity. Let $h=0.5$, tentative shared velocity $u^*=0.2$, and inverse momentum diagonal $d_e=0.1$. Positive shared velocity leaves cell 1 and enters cell 2. All external normal velocities are zero.
+Consider two closed square cells with one shared vertical face. This is an algebraic conservation example, not a resolved cavity. The pressure guess is initially zero in both cells. Let $h=0.5$, tentative shared velocity $u^*=0.2$, and inverse momentum diagonal $d_e=0.1$. Positive shared velocity leaves cell 1 and enters cell 2. All external normal velocities are zero.
 \[
-\delta_1^*=\frac{0.2}{0.5}=0.4,\qquad
-\delta_2^*=\frac{-0.2}{0.5}=-0.4.
+r_{c,1}^*=\frac{0.2}{0.5}=0.4,\qquad
+r_{c,2}^*=\frac{-0.2}{0.5}=-0.4.
 \]
 The shared pressure weight is $d_e/h^2=0.1/0.25=0.4$. Therefore
 \[
@@ -172,16 +221,16 @@ The first row gives $p'_1-p'_2=-1$. With zero mean, $p'_1+p'_2=0$, so $p'_1=-0.5
 u=u^*-d_e\frac{p'_2-p'_1}{h}
 =0.2-0.1\frac{0.5-(-0.5)}{0.5}=0.
 \]
-Both corrected divergences are zero. A common constant added to $p'_1$ and $p'_2$ leaves this calculation unchanged.
+Thus the unrelaxed changes are $\Delta p_1=p'_1=-0.5$ and $\Delta p_2=p'_2=0.5$. Both corrected divergences are zero. A common constant added to $p'_1$ and $p'_2$ leaves this calculation unchanged.
 
-\textbf{Pressure relaxation and velocity correction.} If only $\alpha_p=0.3$ of the velocity correction were applied, the shared velocity would remain $0.2-0.3(0.2)=0.14$. The two mass defects would then be $+0.28$ and $-0.28$. Therefore the conservative velocity correction is applied fully, even when the pressure field used in the next momentum predictor is relaxed.
+\textbf{Pressure relaxation and velocity correction.} The pressure relaxation factor $\alpha_p$ is the fraction of $p'$ added to the pressure stored for the next momentum predictor: $p^{k+1}=p^k+\alpha_p p'$. The stored pressure change is therefore $\alpha_p p'$, rather than the full unrelaxed $\Delta p=p'$. If only $\alpha_p=0.3$ of the velocity correction were applied, the shared velocity would remain $0.2-0.3(0.2)=0.14$. The two mass defects would then be $+0.28$ and $-0.28$. With $\alpha_p=0.3$, the stored pressures become $-0.15$ and $0.15$ from the zero initial guess, while the fully corrected shared velocity remains zero. This velocity need not yet satisfy momentum with the relaxed stored pressure; the next predictor and correction continue the coupling iteration. The conservative velocity correction is applied fully.
 
 \textbf{Local and global conservation.} The initial global sum was already $0.4-0.4=0$, but each cell was imbalanced. A zero total boundary flux alone cannot certify local continuity.
 \newpage
 \topic{8}{SIMPLE: steady pressure--velocity coupling}
 SIMPLE means Semi-Implicit Method for Pressure-Linked Equations. Its index $k$ counts steady coupling iterations, not physical time. Each iteration assembles convection from the latest velocity, solves a momentum predictor, then solves the pressure-correction equation.
 
-\textbf{Momentum under-relaxation.} Let $a_f^0$ be the original center coefficient of the current unrelaxed assembly. For $0<\alpha_u\leq1$, the relaxed row uses
+\textbf{Momentum under-relaxation.} Let $a_f^0$ be the original center coefficient of the current unrelaxed assembly. The superscript $0$ here identifies the coefficient before relaxation, not the initial physical time. The label $\mathrm{rel}$ means relaxed. The factor $\alpha_u$ controls momentum under-relaxation; for $0<\alpha_u\leq1$, the relaxed row uses
 \[
 a_f^{\rm rel}=\frac{a_f^0}{\alpha_u},\qquad
 b_f^{\rm rel}=b_f+\left(\frac{1}{\alpha_u}-1\right)a_f^0q_f^k.
@@ -240,7 +289,7 @@ The pressure equation follows by applying $D$ to the last line and imposing $Dq^
 
 \textbf{Purpose of the next correction.} Reconstructed velocity changes the neighbor terms in $H$. Recomputing $H$ and solving pressure again improves the consistency of reconstructed velocity with the same frozen momentum equation. Repeating a linear pressure solve with an unchanged right-hand side is not an additional PISO correction.
 
-After $N_i$ corrections, accept $q^{n+1}=q^{(N_i)}$ and $p^{n+1}=p^{(N_i)}$, then advance time once. The retained baseline has $N_i=2$. No momentum or pressure relaxation is applied by this transient branch.
+Let $N_i$ be the specified number of inner corrections. After $N_i$ corrections, accept $q^{n+1}=q^{(N_i)}$ and $p^{n+1}=p^{(N_i)}$, then advance time once. The retained baseline has $N_i=2$. No momentum or pressure relaxation is applied by this transient branch.
 
 The nonlinear convection coefficients remain those used for the initial predictor. That limitation motivates an outer coefficient-update loop.
 \newpage
@@ -252,7 +301,7 @@ b=\begin{bmatrix}2\\0\end{bmatrix},\quad
 D=\begin{bmatrix}1&-1\end{bmatrix},\quad
 G=\begin{bmatrix}-1\\1\end{bmatrix}.
 \]
-The scalar $p$ is one gauge-reduced pressure degree of freedom. Continuity is $Dq=q_1-q_2=0$. From $A$,
+Here $p$ is one independent scalar pressure variable after removing an arbitrary common pressure offset. It is not a separate pressure value in each physical cell. The matrices are prescribed to illustrate coupling algebra; they are not derived from the earlier two-cell geometry. Continuity is $Dq=q_1-q_2=0$. From $A$,
 \[
 d=\begin{bmatrix}1/4&0\\0&1/3\end{bmatrix},\quad
 R=\begin{bmatrix}0&1\\1&0\end{bmatrix},\quad L=-DdG=7/12.
@@ -277,7 +326,7 @@ The signs in these two velocity formulas follow from $G=(-1,1)^T$. Now $Dq^{(1)}
 r^{(1)}=Aq^{(1)}-b+Gp^{(1)}
 =\begin{bmatrix}32/77\\-24/77\end{bmatrix}.
 \]
-Mass balance is exact, but momentum consistency still needs improvement.
+The vector $r=Aq-b+Gp$ is the error in satisfying the momentum rows; exact satisfaction gives $r=0$. Its infinity norm is the largest absolute entry, $\|r\|_\infty=\max_i|r_i|$, where $i$ labels a momentum row. Mass balance is exact here, but momentum consistency still needs improvement.
 \newpage
 \topic{11 continued}{The second pressure correction}
 The corrected neighbor velocities change $H$, even though $A$ and $L$ are unchanged:
@@ -310,12 +359,12 @@ The right-hand side of the pressure equation changes from $-8/11$ to $-40/77$. T
 \topic{12}{PIMPLE: outer coefficient updates and inner corrections}
 PIMPLE combines an outer momentum-update loop with PISO inner corrections. Physical time levels are $n,n+1$; $\ell$ labels outer updates and $m$ labels inner pressure corrections. The previous physical velocity $q^n$ is stored once.
 
-At the start of outer pass $\ell$, assemble convection using the latest available corrected velocity $\widehat q^{(\ell)}$. This gives new matrices and sources
+At the start of outer pass $\ell$, assemble convection using the latest available corrected velocity $\widehat q^{(\ell)}$. With $I$ denoting the identity matrix, this gives new matrices and sources
 \[
 A^{(\ell)}=A_{\rm space}(\widehat q^{(\ell)})+I/\Delta t,
 \qquad b^{(\ell)}=b_{\rm wall}^{(\ell)}+q^n/\Delta t.
 \]
-Here $I$ is the identity matrix. The same $q^n$ appears in every outer pass. Wall contributions may depend on the current assembly, but the prescribed wall motion and old-time source belong to the same physical step.
+The same $q^n$ appears in every outer pass. Wall contributions may depend on the current assembly, but the prescribed wall motion and old-time source belong to the same physical step.
 
 The first outer pass starts from $q^n,p^n$. The symbol $\widehat p^{(\ell)}$ denotes the latest available pressure at the start of outer pass $\ell$. A new momentum predictor is solved using that pressure. Then inner corrections hold the current outer assembly fixed:
 \begin{align*}
@@ -324,7 +373,12 @@ H^{(\ell,m)}&=b^{(\ell)}-R^{(\ell)}q^{(\ell,m)},\\
 L^{(\ell)}p^{(\ell,m+1)}&=-D\left(d^{(\ell)}H^{(\ell,m)}\right),\\
 q^{(\ell,m+1)}&=d^{(\ell)}\left[H^{(\ell,m)}-Gp^{(\ell,m+1)}\right].
 \end{align*}
-The final corrected fields of one outer pass initialize the next. Rebuilding $A$ also rebuilds $d$, $R$ and $L$. Each inner solve computes the full pressure field in the chosen gauge, as in this PISO implementation.
+With $N_i$ inner corrections per outer pass, the initial and transfer rules are
+\begin{align*}
+\widehat q^{(1)}&=q^n,&\widehat p^{(1)}&=p^n,\\
+\widehat q^{(\ell+1)}&=q^{(\ell,N_i)},&\widehat p^{(\ell+1)}&=p^{(\ell,N_i)}.
+\end{align*}
+Thus the final corrected fields of one outer pass initialize the next. Rebuilding $A$ also rebuilds $d$, $R$ and $L$. Each inner solve computes the full pressure field in the chosen gauge, as in this PISO implementation.
 
 \textbf{Two different purposes.} Inner corrections improve pressure--velocity consistency for the current matrix. Outer passes update the nonlinear coefficients that matrix represents. Neither loop advances physical time. Only after the final outer pass are the accepted fields assigned to time $n+1$.
 
@@ -350,7 +404,7 @@ Outer pass & Frozen $s$ & Final $q_1=q_2$ & Final $p$ & Nonlinear defect\\\midru
 2 & $0.2189239332$ & $0.2119026446$ & $-0.8940486777$ & $1.53537\times10^{-3}$\\
 3 & $0.2119026446$ & $0.2122289655$ & $-0.8938855173$ & $7.14784\times10^{-5}$\\\bottomrule
 \end{tabular}\end{center}
-The reported defect evaluates the nonlinear equation using the final velocity:
+The reported defect is the largest absolute component of the nonlinear momentum residual, evaluated with coefficients rebuilt from the final velocity:
 \[
 \left\|A\left((q_1+q_2)/2\right)q-b+Gp\right\|_\infty.
 \]
@@ -380,7 +434,7 @@ For three outer and two inner correctors, PIMPLE uses three assemblies, six comp
 An iteration count alone cannot compare these costs. The retained runs use fixed corrector counts, rather than an adaptive inner tolerance. A steady stopping test is applied outside these operations.
 \newpage
 \topic{15}{Convergence, accuracy and the meaning of a residual}
-\textbf{Cell continuity.} The mass-balance diagnostic is $\max_P|\delta_P|$. It is evaluated from face velocities, not from an interpolated picture of cell-center velocity.
+\textbf{Cell continuity.} The mass-balance diagnostic is $\max_P|r_{c,P}|$: the largest absolute continuity residual among all pressure cells. It is evaluated from face velocities, not from an interpolated picture of cell-center velocity.
 
 \textbf{Momentum defect.} For a steady target, the implementation rebuilds the unrelaxed spatial coefficients using final velocity and evaluates the original momentum equations. For a transient step, a nonlinear step defect includes the same fixed old-time source:
 \[

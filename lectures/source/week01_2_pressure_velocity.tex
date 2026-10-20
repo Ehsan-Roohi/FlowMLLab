@@ -65,7 +65,7 @@ The finite-volume histories evaluate momentum and mass balance. The streamfuncti
 \begin{center}\includegraphics[width=.98\linewidth,height=94mm,keepaspectratio]{../../results/week01_2_formulations/centerlines.png}\end{center}
 The retained study includes all four methods at $h=1/32$, plus selected finer meshes. A converged coarse-grid streamfunction result can have large reference error. At $Re=1000$, its 128-cell-spacing relative profile errors are approximately 2.0\% for $u$ and 1.7\% for $v$, using $\|f_{\rm computed}-f_{\rm Ghia}\|_2/\|f_{\rm Ghia}\|_2$ at the tabulated samples.
 \begin{center}\includegraphics[width=.98\linewidth,height=66mm,keepaspectratio]{../../results/week01_2_formulations/runtime.png}\end{center}
-These are recorded sequential local solver-call timings. Reference errors, mesh spacing and native stopping definitions accompany them. The $Re=400$ all-point $v$ error retains the isolated published entry; a separately labeled sensitivity metric omits that sample without replacing its value.
+For an error vector $z$ over the reference samples, $\|z\|_2=\sqrt{\sum_j z_j^2}$; $j$ labels a sampled location. These are recorded sequential local solver-call timings. Reference errors, mesh spacing and native stopping definitions accompany them. The $Re=400$ all-point $v$ error retains the isolated published entry; a separately labeled sensitivity metric omits that sample without replacing its value.
 \newpage
 \topic{20}{Mesh refinement and recirculation}
 \begin{center}\includegraphics[width=.99\linewidth,height=150mm,keepaspectratio]{../../results/week01_2_formulations/refinement.png}\end{center}

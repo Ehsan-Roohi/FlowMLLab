@@ -7,7 +7,7 @@ An extension after Week 1 (and optionally Week 1.1), connecting finite-volume co
 [Expanded comparison and teaching supplement](COMPARISON_AND_TEACHING.md)
 adds three algorithm flowcharts, a primary-source literature review, a measured
 15-configuration one-step coupling experiment, and a staged higher-Re and
-transient-accuracy plan. The lecture contains 25 pages. A smaller nonlinear
+transient-accuracy plan. The lecture contains 26 pages. A smaller nonlinear
 step defect is distinguished explicitly from a smaller physical time error.
 
 ## Learning outcomes
@@ -202,7 +202,7 @@ Verify archives and execute the retained-results notebook with
 
 ## Equations and algorithm guide
 
-The notebook and 25-page lecture define continuity, both momentum components, all matrix symbols, pressure correction and the SIMPLE/PISO/PIMPLE loops. Re=100, 400 and 1000 timing comparisons include the independent streamfunction-vorticity method. Native FD and FV residuals appear on separate axes.
+The notebook and 26-page lecture define continuity, both momentum components, all matrix symbols, pressure correction and the SIMPLE/PISO/PIMPLE loops. Re=100, 400 and 1000 timing comparisons include the independent streamfunction-vorticity method. Native FD and FV residuals appear on separate axes.
 
 [Teaching revision validation](../../results/week01_2_formulations/teaching_revision_validation.json) records the notebook controller audit and PDF checks.
 
@@ -210,7 +210,7 @@ The notebook and 25-page lecture define continuity, both momentum components, al
 
 The lecture develops scalar cell mass balance and face momentum before introducing matrix operators. It derives the pressure-correction stencil, explains SIMPLE relaxation, and separates PISO inner corrections from PIMPLE outer coefficient updates.
 
-Pages 12-13 calculate two PISO corrections; pages 14-15 explain PIMPLE and calculate a nonlinear coefficient example. The notebook runs both algebraic examples and shows their mass and momentum defects. These examples illustrate coupling and are distinct from the retained cavity simulations.
+Pages 13-14 calculate two PISO corrections; pages 15-16 explain PIMPLE and calculate a nonlinear coefficient example. The notebook runs both algebraic examples and shows their mass and momentum defects. These examples illustrate coupling and are distinct from the retained cavity simulations.
 
 The references include Patankar, Versteeg and Malalasekera, Ferziger et al., Moukalled et al., the original Issa PISO paper and official algorithm documentation.
 

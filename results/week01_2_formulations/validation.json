@@ -54,9 +54,10 @@
     "errors": 0,
     "png_outputs": 14
   },
-  "notebook_sha256": "e63c259e2f12c898fb2c28201b4f95aee02b15dd2160bf268be0021c53a11b59",
+  "notebook_sha256": "975b942023269bb93d980aec67a8a5f86fd950be61a3b408ff4a53b9d7a24e16",
   "unit_tests_passed": 7,
   "fresh_notebook_branch": "Adapter exercised by retained scientific runs; opt-in notebook branch compiled, not separately rerun",
   "hosted_colab_execution": false,
-  "retained_initial_attempts_hash_verified": 2
+  "retained_initial_attempts_hash_verified": 2,
+  "notation_revision": "Only lesson Markdown changed; code and executed outputs identical to prior published version."
 }

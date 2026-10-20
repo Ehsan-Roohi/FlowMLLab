@@ -47,7 +47,7 @@ exact_s = (np.sqrt(97.)-9.) / 4.
 print("Exact nonlinear q1=q2:", exact_s, "; pressure:", exact_s/2.-1.)
 """
 
-REFERENCES="""## 2.17 Further reading
+REFERENCES="""## 2.18 Further reading
 
 - [Patankar (1980), Numerical Heat Transfer and Fluid Flow](https://www.routledge.com/Numerical-Heat-Transfer-and-Fluid-Flow/Patankar/p/book/9780891165224): staggered grids and SIMPLE.
 - [Versteeg and Malalasekera (2007), An Introduction to Computational Fluid Dynamics](https://www.pearson.com/en-gb/subject-catalog/p/Versteeg-An-Introduction-to-Computational-Fluid-Dynamics-The-Finite-Volume-Method-2nd-Edition/P200000005670?view=educator): finite-volume transport and pressure correction.
