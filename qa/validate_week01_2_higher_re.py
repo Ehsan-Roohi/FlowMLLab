@@ -15,7 +15,7 @@ def main():
         'display_name':'Week 1.2 audit','language':'python','env':{'PYTHONPATH':os.environ.get('PYTHONPATH',''),'OPENBLAS_NUM_THREADS':'1','OMP_NUM_THREADS':'1'}}))
     note=ROOT/'notebooks/week01_2/W1_2_Cavity_Pressure_Velocity.ipynb'
     n=nbformat.read(note,as_version=4);default=execute(n,[str(kernels)])
-    assert default=={'executed_code_cells':7,'errors':0,'png_outputs':14},default
+    assert default=={'executed_code_cells':8,'errors':0,'png_outputs':14},default
     nbformat.write(n,note);note.write_bytes(note.read_bytes().replace(b'\r\n',b'\n'))
     # Exercise the fresh interactive branch on a deliberately tiny integration
     # test mesh, not as extra physical accuracy evidence.

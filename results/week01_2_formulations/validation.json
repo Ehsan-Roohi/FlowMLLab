@@ -50,14 +50,13 @@
   "executed_core_source_bundle_verified": true,
   "source_bundle_sha256": "dcd88745f0001806501f37fa674e9c8a08339ecf9aa6f148ee6caac92c0f6b94",
   "notebook_execution": {
-    "executed_code_cells": 7,
+    "executed_code_cells": 8,
     "errors": 0,
     "png_outputs": 14
   },
-  "notebook_sha256": "db9a979987bfe21e82518bf2b722704488225b96f7549b440b7763ad56d08d61",
+  "notebook_sha256": "e63c259e2f12c898fb2c28201b4f95aee02b15dd2160bf268be0021c53a11b59",
   "unit_tests_passed": 7,
   "fresh_notebook_branch": "Adapter exercised by retained scientific runs; opt-in notebook branch compiled, not separately rerun",
   "hosted_colab_execution": false,
-  "retained_initial_attempts_hash_verified": 2,
-  "fresh_notebook_controller_audit": "Four-method controller executed with hash-verified retained fixtures; see teaching_revision_validation.json. No new CFD timing claimed."
+  "retained_initial_attempts_hash_verified": 2
 }

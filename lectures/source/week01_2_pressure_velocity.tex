@@ -1,0 +1,123 @@
+\documentclass[11pt]{article}
+\usepackage[a4paper,margin=21mm,headheight=15pt]{geometry}
+\usepackage{amsmath,amssymb,graphicx,booktabs,array,xcolor,fancyhdr,enumitem,hyperref}
+\usepackage{fontspec}
+\setmainfont{Times New Roman}
+\setsansfont{Times New Roman}
+\setmonofont{Consolas}[Scale=MatchLowercase]
+\usepackage[italic]{mathastext}
+\hypersetup{colorlinks=true,linkcolor=black,urlcolor=black}
+\pagestyle{fancy}\fancyhf{}\lhead{FlowMLLab | Week 1.2}\rhead{Pressure--velocity coupling}\cfoot{\thepage}
+\setlength{\emergencystretch}{3em}
+\setlength{\parindent}{0pt}\setlength{\parskip}{7pt}
+\setlist{nosep,leftmargin=*}
+\newcommand{\topic}[2]{\section*{#1\quad #2}}
+\begin{document}
+\begin{center}
+\vspace*{12mm}
+{\Large FlowMLLab | Week 1.2}\\[12mm]
+{\LARGE\bfseries Pressure--Velocity Coupling}\\[5mm]
+{\Large SIMPLE, PISO and PIMPLE}\\[4mm]
+{\large Finite-volume equations and the lid-driven cavity}\\[8mm]
+Ehsan Roohi
+\end{center}
+\vspace{8mm}
+\textbf{The central problem.} Momentum determines how fluid accelerates under pressure and viscous forces. Continuity constrains the resulting velocity. Pressure--velocity coupling obtains fields that satisfy both requirements on the same grid.
+
+\textbf{Prerequisites.} Continuity and component momentum equations, finite differences, a linear system, and the Week 1 streamfunction--vorticity cavity example. Matrix notation is introduced after the scalar finite-volume equations.
+
+\textbf{Learning outcomes.} Derive a cell pressure-correction equation; interpret predictor and corrected velocities; distinguish steady iteration, inner correction and outer correction; evaluate continuity, momentum defects, accuracy and computational work.
+
+\begin{center}\begin{tabular}{ll}\toprule
+Sections & Topics\\\midrule
+1--4 & Conservation laws, staggered grid, momentum coefficients\\
+5--8 & Pressure correction, conservation example and SIMPLE\\
+9--11 & Backward Euler, PISO and a numerical correction example\\
+12--15 & PIMPLE, nonlinear coefficient updates and convergence\\
+16--21 & Recorded cavity comparisons and coupling study\\
+22--23 & Notebook controls, exercises and references\\\bottomrule
+\end{tabular}\end{center}
+\textbf{Scope.} Two-dimensional, incompressible, laminar flow on a uniform staggered grid. The retained calculations compare $Re=100$, 400 and 1000. Higher-$Re$ spatial accuracy and transient accuracy require their own checks; convergence of a two-dimensional steady solver does not establish the physical stability of a three-dimensional flow.
+\newpage
+\input{week01_2_pressure_velocity_core.tex}
+\newpage
+\topic{16}{Recorded cavity accuracy and runtime at $Re=100$}
+\begin{center}\includegraphics[width=.95\linewidth,height=64mm,keepaspectratio]{../../results/week01_2_pressure_velocity/figures/centerlines.png}\end{center}
+The Ghia velocity markers are independent reference samples. The three finite-volume coupling methods use the same spatial equations. Their converged fields agree closely; differences from the finite-difference formulation also include spatial-discretization differences. The displayed 32/64 finite-volume cell counts correspond to 33/65 finite-difference nodes.
+\begin{center}\includegraphics[width=.91\linewidth,height=73mm,keepaspectratio]{../../results/week01_2_pressure_velocity/figures/runtime.png}\end{center}
+The bars include all four formulations and use recorded solver-call seconds. The finite-difference reference has its own stopping norm and recovers pressure afterward. These measurements depend on the host, implementation, mesh, relaxation and stopping targets; they do not establish a universal fastest method.
+
+The finite-difference centerline errors decrease on refinement in this retained comparison. The finite-volume Ghia errors are not monotone between the two supplied grids. That behavior is retained rather than interpreted as proof of grid independence. More resolution and reference evidence are needed for an asymptotic accuracy claim.
+\newpage
+\topic{17}{Velocity structure and vorticity}
+\begin{center}\includegraphics[width=.98\linewidth,height=85mm,keepaspectratio]{../../results/week01_2_pressure_velocity/figures/speed.png}\end{center}
+Speed is $|\boldsymbol u|=\sqrt{u^2+v^2}$ and signed vorticity is $\omega=\partial v/\partial x-\partial u/\partial y$. The moving lid drives a clockwise primary circulation and a lower-cavity return flow. Black streamlines follow computed velocity; they are not vorticity contours. Small corner eddies depend on resolution and convergence as well as display density.
+\begin{center}\includegraphics[width=.98\linewidth,height=85mm,keepaspectratio]{../../results/week01_2_pressure_velocity/figures/omega.png}\end{center}
+Signed fields use a common symmetric-logarithmic color scale across methods, resolving interior values while retaining strong wall gradients. Colorbar values remain physical nondimensional field values. Similar converged fields are expected when the same discrete steady equations are solved; the comparison is useful for checking consistency.
+\newpage
+\topic{18}{Pressure and native convergence histories}
+\begin{center}\includegraphics[width=.98\linewidth,height=89mm,keepaspectratio]{../../results/week01_2_pressure_velocity/figures/p.png}\end{center}
+All pressures are reported with zero mean. Pressure gradients, rather than the arbitrary mean, affect velocity. Differences near the discontinuous lid corners should not be interpreted as reference-pressure validation. Ghia supplies velocity data, not pressure data.
+\begin{center}\includegraphics[width=.98\linewidth,height=70mm,keepaspectratio]{../../results/week01_2_pressure_velocity/figures/convergence.png}\end{center}
+The finite-volume histories evaluate momentum and mass balance. The streamfunction solver's native vorticity-update norm is kept separate in the notebook because it is a different quantity. Timing comparisons still include that formulation. A small relaxed update alone is not a momentum-equation convergence test.
+\newpage
+\topic{19}{Accuracy and recorded cost at $Re=400$ and 1000}
+\begin{center}\includegraphics[width=.98\linewidth,height=94mm,keepaspectratio]{../../results/week01_2_formulations/centerlines.png}\end{center}
+The retained study includes all four methods at $h=1/32$, plus selected finer meshes. A converged coarse-grid streamfunction result can have large reference error. At $Re=1000$, its 128-cell-spacing relative profile errors are approximately 2.0\% for $u$ and 1.7\% for $v$, using $\|f_{\rm computed}-f_{\rm Ghia}\|_2/\|f_{\rm Ghia}\|_2$ at the tabulated samples.
+\begin{center}\includegraphics[width=.98\linewidth,height=66mm,keepaspectratio]{../../results/week01_2_formulations/runtime.png}\end{center}
+These are recorded sequential local solver-call timings. Reference errors, mesh spacing and native stopping definitions accompany them. The $Re=400$ all-point $v$ error retains the isolated published entry; a separately labeled sensitivity metric omits that sample without replacing its value.
+\newpage
+\topic{20}{Mesh refinement and recirculation}
+\begin{center}\includegraphics[width=.99\linewidth,height=150mm,keepaspectratio]{../../results/week01_2_formulations/refinement.png}\end{center}
+Each panel states Reynolds number, formulation and spacing. The sampled primary-vortex location and resolved corner circulation change with refinement. More inner pressure corrections cannot reproduce an unresolved boundary layer or secondary vortex.
+
+The fine-grid study is selected rather than a complete four-method refinement matrix. A result at one mesh does not demonstrate asymptotic order. Native steady-equation checks, Ghia errors and recorded initial failed attempts remain available with the data.
+
+\textbf{Computational cost.} Fine grids and higher Reynolds numbers may require substantially longer runtimes and more memory. Students should begin with the supplied coarse case and estimate cost before selecting 64 or 128 cells on a laptop or Colab runtime.
+\newpage
+\topic{21}{A measured nonlinear coupling effect in the cavity}
+\begin{center}\includegraphics[width=.99\linewidth,height=105mm,keepaspectratio]{../../results/week01_2_pressure_velocity/figures/coupling_step_study.png}\end{center}
+Fifteen configurations start from rest at $Re=100$ on 32 cells per side. Each takes one backward-Euler step. At each fixed $\Delta t$, the study varies inner pressure corrections and outer coefficient updates.
+
+The nonlinear step diagnostic rebuilds convection from the final velocity, while the frozen-predictor diagnostic uses the coefficients assembled for the predictor. Extra PISO corrections can reduce pressure--velocity inconsistency without eliminating the error from frozen nonlinear coefficients. PIMPLE also updates those coefficients, with additional momentum assembly and solves.
+
+All retained cases in this one-step study satisfy a cell-divergence defect below $10^{-9}$. The remaining nonlinear momentum defects distinguish the correction strategies. Their differences demonstrate algebraic coupling behavior for this setup, not the accuracy of a transient trajectory.
+
+Each panel has its own logarithmic vertical range. For a temporal-accuracy study, reduce $\Delta t$ and compare at matched physical times. More correctors and a stable larger time step do not establish an accurate startup history or a universal wall-time advantage.
+\newpage
+\topic{22}{Notebook controls and student analysis}
+The notebook presents the same derivations and runnable algebraic examples, followed by retained CFD results. Fresh CFD runs are opt-in so the default lesson can be inspected without repeating every expensive calculation.
+\begin{center}\begin{tabular}{ll}\toprule
+Control & Purpose\\\midrule
+\texttt{RUN\_NEW} & Fresh baseline calculation at $Re=100$\\
+\texttt{RUN\_HIGHER\_RE} & Fresh experimental higher-$Re$ calculation\\
+\texttt{HIGHER\_METHOD} & One method or all four formulations\\
+\texttt{HIGHER\_CELLS} & Number of cells per side / matched FD spacing\\
+\texttt{RUN\_STREAMFUNCTION} & Independent FD refinement experiment\\\bottomrule
+\end{tabular}\end{center}
+\textbf{Conservation.} Derive the four-face cell pressure equation and verify the two-cell example. Explain why a zero global flux does not guarantee zero cell imbalance. Add a constant pressure offset and check that velocities do not change.
+
+\textbf{PISO.} Reproduce both corrections of the frozen-matrix example. Identify which quantities change between correctors. Explain why zero divergence after the first correction does not imply zero momentum defect.
+
+\textbf{PIMPLE.} Reproduce the three outer passes of the nonlinear example. Evaluate the nonlinear defect using coefficients rebuilt from the final velocity. Explain why the old-time source must stay fixed. Compare one outer pass with PISO.
+
+\textbf{Cavity comparison.} Start at $Re=100$ and matching mesh spacing. Record final cell divergence, unrelaxed momentum defect, both Ghia profile errors, runtime, and solve counts. Change one coupling setting at a time; keep spatial equations and final accuracy targets fixed.
+
+\textbf{Higher Reynolds number.} At $Re=400$ and 1000, separate spatial refinement from coupling changes. Retain failed configurations. State the cost before proposing a fine-grid run. Native FD and FV residual magnitudes must not be interpreted as the same error.
+
+\textbf{Transient extension.} Specify a final physical time, run a sequence of halved time steps, and compare common field or phase errors. Keep the time scheme fixed when comparing coupling algorithms. The current steady SIMPLE iteration is not a transient trajectory.
+\newpage
+\topic{23}{References}
+The textbook treatments develop finite-volume conservation, staggered pressure--velocity coupling and pressure correction. The paper and official algorithm documentation provide the PISO origin and practical inner/outer-loop distinctions.
+\begin{enumerate}[label={[\arabic*]}]
+\item S. V. Patankar (1980). \emph{Numerical Heat Transfer and Fluid Flow}. Hemisphere/Taylor \& Francis. \href{https://www.routledge.com/Numerical-Heat-Transfer-and-Fluid-Flow/Patankar/p/book/9780891165224}{Publisher}. Foundational pressure correction, staggered grids and SIMPLE.
+\item H. K. Versteeg and W. Malalasekera (2007). \emph{An Introduction to Computational Fluid Dynamics: The Finite Volume Method}, 2nd ed. Pearson. \href{https://www.pearson.com/en-gb/subject-catalog/p/Versteeg-An-Introduction-to-Computational-Fluid-Dynamics-The-Finite-Volume-Method-2nd-Edition/P200000005670?view=educator}{Publisher}. Finite-volume transport and pressure--velocity coupling.
+\item J. H. Ferziger, M. Peri\'c and R. L. Street (2020). \emph{Computational Methods for Fluid Dynamics}, 4th ed. Springer. \href{https://doi.org/10.1007/978-3-319-99693-6}{doi:10.1007/978-3-319-99693-6}. Incompressible-flow solution methods and numerical errors.
+\item F. Moukalled, L. Mangani and M. Darwish (2016). \emph{The Finite Volume Method in Computational Fluid Dynamics}. Chapter 15, ``Fluid Flow Computation: Incompressible Flows,'' pp. 561--654. \href{https://doi.org/10.1007/978-3-319-16874-6_15}{Chapter DOI}. Staggered/collocated arrangements and SIMPLE/PISO derivations.
+\item R. I. Issa (1986). ``Solution of the implicitly discretised fluid flow equations by operator-splitting.'' \emph{Journal of Computational Physics} 62(1), 40--65. \href{https://doi.org/10.1016/0021-9991(86)90099-9}{doi:10.1016/0021-9991(86)90099-9}. Original PISO formulation.
+\item CFD Direct, \emph{OpenFOAM User Guide v13}, sections 4.6.7--4.6.8. \href{https://doc.cfd.direct/openfoam/user-guide-v13/fvsolution}{Solution and algorithm control}. Pressure reference, correctors and outer correctors. The teaching solver's fixed-loop MAC implementation is specified in the preceding equations; software variants need not have identical defaults.
+\item OpenCFD, \emph{Pressure--velocity coupling}. \href{https://doc.openfoam.com/2306/tools/processing/solvers/pressure-velocity/}{Official equation decomposition}. Momentum diagonal and neighbor-source representation.
+\item U. Ghia, K. N. Ghia and C. T. Shin (1982). ``High-Re solutions for incompressible flow using the Navier--Stokes equations and a multigrid method.'' \emph{JCP} 48, 387--411. \href{https://doi.org/10.1016/0021-9991(82)90058-4}{doi:10.1016/0021-9991(82)90058-4}. Velocity benchmark samples.
+\end{enumerate}
+The examples use a staggered grid. Collocated-grid interpolation and Rhie--Chow stabilization are separate topics and are not implemented by this solver.
+\end{document}

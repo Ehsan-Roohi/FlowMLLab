@@ -2,14 +2,12 @@
 
 [Open in Colab](https://colab.research.google.com/github/Ehsan-Roohi/FlowMLLab/blob/main/notebooks/week01_2/W1_2_Cavity_Pressure_Velocity.ipynb) | [Lecture](../../lectures/week01_2_pressure_velocity.pdf) | [Executed comparison](../../results/week01_2_pressure_velocity/README.md)
 
-An independent extension after Week 1 (and optionally Week 1.1). All original
-Week-1 notebooks, source modules and retained results remain unchanged.
-The initial qualified case is **Re=100 only**.
+An extension after Week 1 (and optionally Week 1.1), connecting finite-volume conservation to pressure correction. The baseline case is Re=100; separate retained experiments compare Re=400 and 1000.
 
 [Expanded comparison and teaching supplement](COMPARISON_AND_TEACHING.md)
 adds three algorithm flowcharts, a primary-source literature review, a measured
 15-configuration one-step coupling experiment, and a staged higher-Re and
-transient-accuracy plan. The lecture now contains 19 pages. A smaller nonlinear
+transient-accuracy plan. The lecture contains 25 pages. A smaller nonlinear
 step defect is distinguished explicitly from a smaller physical time error.
 
 ## Learning outcomes
@@ -207,3 +205,13 @@ Verify archives and execute the retained-results notebook with
 The notebook and 25-page lecture define continuity, both momentum components, all matrix symbols, pressure correction and the SIMPLE/PISO/PIMPLE loops. Re=100, 400 and 1000 timing comparisons include the independent streamfunction-vorticity method. Native FD and FV residuals appear on separate axes.
 
 [Teaching revision validation](../../results/week01_2_formulations/teaching_revision_validation.json) records the notebook controller audit and PDF checks.
+
+## Lecture and algebra examples
+
+The lecture develops scalar cell mass balance and face momentum before introducing matrix operators. It derives the pressure-correction stencil, explains SIMPLE relaxation, and separates PISO inner corrections from PIMPLE outer coefficient updates.
+
+Pages 12-13 calculate two PISO corrections; pages 14-15 explain PIMPLE and calculate a nonlinear coefficient example. The notebook runs both algebraic examples and shows their mass and momentum defects. These examples illustrate coupling and are distinct from the retained cavity simulations.
+
+The references include Patankar, Versteeg and Malalasekera, Ferziger et al., Moukalled et al., the original Issa PISO paper and official algorithm documentation.
+
+Editable source: [LaTeX lecture](../../lectures/source/week01_2_pressure_velocity.tex) and [core equations](../../lectures/source/week01_2_pressure_velocity_core.tex). Build with `python qa/build_week01_2_assets.py` followed by `python qa/build_week01_2_lecture.py`; Tectonic and licensed Times New Roman are required. [Lesson validation](../../results/week01_2_formulations/coupling_lesson_validation.json).

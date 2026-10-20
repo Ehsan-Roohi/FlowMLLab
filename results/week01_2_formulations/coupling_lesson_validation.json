@@ -1,0 +1,24 @@
+{
+  "notebook": {
+    "code_cells": 8,
+    "png_outputs": 14,
+    "errors": 0,
+    "sha256": "e63c259e2f12c898fb2c28201b4f95aee02b15dd2160bf268be0021c53a11b59"
+  },
+  "examples": {
+    "two_cell_conservation": true,
+    "piso_exact_fractions_checked": true,
+    "pimple_three_outer_passes_checked": true,
+    "algebra_examples_are_cavity_simulations": false
+  },
+  "lesson_update_idempotent": true,
+  "pdf": {
+    "pages": 25,
+    "sha256": "8edba8373004d6f11d846c0c10404149e0fdf14228068f10143ca18a14a88325",
+    "times_new_roman_present": true,
+    "all_pages_rendered_and_reviewed": true,
+    "text_within_horizontal_page_bounds": true
+  },
+  "source_access": "Publisher metadata and chapter previews; PISO paper abstract; official pressure-velocity algorithm documentation. Full textbook text was not downloaded.",
+  "scientific_scope": "Teaching and presentation update; solver physics and retained CFD trajectories unchanged. Notebook executed locally; hosted Colab not executed."
+}
