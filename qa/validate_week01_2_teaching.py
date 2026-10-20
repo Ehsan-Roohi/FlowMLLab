@@ -42,7 +42,7 @@ fixture=n.v4.new_notebook(cells=[n.v4.new_code_cell(setup),n.v4.new_code_cell(so
 counts=execute(fixture,[str(ROOT/'tmp/week01_2_kernels')])
 assert counts=={'executed_code_cells':3,'errors':0,'png_outputs':3},counts
 pdfs={}
-for name,expected in [('week01_numerical_foundations',27),('week01_2_pressure_velocity',25)]:
+for name,expected in [('week01_numerical_foundations',33),('week01_2_pressure_velocity',25)]:
     p=ROOT/'lectures'/f'{name}.pdf';r=PdfReader(p)
     assert len(r.pages)==expected
     fonts=set()

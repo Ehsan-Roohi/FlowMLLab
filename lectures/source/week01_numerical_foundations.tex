@@ -206,47 +206,7 @@ This verifies the sign and provides smooth fields for checking derivative code. 
 \textbf{Why $\psi=0$ on the cavity walls?} Impermeability makes $\psi$ constant along each wall. The connected cavity boundary permits one common constant; choose zero because adding a constant leaves velocity unchanged. Tangential no-slip is additional information, enforced through the wall-vorticity relation on page~\pageref{sec:boundary}. Specifying $\psi=0$ alone does not impose a stationary wall.
 \checkpoint{Explain why solving the Poisson equation once cannot determine the flow if its right-hand side $\omega$ is still unknown.}
 \newpage
-\topic{6}{Optional derivation: vorticity transport}\label{sec:transport}
-You may skip the product-rule steps on a first reading, but read the boxed transport equation and its physical interpretation: both are needed for the time update in Section~9.
-Use the dimensionless momentum equations from page~\pageref{sec:scales}. Take $\partial_x$ of vertical momentum and subtract $\partial_y$ of horizontal momentum. Smoothness allows mixed derivatives to commute.
-
-\textbf{Step 1: time and pressure.}
-\[
-\partial_xv_t-\partial_yu_t=\omega_t,\qquad
--p_{yx}+p_{xy}=0.
-\]
-Pressure disappears because the curl of a gradient is zero; pressure itself need not be uniform or zero.
-
-\textbf{Step 2: expand convection.} Applying the product rule gives
-\begin{align*}
-\partial_x(uv_x+vv_y)-\partial_y(uu_x+vu_y)
-={}&u(v_{xx}-u_{xy})+v(v_{xy}-u_{yy})\\
-&+u_xv_x+v_xv_y-u_yu_x-v_yu_y\\
-={}&u\omega_x+v\omega_y+(u_x+v_y)(v_x-u_y)\\
-={}&u\omega_x+v\omega_y.
-\end{align*}
-The last equality uses continuity, $u_x+v_y=0$. More explicitly, the last four product-rule terms factor as
-\[
-u_xv_x+v_xv_y-u_yu_x-v_yu_y
-=(u_x+v_y)(v_x-u_y)=0\cdot\omega=0.
-\]
-Their sum vanishes; none of these individual products is required to be zero. This is the cancellation that should not be skipped when deriving the equation for the first time.
-
-\textbf{Step 3: viscous diffusion.} Since $Re$ is constant,
-\[
-\frac{1}{Re}\left[\partial_x\nabla^2v-\partial_y\nabla^2u\right]=\frac{1}{Re}\nabla^2\omega.
-\]
-Combining the three steps yields
-\begin{equation}\boxed{\omega_t+u\omega_x+v\omega_y=\frac{1}{Re}(\omega_{xx}+\omega_{yy}).}\label{eq:transport}\end{equation}
-In dimensional variables the diffusion coefficient is $\nu$, not $1/Re$.
-
-\textbf{Physical reading.} Local vorticity changes through advection by the velocity field and diffusion by viscosity. Moving and stationary no-slip walls supply boundary vorticity. There is no vortex-stretching term for the strictly two-dimensional velocity field assumed here. Compressible, variable-property, three-dimensional, or forced flows can require additional terms.
-In detail, the three-dimensional stretching term is $(\boldsymbol\omega\cdot\nabla)\boldsymbol u$. Here $\boldsymbol\omega=(0,0,\omega)$ and $\partial_z\boldsymbol u=0$, so this term equals $\omega\partial_z\boldsymbol u=0$. This geometric argument is distinct from the continuity cancellation above. The viscous curl $Re^{-1}\nabla^2\omega$ does \emph{not} vanish. Section~12 shows why the \emph{divergence} of viscous diffusion vanishes in the pressure derivation; these are different operations.
-
-\textbf{Why this formulation helps.}\label{sec:pressure-why} In the original equations, pressure adjusts the velocity to satisfy incompressibility and boundary conditions. Taking the curl removes its gradient from the transport equation above; defining a streamfunction then supplies the velocities while satisfying continuity. These are two distinct operations. The unknowns are now $\psi$ and $\omega$, coupled through Eq.~\eqref{eq:poisson}; the pressure is not assumed zero. When pressure contours or forces are needed, recover pressure afterward as described in Section~12.
-
-This is convenient for the simply connected two-dimensional cavity, but it still requires a Poisson solve and careful wall-vorticity data. It does not automatically improve speed or accuracy. A single scalar streamfunction is not a general three-dimensional velocity representation; pressure--velocity methods are useful alternatives for general geometries.
-\checkpoint{Which operation removes pressure, and which representation satisfies continuity? The curl of momentum removes pressure; the streamfunction satisfies continuity.}
+\input{week01_transport_derivation.tex}
 \newpage
 \input{week01_finite_differences.tex}
 \newpage

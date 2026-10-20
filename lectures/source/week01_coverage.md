@@ -81,7 +81,7 @@ figure/record are retained from the earlier fresh execution. The new arithmetic
 examples (cubic slopes, quartic curvature, a quadratic 2D Laplacian, a four-node
 Poisson system, and a single vorticity update) were checked independently.
 
-## Pressure follow-up: 27-page edition
+## Historical pressure follow-up: 27-page edition
 
 The core coverage map above still applies. Pages 24–27 add the reason for
 pressure elimination, a full componentwise pressure-Poisson derivation,
@@ -91,3 +91,14 @@ and the directly relevant Ghia et al. (1982) cavity benchmark; the notebook's
 Jacobi/Euler algorithm is explicitly distinguished from Ghia's CSI-MG method.
 The prior 23-page PDF is preserved in `lectures/versions/week01_23pages.pdf`;
 the current edition has its own 27-page filename in that same directory.
+
+## Current step-by-step edition: 33 pages
+
+The current [lecture](../week01_numerical_foundations.pdf) expands the first-reading path:
+
+- Pages 7-9: continuity and both momentum equations, full differentiation before simplification, mixed-derivative commutation, product rule and vorticity diffusion.
+- Page 10: the separate divergence operation and four-term viscous cancellation.
+- Pages 14-15: directional Taylor expansions, origins of -2 and -4, the five-point stencil and matching array slices.
+- Pages 16-18: rearrange the Poisson equation, locate four unknowns, write every node equation, assemble each matrix row, substitute the exact solution and compute Jacobi sweeps.
+
+The cavity notebook contains the same derivations. Its solver code and retained outputs are unchanged in this revision. [Algebra and consistency checks](../../results/week01_foundations/derivation_revision_validation.json).
