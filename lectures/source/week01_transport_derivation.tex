@@ -1,6 +1,6 @@
-% Explicit first-reading derivation; full partial-derivative notation.
-\topic{6}{Derive vorticity transport from momentum}\label{sec:transport}
-\textbf{Start from the equations we are transforming.} Here $u(x,y,t)$ is horizontal velocity, $v(x,y,t)$ is vertical velocity, and $p(x,y,t)$ is pressure. All are dimensionless as defined in Section~3. Density and viscosity are constant, there is no body force, and $Re=UL/\nu$. The incompressible Navier--Stokes system is
+% Vorticity transport and pressure-Poisson derivations.
+\topic{6}{Vorticity transport from momentum conservation}\label{sec:transport}
+\textbf{Governing equations.} Here $u(x,y,t)$ is horizontal velocity, $v(x,y,t)$ is vertical velocity, and $p(x,y,t)$ is pressure. All are dimensionless as defined in Section~3. Density and viscosity are constant, there is no body force, and $Re=UL/\nu$. The incompressible Navier--Stokes system is
 \begin{equation*}
 \underbrace{\frac{\partial u}{\partial x}+\frac{\partial v}{\partial y}=0}_{\text{continuity: conservation of mass}}.
 \end{equation*}
@@ -21,13 +21,13 @@ The two momentum equations are
 \end{equation*}
 Local acceleration, convection, pressure acceleration, and viscous diffusion appear in that order in each momentum equation. Continuity is an additional constraint on the same velocity fields.
 
-\textbf{Define the quantity we want to evolve.} The out-of-plane vorticity is
+\textbf{Vorticity.} The out-of-plane vorticity is
 \[
 \omega=\frac{\partial v}{\partial x}-\frac{\partial u}{\partial y}.
 \]
 We want a time-evolution equation for this particular difference of velocity derivatives. Therefore differentiate the \emph{entire vertical momentum equation} with respect to $x$, differentiate the \emph{entire horizontal momentum equation} with respect to $y$, and subtract the second result from the first. This operation is the out-of-plane component of the curl of momentum.
 
-\textbf{Write the complete transformed equation before simplifying.}
+\textbf{Curl of the momentum equations.}
 \begin{align*}
 &\frac{\partial}{\partial x}\left(\frac{\partial v}{\partial t}\right)
 -\frac{\partial}{\partial y}\left(\frac{\partial u}{\partial t}\right)\\
@@ -39,10 +39,10 @@ We want a time-evolution equation for this particular difference of velocity der
 \frac{\partial}{\partial x}\left(\frac{\partial^2v}{\partial x^2}+\frac{\partial^2v}{\partial y^2}\right)
 -\frac{\partial}{\partial y}\left(\frac{\partial^2u}{\partial x^2}+\frac{\partial^2u}{\partial y^2}\right)\right].
 \end{align*}
-No term has been discarded. The next pages simplify time, pressure, convection, and diffusion separately.
+The transformed equation contains contributions from local acceleration, convection, pressure, and viscous diffusion.
 \newpage
-\topic{6.1}{Time derivatives and convection: show every step}
-\textbf{Why can the order of differentiation change?} We assume the velocity and pressure fields have continuous mixed partial derivatives in the smooth interior. Under this assumption, differentiating first in time and then in space gives the same result as the reverse order. We are not changing which coordinate is time, and we are not replacing a time derivative with a spatial derivative:
+\topic{6.1}{Time derivatives and convective transport}
+\textbf{Commutation of mixed partial derivatives.} We assume the velocity and pressure fields have continuous mixed partial derivatives in the smooth interior. Under this assumption, differentiating first in time and then in space gives the same result as the reverse order. The derivative operators therefore commute:
 \begin{align*}
 \frac{\partial}{\partial x}\left(\frac{\partial v}{\partial t}\right)
 -\frac{\partial}{\partial y}\left(\frac{\partial u}{\partial t}\right)
@@ -58,7 +58,7 @@ Likewise the pressure terms cancel because their mixed derivatives agree:
 \]
 Pressure has disappeared from this transformed equation; pressure itself can still vary in space.
 
-\textbf{Expand each convective product before grouping.} For any two functions $a,b$, $\partial(ab)/\partial x=(\partial a/\partial x)b+a(\partial b/\partial x)$. The four products in the transformed equation give
+\textbf{Product rule for convective terms.} For any two functions $a,b$, $\partial(ab)/\partial x=(\partial a/\partial x)b+a(\partial b/\partial x)$. The four products in the transformed equation give
 \begin{align*}
 \frac{\partial}{\partial x}\left(u\frac{\partial v}{\partial x}\right)
 &=\frac{\partial u}{\partial x}\frac{\partial v}{\partial x}+u\frac{\partial^2v}{\partial x^2},\\
@@ -77,7 +77,7 @@ u\left(\frac{\partial^2v}{\partial x^2}-\frac{\partial^2u}{\partial x\,\partial 
 \]
 \newpage
 \topic{6.2}{The cancellation and the final transport equation}
-\textbf{The remaining four products vanish only after adding them.} They factor as
+\textbf{Continuity and the velocity-gradient products.} They factor as
 \begin{align*}
 &\frac{\partial u}{\partial x}\frac{\partial v}{\partial x}
 +\frac{\partial v}{\partial x}\frac{\partial v}{\partial y}
@@ -112,14 +112,14 @@ Combining the time, convection, pressure and viscous results gives
 \end{equation}
 The left side describes local change and transport by fluid motion. The right side describes viscous spreading of vorticity. It is generally nonzero. In strictly two-dimensional motion there is no variation in $z$ and no out-of-plane velocity, so the three-dimensional vortex-stretching contribution is absent as well.
 
-\textbf{Close the system.} With $u=\partial\psi/\partial y$ and $v=-\partial\psi/\partial x$, the vorticity definition gives
+\textbf{Streamfunction coupling.} With $u=\partial\psi/\partial y$ and $v=-\partial\psi/\partial x$, the vorticity definition gives
 \[
 \frac{\partial^2\psi}{\partial x^2}+\frac{\partial^2\psi}{\partial y^2}=-\omega.
 \]
 The time-dependent vorticity equation and this spatial Poisson equation are solved together, with initial and wall conditions. They were derived from momentum and continuity; they do not replace the physical conservation laws with a new physical model.
 \newpage
-\topic{6.3}{A different operation: why the four viscous terms sum to zero}
-\textbf{Differentiate and add, rather than subtract.} To derive an equation for pressure, take the $x$ derivative of horizontal momentum and add the $y$ derivative of vertical momentum. The viscous part of this operation is
+\topic{6.3}{Divergence of momentum and the pressure equation}
+\textbf{Divergence of viscous acceleration.} To derive an equation for pressure, take the $x$ derivative of horizontal momentum and add the $y$ derivative of vertical momentum. The viscous part of this operation is
 \begin{align*}
 \frac{1}{Re}\left[
 \frac{\partial}{\partial x}\left(\frac{\partial^2u}{\partial x^2}+\frac{\partial^2u}{\partial y^2}\right)
@@ -140,7 +140,7 @@ This is the four-term expression obtained by taking the divergence of viscous ac
 \end{align*}
 Commutation of smooth mixed derivatives justifies the second line. Continuity justifies the last line. Omitting either mixed term would invalidate the cancellation.
 
-\textbf{Where this goes in the pressure derivation.} The time terms similarly sum to $\partial(\partial u/\partial x+\partial v/\partial y)/\partial t=0$. The remaining pressure and convection terms give
+\textbf{Pressure-Poisson equation.} The time terms similarly sum to $\partial(\partial u/\partial x+\partial v/\partial y)/\partial t=0$. The remaining pressure and convection terms give
 \begin{align*}
 \frac{\partial^2p}{\partial x^2}+\frac{\partial^2p}{\partial y^2}
 =-\left[\left(\frac{\partial u}{\partial x}\right)^2
@@ -149,5 +149,5 @@ Commutation of smooth mixed derivatives justifies the second line. Continuity ju
 \end{align*}
 Section~12 derives the convective expansion and pressure boundary conditions. The pressure equation is a consequence of the same momentum equations, not a new momentum equation.
 
-\textbf{Keep the two results distinct.} Curl of momentum produces a difference of velocity derivatives, $\omega$, and retains viscous diffusion. Divergence of momentum produces the sum in continuity, which is zero, and eliminates the interior divergence of viscous acceleration for this constant-property fluid. These operations must not be interchanged.
+\textbf{Curl and divergence.} Curl of momentum produces a difference of velocity derivatives, $\omega$, and retains viscous diffusion. Divergence of momentum produces the sum in continuity, which is zero, and eliminates the interior divergence of viscous acceleration for this constant-property fluid. The two operations yield different equations.
 \checkpoint{Write the two derivative operations in words. Which uses a subtraction and produces vorticity? Which uses an addition and produces the pressure equation?}

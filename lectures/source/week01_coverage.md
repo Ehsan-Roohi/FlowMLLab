@@ -92,9 +92,9 @@ Jacobi/Euler algorithm is explicitly distinguished from Ghia's CSI-MG method.
 The prior 23-page PDF is preserved in `lectures/versions/week01_23pages.pdf`;
 the current edition has its own 27-page filename in that same directory.
 
-## Current step-by-step edition: 33 pages
+## Current edition: 32 pages
 
-The current [lecture](../week01_numerical_foundations.pdf) expands the first-reading path:
+The current [lecture](../week01_numerical_foundations.pdf) covers the following derivations:
 
 - Pages 7-9: continuity and both momentum equations, full differentiation before simplification, mixed-derivative commutation, product rule and vorticity diffusion.
 - Page 10: the separate divergence operation and four-term viscous cancellation.

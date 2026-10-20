@@ -83,7 +83,7 @@ class Derivations(unittest.TestCase):
 if __name__=='__main__':
     result=unittest.TextTestRunner(verbosity=2).run(unittest.defaultTestLoader.loadTestsFromTestCase(Derivations))
     if not result.wasSuccessful():raise SystemExit(1)
-    pdf=ROOT/'lectures/week01_numerical_foundations.pdf';r=PdfReader(pdf);assert len(r.pages)==33
-    record={'revision':'Expanded first-reading derivations','algebra_checks_passed':result.testsRun,'new_cfd_runs':False,'notebook_solver_code_and_outputs_unchanged':True,'notebook_lesson_update_idempotent':True,'pdf_pages':len(r.pages),'pdf_sha256':hashlib.sha256(pdf.read_bytes()).hexdigest(),'visual_review':'All 33 pages rendered; revised derivation and stencil pages inspected at higher resolution','reading_map':{'vorticity_derivation':[7,8,9],'four_viscous_terms':[10],'taylor_to_stencil':[14,15],'poisson_to_matrix_and_jacobi':[16,17,18]}}
+    pdf=ROOT/'lectures/week01_numerical_foundations.pdf';r=PdfReader(pdf);assert len(r.pages)==32
+    record={'revision':'Vorticity transport and Poisson discretization','algebra_checks_passed':result.testsRun,'new_cfd_runs':False,'notebook_solver_code_and_outputs_unchanged':True,'notebook_lesson_update_idempotent':True,'pdf_pages':len(r.pages),'pdf_sha256':hashlib.sha256(pdf.read_bytes()).hexdigest(),'visual_review':'All 32 pages rendered; revised derivation and stencil pages inspected at higher resolution','reading_map':{'vorticity_derivation':[7,8,9],'four_viscous_terms':[10],'taylor_to_stencil':[14,15],'poisson_to_matrix_and_jacobi':[16,17,18]}}
     out=ROOT/'results/week01_foundations/derivation_revision_validation.json';out.parent.mkdir(parents=True,exist_ok=True);out.write_text(json.dumps(record,indent=2)+'\n',encoding='utf-8')
     print(json.dumps(record,indent=2))

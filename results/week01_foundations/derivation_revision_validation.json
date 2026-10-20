@@ -1,12 +1,12 @@
 {
-  "revision": "Expanded first-reading derivations",
+  "revision": "Vorticity transport and Poisson discretization",
   "algebra_checks_passed": 7,
   "new_cfd_runs": false,
   "notebook_solver_code_and_outputs_unchanged": true,
   "notebook_lesson_update_idempotent": true,
-  "pdf_pages": 33,
-  "pdf_sha256": "9d5bf325d7a7439fb8549b76facfb24e3c043cad6af893c9e8da544379ddf730",
-  "visual_review": "All 33 pages rendered; revised derivation and stencil pages inspected at higher resolution",
+  "pdf_pages": 32,
+  "pdf_sha256": "757a621566e7bfa2e49fc2e7b9ab0a71b0554edc46b6fa20f234c928904f3899",
+  "visual_review": "All 32 pages rendered; revised derivation and stencil pages inspected at higher resolution",
   "reading_map": {
     "vorticity_derivation": [
       7,

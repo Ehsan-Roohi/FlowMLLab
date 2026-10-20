@@ -144,7 +144,7 @@ err_v = np.linalg.norm(v_interp-GHIA_V) / np.linalg.norm(GHIA_V)
 For the odd uniform grid $N=65$, index 32 lies at 0.5. \texttt{u[:,mid]} fixes $x$ and varies $y$; \texttt{v[mid,:]} fixes $y$ and varies $x$. \texttt{np.interp} samples these computed curves at the benchmark coordinates. An even grid has no node exactly at 0.5, so this simple index selection would need interpolation in the transverse direction too.
 \newpage
 \topic{C}{Visual guide: the solver and pressure extension}\label{sec:visual-guide}
-\textbf{The actual loop has two levels.} The diagram retains the original lecture's algorithm overview while making the fixed-step behavior and boundary-update order explicit.
+\textbf{The actual loop has two levels.} The diagram shows the fixed-step solver and its boundary updates.
 \begin{center}
 \begin{tikzpicture}[>=stealth,box/.style={draw=accent,rounded corners,align=center,text width=9.7cm,minimum height=.62cm,font=\small},node distance=.3cm]
 \node[box] (init) {Initialize $\psi,\omega$; impose wall vorticity};
@@ -173,30 +173,3 @@ There is no tolerance-triggered exit in the current teaching loop. Inspect equat
 The gauge removes an arbitrary constant. Correct wall data and Neumann compatibility still matter, as explained on page~\pageref{sec:pressure-proof}. The introductory \texttt{run\_cavity} return dictionary does not contain a pressure field; the notebook's separate pressure-validation material is an extension with its own run settings.
 
 \textbf{Suggested classroom sequence.} Derive one stencil, do one update by hand, identify the matching array slice, and then run the full example. Ask students to predict the effect of a sign error before showing a plot.
-\newpage
-\topic{D}{Coverage of the original lecture}\label{sec:coverage}
-This expanded edition reorganizes the original lecture; it is not a verbatim copy. The table maps all sixteen original sections. Earlier shortened definitions and visual explanations have been restored or expanded. The original PDF remains available unchanged at its baseline Git commit, linked in the accompanying coverage note.
-\begin{center}\small
-\begin{tabular}{p{.49\linewidth}p{.43\linewidth}}\toprule
-Original section & Where to find it here\\\midrule
-1. Purpose of this lecture & Opening page: learning question and three notebooks\\[4pt]
-2. What is a fluid? & Section 1: definition, examples, and variable glossary\\[4pt]
-3. Continuum viewpoint & Section 1: molecular scales, fields, and arrays\\[4pt]
-4. Eulerian description & Section 1: fixed positions versus particle following\\[4pt]
-5. Velocity and material derivative & Section 1: chain rule and local/convective acceleration\\[4pt]
-6. Conservation of mass & Section 2: general and incompressible continuity\\[4pt]
-7. Momentum: Navier--Stokes & Section 2: vector and both component equations\\[4pt]
-8. Reynolds number & Section 3: scales, physical interpretation, $Re=100$\\[4pt]
-9. Boundary conditions & Section 8 and B2: no slip, impermeability, corner convention\\[4pt]
-10. Streamfunction--vorticity & Sections 4--6: definitions, proof, transport derivation\\[4pt]
-11. Finite differences & Sections 7--7.3: Taylor series, examples, stencil, algebraic system\\[4pt]
-12. Residuals and convergence & Section 10 and B4: diagnostics, limits, ML connection\\[4pt]
-13. Couette, Poiseuille, cavity & Section 11; Couette example also in Section 4\\[4pt]
-14. Ghia validation & Section 11 and B4: profiles, interpolation, errors\\[4pt]
-15. Optional pressure recovery & Section 12 and C: equation, boundary data, gauge\\[4pt]
-16. End-of-week outcomes & Section 12 and the checkpoints throughout\\\bottomrule
-\end{tabular}\end{center}
-\textbf{Figures.} The old streamline illustration is replaced by a fresh computation with centerline comparisons (page~\pageref{sec:benchmark}). The five-point stencil has a new labeled drawing in Section 7.2. The solver and pressure-recovery diagrams are redrawn in C. Their instructional roles are preserved, while the solver diagram now matches the code's fixed-step implementation.
-
-\textbf{Scientific clarifications.} The original Eq.~(15) is proved in Section 5; equation numbers have otherwise changed. Dimensionless viscosity is distinguished from physical viscosity. Pressure recovery is stated with its boundary conditions and gauge. The claim that iteration stops at a residual tolerance is replaced by the actual fixed-step behavior. These corrections retain the topics while improving accuracy.
-\textbf{Code scope.} The notebook's numerical algorithm is unchanged. B1--B4 explain its existing operations; the arithmetic examples in Section 7 and the code walkthrough are explicitly identified as teaching checks.

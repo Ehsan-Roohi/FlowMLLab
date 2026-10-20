@@ -93,10 +93,10 @@ The cubic example above gives $\log(0.01/0.0025)/\log2=2$. The notebook tests $\
 
 \textbf{Predict, run, explain.} Before running, predict the factors of two and four for forward and centered errors. After running, explain why the observed orders approach one and two. The finest grid is not automatically exact; eventually floating-point cancellation can compete with truncation error.
 \newpage
-\topic{7.2}{Build the two-dimensional stencil from Taylor series}\label{sec:fd-grid}
-\textbf{What is stored?} At a fixed time, sample a smooth scalar field $f(x,y)$ on a rectangular grid. Coordinates are $x_i=x_0+i\Delta x$, $y_j=y_0+j\Delta y$. We store $f_{j,i}=f(x_i,y_j)$: array row $j$ corresponds to $y$, and array column $i$ corresponds to $x$.
+\topic{7.2}{Taylor expansions and the two-dimensional stencil}\label{sec:fd-grid}
+\textbf{Field samples on the grid.} At a fixed time, sample a smooth scalar field $f(x,y)$ on a rectangular grid. Coordinates are $x_i=x_0+i\Delta x$, $y_j=y_0+j\Delta y$. We store $f_{j,i}=f(x_i,y_j)$: array row $j$ corresponds to $y$, and array column $i$ corresponds to $x$.
 
-\textbf{First hold $y=y_j$ fixed and move only in $x$.} Name the center $C=f(x_i,y_j)$, its east neighbor $E=f(x_i+\Delta x,y_j)$, and its west neighbor $W=f(x_i-\Delta x,y_j)$. Taylor expansion about the same center gives
+\textbf{Expansion in the horizontal direction.} Name the center $C=f(x_i,y_j)$, its east neighbor $E=f(x_i+\Delta x,y_j)$, and its west neighbor $W=f(x_i-\Delta x,y_j)$. Taylor expansion about the same center gives
 \begin{align*}
 E&=C+\Delta x\frac{\partial f}{\partial x}
 +\frac{\Delta x^2}{2}\frac{\partial^2f}{\partial x^2}
@@ -116,7 +116,7 @@ Subtract $2C$ and divide by $\Delta x^2$:
 \]
 This explains the coefficient $-2$: each neighbor expansion contains one center value, so their sum contains $2C$. It also explains the denominator: a second derivative requires division by the square of the spacing.
 
-\textbf{Now hold $x=x_i$ fixed and move only in $y$.} Let $N=f(x_i,y_j+\Delta y)$ and $S=f(x_i,y_j-\Delta y)$. The same calculation gives
+\textbf{Expansion in the vertical direction.} Let $N=f(x_i,y_j+\Delta y)$ and $S=f(x_i,y_j-\Delta y)$. The same calculation gives
 \begin{align*}
 N&=C+\Delta y\frac{\partial f}{\partial y}+\frac{\Delta y^2}{2}\frac{\partial^2f}{\partial y^2}+\frac{\Delta y^3}{6}\frac{\partial^3f}{\partial y^3}+O(\Delta y^4),\\
 S&=C-\Delta y\frac{\partial f}{\partial y}+\frac{\Delta y^2}{2}\frac{\partial^2f}{\partial y^2}-\frac{\Delta y^3}{6}\frac{\partial^3f}{\partial y^3}+O(\Delta y^4).
@@ -128,7 +128,7 @@ The cubic terms have opposite signs and cancel on addition, just as in $x$. Thus
 \]
 A second derivative measures curvature, not upward or downward velocity. The letters $N,S,E,W$ identify locations; they are not signed physical quantities.
 \newpage
-\topic{7.2 continued}{Add the curvatures, then translate to arrays}
+\topic{7.2 continued}{The five-point Laplacian and array indexing}
 The Laplacian is defined as the sum of the two second derivatives:
 \[
 \nabla^2 f=\frac{\partial^2f}{\partial x^2}+\frac{\partial^2f}{\partial y^2}.
@@ -152,14 +152,14 @@ The center coefficient is $-4$ because the $x$ and $y$ formulas each contribute 
 \node[left] at (-1.3,0) {$W=f_{j,i-1}$};
 \end{tikzpicture}
 \end{center}
-\textbf{Check each directional contribution.} For $f=x^2+3y^2$, center $(0.5,0.5)$, and $h=0.1$, the five values are $(C,E,W,N,S)=(1,1.11,0.91,1.33,0.73)$. Therefore
+\textbf{Polynomial example.} For $f=x^2+3y^2$, center $(0.5,0.5)$, and $h=0.1$, the five values are $(C,E,W,N,S)=(1,1.11,0.91,1.33,0.73)$. Therefore
 \[
 \frac{E-2C+W}{h^2}=\frac{1.11-2+0.91}{0.01}=2,\qquad
 \frac{N-2C+S}{h^2}=\frac{1.33-2+0.73}{0.01}=6.
 \]
 Their sum is $8$, equal to the exact Laplacian $2+6$. This is a derivative check, not a cavity flow solution.
 
-\textbf{Apply one formula at every interior array entry.}
+\textbf{Vectorized stencil evaluation.}
 \begin{center}\begin{tabular}{lll}\toprule
 Location & Single entry & All interior-aligned entries\\\midrule
 Center & \texttt{f[j,i]} & \texttt{f[1:-1,1:-1]}\\
@@ -171,7 +171,7 @@ South & \texttt{f[j-1,i]} & \texttt{f[:-2,1:-1]}\\\bottomrule
 Each block has shape $(N_y-2,N_x-2)$. In Python, \texttt{1:-1} excludes both boundaries. Every output entry combines its own five neighboring samples. The code's zero placeholders on the outer boundary are not a physical assertion about the wall Laplacian.
 \newpage
 \topic{7.3}{From the Poisson equation to an iteration}\label{sec:fd-system}
-\textbf{Begin with the differential equation and its sign.} The streamfunction equation derived in Section~5 is
+\textbf{Streamfunction Poisson equation.} The streamfunction equation derived in Section~5 is
 \[
 \frac{\partial^2\psi}{\partial x^2}+\frac{\partial^2\psi}{\partial y^2}=-\omega.
 \]
@@ -211,8 +211,8 @@ The superscript $k$ is an iteration counter, not an exponent and not physical ti
 \end{align*}
 The positive vorticity term in the update follows from rearranging $\nabla^2\psi=-\omega$. It is not an arbitrary sign choice.
 \newpage
-\topic{7.3 continued}{Write all four node equations before the matrix}
-\textbf{Specify a small problem completely.} Use the unit square with grid coordinates $0,1/3,2/3,1$ in each direction. Thus $h=1/3$, $h^2=1/9$, and there are four interior unknowns. Prescribe $\psi=0$ at every boundary node and $\omega=-2$ at each interior node. Label the unknowns by location:
+\topic{7.3 continued}{A four-node Poisson system}
+\textbf{Grid, source, and boundary data.} Use the unit square with grid coordinates $0,1/3,2/3,1$ in each direction. Thus $h=1/3$, $h^2=1/9$, and there are four interior unknowns. Prescribe $\psi=0$ at every boundary node and $\omega=-2$ at each interior node. Label the unknowns by location:
 \begin{center}
 \begin{tabular}{c|cccc}
 $y\backslash x$ & $0$ & $1/3$ & $2/3$ & $1$\\\hline
@@ -248,14 +248,14 @@ The diagonal $4$ belongs to the center. A coefficient $-1$ belongs to an interio
 
 \textbf{If a wall value were nonzero}, it would enter the known right side. For example, west boundary $g_W$ and south boundary $g_S$ at node $a$ give $4a-b-c=-2/9+g_W+g_S$. The wall data have not been ignored; they are zero in the chosen example.
 \newpage
-\topic{7.3 continued}{Solve and check the small system}
-\textbf{Check the claimed solution by substitution.} All four equations have identical data and symmetric positions. Setting $a=b=c=d=s$ reduces each row to $4s-s-s=2s=-2/9$, giving $s=-1/9$. For example, the first row gives
+\topic{7.3 continued}{Solution and Jacobi convergence}
+\textbf{Exact solution of the discrete system.} All four equations have identical data and symmetric positions. Setting $a=b=c=d=s$ reduces each row to $4s-s-s=2s=-2/9$, giving $s=-1/9$. For example, the first row gives
 \[
 4(-1/9)-(-1/9)-(-1/9)=-2/9.
 \]
 This satisfies every row; the discrete Dirichlet Poisson matrix is nonsingular, so this is the unique solution. Prescribed $\omega=-2$ is a demonstration input, not the vorticity from a complete no-slip cavity run.
 
-\textbf{Derive all Jacobi updates from the same rows.} Isolate each diagonal term and use only the preceding sweep's neighbors:
+\textbf{Jacobi iteration.} Isolate each diagonal term and use only the preceding sweep's neighbors:
 \begin{align*}
 a^{k+1}&=\tfrac14(b^k+c^k-2/9),&
 b^{k+1}&=\tfrac14(a^k+d^k-2/9),\\
@@ -279,7 +279,7 @@ Sweep $k$ & Each interior value & Absolute error relative to $-1/9$\\\midrule
 3 & $-7/72$ & $1/72$\\
 $\infty$ & $-1/9$ & $0$\\\bottomrule
 \end{tabular}\end{center}
-\textbf{Connect the mathematics to code.} The notebook uses \texttt{old = psi.copy()} to retain the previous sweep. Its center slice is assigned the update derived above, using four neighbor slices from \texttt{old}. Reusing a newly updated neighbor within a point-by-point loop would instead produce a Gauss--Seidel sweep.
+\textbf{Implementation.} The notebook uses \texttt{old = psi.copy()} to retain the previous sweep. Its center slice is assigned the update derived above, using four neighbor slices from \texttt{old}. Reusing a newly updated neighbor within a point-by-point loop would instead produce a Gauss--Seidel sweep.
 
-\textbf{What changes, and what stays fixed?} During these inner iterations, the streamfunction guess changes; vorticity, wall values, mesh, and physical time stay fixed. After the Poisson solve, the outer algorithm obtains velocity from streamfunction and advances vorticity in time. A new vorticity field requires another Poisson solve.
+\textbf{Inner iteration and physical time.} During these inner iterations, the streamfunction guess changes; vorticity, wall values, mesh, and physical time stay fixed. After the Poisson solve, the outer algorithm obtains velocity from streamfunction and advances vorticity in time. A new vorticity field requires another Poisson solve.
 \checkpoint{Recover the third matrix row by listing the four neighbors of $c$. Then change only its north boundary value to $0.1$ and write the new right side. Answer: $-2/9+0.1$.}

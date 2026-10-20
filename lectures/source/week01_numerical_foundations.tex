@@ -57,7 +57,7 @@ Sections & Topic\\\midrule
 11 & Benchmark comparison and assessment\\
 12--12.2 & Optional pressure derivation, wall data, and recovery\\
 B1--B4 & Code applications of the preceding derivations\\
-C--D & Algorithm diagrams and topic coverage\\\bottomrule
+C & Algorithm diagrams\\\bottomrule
 \end{tabular}\end{center}
 \textbf{Conventions.} A right-handed $(x,y,z)$ system is used, with $x$ rightward and $y$ upward. Positive $\omega=\omega_z$ means counterclockwise local rotation. Dimensional quantities have a subscript $d$ when scales are introduced. After nondimensionalization, unadorned variables are dimensionless.
 
@@ -322,7 +322,7 @@ These are errors at benchmark sample points, not full-domain errors. Use the sam
 
 \textbf{Optional derivation exercise.} Reproduce the curl-of-momentum calculation on page~\pageref{sec:transport}, identifying the exact use of incompressibility. Then derive the moving-wall vorticity formula from a Taylor expansion.
 
-\textbf{References and authorship scope}
+\textbf{References}
 \begin{enumerate}[label={[\arabic*]}]
 \item U. Ghia, K. N. Ghia, and C. T. Shin (1982). High-Re solutions for incompressible flow using the Navier--Stokes equations and a multigrid method. \emph{Journal of Computational Physics}, 48, 387--411. Benchmark data used by the existing notebook.
 \item F. M. White and H. Xue (2022). \emph{Fluid Mechanics}, 9th ed. McGraw Hill. Background on conservation laws and incompressible flow.
@@ -331,6 +331,5 @@ These are errors at benchmark sample points, not full-domain errors. Use the sam
 \item NASA Glenn Research Center, \emph{Examining Spatial (Grid) Convergence}. Guidance on refinement and observed order. \href{https://www.grc.nasa.gov/www/wind/valid/tutorial/spatconv.html}{NASA grid-convergence guide}.
 \item A. Thom (1933). \emph{The flow past circular cylinders at low speeds}. Proceedings of the Royal Society of London, Series A, 141, 651--669. Historical numerical-flow reference. \href{https://doi.org/10.1098/rspa.1933.0146}{doi:10.1098/rspa.1933.0146}.
 \end{enumerate}
-{\small Explanations and derivations were independently written for FlowMLLab's introductory cavity example, using the requested topic checklist. The figure is a fresh execution of FlowMLLab's own solver. No restricted course text, solution, figure, or code was incorporated. No ML split or calibration is involved in this numerical-foundations extension; its baseline is the stated Ghia centerline comparison.}
 \input{week01_code_walkthrough.tex}
 \end{document}

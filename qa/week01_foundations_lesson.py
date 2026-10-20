@@ -56,7 +56,7 @@ def update_notebook(path=None):
     governing=next(c for c in nb.cells if c.cell_type=='markdown' and c.source.startswith('## 2. From '))
     governing.source=r"""## 2. From momentum and continuity to streamfunction and vorticity
 
-The dimensional conservation equations are stated above. Scale position by cavity side $L$, velocity by lid speed $U$, time by $L/U$, and pressure difference by $\rho U^2$. The following derivation uses dimensionless variables and $Re=UL/\nu$. All derivatives are written explicitly.
+The dimensional conservation equations are stated above. Scale position by cavity side $L$, velocity by lid speed $U$, time by $L/U$, and pressure difference by $\rho U^2$. The following derivation uses dimensionless variables and $Re=UL/\nu$.
 
 For a smooth two-dimensional incompressible field in this simply connected cavity, define the streamfunction by
 
@@ -66,7 +66,7 @@ Substituting these definitions into continuity gives zero because smooth mixed d
 
 $$\omega=-\frac{\partial^2\psi}{\partial x^2}-\frac{\partial^2\psi}{\partial y^2}.$$
 
-Thus $\nabla^2\psi=-\omega$. The next four cells derive the vorticity evolution equation and distinguish it from the pressure derivation.
+Thus $\nabla^2\psi=-\omega$. The vorticity evolution and pressure equations follow from the curl and divergence of momentum, respectively.
 """
     idx=nb.cells.index(governing)+1
     nb.cells[idx:idx]=lesson_cells(transport,'transport')
