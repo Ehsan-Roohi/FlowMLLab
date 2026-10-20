@@ -170,8 +170,8 @@ A fair extension must actually run that solver, check time-step stability and
 steady convergence, compare matching physical grid spacing and centerlines,
 and retain its own vorticity-update residual. That residual is different from
 the FV momentum defect: their curves must not be ranked as the same quantity.
-A small update alone cannot establish steady accuracy. No new Re=400/1000
-streamfunction-vorticity results are claimed by this visualization update.
+A small update alone cannot establish steady accuracy. Section 10 now supplies actual higher-Re streamfunction-vorticity runs and a
+sequential four-method comparison. See the independent-formulation report.
 
 **Reading the new figures:** low values are blue, intermediate values green,
 and high values red; signed fields use symmetric limits, so zero is green.
@@ -180,3 +180,24 @@ pressure and vorticity. Corner seeds make resolved small recirculation easier
 to see; they cannot create a missing vortex or compensate for a coarse mesh.
 Streamlines on a pressure plot are velocity trajectories, not pressure contours.
 RGB is used for this teaching display; use the colorbar for quantitative values.
+
+## Independent formulation at Re=400 and 1000
+
+Section 10 compares fresh streamfunction-vorticity and SIMPLE/PISO/PIMPLE runs
+at matched spacing, with Ghia centerline errors, separate native convergence
+plots, sequential CPU timings and RGB fields with streamlines.
+
+[Report and retained fields](../../results/week01_2_formulations/README.md).
+Fresh FD calculations are optional through `RUN_STREAMFUNCTION`. Start at 32
+cells and allow more time and memory for finer grids. FD pressure is recovered
+after solving velocity; the residual definitions differ between formulations.
+
+```sh
+python qa/run_week01_2_formulations.py
+python qa/run_week01_2_formulations.py --cells 64 --methods simple streamfunction-vorticity
+python qa/run_week01_2_formulations.py --cells 128 --methods streamfunction-vorticity
+python qa/report_week01_2_formulations.py
+```
+
+Verify archives and execute the retained-results notebook with
+`python qa/validate_week01_2_formulations.py` after the runs finish.

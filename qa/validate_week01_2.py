@@ -53,7 +53,7 @@ def main():
     print('Five conservation/coupling tests passed.',flush=True)
     nb=nbformat.read(NOTE,as_version=4)
     cached=execute(nb,[str(kernels)])
-    assert cached['png_outputs']==9  # six baseline plots plus three higher-Re plots
+    assert cached['png_outputs']==16  # six baseline, three higher-Re and seven independent-formulation plots
     nbformat.write(nb,NOTE)
     NOTE.write_bytes(NOTE.read_bytes().replace(b'\r\n',b'\n'))
     print('Default notebook executed:',cached,flush=True)
@@ -62,7 +62,7 @@ def main():
     cell.source=cell.source.replace('RUN_NEW = False','RUN_NEW = True')
     cell.source+='\nassert len(fresh)==3 and all(r["converged"] for r in fresh)\n'
     check=execute(fresh,[str(kernels)])
-    assert check['png_outputs']==15
+    assert check['png_outputs']==22
     nbformat.write(fresh,ROOT/'tmp/week01_2_fresh_audit.ipynb')
     print('Fresh SIMPLE/PISO/PIMPLE 32-cell branch executed:',check,flush=True)
     pdf=ROOT/'lectures/week01_2_pressure_velocity.pdf'

@@ -181,6 +181,8 @@ Independent implementation informed by [PySIMPLE](https://github.com/VishalKanda
         'language_info':{'name':'python','version':'3.12'},'course_module':'1.2','reynolds':100})
     from qa.week01_2_higher_re_notebook import append_higher_re
     append_higher_re(nb)
+    from qa.week01_2_formulation_notebook import append_formulations
+    append_formulations(nb)
     nbf.write(nb,NOTE)
     from qa.notebook_review_updates import review_notebook_file
     review_notebook_file(NOTE)

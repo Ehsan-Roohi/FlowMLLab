@@ -10,7 +10,7 @@ OUT=ROOT/'results/week01_2_higher_re'
 
 def main():
     rows=[];records=[]
-    for f in sorted(OUT.glob('*.json')):
+    for f in sorted(OUT.glob('*-re*-n*.json')):
         if f.name=='validation.json':continue
         r=json.loads(f.read_text());r['name']=f.stem;records.append(r)
         archive=f.with_suffix('.npz')

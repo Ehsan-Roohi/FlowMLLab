@@ -1,0 +1,62 @@
+{
+  "date": "2026-10-20",
+  "retained_runs": 14,
+  "same_grid_fv_agreement": [
+    {
+      "Re": 400,
+      "method": "piso",
+      "linf_vs_simple": {
+        "u": 1.2171354965562209e-06,
+        "v": 9.760884870368969e-07,
+        "p": 4.671123188804138e-07
+      }
+    },
+    {
+      "Re": 400,
+      "method": "pimple",
+      "linf_vs_simple": {
+        "u": 2.5498249862643263e-06,
+        "v": 1.9944749000133655e-06,
+        "p": 9.261913690022938e-07
+      }
+    },
+    {
+      "Re": 1000,
+      "method": "piso",
+      "linf_vs_simple": {
+        "u": 8.189491406906946e-06,
+        "v": 8.225823817153977e-06,
+        "p": 3.2770751814820143e-06
+      }
+    },
+    {
+      "Re": 1000,
+      "method": "pimple",
+      "linf_vs_simple": {
+        "u": 9.042003154879907e-06,
+        "v": 9.083306753421283e-06,
+        "p": 3.6136871696887396e-06
+      }
+    }
+  ],
+  "all_converged": true,
+  "field_hashes_verified": true,
+  "benchmark_metrics_recomputed": true,
+  "native_steady_gates_checked": true,
+  "source_unchanged": {
+    "common/w4utils.py": true,
+    "flowmllab/pressure_velocity.py": true
+  },
+  "executed_core_source_bundle_verified": true,
+  "source_bundle_sha256": "dcd88745f0001806501f37fa674e9c8a08339ecf9aa6f148ee6caac92c0f6b94",
+  "notebook_execution": {
+    "executed_code_cells": 7,
+    "errors": 0,
+    "png_outputs": 16
+  },
+  "notebook_sha256": "ef8b9f1021396eb95aae404b2540fe52999cb6b6adb4f54338f301c2f6a0191f",
+  "unit_tests_passed": 7,
+  "fresh_notebook_branch": "Adapter exercised by retained scientific runs; opt-in notebook branch compiled, not separately rerun",
+  "hosted_colab_execution": false,
+  "retained_initial_attempts_hash_verified": 2
+}

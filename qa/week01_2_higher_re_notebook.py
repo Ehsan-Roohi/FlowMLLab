@@ -34,8 +34,8 @@ A fair extension must actually run that solver, check time-step stability and
 steady convergence, compare matching physical grid spacing and centerlines,
 and retain its own vorticity-update residual. That residual is different from
 the FV momentum defect: their curves must not be ranked as the same quantity.
-A small update alone cannot establish steady accuracy. No new Re=400/1000
-streamfunction-vorticity results are claimed by this visualization update.
+A small update alone cannot establish steady accuracy. The original omission is now addressed in Section 10 below, which retains
+actual independent runs, native steady checks and sequential timing evidence.
 
 **Reading the new figures:** low values are blue, intermediate values green,
 and high values red; signed fields use symmetric limits, so zero is green.
@@ -75,7 +75,7 @@ The latter uses collocated grids and modified PISO/SIMPLEC variants, not our
 PIMPLE implementation. No universal algorithm Reynolds-number ceiling follows.
 '''),('code','''import json, hashlib
 HIGH_RE = ROOT / "results/week01_2_higher_re"
-experimental_records = [json.loads(f.read_text()) for f in sorted(HIGH_RE.glob("*.json"))
+experimental_records = [json.loads(f.read_text()) for f in sorted(HIGH_RE.glob("*-re*-n*.json"))
                         if f.name != "validation.json"]
 display(pd.DataFrame([{
     "method": r["config"]["method"], "Re": r["config"]["reynolds"],
