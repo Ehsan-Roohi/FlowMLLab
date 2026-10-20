@@ -156,3 +156,27 @@ one method, measure its time, then decide whether to refine. Do not launch every
 128-cell case at once. Cached figures below require no new CFD solve. Fresh runs
 are opt-in; there is no guaranteed completion time on a student's computer.
 
+
+### Why is streamfunction-vorticity absent from the higher-Re comparison?
+
+The Re=400/1000 extension originally measured only SIMPLE, PISO and PIMPLE.
+That was a study-scope omission, not a limitation of streamfunction-vorticity.
+The existing Week-1 `common/w4utils.py::run_cavity(Re=..., N=...)` accepts these
+Reynolds numbers. It solves streamfunction and vorticity, then recovers pressure
+separately. In two-dimensional incompressible flow this is an appropriate
+independent formulation for the same cavity problem.
+
+A fair extension must actually run that solver, check time-step stability and
+steady convergence, compare matching physical grid spacing and centerlines,
+and retain its own vorticity-update residual. That residual is different from
+the FV momentum defect: their curves must not be ranked as the same quantity.
+A small update alone cannot establish steady accuracy. No new Re=400/1000
+streamfunction-vorticity results are claimed by this visualization update.
+
+**Reading the new figures:** low values are blue, intermediate values green,
+and high values red; signed fields use symmetric limits, so zero is green.
+Black curves and arrows follow computed velocity on every field panel, including
+pressure and vorticity. Corner seeds make resolved small recirculation easier
+to see; they cannot create a missing vortex or compensate for a coarse mesh.
+Streamlines on a pressure plot are velocity trajectories, not pressure contours.
+RGB is used for this teaching display; use the colorbar for quantitative values.

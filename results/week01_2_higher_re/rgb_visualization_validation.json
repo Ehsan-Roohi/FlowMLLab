@@ -1,0 +1,11 @@
+{
+  "date": "2026-10-20",
+  "notebook_execution": {
+    "executed_code_cells": 6,
+    "errors": 0,
+    "png_outputs": 9
+  },
+  "numerical_fields": "Unchanged; all nine higher-Re field hashes checked by existing report validator",
+  "visual_review": "RGB scales and velocity-derived streamlines, including resolved corner vortices",
+  "new_streamfunction_runs": false
+}

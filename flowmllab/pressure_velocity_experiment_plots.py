@@ -1,5 +1,6 @@
 """Physical fields and matched diagnostics for experimental cavity runs."""
 import numpy as np
+from .cavity_visuals import RGB, flow_structure
 from .pressure_velocity import centerlines,GHIA_X,GHIA_Y
 from .pressure_velocity_experiments import REFERENCE
 
@@ -61,11 +62,11 @@ def comparison_figures(rows):
         x,y=r['x'],r['y'];cfg=r['config']
         data=[np.hypot(r['u'],r['v']),r['p'],r['omega']]
         limits=[(0,1),(-pressure_max,pressure_max),(-omega_max,omega_max)]
-        for ax,z,title,cmap,(lo,hi) in zip(axes[i],data,['Speed / U','Zero-mean pressure / rho U^2','Vorticity L / U'],['viridis','RdBu_r','RdBu_r'],limits):
+        for ax,z,title,cmap,(lo,hi) in zip(axes[i],data,['Speed / U','Zero-mean pressure / rho U^2','Vorticity L / U'],[RGB,RGB,RGB],limits):
             im=ax.pcolormesh(x,y,z,cmap=cmap,vmin=lo,vmax=hi,shading='nearest',rasterized=True)
             ax.set(aspect='equal',xlim=(0,1),ylim=(0,1),xlabel='x / L',ylabel='y / L',title=f"Re={cfg['reynolds']}, N={cfg['cells']}: {title}")
             fig.colorbar(im,ax=ax,shrink=.8)
-        axes[i,0].streamplot(x,y,r['u'],r['v'],density=1.1,color='white',linewidth=.55,arrowsize=.7)
-    fig.suptitle('Finest retained central solution per Re; shared physical color scales')
+            flow_structure(ax,x,y,r['u'],r['v'])
+    fig.suptitle('Finest retained solution per Re; RGB scales + velocity streamlines')
     output['fields']=fig
     return output

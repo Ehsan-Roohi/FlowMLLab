@@ -2,6 +2,7 @@
 from pathlib import Path
 import hashlib,json
 import numpy as np
+from .cavity_visuals import RGB, flow_structure
 from .pressure_velocity import centerlines,GHIA_X,GHIA_Y,GHIA_U,GHIA_V
 
 LABELS={'simple':'SIMPLE','piso':'PISO (2 corrections)','pimple':'PIMPLE (3 outer, 2 inner)',
@@ -50,16 +51,16 @@ def figures(rows,cells=64):
     for key,title in [('speed','Speed / U'),('p','Zero-mean pressure / (rho U^2)'),('omega','Vorticity L / U')]:
         fig,axes=plt.subplots(2,2,figsize=(9,8),layout='constrained')
         values=[np.hypot(r['u'],r['v']) if key=='speed' else r[key] for r in selected]
-        if key=='speed':lo=0.;hi=max(float(q.max()) for q in values);cmap='viridis'
+        if key=='speed':lo=0.;hi=max(float(q.max()) for q in values);cmap=RGB
         else:
             bound=max(float(np.max(np.abs(q))) for q in values)
-            lo,hi=-bound,bound;cmap='RdBu_r'
+            lo,hi=-bound,bound;cmap=RGB
         for ax,r,q in zip(axes.flat,selected,values):
             im=ax.pcolormesh(r['x'],r['y'],q,cmap=cmap,vmin=lo,vmax=hi,shading='auto',rasterized=True)
-            if key=='speed':ax.streamplot(r['x'],r['y'],r['u'],r['v'],color='black',density=.8,linewidth=.5,arrowsize=.6)
+            flow_structure(ax,r['x'],r['y'],r['u'],r['v'])
             ax.set(title=LABELS[r['config']['method']],xlabel='x / L',ylabel='y / L',xlim=(0,1),ylim=(0,1),aspect='equal')
         fig.colorbar(im,ax=list(axes.flat),label=title,shrink=.82)
-        fig.suptitle(f'Re = 100: {title}; shared color scale')
+        fig.suptitle(f'Re = 100: {title}; RGB scale + velocity streamlines')
         plots[key]=fig
     fig,axes=plt.subplots(1,2,figsize=(10,4.5),layout='constrained')
     for r in selected:
