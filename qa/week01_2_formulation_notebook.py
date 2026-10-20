@@ -40,7 +40,7 @@ one-point omission sensitivity separately. Pressure has no Ghia benchmark.
 **Timing:** sequential single-thread runs, one sample per setting; the timed
 solver call includes FD pressure recovery. Different dt, equations, stopping
 norms and unknown counts preclude a universal fastest-method claim. Compare
-accuracy before interpreting seconds. The RGB field panels show all four
+accuracy before interpreting seconds. The field panels show all four
 methods with velocity streamlines and visible resolved corner recirculation.
 
 **Retained failures:** the initial Re=400 update-only stop failed the steady
@@ -80,7 +80,7 @@ display(pd.DataFrame([{
 # Keep inline images compact; full-resolution PNGs are retained in the report.
 from PIL import Image as PILImage
 from io import BytesIO
-for name in ["centerlines", "convergence", "runtime", "speed", "p", "omega", "refinement"]:
+for name in ["p", "omega", "refinement"]:
     picture = PILImage.open(FORMULATIONS / (name + ".png"))
     picture.thumbnail((1400, 1100))
     buffer = BytesIO()

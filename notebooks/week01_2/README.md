@@ -173,19 +173,19 @@ the FV momentum defect: their curves must not be ranked as the same quantity.
 A small update alone cannot establish steady accuracy. Section 10 now supplies actual higher-Re streamfunction-vorticity runs and a
 sequential four-method comparison. See the independent-formulation report.
 
-**Reading the new figures:** low values are blue, intermediate values green,
-and high values red; signed fields use symmetric limits, so zero is green.
+**Reading the figures:** signed fields share limits across methods. A symmetric
+logarithmic color scale resolves small interior values and large wall gradients.
 Black curves and arrows follow computed velocity on every field panel, including
 pressure and vorticity. Corner seeds make resolved small recirculation easier
 to see; they cannot create a missing vortex or compensate for a coarse mesh.
 Streamlines on a pressure plot are velocity trajectories, not pressure contours.
-RGB is used for this teaching display; use the colorbar for quantitative values.
+Use the colorbar values when comparing signed fields.
 
 ## Independent formulation at Re=400 and 1000
 
 Section 10 compares fresh streamfunction-vorticity and SIMPLE/PISO/PIMPLE runs
 at matched spacing, with Ghia centerline errors, separate native convergence
-plots, sequential CPU timings and RGB fields with streamlines.
+plots, sequential CPU timings and flow fields with streamlines.
 
 [Report and retained fields](../../results/week01_2_formulations/README.md).
 Fresh FD calculations are optional through `RUN_STREAMFUNCTION`. Start at 32
@@ -201,3 +201,9 @@ python qa/report_week01_2_formulations.py
 
 Verify archives and execute the retained-results notebook with
 `python qa/validate_week01_2_formulations.py` after the runs finish.
+
+## Equations and algorithm guide
+
+The notebook and 25-page lecture define continuity, both momentum components, all matrix symbols, pressure correction and the SIMPLE/PISO/PIMPLE loops. Re=100, 400 and 1000 timing comparisons include the independent streamfunction-vorticity method. Native FD and FV residuals appear on separate axes.
+
+[Teaching revision validation](../../results/week01_2_formulations/teaching_revision_validation.json) records the notebook controller audit and PDF checks.

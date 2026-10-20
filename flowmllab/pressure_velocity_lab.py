@@ -2,7 +2,7 @@
 from pathlib import Path
 import hashlib,json
 import numpy as np
-from .cavity_visuals import RGB, flow_structure
+from .cavity_visuals import RGB, flow_structure, field_normalization, field_scale_note
 from .pressure_velocity import centerlines,GHIA_X,GHIA_Y,GHIA_U,GHIA_V
 
 LABELS={'simple':'SIMPLE','piso':'PISO (2 corrections)','pimple':'PIMPLE (3 outer, 2 inner)',
@@ -55,12 +55,14 @@ def figures(rows,cells=64):
         else:
             bound=max(float(np.max(np.abs(q))) for q in values)
             lo,hi=-bound,bound;cmap=RGB
+        norm=field_normalization(key,values)
         for ax,r,q in zip(axes.flat,selected,values):
-            im=ax.pcolormesh(r['x'],r['y'],q,cmap=cmap,vmin=lo,vmax=hi,shading='auto',rasterized=True)
+            im=ax.pcolormesh(r['x'],r['y'],q,cmap=cmap,norm=norm,shading='auto',rasterized=True)
             flow_structure(ax,r['x'],r['y'],r['u'],r['v'])
             ax.set(title=LABELS[r['config']['method']],xlabel='x / L',ylabel='y / L',xlim=(0,1),ylim=(0,1),aspect='equal')
         fig.colorbar(im,ax=list(axes.flat),label=title,shrink=.82)
-        fig.suptitle(f'Re = 100: {title}; RGB scale + velocity streamlines')
+        fig.suptitle(f'Re = 100: {title} and velocity streamlines')
+        if key!='speed':fig.supxlabel(field_scale_note(key),fontsize=9)
         plots[key]=fig
     fig,axes=plt.subplots(1,2,figsize=(10,4.5),layout='constrained')
     for r in selected:
@@ -73,6 +75,16 @@ def figures(rows,cells=64):
     fig.legend(*axes[0].get_legend_handles_labels(),loc='outside lower center',ncol=3,frameon=False)
     fig.suptitle('Coupling convergence: one measured local CPU solve per method')
     plots['convergence']=fig
+    fig,ax=plt.subplots(figsize=(8,4.6),layout='constrained')
+    costs=[r['runtime_seconds'] for r in selected]
+    labels=[LABELS[r['config']['method']] for r in selected]
+    bars=ax.bar(range(len(selected)),costs,color=['#1748b7','#e22f29','#009f59','#703ac4'][:len(selected)])
+    ax.set_xticks(range(len(selected)),labels,rotation=12,ha='right')
+    for bar,value in zip(bars,costs):ax.text(bar.get_x()+bar.get_width()/2,value,f'{value:.2f} s',ha='center',va='bottom',fontsize=10)
+    ax.set(ylabel='Recorded solver-call wall time (s)',title=f'Re=100, h=1/{cells}: all four formulations')
+    ax.margins(y=.18)
+    fig.supxlabel('One recorded local run per setting; different equations and stopping norms',fontsize=9)
+    plots['runtime']=fig
     fig,axes=plt.subplots(1,2,figsize=(10,4.4),layout='constrained')
     for method,ls in zip(names,styles):
         chosen=sorted([r for r in rows if r['config']['method']==method],key=lambda r:r['config']['cells'])

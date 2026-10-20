@@ -1,0 +1,35 @@
+{
+  "scope": "Teaching and plotting revision; scientific solver sources and archived trajectories unchanged",
+  "all_method_controller_fixture_test": {
+    "executed_code_cells": 3,
+    "errors": 0,
+    "png_outputs": 3
+  },
+  "fixture_methods": 4,
+  "fixture_is_new_cfd_run": false,
+  "pdfs": {
+    "week01_numerical_foundations": {
+      "pages": 27,
+      "times_new_roman_embedded": true,
+      "visual_review": "All pages rendered and inspected",
+      "sha256": "15d6ec2528382ebdb8bdaccae1e14c7fd0cf3f7f54beb57c36706cbae5a122d9"
+    },
+    "week01_2_pressure_velocity": {
+      "pages": 25,
+      "times_new_roman_embedded": true,
+      "visual_review": "All pages rendered and inspected",
+      "sha256": "0e1f663ba8c19c1b205ae503f6d579fc79296f92abbfc2b4d9c61703bc811f4c"
+    }
+  },
+  "week1_execution": {
+    "python": {
+      "code_cells": 26,
+      "png_outputs": 11
+    },
+    "cavity": {
+      "code_cells": 15,
+      "png_outputs": 6
+    },
+    "tensorflow": "Not executed: TensorFlow unavailable locally; deterministic scalar-field preview regenerated with NumPy, no training claim"
+  }
+}

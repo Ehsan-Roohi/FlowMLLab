@@ -26,7 +26,7 @@ def main():
  n.validate(nb)
  kernels=ROOT/'tmp/week01_2_kernels';folder=kernels/'week01_2';folder.mkdir(exist_ok=True,parents=True)
  (folder/'kernel.json').write_text(json.dumps({'argv':[sys.executable,'-m','ipykernel_launcher','-f','{connection_file}'],'display_name':'Week 1.2 audit','language':'python','env':{'PYTHONPATH':os.environ.get('PYTHONPATH',''),'OPENBLAS_NUM_THREADS':'1','OMP_NUM_THREADS':'1','MPLBACKEND':'module://matplotlib_inline.backend_inline'}}))
- counts=execute(nb,[str(kernels)]);assert counts=={'executed_code_cells':7,'errors':0,'png_outputs':16},counts
+ counts=execute(nb,[str(kernels)]);assert counts=={'executed_code_cells':7,'errors':0,'png_outputs':14},counts
  for c in nb.cells:c.get('metadata',{}).pop('execution',None)
  n.write(nb,path);path.write_bytes(path.read_bytes().replace(b'\r\n',b'\n'))
  target=ROOT/'results/week01_2_formulations/validation.json';v=json.loads(target.read_text())

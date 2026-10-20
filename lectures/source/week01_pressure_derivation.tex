@@ -11,6 +11,26 @@ v_t+uv_x+vv_y&=-p_y/\rho+\nu(v_{xx}+v_{yy}).
 \end{align*}
 The time and viscous terms vanish because the divergence is identically zero. This is not a steady-flow or zero-viscosity assumption: the derivation applies to unsteady viscous incompressible flow too.
 
+\textbf{Keep all four viscous derivatives before canceling.} Write $u_x=\partial u/\partial x$ and $v_y=\partial v/\partial y$. For smooth interior fields, mixed partial derivatives commute:
+\begin{align*}
+\partial_x\nabla^2u+\partial_y\nabla^2v
+&=\partial_xu_{xx}+\partial_xu_{yy}
+ +\partial_yv_{xx}+\partial_yv_{yy}\\
+&=\partial_{xx}u_x+\partial_{yy}u_x
+ +\partial_{xx}v_y+\partial_{yy}v_y\\
+&=\partial_{xx}(u_x+v_y)+\partial_{yy}(u_x+v_y)\\
+&=\nabla^2\underbrace{(u_x+v_y)}_{0}=0.
+\end{align*}
+For example, $\partial_xu_{yy}=\partial_{yy}u_x$ and $\partial_yv_{xx}=\partial_{xx}v_y$ allow the middle two terms to be grouped with the correct partners. One may not replace $\partial_{xx}u_x+\partial_{yy}v_y$ alone by $\nabla^2(u_x+v_y)$: two cross terms would be missing.
+
+\textbf{A quick counterexample to canceling individual pairs.} Let $u=x^3y$, $v=-\tfrac32x^2y^2$. Then $u_x+v_y=0$, but
+\[
+\partial_{xx}u_x+\partial_{yy}v_y=6y,\qquad
+\partial_{yy}u_x+\partial_{xx}v_y=-6y.
+\]
+Only the complete four-term sum is zero. The time term vanishes separately because $\partial_t(u_x+v_y)=0$. These smooth interior identities do not imply that every discrete derivative or moving-lid corner value satisfies them exactly. Taking the \emph{curl} instead gives $\nu\nabla^2\omega$, which remains in vorticity transport.
+\newpage
+
 \textbf{2. Expand the convective terms.}
 \begin{align*}
 \partial_x(uu_x+vu_y)&=u_x^2+u u_{xx}+v_xu_y+v u_{yx},\\

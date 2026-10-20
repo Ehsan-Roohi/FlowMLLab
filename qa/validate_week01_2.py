@@ -5,7 +5,7 @@ Python interpreter as the Jupyter kernel, rather than an unrelated system one.
 Requires the project's test extras and pdfplumber. PDF visual review is separate.
 """
 from pathlib import Path
-import copy,hashlib,json,os,subprocess,sys
+import copy,hashlib,json,os,subprocess,sys,ast
 import numpy as np
 import scipy
 import nbformat
@@ -53,7 +53,7 @@ def main():
     print('Five conservation/coupling tests passed.',flush=True)
     nb=nbformat.read(NOTE,as_version=4)
     cached=execute(nb,[str(kernels)])
-    assert cached['png_outputs']==16  # six baseline, three higher-Re and seven independent-formulation plots
+    assert cached['png_outputs']==14  # seven baseline, four higher-Re comparisons, three detailed-field plots
     nbformat.write(nb,NOTE)
     NOTE.write_bytes(NOTE.read_bytes().replace(b'\r\n',b'\n'))
     print('Default notebook executed:',cached,flush=True)
@@ -62,11 +62,12 @@ def main():
     cell.source=cell.source.replace('RUN_NEW = False','RUN_NEW = True')
     cell.source+='\nassert len(fresh)==3 and all(r["converged"] for r in fresh)\n'
     check=execute(fresh,[str(kernels)])
-    assert check['png_outputs']==22
+    assert check['png_outputs']==21
     nbformat.write(fresh,ROOT/'tmp/week01_2_fresh_audit.ipynb')
     print('Fresh SIMPLE/PISO/PIMPLE 32-cell branch executed:',check,flush=True)
     pdf=ROOT/'lectures/week01_2_pressure_velocity.pdf'
-    reader=PdfReader(pdf);assert len(reader.pages)==18
+    from qa.build_week01_2 import LECTURE_PAGES
+    reader=PdfReader(pdf);assert len(reader.pages)==LECTURE_PAGES
     study=json.loads((OUT/'coupling_step_study.json').read_text())
     assert study['source_sha256']==manifest['source_sha256'] and len(study['rows'])==15
     assert all(np.isfinite(r['full_nonlinear_step_momentum_linf']) and r['continuity_linf']<1e-9 for r in study['rows'])
@@ -88,7 +89,19 @@ def main():
     for name in ['notebooks/week01/03_cavity_ghia.ipynb','common/w4utils.py']:
         original=subprocess.check_output(['git','show','HEAD:'+name],cwd=ROOT)
         # Git's LF representation may differ from the local checkout's CRLF.
-        assert original.replace(b'\r\n',b'\n')==(ROOT/name).read_bytes().replace(b'\r\n',b'\n')
+        if name.endswith('.py'):
+            assert original.replace(b'\r\n',b'\n')==(ROOT/name).read_bytes().replace(b'\r\n',b'\n')
+        else:
+            def solver_functions(blob):
+                notebook=json.loads(blob);result={}
+                for cell in notebook['cells']:
+                    if cell['cell_type']!='code':continue
+                    tree=ast.parse(''.join(cell['source']))
+                    for node in tree.body:
+                        if isinstance(node,ast.FunctionDef) and node.name in {'build_grid','laplacian','apply_vorticity_boundary_conditions','solve_streamfunction_poisson','compute_velocity','advance_vorticity','run_cavity','centerline_profiles','ghia_errors'}:
+                            result[node.name]=ast.dump(node,include_attributes=False)
+                return result
+            assert solver_functions(original)==solver_functions((ROOT/name).read_bytes())
         preserved[name]=hashlib.sha256(original).hexdigest()
     validation={'date':'2026-10-09','baseline_commit':baseline,
         'python':sys.version.split()[0],'numpy':np.__version__,'scipy':scipy.__version__,
@@ -99,9 +112,9 @@ def main():
             'source_matches_retained_solver':True,'continuity_gate_passed':True,'frozen_PISO_defect_decreases':True,
             'scope':'Within-step algebraic consistency only; not temporal truncation error or higher-Re validation.'},
         'flowchart_count':3,
-        'notebook_sha256':digest(NOTE),'pdf':{'pages':18,'sha256':digest(pdf),'fonts':sorted(fonts),
+        'notebook_sha256':digest(NOTE),'pdf':{'pages':len(reader.pages),'sha256':digest(pdf),'fonts':sorted(fonts),
             'text_within_page_bounds':True},
-        'preserved_week1_baseline_sha256':preserved,
+        'historical_week1_baseline_sha256':preserved,'week1_solver_definitions_unchanged':True,'current_week1_notebook_sha256':digest(ROOT/'notebooks/week01/03_cavity_ghia.ipynb'),
         'qualification':'Local CPU notebook execution; hosted Colab execution was not tested. Only Re=100 steady flow accuracy is benchmark-qualified; the added one-step study measures algebraic consistency. No higher-Re or temporal-accuracy qualification. FV benchmark refinement trend is nonmonotone.'}
     (OUT/'validation.json').write_text(json.dumps(validation,indent=2)+'\n')
     print('Evidence and PDF structural checks passed.',flush=True)

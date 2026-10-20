@@ -71,6 +71,8 @@ def build_ghia_velocity_validation(
     output_dir = Path(output_dir or root / "results" / "article_figures")
     sys.path.insert(0, str(root / "common"))
     from w4utils import GHIA  # noqa: PLC0415
+    sys.path.insert(0, str(root))
+    from flowmllab.cavity_visuals import RGB, flow_structure
 
     data = _load_npz(root / "data" / "cavity_data.npz")
     index = int(np.where(np.isclose(data["Re"], 400.0))[0][0])
@@ -103,8 +105,8 @@ def build_ghia_velocity_validation(
     ax_u = fig.add_subplot(grid[0, 1])
     ax_v = fig.add_subplot(grid[1, 1])
     levels = np.linspace(0.0, 1.0, 25)
-    contour = ax_field.contourf(X, Y, speed, levels=levels, cmap="viridis", extend="max")
-    ax_field.streamplot(x, y, u, v, color="white", density=1.25, linewidth=0.8, arrowsize=0.9)
+    contour = ax_field.contourf(X, Y, speed, levels=levels, cmap=RGB, extend="max")
+    flow_structure(ax_field, x, y, u, v)
     ax_field.set(
         title=r"(a) $Re=400$: speed and streamlines",
         xlabel=r"$x/L$", ylabel=r"$y/L$", aspect="equal", xlim=(0, 1), ylim=(0, 1),
@@ -112,10 +114,10 @@ def build_ghia_velocity_validation(
     cbar = fig.colorbar(contour, ax=ax_field, orientation="horizontal", pad=0.05, shrink=0.88)
     cbar.set_label(r"Speed $|\mathbf{u}|/U_{lid}$", fontsize=13)
     ax_u.plot(u[:, mid_x], y, color="#1261A0", label="FlowMLLab solver")
-    ax_u.scatter(ref["u"], ref["y"], s=48, color="#E87500", edgecolor="white", linewidth=0.6, label="Ghia et al.", zorder=3)
+    ax_u.scatter(ref["u"], ref["y"], s=48, color="#ed2024", edgecolor="white", linewidth=0.6, label="Ghia et al.", zorder=3)
     ax_u.set(title=r"(b) Vertical centerline $u(x/L=0.5,y)$", xlabel=r"$u/U_{lid}$", ylabel=r"$y/L$", ylim=(0, 1.04))
     ax_v.plot(x, v[mid_y, :], color="#1261A0", label="FlowMLLab solver")
-    ax_v.scatter(ref["x"], ref["v"], s=48, color="#E87500", edgecolor="white", linewidth=0.6, label="Ghia et al.", zorder=3)
+    ax_v.scatter(ref["x"], ref["v"], s=48, color="#ed2024", edgecolor="white", linewidth=0.6, label="Ghia et al.", zorder=3)
     ax_v.set(title=r"(c) Horizontal centerline $v(x,y/L=0.5)$", xlabel=r"$x/L$", ylabel=r"$v/U_{lid}$", xlim=(-0.02, 1.02))
     for axis in (ax_u, ax_v):
         axis.grid(alpha=0.25)
@@ -155,6 +157,8 @@ def build_pressure_validation(
     source = root / "results" / "article_validation"
     sys.path.insert(0, str(root / "common"))
     import w4utils  # noqa: PLC0415
+    sys.path.insert(0, str(root))
+    from flowmllab.cavity_visuals import RGB, field_normalization, flow_structure
 
     coarse = _load_npz(source / "re1000_n65.npz")
     fine = _load_npz(source / "re1000_n129.npz")
@@ -177,21 +181,23 @@ def build_pressure_validation(
 
     _style()
     fig, axes = plt.subplots(2, 2, figsize=(15.8, 10.1), constrained_layout=True)
-    levels = np.linspace(np.min(pf), np.max(pf), 33)
-    im = axes[0, 0].contourf(*np.meshgrid(xf, yf), pf, levels=levels, cmap="coolwarm", extend="both")
+    norm = field_normalization('pressure', [pf])
+    levels = norm.inverse(np.linspace(0., 1., 65))
+    im = axes[0, 0].contourf(*np.meshgrid(xf, yf), pf, levels=levels, cmap=RGB, norm=norm, extend="both")
+    flow_structure(axes[0, 0], xf, yf, fine['u'], fine['v'])
     axes[0, 0].set(title=r"(a) Recovered pressure, $Re=1000$, $129^2$ grid", xlabel=r"$x/L$", ylabel=r"$y/L$", aspect="equal")
     fig.colorbar(im, ax=axes[0, 0], shrink=0.9, label=r"$(p-p_c)/(\rho U_{lid}^2)$")
-    axes[0, 1].plot(pc[:, mc], yc, "--", color="#94A3B8", label=rf"FlowMLLab $65^2$ ($E={100*evc:.1f}\%$)")
+    axes[0, 1].plot(pc[:, mc], yc, "--", color="#00a652", label=rf"FlowMLLab $65^2$ ($E={100*evc:.1f}\%$)")
     axes[0, 1].plot(pf[:, mf], yf, color="#1D4ED8", label=rf"FlowMLLab $129^2$ ($E={100*evf:.2f}\%$)")
     axes[0, 1].scatter(vertical["p_over_rhoU2"], vertical["coordinate"], s=42, facecolors="white", edgecolors="black", linewidths=1.2, zorder=3, label="Botella--Peyret")
     axes[0, 1].set(title="(b) Vertical centerline", xlabel=r"$(p-p_c)/(\rho U_{lid}^2)$", ylabel=r"$y/L$")
-    axes[1, 0].plot(xc, pc[mc, ::-1], "--", color="#94A3B8", label=rf"FlowMLLab $65^2$ ($E={100*ehc:.1f}\%$)")
-    axes[1, 0].plot(xf, pf[mf, ::-1], color="#B45309", label=rf"FlowMLLab $129^2$ ($E={100*ehf:.2f}\%$)")
+    axes[1, 0].plot(xc, pc[mc, ::-1], "--", color="#00a652", label=rf"FlowMLLab $65^2$ ($E={100*ehc:.1f}\%$)")
+    axes[1, 0].plot(xf, pf[mf, ::-1], color="#ed2024", label=rf"FlowMLLab $129^2$ ($E={100*ehf:.2f}\%$)")
     axes[1, 0].scatter(horizontal["coordinate"], horizontal["p_over_rhoU2"], s=42, facecolors="white", edgecolors="black", linewidths=1.2, zorder=3, label="Botella--Peyret")
     axes[1, 0].set(title="(c) Horizontal centerline (lid-direction mapped)", xlabel=r"$x/L$", ylabel=r"$(p-p_c)/(\rho U_{lid}^2)$")
     positions, width = np.arange(2), 0.34
-    axes[1, 1].bar(positions - width / 2, 100 * np.array([evc, ehc]), width, color="#94A3B8", label=r"$65^2$")
-    axes[1, 1].bar(positions + width / 2, 100 * np.array([evf, ehf]), width, color=["#1D4ED8", "#B45309"], label=r"$129^2$")
+    axes[1, 1].bar(positions - width / 2, 100 * np.array([evc, ehc]), width, color="#00a652", label=r"$65^2$")
+    axes[1, 1].bar(positions + width / 2, 100 * np.array([evf, ehf]), width, color=["#1D4ED8", "#ed2024"], label=r"$129^2$")
     axes[1, 1].set(title="(d) Literature error decreases under refinement", ylabel=r"centerline relative $L_2$ error (\%)", xticks=positions, xticklabels=["vertical", "horizontal"], ylim=(0, 24))
     axes[1, 1].text(0.98, 0.95, f"129² grid\nsteady residual: {float(fine['final_residual']):.2e}\ngradient mismatch: {100*interior_mismatch:.2f}% interior\n({100*global_mismatch:.1f}% including corners)", transform=axes[1, 1].transAxes, ha="right", va="top", fontsize=12, bbox={"boxstyle": "round,pad=0.45", "facecolor": "white", "edgecolor": "0.65"})
     for axis in (axes[0, 1], axes[1, 0], axes[1, 1]):

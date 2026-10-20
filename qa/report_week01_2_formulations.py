@@ -7,7 +7,7 @@ from flowmllab.pressure_velocity import centerlines,GHIA_X,GHIA_Y
 from flowmllab.pressure_velocity_experiments import benchmark_errors,REFERENCE,ExperimentalConfig
 from flowmllab.pressure_velocity import _residual,divergence
 from flowmllab.streamfunction_experiments import sv
-from flowmllab.cavity_visuals import RGB,flow_structure
+from flowmllab.cavity_visuals import RGB,flow_structure,field_normalization,field_scale_note
 OUT=ROOT/'results/week01_2_formulations'
 METHODS=['simple','piso','pimple','streamfunction-vorticity']
 COLORS=['#1649b7','#d83723','#138044','#803cb2']
@@ -91,15 +91,17 @@ def main():
   fig,axes=plt.subplots(2,4,figsize=(16,8),layout='constrained')
   vals=[np.hypot(r['u'],r['v']) if key=='speed' else r[key] for r in base]
   hi=max(float(np.abs(z).max()) for z in vals);lo=0 if key=='speed' else -hi
+  norm=field_normalization(key,vals)
   for i,re in enumerate([400,1000]):
    for j,method in enumerate(METHODS):
     r=next(r for r in base if r['config']['reynolds']==re and r['config']['method']==method)
     z=np.hypot(r['u'],r['v']) if key=='speed' else r[key]
-    ax=axes[i,j];im=ax.pcolormesh(r['x'],r['y'],z,cmap=RGB,vmin=lo,vmax=hi,shading='nearest',rasterized=True)
+    ax=axes[i,j];im=ax.pcolormesh(r['x'],r['y'],z,cmap=RGB,norm=norm,shading='nearest',rasterized=True)
     flow_structure(ax,r['x'],r['y'],r['u'],r['v'])
     ax.set(aspect='equal',xlim=(0,1),ylim=(0,1),xlabel='x / L',ylabel='y / L',title=f"Re={re}: {method}" + (" [NOT STEADY]" if not r['converged'] else ""))
   fig.colorbar(im,ax=list(axes.flat),label=title,shrink=.8)
   fig.suptitle(f'{title}; matched h=1/32; FD nodes and FV cell centers differ')
+  if key!='speed':fig.supxlabel(field_scale_note(key),fontsize=10)
   save(fig,key)
  fine=[r for r in rows if r['config']['cells']>=64]
  if fine:

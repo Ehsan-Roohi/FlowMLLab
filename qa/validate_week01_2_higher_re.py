@@ -15,17 +15,17 @@ def main():
         'display_name':'Week 1.2 audit','language':'python','env':{'PYTHONPATH':os.environ.get('PYTHONPATH',''),'OPENBLAS_NUM_THREADS':'1','OMP_NUM_THREADS':'1'}}))
     note=ROOT/'notebooks/week01_2/W1_2_Cavity_Pressure_Velocity.ipynb'
     n=nbformat.read(note,as_version=4);default=execute(n,[str(kernels)])
-    assert default=={'executed_code_cells':7,'errors':0,'png_outputs':16},default
+    assert default=={'executed_code_cells':7,'errors':0,'png_outputs':14},default
     nbformat.write(n,note);note.write_bytes(note.read_bytes().replace(b'\r\n',b'\n'))
     # Exercise the fresh interactive branch on a deliberately tiny integration
     # test mesh, not as extra physical accuracy evidence.
     fresh_cell=copy.deepcopy(next(c for c in n.cells if c.cell_type=='code' and 'RUN_HIGHER_RE = False' in c.source))
-    fresh_cell.source=fresh_cell.source.replace('RUN_HIGHER_RE = False','RUN_HIGHER_RE = True').replace('HIGHER_CELLS = 32','HIGHER_CELLS = 8')
-    fresh_cell.source+='\nassert len(higher_runs)==3 and all(r["converged"] for r in higher_runs)\n'
+    fresh_cell.source=fresh_cell.source.replace('RUN_HIGHER_RE = False','RUN_HIGHER_RE = True').replace('HIGHER_CELLS = 32','HIGHER_CELLS = 16')
+    fresh_cell.source+='\nassert len(higher_runs)==4 and all(r["converged"] for r in higher_runs)\n'
     check=nbformat.v4.new_notebook(cells=[copy.deepcopy(n.cells[1]),fresh_cell],metadata=n.metadata)
     fresh=execute(check,[str(kernels)])
     assert fresh['executed_code_cells']==2 and fresh['errors']==0 and fresh['png_outputs']==3
-    record={'date':'2026-10-15','default_execution':default,'fresh_interactive_branch_integration_test':{'cells':8,**fresh,'accuracy_claim':False},'unit_tests_passed':7}
+    record={'date':'2026-10-15','default_execution':default,'fresh_interactive_branch_integration_test':{'cells':16,**fresh,'accuracy_claim':False},'unit_tests_passed':7}
     p=ROOT/'results/week01_2_pressure_velocity/validation.json';v=json.loads(p.read_text())
     v['notebook_sha256']=hashlib.sha256(note.read_bytes()).hexdigest();v['default_notebook']=default
     v['higher_re_notebook_extension']={**record,'scope':'Experimental extension only; original Re=100 source and fields unchanged.'}

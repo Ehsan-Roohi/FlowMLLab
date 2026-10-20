@@ -1,7 +1,7 @@
 \documentclass[11pt]{article}
 \usepackage[a4paper,margin=22mm,headheight=15pt]{geometry}
 \usepackage{amsmath,amssymb,graphicx,booktabs,array,xcolor,fancyhdr,enumitem,hyperref}
-\usepackage{mathptmx,listings,tikz}
+\usepackage{listings,tikz}
 \usetikzlibrary{positioning}
 \lstset{language=Python,basicstyle=\ttfamily\small,keywordstyle=\color{accent},commentstyle=\color{gray},showstringspaces=false,breaklines=true,columns=fullflexible,keepspaces=true,frame=single,rulecolor=\color{accent!35},backgroundcolor=\color{accent!3},xleftmargin=3pt,xrightmargin=3pt,aboveskip=7pt,belowskip=7pt}
 \definecolor{accent}{HTML}{176578}
@@ -12,6 +12,11 @@
 \newcommand{\topic}[2]{\section*{#1\quad #2}\addcontentsline{toc}{section}{#1: #2}}
 \newcommand{\checkpoint}[1]{\par\smallskip\noindent\textcolor{accent}{\textbf{Check your understanding.}} #1\par}
 \newcommand{\dd}{\mathrm{d}}
+\usepackage{fontspec}
+\setmainfont{Times New Roman}
+\setsansfont{Times New Roman}
+\setmonofont{Consolas}[Scale=MatchLowercase]
+\usepackage[italic]{mathastext}
 \begin{document}
 \begin{center}
 {\color{accent}\LARGE\bfseries AI in Fluids: Week 1}\\[8pt]
@@ -94,6 +99,8 @@ The first term describes change at a fixed point; the last two describe change a
 \checkpoint{Can a particle accelerate when $\partial\boldsymbol{u}_d/\partial t_d=0$? Explain using a particle turning around a cavity vortex.}
 \newpage
 \topic{2}{Review: continuity and momentum}\label{sec:momentum}
+\textbf{The incompressible Navier--Stokes system.} In this course this means solving conservation of mass (continuity) together with both momentum components. The three unknowns are horizontal velocity, vertical velocity, and pressure. Momentum alone does not enforce mass conservation; continuity alone does not determine motion. Initial data and wall conditions complete the problem. We first write the dimensional system, then derive the dimensionless equations actually used in the code.
+
 \textbf{Mass conservation.} The general continuity equation is
 \begin{equation}
 \frac{\partial\rho}{\partial t_d}+\nabla_d\cdot(\rho\boldsymbol{u}_d)=0.
@@ -218,7 +225,12 @@ Pressure disappears because the curl of a gradient is zero; pressure itself need
 ={}&u\omega_x+v\omega_y+(u_x+v_y)(v_x-u_y)\\
 ={}&u\omega_x+v\omega_y.
 \end{align*}
-The last equality uses continuity, $u_x+v_y=0$. This is the cancellation that should not be skipped when deriving the equation for the first time.
+The last equality uses continuity, $u_x+v_y=0$. More explicitly, the last four product-rule terms factor as
+\[
+u_xv_x+v_xv_y-u_yu_x-v_yu_y
+=(u_x+v_y)(v_x-u_y)=0\cdot\omega=0.
+\]
+Their sum vanishes; none of these individual products is required to be zero. This is the cancellation that should not be skipped when deriving the equation for the first time.
 
 \textbf{Step 3: viscous diffusion.} Since $Re$ is constant,
 \[
@@ -229,6 +241,7 @@ Combining the three steps yields
 In dimensional variables the diffusion coefficient is $\nu$, not $1/Re$.
 
 \textbf{Physical reading.} Local vorticity changes through advection by the velocity field and diffusion by viscosity. Moving and stationary no-slip walls supply boundary vorticity. There is no vortex-stretching term for the strictly two-dimensional velocity field assumed here. Compressible, variable-property, three-dimensional, or forced flows can require additional terms.
+In detail, the three-dimensional stretching term is $(\boldsymbol\omega\cdot\nabla)\boldsymbol u$. Here $\boldsymbol\omega=(0,0,\omega)$ and $\partial_z\boldsymbol u=0$, so this term equals $\omega\partial_z\boldsymbol u=0$. This geometric argument is distinct from the continuity cancellation above. The viscous curl $Re^{-1}\nabla^2\omega$ does \emph{not} vanish. Section~12 shows why the \emph{divergence} of viscous diffusion vanishes in the pressure derivation; these are different operations.
 
 \textbf{Why this formulation helps.}\label{sec:pressure-why} In the original equations, pressure adjusts the velocity to satisfy incompressibility and boundary conditions. Taking the curl removes its gradient from the transport equation above; defining a streamfunction then supplies the velocities while satisfying continuity. These are two distinct operations. The unknowns are now $\psi$ and $\omega$, coupled through Eq.~\eqref{eq:poisson}; the pressure is not assumed zero. When pressure contours or forces are needed, recover pressure afterward as described in Section~12.
 

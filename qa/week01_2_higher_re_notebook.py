@@ -37,17 +37,18 @@ the FV momentum defect: their curves must not be ranked as the same quantity.
 A small update alone cannot establish steady accuracy. The original omission is now addressed in Section 10 below, which retains
 actual independent runs, native steady checks and sequential timing evidence.
 
-**Reading the new figures:** low values are blue, intermediate values green,
-and high values red; signed fields use symmetric limits, so zero is green.
+**Reading the figures:** signed fields share limits across methods. A symmetric
+logarithmic color scale resolves small interior values and large wall gradients.
 Black curves and arrows follow computed velocity on every field panel, including
 pressure and vorticity. Corner seeds make resolved small recirculation easier
 to see; they cannot create a missing vortex or compensate for a coarse mesh.
 Streamlines on a pressure plot are velocity trajectories, not pressure contours.
-RGB is used for this teaching display; use the colorbar for quantitative values.
+Use the colorbar values; signed fields use a symmetric logarithmic scale to show both interior structure and strong wall gradients.
 
 **Required sequence and deliverables**
 1. Reproduce the retained Re=100 baseline before running this extension.
-2. Run SIMPLE, PISO and PIMPLE at Re=400 on 32 cells, then repeat at Re=1000.
+2. Run SIMPLE, PISO, PIMPLE and streamfunction-vorticity at Re=400 on 32 cells,
+   then repeat at Re=1000. The FD time step is 0.001; HIGHER_DT controls the FV time step.
    Retain failures and report the exact settings and stopping reason.
 3. Refine to 64 cells; use 128 only if the measured mesh error warrants its cost.
    Plot both centerlines against the Ghia table for the correct Reynolds number.
@@ -69,18 +70,18 @@ The Re=400 published v-table entry at x=0.9063 is isolated from its neighbors.
 The all-point error is always retained; a separately labeled sensitivity metric
 omits that one entry without replacing its value. Ghia does not validate pressure.
 
-[Measured higher-Re report](https://github.com/Ehsan-Roohi/FlowMLLab/blob/main/results/week01_2_higher_re/README.md)
+[Measured higher-Re report](https://github.com/Ehsan-Roohi/FlowMLLab/blob/main/results/week01_2_formulations/README.md)
 and [comparison study at Re=1000/5000](https://congress2.cimne.com/eccomas/proceedings/cfd2010/papers/01330.pdf).
 The latter uses collocated grids and modified PISO/SIMPLEC variants, not our
 PIMPLE implementation. No universal algorithm Reynolds-number ceiling follows.
 '''),('code','''import json, hashlib
-HIGH_RE = ROOT / "results/week01_2_higher_re"
+HIGH_RE = ROOT / "results/week01_2_formulations"
 experimental_records = [json.loads(f.read_text()) for f in sorted(HIGH_RE.glob("*-re*-n*.json"))
                         if f.name != "validation.json"]
 display(pd.DataFrame([{
     "method": r["config"]["method"], "Re": r["config"]["reynolds"],
-    "cells": r["config"]["cells"], "scheme": r["config"]["convection"],
-    "status": r["status"], "iterations": r.get("iterations"),
+    "cells": r["config"]["cells"], "scheme": r["config"].get("convection", "central"),
+    "status": r["status"], "iterations/steps": r.get("iterations", r.get("steps")), "solver seconds": r.get("end_to_end_seconds", r.get("runtime_seconds")),
     "momentum Linf": r.get("momentum_residual_linf"),
     "divergence Linf": r.get("continuity_linf"),
     "Ghia u rel L2": r.get("ghia_u_relative_l2"),
@@ -88,31 +89,37 @@ display(pd.DataFrame([{
     "v sensitivity: omit x=.9063": r.get("ghia_v_relative_l2_without_x09063"),
     "pressure solves": r.get("pressure_solves")
 } for r in experimental_records]))
-for name in ["centerlines", "convergence", "fields"]:
+for name in ["centerlines", "convergence", "runtime", "speed"]:
     figure = HIGH_RE / (name + ".png")
     if figure.exists(): display(Image(filename=str(figure)))
 '''),('code','''# Run deliberately: finer grids and PIMPLE can take minutes on a CPU.
 RUN_HIGHER_RE = False
 HIGHER_RE = 400       # supported experimental values: 400, 1000
 HIGHER_CELLS = 32     # refine to 64, then justify 128
-HIGHER_METHOD = "all" # simple, piso, pimple, all
+HIGHER_METHOD = "all"  # all four methods; or name one explicitly # simple, piso, pimple, all
 HIGHER_SCHEME = "central" # central or upwind
 HIGHER_DT = 0.05      # steady marching control, not a transient-accuracy claim
 if RUN_HIGHER_RE:
     from flowmllab.pressure_velocity_experiments import ExperimentalConfig, run_experiment
     from flowmllab.pressure_velocity import centerlines
-    methods = ["simple", "piso", "pimple"] if HIGHER_METHOD == "all" else [HIGHER_METHOD]
+    from flowmllab.streamfunction_experiments import run_streamfunction
+    methods = ["simple", "piso", "pimple", "streamfunction-vorticity"] if HIGHER_METHOD == "all" else [HIGHER_METHOD]
     higher_runs, higher_summary = [], []
     save_root = ROOT / "output/week01_2_higher_re"
     save_root.mkdir(parents=True, exist_ok=True)
     for m in methods:
         try:
-            r = run_experiment(ExperimentalConfig(
-                method=m, cells=HIGHER_CELLS, reynolds=HIGHER_RE,
-                convection=HIGHER_SCHEME, dt=HIGHER_DT, velocity_relaxation=0.5,
-                pressure_relaxation=0.2, tolerance=1e-6, max_iterations=4000), progress=True)
+            if m == "streamfunction-vorticity":
+                if HIGHER_SCHEME != "central":
+                    raise ValueError("The independent FD reference uses central differences; choose central for the four-method comparison.")
+                r = run_streamfunction(HIGHER_RE, HIGHER_CELLS, progress=True)
+            else:
+                r = run_experiment(ExperimentalConfig(
+                    method=m, cells=HIGHER_CELLS, reynolds=HIGHER_RE,
+                    convection=HIGHER_SCHEME, dt=HIGHER_DT, velocity_relaxation=0.5,
+                    pressure_relaxation=0.2, tolerance=1e-6, max_iterations=4000), progress=True)
             higher_runs.append(r)
-            higher_summary.append({k:r[k] for k in ["converged", "iterations",
+            higher_summary.append({k:r.get(k) for k in ["converged", "iterations", "steps", "steady_vorticity_linf",
                 "runtime_seconds", "pressure_solves", "momentum_residual_linf",
                 "continuity_linf", "ghia_u_relative_l2", "ghia_v_relative_l2"]}
                 | {"method":m, "Re":HIGHER_RE, "cells":HIGHER_CELLS, "scheme":HIGHER_SCHEME})

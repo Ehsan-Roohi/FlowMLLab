@@ -15,10 +15,10 @@ PATCH_FILE = Path(__file__).with_name('notebook_review_patches.json')
 def review_notebook_file(path):
     path = Path(path).resolve()
     key = path.relative_to(ROOT).as_posix()
-    patches = json.loads(PATCH_FILE.read_text()).get(key, [])
+    patches = json.loads(PATCH_FILE.read_text(encoding='utf-8')).get(key, [])
     if not patches:
         return
-    nb = json.loads(path.read_text())
+    nb = json.loads(path.read_text(encoding='utf-8'))
     def source(cell):
         return ''.join(cell['source']).strip()
     for patch in patches:
@@ -56,9 +56,9 @@ def review_notebook_file(path):
         if not cell.get('id'):
             cell['id'] = hashlib.sha256(f'{key}:{index}:{source(cell)}'.encode()).hexdigest()[:12]
     nb.setdefault('metadata', {})['review_note'] = 'Source reviewed; changed/new code has no retained output. Original results remain historical author evidence.'
-    path.write_text(json.dumps(nb, indent=1, ensure_ascii=False)+'\n')
+    path.write_text(json.dumps(nb, indent=1, ensure_ascii=False)+'\n', encoding='utf-8')
 
 
 if __name__ == '__main__':
-    for relative in json.loads(PATCH_FILE.read_text()):
+    for relative in json.loads(PATCH_FILE.read_text(encoding='utf-8')):
         review_notebook_file(ROOT / relative)
