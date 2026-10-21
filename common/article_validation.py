@@ -70,7 +70,7 @@ def build_ghia_velocity_validation(
     root = find_course_root(root)
     output_dir = Path(output_dir or root / "results" / "article_figures")
     sys.path.insert(0, str(root / "common"))
-    from w4utils import GHIA  # noqa: PLC0415
+    from w4utils import GHIA, ghia_valid_mask  # noqa: PLC0415
     sys.path.insert(0, str(root))
     from flowmllab.cavity_visuals import RGB, flow_structure
 
@@ -86,7 +86,9 @@ def build_ghia_velocity_validation(
     u_ref_pred = np.interp(ref["y"], y, u[:, mid_x])
     v_ref_pred = np.interp(ref["x"], x, v[mid_y, :])
     u_error = float(np.linalg.norm(u_ref_pred - ref["u"]) / np.linalg.norm(ref["u"]))
-    v_error = float(np.linalg.norm(v_ref_pred - ref["v"]) / np.linalg.norm(ref["v"]))
+    valid_v = ghia_valid_mask(400, "v")
+    v_error_all = float(np.linalg.norm(v_ref_pred - ref["v"]) / np.linalg.norm(ref["v"]))
+    v_error = float(np.linalg.norm((v_ref_pred - ref["v"])[valid_v]) / np.linalg.norm(ref["v"][valid_v]))
 
     _style()
     plt.rcParams.update(
@@ -117,13 +119,17 @@ def build_ghia_velocity_validation(
     ax_u.scatter(ref["u"], ref["y"], s=48, color="#ed2024", edgecolor="white", linewidth=0.6, label="Ghia et al.", zorder=3)
     ax_u.set(title=r"(b) Vertical centerline $u(x/L=0.5,y)$", xlabel=r"$u/U_{lid}$", ylabel=r"$y/L$", ylim=(0, 1.04))
     ax_v.plot(x, v[mid_y, :], color="#1261A0", label="FlowMLLab solver")
-    ax_v.scatter(ref["x"], ref["v"], s=48, color="#ed2024", edgecolor="white", linewidth=0.6, label="Ghia et al.", zorder=3)
+    ax_v.scatter(ref["x"][valid_v], ref["v"][valid_v], s=48, color="#ed2024", edgecolor="white", linewidth=0.6, label="Ghia et al. (qualified)", zorder=3)
+    ax_v.scatter(ref["x"][~valid_v], ref["v"][~valid_v], s=80, marker="x", color="#9b5500", linewidth=1.8, label="Published anomalous point (not scored)", zorder=4)
     ax_v.set(title=r"(c) Horizontal centerline $v(x,y/L=0.5)$", xlabel=r"$x/L$", ylabel=r"$v/U_{lid}$", xlim=(-0.02, 1.02))
     for axis in (ax_u, ax_v):
         axis.grid(alpha=0.25)
         axis.legend(loc="best", frameon=True)
     paths = _save(fig, output_dir, "fig02_cavity_benchmark")
-    metrics = {"Re": 400, "u_centerline_relative_l2": u_error, "v_centerline_relative_l2": v_error}
+    metrics = {"Re": 400, "u_centerline_relative_l2": u_error,
+               "v_centerline_relative_l2": v_error,
+               "v_centerline_relative_l2_including_anomalous_point": v_error_all,
+               "excluded_Ghia_v_x_over_L": 0.9063}
     (output_dir / "fig02_cavity_benchmark_metrics.json").write_text(json.dumps(metrics, indent=2) + "\n")
     return {"figure": paths, "metrics": metrics}
 
