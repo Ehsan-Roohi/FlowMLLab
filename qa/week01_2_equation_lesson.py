@@ -99,4 +99,6 @@ def improve_notebook(nb):
     new[-2].id='pressure-recorded-evidence'
     index=nb.cells.index(setup)+1;nb.cells[index:index]=new
     nb.cells[0].source=nb.cells[0].source.replace('This is an independent extension. The original Week-1 streamfunction-vorticity lab is unchanged.','The lesson connects finite-volume conservation equations to SIMPLE, PISO and PIMPLE, with algebraic examples and recorded cavity comparisons.').replace('**Qualified scope:** Re=100, 32 and 64 uniform cells per side, steady solutions. Startup time accuracy and larger-time-step benefits are future experiments.','**Scope:** Re=100 baseline and retained Re=400/1000 experiments; steady velocity comparisons, mesh refinement and within-step coupling. Transient trajectory accuracy requires a separate time-step study.')
+    from qa.notebook_math import normalize_notebook
+    normalize_notebook(nb)
     return nb

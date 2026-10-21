@@ -7,6 +7,10 @@ are never read, regenerated or modified. Changed code cells lose stale output.
 from pathlib import Path
 import hashlib
 import json
+try:
+    from .notebook_math import normalize_notebook
+except ImportError:
+    from notebook_math import normalize_notebook
 
 ROOT = Path(__file__).resolve().parents[1]
 PATCH_FILE = Path(__file__).with_name('notebook_review_patches.json')
@@ -16,8 +20,6 @@ def review_notebook_file(path):
     path = Path(path).resolve()
     key = path.relative_to(ROOT).as_posix()
     patches = json.loads(PATCH_FILE.read_text(encoding='utf-8')).get(key, [])
-    if not patches:
-        return
     nb = json.loads(path.read_text(encoding='utf-8'))
     def source(cell):
         return ''.join(cell['source']).strip()
@@ -56,6 +58,7 @@ def review_notebook_file(path):
         if not cell.get('id'):
             cell['id'] = hashlib.sha256(f'{key}:{index}:{source(cell)}'.encode()).hexdigest()[:12]
     nb.setdefault('metadata', {})['review_note'] = 'Source reviewed; changed/new code has no retained output. Original results remain historical author evidence.'
+    normalize_notebook(nb)
     path.write_text(json.dumps(nb, indent=1, ensure_ascii=False)+'\n', encoding='utf-8')
 
 

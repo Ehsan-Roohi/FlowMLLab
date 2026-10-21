@@ -5,11 +5,13 @@ These are additional derivations and exercises; they do not replace any original
 ## Worked example: two control volumes and one shared face
 Take two unit-volume cells with impermeable exterior faces and one interior
 face velocity q, positive from left to right. With unit spacing,
-\[
+
+$$
 D=\begin{bmatrix}1\\-1\end{bmatrix},\quad
 G=\begin{bmatrix}-1&1\end{bmatrix},\quad d=1,\quad
 L=-DdG=\begin{bmatrix}1&-1\\-1&1\end{bmatrix}.
-\]
+$$
+
 For the predictor q*=1, Dq*=(1,−1): each cell fails continuity, but total
 mass defect is zero because the shared flux cancels. Solve Lp'=−Dq* with gauge
 p'_2=0. The first equation gives p'_1=−1. Then Gp'=1 and
@@ -34,10 +36,12 @@ needs matrix covariance, projection, and positive-definite linear systems.
 Let the Poiseuille amplitude w have prior N(1,.25²), and let two normalized
 observations at unit basis value be y=(.9,1.1), with independent known noise
 σ=.1. Completing the square in the prior times likelihood gives
-\[
+
+$$
 S_n^{-1}=S_0^{-1}+\Phi^T\Phi/\sigma^2,
 \quad m_n=S_n(S_0^{-1}m_0+\Phi^Ty/\sigma^2).
-\]
+$$
+
 Here Φ is 2×1, w is scalar, S0=.0625, precision=16+200=216;
 mn=1 and Sn=1/216=.00462963. A new amplitude observation has variance
 σ²+Sn=.01462963, whereas the latent amplitude has variance Sn only. The

@@ -1,0 +1,9 @@
+{
+  "notebooks_checked": 51,
+  "notebooks_reformatted": 24,
+  "markdown_cells_reformatted": 116,
+  "code_cells_and_outputs_preserved": true,
+  "math_and_prose_tokens_preserved": true,
+  "normalization_idempotent": true,
+  "scope": "Only Markdown delimiter/layout repair; no solver or model changes and no new scientific runs."
+}

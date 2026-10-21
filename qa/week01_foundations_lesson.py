@@ -32,7 +32,8 @@ def markdown(tex):
         tex=tex.replace('\\begin{'+kind+'}','$$').replace('\\end{'+kind+'}','$$')
     tex=tex.replace('\\[','$$').replace('\\]','$$')
     tex=tex.replace('~',' ').replace('--','-').replace('\\_','_')
-    return tex.strip()
+    from qa.notebook_math import normalize_markdown
+    return normalize_markdown(tex.strip())
 
 
 def lesson_cells(tex,group):

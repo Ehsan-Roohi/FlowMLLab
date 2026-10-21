@@ -123,3 +123,6 @@ if RUN_STREAMFUNCTION:
  for kind,text in [('markdown',description),('code',code)]:
   c=nbf.v4.new_markdown_cell(text) if kind=='markdown' else nbf.v4.new_code_cell(text)
   c.metadata['formulation_comparison']=True;nb.cells.append(c)
+
+ from qa.notebook_math import normalize_notebook
+ normalize_notebook(nb)

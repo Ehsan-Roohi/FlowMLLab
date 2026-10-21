@@ -9,7 +9,7 @@
     "code_cells": 8,
     "png_outputs": 14,
     "errors": 0,
-    "sha256": "975b942023269bb93d980aec67a8a5f86fd950be61a3b408ff4a53b9d7a24e16"
+    "sha256": "dee998eab5520d42f9a7b18a348e18764d0025104482bd411f28c9e9d1db693c"
   },
   "examples": {
     "two_cell_conservation": true,
