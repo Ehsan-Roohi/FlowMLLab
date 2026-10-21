@@ -47,7 +47,9 @@ def review_notebook_file(path):
             if any(c.get('metadata', {}).get('review_id') == ident for c in nb['cells']):
                 continue
             before = patch.get('before')
-            if before:
+            if patch.get('append'):
+                position = len(nb['cells'])
+            elif before:
                 positions = [i for i,c in enumerate(nb['cells']) if before in source(c)]
                 if len(positions) != 1:
                     raise ValueError(f'{key}: ambiguous insertion anchor {before!r}')
@@ -62,7 +64,7 @@ def review_notebook_file(path):
     for index, cell in enumerate(nb['cells']):
         if not cell.get('id'):
             cell['id'] = hashlib.sha256(f'{key}:{index}:{source(cell)}'.encode()).hexdigest()[:12]
-    nb.setdefault('metadata', {})['review_note'] = 'Source reviewed; changed/new code has no retained output. Original results remain historical author evidence.'
+    nb.setdefault('metadata', {})['review_note'] = 'Source contains reviewed teaching overlays. Saved outputs must be interpreted with their execution provenance; a source rebuild is not a scientific run.'
     normalize_notebook(nb)
     path.write_text(json.dumps(nb, indent=1, ensure_ascii=False)+'\n', encoding='utf-8')
 

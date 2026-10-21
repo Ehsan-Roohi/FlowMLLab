@@ -31,13 +31,13 @@ def pdf_pages(path: Path) -> int:
 
 
 def inventory() -> dict:
-    catalog = json.loads((ROOT / 'course/catalog.json').read_text())
-    version = tomllib.loads((ROOT / 'pyproject.toml').read_text())['project']['version']
+    catalog = json.loads((ROOT / 'course/catalog.json').read_text(encoding='utf-8'))
+    version = tomllib.loads((ROOT / 'pyproject.toml').read_text(encoding='utf-8'))['project']['version']
     lectures = [{'path': p.relative_to(ROOT).as_posix(), 'pages': pdf_pages(p)} for p in sorted((ROOT / 'lectures').glob('week*.pdf'))]
     notebooks = []
     for p in sorted((ROOT / 'notebooks').glob('week*/*.ipynb')):
         # Parsing catches corrupt inventory members without executing their code.
-        document = json.loads(p.read_text())
+        document = json.loads(p.read_text(encoding='utf-8'))
         if document.get('nbformat') != 4:
             raise ValueError(f'Unsupported notebook format: {p}')
         role = 'historical audit companion' if p.name == 'W15_Geometry_Operators_Step_Audit.ipynb' else 'student'
@@ -117,13 +117,13 @@ def site_modules(inv: dict) -> str:
 
 def desired_files(inv: dict) -> dict[Path,str]:
     out={ROOT/'docs/course_inventory.json':json.dumps(inv,indent=2,ensure_ascii=False)+'\n', ROOT/'docs/COURSE_INVENTORY.md':inventory_md(inv)}
-    readme=(ROOT/'README.md').read_text()
+    readme=(ROOT/'README.md').read_text(encoding='utf-8')
     out[ROOT/'README.md']=replace_block(readme,'course-counts',generated_readme(inv))
     runtime = ['| Unit | Mode / resources | Compute planning estimate |', '| --- | --- | --- |']
     runtime += [f'| [Week {m["id"]}]({m["page"]}) | {m["mode"]} | {m["compute_estimate"]} |' for m in inv['modules']]
-    start=(ROOT/'START_HERE.md').read_text()
+    start=(ROOT/'START_HERE.md').read_text(encoding='utf-8')
     out[ROOT/'START_HERE.md']=replace_block(start,'course-runtime','\n'.join(runtime))
-    lecture=(ROOT/'lectures/README.md').read_text()
+    lecture=(ROOT/'lectures/README.md').read_text(encoding='utf-8')
     counts={Path(p['path']).name:p['pages'] for p in inv['lecture_pdfs']}
     def fix_pages(match):
         name=match.group(2)
@@ -131,7 +131,7 @@ def desired_files(inv: dict) -> dict[Path,str]:
         return f'{match.group(1)} ({counts[name]} pages)'
     lecture=re.sub(r'(\[[^\]]+\]\((week[^)]+\.pdf)\))\s*\(\d+(?: pages)?\)',fix_pages,lecture)
     out[ROOT/'lectures/README.md']=lecture
-    site=(ROOT/'docs/index.html').read_text()
+    site=(ROOT/'docs/index.html').read_text(encoding='utf-8')
     c=inv['counts']
     site=replace_block(site,'course-summary',f'<p class="release">Current course version v{inv["course_version"]} · Weeks 1–22</p>\n<p>{c["student_notebooks"]} student notebooks, including {c["historical_student_companions"]} historical companion · {c["active_lecture_pdfs"]} active lecture PDFs · {c["lecture_pages"]} pages. Optional supplements are separate.</p>')
     site=replace_block(site,'course-modules',site_modules(inv))
@@ -156,9 +156,17 @@ class SiteStructure(HTMLParser):
 def link_errors(files: dict[Path,str]) -> list[str]:
     errors=[]
     targets=set()
+    # A deliberate sparse checkout can omit valid published targets. Only the
+    # skip-worktree index flag is accepted; an ordinary deleted file still fails.
+    indexed = subprocess.check_output(['git','ls-files','-v','-z'],cwd=ROOT).decode('utf-8')
+    sparse = {entry[2:] for entry in indexed.split('\0') if entry.startswith('S ')}
+    def deliberately_sparse(target):
+        try: relative=target.relative_to(ROOT).as_posix()
+        except ValueError:return False
+        return relative in sparse or any(p.startswith(relative.rstrip('/')+'/') for p in sparse)
     for relative in PRIMARY_DOCS:
         file=ROOT/relative
-        text=files.get(file,file.read_text() if file.exists() else '')
+        text=files.get(file,file.read_text(encoding='utf-8') if file.exists() else '')
         urls=re.findall(r'\]\(([^)\s]+)(?:\s+"[^"]*")?\)',text) if file.suffix=='.md' else re.findall(r'(?:href|src)="([^"]+)"',text)
         for url in urls:
             u=urlparse(html.unescape(url));path=unquote(u.path)
@@ -171,13 +179,14 @@ def link_errors(files: dict[Path,str]) -> list[str]:
             else:
                 target=(file.parent/path).resolve()
             targets.add(str(target))
-            if not target.exists() and target not in files:errors.append(f'{relative}: missing target {url}')
+            if not target.exists() and target not in files and not deliberately_sparse(target):
+                errors.append(f'{relative}: missing target {url}')
     structure=SiteStructure()
     structure.feed(files[ROOT/'docs/index.html'])
     if len(structure.ids)!=len(set(structure.ids)):errors.append('docs/index.html: duplicate HTML ids')
     errors += [f'docs/index.html: missing fragment #{a}' for a in structure.anchors if a not in structure.ids]
     errors += ['docs/index.html: image without alternative text' for image in structure.images if not image.get('alt')]
-    print(f'Checked {len(targets)} distinct local/repository/Colab file targets, site fragments and image alt text (no network).')
+    print(f'Checked {len(targets)} local/indexed repository/Colab targets, site fragments and image alt text (no network).')
     return errors
 
 
@@ -189,9 +198,9 @@ def main() -> int:
     errors=link_errors(out)
     if errors:
         print('\n'.join(errors),file=sys.stderr);return 1
-    stale=[p for p,body in out.items() if not p.exists() or p.read_text()!=body]
+    stale=[p for p,body in out.items() if not p.exists() or p.read_text(encoding='utf-8')!=body]
     if args.write:
-        for path in stale:path.write_text(out[path])
+        for path in stale:path.write_text(out[path],encoding='utf-8')
         print(f'Updated {len(stale)} generated files/blocks.')
     elif stale:
         print('Stale generated files: '+', '.join(str(p.relative_to(ROOT)) for p in stale),file=sys.stderr)

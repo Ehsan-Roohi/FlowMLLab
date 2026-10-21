@@ -1,0 +1,20 @@
+\section*{Check the branch, the domain and the denominator}
+For Rayleigh flow with heat-capacity ratio $\gamma>1$, the supersonic branch has
+
+\[1-\gamma^{-2}<T_0/T_0^*<1.\]
+
+At $\gamma=1.4$ the lower limit is about 0.4898 and corresponds to infinite
+Mach number. A requested ratio of 0.30 has no supersonic solution. The solver
+must explain this physical limit before invoking a root finder. The sonic endpoint
+has $M=1$; no finite maximum Mach should silently redefine the physical domain.
+
+Residual and output error have different units and sensitivities. If a relation
+is $F(y,a)=0$, a small perturbation obeys $\delta F\approx F_y\delta y$ with
+input $a$ held fixed. A large $F_y$ can produce a large equation residual from a
+small output error. A positivity parameterization enforces positivity alone,
+not the equation, conservation or accuracy.
+
+Compare baseline error on the common supported queries and report coverage on
+the full query set. Error on 65\% of queries is not directly comparable with
+error on 100\%. A pass close to a declared threshold is a narrow pass, not a
+robust margin. Keep the original criterion when reproducing the experiment.

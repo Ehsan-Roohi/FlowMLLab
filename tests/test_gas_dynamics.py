@@ -26,6 +26,17 @@ RESULTS = ROOT / "results" / "gas_dynamics_week8"
 
 
 class GasDynamicsWeek8Tests(unittest.TestCase):
+    def test_rayleigh_branch_limits_and_large_mach(self) -> None:
+        for target in (0.30, 1.0 - 1.0 / 1.4**2):
+            with self.assertRaisesRegex(ValueError, "Supersonic Rayleigh"):
+                rayleigh_inverse_t0(target, "supersonic")
+        for branch in ("subsonic", "supersonic"):
+            self.assertEqual(rayleigh_inverse_t0(1.0, branch), 1.0)
+        with self.assertRaisesRegex(ValueError, "branch"):
+            rayleigh_inverse_t0(1.0, "invalid")
+        target = float(rayleigh_ratios(100.0)[4])
+        self.assertAlmostEqual(rayleigh_inverse_t0(target, "supersonic"), 100.0, places=6)
+
     def test_rayleigh_inverse_closes_on_both_branches(self) -> None:
         target = 0.82
         subsonic = rayleigh_inverse_t0(target, "subsonic")

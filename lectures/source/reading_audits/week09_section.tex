@@ -1,0 +1,30 @@
+\section*{Local accuracy, geometry and the evaluation contract}
+In the zonal loss
+
+\[\mathcal L=\alpha\,\frac{1}{N_v}\sum_{i\in V}e_i^2
++(1-\alpha)\,\frac{1}{N_m}\sum_{i\in M}e_i^2,\]
+
+$V$ denotes reverse-flow samples, $M$ the remaining samples, and $N_v,N_m$
+their counts. The scalar $\alpha$ weights regional mean errors, rather than
+the number of pixels in each region. Select it on validation cases, then freeze
+it before opening final cases. Always show unweighted global AND reverse-flow
+validation errors beside the weighted fits. A validation guardrail, such as a
+two-percentage-point global penalty, is a selection rule, not a guarantee on new
+geometries. Map the largest local error; it may sit at the step lip rather than
+inside the reverse-flow zone.
+
+The classroom coordinate model is an MLP. A strict branch/trunk model that uses
+only $(x/H,y/H)$ in its trunk has a different geometry representation and training
+problem. A worse result is not by itself proof of an architectural limitation.
+Compare seeds, budget, training error and explicit wall-relative features before
+attributing the difference to geometry. Do not mix numbers from different runs.
+
+In nozzle registration, a station returned only at grid nodes cannot distinguish
+sub-cell shock motion. Equal detected stations do not prove identical physical
+shocks. Report grid spacing, ties and every non-monotone pair. Target-assisted
+alignment is a representation audit; deployment must use a training-only locator.
+Historical holdouts are regression cases once inspected, not new blind cases.
+
+Branch sensors and query coordinates have different roles. Fixed branch sensors
+describe the input consistently across cases. Each query must still be paired
+with its own target value; equal array shapes alone do not establish that pairing.

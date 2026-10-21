@@ -9,8 +9,8 @@
     "historical_baseline": "At review base c9562b8: 34 active PDFs / 444 pages; 51 student notebooks including one historical companion. Current counts below are regenerated and may change."
   },
   "counts": {
-    "active_lecture_pdfs": 34,
-    "lecture_pages": 453,
+    "active_lecture_pdfs": 35,
+    "lecture_pages": 483,
     "student_notebooks": 51,
     "historical_student_companions": 1,
     "optional_notebooks": 1,
@@ -19,19 +19,19 @@
   "lecture_pdfs": [
     {
       "path": "lectures/week01_1_ai_assisted_scientific_software.pdf",
-      "pages": 9
+      "pages": 10
     },
     {
       "path": "lectures/week01_2_pressure_velocity.pdf",
-      "pages": 19
-    },
-    {
-      "path": "lectures/week01_numerical_foundations.pdf",
       "pages": 26
     },
     {
+      "path": "lectures/week01_numerical_foundations.pdf",
+      "pages": 32
+    },
+    {
       "path": "lectures/week02_1_probabilistic_uq.pdf",
-      "pages": 9
+      "pages": 10
     },
     {
       "path": "lectures/week02_supervised_learning_rarefaction.pdf",
@@ -43,7 +43,7 @@
     },
     {
       "path": "lectures/week04_2_grid51_validation.pdf",
-      "pages": 3
+      "pages": 4
     },
     {
       "path": "lectures/week04_2_pinn_cavity.pdf",
@@ -51,11 +51,11 @@
     },
     {
       "path": "lectures/week04_2_stokes_to_navier_stokes.pdf",
-      "pages": 10
+      "pages": 11
     },
     {
       "path": "lectures/week04_cavity_surrogates_deeponet.pdf",
-      "pages": 10
+      "pages": 11
     },
     {
       "path": "lectures/week05_06_project_guide.pdf",
@@ -67,47 +67,51 @@
     },
     {
       "path": "lectures/week07_1_hypersonic_rarefied_cylinder.pdf",
-      "pages": 16
+      "pages": 17
     },
     {
       "path": "lectures/week07_2_cylinder_state_estimation.pdf",
-      "pages": 4
+      "pages": 5
     },
     {
       "path": "lectures/week07_3_masked_pretraining.pdf",
-      "pages": 6
+      "pages": 7
     },
     {
       "path": "lectures/week07_4_diverse_wake_pretraining.pdf",
-      "pages": 4
+      "pages": 5
     },
     {
       "path": "lectures/week07_cylinder_lbm_neural_surrogate.pdf",
-      "pages": 18
+      "pages": 19
     },
     {
       "path": "lectures/week07_modal_forecasting.pdf",
-      "pages": 4
+      "pages": 5
     },
     {
       "path": "lectures/week08_gas_dynamics_sciml.pdf",
-      "pages": 12
-    },
-    {
-      "path": "lectures/week09_3_nozzle_data_alignment.pdf",
-      "pages": 2
-    },
-    {
-      "path": "lectures/week09_rarefied_deeponet_case_studies.pdf",
-      "pages": 18
-    },
-    {
-      "path": "lectures/week10_dsmc_data_driven_surrogates.pdf",
       "pages": 13
     },
     {
+      "path": "lectures/week09_3_nozzle_data_alignment.pdf",
+      "pages": 3
+    },
+    {
+      "path": "lectures/week09_rarefied_deeponet_case_studies.pdf",
+      "pages": 19
+    },
+    {
+      "path": "lectures/week10_1_collision_map_audit.pdf",
+      "pages": 1
+    },
+    {
+      "path": "lectures/week10_dsmc_data_driven_surrogates.pdf",
+      "pages": 14
+    },
+    {
       "path": "lectures/week11_shock_vortex_identification.pdf",
-      "pages": 16
+      "pages": 17
     },
     {
       "path": "lectures/week12_dsmc_moment_reconstruction.pdf",

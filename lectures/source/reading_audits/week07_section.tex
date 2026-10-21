@@ -1,0 +1,24 @@
+\section*{Why a grid study can fail when the last pair looks close}
+Richardson extrapolation assumes a consistent asymptotic error law. With fine,
+medium and coarse observations $q_1,q_2,q_3$ and a uniform refinement ratio $r>1$,
+the monotone estimate is
+
+\[p=\frac{\log |(q_3-q_2)/(q_2-q_1)|}{\log r}.\]
+
+Here $q$ is one physical observable, such as drag or recirculation length, and
+$p$ is an observed accuracy order. A change of sign between the two successive
+differences invalidates this monotone estimate; an undefined GCI is a diagnostic,
+not a number to replace by zero. For example, lengths 1.422, 1.418 and 1.437 do
+not approach a limit monotonically. Keep the gate failed, add a declared finer
+grid or longer sampling window, and repeat the same metric definitions.
+
+Check diameter resolution separately for every Reynolds number using
+$Re=UD/\nu$: the retained Re180 configuration uses 15 nodes per diameter,
+where other listed configurations use 12. Domain blockage (here 12.5\%) can alter
+drag and shedding frequency even after a grid study. Grid independence, domain
+independence and external physical validation are separate tests.
+
+For modal sensing, an oracle gets true modal coefficients; an autonomous forecast
+must generate its own. Eight sensors for eight modes can be badly conditioned.
+Report the sensor count, placement, condition number and error together; a plot
+without the underlying table is insufficient evidence.

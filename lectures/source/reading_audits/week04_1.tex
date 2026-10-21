@@ -1,0 +1,30 @@
+\documentclass[11pt]{article}
+\usepackage[a4paper,margin=23mm]{geometry}
+\usepackage{amsmath,amssymb,xcolor,hyperref,fancyhdr}
+\usepackage{fontspec}
+\setmainfont{Times New Roman}
+\setmonofont{Times New Roman}
+\usepackage[italic]{mathastext}
+\setlength{\emergencystretch}{3em}
+\setlength{\parskip}{7pt}\setlength{\parindent}{0pt}
+\pagestyle{fancy}\fancyhf{}\setlength{\headheight}{14pt}
+\lhead{FlowMLLab}\rhead{Reading and experiment guide}\cfoot{\thepage}
+\begin{document}
+\noindent\textbf{Week 4.1 | Reading the evidence}\par\medskip\hrule\medskip
+\section*{Read an error budget before a speedup}
+A POD mode is a spatial pattern; its coefficient changes with time. Capturing
+99.9\% of snapshot energy limits a projection error on those snapshots, not the
+future trajectory error of a Galerkin model. Closure error, DEIM approximation,
+time integration and parameter transfer can still dominate. A reduced solver
+that reconstructs the full field every step can be slower than its full model.
+
+Compare the ROM with the CFD solution on the same grid first, then separately
+compare that CFD grid with a finer one and with Ghia centerlines. A small ROM
+error cannot remove a coarse-label error. Treat retained timing ratios as
+machine-specific observations, not a speedup students must reproduce. A failed
+physical comparison remains a failed comparison even if an ML metric is small.
+\paragraph{Check your understanding.}
+Identify the input information, the reference, the metric denominator and the
+evaluation split in one worked notebook comparison. Predict which conclusion
+would change if any one of those four changed, then check your prediction.
+\end{document}

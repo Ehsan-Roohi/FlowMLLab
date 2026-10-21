@@ -17,10 +17,12 @@ from flowmllab.cavity_diversity import case_manifest,solve_cases,evaluate,fields
 from flowmllab.stokes_correction import solve_stokes
 from common.w4utils import recover_pressure
 
+REPO_ROOT = Path(__file__).resolve().parents[1]
+
 
 def refined_data(out):
     out=Path(out);out.mkdir(parents=True,exist_ok=True)
-    old=Path('results/cavity_diversity_pilot')
+    old=REPO_ROOT/'results/cavity_diversity_pilot'
     manifest=json.loads((old/'manifest.json').read_text());cases=manifest['cases'];data=dict(np.load(old/'dataset.npz'))
     if (out/'expanded.npz').exists():
         return json.loads((out/'expanded_cases.json').read_text()),dict(np.load(out/'expanded.npz'))
@@ -117,10 +119,20 @@ def pressure_fields(psi,cases,lid):
     return u,v,np.array(p),audit
 
 
-def run(stage='same_data'):
+def run(stage='same_data', *, output_dir=None):
     torch.set_num_threads(2)
-    out=Path('results/stokes_refined')/stage;out.mkdir(parents=True,exist_ok=True)
-    old=Path('results/cavity_diversity_pilot');cases=json.loads((old/'manifest.json').read_text())['cases'];data=dict(np.load(old/'dataset.npz'))
+    if stage not in {'same_data', 'expanded'}:
+        raise ValueError('stage must be same_data or expanded')
+    if output_dir is None:
+        out=Path('results/stokes_refined')/stage
+        out.mkdir(parents=True,exist_ok=True)
+    else:
+        out=Path(output_dir).resolve()/stage
+        retained=Path(__file__).resolve().parents[1]/'results'
+        if out.is_relative_to(retained.resolve()):
+            raise ValueError('Student training must write outside retained results/')
+        out.mkdir(parents=True,exist_ok=False)
+    old=REPO_ROOT/'results/cavity_diversity_pilot';cases=json.loads((old/'manifest.json').read_text())['cases'];data=dict(np.load(old/'dataset.npz'))
     if stage=='expanded':cases,data=refined_data(out)
     low=solve_stokes(cases,data['psi'].shape[-1]);re=np.array([c['Re'] for c in cases]);rows=[];configs=[];hist=[];preds={}
     for family in ('constant','diverse'):

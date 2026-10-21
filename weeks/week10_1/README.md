@@ -8,7 +8,8 @@ Molecular scattering and DSMC cylinder contours.
 
 ## Lecture and notebooks
 
-**Lecture:** [Lecture companion](../../lectures/week10_1_abinitio_collision_deeponet.md)
+**Executable-lab lecture:** [Collision-map audit PDF](../../lectures/week10_1_collision_map_audit.pdf).
+**Separate research reading:** [Ab initio DSMC companion](../../lectures/week10_1_abinitio_collision_deeponet.md).
 
 | Notebook | Read | Run / setup |
 | --- | --- | --- |

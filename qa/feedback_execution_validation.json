@@ -1,0 +1,149 @@
+{
+  "python": "3.12.14",
+  "packages": {
+    "numpy": "2.2.6",
+    "scipy": "1.15.3",
+    "pandas": "2.3.3",
+    "scikit-learn": "1.6.1",
+    "matplotlib": "3.10.9",
+    "torch": "2.8.0+cpu"
+  },
+  "executed_notebooks": {
+    "notebooks/week10_1/W10_1_Collision_Map_Surrogate_Audit.ipynb": {
+      "status": "passed",
+      "seconds": 174.31,
+      "code_cells": 9,
+      "source_sha256": "c8a1055f1ee031c5ac93a0d340329cf5b5e4d4c3edefb136b5eed84bac7cb47c",
+      "code_sha256": "e9c156e3ccb508970b1cb7f98437ac8eef7505f5d8261b070721395eef35df40",
+      "execution_context": "Independent local CPU kernel; all default code cells completed."
+    },
+    "notebooks/week08/W8_Lab1_Exact_Gas_Dynamics_Student.ipynb": {
+      "status": "passed",
+      "seconds": 5.63,
+      "code_cells": 8,
+      "source_sha256": "6be45f6e350980dbd70a7056958cf61e16b565b717b66c35192dd893ae0cb27d",
+      "code_sha256": "d68f2277b5e32d0229c4d1ff578d495f6dea567a26e63f4953db88ce692ba2d7",
+      "execution_context": "Independent local CPU kernel; all default code cells completed."
+    },
+    "notebooks/week10/W10_DSMC_Data_Driven_Surrogates_Student.ipynb": {
+      "status": "passed",
+      "seconds": 11.56,
+      "code_cells": 13,
+      "source_sha256": "fc834601fcc9bf3ebf7d4f8ac840450327e3ba8577efb08d6592d85366e9dd34",
+      "code_sha256": "445c2945478f2e951a7e5c90a168bcb1eb2d6eacea8b8e46e8a0d3b30324f1e9",
+      "execution_context": "Independent local CPU kernel; all default code cells completed."
+    },
+    "notebooks/week11/W11_Shock_Vortex_Identification.ipynb": {
+      "status": "passed",
+      "seconds": 11.11,
+      "code_cells": 11,
+      "source_sha256": "9fc381fbcf446acd26fdf505cf132aa21961dad857cc70f6d644156b52d54ea3",
+      "code_sha256": "4d64bfdf1acb95cb7fa46fa53f58225858f26669db1fc1bf83affa11011a3f5b",
+      "execution_context": "Independent local CPU kernel; all default code cells completed."
+    },
+    "notebooks/week09/W9_Lab1_Microstep_Zonal_DeepONet_Student.ipynb": {
+      "status": "passed",
+      "seconds": 67.61,
+      "code_cells": 13,
+      "source_sha256": "800fdaa8c61d1c9d4152770220c666cd6c0b0faf43d376063721c87463e6a37b",
+      "code_sha256": "f8e6cec2e82a242bd7499642837542dd500e8a79c9933458e251b5d0c19ee51f",
+      "execution_context": "Independent local CPU kernel; all default code cells completed."
+    },
+    "notebooks/week09/W9_Lab3_Nozzle_Data_Alignment_Audit.ipynb": {
+      "status": "passed",
+      "seconds": 2.9,
+      "code_cells": 5,
+      "source_sha256": "2e72314a99e04fd96a2397a807469e3c447d09ce4de3ac871c08de7031824360",
+      "code_sha256": "19b2ce34f4c9551826e4da992349e07c6048b04c5b9e711514c813d93336ec6b",
+      "execution_context": "Independent local CPU kernel; all default code cells completed."
+    },
+    "notebooks/week11/W11_Cavitation_Cloud_Detection.ipynb": {
+      "status": "passed",
+      "seconds": 21.27,
+      "code_cells": 12,
+      "source_sha256": "befcab07a52dea9784aa45d8239481ab6d301ab8a2f38aa71cd46f612a50c4ad",
+      "code_sha256": "961b8757dded2c7109100f298aad0871eb9c93738d22c75ddbd7310f3469d0d8",
+      "execution_context": "Independent local CPU kernel; all default code cells completed."
+    },
+    "notebooks/week11/W11_Lab2_Reconstruction_and_Identification.ipynb": {
+      "status": "passed",
+      "seconds": 8.21,
+      "code_cells": 9,
+      "source_sha256": "9be406d11d31144f730c72d9d070527d22e63f57c22e02e93026f17651fc0879",
+      "code_sha256": "e752682853ecc761b45019adb3d1d08002df261af0cb90087293f25cbaf6b8d2",
+      "execution_context": "Independent local CPU kernel; all default code cells completed."
+    },
+    "notebooks/week09/W9_Lab2_Shock_Aligned_Nozzle_DeepONet_Student.ipynb": {
+      "status": "passed",
+      "seconds": 22.52,
+      "code_cells": 15,
+      "source_sha256": "8d5d6d75c58369dca99badea24dfb129adafba33763774976725b3ac8fc011f0",
+      "code_sha256": "281563b1195aaec69eb18c8b074d6e792126908308e09c19ac2ff2f92c957895",
+      "execution_context": "Independent local CPU kernel; all default code cells completed."
+    },
+    "notebooks/week02_1/Probabilistic_UQ_CFD.ipynb": {
+      "status": "passed",
+      "seconds": 3.67,
+      "code_cells": 11,
+      "source_sha256": "a593900ea6ed047e1d085854a70b2bc82af3a0a192086709eaec522bea96c1cc",
+      "code_sha256": "969aabaa4b8a1c0242681aac246d67ee18bdb211554a7be2c57a96e718c09ba6",
+      "execution_context": "Independent local CPU kernel; all default code cells completed."
+    },
+    "notebooks/week07/W7_Lab2_Modal_Forecasting.ipynb": {
+      "status": "passed",
+      "seconds": 9.0,
+      "code_cells": 7,
+      "source_sha256": "800acf271aefe5bbec98d5b4aaa9f12f4974c840dbb4fff7ac67333f7a8d873a",
+      "code_sha256": "f78038fb913a70f10f69dd7160e82c40750b32db769300e7156b14c07ebba41d",
+      "execution_context": "Independent local CPU kernel; all default code cells completed."
+    },
+    "notebooks/week08/W8_Lab2_Gas_Dynamics_SciML_Evidence_Student.ipynb": {
+      "status": "passed",
+      "seconds": 4.31,
+      "code_cells": 9,
+      "source_sha256": "7a62781e96b5b078c54a479bede26ab1dbd28ce33115fe72074b92fa700fbb35",
+      "code_sha256": "3cfb64082bdb3585919b03880675340b49fe558cea047e0cf0d7f82ba0c2c5a8",
+      "execution_context": "Independent local CPU kernel; all default code cells completed."
+    },
+    "notebooks/week07_2/W7_2_Cylinder_Wake_State_Estimation.ipynb": {
+      "status": "passed",
+      "seconds": 7.24,
+      "code_cells": 8,
+      "source_sha256": "ac6f62a94606c53f8568868128f42147910728150b6f72fd02f40f9bbf779a56",
+      "code_sha256": "354ab9e2cd26de164a251e465a1951c3a3ef5a3d7538ffb1ddbed6cb03e6a5f5",
+      "execution_context": "Independent local CPU kernel; all default code cells completed."
+    },
+    "notebooks/week07_1/W7_1_Hypersonic_Rarefied_Cylinder_DeepONet.ipynb": {
+      "status": "passed",
+      "seconds": 41.11,
+      "code_cells": 9,
+      "source_sha256": "a6cb3185c58a75f6bf858cd100be4db197c979f03517bbde849c773c02c84995",
+      "code_sha256": "93dee711ccf12b3c5ea45507e900a42153de8699538a8a81c9391dcbd8882365",
+      "execution_context": "Independent local CPU kernel; all default code cells completed."
+    },
+    "notebooks/week04/W4_Lab4_Stokes_to_Navier_Stokes.ipynb": {
+      "status": "passed",
+      "seconds": 2.49,
+      "code_cells": 14,
+      "source_sha256": "0a544198018d098b730e977f8d540c7c639c37bddead1b83574e1935d3c4a090",
+      "code_sha256": "047c6c5b7c5da25be5d86d1b3b56feb66f98944d6c5316b7be1e6b46eebe2aed",
+      "execution_context": "Independent local CPU kernel; all default code cells completed."
+    },
+    "notebooks/week04/W4_Lab4_Grid51_Validation.ipynb": {
+      "status": "passed",
+      "seconds": 2.03,
+      "code_cells": 3,
+      "source_sha256": "9773ba24873a8ff49ef604f134cc68e20ee3399dc652908ab8d45a482a6d3e08",
+      "code_sha256": "b756b854d29e624192d6e98ce02f24396d65bc2b3dcfc32f04cac8024bc81539",
+      "execution_context": "Independent local CPU kernel; all default code cells completed."
+    }
+  },
+  "not_rerun": [
+    "Week 1.1 reference workflow",
+    "Full Week 4.1 ROM regeneration",
+    "Full Week 7 CFD regeneration",
+    "Week 7.3 long training",
+    "Week 7.4 pretraining"
+  ],
+  "scope": "Default local CPU notebook paths and accepted diagnostic cells. Optional full training, CFD/DSMC production runs and hosted Colab Run All are not claimed."
+}

@@ -1,0 +1,13 @@
+\section*{Separate surrogate error from changing the CFD labels}
+The low-fidelity Stokes field omits convection; the learned correction estimates
+what must be added to approximate Navier\textendash{}Stokes on the specified grid. The
+surrogate-to-label error and the coarse-to-fine CFD difference answer different
+questions. A 0.1\% surrogate error against a coarse field can coexist with a 20\%
+change in that field under refinement.
+
+Pressure is reconstructed from momentum gradients with an aligned gauge. The
+reported gradient residual measures compatibility of that reconstruction with
+the supplied gradients; it is not a direct pressure-error norm and need not rank
+models in the same order. Read velocity, pressure and compatibility together.
+Optional retraining writes a new student directory. The retained figures remain
+historical evidence; they do not become figures of your new fit.

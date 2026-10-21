@@ -1,5 +1,9 @@
 # Week 10.1 executable lab: classical collision map and its audit
 
+[Lecture for this executable lab](../../lectures/week10_1_collision_map_audit.pdf)
+explains collision-map errors, optimizer stopping and the low-energy sampling
+domain. The ab initio cylinder companion is separate research reading.
+
 `W10_1_Collision_Map_Surrogate_Audit.ipynb` turns the Week 10.1 reading companion into a
 CPU lab (about one minute). It uses the reduced Lennard-Jones potential as a transparent
 teaching analog of the ab initio angle-prediction problem in Roohi, Shoja-Sani and Stefanov,

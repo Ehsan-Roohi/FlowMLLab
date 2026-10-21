@@ -1,0 +1,10 @@
+{
+  "affected_notebooks": 21,
+  "code_cells_syntax_checked": 212,
+  "lecture_pdfs_checked": 17,
+  "portable_math": true,
+  "overlay_cells_match": true,
+  "stokes_output_guards": "passed without training",
+  "rayleigh_branch_roundtrips": "passed",
+  "scope": "Structural checks and bounded regressions; full notebook execution is recorded separately."
+}

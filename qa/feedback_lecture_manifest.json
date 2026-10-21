@@ -1,0 +1,121 @@
+{
+  "week01_1_ai_assisted_scientific_software": {
+    "base_pages": 9,
+    "teaching_pages": 1,
+    "pages": 10,
+    "section": "lectures/source/reading_audits/week01_1_section.tex",
+    "sha256": "ef782866f10222b68c1fe130ec9cc879aac13cb2f843f28b9615283de96bc745"
+  },
+  "week02_1_probabilistic_uq": {
+    "base_pages": 9,
+    "teaching_pages": 1,
+    "pages": 10,
+    "section": "lectures/source/reading_audits/week02_1_section.tex",
+    "sha256": "6b7ce96b5ff1ae6e89921716811fa70a100aa98d963ec8c5d3e7dbf79cd15a74"
+  },
+  "week04_cavity_surrogates_deeponet": {
+    "base_pages": 10,
+    "teaching_pages": 1,
+    "pages": 11,
+    "section": "lectures/source/reading_audits/week04_1_section.tex",
+    "sha256": "b5ab7b7ea23a73cc59aad448739232e091ef043c843527645a31832a01545f57"
+  },
+  "week04_2_stokes_to_navier_stokes": {
+    "base_pages": 10,
+    "teaching_pages": 1,
+    "pages": 11,
+    "section": "lectures/source/reading_audits/week04_2_section.tex",
+    "sha256": "50267d517573dbacba11e4865f1a58b9c94554bc43ca029e1d845d700f7aed88"
+  },
+  "week04_2_grid51_validation": {
+    "base_pages": 3,
+    "teaching_pages": 1,
+    "pages": 4,
+    "section": "lectures/source/reading_audits/week04_2_section.tex",
+    "sha256": "b1c4f823d86a118c5c8ff2c0c2caebbd5afcc051b956eb922ff228b8fb6b2669"
+  },
+  "week07_cylinder_lbm_neural_surrogate": {
+    "base_pages": 18,
+    "teaching_pages": 1,
+    "pages": 19,
+    "section": "lectures/source/reading_audits/week07_section.tex",
+    "sha256": "3dcdbf8a75410921f96470fbc0b4650eee4ce77d06b094739e7c2e5c24fc0f63"
+  },
+  "week07_modal_forecasting": {
+    "base_pages": 4,
+    "teaching_pages": 1,
+    "pages": 5,
+    "section": "lectures/source/reading_audits/week07_section.tex",
+    "sha256": "89eae3f64ab3b4ee47c3e78d155785c8283b781d2dd9be9d514c0bd098ae1c15"
+  },
+  "week07_1_hypersonic_rarefied_cylinder": {
+    "base_pages": 16,
+    "teaching_pages": 1,
+    "pages": 17,
+    "section": "lectures/source/reading_audits/week07_1_section.tex",
+    "sha256": "1c29fcb7f2f2a0a01425a446ca53d454029d8eba801837b55b7627e5ac0880ac"
+  },
+  "week07_2_cylinder_state_estimation": {
+    "base_pages": 4,
+    "teaching_pages": 1,
+    "pages": 5,
+    "section": "lectures/source/reading_audits/week07_2_section.tex",
+    "sha256": "93e37343f787147633ac0f83aa5abfac30353ca6e3474cfac8c05a6991c97722"
+  },
+  "week07_3_masked_pretraining": {
+    "base_pages": 6,
+    "teaching_pages": 1,
+    "pages": 7,
+    "section": "lectures/source/reading_audits/week07_3_section.tex",
+    "sha256": "66b4d2f7c750aacf0c631d51043475ec841cb58ace20b128b7b50f516b84909e"
+  },
+  "week07_4_diverse_wake_pretraining": {
+    "base_pages": 4,
+    "teaching_pages": 1,
+    "pages": 5,
+    "section": "lectures/source/reading_audits/week07_4_section.tex",
+    "sha256": "d1e3fca7e6369e384e0b25af429995d26bf8441e53400ea783c4e240b55bdfe0"
+  },
+  "week08_gas_dynamics_sciml": {
+    "base_pages": 12,
+    "teaching_pages": 1,
+    "pages": 13,
+    "section": "lectures/source/reading_audits/week08_section.tex",
+    "sha256": "77df2c788cfc883a94733713986f443e1d480edd9c86e3bc3631421eb081e70c"
+  },
+  "week09_rarefied_deeponet_case_studies": {
+    "base_pages": 18,
+    "teaching_pages": 1,
+    "pages": 19,
+    "section": "lectures/source/reading_audits/week09_section.tex",
+    "sha256": "4ddc955720689bf1fae9ef0c654fc8a1aef83f6e2ae705e605fff864ab37693e"
+  },
+  "week09_3_nozzle_data_alignment": {
+    "base_pages": 2,
+    "teaching_pages": 1,
+    "pages": 3,
+    "section": "lectures/source/reading_audits/week09_section.tex",
+    "sha256": "c2caecee5c0d222e3b35a96ff84c6c31268a3047dec8bb064ff1695606dfd9f5"
+  },
+  "week10_dsmc_data_driven_surrogates": {
+    "base_pages": 13,
+    "teaching_pages": 1,
+    "pages": 14,
+    "section": "lectures/source/reading_audits/week10_section.tex",
+    "sha256": "8d725f8326e1e58761035d039d4e04ab2bcc6d7ac78f8a922ad4c814cb783040"
+  },
+  "week10_1_collision_map_audit": {
+    "base_pages": 0,
+    "teaching_pages": 1,
+    "pages": 1,
+    "section": "lectures/source/reading_audits/week10_1_section.tex",
+    "sha256": "4f449637b4dfe2733141f011264d645526f065f13909b1fe5ba2c71512f2d945"
+  },
+  "week11_shock_vortex_identification": {
+    "base_pages": 16,
+    "teaching_pages": 1,
+    "pages": 17,
+    "section": "lectures/source/reading_audits/week11_section.tex",
+    "sha256": "8d7199ac86e7f159f3c86232214b68a23af3cfe32a37f3c4e61badd957ea7111"
+  }
+}

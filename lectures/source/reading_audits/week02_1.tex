@@ -1,0 +1,33 @@
+\documentclass[11pt]{article}
+\usepackage[a4paper,margin=23mm]{geometry}
+\usepackage{amsmath,amssymb,xcolor,hyperref,fancyhdr}
+\usepackage{fontspec}
+\setmainfont{Times New Roman}
+\setmonofont{Times New Roman}
+\usepackage[italic]{mathastext}
+\setlength{\emergencystretch}{3em}
+\setlength{\parskip}{7pt}\setlength{\parindent}{0pt}
+\pagestyle{fancy}\fancyhf{}\setlength{\headheight}{14pt}
+\lhead{FlowMLLab}\rhead{Reading and experiment guide}\cfoot{\thepage}
+\begin{document}
+\noindent\textbf{Week 2.1 | Reading the evidence}\par\medskip\hrule\medskip
+\section*{Published evidence and a closed assessment are different}
+\texttt{OPEN\_BLIND=False} keeps the live final-case evaluation closed. Published blind
+tables and figures also reveal those answers, so they are hidden by the same
+switch below. Freeze preprocessing, model settings, calibration and the metric
+definitions before opening it. Once opened, these public cases are regression
+cases for future changes; a new blind claim needs new cases.
+
+Coverage counts how often the truth falls inside an interval; sharpness describes
+its width. NLL (negative log likelihood) scores the full predictive distribution,
+and CRPS (continuous ranked probability score) scores its cumulative distribution.
+A scale factor can match coverage at one chosen probability without correcting
+the entire calibration curve. Thousands of neighboring grid nodes do not create
+thousands of independent flow cases. Use the development-only leave-one-case-out
+cell to assess dependence on the calibration case; do not choose that case by
+looking at final-case coverage.
+\paragraph{Check your understanding.}
+Identify the input information, the reference, the metric denominator and the
+evaluation split in one worked notebook comparison. Predict which conclusion
+would change if any one of those four changed, then check your prediction.
+\end{document}

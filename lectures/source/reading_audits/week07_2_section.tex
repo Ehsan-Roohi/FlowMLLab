@@ -1,0 +1,13 @@
+\section*{A sensor-space check is not a field-space uncertainty check}
+The reduced state contains POD coefficients. The observation matrix maps those
+coefficients to sensor readings. The innovation is the measured reading minus
+its predicted reading; the Kalman gain determines how much that innovation
+changes the state. A near-unit normalized innovation RMS tests uncertainty at
+observed sensors. It does not certify coverage of the full field, where missing
+POD modes and model discrepancy remain. Thus innovation RMS near 1.08 and field
+coverage near 55\% need not contradict one another.
+
+If rank 8, 32 sensors and covariance scale 1000 are the largest searched values
+and also the selected values, the search has reached its boundary. Extend the
+search on development/validation cases before freezing a new protocol. Do not
+extend it in response to test-case scores.

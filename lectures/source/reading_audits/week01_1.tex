@@ -1,0 +1,34 @@
+\documentclass[11pt]{article}
+\usepackage[a4paper,margin=23mm]{geometry}
+\usepackage{amsmath,amssymb,xcolor,hyperref,fancyhdr}
+\usepackage{fontspec}
+\setmainfont{Times New Roman}
+\setmonofont{Times New Roman}
+\usepackage[italic]{mathastext}
+\setlength{\emergencystretch}{3em}
+\setlength{\parskip}{7pt}\setlength{\parindent}{0pt}
+\pagestyle{fancy}\fancyhf{}\setlength{\headheight}{14pt}
+\lhead{FlowMLLab}\rhead{Reading and experiment guide}\cfoot{\thepage}
+\begin{document}
+\noindent\textbf{Week 1.1 | Reading the evidence}\par\medskip\hrule\medskip
+\section*{Reading the implementation contract}
+The derivative example is a worked reference; Part B asks you to implement a
+boundary-flux integral. A boundary segment needs two distinct ordered points for
+trapezoidal integration. The example's five-point derivative validator therefore
+must not be reused as the minimum-size rule for the flux integral. Validate the
+quantity you actually compute. Use \texttt{np.trapezoid} with NumPy 2.
+
+An independent expected value comes from analysis, not from calling the same
+routine twice. For a constant horizontal velocity in a closed rectangle, the
+right and left fluxes cancel and the top and bottom fluxes vanish. Derive these
+four numbers before writing the function. A test that computes its expected
+answer with the function under test cannot expose that function's axis error.
+Record the commit and reviewed line ranges together, since edits move lines.
+If a tool does not expose its model identifier, record \textbf{not exposed}. Small
+round-off differences in a manufactured residual are interpreted against the
+stated tolerance, not against an exact printed decimal.
+\paragraph{Check your understanding.}
+Identify the input information, the reference, the metric denominator and the
+evaluation split in one worked notebook comparison. Predict which conclusion
+would change if any one of those four changed, then check your prediction.
+\end{document}

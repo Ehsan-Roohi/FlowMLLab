@@ -55,16 +55,27 @@ def rayleigh_inverse_t0(
 ) -> float:
     """Invert ``T0/T0*`` on a declared subsonic or supersonic branch."""
     target = float(stagnation_temperature_ratio)
+    if not np.isfinite(gamma) or gamma <= 1.0:
+        raise ValueError("gamma must be finite and greater than one.")
+    if branch not in {"subsonic", "supersonic"}:
+        raise ValueError("branch must be 'subsonic' or 'supersonic'.")
     if not 0.0 < target <= 1.0:
         raise ValueError("T0/T0* must lie in (0, 1].")
-    if abs(target - 1.0) < 1.0e-13:
+    if target == 1.0:
         return 1.0
-    residual = lambda mach: float(rayleigh_ratios(mach, gamma)[4] - target)
+    # Compact variables include the limiting states without imposing an arbitrary
+    # maximum Mach number. Neither bracket evaluates the singular Mach endpoints.
     if branch == "subsonic":
-        return float(brentq(residual, 1.0e-5, 1.0 - 1.0e-9))
-    if branch == "supersonic":
-        return float(brentq(residual, 1.0 + 1.0e-9, 30.0))
-    raise ValueError("branch must be 'subsonic' or 'supersonic'.")
+        residual = lambda m: (gamma+1)*m*m*(2+(gamma-1)*m*m)/(1+gamma*m*m)**2-target
+        return float(brentq(residual, 0.0, 1.0, xtol=1e-14))
+    lower = 1.0 - 1.0/gamma**2
+    if target <= lower:
+        raise ValueError(f"Supersonic Rayleigh flow requires T0/T0* > {lower:.8g}; "
+                         "the lower limit corresponds to infinite Mach number.")
+    residual = lambda inverse_mach: ((gamma+1)*(2*inverse_mach**2+gamma-1)
+                                     /(inverse_mach**2+gamma)**2-target)
+    inverse_mach = brentq(residual, 0.0, 1.0, xtol=1e-14)
+    return float(1.0/inverse_mach)
 
 
 def fanno_ratios(mach: np.ndarray | float, gamma: float = GAMMA) -> np.ndarray:

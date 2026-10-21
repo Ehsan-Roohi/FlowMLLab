@@ -1,0 +1,29 @@
+\documentclass[11pt]{article}
+\usepackage[a4paper,margin=23mm]{geometry}
+\usepackage{amsmath,amssymb,xcolor,hyperref,fancyhdr}
+\usepackage{fontspec}
+\setmainfont{Times New Roman}
+\setmonofont{Times New Roman}
+\usepackage[italic]{mathastext}
+\setlength{\emergencystretch}{3em}
+\setlength{\parskip}{7pt}\setlength{\parindent}{0pt}
+\pagestyle{fancy}\fancyhf{}\setlength{\headheight}{14pt}
+\lhead{FlowMLLab}\rhead{Reading and experiment guide}\cfoot{\thepage}
+\begin{document}
+\noindent\textbf{Week 7.4 | Reading the evidence}\par\medskip\hrule\medskip
+\section*{Count source labels as well as target labels}
+The target budget $k$ counts labels from the new trajectory. It does not include
+the 2761 source lift labels used for the retained ridge readout. Report both
+counts, along with unlabelled pretraining frames. The phrase "32 labels" alone
+would hide this source supervision.
+
+An aggregate improvement does not imply improvement on every Reynolds number.
+Read the per-trajectory table, including Re115 and extrapolation at Re135
+(development maximum 130). One encoder initialization cannot measure variation
+between independently pretrained encoders. A baseline winning is an acceptable
+scientific outcome, not a reason to change the evaluation cases.
+\paragraph{Check your understanding.}
+Identify the input information, the reference, the metric denominator and the
+evaluation split in one worked notebook comparison. Predict which conclusion
+would change if any one of those four changed, then check your prediction.
+\end{document}

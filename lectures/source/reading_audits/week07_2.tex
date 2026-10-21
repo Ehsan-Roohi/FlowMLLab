@@ -1,0 +1,31 @@
+\documentclass[11pt]{article}
+\usepackage[a4paper,margin=23mm]{geometry}
+\usepackage{amsmath,amssymb,xcolor,hyperref,fancyhdr}
+\usepackage{fontspec}
+\setmainfont{Times New Roman}
+\setmonofont{Times New Roman}
+\usepackage[italic]{mathastext}
+\setlength{\emergencystretch}{3em}
+\setlength{\parskip}{7pt}\setlength{\parindent}{0pt}
+\pagestyle{fancy}\fancyhf{}\setlength{\headheight}{14pt}
+\lhead{FlowMLLab}\rhead{Reading and experiment guide}\cfoot{\thepage}
+\begin{document}
+\noindent\textbf{Week 7.2 | Reading the evidence}\par\medskip\hrule\medskip
+\section*{A sensor-space check is not a field-space uncertainty check}
+The reduced state contains POD coefficients. The observation matrix maps those
+coefficients to sensor readings. The innovation is the measured reading minus
+its predicted reading; the Kalman gain determines how much that innovation
+changes the state. A near-unit normalized innovation RMS tests uncertainty at
+observed sensors. It does not certify coverage of the full field, where missing
+POD modes and model discrepancy remain. Thus innovation RMS near 1.08 and field
+coverage near 55\% need not contradict one another.
+
+If rank 8, 32 sensors and covariance scale 1000 are the largest searched values
+and also the selected values, the search has reached its boundary. Extend the
+search on development/validation cases before freezing a new protocol. Do not
+extend it in response to test-case scores.
+\paragraph{Check your understanding.}
+Identify the input information, the reference, the metric denominator and the
+evaluation split in one worked notebook comparison. Predict which conclusion
+would change if any one of those four changed, then check your prediction.
+\end{document}

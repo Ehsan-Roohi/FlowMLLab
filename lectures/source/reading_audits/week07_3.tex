@@ -1,0 +1,32 @@
+\documentclass[11pt]{article}
+\usepackage[a4paper,margin=23mm]{geometry}
+\usepackage{amsmath,amssymb,xcolor,hyperref,fancyhdr}
+\usepackage{fontspec}
+\setmainfont{Times New Roman}
+\setmonofont{Times New Roman}
+\usepackage[italic]{mathastext}
+\setlength{\emergencystretch}{3em}
+\setlength{\parskip}{7pt}\setlength{\parindent}{0pt}
+\pagestyle{fancy}\fancyhf{}\setlength{\headheight}{14pt}
+\lhead{FlowMLLab}\rhead{Reading and experiment guide}\cfoot{\thepage}
+\begin{document}
+\noindent\textbf{Week 7.3 | Reading the evidence}\par\medskip\hrule\medskip
+\section*{Compare information and compute budgets together}
+The main scratch fit uses 300 downstream steps; the extended scratch comparison
+uses 5000. Those are different experiments. At each label count, report training
+steps, optimizer, unlabelled source data, target labels and evaluation frames
+beside the error. The extended control can reverse a conclusion drawn from the
+short-budget curve. A pretrained initialization is not automatically better at
+equal compute.
+
+The pooled POD baseline must see the same allowed unlabelled frames if the claim
+concerns the value of pretraining. Identical errors at one and two labels can
+mean validation kept the same initial checkpoint, rather than that another label
+contains no information. CPU training can take tens of minutes; the fair-budget
+control is a substantial part of the runtime. Use the printed fresh output path
+to find this run; saved historical text is not a new execution.
+\paragraph{Check your understanding.}
+Identify the input information, the reference, the metric denominator and the
+evaluation split in one worked notebook comparison. Predict which conclusion
+would change if any one of those four changed, then check your prediction.
+\end{document}

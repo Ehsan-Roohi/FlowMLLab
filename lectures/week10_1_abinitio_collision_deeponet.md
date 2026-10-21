@@ -125,3 +125,8 @@ error map, confidence interval, steady-state certification or speedup.
 ## Week 10.1 executable scattering lab
 
 [Classical collision map and surrogate audit](../notebooks/week10_1/W10_1_Collision_Map_Surrogate_Audit.ipynb): CPU Lennard-Jones teaching model, analytic scattering checks, transport integrals, and localized surrogate errors.
+
+[Executable-lab lecture PDF](week10_1_collision_map_audit.pdf) explains the
+scattering variables, optimizer budget, diffusion versus viscosity weighting,
+and the omitted low-energy sampling domain. This lecture supports that
+notebook; the ab initio cylinder material above is separate research reading.

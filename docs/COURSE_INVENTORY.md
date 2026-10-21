@@ -6,8 +6,8 @@ Course version **v1.10.0**. These counts describe the current checkout; they do 
 
 | Asset | Count |
 | --- | ---: |
-| Active lecture PDFs | 34 |
-| Pages in those PDFs | 453 |
+| Active lecture PDFs | 35 |
+| Pages in those PDFs | 483 |
 | Student notebooks, including historical companion | 51 |
 | Historical student audit companion (included above) | 1 |
 | Optional self-study notebooks (separate) | 1 |
@@ -24,29 +24,30 @@ Course version **v1.10.0**. These counts describe the current checkout; they do 
 
 | File | Pages |
 | --- | ---: |
-| [week01_1_ai_assisted_scientific_software.pdf](../lectures/week01_1_ai_assisted_scientific_software.pdf) | 9 |
-| [week01_2_pressure_velocity.pdf](../lectures/week01_2_pressure_velocity.pdf) | 19 |
-| [week01_numerical_foundations.pdf](../lectures/week01_numerical_foundations.pdf) | 26 |
-| [week02_1_probabilistic_uq.pdf](../lectures/week02_1_probabilistic_uq.pdf) | 9 |
+| [week01_1_ai_assisted_scientific_software.pdf](../lectures/week01_1_ai_assisted_scientific_software.pdf) | 10 |
+| [week01_2_pressure_velocity.pdf](../lectures/week01_2_pressure_velocity.pdf) | 26 |
+| [week01_numerical_foundations.pdf](../lectures/week01_numerical_foundations.pdf) | 32 |
+| [week02_1_probabilistic_uq.pdf](../lectures/week02_1_probabilistic_uq.pdf) | 10 |
 | [week02_supervised_learning_rarefaction.pdf](../lectures/week02_supervised_learning_rarefaction.pdf) | 21 |
 | [week03_kinetic_dsmc.pdf](../lectures/week03_kinetic_dsmc.pdf) | 37 |
-| [week04_2_grid51_validation.pdf](../lectures/week04_2_grid51_validation.pdf) | 3 |
+| [week04_2_grid51_validation.pdf](../lectures/week04_2_grid51_validation.pdf) | 4 |
 | [week04_2_pinn_cavity.pdf](../lectures/week04_2_pinn_cavity.pdf) | 12 |
-| [week04_2_stokes_to_navier_stokes.pdf](../lectures/week04_2_stokes_to_navier_stokes.pdf) | 10 |
-| [week04_cavity_surrogates_deeponet.pdf](../lectures/week04_cavity_surrogates_deeponet.pdf) | 10 |
+| [week04_2_stokes_to_navier_stokes.pdf](../lectures/week04_2_stokes_to_navier_stokes.pdf) | 11 |
+| [week04_cavity_surrogates_deeponet.pdf](../lectures/week04_cavity_surrogates_deeponet.pdf) | 11 |
 | [week05_06_project_guide.pdf](../lectures/week05_06_project_guide.pdf) | 59 |
 | [week05_modal_sensing.pdf](../lectures/week05_modal_sensing.pdf) | 5 |
-| [week07_1_hypersonic_rarefied_cylinder.pdf](../lectures/week07_1_hypersonic_rarefied_cylinder.pdf) | 16 |
-| [week07_2_cylinder_state_estimation.pdf](../lectures/week07_2_cylinder_state_estimation.pdf) | 4 |
-| [week07_3_masked_pretraining.pdf](../lectures/week07_3_masked_pretraining.pdf) | 6 |
-| [week07_4_diverse_wake_pretraining.pdf](../lectures/week07_4_diverse_wake_pretraining.pdf) | 4 |
-| [week07_cylinder_lbm_neural_surrogate.pdf](../lectures/week07_cylinder_lbm_neural_surrogate.pdf) | 18 |
-| [week07_modal_forecasting.pdf](../lectures/week07_modal_forecasting.pdf) | 4 |
-| [week08_gas_dynamics_sciml.pdf](../lectures/week08_gas_dynamics_sciml.pdf) | 12 |
-| [week09_3_nozzle_data_alignment.pdf](../lectures/week09_3_nozzle_data_alignment.pdf) | 2 |
-| [week09_rarefied_deeponet_case_studies.pdf](../lectures/week09_rarefied_deeponet_case_studies.pdf) | 18 |
-| [week10_dsmc_data_driven_surrogates.pdf](../lectures/week10_dsmc_data_driven_surrogates.pdf) | 13 |
-| [week11_shock_vortex_identification.pdf](../lectures/week11_shock_vortex_identification.pdf) | 16 |
+| [week07_1_hypersonic_rarefied_cylinder.pdf](../lectures/week07_1_hypersonic_rarefied_cylinder.pdf) | 17 |
+| [week07_2_cylinder_state_estimation.pdf](../lectures/week07_2_cylinder_state_estimation.pdf) | 5 |
+| [week07_3_masked_pretraining.pdf](../lectures/week07_3_masked_pretraining.pdf) | 7 |
+| [week07_4_diverse_wake_pretraining.pdf](../lectures/week07_4_diverse_wake_pretraining.pdf) | 5 |
+| [week07_cylinder_lbm_neural_surrogate.pdf](../lectures/week07_cylinder_lbm_neural_surrogate.pdf) | 19 |
+| [week07_modal_forecasting.pdf](../lectures/week07_modal_forecasting.pdf) | 5 |
+| [week08_gas_dynamics_sciml.pdf](../lectures/week08_gas_dynamics_sciml.pdf) | 13 |
+| [week09_3_nozzle_data_alignment.pdf](../lectures/week09_3_nozzle_data_alignment.pdf) | 3 |
+| [week09_rarefied_deeponet_case_studies.pdf](../lectures/week09_rarefied_deeponet_case_studies.pdf) | 19 |
+| [week10_1_collision_map_audit.pdf](../lectures/week10_1_collision_map_audit.pdf) | 1 |
+| [week10_dsmc_data_driven_surrogates.pdf](../lectures/week10_dsmc_data_driven_surrogates.pdf) | 14 |
+| [week11_shock_vortex_identification.pdf](../lectures/week11_shock_vortex_identification.pdf) | 17 |
 | [week12_dsmc_moment_reconstruction.pdf](../lectures/week12_dsmc_moment_reconstruction.pdf) | 13 |
 | [week13_rectangular_cavity_pinn.pdf](../lectures/week13_rectangular_cavity_pinn.pdf) | 12 |
 | [week14_rans_pinn_nn.pdf](../lectures/week14_rans_pinn_nn.pdf) | 7 |

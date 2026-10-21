@@ -143,6 +143,33 @@
       "before": null,
       "cell_type": "markdown",
       "replacement": "## Self-study bridge A: exact scalar Bayes before POD or GP\nComplete this section after Week 2. The field/POD–GP section is bridge B,\nbest studied after Week 4's SVD/POD lesson. Prerequisites for bridge A are a\nGaussian density, variance, and scalar differentiation; bridge B additionally\nneeds matrix covariance, projection, and positive-definite linear systems.\n\nLet the Poiseuille amplitude w have prior N(1,.25²), and let two normalized\nobservations at unit basis value be y=(.9,1.1), with independent known noise\nσ=.1. Completing the square in the prior times likelihood gives\n\n$$\nS_n^{-1}=S_0^{-1}+\\Phi^T\\Phi/\\sigma^2,\n\\quad m_n=S_n(S_0^{-1}m_0+\\Phi^Ty/\\sigma^2).\n$$\n\nHere Φ is 2×1, w is scalar, S0=.0625, precision=16+200=216;\nmn=1 and Sn=1/216=.00462963. A new amplitude observation has variance\nσ²+Sn=.01462963, whereas the latent amplitude has variance Sn only. The\nGaussian 95% predictive interval is approximately 1±.2371. Neither includes\nCFD model discrepancy. With a field basis φ(x), replace Sn by φ(x)²Sn.\n\n**Exercise:** discard the second observation. **Answer:** precision116,\nmean106/116=.913793, variance1/116. Explain why less data increase parameter\nuncertainty but do not change the declared measurement-noise variance.\n\n## Self-study bridge B: a two-observation GP calculation\nA GP is a joint Gaussian model of function values, with a kernel specifying\ncovariance. Take latent covariance K=[[1,.5],[.5,1]], observation noise .25I,\nobservations y=(1,−1), zero prior mean, test covariance k*=(.5,.5), and\nk**=1. Solve (K+.25I)α=y rather than forming an inverse in production code:\nα=(4/3,−4/3). Thus the predictive mean is k*ᵀα=0. Solving the same matrix\nagainst k* gives (2/7,2/7), so latent variance is 1−2/7=5/7.\nPredicting a noisy observation adds .25: variance27/28. The posterior over\nPOD coefficients is propagated through the modes; truncation and simulator\ndiscrepancy are additional omissions, not automatically GP variance.\n\n**Checkpoint:** label the units of K (coefficient²), α (1/coefficient), and\nk*ᵀα (coefficient). If u=mean+Φa, field covariance is Φ Cov(a) Φᵀ; retaining\nonly its diagonal discards spatial correlations. A fieldwise simultaneous\ninterval is not established by pointwise marginal coverage.\n\n## Worked scoring example: the variance term cannot be dropped\nFor one Gaussian prediction, NLL=.5 log(2πσ²)+(y−μ)²/(2σ²).\nFor y=μ, σ=.5,1,2 give NLL≈.2258,.9189,1.6121. If y−μ=1, these\nbecome 2.2258,1.4189,1.7371: confidently wrong predictions are penalized.\nAt y=μ, Gaussian CRPS=σ(√2−1)/√π≈.233695σ, in target units.\nGeneral CRPS integrates [F(z)−1{y≤z}]² over z; the observed step CDF is not\na second learned distribution. Narrower is better only when justified by\naccuracy and coverage; widening all intervals is not a complete solution.\n\n**Exit task:** calculate the posterior by hand, then identify observation,\nparameter, truncation and discrepancy contributions before running the field\nexample. Preserve its original under-coverage rather than tuning on test."
+    },
+    {
+      "kind": "replace",
+      "match": "evidence_dir = ROOT / \"results\" / \"probabilistic_uq\"\nsummary = json.loads((evidence_dir / \"summary.json\").read_text(encoding=\"utf-8\"))\nmetrics = pd.read_csv(evidence_dir / \"blind_metrics.csv\")\ncalibration = pd.read_csv(evidence_dir / \"calibration.csv\")\ndisplay(pd.Series(summary, name=\"retained summary\"))\ndisplay(metrics)\ndisplay(Image(filename=str(evidence_dir / \"probabilistic_uq_validation.png\")))",
+      "replacement": "if OPEN_BLIND:\n    evidence_dir = ROOT / \"results\" / \"probabilistic_uq\"\n    summary = json.loads((evidence_dir / \"summary.json\").read_text(encoding=\"utf-8\"))\n    metrics = pd.read_csv(evidence_dir / \"blind_metrics.csv\")\n    calibration = pd.read_csv(evidence_dir / \"calibration.csv\")\n    display(pd.Series(summary, name=\"retained summary\"))\n    display(metrics)\n    display(Image(filename=str(evidence_dir / \"probabilistic_uq_validation.png\")))\nelse:\n    print(\"Closed assessment: published blind answers are hidden until OPEN_BLIND=True.\")"
+    },
+    {
+      "kind": "replace",
+      "match": "# Read the already-published blind record; no model selection occurs here.\nreview = metrics[[\"Re\", \"pod_gp_relative_L2_uv\", \"interpolation_relative_L2_uv\",\n                  \"raw_90_coverage\", \"calibrated_90_coverage\"]].copy()\ndisplay(review.round(4))\nprint(\"Aggregate calibrated 90% pointwise coverage:\",\n      f\"{summary['aggregate_calibrated_90_coverage']:.1%}\")",
+      "replacement": "if OPEN_BLIND:\n    # Read the already-published blind record; no model selection occurs here.\n    review = metrics[[\"Re\", \"pod_gp_relative_L2_uv\", \"interpolation_relative_L2_uv\",\n                      \"raw_90_coverage\", \"calibrated_90_coverage\"]].copy()\n    display(review.round(4))\n    print(\"Aggregate calibrated 90% pointwise coverage:\",\n          f\"{summary['aggregate_calibrated_90_coverage']:.1%}\")\nelse:\n    print(\"Closed assessment: published blind answers are hidden until OPEN_BLIND=True.\")"
+    },
+    {
+      "kind": "replace",
+      "match": "# Post-hoc error budget in the retained rank-4 velocity basis.\nreview_re = np.array([300.0, 175.0, 275.0, 375.0])\nnormalized_re = ((review_re - model.reynolds_center) / model.reynolds_scale).reshape(-1, 1)\ncoefficient_mean = np.column_stack([gp.predict(normalized_re) for gp in model.regressors])\ncoefficient_std = np.column_stack([gp.predict(normalized_re, return_std=True)[1]\n                                   for gp in model.regressors])\nmode_rows = []\nfor row, re in enumerate(review_re):\n    truth = velocity[case_indices([re])[0]].ravel()\n    true_coefficients = model.basis @ (truth - model.field_mean)\n    omitted = truth - model.field_mean - true_coefficients @ model.basis\n    coefficient_error = true_coefficients - coefficient_mean[row]\n    squared_error = np.sum(coefficient_error**2) + np.sum(omitted**2)\n    mode_rows.append({\"Re\": re,\n                      \"omitted_fraction_of_squared_error\": np.sum(omitted**2) / squared_error,\n                      \"mode_1_fraction_of_retained_error\": coefficient_error[0]**2 / np.sum(coefficient_error**2),\n                      \"z_mode_3\": coefficient_error[2] / coefficient_std[row, 2],\n                      \"z_mode_4\": coefficient_error[3] / coefficient_std[row, 3]})\nmode_review = pd.DataFrame(mode_rows)\ndisplay(mode_review.round(3))",
+      "replacement": "if OPEN_BLIND:\n    # Post-hoc error budget in the retained rank-4 velocity basis.\n    review_re = np.array([300.0, 175.0, 275.0, 375.0])\n    normalized_re = ((review_re - model.reynolds_center) / model.reynolds_scale).reshape(-1, 1)\n    coefficient_mean = np.column_stack([gp.predict(normalized_re) for gp in model.regressors])\n    coefficient_std = np.column_stack([gp.predict(normalized_re, return_std=True)[1]\n                                       for gp in model.regressors])\n    mode_rows = []\n    for row, re in enumerate(review_re):\n        truth = velocity[case_indices([re])[0]].ravel()\n        true_coefficients = model.basis @ (truth - model.field_mean)\n        omitted = truth - model.field_mean - true_coefficients @ model.basis\n        coefficient_error = true_coefficients - coefficient_mean[row]\n        squared_error = np.sum(coefficient_error**2) + np.sum(omitted**2)\n        mode_rows.append({\"Re\": re,\n                          \"omitted_fraction_of_squared_error\": np.sum(omitted**2) / squared_error,\n                          \"mode_1_fraction_of_retained_error\": coefficient_error[0]**2 / np.sum(coefficient_error**2),\n                          \"z_mode_3\": coefficient_error[2] / coefficient_std[row, 2],\n                          \"z_mode_4\": coefficient_error[3] / coefficient_std[row, 3]})\n    mode_review = pd.DataFrame(mode_rows)\n    display(mode_review.round(3))\nelse:\n    print(\"Closed assessment: published blind answers are hidden until OPEN_BLIND=True.\")"
+    },
+    {
+      "kind": "insert",
+      "id": "oct20-reading-guide",
+      "cell_type": "markdown",
+      "replacement": "## Published evidence and a closed assessment are different\n`OPEN_BLIND=False` keeps the live final-case evaluation closed. Published blind\ntables and figures also reveal those answers, so they are hidden by the same\nswitch below. Freeze preprocessing, model settings, calibration and the metric\ndefinitions before opening it. Once opened, these public cases are regression\ncases for future changes; a new blind claim needs new cases.\n\nCoverage counts how often the truth falls inside an interval; sharpness describes\nits width. NLL (negative log likelihood) scores the full predictive distribution,\nand CRPS (continuous ranked probability score) scores its cumulative distribution.\nA scale factor can match coverage at one chosen probability without correcting\nthe entire calibration curve. Thousands of neighboring grid nodes do not create\nthousands of independent flow cases. Use the development-only leave-one-case-out\ncell to assess dependence on the calibration case; do not choose that case by\nlooking at final-case coverage."
+    },
+    {
+      "kind": "insert",
+      "id": "oct20-environment",
+      "cell_type": "markdown",
+      "replacement": "### Before running\n\nUse Python 3.12 or 3.13 with the repository constraints (NumPy 2.0–2.2). [Environment setup and evidence terminology](../../docs/STUDENT_EXECUTION_GUIDE.md). A classical baseline may win; that is a valid result. Read the mode printed by each experiment before describing a retained table as your own training run."
     }
   ],
   "notebooks/week05_06/P1_Re_Generalization.ipynb": [
@@ -252,6 +279,23 @@
       "match": "## What this addendum establishes\n\nTwo different errors appear above and they must not be confused.\n\n1. **Surrogate error** (first table): how far the trained correction is from the Navier–Stokes solution *on the same grid*. It is about 0.1% (constant lids) and 0.8% (diverse lids) at 51 × 51, slightly better than at 25 × 25.\n2. **Label change under refinement** (second table): how far the 25 × 25 CFD solution is from the 51 × 51 solution sampled at the same nodes. It is about 18 to 20% for the two main families.\n\nThe surrogate error is therefore roughly one hundred times smaller than the discretization error of the labels it was trained on. A surrogate cannot be more accurate than its labels: the 0.1% measures how well the network reproduces *this solver on this grid*, not how close either is to the converged cavity flow. This is why Lab 4 calls its results same-grid regression evidence and why a mesh-convergence study (at least three grids and an observed order) is required before any physical accuracy claim.\n\n**Exercise.** Using `grid_shift.csv`, find the family whose labels changed least under refinement and the one that changed most. Propose one reason for the difference that you could test with a third grid.",
       "replacement": "## Interpretation: same-grid label error versus inter-grid difference\nThe reported 20.59% and 17.81% values are **differences between numerical grids**,\nnot independently established discretization errors. Two grids alone do not\nestablish asymptotic order or the true error of either solution.\nRelative to the displayed same-grid surrogate errors 0.097% and 0.810%, the\nratios are approximately 212 and 22, respectively; there is no common 100-fold factor.\n\nA small surrogate error shows agreement with its labels. It does not by itself\nestablish physical accuracy beyond those labels. Regularization may sometimes\nreduce a physical error, but that requires an independent reference or a\nqualified refinement study. Keep the original numerical results and these\ninterpretive limits together; no new CFD or training was run for this correction.\n\n**Check:** If two biased solvers agree exactly, is either necessarily accurate?\nNo: their common bias is invisible to a difference norm. Propose a third-grid\nstudy and state which asymptotic assumption must be checked before extrapolation.",
       "kind": "replace"
+    },
+    {
+      "kind": "insert",
+      "id": "oct20-reading-guide",
+      "cell_type": "markdown",
+      "replacement": "## Separate surrogate error from changing the CFD labels\nThe low-fidelity Stokes field omits convection; the learned correction estimates\nwhat must be added to approximate Navier--Stokes on the specified grid. The\nsurrogate-to-label error and the coarse-to-fine CFD difference answer different\nquestions. A 0.1% surrogate error against a coarse field can coexist with a 20%\nchange in that field under refinement.\n\nPressure is reconstructed from momentum gradients with an aligned gauge. The\nreported gradient residual measures compatibility of that reconstruction with\nthe supplied gradients; it is not a direct pressure-error norm and need not rank\nmodels in the same order. Read velocity, pressure and compatibility together.\nOptional retraining writes a new student directory. The retained figures remain\nhistorical evidence; they do not become figures of your new fit."
+    },
+    {
+      "kind": "insert",
+      "id": "oct20-environment",
+      "cell_type": "markdown",
+      "replacement": "### Before running\n\nUse Python 3.12 or 3.13 with the repository constraints (NumPy 2.0–2.2). [Environment setup and evidence terminology](../../docs/STUDENT_EXECUTION_GUIDE.md). A classical baseline may win; that is a valid result. Read the mode printed by each experiment before describing a retained table as your own training run."
+    },
+    {
+      "kind": "replace",
+      "match": "from pathlib import Path\nimport pandas as pd\nfrom IPython.display import Image, display\n# Locate the repository root from any working directory (notebook folder or checkout root).\nROOT = next(p for p in (Path.cwd(), *Path.cwd().parents) if (p / 'results/stokes_grid51').is_dir())\nR = ROOT / 'results/stokes_grid51'\ndisplay(pd.read_csv(R/'grid_comparison.csv'))\ndisplay(pd.read_csv(R/'grid_shift.csv').groupby('family').velocity_grid_shift_rel_l2.mean())\ndisplay(pd.read_csv(R/'vortex_metrics.csv'))",
+      "replacement": "from pathlib import Path\nimport pandas as pd\nfrom IPython.display import Image, display\n# Locate the repository root from any working directory (notebook folder or checkout root).\nROOT = next(p for p in (Path.cwd(), *Path.cwd().parents) if (p / 'results/stokes_grid51').is_dir())\nR = ROOT / 'results/stokes_grid51'\ndisplay(pd.read_csv(R/'grid_comparison.csv'))\nprint('CFD-versus-CFD label change under grid refinement (not surrogate error):')\ndisplay(pd.read_csv(R/'grid_shift.csv').groupby('family').velocity_grid_shift_rel_l2.mean())\nimport re\nvortex_table = pd.read_csv(R/'vortex_metrics.csv')\nvortex_table = vortex_table.map(lambda value: re.sub(r'np\\.float64\\(([^()]*)\\)', r'\\1', value) if isinstance(value,str) else value)\ndisplay(vortex_table)"
     }
   ],
   "notebooks/week04/W4_Lab2_Scalar_and_Field_Surrogates_Student.ipynb": [
@@ -318,6 +362,23 @@
       "before": null,
       "cell_type": "markdown",
       "replacement": "## Worked POD and hyper-reduction example\nTake centered snapshots S=[[-1,0],[0,0],[1,0]]. Then SᵀS=diag(2,0), the first\nsingular value is √2 and a valid first spatial mode is φ=(1,0)ᵀ (its sign is\narbitrary). For a query q=(2,.5), the exact coefficient is φᵀq=2 and the rank-one\nreconstruction is (2,0). The norm of the representation residual is .5;\nno more accurate coefficient regressor can recover its missing second component.\nIf a learned coefficient is 1.8, reconstruction error has both .2 coefficient\nerror and .5 representation error: Euclidean norm √(.04+.25)=√.29.\n\nGalerkin evolves coefficients by projecting the equations, rather than fitting\na static Re-to-coefficient map. Computing Φᵀf(Φa) may still require the entire\nspatial nonlinear vector; a low-dimensional state alone is not low online cost.\nFor a nonlinear basis ψ=(1,2)ᵀ/√5, DEIM selects row2. If f=(2,4), recover\nf=ψ f2/ψ2=(2,4). For f=(2,5), the same approximation gives (2.5,5): the\nunobserved component error is .5. The inverse selected entry controls sensitivity.\n\n**Exercise:** choose row1 instead and perturb the measured value by .1.\nIts coefficient error is .1√5, versus .1√5/2 at row2. Explain why choosing a\nlarge independent pivot reduces amplification, but cannot remove basis error."
+    },
+    {
+      "kind": "insert",
+      "id": "oct20-reading-guide",
+      "cell_type": "markdown",
+      "replacement": "## Read an error budget before a speedup\nA POD mode is a spatial pattern; its coefficient changes with time. Capturing\n99.9% of snapshot energy limits a projection error on those snapshots, not the\nfuture trajectory error of a Galerkin model. Closure error, DEIM approximation,\ntime integration and parameter transfer can still dominate. A reduced solver\nthat reconstructs the full field every step can be slower than its full model.\n\nCompare the ROM with the CFD solution on the same grid first, then separately\ncompare that CFD grid with a finer one and with Ghia centerlines. A small ROM\nerror cannot remove a coarse-label error. Treat retained timing ratios as\nmachine-specific observations, not a speedup students must reproduce. A failed\nphysical comparison remains a failed comparison even if an ML metric is small."
+    },
+    {
+      "kind": "replace",
+      "match": "timing = json.loads((RESULTS / \"timing.json\").read_text())\ndisplay(pd.DataFrame([timing]).T.rename(columns={0: \"recorded value\"}))\nassert timing[\"POD_Galerkin_speedup\"] < 1.0\nassert timing[\"POD_DEIM_speedup\"] > 2.0",
+      "replacement": "timing = json.loads((RESULTS / \"timing.json\").read_text())\ndisplay(pd.DataFrame([timing]).T.rename(columns={0: \"recorded value\"}))\nprint(\"RETAINED timing ratios; hardware-specific observations, not acceptance criteria.\")"
+    },
+    {
+      "kind": "insert",
+      "id": "oct20-environment",
+      "cell_type": "markdown",
+      "replacement": "### Before running\n\nUse Python 3.12 or 3.13 with the repository constraints (NumPy 2.0–2.2). [Environment setup and evidence terminology](../../docs/STUDENT_EXECUTION_GUIDE.md). A classical baseline may win; that is a valid result. Read the mode printed by each experiment before describing a retained table as your own training run."
     }
   ],
   "notebooks/week05_06/W5_Lab2_Sparse_Sensing_Dynamics.ipynb": [
@@ -336,6 +397,781 @@
       "before": null,
       "cell_type": "markdown",
       "replacement": "## Readiness example: an Ornstein–Uhlenbeck moment balance\nBefore the 16-input/9-output closure, derive a one-component relaxation:\n∂tf=γ∂v[(v−U)f]+D∂vvf, with constant U,γ,D and decaying velocity-space tails.\nIntegrating by parts gives d⟨v−U⟩/dt=−γ⟨v−U⟩ and\n d⟨(v−U)²⟩/dt=−2γ⟨(v−U)²⟩+2D.\nThus stationary variance is D/γ. For γ=2 s⁻¹ and D=8 m²s⁻³,\nvariance is 4 m²s⁻². Starting at variance9 gives V(t)=4+5exp(−4t).\nAt t=.5 s, V≈4.6767. Do not confuse this raw velocity variance with\npressure ρV or temperature mV/kB; density and units matter.\n\n**Exercise:** a time step .01 s with forward Euler from V=9 gives\nVnew=9+.01(−4×9+16)=8.8. The exact value is about8.80395.\nThis scalar example explains relaxation and moment constraints, not the full\nnonlinear cavity closure. The C tensor and Γ vector in the actual 9×9 problem\nmust be interpreted using their stated moment equations and normalization.\nBefore admission to 6A, explain a second- and third-moment balance, solve this\nexample, and distinguish coefficient regression from closed-loop field fidelity.\nThis instructor-assigned GPU research track is not a mandatory beginner week6 task."
+    }
+  ],
+  "notebooks/week04/W4_Lab4_Stokes_to_Navier_Stokes.ipynb": [
+    {
+      "kind": "replace",
+      "match": "RUN_TRAINING = False\nif RUN_TRAINING:\n    from flowmllab.stokes_refined import run\n    run('same_data')\n    run('expanded')\nelse:\n    print('Using retained predictions; training was not rerun.')",
+      "replacement": "RUN_TRAINING = False\nif RUN_TRAINING:\n    from pathlib import Path\n    import uuid\n    from flowmllab.stokes_refined import run\n    STUDENT_TRAINING = ROOT / 'student_runs' / ('stokes_' + uuid.uuid4().hex[:12])\n    print('Fresh training directory:', STUDENT_TRAINING)\n    run('same_data', output_dir=STUDENT_TRAINING)\n    run('expanded', output_dir=STUDENT_TRAINING)\n    print('Tables and figures below remain RETAINED; inspect this new directory for your fit.')\nelse:\n    print('RETAINED predictions; training was not rerun.')"
+    },
+    {
+      "kind": "insert",
+      "id": "oct20-reading-guide",
+      "cell_type": "markdown",
+      "replacement": "## Separate surrogate error from changing the CFD labels\nThe low-fidelity Stokes field omits convection; the learned correction estimates\nwhat must be added to approximate Navier--Stokes on the specified grid. The\nsurrogate-to-label error and the coarse-to-fine CFD difference answer different\nquestions. A 0.1% surrogate error against a coarse field can coexist with a 20%\nchange in that field under refinement.\n\nPressure is reconstructed from momentum gradients with an aligned gauge. The\nreported gradient residual measures compatibility of that reconstruction with\nthe supplied gradients; it is not a direct pressure-error norm and need not rank\nmodels in the same order. Read velocity, pressure and compatibility together.\nOptional retraining writes a new student directory. The retained figures remain\nhistorical evidence; they do not become figures of your new fit."
+    },
+    {
+      "kind": "insert",
+      "id": "oct20-environment",
+      "cell_type": "markdown",
+      "replacement": "### Before running\n\nUse Python 3.12 or 3.13 with the repository constraints (NumPy 2.0–2.2). [Environment setup and evidence terminology](../../docs/STUDENT_EXECUTION_GUIDE.md). A classical baseline may win; that is a valid result. Read the mode printed by each experiment before describing a retained table as your own training run."
+    }
+  ],
+  "notebooks/week10/W10_DSMC_Data_Driven_Surrogates_Student.ipynb": [
+    {
+      "kind": "replace",
+      "match": "student_output = REPO_ROOT / \"student_runs/week10_aescte_dsmc\"\ncommand = [_sys.executable, str(REPO_ROOT / \"qa/run_week10_aescte_validation.py\"), \"--output-dir\", str(student_output)]\n_subprocess.run(command, check=True)\nsummary = json.loads((student_output / \"validation_summary.json\").read_text())\ndisplay(pd.Series(summary).to_frame(\"value\"))\ndisplay(pd.read_csv(student_output / \"week10_validation_metrics.csv\"))",
+      "replacement": "student_output = REPO_ROOT / \"student_runs/week10_aescte_dsmc\"\ncommand = [_sys.executable, str(REPO_ROOT / \"qa/run_week10_aescte_validation.py\"), \"--output-dir\", str(student_output)]\n_subprocess.run(command, check=True)\nsummary = json.loads((student_output / \"validation_summary.json\").read_text())\ndisplay(pd.Series(summary).to_frame(\"value\"))\ndisplay(pd.read_csv(student_output / \"week10_validation_metrics.csv\"))\n\nprint('FRESH figures from this run:', student_output)\nfor filename in ('cavity_kn005_reproduction.png', 'cavity_validation_profiles.png',\n                 'diatomic_shock_reproduction.png', 'monatomic_relaxation_reproduction.png'):\n    generated_figure = student_output / filename\n    if not generated_figure.is_file():\n        raise FileNotFoundError('Fresh figure not generated: ' + str(generated_figure))\n    display(Image(filename=str(generated_figure)))"
+    },
+    {
+      "kind": "insert",
+      "id": "oct20-reading-guide",
+      "cell_type": "markdown",
+      "replacement": "## Trace every figure to the run that produced it\nRetained author figures document a fixed experiment. Newly regenerated figures\nmust be displayed from the fresh output directory, next to that run's metrics.\nThe default cavity reproduction interpolates fields in log Knudsen number; it\ndoes not retrain the article's per-Knudsen MLPs.\n\nFor two training Knudsen numbers $Kn_a,Kn_b$, the interpolation weight is\n\n$$\nw=\\frac{\\log Kn-\\log Kn_a}{\\log Kn_b-\\log Kn_a},\\qquad\nq=(1-w)q_a+wq_b.\n$$\n\n$q$ is a field and $w$ is dimensionless. This is interpolation for $0\\le w\\le1$;\noutside that interval it is extrapolation. Verify the weight by substitution.\nFor error $\\|q-\\hat q\\|_2/S$, state the scale $S$. A velocity-component error\nnormalized by the lid speed can look small while its component-relative error\nis large. Neither normalization may be silently substituted for the other.\nAlso inspect heat flux, stress and translational-temperature overshoot: matching\ndensity alone does not validate nonequilibrium shock structure."
+    },
+    {
+      "kind": "insert",
+      "id": "oct20-worked-audit-heading",
+      "cell_type": "markdown",
+      "replacement": "## Worked audit and interpretation\n\nRun these cells after the main lesson. They compute diagnostics from the objects above; they do not replace the frozen scientific protocol. Predict the result before running, then explain any failure using the stated metric and input information.",
+      "append": true
+    },
+    {
+      "kind": "insert",
+      "id": "oct20-audit-24-text",
+      "cell_type": "markdown",
+      "replacement": "### Audit 1: Verify log-Knudsen weights against their analytical formula.\n\nState which inputs and reference define this comparison. A failed check is a result to investigate, not permission to select new settings on the test cases.",
+      "append": true
+    },
+    {
+      "kind": "insert",
+      "id": "oct20-audit-24",
+      "cell_type": "code",
+      "replacement": "from flowmllab.aescte_dsmc import CAVITY_TRAIN_KNUDSEN\n\nweight_rows = []\nfor kn in CAVITY_TEST_KNUDSEN:\n    analytic = (np.log10(kn) - np.log10(CAVITY_TRAIN_KNUDSEN[CAVITY_TRAIN_KNUDSEN < kn].max())) / (\n        np.log10(CAVITY_TRAIN_KNUDSEN[CAVITY_TRAIN_KNUDSEN > kn].min())\n        - np.log10(CAVITY_TRAIN_KNUDSEN[CAVITY_TRAIN_KNUDSEN < kn].max()))\n    for lid in CAVITY_LID_SPEEDS_MS.astype(int):\n        pred = cavity_predictions[(lid, float(kn))]\n        lower = cavity_case(cavity, lid, pred[\"lower_knudsen\"])\n        upper = cavity_case(cavity, lid, pred[\"upper_knudsen\"])\n        manual = {f: (1 - analytic) * cavity[f][lower] + analytic * cavity[f][upper]\n                  for f in (\"u_ms\", \"v_ms\", \"temperature_k\")}\n        weight_rows.append({\"U_lid\": lid, \"Kn*\": kn, \"Kn_l\": pred[\"lower_knudsen\"], \"Kn_u\": pred[\"upper_knudsen\"],\n                            \"w (hand)\": analytic, \"w (module)\": pred[\"weight\"], \"log10(5)\": np.log10(5),\n                            \"max |hand - module| field\": max(np.abs(manual[f] - pred[f]).max() for f in manual)})\ndisplay(pd.DataFrame(weight_rows))",
+      "append": true
+    },
+    {
+      "kind": "insert",
+      "id": "oct20-audit-26-text",
+      "cell_type": "markdown",
+      "replacement": "### Audit 2: Read the error normalization before comparing velocity components.\n\nState which inputs and reference define this comparison. A failed check is a result to investigate, not permission to select new settings on the test cases.",
+      "append": true
+    },
+    {
+      "kind": "insert",
+      "id": "oct20-audit-26",
+      "cell_type": "code",
+      "replacement": "primary_table = cavity_metrics.copy()\nprimary_table[\"normalization scale\"] = np.where(primary_table[\"field\"] == \"temperature_k\", \"50 K wall dT\",\n                                                \"U_lid = \" + primary_table[\"U_lid_m/s\"].astype(str) + \" m/s\")\ndisplay(primary_table.pivot_table(index=[\"U_lid_m/s\", \"held_out_Kn\"], columns=\"field\",\n                                  values=\"NRMSE_percent\").round(3)[[\"u_ms\", \"v_ms\", \"temperature_k\"]])\nprint(\"primary max / mean NRMSE (%):\", round(cavity_metrics.NRMSE_percent.max(), 3), \"/\",\n      round(cavity_metrics.NRMSE_percent.mean(), 3))\nsecondary = pd.read_csv(student_output / \"week10_validation_metrics.csv\").query(\"case_family == 'cavity' and field in ['qx', 'qy', 'txy']\")\ndisplay(secondary.pivot_table(index=[\"lid_speed_ms\", \"test_parameter\"], columns=\"field\", values=\"value\").round(2))",
+      "append": true
+    },
+    {
+      "kind": "insert",
+      "id": "oct20-audit-29-text",
+      "cell_type": "markdown",
+      "replacement": "### Audit 3: Measure shock overshoot and the midpoint convention.\n\nState which inputs and reference define this comparison. A failed check is a result to investigate, not permission to select new settings on the test cases.",
+      "append": true
+    },
+    {
+      "kind": "insert",
+      "id": "oct20-audit-29",
+      "cell_type": "code",
+      "replacement": "def midpoint(x, profile):\n    upstream, downstream = profile[:5].mean(), profile[-20:].mean()\n    return x[np.argmax((profile - upstream) / (downstream - upstream) >= 0.5)]\n\novershoot_rows = []\nfor i, mach in enumerate(diatomic[\"mach\"]):\n    x = diatomic[\"x_over_lambda\"][i]\n    t_tr, t_rot = diatomic[\"translational_temperature\"][i], diatomic[\"rotational_temperature\"][i]\n    peak = int(np.argmax(t_tr))\n    overshoot_rows.append({\"Mach\": mach, \"T_tr peak (normalized)\": t_tr[peak], \"peak x/lambda\": x[peak],\n                           \"T_rot at T_tr peak\": t_rot[peak], \"x50 T_tr\": midpoint(x, t_tr),\n                           \"x50 T_rot\": midpoint(x, t_rot), \"lag (lambda)\": midpoint(x, t_rot) - midpoint(x, t_tr)})\ndisplay(pd.DataFrame(overshoot_rows).round(3))",
+      "append": true
+    },
+    {
+      "kind": "insert",
+      "id": "oct20-audit-32-text",
+      "cell_type": "markdown",
+      "replacement": "### Audit 4: Compare interpolation with extrapolation for the same fields.\n\nState which inputs and reference define this comparison. A failed check is a result to investigate, not permission to select new settings on the test cases.",
+      "append": true
+    },
+    {
+      "kind": "insert",
+      "id": "oct20-audit-32",
+      "cell_type": "code",
+      "replacement": "ratio = shock_metrics.pivot(index=\"field\", columns=\"task\", values=\"relative_L2_percent\")\nratio[\"extrapolation / interpolation\"] = ratio[\"extrapolation\"] / ratio[\"interpolation\"]\ndisplay(ratio.round(3))\nfor mach, pred in ((1.7, pred_17), (1.4, pred_14)):\n    target = int(np.flatnonzero(np.isclose(diatomic[\"mach\"], mach))[0])\n    true_peak = diatomic[\"translational_temperature\"][target].max()\n    predicted_peak = pred[\"translational_temperature\"].max()\n    print(f\"Mach {mach}: T_tr overshoot peak DSMC {true_peak:.4f}, surrogate {predicted_peak:.4f}, \"\n          f\"error in overshoot height {100 * (predicted_peak - true_peak) / (true_peak - 1):+.1f}%\")",
+      "append": true
+    },
+    {
+      "kind": "insert",
+      "id": "oct20-environment",
+      "cell_type": "markdown",
+      "replacement": "### Before running\n\nUse Python 3.12 or 3.13 with the repository constraints (NumPy 2.0–2.2). [Environment setup and evidence terminology](../../docs/STUDENT_EXECUTION_GUIDE.md). A classical baseline may win; that is a valid result. Read the mode printed by each experiment before describing a retained table as your own training run."
+    }
+  ],
+  "notebooks/week09/W9_Lab1_Microstep_Zonal_DeepONet_Student.ipynb": [
+    {
+      "kind": "replace",
+      "match": "baseline_fit = fit_coordinate_surrogate(STEP_HEIGHT_DEVELOPMENT_PERCENT, None)\nbaseline_validation = evaluate_model(\n    baseline_fit, STEP_HEIGHT_VALIDATION_PERCENT, learning_cases,\n)\nbaseline_global = 100 * baseline_validation[\"full_relative_l2\"].mean()\nselection_rows = []\ncandidate_models = {}\nfor alpha in (.5, .6, .7, .8):\n    candidate_models[alpha] = fit_coordinate_surrogate(\n        STEP_HEIGHT_DEVELOPMENT_PERCENT, alpha,\n    )\n    metrics = evaluate_model(\n        candidate_models[alpha], STEP_HEIGHT_VALIDATION_PERCENT, learning_cases,\n    )\n    selection_rows.append({\n        \"alpha\": alpha,\n        \"validation_global_percent\": 100 * metrics[\"full_relative_l2\"].mean(),\n        \"validation_vortex_percent\": 100 * metrics[\"vortex_relative_l2\"].mean(),\n    })\nselection = pd.DataFrame(selection_rows)\neligible = selection[\n    selection[\"validation_global_percent\"] <= baseline_global + 2.0\n]\nselected_alpha = float(eligible.sort_values(\"validation_vortex_percent\").iloc[0][\"alpha\"])\ndisplay(selection)\nprint(f\"unweighted validation global error: {baseline_global:.3f}%\")\nprint(\"selected alpha:\", selected_alpha)\nif selected_alpha != 0.6:\n    print(\"Version-sensitive teaching result: the article used alpha=0.6;\",\n          \"this run selected\", selected_alpha)",
+      "replacement": "baseline_fit = fit_coordinate_surrogate(STEP_HEIGHT_DEVELOPMENT_PERCENT, None)\nbaseline_validation = evaluate_model(\n    baseline_fit, STEP_HEIGHT_VALIDATION_PERCENT, learning_cases,\n)\nbaseline_global = 100 * baseline_validation[\"full_relative_l2\"].mean()\nselection_rows = []\ncandidate_models = {}\nfor alpha in (.5, .6, .7, .8):\n    candidate_models[alpha] = fit_coordinate_surrogate(\n        STEP_HEIGHT_DEVELOPMENT_PERCENT, alpha,\n    )\n    metrics = evaluate_model(\n        candidate_models[alpha], STEP_HEIGHT_VALIDATION_PERCENT, learning_cases,\n    )\n    selection_rows.append({\n        \"alpha\": alpha,\n        \"validation_global_percent\": 100 * metrics[\"full_relative_l2\"].mean(),\n        \"validation_vortex_percent\": 100 * metrics[\"vortex_relative_l2\"].mean(),\n    })\nselection = pd.DataFrame(selection_rows)\neligible = selection[\n    selection[\"validation_global_percent\"] <= baseline_global + 2.0\n]\nselected_alpha = float(eligible.sort_values(\"validation_vortex_percent\").iloc[0][\"alpha\"])\nbaseline_vortex_percent = 100 * baseline_validation['vortex_relative_l2'].mean()\nvalidation_comparison = pd.concat([\n    pd.DataFrame([{'alpha':'unweighted', 'validation_global_percent':baseline_global,\n                   'validation_vortex_percent':baseline_vortex_percent}]),\n    selection,\n], ignore_index=True)\ndisplay(validation_comparison)\nprint(f\"unweighted validation global error: {baseline_global:.3f}%\")\nprint(\"selected alpha:\", selected_alpha)\nif selected_alpha != 0.6:\n    print(\"Version-sensitive teaching result: the article used alpha=0.6;\",\n          \"this run selected\", selected_alpha)"
+    },
+    {
+      "kind": "insert",
+      "id": "oct20-reading-guide",
+      "cell_type": "markdown",
+      "replacement": "## Local accuracy, geometry and the evaluation contract\nIn the zonal loss\n\n$$\n\\mathcal L=\\alpha\\,\\frac{1}{N_v}\\sum_{i\\in V}e_i^2\n+(1-\\alpha)\\,\\frac{1}{N_m}\\sum_{i\\in M}e_i^2,\n$$\n\n$V$ denotes reverse-flow samples, $M$ the remaining samples, and $N_v,N_m$\ntheir counts. The scalar $\\alpha$ weights regional mean errors, rather than\nthe number of pixels in each region. Select it on validation cases, then freeze\nit before opening final cases. Always show unweighted global AND reverse-flow\nvalidation errors beside the weighted fits. A validation guardrail, such as a\ntwo-percentage-point global penalty, is a selection rule, not a guarantee on new\ngeometries. Map the largest local error; it may sit at the step lip rather than\ninside the reverse-flow zone.\n\nThe classroom coordinate model is an MLP. A strict branch/trunk model that uses\nonly $(x/H,y/H)$ in its trunk has a different geometry representation and training\nproblem. A worse result is not by itself proof of an architectural limitation.\nCompare seeds, budget, training error and explicit wall-relative features before\nattributing the difference to geometry. Do not mix numbers from different runs.\n\nIn nozzle registration, a station returned only at grid nodes cannot distinguish\nsub-cell shock motion. Equal detected stations do not prove identical physical\nshocks. Report grid spacing, ties and every non-monotone pair. Target-assisted\nalignment is a representation audit; deployment must use a training-only locator.\nHistorical holdouts are regression cases once inspected, not new blind cases.\n\nBranch sensors and query coordinates have different roles. Fixed branch sensors\ndescribe the input consistently across cases. Each query must still be paired\nwith its own target value; equal array shapes alone do not establish that pairing."
+    },
+    {
+      "kind": "insert",
+      "id": "oct20-worked-audit-heading",
+      "cell_type": "markdown",
+      "replacement": "## Worked audit and interpretation\n\nRun these cells after the main lesson. They compute diagnostics from the objects above; they do not replace the frozen scientific protocol. Predict the result before running, then explain any failure using the stated metric and input information.",
+      "append": true
+    },
+    {
+      "kind": "insert",
+      "id": "oct20-audit-26-text",
+      "cell_type": "markdown",
+      "replacement": "### Audit 1: Show both errors of the unweighted validation baseline next to the zonal sweep.\n\nState which inputs and reference define this comparison. A failed check is a result to investigate, not permission to select new settings on the test cases.",
+      "append": true
+    },
+    {
+      "kind": "insert",
+      "id": "oct20-audit-26",
+      "cell_type": "code",
+      "replacement": "baseline_vortex = 100 * baseline_validation[\"vortex_relative_l2\"].mean()\nsweep = pd.concat([\n    pd.DataFrame([{\"alpha\": \"unweighted\", \"validation_global_percent\": baseline_global,\n                   \"validation_vortex_percent\": baseline_vortex}]),\n    selection.astype({\"alpha\": object}),\n], ignore_index=True)\nsweep[\"global change (points)\"] = sweep[\"validation_global_percent\"] - baseline_global\nsweep[\"vortex change (points)\"] = sweep[\"validation_vortex_percent\"] - baseline_vortex\nsweep[\"eligible (<= +2 points)\"] = [None] + list(sweep[\"global change (points)\"].iloc[1:] <= 2.0)\nsweep[\"selected\"] = sweep[\"alpha\"].apply(lambda value: value == selected_alpha)\ndisplay(sweep.round(3))",
+      "append": true
+    },
+    {
+      "kind": "insert",
+      "id": "oct20-audit-29-text",
+      "cell_type": "markdown",
+      "replacement": "### Audit 2: Compare each final geometry, not just the mean.\n\nState which inputs and reference define this comparison. A failed check is a result to investigate, not permission to select new settings on the test cases.",
+      "append": true
+    },
+    {
+      "kind": "insert",
+      "id": "oct20-audit-29",
+      "cell_type": "code",
+      "replacement": "print('Fresh model errors; any merged contour metrics below are retained evidence.')\nheld_out_table = comparison.assign(**{\n    \"global %\": 100 * comparison[\"full_relative_l2\"],\n    \"reverse-flow %\": 100 * comparison[\"vortex_relative_l2\"],\n    \"U<0 points\": comparison[\"vortex_points\"],\n})[[\"model\", \"height_percent\", \"global %\", \"reverse-flow %\", \"U<0 points\"]]\ndisplay(held_out_table.round(3))\nretained = independent_contours.set_index(\"case_id\")\nfor height in STEP_HEIGHT_HELD_OUT_PERCENT:\n    row = zonal_test.set_index(\"height_percent\").loc[int(height)]\n    print(f\"H{height}: fresh minus retained global error (points):\", 100 * row[\"full_relative_l2\"] - retained.loc[f\"H{height}\", \"combined_relative_l2_percent\"])\ndisplay(retained[[\"negative_u_iou_percent\", \"dsmc_reattachment_length_over_L\",\n                  \"independent_reattachment_length_over_L\"]].round(4))",
+      "append": true
+    },
+    {
+      "kind": "insert",
+      "id": "oct20-audit-32-text",
+      "cell_type": "markdown",
+      "replacement": "### Audit 3: Locate the maximum local error in physical coordinates.\n\nState which inputs and reference define this comparison. A failed check is a result to investigate, not permission to select new settings on the test cases.",
+      "append": true
+    },
+    {
+      "kind": "insert",
+      "id": "oct20-audit-32",
+      "cell_type": "code",
+      "replacement": "with np.load(RESULTS / \"step_height_test_2cases.npz\", allow_pickle=False) as archive:\n    step_x = float(archive[\"step_x_m\"])\nH_channel = bounds_m[3] - bounds_m[2]\nerror_rows = []\nfor height in STEP_HEIGHT_HELD_OUT_PERCENT:\n    case = held_out_cases[int(height)]\n    prediction = predict_case(final_zonal, height, case)\n    vector_error = np.hypot(prediction[:, 0] - case[\"u\"], prediction[:, 1] - case[\"v\"])\n    k = int(np.argmax(vector_error))\n    step_top = float(case[\"y\"][case[\"x\"] <= step_x].min())          # known geometry, no flow data\n    error_rows.append({\"case\": int(height), \"error\": vector_error, \"k\": k, \"step_top\": step_top,\n                       \"max error (source units)\": vector_error[k],\n                       \"max |velocity| in case\": float(np.hypot(case[\"u\"], case[\"v\"]).max()),\n                       \"x/H at max\": (case[\"x\"][k] - bounds_m[0]) / H_channel,\n                       \"y/H at max\": (case[\"y\"][k] - bounds_m[2]) / H_channel,\n                       \"distance to step corner (nm)\": 1e9 * np.hypot(case[\"x\"][k] - step_x, case[\"y\"][k] - step_top),\n                       \"reference U at max\": float(case[\"u\"][k])})\nworst = max(error_rows, key=lambda row: row[\"max error (source units)\"])\ndisplay(pd.DataFrame([{key: value for key, value in row.items() if key not in (\"error\", \"k\", \"step_top\")}\n                      for row in error_rows]).round(3))\n\ncase = held_out_cases[worst[\"case\"]]\ngx, gy, error_grid = on_parent_grid(case, worst[\"error\"])\n_, _, u_grid_ref = on_parent_grid(case, case[\"u\"])\nfig, ax = plt.subplots(figsize=(11.0, 3.4), constrained_layout=True)\nimage = ax.pcolormesh(gx * 1e9, gy * 1e9, np.ma.masked_invalid(error_grid), shading=\"nearest\", cmap=\"magma\")\nax.contour(gx * 1e9, gy * 1e9, np.ma.masked_invalid(u_grid_ref), levels=[0.0], colors=\"cyan\", linewidths=1.0)\nax.add_patch(plt.Rectangle((bounds_m[0] * 1e9, bounds_m[2] * 1e9), (step_x - bounds_m[0]) * 1e9,\n                           (worst[\"step_top\"] - bounds_m[2]) * 1e9, color=\"0.6\", zorder=3))\nax.plot(step_x * 1e9, worst[\"step_top\"] * 1e9, \"w^\", ms=9, mec=\"k\", zorder=4, label=\"step corner\")\nax.plot(case[\"x\"][worst[\"k\"]] * 1e9, case[\"y\"][worst[\"k\"]] * 1e9, \"o\", mfc=\"none\", mec=\"lime\", ms=14, mew=2.2,\n        zorder=5, label=f\"largest error ({worst['max error (source units)']:.1f})\")\nax.set(xlabel=\"x (nm)\", ylabel=\"y (nm)\",\n       title=f\"H{worst['case']}: |velocity error| of the frozen zonal model (cyan: DSMC U = 0)\")\nax.set_aspect(\"equal\", adjustable=\"box\")\nax.legend(loc=\"upper right\", fontsize=8)\nfig.colorbar(image, ax=ax, label=\"|(U, V) error| (source units)\", shrink=0.8)\nplt.show()",
+      "append": true
+    },
+    {
+      "kind": "insert",
+      "id": "oct20-audit-41-text",
+      "cell_type": "markdown",
+      "replacement": "### Audit 4: Separate source identity from DSMC numerical verification.\n\nState which inputs and reference define this comparison. A failed check is a result to investigate, not permission to select new settings on the test cases.",
+      "append": true
+    },
+    {
+      "kind": "insert",
+      "id": "oct20-audit-41",
+      "cell_type": "code",
+      "replacement": "checklist = pd.DataFrame([\n    (\"Knudsen number of the height study\", \"0.01 (archive field fixed_knudsen)\", \"available\"),\n    (\"Parent grid\", \"200 x 120 nodes; solid-step nodes absent\", \"available\"),\n    (\"Domain and step geometry\",\n     f\"L = {1e9 * (bounds_m[1] - bounds_m[0]):.2f} nm, H = {1e9 * H_channel:.2f} nm, step face at x = {1e9 * step_x:.1f} nm\", \"available\"),\n    (\"Source identity\", \"See the retained source manifest; identity is separate from convergence\", \"available\"),\n    (\"Cell size relative to local mean free path\", \"unavailable\", \"not established by the public data repository\"),\n    (\"Time step relative to local collision time\", \"unavailable\", \"not established by the public data repository\"),\n    (\"Particles per cell\", \"unavailable\", \"not established by the public data repository\"),\n    (\"Sampling duration, independent seeds, confidence intervals\", \"unavailable\", \"not established by the public data repository\"),\n    (\"Statistical uncertainty near separation and reattachment\", \"unavailable\", \"not established by the public data repository\"),\n    (\"Wall reflection model and accommodation coefficients\", \"unavailable\", \"not established by the public data repository\"),\n    (\"Smoothing applied to the published *_smoothed fields\", \"unavailable\", \"procedure not documented with the data\"),\n    (\"Joint (Kn, h/H) generalization\", \"not demonstrated\", \"study scope: h/H at fixed Kn = 0.01; Kn at fixed geometry\"),\n], columns=[\"verification item\", \"value\", \"status\"])\nassert set(manifest[\"dsmc_provenance_status\"].values()) == {\"not established by the public data repository\"}\ndisplay(checklist)",
+      "append": true
+    },
+    {
+      "kind": "insert",
+      "id": "oct20-environment",
+      "cell_type": "markdown",
+      "replacement": "### Before running\n\nUse Python 3.12 or 3.13 with the repository constraints (NumPy 2.0–2.2). The optional branch/trunk coding exercise additionally needs TensorFlow/Keras; the default coordinate-MLP audit does not. [Environment setup and evidence terminology](../../docs/STUDENT_EXECUTION_GUIDE.md). A classical baseline may win; that is a valid result. Read the mode printed by each experiment before describing a retained table as your own training run."
+    },
+    {
+      "kind": "insert",
+      "id": "oct20-source-records-text",
+      "cell_type": "markdown",
+      "replacement": "### Source hashes and the files available in this checkout\n\nThe nine source hashes below are **retained manifest records**. They identify\nthe original smoothed fields; printing them is not a new download or a new\nverification of those upstream files. The two compact archive hashes are\nrecomputed locally and compared with the manifest. This verifies archive\nidentity, not DSMC convergence.",
+      "append": true
+    },
+    {
+      "kind": "insert",
+      "id": "oct20-source-records-code",
+      "cell_type": "code",
+      "replacement": "import hashlib\nprint('RETAINED upstream source records:')\ndisplay(pd.DataFrame.from_dict(manifest['smoothed_files'], orient='index').rename_axis('source file').reset_index())\narchive_hash_rows = []\nfor archive_name, expected_hash in manifest['derived_archives_sha256'].items():\n    observed_hash = hashlib.sha256((RESULTS / archive_name).read_bytes()).hexdigest()\n    archive_hash_rows.append({'archive':archive_name, 'expected SHA256':expected_hash,\n                              'observed SHA256':observed_hash, 'matches':observed_hash == expected_hash})\ndisplay(pd.DataFrame(archive_hash_rows))\nassert all(row['matches'] for row in archive_hash_rows)",
+      "append": true
+    }
+  ],
+  "notebooks/week07_2/W7_2_Cylinder_Wake_State_Estimation.ipynb": [
+    {
+      "kind": "replace",
+      "match": "coverage=pd.DataFrame(result['coverage'])\ndisplay(coverage)\nprint('Mean nominal-95% pointwise coverage:',coverage.test_pointwise_95_coverage.mean())\nassert coverage.test_pointwise_95_coverage.mean() < .75, 'Update the retained failure statement if behavior changes'",
+      "replacement": "coverage=pd.DataFrame(result['coverage'])\ndisplay(coverage)\nprint('Mean nominal-95% pointwise coverage:',coverage.test_pointwise_95_coverage.mean())\nprint('Nominal coverage shortfall:', .95 - coverage.test_pointwise_95_coverage.mean())"
+    },
+    {
+      "kind": "insert",
+      "id": "oct20-reading-guide",
+      "cell_type": "markdown",
+      "replacement": "## A sensor-space check is not a field-space uncertainty check\nThe reduced state contains POD coefficients. The observation matrix maps those\ncoefficients to sensor readings. The innovation is the measured reading minus\nits predicted reading; the Kalman gain determines how much that innovation\nchanges the state. A near-unit normalized innovation RMS tests uncertainty at\nobserved sensors. It does not certify coverage of the full field, where missing\nPOD modes and model discrepancy remain. Thus innovation RMS near 1.08 and field\ncoverage near 55% need not contradict one another.\n\nIf rank 8, 32 sensors and covariance scale 1000 are the largest searched values\nand also the selected values, the search has reached its boundary. Extend the\nsearch on development/validation cases before freezing a new protocol. Do not\nextend it in response to test-case scores."
+    },
+    {
+      "kind": "insert",
+      "id": "oct20-environment",
+      "cell_type": "markdown",
+      "replacement": "### Before running\n\nUse Python 3.12 or 3.13 with the repository constraints (NumPy 2.0–2.2). [Environment setup and evidence terminology](../../docs/STUDENT_EXECUTION_GUIDE.md). A classical baseline may win; that is a valid result. Read the mode printed by each experiment before describing a retained table as your own training run."
+    },
+    {
+      "kind": "insert",
+      "id": "oct20-kalman-step-text",
+      "cell_type": "markdown",
+      "before": "## 3. Freeze selection",
+      "replacement": "### One numerical measurement update\n\nLet $a^-$ be the predicted two-coefficient state and $P^-$ its covariance.\nThe row matrix $H$ maps the state to one sensor. Measurement $y$ has independent\nzero-mean noise with covariance $R$. The innovation $d$, its covariance $S$,\nthe gain $K$, and the corrected state $a^+$ are\n\n$$\nd=y-Ha^-,\\quad S=HP^-H^T+R,\\quad\nK=P^-H^TS^{-1},\\quad a^+=a^-+Kd.\n$$\n\nThe superscripts minus and plus mean **before** and **after** using this measurement;\nthey are not powers. The gain tells how strongly the state responds to the sensor.\nHere the sensor observes only the first coefficient. Predict whether that\ncoefficient moves toward 1.2, and whether the unobserved second variance changes.\nThe covariance update below uses the Joseph form, which keeps both the state\nuncertainty and measurement-noise contribution explicit."
+    },
+    {
+      "kind": "insert",
+      "id": "oct20-kalman-step-code",
+      "cell_type": "code",
+      "before": "## 3. Freeze selection",
+      "replacement": "prior_state = np.array([1.0, 0.0])\nprior_cov = np.diag([0.25, 0.09])\nobservation = np.array([[1.0, 0.0]])\nnoise_cov = np.array([[0.04]])\nmeasurement = np.array([1.2])\ninnovation = measurement - observation @ prior_state\ninnovation_cov = observation @ prior_cov @ observation.T + noise_cov\ngain = np.linalg.solve(innovation_cov, observation @ prior_cov).T\nposterior_state = prior_state + gain @ innovation\nidentity = np.eye(2)\nremainder = identity - gain @ observation\nposterior_cov = remainder @ prior_cov @ remainder.T + gain @ noise_cov @ gain.T\nprint('Innovation:', innovation)\nprint('Innovation covariance:', innovation_cov)\nprint('Kalman gain:', gain.ravel())\ndisplay(pd.DataFrame({'prior state':prior_state, 'posterior state':posterior_state,\n                      'prior variance':np.diag(prior_cov), 'posterior variance':np.diag(posterior_cov)}))\nassert 1.0 < posterior_state[0] < measurement[0]\nnp.testing.assert_allclose(posterior_cov[1,1], prior_cov[1,1])\nassert np.linalg.eigvalsh(posterior_cov).min() >= -1e-12"
+    }
+  ],
+  "notebooks/week07/W7_Lab2_Modal_Forecasting.ipynb": [
+    {
+      "kind": "replace",
+      "match": "print('Validation-selected DMD:', forecast['selected_dmd'])\ndisplay(pd.DataFrame({k:{'validation_l2':v['validation']['relative_l2'],\n    'test_l2':v['test']['relative_l2'], 'worst_test_frame':v['test']['worst_frame_relative_l2']}\n    for k,v in forecast['methods'].items()}).T)\ndisplay(forecast['methods']['MLP-r8'])\ndisplay(Image(filename=str(scratch/'forecast_fields.png')))\ndisplay(Image(filename=str(scratch/'forecast_audit.png')))",
+      "replacement": "print('Validation-selected DMD:', forecast['selected_dmd'])\ndisplay(pd.DataFrame({k:{'validation_l2':v['validation']['relative_l2'],\n    'test_l2':v['test']['relative_l2'], 'worst_test_frame':v['test']['worst_frame_relative_l2']}\n    for k,v in forecast['methods'].items()}).T)\ndisplay(forecast['methods']['MLP-r8'])\ndisplay(Image(filename=str(scratch/'forecast_fields.png')))\ndisplay(Image(filename=str(scratch/'forecast_audit.png')))\nprint('FRESH sensor-placement comparison (read errors and conditioning together):')\nsensor_table = pd.DataFrame(sensing['records'])\ndisplay(sensor_table.groupby(['split','method','budget'], dropna=False)[['relative_l2','condition_number']].mean().round(5))\nprint('Full per-seed sensor records remain in sensor_table.')"
+    },
+    {
+      "kind": "insert",
+      "id": "oct20-reading-guide",
+      "cell_type": "markdown",
+      "replacement": "## Why a grid study can fail when the last pair looks close\nRichardson extrapolation assumes a consistent asymptotic error law. With fine,\nmedium and coarse observations $q_1,q_2,q_3$ and a uniform refinement ratio $r>1$,\nthe monotone estimate is\n\n$$\np=\\frac{\\log |(q_3-q_2)/(q_2-q_1)|}{\\log r}.\n$$\n\nHere $q$ is one physical observable, such as drag or recirculation length, and\n$p$ is an observed accuracy order. A change of sign between the two successive\ndifferences invalidates this monotone estimate; an undefined GCI is a diagnostic,\nnot a number to replace by zero. For example, lengths 1.422, 1.418 and 1.437 do\nnot approach a limit monotonically. Keep the gate failed, add a declared finer\ngrid or longer sampling window, and repeat the same metric definitions.\n\nCheck diameter resolution separately for every Reynolds number using\n$Re=UD/\\nu$: the retained Re180 configuration uses 15 nodes per diameter,\nwhere other listed configurations use 12. Domain blockage (here 12.5%) can alter\ndrag and shedding frequency even after a grid study. Grid independence, domain\nindependence and external physical validation are separate tests.\n\nFor modal sensing, an oracle gets true modal coefficients; an autonomous forecast\nmust generate its own. Eight sensors for eight modes can be badly conditioned.\nReport the sensor count, placement, condition number and error together; a plot\nwithout the underlying table is insufficient evidence."
+    },
+    {
+      "kind": "insert",
+      "id": "oct20-environment",
+      "cell_type": "markdown",
+      "replacement": "### Before running\n\nUse Python 3.12 or 3.13 with the repository constraints (NumPy 2.0–2.2). [Environment setup and evidence terminology](../../docs/STUDENT_EXECUTION_GUIDE.md). A classical baseline may win; that is a valid result. Read the mode printed by each experiment before describing a retained table as your own training run."
+    }
+  ],
+  "notebooks/week01_1/W1_1_AI_Assisted_Scientific_Software.ipynb": [
+    {
+      "kind": "insert",
+      "id": "oct20-reading-guide",
+      "cell_type": "markdown",
+      "replacement": "## Reading the implementation contract\nThe derivative example is a worked reference; Part B asks you to implement a\nboundary-flux integral. A boundary segment needs two distinct ordered points for\ntrapezoidal integration. The example's five-point derivative validator therefore\nmust not be reused as the minimum-size rule for the flux integral. Validate the\nquantity you actually compute. Use `np.trapezoid` with NumPy 2.\n\nAn independent expected value comes from analysis, not from calling the same\nroutine twice. For a constant horizontal velocity in a closed rectangle, the\nright and left fluxes cancel and the top and bottom fluxes vanish. Derive these\nfour numbers before writing the function. A test that computes its expected\nanswer with the function under test cannot expose that function's axis error.\nRecord the commit and reviewed line ranges together, since edits move lines.\nIf a tool does not expose its model identifier, record **not exposed**. Small\nround-off differences in a manufactured residual are interpreted against the\nstated tolerance, not against an exact printed decimal."
+    },
+    {
+      "kind": "insert",
+      "id": "oct20-environment",
+      "cell_type": "markdown",
+      "replacement": "### Before running\n\nUse Python 3.12 or 3.13 with the repository constraints (NumPy 2.0–2.2). [Environment setup and evidence terminology](../../docs/STUDENT_EXECUTION_GUIDE.md). A classical baseline may win; that is a valid result. Read the mode printed by each experiment before describing a retained table as your own training run."
+    }
+  ],
+  "notebooks/week07/W7_Lattice_Boltzmann_Cylinder_Student.ipynb": [
+    {
+      "kind": "insert",
+      "id": "oct20-reading-guide",
+      "cell_type": "markdown",
+      "replacement": "## Why a grid study can fail when the last pair looks close\nRichardson extrapolation assumes a consistent asymptotic error law. With fine,\nmedium and coarse observations $q_1,q_2,q_3$ and a uniform refinement ratio $r>1$,\nthe monotone estimate is\n\n$$\np=\\frac{\\log |(q_3-q_2)/(q_2-q_1)|}{\\log r}.\n$$\n\nHere $q$ is one physical observable, such as drag or recirculation length, and\n$p$ is an observed accuracy order. A change of sign between the two successive\ndifferences invalidates this monotone estimate; an undefined GCI is a diagnostic,\nnot a number to replace by zero. For example, lengths 1.422, 1.418 and 1.437 do\nnot approach a limit monotonically. Keep the gate failed, add a declared finer\ngrid or longer sampling window, and repeat the same metric definitions.\n\nCheck diameter resolution separately for every Reynolds number using\n$Re=UD/\\nu$: the retained Re180 configuration uses 15 nodes per diameter,\nwhere other listed configurations use 12. Domain blockage (here 12.5%) can alter\ndrag and shedding frequency even after a grid study. Grid independence, domain\nindependence and external physical validation are separate tests.\n\nFor modal sensing, an oracle gets true modal coefficients; an autonomous forecast\nmust generate its own. Eight sensors for eight modes can be badly conditioned.\nReport the sensor count, placement, condition number and error together; a plot\nwithout the underlying table is insufficient evidence."
+    },
+    {
+      "kind": "insert",
+      "id": "oct20-environment",
+      "cell_type": "markdown",
+      "replacement": "### Before running\n\nUse Python 3.12 or 3.13 with the repository constraints (NumPy 2.0–2.2). [Environment setup and evidence terminology](../../docs/STUDENT_EXECUTION_GUIDE.md). A classical baseline may win; that is a valid result. Read the mode printed by each experiment before describing a retained table as your own training run."
+    }
+  ],
+  "notebooks/week07_1/W7_1_Hypersonic_Rarefied_Cylinder_DeepONet.ipynb": [
+    {
+      "kind": "insert",
+      "id": "oct20-reading-guide",
+      "cell_type": "markdown",
+      "replacement": "## Identify the model you actually run\nThe default trained classroom model is a coordinate MLP, not a branch/trunk\nDeepONet. An MLP maps a finite vector to outputs. A DeepONet combines a branch\nencoding an input function sampled at fixed sensors with a trunk encoding query\ncoordinates. The optional topology demonstration is separate and may be skipped.\n\nA classical interpolation baseline may win; reporting that is a correct result.\nLocate errors by physical region as well as globally: shock layer, near-wall\nregion and wake. Quote the region mask and normalization. Similar training and\nvalidation errors suggest limited fit capacity or budget, but do not identify a\nunique cause. Neither a favorable error nor a topology diagram proves operator\ngeneralization to a new family of input functions."
+    },
+    {
+      "kind": "insert",
+      "id": "oct20-environment",
+      "cell_type": "markdown",
+      "replacement": "### Before running\n\nUse Python 3.12 or 3.13 with the repository constraints (NumPy 2.0–2.2). [Environment setup and evidence terminology](../../docs/STUDENT_EXECUTION_GUIDE.md). A classical baseline may win; that is a valid result. Read the mode printed by each experiment before describing a retained table as your own training run."
+    },
+    {
+      "kind": "replace",
+      "match": "# Week 7.1 - Rarefied hypersonic cylinder operator learning\n\n<!-- MIE690A article-aligned validation v4 -->\n\n<!-- FLOWMLLAB_COLAB_LAUNCH_V1 -->\n[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/Ehsan-Roohi/FlowMLLab/blob/main/notebooks/week07_1/W7_1_Hypersonic_Rarefied_Cylinder_DeepONet.ipynb)\n\n**Runtime:** CPU, normally under 2 minutes. **Placement:** incremental Week 7.1,\nafter the continuum/LBM cylinder lab and before Week 8 gas dynamics.\n\n### Central question\n\nWhen a parameterized DSMC field lives on the same cylinder grid, what evidence\nis required before a neural operator is more useful than direct interpolation?\n\n### Learning outcomes\n\n1. distinguish freestream Mach from the predicted local Mach field;\n2. formulate the cylinder map as an operator $G:M_\\infty\\mapsto q(x,y)$;\n3. enforce whole-case training, validation, interpolation, and extrapolation splits;\n4. explain branch, trunk, layerwise fusion, standardized targets, and weighted loss;\n5. compare structured interpolation with a trained 3x96 tanh MLP; and\n6. diagnose underfitting from training errors without confusing accuracy and calibration.",
+      "replacement": "# Week 7.1 - Rarefied hypersonic cylinder: coordinate MLP and operator anatomy\n\n<!-- MIE690A article-aligned validation v4 -->\n\n<!-- FLOWMLLAB_COLAB_LAUNCH_V1 -->\n[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/Ehsan-Roohi/FlowMLLab/blob/main/notebooks/week07_1/W7_1_Hypersonic_Rarefied_Cylinder_DeepONet.ipynb)\n\n**Runtime:** CPU, normally under 2 minutes. **Placement:** incremental Week 7.1,\nafter the continuum/LBM cylinder lab and before Week 8 gas dynamics.\n\n### Central question\n\nWhen a parameterized DSMC field lives on the same cylinder grid, what evidence\nis required before a neural operator is more useful than direct interpolation?\n\n### Learning outcomes\n\n1. distinguish freestream Mach from the predicted local Mach field;\n2. formulate the cylinder map as an operator $G:M_\\infty\\mapsto q(x,y)$;\n3. enforce whole-case training, validation, interpolation, and extrapolation splits;\n4. explain branch, trunk, layerwise fusion, standardized targets, and weighted loss;\n5. compare structured interpolation with a trained 3x96 tanh MLP; and\n6. diagnose underfitting from training errors without confusing accuracy and calibration."
+    },
+    {
+      "kind": "insert",
+      "id": "oct20-localization-explanation",
+      "cell_type": "markdown",
+      "replacement": "## Error localization: print the numbers behind the contour\n\nThe next cell evaluates the same $M_\\infty=8.5$ case shown above. It prints the\nlargest absolute error and its coordinates for each method and field. It also\nreports relative $L_2$ error in three equal-width $x$ bands; each denominator is\nthe reference norm **inside that band**. These are geometric summaries, not\nindependent shock-layer or wake labels. A physical-region claim would require\npredeclared region masks. Explain why the location of the maximum and the\nregion-averaged error can tell different stories.",
+      "append": true
+    },
+    {
+      "kind": "insert",
+      "id": "oct20-localization-table",
+      "cell_type": "code",
+      "replacement": "localization = []\nregion_errors = []\nquery_x, query_y = data.x[mask], data.y[mask]\nband_edges = np.linspace(query_x.min(), query_x.max(), 4)\nfor method_name, estimate in [('Mach interpolation', baseline), ('coordinate MLP', operator)]:\n    for j, field_name in enumerate(TARGET_NAMES):\n        absolute_error = np.abs(estimate[:, j] - truth[:, j])\n        worst_index = int(np.argmax(absolute_error))\n        localization.append({'method':method_name, 'field':field_name,\n            'maximum absolute error':absolute_error[worst_index],\n            'x at maximum':query_x[worst_index], 'y at maximum':query_y[worst_index]})\n        for band in range(3):\n            inside = (query_x >= band_edges[band]) & (query_x <= band_edges[band+1] if band == 2 else query_x < band_edges[band+1])\n            denominator = np.linalg.norm(truth[inside, j])\n            region_errors.append({'method':method_name, 'field':field_name, 'x band':band+1,\n                'points':int(inside.sum()), 'regional relative L2':\n                np.linalg.norm(estimate[inside,j] - truth[inside,j])/denominator if denominator > 0 else np.nan})\ndisplay(pd.DataFrame(localization).round(6))\ndisplay(pd.DataFrame(region_errors).round(5))",
+      "append": true
+    }
+  ],
+  "notebooks/week07_3/W7_3_Masked_Pretraining_Label_Efficiency.ipynb": [
+    {
+      "kind": "insert",
+      "id": "oct20-reading-guide",
+      "cell_type": "markdown",
+      "replacement": "## Compare information and compute budgets together\nThe main scratch fit uses 300 downstream steps; the extended scratch comparison\nuses 5000. Those are different experiments. At each label count, report training\nsteps, optimizer, unlabelled source data, target labels and evaluation frames\nbeside the error. The extended control can reverse a conclusion drawn from the\nshort-budget curve. A pretrained initialization is not automatically better at\nequal compute.\n\nThe pooled POD baseline must see the same allowed unlabelled frames if the claim\nconcerns the value of pretraining. Identical errors at one and two labels can\nmean validation kept the same initial checkpoint, rather than that another label\ncontains no information. CPU training can take tens of minutes; the fair-budget\ncontrol is a substantial part of the runtime. Use the printed fresh output path\nto find this run; saved historical text is not a new execution."
+    },
+    {
+      "kind": "insert",
+      "id": "oct20-environment",
+      "cell_type": "markdown",
+      "replacement": "### Before running\n\nUse Python 3.12 or 3.13 with the repository constraints (NumPy 2.0–2.2). This notebook needs CPU PyTorch for its neural cells; use the CPU installation commands in the setup guide. [Environment setup and evidence terminology](../../docs/STUDENT_EXECUTION_GUIDE.md). A classical baseline may win; that is a valid result. Read the mode printed by each experiment before describing a retained table as your own training run."
+    }
+  ],
+  "notebooks/week07_4/W7_4_Diverse_Wake_Pretraining.ipynb": [
+    {
+      "kind": "insert",
+      "id": "oct20-reading-guide",
+      "cell_type": "markdown",
+      "replacement": "## Count source labels as well as target labels\nThe target budget $k$ counts labels from the new trajectory. It does not include\nthe 2761 source lift labels used for the retained ridge readout. Report both\ncounts, along with unlabelled pretraining frames. The phrase \"32 labels\" alone\nwould hide this source supervision.\n\nAn aggregate improvement does not imply improvement on every Reynolds number.\nRead the per-trajectory table, including Re115 and extrapolation at Re135\n(development maximum 130). One encoder initialization cannot measure variation\nbetween independently pretrained encoders. A baseline winning is an acceptable\nscientific outcome, not a reason to change the evaluation cases."
+    },
+    {
+      "kind": "insert",
+      "id": "oct20-environment",
+      "cell_type": "markdown",
+      "replacement": "### Before running\n\nUse Python 3.12 or 3.13 with the repository constraints (NumPy 2.0–2.2). [Environment setup and evidence terminology](../../docs/STUDENT_EXECUTION_GUIDE.md). A classical baseline may win; that is a valid result. Read the mode printed by each experiment before describing a retained table as your own training run."
+    }
+  ],
+  "notebooks/week08/W8_Lab1_Exact_Gas_Dynamics_Student.ipynb": [
+    {
+      "kind": "insert",
+      "id": "oct20-reading-guide",
+      "cell_type": "markdown",
+      "replacement": "## Check the branch, the domain and the denominator\nFor Rayleigh flow with heat-capacity ratio $\\gamma>1$, the supersonic branch has\n\n$$\n1-\\gamma^{-2}<T_0/T_0^*<1.\n$$\n\nAt $\\gamma=1.4$ the lower limit is about 0.4898 and corresponds to infinite\nMach number. A requested ratio of 0.30 has no supersonic solution. The solver\nmust explain this physical limit before invoking a root finder. The sonic endpoint\nhas $M=1$; no finite maximum Mach should silently redefine the physical domain.\n\nResidual and output error have different units and sensitivities. If a relation\nis $F(y,a)=0$, a small perturbation obeys $\\delta F\\approx F_y\\delta y$ with\ninput $a$ held fixed. A large $F_y$ can produce a large equation residual from a\nsmall output error. A positivity parameterization enforces positivity alone,\nnot the equation, conservation or accuracy.\n\nCompare baseline error on the common supported queries and report coverage on\nthe full query set. Error on 65% of queries is not directly comparable with\nerror on 100%. A pass close to a declared threshold is a narrow pass, not a\nrobust margin. Keep the original criterion when reproducing the experiment."
+    },
+    {
+      "kind": "insert",
+      "id": "oct20-worked-audit-heading",
+      "cell_type": "markdown",
+      "replacement": "## Worked audit and interpretation\n\nRun these cells after the main lesson. They compute diagnostics from the objects above; they do not replace the frozen scientific protocol. Predict the result before running, then explain any failure using the stated metric and input information.",
+      "append": true
+    },
+    {
+      "kind": "insert",
+      "id": "oct20-audit-10-text",
+      "cell_type": "markdown",
+      "replacement": "### Audit 1: Substitute changed targets back into the declared branch equations.\n\nState which inputs and reference define this comparison. A failed check is a result to investigate, not permission to select new settings on the test cases.",
+      "append": true
+    },
+    {
+      "kind": "insert",
+      "id": "oct20-audit-10",
+      "cell_type": "code",
+      "replacement": "rows = []\nfor target in (0.60, 0.95):\n    for branch in (\"subsonic\", \"supersonic\"):\n        mach = rayleigh_inverse_t0(target, branch)\n        rows.append((\"Rayleigh T0/T0*\", target, branch, mach,\n                     float(rayleigh_ratios(mach)[4] - target)))\nfor target in (0.05, 0.50):\n    for branch in (\"subsonic\", \"supersonic\"):\n        mach = fanno_inverse_friction_length(target, branch)\n        rows.append((\"Fanno 4fL*/D\", target, branch, mach,\n                     float(fanno_ratios(mach)[4] - target)))\ncheckpoint = pd.DataFrame(rows, columns=[\"relation\", \"target\", \"branch\", \"Mach\", \"forward residual\"])\ndisplay(checkpoint)\nassert checkpoint[\"forward residual\"].abs().max() < 1e-9\nassert all((checkpoint[\"Mach\"] < 1.0) == (checkpoint[\"branch\"] == \"subsonic\"))\n\nblind_mach = 0.5 * (rayleigh_roots[\"subsonic\"] + rayleigh_roots[\"supersonic\"])\nprint(f\"average of the two T0/T0* = {target_t0} roots: M = {blind_mach:.3f}, \"\n      f\"forward T0/T0* = {rayleigh_ratios(blind_mach)[4]:.3f}\")\nprint(\"Rayleigh supersonic limit (gamma^2 - 1)/gamma^2 =\", round((GAMMA**2 - 1) / GAMMA**2, 4))\nprint(\"Fanno supersonic limit of 4fL*/D =\",\n      round(-1 / GAMMA + (GAMMA + 1) / (2 * GAMMA) * np.log((GAMMA + 1) / (GAMMA - 1)), 4))",
+      "append": true
+    },
+    {
+      "kind": "insert",
+      "id": "oct20-environment",
+      "cell_type": "markdown",
+      "replacement": "### Before running\n\nUse Python 3.12 or 3.13 with the repository constraints (NumPy 2.0–2.2). [Environment setup and evidence terminology](../../docs/STUDENT_EXECUTION_GUIDE.md). A classical baseline may win; that is a valid result. Read the mode printed by each experiment before describing a retained table as your own training run."
+    }
+  ],
+  "notebooks/week08/W8_Lab2_Gas_Dynamics_SciML_Evidence_Student.ipynb": [
+    {
+      "kind": "insert",
+      "id": "oct20-reading-guide",
+      "cell_type": "markdown",
+      "replacement": "## Check the branch, the domain and the denominator\nFor Rayleigh flow with heat-capacity ratio $\\gamma>1$, the supersonic branch has\n\n$$\n1-\\gamma^{-2}<T_0/T_0^*<1.\n$$\n\nAt $\\gamma=1.4$ the lower limit is about 0.4898 and corresponds to infinite\nMach number. A requested ratio of 0.30 has no supersonic solution. The solver\nmust explain this physical limit before invoking a root finder. The sonic endpoint\nhas $M=1$; no finite maximum Mach should silently redefine the physical domain.\n\nResidual and output error have different units and sensitivities. If a relation\nis $F(y,a)=0$, a small perturbation obeys $\\delta F\\approx F_y\\delta y$ with\ninput $a$ held fixed. A large $F_y$ can produce a large equation residual from a\nsmall output error. A positivity parameterization enforces positivity alone,\nnot the equation, conservation or accuracy.\n\nCompare baseline error on the common supported queries and report coverage on\nthe full query set. Error on 65% of queries is not directly comparable with\nerror on 100%. A pass close to a declared threshold is a narrow pass, not a\nrobust margin. Keep the original criterion when reproducing the experiment."
+    },
+    {
+      "kind": "insert",
+      "id": "oct20-environment",
+      "cell_type": "markdown",
+      "replacement": "### Before running\n\nUse Python 3.12 or 3.13 with the repository constraints (NumPy 2.0–2.2). [Environment setup and evidence terminology](../../docs/STUDENT_EXECUTION_GUIDE.md). A classical baseline may win; that is a valid result. Read the mode printed by each experiment before describing a retained table as your own training run."
+    },
+    {
+      "kind": "replace",
+      "match": "application = evidence[\"application\"]\napplication_table = pd.DataFrame({\n    \"quantity\": [\n        \"shock-tube states\", \"MLP relative L2 (%)\", \"speedup vs one Brent root/state\",\n        \"nozzle inverse-design cases\", \"maximum Newton iterations\",\n        \"network-vs-finite-difference gradient relative difference\",\n    ],\n    \"value\": [\n        application[\"shock_tube_queries\"],\n        100.0 * application[\"shock_tube_rel_l2\"],\n        application[\"shock_tube_speedup\"],\n        application[\"nozzle_cases\"],\n        application[\"nozzle_max_iterations\"],\n        application[\"nozzle_max_gradient_relative_difference\"],\n    ],\n})\ndisplay(application_table)\nassert application[\"shock_tube_queries\"] == 100000\nassert application[\"shock_tube_speedup\"] > 10\n\nphysical = evidence[\"physical\"].copy()\ndisplay(physical.pivot(index=\"problem\", columns=\"diagnostic\", values=\"value\"))\n\nvalidity = physical[physical[\"diagnostic\"].str.endswith((\"rate\", \"ordering\"))]\nassert (validity[\"value\"] == 1.0).all()",
+      "replacement": "application = evidence[\"application\"]\napplication_table = pd.DataFrame({\n    \"quantity\": [\n        \"shock-tube states\", \"MLP relative L2 (%)\", \"speedup vs one Brent root/state\",\n        \"nozzle inverse-design cases\", \"maximum Newton iterations\",\n        \"network-vs-finite-difference gradient relative difference\",\n    ],\n    \"value\": [\n        application[\"shock_tube_queries\"],\n        100.0 * application[\"shock_tube_rel_l2\"],\n        application[\"shock_tube_speedup\"],\n        application[\"nozzle_cases\"],\n        application[\"nozzle_max_iterations\"],\n        application[\"nozzle_max_gradient_relative_difference\"],\n    ],\n})\ndisplay(application_table)\nassert application[\"shock_tube_queries\"] == 100000\nassert application[\"shock_tube_speedup\"] > 10\n\nphysical = evidence[\"physical\"].copy()\nfor problem_name, diagnostics_table in physical.groupby(\"problem\", sort=False):\n    print(\"RETAINED physical diagnostics:\", problem_name)\n    display(diagnostics_table[[\"diagnostic\", \"value\"]].reset_index(drop=True))\n\nvalidity = physical[physical[\"diagnostic\"].str.endswith((\"rate\", \"ordering\"))]\nassert (validity[\"value\"] == 1.0).all()"
+    }
+  ],
+  "notebooks/week09/W9_Lab2_Shock_Aligned_Nozzle_DeepONet_Student.ipynb": [
+    {
+      "kind": "insert",
+      "id": "oct20-reading-guide",
+      "cell_type": "markdown",
+      "replacement": "## Local accuracy, geometry and the evaluation contract\nIn the zonal loss\n\n$$\n\\mathcal L=\\alpha\\,\\frac{1}{N_v}\\sum_{i\\in V}e_i^2\n+(1-\\alpha)\\,\\frac{1}{N_m}\\sum_{i\\in M}e_i^2,\n$$\n\n$V$ denotes reverse-flow samples, $M$ the remaining samples, and $N_v,N_m$\ntheir counts. The scalar $\\alpha$ weights regional mean errors, rather than\nthe number of pixels in each region. Select it on validation cases, then freeze\nit before opening final cases. Always show unweighted global AND reverse-flow\nvalidation errors beside the weighted fits. A validation guardrail, such as a\ntwo-percentage-point global penalty, is a selection rule, not a guarantee on new\ngeometries. Map the largest local error; it may sit at the step lip rather than\ninside the reverse-flow zone.\n\nThe classroom coordinate model is an MLP. A strict branch/trunk model that uses\nonly $(x/H,y/H)$ in its trunk has a different geometry representation and training\nproblem. A worse result is not by itself proof of an architectural limitation.\nCompare seeds, budget, training error and explicit wall-relative features before\nattributing the difference to geometry. Do not mix numbers from different runs.\n\nIn nozzle registration, a station returned only at grid nodes cannot distinguish\nsub-cell shock motion. Equal detected stations do not prove identical physical\nshocks. Report grid spacing, ties and every non-monotone pair. Target-assisted\nalignment is a representation audit; deployment must use a training-only locator.\nHistorical holdouts are regression cases once inspected, not new blind cases.\n\nBranch sensors and query coordinates have different roles. Fixed branch sensors\ndescribe the input consistently across cases. Each query must still be paired\nwith its own target value; equal array shapes alone do not establish that pairing."
+    },
+    {
+      "kind": "insert",
+      "id": "oct20-worked-audit-heading",
+      "cell_type": "markdown",
+      "replacement": "## Worked audit and interpretation\n\nRun these cells after the main lesson. They compute diagnostics from the objects above; they do not replace the frozen scientific protocol. Predict the result before running, then explain any failure using the stated metric and input information.",
+      "append": true
+    },
+    {
+      "kind": "insert",
+      "id": "oct20-audit-30-text",
+      "cell_type": "markdown",
+      "replacement": "### Audit 1: Check the POD spectrum against the retained representation audit.\n\nState which inputs and reference define this comparison. A failed check is a result to investigate, not permission to select new settings on the test cases.",
+      "append": true
+    },
+    {
+      "kind": "insert",
+      "id": "oct20-audit-30",
+      "cell_type": "code",
+      "replacement": "energy_columns = [\"E1_percent\", \"E12_percent\", \"E123_percent\", \"N99\"]\npod_table = pod_observed.set_index(\"coordinate\")[energy_columns]\nreference_table = pod_reference.set_index(\"coordinate\")[energy_columns]\ndisplay(pod_table.join(reference_table, rsuffix=\" (reference)\"))\nprint(\"max |notebook - published reference| in energy percent:\",\n      f\"{float((pod_table[energy_columns[:3]] - reference_table[energy_columns[:3]]).abs().max().max()):.1e}\")",
+      "append": true
+    },
+    {
+      "kind": "insert",
+      "id": "oct20-audit-33-text",
+      "cell_type": "markdown",
+      "replacement": "### Audit 2: Separate target-assisted profile errors from training-only station prediction.\n\nState which inputs and reference define this comparison. A failed check is a result to investigate, not permission to select new settings on the test cases.",
+      "append": true
+    },
+    {
+      "kind": "insert",
+      "id": "oct20-audit-33",
+      "cell_type": "code",
+      "replacement": "profile_errors = blind_metrics.pivot(index=\"pressure_kPa\", columns=\"coordinate\",\n                                     values=\"normalized_centerline_relative_L2_percent\")\nprofile_errors.columns = [f\"{name} profile error (%), rank {selected_rank[name]}\" for name in profile_errors.columns]\nheld_out_table = profile_errors.join(shock_table.set_index(\"pressure_kPa\"))\nheld_out_table[\"absolute_error_in_grid_spacings\"] = held_out_table[\"absolute_error_um\"] / 2.05\ndisplay(held_out_table)",
+      "append": true
+    },
+    {
+      "kind": "insert",
+      "id": "oct20-audit-35-text",
+      "cell_type": "markdown",
+      "replacement": "### Audit 3: Summarize the newly generated six-field errors.\n\nState which inputs and reference define this comparison. A failed check is a result to investigate, not permission to select new settings on the test cases.",
+      "append": true
+    },
+    {
+      "kind": "insert",
+      "id": "oct20-audit-35",
+      "cell_type": "code",
+      "replacement": "field_table = generated_metrics.pivot(index=\"field\", columns=\"held_out_pressure_kpa\",\n                                      values=\"selected_global_relative_l2_percent\")\nfield_table.insert(0, \"selected method\", generated_metrics.groupby(\"field\")[\"selected_method\"].first())\nfield_table[\"mean\"] = field_table[[16, 25, 30]].mean(axis=1)\ndisplay(field_table)\nprint(f\"mean over 18 held-out field/pressure pairs: {generated_metrics['selected_global_relative_l2_percent'].mean():.3f}%; \"\n      f\"maximum: {generated_metrics['selected_global_relative_l2_percent'].max():.3f}% \"\n      f\"({generated_metrics.loc[generated_metrics['selected_global_relative_l2_percent'].idxmax(), ['field', 'held_out_pressure_kpa']].tolist()})\")\nif _NozzleImage is not None:\n    display(_NozzleImage(filename=str(GENERATED_RESULTS / \"nozzle_flowmllab/nozzle_back_pressure_P30_contours.png\")))",
+      "append": true
+    },
+    {
+      "kind": "insert",
+      "id": "oct20-audit-37-text",
+      "cell_type": "markdown",
+      "replacement": "### Audit 4: Print the station resolution, tied stations and non-monotone pressure pairs.\n\nState which inputs and reference define this comparison. A failed check is a result to investigate, not permission to select new settings on the test cases.",
+      "append": true
+    },
+    {
+      "kind": "insert",
+      "id": "oct20-audit-37",
+      "cell_type": "code",
+      "replacement": "spacing = np.diff(data[\"x_m\"]) * 1e6\nstation_um = data[\"shock_x_m\"] * 1e6\noffset_from_node = np.min(np.abs(station_um[:, None] - x_um[None, :]), axis=1)\nprint(f\"centerline spacing: min {spacing.min():.4f}, max {spacing.max():.4f} um\")\nprint(\"max distance of a detected station from a grid node (um):\", float(offset_from_node.max()))\nprint(\"distinct stations among 15 cases:\", len(np.unique(np.round(station_um, 6))))\nfor a, b in ((27, 28), (30, 33)):\n    ia, ib = (int(np.flatnonzero(pressure == value)[0]) for value in (a, b))\n    print(f\"{a} vs {b} kPa: x_s = {station_um[ia]:.2f} vs {station_um[ib]:.2f} um\")\ndevelopment_order = np.argsort(pressure[development])\ndev_p, dev_x = pressure[development][development_order], station_um[development][development_order]\nreversal = np.flatnonzero(np.diff(dev_x) > 0)\nprint(\"development stations moving downstream as pressure rises:\",\n      [(int(dev_p[i]), int(dev_p[i + 1]), round(float(dev_x[i + 1] - dev_x[i]), 2)) for i in reversal])",
+      "append": true
+    },
+    {
+      "kind": "insert",
+      "id": "oct20-environment",
+      "cell_type": "markdown",
+      "replacement": "### Before running\n\nUse Python 3.12 or 3.13 with the repository constraints (NumPy 2.0–2.2). The optional branch/trunk coding exercise additionally needs TensorFlow/Keras; the default coordinate-MLP audit does not. [Environment setup and evidence terminology](../../docs/STUDENT_EXECUTION_GUIDE.md). A classical baseline may win; that is a valid result. Read the mode printed by each experiment before describing a retained table as your own training run."
+    },
+    {
+      "kind": "replace",
+      "match": "command = [\n    _flowmllab_sys.executable,\n    str(REPO_ROOT / \"qa/run_nozzle_field_validation.py\"),\n    \"--root\", str(REPO_ROOT),\n    \"--output-dir\", str(REPO_ROOT / \"tmp/week09_lab2\"),\n]\n_flowmllab_subprocess.run(command, check=True)\nGENERATED_RESULTS = REPO_ROOT / \"tmp/week09_lab2\"\ngenerated_metrics = pd.read_csv(GENERATED_RESULTS / \"nozzle_flowmllab_heldout_metrics.csv\")\ndisplay(generated_metrics.pivot(\n    index=\"field\", columns=\"held_out_pressure_kpa\",\n    values=\"selected_global_relative_l2_percent\",\n))\ndisplay(generated_metrics.pivot(\n    index=\"field\", columns=\"held_out_pressure_kpa\",\n    values=\"selected_shock_window_relative_l2_percent\",\n))\n\ntry:\n    from IPython.display import Image as _NozzleImage\nexcept ModuleNotFoundError:\n    _NozzleImage = None\nif _NozzleImage is not None:\n    for filename in (\n        \"nozzle_flowmllab/nozzle_back_pressure_P16_contours.png\",\n        \"nozzle_flowmllab/nozzle_back_pressure_P25_contours.png\",\n        \"nozzle_flowmllab/nozzle_back_pressure_P30_contours.png\",\n        \"nozzle_flowmllab/nozzle_back_pressure_profiles.png\",\n        \"nozzle_flowmllab/nozzle_back_pressure_error_summary.png\",\n    ):\n        display(_NozzleImage(filename=str(GENERATED_RESULTS / filename)))",
+      "replacement": "command = [\n    _flowmllab_sys.executable,\n    str(REPO_ROOT / \"qa/run_nozzle_field_validation.py\"),\n    \"--root\", str(REPO_ROOT),\n    \"--output-dir\", str(REPO_ROOT / \"tmp/week09_lab2\"),\n]\n_flowmllab_subprocess.run(command, check=True, capture_output=True, text=True)\nGENERATED_RESULTS = REPO_ROOT / \"tmp/week09_lab2\"\ngenerated_metrics = pd.read_csv(GENERATED_RESULTS / \"nozzle_flowmllab_heldout_metrics.csv\")\ndisplay(generated_metrics.pivot(\n    index=\"field\", columns=\"held_out_pressure_kpa\",\n    values=\"selected_global_relative_l2_percent\",\n))\ndisplay(generated_metrics.pivot(\n    index=\"field\", columns=\"held_out_pressure_kpa\",\n    values=\"selected_shock_window_relative_l2_percent\",\n))\n\ntry:\n    from IPython.display import Image as _NozzleImage\nexcept ModuleNotFoundError:\n    _NozzleImage = None\nif _NozzleImage is not None:\n    for filename in (\n        \"nozzle_flowmllab/nozzle_back_pressure_P16_contours.png\",\n        \"nozzle_flowmllab/nozzle_back_pressure_P25_contours.png\",\n        \"nozzle_flowmllab/nozzle_back_pressure_P30_contours.png\",\n        \"nozzle_flowmllab/nozzle_back_pressure_profiles.png\",\n        \"nozzle_flowmllab/nozzle_back_pressure_error_summary.png\",\n    ):\n        display(_NozzleImage(filename=str(GENERATED_RESULTS / filename)))"
+    }
+  ],
+  "notebooks/week09/W9_Lab3_Nozzle_Data_Alignment_Audit.ipynb": [
+    {
+      "kind": "insert",
+      "id": "oct20-reading-guide",
+      "cell_type": "markdown",
+      "replacement": "## Local accuracy, geometry and the evaluation contract\nIn the zonal loss\n\n$$\n\\mathcal L=\\alpha\\,\\frac{1}{N_v}\\sum_{i\\in V}e_i^2\n+(1-\\alpha)\\,\\frac{1}{N_m}\\sum_{i\\in M}e_i^2,\n$$\n\n$V$ denotes reverse-flow samples, $M$ the remaining samples, and $N_v,N_m$\ntheir counts. The scalar $\\alpha$ weights regional mean errors, rather than\nthe number of pixels in each region. Select it on validation cases, then freeze\nit before opening final cases. Always show unweighted global AND reverse-flow\nvalidation errors beside the weighted fits. A validation guardrail, such as a\ntwo-percentage-point global penalty, is a selection rule, not a guarantee on new\ngeometries. Map the largest local error; it may sit at the step lip rather than\ninside the reverse-flow zone.\n\nThe classroom coordinate model is an MLP. A strict branch/trunk model that uses\nonly $(x/H,y/H)$ in its trunk has a different geometry representation and training\nproblem. A worse result is not by itself proof of an architectural limitation.\nCompare seeds, budget, training error and explicit wall-relative features before\nattributing the difference to geometry. Do not mix numbers from different runs.\n\nIn nozzle registration, a station returned only at grid nodes cannot distinguish\nsub-cell shock motion. Equal detected stations do not prove identical physical\nshocks. Report grid spacing, ties and every non-monotone pair. Target-assisted\nalignment is a representation audit; deployment must use a training-only locator.\nHistorical holdouts are regression cases once inspected, not new blind cases.\n\nBranch sensors and query coordinates have different roles. Fixed branch sensors\ndescribe the input consistently across cases. Each query must still be paired\nwith its own target value; equal array shapes alone do not establish that pairing."
+    },
+    {
+      "kind": "insert",
+      "id": "oct20-worked-audit-heading",
+      "cell_type": "markdown",
+      "replacement": "## Worked audit and interpretation\n\nRun these cells after the main lesson. They compute diagnostics from the objects above; they do not replace the frozen scientific protocol. Predict the result before running, then explain any failure using the stated metric and input information.",
+      "append": true
+    },
+    {
+      "kind": "insert",
+      "id": "oct20-audit-5-text",
+      "cell_type": "markdown",
+      "replacement": "### Audit 1: Demonstrate why equal shapes do not prove query-target pairing.\n\nState which inputs and reference define this comparison. A failed check is a result to investigate, not permission to select new settings on the test cases.",
+      "append": true
+    },
+    {
+      "kind": "insert",
+      "id": "oct20-audit-5",
+      "cell_type": "code",
+      "replacement": "x_a, x_b, x_c = (record[0] for record in records)\nprint(\"max |x_a - x_b| =\", float(np.max(np.abs(x_a - x_b))))\nprint(\"max |x_a - x_c| =\", float(np.max(np.abs(x_a - x_c))), \"at row\", int(np.argmax(np.abs(x_a - x_c))))\nthroat_c = int(np.argmin(np.abs(x_c - parameters[2][0])))\nrow = 2 * 41 + throat_c\nprint(f\"nozzle-c row {throat_c}: M = {target[row, 0]:.3f}; true x = {source_x[row]:.3f}, \"\n      f\"bugged x = {wrong_x[row]:.3f}, nozzle-c throat = {parameters[2][0]:.2f}\")",
+      "append": true
+    },
+    {
+      "kind": "insert",
+      "id": "oct20-environment",
+      "cell_type": "markdown",
+      "replacement": "### Before running\n\nUse Python 3.12 or 3.13 with the repository constraints (NumPy 2.0–2.2). The optional branch/trunk coding exercise additionally needs TensorFlow/Keras; the default coordinate-MLP audit does not. [Environment setup and evidence terminology](../../docs/STUDENT_EXECUTION_GUIDE.md). A classical baseline may win; that is a valid result. Read the mode printed by each experiment before describing a retained table as your own training run."
+    }
+  ],
+  "notebooks/week10_1/W10_1_Collision_Map_Surrogate_Audit.ipynb": [
+    {
+      "kind": "insert",
+      "id": "oct20-reading-guide",
+      "cell_type": "markdown",
+      "replacement": "## Collision-map errors and the low-temperature sampling domain\nThis executable lesson learns a Lennard--Jones deflection map; it does not run a\nlearned collision kernel inside a DSMC flow simulation. Impact parameter $b$ and\nrelative energy $E$ determine deflection angle $\\chi$. The surrogate predicts\n$\\cos\\chi$, so inspect its largest local errors near orbiting and glory features,\nnot only a thermal average.\n\nAn optimizer stopping at its iteration budget is not a convergence certificate.\nRecord the warning, iteration count, seed and library versions. Reproducing a\nretained decimal is not a reason to tune on final energies.\n\nThe transport audit samples a Maxwellian relative-energy distribution and drops\nstates outside the tabulated interval. Report the number and fraction dropped\nat every temperature, separately below and above the table. At low temperature,\na larger omitted low-energy mass can make a truncated integral look artificially\naccurate when reference and surrogate omit the same region. Compare the two on\nthe same stated interval, then assess the omitted contribution separately.\nDiffusion and viscosity weight scattering differently; a single small integrated\nerror cannot bound both cross sections at every energy."
+    },
+    {
+      "kind": "insert",
+      "id": "oct20-worked-audit-heading",
+      "cell_type": "markdown",
+      "replacement": "## Worked audit and interpretation\n\nRun these cells after the main lesson. They compute diagnostics from the objects above; they do not replace the frozen scientific protocol. Predict the result before running, then explain any failure using the stated metric and input information.",
+      "append": true
+    },
+    {
+      "kind": "insert",
+      "id": "oct20-audit-14-text",
+      "cell_type": "markdown",
+      "replacement": "### Audit 1: Locate local scattering errors before thermal averaging.\n\nState which inputs and reference define this comparison. A failed check is a result to investigate, not permission to select new settings on the test cases.",
+      "append": true
+    },
+    {
+      "kind": "insert",
+      "id": "oct20-audit-14",
+      "cell_type": "code",
+      "replacement": "import pandas as pd\nfrom IPython.display import display\n\n# Discussion 1: locate the largest error and the features of chi(b, E) at every unseen energy\nfine_b = np.arange(0.9, 2.601, 0.01)\nglory_b, rainbow_b, chi_min = [], [], []\nfor e in test_energies:\n    chi_fine = np.array([deflection_angle(float(b), float(e)) for b in fine_b])\n    rainbow_b.append(fine_b[np.argmin(chi_fine)]); chi_min.append(np.degrees(chi_fine.min()))\n    glory_b.append(fine_b[np.argmax(chi_fine < 0)])          # first zero crossing: the glory\ni_max, j_max = np.unravel_index(np.argmax(np.abs(err)), err.shape)\nchi_at_max = np.degrees(deflection_angle(float(impact[j_max]), float(test_energies[i_max])))\nprint(f\"largest |error| = {np.abs(err).max():.3f} at E/eps = {test_energies[i_max]:.3f}, b/sigma = {impact[j_max]:.2f}: \"\n      f\"exact cos chi = {test_table.cos_chi[i_max, j_max]:.3f} (chi = {chi_at_max:.1f} deg), surrogate = {pred[i_max, j_max]:.3f}\")\nprint(f\"at that energy: glory at b = {glory_b[i_max]:.2f}, deepest deflection chi = {chi_min[i_max]:.1f} deg at b = {rainbow_b[i_max]:.2f}\")\nbad = np.abs(err) > 0.1\nprint(f\"|error| > 0.1 in {bad.sum()} of {err.size} unseen cells: E/eps in [{test_energies[bad.any(1)].min():.2f}, \"\n      f\"{test_energies[bad.any(1)].max():.2f}], b/sigma in [{impact[bad.any(0)].min():.2f}, {impact[bad.any(0)].max():.2f}]\")\nprint(\"energies where the deflection passes -180 deg (orbiting):\", np.round(test_energies[np.array(chi_min) < -180], 3))\n\nfig, ax = plt.subplots(figsize=(7.6, 4.6))\nim = ax.pcolormesh(impact, test_energies, err, cmap=\"RdBu_r\", vmin=-0.5, vmax=0.5, shading=\"auto\")\nax.plot(glory_b, test_energies, \"k--\", lw=1.2, label=r\"glory ($\\chi=0$)\")\nax.plot(rainbow_b, test_energies, \"k-\", lw=1.4, label=r\"rainbow / orbiting ($\\chi$ minimum)\")\nax.plot(impact[j_max], test_energies[i_max], \"o\", mfc=\"none\", mec=\"lime\", ms=13, mew=2.2, label=\"largest error\")\nax.set(yscale=\"log\", xlabel=r\"$b/\\sigma$\", ylabel=r\"$E/\\epsilon$ (unseen)\", title=r\"Surrogate error in $\\cos\\chi$ with the features of $\\chi(b,E)$\")\nfig.colorbar(im, ax=ax, label=r\"$\\cos\\chi$ error\"); ax.legend(loc=\"upper right\", fontsize=8); plt.show()",
+      "append": true
+    },
+    {
+      "kind": "insert",
+      "id": "oct20-audit-17-text",
+      "cell_type": "markdown",
+      "replacement": "### Audit 2: Compare diffusion and viscosity cross sections on the same energy table.\n\nState which inputs and reference define this comparison. A failed check is a result to investigate, not permission to select new settings on the test cases.",
+      "append": true
+    },
+    {
+      "kind": "insert",
+      "id": "oct20-audit-17",
+      "cell_type": "code",
+      "replacement": "# Discussion 2: diffusion (Q1) versus viscosity (Q2), cross-section by cross-section and after thermal averaging\nfrom scipy.special import gammainc\nq1_exact, q2_exact = transport_cross_sections(impact, test_table.cos_chi)\nq1_surr, q2_surr = transport_cross_sections(impact, pred)\nrel = lambda a, b: 100 * np.abs(a - b) / np.abs(b)\nk = int(np.argmax(rel(q1_surr, q1_exact)))\nprint(f\"max cross-section error over unseen energies: Q1 {rel(q1_surr, q1_exact).max():.2f}% (at E = {test_energies[k]:.3f}), \"\n      f\"Q2 {rel(q2_surr, q2_exact).max():.2f}% (at E = {test_energies[int(np.argmax(rel(q2_surr, q2_exact)))]:.3f})\")\n\ndef omega_star(q, t_star, order):\n    \"\"\"Omega^(1,1)* (order 1) or Omega^(2,2)* (order 2), normalized by the rigid-sphere value.\"\"\"\n    x = test_energies / t_star\n    if order == 1:\n        return 0.5 * np.trapezoid(np.exp(-x) * x**2 * q, x) / np.pi\n    return 0.5 * np.trapezoid(np.exp(-x) * x**3 * q, x) / (2 * np.pi)\n\nrows = []\nfor t_star in (0.8, 1.5, 3.0, 6.0):\n    rows.append({\"T*\": t_star,\n                 \"Omega11* rel. error %\": rel(omega_star(q1_surr, t_star, 1), omega_star(q1_exact, t_star, 1)),\n                 \"Omega22* rel. error %\": rel(omega_star(q2_surr, t_star, 2), omega_star(q2_exact, t_star, 2)),\n                 \"x^2 e^-x weight below E=0.64 %\": 100 * gammainc(3, test_energies[0] / t_star),\n                 \"x^3 e^-x weight below E=0.64 %\": 100 * gammainc(4, test_energies[0] / t_star)})\ndisplay(pd.DataFrame(rows).round(3))",
+      "append": true
+    },
+    {
+      "kind": "insert",
+      "id": "oct20-audit-20-text",
+      "cell_type": "markdown",
+      "replacement": "### Audit 3: Count omitted low-energy pairs before interpreting the thermal integral.\n\nState which inputs and reference define this comparison. A failed check is a result to investigate, not permission to select new settings on the test cases.",
+      "append": true
+    },
+    {
+      "kind": "insert",
+      "id": "oct20-audit-20",
+      "cell_type": "code",
+      "replacement": "# Discussion 3: the audit re-run at T* = 0.8 next to the three original temperatures\naudit_rows = []\nfor t_star in (0.8, 1.5, 3.0, 6.0):\n    a = collision_weighted_audit(fitted, t_star, count=3000, seed=1)\n    audit_rows.append({k: a[k] for k in (\"reduced_temperature\", \"states\", \"discarded_out_of_range\", \"rms_cos_error\",\n                                         \"max_abs_cos_error\", \"fraction_abs_error_above_0p1\")})\ndisplay(pd.DataFrame(audit_rows).round(4))\n\n# Where do the T* = 0.8 states sit relative to the table the surrogate was trained on (E/eps in [0.6, 120])?\ne_s, b_s = sample_collision_states(0.8, 3000, 1)\nkept = (e_s >= 0.5) & (e_s <= 40.0)\nbelow_table = kept & (e_s < energies.min())\nexact_s = np.array([np.cos(deflection_angle(float(b), float(e))) for e, b in zip(e_s[kept], b_s[kept])])\nscaler, net = fitted\npred_s = np.clip(net.predict(scaler.transform(np.column_stack([np.log(e_s[kept]), b_s[kept]]))), -1, 1)\ninside = e_s[kept] >= energies.min()\nprint(f\"T* = 0.8: {np.count_nonzero(~kept)} of 3000 pairs discarded (E < 0.5: {np.count_nonzero(e_s < 0.5)}, E > 40: {np.count_nonzero(e_s > 40)}); \"\n      f\"{np.count_nonzero(below_table)} kept pairs lie below the training table (0.5 <= E < 0.6)\")\nfor name, sel in ((\"kept, inside the table\", inside), (\"kept, below the table\", ~inside)):\n    e = pred_s[sel] - exact_s[sel]\n    print(f\"  {name}: {sel.sum()} states, RMS {np.sqrt(np.mean(e**2)):.4f}, max {np.abs(e).max():.3f}, fraction > 0.1 {np.mean(np.abs(e) > 0.1):.3f}\")\nprint(f\"Maxwellian-pair probability of E < 0.6 at T* = 0.8: {100 * gammainc(1.5, 0.6 / 0.8):.1f}% \"\n      f\"(versus {100 * gammainc(1.5, 0.6 / 1.5):.1f}% at T* = 1.5)\")",
+      "append": true
+    },
+    {
+      "kind": "insert",
+      "id": "oct20-environment",
+      "cell_type": "markdown",
+      "replacement": "### Before running\n\nUse Python 3.12 or 3.13 with the repository constraints (NumPy 2.0–2.2). [Environment setup and evidence terminology](../../docs/STUDENT_EXECUTION_GUIDE.md). A classical baseline may win; that is a valid result. Read the mode printed by each experiment before describing a retained table as your own training run."
+    }
+  ],
+  "notebooks/week11/W11_Cavitation_Cloud_Detection.ipynb": [
+    {
+      "kind": "insert",
+      "id": "oct20-reading-guide",
+      "cell_type": "markdown",
+      "replacement": "## What the detector knows, and what its score means\nA pixel MLP cannot compute spatial derivatives from the velocity of one pixel.\nWhen vorticity, compression, $Q_d$ and swirling strength are inputs, the learned\ndecision already has engineered physical information. Remove rotational inputs\non a new declared split, retrain, select thresholds on validation and report each\ntest case separately. A loss of skill shows dependence on those inputs for this\nmodel and protocol; it is not a theorem about all neural networks. Report an\niteration-limit warning and an optimum at the edge of a threshold grid.\n\nFor noisy velocities, recompute every derivative channel from the noisy fields.\nDo not add noise to $u,v$ while leaving their clean derivatives in the inputs.\nUse pure shear and expansion as negative controls: large gradients are not\nautomatically vortices or compression layers.\n\nReconstruction error and segmentation Dice measure different tasks. Derivatives\namplify small-scale velocity errors. A threshold sweep changes the weak reference\nitself, so derive thresholds on training data and use validation for sensitivity;\ndo not choose the reference that maximizes test Dice.\n\nFor vapor clouds, compare the network with an explicit connectivity rule and\nreport wall false positives separately. Dice calculated after masking solid\npixels does not penalize predictions inside the foil. Agreement with an\nalgorithmic reference is not accuracy against independently labeled cavitation.\nA frame mask is not temporal cloud tracking or a shedding-frequency measurement.\n\nFreezing a decoder does not freeze its input: if its shared encoder changes,\nits predictions can change. Freeze normalization statistics too, or explicitly\nmeasure and control old-task drift before claiming preservation."
+    },
+    {
+      "kind": "insert",
+      "id": "oct20-worked-audit-heading",
+      "cell_type": "markdown",
+      "replacement": "## Worked audit and interpretation\n\nRun these cells after the main lesson. They compute diagnostics from the objects above; they do not replace the frozen scientific protocol. Predict the result before running, then explain any failure using the stated metric and input information.",
+      "append": true
+    },
+    {
+      "kind": "insert",
+      "id": "oct20-audit-26-text",
+      "cell_type": "markdown",
+      "replacement": "### Audit 1: Locate an attached/cloud disagreement in Case24 and inspect its vapor fraction.\n\nState which inputs and reference define this comparison. A failed check is a result to investigate, not permission to select new settings on the test cases.",
+      "append": true
+    },
+    {
+      "kind": "insert",
+      "id": "oct20-audit-26",
+      "cell_type": "code",
+      "replacement": "# Exit item 2: one wrong attached/cloud decision in the displayed nontraining case (Case_24, 2.00 s)\nfrom scipy import ndimage as ndi\nfrom matplotlib.patches import Ellipse\nc24, i24 = cases['Case_24'], 24\np24, r24, a24 = predictions['Case_24'][i24], c24['reference'][i24], c24['alpha'][i24]\nvalid = (r24 != 255) & ~c24['wall']\nnames = {0: 'background', 1: 'attached', 2: 'cloud'}\nconfusion = pd.DataFrame([[int(np.sum(valid & (r24 == r) & (p24 == p))) for p in (0, 1, 2)] for r in (0, 1, 2)],\n                         index=[f'reference {names[r]}' for r in (0, 1, 2)], columns=[f'predicted {names[p]}' for p in (0, 1, 2)])\nprint(f\"Case_24 frame {i24}: t = {c24['times'][i24]:.2f} s (valid pixels only)\")\ndisplay(confusion)\n\nswap = valid & (((p24 == 1) & (r24 == 2)) | ((p24 == 2) & (r24 == 1)))\ncomponents, count = ndi.label(swap, structure=np.ones((3, 3)))\nif count == 0:\n    raise ValueError('No attached/cloud swap exists in this frame; choose a frame using a predeclared rule.')\nlargest = 1 + int(np.argmax(ndi.sum(swap, components, range(1, count + 1))))\nregion = components == largest\nrows_, cols_ = np.nonzero(region)\nx, y = c24['x'], c24['y']\npixel = (x[1] - x[0], y[1] - y[0])\nreference_class, predicted_class = np.bincount(r24[region]).argmax(), np.bincount(p24[region]).argmax()\nraster = raster_baseline(a24, c24['wall'])\nprint(f\"largest attached/cloud swap: {region.sum()} pixels ({region.sum() * pixel[0] * pixel[1] * 1e6:.2f} mm^2), \"\n      f\"centroid x = {x[cols_].mean():.4f} m, y = {y[rows_].mean():.4f} m; reference = {names[reference_class]}, \"\n      f\"network = {names[predicted_class]}; vapor fraction in region {a24[region].min():.2f}-{a24[region].max():.2f}; \"\n      f\"raster baseline agrees with the reference on {100 * np.mean(raster[region] == r24[region]):.0f}% of it\")\nprint(f\"raster spacing: {pixel[0] * 1e3:.3f} mm x {pixel[1] * 1e3:.3f} mm\")\nfor name, c in cases.items():\n    print(f\"  {name}: {len(c['times'])} frames over {c['times'][0]:.2f}-{c['times'][-1]:.2f} s, \"\n          f\"median frame interval {np.median(np.diff(c['times'])):.3f} s\")\n\nfig = comparison_figure(c24, predictions['Case_24'], [i24], 'Case 24 | 2.00 s | marked: wrong attached/cloud decision')\nfor ax in fig.axes[:3]:\n    ax.add_patch(Ellipse((x[cols_].mean(), y[rows_].mean()),\n                         width=max(np.ptp(x[cols_]), 4 * pixel[0]) * 1.8, height=max(np.ptp(y[rows_]), 4 * pixel[1]) * 1.8,\n                         fill=False, ec='lime', lw=2.2))\nplt.show()",
+      "append": true
+    },
+    {
+      "kind": "insert",
+      "id": "oct20-audit-29-text",
+      "cell_type": "markdown",
+      "replacement": "### Audit 2: Compare connectivity and neural masks; include predictions inside the solid wall.\n\nState which inputs and reference define this comparison. A failed check is a result to investigate, not permission to select new settings on the test cases.",
+      "append": true
+    },
+    {
+      "kind": "insert",
+      "id": "oct20-audit-29",
+      "cell_type": "code",
+      "replacement": "# Exit item 3: raster baseline versus neural detector, both classes and wall errors\ncompare_rows = []\nfor name, c in cases.items():\n    raster = np.stack([raster_baseline(a, c['wall']) for a in c['alpha']])\n    neural = predictions[name]\n    m_r, m_n = scores(raster, c['reference']), scores(neural, c['reference'])\n    wall = np.broadcast_to(c['wall'], neural.shape)\n    compare_rows.append({'case': name, 'role': c['role'],\n        'neural attached Dice': m_n['attached_2d']['dice'], 'raster attached Dice': m_r['attached_2d']['dice'],\n        'neural cloud Dice': m_n['disconnected_2d']['dice'], 'raster cloud Dice': m_r['disconnected_2d']['dice'],\n        'neural cloud FP/FN': f\"{m_n['disconnected_2d']['fp']}/{m_n['disconnected_2d']['fn']}\",\n        'raster cloud FP/FN': f\"{m_r['disconnected_2d']['fp']}/{m_r['disconnected_2d']['fn']}\",\n        'neural wall positives': int(((neural > 0) & wall).sum()), 'raster wall positives': int(((raster > 0) & wall).sum())})\ncomparison_table = pd.DataFrame(compare_rows)\ndisplay(comparison_table.round(4))\nprint('total wall positives - neural:', comparison_table['neural wall positives'].sum(),\n      '| raster:', comparison_table['raster wall positives'].sum())",
+      "append": true
+    },
+    {
+      "kind": "insert",
+      "id": "oct20-environment",
+      "cell_type": "markdown",
+      "replacement": "### Before running\n\nUse Python 3.12 or 3.13 with the repository constraints (NumPy 2.0–2.2). This notebook needs CPU PyTorch for its neural cells; use the CPU installation commands in the setup guide. [Environment setup and evidence terminology](../../docs/STUDENT_EXECUTION_GUIDE.md). A classical baseline may win; that is a valid result. Read the mode printed by each experiment before describing a retained table as your own training run."
+    }
+  ],
+  "notebooks/week11/W11_Lab2_Reconstruction_and_Identification.ipynb": [
+    {
+      "kind": "insert",
+      "id": "oct20-reading-guide",
+      "cell_type": "markdown",
+      "replacement": "## What the detector knows, and what its score means\nA pixel MLP cannot compute spatial derivatives from the velocity of one pixel.\nWhen vorticity, compression, $Q_d$ and swirling strength are inputs, the learned\ndecision already has engineered physical information. Remove rotational inputs\non a new declared split, retrain, select thresholds on validation and report each\ntest case separately. A loss of skill shows dependence on those inputs for this\nmodel and protocol; it is not a theorem about all neural networks. Report an\niteration-limit warning and an optimum at the edge of a threshold grid.\n\nFor noisy velocities, recompute every derivative channel from the noisy fields.\nDo not add noise to $u,v$ while leaving their clean derivatives in the inputs.\nUse pure shear and expansion as negative controls: large gradients are not\nautomatically vortices or compression layers.\n\nReconstruction error and segmentation Dice measure different tasks. Derivatives\namplify small-scale velocity errors. A threshold sweep changes the weak reference\nitself, so derive thresholds on training data and use validation for sensitivity;\ndo not choose the reference that maximizes test Dice.\n\nFor vapor clouds, compare the network with an explicit connectivity rule and\nreport wall false positives separately. Dice calculated after masking solid\npixels does not penalize predictions inside the foil. Agreement with an\nalgorithmic reference is not accuracy against independently labeled cavitation.\nA frame mask is not temporal cloud tracking or a shedding-frequency measurement.\n\nFreezing a decoder does not freeze its input: if its shared encoder changes,\nits predictions can change. Freeze normalization statistics too, or explicitly\nmeasure and control old-task drift before claiming preservation."
+    },
+    {
+      "kind": "insert",
+      "id": "oct20-worked-audit-heading",
+      "cell_type": "markdown",
+      "replacement": "## Worked audit and interpretation\n\nRun these cells after the main lesson. They compute diagnostics from the objects above; they do not replace the frozen scientific protocol. Predict the result before running, then explain any failure using the stated metric and input information.",
+      "append": true
+    },
+    {
+      "kind": "insert",
+      "id": "oct20-audit-11-text",
+      "cell_type": "markdown",
+      "replacement": "### Audit 1: Load frozen weights and check that the replay matches the retained run.\n\nState which inputs and reference define this comparison. A failed check is a result to investigate, not permission to select new settings on the test cases.",
+      "append": true
+    },
+    {
+      "kind": "insert",
+      "id": "oct20-audit-11",
+      "cell_type": "code",
+      "replacement": "import numpy as np\nimport torch\n# Retained pipeline functions, reused rather than re-implemented\nimport importlib.util\nspec = importlib.util.spec_from_file_location('w11_reconstruction', ROOT / 'qa/run_week11_reconstruction.py')\nw11 = importlib.util.module_from_spec(spec); spec.loader.exec_module(w11)\n\nraw = {re: torch.tensor(np.stack((d['u'], d['v']), axis=1), dtype=torch.float32) for re, d in cases.items()}\ndx = float(np.diff(cases[90]['x'])[0]); dy = float(np.diff(cases[90]['y'])[0])\nmean_t = torch.tensor(protocol['mean']).view(1, 2, 1, 1); std_t = torch.tensor(protocol['std']).view(1, 2, 1, 1)\nretained_models = {}\nfor seed in protocol['seeds']:\n    # weights-only loading; the stored protocol records torch.__version__, a TorchVersion object\n    with torch.serialization.safe_globals([torch.torch_version.TorchVersion]):\n        checkpoint = torch.load(evidence / f'reconstruction_{seed}.pt', weights_only=True, map_location='cpu')\n    retained_models[seed] = w11.UNet(2); retained_models[seed].load_state_dict(checkpoint['state_dict']); retained_models[seed].eval()\n\ndef reconstructions(re):\n    out = {'interpolation': w11.degrade(raw[re]).numpy()}\n    with torch.no_grad():\n        for seed, model in retained_models.items():\n            out[f'U-Net seed {seed}'] = (model((w11.degrade(raw[re]) - mean_t) / std_t) * std_t + mean_t).numpy()\n    return out\n\nfields = {re: reconstructions(re) for re in (100, 105)}\n# Integrity: the reloaded checkpoints reproduce the retained Re105 scores at the protocol threshold\nreference_105 = w11.diagnostics(raw[105].numpy(), dx, dy)[0] > protocol['swirl_threshold']\nfor seed in protocol['seeds']:\n    replay = w11.mask_scores(w11.diagnostics(fields[105][f'U-Net seed {seed}'], dx, dy)[0] > protocol['swirl_threshold'], reference_105)\n    stored = metrics.query(\"method == 'reconstruction' and seed == @seed\").iloc[0]\n    assert np.isclose(replay['dice'], stored['dice'], atol=1e-6), (seed, replay, stored['dice'])\nprint('Retained reconstruction checkpoints reproduce the stored Re105 Dice for seeds', protocol['seeds'])",
+      "append": true
+    },
+    {
+      "kind": "insert",
+      "id": "oct20-audit-14-text",
+      "cell_type": "markdown",
+      "replacement": "### Audit 2: Compare native and reconstructed divergence on the same interior region.\n\nState which inputs and reference define this comparison. A failed check is a result to investigate, not permission to select new settings on the test cases.",
+      "append": true
+    },
+    {
+      "kind": "insert",
+      "id": "oct20-audit-14",
+      "cell_type": "code",
+      "replacement": "# Q2: divergence of the native ROI field itself, and of the two reconstructions\nrows = []\nfor name, a in (('native LBM Re105', raw[105].numpy()), ('interpolation', fields[105]['interpolation']),\n                ('U-Net seed 17', fields[105]['U-Net seed 17'])):\n    _, w, div = w11.diagnostics(a, dx, dy)\n    roi = (Ellipsis, slice(2, -2), slice(2, -2))\n    rows.append({'field': name, 'divergence RMS': float(np.sqrt(np.mean(div[roi]**2))),\n                 'vorticity RMS': float(np.sqrt(np.mean(w[roi]**2))),\n                 'divergence / vorticity RMS': float(np.sqrt(np.mean(div[roi]**2)) / np.sqrt(np.mean(w[roi]**2)))})\ndisplay(pd.DataFrame(rows).round(4))",
+      "append": true
+    },
+    {
+      "kind": "insert",
+      "id": "oct20-audit-17-text",
+      "cell_type": "markdown",
+      "replacement": "### Audit 3: Derive diagnostic thresholds from training only and inspect validation sensitivity.\n\nState which inputs and reference define this comparison. A failed check is a result to investigate, not permission to select new settings on the test cases.",
+      "append": true
+    },
+    {
+      "kind": "insert",
+      "id": "oct20-audit-17",
+      "cell_type": "code",
+      "replacement": "# Q3, step 1: thresholds from TRAINING swirl only (Re90 + Re110, interior ROI); scores on Re100 (validation) only\ntrain_swirl = w11.diagnostics(torch.cat((raw[90], raw[110])).numpy(), dx, dy)[0][..., 2:-2, 2:-2]\npercentiles = (80, 85, 90, 95)\nthresholds = {q: float(np.quantile(train_swirl, q / 100)) for q in percentiles}\nassert np.isclose(thresholds[90], protocol['swirl_threshold'])\n\ndef sweep(re):\n    rows = []\n    truth = w11.diagnostics(raw[re].numpy(), dx, dy)[0]\n    for q, cut in thresholds.items():\n        reference = truth > cut\n        for name, a in fields[re].items():\n            s = w11.mask_scores(w11.diagnostics(a, dx, dy)[0] > cut, reference)\n            rows.append({'percentile': q, 'threshold': cut, 'method': 'U-Net (3 seeds)' if name.startswith('U-Net') else name,\n                         'dice': s['dice'], 'iou': s['iou'], 'reference fraction': float(reference[..., 2:-2, 2:-2].mean())})\n    table = pd.DataFrame(rows).groupby(['percentile', 'threshold', 'reference fraction', 'method'])[['dice', 'iou']].agg(['mean', 'std'])\n    return table\n\nvalidation_sweep = sweep(100)\ndisplay(validation_sweep.round(4))\ngap = validation_sweep[('dice', 'mean')].unstack('method')\ngap['U-Net minus interpolation'] = gap['U-Net (3 seeds)'] - gap['interpolation']\ndisplay(gap.round(4))",
+      "append": true
+    },
+    {
+      "kind": "insert",
+      "id": "oct20-audit-19-text",
+      "cell_type": "markdown",
+      "replacement": "### Audit 4: Evaluate the frozen threshold sweep on the historical regression case.\n\nState which inputs and reference define this comparison. A failed check is a result to investigate, not permission to select new settings on the test cases.",
+      "append": true
+    },
+    {
+      "kind": "insert",
+      "id": "oct20-audit-19",
+      "cell_type": "code",
+      "replacement": "# Q3, step 2: the frozen claim, evaluated once on Re105 with the same four thresholds\ntest_sweep = sweep(105)\ndisplay(test_sweep.round(4))\ntest_gap = test_sweep[('dice', 'mean')].unstack('method')\ntest_gap['U-Net minus interpolation'] = test_gap['U-Net (3 seeds)'] - test_gap['interpolation']\ndisplay(test_gap.round(4))\nprint('Frozen claim holds at every threshold:', bool((test_gap['U-Net minus interpolation'] > 0).all()))",
+      "append": true
+    },
+    {
+      "kind": "insert",
+      "id": "oct20-environment",
+      "cell_type": "markdown",
+      "replacement": "### Before running\n\nUse Python 3.12 or 3.13 with the repository constraints (NumPy 2.0–2.2). This notebook needs CPU PyTorch for its neural cells; use the CPU installation commands in the setup guide. [Environment setup and evidence terminology](../../docs/STUDENT_EXECUTION_GUIDE.md). A classical baseline may win; that is a valid result. Read the mode printed by each experiment before describing a retained table as your own training run."
+    }
+  ],
+  "notebooks/week11/W11_Shock_Vortex_Identification.ipynb": [
+    {
+      "kind": "insert",
+      "id": "oct20-reading-guide",
+      "cell_type": "markdown",
+      "replacement": "## What the detector knows, and what its score means\nA pixel MLP cannot compute spatial derivatives from the velocity of one pixel.\nWhen vorticity, compression, $Q_d$ and swirling strength are inputs, the learned\ndecision already has engineered physical information. Remove rotational inputs\non a new declared split, retrain, select thresholds on validation and report each\ntest case separately. A loss of skill shows dependence on those inputs for this\nmodel and protocol; it is not a theorem about all neural networks. Report an\niteration-limit warning and an optimum at the edge of a threshold grid.\n\nFor noisy velocities, recompute every derivative channel from the noisy fields.\nDo not add noise to $u,v$ while leaving their clean derivatives in the inputs.\nUse pure shear and expansion as negative controls: large gradients are not\nautomatically vortices or compression layers.\n\nReconstruction error and segmentation Dice measure different tasks. Derivatives\namplify small-scale velocity errors. A threshold sweep changes the weak reference\nitself, so derive thresholds on training data and use validation for sensitivity;\ndo not choose the reference that maximizes test Dice.\n\nFor vapor clouds, compare the network with an explicit connectivity rule and\nreport wall false positives separately. Dice calculated after masking solid\npixels does not penalize predictions inside the foil. Agreement with an\nalgorithmic reference is not accuracy against independently labeled cavitation.\nA frame mask is not temporal cloud tracking or a shedding-frequency measurement.\n\nFreezing a decoder does not freeze its input: if its shared encoder changes,\nits predictions can change. Freeze normalization statistics too, or explicitly\nmeasure and control old-task drift before claiming preservation."
+    },
+    {
+      "kind": "insert",
+      "id": "oct20-worked-audit-heading",
+      "cell_type": "markdown",
+      "replacement": "## Worked audit and interpretation\n\nRun these cells after the main lesson. They compute diagnostics from the objects above; they do not replace the frozen scientific protocol. Predict the result before running, then explain any failure using the stated metric and input information.",
+      "append": true
+    },
+    {
+      "kind": "insert",
+      "id": "oct20-audit-15-text",
+      "cell_type": "markdown",
+      "replacement": "### Audit 1: Define matched evaluation and recompute derivative features from primitive fields.\n\nState which inputs and reference define this comparison. A failed check is a result to investigate, not permission to select new settings on the test cases.",
+      "append": true
+    },
+    {
+      "kind": "insert",
+      "id": "oct20-audit-15",
+      "cell_type": "code",
+      "replacement": "from scipy.ndimage import label as connected_components\n\ndef case_from_fields(x, u, v, p, labels):\n    \"\"\"Recompute every derivative channel from (possibly noisy) primitive fields, exactly as manufactured_case does.\"\"\"\n    h = x[1] - x[0]\n    d = diagnostics(u, v, h, h)\n    py, px = np.gradient(p, h, h, edge_order=2)\n    features = np.stack([u, v, p, d['compression'], d['omega'], d['qd'], d['swirl'], np.hypot(px, py)], axis=-1)\n    return dict(x=x, u=u, v=v, p=p, features=features, labels=labels, **d)\n\ndef evaluate(cases, ids, score_fn, thresholds, method):\n    rows = []\n    for seed, c in zip(ids, cases):\n        pred = score_fn(c) >= thresholds\n        for k, task in enumerate(['compression layer', 'vortex core']):\n            rows.append({'case': seed, 'method': method, 'task': task,\n                         'Dice': dice(c['labels'][..., k], pred[..., k]),\n                         'flagged fraction': float(pred[..., k].mean()),\n                         'components': connected_components(pred[..., k], structure=np.ones((3, 3)))[1]})\n    return rows",
+      "append": true
+    },
+    {
+      "kind": "insert",
+      "id": "oct20-audit-17-text",
+      "cell_type": "markdown",
+      "replacement": "### Audit 2: Keep models frozen while adding velocity noise and recomputing all derivatives.\n\nState which inputs and reference define this comparison. A failed check is a result to investigate, not permission to select new settings on the test cases.",
+      "append": true
+    },
+    {
+      "kind": "insert",
+      "id": "oct20-audit-17",
+      "cell_type": "code",
+      "replacement": "# Assignment 1: noise on the velocities, then every derivative channel recomputed (frozen models and thresholds)\nnoise_rows = []\nvelocity_scale = np.std(np.concatenate([np.hypot(c['u'], c['v']).ravel() for c in data['train']]))\nfor level in (0.0, 0.01, 0.03, 0.10):\n    rng = np.random.default_rng(2026)\n    noisy = []\n    for c in data['test']:\n        sigma = level * velocity_scale\n        noisy.append(case_from_fields(c['x'], c['u'] + sigma * rng.standard_normal(c['u'].shape),\n                                      c['v'] + sigma * rng.standard_normal(c['v'].shape), c['p'], c['labels']))\n    for row in (evaluate(noisy, split['test'], physical_scores, physical_threshold, 'physical')\n                + evaluate(noisy, split['test'], scores, neural_threshold, 'MLP')):\n        noise_rows.append({'noise (% of velocity std)': 100 * level, **row})\nnoise_table = pd.DataFrame(noise_rows)\nprint(f\"velocity scale (std of |u| over training cases): {velocity_scale:.3f}\")\ndisplay(noise_table.pivot_table(index=['noise (% of velocity std)', 'method'], columns=['task', 'case'],\n                                values='Dice').round(3))\ndisplay(noise_table.pivot_table(index=['noise (% of velocity std)', 'method'], columns='task',\n                                values='components', aggfunc='max'))",
+      "append": true
+    },
+    {
+      "kind": "insert",
+      "id": "oct20-audit-20-text",
+      "cell_type": "markdown",
+      "replacement": "### Audit 3: Retrain on a disjoint split with and without rotational inputs.\n\nState which inputs and reference define this comparison. A failed check is a result to investigate, not permission to select new settings on the test cases.",
+      "append": true
+    },
+    {
+      "kind": "insert",
+      "id": "oct20-audit-20",
+      "cell_type": "code",
+      "replacement": "# Assignment 2: new, never-used case IDs; rotational channels (omega, Q_d, swirl) removed\nimport warnings\nfrom sklearn.exceptions import ConvergenceWarning\nnew_split = {'train': list(range(60, 68)), 'validation': [70, 71], 'test': [80, 81]}\nassert not set(sum(new_split.values(), [])) & set(sum(split.values(), []))\nnew_data = {k: [manufactured_case(i) for i in ids] for k, ids in new_split.items()}\nchannel_names = ['u', 'v', 'p', 'compression', 'omega', 'Q_d', 'swirl', '|grad p|']\nkeep = {'all eight channels': list(range(8)), 'no rotational channels': [0, 1, 2, 3, 7]}\n\ndef fit_channels(columns):\n    f = np.concatenate([c['features'].reshape(-1, 8)[::3][:, columns] for c in new_data['train']])\n    y = np.concatenate([c['labels'].reshape(-1, 2)[::3] for c in new_data['train']])\n    m = make_pipeline(StandardScaler(), MLPClassifier(hidden_layer_sizes=(32, 24), activation='tanh',\n                      solver='adam', max_iter=180, random_state=11, early_stopping=False))\n    with threadpool_limits(limits=1), warnings.catch_warnings():\n        warnings.simplefilter('always', ConvergenceWarning)\n        m.fit(f, y)\n    print(f\"  Adam stopped after {m[-1].n_iter_} of 180 iterations, training loss {m[-1].loss_:.4f}\")\n    return lambda c: m.predict_proba(c['features'].reshape(-1, 8)[:, columns]).reshape(*c['p'].shape, 2)\n\nablation_rows = []\nfor name, columns in keep.items():\n    print(name)\n    score_fn = fit_channels(columns)\n    thresholds = choose_thresholds(new_data['validation'], [score_fn(c) for c in new_data['validation']],\n                                   np.linspace(.1, .9, 9))\n    print(f\"  inputs {[channel_names[i] for i in columns]}, validation thresholds {thresholds}\")\n    ablation_rows += evaluate(new_data['test'], new_split['test'], score_fn, thresholds, f'MLP, {name}')\nnew_physical = choose_thresholds(new_data['validation'], [physical_scores(c) for c in new_data['validation']],\n                                 np.linspace(.2, 5, 25))\nablation_rows += evaluate(new_data['test'], new_split['test'], physical_scores, new_physical, 'physical')\nablation = pd.DataFrame(ablation_rows)\ndisplay(ablation.pivot_table(index='method', columns=['task', 'case'], values='Dice').round(3))",
+      "append": true
+    },
+    {
+      "kind": "insert",
+      "id": "oct20-audit-23-text",
+      "cell_type": "markdown",
+      "replacement": "### Audit 4: Check pure shear and expansion without positive target labels.\n\nState which inputs and reference define this comparison. A failed check is a result to investigate, not permission to select new settings on the test cases.",
+      "append": true
+    },
+    {
+      "kind": "insert",
+      "id": "oct20-audit-23",
+      "cell_type": "code",
+      "replacement": "# Assignment 3: held-out controls with no compression layer and no vortex core (all labels False)\nxc = data['test'][0]['x']\nXC, YC = np.meshgrid(xc, xc)\nempty = np.zeros(XC.shape + (2,), bool)\ncontrols_eval = {\n    # thin shear layer: |omega| up to 6, the size of a core's vorticity, but lambda_ci = 0\n    'pure shear layer': case_from_fields(xc, 1 + .25 * YC + .3 * np.tanh(YC / .05), 0 * XC, 1 + 0 * XC, empty),\n    # mirror image of the compression layer: the flow accelerates and the pressure falls (div > 0)\n    'expansion layer': case_from_fields(xc, 1 + .35 * np.tanh(XC / .07), 0 * XC, 1.7 - .35 * (1 + np.tanh(XC / .07)), empty),\n}\ncontrol_eval_rows = []\nfor name, c in controls_eval.items():\n    print(f\"{name}: max |omega| = {np.abs(c['omega']).max():.2f}, max swirl = {c['swirl'].max():.2f}, \"\n          f\"max divergence = {c['div'].max():.2f}, max compression = {c['compression'].max():.2f}\")\n    for method, score_fn, thresholds in (('physical', physical_scores, physical_threshold),\n                                         ('MLP', scores, neural_threshold)):\n        pred = score_fn(c) >= thresholds\n        control_eval_rows.append({'control': name, 'method': method,\n                                  'false-positive layer fraction': float(pred[..., 0].mean()),\n                                  'false-positive core fraction': float(pred[..., 1].mean())})\ndisplay(pd.DataFrame(control_eval_rows).round(4))",
+      "append": true
+    },
+    {
+      "kind": "insert",
+      "id": "oct20-environment",
+      "cell_type": "markdown",
+      "replacement": "### Before running\n\nUse Python 3.12 or 3.13 with the repository constraints (NumPy 2.0–2.2). This notebook needs CPU PyTorch for its neural cells; use the CPU installation commands in the setup guide. [Environment setup and evidence terminology](../../docs/STUDENT_EXECUTION_GUIDE.md). A classical baseline may win; that is a valid result. Read the mode printed by each experiment before describing a retained table as your own training run."
     }
   ]
 }

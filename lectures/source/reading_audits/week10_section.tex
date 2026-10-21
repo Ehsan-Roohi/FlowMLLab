@@ -1,0 +1,18 @@
+\section*{Trace every figure to the run that produced it}
+Retained author figures document a fixed experiment. Newly regenerated figures
+must be displayed from the fresh output directory, next to that run's metrics.
+The default cavity reproduction interpolates fields in log Knudsen number; it
+does not retrain the article's per-Knudsen MLPs.
+
+For two training Knudsen numbers $Kn_a,Kn_b$, the interpolation weight is
+
+\[w=\frac{\log Kn-\log Kn_a}{\log Kn_b-\log Kn_a},\qquad
+q=(1-w)q_a+wq_b.\]
+
+$q$ is a field and $w$ is dimensionless. This is interpolation for $0\le w\le1$;
+outside that interval it is extrapolation. Verify the weight by substitution.
+For error $\|q-\hat q\|_2/S$, state the scale $S$. A velocity-component error
+normalized by the lid speed can look small while its component-relative error
+is large. Neither normalization may be silently substituted for the other.
+Also inspect heat flux, stress and translational-temperature overshoot: matching
+density alone does not validate nonequilibrium shock structure.

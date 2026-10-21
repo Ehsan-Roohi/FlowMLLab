@@ -1,0 +1,12 @@
+\section*{Identify the model you actually run}
+The default trained classroom model is a coordinate MLP, not a branch/trunk
+DeepONet. An MLP maps a finite vector to outputs. A DeepONet combines a branch
+encoding an input function sampled at fixed sensors with a trunk encoding query
+coordinates. The optional topology demonstration is separate and may be skipped.
+
+A classical interpolation baseline may win; reporting that is a correct result.
+Locate errors by physical region as well as globally: shock layer, near-wall
+region and wake. Quote the region mask and normalization. Similar training and
+validation errors suggest limited fit capacity or budget, but do not identify a
+unique cause. Neither a favorable error nor a topology diagram proves operator
+generalization to a new family of input functions.

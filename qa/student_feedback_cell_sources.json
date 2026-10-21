@@ -1,0 +1,141 @@
+{
+  "source": "Aryan Mohta submission, 20 October 2026; accepted code adapted and reviewed",
+  "cells": [
+    {
+      "notebook": "notebooks/week10/W10_DSMC_Data_Driven_Surrogates_Student.ipynb",
+      "submitted_cell_index": 24,
+      "source_sha256": "f78d7583e6bb709057efc92597749130cf8849fe95fc2dec0d7755d50dcd6b9f"
+    },
+    {
+      "notebook": "notebooks/week10/W10_DSMC_Data_Driven_Surrogates_Student.ipynb",
+      "submitted_cell_index": 26,
+      "source_sha256": "bd913572ddcc6d4c801d80ec59010f34cc387d2f3fc512d3da36996727aedb38"
+    },
+    {
+      "notebook": "notebooks/week10/W10_DSMC_Data_Driven_Surrogates_Student.ipynb",
+      "submitted_cell_index": 29,
+      "source_sha256": "d5e8b30ed37129c43c802b0b89a3f51bcc50d50140f8e38060e91f060492b0e2"
+    },
+    {
+      "notebook": "notebooks/week10/W10_DSMC_Data_Driven_Surrogates_Student.ipynb",
+      "submitted_cell_index": 32,
+      "source_sha256": "05c9fc8b2fff64f31522abe2ebe5f28cbcc0e9ecd4ed482f3971a5cdebc243e2"
+    },
+    {
+      "notebook": "notebooks/week10_1/W10_1_Collision_Map_Surrogate_Audit.ipynb",
+      "submitted_cell_index": 14,
+      "source_sha256": "b394ed73f6f03a089b9a9747969ac02c23c5b9034f1d6afa6f4e1a4824cd2037"
+    },
+    {
+      "notebook": "notebooks/week10_1/W10_1_Collision_Map_Surrogate_Audit.ipynb",
+      "submitted_cell_index": 17,
+      "source_sha256": "92dfebc1cd673f658ab6dcd53cedf4fdd95f1637c0c6ced2fbf7693de979832a"
+    },
+    {
+      "notebook": "notebooks/week10_1/W10_1_Collision_Map_Surrogate_Audit.ipynb",
+      "submitted_cell_index": 20,
+      "source_sha256": "bf23a302cdefd7cf7a16638b2093444282e8ff36c43d4d7191e28e8a01c45727"
+    },
+    {
+      "notebook": "notebooks/week11/W11_Shock_Vortex_Identification.ipynb",
+      "submitted_cell_index": 15,
+      "source_sha256": "220ea568f48bb5e7b88348d923cbfdd519c422c8d4bbf6eed3a868c2b4d753a9"
+    },
+    {
+      "notebook": "notebooks/week11/W11_Shock_Vortex_Identification.ipynb",
+      "submitted_cell_index": 17,
+      "source_sha256": "99c4e869ab26145387de7dbde27931bf44b1a11f409566d66d55731b56ea1ea3"
+    },
+    {
+      "notebook": "notebooks/week11/W11_Shock_Vortex_Identification.ipynb",
+      "submitted_cell_index": 20,
+      "source_sha256": "a176f14d4941af030b68c3b1527c94dfd6a130599e964b6955199d06a524d0f3"
+    },
+    {
+      "notebook": "notebooks/week11/W11_Shock_Vortex_Identification.ipynb",
+      "submitted_cell_index": 23,
+      "source_sha256": "ca3cf8f3a3ebd552c0ec801ed8532b9967b91508afca4d3e0004896dd4e46688"
+    },
+    {
+      "notebook": "notebooks/week11/W11_Lab2_Reconstruction_and_Identification.ipynb",
+      "submitted_cell_index": 11,
+      "source_sha256": "93f7325b7ca0cf0c62944e2e87929f12b0ae38acfc94b98e2ec872d10648b665"
+    },
+    {
+      "notebook": "notebooks/week11/W11_Lab2_Reconstruction_and_Identification.ipynb",
+      "submitted_cell_index": 14,
+      "source_sha256": "eb7e2b4680b30b3a2bf2dc0e17a839a71935ec4a6ca36c8dafdd4c531af354cd"
+    },
+    {
+      "notebook": "notebooks/week11/W11_Lab2_Reconstruction_and_Identification.ipynb",
+      "submitted_cell_index": 17,
+      "source_sha256": "fbf719069c5161b96667d4078121ecc7e205aa2438437dcc1d8166918303d212"
+    },
+    {
+      "notebook": "notebooks/week11/W11_Lab2_Reconstruction_and_Identification.ipynb",
+      "submitted_cell_index": 19,
+      "source_sha256": "1d88c679a091bbc0d047dd95ee3fbfe1e68f78aa584f74adb72834077f8a631f"
+    },
+    {
+      "notebook": "notebooks/week11/W11_Cavitation_Cloud_Detection.ipynb",
+      "submitted_cell_index": 26,
+      "source_sha256": "a20eaed6a227246bbcc5dad85645cfc08f89b99862f6f5005fabc94765145da2"
+    },
+    {
+      "notebook": "notebooks/week11/W11_Cavitation_Cloud_Detection.ipynb",
+      "submitted_cell_index": 29,
+      "source_sha256": "6f674a275b36b480a0bf05ccd51d9e066447d95a391d2a41bc8d64ab09ab1a05"
+    },
+    {
+      "notebook": "notebooks/week09/W9_Lab1_Microstep_Zonal_DeepONet_Student.ipynb",
+      "submitted_cell_index": 26,
+      "source_sha256": "1aa168dccdd1b7a4df34cea5ac551094f9c8f5337e28ea38c9b9d49893467187"
+    },
+    {
+      "notebook": "notebooks/week09/W9_Lab1_Microstep_Zonal_DeepONet_Student.ipynb",
+      "submitted_cell_index": 29,
+      "source_sha256": "02b112d470c413358586395bdc88abfc4779d4bc271ed3c9ec512fee0c7e1b9c"
+    },
+    {
+      "notebook": "notebooks/week09/W9_Lab1_Microstep_Zonal_DeepONet_Student.ipynb",
+      "submitted_cell_index": 32,
+      "source_sha256": "fe7bbf4a25e8fe743b609062dac83871977085d78e1afdbc236c4b8a4f2a842c"
+    },
+    {
+      "notebook": "notebooks/week09/W9_Lab1_Microstep_Zonal_DeepONet_Student.ipynb",
+      "submitted_cell_index": 41,
+      "source_sha256": "5cba7ae813b88240295cd0f7711e5333629043b4280ba7054351d5347da6e65a"
+    },
+    {
+      "notebook": "notebooks/week09/W9_Lab2_Shock_Aligned_Nozzle_DeepONet_Student.ipynb",
+      "submitted_cell_index": 30,
+      "source_sha256": "9af203cd06b05539e7e44188a077396c1776f13366cb74160bf5e1156c3950bb"
+    },
+    {
+      "notebook": "notebooks/week09/W9_Lab2_Shock_Aligned_Nozzle_DeepONet_Student.ipynb",
+      "submitted_cell_index": 33,
+      "source_sha256": "1e81de1f1c4108440a7989e3752989ed931c92de0179459afba29d1c364cb722"
+    },
+    {
+      "notebook": "notebooks/week09/W9_Lab2_Shock_Aligned_Nozzle_DeepONet_Student.ipynb",
+      "submitted_cell_index": 35,
+      "source_sha256": "0217dddc4bb2d9aa5b19348d8755dde505571a0811d501cbbb7190a0c1a8d918"
+    },
+    {
+      "notebook": "notebooks/week09/W9_Lab2_Shock_Aligned_Nozzle_DeepONet_Student.ipynb",
+      "submitted_cell_index": 37,
+      "source_sha256": "a5334ab923959b9041c7da497732e14cdb2d8f2b2f420ec77945a5cd46e3bf0a"
+    },
+    {
+      "notebook": "notebooks/week09/W9_Lab3_Nozzle_Data_Alignment_Audit.ipynb",
+      "submitted_cell_index": 5,
+      "source_sha256": "7242291ae31940f95bcb2dfa056f1fbbc8a7a6140704af8aca6602c9037f780e"
+    },
+    {
+      "notebook": "notebooks/week08/W8_Lab1_Exact_Gas_Dynamics_Student.ipynb",
+      "submitted_cell_index": 10,
+      "source_sha256": "a9596ad9fbc25aa7178d00d09ef91d3a709ede9ee9a345d8f7fba1e12d7157ba"
+    }
+  ],
+  "excluded": "Network re-downloads, inconsistent DeepONet result prose and unverified causal conclusions. Submitted outputs are never imported."
+}

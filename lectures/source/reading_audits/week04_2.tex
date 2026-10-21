@@ -1,0 +1,31 @@
+\documentclass[11pt]{article}
+\usepackage[a4paper,margin=23mm]{geometry}
+\usepackage{amsmath,amssymb,xcolor,hyperref,fancyhdr}
+\usepackage{fontspec}
+\setmainfont{Times New Roman}
+\setmonofont{Times New Roman}
+\usepackage[italic]{mathastext}
+\setlength{\emergencystretch}{3em}
+\setlength{\parskip}{7pt}\setlength{\parindent}{0pt}
+\pagestyle{fancy}\fancyhf{}\setlength{\headheight}{14pt}
+\lhead{FlowMLLab}\rhead{Reading and experiment guide}\cfoot{\thepage}
+\begin{document}
+\noindent\textbf{Week 4.2 | Reading the evidence}\par\medskip\hrule\medskip
+\section*{Separate surrogate error from changing the CFD labels}
+The low-fidelity Stokes field omits convection; the learned correction estimates
+what must be added to approximate Navier\textendash{}Stokes on the specified grid. The
+surrogate-to-label error and the coarse-to-fine CFD difference answer different
+questions. A 0.1\% surrogate error against a coarse field can coexist with a 20\%
+change in that field under refinement.
+
+Pressure is reconstructed from momentum gradients with an aligned gauge. The
+reported gradient residual measures compatibility of that reconstruction with
+the supplied gradients; it is not a direct pressure-error norm and need not rank
+models in the same order. Read velocity, pressure and compatibility together.
+Optional retraining writes a new student directory. The retained figures remain
+historical evidence; they do not become figures of your new fit.
+\paragraph{Check your understanding.}
+Identify the input information, the reference, the metric denominator and the
+evaluation split in one worked notebook comparison. Predict which conclusion
+would change if any one of those four changed, then check your prediction.
+\end{document}

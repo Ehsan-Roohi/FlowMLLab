@@ -1,0 +1,12 @@
+\section*{Read an error budget before a speedup}
+A POD mode is a spatial pattern; its coefficient changes with time. Capturing
+99.9\% of snapshot energy limits a projection error on those snapshots, not the
+future trajectory error of a Galerkin model. Closure error, DEIM approximation,
+time integration and parameter transfer can still dominate. A reduced solver
+that reconstructs the full field every step can be slower than its full model.
+
+Compare the ROM with the CFD solution on the same grid first, then separately
+compare that CFD grid with a finer one and with Ghia centerlines. A small ROM
+error cannot remove a coarse-label error. Treat retained timing ratios as
+machine-specific observations, not a speedup students must reproduce. A failed
+physical comparison remains a failed comparison even if an ML metric is small.

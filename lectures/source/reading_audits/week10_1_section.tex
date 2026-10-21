@@ -1,0 +1,19 @@
+\section*{Collision-map errors and the low-temperature sampling domain}
+This executable lesson learns a Lennard\textendash{}Jones deflection map; it does not run a
+learned collision kernel inside a DSMC flow simulation. Impact parameter $b$ and
+relative energy $E$ determine deflection angle $\chi$. The surrogate predicts
+$\cos\chi$, so inspect its largest local errors near orbiting and glory features,
+not only a thermal average.
+
+An optimizer stopping at its iteration budget is not a convergence certificate.
+Record the warning, iteration count, seed and library versions. Reproducing a
+retained decimal is not a reason to tune on final energies.
+
+The transport audit samples a Maxwellian relative-energy distribution and drops
+states outside the tabulated interval. Report the number and fraction dropped
+at every temperature, separately below and above the table. At low temperature,
+a larger omitted low-energy mass can make a truncated integral look artificially
+accurate when reference and surrogate omit the same region. Compare the two on
+the same stated interval, then assess the omitted contribution separately.
+Diffusion and viscosity weight scattering differently; a single small integrated
+error cannot bound both cross sections at every energy.

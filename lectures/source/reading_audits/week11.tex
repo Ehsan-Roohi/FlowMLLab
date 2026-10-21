@@ -1,0 +1,46 @@
+\documentclass[11pt]{article}
+\usepackage[a4paper,margin=23mm]{geometry}
+\usepackage{amsmath,amssymb,xcolor,hyperref,fancyhdr}
+\usepackage{fontspec}
+\setmainfont{Times New Roman}
+\setmonofont{Times New Roman}
+\usepackage[italic]{mathastext}
+\setlength{\emergencystretch}{3em}
+\setlength{\parskip}{7pt}\setlength{\parindent}{0pt}
+\pagestyle{fancy}\fancyhf{}\setlength{\headheight}{14pt}
+\lhead{FlowMLLab}\rhead{Reading and experiment guide}\cfoot{\thepage}
+\begin{document}
+\noindent\textbf{Week 11 | Reading the evidence}\par\medskip\hrule\medskip
+\section*{What the detector knows, and what its score means}
+A pixel MLP cannot compute spatial derivatives from the velocity of one pixel.
+When vorticity, compression, $Q_d$ and swirling strength are inputs, the learned
+decision already has engineered physical information. Remove rotational inputs
+on a new declared split, retrain, select thresholds on validation and report each
+test case separately. A loss of skill shows dependence on those inputs for this
+model and protocol; it is not a theorem about all neural networks. Report an
+iteration-limit warning and an optimum at the edge of a threshold grid.
+
+For noisy velocities, recompute every derivative channel from the noisy fields.
+Do not add noise to $u,v$ while leaving their clean derivatives in the inputs.
+Use pure shear and expansion as negative controls: large gradients are not
+automatically vortices or compression layers.
+
+Reconstruction error and segmentation Dice measure different tasks. Derivatives
+amplify small-scale velocity errors. A threshold sweep changes the weak reference
+itself, so derive thresholds on training data and use validation for sensitivity;
+do not choose the reference that maximizes test Dice.
+
+For vapor clouds, compare the network with an explicit connectivity rule and
+report wall false positives separately. Dice calculated after masking solid
+pixels does not penalize predictions inside the foil. Agreement with an
+algorithmic reference is not accuracy against independently labeled cavitation.
+A frame mask is not temporal cloud tracking or a shedding-frequency measurement.
+
+Freezing a decoder does not freeze its input: if its shared encoder changes,
+its predictions can change. Freeze normalization statistics too, or explicitly
+measure and control old-task drift before claiming preservation.
+\paragraph{Check your understanding.}
+Identify the input information, the reference, the metric denominator and the
+evaluation split in one worked notebook comparison. Predict which conclusion
+would change if any one of those four changed, then check your prediction.
+\end{document}
