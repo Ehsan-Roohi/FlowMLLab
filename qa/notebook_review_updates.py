@@ -8,9 +8,9 @@ from pathlib import Path
 import hashlib
 import json
 try:
-    from .notebook_math import normalize_notebook
+    from .notebook_math import normalize_notebook, normalize_markdown
 except ImportError:
-    from notebook_math import normalize_notebook
+    from notebook_math import normalize_notebook, normalize_markdown
 
 ROOT = Path(__file__).resolve().parents[1]
 PATCH_FILE = Path(__file__).with_name('notebook_review_patches.json')
@@ -23,11 +23,16 @@ def review_notebook_file(path):
     nb = json.loads(path.read_text(encoding='utf-8'))
     def source(cell):
         return ''.join(cell['source']).strip()
+    def equivalent(cell, text):
+        actual = source(cell)
+        if cell['cell_type'] == 'markdown':
+            return normalize_markdown(actual) == normalize_markdown(text.strip())
+        return actual == text.strip()
     for patch in patches:
         replacement = patch['replacement'].strip()
         if patch['kind'] == 'replace':
-            matches = [c for c in nb['cells'] if source(c) == patch['match'].strip()]
-            if not matches and any(source(c) == replacement for c in nb['cells']):
+            matches = [c for c in nb['cells'] if equivalent(c, patch['match'])]
+            if not matches and any(equivalent(c, replacement) for c in nb['cells']):
                 continue
             if len(matches) != 1:
                 raise ValueError(f'{key}: expected one source match, found {len(matches)}: {patch["match"][:80]}')

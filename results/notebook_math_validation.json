@@ -5,5 +5,14 @@
   "code_cells_and_outputs_preserved": true,
   "math_and_prose_tokens_preserved": true,
   "normalization_idempotent": true,
-  "scope": "Only Markdown delimiter/layout repair; no solver or model changes and no new scientific runs."
+  "scope": "Only Markdown delimiter/layout repair; no solver or model changes and no new scientific runs.",
+  "baseline_revision": "ba7c0dc0d2a423b23d29f487ad9717766e53068d",
+  "colab_visual_check": {
+    "revision": "08dc4dd16f8c460f46a953123c14f21ec6ba698d",
+    "notebook": "notebooks/week01_2/W1_2_Cavity_Pressure_Velocity.ipynb",
+    "matrix_and_fractions_rendered": true,
+    "previously_broken_streamfunction_equations_rendered": true,
+    "math_renderer_errors": 0,
+    "hosted_runtime_execution": false
+  }
 }
