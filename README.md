@@ -29,24 +29,6 @@ Reading retained evidence, executing a compact teaching model and regenerating t
 full scientific protocol are different operations. The setup guide labels their
 requirements; a Colab link alone does not certify hosted execution.
 
-## Weeks 17–22 — Transformers and language modeling
-
-Six CPU laboratories connect Q/K/V attention and a small next-character language
-model to sensor reconstruction, autonomous wake prediction and transfer audits.
-Each week has four coding exercises, an executed student notebook, separate
-instructor solutions and a lecture. Current PDF page counts are listed in the
-[lecture inventory](docs/COURSE_INVENTORY.md#lecture-files).
-
-[17 · Attention](weeks/week17/README.md) · [18 · Language modeling](weeks/week18/README.md) · [19 · Sensors and tokens](weeks/week19/README.md) · [20 · Missing observations](weeks/week20/README.md) · [21 · Autonomous prediction](weeks/week21/README.md) · [22 · Transfer audits](weeks/week22/README.md)
-
-![Week 17 contour preview: CFD velocity reference with sixteen sensors, SensorSet prediction and absolute reconstruction error](docs/assets/transformer-contours/week17.png)
-
-*From sparse sensors to a flow field: the retained CFD reference, SensorSet prediction and spatial error at one fixed Re105 snapshot. Field panels share a color scale; the error has its own scale.*
-
-[Contour sources and reproduction](docs/assets/transformer-contours/README.md)
-
-[Setup and prerequisites](docs/TRANSFORMER_COURSE.md) · [Six figures and experiments](#transformer-labs) · [Review corrections and validation](docs/TRANSFORMER_SECOND_REVIEW_RESPONSE.md) · [Version 1.10.0 changes](RELEASE_NOTES_v1.10.0.md). Interactive Colab and student workload acceptance remain open. Release assets and archival status are linked below.
-
 ## Start here
 
 **Research provenance:** the article-linked DSMC cases were produced in earlier
@@ -736,6 +718,24 @@ The exercise distinguishes numerical verification, surrogate prediction error an
 [Executed notebook and assignment](notebooks/week16/README.md) · [Lecture](lectures/week16_supersonic_shape_optimization.pdf) · [Numerical evidence](results/week16_lowboom/README.md)
 
 The finest Taylor–Maccoll cone pressure error is 1.16%. Atmospheric propagation and ground-level PLdB are not computed. The NASA SEEB-ALR reproduction failed its numerical and physical checks and remains a clearly labeled deferred research appendix; no successful NASA validation is claimed.
+
+### Weeks 17–22 — Transformers and language modeling
+
+Six CPU laboratories connect Q/K/V attention and a small next-character language
+model to sensor reconstruction, autonomous wake prediction and transfer audits.
+Each week has four coding exercises, an executed student notebook, separate
+instructor solutions and a lecture. Current PDF page counts are listed in the
+[lecture inventory](docs/COURSE_INVENTORY.md#lecture-files).
+
+[17 · Attention](weeks/week17/README.md) · [18 · Language modeling](weeks/week18/README.md) · [19 · Sensors and tokens](weeks/week19/README.md) · [20 · Missing observations](weeks/week20/README.md) · [21 · Autonomous prediction](weeks/week21/README.md) · [22 · Transfer audits](weeks/week22/README.md)
+
+![Week 17 contour preview: CFD velocity reference with sixteen sensors, SensorSet prediction and absolute reconstruction error](docs/assets/transformer-contours/week17.png)
+
+*From sparse sensors to a flow field: the retained CFD reference, SensorSet prediction and spatial error at one fixed Re105 snapshot. Field panels share a color scale; the error has its own scale.*
+
+[Contour sources and reproduction](docs/assets/transformer-contours/README.md)
+
+[Setup and prerequisites](docs/TRANSFORMER_COURSE.md) · [Six figures and experiments](#transformer-labs) · [Review corrections and validation](docs/TRANSFORMER_SECOND_REVIEW_RESPONSE.md) · [Version 1.10.0 changes](RELEASE_NOTES_v1.10.0.md). Interactive Colab and student workload acceptance remain open. Release assets and archival status are linked below.
 
 ### Week 17 — Attention as a learned kernel
 
