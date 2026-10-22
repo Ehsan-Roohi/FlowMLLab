@@ -2,7 +2,7 @@
 import numpy as np
 from .cavity_visuals import RGB, flow_structure, field_normalization
 from .pressure_velocity import centerlines,GHIA_X,GHIA_Y
-from .pressure_velocity_experiments import REFERENCE
+from .pressure_velocity_experiments import REFERENCE, benchmark_valid_mask
 
 def comparison_figures(rows):
     if any(r["config"]["method"] == "streamfunction-vorticity" for r in rows):
@@ -31,7 +31,19 @@ def comparison_figures(rows):
             for ax,a,b in [(axes[i,0],u,y),(axes[i,1],x,v)]:
                 ax.plot(a,b,style,color=colors[cfg['method']],lw=1.5,label=label)
         axes[i,0].plot(REFERENCE[re]['u'],GHIA_Y,'ko',ms=4,label='Ghia (1982)')
-        axes[i,1].plot(GHIA_X,REFERENCE[re]['v'],'ko',ms=4)
+        # Keep the published Re=400 x/L=0.9063 value for provenance, but
+        # explicitly flag it: the tabulated v value is a known anomaly and
+        # must not be interpreted as a validated data point.
+        ref_x = np.asarray(GHIA_X)
+        ref_v = np.asarray(REFERENCE[re]['v'])
+        valid_v = benchmark_valid_mask(re, 'v', ref_x)
+        axes[i,1].plot(ref_x[valid_v], ref_v[valid_v], 'ko', ms=4,
+                       label='Ghia (1982; qualified)')
+        if np.any(~valid_v):
+            axes[i,1].plot(ref_x[~valid_v], ref_v[~valid_v], 'rx',
+                           ms=8, mew=1.8,
+                           label='Published anomalous point (excluded from error)')
+        axes[i,1].legend(fontsize=8, loc='best')
         axes[i,0].set(xlabel=r'$u/U$',ylabel=r'$y/L$',title=f'Re={re}: vertical centerline')
         axes[i,1].set(xlabel=r'$x/L$',ylabel=r'$v/U$',title=f'Re={re}: horizontal centerline')
         axes[i,0].legend(fontsize=8,loc='best')
