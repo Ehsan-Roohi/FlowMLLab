@@ -4,7 +4,7 @@ import sys,json,hashlib
 ROOT=Path(__file__).resolve().parents[1];sys.path.insert(0,str(ROOT))
 import numpy as np
 from flowmllab.pressure_velocity import centerlines,GHIA_X,GHIA_Y
-from flowmllab.pressure_velocity_experiments import benchmark_errors,REFERENCE,ExperimentalConfig
+from flowmllab.pressure_velocity_experiments import benchmark_errors,REFERENCE,ExperimentalConfig,benchmark_valid_mask
 from flowmllab.pressure_velocity import _residual,divergence
 from flowmllab.streamfunction_experiments import sv
 from flowmllab.cavity_visuals import RGB,flow_structure,field_normalization,field_scale_note
@@ -19,7 +19,23 @@ def load():
   if d['status']=='failed':continue
   archive=p.with_suffix('.npz');assert hashlib.sha256(archive.read_bytes()).hexdigest()==d['field_sha256']
   with np.load(archive,allow_pickle=False) as f:r={**d,**{k:f[k] for k in f.files}}
-  for k,v in benchmark_errors(r).items():assert np.isclose(v,r[k],rtol=1e-12,atol=1e-14)
+  recomputed=benchmark_errors(r)
+  # Archives predate the qualified benchmark convention. Keep their historical
+  # all-point numbers immutable while checking both metrics against the fields.
+  if r['config']['reynolds']==400:
+   for k,v in recomputed.items():
+    if k not in ('ghia_v_relative_l2','ghia_v_linf','ghia_v_relative_l2_including_x09063',
+                 'ghia_v_linf_including_x09063','ghia_v_relative_l2_without_x09063'):
+     assert np.isclose(v,r[k],rtol=1e-12,atol=1e-14)
+   assert np.isclose(recomputed['ghia_v_relative_l2_including_x09063'],
+                     r['ghia_v_relative_l2'],rtol=1e-12,atol=1e-14)
+   assert np.isclose(recomputed['ghia_v_relative_l2'],
+                     r['ghia_v_relative_l2_without_x09063'],rtol=1e-12,atol=1e-14)
+  else:
+   for k,v in recomputed.items():assert np.isclose(v,r[k],rtol=1e-12,atol=1e-14)
+  r['ghia_v_qualified_relative_l2']=recomputed['ghia_v_relative_l2']
+  r['ghia_v_all_points_relative_l2']=recomputed.get('ghia_v_relative_l2_including_x09063',
+                                                    recomputed['ghia_v_relative_l2'])
   assert all(np.isfinite(a).all() for a in r.values() if isinstance(a,np.ndarray))
   assert abs(r['p'].mean())<1e-10
   if r['config']['method']=='streamfunction-vorticity':
@@ -57,7 +73,15 @@ def main():
     axes[i,0].plot(u,y,style,color=color,label=f"{method}, h=1/{c['cells']}" + (" [NOT STEADY]" if not r['converged'] else ""))
     axes[i,1].plot(x,v,style,color=color)
   axes[i,0].plot(REFERENCE[re]['u'],GHIA_Y,'ko',ms=3,label='Ghia reference')
-  axes[i,1].plot(GHIA_X,REFERENCE[re]['v'],'ko',ms=3)
+  # Do not alter the published Ghia value. Visually distinguish the isolated
+  # Re=400 x/L=0.9063 tabulation anomaly and omit it only from the qualified norm.
+  ref_x=np.asarray(GHIA_X);ref_v=np.asarray(REFERENCE[re]['v'])
+  mask=benchmark_valid_mask(re,'v',ref_x)
+  axes[i,1].plot(ref_x[mask],ref_v[mask],'ko',ms=3,label='Ghia reference (qualified)')
+  if np.any(~mask):
+   axes[i,1].plot(ref_x[~mask],ref_v[~mask],'rx',ms=8,mew=1.7,
+                  label='Published anomalous point (not scored)')
+  axes[i,1].legend(fontsize=8)
   axes[i,0].set(xlabel='u / U',ylabel='y / L',title=f'Re={re}: vertical centerline')
   axes[i,1].set(xlabel='x / L',ylabel='v / U',title=f'Re={re}: horizontal centerline')
   axes[i,0].legend(fontsize=8)
