@@ -1,0 +1,71 @@
+{
+  "case_A": [
+    -0.1111111111111111,
+    -0.11111111111111112,
+    -0.11111111111111109,
+    -0.11111111111111109
+  ],
+  "case_B": [
+    -0.10277777777777777,
+    -0.10694444444444444,
+    -0.08194444444444443,
+    -0.10277777777777776
+  ],
+  "jacobi_converges_to_both_direct_solutions": true,
+  "four_face_flux_check": true,
+  "momentum_coefficient_identities": 100,
+  "one_momentum_row": 0.03625,
+  "week01_numerical_foundations": {
+    "pages": 35,
+    "sha256": "068eac939af17663c7ae7d26a952dd616c545ea6d5bcdd7985ba68e21db387b2",
+    "matches_reviewed_text": true
+  },
+  "week01_2_pressure_velocity": {
+    "pages": 30,
+    "sha256": "d4c7d937826303a8caa55b885c3eac15ee0e13dacb5e35ef65a3e68c6c444709",
+    "matches_reviewed_text": true
+  },
+  "scope": "Published lecture derivations and presentation; no solver changes or new CFD runs.",
+  "visual_review": {
+    "all_pages_rendered": 65,
+    "revised_pages_inspected_at_high_resolution": {
+      "week01": [
+        17,
+        18,
+        19,
+        20,
+        21
+      ],
+      "week01_2": [
+        3,
+        4,
+        5,
+        6,
+        7,
+        8
+      ]
+    },
+    "margin_violations": 0,
+    "numerical_examples_checked": true,
+    "new_cfd_runs": false
+  },
+  "existing_derivation_algebra_tests_passed": 6,
+  "existing_piso_pimple_algebra_examples_checked": true,
+  "notebook_sync_check": {
+    "passed": false,
+    "detail": "The legacy notebook synchronization check assumes the lecture section is inline. The expanded lecture now uses an included source fragment. The check also rewrites the notebook; that test side effect was restored. This publication retains the existing notebook and its executed outputs."
+  },
+  "portable_sources_compiled": true,
+  "pdf_audit": {
+    "week01_numerical_foundations": {
+      "pages": 35,
+      "times_new_roman_present": true,
+      "horizontal_margin_and_glyph_violations": 0
+    },
+    "week01_2_pressure_velocity": {
+      "pages": 30,
+      "times_new_roman_present": true,
+      "horizontal_margin_and_glyph_violations": 0
+    }
+  }
+}

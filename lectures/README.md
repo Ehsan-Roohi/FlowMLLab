@@ -16,9 +16,9 @@ with the equation renderer in [qa/week01_2_math.py](../qa/week01_2_math.py).
 
 | Week | Lecture (pages) | Main topics | Companion notebooks | Editable source |
 | --- | --- | --- | --- | --- |
-| 1 | [Numerical foundations](week01_numerical_foundations.pdf) (32 pages) | Continuity and momentum, nondimensionalization, streamfunction/vorticity derivations, finite differences, wall conditions, coupled iteration, convergence, Ghia validation | `notebooks/week01/` | [LaTeX](source/week01_numerical_foundations.tex), [code walkthrough](source/week01_code_walkthrough.tex), [pressure appendix](source/week01_pressure_derivation.tex) |
+| 1 | [Numerical foundations](week01_numerical_foundations.pdf) (35 pages) | Continuity and momentum, nondimensionalization, streamfunction/vorticity derivations, finite differences, wall conditions, coupled iteration, convergence, Ghia validation | `notebooks/week01/` | [LaTeX](source/week01_numerical_foundations.tex), [code walkthrough](source/week01_code_walkthrough.tex), [pressure appendix](source/week01_pressure_derivation.tex) |
 | 1.1 | [AI-assisted scientific software](week01_1_ai_assisted_scientific_software.pdf) (10 pages) | Specification, manufactured-solution verification, physical gates, provenance, adversarial axis tests, human-agent authority and disclosure | `notebooks/week01_1/W1_1_AI_Assisted_Scientific_Software.ipynb` | [Markdown](source/week01_1_ai_assisted_scientific_software.md) |
-| 1.2 | [Pressure-velocity coupling](week01_2_pressure_velocity.pdf) (26 pages) | Cell mass balance, scalar FV momentum, pressure-correction derivation, SIMPLE/PISO/PIMPLE algebra examples and loop diagram, Re=100/400/1000 comparisons | `notebooks/week01_2/W1_2_Cavity_Pressure_Velocity.ipynb` | [LaTeX](source/week01_2_pressure_velocity.tex), [core equations](source/week01_2_pressure_velocity_core.tex), [notebook guide](../notebooks/week01_2/README.md) |
+| 1.2 | [Pressure-velocity coupling](week01_2_pressure_velocity.pdf) (30 pages) | Cell mass balance, scalar FV momentum, pressure-correction derivation, SIMPLE/PISO/PIMPLE algebra examples and loop diagram, Re=100/400/1000 comparisons | `notebooks/week01_2/W1_2_Cavity_Pressure_Velocity.ipynb` | [LaTeX](source/week01_2_pressure_velocity.tex), [core equations](source/week01_2_pressure_velocity_core.tex), [notebook guide](../notebooks/week01_2/README.md) |
 | 2 | [Supervised learning and rarefaction](week02_supervised_learning_rarefaction.pdf) (21 pages) | Neurons, MLPs, losses, optimization, scaling, case-wise splits, rarefaction | `notebooks/week02/` | [LaTeX](source/week02_lecture.tex) |
 | 2.1 | [Probabilistic UQ](week02_1_probabilistic_uq.pdf) (10 pages) | Observation models, exact Bayesian regression, POD–Gaussian-process fields, proper scores, leakage-free calibration, retained blind under-coverage | `notebooks/week02_1/Probabilistic_UQ_CFD.ipynb` | [Current self-study LaTeX](source/week02_1_probabilistic_uq_notes.tex), [build guide](../qa/WEEK01_06_REVIEW_BUILD.md); [legacy slide companion](source/week02_1_probabilistic_uq.pptx) |
 | 3 | [Kinetic theory and DSMC](week03_kinetic_dsmc.pdf) (37 pages) | Distribution functions, Maxwellian moments, sampling error, DSMC | `notebooks/week03/` | [PPTX](source/week03_lecture.pptx) |
@@ -63,14 +63,17 @@ is built by [`qa/build_week04_2_lecture.py`](../qa/build_week04_2_lecture.py).
 
 The Week 1 foundations lecture is compiled from
 [`source/week01_numerical_foundations.tex`](source/week01_numerical_foundations.tex),
-which includes the code walkthrough and the pressure-derivation appendix. From
-`lectures/source`:
+which includes the code walkthrough and the pressure-derivation appendix. From the repository root, use Tectonic with Times New Roman installed:
 
 ```bash
-pdflatex -interaction=nonstopmode -halt-on-error -output-directory=/tmp week01_numerical_foundations.tex
-pdflatex -interaction=nonstopmode -halt-on-error -output-directory=/tmp week01_numerical_foundations.tex
-cp /tmp/week01_numerical_foundations.pdf ../week01_numerical_foundations.pdf
+tectonic --outdir lectures lectures/source/week01_numerical_foundations.tex
+python qa/build_week01_2_lecture.py
 ```
+
+The four-node Poisson examples are in
+[`source/week01_four_node_example.tex`](source/week01_four_node_example.tex).
+The Week 1.2 control-volume derivation is in
+[`source/week01_2_control_volume_derivation.tex`](source/week01_2_control_volume_derivation.tex).
 
 Its figure and single-grid diagnostics are regenerated from the repository root with
 `python qa/build_week01_foundations_figure.py` (NumPy and Matplotlib only); the

@@ -24,53 +24,7 @@ The following sections use these dimensionless quantities. At steady state the l
 
 \textbf{Cavity conditions.} The unit-square top lid has $u=1,v=0$; three stationary walls have $u=v=0$. Every wall is impermeable. The ideal moving-lid corners contain a velocity discontinuity, so pressure and vorticity extrema there require care. The introductory case is $Re=100$.
 \newpage
-\topic{2}{Staggered grid and cell mass balance}
-Pressure is stored at the center of each square pressure cell. Horizontal velocity is stored on vertical faces and vertical velocity on horizontal faces. This is the staggered MAC arrangement. The spacing is $h=1/N$ for $N$ cells along one side.
-\begin{center}\includegraphics[width=.83\linewidth]{week01_2_assets/mac_grid.pdf}\end{center}
-Capital $P,E,W,N,S$ label pressure-cell centers; lowercase $e,w,n,s$ label the four faces of cell $P$. All horizontal velocity components are positive rightward; all vertical components are positive upward. The outward normal at the west or south face points in the negative coordinate direction.
-
-Let $V$ denote the pressure-cell area $h^2$, $\partial V$ its perimeter, $\boldsymbol u=(u,v)$ the velocity vector, $\boldsymbol n$ its outward unit normal and $\mathrm dS$ a boundary-length element. Integrating continuity gives the net outward volume flux per unit depth:
-\[
-\int_{\partial V}\boldsymbol u\cdot\boldsymbol n\,\mathrm dS
-=h u_e-h u_w+h v_n-h v_s=0.
-\]
-Define $r_{c,P}$ as the continuity residual of cell $P$: net outward volume flux divided by cell area. The subscript $c$ means continuity, and $P$ is a cell label. It is not a pressure change. Dividing by $h^2$ gives
-\[
-\boxed{r_{c,P}=\frac{u_e-u_w+v_n-v_s}{h}=0.}
-\]
-Density is constant, so zero volume imbalance also means zero mass imbalance. A shared face enters one cell with a plus sign and its neighbor with a minus sign. Summing all cell balances cancels internal fluxes; an impermeable boundary has zero total outward flux.
-
-\textbf{Why pressure is needed.} A guessed pressure can satisfy the momentum equations for a tentative velocity yet leave $r_{c,P}\ne0$. The coupling algorithms adjust pressure gradients and face velocities together so that each cell satisfies continuity. Pressure is not prescribed independently throughout an incompressible cavity.
-\newpage
-\topic{3}{Finite-volume momentum at one velocity face}
-The velocity $u_e$ lies between pressure centers $P$ and $E$. Its momentum control volume is centered on that velocity face. Here $V_e$ is the velocity control volume, $\partial V_e$ its boundary, $\boldsymbol n$ the outward unit normal, $\mathrm dV$ an area element, and $\mathrm dS$ a boundary-length element, all per unit depth. Integrating horizontal momentum over this volume gives
-\[
-\frac{\mathrm d}{\mathrm dt}\int_{V_e}u\,\mathrm dV
-+\int_{\partial V_e}u(\boldsymbol u\cdot\boldsymbol n)\,\mathrm dS
-=-\int_{V_e}\frac{\partial p}{\partial x}\,\mathrm dV
-+\frac{1}{Re}\int_{\partial V_e}\nabla u\cdot\boldsymbol n\,\mathrm dS.
-\]
-On the uniform interior grid, the volume-normalized pressure term is $-(p_E-p_P)/h$. Central interpolation approximates transported velocity at a momentum-volume face by the average of adjacent velocity samples. Central differences approximate its normal gradient.
-
-\textbf{One interior row.} Denote the momentum control volume's neighboring horizontal velocities by $u_{\rm E},u_{\rm W},u_{\rm N},u_{\rm S}$; these are different samples of the same horizontal component. Its equation is
-\[
-\boxed{a_eu_e=a_{\rm E}u_{\rm E}+a_{\rm W}u_{\rm W}
-+a_{\rm N}u_{\rm N}+a_{\rm S}u_{\rm S}+b_e-\frac{p_E-p_P}{h}.}
-\]
-Here $a_e$ is the center momentum coefficient, $a_{\rm NB}$ are neighbor coefficients, and $b_e$ contains known wall and time sources. All coefficients are normalized by control-volume area; no extra face area belongs in the pressure-gradient term.
-
-Let $\beta=1/(Re\,h^2)$. Let $c_{\rm E},c_{\rm W}$ be the advecting horizontal velocities at the east/west boundaries of this momentum volume, and $c_{\rm N},c_{\rm S}$ the advecting vertical velocities at its north/south boundaries. Central interpolation gives $c_{\rm E}=(u_e+u_{\rm E})/2$ and $c_{\rm W}=(u_{\rm W}+u_e)/2$. For the top and bottom boundaries,
-\[
-c_{\rm N}=\frac{v_{n,P}+v_{n,E}}{2},\qquad c_{\rm S}=\frac{v_{s,P}+v_{s,E}}{2}.
-\]
-Here $v_{n,P},v_{n,E}$ are the vertical velocities at the top faces of pressure cells $P,E$; $v_{s,P},v_{s,E}$ are their bottom-face velocities. The interior central scheme uses
-\begin{align*}
-a_{\rm E}&=\beta-\frac{c_{\rm E}}{2h},&a_{\rm W}&=\beta+\frac{c_{\rm W}}{2h},\\
-a_{\rm N}&=\beta-\frac{c_{\rm N}}{2h},&a_{\rm S}&=\beta+\frac{c_{\rm S}}{2h},\\
-a_e&=a_{\rm E}+a_{\rm W}+a_{\rm N}+a_{\rm S}
-+\frac{c_{\rm E}-c_{\rm W}+c_{\rm N}-c_{\rm S}}{h}.
-\end{align*}
-For example, east-face convection contributes $c_{\rm E}(u_e+u_{\rm E})/(2h)$ on the left, and diffusion contributes $\beta(u_{\rm E}-u_e)$ on the right. Moving the convective neighbor term to the right leaves $(\beta-c_{\rm E}/(2h))u_{\rm E}$, which explains $a_{\rm E}$. Other faces follow from their outward-normal signs. Time and wall terms modify the diagonal and source. The vertical component has an analogous row.
+\input{week01_2_control_volume_derivation.tex}
 \newpage
 \topic{4}{Momentum coefficients and matrix notation}
 For a velocity location labeled $f$, let $\mathrm{NB}(f)$ be the neighboring velocity locations in its momentum row. The index $g$ labels one such location; $a_{fg}$ is the coefficient multiplying its velocity $q_g$. These are velocity-control-volume neighbors, rather than the pressure neighbors labeled $E,W,N,S$. Collect the source and neighbor contributions into

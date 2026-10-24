@@ -1,0 +1,274 @@
+\topic{2}{Staggered locations and a pressure control volume}
+The equations in Section 1 are dimensionless. We now integrate them over a
+small fixed region of the grid. A \emph{control volume} is a chosen region of the flow domain. In a
+two-dimensional calculation it is an area per unit depth in the third direction.
+\begin{center}\includegraphics[width=.80\linewidth]{week01_2_assets/mac_grid.pdf}\end{center}
+Pressure $p_P$ is stored at pressure-cell center $P$. Horizontal velocity is
+stored at vertical faces; vertical velocity is stored at horizontal faces.
+For the cell around $P$, use lowercase $e,w,n,s$ for east, west, north and south
+faces. Uppercase $E,W,N,S$ denote neighboring \emph{pressure centers}.
+
+First allow a rectangular cell:
+\[
+V_P=[x_w,x_e]\times[y_s,y_n],\qquad
+\Delta x=x_e-x_w,\quad\Delta y=y_n-y_s,\quad |V_P|=\Delta x\Delta y.
+\]
+Here $|V_P|$ means its area. The boundary is $\partial V_P$. Its outward unit
+normal $\boldsymbol n$ points away from $P$ at each face:
+\begin{center}\begin{tabular}{cccl}\toprule
+Face & Outward normal & Face length & Outward velocity component\\\midrule
+East & $(1,0)$ & $\Delta y$ & $+u_e$\\
+West & $(-1,0)$ & $\Delta y$ & $-u_w$\\
+North & $(0,1)$ & $\Delta x$ & $+v_n$\\
+South & $(0,-1)$ & $\Delta x$ & $-v_s$\\\bottomrule
+\end{tabular}\end{center}
+All $u$ values are positive rightward and all $v$ values positive upward.
+These coordinate conventions do not reverse at the west or south face.
+The minus signs arise from the \emph{outward normal}, rather than from a
+different definition of velocity.
+
+The uniform square grid used below has $\Delta x=\Delta y=h=1/N$, where $N$
+is the number of pressure cells along one side. Its cell area is $h^2$ and
+each face length per unit depth is $h$.
+\newpage
+\topic{2 continued}{Integral and discrete continuity equations}
+Start with the differential equation
+\[
+\frac{\partial u}{\partial x}+\frac{\partial v}{\partial y}=0.
+\]
+Integrate both terms over the same cell, with $\mathrm dV=\mathrm dx\,\mathrm dy$:
+\[
+\int_{y_s}^{y_n}\int_{x_w}^{x_e}\frac{\partial u}{\partial x}\,\mathrm dx\,\mathrm dy
++\int_{x_w}^{x_e}\int_{y_s}^{y_n}\frac{\partial v}{\partial y}\,\mathrm dy\,\mathrm dx=0.
+\]
+For the first term integrate in $x$ while holding $y$ fixed. For the second
+integrate in $y$ while holding $x$ fixed. The fundamental theorem of calculus gives
+\begin{align*}
+\int_{y_s}^{y_n}[u(x_e,y)-u(x_w,y)]\,\mathrm dy
++\int_{x_w}^{x_e}[v(x,y_n)-v(x,y_s)]\,\mathrm dx=0.
+\end{align*}
+Thus a derivative inside the cell becomes the difference of values on its two
+opposite faces. This is also the divergence theorem in two dimensions:
+\[
+\int_{V_P}\nabla\cdot\boldsymbol u\,\mathrm dV
+=\int_{\partial V_P}\boldsymbol u\cdot\boldsymbol n\,\mathrm dS=0.
+\]
+The line element $\mathrm dS$ runs along a cell face. Define each face-average
+velocity by its face integral; for example,
+\[
+\overline u_e=\frac{1}{\Delta y}\int_{y_s}^{y_n}u(x_e,y)\,\mathrm dy.
+\]
+Replacing a face average by the stored face-center sample is the midpoint
+approximation used on this grid. With those samples the discrete balance is
+\[
+\underbrace{\Delta y\,u_e}_{\text{east outflow}}
+-\underbrace{\Delta y\,u_w}_{\text{west inflow}}
++\underbrace{\Delta x\,v_n}_{\text{north outflow}}
+-\underbrace{\Delta x\,v_s}_{\text{south inflow}}=0.
+\]
+Each term is a signed volume flux per unit depth. Dividing by cell area gives
+\[
+\frac{u_e-u_w}{\Delta x}+\frac{v_n-v_s}{\Delta y}=0,
+\qquad
+\boxed{r_{c,P}=\frac{u_e-u_w+v_n-v_s}{h}=0\quad\text{on a square grid}.}
+\]
+The residual $r_{c,P}$ is net outward volume flux divided by area. It is not a
+pressure change. For constant density $\rho$, multiplication of every flux by
+$\rho$ gives the corresponding mass balance.
+
+\textbf{Numerical check.} With $h=0.25$ and
+$(u_e,u_w,v_n,v_s)=(0.30,0.20,0.10,0.05)$, net outward flux is
+$0.25(0.30-0.20+0.10-0.05)=0.0375$ and $r_{c,P}=0.0375/0.25^2=0.60$.
+This tentative velocity violates local continuity even if a neighboring cell
+has an equal and opposite imbalance. Shared internal fluxes cancel in a global
+sum; they must still balance in each individual cell.
+\newpage
+\topic{3}{Conservative form and integral momentum balance}
+The horizontal momentum equation from Section 1 is
+\[
+\frac{\partial u}{\partial t}+u\frac{\partial u}{\partial x}
++v\frac{\partial u}{\partial y}
+=-\frac{\partial p}{\partial x}+\frac{1}{Re}\nabla^2u.
+\]
+To convert convection into face fluxes, apply the product rule:
+\begin{align*}
+\frac{\partial(u^2)}{\partial x}+\frac{\partial(uv)}{\partial y}
+&=2u\frac{\partial u}{\partial x}+v\frac{\partial u}{\partial y}
++u\frac{\partial v}{\partial y}\\
+&=u\frac{\partial u}{\partial x}+v\frac{\partial u}{\partial y}
++u\underbrace{\left(\frac{\partial u}{\partial x}+\frac{\partial v}{\partial y}\right)}_{0\ \text{by continuity}}.
+\end{align*}
+Consequently, for the incompressible continuum equations,
+\[
+\frac{\partial u}{\partial t}+\nabla\cdot(u\boldsymbol u)
+=-\frac{\partial p}{\partial x}+\frac{1}{Re}\nabla\cdot(\nabla u).
+\]
+The scalar $u$ in $u\boldsymbol u$ is the horizontal momentum per unit mass
+being transported; $\boldsymbol u=(u,v)$ is the transporting velocity.
+
+Integrate over the \emph{horizontal-velocity} control volume $V_e$, centered
+on the stored velocity $u_e$. It is a different region from pressure cell $V_P$.
+For a fixed control volume, the time derivative can pass outside the integral.
+Apply the divergence theorem separately to convection, pressure and diffusion:
+\begin{align*}
+\frac{\mathrm d}{\mathrm dt}\int_{V_e}u\,\mathrm dV
++\int_{\partial V_e}u(\boldsymbol u\cdot\boldsymbol n)\,\mathrm dS
+&=-\int_{\partial V_e}p\,n_x\,\mathrm dS
++\frac{1}{Re}\int_{\partial V_e}\nabla u\cdot\boldsymbol n\,\mathrm dS.
+\end{align*}
+Here $n_x$ is the horizontal component of the outward unit normal.
+The pressure identity used above is
+\[
+\int_{V_e}\frac{\partial p}{\partial x}\,\mathrm dV
+=\int_{\partial V_e}p\,n_x\,\mathrm dS.
+\]
+\begin{center}\begin{tabular}{lp{.67\linewidth}}\toprule
+Term & Physical meaning in this equation\\\midrule
+Time derivative & Accumulation of horizontal momentum per unit density\\
+Convective integral & Horizontal momentum carried through the boundary by flow\\
+Pressure integral & Horizontal pressure force per unit density\\
+Diffusive integral & Viscous transport of horizontal momentum\\\bottomrule
+\end{tabular}\end{center}
+These integral balances follow from the differential equations. Face quadrature
+and interpolation convert them into equations for the stored grid values.
+\newpage
+\topic{3 continued}{The momentum volume and its four face contributions}
+The horizontal velocity $u_e$ lies halfway between pressure centers $P$ and $E$.
+Its square momentum volume extends from $x_P$ to $x_E$, a distance $h$.
+The pressure centers therefore lie at the midpoints of its west and east faces.
+\begin{center}\includegraphics[width=.93\linewidth,height=52mm,keepaspectratio]{week01_2_assets/momentum_volume.pdf}\end{center}
+At this volume's boundaries, write $c_{\rm E},c_{\rm W}$ for the horizontal
+advecting velocities and $c_{\rm N},c_{\rm S}$ for the vertical advecting velocities.
+All are positive in their coordinate directions. Write $\widehat u_{\rm E}$,
+$\widehat u_{\rm W}$, $\widehat u_{\rm N}$, $\widehat u_{\rm S}$ for the
+horizontal component being \emph{transported} at those boundaries.
+The hat values are interpolated from neighboring velocity samples.
+
+\textbf{Convection.} Midpoint evaluation of the four integrals gives
+\[
+h\left(c_{\rm E}\widehat u_{\rm E}-c_{\rm W}\widehat u_{\rm W}
++c_{\rm N}\widehat u_{\rm N}-c_{\rm S}\widehat u_{\rm S}\right).
+\]
+North/south transport is still transport of \emph{horizontal} momentum: the
+fluid crosses those faces with vertical velocity while carrying horizontal $u$.
+
+\textbf{Pressure.} Only the east and west faces have $n_x\ne0$.
+Approximating their pressure averages by $p_E$ and $p_P$ gives
+\[
+-\int_{\partial V_e}p n_x\,\mathrm dS
+\simeq -h p_E+h p_P=-h(p_E-p_P).
+\]
+After dividing by area $h^2$, this is $-(p_E-p_P)/h$.
+The separation between $P$ and $E$ is $h$, not $2h$.
+
+\textbf{Diffusion.} The normal derivative changes sign on west and south:
+\[
+\frac{h}{Re}\left[
+\left(\frac{\partial u}{\partial x}\right)_{\rm E}
+-\left(\frac{\partial u}{\partial x}\right)_{\rm W}
++\left(\frac{\partial u}{\partial y}\right)_{\rm N}
+-\left(\frac{\partial u}{\partial y}\right)_{\rm S}\right].
+\]
+\textbf{Accumulation.} Approximate the volume integral by $h^2u_e$, so its
+derivative is $h^2\,\mathrm du_e/\mathrm dt$. It vanishes for the target steady
+problem. For backward Euler it becomes $h^2(u_e^{n+1}-u_e^n)/\Delta t$,
+where $n$ is a physical time index.
+\newpage
+\topic{3 continued}{Central interpolation and face gradients}
+Let $u_{\rm E},u_{\rm W},u_{\rm N},u_{\rm S}$ be neighboring stored
+\emph{horizontal} velocities one grid spacing from $u_e$. They are not the
+pressure samples $p_E,p_W,p_N,p_S$. For central interpolation,
+\begin{align*}
+\widehat u_{\rm E}&=(u_e+u_{\rm E})/2,&
+\widehat u_{\rm W}&=(u_{\rm W}+u_e)/2,\\
+\widehat u_{\rm N}&=(u_e+u_{\rm N})/2,&
+\widehat u_{\rm S}&=(u_{\rm S}+u_e)/2.
+\end{align*}
+The advecting velocities are obtained from the staggered grid:
+\begin{align*}
+c_{\rm E}&=(u_e+u_{\rm E})/2,&c_{\rm W}&=(u_{\rm W}+u_e)/2,\\
+c_{\rm N}&=(v_{n,P}+v_{n,E})/2,&c_{\rm S}&=(v_{s,P}+v_{s,E})/2.
+\end{align*}
+For example, $v_{n,P}$ and $v_{n,E}$ are the vertical velocities on the north
+faces of pressure cells $P$ and $E$. During a linear momentum solve the $c$
+values are held at their current estimates; updating them is a later nonlinear step.
+
+Approximate the gradients at the momentum-volume faces by
+\begin{align*}
+u_{x,{\rm E}}&\simeq(u_{\rm E}-u_e)/h,&
+u_{x,{\rm W}}&\simeq(u_e-u_{\rm W})/h,\\
+u_{y,{\rm N}}&\simeq(u_{\rm N}-u_e)/h,&
+u_{y,{\rm S}}&\simeq(u_e-u_{\rm S})/h.
+\end{align*}
+Here $u_{x,{\rm E}}$ means $\partial u/\partial x$ evaluated at the east face.
+Substitution and division by $h^2$ turn diffusion into
+\[
+\beta(u_{\rm E}+u_{\rm W}+u_{\rm N}+u_{\rm S}-4u_e),
+\qquad \boxed{\beta=\frac{1}{Re\,h^2}.}
+\]
+For instance, the east and west contributions combine as
+$[(u_{\rm E}-u_e)-(u_e-u_{\rm W})]/(Re\,h^2)$.
+The two occurrences of $-u_e$ explain the central $-2u_e$ in that direction.
+
+The full volume-normalized equation is therefore
+\begin{align*}
+\frac{\mathrm du_e}{\mathrm dt}
+&+\frac{c_{\rm E}(u_e+u_{\rm E})-c_{\rm W}(u_{\rm W}+u_e)}{2h}\\
+&+\frac{c_{\rm N}(u_e+u_{\rm N})-c_{\rm S}(u_{\rm S}+u_e)}{2h}\\
+&=-\frac{p_E-p_P}{h}
++\beta(u_{\rm E}+u_{\rm W}+u_{\rm N}+u_{\rm S}-4u_e).
+\end{align*}
+Each term has the form of an acceleration. Dividing face length $h$ by
+cell area $h^2$ accounts for the factors of $1/h$ in these terms.
+\newpage
+\topic{3 continued}{Momentum coefficients and numerical example}
+For the steady interior row, move each convective neighbor term to the right
+and each central diffusive term to the left. The result is
+\[
+\boxed{a_eu_e=a_{\rm E}u_{\rm E}+a_{\rm W}u_{\rm W}
++a_{\rm N}u_{\rm N}+a_{\rm S}u_{\rm S}+b_e-\frac{p_E-p_P}{h}.}
+\]
+An interior steady row has no time or wall source, so $b_e=0$ there.
+The neighbor coefficients are
+\begin{align*}
+a_{\rm E}&=\beta-c_{\rm E}/(2h),&a_{\rm W}&=\beta+c_{\rm W}/(2h),\\
+a_{\rm N}&=\beta-c_{\rm N}/(2h),&a_{\rm S}&=\beta+c_{\rm S}/(2h).
+\end{align*}
+For example, the east contribution to convection is
+$c_{\rm E}u_e/(2h)+c_{\rm E}u_{\rm E}/(2h)$.
+The east diffusion term on the right is $\beta u_{\rm E}-\beta u_e$.
+Moving terms gives $(\beta-c_{\rm E}/(2h))u_{\rm E}$ on the right and
+$(\beta+c_{\rm E}/(2h))u_e$ on the left. Repeating the operation at all faces gives
+\begin{align*}
+a_e&=4\beta+\frac{c_{\rm E}-c_{\rm W}+c_{\rm N}-c_{\rm S}}{2h}\\
+&=a_{\rm E}+a_{\rm W}+a_{\rm N}+a_{\rm S}
++\frac{c_{\rm E}-c_{\rm W}+c_{\rm N}-c_{\rm S}}{h}.
+\end{align*}
+Do not set the last term to zero merely because the target flow is
+incompressible: the current advecting estimates can still have a discrete mass
+imbalance. Pressure--velocity coupling removes that imbalance iteratively.
+Backward Euler adds $1/\Delta t$ to $a_e$ and $u_e^n/\Delta t$ to $b_e$.
+Known wall values also contribute to the source and can modify the diagonal.
+
+\textbf{One frozen-row example.} Set $h=0.25$, $Re=100$,
+$c_{\rm E}=c_{\rm W}=0.02$, $c_{\rm N}=c_{\rm S}=0$.
+Then $\beta=0.16$ and
+\[
+(a_{\rm E},a_{\rm W},a_{\rm N},a_{\rm S})=(0.12,0.20,0.16,0.16),
+\qquad a_e=0.64.
+\]
+For given neighbor values $(u_{\rm E},u_{\rm W},u_{\rm N},u_{\rm S})
+=(0.04,0.02,0.03,0.01)$, their weighted sum is
+\[
+0.12(0.04)+0.20(0.02)+0.16(0.03)+0.16(0.01)=0.0152.
+\]
+With $p_P=0.010$, $p_E=0.008$ and $b_e=0$, the pressure contribution is
+$-(0.008-0.010)/0.25=+0.008$. Thus
+\[
+\boxed{u_e=(0.0152+0.008)/0.64=0.03625.}
+\]
+The lower east pressure drives a positive horizontal contribution.
+This satisfies one frozen momentum row; it does not by itself enforce the
+neighboring pressure cells' continuity equations. That is the purpose of SIMPLE.
+For vertical momentum, apply the same construction around $v_n$; its pressure
+term is $-(p_N-p_P)/h$. The next section assembles these scalar rows into a matrix.

@@ -10,7 +10,7 @@
   },
   "counts": {
     "active_lecture_pdfs": 35,
-    "lecture_pages": 483,
+    "lecture_pages": 490,
     "student_notebooks": 51,
     "historical_student_companions": 1,
     "optional_notebooks": 1,
@@ -23,11 +23,11 @@
     },
     {
       "path": "lectures/week01_2_pressure_velocity.pdf",
-      "pages": 26
+      "pages": 30
     },
     {
       "path": "lectures/week01_numerical_foundations.pdf",
-      "pages": 32
+      "pages": 35
     },
     {
       "path": "lectures/week02_1_probabilistic_uq.pdf",
