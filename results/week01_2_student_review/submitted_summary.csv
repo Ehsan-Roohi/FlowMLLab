@@ -1,0 +1,13 @@
+report_page,method,reynolds,cells,convection,iterations,pressure_solves,reported_runtime_seconds,reported_momentum_linf,reported_divergence_linf,reported_u_error_percent,reported_v_error_percent,v_reference_policy
+1,simple,400,32,central,550,550,17,7.83e-7,6.705e-15,3.61,8.43,exclude_x_0.9063
+2,simple,400,64,central,2070,2070,108.3,9.85e-7,1.17e-14,0.83,1.85,exclude_x_0.9063
+3,piso,400,32,central,1040,2080,16.2,9.14e-7,1.34e-13,3.61,8.43,exclude_x_0.9063
+4,piso,400,64,central,1010,2020,57.7,9.50e-7,2.78e-14,0.83,1.85,exclude_x_0.9063
+5,pimple,400,32,central,1050,6300,48.39,9.14e-7,9.39e-14,3.61,8.43,exclude_x_0.9063
+6,pimple,400,64,central,1020,6120,178.6,9.94e-7,4.26e-14,0.83,1.85,exclude_x_0.9063
+7,simple,1000,32,central,610,610,7.35,8.79e-7,7.12e-15,8.67,14.15,all_tabulated_samples
+8,simple,1000,64,central,1790,1790,94.7,9.96e-7,7.11e-15,2.59,3.46,all_tabulated_samples
+9,piso,1000,32,central,2370,4740,37.1,9.95e-7,6.15e-14,8.67,14.15,all_tabulated_samples
+10,piso,1000,64,central,2170,4340,125.2,9.68e-7,5.01e-13,2.59,3.46,all_tabulated_samples
+11,pimple,1000,32,central,2440,14640,111.6,9.85e-7,4.87e-14,8.67,14.15,all_tabulated_samples
+12,pimple,1000,64,central,2320,13920,387.5,9.98e-7,3.35e-13,2.59,3.46,all_tabulated_samples

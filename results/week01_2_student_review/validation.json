@@ -1,0 +1,15 @@
+{
+  "submitted_cases": 12,
+  "pressure_solve_count_checks": 12,
+  "fresh_cases": 9,
+  "fresh_central_cases_matching_report_rounded_errors_and_work": 8,
+  "fresh_fv_residuals_and_benchmark_metrics_checked": true,
+  "student_timing_replicated": false,
+  "old_time_correction": "Documented; solver unchanged",
+  "notebook_review_cells": 4,
+  "new_code_cell_executed": true,
+  "week1_unequal_spacing_derivative_check": "passed and executed",
+  "integrated_coefficient_normalization_check": "passed",
+  "pre_existing_notebook_cells_preserved": 73,
+  "scope": "Selected fresh reproduction; four N=64 PISO/PIMPLE cases remain student-reported."
+}

@@ -1,0 +1,51 @@
+{
+  "config": {
+    "method": "simple",
+    "cells": 32,
+    "reynolds": 400,
+    "convection": "central",
+    "dt": 0.05,
+    "velocity_relaxation": 0.5,
+    "pressure_relaxation": 0.2,
+    "pressure_correctors": 2,
+    "outer_correctors": 3,
+    "tolerance": 1e-06,
+    "max_iterations": 4000,
+    "check_every": 10,
+    "end_time": null
+  },
+  "converged": true,
+  "reached_end_time": false,
+  "iterations": 550,
+  "physical_time": null,
+  "runtime_seconds": 18.871680600001127,
+  "pressure_solves": 550,
+  "momentum_residual_linf": 7.832186670886365e-07,
+  "continuity_linf": 6.7047062346503594e-15,
+  "vortex_x": 0.5625,
+  "vortex_y": 0.625,
+  "psi_min": -0.10649299504705743,
+  "kinetic_energy": 0.035313380358526325,
+  "ghia_u_relative_l2": 0.036072889350818045,
+  "ghia_v_relative_l2": 0.08433269636004266,
+  "ghia_u_linf": 0.03141801708438724,
+  "ghia_v_linf": 0.03138297513292987,
+  "ghia_v_relative_l2_including_x09063": 0.14772525141682064,
+  "ghia_v_linf_including_x09063": 0.12112525555550477,
+  "ghia_v_relative_l2_without_x09063": 0.08433269636004266,
+  "qualification": "Experimental 2D steady discrete-equation study; inspect mesh and benchmark errors. Not turbulent-flow or transient-accuracy validation.",
+  "nominal_Re_over_N": 12.5,
+  "source_sha256": {
+    "flowmllab/pressure_velocity.py": "d502568afece2262dbb759c1e315e384cf9c88ac46e98992ee7950a77a0aba5d",
+    "flowmllab/pressure_velocity_experiments.py": "97307031b359d521b4627e7992958e9072de6551ac8b8ee0b8524dc90da0569a"
+  },
+  "field_sha256": "4080bb809aafd7e23649648e2d982628abf479f9a386e16c4a5734f244a21458",
+  "provenance": "Fresh author-side calculation, 26 October 2026; distinct from submitted report measurements.",
+  "environment": {
+    "python": "3.12.14",
+    "numpy": "2.2.6",
+    "scipy": "1.15.3",
+    "platform": "Windows-11-10.0.26200-SP0",
+    "blas_thread_limit": "1 (execution environment)"
+  }
+}

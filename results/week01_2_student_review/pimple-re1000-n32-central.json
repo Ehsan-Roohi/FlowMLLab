@@ -1,0 +1,48 @@
+{
+  "config": {
+    "method": "pimple",
+    "cells": 32,
+    "reynolds": 1000,
+    "convection": "central",
+    "dt": 0.05,
+    "velocity_relaxation": 0.5,
+    "pressure_relaxation": 0.2,
+    "pressure_correctors": 2,
+    "outer_correctors": 3,
+    "tolerance": 1e-06,
+    "max_iterations": 4000,
+    "check_every": 10,
+    "end_time": null
+  },
+  "converged": true,
+  "reached_end_time": false,
+  "iterations": 2440,
+  "physical_time": 121.99999999999521,
+  "runtime_seconds": 109.08266910001112,
+  "pressure_solves": 14640,
+  "momentum_residual_linf": 9.850088004137447e-07,
+  "continuity_linf": 4.867634073590921e-14,
+  "vortex_x": 0.53125,
+  "vortex_y": 0.5625,
+  "psi_min": -0.1024277471036549,
+  "kinetic_energy": 0.03301687840020971,
+  "ghia_u_relative_l2": 0.08674800723214561,
+  "ghia_v_relative_l2": 0.14151506542645206,
+  "ghia_u_linf": 0.0670401318663823,
+  "ghia_v_linf": 0.08166248975785212,
+  "qualification": "Experimental 2D steady discrete-equation study; inspect mesh and benchmark errors. Not turbulent-flow or transient-accuracy validation.",
+  "nominal_Re_over_N": 31.25,
+  "source_sha256": {
+    "flowmllab/pressure_velocity.py": "d502568afece2262dbb759c1e315e384cf9c88ac46e98992ee7950a77a0aba5d",
+    "flowmllab/pressure_velocity_experiments.py": "97307031b359d521b4627e7992958e9072de6551ac8b8ee0b8524dc90da0569a"
+  },
+  "field_sha256": "108b7267199f3a872361e464dab1aac022bca24bfb87a76b756f045290f0c04a",
+  "provenance": "Fresh author-side calculation, 26 October 2026; distinct from submitted report measurements.",
+  "environment": {
+    "python": "3.12.14",
+    "numpy": "2.2.6",
+    "scipy": "1.15.3",
+    "platform": "Windows-11-10.0.26200-SP0",
+    "blas_thread_limit": "1 (execution environment)"
+  }
+}

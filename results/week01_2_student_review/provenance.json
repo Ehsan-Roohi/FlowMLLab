@@ -1,0 +1,103 @@
+{
+  "contributor": "Naoya Miyamoto",
+  "received_date": "2026-10-26",
+  "review_scope": "Week 1 foundations and Week 1.2 pressure-velocity coupling",
+  "private_source_reports": [
+    {
+      "title": "IS HW.pdf",
+      "pages": 3,
+      "sha256": "01da50e11f061e661c60ca6019260ed078b0dc710f137b7a5efcbe2530c234f0",
+      "public_pdf_copy": false
+    },
+    {
+      "title": "SIMPLE and PIMPLE Algorithms (5).pdf",
+      "pages": 9,
+      "sha256": "821e1f90c6609c9c4d53c08f0612a81606ba0ed2dad081cc8090ba02bf8e0f33",
+      "public_pdf_copy": false
+    },
+    {
+      "title": "Lid-Driven Cavity — Re 400 and 1000.pdf",
+      "pages": 13,
+      "sha256": "27353fa7a0e43185aa6e25ccf7a27a292da931336066625a3f2899d3cd617d1d",
+      "public_pdf_copy": false
+    }
+  ],
+  "submitted_measurements": {
+    "file": "submitted_summary.csv",
+    "source_report": "Lid-Driven Cavity — Re 400 and 1000.pdf",
+    "source_pages": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12
+    ],
+    "status": "Transcribed student-reported values. Full original arrays, machine specification and execution configuration were not attached.",
+    "upwind_quantitative_data_submitted": false
+  },
+  "accepted_items": [
+    "pressure correction explained as response to continuity imbalance",
+    "nested-loop computational work interpretation",
+    "mesh refinement versus equation convergence",
+    "first-order upwind hypothesis checked with a matched fresh run"
+  ],
+  "corrected_items": [
+    {
+      "report": "SIMPLE and PIMPLE Algorithms (5).pdf",
+      "pages": [
+        2,
+        3
+      ],
+      "issue": "Pressure sensitivity needs consistent pressure units and integrated versus normalized momentum coefficients."
+    },
+    {
+      "report": "SIMPLE and PIMPLE Algorithms (5).pdf",
+      "pages": [
+        6
+      ],
+      "issue": "West and south advected neighbors carry old-time superscripts in the first line but predictor stars in the coefficient row. The implicit predictor must use one consistent level."
+    },
+    {
+      "report": "Lid-Driven Cavity — Re 400 and 1000.pdf",
+      "pages": [
+        13
+      ],
+      "issue": "Use final equation defects, not small residuals throughout: the plotted momentum histories decay from larger initial values."
+    },
+    {
+      "report": "IS HW.pdf",
+      "pages": [
+        2
+      ],
+      "issue": "The central approximation of du/dy needs 2 Delta y, not 2 Delta x, for unequal coordinate spacings. Added an exact manufactured-field check in Week 1."
+    }
+  ],
+  "fresh_calculations": {
+    "source_commit": "e561ee4142ad2e070df564908c36b77645044d15",
+    "run_date": "2026-10-26",
+    "script": "qa/review_naoya_cavity.py",
+    "cases": 9,
+    "shared_central_report_cases": 8,
+    "not_rerun": "PISO and PIMPLE at N=64, Re=400 and 1000",
+    "timing_interpretation": "Single local wall-clock observations; not matched timing replication."
+  },
+  "baseline_notebooks": {
+    "notebooks/week01/03_cavity_ghia.ipynb": {
+      "pre_existing_cell_count": 40,
+      "cells_sha256": "217657efcf3943c950decdb4c1a76b91e2f35e1e5da5aac766359c998936c616",
+      "serialization": "nbformat 4 cells; JSON sorted keys, ensure_ascii=False; UTF-8"
+    },
+    "notebooks/week01_2/W1_2_Cavity_Pressure_Velocity.ipynb": {
+      "pre_existing_cell_count": 33,
+      "cells_sha256": "3d6717762624d57e255736da98f7dc8dc65a3d719c6573b0e5a958851554a060",
+      "serialization": "nbformat 4 cells; JSON sorted keys, ensure_ascii=False; UTF-8"
+    }
+  }
+}
