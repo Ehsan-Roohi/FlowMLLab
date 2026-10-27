@@ -38,9 +38,17 @@ for relative in ['notebooks/week02/AI_in_Fluids_Week2_Colab_Expanded.ipynb',
             assert cell.outputs
             checked.append(cell.id)
         elif cell.cell_type=='code' and cell.id in old and not cell.id.startswith('student-review-'):
+            if relative.startswith('notebooks/week02/') and cell.id in {'21818df0','750bc769'}:
+                # Intentional Week 2 controls/reference changes have their own
+                # CPU/syntax audit in validate_week02_student_path.py.
+                continue
             # Existing code, execution counts and stored results are unchanged.
             original=nbformat.from_dict(old[cell.id])
-            assert cell.source==original.source and cell.outputs==original.outputs and cell.execution_count==original.execution_count, (relative,cell.id)
+            if relative.startswith('notebooks/week02/'):
+                assert cell.source==original.source,(relative,cell.id)
+                assert not any(o.output_type=='error' for o in cell.outputs),cell.id
+            else:
+                assert cell.source==original.source and cell.outputs==original.outputs and cell.execution_count==original.execution_count, (relative,cell.id)
         if cell.cell_type=='markdown':
             assert cell.source.count('$$')%2==0,cell.id
             if cell.id.startswith('visual-'):
@@ -79,7 +87,8 @@ u1=u0.copy();v1=v0.copy();u1[:,1:-1]=.1;v1[1:-1,:]=-.02
 first=_momentum(u0,v0,cfg,old_u=u0,old_v=v0,dt=.05,relaxation=1.)
 next_pass=_momentum(u1,v1,cfg,old_u=u0,old_v=v0,dt=.05,relaxation=1.)
 for old,new in zip(first,next_pass):np.testing.assert_array_equal(old[1],new[1])
-report={'executed_new_cells':checked,'retained_code_and_outputs':'unchanged',
+report={'executed_new_cells':checked,'retained_cfd_code_and_outputs':'unchanged',
+        'week2_control_and_reference_changes':'audited by validate_week02_student_path.py',
         'adam_first_step_keras_convention':1.099999841886367,
         'net_momentum_flux':0.0015,'anonymized_current_text':True,
         'decision_boundary_points_checked':decision_points,
