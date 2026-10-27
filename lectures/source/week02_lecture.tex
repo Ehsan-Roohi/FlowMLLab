@@ -86,7 +86,7 @@ Neural Networks for Fluid Surrogates and Rarefied-Flow Variables}
 \author{Instructor: Ehsan Roohi\\M\&I-ENG 690A: AI in Fluid Mechanics}
 \date{Summer Online Course}
 
-\input{lectures/source/lecture_typography.tex}
+\input{lecture_typography.tex}
 \tcbset{coltitle=black,colbacktitle=black!5}
 
 \begin{document}
@@ -196,7 +196,7 @@ Fluid language & Computational language & ML language \\
 \midrule
 Flow field $u(x,y)$ & 2D array $U_{j,i}$ & Image-like tensor or target field \\
 Grid point $(x_i,y_j)$ & Array location $(j,i)$ & Input features $x_i,y_j$ \\
-Parameter $\re$ or $\kn$ & Scalar value & Input feature \\
+Physical parameter $\re$ or $\kn$ & Scalar value & Input feature \\
 Boundary condition & Array edge values & Constraint or validation check \\
 Residual & Equation mismatch & Physics diagnostic or physics loss \\
 Benchmark data & Trusted numerical values & Test targets \\
@@ -227,7 +227,8 @@ Sample & One input-output example, such as one rarefied-flow case or one grid po
 Feature & An input variable used by the model, such as $\log_{10}\kn$, accommodation coefficient, pressure ratio, or spatial coordinate. \\
 Target & The quantity the model should predict, such as mass flow rate, slip velocity, heat flux, density, temperature, or a velocity component. \\
 Prediction & The output produced by the model before comparing with the target. \\
-Parameter & A trainable number inside the model, usually a weight or bias in a neural network. \\
+Trainable parameter & A trainable number inside the model, usually a weight or bias in a neural network. \\
+Hyperparameter & A training choice such as learning rate, batch size or hidden-layer width; it is not updated by Adam. \\
 Loss & A scalar number measuring prediction error on training data. \\
 Optimizer & An algorithm that changes model parameters to reduce the loss. \\
 Epoch & One pass through the training dataset. \\
@@ -293,21 +294,26 @@ The boundary between the two classes is
 \end{equation}
 Here $w_1$, $w_2$, and $b$ are the same parameters used in Eq.~\eqref{eq:linear_score}, and $x_1$ and $x_2$ are the features defined in Eq.~\eqref{eq:two_features}.  This equation is a line in the two-dimensional feature plane.
 
+For this illustration choose $w_1=1$, $w_2=-2$, and $b=2.8$, so
+$z=x_1-2x_2+2.8$ and the line is $x_2=(x_1+2.8)/2$.
 \begin{center}
-\begin{tikzpicture}[scale=0.9,>=Latex]
-\draw[->] (-4.2,0) -- (2.2,0) node[right,text=black] {$x_1=\log_{10}(\kn)$};
-\draw[->] (0,-0.2) -- (0,3.1) node[above,text=black] {$x_2=\alpha$};
-\draw[thick,fluidblue] (-3.5,2.7) -- (1.8,0.6) node[right,text=black] {$w_1x_1+w_2x_2+b=0$};
-\fill[fluidgreen] (-3,2.0) circle (2pt) node[above left,text=black] {0};
-\fill[fluidgreen] (-2.4,1.2) circle (2pt) node[left,text=black] {0};
-\fill[fluidgreen] (-1.9,2.5) circle (2pt) node[above,text=black] {0};
-\fill[fluidred] (-0.3,1.0) circle (2pt) node[below,text=black] {1};
-\fill[fluidred] (0.6,1.5) circle (2pt) node[right,text=black] {1};
-\fill[fluidred] (1.2,0.8) circle (2pt) node[right,text=black] {1};
-\node[align=center,text=black] at (-2.8,0.45) {continuum-like\\class 0};
-\node[align=center,text=black] at (1.05,2.45) {rarefied\\class 1};
+\begin{tikzpicture}[xscale=1.1,yscale=5,>=Latex,every node/.style={font=\small}]
+\draw[->] (-4.1,.55) -- (1.7,.55) node[right] {$x_1=\log_{10}(\kn)$};
+\draw[->] (-4.1,.55) -- (-4.1,1.06) node[above] {$x_2=\alpha$};
+\foreach \x in {-4,-3,-2,-1,0,1}{\draw (\x,.555)--(\x,.545) node[below] {$\x$};}
+\foreach \y in {.6,.8,1.0}{\draw (-4.05,\y)--(-4.15,\y) node[left] {$\y$};}
+\draw[thick,fluidblue] (-1.6,.6)--(-.8,1.0) node[above right] {$z=0$};
+\foreach \x/\y in {-3/.65,-2.1/.8,-1.3/.9}{
+  \node[circle,fill=fluidgreen,inner sep=1.7pt] at (\x,\y) {};
+  \node[above=2pt] at (\x,\y) {0};}
+\foreach \x/\y in {-.8/.7,0/.85,1/.95}{
+  \node[circle,fill=fluidred,inner sep=1.7pt] at (\x,\y) {};
+  \node[above=2pt] at (\x,\y) {1};}
 \end{tikzpicture}
 \end{center}
+Every sample lies in $0.6\leq\alpha\leq1$. For example,
+$z(-1.3,0.9)=-0.3<0$ gives class 0, while $z(-0.8,0.7)=0.6>0$ gives class 1.
+These are illustrative class labels, not a physical definition of Knudsen regimes.
 
 This is the first important idea: a neuron with a step activation draws a boundary in feature space.  Learning means changing $w_1$, $w_2$, and $b$ until that boundary separates the training examples as well as possible.
 
@@ -317,10 +323,10 @@ This is the first important idea: a neuron with a step activation draws a bounda
 A single artificial neuron takes several input features, multiplies them by weights, adds a bias, and then applies an activation function.
 
 \begin{equation}
-    z = \sum_{j=1}^{m} w_j x_j + b = \bm{w}^{T}\bx+b.
+    z = \sum_{j=1}^{d_x} w_j x_j + b = \bm{w}^{T}\bx+b.
     \label{eq:neuron_z}
 \end{equation}
-Here $m$ is the number of input features, $j$ is the feature index, $x_j$ is the $j$th input feature, $w_j$ is the weight multiplying $x_j$, $b$ is the bias, $\bx=[x_1,x_2,\ldots,x_m]^T$ is the feature vector, $\bm{w}=[w_1,w_2,\ldots,w_m]^T$ is the weight vector, $T$ denotes transpose, and $z$ is the pre-activation value.
+Here $d_x$ is the number of input features, $j$ is the feature index, $x_j$ is the $j$th input feature, $w_j$ is the weight multiplying $x_j$, $b$ is the bias, $\bx=[x_1,x_2,\ldots,x_{d_x}]^T$ is the feature vector, $\bm{w}=[w_1,w_2,\ldots,w_{d_x}]^T$ is the weight vector, $T$ denotes transpose, and $z$ is the pre-activation value.
 
 The neuron output is
 \begin{equation}
@@ -334,13 +340,13 @@ Here $o$ is the neuron output and $\phi$ is the activation function.  The activa
 \node (x1) at (0,1.3) {$x_1$};
 \node (x2) at (0,0.45) {$x_2$};
 \node (xd) at (0,-0.25) {$\vdots$};
-\node (xm) at (0,-1.05) {$x_m$};
+\node (xm) at (0,-1.05) {$x_{d_x}$};
 \node[circle,draw,minimum size=1.15cm,fill=lightblue,text=black] (sum) at (2.5,0.15) {$\sum$};
 \node[rectangle,draw,rounded corners,minimum width=1.2cm,minimum height=0.8cm,fill=lightgreen,text=black] (act) at (4.4,0.15) {$\phi$};
 \node (out) at (6.0,0.15) {$o$};
 \draw[->] (x1) -- node[above,text=black] {$w_1$} (sum);
 \draw[->] (x2) -- node[above,text=black] {$w_2$} (sum);
-\draw[->] (xm) -- node[below,text=black] {$w_m$} (sum);
+\draw[->] (xm) -- node[below,text=black] {$w_{d_x}$} (sum);
 \node (b) at (2.5,-1.75) {$b$};
 \draw[->] (b) -- (sum);
 \draw[->] (sum) -- node[above,text=black] {$z$} (act);
@@ -448,7 +454,7 @@ Learning means changing the trainable parameters to reduce the loss.  In a one-n
 
 For a linear-output neuron,
 \begin{equation}
-    o = z = \sum_{j=1}^{m} w_jx_j+b.
+    o = z = \sum_{j=1}^{d_x} w_jx_j+b.
     \label{eq:linear_neuron_output}
 \end{equation}
 Here $o$ is the scalar output, $z$ is the pre-activation value, $m$ is the number of features, $x_j$ is the $j$th feature, $w_j$ is the $j$th weight, and $b$ is the bias.
@@ -568,19 +574,27 @@ The learning rate $\eta$ in Eqs.~\eqref{eq:gd_w} and \eqref{eq:gd_b} controls ho
 \end{itemize}
 
 \begin{center}
-\begin{tikzpicture}[scale=0.95,>=Latex,every node/.style={font=\small}]
-\draw[->] (0,0) -- (10,0) node[right,text=black] {training step};
-\draw[->] (0,0) -- (0,3.0) node[above,text=black] {loss};
-\draw[fluidgreen,thick] plot[smooth] coordinates {(0.3,2.7) (1.5,1.8) (2.8,1.15) (4.2,0.75) (6.2,0.45) (9.2,0.25)};
-\draw[fluidblue,thick,dashed] plot[smooth] coordinates {(0.3,2.7) (1.7,2.45) (3.0,2.25) (5.0,2.0) (7.2,1.82) (9.2,1.68)};
-\draw[fluidred,thick,dotted] plot[smooth] coordinates {(0.3,2.4) (1.3,0.6) (2.3,2.7) (3.4,0.5) (4.5,2.8) (5.5,0.4) (6.8,2.9) (8.2,0.6) (9.2,2.6)};
-\node[fluidgreen,text=black] at (8.0,0.65) {reasonable $\eta$};
-\node[fluidblue,text=black] at (7.9,1.95) {too small};
-\node[fluidred,text=black] at (7.4,2.75) {too large};
+\begin{tikzpicture}[xscale=.95,yscale=.65,>=Latex,every node/.style={font=\small}]
+\draw[->] (0,0) -- (7.6,0);
+\node at (3.5,-.65) {update $k$};
+\draw[->] (0,0) -- (0,4.4) node[above] {$C_k/C_0$};
+\draw (0,.06) -- (0,-.06) node[below] {0};
+\draw (2,.06) -- (2,-.06) node[below] {2};
+\draw (4,.06) -- (4,-.06) node[below] {4};
+\draw (6,.06) -- (6,-.06) node[below] {6};
+\draw (.06,1) -- (-.06,1) node[left] {1};
+\draw (.06,2) -- (-.06,2) node[left] {2};
+\draw (.06,3) -- (-.06,3) node[left] {3};
+\draw (.06,4) -- (-.06,4) node[left] {4};
+\draw[fluidblue,thick,mark=*,mark size=1pt] plot coordinates {(0,1.000000) (1,0.902500) (2,0.814506) (3,0.735092) (4,0.663420) (5,0.598737) (6,0.540360) (7,0.487675)};
+\draw[fluidgreen,thick,mark=*,mark size=1pt] plot coordinates {(0,1.000000) (1,0.250000) (2,0.062500) (3,0.015625) (4,0.003906) (5,0.000977) (6,0.000244) (7,0.000061)};
+\draw[fluidred,thick,mark=*,mark size=1pt] plot coordinates {(0,1.000000) (1,1.210000) (2,1.464100) (3,1.771561) (4,2.143589) (5,2.593742) (6,3.138428) (7,3.797498)};
+\node at (8.25,.65) {$\eta=0.05$};
+\node at (8.25,.2) {$\eta=0.5$};
+\node at (8.25,3.8) {$\eta=2.1$};
 \end{tikzpicture}
 \end{center}
-
-Here $\eta$ is the learning rate, and ``loss'' is the training objective such as MSE.
+For the scalar loss $C(\theta)=\tfrac12(\theta-3)^2$ and $\theta_0=1$, these are actual gradient-descent loss samples normalized by $C_0$. The large-rate loss grows; it is not a bounded oscillation. The notebook also shows $\eta=1.5$, whose parameter oscillations decay. The Adam lesson below derives the error factor $1-\eta$.
 
 % ============================================================
 \section{From one neuron to a multi-layer perceptron}
@@ -634,6 +648,8 @@ Here $\widehat{\by}$ is the model prediction, $L$ is the index of the output lay
 \node at (6.7,2.25) {outputs};
 \end{tikzpicture}
 \end{center}
+
+The illustrated $3$--$4$--$3$--$2$ topology has 39 weights and biases. The notebook uses a separate $4$--$32$--$32$--$1$ topology with 1249 trainable parameters.
 
 \subsection{Why hidden layers help}
 
@@ -741,7 +757,7 @@ Momentum smooths the update direction:
 \end{align}
 Here $\bm{v}_k$ is the momentum vector at step $k$, $\beta\in[0,1)$ is the momentum coefficient, $\bm{g}_k=\nabla_{\btheta}C_{\mathcal{B}}(\btheta_k)$ is the current gradient, $\eta$ is the learning rate, and $\btheta_k$ is the parameter vector.
 
-Adam is a popular optimizer that combines ideas from momentum and adaptive learning rates.  In this course, students do not need to derive Adam.  They should understand that Adam uses gradients to adjust weights and that the learning rate still matters.
+\input{week02_optimizer_lesson.tex}
 
 % ============================================================
 \section{Training, validation, testing, and overfitting}
@@ -768,7 +784,7 @@ Overfitting occurs when the model performs well on training data but poorly on u
 \end{tikzpicture}
 \end{center}
 
-Here ``epoch'' is the number of passes through the training data.  Training loss often decreases continuously, but validation loss can increase after overfitting begins.
+An epoch is one complete pass through the training data; the horizontal axis counts completed epochs.  Training loss often decreases continuously, but validation loss can increase after overfitting begins.
 
 % ============================================================
 \section{Normalization and nondimensionalization}
@@ -795,17 +811,17 @@ Here $x$ is the original scalar feature, $x_{\min}$ is the minimum training-set 
 
 The Reynolds number is
 \begin{equation}
-    \re=\frac{\rho U L}{\mu}=\frac{U L}{\nu}.
+    \re=\frac{\rho U L_c}{\mu}=\frac{U L_c}{\nu}.
     \label{eq:reynolds}
 \end{equation}
-Here $\re$ is the Reynolds number, $\rho$ is density, $U$ is a characteristic velocity, $L$ is a characteristic length, $\mu$ is dynamic viscosity, and $\nu=\mu/\rho$ is kinematic viscosity.
+Here $\re$ is the Reynolds number, $\rho$ is density, $U$ is a characteristic velocity, $L_c$ is a characteristic length, $\mu$ is dynamic viscosity, and $\nu=\mu/\rho$ is kinematic viscosity.
 
 The Knudsen number is
 \begin{equation}
-    \kn=\frac{\lambda}{L}.
+    \kn=\frac{\lambda}{L_c}.
     \label{eq:knudsen}
 \end{equation}
-Here $\kn$ is the Knudsen number, $\lambda$ is the molecular mean free path, and $L$ is a characteristic macroscopic length.
+Here $\kn$ is the Knudsen number, $\lambda$ is the molecular mean free path, and $L_c$ is a characteristic macroscopic length.
 
 The Mach number is
 \begin{equation}
@@ -832,7 +848,7 @@ The molecular mean free path is the average distance traveled by a molecule betw
 \end{equation}
 Here $\lambda$ is the mean free path, $k_B$ is Boltzmann's constant, $T$ is gas temperature, $d$ is the molecular diameter, and $p$ is gas pressure.
 
-Equation~\eqref{eq:mean_free_path} shows that lower pressure increases $\lambda$.  Small devices also increase $\kn$ because $L$ becomes small in Eq.~\eqref{eq:knudsen}.
+Equation~\eqref{eq:mean_free_path} shows that lower pressure increases $\lambda$.  Small devices also increase $\kn$ because $L_c$ becomes small in Eq.~\eqref{eq:knudsen}.
 
 \subsection{Knudsen-number regimes}
 

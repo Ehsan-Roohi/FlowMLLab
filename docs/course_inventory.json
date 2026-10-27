@@ -10,7 +10,7 @@
   },
   "counts": {
     "active_lecture_pdfs": 35,
-    "lecture_pages": 490,
+    "lecture_pages": 501,
     "student_notebooks": 51,
     "historical_student_companions": 1,
     "optional_notebooks": 1,
@@ -23,7 +23,7 @@
     },
     {
       "path": "lectures/week01_2_pressure_velocity.pdf",
-      "pages": 30
+      "pages": 38
     },
     {
       "path": "lectures/week01_numerical_foundations.pdf",
@@ -35,7 +35,7 @@
     },
     {
       "path": "lectures/week02_supervised_learning_rarefaction.pdf",
-      "pages": 21
+      "pages": 24
     },
     {
       "path": "lectures/week03_kinetic_dsmc.pdf",

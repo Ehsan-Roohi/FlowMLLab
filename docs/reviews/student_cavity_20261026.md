@@ -1,6 +1,6 @@
 # From a student cavity study to a reproducible comparison
 
-Naoya Miyamoto's three reports, received on 26 October 2026, cover the
+The student's three reports, received on 26 October 2026, cover the
 streamfunction-vorticity foundations in Week 1 and pressure-velocity coupling
 in Week 1.2. They do not provide evidence for the later machine-learning units.
 The useful contribution is a worked comparison of coupling cost and mesh error,

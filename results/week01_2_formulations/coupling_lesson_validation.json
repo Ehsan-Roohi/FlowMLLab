@@ -6,10 +6,10 @@
     "spatial_pressure_difference": "p_E - p_P"
   },
   "notebook": {
-    "code_cells": 8,
-    "png_outputs": 14,
+    "code_cells": 11,
+    "png_outputs": 3,
     "errors": 0,
-    "sha256": "dee998eab5520d42f9a7b18a348e18764d0025104482bd411f28c9e9d1db693c"
+    "sha256": "88f9ee16e43e28efeab504ffe2e18ba3fad22328cd8e58666ee8c6a37fb273ac"
   },
   "examples": {
     "two_cell_conservation": true,
@@ -19,12 +19,12 @@
   },
   "lesson_update_idempotent": true,
   "pdf": {
-    "pages": 26,
-    "sha256": "496cf68afefb03a1b7c0e8ec7435aad1e22b60dca2be312c1a02724e3fc1d2a4",
+    "pages": 38,
+    "sha256": "56e994c2d5453557d225fcdc4310a36dec533622d25196e311ff54e9d69f17dd",
     "times_new_roman_present": true,
     "all_pages_rendered_and_reviewed": true,
     "text_within_horizontal_page_bounds": true
   },
   "source_access": "Publisher metadata and chapter previews; PISO paper abstract; official pressure-velocity algorithm documentation. Full textbook text was not downloaded.",
-  "scientific_scope": "Teaching and presentation update; solver physics and retained CFD trajectories unchanged. Notebook executed locally; hosted Colab not executed."
+  "scientific_scope": "Teaching and presentation update; solver physics and retained CFD trajectories unchanged. Algebra examples checked locally; optional solver cells need not be executed. Hosted Colab not executed."
 }

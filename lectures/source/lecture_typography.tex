@@ -5,7 +5,7 @@
 \setmainfont{Times New Roman}
 \setsansfont{Times New Roman}
 % Explicit code-only exception: preserve alignment in literal source listings.
-\setmonofont{DejaVu Sans Mono}[Scale=MatchLowercase]
+\IfFontExistsTF{DejaVu Sans Mono}{\setmonofont{DejaVu Sans Mono}[Scale=MatchLowercase]}{\setmonofont{Consolas}[Scale=MatchLowercase]}
 % mathastext preserves the existing TeX math-symbol machinery (including bm),
 % while making Latin letters/digits and common punctuation use genuine TNR.
 % Specialized mathematical symbols remain in the explicitly required math font.

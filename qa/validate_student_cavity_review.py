@@ -1,10 +1,11 @@
 """Check submitted-table arithmetic, fresh cavity fields and notebook additions.
 
 No solver trajectory is run by this validator. It reads the independent fresh
-suite created by review_naoya_cavity.py --run.
+suite created by review_student_cavity.py --run.
 """
 from pathlib import Path
 import csv
+import copy
 import hashlib
 import json
 import sys
@@ -14,7 +15,7 @@ import numpy as np
 
 ROOT=Path(__file__).resolve().parents[1]
 sys.path[:0]=[str(ROOT),str(ROOT/'qa')]
-from review_naoya_cavity import load, selected_cases, OUT
+from review_student_cavity import load, selected_cases, OUT
 from flowmllab.pressure_velocity import divergence, _residual
 from flowmllab.pressure_velocity_experiments import ExperimentalConfig, benchmark_errors
 from notebook_math import normalize_markdown
@@ -62,21 +63,26 @@ def main():
                  'notebooks/week01_2/W1_2_Cavity_Pressure_Velocity.ipynb']:
         after=nbformat.read(ROOT/name,4)
         # Check every pre-existing cell, including source and executed outputs.
-        remaining=[c for c in after.cells if not c.id.startswith('naoya-')]
+        remaining=copy.deepcopy([c for c in after.cells if not c.id.startswith(('student-review-', 'visual-'))])
+        # Only the documented outer-iteration notation changes in baseline prose.
+        # Reverse that spelling change before checking the historical cell digest.
+        for cell in remaining:
+            if cell.cell_type=='markdown':
+                cell.source=cell.source.replace(r'q_{\rm lag}',r'\widehat q').replace(r'p_{\rm lag}',r'\widehat p')
         digest=hashlib.sha256(json.dumps(remaining,sort_keys=True,ensure_ascii=False).encode()).hexdigest()
         assert digest==baseline[name]['cells_sha256'],name
         assert len(remaining)==baseline[name]['pre_existing_cell_count'],name
         preserved+=len(remaining)
     foundation=nbformat.read(ROOT/'notebooks/week01/03_cavity_ghia.ipynb',4)
-    note=next(c for c in foundation.cells if c.id=='naoya-rectangular-vorticity-note')
+    note=next(c for c in foundation.cells if c.id=='student-review-rectangular-vorticity-note')
     assert normalize_markdown(note.source)==note.source
-    cell=next(c for c in foundation.cells if c.id=='naoya-rectangular-vorticity-check')
+    cell=next(c for c in foundation.cells if c.id=='student-review-rectangular-vorticity-check')
     namespace={};exec(cell.source,namespace)
     np.testing.assert_allclose(namespace['omega_central'],-1.008,atol=1e-12)
     np.testing.assert_allclose(namespace['omega_wrong_spacing'],-1.584,atol=1e-12)
     assert cell.execution_count is not None and not any(o.output_type=='error' for o in cell.outputs)
     book=nbformat.read(ROOT/'notebooks/week01_2/W1_2_Cavity_Pressure_Velocity.ipynb',4);nbformat.validate(book)
-    accepted=[c for c in book.cells if c.id.startswith('naoya-')]
+    accepted=[c for c in book.cells if c.id.startswith('student-review-')]
     assert len(accepted)==4
     for cell in accepted:
         if cell.cell_type=='markdown':
@@ -94,7 +100,8 @@ def main():
             'notebook_review_cells':4,'new_code_cell_executed':True,
             'week1_unequal_spacing_derivative_check':'passed and executed',
             'integrated_coefficient_normalization_check':'passed',
-            'pre_existing_notebook_cells_preserved':preserved,
+            'pre_existing_notebook_cells_checked':preserved,
+            'permitted_baseline_prose_change':'PIMPLE outer fields use lag subscript instead of hat; code and outputs unchanged',
             'scope':'Selected fresh reproduction; four N=64 PISO/PIMPLE cases remain student-reported.'}
     (OUT/'validation.json').write_text(json.dumps(result,indent=2)+'\n')
     print(json.dumps(result,indent=2))

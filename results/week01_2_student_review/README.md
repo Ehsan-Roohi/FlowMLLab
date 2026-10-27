@@ -1,11 +1,11 @@
 # Student cavity study: selected fresh checks
 
-Naoya Miyamoto's October 2026 report supplied 12 central-convection cases.
+The student's October 2026 report supplied 12 central-convection cases.
 The table below contains **nine separate author-side calculations** with
 the current Python solver: eight corresponding central cases and one
 matched upwind case. No CFD package is used.
 
-[Review and corrected teaching explanations](../../docs/reviews/naoya_cavity_20261026.md)
+[Review and corrected teaching explanations](../../docs/reviews/student_cavity_20261026.md)
  | [Student-reported measurements](submitted_summary.csv)
  | [Fresh measurements](fresh_summary.csv)
  | [Source report hashes and provenance](provenance.json)
@@ -87,11 +87,11 @@ From a complete checkout with the project dependencies installed:
 
 ```bash
 # Rebuild figures and tables from hash-verified retained fields:
-python qa/review_naoya_cavity.py
+python qa/review_student_cavity.py
 # Calculate any missing fresh cases (can take several minutes or longer):
-python qa/review_naoya_cavity.py --run
+python qa/review_student_cavity.py --run
 # Check report arithmetic, fresh fields and executed teaching cells:
-python qa/validate_naoya_review.py
+python qa/validate_student_cavity_review.py
 ```
 
 Existing results are reused only when solver hashes and full configurations

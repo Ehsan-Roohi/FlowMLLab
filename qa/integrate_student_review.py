@@ -9,21 +9,20 @@ from notebook_math import normalize_markdown
 
 COEFFICIENTS = r'''### Reading the correction coefficient in an integrated equation
 
-The momentum diagonal depends on how the equation is normalized. Let $V_e$ be
-the horizontal-velocity control-volume size and $\widehat a_e$ the momentum
-diagonal **before** division by $V_e$. With the dimensionless pressure used here,
-the local SIMPLE correction is
+Let $V_e$ be the horizontal-velocity control-volume size and $a_e$ the momentum
+diagonal **after** division by $V_e$. The integrated row therefore has diagonal
+$V_e a_e$. With the dimensionless pressure used here, the local SIMPLE correction is
 
 $$
-\widehat a_e u'_e=-V_e\frac{p'_E-p'_P}{h}.
+(V_e a_e)u'_e=-V_e\frac{p'_E-p'_P}{h}.
 $$
 
 $p'_E$ and $p'_P$ are the pressure corrections in adjacent pressure cells;
 $h$ is their center-to-center distance. Dividing the momentum row by $V_e$ gives
 
 $$
-a_e=\frac{\widehat a_e}{V_e},\qquad
-d_e=\frac{V_e}{\widehat a_e}=\frac{1}{a_e},\qquad
+a_eu'_e=-\frac{p'_E-p'_P}{h},\qquad
+d_e=\frac{V_e}{V_e a_e}=\frac{1}{a_e},\qquad
 u'_e=-d_e\frac{p'_E-p'_P}{h}.
 $$
 
@@ -58,7 +57,7 @@ changes the equation; it is not another PISO correction.'''
 
 CASE_STUDY = r'''## 11. Worked study: a converged solution can still need a finer grid
 
-Naoya Miyamoto's October 2026 cavity report compares SIMPLE, PISO and PIMPLE
+The student's October 2026 cavity report compares SIMPLE, PISO and PIMPLE
 on 32 and 64 cells per side at $Re=400$ and 1000. The table below preserves his
 reported measurements. Separate fresh calculations check selected cases with
 the current solver; the two sets of timings are not interchangeable.
@@ -82,7 +81,7 @@ not independently rerun here. Original student arrays, full configuration and
 machine specifications were not attached, so exact source-run replication and
 timing replication cannot be claimed.
 
-[Reviewed explanations, corrections and provenance](https://github.com/Ehsan-Roohi/FlowMLLab/blob/main/docs/reviews/naoya_cavity_20261026.md)
+[Reviewed explanations, corrections and provenance](https://github.com/Ehsan-Roohi/FlowMLLab/blob/main/docs/reviews/student_cavity_20261026.md)
 
 **Exercises**
 
@@ -99,7 +98,7 @@ timing replication cannot be claimed.
 
 The following cell loads small retained tables and figures; it does not launch
 new CFD. Recomputing the nine-case suite with
-`python qa/review_naoya_cavity.py --run` may take several minutes or longer on
+`python qa/review_student_cavity.py --run` may take several minutes or longer on
 a CPU. Begin with the retained evidence before running finer grids.'''
 
 DISPLAY_CODE = '''from IPython.display import display, Image
@@ -148,7 +147,7 @@ invisible when both spacings are equal. The central formulas differentiate
 these polynomial terms exactly up to round-off; general smooth fields still
 have truncation error. This is a derivative check, not a cavity-flow simulation.
 
-This exercise was developed while reviewing Naoya Miyamoto's foundations notes.'''
+This exercise was developed while reviewing The student's foundations notes.'''
 
 VORTICITY_CODE = '''import numpy as np
 check_x, check_y = 0.4, 0.6
@@ -174,8 +173,8 @@ def main():
     path=ROOT/'notebooks/week01_2/W1_2_Cavity_Pressure_Velocity.ipynb'
     book=nbformat.read(path,4)
     old={c.id:c for c in book.cells}
-    ids=['naoya-coefficient-normalization','naoya-old-time-level',
-         'naoya-refinement-study','naoya-refinement-evidence']
+    ids=['student-review-coefficient-normalization','student-review-old-time-level',
+         'student-review-refinement-study','student-review-refinement-evidence']
     book.cells=[c for c in book.cells if c.id not in ids]
     for anchor,identifier,text in [('pressure-lesson-5',ids[0],COEFFICIENTS),
                                   ('pressure-lesson-10',ids[1],OLD_TIME)]:
@@ -187,10 +186,10 @@ def main():
     if ids[3] in old and old[ids[3]].source==cell.source:
         cell.outputs=old[ids[3]].outputs;cell.execution_count=old[ids[3]].execution_count
     book.cells.append(cell)
-    nbformat.validate(book);nbformat.write(book,path)
+    nbformat.validate(book);path.write_text(nbformat.writes(book),encoding='utf-8',newline='\n')
     path=ROOT/'notebooks/week01/03_cavity_ghia.ipynb'
     book=nbformat.read(path,4);old={c.id:c for c in book.cells}
-    identifiers=['naoya-rectangular-vorticity-note','naoya-rectangular-vorticity-check']
+    identifiers=['student-review-rectangular-vorticity-note','student-review-rectangular-vorticity-check']
     book.cells=[c for c in book.cells if c.id not in identifiers]
     index=next(i for i,c in enumerate(book.cells) if c.cell_type=='code' and c.source.startswith('def compute_velocity('))
     note=nbformat.v4.new_markdown_cell(normalize_markdown(VORTICITY_NOTE),id=identifiers[0])
@@ -198,7 +197,7 @@ def main():
     if code.id in old and old[code.id].source==code.source:
         code.outputs=old[code.id].outputs;code.execution_count=old[code.id].execution_count
     book.cells[index+1:index+1]=[note,code]
-    nbformat.validate(book);nbformat.write(book,path)
+    nbformat.validate(book);path.write_text(nbformat.writes(book),encoding='utf-8',newline='\n')
     print('Added notation explanations, a refinement case study, and an unequal-spacing derivative check.')
 
 

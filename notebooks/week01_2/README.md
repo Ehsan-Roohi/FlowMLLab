@@ -4,8 +4,8 @@
 
 An extension after Week 1 (and optionally Week 1.1), connecting finite-volume conservation to pressure correction. The baseline case is Re=100; separate retained experiments compare Re=400 and 1000.
 
-[Worked student study: convergence versus mesh accuracy](../../docs/reviews/naoya_cavity_20261026.md)
-adds Naoya Miyamoto's 12-case report table, selected fresh Python checks,
+[Worked student study: convergence versus mesh accuracy](../../docs/reviews/student_cavity_20261026.md)
+includes a 12-case student report table, selected fresh Python checks,
 physical velocity profiles, and exercises on pressure-solve work and numerical
 diffusion. Submitted measurements and fresh author-side runs are labeled
 separately. Section 11 of the notebook displays the comparison without running
@@ -15,8 +15,13 @@ and old-time data in PIMPLE.
 [Expanded comparison and teaching supplement](COMPARISON_AND_TEACHING.md)
 adds three algorithm flowcharts, a primary-source literature review, a measured
 15-configuration one-step coupling experiment, and a staged higher-Re and
-transient-accuracy plan. The lecture contains 30 pages. A smaller nonlinear
+transient-accuracy plan. The lecture contains 38 pages. A smaller nonlinear
 step defect is distinguished explicitly from a smaller physical time error.
+
+The illustrated lesson locates stored and interpolated velocities on separate
+pressure and momentum volumes, follows one face's momentum flux, and draws
+the SIMPLE, PISO and PIMPLE loops. Short arithmetic examples connect the
+diagrams to pressure correction before the matrix notation.
 
 ## Learning outcomes
 

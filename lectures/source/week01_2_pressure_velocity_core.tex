@@ -105,6 +105,8 @@ The corrected velocity must satisfy cell continuity. Substituting the four face 
 \]
 This equation determines pressure corrections from the predictor's cell imbalance. Neglecting neighbor corrections is an approximation to momentum coupling, not permission to violate continuity. Repeated coupling iterations are required to recover the target steady momentum solution.
 \newpage
+\input{week01_2_shared_face_visual.tex}
+\newpage
 \topic{6}{The cell pressure equation and its boundary data}
 At each face, the corrected velocity is tentative velocity plus its correction:
 \begin{align*}
@@ -204,6 +206,10 @@ Velocity is corrected fully; only the stored pressure update is damped by $\alph
 
 \textbf{Role.} SIMPLE is a natural steady solver. It can also be used inside a transient nonlinear solve, but the current implementation's SIMPLE branch has no physical time step. Its iteration count cannot be compared directly with the physical-step counts of PISO or PIMPLE.
 \newpage
+\topic{8 continued}{SIMPLE: follow the loop}
+\begin{center}\includegraphics[width=.94\linewidth,height=145mm,keepaspectratio]{week01_2_assets/simple_visual.pdf}\end{center}
+A return along the red arrow begins a new steady nonlinear iteration. Rebuild the convection coefficients from the latest velocity and check both momentum and continuity.
+\newpage
 \topic{9}{Physical time and backward-Euler momentum}
 PISO and PIMPLE solve a transient momentum equation. Superscripts $n$ and $n+1$ denote physical time levels, separated by $\Delta t$. For one face velocity,
 \[
@@ -246,6 +252,10 @@ The pressure equation follows by applying $D$ to the last line and imposing $Dq^
 Let $N_i$ be the specified number of inner corrections. After $N_i$ corrections, accept $q^{n+1}=q^{(N_i)}$ and $p^{n+1}=p^{(N_i)}$, then advance time once. The retained baseline has $N_i=2$. No momentum or pressure relaxation is applied by this transient branch.
 
 The nonlinear convection coefficients remain those used for the initial predictor. That limitation motivates an outer coefficient-update loop.
+\newpage
+\topic{10 continued}{PISO: follow the loop}
+\begin{center}\includegraphics[width=.94\linewidth,height=145mm,keepaspectratio]{week01_2_assets/piso_visual.pdf}\end{center}
+All inner corrections remain at the same new time level. The old-time velocity in the transient term is fixed. Each further pressure correction uses updated velocity information; an unchanged repeated pressure solve is not an additional PISO correction.
 \newpage
 \topic{11}{PISO: a frozen-matrix numerical example}
 This reduced two-velocity system illustrates coupling algebra; it is not a cavity grid. Let
@@ -313,30 +323,34 @@ The right-hand side of the pressure equation changes from $-8/11$ to $-40/77$. T
 \topic{12}{PIMPLE: outer coefficient updates and inner corrections}
 PIMPLE combines an outer momentum-update loop with PISO inner corrections. Physical time levels are $n,n+1$; $\ell$ labels outer updates and $m$ labels inner pressure corrections. The previous physical velocity $q^n$ is stored once.
 
-At the start of outer pass $\ell$, assemble convection using the latest available corrected velocity $\widehat q^{(\ell)}$. With $I$ denoting the identity matrix, this gives new matrices and sources
+At the start of outer pass $\ell$, assemble convection using the latest available corrected velocity $q_{\rm lag}^{(\ell)}$. With $I$ denoting the identity matrix, this gives new matrices and sources
 \[
-A^{(\ell)}=A_{\rm space}(\widehat q^{(\ell)})+I/\Delta t,
+A^{(\ell)}=A_{\rm space}(q_{\rm lag}^{(\ell)})+I/\Delta t,
 \qquad b^{(\ell)}=b_{\rm wall}^{(\ell)}+q^n/\Delta t.
 \]
-The same $q^n$ appears in every outer pass. Wall contributions may depend on the current assembly, but the prescribed wall motion and old-time source belong to the same physical step.
+The same $q^n$ appears in every outer pass. For this fixed-grid, fixed-lid code, the wall source is constant, so $b^{(\ell)}$ has the same value in every outer pass. The prescribed wall motion and old-time source belong to the same physical step.
 
-The first outer pass starts from $q^n,p^n$. The symbol $\widehat p^{(\ell)}$ denotes the latest available pressure at the start of outer pass $\ell$. A new momentum predictor is solved using that pressure. Then inner corrections hold the current outer assembly fixed:
+The first outer pass starts from $q^n,p^n$. The symbol $p_{\rm lag}^{(\ell)}$ denotes the latest available pressure at the start of outer pass $\ell$. A new momentum predictor is solved using that pressure. Then inner corrections hold the current outer assembly fixed:
 \begin{align*}
-A^{(\ell)}q^{(\ell,0)}&=b^{(\ell)}-G\widehat p^{(\ell)},\\
+A^{(\ell)}q^{(\ell,0)}&=b^{(\ell)}-Gp_{\rm lag}^{(\ell)},\\
 H^{(\ell,m)}&=b^{(\ell)}-R^{(\ell)}q^{(\ell,m)},\\
 L^{(\ell)}p^{(\ell,m+1)}&=-D\left(d^{(\ell)}H^{(\ell,m)}\right),\\
 q^{(\ell,m+1)}&=d^{(\ell)}\left[H^{(\ell,m)}-Gp^{(\ell,m+1)}\right].
 \end{align*}
 With $N_i$ inner corrections per outer pass, the initial and transfer rules are
 \begin{align*}
-\widehat q^{(1)}&=q^n,&\widehat p^{(1)}&=p^n,\\
-\widehat q^{(\ell+1)}&=q^{(\ell,N_i)},&\widehat p^{(\ell+1)}&=p^{(\ell,N_i)}.
+q_{\rm lag}^{(1)}&=q^n,&p_{\rm lag}^{(1)}&=p^n,\\
+q_{\rm lag}^{(\ell+1)}&=q^{(\ell,N_i)},&p_{\rm lag}^{(\ell+1)}&=p^{(\ell,N_i)}.
 \end{align*}
 Thus the final corrected fields of one outer pass initialize the next. Rebuilding $A$ also rebuilds $d$, $R$ and $L$. Each inner solve computes the full pressure field in the chosen gauge, as in this PISO implementation.
 
 \textbf{Two different purposes.} Inner corrections improve pressure--velocity consistency for the current matrix. Outer passes update the nonlinear coefficients that matrix represents. Neither loop advances physical time. Only after the final outer pass are the accepted fields assigned to time $n+1$.
 
 With one outer pass, this code reduces to its PISO algorithm. Its PIMPLE branch does not apply SIMPLE's under-relaxation. Additional loops reduce certain algebraic errors at extra cost; they do not increase backward-Euler's formal time order.
+\newpage
+\topic{12 continued}{PIMPLE: follow the loop}
+\begin{center}\includegraphics[width=.94\linewidth,height=145mm,keepaspectratio]{week01_2_assets/pimple_visual.pdf}\end{center}
+The outer loop updates convection coefficients and resolves momentum. The inner loop updates pressure and face velocity for those coefficients. Neither loop advances physical time. Accept a time step only after the solve targets are met; a steady-loop comparison alone does not establish transient accuracy.
 \newpage
 \topic{13}{PIMPLE: a nonlinear coefficient example}
 Extend the preceding algebraic example by making its momentum coefficients depend on velocity:

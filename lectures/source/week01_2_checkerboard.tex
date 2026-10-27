@@ -1,0 +1,30 @@
+\topic{2 continued}{Why pressure and velocity are staggered}
+\begin{center}\includegraphics[width=\linewidth]{week01_2_assets/checkerboard_pressure.pdf}\end{center}
+Consider a synthetic interior grid patch with $p_i=(-1)^i$. The index $i$
+counts pressure samples along $x$; the spacing is $h=0.25$. Neighboring
+pressures alternate between $+1$ and $-1$.
+
+If velocity and pressure were both stored at the same centers and the pressure
+gradient were approximated by a naive central difference there, it would give
+\[
+\left(\frac{\partial p}{\partial x}\right)_i
+\simeq\frac{p_{i+1}-p_{i-1}}{2h}=0,
+\]
+because $p_{i+1}=p_{i-1}$. This alternating pressure mode is invisible to that
+gradient: the resulting momentum equation cannot distinguish it from zero
+pressure gradient in the interior.
+
+On the MAC grid, horizontal momentum is evaluated at the shared face between
+adjacent pressure centers. Its pressure gradient is
+\[
+\left(\frac{\partial p}{\partial x}\right)_{i+1/2}
+\simeq\frac{p_{i+1}-p_i}{h}=\pm\frac{2}{h}=\pm8.
+\]
+The face momentum equation responds to the adjacent pressure difference.
+This is one reason for staggering the unknowns. In two dimensions an alternating
+pattern in both directions is called a pressure checkerboard.
+
+The figure is a discrete diagnostic pattern, not a computed cavity solution.
+Properly stabilized collocated methods can also work; they require their own
+face-flux interpolation treatment. The present course implementation uses the
+staggered arrangement derived here.

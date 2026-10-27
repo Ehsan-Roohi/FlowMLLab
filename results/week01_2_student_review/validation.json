@@ -10,6 +10,7 @@
   "new_code_cell_executed": true,
   "week1_unequal_spacing_derivative_check": "passed and executed",
   "integrated_coefficient_normalization_check": "passed",
-  "pre_existing_notebook_cells_preserved": 73,
+  "pre_existing_notebook_cells_checked": 73,
+  "permitted_baseline_prose_change": "PIMPLE outer fields use lag subscript instead of hat; code and outputs unchanged",
   "scope": "Selected fresh reproduction; four N=64 PISO/PIMPLE cases remain student-reported."
 }

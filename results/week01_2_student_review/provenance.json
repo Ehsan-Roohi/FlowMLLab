@@ -1,5 +1,5 @@
 {
-  "contributor": "Naoya Miyamoto",
+  "contributor": "Anonymous student contributor",
   "received_date": "2026-10-26",
   "review_scope": "Week 1 foundations and Week 1.2 pressure-velocity coupling",
   "private_source_reports": [
@@ -82,7 +82,7 @@
   "fresh_calculations": {
     "source_commit": "e561ee4142ad2e070df564908c36b77645044d15",
     "run_date": "2026-10-26",
-    "script": "qa/review_naoya_cavity.py",
+    "script": "qa/review_student_cavity.py",
     "cases": 9,
     "shared_central_report_cases": 8,
     "not_rerun": "PISO and PIMPLE at N=64, Re=400 and 1000",

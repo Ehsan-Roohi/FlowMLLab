@@ -1,0 +1,119 @@
+\clearpage
+\subsection{Learning rate: follow one parameter}
+A parameter is a trainable weight or bias. The vector $\theta$ collects all of
+them. A batch is a subset of training samples; its loss $C_B$ is their average
+prediction error. The gradient points locally uphill in parameter space, so an
+optimizer takes a step in the opposite direction. The update index $k$ counts
+parameter changes, not epochs and not physical CFD time steps.
+\[
+g_k=\nabla_\theta C_B(\theta_{k-1}),\qquad
+\theta_k=\theta_{k-1}-\eta g_k.
+\]
+The learning rate $\eta>0$ sets the step scale. For one scalar parameter, take
+\[
+C(\theta)=\tfrac12(\theta-3)^2,\qquad
+g=\frac{\mathrm dC}{\mathrm d\theta}=\theta-3.
+\]
+Starting from $\theta_0=1$ gives $g_1=-2$. With $\eta=0.5$, the next parameter
+is $\theta_1=1-0.5(-2)=2$: the negative gradient moves it toward the minimum
+at $\theta=3$. Repeating the update gives
+\[
+\underbrace{\theta_k-3}_{e_k}
+=(1-\eta)\underbrace{(\theta_{k-1}-3)}_{e_{k-1}}.
+\]
+Thus this quadratic gradient-descent example converges when $|1-\eta|<1$,
+or $0<\eta<2$. For $\eta=0.05$ it approaches slowly; for $\eta=0.5$ its error
+halves each update; for $\eta=2.1$ its error changes sign and grows.
+This bound depends on this loss's curvature. It is not a general neural-network
+or Adam learning-rate limit.
+
+\textbf{Notebook experiment.} Plot the parameter and the loss against update
+number for these rates, including $\eta=1.5$ (alternating, decaying errors). Keep the starting value and loss fixed so that
+the effect of the rate can be identified. The experiment uses NumPy and does
+not retrain the fluid surrogate.
+
+\subsection{Adam: two memories for every parameter}
+Adam stores a running average $m_k$ of signed gradients and a running average
+$v_k$ of squared gradients. Both arrays have the same shape as $\theta$.
+The symbol $v_k$ in this optimizer is memory, not a fluid velocity.
+Starting with $m_0=v_0=0$,
+\begin{align*}
+m_k&=\beta_1m_{k-1}+(1-\beta_1)g_k,\\
+v_k&=\beta_2v_{k-1}+(1-\beta_2)g_k^2.
+\end{align*}
+The parameters $0\leq\beta_1,\beta_2<1$ control memory. The notebook uses
+the Keras defaults $\beta_1=0.9$ and $\beta_2=0.999$. Multiplication, squaring,
+division and square roots operate separately on every component.
+The first memory smooths the direction; the second measures recent gradient
+magnitude. Dividing by a square-root magnitude makes the step scale adaptive
+for each parameter. The second memory averages squared gradients; it is not a statistical variance. It does not remove the base learning-rate choice.
+
+\clearpage
+\subsection{Bias correction and the implemented update}
+The zero initial memories underestimate the early average magnitudes. After
+$k$ updates their bias-corrected versions are
+\[
+\widehat m_k=\frac{m_k}{1-\beta_1^k},\qquad
+\widehat v_k=\frac{v_k}{1-\beta_2^k}.
+\]
+The familiar Adam algorithm writes
+\[
+\theta_k=\theta_{k-1}-\eta\frac{\widehat m_k}
+{\sqrt{\widehat v_k}+\epsilon_{\rm alg}}.
+\]
+Here the small positive $\epsilon_{\rm alg}$ prevents division by zero.
+For exact reproduction, Keras uses the paper's \emph{epsilon-hat} convention:
+\[
+\alpha_k=\eta\frac{\sqrt{1-\beta_2^k}}{1-\beta_1^k},\qquad
+\boxed{\theta_k=\theta_{k-1}-\alpha_k
+\frac{m_k}{\sqrt{v_k}+\epsilon_K}.}
+\]
+Its default is $\epsilon_K=10^{-7}$. The equivalent denominator in the
+bias-corrected form contains $\epsilon_K/\sqrt{1-\beta_2^k}$; the two epsilon
+symbols should not be assigned the same value when reproducing an exact step.
+
+\textbf{One numerical Adam step.} For the preceding quadratic, $\theta_0=1$
+and $g_1=-2$. Hence
+\[
+m_1=0.1(-2)=-0.2,\qquad v_1=0.001(4)=0.004,
+\]
+\[
+\widehat m_1=-0.2/0.1=-2,\qquad
+\widehat v_1=0.004/0.001=4.
+\]
+Use $\eta=0.1$ only for this visible arithmetic example. Substitution into the
+Keras-form update gives $\theta_1\simeq1.09999984$. The notebook executes
+this calculation and checks its value. The fluid surrogate keeps its separate
+learning rate of $0.001$.
+
+Using the same $\eta=0.1$, gradient descent would move by $0.2$, giving
+$\theta_1=1.2$, while Adam moves by approximately $0.1$. With uncorrected
+memories, the alternative update $-\eta m_1/(\sqrt{v_1}+\epsilon_K)$ would
+move by approximately $0.316$. Bias correction changes the early step scale.
+
+\clearpage
+\subsection{Read the actual training settings}
+The 5000 samples split into 3500 training, 750 validation and 750 test samples.
+The $4$--$32$--$32$--$1$ network has
+$4(32)+32+32(32)+32+32(1)+1=1249$ trainable parameters.
+Each epoch contains 55 updates: 54 batches of 64 samples and a final batch of 44.
+Running all 500 epochs would give 27,500 updates.
+
+\begin{center}\begin{tabular}{p{.31\linewidth}p{.61\linewidth}}\toprule
+Setting & Meaning in the Week 2 training call\\\midrule
+\texttt{learning\_rate=1e-3} & Base Adam step scale $\eta=0.001$.\\
+\texttt{batch\_size=64} & Up to 64 samples contribute to each gradient update.\\
+One epoch & One pass through the training set: approximately $\lceil N_{\rm train}/64\rceil$ updates, including a smaller final batch.\\
+\texttt{epochs=500} & Maximum number of passes, not a promise to run all 500.\\
+\texttt{patience=30} & Stop after 30 epochs without lower validation loss (default improvement threshold: zero).\\
+\texttt{restore\_best\_weights=True} & Restore weights from the best monitored epoch.\\\bottomrule
+\end{tabular}\end{center}
+If epoch 120 has the lowest validation loss and the next 30 epochs do not improve it, training ends after epoch 150 and restores epoch-120 weights. Early stopping does not reduce the learning rate. For each independent rate trial, call \texttt{keras.utils.set\_random\_seed(7)}
+before rebuilding the model, optimizer and callback. Hold the split,
+training-only scaling, architecture and batch policy fixed; compare matched seeds. Select using validation loss; reserve test data for final evaluation.
+Training loss alone does not establish physical accuracy or extrapolation.
+
+\textbf{Sources.} Kingma and Ba, \emph{Adam: A Method for Stochastic Optimization}
+(ICLR 2015), \url{https://arxiv.org/abs/1412.6980}; Keras Adam documentation,
+\url{https://keras.io/api/optimizers/adam/}.
+\clearpage

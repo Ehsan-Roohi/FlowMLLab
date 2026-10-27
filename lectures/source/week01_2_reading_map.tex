@@ -1,0 +1,40 @@
+\topic{Reading map}{From a cell balance to a coupling algorithm}
+\textbf{The physical question.} A guessed pressure field produces a velocity
+from the momentum equations. Why might that velocity fail continuity?
+The momentum solve uses the guessed pressure gradient; it has not yet imposed
+zero net volume flux in every pressure cell. Pressure correction connects these
+two requirements.
+
+\begin{center}\begin{tabular}{p{.19\linewidth}p{.69\linewidth}}\toprule
+Stage & Quantity to identify before moving on\\\midrule
+1. Locate & Pressure at cell centers; horizontal and vertical velocities on their respective pressure-cell faces. Draw the separate momentum volume.\\
+2. Balance & Integrate continuity over one pressure cell. East/north outflow is positive; west/south outflow is negative.\\
+3. Predict & Use the current pressure in momentum to obtain tentative face velocities. Evaluate their cell imbalance.\\
+4. Correct & Express a face-velocity increment using the pressure-correction difference across that face. Substitute into continuity to obtain the pressure equation.\\
+5. Repeat & SIMPLE repeats the steady solve; PISO adds corrections within a time step; PIMPLE also updates momentum coefficients in an outer loop.\\\bottomrule
+\end{tabular}\end{center}
+
+\textbf{A small mass-balance check.} In a square pressure cell with $h=0.25$,
+suppose the predicted face velocities are
+$(u_e^*,u_w^*,v_n^*,v_s^*)=(0.12,0.08,0.01,0.03)$.
+Their integrated outward volume flux per unit depth is
+\[
+Q_P^*=h(u_e^*-u_w^*+v_n^*-v_s^*)
+=0.25(0.12-0.08+0.01-0.03)=0.005.
+\]
+The corresponding volume-normalized divergence is
+$r_{c,P}^*=Q_P^*/h^2=0.08$. More fluid leaves this cell than enters it.
+The correction must contribute $-0.005$ to the integrated outward flux.
+It is determined together with neighboring cells, since they share faces.
+Neither $Q_P^*$ nor $r_{c,P}^*$ is a pressure change.
+
+\textbf{Companion reading.} The following freely accessible references provide
+three complementary explanations:
+\begin{itemize}
+\item \href{https://doc.cfd.direct/notes/cfd-general-principles/pressure-velocity-coupling}{Section 5.10: pressure--velocity coupling}. Follow momentum rearrangement, face flux and substitution into continuity. The present lecture first expands those operations on a uniform staggered cell.
+\item \href{https://www.openfoam.com/documentation/user-guide/6-solving/6.3-solution-and-algorithm-control}{OpenFOAM algorithm controls, section 6.3.3}. Compare the steady SIMPLE and transient PISO correction patterns.
+\item \href{https://doc.cfd.direct/notes/cfd-general-principles/the-pimple-algorithm}{Section 5.21: PIMPLE}. Identify which coefficients change in the outer loop and why a steady pseudo-transient calculation is different from a time-accurate transient calculation.
+\end{itemize}
+These references also discuss collocated software implementations. Here the
+grid is staggered; a software-specific face-interpolation rule should not be
+substituted into this grid without deriving its corresponding balance.

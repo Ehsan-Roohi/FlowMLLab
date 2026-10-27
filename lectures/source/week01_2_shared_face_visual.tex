@@ -1,0 +1,34 @@
+\newpage
+\topic{5 continued}{One shared face, one velocity correction}
+\begin{center}\includegraphics[width=\linewidth]{week01_2_assets/shared_face_correction.pdf}\end{center}
+The predictor $u_e^*$ is obtained from momentum with the current pressure
+estimate. It generally leaves a cell mass imbalance. A pressure correction
+$p^\prime$ produces a velocity increment $u_e^\prime$:
+\[
+u_e=u_e^*+u_e^\prime,\qquad
+u_e^\prime=-d_e\frac{p_E^\prime-p_P^\prime}{h},\qquad d_e=1/a_e>0.
+\]
+Here $a_e$ is the diagonal of the \emph{volume-normalized} momentum equation.
+The prime denotes an increment, not differentiation. If $p_E^\prime>p_P^\prime$,
+the correction acts westward, consistent with acceleration down a pressure
+gradient.
+
+Cell $P$ and cell $E$ use the same shared face value. In the outward flux
+balance it contributes $+h u_e$ for $P$ and $-h u_e$ for $E$. A shared-face
+correction therefore preserves pairwise cancellation between neighboring cells.
+The pressure equation chooses these corrections to remove each cell's
+predictor mass imbalance, subject to the boundary fluxes and pressure reference.
+
+Return to the reading-map mass-balance example, where $u_e^*=0.12$ and
+$r_{c,P}^*=0.08$. For this correction illustration, assume $a_e=2$, so
+$d_e=0.5$, and suppose the pressure solve returns
+$p_E^\prime-p_P^\prime=0.01$. Then
+\[
+u_e^\prime=-0.5(0.01)/0.25=-0.02,\qquad u_e=0.12-0.02=0.10.
+\]
+Holding the other faces fixed, cell $P$ loses $h(0.02)=0.005$ of outward
+volume flux: its imbalance becomes zero. The same face change increases
+cell $E$'s outward flux by $0.005$. A correction that fixes $P$ alone may
+therefore spoil $E$; all pressure cells must be solved together.
+The prescribed diagonal $a_e=2$ belongs to this correction illustration,
+not to the earlier convection-flux example.
