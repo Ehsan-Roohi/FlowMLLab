@@ -61,11 +61,18 @@ The equations above specify this notebook's staggered-grid implementation. Collo
 
 def lesson_cells():
     import nbformat as n
+    import json
     from qa.week01_foundations_lesson import markdown
     tex=(ROOT/'lectures/source/week01_2_pressure_velocity_core.tex').read_text(encoding='utf-8')
     cells=[]
+    figure_guide=json.loads((ROOT/'lectures/source/week01_2_assets/figure_index.json').read_text(encoding='utf-8'))
     for i,part in enumerate(tex.split('\\newpage')):
         if not part.strip():continue
+        def numbered_figure(match):
+            name=match.group(1);entry=figure_guide[name]
+            return ('\n\n!['+name.replace('_',' ')+'](https://raw.githubusercontent.com/Ehsan-Roohi/FlowMLLab/main/lectures/source/week01_2_assets/'+entry['image']+')\n\n'
+                    '**Figure '+entry['number']+'.** '+entry['caption']+'\n\n')
+        part=re.sub(r'\\lessonfigure\{([^}]+)\}\{[^\n]*\}\{[^}]+\}',numbered_figure,part)
         part=re.sub(r'\\includegraphics\[[^\]]*\]\{week01_2_assets/([^}]*)\.pdf\}',lambda m:'\n\n![Pressure-velocity grid and loops](https://raw.githubusercontent.com/Ehsan-Roohi/FlowMLLab/main/lectures/source/week01_2_assets/'+m[1]+'.png)\n\n',part)
         text=markdown(part).replace(r'\small','')
         text=re.sub(r'^### [^:]+:',f'## 2.{i+1}',text,count=1)

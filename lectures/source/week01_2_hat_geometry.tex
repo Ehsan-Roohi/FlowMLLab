@@ -1,13 +1,21 @@
 \newpage
 \topic{3 continued}{Locate the velocity before interpolating it}
-\begin{center}\includegraphics[width=\linewidth]{week01_2_assets/hat_locations.pdf}\end{center}
+\lessonfigure{hat_stored_locations}{Stored samples around the horizontal-momentum volume (blue square). Blue circles: horizontal velocity; green triangles: vertical velocity; open black squares: pressure. Coordinates are relative to pressure center P and scaled by h.}{hat-stored-locations}
 Use local coordinates with origin at pressure center $P$. The axes are measured in grid spacings $h$. The pressure
 centers are $P=(0,0)$ and $E=(h,0)$. The horizontal velocity $u_e$ is stored
 at $(h/2,0)$, on their shared pressure-cell face. Its own momentum control
 volume is shifted: $0\leq x\leq h$ and $-h/2\leq y\leq h/2$.
 
-The blue circles are stored horizontal components. The red crosses are
-evaluation points at the faces of this momentum volume. In these face-flux formulas, a hat denotes
+The blue circles are stored horizontal components. For example, $u_{\rm N}$ is
+a neighboring horizontal component one spacing above $u_e$, not a vertical
+velocity. Green triangles mark stored vertical components. Their averages
+supply the speeds carrying fluid through the north and south momentum faces.
+
+\newpage
+\topic{3 continued}{Interpolate the transported horizontal component}
+\lessonfigure{hat_interpolated_locations}{Evaluation points for transported horizontal velocity. Blue circles are stored u samples and red crosses are interpolated values on momentum-volume faces. Dashed segments connect each pair used in an average. The west and east crosses coincide geometrically with pressure centers; pressure symbols are omitted here for clarity.}{hat-interpolated-locations}
+The red crosses are evaluation points at the faces of the horizontal-momentum
+volume. In these face-flux formulas, a hat denotes
 interpolation to a momentum-volume face. The east and west crosses coincide with pressure
 centers; the north and south crosses lie at pressure-cell corners. These
 geometrical coincidences do not make pressure and horizontal velocity the
@@ -18,10 +26,9 @@ Each cross lies halfway between two blue samples. For example,
 \widehat u_{\rm N}=\frac{u_e+u_{\rm N}}2,\qquad
 \widehat u_{\rm E}=\frac{u_e+u_{\rm E}}2.
 \]
-The subscript N on $u_{\rm N}$ means a neighboring \emph{horizontal} component
-one grid spacing to the north. It does not mean a vertical velocity. The green
-triangles store vertical components, which supply the speeds carrying fluid
-through the north and south faces.
+For example, the north cross is at $(h/2,h/2)$, halfway between
+$u_e$ at $(h/2,0)$ and $u_{\rm N}$ at $(h/2,h)$. The same construction
+applies to the east, west and south faces.
 
 \textbf{Read each mark in its equation.} In the face-flux formulas a hat indicates interpolation; a star indicates
 a provisional momentum solution; a prime indicates a pressure or velocity
@@ -31,7 +38,7 @@ $p_{\rm lag}^{(\ell)}$ for the latest outer-iteration estimates, keeping the hat
 for spatial interpolation.
 \newpage
 \topic{3 continued}{Crossing a face while carrying horizontal momentum}
-\begin{center}\includegraphics[width=\linewidth]{week01_2_assets/north_face_transport.pdf}\end{center}
+\lessonfigure{north_face_transport}{Horizontal momentum transported through the north face. The normal speed $c_{\rm N}$ carries fluid upward through the red face; the transported component is the horizontal velocity $\widehat u_{\rm N}$, offset above the face for clarity. $Q_{\rm N}$ is outward volume flux per unit depth. $F^u_{\rm N}$ is horizontal-momentum flux per unit density and unit depth. The values are nondimensional; arrow lengths are schematic.}{north-face-transport}
 At the north face, $c_{\rm N}$ is vertical: it carries fluid across the face.
 The transported quantity $\widehat u_{\rm N}$ is horizontal. Per unit density
 and unit depth, their product times the face length is the integrated
@@ -61,7 +68,3 @@ h(c_{\rm E}\widehat u_{\rm E}-c_{\rm W}\widehat u_{\rm W}
 \end{align*}
 Dividing by area $h^2$ gives the convection term $0.024$. The notebook checks
 these values. This is a local interpolation example, not a solved cavity field.
-
-In a linear momentum predictor, advecting speeds $c$ are frozen coefficients;
-the transported horizontal components are unknowns. At east and west their
-averaging formulas have the same geometry, but their roles in the solve differ.

@@ -1,6 +1,11 @@
 \documentclass[11pt]{article}
 \usepackage[a4paper,margin=21mm,headheight=15pt]{geometry}
 \usepackage{amsmath,amssymb,graphicx,booktabs,array,xcolor,fancyhdr,enumitem,hyperref}
+\usepackage{caption}
+\captionsetup{font=normalsize,labelfont=bf,justification=raggedright,singlelinecheck=false,skip=6pt}
+\newcommand{\lessonfigure}[3]{%
+\begin{center}\includegraphics[width=\linewidth]{week01_2_assets/#1.pdf}%
+\captionof{figure}{#2}\label{fig:#3}\end{center}}
 \usepackage{fontspec}
 \setmainfont{Times New Roman}
 \setsansfont{Times New Roman}
@@ -44,37 +49,51 @@ Sections & Topics\\\midrule
 \input{week01_2_pressure_velocity_core.tex}
 \newpage
 \topic{16}{Recorded cavity accuracy and runtime at $Re=100$}
-\begin{center}\includegraphics[width=.95\linewidth,height=64mm,keepaspectratio]{../../results/week01_2_pressure_velocity/figures/centerlines.png}\end{center}
+\lessonfigure{profiles_re100}{Retained Re=100 centerline velocities at matched spacing h=1/64. Curves show all four formulations; black markers are Ghia et al. (1982) samples. FV uses 64 pressure cells per side and FD uses 65 boundary-inclusive nodes. Line styles and colors identify the computed series.}{profiles-re100}
 The Ghia velocity markers are independent reference samples. The three finite-volume coupling methods use the same spatial equations. Their converged fields agree closely; differences from the finite-difference formulation also include spatial-discretization differences. The displayed 32/64 finite-volume cell counts correspond to 33/65 finite-difference nodes.
+\newpage
+\topic{16 continued}{Accuracy and measured solver cost}
 \input{week01_2_runtime_re100.tex}
 The table includes all four formulations and reports recorded solver-call seconds. The finite-difference reference has its own stopping norm and recovers pressure afterward. These measurements depend on the host, implementation, mesh, relaxation and stopping targets; they do not establish a universal fastest method.
 
 The finite-difference centerline errors decrease on refinement in this retained comparison. The finite-volume Ghia errors are not monotone between the two supplied grids. That behavior is retained rather than interpreted as proof of grid independence. More resolution and reference evidence are needed for an asymptotic accuracy claim.
 \newpage
 \topic{17}{Velocity structure and vorticity}
-\begin{center}\includegraphics[width=.98\linewidth,height=85mm,keepaspectratio]{../../results/week01_2_pressure_velocity/figures/speed.png}\end{center}
+\lessonfigure{field_speed_re100}{Retained Re=100 speed and velocity streamlines at h=1/64. All panels use the same physical color limits. Streamline arrows show circulation direction; their density does not measure vorticity.}{field-speed-re100}
 Speed is $|\boldsymbol u|=\sqrt{u^2+v^2}$ and signed vorticity is $\omega=\partial v/\partial x-\partial u/\partial y$. The moving lid drives a clockwise primary circulation and a lower-cavity return flow. Black streamlines follow computed velocity; they are not vorticity contours. Small corner eddies depend on resolution and convergence as well as display density.
-\begin{center}\includegraphics[width=.98\linewidth,height=85mm,keepaspectratio]{../../results/week01_2_pressure_velocity/figures/omega.png}\end{center}
+\newpage
+\topic{17 continued}{Signed vorticity and circulation}
+\lessonfigure{field_omega_re100}{Retained Re=100 signed vorticity with velocity streamlines at h=1/64. One symmetric logarithmic color scale is shared by all panels, linear for absolute vorticity up to 1. The displayed colorbar values are nondimensional physical vorticity, including wall peaks.}{field-omega-re100}
 Signed fields use a common symmetric-logarithmic color scale across methods, resolving interior values while retaining strong wall gradients. Colorbar values remain physical nondimensional field values. Similar converged fields are expected when the same discrete steady equations are solved; the comparison is useful for checking consistency.
 \newpage
 \topic{18}{Pressure and native convergence histories}
-\begin{center}\includegraphics[width=.98\linewidth,height=89mm,keepaspectratio]{../../results/week01_2_pressure_velocity/figures/p.png}\end{center}
+\lessonfigure{field_p_re100}{Retained Re=100 zero-mean pressure and velocity streamlines at h=1/64. One symmetric logarithmic color scale is shared, linear for absolute pressure up to 0.01. FD pressure is reconstructed after the vorticity solve. No independent pressure benchmark is claimed.}{field-p-re100}
 All pressures are reported with zero mean. Pressure gradients, rather than the arbitrary mean, affect velocity. Differences near the discontinuous lid corners should not be interpreted as reference-pressure validation. Ghia supplies velocity data, not pressure data.
-\begin{center}\includegraphics[width=.98\linewidth,height=70mm,keepaspectratio]{../../results/week01_2_pressure_velocity/figures/convergence.png}\end{center}
+\newpage
+\topic{18 continued}{Native convergence histories}
+\lessonfigure{convergence_re100}{Retained Re=100 finite-volume convergence histories at h=1/64. The horizontal coordinate is recorded solver-call wall time from one local run per method. Momentum and continuity are separate defects. The streamfunction-vorticity solver uses a different native stopping norm and is included in the adjacent timing tables, not on these FV residual axes.}{convergence-re100}
 The finite-volume histories evaluate momentum and mass balance. The streamfunction solver's native vorticity-update norm is kept separate in the notebook because it is a different quantity. Timing comparisons still include that formulation. A small relaxed update alone is not a momentum-equation convergence test.
 \newpage
 \topic{19}{Accuracy and recorded cost at $Re=400$ and 1000}
-\begin{center}\includegraphics[width=.98\linewidth,height=94mm,keepaspectratio]{../../results/week01_2_formulations/centerlines.png}\end{center}
+\lessonfigure{profiles_re400}{Retained Re=400 centerline velocities. Color identifies formulation and line style identifies spacing. Black markers are Ghia samples; the red cross retains the isolated published horizontal-profile anomaly at x/L=0.9063, excluded only from the qualified error norm. Selected fine cases do not constitute a complete refinement matrix.}{profiles-re400}
 The retained study includes all four methods at $h=1/32$, plus selected finer meshes. A converged coarse-grid streamfunction result can have large reference error. At $Re=1000$, its 128-cell-spacing relative profile errors are approximately 2.0\% for $u$ and 1.7\% for $v$, using $\|f_{\rm computed}-f_{\rm Ghia}\|_2/\|f_{\rm Ghia}\|_2$ at the tabulated samples.
+\newpage
+\topic{19 continued}{Centerline accuracy at $Re=1000$}
+\lessonfigure{profiles_re1000}{Retained Re=1000 centerline velocities. Color identifies formulation and line style identifies spacing; black markers are Ghia et al. (1982) samples. Finer FD solutions show the effect of spatial resolution separately from the coupling algorithm.}{profiles-re1000}
+\newpage
+\topic{19 continued}{Recorded higher-Reynolds-number cost}
 \input{week01_2_runtime_higher.tex}
 For an error vector $z$ over the reference samples, $\|z\|_2=\sqrt{\sum_j z_j^2}$; $j$ labels a sampled location. These are recorded sequential local solver-call timings. Reference errors, mesh spacing and native stopping definitions accompany them. The $Re=400$ all-point $v$ error retains the isolated published entry; a separately labeled sensitivity metric omits that sample without replacing its value.
 \newpage
 \topic{20}{Mesh refinement and recirculation}
-\begin{center}\includegraphics[width=.99\linewidth,height=150mm,keepaspectratio]{../../results/week01_2_formulations/refinement.png}\end{center}
+\lessonfigure{refinement_re400}{Retained Re=400 speed and computed velocity streamlines: SIMPLE at h=1/64, and independent streamfunction-vorticity solutions at h=1/64 and 1/128. The color scale and lid speed are common. Small recirculation structures must be supported by the resolved velocity field.}{refinement-re400}
 Each panel states Reynolds number, formulation and spacing. The sampled primary-vortex location and resolved corner circulation change with refinement. More inner pressure corrections cannot reproduce an unresolved boundary layer or secondary vortex.
 
 The fine-grid study is selected rather than a complete four-method refinement matrix. A result at one mesh does not demonstrate asymptotic order. Native steady-equation checks, Ghia errors and recorded initial failed attempts remain available with the data.
 
+\newpage
+\topic{20 continued}{Refined circulation at $Re=1000$}
+\lessonfigure{refinement_re1000}{Retained Re=1000 speed and computed velocity streamlines for the same selected refinement cases. The finer grid changes resolved boundary layers and corner circulation. Additional pressure corrections alone cannot recover spatial structures absent from the mesh.}{refinement-re1000}
 \textbf{Computational cost.} Fine grids and higher Reynolds numbers may require substantially longer runtimes and more memory. Students should begin with the supplied coarse case and estimate cost before selecting 64 or 128 cells on a laptop or Colab runtime.
 \newpage
 \topic{21}{A measured nonlinear coupling effect in the cavity}
@@ -122,4 +141,5 @@ The textbook treatments develop finite-volume conservation, staggered pressure--
 \item U. Ghia, K. N. Ghia and C. T. Shin (1982). ``High-Re solutions for incompressible flow using the Navier--Stokes equations and a multigrid method.'' \emph{JCP} 48, 387--411. \href{https://doi.org/10.1016/0021-9991(82)90058-4}{doi:10.1016/0021-9991(82)90058-4}. Velocity benchmark samples.
 \end{enumerate}
 The examples use a staggered grid. Collocated-grid interpolation and Rhie--Chow stabilization are separate topics and are not implemented by this solver.
+\input{week01_2_online_resources.tex}
 \end{document}

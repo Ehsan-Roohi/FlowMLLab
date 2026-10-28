@@ -1,0 +1,266 @@
+{
+  "mac_grid": {
+    "number": "1",
+    "caption": "Staggered (MAC) storage. Black dots mark pressure centers, blue circles horizontal velocities and green triangles vertical velocities. The shaded square is the pressure control volume around P; its side length is h.",
+    "image": "mac_grid.png",
+    "lecture": true,
+    "lecture_page": 4,
+    "png_sha256": "a59941ecffb44f32b02ab7c0d29529f95bcc2a65c0f03f34670dc71f0f788a05"
+  },
+  "checkerboard_pressure": {
+    "number": "2",
+    "caption": "A discrete pressure diagnostic with h=0.25. (a) Adjacent pressures alternate between +1 and -1. (b) The naive centered gradient at pressure centers is zero, while adjacent-pressure differences at shared velocity faces are +8 or -8. This is a synthetic pattern, not a cavity solution.",
+    "image": "checkerboard_pressure.png",
+    "lecture": true,
+    "lecture_page": 5,
+    "png_sha256": "d0df390dd98455b434851f3705b6bf0bceb7fb2c3ff1fe4eee956c083045d4db"
+  },
+  "momentum_volume": {
+    "number": "3",
+    "caption": "Horizontal-momentum control volume $V_e$. The unknown $u_e$ is at its center, while $p_P$ and $p_E$ are at the west and east face midpoints. Arrows show outward unit normals. The two pressure samples are separated by h.",
+    "image": "momentum_volume.png",
+    "lecture": true,
+    "lecture_page": 8,
+    "png_sha256": "028f76df25313b4900e2a9361354f5c30f20db4ff47f9de2d0393744182b9c05"
+  },
+  "hat_stored_locations": {
+    "number": "4",
+    "caption": "Stored samples around the horizontal-momentum volume (blue square). Blue circles: horizontal velocity; green triangles: vertical velocity; open black squares: pressure. Coordinates are relative to pressure center P and scaled by h.",
+    "image": "hat_stored_locations.png",
+    "lecture": true,
+    "lecture_page": 9,
+    "png_sha256": "a0fedfcbc0e72eb0caccc81098146e5db44797e1c1da1cbb4a5f5be5ca86de8b"
+  },
+  "hat_interpolated_locations": {
+    "number": "5",
+    "caption": "Evaluation points for transported horizontal velocity. Blue circles are stored u samples and red crosses are interpolated values on momentum-volume faces. Dashed segments connect each pair used in an average. The west and east crosses coincide geometrically with pressure centers; pressure symbols are omitted here for clarity.",
+    "image": "hat_interpolated_locations.png",
+    "lecture": true,
+    "lecture_page": 10,
+    "png_sha256": "fe11784dbc57e91814b88dbbf4929a2c1057e0edb0885a4ffa84edc5a3ce9b28"
+  },
+  "north_face_transport": {
+    "number": "6",
+    "caption": "Horizontal momentum transported through the north face. The normal speed $c_{\\rm N}$ carries fluid upward through the red face; the transported component is the horizontal velocity $\\widehat u_{\\rm N}$, offset above the face for clarity. $Q_{\\rm N}$ is outward volume flux per unit depth. $F^u_{\\rm N}$ is horizontal-momentum flux per unit density and unit depth. The values are nondimensional; arrow lengths are schematic.",
+    "image": "north_face_transport.png",
+    "lecture": true,
+    "lecture_page": 11,
+    "png_sha256": "b4c1b6a42a5c9d48517e89125d3c5ded9b40b9daaff6ac3b1aad08dc66c22559"
+  },
+  "shared_face_correction": {
+    "number": "7",
+    "caption": "A shared-face pressure correction. When $p_E^\\prime$ exceeds $p_P^\\prime$ by 0.01, the velocity increment is westward: $u_e^\\prime=-0.02$. The predictor 0.12 becomes 0.10. The same face velocity enters the two neighboring outward flux balances with opposite signs.",
+    "image": "shared_face_correction.png",
+    "lecture": true,
+    "lecture_page": 16,
+    "png_sha256": "612eb17937a5bd98b03c6d2dce87b7c79e814e067801c6a6a1d1069964bcf552"
+  },
+  "simple_visual": {
+    "number": "8",
+    "caption": "SIMPLE for a steady problem. Follow the blue boxes downward. The red return path rebuilds momentum after an unconverged iteration. Correct face velocities fully, relax pressure as specified, and test both momentum and cell continuity.",
+    "image": "simple_visual.png",
+    "lecture": true,
+    "lecture_page": 21,
+    "png_sha256": "bcf0a3eb203a70100fa6a5f0ffc953638e292601912adb9ade88099d91e2690b"
+  },
+  "piso_visual": {
+    "number": "9",
+    "caption": "PISO within one physical time step. The red return path updates correction terms before another pressure solve, using fixed momentum coefficients. The saved old-time velocity remains unchanged until the new time level is accepted.",
+    "image": "piso_visual.png",
+    "lecture": true,
+    "lecture_page": 24,
+    "png_sha256": "bdcf3b09bfea5207f1c0419c54f9b57bf04bceb275439685aba4ae275ed4de48"
+  },
+  "pimple_visual": {
+    "number": "10",
+    "caption": "PIMPLE within one physical time step. Green: inner pressure-velocity corrections with fixed momentum coefficients. Red: outer iterations rebuild those coefficients from the latest new-time estimate. Neither loop advances the saved old-time data.",
+    "image": "pimple_visual.png",
+    "lecture": true,
+    "lecture_page": 28,
+    "png_sha256": "58b788e0e739b0ff3b2ad0f0927f48477b46c474d3b2aad9379616b0078755f8"
+  },
+  "loop_map": {
+    "number": "11",
+    "caption": "Comparison of repeated work. A SIMPLE cycle is a steady nonlinear iteration. PISO repeats pressure-velocity corrections within one step. PIMPLE nests those corrections inside momentum-coefficient updates. The red arrows denote repetition; they do not denote physical time advancement.",
+    "image": "loop_map.png",
+    "lecture": true,
+    "lecture_page": 30,
+    "png_sha256": "cabe3b356ba6c822d8460992c6bab29398c034252d14260d906ba2927cfc732e"
+  },
+  "profiles_re100": {
+    "number": "12",
+    "caption": "Retained Re=100 centerline velocities at matched spacing h=1/64. Curves show all four formulations; black markers are Ghia et al. (1982) samples. FV uses 64 pressure cells per side and FD uses 65 boundary-inclusive nodes. Line styles and colors identify the computed series.",
+    "image": "profiles_re100.png",
+    "lecture": true,
+    "lecture_page": 32,
+    "png_sha256": "168d363e17ba706df7d3d92dc344e8b2a420dba28e49cbec3e7295c9245f6fac"
+  },
+  "field_speed_re100": {
+    "number": "13",
+    "caption": "Retained Re=100 speed and velocity streamlines at h=1/64. All panels use the same physical color limits. Streamline arrows show circulation direction; their density does not measure vorticity.",
+    "image": "field_speed_re100.png",
+    "lecture": true,
+    "lecture_page": 34,
+    "png_sha256": "51f1173064fe72de5eb846c9e151d0f27a472b3eaff3b393064cb9c91e536298"
+  },
+  "field_omega_re100": {
+    "number": "14",
+    "caption": "Retained Re=100 signed vorticity with velocity streamlines at h=1/64. One symmetric logarithmic color scale is shared by all panels, linear for absolute vorticity up to 1. The displayed colorbar values are nondimensional physical vorticity, including wall peaks.",
+    "image": "field_omega_re100.png",
+    "lecture": true,
+    "lecture_page": 35,
+    "png_sha256": "5491e27bb64bc560325b9c7dc2cda542905dab28c872ffca8b3a75c8a6624649"
+  },
+  "field_p_re100": {
+    "number": "15",
+    "caption": "Retained Re=100 zero-mean pressure and velocity streamlines at h=1/64. One symmetric logarithmic color scale is shared, linear for absolute pressure up to 0.01. FD pressure is reconstructed after the vorticity solve. No independent pressure benchmark is claimed.",
+    "image": "field_p_re100.png",
+    "lecture": true,
+    "lecture_page": 36,
+    "png_sha256": "3438b0de16dda6796b4d94692a87ac9619c06f6b798de590c19d922385b47a5a"
+  },
+  "convergence_re100": {
+    "number": "16",
+    "caption": "Retained Re=100 finite-volume convergence histories at h=1/64. The horizontal coordinate is recorded solver-call wall time from one local run per method. Momentum and continuity are separate defects. The streamfunction-vorticity solver uses a different native stopping norm and is included in the adjacent timing tables, not on these FV residual axes.",
+    "image": "convergence_re100.png",
+    "lecture": true,
+    "lecture_page": 37,
+    "png_sha256": "8d7d80481091527d704210b399621fa3a10f3d1d3e83e73262f216269fc63e9d"
+  },
+  "profiles_re400": {
+    "number": "17",
+    "caption": "Retained Re=400 centerline velocities. Color identifies formulation and line style identifies spacing. Black markers are Ghia samples; the red cross retains the isolated published horizontal-profile anomaly at x/L=0.9063, excluded only from the qualified error norm. Selected fine cases do not constitute a complete refinement matrix.",
+    "image": "profiles_re400.png",
+    "lecture": true,
+    "lecture_page": 38,
+    "png_sha256": "30f0101b629a4f28297db8ecd644f55a47faaad765235c5a88d19eefe9ede5eb"
+  },
+  "profiles_re1000": {
+    "number": "18",
+    "caption": "Retained Re=1000 centerline velocities. Color identifies formulation and line style identifies spacing; black markers are Ghia et al. (1982) samples. Finer FD solutions show the effect of spatial resolution separately from the coupling algorithm.",
+    "image": "profiles_re1000.png",
+    "lecture": true,
+    "lecture_page": 39,
+    "png_sha256": "be2fa0b349b9c39b5098929d4270ea07a7ae595dc85556116319a85f4bf1b93a"
+  },
+  "refinement_re400": {
+    "number": "19",
+    "caption": "Retained Re=400 speed and computed velocity streamlines: SIMPLE at h=1/64, and independent streamfunction-vorticity solutions at h=1/64 and 1/128. The color scale and lid speed are common. Small recirculation structures must be supported by the resolved velocity field.",
+    "image": "refinement_re400.png",
+    "lecture": true,
+    "lecture_page": 41,
+    "png_sha256": "a3a1941512115dd51facc6da1cfb8d70eda2617dd74a8c5ab16d917c3ccc0460"
+  },
+  "refinement_re1000": {
+    "number": "20",
+    "caption": "Retained Re=1000 speed and computed velocity streamlines for the same selected refinement cases. The finer grid changes resolved boundary layers and corner circulation. Additional pressure corrections alone cannot recover spatial structures absent from the mesh.",
+    "image": "refinement_re1000.png",
+    "lecture": true,
+    "lecture_page": 42,
+    "png_sha256": "163ec652d8acdaafee7b4ea2fd2e7f968098868b4637573db9da87729771860c"
+  },
+  "field_speed_re400": {
+    "number": "S1",
+    "caption": "Retained Re=400 speed at h=1/32, with computed velocity streamlines. All four formulations are shown on the same physical color scale. Signed fields use symmetric logarithmic normalization. These coarse-grid solutions are distinct from the selected fine-grid comparisons.",
+    "image": "field_speed_re400.png",
+    "lecture": false,
+    "lecture_page": null,
+    "png_sha256": "03e01b6b787972cb3e0bbda7105aebc30fc13d070b93484d1430b2bd9562a13e"
+  },
+  "field_p_re400": {
+    "number": "S2",
+    "caption": "Retained Re=400 zero-mean pressure at h=1/32, with computed velocity streamlines. All four formulations are shown on the same physical color scale. Signed fields use symmetric logarithmic normalization. These coarse-grid solutions are distinct from the selected fine-grid comparisons.",
+    "image": "field_p_re400.png",
+    "lecture": false,
+    "lecture_page": null,
+    "png_sha256": "9e118d8b1747119d2a51fb34883d5a2384e05f721c00f13e126caba591940cc3"
+  },
+  "field_omega_re400": {
+    "number": "S3",
+    "caption": "Retained Re=400 signed vorticity at h=1/32, with computed velocity streamlines. All four formulations are shown on the same physical color scale. Signed fields use symmetric logarithmic normalization. These coarse-grid solutions are distinct from the selected fine-grid comparisons.",
+    "image": "field_omega_re400.png",
+    "lecture": false,
+    "lecture_page": null,
+    "png_sha256": "aa4c7416b5fe992b5168224a81a6b9b245d6c7d4662a2ac9171e30b9a1feb64d"
+  },
+  "convergence_re400": {
+    "number": "S4",
+    "caption": "Retained Re=400, h=1/32 convergence. Upper: FV steady momentum defect. Lower: FD relative vorticity-update rate, divided by its time step. The equations, iteration units and stopping norms differ; their ordinate magnitudes cannot be used to rank formulation accuracy. Recorded costs are in the tables.",
+    "image": "convergence_re400.png",
+    "lecture": false,
+    "lecture_page": null,
+    "png_sha256": "fd4c505d1e9715b5759c786e6135655ef5815bf56430b814f7d77211f2b5782f"
+  },
+  "field_speed_re1000": {
+    "number": "S5",
+    "caption": "Retained Re=1000 speed at h=1/32, with computed velocity streamlines. All four formulations are shown on the same physical color scale. Signed fields use symmetric logarithmic normalization. These coarse-grid solutions are distinct from the selected fine-grid comparisons.",
+    "image": "field_speed_re1000.png",
+    "lecture": false,
+    "lecture_page": null,
+    "png_sha256": "616b097d74e58a8392e63133f5f36ce5f891d7ecbac921013254cc824932b4da"
+  },
+  "field_p_re1000": {
+    "number": "S6",
+    "caption": "Retained Re=1000 zero-mean pressure at h=1/32, with computed velocity streamlines. All four formulations are shown on the same physical color scale. Signed fields use symmetric logarithmic normalization. These coarse-grid solutions are distinct from the selected fine-grid comparisons.",
+    "image": "field_p_re1000.png",
+    "lecture": false,
+    "lecture_page": null,
+    "png_sha256": "f0ded27b8a2e8a226e98cad94c30ae1d913a9ca1fc57deb8a06f83dbe1d13762"
+  },
+  "field_omega_re1000": {
+    "number": "S7",
+    "caption": "Retained Re=1000 signed vorticity at h=1/32, with computed velocity streamlines. All four formulations are shown on the same physical color scale. Signed fields use symmetric logarithmic normalization. These coarse-grid solutions are distinct from the selected fine-grid comparisons.",
+    "image": "field_omega_re1000.png",
+    "lecture": false,
+    "lecture_page": null,
+    "png_sha256": "5041cabd32e963084d1a6018c75afaab11b6ecc7fa69affe5502e409a3f82a5d"
+  },
+  "convergence_re1000": {
+    "number": "S8",
+    "caption": "Retained Re=1000, h=1/32 convergence. Upper: FV steady momentum defect. Lower: FD relative vorticity-update rate, divided by its time step. The equations, iteration units and stopping norms differ; their ordinate magnitudes cannot be used to rank formulation accuracy. Recorded costs are in the tables.",
+    "image": "convergence_re1000.png",
+    "lecture": false,
+    "lecture_page": null,
+    "png_sha256": "d92bbbeadbf1507ba00caba957da1f2d37450bf161c8d9bd6598b93c32d68381"
+  },
+  "review_profiles_re400": {
+    "number": "S9",
+    "caption": "Independent follow-up Re=400 velocity profiles for central convection. Solid lines use 32 FV cells per side; dashed lines use 64 where available. Black markers are Ghia samples. At Re=400 the red cross retains the isolated published anomaly without including it in the qualified norm. These fields and their timings belong to the separately identified follow-up suite.",
+    "image": "review_profiles_re400.png",
+    "lecture": false,
+    "lecture_page": null,
+    "png_sha256": "08a53e83d05968f3257c7477270526db1d3bae32a5e035a9bd666af79edf5d6a"
+  },
+  "review_coupling_re400": {
+    "number": "S10",
+    "caption": "Independent follow-up Re=400, 32-cell central-convection histories against cumulative pressure solves. The dotted momentum line is the 1e-6 target. Divergence fluctuations near machine precision are not spatial error. Solve count is a work indicator, not an assertion that every linear solve has equal cost.",
+    "image": "review_coupling_re400.png",
+    "lecture": false,
+    "lecture_page": null,
+    "png_sha256": "15ba6e39910ab7a5c75d3419bfaf9f053b885912521b18c6cb9c4bb7cb6c6419"
+  },
+  "review_profiles_re1000": {
+    "number": "S11",
+    "caption": "Independent follow-up Re=1000 velocity profiles for central convection. Solid lines use 32 FV cells per side; dashed lines use 64 where available. Black markers are Ghia samples. At Re=400 the red cross retains the isolated published anomaly without including it in the qualified norm. These fields and their timings belong to the separately identified follow-up suite.",
+    "image": "review_profiles_re1000.png",
+    "lecture": false,
+    "lecture_page": null,
+    "png_sha256": "d1ed0ef58784e3715aa4588ea990a3c6ff845eabffd7eb2146718bf806c81dcf"
+  },
+  "review_coupling_re1000": {
+    "number": "S12",
+    "caption": "Independent follow-up Re=1000, 32-cell central-convection histories against cumulative pressure solves. The dotted momentum line is the 1e-6 target. Divergence fluctuations near machine precision are not spatial error. Solve count is a work indicator, not an assertion that every linear solve has equal cost.",
+    "image": "review_coupling_re1000.png",
+    "lecture": false,
+    "lecture_page": null,
+    "png_sha256": "0fc8215a169780f8cc10088db63b00615e11b209029c305638eea45a2a5d44fa"
+  },
+  "review_convection_re400": {
+    "number": "S13",
+    "caption": "Independent follow-up Re=400 SIMPLE profiles: first-order upwind and central convection on the indicated meshes. Changing convection changes the spatial equations; this is separate from changing the pressure-velocity coupling algorithm. The isolated Ghia horizontal-profile anomaly is omitted from the qualified markers.",
+    "image": "review_convection_re400.png",
+    "lecture": false,
+    "lecture_page": null,
+    "png_sha256": "fc6933031b0b2bfaf687e4693f71c6bdfdc2dd2c921b0c99c2ea698fa295de55"
+  }
+}

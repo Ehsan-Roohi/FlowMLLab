@@ -14,7 +14,7 @@ Developed for **MIE 690A: AI in Fluid Mechanics**, University of Massachusetts
 Amherst.
 
 <!-- course-counts:start -->
-The current checkout contains **51 student notebooks** (including 1 historical audit companion) and **35 active lecture PDFs / 501 pages** across Weeks 1–22 and their incremental units. Optional self-study supplements are counted separately.
+The current checkout contains **51 student notebooks** (including 1 historical audit companion) and **35 active lecture PDFs / 509 pages** across Weeks 1–22 and their incremental units. Optional self-study supplements are counted separately.
 
 [Inventory and counting rules](docs/COURSE_INVENTORY.md) · [Choose a learning path](START_HERE.md)
 <!-- course-counts:end -->

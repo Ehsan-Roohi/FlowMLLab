@@ -19,7 +19,7 @@ from qa.week01_2_math import Equation
 OUT=ROOT/'results/week01_2_pressure_velocity'
 NOTE=ROOT/'notebooks/week01_2/W1_2_Cavity_Pressure_Velocity.ipynb'
 PDF=ROOT/'lectures/week01_2_pressure_velocity.pdf'
-LECTURE_PAGES=38
+LECTURE_PAGES=46
 
 
 def notebook():

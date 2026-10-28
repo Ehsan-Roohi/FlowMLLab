@@ -2,7 +2,7 @@
 The equations in Section 1 are dimensionless. We now integrate them over a
 small fixed region of the grid. A \emph{control volume} is a chosen region of the flow domain. In a
 two-dimensional calculation it is an area per unit depth in the third direction.
-\begin{center}\includegraphics[width=.80\linewidth]{week01_2_assets/mac_grid.pdf}\end{center}
+\lessonfigure{mac_grid}{Staggered (MAC) storage. Black dots mark pressure centers, blue circles horizontal velocities and green triangles vertical velocities. The shaded square is the pressure control volume around P; its side length is h.}{mac-grid}
 Pressure $p_P$ is stored at pressure-cell center $P$. Horizontal velocity is
 stored at vertical faces; vertical velocity is stored at horizontal faces.
 For the cell around $P$, use lowercase $e,w,n,s$ for east, west, north and south
@@ -138,7 +138,7 @@ and interpolation convert them into equations for the stored grid values.
 The horizontal velocity $u_e$ lies halfway between pressure centers $P$ and $E$.
 Its square momentum volume extends from $x_P$ to $x_E$, a distance $h$.
 The pressure centers therefore lie at the midpoints of its west and east faces.
-\begin{center}\includegraphics[width=.93\linewidth,height=52mm,keepaspectratio]{week01_2_assets/momentum_volume.pdf}\end{center}
+\lessonfigure{momentum_volume}{Horizontal-momentum control volume $V_e$. The unknown $u_e$ is at its center, while $p_P$ and $p_E$ are at the west and east face midpoints. Arrows show outward unit normals. The two pressure samples are separated by h.}{momentum-volume}
 At this volume's boundaries, write $c_{\rm E},c_{\rm W}$ for the horizontal
 advecting velocities and $c_{\rm N},c_{\rm S}$ for the vertical advecting velocities.
 All are positive in their coordinate directions. Write $\widehat u_{\rm E}$,
@@ -179,6 +179,10 @@ where $n$ is a physical time index.
 \input{week01_2_hat_geometry.tex}
 \newpage
 \topic{3 continued}{Central interpolation and face gradients}
+In a linear momentum predictor, advecting speeds $c$ are frozen coefficients;
+the transported horizontal components are unknowns. At east and west their
+averaging formulas have the same geometry, but their roles in the solve differ.
+
 Let $u_{\rm E},u_{\rm W},u_{\rm N},u_{\rm S}$ be neighboring stored
 \emph{horizontal} velocities one grid spacing from $u_e$. They are not the
 pressure samples $p_E,p_W,p_N,p_S$. For central interpolation,

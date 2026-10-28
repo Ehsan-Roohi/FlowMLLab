@@ -1,0 +1,24 @@
+{
+  "lecture_pages": 46,
+  "lecture_figures": 20,
+  "notebook_supplementary_figures": 13,
+  "all_figure_numbers_and_captions_checked": true,
+  "all_diagrams_at_text_width_inches": 6.6,
+  "vector_text_within_figure_bounds": true,
+  "all_pdf_text_within_page_bounds": true,
+  "archived_fields_sha256_checked": 22,
+  "solver_sources_and_opt_in_solve_calls": "unchanged",
+  "executed_cheap_cells": [
+    "visual-checkerboard-check",
+    "visual-hat-arithmetic",
+    "51fefcd5",
+    "1b614a07",
+    "ee106a2c",
+    "student-review-refinement-evidence"
+  ],
+  "fresh_cfd_trajectories": 0,
+  "pdf_sha256": "8ed7935bd75ab1d6ad795bd1264f89949cfba1ca43775e2986d940a123be946b",
+  "notebook_sha256": "e3a79f0db0c507669944de6caf9c8f81f753d6160816e1c2e5bd690c59dce361",
+  "hosted_colab_run": false,
+  "visual_review": "All final pages rendered; all figure pages reviewed at publication scale."
+}

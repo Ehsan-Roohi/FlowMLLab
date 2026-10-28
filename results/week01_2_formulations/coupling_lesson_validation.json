@@ -7,9 +7,9 @@
   },
   "notebook": {
     "code_cells": 11,
-    "png_outputs": 3,
+    "png_outputs": 0,
     "errors": 0,
-    "sha256": "88f9ee16e43e28efeab504ffe2e18ba3fad22328cd8e58666ee8c6a37fb273ac"
+    "sha256": "e3a79f0db0c507669944de6caf9c8f81f753d6160816e1c2e5bd690c59dce361"
   },
   "examples": {
     "two_cell_conservation": true,
@@ -19,8 +19,8 @@
   },
   "lesson_update_idempotent": true,
   "pdf": {
-    "pages": 38,
-    "sha256": "56e994c2d5453557d225fcdc4310a36dec533622d25196e311ff54e9d69f17dd",
+    "pages": 46,
+    "sha256": "8ed7935bd75ab1d6ad795bd1264f89949cfba1ca43775e2986d940a123be946b",
     "times_new_roman_present": true,
     "all_pages_rendered_and_reviewed": true,
     "text_within_horizontal_page_bounds": true

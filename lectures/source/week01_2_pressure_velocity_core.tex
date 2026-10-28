@@ -207,7 +207,7 @@ Velocity is corrected fully; only the stored pressure update is damped by $\alph
 \textbf{Role.} SIMPLE is a natural steady solver. It can also be used inside a transient nonlinear solve, but the current implementation's SIMPLE branch has no physical time step. Its iteration count cannot be compared directly with the physical-step counts of PISO or PIMPLE.
 \newpage
 \topic{8 continued}{SIMPLE: follow the loop}
-\begin{center}\includegraphics[width=.94\linewidth,height=145mm,keepaspectratio]{week01_2_assets/simple_visual.pdf}\end{center}
+\lessonfigure{simple_visual}{SIMPLE for a steady problem. Follow the blue boxes downward. The red return path rebuilds momentum after an unconverged iteration. Correct face velocities fully, relax pressure as specified, and test both momentum and cell continuity.}{simple-visual}
 A return along the red arrow begins a new steady nonlinear iteration. Rebuild the convection coefficients from the latest velocity and check both momentum and continuity.
 \newpage
 \topic{9}{Physical time and backward-Euler momentum}
@@ -254,7 +254,7 @@ Let $N_i$ be the specified number of inner corrections. After $N_i$ corrections,
 The nonlinear convection coefficients remain those used for the initial predictor. That limitation motivates an outer coefficient-update loop.
 \newpage
 \topic{10 continued}{PISO: follow the loop}
-\begin{center}\includegraphics[width=.94\linewidth,height=145mm,keepaspectratio]{week01_2_assets/piso_visual.pdf}\end{center}
+\lessonfigure{piso_visual}{PISO within one physical time step. The red return path updates correction terms before another pressure solve, using fixed momentum coefficients. The saved old-time velocity remains unchanged until the new time level is accepted.}{piso-visual}
 All inner corrections remain at the same new time level. The old-time velocity in the transient term is fixed. Each further pressure correction uses updated velocity information; an unchanged repeated pressure solve is not an additional PISO correction.
 \newpage
 \topic{11}{PISO: a frozen-matrix numerical example}
@@ -349,7 +349,7 @@ Thus the final corrected fields of one outer pass initialize the next. Rebuildin
 With one outer pass, this code reduces to its PISO algorithm. Its PIMPLE branch does not apply SIMPLE's under-relaxation. Additional loops reduce certain algebraic errors at extra cost; they do not increase backward-Euler's formal time order.
 \newpage
 \topic{12 continued}{PIMPLE: follow the loop}
-\begin{center}\includegraphics[width=.94\linewidth,height=145mm,keepaspectratio]{week01_2_assets/pimple_visual.pdf}\end{center}
+\lessonfigure{pimple_visual}{PIMPLE within one physical time step. Green: inner pressure-velocity corrections with fixed momentum coefficients. Red: outer iterations rebuild those coefficients from the latest new-time estimate. Neither loop advances the saved old-time data.}{pimple-visual}
 The outer loop updates convection coefficients and resolves momentum. The inner loop updates pressure and face velocity for those coefficients. Neither loop advances physical time. Accept a time step only after the solve targets are met; a steady-loop comparison alone does not establish transient accuracy.
 \newpage
 \topic{13}{PIMPLE: a nonlinear coefficient example}
@@ -386,7 +386,7 @@ s=\frac{\sqrt{97}-9}{4}=0.2122144504,\qquad p=s/2-1.
 The table shows the benefit of coefficient updates for this example. Actual cavity efficiency must be judged using its own measured equation defects, accuracy and solve costs.
 \newpage
 \topic{14}{Algorithm loops and computational work}
-\begin{center}\includegraphics[width=.96\linewidth]{week01_2_assets/loop_map.pdf}\end{center}
+\lessonfigure{loop_map}{Comparison of repeated work. A SIMPLE cycle is a steady nonlinear iteration. PISO repeats pressure-velocity corrections within one step. PIMPLE nests those corrections inside momentum-coefficient updates. The red arrows denote repetition; they do not denote physical time advancement.}{loop-map}
 The nested loops act on one target problem at the current physical step. The diagram distinguishes steady SIMPLE iterations from PISO and PIMPLE time integration.
 
 Let $N_i$ be the number of pressure correctors and $N_o$ the number of outer correctors. Each predictor solves horizontal and vertical momentum separately.

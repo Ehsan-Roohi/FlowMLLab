@@ -15,7 +15,7 @@ and old-time data in PIMPLE.
 [Expanded comparison and teaching supplement](COMPARISON_AND_TEACHING.md)
 adds three algorithm flowcharts, a primary-source literature review, a measured
 15-configuration one-step coupling experiment, and a staged higher-Re and
-transient-accuracy plan. The lecture contains 38 pages. A smaller nonlinear
+transient-accuracy plan. The lecture contains 46 pages. A smaller nonlinear
 step defect is distinguished explicitly from a smaller physical time error.
 
 The illustrated lesson locates stored and interpolated velocities on separate
@@ -228,3 +228,18 @@ Pages 13-14 calculate two PISO corrections; pages 15-16 explain PIMPLE and calcu
 The references include Patankar, Versteeg and Malalasekera, Ferziger et al., Moukalled et al., the original Issa PISO paper and official algorithm documentation.
 
 Editable source: [LaTeX lecture](../../lectures/source/week01_2_pressure_velocity.tex) and [core equations](../../lectures/source/week01_2_pressure_velocity_core.tex). Build with `python qa/build_week01_2_assets.py` followed by `python qa/build_week01_2_lecture.py`; Tectonic and licensed Times New Roman are required. [Lesson validation](../../results/week01_2_formulations/coupling_lesson_validation.json).
+
+## Figures and companion explanations
+
+The lecture has 20 numbered figures with captions; the notebook uses the same identifiers and adds 13 S-numbered supplements. Stored velocities, interpolated momentum-face values and north-face transport are shown separately at full width. Physical fields and centerline curves are redrawn from hash-checked archived arrays; recorded runtimes are unchanged. The end of the lecture and notebook links free SIMPLE/PISO YouTube lectures and CFD Direct readings for pressure correction and PIMPLE.
+
+To reproduce the figures and their notebook guide:
+
+```bash
+python qa/refresh_week01_2_figures.py
+python qa/integrate_week01_2_figure_guide.py
+python qa/build_week01_2_lecture.py
+python qa/validate_week01_2_figure_guide.py
+```
+
+The figure validator executes the inexpensive interpolation examples and retained-result tables. Fresh CFD solves remain opt-in.

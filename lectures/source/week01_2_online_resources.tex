@@ -1,0 +1,45 @@
+\newpage
+\topic{23 continued}{Guided reading and video lectures}
+\textbf{1. From momentum to a pressure equation.}
+Chris Greenshields and Henry Weller, \emph{Notes on Computational Fluid Dynamics: General Principles},
+\href{https://doc.cfd.direct/notes/cfd-general-principles/pressure-velocity-coupling}{section 5.10, Pressure--velocity coupling}.
+Read alongside Sections 4--7 of this lecture. Follow the momentum diagonal,
+the face-flux correction and substitution into continuity. Their software
+notation differs from the staggered scalar equations used here.
+
+\textbf{2. SIMPLE and under-relaxation.}
+The same authors' \href{https://doc.cfd.direct/notes/cfd-general-principles/steady-state-solution}{section 5.12, Steady-state solution},
+is a companion to Section 8. Identify the momentum predictor, conservative
+flux correction and next nonlinear iteration. Compare it with Aidan Wimshurst's
+Fluid Mechanics 101 video,
+\href{https://www.youtube.com/watch?v=OOILoJ1zuiw}{\emph{[CFD] The SIMPLE Algorithm (to solve incompressible Navier--Stokes)}}.
+Use the diagram in this lecture to track where each unknown is stored while
+following the pressure-correction sequence in the video.
+
+\textbf{3. PISO within a physical time step.}
+Read \href{https://doc.cfd.direct/notes/cfd-general-principles/transient-solution}{section 5.19, Transient solution},
+alongside Sections 9--11. Then watch Fluid Mechanics 101,
+\href{https://www.youtube.com/watch?v=ahdW5TKacok}{\emph{[CFD] The PISO Algorithm}}.
+Focus on what is updated before the next pressure solve, and what remains
+fixed during the time step. Non-orthogonal corrections discussed in the video
+are a separate mesh issue; the present uniform Cartesian grid does not require them.
+
+\textbf{4. PIMPLE and nonlinear outer iterations.}
+Read \href{https://doc.cfd.direct/notes/cfd-general-principles/the-pimple-algorithm}{section 5.21, The PIMPLE algorithm},
+alongside Sections 12--14. Compare the outer coefficient updates with the
+inner corrections. Distinguish time-accurate integration from a
+pseudo-transient route to a steady state; more correctors do not replace a
+time-step refinement study.
+
+\textbf{5. Connect the loops to practical controls.}
+The official \href{https://doc.cfd.direct/openfoam/user-guide-v13/fvsolution}{OpenFOAM v13 User Guide, Solution and algorithm control},
+explains pressure references, \texttt{nCorrectors} and
+\texttt{nOuterCorrectors}. Map these names to the loops before reading
+software configuration examples. This Python lesson uses its own MAC-grid
+implementation, so software-specific interpolation details and defaults
+should not be transferred without checking.
+
+The videos are linked as companion explanations. The
+\href{https://www.fluidmechanics101.com/pages/lectures.html}{author's lecture catalogue}
+lists the SIMPLE and PISO lectures and distinguishes the YouTube videos
+from separately sold slide collections. No paid slides are required for this lesson.

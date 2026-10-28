@@ -10,7 +10,7 @@
   },
   "counts": {
     "active_lecture_pdfs": 35,
-    "lecture_pages": 501,
+    "lecture_pages": 509,
     "student_notebooks": 51,
     "historical_student_companions": 1,
     "optional_notebooks": 1,
@@ -23,7 +23,7 @@
     },
     {
       "path": "lectures/week01_2_pressure_velocity.pdf",
-      "pages": 38
+      "pages": 46
     },
     {
       "path": "lectures/week01_numerical_foundations.pdf",
