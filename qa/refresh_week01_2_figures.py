@@ -177,8 +177,9 @@ def checkerboard():
     axes[1].plot(x[1:-1],(p[2:]-p[:-2])/.5,'o',c=BLUE,label='Centered difference at a cell center',ms=7)
     axes[1].plot((x[1:]+x[:-1])/2,(p[1:]-p[:-1])/.25,'x',c=RED,label='Adjacent-center difference at the midpoint',ms=9,mew=2)
     axes[1].set(ylabel='Pressure gradient',title='(b) Response of the two discrete gradients')
-    axes[1].legend(loc='upper center',ncols=1,fontsize=12)
-    axes[1].set_ylim(-11,15)
+    fig.legend(*axes[1].get_legend_handles_labels(),loc='outside lower center',
+               ncols=1,fontsize=12,frameon=False)
+    axes[1].set_ylim(-10,10);axes[1].set_yticks([-8,0,8])
     for ax in axes:ax.set_xlabel(r'$x$');ax.grid(alpha=.18)
     save(fig,'checkerboard_pressure')
 
