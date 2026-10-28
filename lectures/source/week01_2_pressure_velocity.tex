@@ -11,7 +11,8 @@
 \setsansfont{Times New Roman}
 \setmonofont{Consolas}[Scale=MatchLowercase]
 \usepackage[italic]{mathastext}
-\hypersetup{colorlinks=true,linkcolor=black,urlcolor=black}
+\definecolor{linkblue}{HTML}{0645AD}
+\hypersetup{colorlinks=true,linkcolor=linkblue,urlcolor=linkblue}
 \pagestyle{fancy}\fancyhf{}\lhead{FlowMLLab | Week 1.2}\rhead{Pressure--velocity coupling}\cfoot{\thepage}
 \setlength{\emergencystretch}{3em}
 \setlength{\parindent}{0pt}\setlength{\parskip}{7pt}
@@ -35,7 +36,7 @@ Ehsan Roohi
 
 \begin{center}\begin{tabular}{ll}\toprule
 Sections & Topics\\\midrule
-1--4 & Conservation laws, staggered grid, momentum coefficients\\
+1--4 & Conservation laws, finite volume, grid layout, momentum coefficients\\
 5--8 & Pressure correction, conservation example and SIMPLE\\
 9--11 & Backward Euler, PISO and a numerical correction example\\
 12--15 & PIMPLE, nonlinear coefficient updates and convergence\\
@@ -44,7 +45,7 @@ Sections & Topics\\\midrule
 \end{tabular}\end{center}
 \textbf{Scope.} Two-dimensional, incompressible, laminar flow on a uniform staggered grid. The retained calculations compare $Re=100$, 400 and 1000. Higher-$Re$ spatial accuracy and transient accuracy require their own checks; convergence of a two-dimensional steady solver does not establish the physical stability of a three-dimensional flow.
 \newpage
-\input{week01_2_reading_map.tex}
+\input{week01_2_introduction.tex}
 \newpage
 \input{week01_2_pressure_velocity_core.tex}
 \newpage

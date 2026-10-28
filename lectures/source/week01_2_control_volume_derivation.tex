@@ -1,13 +1,22 @@
-\topic{2}{Staggered locations and a pressure control volume}
+\input{week01_2_finite_volume_intro.tex}
+\newpage
+\topic{2 continued}{Staggered locations and a pressure control volume}
 The equations in Section 1 are dimensionless. We now integrate them over a
 small fixed region of the grid. A \emph{control volume} is a chosen region of the flow domain. In a
 two-dimensional calculation it is an area per unit depth in the third direction.
-\lessonfigure{mac_grid}{Staggered (MAC) storage. Black dots mark pressure centers, blue circles horizontal velocities and green triangles vertical velocities. The shaded square is the pressure control volume around P; its side length is h.}{mac-grid}
 Pressure $p_P$ is stored at pressure-cell center $P$. Horizontal velocity is
 stored at vertical faces; vertical velocity is stored at horizontal faces.
 For the cell around $P$, use lowercase $e,w,n,s$ for east, west, north and south
 faces. Uppercase $E,W,N,S$ denote neighboring \emph{pressure centers}.
+Here a pressure center means the cell center at which pressure is stored.
+The \emph{shared velocity face} between $P$ and $E$ is their common vertical
+boundary; the horizontal velocity stored there is $u_e$. It is one value used
+in the continuity balances of both cells. This storage pattern is the MAC (marker-and-cell)
+staggered grid: pressure and the two velocity components occupy different locations.
+\lessonfigure{mac_grid}{Staggered (MAC) storage. Open black circles mark cell centers where pressure is stored; blue filled circles mark horizontal velocities and green triangles mark vertical velocities. The shaded square is the pressure control volume around P, of side length h.}{mac-grid}
 
+\newpage
+\topic{2 continued}{Geometry and outward directions of one cell}
 First allow a rectangular cell:
 \[
 V_P=[x_w,x_e]\times[y_s,y_n],\qquad
@@ -50,12 +59,17 @@ integrate in $y$ while holding $x$ fixed. The fundamental theorem of calculus gi
 +\int_{x_w}^{x_e}[v(x,y_n)-v(x,y_s)]\,\mathrm dx=0.
 \end{align*}
 Thus a derivative inside the cell becomes the difference of values on its two
-opposite faces. This is also the divergence theorem in two dimensions:
+opposite faces. Write the velocity vector as $\boldsymbol u=(u,v)$ and the
+outward normal as $\boldsymbol n=(n_x,n_y)$. Their dot product
+$\boldsymbol u\cdot\boldsymbol n=un_x+vn_y$ is the outward normal speed.
+The divergence is $\nabla\cdot\boldsymbol u=\partial u/\partial x+\partial v/\partial y$.
+With $\mathrm dS$ denoting a boundary-length element, the same identity is the
+divergence theorem in two dimensions:
 \[
 \int_{V_P}\nabla\cdot\boldsymbol u\,\mathrm dV
 =\int_{\partial V_P}\boldsymbol u\cdot\boldsymbol n\,\mathrm dS=0.
 \]
-The line element $\mathrm dS$ runs along a cell face. Define each face-average
+Define each face-average
 velocity by its face integral; for example,
 \[
 \overline u_e=\frac{1}{\Delta y}\int_{y_s}^{y_n}u(x_e,y)\,\mathrm dy.
@@ -100,7 +114,10 @@ To convert convection into face fluxes, apply the product rule:
 &=u\frac{\partial u}{\partial x}+v\frac{\partial u}{\partial y}
 +u\underbrace{\left(\frac{\partial u}{\partial x}+\frac{\partial v}{\partial y}\right)}_{0\ \text{by continuity}}.
 \end{align*}
-Consequently, for the incompressible continuum equations,
+The gradient $\nabla u=(\partial u/\partial x,\partial u/\partial y)$ collects
+the two spatial derivatives of the horizontal velocity. Its divergence is
+$\nabla\cdot(\nabla u)=\partial^2u/\partial x^2+\partial^2u/\partial y^2$,
+the Laplacian in the viscous term. Consequently, the incompressible equation is
 \[
 \frac{\partial u}{\partial t}+\nabla\cdot(u\boldsymbol u)
 =-\frac{\partial p}{\partial x}+\frac{1}{Re}\nabla\cdot(\nabla u).
@@ -173,14 +190,14 @@ The separation between $P$ and $E$ is $h$, not $2h$.
 \]
 \textbf{Accumulation.} Approximate the volume integral by $h^2u_e$, so its
 derivative is $h^2\,\mathrm du_e/\mathrm dt$. It vanishes for the target steady
-problem. For backward Euler it becomes $h^2(u_e^{n+1}-u_e^n)/\Delta t$,
-where $n$ is a physical time index.
+problem. Section 9 introduces the discrete time derivative for a transient calculation.
 \newpage
 \input{week01_2_hat_geometry.tex}
 \newpage
 \topic{3 continued}{Central interpolation and face gradients}
-In a linear momentum predictor, advecting speeds $c$ are frozen coefficients;
-the transported horizontal components are unknowns. At east and west their
+In one linear momentum solve, advecting speeds $c$ are evaluated from the
+known velocity estimate and then held fixed. This is called freezing the
+coefficients. The transported horizontal components remain unknowns. At east and west their
 averaging formulas have the same geometry, but their roles in the solve differ.
 
 Let $u_{\rm E},u_{\rm W},u_{\rm N},u_{\rm S}$ be neighboring stored
@@ -231,7 +248,10 @@ cell area $h^2$ accounts for the factors of $1/h$ in these terms.
 \newpage
 \topic{3 continued}{Momentum coefficients and numerical example}
 For the steady interior row, move each convective neighbor term to the right
-and each central diffusive term to the left. The result is
+and each central diffusive term to the left. Introduce $a_e$ for the coefficient
+of the velocity being solved, $a_{\rm E},a_{\rm W},a_{\rm N},a_{\rm S}$ for
+its four neighbor coefficients, and $b_e$ for known terms collected on the
+right side, such as a prescribed wall-velocity contribution. The result is
 \[
 \boxed{a_eu_e=a_{\rm E}u_{\rm E}+a_{\rm W}u_{\rm W}
 +a_{\rm N}u_{\rm N}+a_{\rm S}u_{\rm S}+b_e-\frac{p_E-p_P}{h}.}
@@ -255,8 +275,9 @@ a_e&=4\beta+\frac{c_{\rm E}-c_{\rm W}+c_{\rm N}-c_{\rm S}}{2h}\\
 Do not set the last term to zero merely because the target flow is
 incompressible: the current advecting estimates can still have a discrete mass
 imbalance. Pressure--velocity coupling removes that imbalance iteratively.
-Backward Euler adds $1/\Delta t$ to $a_e$ and $u_e^n/\Delta t$ to $b_e$.
-Known wall values also contribute to the source and can modify the diagonal.
+Known wall values contribute to the source and can modify the diagonal.
+For a transient problem, the time derivative also supplies a center term and
+a known old-time source; those are derived in Section 9.
 
 \textbf{One frozen-row example.} Set $h=0.25$, $Re=100$,
 $c_{\rm E}=c_{\rm W}=0.02$, $c_{\rm N}=c_{\rm S}=0$.

@@ -1,0 +1,91 @@
+\topic{5}{Why a momentum solution needs a pressure correction}
+Suppose the velocity and pressure estimates have already been updated $k$
+times. Superscript $k$ labels that steady coupling iteration. It is not a
+physical time level. The current pressure column is $p^k$.
+
+Hold the momentum coefficients fixed and solve
+\[
+Aq^*=b-Gp^k.
+\]
+The star labels the \emph{predictor}: the velocity obtained using this pressure
+estimate. It is provisional because the momentum solve alone does not impose
+continuity in every cell. Compute its cell residuals from $Dq^*$.
+
+For one square pressure cell with $h=0.25$, suppose its predicted velocities are
+\[
+(u_e^*,u_w^*,v_n^*,v_s^*)=(0.12,0.08,0.01,0.03).
+\]
+The star on each component has the same predictor meaning. The integrated
+outward volume flow rate per unit depth, called $Q_P^*$, is
+\[
+Q_P^*=h(u_e^*-u_w^*+v_n^*-v_s^*)
+=0.25(0.12-0.08+0.01-0.03)=0.005.
+\]
+Dividing by cell area gives the continuity residual,
+\[
+r_{c,P}^*=Q_P^*/h^2=0.005/0.0625=0.08.
+\]
+More fluid leaves than enters. The face velocities must change so that their
+combined outward flow changes by $-0.005$. Pressure correction is obtained
+from this conservation requirement over all cells, rather than guessed from
+this number alone.
+
+Let $p_{\rm corr}$ denote the pressure sought by this correction solve, and
+$q_{\rm corr}$ its corrected velocity. Define their increments by
+\[
+p'=p_{\rm corr}-p^k,\qquad q'=q_{\rm corr}-q^*.
+\]
+A prime denotes an additive change, not a derivative. Equivalently,
+\[
+\boxed{\Delta p=p_{\rm corr}-p^k=p'.}
+\]
+This is a pressure change at a fixed cell between estimates.
+The difference $p_E-p_P$ compares pressures at two locations in one estimate.
+The residual $r_{c,P}^*$ instead measures a velocity imbalance. These three
+quantities have different roles and must not be interchanged.
+\newpage
+\topic{5 continued}{Derive the velocity correction from one momentum row}
+For horizontal face $e$, the predictor equation is
+\[
+a_eu_e^*=\sum_{g\in\mathrm{NB}(e)}a_{eg}q_g^*
+          +b_e-\frac{p_E^k-p_P^k}{h}.
+\]
+Use the same coefficients for a corrected solution. Substitute
+$u_{e,\rm corr}=u_e^*+u'_e$, $q_{g,\rm corr}=q_g^*+q'_g$ and
+$p_{P,\rm corr}=p_P^k+p'_P$, with the analogous expression at $E$:
+\begin{align*}
+a_e(u_e^*+u'_e)={}&\sum_{g\in\mathrm{NB}(e)}a_{eg}(q_g^*+q'_g)+b_e\\
+ &-\frac{(p_E^k+p'_E)-(p_P^k+p'_P)}{h}.
+\end{align*}
+Subtract the predictor row. The known source $b_e$, predictor neighbor terms
+and old pressure gradient cancel, leaving
+\[
+a_eu'_e=\sum_{g\in\mathrm{NB}(e)}a_{eg}q'_g-\frac{p'_E-p'_P}{h}.
+\]
+This exact correction equation couples corrections at neighboring velocity
+locations. For all velocity rows it is $Aq'=-Gp'$.
+
+\textbf{The SIMPLE approximation.} For the local velocity correction,
+neglect the neighbor-correction sum. The center response remains:
+\[
+a_eu'_e\simeq-\frac{p'_E-p'_P}{h},\qquad
+\boxed{u'_e=-d_e\frac{p'_E-p'_P}{h}},\qquad d_e=1/a_e.
+\]
+This approximates the momentum response to a pressure increment. It does not
+remove the requirement to conserve mass. The pressure equation is chosen so
+that the resulting face corrections satisfy every cell's continuity balance.
+
+The same construction at the other three faces gives
+\begin{align*}
+u'_w&=-d_w\frac{p'_P-p'_W}{h},\\
+v'_n&=-d_n\frac{p'_N-p'_P}{h},&
+v'_s&=-d_s\frac{p'_P-p'_S}{h}.
+\end{align*}
+Each $d$ is the reciprocal diagonal of that face's own momentum row. Corrected
+continuity on a square cell requires
+\[
+0=r_{c,P}^*+\frac{u'_e-u'_w+v'_n-v'_s}{h}.
+\]
+Section 6 substitutes the four expressions into this balance to obtain
+the pressure equation. Repeated coupling iterations also restore consistency
+with the full momentum equations, whose neighbor corrections were approximated.

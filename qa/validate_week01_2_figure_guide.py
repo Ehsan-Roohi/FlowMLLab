@@ -44,7 +44,7 @@ def main():
     pdf=ROOT/'lectures/week01_2_pressure_velocity.pdf'
     found=[];pages_by_figure={};links=[]
     with pdfplumber.open(pdf) as doc:
-        assert len(doc.pages)==46
+        assert len(doc.pages)==59
         for i,page in enumerate(doc.pages,1):
             text=page.extract_text() or ''
             for number in re.findall(r'Figure\s*(\d+)\s*:',text):
@@ -95,7 +95,7 @@ def main():
     shell.user_ns.update({'np':np,'pd':pd,'ROOT':work,
         'recorded':[r for r in rows if r['config']['reynolds']==100],'LABELS':LABELS})
     executed=[]
-    for id in ['visual-checkerboard-check','visual-hat-arithmetic','51fefcd5','1b614a07','ee106a2c','student-review-refinement-evidence']:
+    for id in ['visual-checkerboard-check','visual-hat-arithmetic','prereq-source-relaxation','51fefcd5','1b614a07','ee106a2c','student-review-refinement-evidence']:
         c=next(c for c in book.cells if c.id==id)
         with capture_output() as captured:result=shell.run_cell(c.source,store_history=True)
         assert not result.error_before_exec and not result.error_in_exec,(id,result.error_in_exec)
@@ -109,7 +109,7 @@ def main():
         entry['lecture_page']=pages_by_figure.get(entry['number'])
         entry['png_sha256']=sha(ASSETS/entry['image'])
     (ASSETS/'figure_index.json').write_text(json.dumps(guide,indent=2)+'\n',encoding='utf-8',newline='\n')
-    report={'lecture_pages':46,'lecture_figures':20,'notebook_supplementary_figures':13,
+    report={'lecture_pages':59,'lecture_figures':20,'notebook_supplementary_figures':13,
         'all_figure_numbers_and_captions_checked':True,'all_diagrams_at_text_width_inches':6.6,
         'vector_text_within_figure_bounds':True,'all_pdf_text_within_page_bounds':True,
         'archived_fields_sha256_checked':len(rows),'solver_sources_and_opt_in_solve_calls':'unchanged',

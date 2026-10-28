@@ -1,26 +1,26 @@
 {
   "mac_grid": {
     "number": "1",
-    "caption": "Staggered (MAC) storage. Black dots mark pressure centers, blue circles horizontal velocities and green triangles vertical velocities. The shaded square is the pressure control volume around P; its side length is h.",
+    "caption": "Staggered (MAC) storage. Open black circles mark cell centers where pressure is stored; blue filled circles mark horizontal velocities and green triangles mark vertical velocities. The shaded square is the pressure control volume around P, of side length h.",
     "image": "mac_grid.png",
     "lecture": true,
-    "lecture_page": 4,
-    "png_sha256": "a59941ecffb44f32b02ab7c0d29529f95bcc2a65c0f03f34670dc71f0f788a05"
+    "lecture_page": 6,
+    "png_sha256": "48438e2d7e0df21252232f7c062c0be762970cadf1cdc6dbc935e6a782cd1ba3"
   },
   "checkerboard_pressure": {
     "number": "2",
-    "caption": "A discrete pressure diagnostic with h=0.25. (a) Adjacent pressures alternate between +1 and -1. (b) The naive centered gradient at pressure centers is zero, while adjacent-pressure differences at shared velocity faces are +8 or -8. This is a synthetic pattern, not a cavity solution.",
+    "caption": "A synthetic pressure diagnostic with h=0.25. (a) Pressure samples at equally spaced cell centers alternate between +1 and -1. (b) Blue circles use the two samples on either side of a cell center; red crosses use the two adjacent samples around their midpoint. The blue result is zero while the red results are +8 or -8. The legend identifies these two difference formulas and their evaluation positions; it does not show two flow solutions.",
     "image": "checkerboard_pressure.png",
     "lecture": true,
-    "lecture_page": 5,
-    "png_sha256": "d0df390dd98455b434851f3705b6bf0bceb7fb2c3ff1fe4eee956c083045d4db"
+    "lecture_page": 8,
+    "png_sha256": "670a9340f449a15e4e387aff9fdcba00560c7e71819efae973bf4bb435792ee9"
   },
   "momentum_volume": {
     "number": "3",
     "caption": "Horizontal-momentum control volume $V_e$. The unknown $u_e$ is at its center, while $p_P$ and $p_E$ are at the west and east face midpoints. Arrows show outward unit normals. The two pressure samples are separated by h.",
     "image": "momentum_volume.png",
     "lecture": true,
-    "lecture_page": 8,
+    "lecture_page": 12,
     "png_sha256": "028f76df25313b4900e2a9361354f5c30f20db4ff47f9de2d0393744182b9c05"
   },
   "hat_stored_locations": {
@@ -28,7 +28,7 @@
     "caption": "Stored samples around the horizontal-momentum volume (blue square). Blue circles: horizontal velocity; green triangles: vertical velocity; open black squares: pressure. Coordinates are relative to pressure center P and scaled by h.",
     "image": "hat_stored_locations.png",
     "lecture": true,
-    "lecture_page": 9,
+    "lecture_page": 13,
     "png_sha256": "a0fedfcbc0e72eb0caccc81098146e5db44797e1c1da1cbb4a5f5be5ca86de8b"
   },
   "hat_interpolated_locations": {
@@ -36,7 +36,7 @@
     "caption": "Evaluation points for transported horizontal velocity. Blue circles are stored u samples and red crosses are interpolated values on momentum-volume faces. Dashed segments connect each pair used in an average. The west and east crosses coincide geometrically with pressure centers; pressure symbols are omitted here for clarity.",
     "image": "hat_interpolated_locations.png",
     "lecture": true,
-    "lecture_page": 10,
+    "lecture_page": 14,
     "png_sha256": "fe11784dbc57e91814b88dbbf4929a2c1057e0edb0885a4ffa84edc5a3ce9b28"
   },
   "north_face_transport": {
@@ -44,7 +44,7 @@
     "caption": "Horizontal momentum transported through the north face. The normal speed $c_{\\rm N}$ carries fluid upward through the red face; the transported component is the horizontal velocity $\\widehat u_{\\rm N}$, offset above the face for clarity. $Q_{\\rm N}$ is outward volume flux per unit depth. $F^u_{\\rm N}$ is horizontal-momentum flux per unit density and unit depth. The values are nondimensional; arrow lengths are schematic.",
     "image": "north_face_transport.png",
     "lecture": true,
-    "lecture_page": 11,
+    "lecture_page": 15,
     "png_sha256": "b4c1b6a42a5c9d48517e89125d3c5ded9b40b9daaff6ac3b1aad08dc66c22559"
   },
   "shared_face_correction": {
@@ -52,7 +52,7 @@
     "caption": "A shared-face pressure correction. When $p_E^\\prime$ exceeds $p_P^\\prime$ by 0.01, the velocity increment is westward: $u_e^\\prime=-0.02$. The predictor 0.12 becomes 0.10. The same face velocity enters the two neighboring outward flux balances with opposite signs.",
     "image": "shared_face_correction.png",
     "lecture": true,
-    "lecture_page": 16,
+    "lecture_page": 24,
     "png_sha256": "612eb17937a5bd98b03c6d2dce87b7c79e814e067801c6a6a1d1069964bcf552"
   },
   "simple_visual": {
@@ -60,7 +60,7 @@
     "caption": "SIMPLE for a steady problem. Follow the blue boxes downward. The red return path rebuilds momentum after an unconverged iteration. Correct face velocities fully, relax pressure as specified, and test both momentum and cell continuity.",
     "image": "simple_visual.png",
     "lecture": true,
-    "lecture_page": 21,
+    "lecture_page": 31,
     "png_sha256": "bcf0a3eb203a70100fa6a5f0ffc953638e292601912adb9ade88099d91e2690b"
   },
   "piso_visual": {
@@ -68,23 +68,23 @@
     "caption": "PISO within one physical time step. The red return path updates correction terms before another pressure solve, using fixed momentum coefficients. The saved old-time velocity remains unchanged until the new time level is accepted.",
     "image": "piso_visual.png",
     "lecture": true,
-    "lecture_page": 24,
-    "png_sha256": "bdcf3b09bfea5207f1c0419c54f9b57bf04bceb275439685aba4ae275ed4de48"
+    "lecture_page": 35,
+    "png_sha256": "d005b9310cf2f3a2c135436229dba97dd15a1b2761586ad59376d369c8200b16"
   },
   "pimple_visual": {
     "number": "10",
-    "caption": "PIMPLE within one physical time step. Green: inner pressure-velocity corrections with fixed momentum coefficients. Red: outer iterations rebuild those coefficients from the latest new-time estimate. Neither loop advances the saved old-time data.",
+    "caption": "PIMPLE within one physical time step. Green: inner pressure-velocity corrections with fixed momentum coefficients. Red: outer passes rebuild those coefficients from the latest new-time estimate. The retained code completes the configured passes, accepts the step, and tests steady convergence between steps. Neither correction loop advances the saved old-time data.",
     "image": "pimple_visual.png",
     "lecture": true,
-    "lecture_page": 28,
-    "png_sha256": "58b788e0e739b0ff3b2ad0f0927f48477b46c474d3b2aad9379616b0078755f8"
+    "lecture_page": 41,
+    "png_sha256": "3fa555bda561e134d614e985986ab7483e6f8e16f750b44b5a397687f13fb766"
   },
   "loop_map": {
     "number": "11",
     "caption": "Comparison of repeated work. A SIMPLE cycle is a steady nonlinear iteration. PISO repeats pressure-velocity corrections within one step. PIMPLE nests those corrections inside momentum-coefficient updates. The red arrows denote repetition; they do not denote physical time advancement.",
     "image": "loop_map.png",
     "lecture": true,
-    "lecture_page": 30,
+    "lecture_page": 43,
     "png_sha256": "cabe3b356ba6c822d8460992c6bab29398c034252d14260d906ba2927cfc732e"
   },
   "profiles_re100": {
@@ -92,7 +92,7 @@
     "caption": "Retained Re=100 centerline velocities at matched spacing h=1/64. Curves show all four formulations; black markers are Ghia et al. (1982) samples. FV uses 64 pressure cells per side and FD uses 65 boundary-inclusive nodes. Line styles and colors identify the computed series.",
     "image": "profiles_re100.png",
     "lecture": true,
-    "lecture_page": 32,
+    "lecture_page": 45,
     "png_sha256": "168d363e17ba706df7d3d92dc344e8b2a420dba28e49cbec3e7295c9245f6fac"
   },
   "field_speed_re100": {
@@ -100,7 +100,7 @@
     "caption": "Retained Re=100 speed and velocity streamlines at h=1/64. All panels use the same physical color limits. Streamline arrows show circulation direction; their density does not measure vorticity.",
     "image": "field_speed_re100.png",
     "lecture": true,
-    "lecture_page": 34,
+    "lecture_page": 47,
     "png_sha256": "51f1173064fe72de5eb846c9e151d0f27a472b3eaff3b393064cb9c91e536298"
   },
   "field_omega_re100": {
@@ -108,7 +108,7 @@
     "caption": "Retained Re=100 signed vorticity with velocity streamlines at h=1/64. One symmetric logarithmic color scale is shared by all panels, linear for absolute vorticity up to 1. The displayed colorbar values are nondimensional physical vorticity, including wall peaks.",
     "image": "field_omega_re100.png",
     "lecture": true,
-    "lecture_page": 35,
+    "lecture_page": 48,
     "png_sha256": "5491e27bb64bc560325b9c7dc2cda542905dab28c872ffca8b3a75c8a6624649"
   },
   "field_p_re100": {
@@ -116,7 +116,7 @@
     "caption": "Retained Re=100 zero-mean pressure and velocity streamlines at h=1/64. One symmetric logarithmic color scale is shared, linear for absolute pressure up to 0.01. FD pressure is reconstructed after the vorticity solve. No independent pressure benchmark is claimed.",
     "image": "field_p_re100.png",
     "lecture": true,
-    "lecture_page": 36,
+    "lecture_page": 49,
     "png_sha256": "3438b0de16dda6796b4d94692a87ac9619c06f6b798de590c19d922385b47a5a"
   },
   "convergence_re100": {
@@ -124,7 +124,7 @@
     "caption": "Retained Re=100 finite-volume convergence histories at h=1/64. The horizontal coordinate is recorded solver-call wall time from one local run per method. Momentum and continuity are separate defects. The streamfunction-vorticity solver uses a different native stopping norm and is included in the adjacent timing tables, not on these FV residual axes.",
     "image": "convergence_re100.png",
     "lecture": true,
-    "lecture_page": 37,
+    "lecture_page": 50,
     "png_sha256": "8d7d80481091527d704210b399621fa3a10f3d1d3e83e73262f216269fc63e9d"
   },
   "profiles_re400": {
@@ -132,7 +132,7 @@
     "caption": "Retained Re=400 centerline velocities. Color identifies formulation and line style identifies spacing. Black markers are Ghia samples; the red cross retains the isolated published horizontal-profile anomaly at x/L=0.9063, excluded only from the qualified error norm. Selected fine cases do not constitute a complete refinement matrix.",
     "image": "profiles_re400.png",
     "lecture": true,
-    "lecture_page": 38,
+    "lecture_page": 51,
     "png_sha256": "30f0101b629a4f28297db8ecd644f55a47faaad765235c5a88d19eefe9ede5eb"
   },
   "profiles_re1000": {
@@ -140,7 +140,7 @@
     "caption": "Retained Re=1000 centerline velocities. Color identifies formulation and line style identifies spacing; black markers are Ghia et al. (1982) samples. Finer FD solutions show the effect of spatial resolution separately from the coupling algorithm.",
     "image": "profiles_re1000.png",
     "lecture": true,
-    "lecture_page": 39,
+    "lecture_page": 52,
     "png_sha256": "be2fa0b349b9c39b5098929d4270ea07a7ae595dc85556116319a85f4bf1b93a"
   },
   "refinement_re400": {
@@ -148,7 +148,7 @@
     "caption": "Retained Re=400 speed and computed velocity streamlines: SIMPLE at h=1/64, and independent streamfunction-vorticity solutions at h=1/64 and 1/128. The color scale and lid speed are common. Small recirculation structures must be supported by the resolved velocity field.",
     "image": "refinement_re400.png",
     "lecture": true,
-    "lecture_page": 41,
+    "lecture_page": 54,
     "png_sha256": "a3a1941512115dd51facc6da1cfb8d70eda2617dd74a8c5ab16d917c3ccc0460"
   },
   "refinement_re1000": {
@@ -156,7 +156,7 @@
     "caption": "Retained Re=1000 speed and computed velocity streamlines for the same selected refinement cases. The finer grid changes resolved boundary layers and corner circulation. Additional pressure corrections alone cannot recover spatial structures absent from the mesh.",
     "image": "refinement_re1000.png",
     "lecture": true,
-    "lecture_page": 42,
+    "lecture_page": 55,
     "png_sha256": "163ec652d8acdaafee7b4ea2fd2e7f968098868b4637573db9da87729771860c"
   },
   "field_speed_re400": {

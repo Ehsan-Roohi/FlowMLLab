@@ -31,6 +31,12 @@ def main():
     def md(id,source):return nbformat.v4.new_markdown_cell(source,id=id)
     path=ROOT/'notebooks/week01_2/W1_2_Cavity_Pressure_Velocity.ipynb'
     nb=nbformat.read(path,4)
+    if any(c.id.startswith('coupling-page-') for c in nb.cells):
+        from qa.sync_week01_2_teaching import sync_notebook
+        nb=sync_notebook(nb)
+        path.write_text(nbformat.writes(nb),encoding='utf-8',newline='\n')
+        print(json.dumps({'lecture_figures':len(names),'supplementary_figures':len(extra),'synchronized_prerequisites':True}))
+        return
     nb.cells=[c for c in nb.cells if not c.id.startswith('visual-caption-')]
     byid={c.id:c for c in nb.cells}
     byid['visual-hat-geometry'].source=r'''### Stored velocities and interpolated face values

@@ -19,10 +19,18 @@ from qa.week01_2_math import Equation
 OUT=ROOT/'results/week01_2_pressure_velocity'
 NOTE=ROOT/'notebooks/week01_2/W1_2_Cavity_Pressure_Velocity.ipynb'
 PDF=ROOT/'lectures/week01_2_pressure_velocity.pdf'
-LECTURE_PAGES=46
+LECTURE_PAGES=59
 
 
 def notebook():
+    # Preserve the complete scalar-first lesson when refreshing retained evidence.
+    current=ROOT/'notebooks/week01_2/W1_2_Cavity_Pressure_Velocity.ipynb'
+    if current.is_file():
+        import nbformat
+        if any(c.id.startswith('coupling-page-') for c in nbformat.read(current,4).cells):
+            from qa.sync_week01_2_teaching import main as sync_teaching
+            sync_teaching()
+            return
     cells=[]
     def md(s):cells.append(nbf.v4.new_markdown_cell(s))
     def code(s,hidden=False):

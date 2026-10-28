@@ -1,0 +1,71 @@
+\topic{2}{What the finite-volume method conserves}
+A \emph{mesh} divides the fluid domain into small regions called cells.
+A \emph{control volume} is a fixed region over which we impose a conservation
+balance. In this two-dimensional lesson it is a cell area with one unit of
+depth perpendicular to the page. A \emph{face} is one boundary segment of
+that cell. Two neighboring cells have one face in common.
+
+The finite-volume method starts from the conservation law for each control
+volume. It accounts for what is stored inside the region, what crosses its
+faces, and any source acting inside it. A \emph{flux} is the amount transported
+across a surface per unit area and unit time. Multiplying by face area gives
+a transport rate. Here a face length times velocity gives volume flow rate
+per unit depth.
+
+For the incompressible cavity, the mass inside a fixed cell is constant.
+Its continuity balance is therefore
+\[
+\boxed{\text{total mass flow rate out of a cell}
+       -\text{total mass flow rate into it}=0.}
+\]
+Momentum has a related balance, with acceleration, pressure forces and viscous
+transport as well as momentum carried by fluid crossing the faces.
+
+\textbf{How the equations become numerical.}
+First integrate a conservation equation over the chosen region. Next express
+transport and forces through its faces. Finally approximate the required
+face values using a finite set of stored values. The resulting equation is
+an algebraic relation between neighboring unknowns. This process is called
+\emph{discretization}.
+
+\textbf{Why sharing a face matters.} Fluid leaving one cell through an internal
+face enters the neighboring cell through that same face. Using one numerical
+face flow rate in both balances makes these internal contributions cancel
+when the balances are added. Each individual cell must still balance;
+cancellation in the whole domain alone is insufficient.
+
+\newpage
+\topic{2 continued}{Finite volume and finite differences}
+The finite-difference approach used in Week 1 begins with a differential
+equation evaluated at grid points. It replaces derivatives by combinations
+of nearby samples. For a smooth function $f(x)$ sampled at equally spaced
+positions $x_i$, define $f_i=f(x_i)$ and $h=x_{i+1}-x_i$. For example,
+\[
+\left.\frac{\mathrm df}{\mathrm dx}\right|_{x_i}
+\simeq\frac{f_{i+1}-f_{i-1}}{2h}.
+\]
+This is a centered approximation to a derivative \emph{at a point}.
+
+The finite-volume approach begins with a conservation balance \emph{over a
+region}. Its approximations concern the values and gradients needed at the
+region's faces. Those gradients can also be evaluated with differences.
+Using a difference formula inside a finite-volume method does not change
+the fact that the starting equation is a cell conservation balance.
+
+\begin{center}\begin{tabular}{>{\raggedright\arraybackslash}p{.22\linewidth}>{\raggedright\arraybackslash}p{.33\linewidth}>{\raggedright\arraybackslash}p{.33\linewidth}}\toprule
+Question & Finite differences & Finite volume\\\midrule
+Starting form & Differential equation at a grid location & Integrated conservation law for a cell\\
+Numerical construction & Approximate derivatives from nearby samples & Approximate face transport and cell terms\\
+Conservation check & Depends on the chosen discrete construction & Check the balance of every cell using shared face fluxes\\
+This course & Week 1 streamfunction--vorticity solver & Week 1.2 pressure--velocity solver\\\bottomrule
+\end{tabular}\end{center}
+On a uniform Cartesian mesh, the two approaches can produce identical
+algebraic formulas for some terms, such as constant-coefficient diffusion.
+Finite-difference schemes can also be constructed in conservative form.
+The distinction is the construction of the discrete equations, not a claim
+that one approach always conserves and the other never can.
+
+For the cavity, the next pages choose where to store each unknown. Then the
+continuity integral is evaluated over one cell and the momentum integral over
+a region associated with one velocity unknown. Their locations and boundaries
+are specified before performing those integrations.

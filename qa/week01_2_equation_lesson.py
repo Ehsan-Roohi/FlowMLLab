@@ -84,6 +84,9 @@ def lesson_cells():
 
 
 def improve_notebook(nb):
+    if any(c.id.startswith('coupling-page-') for c in nb.cells):
+        from qa.sync_week01_2_teaching import sync_notebook
+        return sync_notebook(nb)
     import nbformat as n
     cached_example=next((c for c in nb.cells if c.metadata.get('coupling_algebra_example')),None)
     old_prefixes=('## 2.', '## 3. SIMPLE','## 4. PISO','## 5. PIMPLE','## 5.1','## Worked example: two control volumes','## Algorithm flowcharts')

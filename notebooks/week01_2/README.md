@@ -15,7 +15,7 @@ and old-time data in PIMPLE.
 [Expanded comparison and teaching supplement](COMPARISON_AND_TEACHING.md)
 adds three algorithm flowcharts, a primary-source literature review, a measured
 15-configuration one-step coupling experiment, and a staged higher-Re and
-transient-accuracy plan. The lecture contains 46 pages. A smaller nonlinear
+transient-accuracy plan. The lecture contains 59 pages. A smaller nonlinear
 step defect is distinguished explicitly from a smaller physical time error.
 
 The illustrated lesson locates stored and interpolated velocities on separate
@@ -238,8 +238,11 @@ To reproduce the figures and their notebook guide:
 ```bash
 python qa/refresh_week01_2_figures.py
 python qa/integrate_week01_2_figure_guide.py
+python qa/sync_week01_2_teaching.py
 python qa/build_week01_2_lecture.py
 python qa/validate_week01_2_figure_guide.py
 ```
 
 The figure validator executes the inexpensive interpolation examples and retained-result tables. Fresh CFD solves remain opt-in.
+
+The teaching sequence starts with the cavity physics, then defines control volumes and contrasts finite volume with finite differences before integration. Momentum notation proceeds from one scalar row and its known source to vectors and operators. Pressure correction, relaxation and residual checks precede SIMPLE; the PISO and PIMPLE sections define their changing fields and fixed data before the loop equations. Video links are blue in the lecture PDF.

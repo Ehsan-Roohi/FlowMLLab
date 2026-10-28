@@ -70,7 +70,11 @@ def grids():
         ax.plot([1.3, 8.7], [b, b], color='.8', lw=.8)
     ax.add_patch(Rectangle((3.9, 3.9), 2.2, 2.2, fc='#edf3fa', ec='black', lw=1.6))
     for x, y, s in [(5,5,'P'), (7.2,5,'E'), (2.8,5,'W'), (5,7.2,'N'), (5,2.8,'S')]:
-        ax.plot(x, y, 'ko', ms=5); text(ax,x+.3,y+.34,rf'$p_{s}$',size=17)
+        ax.plot(x,y,'o',mfc='white',mec='black',mew=1.5,ms=9,zorder=8)
+        ax.annotate(rf'$p_{s}$',xy=(x,y),xytext=(12,12),
+                    textcoords='offset points',ha='left',va='bottom',fontsize=16,
+                    bbox=dict(fc='white',ec='none',pad=1),
+                    arrowprops=dict(arrowstyle='-',color='.4',lw=.7,shrinkB=5),zorder=9)
     for x,s in [(3.9,'w'),(6.1,'e')]:
         ax.plot(x,5,'o',c=BLUE,ms=6); arrow(ax,(x,5),(x+.7,5),BLUE)
         text(ax,x,4.25,rf'$u_{s}$',BLUE,17)
@@ -170,8 +174,8 @@ def checkerboard():
     fig,axes=plt.subplots(2,1,figsize=(6.6,4.8),layout='constrained')
     axes[0].plot(x,p,'ko--',ms=6)
     axes[0].set(ylabel=r'$p_i$',title='(a) Alternating pressure samples',yticks=[-1,0,1])
-    axes[1].plot(x[1:-1],(p[2:]-p[:-2])/.5,'o',c=BLUE,label='At pressure centers',ms=7)
-    axes[1].plot((x[1:]+x[:-1])/2,(p[1:]-p[:-1])/.25,'x',c=RED,label='At shared velocity faces',ms=9,mew=2)
+    axes[1].plot(x[1:-1],(p[2:]-p[:-2])/.5,'o',c=BLUE,label='Centered difference at a cell center',ms=7)
+    axes[1].plot((x[1:]+x[:-1])/2,(p[1:]-p[:-1])/.25,'x',c=RED,label='Adjacent-center difference at the midpoint',ms=9,mew=2)
     axes[1].set(ylabel='Pressure gradient',title='(b) Response of the two discrete gradients')
     axes[1].legend(loc='upper center',ncols=1,fontsize=12)
     axes[1].set_ylim(-11,15)
@@ -199,8 +203,8 @@ def loops():
             'Solve momentum for predictor velocities',
             'Solve pressure; correct face velocities',
             'Update correction terms; repeat inner corrections',
-            'Check nonlinear momentum and continuity defects',
-            'Accept step when solve targets are satisfied']}
+            'Complete configured outer passes',
+            'Accept step; test steady convergence']}
     for name,labels in rows.items():
         fig,ax=figure(6.4)
         left,right=1.3,8.25;ys=np.linspace(9.15,1.1,7)
@@ -219,7 +223,10 @@ def loops():
             ax.plot([left,.55,.55],[ys[4],ys[4],ys[3]],c=GREEN,lw=1.6)
             arrow(ax,(.55,ys[3]),(left,ys[3]),GREEN)
             text(ax,.12,(ys[4]+ys[3])/2,'Inner loop',GREEN,13,rotation=90)
-        text(ax,4.8,.18,'Steady iterations' if name=='simple' else 'Old-time data stay fixed inside both loops.',size=13)
+        footer={'simple':'Steady iterations',
+                'piso':'Old-time data stay fixed during corrections.',
+                'pimple':'Old-time data stay fixed inside both loops.'}[name]
+        text(ax,4.8,.18,footer,size=13)
         save(fig,name+'_visual')
     fig,ax=figure(4.1)
     labels=[('SIMPLE','Steady iteration','Rebuild momentum;\ncorrect pressure and velocity'),
@@ -392,8 +399,8 @@ def supplementary(rows,include_historical=True):
         'The isolated Ghia horizontal-profile anomaly is omitted from the qualified markers.')
 
 CAPTIONS = {
- 'mac_grid': 'Staggered (MAC) storage. Black dots mark pressure centers, blue circles horizontal velocities and green triangles vertical velocities. The shaded square is the pressure control volume around P; its side length is h.',
- 'checkerboard_pressure': 'A discrete pressure diagnostic with h=0.25. (a) Adjacent pressures alternate between +1 and -1. (b) The naive centered gradient at pressure centers is zero, while adjacent-pressure differences at shared velocity faces are +8 or -8. This is a synthetic pattern, not a cavity solution.',
+ 'mac_grid': 'Staggered (MAC) storage. Open black circles mark cell centers where pressure is stored; blue filled circles mark horizontal velocities and green triangles mark vertical velocities. The shaded square is the pressure control volume around P, of side length h.',
+ 'checkerboard_pressure': 'A synthetic pressure diagnostic with h=0.25. (a) Pressure samples at equally spaced cell centers alternate between +1 and -1. (b) Blue circles use the two samples on either side of a cell center; red crosses use the two adjacent samples around their midpoint. The blue result is zero while the red results are +8 or -8. The legend identifies these two difference formulas and their evaluation positions; it does not show two flow solutions.',
  'momentum_volume': 'Horizontal-momentum control volume V_e. The unknown u_e is at its center, while p_P and p_E are at the west and east face midpoints. Arrows show outward unit normals. The two pressure samples are separated by h.',
  'hat_stored_locations': 'Stored samples around the horizontal-momentum volume (blue square). Blue circles: horizontal velocity; green triangles: vertical velocity; open black squares: pressure. Coordinates are relative to pressure center P and scaled by h.',
  'hat_interpolated_locations': 'Evaluation points for transported horizontal velocity. Blue circles are stored u samples and red crosses are interpolated values on momentum-volume faces. Dashed segments connect each pair used in an average. The west and east crosses coincide geometrically with pressure centers; pressure symbols are omitted here for clarity.',
@@ -401,7 +408,7 @@ CAPTIONS = {
  'shared_face_correction': 'A shared-face pressure correction. When p-prime_E exceeds p-prime_P by 0.01, the velocity increment is westward: u-prime_e=-0.02. The predictor 0.12 becomes 0.10. The same face velocity enters the two neighboring outward flux balances with opposite signs.',
  'simple_visual': 'SIMPLE for a steady problem. Follow the blue boxes downward. The red return path rebuilds momentum after an unconverged iteration. Correct face velocities fully, relax pressure as specified, and test both momentum and cell continuity.',
  'piso_visual': 'PISO within one physical time step. The red return path updates correction terms before another pressure solve, using fixed momentum coefficients. The saved old-time velocity remains unchanged until the new time level is accepted.',
- 'pimple_visual': 'PIMPLE within one physical time step. Green: inner pressure-velocity corrections with fixed momentum coefficients. Red: outer iterations rebuild those coefficients from the latest new-time estimate. Neither loop advances the saved old-time data.',
+ 'pimple_visual': 'PIMPLE within one physical time step. Green: inner pressure-velocity corrections with fixed momentum coefficients. Red: outer passes rebuild those coefficients from the latest new-time estimate. The retained code completes the configured passes, accepts the step, and tests steady convergence between steps. Neither correction loop advances the saved old-time data.',
  'loop_map': 'Comparison of repeated work. A SIMPLE cycle is a steady nonlinear iteration. PISO repeats pressure-velocity corrections within one step. PIMPLE nests those corrections inside momentum-coefficient updates. The red arrows denote repetition; they do not denote physical time advancement.',
  'profiles_re100': 'Retained Re=100 centerline velocities at matched spacing h=1/64. Curves show all four formulations; black markers are Ghia et al. (1982) samples. FV uses 64 pressure cells per side and FD uses 65 boundary-inclusive nodes. Line styles and colors identify the computed series.',
  'field_speed_re100': 'Retained Re=100 speed and velocity streamlines at h=1/64. All panels use the same physical color limits. Streamline arrows show circulation direction; their density does not measure vorticity.',

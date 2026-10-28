@@ -26,84 +26,9 @@ The following sections use these dimensionless quantities. At steady state the l
 \newpage
 \input{week01_2_control_volume_derivation.tex}
 \newpage
-\topic{4}{Momentum coefficients and matrix notation}
-For a velocity location labeled $f$, let $\mathrm{NB}(f)$ be the neighboring velocity locations in its momentum row. The index $g$ labels one such location; $a_{fg}$ is the coefficient multiplying its velocity $q_g$. These are velocity-control-volume neighbors, rather than the pressure neighbors labeled $E,W,N,S$. Collect the source and neighbor contributions into
-\[
-H_f=b_f+\sum_{g\in\mathrm{NB}(f)}a_{fg}q_g,
-\qquad d_f=\frac{1}{a_f}.
-\]
-The symbol $q_g$ means a velocity degree of freedom; it is not volume flux. The scalar momentum row becomes
-\[
-q_f=d_f\left[H_f-(Gp)_f\right],\qquad (Gp)_e=\frac{p_E-p_P}{h}.
-\]
-The vector $q$ collects all unknown interior horizontal and vertical face velocities. The scalar rows form two component linear systems, written together as
-\[
-Aq=b-Gp.
-\]
-The product $Dq$ collects the cell residuals: $(Dq)_P=r_{c,P}$. The product $Gp$ collects face pressure gradients. Multiplication by $d$ scales each face entry by its own $1/a_f$.
-
-For $N$ cells per side, $p$ has $N^2$ entries and $q$ has $2N(N-1)$ unknown interior face velocities. Thus $A$ is $2N(N-1)$ square, $D$ has $N^2$ rows and $2N(N-1)$ columns, $G$ has the reverse shape, and $L=-DdG$ is $N^2$ square. The operator $\operatorname{diag}(a_f)$ places the coefficients on the diagonal and zeros elsewhere.
-
-The diagonal of $A$ contains the center coefficients $a_f$; its off-diagonal entries are $-a_{fg}$. With $R=A-\operatorname{diag}(a_f)$ and $d=\operatorname{diag}(1/a_f)$,
-\[
-H(q)=b-Rq,\qquad q=d\left[H(q)-Gp\right].
-\]
-Thus $H$ is computed from current neighbor velocities; it is not another fluid property. Here $d$ is an inverse diagonal matrix, while $h$ is mesh spacing. In operator formulas $L$ denotes the pressure matrix; the $L$ used earlier in dimensional scaling denotes cavity length.
-
-\begin{center}\begin{tabular}{lll}\toprule
-Symbol & Meaning & Location or role\\\midrule
-$p$ & Pressure relative to a reference & Cell centers\\
-$q$ & Collected velocity components & Interior faces\\
-$A,b$ & Momentum matrix and source & Two component systems\\
-$d$ & Inverse center coefficients & Face-wise diagonal\\
-$R$ & Off-diagonal part of $A$ & Neighbor coupling\\
-$H=b-Rq$ & Source plus neighbor terms & Recomputed from $q$\\
-$D$ & Discrete divergence & Faces to cell balance\\
-$G$ & Discrete pressure gradient & Centers to faces\\
-$L=-DdG$ & Pressure operator & Cell-center system\\\bottomrule
-\end{tabular}\end{center}
-The notation abbreviates the scalar equations; it does not introduce additional physics. Each occurrence of $A,b,d$ refers to the current assembly, including any wall, transient or relaxation modifications.
+\input{week01_2_momentum_notation.tex}
 \newpage
-\topic{5}{Pressure correction from the momentum equations}
-A star denotes a tentative velocity. The superscript $k$ labels the current steady coupling iteration, not a power or a physical time level. Given the current pressure estimate $p^k$, solve momentum for $q^*$ while holding its coefficients fixed:
-
-\[
-Aq^*=b-Gp^k.
-\]
-\textbf{Pressure correction and pressure differences.} Let $p_{\rm corr}$ be the pressure targeted by the current correction solve. Define
-\[
-p'=p_{\rm corr}-p^k,\qquad q'=q_{\rm corr}-q^*.
-\]
-A prime is an additive correction, not a derivative. The unrelaxed pressure change at that cell is
-\[
-\boxed{\Delta p=p_{\rm corr}-p^k=p'.}
-\]
-It is a change at a fixed cell during coupling. By contrast, $p_E-p_P$ is a spatial pressure difference between neighboring cells at the same iteration. Neither is the continuity residual $r_{c,P}$.
-
-Write $q_{\rm corr}=q^*+q'$ and $p_{\rm corr}=p^k+p'$. Substituting these into the same momentum system and subtracting the predictor gives
-\[
-Aq'=-Gp'.
-\]
-At one horizontal face this is
-\[
-a_eu'_e=\sum_{g\in\mathrm{NB}(e)}a_{eg}q'_g-\frac{p'_E-p'_P}{h}.
-\]
-The exact correction couples neighboring velocity corrections. SIMPLE obtains a local correction by neglecting that neighbor-correction sum during this correction solve:
-\[
-\boxed{u'_e=-d_e\frac{p'_E-p'_P}{h}},\qquad d_e=1/a_e.
-\]
-Likewise,
-\begin{align*}
-u'_w&=-d_w\frac{p'_P-p'_W}{h},\\
-v'_n&=-d_n\frac{p'_N-p'_P}{h},&
-v'_s&=-d_s\frac{p'_P-p'_S}{h}.
-\end{align*}
-The corrected velocity must satisfy cell continuity. Substituting the four face corrections gives
-\[
-0=r_{c,P}^*+\frac{u'_e-u'_w+v'_n-v'_s}{h},
-\qquad r_{c,P}^*=\frac{u_e^*-u_w^*+v_n^*-v_s^*}{h}.
-\]
-This equation determines pressure corrections from the predictor's cell imbalance. Neglecting neighbor corrections is an approximation to momentum coupling, not permission to violate continuity. Repeated coupling iterations are required to recover the target steady momentum solution.
+\input{week01_2_pressure_correction_intro.tex}
 \newpage
 \input{week01_2_shared_face_visual.tex}
 \newpage
@@ -130,7 +55,10 @@ Collect the coefficients of each pressure correction and move the tentative resi
 \end{align*}
 The center coefficient is the sum of four face weights; each neighbor has a negative coefficient. The right side is the negative cell divergence of the tentative velocity. The same face weight must be shared by its two adjacent pressure cells.
 
-\textbf{Matrix form.} Applying $D$ to $q=q^*-dGp'$ gives
+\textbf{Matrix form.} Name the resulting pressure matrix $L$. It has one row
+per pressure cell and multiplies the column of cell pressure corrections.
+This operator symbol is distinct from the cavity length used in Section 1's
+dimensional scaling. Applying $D$ to $q=q^*-dGp'$ gives
 \begin{align*}
 0&=Dq^*-DdGp',\\
 L&=-DdG,\\
@@ -183,28 +111,49 @@ Thus the unrelaxed changes are $\Delta p_1=p'_1=-0.5$ and $\Delta p_2=p'_2=0.5$.
 
 \textbf{Local and global conservation.} The initial global sum was already $0.4-0.4=0$, but each cell was imbalanced. A zero total boundary flux alone cannot certify local continuity.
 \newpage
-\topic{8}{SIMPLE: steady pressure--velocity coupling}
-SIMPLE means Semi-Implicit Method for Pressure-Linked Equations. Its index $k$ counts steady coupling iterations, not physical time. Each iteration assembles convection from the latest velocity, solves a momentum predictor, then solves the pressure-correction equation.
+\input{week01_2_iteration_preparation.tex}
+\newpage
+\topic{8}{SIMPLE: assemble the steady coupling iteration}
+SIMPLE means Semi-Implicit Method for Pressure-Linked Equations. It combines
+the momentum solve, pressure correction and conservative velocity update
+already derived. Begin iteration $k$ with velocity $q^k$ and pressure $p^k$.
 
-\textbf{Momentum under-relaxation.} Let $a_f^0$ be the original center coefficient of the current unrelaxed assembly. The superscript $0$ here identifies the coefficient before relaxation, not the initial physical time. The label $\mathrm{rel}$ means relaxed. The factor $\alpha_u$ controls momentum under-relaxation; for $0<\alpha_u\leq1$, the relaxed row uses
-\[
-a_f^{\rm rel}=\frac{a_f^0}{\alpha_u},\qquad
-b_f^{\rm rel}=b_f+\left(\frac{1}{\alpha_u}-1\right)a_f^0q_f^k.
-\]
-The added source uses the original diagonal $a_f^0$. At a converged fixed point, $q_f^{k+1}=q_f^k$, the added diagonal and source contributions cancel. The target steady equation is unchanged. The pressure correction uses $d_f=1/a_f^{\rm rel}$.
-
-\textbf{One steady iteration.}
+\begin{enumerate}
+\item \textbf{Build momentum.} Evaluate convection from $q^k$ and assemble
+the original steady matrix $A$ and known source $b$. Apply the velocity
+under-relaxation rule from Section 7 to obtain $A^{\rm rel}$ and $b^{\rm rel}$.
+The relaxed center coefficients become the diagonal of $A^{\rm rel}$; its
+neighbor entries are unchanged. The column $b^{\rm rel}$ collects the relaxed
+source entries.
+\item \textbf{Predict velocity.} Solve the relaxed momentum equations using
+the current pressure. The result is $q^*$, which may violate continuity.
+\item \textbf{Calculate the imbalance.} Apply $D$ to obtain one residual
+$r_{c,P}^*$ per pressure cell. Use the relaxed inverse diagonal $d$ to build
+the pressure matrix $L=-DdG$.
+\item \textbf{Solve pressure correction.} Solve $Lp'=-Dq^*$ with the wall
+correction conditions and one pressure reference, as derived in Section 6.
+\item \textbf{Update the fields.} Apply the full face-velocity correction
+and the under-relaxed pressure update shown below.
+\item \textbf{Test both equations.} Rebuild the unrelaxed momentum coefficients
+from the corrected velocity and check the momentum and continuity tolerances.
+If either fails, use the corrected fields as the next estimates and repeat.
+\end{enumerate}
+In compact notation, the solve and updates are
 \begin{align*}
 A^{\rm rel}q^*&=b^{\rm rel}-Gp^k,\\
 Lp'&=-Dq^*,\\
 q^{k+1}&=q^*-dGp',\\
-p^{k+1}&=p^k+\alpha_p p',\qquad 0<\alpha_p\leq1.
+p^{k+1}&=p^k+\alpha_p p'.
 \end{align*}
-Velocity is corrected fully; only the stored pressure update is damped by $\alpha_p$. After boundary conditions and the pressure gauge are applied, the next iteration rebuilds the momentum coefficients from the corrected velocity.
+The stored pressure increment is $\alpha_p p'$, whereas the unrelaxed
+correction is $\Delta p=p'$. Velocity receives its full correction so that
+the cell balances are conservative. Prescribed wall velocities remain fixed;
+a common pressure offset is removed without changing pressure gradients.
 
-\textbf{Stopping criteria.} Momentum relaxation can make updates small before the original equations are satisfied. The implementation checks the unrelaxed nonlinear steady momentum defect and the cell divergence. Both must meet tolerance. In the retained baseline, $\alpha_u=0.7$ and $\alpha_p=0.3$.
-
-\textbf{Role.} SIMPLE is a natural steady solver. It can also be used inside a transient nonlinear solve, but the current implementation's SIMPLE branch has no physical time step. Its iteration count cannot be compared directly with the physical-step counts of PISO or PIMPLE.
+The retained baseline uses $\alpha_u=0.7$, $\alpha_p=0.3$,
+$\varepsilon_m=10^{-6}$ and $\varepsilon_c=10^{-9}$. These numerical controls
+do not change the Reynolds number. This SIMPLE branch solves a steady
+problem; increasing $k$ does not advance physical time.
 \newpage
 \topic{8 continued}{SIMPLE: follow the loop}
 \lessonfigure{simple_visual}{SIMPLE for a steady problem. Follow the blue boxes downward. The red return path rebuilds momentum after an unconverged iteration. Correct face velocities fully, relax pressure as specified, and test both momentum and cell continuity.}{simple-visual}
@@ -232,26 +181,71 @@ Thus the transient assembly adds $1/\Delta t$ to the diagonal and the known old 
 
 Backward Euler is first-order accurate in time. Extra correctors can reduce algebraic coupling error, but do not change its time-discretization order. A larger stable $\Delta t$ still requires a temporal-accuracy assessment.
 \newpage
-\topic{10}{PISO: pressure corrections for a frozen momentum matrix}
-PISO means Pressure-Implicit with Splitting of Operators. At one physical step, assemble transient momentum once and solve
+\topic{10}{PISO: several corrections in one physical time step}
+PISO means Pressure-Implicit with Splitting of Operators. Start with the
+accepted old-time velocity $q^n$ and pressure $p^n$. The next accepted fields
+will belong to time $n+1$, one physical interval $\Delta t$ later.
+
+First assemble the transient momentum equation from Section 9 and solve
 \[
 Aq^*=b-Gp^{\rm guess}.
 \]
-This predictor uses the pressure available from the preceding step or initial state. Its momentum residual for that pressure can be small, while its cell divergence is nonzero.
+The pressure $p^{\rm guess}$ is the initial pressure estimate for this step,
+normally the preceding accepted pressure. The source $b$ includes the fixed
+old-time contribution $q^n/\Delta t$ and known wall contributions. The
+predictor $q^*$ satisfies this momentum solve, but can still violate continuity.
+Convection coefficients are evaluated from the initial velocity estimate,
+for example $q^n$, and held fixed during the following inner corrections.
 
-Set $q^{(0)}=q^*$. The index $m$ counts inner corrections within this one physical step. The component matrices $A$, their source $b$, inverse diagonal $d$, off-diagonal part $R$, and pressure operator $L=-DdG$ remain fixed throughout the inner loop. Neighbor velocities do change, so each correction computes
+The next operations improve pressure and velocity within this same step.
+Write $q^{(0)}=q^*$ and use $m$ to count inner corrections. Parenthesized
+superscripts identify a correction estimate, not a physical time or a power.
+
+\begin{center}\begin{tabular}{lp{.72\linewidth}}\toprule
+Quantity & Behavior during this PISO loop\\\midrule
+$q^n$ & Accepted old-time velocity; fixed throughout the step.\\
+$A,b$ & Transient momentum coefficients and source; assembled once.\\
+$d,R$ & Reciprocal diagonal and off-diagonal part of this same $A$; fixed.\\
+$L=-DdG$ & Pressure matrix from the fixed reciprocal diagonal; fixed.\\
+$q^{(m)},p^{(m)}$ & Current estimates at the new time level; updated by corrections.\\
+$H^{(m)}$ & Known source plus the latest neighbor-velocity contributions; recomputed.\\\bottomrule
+\end{tabular}\end{center}
+The key distinction is between a fixed momentum matrix and changing velocity
+values within it. Updating the neighbor contributions is what makes another
+pressure correction different from solving an identical equation again.
+\newpage
+\topic{10 continued}{Form each inner pressure solve and velocity update}
+Given the current estimate $q^{(m)}$, collect its neighbor contributions:
+\[
+H^{(m)}=b-Rq^{(m)}.
+\]
+The momentum-row reconstruction for a new pressure estimate is
+\[
+q^{(m+1)}=d[H^{(m)}-Gp^{(m+1)}].
+\]
+Require its cell divergence to vanish. Applying $D$ gives
 \begin{align*}
-H^{(m)}&=b-Rq^{(m)},\\
-Lp^{(m+1)}&=-D\left(dH^{(m)}\right),\\
-q^{(m+1)}&=d\left[H^{(m)}-Gp^{(m+1)}\right].
+0&=D(dH^{(m)})-DdG p^{(m+1)},\\
+Lp^{(m+1)}&=-D(dH^{(m)}),\qquad L=-DdG.
 \end{align*}
-The pressure equation follows by applying $D$ to the last line and imposing $Dq^{(m+1)}=0$. Unlike SIMPLE's $p'$, this implementation's $p^{(m+1)}$ is the full pressure field in the chosen gauge, rather than a pressure increment. It replaces the previous pressure; it is not added to it.
+Thus one inner correction consists of recomputing $H^{(m)}$, solving this
+pressure equation and reconstructing all face velocities. The next
+correction repeats these operations with the newly reconstructed velocity.
 
-\textbf{Purpose of the next correction.} Reconstructed velocity changes the neighbor terms in $H$. Recomputing $H$ and solving pressure again improves the consistency of reconstructed velocity with the same frozen momentum equation. Repeating a linear pressure solve with an unchanged right-hand side is not an additional PISO correction.
+\textbf{Full pressure or increment?} In this implementation,
+$p^{(m+1)}$ is the full pressure field in the selected reference convention.
+It replaces the previous pressure estimate. It is not SIMPLE's additive
+correction $p'$, and must not be added to the previous pressure.
 
-Let $N_i$ be the specified number of inner corrections. After $N_i$ corrections, accept $q^{n+1}=q^{(N_i)}$ and $p^{n+1}=p^{(N_i)}$, then advance time once. The retained baseline has $N_i=2$. No momentum or pressure relaxation is applied by this transient branch.
+Let $N_i$ denote the chosen number of inner corrections. After those
+corrections, accept $q^{n+1}=q^{(N_i)}$ and $p^{n+1}=p^{(N_i)}$.
+Only this acceptance advances the physical time. The retained baseline uses
+$N_i=2$ and does not apply SIMPLE's under-relaxation in this transient branch.
 
-The nonlinear convection coefficients remain those used for the initial predictor. That limitation motivates an outer coefficient-update loop.
+The convection coefficients remain those assembled for the predictor.
+Further inner corrections improve coupling for that fixed matrix. They do
+not rebuild convection from the latest new-time velocity; PIMPLE adds an
+outer iteration for that purpose.
 \newpage
 \topic{10 continued}{PISO: follow the loop}
 \lessonfigure{piso_visual}{PISO within one physical time step. The red return path updates correction terms before another pressure solve, using fixed momentum coefficients. The saved old-time velocity remains unchanged until the new time level is accepted.}{piso-visual}
@@ -323,16 +317,40 @@ The right-hand side of the pressure equation changes from $-8/11$ to $-40/77$. T
 \topic{12}{PIMPLE: outer coefficient updates and inner corrections}
 PIMPLE combines an outer momentum-update loop with PISO inner corrections. Physical time levels are $n,n+1$; $\ell$ labels outer updates and $m$ labels inner pressure corrections. The previous physical velocity $q^n$ is stored once.
 
-At the start of outer pass $\ell$, assemble convection using the latest available corrected velocity $q_{\rm lag}^{(\ell)}$. With $I$ denoting the identity matrix, this gives new matrices and sources
+Before writing the nested equations, distinguish their labels and stored fields:
+\begin{center}\begin{tabular}{lp{.72\linewidth}}\toprule
+Label or field & Meaning\\\midrule
+$n,n+1$ & Old and new physical time levels.\\
+$\ell$ & Outer pass: rebuild momentum coefficients using the latest velocity estimate.\\
+$m$ & Inner correction within one outer pass: update pressure and face velocity.\\
+$q^n$ & Accepted old-time velocity, saved once and kept fixed.\\
+$q_{\rm lag}^{(\ell)},p_{\rm lag}^{(\ell)}$ & Velocity and pressure estimates entering outer pass $\ell$. The subscript lag identifies inputs carried from the preceding pass.\\
+$q^{(\ell,0)}$ & Momentum predictor at the start of outer pass $\ell$.\\
+$q^{(\ell,m)}$ & New-time velocity estimate after $m$ inner corrections in pass $\ell$.\\\bottomrule
+\end{tabular}\end{center}
+For example, $(\ell,m)=(2,1)$ means the first inner correction of the second
+outer pass. It remains within the same physical step. The first outer pass
+starts from the accepted old-time fields; subsequent passes start from the
+latest corrected new-time fields.
+\newpage
+\topic{12 continued}{Assemble an outer pass and carry its fields forward}
+At the start of outer pass $\ell$, assemble convection using the latest available corrected velocity $q_{\rm lag}^{(\ell)}$. Here $A_{\rm space}$ contains the spatial convection and diffusion coefficients,
+$b_{\rm wall}$ contains prescribed wall contributions, and $I$ is the identity
+matrix (ones on its diagonal, zeros elsewhere). Adding the backward-Euler terms gives
 \[
 A^{(\ell)}=A_{\rm space}(q_{\rm lag}^{(\ell)})+I/\Delta t,
 \qquad b^{(\ell)}=b_{\rm wall}^{(\ell)}+q^n/\Delta t.
 \]
 The same $q^n$ appears in every outer pass. For this fixed-grid, fixed-lid code, the wall source is constant, so $b^{(\ell)}$ has the same value in every outer pass. The prescribed wall motion and old-time source belong to the same physical step.
 
-The first outer pass starts from $q^n,p^n$. The symbol $p_{\rm lag}^{(\ell)}$ denotes the latest available pressure at the start of outer pass $\ell$. A new momentum predictor is solved using that pressure. Then inner corrections hold the current outer assembly fixed:
+The first outer pass starts from $q^n,p^n$. The symbol $p_{\rm lag}^{(\ell)}$ denotes the latest available pressure at the start of outer pass $\ell$. A new momentum predictor is solved using that pressure. The predictor is therefore
+\[
+A^{(\ell)}q^{(\ell,0)}=b^{(\ell)}-Gp_{\rm lag}^{(\ell)}.
+\]
+\newpage
+\topic{12 continued}{Inner corrections and the next outer pass}
+From this assembly define $d^{(\ell)}$ as its reciprocal diagonal, $R^{(\ell)}$ as its off-diagonal part, and $L^{(\ell)}=-D d^{(\ell)}G$ as its pressure matrix. These three objects are fixed during the inner corrections of outer pass $\ell$:
 \begin{align*}
-A^{(\ell)}q^{(\ell,0)}&=b^{(\ell)}-Gp_{\rm lag}^{(\ell)},\\
 H^{(\ell,m)}&=b^{(\ell)}-R^{(\ell)}q^{(\ell,m)},\\
 L^{(\ell)}p^{(\ell,m+1)}&=-D\left(d^{(\ell)}H^{(\ell,m)}\right),\\
 q^{(\ell,m+1)}&=d^{(\ell)}\left[H^{(\ell,m)}-Gp^{(\ell,m+1)}\right].
@@ -346,11 +364,11 @@ Thus the final corrected fields of one outer pass initialize the next. Rebuildin
 
 \textbf{Two different purposes.} Inner corrections improve pressure--velocity consistency for the current matrix. Outer passes update the nonlinear coefficients that matrix represents. Neither loop advances physical time. Only after the final outer pass are the accepted fields assigned to time $n+1$.
 
-With one outer pass, this code reduces to its PISO algorithm. Its PIMPLE branch does not apply SIMPLE's under-relaxation. Additional loops reduce certain algebraic errors at extra cost; they do not increase backward-Euler's formal time order.
+With one outer pass, this code reduces to its PISO algorithm. Its PIMPLE branch does not apply SIMPLE's under-relaxation. The retained code performs the configured number of outer and inner corrections, then tests steady convergence between completed steps. A transient-accuracy study must also assess the time step and remaining within-step defects. Additional loops reduce certain algebraic errors at extra cost; they do not increase backward-Euler's formal time order.
 \newpage
 \topic{12 continued}{PIMPLE: follow the loop}
-\lessonfigure{pimple_visual}{PIMPLE within one physical time step. Green: inner pressure-velocity corrections with fixed momentum coefficients. Red: outer iterations rebuild those coefficients from the latest new-time estimate. Neither loop advances the saved old-time data.}{pimple-visual}
-The outer loop updates convection coefficients and resolves momentum. The inner loop updates pressure and face velocity for those coefficients. Neither loop advances physical time. Accept a time step only after the solve targets are met; a steady-loop comparison alone does not establish transient accuracy.
+\lessonfigure{pimple_visual}{PIMPLE within one physical time step. Green: inner pressure-velocity corrections with fixed momentum coefficients. Red: outer passes rebuild those coefficients from the latest new-time estimate. The retained code completes the configured passes, accepts the step, and tests steady convergence between steps. Neither correction loop advances the saved old-time data.}{pimple-visual}
+The outer loop updates convection coefficients and resolves momentum. The inner loop updates pressure and face velocity for those coefficients. Neither loop advances physical time. The retained code completes the configured passes and checks steady convergence between steps. A time-accurate simulation also needs within-step and time-step accuracy checks.
 \newpage
 \topic{13}{PIMPLE: a nonlinear coefficient example}
 Extend the preceding algebraic example by making its momentum coefficients depend on velocity:

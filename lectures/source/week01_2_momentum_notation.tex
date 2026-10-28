@@ -1,0 +1,167 @@
+\topic{4}{Read one discrete momentum equation}
+The previous section produced an equation for the horizontal velocity $u_e$.
+It has one unknown at the center of a horizontal-momentum control volume and
+four neighboring horizontal velocities. Before shortening that equation,
+identify its entries:
+\begin{center}\begin{tabular}{lp{.76\linewidth}}\toprule
+Entry & Meaning in this row\\\midrule
+$u_e$ & Horizontal velocity being calculated. It is stored at face $e$ between pressure cells $P$ and $E$.\\
+$u_{\rm E},u_{\rm W},u_{\rm N},u_{\rm S}$ & Horizontal velocities one mesh spacing east, west, north and south of $u_e$.\\
+$a_e$ & Center coefficient multiplying $u_e$. It comes from discretized convection and diffusion.\\
+$a_{\rm E},a_{\rm W},a_{\rm N},a_{\rm S}$ & Coefficients multiplying the four neighboring velocities.\\
+$b_e$ & Known source contribution after prescribed boundary values have been collected on the right side.\\
+$p_P,p_E$ & Pressures at adjacent cell centers, separated by $h$.\\\bottomrule
+\end{tabular}\end{center}
+The row is
+\begin{align*}
+a_eu_e={}&a_{\rm E}u_{\rm E}+a_{\rm W}u_{\rm W}
+          +a_{\rm N}u_{\rm N}+a_{\rm S}u_{\rm S}\\
+        &+b_e-\frac{p_E-p_P}{h}.
+\end{align*}
+The neighbor terms describe interaction with the surrounding flow. The last
+term is the horizontal pressure force per unit mass. All rows here have
+already been divided by control-volume area; their terms have the
+dimensionless form of accelerations.
+
+\textbf{Where the source comes from.} At a steady interior location, there is
+no prescribed wall value in the row and this cavity has no body-force source:
+$b_e=0$. At the moving lid, the stored velocity is a distance $h/2$ below the
+prescribed wall velocity $U_{\rm wall}$. Approximate the normal diffusive
+gradient using that half-cell distance. The north-face contribution, divided
+by the momentum-volume area, is
+\[
+\frac{1}{Re}\frac{h}{h^2}\frac{U_{\rm wall}-u_e}{h/2}
+=2\beta U_{\rm wall}-2\beta u_e,\qquad \beta=\frac{1}{Re\,h^2}.
+\]
+Move $-2\beta u_e$ to the left: it contributes $+2\beta$ to the diagonal.
+The known term $2\beta U_{\rm wall}$ stays on the right and enters $b_e$.
+For $Re=100$, $h=0.25$ and $U_{\rm wall}=1$, these wall contributions are
+$0.32$ to the diagonal and $0.32$ to the source. The complete wall row also
+includes its remaining face contributions. The symbol $b_e$ collects known
+terms; it is not another unknown. Time-dependent sources are introduced
+with the time discretization in Section 9.
+\newpage
+\topic{4 continued}{A source, a neighbor sum and one velocity}
+The quantity needed from the neighboring velocities is their weighted sum
+plus the known source. Call it $H_e$:
+\[
+H_e=b_e+a_{\rm E}u_{\rm E}+a_{\rm W}u_{\rm W}
+        +a_{\rm N}u_{\rm N}+a_{\rm S}u_{\rm S}.
+\]
+Define $d_e=1/a_e$, the reciprocal of the center coefficient. Dividing the
+momentum row by $a_e$ now gives
+\[
+\boxed{u_e=d_e\left(H_e-\frac{p_E-p_P}{h}\right).}
+\]
+For fixed coefficients, changing a neighbor velocity changes $H_e$.
+Changing the pressure difference changes the pressure contribution. These are
+the two pieces used repeatedly in pressure--velocity coupling.
+
+Use the preceding interior example: $a_e=0.64$, $b_e=0$, and
+$(a_{\rm E},a_{\rm W},a_{\rm N},a_{\rm S})=(0.12,0.20,0.16,0.16)$.
+With neighboring velocities $(0.04,0.02,0.03,0.01)$,
+\[
+H_e=0+0.12(0.04)+0.20(0.02)+0.16(0.03)+0.16(0.01)=0.0152.
+\]
+For $p_P=0.010$, $p_E=0.008$ and $h=0.25$,
+\begin{align*}
+\frac{p_E-p_P}{h}&=-0.008, & d_e&=1/0.64=1.5625,\\
+u_e&=1.5625[0.0152-(-0.008)]=0.03625.
+\end{align*}
+This is the same scalar momentum calculation, with its terms grouped under
+two names. It does not yet enforce the four-face continuity balance in
+each pressure cell.
+
+\textbf{Generalizing the location.} Let $f$ label any unknown velocity location
+and write its component as $q_f$: either a horizontal $u$ or a vertical $v$.
+Let $g$ label a neighboring location contributing to that same component row.
+The set of such neighbors is $\mathrm{NB}(f)$, and $a_{fg}$ multiplies $q_g$.
+Then
+\[
+H_f=b_f+\sum_{g\in\mathrm{NB}(f)}a_{fg}q_g,\qquad d_f=1/a_f.
+\]
+The sum adds the neighbor contributions just evaluated explicitly.
+The generic symbol $q_f$ represents a velocity component, not a volume flow rate.
+\newpage
+\topic{4 continued}{Collect the scalar rows into a linear system}
+A \emph{vector} is an ordered column of values. Collect all unknown interior
+horizontal and vertical face velocities into the column $q$. Collect the
+cell-center pressures into $p$ and the known source entries $b_f$ into $b$.
+Use the same ordering every time these columns are assembled.
+
+A \emph{matrix} stores the coefficients multiplying that column of unknowns.
+For the momentum matrix $A$, put $a_f$ on row $f$'s diagonal. Move the neighbor
+terms to the left, so its neighbor entries are $-a_{fg}$:
+\[
+(Aq)_f=a_fq_f-\sum_{g\in\mathrm{NB}(f)}a_{fg}q_g.
+\]
+The notation $(Aq)_f$ means entry $f$ of the product $Aq$. It is precisely
+the left side of one rearranged scalar momentum equation.
+
+Define $G$ as the discrete pressure-gradient operation. It maps the stored
+pressures to a pressure gradient at each unknown velocity location. For example,
+\[
+(Gp)_e=\frac{p_E-p_P}{h},\qquad
+(Gp)_n=\frac{p_N-p_P}{h}.
+\]
+The first entry acts in horizontal momentum and the second in vertical
+momentum. The complete set of rows is therefore
+\[
+\boxed{Aq=b-Gp.}
+\]
+This abbreviates the equations already derived. Once coefficients, boundary
+values and a pressure estimate are specified, a linear solver calculates
+the velocity column.
+
+For the square mesh with $N$ pressure cells along each side, there are $N^2$
+pressures. Unknown interior velocities comprise $N(N-1)$ horizontal and
+$N(N-1)$ vertical values. Thus $q$ and $b$ each have $2N(N-1)$ entries,
+and $A$ has that many rows and columns. Prescribed wall-normal velocities
+are boundary data, rather than entries in $q$.
+The Python arrays retain those boundary values as well: pressure has shape
+$(N,N)$, horizontal velocity $(N,N+1)$ and vertical velocity $(N+1,N)$.
+Array entry $[j,i]$ uses row $j$ for the $y$ direction and column $i$ for $x$.
+The column $q$ used in the algebra contains only the interior unknown entries
+extracted from those full arrays.
+\newpage
+\topic{4 continued}{The operators used by the coupling algorithms}
+Define the discrete divergence operation $D$ by applying the derived cell
+continuity balance to the stored face velocities:
+\[
+(Dq)_P=\frac{u_e-u_w+v_n-v_s}{h}=r_{c,P}.
+\]
+Thus $Dq$ is a column of cell imbalances, one entry per pressure cell.
+Zero in every entry means discrete continuity. The gradient $G$ maps pressure
+values to face gradients; $D$ maps face velocities back to cell balances.
+
+Call the diagonal part of the momentum matrix $M$, the remaining part $R$,
+and the inverse of the diagonal $d$:
+\[
+M=\operatorname{diag}(a_f),\qquad R=A-M,\qquad
+d=M^{-1}=\operatorname{diag}(1/a_f).
+\]
+The notation $\operatorname{diag}(a_f)$ means a matrix containing the center
+coefficients on its diagonal and zeros elsewhere. The inverse $d$ simply
+divides entry $f$ by $a_f$. The matrix $R$ contains the off-diagonal entries
+$-a_{fg}$, so
+\[
+H(q)=b-Rq,\qquad q=d[H(q)-Gp].
+\]
+In entry $f$, $-Rq$ restores the positive neighbor sum used in $H_f$.
+The notation $H(q)$ emphasizes that these contributions change when the
+neighbor velocities change. Coefficients stay fixed during one linear solve;
+convection coefficients are rebuilt between nonlinear updates.
+
+\begin{center}\begin{tabular}{lp{.77\linewidth}}\toprule
+Symbol & Operation and input/output\\\midrule
+$A,b$ & Momentum coefficients and known sources; $Aq=b-Gp$.\\
+$G$ & Cell pressures in; pressure gradients at velocity faces out.\\
+$D$ & Face velocities in; cell continuity residuals out.\\
+$d$ & Scale each velocity-row entry by its reciprocal center coefficient.\\
+$R$ & Off-diagonal momentum coefficients, carrying neighbor coupling.\\
+$H(q)$ & Known sources plus neighbor-velocity contributions.\\\bottomrule
+\end{tabular}\end{center}
+Pressure is solved at cell centers and velocity at faces, so $D$ and $G$
+map between different collections of values. Section 6 derives the pressure
+matrix from these operations. The small letter $d$ is distinct from the grid
+spacing $h$.

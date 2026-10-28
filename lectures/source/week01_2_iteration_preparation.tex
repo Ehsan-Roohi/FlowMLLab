@@ -1,0 +1,83 @@
+\newpage
+\topic{7 continued}{Prepare a steady iteration: under-relaxation}
+A coupling \emph{iteration} updates an estimate of a steady solution. The
+counter $k$ labels those updates. It does not measure elapsed physical time.
+The estimates entering the update are $q^k$ and $p^k$.
+
+\textbf{Velocity under-relaxation.} Convection coefficients depend on velocity,
+so replacing an estimate by a very different predictor can destabilize the
+next coefficient update. An under-relaxation factor $\alpha_u$, with
+$0<\alpha_u\leq1$, controls this change. Subscript $u$ refers to velocity;
+the same factor is used for both components here.
+
+Let $a_f^0$ be the center coefficient before relaxation. The superscript $0$
+identifies the original coefficient of this assembly, not an initial time.
+The relaxed row uses
+\[
+a_f^{\rm rel}=\frac{a_f^0}{\alpha_u},\qquad
+b_f^{\rm rel}=b_f+
+\left(\frac{1}{\alpha_u}-1\right)a_f^0q_f^k.
+\]
+The label $\mathrm{rel}$ means relaxed. Neighbor coefficients are unchanged.
+The larger diagonal is accompanied by a known source containing the old
+velocity estimate. At a converged fixed point the new and old velocities
+coincide, so these extra diagonal and source terms cancel. The intended
+steady momentum equation is preserved.
+
+For the preceding single-row example, let $a_e^0=0.64$, the old estimate be
+$u_e^k=0.02$, and choose $\alpha_u=0.7$. Holding its neighbor and pressure
+contributions fixed gives
+\begin{align*}
+a_e^{\rm rel}&=0.64/0.7\simeq0.9142857,\\
+\text{added source}&=(1/0.7-1)(0.64)(0.02)\simeq0.005485714,\\
+u_e^*&\simeq(0.0152+0.008+0.005485714)/0.9142857=0.031375.
+\end{align*}
+For this frozen-row illustration, this is also
+$0.7(0.03625)+0.3(0.02)$. In the coupled solver, relaxation is applied
+to the assembled momentum equations as written above. The pressure correction
+uses the relaxed reciprocal diagonal $d_f=1/a_f^{\rm rel}$.
+
+\textbf{Pressure under-relaxation.} The separate factor $\alpha_p$, with
+$0<\alpha_p\leq1$, controls the pressure stored for the next predictor:
+$p^{k+1}=p^k+\alpha_p p'$. The full velocity correction is retained to satisfy
+continuity, as the two-cell example demonstrated. The factors $\alpha_u$ and
+$\alpha_p$ are numerical controls, not fluid properties.
+\newpage
+\topic{7 continued}{Decide whether both equations have been satisfied}
+A \emph{residual} is the left side of an equation minus its right side,
+evaluated using the current estimates. Zero residual means that discrete
+equation is satisfied. The cell continuity residual is already
+$r_{c,P}=(Dq)_P$.
+
+For the momentum equations, collect their residuals into a column $r_m$:
+\[
+r_m=A(q)q-b+Gp.
+\]
+Here $A(q)$ means that convection coefficients are rebuilt from the current
+velocity before evaluating this test. Use the original, unrelaxed steady
+equations. This checks the physical discretization being solved rather than
+only the temporary relaxed predictor equations.
+
+To report one number for a residual column $r$, use the infinity norm
+\[
+\|r\|_\infty=\max_i|r_i|.
+\]
+Index $i$ runs through that column's entries; the operation selects the
+largest absolute entry. Thus the two required checks are
+\[
+\|r_m\|_\infty<\varepsilon_m,\qquad
+\|Dq\|_\infty<\varepsilon_c.
+\]
+The positive numbers $\varepsilon_m$ and $\varepsilon_c$ are the selected
+momentum and continuity tolerances. They are separate because the residuals
+test different equations. The retained cavity runs use $10^{-6}$ and
+$10^{-9}$ respectively.
+
+A small change between successive velocities is insufficient: strong
+under-relaxation can produce a small change even when the momentum balance
+is still inaccurate. Small equation residuals are also distinct from small
+spatial discretization error. Accuracy still requires the reference-profile
+and mesh-refinement comparisons later in the lesson.
+
+In a steady coupling iteration, both equation checks are evaluated after
+the velocity and pressure updates, using the latest corrected fields.

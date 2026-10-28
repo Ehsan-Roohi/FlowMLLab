@@ -7,7 +7,7 @@ Course version **v1.10.0**. These counts describe the current checkout; they do 
 | Asset | Count |
 | --- | ---: |
 | Active lecture PDFs | 35 |
-| Pages in those PDFs | 509 |
+| Pages in those PDFs | 522 |
 | Student notebooks, including historical companion | 51 |
 | Historical student audit companion (included above) | 1 |
 | Optional self-study notebooks (separate) | 1 |
@@ -25,7 +25,7 @@ Course version **v1.10.0**. These counts describe the current checkout; they do 
 | File | Pages |
 | --- | ---: |
 | [week01_1_ai_assisted_scientific_software.pdf](../lectures/week01_1_ai_assisted_scientific_software.pdf) | 10 |
-| [week01_2_pressure_velocity.pdf](../lectures/week01_2_pressure_velocity.pdf) | 46 |
+| [week01_2_pressure_velocity.pdf](../lectures/week01_2_pressure_velocity.pdf) | 59 |
 | [week01_numerical_foundations.pdf](../lectures/week01_numerical_foundations.pdf) | 35 |
 | [week02_1_probabilistic_uq.pdf](../lectures/week02_1_probabilistic_uq.pdf) | 10 |
 | [week02_supervised_learning_rarefaction.pdf](../lectures/week02_supervised_learning_rarefaction.pdf) | 24 |

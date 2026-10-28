@@ -1,0 +1,38 @@
+\topic{Introduction}{A moving lid, a circulating fluid and an unknown pressure}
+Consider a square container filled with a viscous liquid. Its top wall moves
+to the right while the other three walls remain stationary. Friction with
+the moving wall starts the liquid moving. The walls prevent it from leaving
+the container, so the motion turns into a circulation inside the square.
+This is the \emph{lid-driven cavity} problem.
+
+To calculate that motion, we need both the fluid velocity and the pressure
+throughout the container. Two physical requirements determine them together.
+
+\textbf{Mass conservation.} Imagine a small fixed region inside the liquid.
+For an incompressible liquid, whose density stays constant, the amount entering that region must equal the
+amount leaving it. Otherwise liquid would accumulate or disappear there.
+This requirement is called the \emph{continuity equation}.
+
+\textbf{Momentum conservation.} The liquid changes its motion because of
+forces. Pressure differences push it, and viscosity transfers motion between
+neighboring fluid layers. The \emph{momentum equations} relate those effects
+to the fluid acceleration.
+
+Neither requirement alone gives a complete solution. A velocity calculated
+with an inaccurate pressure can satisfy a momentum calculation while still
+giving unequal inflow and outflow in a small region. We therefore need a
+procedure that makes velocity and pressure satisfy both requirements.
+
+\textbf{The route through the lesson.}
+\begin{enumerate}
+\item Write the continuity and momentum equations for this cavity.
+\item Divide the domain into small cells and explain the finite-volume method:
+      each cell must obey its own conservation balance.
+\item Locate the stored pressure and velocity values and derive the equations
+      that connect neighboring cells.
+\item Explain how an initial pressure estimate is corrected. Then assemble
+      these operations into SIMPLE, PISO and PIMPLE.
+\item Examine calculated cavity fields, accuracy, convergence and measured cost.
+\end{enumerate}
+The first calculation uses a Reynolds number
+of 100; its definition follows with the governing equations.

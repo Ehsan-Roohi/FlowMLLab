@@ -1,5 +1,5 @@
 {
-  "lecture_pages": 46,
+  "lecture_pages": 59,
   "lecture_figures": 20,
   "notebook_supplementary_figures": 13,
   "all_figure_numbers_and_captions_checked": true,
@@ -11,14 +11,15 @@
   "executed_cheap_cells": [
     "visual-checkerboard-check",
     "visual-hat-arithmetic",
+    "prereq-source-relaxation",
     "51fefcd5",
     "1b614a07",
     "ee106a2c",
     "student-review-refinement-evidence"
   ],
   "fresh_cfd_trajectories": 0,
-  "pdf_sha256": "8ed7935bd75ab1d6ad795bd1264f89949cfba1ca43775e2986d940a123be946b",
-  "notebook_sha256": "e3a79f0db0c507669944de6caf9c8f81f753d6160816e1c2e5bd690c59dce361",
+  "pdf_sha256": "8d1488ee70d2f0317982543d320cb7ce72eb02a44b11cc4820e3daba67f5366c",
+  "notebook_sha256": "ed105b3e53a8341a004eaa1561322d8fa864ede793271ee936cda222e8d70c3d",
   "hosted_colab_run": false,
   "visual_review": "All final pages rendered; all figure pages reviewed at publication scale."
 }
