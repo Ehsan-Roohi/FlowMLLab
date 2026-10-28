@@ -68,7 +68,7 @@
     "caption": "PISO within one physical time step. The red return path updates correction terms before another pressure solve, using fixed momentum coefficients. The saved old-time velocity remains unchanged until the new time level is accepted.",
     "image": "piso_visual.png",
     "lecture": true,
-    "lecture_page": 35,
+    "lecture_page": 37,
     "png_sha256": "d005b9310cf2f3a2c135436229dba97dd15a1b2761586ad59376d369c8200b16"
   },
   "pimple_visual": {
@@ -76,7 +76,7 @@
     "caption": "PIMPLE within one physical time step. Green: inner pressure-velocity corrections with fixed momentum coefficients. Red: outer passes rebuild those coefficients from the latest new-time estimate. The retained code completes the configured passes, accepts the step, and tests steady convergence between steps. Neither correction loop advances the saved old-time data.",
     "image": "pimple_visual.png",
     "lecture": true,
-    "lecture_page": 41,
+    "lecture_page": 43,
     "png_sha256": "3fa555bda561e134d614e985986ab7483e6f8e16f750b44b5a397687f13fb766"
   },
   "loop_map": {
@@ -84,7 +84,7 @@
     "caption": "Comparison of repeated work. A SIMPLE cycle is a steady nonlinear iteration. PISO repeats pressure-velocity corrections within one step. PIMPLE nests those corrections inside momentum-coefficient updates. The red arrows denote repetition; they do not denote physical time advancement.",
     "image": "loop_map.png",
     "lecture": true,
-    "lecture_page": 43,
+    "lecture_page": 45,
     "png_sha256": "cabe3b356ba6c822d8460992c6bab29398c034252d14260d906ba2927cfc732e"
   },
   "profiles_re100": {
@@ -92,7 +92,7 @@
     "caption": "Retained Re=100 centerline velocities at matched spacing h=1/64. Curves show all four formulations; black markers are Ghia et al. (1982) samples. FV uses 64 pressure cells per side and FD uses 65 boundary-inclusive nodes. Line styles and colors identify the computed series.",
     "image": "profiles_re100.png",
     "lecture": true,
-    "lecture_page": 45,
+    "lecture_page": 48,
     "png_sha256": "168d363e17ba706df7d3d92dc344e8b2a420dba28e49cbec3e7295c9245f6fac"
   },
   "field_speed_re100": {
@@ -100,7 +100,7 @@
     "caption": "Retained Re=100 speed and velocity streamlines at h=1/64. All panels use the same physical color limits. Streamline arrows show circulation direction; their density does not measure vorticity.",
     "image": "field_speed_re100.png",
     "lecture": true,
-    "lecture_page": 47,
+    "lecture_page": 50,
     "png_sha256": "51f1173064fe72de5eb846c9e151d0f27a472b3eaff3b393064cb9c91e536298"
   },
   "field_omega_re100": {
@@ -108,7 +108,7 @@
     "caption": "Retained Re=100 signed vorticity with velocity streamlines at h=1/64. One symmetric logarithmic color scale is shared by all panels, linear for absolute vorticity up to 1. The displayed colorbar values are nondimensional physical vorticity, including wall peaks.",
     "image": "field_omega_re100.png",
     "lecture": true,
-    "lecture_page": 48,
+    "lecture_page": 51,
     "png_sha256": "5491e27bb64bc560325b9c7dc2cda542905dab28c872ffca8b3a75c8a6624649"
   },
   "field_p_re100": {
@@ -116,7 +116,7 @@
     "caption": "Retained Re=100 zero-mean pressure and velocity streamlines at h=1/64. One symmetric logarithmic color scale is shared, linear for absolute pressure up to 0.01. FD pressure is reconstructed after the vorticity solve. No independent pressure benchmark is claimed.",
     "image": "field_p_re100.png",
     "lecture": true,
-    "lecture_page": 49,
+    "lecture_page": 52,
     "png_sha256": "3438b0de16dda6796b4d94692a87ac9619c06f6b798de590c19d922385b47a5a"
   },
   "convergence_re100": {
@@ -124,7 +124,7 @@
     "caption": "Retained Re=100 finite-volume convergence histories at h=1/64. The horizontal coordinate is recorded solver-call wall time from one local run per method. Momentum and continuity are separate defects. The streamfunction-vorticity solver uses a different native stopping norm and is included in the adjacent timing tables, not on these FV residual axes.",
     "image": "convergence_re100.png",
     "lecture": true,
-    "lecture_page": 50,
+    "lecture_page": 53,
     "png_sha256": "8d7d80481091527d704210b399621fa3a10f3d1d3e83e73262f216269fc63e9d"
   },
   "profiles_re400": {
@@ -132,7 +132,7 @@
     "caption": "Retained Re=400 centerline velocities. Color identifies formulation and line style identifies spacing. Black markers are Ghia samples; the red cross retains the isolated published horizontal-profile anomaly at x/L=0.9063, excluded only from the qualified error norm. Selected fine cases do not constitute a complete refinement matrix.",
     "image": "profiles_re400.png",
     "lecture": true,
-    "lecture_page": 51,
+    "lecture_page": 54,
     "png_sha256": "30f0101b629a4f28297db8ecd644f55a47faaad765235c5a88d19eefe9ede5eb"
   },
   "profiles_re1000": {
@@ -140,7 +140,7 @@
     "caption": "Retained Re=1000 centerline velocities. Color identifies formulation and line style identifies spacing; black markers are Ghia et al. (1982) samples. Finer FD solutions show the effect of spatial resolution separately from the coupling algorithm.",
     "image": "profiles_re1000.png",
     "lecture": true,
-    "lecture_page": 52,
+    "lecture_page": 55,
     "png_sha256": "be2fa0b349b9c39b5098929d4270ea07a7ae595dc85556116319a85f4bf1b93a"
   },
   "refinement_re400": {
@@ -148,7 +148,7 @@
     "caption": "Retained Re=400 speed and computed velocity streamlines: SIMPLE at h=1/64, and independent streamfunction-vorticity solutions at h=1/64 and 1/128. The color scale and lid speed are common. Small recirculation structures must be supported by the resolved velocity field.",
     "image": "refinement_re400.png",
     "lecture": true,
-    "lecture_page": 54,
+    "lecture_page": 57,
     "png_sha256": "a3a1941512115dd51facc6da1cfb8d70eda2617dd74a8c5ab16d917c3ccc0460"
   },
   "refinement_re1000": {
@@ -156,12 +156,12 @@
     "caption": "Retained Re=1000 speed and computed velocity streamlines for the same selected refinement cases. The finer grid changes resolved boundary layers and corner circulation. Additional pressure corrections alone cannot recover spatial structures absent from the mesh.",
     "image": "refinement_re1000.png",
     "lecture": true,
-    "lecture_page": 55,
+    "lecture_page": 58,
     "png_sha256": "163ec652d8acdaafee7b4ea2fd2e7f968098868b4637573db9da87729771860c"
   },
   "field_speed_re400": {
     "number": "S1",
-    "caption": "Retained Re=400 speed at h=1/32, with computed velocity streamlines. All four formulations are shown on the same physical color scale. Signed fields use symmetric logarithmic normalization. These coarse-grid solutions are distinct from the selected fine-grid comparisons.",
+    "caption": "Retained Re=400 speed at h=1/32, with computed velocity streamlines. All four formulations are shown on the same physical color scale. Speed uses a linear color scale. These coarse-grid solutions are distinct from the selected fine-grid comparisons.",
     "image": "field_speed_re400.png",
     "lecture": false,
     "lecture_page": null,
@@ -193,7 +193,7 @@
   },
   "field_speed_re1000": {
     "number": "S5",
-    "caption": "Retained Re=1000 speed at h=1/32, with computed velocity streamlines. All four formulations are shown on the same physical color scale. Signed fields use symmetric logarithmic normalization. These coarse-grid solutions are distinct from the selected fine-grid comparisons.",
+    "caption": "Retained Re=1000 speed at h=1/32, with computed velocity streamlines. All four formulations are shown on the same physical color scale. Speed uses a linear color scale. These coarse-grid solutions are distinct from the selected fine-grid comparisons.",
     "image": "field_speed_re1000.png",
     "lecture": false,
     "lecture_page": null,
@@ -241,7 +241,7 @@
   },
   "review_profiles_re1000": {
     "number": "S11",
-    "caption": "Independent follow-up Re=1000 velocity profiles for central convection. Solid lines use 32 FV cells per side; dashed lines use 64 where available. Black markers are Ghia samples. At Re=400 the red cross retains the isolated published anomaly without including it in the qualified norm. These fields and their timings belong to the separately identified follow-up suite.",
+    "caption": "Independent follow-up Re=1000 velocity profiles for central convection. Solid lines use 32 FV cells per side; dashed lines use 64 where available. Black markers are Ghia samples. These fields and their timings belong to the separately identified follow-up suite.",
     "image": "review_profiles_re1000.png",
     "lecture": false,
     "lecture_page": null,

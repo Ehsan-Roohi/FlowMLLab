@@ -47,7 +47,7 @@ def main():
     pdf=ROOT/'lectures/week01_2_pressure_velocity.pdf'
     video_links=[]
     with pdfplumber.open(pdf) as doc:
-        assert len(doc.pages)==59
+        assert len(doc.pages)==62
         page2=doc.pages[1].extract_text()
         assert 'moving lid' in page2.lower() and 'mass conservation' in page2.lower()
         assert 'r c,P' not in page2 and 'Q P' not in page2
@@ -63,7 +63,7 @@ def main():
                 assert len(blue)>=8,(uri,chars[:2])
                 video_links.append({'uri':uri,'page':i,'blue_text_characters':len(blue)})
     assert {r['uri'].split('v=')[-1] for r in video_links}=={'OOILoJ1zuiw','ahdW5TKacok'}
-    report={'pages':59,'introductory_page_has_no_equation_notation':True,
+    report={'pages':62,'introductory_page_has_no_equation_notation':True,
             'finite_volume_and_difference_comparison_precedes_integration':True,
             'cell_center_and_face_locations_defined_before_figures':True,
             'source_neighbors_operators_corrections_relaxation_defined_before_SIMPLE':True,

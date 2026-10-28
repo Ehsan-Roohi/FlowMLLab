@@ -11,6 +11,59 @@ SOURCE=ROOT/'lectures/source'
 NOTE=ROOT/'notebooks/week01_2/W1_2_Cavity_Pressure_Velocity.ipynb'
 URL='https://raw.githubusercontent.com/Ehsan-Roohi/FlowMLLab/main/lectures/source/week01_2_assets/'
 
+OLD_TIME_NOTE=r'''### Keep the accepted old-time field fixed
+
+At the start of a physical step, store the accepted velocity $q^n$ at time $t^n$.
+The backward-Euler source $q^n/\Delta t$ uses that same stored field throughout
+the step. The provisional and corrected new-time estimates can change without
+changing $q^n$. Replace the accepted old-time field only when advancing to the
+next physical step. The following PISO and PIMPLE sections specify their
+correction counters separately from the physical-time index $n$.
+'''
+
+SIMPLE_EXAMPLE_CODE='''# Prescribed two-cell algebra, not a resolved cavity simulation.
+import numpy as np
+import pandas as pd
+
+def simple_two_cell_walkthrough(passes=3):
+    h, a_original, b_known = 0.5, 7.0, 2.0
+    alpha_u, alpha_p = 0.7, 0.3
+    u, p = 0.0, np.zeros(2)
+    D = np.array([[1 / h], [-1 / h]])
+    G = np.array([[-1 / h, 1 / h]])
+    trace = []
+    for completed_pass in range(1, passes + 1):
+        a_relaxed = a_original / alpha_u
+        b_relaxed = b_known + (1 / alpha_u - 1) * a_original * u
+        u_star = (b_relaxed - (G @ p).item()) / a_relaxed
+        d = 1 / a_relaxed
+        imbalance = D @ np.array([u_star])
+        L = -(D @ (d * G))
+        # Use one mass row and the zero-mean pressure condition.
+        # The other mass row is dependent for these two closed cells.
+        gauge_system = np.vstack([L[0], np.ones(2)])
+        p_prime = np.linalg.solve(gauge_system, [-imbalance[0], 0.0])
+        np.testing.assert_allclose(L @ p_prime, -imbalance, atol=1e-14)
+        u = u_star - d * (G @ p_prime).item()
+        p = p + alpha_p * p_prime
+        momentum = a_original * u - b_known + (G @ p).item()
+        continuity = np.max(np.abs(D @ np.array([u])))
+        trace.append({'pass': completed_pass, 'u*': u_star,
+            "p1'": p_prime[0], "p2'": p_prime[1], 'u_next': u,
+            'p1_stored': p[0], 'p2_stored': p[1],
+            'original momentum residual': momentum,
+            'continuity Linf': continuity})
+    return pd.DataFrame(trace)
+
+simple_trace = simple_two_cell_walkthrough()
+display(simple_trace.round(6))
+np.testing.assert_allclose(simple_trace['u*'], [0.2, 0.14, 0.098], atol=1e-14)
+np.testing.assert_allclose(simple_trace['p2_stored'], [0.15, 0.255, 0.3285], atol=1e-14)
+np.testing.assert_allclose(simple_trace['original momentum residual'], [-1.4, -0.98, -0.686], atol=1e-14)
+assert simple_trace['continuity Linf'].max() < 1e-14
+print('Continuity is satisfied at each corrected state; stored pressure still requires iteration.')
+'''
+
 RELAXATION_CODE='''# One frozen momentum row: use unrounded coefficients in the calculation.
 import numpy as np
 row_a = 0.64
@@ -91,6 +144,7 @@ def markdown(text,guide):
 def sync_notebook(book):
     guide=json.loads((SOURCE/'week01_2_assets/figure_index.json').read_text(encoding='utf-8'))
     old={c.id:c for c in book.cells}
+    old['student-review-old-time-level'].source=OLD_TIME_NOTE
     source=expand(SOURCE/'week01_2_introduction.tex')+'\n'+r'\newpage'+'\n'+expand(SOURCE/'week01_2_pressure_velocity_core.tex')
     # Preserve the exact recorded-data/opt-in-solver tail and its executed tables.
     evidence=next(i for i,c in enumerate(book.cells) if c.id=='pressure-recorded-evidence')
@@ -109,6 +163,10 @@ def sync_notebook(book):
             c=nbformat.v4.new_code_cell(RELAXATION_CODE,id='prereq-source-relaxation')
             if c.id in old and old[c.id].source==c.source:c=old[c.id]
             lessons.append(c)
+        if 'Correct both fields, then check the original equations' in part:
+            c=nbformat.v4.new_code_cell(SIMPLE_EXAMPLE_CODE,id='beginner-simple-complete-pass')
+            if c.id in old and old[c.id].source==c.source:c=old[c.id]
+            lessons.append(c)
         if 'PIMPLE: a nonlinear coefficient example' in part:
             lessons.append(old['pressure-algebra-examples']);algebra_done=True
     assert algebra_done and matrix_done
@@ -122,6 +180,8 @@ def sync_notebook(book):
     refs=nbformat.v4.new_markdown_cell(REFERENCES,id='coupling-reading-references')
     refs.metadata['pressure_coupling_lesson']=True;lessons.append(refs)
     book.cells=[old['829339c3'],old['ed71508c'],*lessons,*tail]
+    from qa.week01_2_beginner_practical import improve_practical_cells
+    book=improve_practical_cells(book,guide,markdown)
     nbformat.validate(book)
     return book
 

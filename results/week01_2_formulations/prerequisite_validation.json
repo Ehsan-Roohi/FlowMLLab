@@ -1,30 +1,30 @@
 {
-  "pages": 59,
+  "pages": 62,
   "introductory_page_has_no_equation_notation": true,
   "finite_volume_and_difference_comparison_precedes_integration": true,
   "cell_center_and_face_locations_defined_before_figures": true,
   "source_neighbors_operators_corrections_relaxation_defined_before_SIMPLE": true,
   "PISO_and_PIMPLE_indices_explained_before_loop_equations": true,
   "notebook_synchronized_with_lecture": true,
-  "notebook_tables_checked": 10,
+  "notebook_tables_checked": 11,
   "video_links": [
     {
       "uri": "https://www.youtube.com/watch?v=OOILoJ1zuiw",
-      "page": 59,
+      "page": 62,
       "blue_text_characters": 31
     },
     {
       "uri": "https://www.youtube.com/watch?v=OOILoJ1zuiw",
-      "page": 59,
+      "page": 62,
       "blue_text_characters": 28
     },
     {
       "uri": "https://www.youtube.com/watch?v=ahdW5TKacok",
-      "page": 59,
+      "page": 62,
       "blue_text_characters": 21
     }
   ],
   "solver_physics_modified": false,
-  "pdf_sha256": "f5418721b42131b0a54f9a9ff53c24f8517fad4f828fd5b4181784e70dcf7719",
-  "notebook_sha256": "ed105b3e53a8341a004eaa1561322d8fa864ede793271ee936cda222e8d70c3d"
+  "pdf_sha256": "b20c8f7f4543d90b86ca13dd66c287dcb4d052d7623c7016607ed4b3643943e3",
+  "notebook_sha256": "18a3da2a187732e23d239847c768376a899f5ae65bdc8c3e5944fc08d49d5812"
 }

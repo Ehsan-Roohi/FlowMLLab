@@ -44,7 +44,7 @@ def main():
     pdf=ROOT/'lectures/week01_2_pressure_velocity.pdf'
     found=[];pages_by_figure={};links=[]
     with pdfplumber.open(pdf) as doc:
-        assert len(doc.pages)==59
+        assert len(doc.pages)==62
         for i,page in enumerate(doc.pages,1):
             text=page.extract_text() or ''
             for number in re.findall(r'Figure\s*(\d+)\s*:',text):
@@ -68,8 +68,8 @@ def main():
         assert entry['image'] in text,name
         assert text.count('**Figure '+entry['number']+'.**')==1,entry['number']
     assert 'hat_locations.png' not in text
-    # Explicitly preserve scientific solve calls and numerical controls even in
-    # cells whose image display is changed. AST ignores added caption wording.
+    # Preserve scientific calls outside the two intentionally exposed control
+    # cells; their constructor/default/export routing has a separate audit.
     prior=nbformat.reads(subprocess.check_output(['git','show','HEAD:'+NOTE.relative_to(ROOT).as_posix()],cwd=ROOT,text=True,encoding='utf-8'),4)
     def solve_calls(c):
         return [ast.dump(n,include_attributes=False) for n in ast.walk(ast.parse(c.source))
@@ -77,7 +77,8 @@ def main():
                 and n.func.id in {'run_cavity','run_streamfunction','run_experiment','CavityConfig','ExperimentalConfig'}]
     old={c.id:c for c in prior.cells if c.cell_type=='code'}
     for c in book.cells:
-        if c.cell_type=='code' and c.id in old:assert solve_calls(c)==solve_calls(old[c.id]),c.id
+        if c.cell_type=='code' and c.id in old and c.id not in {'327cdaea','1a08e6d5'}:
+            assert solve_calls(c)==solve_calls(old[c.id]),c.id
     protected=['flowmllab/pressure_velocity.py','flowmllab/pressure_velocity_experiments.py',
                'flowmllab/streamfunction_experiments.py']
     for name in protected:assert (ROOT/name).read_bytes()==subprocess.check_output(['git','show','HEAD:'+name],cwd=ROOT)
@@ -95,7 +96,7 @@ def main():
     shell.user_ns.update({'np':np,'pd':pd,'ROOT':work,
         'recorded':[r for r in rows if r['config']['reynolds']==100],'LABELS':LABELS})
     executed=[]
-    for id in ['visual-checkerboard-check','visual-hat-arithmetic','prereq-source-relaxation','51fefcd5','1b614a07','ee106a2c','student-review-refinement-evidence']:
+    for id in ['visual-checkerboard-check','visual-hat-arithmetic','prereq-source-relaxation','beginner-simple-complete-pass','51fefcd5','1b614a07','ee106a2c','student-review-refinement-evidence']:
         c=next(c for c in book.cells if c.id==id)
         with capture_output() as captured:result=shell.run_cell(c.source,store_history=True)
         assert not result.error_before_exec and not result.error_in_exec,(id,result.error_in_exec)
@@ -109,15 +110,15 @@ def main():
         entry['lecture_page']=pages_by_figure.get(entry['number'])
         entry['png_sha256']=sha(ASSETS/entry['image'])
     (ASSETS/'figure_index.json').write_text(json.dumps(guide,indent=2)+'\n',encoding='utf-8',newline='\n')
-    report={'lecture_pages':59,'lecture_figures':20,'notebook_supplementary_figures':13,
+    report={'lecture_pages':62,'lecture_figures':20,'notebook_supplementary_figures':13,
         'all_figure_numbers_and_captions_checked':True,'all_diagrams_at_text_width_inches':6.6,
         'vector_text_within_figure_bounds':True,'all_pdf_text_within_page_bounds':True,
-        'archived_fields_sha256_checked':len(rows),'solver_sources_and_opt_in_solve_calls':'unchanged',
+        'archived_fields_sha256_checked':len(rows),'solver_sources':'unchanged; fresh controls audited separately',
         'executed_cheap_cells':executed,'fresh_cfd_trajectories':0,
         'pdf_sha256':sha(pdf),'notebook_sha256':sha(NOTE),
         'hosted_colab_run':False,'visual_review':'All final pages rendered; all figure pages reviewed at publication scale.'}
-    (ROOT/'output/week01_2_figure_validation.json').write_text(json.dumps(report,indent=2)+'\n',encoding='utf-8')
-    (ROOT/'results/week01_2_formulations/figure_guide_validation.json').write_text(json.dumps(report,indent=2)+'\n',encoding='utf-8')
+    (ROOT/'output/week01_2_figure_validation.json').write_text(json.dumps(report,indent=2)+'\n',encoding='utf-8',newline='\n')
+    (ROOT/'results/week01_2_formulations/figure_guide_validation.json').write_text(json.dumps(report,indent=2)+'\n',encoding='utf-8',newline='\n')
     print(json.dumps(report,indent=2))
 
 if __name__=='__main__':main()

@@ -49,7 +49,9 @@ Sections & Topics\\\midrule
 \newpage
 \input{week01_2_pressure_velocity_core.tex}
 \newpage
-\topic{16}{Recorded cavity accuracy and runtime at $Re=100$}
+\input{week01_2_benchmark_quantities.tex}
+\newpage
+\topic{16 continued}{Recorded cavity accuracy and runtime at $Re=100$}
 \lessonfigure{profiles_re100}{Retained Re=100 centerline velocities at matched spacing h=1/64. Curves show all four formulations; black markers are Ghia et al. (1982) samples. FV uses 64 pressure cells per side and FD uses 65 boundary-inclusive nodes. Line styles and colors identify the computed series.}{profiles-re100}
 The Ghia velocity markers are independent reference samples. The three finite-volume coupling methods use the same spatial equations. Their converged fields agree closely; differences from the finite-difference formulation also include spatial-discretization differences. The displayed 32/64 finite-volume cell counts correspond to 33/65 finite-difference nodes.
 \newpage
@@ -61,7 +63,7 @@ The finite-difference centerline errors decrease on refinement in this retained 
 \newpage
 \topic{17}{Velocity structure and vorticity}
 \lessonfigure{field_speed_re100}{Retained Re=100 speed and velocity streamlines at h=1/64. All panels use the same physical color limits. Streamline arrows show circulation direction; their density does not measure vorticity.}{field-speed-re100}
-Speed is $|\boldsymbol u|=\sqrt{u^2+v^2}$ and signed vorticity is $\omega=\partial v/\partial x-\partial u/\partial y$. The moving lid drives a clockwise primary circulation and a lower-cavity return flow. Black streamlines follow computed velocity; they are not vorticity contours. Small corner eddies depend on resolution and convergence as well as display density.
+Negative vorticity denotes clockwise local rotation; positive vorticity denotes counterclockwise local rotation. Speed is $|\boldsymbol u|=\sqrt{u^2+v^2}$ and signed vorticity is $\omega=\partial v/\partial x-\partial u/\partial y$. The moving lid drives a clockwise primary circulation and a lower-cavity return flow. Black streamlines follow computed velocity; they are not vorticity contours. Small corner eddies depend on resolution and convergence as well as display density.
 \newpage
 \topic{17 continued}{Signed vorticity and circulation}
 \lessonfigure{field_omega_re100}{Retained Re=100 signed vorticity with velocity streamlines at h=1/64. One symmetric logarithmic color scale is shared by all panels, linear for absolute vorticity up to 1. The displayed colorbar values are nondimensional physical vorticity, including wall peaks.}{field-omega-re100}
@@ -85,6 +87,12 @@ The retained study includes all four methods at $h=1/32$, plus selected finer me
 \topic{19 continued}{Recorded higher-Reynolds-number cost}
 \input{week01_2_runtime_higher.tex}
 For an error vector $z$ over the reference samples, $\|z\|_2=\sqrt{\sum_j z_j^2}$; $j$ labels a sampled location. These are recorded sequential local solver-call timings. Reference errors, mesh spacing and native stopping definitions accompany them. The $Re=400$ all-point $v$ error retains the isolated published entry; a separately labeled sensitivity metric omits that sample without replacing its value.
+\textbf{FD pressure-gradient discrepancy.} The independent formulation recovers
+pressure after velocity convergence. This diagnostic is the RMS vector
+mismatch between the gradient of recovered pressure and the pressure-gradient
+field inferred from steady momentum, divided by the latter's RMS magnitude.
+RMS means the square root of the mean squared vector magnitude over the grid.
+This tests pressure-recovery consistency; it is not a Ghia pressure error.
 \newpage
 \topic{20}{Mesh refinement and recirculation}
 \lessonfigure{refinement_re400}{Retained Re=400 speed and computed velocity streamlines: SIMPLE at h=1/64, and independent streamfunction-vorticity solutions at h=1/64 and 1/128. The color scale and lid speed are common. Small recirculation structures must be supported by the resolved velocity field.}{refinement-re400}
@@ -105,7 +113,7 @@ The nonlinear step diagnostic rebuilds convection from the final velocity, while
 
 All retained cases in this one-step study satisfy a cell-divergence defect below $10^{-9}$. The remaining nonlinear momentum defects distinguish the correction strategies. Their differences demonstrate algebraic coupling behavior for this setup, not the accuracy of a transient trajectory.
 
-Each panel has its own logarithmic vertical range. For a temporal-accuracy study, reduce $\Delta t$ and compare at matched physical times. More correctors and a stable larger time step do not establish an accurate startup history or a universal wall-time advantage.
+For a temporal-accuracy study, reduce $\Delta t$ and compare at matched physical times. More correctors and a stable larger time step do not establish an accurate startup history or a universal wall-time advantage.
 \newpage
 \topic{22}{Notebook controls and student analysis}
 The notebook presents the same derivations and runnable algebraic examples, followed by retained CFD results. Fresh CFD runs are opt-in so the default lesson can be inspected without repeating every expensive calculation.

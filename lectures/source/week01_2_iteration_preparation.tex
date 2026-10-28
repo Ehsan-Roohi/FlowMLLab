@@ -70,8 +70,12 @@ largest absolute entry. Thus the two required checks are
 \]
 The positive numbers $\varepsilon_m$ and $\varepsilon_c$ are the selected
 momentum and continuity tolerances. They are separate because the residuals
-test different equations. The retained cavity runs use $10^{-6}$ and
-$10^{-9}$ respectively.
+test different equations. The comparison reports require momentum below $10^{-6}$ and divergence below
+$10^{-9}$ as separate acceptance checks. The finite-volume code has one
+\texttt{tolerance} setting for both of its native stopping tests: $10^{-7}$
+in the baseline runs and $10^{-6}$ in the higher-Re study. The report-level
+divergence check is stricter than those native thresholds; it is verified
+from the returned fields, rather than selected through a separate solver knob.
 
 A small change between successive velocities is insufficient: strong
 under-relaxation can produce a small change even when the momentum balance

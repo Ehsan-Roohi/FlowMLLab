@@ -1,0 +1,28 @@
+{
+  "review_scope": "One independent beginner agent read all 59 prior PDF pages and 71 prior notebook cells; root integrated and checked the fixes.",
+  "complete_simple_predictors": [
+    0.2,
+    0.13999999999999999,
+    0.09800000000000002
+  ],
+  "stored_p2": [
+    0.15,
+    0.25499999999999995,
+    0.32849999999999996
+  ],
+  "original_momentum_residual": [
+    -1.4,
+    -0.9800000000000002,
+    -0.6860000000000002
+  ],
+  "two_cell_D_G_L_identity_checked": true,
+  "both_nonlinear_toy_roots_checked": true,
+  "baseline_constructor_defaults_preserved": true,
+  "custom_corrector_routing_checked": true,
+  "mixed_fresh_retained_labels_checked": true,
+  "full_plot_function_completed_on_retained_arrays": true,
+  "higher_FV_and_FD_controls_routed": true,
+  "configuration_and_failure_exports_checked": true,
+  "control_tests_used_stubs": true,
+  "new_CFD_trajectories": 0
+}

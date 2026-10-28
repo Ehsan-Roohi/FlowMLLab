@@ -338,7 +338,8 @@ def supplementary(rows,include_historical=True):
         for key,title in [('speed','speed'),('p','zero-mean pressure'),('omega','signed vorticity')]:
             fields(rows,key,re=re,cells=32)
             SUPPLEMENT_CAPTIONS[f'field_{key}_re{re}']=(f'Retained Re={re} {title} at h=1/32, with computed velocity streamlines. '
-                'All four formulations are shown on the same physical color scale. Signed fields use symmetric logarithmic normalization. '
+                'All four formulations are shown on the same physical color scale. '
+                + ('Signed fields use symmetric logarithmic normalization. ' if key != 'speed' else 'Speed uses a linear color scale. ') +
                 'These coarse-grid solutions are distinct from the selected fine-grid comparisons.')
         fig,axes=plt.subplots(2,1,figsize=(6.6,5.9),layout='constrained')
         for m,color,label in zip(METHODS,COLORS,NAMES):
@@ -361,8 +362,8 @@ def supplementary(rows,include_historical=True):
         central=[r for r in fresh if r['config']['convection']=='central']
         name=f'review_profiles_re{re}';profiles(central,re,name)
         SUPPLEMENT_CAPTIONS[name]=(f'Independent follow-up Re={re} velocity profiles for central convection. '
-            'Solid lines use 32 FV cells per side; dashed lines use 64 where available. Black markers are Ghia samples. '
-            'At Re=400 the red cross retains the isolated published anomaly without including it in the qualified norm. '
+            'Solid lines use 32 FV cells per side; dashed lines use 64 where available. Black markers are Ghia samples. ' +
+            ('The red cross retains the isolated published Re=400 anomaly without including it in the qualified norm. ' if re==400 else '') +
             'These fields and their timings belong to the separately identified follow-up suite.')
         fig,axes=plt.subplots(2,1,figsize=(6.6,5.9),layout='constrained')
         for r in central:

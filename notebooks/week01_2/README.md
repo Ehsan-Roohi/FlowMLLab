@@ -8,20 +8,28 @@ An extension after Week 1 (and optionally Week 1.1), connecting finite-volume co
 includes a 12-case student report table, selected fresh Python checks,
 physical velocity profiles, and exercises on pressure-solve work and numerical
 diffusion. Submitted measurements and fresh author-side runs are labeled
-separately. Section 11 of the notebook displays the comparison without running
+separately. The notebook's refinement-study section displays the comparison without running
 new CFD. Two additional reading notes explain momentum-coefficient normalization
 and old-time data in PIMPLE.
 
 [Expanded comparison and teaching supplement](COMPARISON_AND_TEACHING.md)
 adds three algorithm flowcharts, a primary-source literature review, a measured
 15-configuration one-step coupling experiment, and a staged higher-Re and
-transient-accuracy plan. The lecture contains 59 pages. A smaller nonlinear
+transient-accuracy plan. The lecture contains 62 pages. A smaller nonlinear
 step defect is distinguished explicitly from a smaller physical time error.
 
 The illustrated lesson locates stored and interpolated velocities on separate
 pressure and momentum volumes, follows one face's momentum flux, and draws
 the SIMPLE, PISO and PIMPLE loops. Short arithmetic examples connect the
 diagrams to pressure correction before the matrix notation.
+
+A complete two-cell SIMPLE calculation follows the same momentum row through
+the predictor, cell imbalances, pressure solve, full velocity correction,
+relaxed stored pressure and original-equation residual checks. Three passes
+show why satisfying continuity alone does not finish the steady solve.
+PISO and PIMPLE have their own executable numerical examples. The practical
+cells expose method-specific controls, preserve complete run configurations,
+and distinguish newly executed cases from retained comparison data.
 
 ## Learning outcomes
 
@@ -168,10 +176,8 @@ one method, measure its time, then decide whether to refine. Do not launch every
 are opt-in; there is no guaranteed completion time on a student's computer.
 
 
-### Why is streamfunction-vorticity absent from the higher-Re comparison?
+### How streamfunction-vorticity supports the higher-Re comparison
 
-The Re=400/1000 extension originally measured only SIMPLE, PISO and PIMPLE.
-That was a study-scope omission, not a limitation of streamfunction-vorticity.
 The existing Week-1 `common/w4utils.py::run_cavity(Re=..., N=...)` accepts these
 Reynolds numbers. It solves streamfunction and vorticity, then recovers pressure
 separately. In two-dimensional incompressible flow this is an appropriate
@@ -181,7 +187,7 @@ A fair extension must actually run that solver, check time-step stability and
 steady convergence, compare matching physical grid spacing and centerlines,
 and retain its own vorticity-update residual. That residual is different from
 the FV momentum defect: their curves must not be ranked as the same quantity.
-A small update alone cannot establish steady accuracy. Section 10 now supplies actual higher-Re streamfunction-vorticity runs and a
+A small update alone cannot establish steady accuracy. The higher-Re investigation supplies retained streamfunction-vorticity runs and a
 sequential four-method comparison. See the independent-formulation report.
 
 **Reading the figures:** signed fields share limits across methods. A symmetric
@@ -194,7 +200,7 @@ Use the colorbar values when comparing signed fields.
 
 ## Independent formulation at Re=400 and 1000
 
-Section 10 compares fresh streamfunction-vorticity and SIMPLE/PISO/PIMPLE runs
+The higher-Re investigation compares retained streamfunction-vorticity and SIMPLE/PISO/PIMPLE runs
 at matched spacing, with Ghia centerline errors, separate native convergence
 plots, sequential CPU timings and flow fields with streamlines.
 
@@ -215,7 +221,7 @@ Verify archives and execute the retained-results notebook with
 
 ## Equations and algorithm guide
 
-The notebook and 26-page lecture define continuity, both momentum components, all matrix symbols, pressure correction and the SIMPLE/PISO/PIMPLE loops. Re=100, 400 and 1000 timing comparisons include the independent streamfunction-vorticity method. Native FD and FV residuals appear on separate axes.
+The notebook and lecture define continuity, both momentum components, the matrix symbols, pressure correction and the SIMPLE/PISO/PIMPLE loops. Re=100, 400 and 1000 timing comparisons include the independent streamfunction-vorticity method. Native FD and FV residuals appear on separate axes.
 
 [Teaching revision validation](../../results/week01_2_formulations/teaching_revision_validation.json) records the notebook controller audit and PDF checks.
 
@@ -223,7 +229,9 @@ The notebook and 26-page lecture define continuity, both momentum components, al
 
 The lecture develops scalar cell mass balance and face momentum before introducing matrix operators. It derives the pressure-correction stencil, explains SIMPLE relaxation, and separates PISO inner corrections from PIMPLE outer coefficient updates.
 
-Pages 13-14 calculate two PISO corrections; pages 15-16 explain PIMPLE and calculate a nonlinear coefficient example. The notebook runs both algebraic examples and shows their mass and momentum defects. These examples illustrate coupling and are distinct from the retained cavity simulations.
+Section 8 calculates three SIMPLE passes from a specified momentum row. Section 11 calculates two PISO corrections; Sections 12-13 explain PIMPLE and calculate a nonlinear coefficient example. The notebook runs these algebraic examples and shows their mass and momentum defects. These examples illustrate coupling and are distinct from the retained cavity simulations.
+
+[Beginner-review validation](../../results/week01_2_formulations/beginner_review_validation.json) records the complete SIMPLE arithmetic, control routing, configuration exports and fresh/retained plot-label checks. Control/export checks use marked test stubs; they produce no CFD measurements.
 
 The references include Patankar, Versteeg and Malalasekera, Ferziger et al., Moukalled et al., the original Issa PISO paper and official algorithm documentation.
 

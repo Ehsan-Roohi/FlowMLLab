@@ -1,0 +1,41 @@
+\topic{16}{Read errors, equation residuals and recorded times}
+The calculated centerlines are compared at the actual Ghia reference sample
+locations. Let $s_j$ be sample position $j$, $f_{\rm ref,j}$ its tabulated
+velocity, and $f_{\rm num}(s_j)$ the computed profile interpolated linearly
+to that position. The symbol $f$ stands for either the horizontal or vertical
+velocity component in its corresponding centerline profile.
+
+Define the relative profile error and largest absolute profile error by
+\[
+E_{{\rm rel},2}=\frac{\sqrt{\sum_j[f_{\rm num}(s_j)-f_{\rm ref,j}]^2}}
+{\sqrt{\sum_j f_{\rm ref,j}^{\,2}}},\qquad
+E_\infty=\max_j|f_{\rm num}(s_j)-f_{\rm ref,j}|.
+\]
+The sums and maximum run over the stated reference samples. A relative error
+of $0.02$ is $2\%$, since percentage error is $100E_{{\rm rel},2}$.
+The denominator above is nonzero for these Ghia profiles. The qualified
+$Re=400$ vertical-velocity score excludes the separately marked published
+sample at $x/L=0.9063$; the all-point score is also retained for comparison.
+
+\begin{center}\begin{tabular}{lp{.68\linewidth}}\toprule
+Reported quantity & What it measures\\\midrule
+Profile error & Difference from independent velocity samples.\\
+Momentum defect & Error in satisfying the discrete momentum equations.\\
+Cell divergence & Error in satisfying the discrete cell continuity equations.\\
+Iterations / steps & Completed steady updates or physical marching steps; their work differs.\\
+Solver-call seconds & Recorded elapsed time for one solver call on the stated host.\\\bottomrule
+\end{tabular}\end{center}
+A small equation residual does not guarantee a small profile error. Mesh and
+spatial approximations remain relevant after a solver has converged. The
+streamfunction--vorticity method has its own update and steady-vorticity
+checks; these are not finite-volume momentum residuals.
+
+Axis labels such as $u/U$ and $p/(\rho U^2)$ denote the dimensional ratios
+used to define the nondimensional fields in Section 1. The plotted stored
+values already represent those ratios; they are not divided by the scales
+a second time.
+
+For timing comparisons, distinguish retained records from newly executed
+cases. Match spacing, equations and stopping requirements before interpreting
+seconds. Timing one run on one host does not establish a universal fastest
+method.

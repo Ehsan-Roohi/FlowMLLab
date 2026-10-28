@@ -1,0 +1,91 @@
+\newpage
+\topic{8 continued}{A complete SIMPLE pass on the same two cells}
+Use the closed two-cell geometry of Section 7: one shared horizontal velocity
+$u$, cell spacing $h=0.5$, and zero normal velocity at every external wall.
+There is only one unknown velocity, so the column $q$ has just the entry $u$.
+The two pressures are $p_1$ and $p_2$.
+
+For this algebraic exercise, prescribe the original, volume-normalized momentum
+row
+\[
+7u=2-\frac{p_2-p_1}{0.5}.
+\]
+Thus the unrelaxed center coefficient is $a^0=7$ and the known source is
+$b=2$. These specified numbers isolate the coupling operations; they are not
+a spatially resolved cavity calculation. Start from $u^0=0$ and
+$p_1^0=p_2^0=0$, and select $\alpha_u=0.7$, $\alpha_p=0.3$.
+
+\textbf{1. Relax the momentum row.} At the first pass, $k=0$:
+\[
+a^{\rm rel}=7/0.7=10,\qquad
+b^{\rm rel}=2+(1/0.7-1)7u^0=2.
+\]
+\textbf{2. Solve the predictor.} The current pressure gradient is zero, so
+\[
+u^*=\frac{2-(0-0)/0.5}{10}=0.2,\qquad d=1/10=0.1.
+\]
+The values $u^*=0.2$ and $d=0.1$ used in Section 7 now follow from the same
+momentum row and current estimates.
+
+\textbf{3. Calculate the cell imbalances.} Positive $u^*$ leaves cell 1 and
+enters cell 2:
+\[
+Dq^*=\begin{bmatrix}u^*/h\\-u^*/h\end{bmatrix}
+=\begin{bmatrix}0.4\\-0.4\end{bmatrix}.
+\]
+\textbf{4. Solve the pressure correction.} Use the matrix from Section 7:
+\[
+0.4\begin{bmatrix}1&-1\\-1&1\end{bmatrix}
+\begin{bmatrix}p'_1\\p'_2\end{bmatrix}
+=\begin{bmatrix}-0.4\\0.4\end{bmatrix}.
+\]
+Its first row gives $p'_1-p'_2=-1$. Impose the zero-mean reference
+$p'_1+p'_2=0$, giving $p'_1=-0.5$, $p'_2=0.5$. The second mass-balance row
+then follows as well; it is dependent because the cells share their only
+interior face and all external normal flow rates are zero.
+\newpage
+\topic{8 continued}{Correct both fields, then check the original equations}
+\textbf{5. Update velocity and stored pressure.} Apply the full face correction:
+\[
+u^1=u^*-d\frac{p'_2-p'_1}{h}
+=0.2-0.1\frac{0.5-(-0.5)}{0.5}=0.
+\]
+Store the under-relaxed pressure for the next predictor:
+\[
+p_1^1=0+0.3(-0.5)=-0.15,\qquad
+p_2^1=0+0.3(0.5)=0.15.
+\]
+The superscript 1 means one completed steady coupling pass, not a physical
+time step. Both cell continuity residuals are now zero.
+
+\textbf{6. Check momentum using the original row.} Its scalar residual is
+\[
+r_m=7u-b+\frac{p_2-p_1}{h}.
+\]
+For the updated fields this is
+\[
+r_m^1=7(0)-2+\frac{0.15-(-0.15)}{0.5}=-1.4.
+\]
+The original momentum equation is not yet satisfied with the stored pressure,
+even though continuity is exact. This is why the next SIMPLE pass is needed.
+
+At pass 2, use $u^1=0$ and $p^1=(-0.15,0.15)$ as inputs. The relaxed source
+remains 2, and
+\[
+u^*=\frac{2-0.30/0.5}{10}=0.14.
+\]
+The next pressure correction is $p'=(-0.35,0.35)$. Correcting velocity fully
+again gives zero; storing $0.3p'$ gives $p^2=(-0.255,0.255)$ and
+$r_m^2=-0.98$. Repeating the same operations gives:
+\begin{center}\begin{tabular}{rrrrr}\toprule
+Completed pass & $u^*$ & Corrected $u$ & Stored $(p_1,p_2)$ & $|r_m|$\\\midrule
+1 & 0.200 & 0 & $(-0.150,0.150)$ & 1.400\\
+2 & 0.140 & 0 & $(-0.255,0.255)$ & 0.980\\
+3 & 0.098 & 0 & $(-0.3285,0.3285)$ & 0.686\\\bottomrule
+\end{tabular}\end{center}
+The exact constrained steady solution is $u=0$, $p_1=-0.5$, $p_2=0.5$.
+This one-velocity example has no off-diagonal velocity coupling, so its
+diagonal pressure-response approximation is exact for a frozen row.
+The chosen pressure under-relaxation makes the stored pressures approach
+the solution over successive passes. Real cavity rows also contain neighbor
+coupling and velocity-dependent convection coefficients.

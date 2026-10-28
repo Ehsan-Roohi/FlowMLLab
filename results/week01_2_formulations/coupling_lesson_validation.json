@@ -6,10 +6,10 @@
     "spatial_pressure_difference": "p_E - p_P"
   },
   "notebook": {
-    "code_cells": 12,
+    "code_cells": 13,
     "png_outputs": 0,
     "errors": 0,
-    "sha256": "ed105b3e53a8341a004eaa1561322d8fa864ede793271ee936cda222e8d70c3d"
+    "sha256": "18a3da2a187732e23d239847c768376a899f5ae65bdc8c3e5944fc08d49d5812"
   },
   "examples": {
     "two_cell_conservation": true,
@@ -19,8 +19,8 @@
   },
   "lesson_update_idempotent": true,
   "pdf": {
-    "pages": 59,
-    "sha256": "f5418721b42131b0a54f9a9ff53c24f8517fad4f828fd5b4181784e70dcf7719",
+    "pages": 62,
+    "sha256": "b20c8f7f4543d90b86ca13dd66c287dcb4d052d7623c7016607ed4b3643943e3",
     "times_new_roman_present": true,
     "all_pages_rendered_and_reviewed": true,
     "text_within_horizontal_page_bounds": true

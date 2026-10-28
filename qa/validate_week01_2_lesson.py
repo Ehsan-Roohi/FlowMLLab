@@ -40,7 +40,7 @@ def main():
             for token in ['\\small','\\topic','\\begin{tabular}','show every step','write every step']:
                 assert token not in c.source.lower(),token
             assert c.source.count('$$')%2==0
-    pdf=ROOT/'lectures/week01_2_pressure_velocity.pdf';r=PdfReader(pdf);assert len(r.pages)==59
+    pdf=ROOT/'lectures/week01_2_pressure_velocity.pdf';r=PdfReader(pdf);assert len(r.pages)==62
     fonts=set()
     for page in r.pages:
         for f in page.get('/Resources',{}).get('/Font',{}).values():fonts.add(str(f.get_object().get('/BaseFont','')))

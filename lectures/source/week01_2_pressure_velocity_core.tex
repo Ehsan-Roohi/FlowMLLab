@@ -94,7 +94,18 @@ Consider two closed square cells with one shared vertical face. This is an algeb
 r_{c,1}^*=\frac{0.2}{0.5}=0.4,\qquad
 r_{c,2}^*=\frac{-0.2}{0.5}=-0.4.
 \]
-The shared pressure weight is $d_e/h^2=0.1/0.25=0.4$. Therefore
+For these two cells, $q=u$ has one entry. The divergence and gradient matrices are
+\[
+D=\begin{bmatrix}1/h\\-1/h\end{bmatrix},\qquad
+G=\begin{bmatrix}-1/h&1/h\end{bmatrix}.
+\]
+The first row of $D$ gives outflow from cell 1; the second gives inflow to cell 2.
+The row $G$ gives $(p_2-p_1)/h$ at their shared velocity face. Consequently,
+\[
+L=-D d_e G=\frac{d_e}{h^2}\begin{bmatrix}1&-1\\-1&1\end{bmatrix},
+\qquad d_e/h^2=0.1/0.25=0.4.
+\]
+Thus $Lp'=-Dq^*$ is
 \[
 0.4\begin{bmatrix}1&-1\\-1&1\end{bmatrix}
 \begin{bmatrix}p'_1\\p'_2\end{bmatrix}
@@ -117,6 +128,9 @@ Thus the unrelaxed changes are $\Delta p_1=p'_1=-0.5$ and $\Delta p_2=p'_2=0.5$.
 SIMPLE means Semi-Implicit Method for Pressure-Linked Equations. It combines
 the momentum solve, pressure correction and conservative velocity update
 already derived. Begin iteration $k$ with velocity $q^k$ and pressure $p^k$.
+For the cavity runs, the initial interior velocity and pressure are zero.
+The moving lid and stationary walls remain prescribed boundary data; their
+known contributions enter the momentum source $b$.
 
 \begin{enumerate}
 \item \textbf{Build momentum.} Evaluate convection from $q^k$ and assemble
@@ -151,13 +165,14 @@ the cell balances are conservative. Prescribed wall velocities remain fixed;
 a common pressure offset is removed without changing pressure gradients.
 
 The retained baseline uses $\alpha_u=0.7$, $\alpha_p=0.3$,
-$\varepsilon_m=10^{-6}$ and $\varepsilon_c=10^{-9}$. These numerical controls
+a native solver tolerance of $10^{-7}$. These numerical controls
 do not change the Reynolds number. This SIMPLE branch solves a steady
 problem; increasing $k$ does not advance physical time.
 \newpage
 \topic{8 continued}{SIMPLE: follow the loop}
 \lessonfigure{simple_visual}{SIMPLE for a steady problem. Follow the blue boxes downward. The red return path rebuilds momentum after an unconverged iteration. Correct face velocities fully, relax pressure as specified, and test both momentum and cell continuity.}{simple-visual}
 A return along the red arrow begins a new steady nonlinear iteration. Rebuild the convection coefficients from the latest velocity and check both momentum and continuity.
+\input{week01_2_simple_complete_example.tex}
 \newpage
 \topic{9}{Physical time and backward-Euler momentum}
 PISO and PIMPLE solve a transient momentum equation. Superscripts $n$ and $n+1$ denote physical time levels, separated by $\Delta t$. For one face velocity,
@@ -396,11 +411,17 @@ The reported defect is the largest absolute component of the nonlinear momentum 
 \]
 It is different from the residual of the frozen predictor matrix. All final mass defects are below $10^{-15}$.
 
-For the exact constrained solution set $q_1=q_2=s$ and add the two momentum rows:
+For a constrained fixed point, set $q_1=q_2=s$ and add the two momentum rows:
 \[
 (9+2s)s=2,\qquad
-s=\frac{\sqrt{97}-9}{4}=0.2122144504,\qquad p=s/2-1.
+s_{\pm}=\frac{-9\pm\sqrt{97}}4,\qquad p=s/2-1.
 \]
+Both roots satisfy the constrained quadratic. The iteration initialized at
+$q=0,p=0$ follows the positive branch $s_+=0.2122144504$ shown in the table.
+The other root is $s_-=-4.7122144504$ and has negative diagonal entries in
+this toy matrix. The displayed iteration does not assert global uniqueness
+of the nonlinear algebraic system.
+
 The table shows the benefit of coefficient updates for this example. Actual cavity efficiency must be judged using its own measured equation defects, accuracy and solve costs.
 \newpage
 \topic{14}{Algorithm loops and computational work}
