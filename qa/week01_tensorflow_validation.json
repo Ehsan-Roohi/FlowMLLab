@@ -1,0 +1,25 @@
+{
+  "revision": "2026-11-02",
+  "python": "3.12.14",
+  "tensorflow": "2.20.0",
+  "numpy": "2.2.6",
+  "keras": "3.15.1",
+  "code_cells_executed": 21,
+  "error_outputs": 0,
+  "retained_plot_outputs": 6,
+  "execution_seconds": 129.38,
+  "notebook_sha256": "28e6e2423ab96c2be8f3264c0938656745e4863ac7e0eeb3359722fa608e96c0",
+  "checks": [
+    "tensor shapes and dtypes",
+    "broadcasting mismatch demonstration",
+    "analytic divergence and vorticity vs finite differences",
+    "manual chain rule vs automatic parameter gradients",
+    "one-step loss decrease and recovered linear coefficients",
+    "disjoint analytic training/validation/test locations",
+    "finite held-out error after validation-only weight selection",
+    "watched vs unwatched coordinates",
+    "analytic first and second derivatives",
+    "channel momentum residual and both wall conditions"
+  ],
+  "execution_scope": "Fresh CPU kernel; analytic teaching data; no new CFD or research training"
+}
