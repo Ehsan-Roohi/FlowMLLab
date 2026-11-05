@@ -21,6 +21,8 @@ The current checkout contains **51 student notebooks** (including 1 historical a
 
 **TensorFlow self-study:** [Complete 21-page TensorFlow/Keras guide](lectures/week01_02_tensorflow_keras.pdf) · [Updated notebook 02](notebooks/week01/02_tensorflow_for_ai_fluids.ipynb).
 
+**DS2V geometry comparison:** [RGB contours of circles and vertical/horizontal ellipses](results/ds2v_geometry/README.md) · [Four-field comparison PDF](results/ds2v_geometry/all_fields_rgb.pdf).
+
 ## Choose your first step
 
 - **New to Python:** [begin with the Week 1 Python lab](notebooks/week01/01_python_for_cfd_ai_fluids.ipynb), then validate the cavity solver.

@@ -1,0 +1,31 @@
+{
+  "unique_solutions": 13,
+  "displayed_panels_per_field": 14,
+  "pdf_pages": 4,
+  "png_mode": "RGB",
+  "png_size": [
+    5428,
+    2047
+  ],
+  "same_extent_for_all_panels": [
+    -0.64,
+    2.1,
+    -1.2,
+    1.2
+  ],
+  "same_color_mapping_within_each_field": true,
+  "late_window_maximum_drift_mm": 0.33043772289762785,
+  "displayed_circular_reference_reused": true,
+  "lower_half_mirrored": true,
+  "pngs_individually_visually_reviewed": true,
+  "artifacts_sha256": {
+    "mach_rgb.png": "68ca11f151787db720fcae6931a959f4b15f526f24d2a83d45220aa705b2cc61",
+    "density_rgb.png": "51278259c9a493df55d081bc71e20134ce138330ffe5be24be8b524c37e4630b",
+    "temperature_rgb.png": "cdfb28fda6cd843182ad3c5d235f4c2eb5db09d272867d50947a1458dbbf431e",
+    "pressure_rgb.png": "6831e94cfec360ca66bd405a933a601bc77f8a93d3e7eab7f70ababf690b3f93",
+    "all_fields_rgb.pdf": "0f4587e6460f25f691fb797d7d212375c48ff713de5a902c8ad69a5a29b8f7df",
+    "shock_comparison.csv": "362de29f2321f31cc72d55201f00e4ccc30df63b3f4bfe0c55bf27680845e643",
+    "provenance.json": "3c74d3804c655eeb51cff8e4528c229fcef94b89e2e363f9e5d6f9c426d5e220",
+    "plot_contours.py": "0d85cc02363aea8dd1826b3724ae2ee3dc7678a45e311ea3ba4c57991f0b5ea5"
+  }
+}
