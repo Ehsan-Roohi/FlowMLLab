@@ -14,10 +14,12 @@ Developed for **MIE 690A: AI in Fluid Mechanics**, University of Massachusetts
 Amherst.
 
 <!-- course-counts:start -->
-The current checkout contains **51 student notebooks** (including 1 historical audit companion) and **35 active lecture PDFs / 525 pages** across Weeks 1–22 and their incremental units. Optional self-study supplements are counted separately.
+The current checkout contains **51 student notebooks** (including 1 historical audit companion) and **36 active lecture PDFs / 546 pages** across Weeks 1–22 and their incremental units. Optional self-study supplements are counted separately.
 
 [Inventory and counting rules](docs/COURSE_INVENTORY.md) · [Choose a learning path](START_HERE.md)
 <!-- course-counts:end -->
+
+**TensorFlow self-study:** [Complete 21-page TensorFlow/Keras guide](lectures/week01_02_tensorflow_keras.pdf) · [Updated notebook 02](notebooks/week01/02_tensorflow_for_ai_fluids.ipynb).
 
 ## Choose your first step
 

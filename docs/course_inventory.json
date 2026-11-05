@@ -9,14 +9,18 @@
     "historical_baseline": "At review base c9562b8: 34 active PDFs / 444 pages; 51 student notebooks including one historical companion. Current counts below are regenerated and may change."
   },
   "counts": {
-    "active_lecture_pdfs": 35,
-    "lecture_pages": 525,
+    "active_lecture_pdfs": 36,
+    "lecture_pages": 546,
     "student_notebooks": 51,
     "historical_student_companions": 1,
     "optional_notebooks": 1,
     "optional_pdfs": 1
   },
   "lecture_pdfs": [
+    {
+      "path": "lectures/week01_02_tensorflow_keras.pdf",
+      "pages": 21
+    },
     {
       "path": "lectures/week01_1_ai_assisted_scientific_software.pdf",
       "pages": 10

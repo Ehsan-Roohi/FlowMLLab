@@ -29,7 +29,7 @@ def main():
     nbformat.validate(nb)
     cells = nb.cells
     source = '\n'.join(c.source for c in cells)
-    assert 'Self-study revision: 2026-11-02' in source
+    assert 'Self-study revision: 2026-11-05' in source
     assert 'FLOWMLLAB_COLAB_LAUNCH_V1' in source
     assert 'FLOWMLLAB_COLAB_BOOTSTRAP_V1' in source
     assert 'notebooks/week02/AI_in_Fluids_Week2_Colab_Expanded.ipynb' in source
@@ -57,7 +57,7 @@ def main():
         except importlib.metadata.PackageNotFoundError:
             tensorflow_version = importlib.metadata.version('tensorflow-cpu')
         report = {
-            'revision': '2026-11-02', 'python': platform.python_version(),
+            'revision': '2026-11-05', 'python': platform.python_version(),
             'tensorflow': tensorflow_version,
             'numpy': importlib.metadata.version('numpy'),
             'keras': importlib.metadata.version('keras'),

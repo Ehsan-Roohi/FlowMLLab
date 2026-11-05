@@ -18,9 +18,11 @@ Python, numerical methods and CFD validation.
 
 ### Notebook 02: TensorFlow self-study route
 
-**Revised 2 November 2026.** The expanded lab explains tensor axes and precision, catches silent broadcasting errors, derives and verifies loss gradients, and separates training, validation and test data in a small Keras experiment. Analytic velocity/vorticity fields and a parallel-plate momentum balance connect the programming steps to fluid mechanics. Guided checkpoints, self-check hints and troubleshooting accompany the runnable examples.
+**Companion PDF:** [TensorFlow and Keras for AI in Fluids (21 pages)](../../lectures/week01_02_tensorflow_keras.pdf). Read the guide alongside the existing notebook. Its controlled experiments change training/validation counts, hidden layers, widths, activations, batch size and learning rate. The guide distinguishes epoch-end losses from online training logs and provides a loss-jump diagnostic.
 
-The notebook generates its own demonstration data and runs on a CPU. Open it through the Colab link above and check its **2026-11-02** revision label; an older Google Drive copy will not update automatically. Keep your existing work separately.
+**Revised 5 November 2026.** The expanded lab explains tensor axes and precision, catches silent broadcasting errors, derives and verifies loss gradients, and separates training, validation and test data in a small Keras experiment. Analytic velocity/vorticity fields and a parallel-plate momentum balance connect the programming steps to fluid mechanics. Guided checkpoints, self-check hints and troubleshooting accompany the runnable examples.
+
+The notebook generates its own demonstration data and runs on a CPU. Open it through the Colab link above and check its **2026-11-05** revision label; an older Google Drive copy will not update automatically. Keep your existing work separately.
 
 **Moving to Week 2:** finish Sections 1–9 and the readiness checklist at the end of notebook 02. If you can identify input/target shapes, perform a gradient update and explain the three data roles, continue to [AI in Fluids — Week 2](https://colab.research.google.com/github/Ehsan-Roohi/FlowMLLab/blob/main/notebooks/week02/AI_in_Fluids_Week2_Colab_Expanded.ipynb). Its first sections revisit a neuron and one update. The channel-residual and convolution examples can be revisited alongside later topics.
 

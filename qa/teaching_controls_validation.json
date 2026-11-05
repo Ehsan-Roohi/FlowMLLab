@@ -1,0 +1,82 @@
+{
+  "revision": "2026-11-05",
+  "scope": "Teaching controls and rendered companion",
+  "tensorflow": {
+    "short_runs": [
+      {
+        "name": "small_relu",
+        "n_train": 30,
+        "n_val": 10,
+        "n_test": 40,
+        "hidden_units": [
+          8
+        ],
+        "activation": "relu",
+        "parameters": 25,
+        "learning_rate": 0.01,
+        "batch_size": 16,
+        "epochs_run": 3,
+        "updates_run": 6,
+        "train_mse": 0.7826576828956604,
+        "val_mse": 0.7586460113525391,
+        "fit_seconds": 0.6034199999994598
+      },
+      {
+        "name": "deep_sigmoid",
+        "n_train": 484,
+        "n_val": 160,
+        "n_test": 40,
+        "hidden_units": [
+          16,
+          16,
+          16
+        ],
+        "activation": "sigmoid",
+        "parameters": 593,
+        "learning_rate": 0.01,
+        "batch_size": 64,
+        "epochs_run": 3,
+        "updates_run": 24,
+        "train_mse": 0.4890521466732025,
+        "val_mse": 0.48222723603248596,
+        "fit_seconds": 1.1918734000064433
+      },
+      {
+        "name": "linear_full_batch",
+        "n_train": 121,
+        "n_val": 40,
+        "n_test": 40,
+        "hidden_units": [
+          32,
+          32
+        ],
+        "activation": "linear",
+        "parameters": 1153,
+        "learning_rate": 0.01,
+        "batch_size": 121,
+        "epochs_run": 3,
+        "updates_run": 3,
+        "train_mse": 0.33515992760658264,
+        "val_mse": 0.2587781846523285,
+        "fit_seconds": 0.6846628999919631
+      }
+    ],
+    "grid_sizes": [
+      33,
+      65,
+      129
+    ],
+    "scope": "Control-path smoke checks; three epochs do not establish model accuracy."
+  },
+  "pdf": {
+    "pages": 21,
+    "all_pages_visually_reviewed": true
+  },
+  "pressure_velocity": {
+    "default_code_cells_executed": 14,
+    "transient_cases_executed": 6,
+    "end_time": 0.2,
+    "all_failure_path_checked": true
+  },
+  "existing_notebook_paths_preserved": true
+}

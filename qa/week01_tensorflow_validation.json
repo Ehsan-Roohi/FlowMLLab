@@ -1,14 +1,14 @@
 {
-  "revision": "2026-11-02",
+  "revision": "2026-11-05",
   "python": "3.12.14",
   "tensorflow": "2.20.0",
   "numpy": "2.2.6",
   "keras": "3.15.1",
-  "code_cells_executed": 21,
+  "code_cells_executed": 25,
   "error_outputs": 0,
-  "retained_plot_outputs": 6,
-  "execution_seconds": 129.38,
-  "notebook_sha256": "28e6e2423ab96c2be8f3264c0938656745e4863ac7e0eeb3359722fa608e96c0",
+  "retained_plot_outputs": 9,
+  "execution_seconds": 339.13,
+  "notebook_sha256": "3f9bb54dc6616c1a77db11f66addda8c82a757d89e58d822b2bc6263267d15a9",
   "checks": [
     "tensor shapes and dtypes",
     "broadcasting mismatch demonstration",
@@ -21,5 +21,6 @@
     "analytic first and second derivatives",
     "channel momentum residual and both wall conditions"
   ],
-  "execution_scope": "Fresh CPU kernel; analytic teaching data; no new CFD or research training"
+  "execution_scope": "Fresh CPU kernel; analytic teaching data; no new CFD or research training",
+  "post_execution_change": "Markdown revision and companion PDF link only; executed code unchanged."
 }
