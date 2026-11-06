@@ -9,19 +9,26 @@ import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 from matplotlib.patches import FancyBboxPatch, FancyArrowPatch
-plt.rcParams.update({"font.family":"DejaVu Sans","font.size":11,"axes.spines.top":False,"axes.spines.right":False,"savefig.facecolor":"white","figure.facecolor":"white"})
-BLUE="#17648d"
-ORANGE="#c66a1c"
-GREEN="#217b5b"
+from matplotlib import font_manager
+fontdir=Path(os.environ.get("FLOWMLLAB_FONT_DIR",r"C:\Windows\Fonts"))
+for name in ("times.ttf","timesbd.ttf","timesi.ttf","timesbi.ttf"):
+    fp=fontdir/name
+    if not fp.is_file():
+        raise FileNotFoundError(f"Times New Roman is required: {fp}")
+    font_manager.fontManager.addfont(str(fp))
+plt.rcParams.update({"font.family":"Times New Roman","text.color":"black","axes.labelcolor":"black","xtick.color":"black","ytick.color":"black","axes.prop_cycle":matplotlib.cycler(color=["black"]),"font.size":11,"axes.spines.top":False,"axes.spines.right":False,"savefig.facecolor":"white","figure.facecolor":"white"})
+BLUE="#000000"
+ORANGE="#000000"
+GREEN="#000000"
 def save(fig,name):
     fig.savefig(FIG/name,dpi=180,bbox_inches="tight",pad_inches=.16)
     plt.close(fig)
 def box(ax,xy,w,h,label,color=BLUE):
     x,y=xy
-    ax.add_patch(FancyBboxPatch((x,y),w,h,boxstyle="round,pad=.02,rounding_size=.035",edgecolor=color,facecolor=color+"0D",lw=1.3))
+    ax.add_patch(FancyBboxPatch((x,y),w,h,boxstyle="round,pad=.02,rounding_size=.035",edgecolor=color,facecolor="white",lw=1.3))
     ax.text(x+w/2,y+h/2,label,ha="center",va="center",fontsize=11)
 def arrow(ax,p,q,label=None):
-    ax.add_patch(FancyArrowPatch(p,q,arrowstyle="-|>",mutation_scale=15,color="#425563",lw=1.2))
+    ax.add_patch(FancyArrowPatch(p,q,arrowstyle="-|>",mutation_scale=15,color="#000000",lw=1.2))
     if label:
         ax.text((p[0]+q[0])/2,(p[1]+q[1])/2+.07,label,ha="center",fontsize=9)
 fig,ax=plt.subplots(figsize=(9,2.9))
@@ -42,7 +49,7 @@ for layer,(x,n) in enumerate(zip(xs,ns)):
         last=np.linspace(1.1,3,ns[layer-1]) if ns[layer-1]>1 else [2.05]
         for yy in last:
             for y in ys:
-                ax.plot([xs[layer-1]+.12,x-.12],[yy,y],color="#b5c6d0",lw=.6,zorder=0)
+                ax.plot([xs[layer-1]+.12,x-.12],[yy,y],color="#b0b0b0",lw=.6,zorder=0)
     ax.scatter([x]*len(ys),ys,s=200,facecolors="white",edgecolors=BLUE,linewidths=1.4,zorder=1)
 for x,label in zip(xs,["Input x\n1 feature","Dense + tanh\n32 units","Dense + tanh\n32 units","Linear output\n1 value"]):
     ax.text(x,.55,label,ha="center",va="center",fontsize=10.5)
@@ -55,7 +62,7 @@ rng=np.random.default_rng(42)
 pool=rng.permutation(201)
 x=np.linspace(0,1,201);xx=np.linspace(0,1,401)
 for ax,ids,color,label,role in zip(axes,[pool[:121],pool[121:161],pool[161:]],[BLUE,ORANGE,GREEN],["Train (121)","Validation (40)","Test (40)"],["Update weights","Choose configuration / epoch","Evaluate frozen choice once"]):
-    ax.plot(xx,np.sin(2*np.pi*xx),color="#cbd2d7",lw=1)
+    ax.plot(xx,np.sin(2*np.pi*xx),color="#b0b0b0",lw=1)
     ax.scatter(x[ids],np.sin(2*np.pi*x[ids]),s=8,color=color)
     ax.set_ylabel(label,fontsize=10)
     ax.text(1.015,.5,role,transform=ax.transAxes,va="center",fontsize=10)
@@ -76,8 +83,8 @@ save(fig,"training_loop.png")
 
 z=np.linspace(-5,5,500)
 fig,ax=plt.subplots(figsize=(8,3.4))
-for y,name in [(np.tanh(z),"tanh"),(np.maximum(z,0),"ReLU"),(1/(1+np.exp(-z)),"sigmoid"),(z,"linear")]:
-    ax.plot(z,y,lw=1.8,label=name)
+for (y,name),ls in zip([(np.tanh(z),"tanh"),(np.maximum(z,0),"ReLU"),(1/(1+np.exp(-z)),"sigmoid"),(z,"linear")],["-","--","-.",":"]):
+    ax.plot(z,y,lw=1.8,ls=ls,label=name,color="black")
 ax.set(xlabel="Pre-activation z",ylabel="Activation",ylim=(-1.5,3),xlim=(-5,5))
 ax.grid(alpha=.18);ax.legend(ncol=4,loc="upper center",bbox_to_anchor=(.5,1.22),frameon=False)
 save(fig,"activations.png")
@@ -86,9 +93,9 @@ fig,ax=plt.subplots(figsize=(8,3.4))
 epoch=np.arange(1,81)
 base=.35*np.exp(-epoch/16)+.006
 rng=np.random.default_rng(3)
-ax.semilogy(epoch,np.clip(base*(1+.4*rng.normal(size=len(epoch))),.002,None),color="#a9becb",lw=.9,label="Illustrative batch-level variability")
+ax.semilogy(epoch,np.clip(base*(1+.4*rng.normal(size=len(epoch))),.002,None),color="#b0b0b0",lw=.9,label="Illustrative batch-level variability")
 ax.semilogy(epoch,base,color=BLUE,lw=2,label="Schematic epoch-end training")
-ax.semilogy(epoch,.38*np.exp(-epoch/15)+.012+.00012*np.maximum(epoch-48,0),color=ORANGE,lw=2,label="Schematic validation")
+ax.semilogy(epoch,.38*np.exp(-epoch/15)+.012+.00012*np.maximum(epoch-48,0),color=ORANGE,lw=2,ls="--",label="Schematic validation")
 ax.set(xlabel="Epoch",ylabel="MSE (illustrative values)")
 ax.legend(loc="upper right",fontsize=8.5);ax.grid(alpha=.18)
 save(fig,"loss_diagnostics.png")

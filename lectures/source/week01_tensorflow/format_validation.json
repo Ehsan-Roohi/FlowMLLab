@@ -1,0 +1,191 @@
+{
+  "pages": 21,
+  "fonts": [
+    "TimesNewRomanPS-BoldMT",
+    "TimesNewRomanPSMT"
+  ],
+  "text_colors": [
+    0
+  ],
+  "clickable_links": 21,
+  "links": [
+    {
+      "source_page": 1,
+      "kind": 2,
+      "uri": "https://ehsan-roohi.github.io/FlowMLLab/",
+      "target_page": null
+    },
+    {
+      "source_page": 1,
+      "kind": 2,
+      "uri": "https://colab.research.google.com/github/Ehsan-Roohi/FlowMLLab/blob/main/notebooks/week01/02_tensorflow_for_ai_fluids.ipynb",
+      "target_page": null
+    },
+    {
+      "source_page": 1,
+      "kind": 2,
+      "uri": "https://github.com/Ehsan-Roohi/FlowMLLab/blob/main/notebooks/week01/02_tensorflow_for_ai_fluids.ipynb",
+      "target_page": null
+    },
+    {
+      "source_page": 1,
+      "kind": 1,
+      "uri": null,
+      "target_page": 1
+    },
+    {
+      "source_page": 1,
+      "kind": 1,
+      "uri": null,
+      "target_page": 5
+    },
+    {
+      "source_page": 1,
+      "kind": 1,
+      "uri": null,
+      "target_page": 9
+    },
+    {
+      "source_page": 1,
+      "kind": 1,
+      "uri": null,
+      "target_page": 13
+    },
+    {
+      "source_page": 1,
+      "kind": 1,
+      "uri": null,
+      "target_page": 17
+    },
+    {
+      "source_page": 3,
+      "kind": 2,
+      "uri": "https://www.tensorflow.org/guide/tensor",
+      "target_page": null
+    },
+    {
+      "source_page": 7,
+      "kind": 2,
+      "uri": "https://www.tensorflow.org/guide/autodiff",
+      "target_page": null
+    },
+    {
+      "source_page": 8,
+      "kind": 2,
+      "uri": "https://keras.io/api/optimizers/sgd/",
+      "target_page": null
+    },
+    {
+      "source_page": 9,
+      "kind": 2,
+      "uri": "https://www.tensorflow.org/guide/keras/sequential_model",
+      "target_page": null
+    },
+    {
+      "source_page": 10,
+      "kind": 2,
+      "uri": "https://www.tensorflow.org/guide/keras/training_with_built_in_methods",
+      "target_page": null
+    },
+    {
+      "source_page": 11,
+      "kind": 2,
+      "uri": "https://keras.io/api/optimizers/adam/",
+      "target_page": null
+    },
+    {
+      "source_page": 12,
+      "kind": 2,
+      "uri": "https://keras.io/getting_started/faq/",
+      "target_page": null
+    },
+    {
+      "source_page": 17,
+      "kind": 2,
+      "uri": "https://keras.io/api/layers/activations/",
+      "target_page": null
+    },
+    {
+      "source_page": 20,
+      "kind": 2,
+      "uri": "https://www.tensorflow.org/api_docs/python/tf/keras/layers/Conv2D",
+      "target_page": null
+    },
+    {
+      "source_page": 21,
+      "kind": 2,
+      "uri": "https://www.tensorflow.org/guide/tensor",
+      "target_page": null
+    },
+    {
+      "source_page": 21,
+      "kind": 2,
+      "uri": "https://www.tensorflow.org/guide/autodiff",
+      "target_page": null
+    },
+    {
+      "source_page": 21,
+      "kind": 2,
+      "uri": "https://keras.io/api/models/model_training_apis/",
+      "target_page": null
+    },
+    {
+      "source_page": 21,
+      "kind": 2,
+      "uri": "https://keras.io/getting_started/faq/",
+      "target_page": null
+    }
+  ],
+  "images": [
+    {
+      "name": "tensor_pipeline.png",
+      "monochrome": true,
+      "width": 1313,
+      "height": 459
+    },
+    {
+      "name": "dense_network.png",
+      "monochrome": true,
+      "width": 1313,
+      "height": 530
+    },
+    {
+      "name": "split_roles.png",
+      "monochrome": true,
+      "width": 1326,
+      "height": 803
+    },
+    {
+      "name": "training_loop.png",
+      "monochrome": true,
+      "width": 1313,
+      "height": 612
+    },
+    {
+      "name": "activations.png",
+      "monochrome": true,
+      "width": 1256,
+      "height": 698
+    },
+    {
+      "name": "loss_diagnostics.png",
+      "monochrome": true,
+      "width": 1276,
+      "height": 608
+    },
+    {
+      "name": "channel_boundary.png",
+      "monochrome": true,
+      "width": 1277,
+      "height": 608
+    },
+    {
+      "name": "cnn_shapes.png",
+      "monochrome": true,
+      "width": 1313,
+      "height": 445
+    }
+  ],
+  "sha256": "f08169658565734f820ca3057958019cf86323f302972371e54b115137ea78ed",
+  "all_20_teaching_sections_present": true
+}

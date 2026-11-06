@@ -1,0 +1,4 @@
+.matplotlib/
+pdf_qa/
+pdf_validation.json
+__pycache__/

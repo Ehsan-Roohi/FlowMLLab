@@ -1,9 +1,11 @@
 # TensorFlow and Keras for AI in Fluids
 ## Week 1, notebook 02 - a complete student companion
 
-FlowMLLab
+[FlowMLLab course website](https://ehsan-roohi.github.io/FlowMLLab/)
 
-This guide accompanies notebooks/week01/02_tensorflow_for_ai_fluids.ipynb.
+**Start the lab:** [Run notebook 02 in Colab](https://colab.research.google.com/github/Ehsan-Roohi/FlowMLLab/blob/main/notebooks/week01/02_tensorflow_for_ai_fluids.ipynb) or [read its current GitHub version](https://github.com/Ehsan-Roohi/FlowMLLab/blob/main/notebooks/week01/02_tensorflow_for_ai_fluids.ipynb).
+
+This guide accompanies the existing Week 1 TensorFlow notebook 02.
 The course also contains a separate pressure-velocity lab called Week 1.2.
 Here, notebook 02 means the introductory TensorFlow lab.
 
@@ -39,9 +41,13 @@ model selection is complete.
 
 ### Guide map
 
-Sections 1-8 follow tensors, field channels, losses and manual training.
-Sections 9-16 explain the Keras experiments and their interpretation.
-Sections 17-20 cover physics residuals, the CNN and submission requirements.
+Use these links to move through the guide.
+
+- [Sections 1-4: setup, tensors, broadcasting and channels](#section-1)
+- [Sections 5-8: losses, automatic differentiation and networks](#section-5)
+- [Sections 9-12: data splits, training and loss diagnostics](#section-9)
+- [Sections 13-16: data-count, architecture and activation experiments](#section-13)
+- [Sections 17-20: physical checks, convolution and submission](#section-17)
 
 <!-- PAGEBREAK -->
 
@@ -98,6 +104,8 @@ or data-handling problems.
 
 # 2. Tensors describe the arrangement of data
 ## Notebook Sections 1 and 3
+
+Reference: [TensorFlow tensor guide](https://www.tensorflow.org/guide/tensor).
 
 A TensorFlow tensor is a multidimensional array. Rank counts its axes.
 Shape gives the length of each axis. A scalar has shape (), a three-entry
@@ -275,6 +283,8 @@ not establish improved physical accuracy.
 # 6. Automatic differentiation records a computation
 ## Notebook Section 7
 
+Reference: [TensorFlow automatic differentiation](https://www.tensorflow.org/guide/autodiff).
+
 The notebook creates x0 as a trainable variable with value 3.
 Inside tf.GradientTape it calculates y0 = x0 squared.
 tape.gradient(y0, x0) returns 6.
@@ -319,6 +329,8 @@ independent scrutiny.
 # 7. Understand one update before running many
 ## Notebook Section 8
 
+Reference: [Gradient descent (SGD)](https://keras.io/api/optimizers/sgd/).
+
 Gradient descent subtracts a scaled gradient.
 
 a_new = a_old - learning_rate times dMSE/da
@@ -361,6 +373,8 @@ Changing target and rate together cannot isolate the effect of either.
 # 8. A dense network builds a nonlinear function
 ## Notebook Section 9, model construction
 
+Reference: [The Keras Sequential model](https://www.tensorflow.org/guide/keras/sequential_model).
+
 A dense layer forms weighted sums and adds a bias per output unit.
 A layer with d inputs and h outputs has d times h plus h parameters.
 
@@ -401,6 +415,8 @@ achieve the lowest validation error within a fixed training budget.
 
 # 9. Training, validation and test have different jobs
 ## Notebook Section 9, data construction
+
+Reference: [Keras training and evaluation](https://www.tensorflow.org/guide/keras/training_with_built_in_methods).
 
 The baseline uses 121 training points, 40 validation points and 40
 test points. Separate coordinate pools prevent overlap between roles.
@@ -444,6 +460,8 @@ split answer different engineering questions.
 
 # 10. Read the training configuration
 ## Notebook Section 9, experiment controls
+
+Reference: [Keras Adam settings](https://keras.io/api/optimizers/adam/).
 
 Edit the named settings, rerun their defining cell and create a fresh
 experiment. The helper resets the model and random seed.
@@ -498,6 +516,8 @@ broad conclusion.
 
 # 11. Compare training and validation fairly
 ## Notebook Section 9, loss histories
+
+Reference: [Keras explanation of training and validation loss](https://keras.io/getting_started/faq/).
 
 Keras history["loss"] aggregates losses during an epoch while weights
 change between batches. Validation loss is normally calculated after
@@ -755,6 +775,8 @@ for high-dimensional fluid fields or other data distributions.
 # 16. Change the activation and explain the result
 ## Student experiment D
 
+Reference: [Keras activation functions](https://keras.io/api/layers/activations/).
+
 ACTIVATION selects the hidden nonlinearity.
 Keep the output linear for the signed sine target.
 
@@ -898,6 +920,8 @@ and programming before the larger problems are attempted.
 
 # 19. A CNN preserves spatial organisation
 ## Notebook Section 11
+
+Reference: [TensorFlow Conv2D API](https://www.tensorflow.org/api_docs/python/tf/keras/layers/Conv2D).
 
 A convolutional neural network (CNN) applies local learned filters
 at many grid locations with shared weights.

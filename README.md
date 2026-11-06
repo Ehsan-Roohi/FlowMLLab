@@ -55,7 +55,7 @@ Weeks 5 and 6 share a project pack and lecture guide, but have separate learning
 
 | Week | Topic | Notebook / lab | Lecture |
 | --- | --- | --- | --- |
-| [1](weeks/week01/README.md) | Python, numerical methods and CFD validation | [Week 1 labs](notebooks/week01/) | [Lecture 1](lectures/week01_numerical_foundations.pdf) |
+| [1](weeks/week01/README.md) | Python, numerical methods and CFD validation | [Week 1 labs](notebooks/week01/) | [Lecture 1](lectures/week01_numerical_foundations.pdf) · [TensorFlow/Keras guide](lectures/week01_02_tensorflow_keras.pdf) |
 | [1.1](weeks/week01_1/README.md) | Specification, verification, physical gates and accountable AI use | [Week 1.1 lab](notebooks/week01_1/W1_1_AI_Assisted_Scientific_Software.ipynb) | [Lecture 1.1](lectures/week01_1_ai_assisted_scientific_software.pdf) |
 | [1.2](weeks/week01_2/README.md) | SIMPLE, PISO and PIMPLE pressure-velocity coupling; Re=100 cavity | [Week 1.2 lab](notebooks/week01_2/W1_2_Cavity_Pressure_Velocity.ipynb) | [Lecture 1.2](lectures/week01_2_pressure_velocity.pdf) |
 | [2](weeks/week02/README.md) | Features, scaling, baselines and model validity | [Week 2 lab](notebooks/week02/AI_in_Fluids_Week2_Colab_Expanded.ipynb) | [Lecture 2](lectures/week02_supervised_learning_rarefaction.pdf) |
