@@ -217,20 +217,64 @@ def _tensorflow() -> Any:
     return tf
 
 
+RESIDUAL_BASES = ("persistence", "cubic")
+
+
+def extrapolation_weights(history: int = 4, *, base: str = "persistence") -> np.ndarray:
+    """Return the history weights of the residual base used by the CNN.
+
+    ``"persistence"`` repeats the latest frame.  ``"cubic"`` is the same
+    one-step polynomial extrapolation as :func:`polynomial_forecast` with
+    degree ``min(3, history - 1)``; for four frames the weights are
+    ``[-1, 4, -6, 4]``.  The CNN then learns only the correction to this
+    transparent baseline.
+    """
+    if int(history) != history or int(history) < 1:
+        raise ValueError("history must be a positive integer")
+    history = int(history)
+    if base == "persistence" or history == 1:
+        weights = np.zeros(history)
+        weights[-1] = 1.0
+        return weights
+    if base != "cubic":
+        raise ValueError(f"base must be one of {RESIDUAL_BASES}")
+    degree = min(3, history - 1)
+    coordinate = np.arange(history, dtype=float)
+    design = np.vander(coordinate, N=degree + 1, increasing=True)
+    weights = (
+        np.vander(np.asarray([float(history)]), N=degree + 1, increasing=True)[0]
+        @ np.linalg.pinv(design)
+    )
+    # Remove pseudo-inverse roundoff so integer stencils such as [-1,4,-6,4]
+    # are exact in float32.
+    return np.round(weights, 10) + 0.0
+
+
 def build_multiscale_predictor(
     *,
     history: int = 4,
     fields_per_frame: int = 3,
     filters: int = 24,
+    base: str = "persistence",
+    periodic_y: bool = False,
 ) -> Any:
     """Build a fully convolutional residual predictor with three spatial scales.
 
     Input channels are time-major flow fields followed by standardized Reynolds
-    number and a fluid mask.  The model starts from exact persistence because the
-    final residual convolution is zero initialized.
+    number and a fluid mask.  The final residual convolution is zero
+    initialized, so the untrained model reproduces its residual ``base``
+    exactly: persistence (the original Week-7 model) or the cubic temporal
+    extrapolant of the same four frames.  ``periodic_y=True`` wraps every
+    convolution and bilinear upsampling across the transverse boundary,
+    matching the periodic transverse LBM boundary instead of zero padding, so
+    the network commutes with transverse shifts by multiples of four nodes; the
+    streamwise direction keeps zero padding.  Neither option changes the
+    parameter count.
     """
     if history < 1 or fields_per_frame != 3 or filters < 4:
         raise ValueError("history>=1, fields_per_frame=3, and filters>=4 are required")
+    if base not in RESIDUAL_BASES:
+        raise ValueError(f"base must be one of {RESIDUAL_BASES}")
     tf = _tensorflow()
     keras = tf.keras
     flow_channels = int(history) * int(fields_per_frame)
@@ -239,41 +283,84 @@ def build_multiscale_predictor(
         name="history_reynolds_mask",
     )
 
-    def conv_block(values: Any, width: int, kernel: int, name: str) -> Any:
-        values = keras.layers.Conv2D(
-            width, kernel, padding="same", activation="swish", name=f"{name}_conv1"
+    def conv(
+        values: Any,
+        width: int,
+        kernel: int,
+        name: str,
+        activation: str | None = "swish",
+        **options: Any,
+    ) -> Any:
+        if not periodic_y or kernel == 1:
+            return keras.layers.Conv2D(
+                width, kernel, padding="same", activation=activation, name=name, **options
+            )(values)
+        pad = kernel // 2
+        values = keras.layers.Lambda(
+            lambda tensor: tf.concat(
+                [tensor[:, -pad:], tensor, tensor[:, :pad]], axis=1
+            ),
+            name=f"{name}_periodic_y",
         )(values)
+        values = keras.layers.ZeroPadding2D(((0, 0), (pad, pad)), name=f"{name}_pad_x")(
+            values
+        )
         return keras.layers.Conv2D(
-            width, 3, padding="same", activation="swish", name=f"{name}_conv2"
+            width, kernel, padding="valid", activation=activation, name=name, **options
+        )(values)
+
+    def conv_block(values: Any, width: int, kernel: int, name: str) -> Any:
+        values = conv(values, width, kernel, f"{name}_conv1")
+        return conv(values, width, 3, f"{name}_conv2")
+
+    def upsample(values: Any, factor: int, name: str) -> Any:
+        if not periodic_y:
+            return keras.layers.UpSampling2D(
+                factor, interpolation="bilinear", name=name
+            )(values)
+        values = keras.layers.Lambda(
+            lambda tensor: tf.concat([tensor[:, -1:], tensor, tensor[:, :1]], axis=1),
+            name=f"{name}_periodic_y",
+        )(values)
+        values = keras.layers.UpSampling2D(factor, interpolation="bilinear", name=name)(
+            values
+        )
+        return keras.layers.Lambda(
+            lambda tensor: tensor[:, factor:-factor], name=f"{name}_crop_y"
         )(values)
 
     fine = conv_block(inputs, filters, 5, "fine")
     half = keras.layers.AveragePooling2D(2, name="half_pool")(inputs)
     half = conv_block(half, filters, 5, "half")
-    half = keras.layers.UpSampling2D(2, interpolation="bilinear", name="half_up")(half)
+    half = upsample(half, 2, "half_up")
     quarter = keras.layers.AveragePooling2D(4, name="quarter_pool")(inputs)
     quarter = conv_block(quarter, filters, 5, "quarter")
-    quarter = keras.layers.UpSampling2D(
-        4, interpolation="bilinear", name="quarter_up"
-    )(quarter)
+    quarter = upsample(quarter, 4, "quarter_up")
     merged = keras.layers.Concatenate(name="multiscale_concat")([fine, half, quarter])
-    merged = keras.layers.Conv2D(
-        2 * filters, 3, padding="same", activation="swish", name="fusion"
-    )(merged)
-    merged = keras.layers.Conv2D(
-        filters, 3, padding="same", activation="swish", name="refine"
-    )(merged)
-    delta = keras.layers.Conv2D(
+    merged = conv(merged, 2 * filters, 3, "fusion")
+    merged = conv(merged, filters, 3, "refine")
+    delta = conv(
+        merged,
         3,
         3,
-        padding="same",
+        "future_increment",
+        activation=None,
         kernel_initializer="zeros",
         bias_initializer="zeros",
-        name="future_increment",
-    )(merged)
+    )
+    weights = extrapolation_weights(int(history), base=base).astype(np.float32)
+
+    def residual_base(values: Any) -> Any:
+        total = 0.0
+        for index, weight in enumerate(weights):
+            if weight != 0.0:
+                frame = values[..., 3 * index : 3 * index + 3]
+                total = total + float(weight) * frame
+        return total
+
     previous = keras.layers.Lambda(
-        lambda values: values[..., flow_channels - 3 : flow_channels],
-        name="latest_frame",
+        residual_base,
+        name="latest_frame" if base == "persistence" else "cubic_extrapolation",
     )(inputs)
     raw = keras.layers.Add(name="residual_prediction")([previous, delta])
     fluid = keras.layers.Lambda(lambda values: values[..., -1:], name="fluid_mask")(
@@ -344,10 +431,12 @@ def composite_flow_loss(
 
 
 __all__ = [
+    "RESIDUAL_BASES",
     "TemporalWindow",
     "build_multiscale_predictor",
     "composite_flow_loss",
     "divergence",
+    "extrapolation_weights",
     "polynomial_forecast",
     "relative_l2",
     "stack_history",

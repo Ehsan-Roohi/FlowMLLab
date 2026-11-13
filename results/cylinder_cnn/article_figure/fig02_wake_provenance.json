@@ -1,0 +1,46 @@
+{
+  "generated_utc": "2026-11-13T12:51:32.744913+00:00",
+  "reynolds": 105,
+  "history_frames": [
+    138,
+    139,
+    140,
+    141
+  ],
+  "target_frame": 142,
+  "dimensionless_time": 77.29166412353516,
+  "case": "re105_nx240_ny96_d12_s22000_start15000_stride25.npz",
+  "case_sha256": "cb3fbbe69a92c4723837103211b8f4469cb918572d7bb2f306611780d0edff96",
+  "case_equals_published_asset": false,
+  "weights_sha256": "027e469cc266f3ca349e8a891edefe81459b2cd6322ff7aa0bfdeaf1d891a420",
+  "model": {
+    "parameters": 83091,
+    "filters": 24,
+    "residual_base": null,
+    "periodic_y_padding": null
+  },
+  "window": {
+    "x_over_D": [
+      -1.2,
+      12.0
+    ],
+    "y_over_D": [
+      -3.5,
+      3.5
+    ]
+  },
+  "displayed_fluid_nodes": 13248,
+  "reference_vorticity_rms": 0.7007836573418769,
+  "cnn_error_rms_percent": 0.7471136052803727,
+  "cnn_error_max_abs_percent": 16.083482858249134,
+  "cnn_error_p99_abs_percent": 3.0161393575059527,
+  "cubic_error_rms_percent": 1.0179801339917713,
+  "cubic_error_max_abs_percent": 12.491240697887667,
+  "error_definition": "100*(omega_CNN-omega_LBM)/RMS(omega_LBM) over displayed fluid nodes",
+  "rendering": "filled contours of unchanged native fluid nodes (piecewise-linear triangulation); exact r=D/2 circle masks the solid; vorticity on a symmetric-log scale spanning +/-max|omega|; error on a linear scale spanning +/-max|e| (no clipping)",
+  "outputs": {
+    "fig02_wake.png": "74240073180c257c1cb681e45f35240ca18e5eb0c35866024fc3418cf1acbed5",
+    "fig02_wake.pdf": "e61fb7f2df83bc3024d4affa20a31fcdc035655a000fc70af60ebfd93ca78bdc",
+    "fig02_wake.tif": "3b77653f168324446f7e33b8d12451c5c44bd1b05eb70395e7e61e0dc3080b9b"
+  }
+}

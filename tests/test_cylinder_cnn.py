@@ -68,5 +68,61 @@ class CylinderCNNTests(unittest.TestCase):
         self.assertEqual(prediction.shape, (2, 16, 20, 3))
         np.testing.assert_allclose(prediction, values[..., 9:12], atol=1.0e-7)
 
+    def test_cubic_extrapolation_weights_match_polynomial_forecast(self) -> None:
+        weights = cylinder_cnn.extrapolation_weights(4, base="cubic")
+        np.testing.assert_allclose(weights, [-1.0, 4.0, -6.0, 4.0], atol=1.0e-12)
+        history = np.random.default_rng(3).normal(size=(4, 5, 6))
+        np.testing.assert_allclose(
+            np.tensordot(weights, history, axes=(0, 0)),
+            cylinder_cnn.polynomial_forecast(history, degree=3),
+            atol=1.0e-10,
+        )
+        np.testing.assert_array_equal(
+            cylinder_cnn.extrapolation_weights(4), [0.0, 0.0, 0.0, 1.0]
+        )
+        with self.assertRaises(ValueError):
+            cylinder_cnn.extrapolation_weights(4, base="quintic")
+
+    def test_periodic_cubic_model_starts_from_cubic_extrapolation(self) -> None:
+        try:
+            model = cylinder_cnn.build_multiscale_predictor(
+                filters=4, base="cubic", periodic_y=True
+            )
+            reference = cylinder_cnn.build_multiscale_predictor(filters=4)
+        except ImportError:
+            self.skipTest("optional TensorFlow dependency is not installed")
+        self.assertEqual(model.count_params(), reference.count_params())
+        rng = np.random.default_rng(5)
+        values = rng.normal(size=(2, 16, 20, 14)).astype(np.float32)
+        values[..., -1] = 1.0
+        values[:, 6:9, 4:7, -1] = 0.0
+        prediction = np.asarray(model(values, training=False))
+        frames = [values[..., 3 * k : 3 * k + 3] for k in range(4)]
+        expected = -frames[0] + 4 * frames[1] - 6 * frames[2] + 4 * frames[3]
+        expected[..., :2] *= values[..., -1:]
+        self.assertEqual(prediction.shape, (2, 16, 20, 3))
+        np.testing.assert_allclose(prediction, expected, atol=1.0e-5)
+
+    def test_periodic_padding_is_equivariant_to_transverse_rolls(self) -> None:
+        try:
+            import tensorflow as tf
+            model = cylinder_cnn.build_multiscale_predictor(
+                filters=4, base="cubic", periodic_y=True
+            )
+        except ImportError:
+            self.skipTest("optional TensorFlow dependency is not installed")
+        tf.keras.utils.set_random_seed(11)
+        for weight in model.weights:
+            weight.assign(0.1 * tf.random.normal(weight.shape))
+        values = np.random.default_rng(7).normal(size=(1, 16, 24, 14)).astype(np.float32)
+        values[..., -1] = 1.0
+        rolled = np.roll(values, 4, axis=1)
+        prediction = np.asarray(model(values, training=False))
+        rolled_prediction = np.asarray(model(rolled, training=False))
+        np.testing.assert_allclose(
+            np.roll(prediction, 4, axis=1), rolled_prediction, atol=1.0e-4
+        )
+
+
 if __name__ == "__main__":
     unittest.main()
