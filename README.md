@@ -102,7 +102,9 @@ decision. [Run the lab](notebooks/week01_1/W1_1_AI_Assisted_Scientific_Software.
 
 **[Open Week 1.2: lecture, notebooks and guide](weeks/week01_2/README.md)**
 
-![Velocity and streamlines from the Re = 100 pressure–velocity coupling lab](results/week01_2_pressure_velocity/figures/speed.png)
+<img src="docs/assets/showcase/week01-2-coupling-streamlines.png" width="745" alt="Black streamlines for four retained lid-driven cavity solutions at Reynolds number 100">
+
+The four panels use the same streamline levels on the retained Re = 100 solutions.
 
 Compare SIMPLE, PISO and PIMPLE on the same lid-driven cavity and check their
 converged velocity fields against an independent streamfunction–vorticity solver.
@@ -111,7 +113,7 @@ converged velocity fields against an independent streamfunction–vorticity solv
 
 **[Open Week 1.3: lecture, notebook and exercises](weeks/week01_3/README.md)**
 
-<img src="docs/assets/showcase/week01-3-optimizer-comparison.png" width="610" alt="Convergence, predicted profile and signed validation error for four optimizer routes">
+<img src="docs/assets/showcase/week01-3-optimizer-comparison.png" width="680" alt="Convergence, predicted profile and signed validation error for four optimizer routes">
 
 Four routes fit the same signal from identical starting weights and training
 samples. The lower panels show which routes resolve the narrow peak and where
@@ -266,13 +268,12 @@ Week 6 completes the selected Week-5 track, including optional closure testing.
 
 **Problem:** Predict future cylinder-wake vorticity.<br>
 **CFD / data:** FlowMLLab D2Q9–TRT lattice Boltzmann solver (LBM).<br>
-**Learning method:** The lead result is a phase-stable learned Fourier decoder, not an autoregressive CNN; POD and CNN baselines are linked below.
+**Learning methods:** A one-step CNN and a separate phase-stable Fourier decoder for long-horizon forecasts.
 
-<img src="docs/assets/showcase/week07-cylinder-vorticity.png" width="760" alt="Alternating positive and negative vorticity downstream of a circular cylinder at Reynolds number 100">
+<img src="docs/assets/showcase/week07-cylinder-vorticity.png" width="695" alt="Re 105 cylinder wake with LBM reference, one-step CNN prediction and signed vorticity error">
 
-This signed-vorticity field comes from the retained Re = 100 LBM case, with
-40 grid nodes per diameter and final nondimensional time about 100.
-[Data and grid assessment](results/cylinder_d40/README.md) ·
+All three panels show the same retained Re = 105 frame at tU∞/D = 77.29. The CNN predicts the next frame from four preceding LBM frames. Signed error is the CNN minus the reference as a percentage of the reference vorticity RMS over the displayed fluid region.
+[One-step CNN protocol](results/cylinder_cnn/README.md) ·
 [Separate Re = 95 forecast diagnostics](results/cylinder_phase/homepage_week07.png)
 
 [Watch the LBM/decoder wake animation](results/cylinder_phase/re095_phase_stable_lbm_vs_decoder.webp)

@@ -4,9 +4,9 @@
 
 LBM, vortex shedding and autonomous surrogates.
 
-![Signed vorticity in the Re = 100 cylinder wake](../../docs/assets/showcase/week07-cylinder-vorticity.png)
+![Re 105 cylinder wake with LBM reference, one-step CNN prediction and signed vorticity error](../../docs/assets/showcase/week07-cylinder-vorticity.png)
 
-This field comes from the retained [Re = 100 D40 calculation](../../results/cylinder_d40/README.md). The forecast exercise below uses a separate Re = 95 trajectory.
+All three panels show the same retained Re = 105 frame at tU∞/D = 77.29. The CNN predicts the next frame from four preceding LBM frames. Signed error is the CNN minus the reference as a percentage of the reference vorticity RMS over the displayed fluid region. [One-step CNN protocol](../../results/cylinder_cnn/README.md). The long-horizon forecast below uses a separate Re = 95 trajectory.
 
 ## Lecture and notebooks
 
@@ -31,7 +31,7 @@ Read the lecture, then work through the notebooks in the listed order. Read each
 
 **Problem:** Predict future cylinder-wake vorticity.<br>
 **CFD / data:** FlowMLLab D2Q9–TRT lattice Boltzmann solver (LBM).<br>
-**Learning method:** The lead result is a phase-stable learned Fourier decoder, not an autoregressive CNN; POD and CNN baselines are linked below.
+**Learning methods:** A one-step CNN and a separate phase-stable Fourier decoder for long-horizon forecasts.
 
 
 

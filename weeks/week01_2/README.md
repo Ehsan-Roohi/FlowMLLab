@@ -3,7 +3,9 @@
 An independent Re=100 extension after the original Week 1. The original
 streamfunction-vorticity notebook remains unchanged.
 
-![Executed Re=100 velocity and streamlines](../../results/week01_2_pressure_velocity/figures/speed.png)
+![Black streamlines for four retained lid-driven cavity solutions at Re = 100](../../docs/assets/showcase/week01-2-coupling-streamlines.png)
+
+The four panels use the same streamline levels on the retained Re = 100 solutions.
 
 [Open in Colab](https://colab.research.google.com/github/Ehsan-Roohi/FlowMLLab/blob/main/notebooks/week01_2/W1_2_Cavity_Pressure_Velocity.ipynb) | [Lecture](../../lectures/week01_2_pressure_velocity.pdf) | [Measured report](../../results/week01_2_pressure_velocity/README.md) | [Detailed guide](../../notebooks/week01_2/README.md)
 
