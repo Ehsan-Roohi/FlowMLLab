@@ -848,6 +848,7 @@ Student submissions are not included.
 · [Workshop, support, and consulting details](docs/RESULTS_GUIDE.md#workshops-support-and-consulting)
 
 Current published release: **v1.11.0** · [GitHub release](https://github.com/Ehsan-Roohi/FlowMLLab/releases/tag/v1.11.0)
+· [v1.11.0 Zenodo archive · DOI 10.5281/zenodo.24220731](https://doi.org/10.5281/zenodo.24220731)
 · [Zenodo version history](https://doi.org/10.5281/zenodo.22074169)
 · [Release notes](RELEASE_NOTES_v1.11.0.md).
 Previous v1.10.0 archive: [10.5281/zenodo.23210097](https://doi.org/10.5281/zenodo.23210097).
