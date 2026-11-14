@@ -4,7 +4,7 @@
 
 Python, numerical methods and CFD validation.
 
-![Black streamlines in the Re = 400 lid-driven cavity](../../docs/assets/showcase/week01-cavity-streamlines.png)
+![Re = 400 cavity streamlines and two Ghia velocity centerline comparisons](../../docs/assets/showcase/week01-cavity-streamlines.png)
 
 [View the original CFD and Ghia centerline comparison](../../results/article_figures/fig02_cavity_benchmark.png).
 

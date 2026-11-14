@@ -2,6 +2,7 @@
 
 import base64
 import json
+import sys
 from pathlib import Path
 
 import matplotlib
@@ -18,23 +19,54 @@ OUTPUT = ROOT / "docs/assets/showcase"
 
 
 def cavity():
+    sys.path.insert(0, str(ROOT / "common"))
+    from w4utils import GHIA, ghia_valid_mask
+
     with np.load(ROOT / "data/cavity_data.npz", allow_pickle=False) as field:
         index, = np.flatnonzero(field["Re"] == 400)
         x, y = field["x"], field["y"]
-        psi = field["psi"][index]
+        psi, u, v = (field[key][index] for key in ("psi", "u", "v"))
+    reference = GHIA[400]
+    valid_v = ghia_valid_mask(400, "v")
+    mid_x = int(np.argmin(np.abs(x - 0.5)))
+    mid_y = int(np.argmin(np.abs(y - 0.5)))
 
-    fig, ax = plt.subplots(figsize=(5.1, 5.1))
+    fig = plt.figure(figsize=(11.3, 6.6))
+    grid = fig.add_gridspec(2, 2, width_ratios=(1.12, 1), left=0.075, right=0.975,
+                           bottom=0.105, top=0.86, wspace=0.30, hspace=0.51)
+    field_ax = fig.add_subplot(grid[:, 0])
+    u_ax = fig.add_subplot(grid[0, 1])
+    v_ax = fig.add_subplot(grid[1, 1])
     interior_levels = -np.r_[0.1065, 0.104, 0.100, np.linspace(0.095, 0.005, 23),
                              0.003, 0.0015]
     corner_levels = np.r_[1.3e-6, 3.0e-6, 5.4e-6, 7.5e-6,
                           np.linspace(5e-5, 5.5e-4, 8)]
-    ax.contour(x, y, psi, levels=np.r_[interior_levels, corner_levels], colors="black",
-               linewidths=0.52, linestyles="solid")
-    ax.set(xlim=(0, 1), ylim=(0, 1), aspect="equal", xlabel="$x/L$", ylabel="$y/L$")
-    ax.set_xticks(np.linspace(0, 1, 6))
-    ax.set_yticks(np.linspace(0, 1, 6))
-    fig.subplots_adjust(left=0.125, right=0.965, bottom=0.12, top=0.965)
-    fig.savefig(OUTPUT / "week01-cavity-streamlines.png", dpi=200)
+    field_ax.contour(x, y, psi, levels=np.r_[interior_levels, corner_levels],
+                     colors="black", linewidths=0.54, linestyles="solid")
+    field_ax.set(xlim=(0, 1), ylim=(0, 1), aspect="equal", xlabel="$x/L$", ylabel="$y/L$",
+                 title="(a) Streamlines, Re = 400")
+    field_ax.set_xticks(np.linspace(0, 1, 6))
+    field_ax.set_yticks(np.linspace(0, 1, 6))
+
+    cfd, = u_ax.plot(u[:, mid_x], y, color="#1261a0", lw=1.8, label="FlowMLLab CFD")
+    ghia = u_ax.scatter(reference["u"], reference["y"], s=24, color="#c3282d",
+                        edgecolor="white", linewidth=0.35, label="Ghia et al.", zorder=3)
+    u_ax.set(title="(b) Vertical centerline", xlabel=r"$u/U_{lid}$ at $x/L=0.5$",
+             ylabel="$y/L$", ylim=(-0.015, 1.025))
+
+    v_ax.plot(x, v[mid_y, :], color="#1261a0", lw=1.8)
+    v_ax.scatter(reference["x"][valid_v], reference["v"][valid_v], s=24, color="#c3282d",
+                 edgecolor="white", linewidth=0.35, zorder=3)
+    anomalous = v_ax.scatter(reference["x"][~valid_v], reference["v"][~valid_v],
+                             s=45, color="#9b5500", marker="x", linewidth=1.3,
+                             label="Tabulated point excluded from error norm", zorder=4)
+    v_ax.set(title="(c) Horizontal centerline", xlabel=r"$x/L$",
+             ylabel=r"$v/U_{lid}$ at $y/L=0.5$", xlim=(-0.02, 1.02))
+    for ax in (u_ax, v_ax):
+        ax.grid(alpha=0.23)
+    fig.legend(handles=[cfd, ghia, anomalous], loc="upper center", ncol=3,
+               frameon=False, bbox_to_anchor=(0.5, 0.977), fontsize=11)
+    fig.savefig(OUTPUT / "week01-cavity-streamlines.png", dpi=180)
     plt.close(fig)
 
 

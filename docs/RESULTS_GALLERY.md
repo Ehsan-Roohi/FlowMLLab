@@ -14,7 +14,7 @@ Follow the captions for data provenance and validity limits; the
 **CFD / data:** FlowMLLab finite-difference streamfunction–vorticity Navier–Stokes solver.<br>
 **Learning method:** No neural network; CFD is checked against Ghia centreline data.
 
-![Black velocity streamlines in a square lid-driven cavity at Re = 400](../docs/assets/showcase/week01-cavity-streamlines.png)
+![Re = 400 cavity streamlines and two Ghia velocity centerline comparisons](../docs/assets/showcase/week01-cavity-streamlines.png)
 
 Start with a numerical solution and an independent benchmark: cavity fields,
 centerlines and Ghia comparisons establish what a useful training label means.
