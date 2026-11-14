@@ -4,6 +4,8 @@
 
 [Lecture PDF](../../lectures/week01_3_keras_optimizers.pdf) · [Open the notebook](../../notebooks/week01_3/W1_3_Keras_Optimizers.ipynb) · [Open in Colab](https://colab.research.google.com/github/Ehsan-Roohi/FlowMLLab/blob/main/notebooks/week01_3/W1_3_Keras_Optimizers.ipynb) · [Local CPU setup](../../notebooks/week01_3/README.md)
 
+![Matched convergence, profiles and signed errors on the localized target](../../docs/assets/showcase/week01-3-optimizer-comparison.png)
+
 Start after [TensorFlow for AI in Fluids](../../notebooks/week01/02_tensorflow_for_ai_fluids.ipynb). The lab returns to the same sine function, then uses harder analytic targets to make differences in training behavior easier to see.
 
 1. Compare optimizers with the same network, starting weights, and samples.

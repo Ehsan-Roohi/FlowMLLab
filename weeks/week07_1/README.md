@@ -6,6 +6,8 @@ DSMC fields and Mach-to-field operators.
 
 ![Original 400 by 400 Mach-8.5 DSMC fields and interpolation errors](../../results/hypersonic_cylinder_week7_1/cylinder_homepage.png)
 
+The [matched circle and ellipse comparison](../../results/ds2v_geometry/README.md) shows Mach, density, temperature and pressure for a separate DSMC geometry study.
+
 ## Lecture and notebooks
 
 **Lecture:** [Lecture 7.1](../../lectures/week07_1_hypersonic_rarefied_cylinder.pdf)

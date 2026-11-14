@@ -4,7 +4,9 @@
 
 LBM, vortex shedding and autonomous surrogates.
 
-![Week 7: global and worst-frame vorticity errors for the 277-frame autonomous rollout](../../results/cylinder_phase/homepage_week07.png)
+![Signed vorticity in the Re = 100 cylinder wake](../../docs/assets/showcase/week07-cylinder-vorticity.png)
+
+This field comes from the retained [Re = 100 D40 calculation](../../results/cylinder_d40/README.md). The forecast exercise below uses a separate Re = 95 trajectory.
 
 ## Lecture and notebooks
 

@@ -1,0 +1,771 @@
+# Results gallery
+
+[Course homepage](../README.md) · [Weekly index](../weeks/README.md) · [Technical results guide](RESULTS_GUIDE.md) · [Replot the homepage figures](../qa/plot_homepage_showcase.py)
+
+The figures below connect each week to an experiment or teaching example.
+Follow the captions for data provenance and validity limits; the
+[technical guide](../docs/RESULTS_GUIDE.md) retains the detailed protocols and metrics.
+
+### Week 1 — Numerical foundations
+
+**[Open Week 1: lecture, notebooks and guide](../weeks/week01/README.md)**
+
+**Problem:** Lid-driven cavity benchmark.<br>
+**CFD / data:** FlowMLLab finite-difference streamfunction–vorticity Navier–Stokes solver.<br>
+**Learning method:** No neural network; CFD is checked against Ghia centreline data.
+
+![Black velocity streamlines in a square lid-driven cavity at Re = 400](../docs/assets/showcase/week01-cavity-streamlines.png)
+
+Start with a numerical solution and an independent benchmark: cavity fields,
+centerlines and Ghia comparisons establish what a useful training label means.
+[Cavity benchmark and Ghia comparison](../results/article_figures/fig02_cavity_benchmark.png) · [Figure contract](../ARTICLE_FIGURE_MAP.md)
+
+### Week 1.1 — AI-assisted scientific software
+
+**[Open Week 1.1: lecture, notebooks and guide](../weeks/week01_1/README.md)**
+
+**Problem:** Verify cavity diagnostics and physical constraints.<br>
+**CFD / data:** Analytic manufactured solution and a retained FlowMLLab cavity field.<br>
+**Learning method:** No trained network; independent tests verify AI-proposed code.
+
+![Executable scientific contract for an AI-proposed cavity diagnostic](../results/week01_1_scientific_software/week01_1_acceptance_summary.png)
+
+An independently derived manufactured solution establishes second-order
+convergence before the accepted `Re=100` cavity case is opened. Seven frozen gates
+then bind array semantics, vorticity convention, incompressibility, wall
+conditions, thresholds and the complete data hash into one machine-readable
+decision. [Run the lab](../notebooks/week01_1/W1_1_AI_Assisted_Scientific_Software.ipynb)
+· [Read the scientific specification](../notebooks/week01_1/SCIENTIFIC_SPEC.md)
+· [Complete the agent-assisted GitHub assignment](../notebooks/week01_1/ASSIGNMENT.md)
+· [Inspect the retained evidence](../results/week01_1_scientific_software/README.md)
+
+### Week 1.2 — Pressure–velocity coupling
+
+**[Open Week 1.2: lecture, notebooks and guide](../weeks/week01_2/README.md)**
+
+![Velocity and streamlines from the Re = 100 pressure–velocity coupling lab](../results/week01_2_pressure_velocity/figures/speed.png)
+
+Compare SIMPLE, PISO and PIMPLE on the same lid-driven cavity and check their
+converged velocity fields against an independent streamfunction–vorticity solver.
+
+### Week 1.3 — Optimizers for scientific machine learning
+
+**[Open Week 1.3: lecture, notebook and exercises](../weeks/week01_3/README.md)**
+
+![Four optimizer routes compared by convergence, predicted profile and signed validation error](../docs/assets/showcase/week01-3-optimizer-comparison.png)
+
+Four routes fit an analytic signal with a narrow peak from identical starting
+weights and training samples. The notebook and lecture include a separate
+SOAP and self-scaled Broyden experiment using the deep-cavity optimizer sequence.
+
+### Week 2 — Supervised learning and rarefaction
+
+**[Open Week 2: lecture, notebooks and guide](../weeks/week02/README.md)**
+
+**Problem:** Predict response across Knudsen number and accommodation.<br>
+**CFD / data:** Synthetic teaching equation; no CFD/DSMC run.<br>
+**Learning method:** Ridge regression, not a neural CFD model.
+
+![Week 2 synthetic response across Knudsen regimes and accommodation coefficients](../assets/week02_synthetic_response.png)
+
+The Week-2 notebook's synthetic response illustrates how Knudsen number and
+accommodation affect the learning problem. This is a teaching equation, not a
+CFD/DSMC result. [Run the lab](../notebooks/week02/AI_in_Fluids_Week2_Colab_Expanded.ipynb)
+
+### Week 2.1 — Probabilistic uncertainty
+
+**[Open Week 2.1: lecture, notebooks and guide](../weeks/week02_1/README.md)**
+
+**Problem:** Predict cavity quantities and fields with uncertainty.<br>
+**CFD / data:** Retained FlowMLLab cavity CFD data.<br>
+**Learning method:** Bayesian regression and POD–Gaussian processes; non-neural models.
+
+![Probabilistic CFD prediction, uncertainty and blind calibration checks](../results/probabilistic_uq/probabilistic_uq_validation.png)
+
+Bayesian and POD–Gaussian-process predictions are checked with proper scores
+and blind coverage; the retained under-coverage is part of the lesson.
+[UQ evidence](../results/probabilistic_uq/README.md)
+
+### Week 3 — Kinetic theory and DSMC
+
+**[Open Week 3: lecture, notebooks and guide](../weeks/week03/README.md)**
+
+**Problem:** Predict wall pressure from molecular motion.<br>
+**CFD / data:** FlowMLLab hard-sphere DSMC with no-time-counter (HS–NTC) collisions.<br>
+**Learning method:** No network in the displayed particle-solver validation.
+
+![HS–NTC DSMC wall-pressure validation against Mohammadzadeh reference data](../results/article_figures/fig10a_mohammadzadeh_validation.png)
+
+Connect molecular sampling to a macroscopic observable through the executed
+HS–NTC wall-pressure validation.
+[Validation contract](../ARTICLE_FIGURE_MAP.md)
+
+### Week 4 — Cavity surrogates and DeepONet
+
+**[Open Week 4: lecture, notebooks and guide](../weeks/week04/README.md)**
+
+**Problem:** Map Reynolds number to cavity fields.<br>
+**CFD / data:** FlowMLLab finite-difference streamfunction–vorticity Navier–Stokes solver.<br>
+**Learning method:** POD–DeepONet: learned parameter-to-coefficient map with a fixed POD spatial basis.
+
+![POD–DeepONet cavity fields, Ghia checks, blind errors and cost](../results/pod_deeponet/pod_deeponet_ghia_validation.png)
+
+Complete-case testing combines field error, wall/divergence checks, reference
+centerlines and measured inference cost.
+[Model and validation evidence](../results/pod_deeponet/README.md)
+
+### Week 4.1 — Classical reduced-order models
+
+**[Open Week 4.1: lecture, notebooks and guide](../weeks/week04_1/README.md)**
+
+**Problem:** Evolve cavity flow in a reduced state space.<br>
+**CFD / data:** The Week-4 cavity equations and finite-difference full-order model.<br>
+**Learning method:** POD–Galerkin and POD–DEIM; neither is a neural network.
+
+![Classical cavity POD–Galerkin and POD–DEIM validation and timing](../results/cavity_rom/cavity_rom_validation.png)
+
+Compare reduced dynamics, hyper-reduction, blind trajectories and the offline/online
+cost tradeoff. [Run the ROM lab](../notebooks/week04/W4_1_Classical_ROM_Cavity.ipynb)
+
+### Week 4.2 — Stokes-to-Navier-Stokes correction
+
+**[Open Week 4.2: lecture, notebooks and guide](../weeks/week04_2/README.md)**
+
+**Problem:** Predict the nonlinear cavity-flow correction from a matched Stokes field.<br>
+**CFD / data:** Constant and spatially diverse lid conditions, solved independently on 25 × 25 and 51 × 51 grids.<br>
+**Learning method:** A POD-based neural correction conditioned on the Stokes field and Reynolds number; pressure is recovered afterwards.
+
+![Week 4.2 diverse-lid example: Navier–Stokes reference, Stokes-corrected prediction and absolute errors in velocity and recovered pressure](../figures/Cavity_diverse_velocity_pressure.png)
+
+![Week 4.2 diverse-lid speed contours with streamlines and primary and corner recirculation markers, plus interior vorticity and error](../figures/Cavity_diverse_streamlines_vorticity.png)
+
+This held-out diverse-lid example shows reference fields, predictions and absolute
+errors, including speed streamlines and interior vorticity. Across six retained
+same-family tests per lid type, the primary and lower-right recirculation centers
+match the reference grid nodes in all cases; mean interior vorticity errors are
+0.12% for constant lids and 1.49% for diverse lids. The contours are linearly
+interpolated for display; errors use the original 25 × 25 samples. These same-grid
+regression tests do not establish grid-independent CFD accuracy or independently
+validated corner vortices. [See the constant-lid vortex figure](../figures/Cavity_constant_streamlines_vorticity.png)
+· [Run the Week 4.2 lab](../notebooks/week04/W4_Lab4_Stokes_to_Navier_Stokes.ipynb)
+· [Read the lecture companion](../lectures/week04_2_stokes_to_navier_stokes.pdf)
+· [Inspect the retained results](../results/stokes_refined/README.md)
+
+The 51 × 51 refinement solves all 184 cases again and retrains the selected
+three-seed POD correction. Mean same-family velocity errors are 0.097% for
+constant lids and 0.810% for diverse lids, compared with 0.107% and 0.917%
+at 25 × 25. The 25-to-51 CFD velocity change is still about 20.6% for constant
+tests and 17.8% for diverse tests when the fine solution is sampled on the
+coarse grid. This is a better resolved surrogate experiment, not a claim of
+mesh-independent CFD accuracy.
+
+![Week 4.2 diverse-lid 51 by 51 speed, streamlines, vorticity and errors](../figures/Cavity_diverse_grid51_streamlines_vorticity.png)
+
+[Open the 51 × 51 validation notebook](../notebooks/week04/W4_Lab4_Grid51_Validation.ipynb)
+· [Read the 51 × 51 PDF addendum](../lectures/week04_2_grid51_validation.pdf)
+· [Inspect the refined data and metrics](../results/stokes_grid51/README.md)
+
+### Week 5 — Physics-guided projects
+
+**[Open Week 5: lecture, notebooks and guide](../weeks/week05/README.md)**
+
+**Problem:** Build a cavity surrogate or reconstruct a wake from sparse sensors.<br>
+**CFD / data:** FlowMLLab cavity CFD for the animation; D2Q9–TRT LBM for the wake extension.<br>
+**Learning method:** POD–DeepONet for the animation; gappy POD, sensor placement and SINDy in the extension.
+
+![Animated cavity comparison for three retained blind POD–DeepONet cases](../assets/flowmllab_blind_demo.gif)
+
+Use this retained cavity experiment as a project starting point: freeze a baseline,
+change one modeling choice and evaluate complete unseen cases.
+[Project pack](../notebooks/week05_06/README.md) · [Interactive demo](../demo/README.md)
+
+Extend the project with the [sparse sensing lab](../notebooks/week05_06/W5_Lab2_Sparse_Sensing_Dynamics.ipynb):
+reconstruct fields from limited measurements and inspect the
+[retained modal-method comparisons](../results/modal_labs/README.md).
+This companion uses the Week 7 cylinder-wake data and should be taken after
+the Week 7 module.
+
+### Week 6 — Physical validation and final evidence
+
+**[Open Week 6: lecture, notebooks and guide](../weeks/week06/README.md)**
+
+**Problem:** Recover and validate cavity pressure.<br>
+**CFD / data:** FlowMLLab cavity CFD with least-squares pressure-gradient reconstruction.<br>
+**Learning method:** No neural model in this pressure-recovery figure.
+
+![Independent cavity pressure-recovery validation](../results/article_figures/fig08_pressure_recovery.png)
+
+This existing pressure benchmark illustrates the independent physical checks
+expected in a final evidence bundle; it is not a learned Fokker–Planck result.
+Week 6 completes the selected Week-5 track, including optional closure testing.
+[Project completion guide](../notebooks/week05_06/README.md)
+
+### Week 7 — Unsteady cylinder wakes
+
+**[Open Week 7: lecture, notebooks and guide](../weeks/week07/README.md)**
+
+**Problem:** Predict future cylinder-wake vorticity.<br>
+**CFD / data:** FlowMLLab D2Q9–TRT lattice Boltzmann solver (LBM).<br>
+**Learning method:** The lead result is a phase-stable learned Fourier decoder, not an autoregressive CNN; POD and CNN baselines are linked below.
+
+![Alternating positive and negative vorticity behind a cylinder at Re = 100](../docs/assets/showcase/week07-cylinder-vorticity.png)
+
+This signed-vorticity field comes from the retained Re = 100 LBM case, with
+40 grid nodes per diameter and final nondimensional time about 100.
+[Data and grid assessment](../results/cylinder_d40/README.md) ·
+[Separate Re = 95 forecast diagnostics](../results/cylinder_phase/homepage_week07.png)
+
+[Watch the LBM/decoder wake animation](../results/cylinder_phase/re095_phase_stable_lbm_vs_decoder.webp)
+
+Four initial fields seed **277 autonomous future frames** at unseen **Re = 95**,
+with **4.281% global vorticity error** against educational LBM labels.
+The grid study passes practical fine-pair limits but fails the formal
+asymptotic/GCI gate; these labels are not high-fidelity DNS.
+[Video](../results/cylinder_phase/re095_phase_stable_lbm_vs_decoder.mp4)
+· [Model evidence](../results/cylinder_phase/README.md)
+· [Grid study](../results/cylinder_grid_convergence/README.md)
+
+Continue with the [modal forecasting lab](../notebooks/week07/W7_Lab2_Modal_Forecasting.ipynb)
+and its [reproducible evidence](../results/modal_labs/README.md).
+The [Re100 D40 dataset](../results/cylinder_d40/README.md) provides force histories,
+final fields and a three-grid comparison. A separate
+[frozen-model Re115 evaluation](../results/cylinder_re115_evaluation/README.md)
+reports 3.17% global vorticity error, with sampling and pressure limitations.
+
+### Week 7.1 — Rarefied hypersonic cylinder
+
+**[Open Week 7.1: lecture, notebooks and guide](../weeks/week07_1/README.md)**
+
+**Problem:** Predict cylinder fields as Mach number varies.<br>
+**CFD / data:** Author-supplied DSMC archives; exact source/checkpoint attribution remains subject to the linked audit.<br>
+**Learning method:** 3×96 tanh MLP versus Mach interpolation; separate from the article's Fusion-DeepONet.
+
+![Original 400 by 400 Mach-8.5 DSMC fields and interpolation errors](../results/hypersonic_cylinder_week7_1/cylinder_homepage.png)
+
+The original **400 × 400 Mach-8.5** fields are rendered with continuous contours.
+Error panels compare against Mach-8/Mach-9 interpolation; gray marks the masked
+solid/sentinel region.
+[Figure provenance](../results/hypersonic_cylinder_week7_1/cylinder_homepage_provenance.json)
+
+Across the five held-out cases in the **compact teaching dataset**, interpolation
+errors are **0.398% / 0.609% / 0.779%** for local Mach, temperature and pressure.
+The trained **3×96 tanh MLP** gives **1.53% / 2.70% / 2.50%**, with training
+errors **1.26% / 2.21% / 1.82%**. Interpolation still wins; the earlier
+underfit random-feature ridge is no longer the default classroom comparison.
+These are new teaching runs, not the published model's accuracy.
+[Data and paper](../data/hypersonic_cylinder/README.md) · [MLP metrics](../results/hypersonic_cylinder_week7_1/mlp_metrics.json)
+
+For matched circle and ellipse DSMC fields, see the [geometry comparison](../results/ds2v_geometry/README.md).
+
+### Week 7.2 — Sparse-sensor state estimation
+
+**[Open Week 7.2: lecture, notebooks and guide](../weeks/week07_2/README.md)**
+
+**Problem:** Estimate a wake from noisy velocity sensors.<br>
+**CFD / data:** Retained FlowMLLab D2Q9–TRT LBM Re110 trajectory.<br>
+**Learning method:** POD–DMD dynamics and a Kalman filter; no neural network in this estimator.
+
+![Reference and causal state estimates at the final test frame](../results/week07_2_state_estimation/state_estimation_fields.png)
+
+A validation-selected rank-8 Kalman filter assimilates 32 noisy transverse-velocity
+sensors on the retained Re110 wake. Mean test relative L2 is **2.18%**, versus
+**3.16%** for matched sensor-only POD reconstruction and **4.36%** for open-loop
+DMD. Its nominal 95% marginal intervals cover only **55.1%** of sampled values;
+the overconfidence is retained as a model failure.
+[Protocol, all baselines and limits](../results/week07_2_state_estimation/README.md)
+
+### Week 7.3 — Self-supervised pretraining and label efficiency
+
+**[Open Week 7.3: lecture, notebooks and guide](../weeks/week07_3/README.md)**
+
+**Problem:** Complete a wake field from 25% of its patches for a new trajectory with few labelled frames.<br>
+**CFD / data:** The four retained FlowMLLab D2Q9–TRT LBM wakes (Re = 90, 100, 105, 110).<br>
+**Learning method:** A masked autoencoder pretrained on the unlabelled Re90/Re100 wakes (He et al., 2022; the MAPA protocol of Tang, Spalding and Cogan, 2026), used zero-shot, with a frozen linear probe, fine-tuned and from scratch; gappy POD with transferred, target-only and pooled bases as the matched classical baselines.
+
+![Hidden-pixel error against the number of labelled Re110 frames](../results/week07_3_pretraining/label_efficiency.png)
+
+The pretrained pipeline beats the same architecture from scratch at every label
+count under the matched 300-step downstream budget. At `k = 1, 2`, validation
+early stopping keeps the zero-shot pretrained weights; label-driven improvement
+starts at `k = 4`. With the full pretraining budget the from-scratch model still
+fails at `k = 2`. Gappy POD with a basis transferred from the unlabelled wakes is
+nevertheless an order of magnitude more accurate (**about 1.4%** zero-shot
+against **about 18%** for the network), and its pooled basis improves with every
+label. The classical win is retained and explained: this periodic wake is low-rank.
+[Protocol, all methods and limits](../results/week07_3_pretraining/README.md)
+
+### Week 7.4 — Diverse-wake pretraining
+
+**[Open Week 7.4: lecture, notebooks and guide](../weeks/week07_4/README.md)**
+
+**Problem:** Decode instantaneous lift on Reynolds trajectories excluded from pretraining.<br>
+**CFD / data:** Sixteen compact D2Q9-TRT LBM trajectories, Re60-135; eleven development cases, Re105 validation, four target cases.<br>
+**Learning method:** Frozen pretrained and random encoders plus ridge, compared with POD-32 plus ridge.
+
+![Lift decoding error versus target-label budget on four Reynolds trajectories](../results/week07_4_diverse_pretraining/homepage_week07_4.png)
+
+The retained pretrained encoder achieves **12.31% mean lift NRMSE with 32 target labels**, versus **16.02% for the random encoder with 128**: better mean accuracy with one-quarter as many target labels. POD-32 leads through k=32; the pretrained encoder has lower mean error at k=64 and 128. This is a MAPA-inspired teaching result, not a reproduction of MAPA or a universal neural advantage. Source labels used in ridge selection are additional to k. One encoder initialization and coarse, fixed-geometry CFD limit the claim.
+[Protocol, per-trajectory results and limitations](../results/week07_4_diverse_pretraining/README.md)
+
+### Week 8 — Gas dynamics and SciML
+
+**[Open Week 8: lecture, notebooks and guide](../weeks/week08/README.md)**
+
+**Problem:** Predict and invert compressible-flow relations.<br>
+**CFD / data:** Exact gas-dynamics relations and numerical root finding; no spatial CFD run.<br>
+**Learning method:** MLP inverse maps versus interpolation and radial-basis-function baselines.
+
+![Gas-dynamics model evidence, blind errors and matched-budget comparisons](../results/gas_dynamics_week8/week8_model_evidence.png)
+
+Preserve physical branches while comparing exact solvers, interpolation and
+learned inverse maps under matched budgets.
+[Benchmarks and validity limits](../results/gas_dynamics_week8/README.md)
+
+### Week 9 — Rarefied micro-step and micro-nozzle
+
+**[Open Week 9: lecture, notebooks and guide](../weeks/week09/README.md)**
+
+**Problem:** Predict geometry-dependent step fields and pressure-dependent nozzle fields.<br>
+**CFD / data:** Author-supplied DSMC archives; the nozzle uses modified Bird-family exports with a documented boundary defect.<br>
+**Learning method:** Step: geometry/coordinate MLP. Nozzle: shock-aligned POD with polynomial or tanh-MLP coefficient maps. Article and experimental DeepONet results are distinguished in the linked reports.
+
+![Held-out H44 micro-step: DSMC and independent teaching-model contours](../results/mahdavi_deeponet/step_independent_contours/held_out_H44_independent.png)
+
+The independent H44 teaching model uses geometry and coordinates only.
+[Step evidence and provenance](../results/mahdavi_deeponet/README.md)
+
+![Micro-nozzle 25-kPa full-height parity-completed view: DSMC half-domain, selected registered-POD model and absolute differences](../results/nozzle_transport/nozzle_P25_fields_full_domain.png)
+
+![Micro-nozzle 25-kPa profiles comparing DSMC, interpolation and learned branches](../results/nozzle_transport/nozzle_P25_profiles.png)
+
+The selected registered-POD polynomial model and trained neural branches are
+compared with the original interpolation baseline. The displayed transverse
+velocity on the symmetry plane is the prescribed **V = 0** boundary condition,
+not a learned accuracy result. The full-height field view is a parity-completed
+visualisation about that plane, not new CFD. Raw exports have a documented symmetry defect;
+these are historical-holdout regression results, not fresh blind validation.
+[Nozzle report](../results/nozzle_transport/README.md)
+· [Raw boundary audit](../results/nozzle_transport/symmetry_boundary_audit.png)
+
+#### Week 9 Lab 3 — Moving-throat data-alignment audit
+
+**Problem:** Detect a silent branch/trunk correspondence error before fitting a nozzle operator.<br>
+**Reference:** Independent quasi-1D isentropic solutions for three moving-throat geometries.<br>
+**Learning method:** Matched 2×48 tanh MLP surrogates isolate the effect of correct versus corrupted trunk-coordinate pairing.
+
+![Blind nozzle-surrogate predictions and errors before and after coordinate repair](../results/nozzle_alignment_audit/nozzle_alignment_impact.svg)
+
+In a controlled quasi-1D stress test, reusing the first nozzle's coordinates
+for every target preserves array shape but raises mean relative L2 error on
+three unseen geometries from **1.63% to 6.72%**. Correct pairing reduces blind
+error by **76%** under the same architecture, training cases and random seed.
+This isolates the value of the pre-fit audit; it is not a DSMC accuracy claim.
+[Run the audit](../notebooks/week09/W9_Lab3_Nozzle_Data_Alignment_Audit.ipynb) ·
+[Metrics and protocol](../results/nozzle_alignment_audit/README.md) ·
+[Companion notes](../lectures/week09_3_nozzle_data_alignment.pdf)
+
+### Week 10 — DSMC cavity and molecular shocks
+
+**[Open Week 10: lecture, notebooks and guide](../weeks/week10/README.md)**
+
+**Problem:** Reconstruct rarefied cavity and mono/diatomic shock data.<br>
+**CFD / data:** Author-supplied article DSMC tables, not new particle-solver runs.<br>
+**Article learning method:** the cavity uses a family of coordinate MLP experts,
+one per training Kn: fixed Fourier features of $(x,y)$ feed three 256-unit
+Swish dense layers, and neighboring experts are fused by log-Kn interpolation.
+It is **not DeepONet**. The article uses DeepONet for its diatomic-shock study.<br>
+**Displayed course reproduction:** direct log-Kn interpolation for the cavity and
+POD–polynomial profile surrogates for the shocks. These displayed predictions do
+not rerun the article's trained neural networks.
+
+![Large-format DSMC cavity and diatomic-shock course reproduction](../results/aescte_dsmc/week10_dsmc_reproduction_summary.png)
+
+The article-data experiment retains **1.281% maximum primary cavity NRMSE**
+and **1.018% maximum shock-profile relative L2 error**, with the data contract
+and regeneration workflow available for inspection.
+[Article (Roohi & Shoja-Sani, 2026)](https://doi.org/10.1016/j.ast.2025.110785)
+· [Reproduction evidence](../results/aescte_dsmc/README.md)
+· [Data contract](../data/aescte_dsmc/README.md)
+
+### Week 10.1 — Ab initio collision DeepONet
+
+**[Open Week 10.1: lecture, notebooks and guide](../weeks/week10_1/README.md)**
+
+**Problem:** Compute cylinder flow using a collision-angle surrogate.<br>
+**CFD / data:** Author-supplied DS2V-based DSMC research runs.<br>
+**Learning method:** DeepONet supplies scattering-angle tables, not whole-field predictions; the CPU lab is a separate Lennard-Jones analog.
+
+![Jäger Ar–Ar cylinder temperature: Exact and DeepONet at different output times](../results/abinitio_deeponet_cylinder/temperature_exact_deeponet.png)
+
+Author-supplied research fields from the later DeepONet collision-angle package,
+related to [Roohi, Shoja-sani and Stefanov, PoF 38, 057123 (2026)](https://doi.org/10.1063/5.0328463).
+DSMC generates these fields using exact-derived or DeepONet-derived angle tables;
+this is not a whole-field neural prediction or reproduction of the article's MLP.
+Shared colors, **different times and sampling windows**: qualitative comparison only.
+[All four colored fields and provenance](../results/abinitio_deeponet_cylinder/README.md)
+· [Surface pressure and heat flux](../results/abinitio_deeponet_cylinder/README.md#surface-pressure-and-heat-flux)
+· [Week 10.1 lecture companion](../lectures/week10_1_abinitio_collision_deeponet.md)
+
+[Run the CPU collision-map lab](../notebooks/week10_1/W10_1_Collision_Map_Surrogate_Audit.ipynb):
+solve a reduced Lennard-Jones scattering problem, check analytic limits and
+audit a fitted surrogate using transport integrals. This executable analog is
+separate from the Jäger research fields above; it does not reproduce the
+article's potential or network.
+
+### Week 11 — Shock and vortex identification
+
+**[Open Week 11: lecture, notebooks and guide](../weeks/week11/README.md)**
+
+**Problem:** Identify shocks/vortex cores and test reconstruction before detection.<br>
+**CFD / data:** Archived ShockVortexML compressible fields for the lead figure; FlowMLLab D2Q9–TRT LBM for the wake extension. The lead archive's exact producing-solver revision is not established here.<br>
+**Learning method:** Harmonized Joint (HJ), a custom shared-encoder, multi-branch
+encoder-decoder with specialist shock, vortex-core, wake/shear and expansion
+paths. The displayed masks use the frozen task-preserving HJ shock-repair
+checkpoint: the shared encoder and complete vortex pathway remain fixed while
+the shock-specific path is adapted. HJ-joint and a capacity-matched U-Net are
+comparison models, not the network shown here. A separate lab uses U-Net for
+velocity-field reconstruction before physical vortex identification.
+
+![Week 11 real airfoil field and learned shock and vortex masks](../results/week11_research/airfoil_2.png)
+
+Six fresh fixed-checkpoint forward passes on existing airfoil and cylinder fields from
+Roohi's [ShockVortexML research](https://github.com/Ehsan-Roohi/ShockVortexML).
+ML-only outputs; previously inspected development-test cases, not human-validated accuracy.
+[All six full-size figures and provenance](../results/week11_research/README.md) ·
+[Notebook and lecture](../notebooks/week11/README.md).
+Synthetic controls remain as the warm-up.
+
+**Watch the extended research pipeline — airfoil and cylinder**
+
+[![Watch Movie S9: numerical schlieren on the left and learned airfoil structures on the right](https://huggingface.co/spaces/ehsanroohi/ShockVortexML-Demo/resolve/e54de0a6f8665ef3cb098061d0704b4d96e0c414/airfoil_movie_v2.png)](https://www.youtube.com/watch?v=ULA8x2jUEvA)
+
+[▶ Watch the airfoil video (S9)](https://www.youtube.com/watch?v=ULA8x2jUEvA)
+· [▶ Watch the cylinder video (S10)](https://www.youtube.com/watch?v=opVMf1OVdM4)
+· [Explore both examples on Hugging Face](https://huggingface.co/spaces/ehsanroohi/ShockVortexML-Demo)
+· [Download original-quality movies and provenance](https://github.com/Ehsan-Roohi/ShockVortexML/releases/tag/movies-localfront-v2-20260909)
+
+Click the preview to open the video on YouTube. The left panel shows numerical
+density schlieren; the right shows localized learned shock fronts, vortex-core
+candidates, wake/shear and expanding-flow regions. These movies use the extended
+local-front model with retained core/wake branches and the PM-v4 expansion-region
+branch, a different configuration from the HJ control checkpoint described above.
+Blue denotes expanding flow, not a validated centred Prandtl–Meyer fan.
+These inspected research examples retain detection errors; their visual coverage
+is not an independent accuracy measurement.
+
+**Real-field extension:** [U-Net reconstruction followed by vortex identification](../results/week11_reconstruction/README.md)
+compares interpolation, reconstructed velocity plus swirling strength, and direct
+mask prediction on the same retained LBM wake cases. Three training seeds, loss
+histories and saved-checkpoint audits are included. These are weak-reference
+vortex scores on coarse incompressible data, not shock accuracy or a blind test.
+
+#### Hydrofoil vapor-cloud detection
+
+**Problem:** Detect attached cavities and disconnected vapor clouds around a hydrofoil.<br>
+**CFD / data:** The author's existing Fluent fields: 158 original alpha-input
+snapshots, plus 16 shared moving-case snapshots for comparing the methods.<br>
+**Methods:** Alpha-input context U-Net, fixed pressure threshold, pressure-only
+3×3 model, pressure U-Net and pressure topology U-Net. The notebook reruns the
+original saved models, including all three pressure-model seeds.
+
+![Same-frame hydrofoil vapor-cloud detection with alpha and pressure methods](../results/week11_cavitation/methods_Plunging3.png)
+
+All panels show the same CFD field, geometry and time. Orange/magenta denote
+attached/disconnected classes; green denotes total cavity for methods without
+a topology output. Pressure models receive no alpha input. Colored contours
+have white contrast halos; arrows mark erroneous vapor predictions
+inside the solid hydrofoil. The displayed Dice excludes solid/uncertain support.
+The illustrated frame has the largest valid CFD cavity area in this retained trajectory and
+uses the first seed (11); the notebook includes all 16 frames and three seeds.
+These inspected nontraining cases use algorithmic weak references and different
+input information, so this is not a blind or matched-input accuracy ranking.
+
+[Open in Colab](https://colab.research.google.com/github/Ehsan-Roohi/FlowMLLab/blob/main/notebooks/week11/W11_Cavitation_Cloud_Detection.ipynb)
+· [Notebook](../notebooks/week11/W11_Cavitation_Cloud_Detection.ipynb)
+· [Detection and training code](../flowmllab/cavitation_detection.py)
+· [Alpha/pressure comparison code](../flowmllab/cavitation_methods.py)
+· [Results and provenance](../results/week11_cavitation/README.md)
+· [Expanded Lecture 11](../lectures/week11_shock_vortex_identification.pdf)
+
+### Week 12 — DSMC moment reconstruction
+
+**[Open Week 12: lecture, notebooks and guide](../weeks/week12/README.md)**
+
+**Problem:** Reduce cavity heat-flux sampling noise.<br>
+**CFD / data:** Author-supplied multi-seed DSMC with an independent finite-sample reference.<br>
+**Learning method:** Archived observation-conditioned estimator in the lead figure; a separate 64×32 tanh patch MLP in the Noise2Noise lab.
+
+![Week 12 real DSMC heat flux reference, observation and reconstruction](../results/week12_research/cavity_qy_hero.png)
+
+Existing author-supplied DSMC cavity results associated with
+[Roohi, arXiv:2609.01637](https://doi.org/10.48550/arXiv.2609.01637).
+Eight seeds, both heat-flux components, 80 recomputed errors; no new DSMC or neural training.
+Mean reference NRMSE for qy: Raw(3) 17.61%, Raw(10) 9.80%, conditioned estimator 4.34%.
+[Full comparisons, profiles and all-seed errors](../results/week12_research/README.md) ·
+[Notebook and lecture](../notebooks/week12/README.md). The independent reference still has sampling noise.
+
+The companion [Noise2Noise-style MLP lab](../results/week12_noise2noise/README.md)
+trains on raw DSMC observations, compares seven estimators and reports both
+held-out seeds. Its training results are documented separately from the
+archived research reconstruction shown above.
+
+### Week 13 — Rectangular-cavity PINN research audit
+
+**[Open Week 13: lecture, notebooks and guide](../weeks/week13/README.md)**
+
+The front page retains only two representative comparisons. The notebook has three parts:
+build and train a small streamfunction PINN on CPU and judge it against the Week 1 CFD
+reference; inspect the deep-cavity field beside CFD; audit the four-case research matrix.
+Complete fields, loss histories and the audit tables are in the [Week 13 notebook](../notebooks/week13/W13_Rectangular_Cavity_PINN_Research.ipynb).
+
+**Problem:** Solve square and deep lid-driven cavities.<br>
+**CFD / data:** Nektar++ CFD and PINN fields are shown in separate, labelled rows on a common grid. The square case retains a near-matched CFD/PINN validation panel.<br>
+**Learning method:** Streamfunction PINN with hard wall constraints, trained using Adam then SSBroyden2 in float64.
+
+The Week 13 module develops streamfunction PINNs for square and deep lid-driven
+cavities. Compare **Re = 100 and 400**, **H/L = 1 and 2**, and **Adam followed
+by SSBroyden2** using retained float64 A100 runs, exact wall constraints and
+independent residual checks. The selected D/W=2.2 comparison uses Nektar++ at
+t=120 and PINN checkpoint 55118. Its 3.59% velocity relative L2 is not a final
+mesh/steady-convergence claim: the retained lid profiles differ.
+
+[Lecture](../lectures/week13_rectangular_cavity_pinn.pdf) ·
+[Notebook and results](../notebooks/week13/README.md) ·
+[Reproduction protocol](../qa/WEEK13_PINN_MATRIX_PROTOCOL.md)
+
+Preparatory reading covers [PINN residuals and hard boundary constraints](../lectures/week04_2_pinn_cavity.pdf)
+(this reading and its `results/week04_2_pinn_cavity/` evidence keep their original
+Week 4.2 file numbering; the Week 4.2 row of the course table is the
+Stokes-to-Navier-Stokes lab),
+including [McDevitt's DeepPlasma cavity code](https://github.com/cmcdevitt2/DeepPlasma/tree/fcb1566eaa3253d4a4108fbac9d49a38fd10ad6b/LDC),
+used with his permission. The earlier [Re=100 qualification and CFD comparison](../results/week04_2_pinn_cavity/README.md)
+provides supporting evidence for this module.
+
+**Selected case A — Re=1000, D/W=2.2:** CFD and PINN speed/streamlines and
+mean-zero pressure use common scales. The pressure scale is symmetric-log and
+retains the full range.
+
+![Nektar++ CFD and PINN fields for the Re=1000, D/W=2.2 cavity](../results/week13_deep_cavity/cfd_pinn_fields.png)
+
+**Selected case B — Re=100, D/W=1:** the PINN fields, pointwise velocity
+difference and CFD/PINN centreline profiles are kept as the compact square-case
+qualification. This selected near-matched run has 3.10% interior velocity
+relative L2; the separate frozen four-case matrix reports 3.343% for its
+`Re=100`, `D/W=1` checkpoint.
+
+![Near-matched CFD validation of the Re=100, D/W=1 PINN](../results/week04_2_pinn_cavity/qualified_validation.png)
+
+### Week 14 - RANS, inverse PINN and neural turbulence closures
+
+**[Open Week 14: lecture, notebooks and guide](../weeks/week14/README.md)**
+
+**Problem:** Improve turbulent kinetic energy without confusing a coefficient fit
+with a validated coupled flow solution.<br>
+**CFD / data:** Lars Davidson's pyCALC-RANS source-checkpoint channel restarts;
+Lee-Moser DNS reference statistics.<br>
+**Learning method:** Inverse PINN diffusion inference and the original small
+ReLU coefficient-regression protocol, with a separately labeled interpolation control.
+
+![Week 14 classical and table-PINN channel profiles against DNS](../results/week14_validation/profiles.png)
+
+[Executed notebook and CPU setup](../notebooks/week14/README.md) ·
+[Lecture](../lectures/week14_rans_pinn_nn.pdf) ·
+[Run ledger](../results/week14_validation/README.md) ·
+[Paper-claim alignment](../docs/WEEK14_PAPER_ALIGNMENT.md).
+
+This completed teaching audit retains unsuccessful convergence criteria and
+source-target regeneration differences. The plotted table-based PINN comparison
+is **not** a verified reproduction of the paper's final PINN-NN curves.
+The notebook reruns the small NN fit and checks retained CFD evidence; it does
+not silently present saved solver fields as a fresh Run-All CFD calculation.
+
+### Week 15 — Geometry-aware neural operators
+
+**[Open Week 15: lecture, notebooks and guide](../weeks/week15/README.md)**
+
+Learn how geometry-aware neural operators generalize from single-step and other training geometries to a retrospective double-step family.
+Compare whole-field prediction errors with reverse-flow topology, using the same CFD references and clearly separated historical and newly trained models.
+The notebook exposes the split, training choices and unresolved low-Reynolds-number failures.
+
+**Problem:** Predict velocity and pressure across changing channel geometry, including double-step cases excluded from training and validation.<br>
+**CFD / data:** Retained channel-flow CFD fields and geometry masks: 100 training, 8 validation and 19 retrospective test cases; three `g005` cases are quarantined. This update generates no new CFD.<br>
+**Learning method:** Compare DeepONet, Geom-DeepONet, Geo-FNO, SMART, GeoTransolver and DoMINO. The fresh suite uses a 19,200-update ceiling and three seeds; learning rates are selected using validation cases only.
+
+**Results:** Historical Geom-DeepONet has 9.86% global velocity error; tuned Geom-DeepONet has 10.53%. Tuned DoMINO has the largest mean reverse-flow IoU (0.534), but 15.59% velocity error. Low-Reynolds-number reverse-flow magnitude remains inaccurate.
+
+[Complete executed notebook](../notebooks/week15/W15_Complete_Geometry_Generalization.ipynb) ·
+[data and reproduction guide](../notebooks/week15/README.md) ·
+[24-page lecture](../lectures/week15_geometry_generalization.pdf) ·
+[post-audit evidence summary](../results/week15_postaudit/README.md).
+
+The frozen split contains 100 training, 8 validation and 19 retrospective
+double-step test cases, with the three cases of geometry `g005` quarantined:
+its floor drops in two steps and then rises again, so it shares the test
+family's two-descending-step motif without belonging to the test family, and it
+is kept out of training, validation and the test alike. The split was
+reconstructed from the masks: no training or validation mask contains the two
+consecutive descending steps that define the test family. The enlarged training
+examples appear first inside the comparison figure, with solid gray, fluid white,
+and the physical 5:1 aspect ratio.
+
+The displayed `g049/Re=100` comparison, selected because its larger vortex is
+easier to inspect on the course homepage, places the CFD field above historical
+ordinary DeepONet, historical Geom-DeepONet, historical Geo-FNO, and the
+validation-tuned Geom-DeepONet, SMART and DoMINO models. Every row uses its own
+streamlines, one shared banded speed scale, and no reverse-flow threshold overlay.
+
+![CFD and six neural-operator predictions for the retrospective g049/Re100 double-step case, chosen for its larger recirculation vortex](../results/week15_postaudit/core_g049_Re100.png)
+
+The historical seed-17 Geom-DeepONet run remains best in global velocity error
+(9.86%), while
+the learning-rate-selected Geom model is the strongest new global-field model
+(10.53%). DoMINO has the best mean reverse-flow IoU in the tuned suite (0.534),
+but its test velocity error is 15.59%, so this is a topology-localized gain rather
+than the best overall field reconstruction.
+The main unresolved failure is Reynolds-stratified: historical Geom has only
+0.096 IoU at Re=25, increasing to 0.628 at Re=100. Tuned Geom, SMART and DoMINO
+improve the Re=25 IoU to 0.261, 0.299 and 0.357, respectively, but still
+overpredict reverse-flow magnitude. The training data contain no Re=25
+single-step case below 0.5H, so this regime extrapolates in both geometry and
+the Reynolds-number/step-height combination.
+
+The learning-rate sweep uses only non-double-step validation cases and selects
+`1e-3` over `3e-4` and `1e-4` for Geom, SMART and DoMINO within a three-point
+grid whose best point is its upper edge. At Re=25, tuned Geom's selected-seed
+IoUs are approximately 0.19, 0.24 and 0.36, so the seed-17 figures should not be
+read as the three-seed mean. Fresh single-stage training at either `3e-4` or
+`1e-3`, rather than learning-rate tuning alone, improves the historical footprint
+detection. Company-inspired
+PhysicsX and LIFT variants are explicitly transparent proxies, not proprietary
+implementations. The public LR archive retains the common-scale ablation and
+failed vortex cases; zonal and fixed-context ablations remain in the author's
+private complete handoff and are not claimed as public release assets.
+
+### Week 16 — Supersonic shape optimization
+
+**[Open Week 16: lecture, notebooks and guide](../weeks/week16/README.md)**
+
+Build a CFD-to-learning design workflow for a fixed-volume supersonic body of revolution.
+Use physically checked data to fit a pressure-signature surrogate, propose shapes, and assess retained designs with direct CFD.
+The exercise distinguishes numerical verification, surrogate prediction error and the limits of near-field noise proxies.
+
+**Problem:** Reduce near-field peak pressure at fixed body volume while constraining pressure drag.<br>
+**CFD / data:** 44 Gmsh/SU2 **8.0.1** axisymmetric Euler cases at Mach 1.8, with 24 training, 6 validation, 8 test and 6 extrapolation cases. Eight finer-grid CFD references test the neural model; ten retained-design calculations and a three-grid Taylor–Maccoll study provide additional checks.<br>
+**Learning method:** Compare POD-based ridge regression, MLP and Gaussian-process surrogates. The separately retained clean-data model is a fixed 32–32 tanh MLP with 12 POD coefficients and log pressure drag, fitted on the 24 training cases; its saved weights are audited without refitting.
+
+**Results:** The retained model has 7.20% aggregate waveform error, 2.24% mean peak-pressure error and 2.27% mean drag error against the finer CFD references. Worst-case waveform error is 15.37%; extrapolation waveform error is 34.29%. Direct finer-grid CFD of the retained optimized geometry gives **20.66% peak-pressure reduction and 3.52% pressure-drag reduction**. These design gains belong to the directly checked retained geometry, not a newly verified optimum from the clean-data model. One alternative violates the drag constraint.
+
+![Physically checked SU2 8.0.1 baseline and retained optimized-body pressure fields](../results/week16_lowboom/reference/clean_cfd_fields.png)
+
+[Executed notebook and assignment](../notebooks/week16/README.md) · [Lecture](../lectures/week16_supersonic_shape_optimization.pdf) · [Numerical evidence](../results/week16_lowboom/README.md)
+
+The finest Taylor–Maccoll cone pressure error is 1.16%. Atmospheric propagation and ground-level PLdB are not computed. The NASA SEEB-ALR reproduction failed its numerical and physical checks and remains a clearly labeled deferred research appendix; no successful NASA validation is claimed.
+
+### Weeks 17–22 — Transformers and language modeling
+
+Six CPU laboratories connect Q/K/V attention and a small next-character language
+model to sensor reconstruction, autonomous wake prediction and transfer audits.
+Each week has four coding exercises, an executed student notebook, separate
+instructor solutions and a lecture. Current PDF page counts are listed in the
+[lecture inventory](../docs/COURSE_INVENTORY.md#lecture-files).
+
+[17 · Attention](../weeks/week17/README.md) · [18 · Language modeling](../weeks/week18/README.md) · [19 · Sensors and tokens](../weeks/week19/README.md) · [20 · Missing observations](../weeks/week20/README.md) · [21 · Autonomous prediction](../weeks/week21/README.md) · [22 · Transfer audits](../weeks/week22/README.md)
+
+![Week 17 contour preview: CFD velocity reference with sixteen sensors, SensorSet prediction and absolute reconstruction error](../docs/assets/transformer-contours/week17.png)
+
+*From sparse sensors to a flow field: the retained CFD reference, SensorSet prediction and spatial error at one fixed Re105 snapshot. Field panels share a color scale; the error has its own scale.*
+
+[Contour sources and reproduction](../docs/assets/transformer-contours/README.md)
+
+[Setup and prerequisites](../docs/TRANSFORMER_COURSE.md) · [Six figures and experiments](#transformer-labs) · [Review corrections and validation](../docs/TRANSFORMER_SECOND_REVIEW_RESPONSE.md) · [Original Weeks 17–22 release notes](../RELEASE_NOTES_v1.10.0.md). Interactive Colab and student workload acceptance remain open. See the [original release and its assets](https://github.com/Ehsan-Roohi/FlowMLLab/releases/tag/v1.10.0).
+
+### Week 17 — Attention as a learned kernel
+
+**[Open Week 17: lecture, notebooks and guide](../weeks/week17/README.md)**
+
+<a id="transformer-labs"></a>
+
+**Problem:** Which attention properties follow from the algebra, and which need physical evidence?<br>
+**CFD / data:** Retained simulated wake observations; the contour preview uses Re105 frame 140 and the saved seed-17 SensorSet prediction.<br>
+**Learning method:** Build Q, K and V, test permutation equivariance and vary temperature/key masks.
+
+The velocity contours compare the CFD reference, reconstruction from 16 sensors and absolute spatial error. The notebook separately inspects trained attention heads: their weights describe model computations and do not establish causal physical influence.
+
+![Re105 velocity contours: CFD reference with sixteen sensors, SensorSet reconstruction and absolute error](../docs/assets/transformer-contours/week17.png)
+
+[Student notebook](../notebooks/week17/W17_CFD_Transformer.ipynb) · [Lecture](../lectures/week17_cfd_transformer.pdf) · [Setup and assignment](../notebooks/week17/README.md)
+
+
+### Week 18 — Language modeling and causal decoding
+
+**[Open Week 18: lecture, notebooks and guide](../weeks/week18/README.md)**
+
+**Problem:** Train next-token predictors without revealing future inputs.<br>
+**Data:** A small character model uses training-only vocabulary from course documents, with a separate validation document; wake coefficients provide the next-state example.<br>
+**Learning method:** Shift targets, implement cross-entropy/perplexity and test every output position.
+
+Vorticity contours show the continuous-state CFD decoder at fixed frames 210 and 245 of an uninterrupted Re110 forecast, with reference and absolute error. This is the CFD branch; the required notebook separately trains a small character language model and tests causal prefix invariance.
+
+![Re110 vorticity contours at two fixed frames: CFD reference, causal wake decoder and absolute error](../docs/assets/transformer-contours/week18.png)
+
+[Student notebook](../notebooks/week18/W18_CFD_Transformer.ipynb) · [Lecture](../lectures/week18_cfd_transformer.pdf) · [Setup and assignment](../notebooks/week18/README.md)
+
+
+### Week 19 — Tokenization and sensor design
+
+**[Open Week 19: lecture, notebooks and guide](../weeks/week19/README.md)**
+
+**Problem:** How do observation design and tokenization constrain reconstruction?<br>
+**CFD / data:** The retained 32 by 78 fluid-region wake fields and 16 sensors selected from the training representation.<br>
+**Learning method:** Invert patches, compute the POD floor and solve noise-conditioned gappy reconstruction.
+
+At Re105 frame 140, white markers locate the 16 sensors. Velocity contours compare the CFD reference, its projection into the saved training POD basis and noisy-observation gappy-POD reconstruction. The projection is a truth-dependent representation diagnostic. The notebook also compares point, patch and single-state token storage.
+
+![Velocity contours with sensor positions, the training-basis POD projection, gappy-POD reconstruction and its absolute error](../docs/assets/transformer-contours/week19.png)
+
+[Student notebook](../notebooks/week19/W19_CFD_Transformer.ipynb) · [Lecture](../lectures/week19_cfd_transformer.pdf) · [Setup and assignment](../notebooks/week19/README.md)
+
+
+### Week 20 — Learning with missing sensors
+
+**[Open Week 20: lecture, notebooks and guide](../weeks/week20/README.md)**
+
+**Problem:** Reconstruct a velocity field when some observations are unavailable.<br>
+**CFD / data:** Re90/Re110 fitting, Re100 selection and previously inspected Re105 retained evaluation.<br>
+**Learning method:** Compare SensorSet, POD-DeepONet, ridge imputation and variable-sensor gappy POD using the same observations.
+
+The fixed Re105 snapshot compares SensorSet and gappy POD using the same stored noisy observations from 8 of 16 sensors; the 16-sensor SensorSet prediction is a control. Shared field and error scales expose spatial differences. This snapshot does not rank architectures; the [paired three-seed augmentation ablation](../results/transformer_sensor_ablation/README.md) separates training-recipe effects from architecture claims.
+
+![Eight-sensor velocity reconstruction: CFD, SensorSet, gappy POD, sixteen-sensor control and two absolute-error contours](../docs/assets/transformer-contours/week20.png)
+
+[Student notebook](../notebooks/week20/W20_CFD_Transformer.ipynb) · [Lecture](../lectures/week20_cfd_transformer.pdf) · [Setup and assignment](../notebooks/week20/README.md)
+
+
+### Week 21 — Autonomous prediction and phase
+
+**[Open Week 21: lecture, notebooks and guide](../weeks/week21/README.md)**
+
+**Problem:** Forecast an uninterrupted wake trajectory without subsequent observation resets.<br>
+**CFD / data:** Re110 fitting frames 0–159, autonomous validation 160–209 and retained evaluation 210–280.<br>
+**Learning method:** Compare a causal Transformer, History-MLP, DMD and persistence; separate representation error from dynamics and inspect frequency/phase fits.
+
+Vorticity contours compare the CFD reference, causal Transformer, History-MLP and DMD at frame 245, 86 forecast updates after the last observed frame 159. The two spatial-error panels share a scale. Panel L2 values describe this snapshot; full-trajectory, representation and multi-seed comparisons remain in the notebook and retained evidence.
+
+![Autonomous Re110 vorticity prediction: CFD, Transformer, History-MLP, DMD and neural-model absolute-error contours](../docs/assets/transformer-contours/week21.png)
+
+[Student notebook](../notebooks/week21/W21_CFD_Transformer.ipynb) · [Lecture](../lectures/week21_cfd_transformer.pdf) · [Setup and assignment](../notebooks/week21/README.md)
+
+
+### Week 22 — Transfer and information budgets
+
+**[Open Week 22: lecture, notebooks and guide](../weeks/week22/README.md)**
+
+**Problem:** Audit a transfer benefit before attributing it to pretraining.<br>
+**CFD / data:** Re90 source and Re100/Re105/Re110 retained targets; budgets of 44, 84 and 154 target frames include validation and initialization observations.<br>
+**Learning method:** Compare scratch, pretrained, matched-update, target-POD-MLP and DMD controls under fixed rollout initialization.
+
+This fixed Re105 frame-245 example uses 84 total target labels and seed 17. Vorticity contours compare pretrained, matched-update scratch and target-POD-MLP predictions with CFD; shared error scales show the pretrained and matched-update residuals. Matched update ceilings do not equal FLOPs or source access, and target-POD-MLP changes the representation. The notebook and retained evidence cover all three Reynolds numbers, budgets and seeds.
+
+![Re105 transfer contours: CFD, pretrained model, matched-update scratch, target-POD-MLP and absolute spatial errors](../docs/assets/transformer-contours/week22.png)
+
+[Student notebook](../notebooks/week22/W22_CFD_Transformer.ipynb) · [Lecture](../lectures/week22_cfd_transformer.pdf) · [Setup and assignment](../notebooks/week22/README.md)

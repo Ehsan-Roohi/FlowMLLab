@@ -10,7 +10,7 @@ ROOT = Path(__file__).resolve().parents[1]
 def read(path):
     p = ROOT / path
     if p.exists():
-        return p.read_text()
+        return p.read_text(encoding='utf-8')
     return subprocess.check_output(['git', 'show', f'HEAD:{path}'], cwd=ROOT, text=True)
 
 def slug(week):
@@ -32,19 +32,23 @@ def main():
     home = read('README.md')
     launch = read('notebooks/README.md')
     course = read('COURSE_MAP.md')
-    table = home.split('## Continue through the course', 1)[1].split('## Results gallery', 1)[0]
+    table = home.split('## Continue through the course', 1)[1].split('<!-- course-counts:start -->', 1)[0]
     entries = []
     for line in table.splitlines():
         m = re.match(r'\| \[([\d.]+)\]\([^)]+\) \| (.+?) \| (.+?) \| (.+?) \|$', line)
         if m:
             entries.append(dict(week=m[1], topic=m[2], lablinks=m[3], lecture=m[4]))
     assert len(entries) >= 16
-    headings = list(re.finditer(r'^### Week ([\d.]+) [—–-]+ (.+)$', home, re.M))
+    # Convert the gallery's docs-relative targets to repository-relative targets.
+    gallery_source = re.sub(r'\]\(\.\./([^)]+)\)', r'](\1)', read('docs/RESULTS_GALLERY.md'))
+    headings = list(re.finditer(r'^### Week ([\d.]+) [—–-]+ (.+)$', gallery_source, re.M))
     gallery = {}
     for i, m in enumerate(headings):
-        end = headings[i+1].start() if i+1 < len(headings) else home.index('## Reuse and contribute')
-        body = home[m.end():end].strip()
+        end = headings[i+1].start() if i+1 < len(headings) else len(gallery_source)
+        body = gallery_source[m.end():end].strip()
+        body = re.split(r'^### Weeks? ', body, maxsplit=1, flags=re.M)[0].rstrip()
         body = re.sub(r'^\*\*\[Open Week .*?\n\n', '', body, flags=re.M)
+        body = re.sub(r'\]\((RESULTS_GUIDE\.md)\)', r'](docs/\1)', body)
         gallery[m[1]] = (m[2], body)
     assert set(gallery) == {e['week'] for e in entries}
 
@@ -126,21 +130,6 @@ def main():
         dest.parent.mkdir(parents=True, exist_ok=True)
         dest.write_text('\n\n'.join(parts) + '\n')
 
-    # The main table now opens landing pages, while direct lecture/lab shortcuts stay available.
-    for entry in entries:
-        week = entry['week']; target = f"weeks/{slug(week)}/README.md"
-        home = re.sub(r'(?m)^(\| \[' + re.escape(week) + r'\]\()[^)]+(\) \|)',lambda m:m[1]+target+m[2],home)
-        pattern = r'(?m)^(### Week '+re.escape(week)+r' [—–-]+ .+\n)'
-        home = re.sub(pattern,lambda m:m[1]+f'\n**[Open Week {week}: lecture, notebooks and guide]({target})**\n',home)
-        # Idempotence: remove adjacent repeated links from a previous build.
-        link = f'**[Open Week {week}: lecture, notebooks and guide]({target})**'
-        home = re.sub(re.escape(link)+r'\s*'+re.escape(link),lambda m:link,home)
-    home = home.replace('Each week has its own row, including the incremental laboratories.',
-                        'Open any week number below for its own page with the topic image, lecture, notebooks and learning guide. Incremental laboratories also have dedicated pages.')
-    home = home.replace('[Course map](COURSE_MAP.md) · [All notebooks]', '[Weekly pages](weeks/README.md) · [Course map](COURSE_MAP.md) · [All notebooks]')
-    # Avoid duplicate weekly-page entry on repeated builds.
-    home = home.replace('[Weekly pages](weeks/README.md) · [Weekly pages](weeks/README.md)', '[Weekly pages](weeks/README.md)')
-    (ROOT/'README.md').write_text(home)
     index = ['# Explore FlowMLLab by week', '[← Course home](../README.md)',
              'Each page brings the topic image, lecture, notebooks and learning guide together. Weeks 5 and 6 have separate pages and share a project pack.',
              '| Week | Topic |\n| --- | --- |']
