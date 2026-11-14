@@ -1,8 +1,8 @@
 {
   "title": "FlowMLLab: An Open-Source Framework for Reproducible CFD-to-Scientific-Machine-Learning Experiments",
-  "description": "FlowMLLab v1.10.0 adds six CPU teaching laboratories for Weeks 17-22: Q/K/V attention, next-character language modeling, tokenization and sensor design, missing-observation reconstruction, autonomous wake prediction and transfer/information-budget audits. The course includes 50 notebooks and 33 lecture PDFs. The six new weeks contain 24 coding exercises, executed student notebooks, separate instructor solutions, editable lectures, frozen prediction/checkpoint evidence and reproducibility checks. The homepage and weekly pages show native-grid velocity/vorticity contours, sensor locations and spatial errors with shared scales and recorded provenance. Previously inspected coarse LBM wakes are retained evaluation cases, not new blind tests; the character language model and continuous-state CFD decoder are separate experiments. Equal optimizer-update ceilings do not establish equal FLOPs or source information. Linux numerical tolerances and remaining interactive Colab and student workload/grading acceptance checks are documented. The earlier Week 16 SU2 8.0.1 educational core and its evidence remain available. NASA SEEB-ALR reproduction remains a failed, deferred research appendix; NASA CFD validation, full Beihang aircraft reproduction, atmospheric propagation and ground PLdB are not claimed. Data provenance, case-specific reuse limits and AI-assistance disclosure remain part of the repository.",
-  "version": "1.10.0",
-  "publication_date": "2026-10-07",
+  "description": "FlowMLLab v1.11.0 adds Week 1.3, a reproducible CPU optimizer laboratory and an 18-page lecture. Students compare Momentum, Adam, L-BFGS and staged optimization across four analytic profiles on matched data, then test SOAP and self-scaled Broyden on a fifth profile with rising frequency. The notebook includes fixed splits, a matched evaluation budget, signed errors, and six exercises. The deep-cavity optimizer sequence is tested on a small regression problem. The broader course covers continuum and rarefied CFD, reduced-order modeling, physics-informed neural networks, neural operators, computer vision, and attention and language-modeling laboratories. Case-specific data licenses and scientific limitations are documented in the repository.",
+  "version": "1.11.0",
+  "publication_date": "2026-11-14",
   "creators": [
     {
       "name": "Roohi, Ehsan",
@@ -30,7 +30,9 @@
     "attention",
     "language modeling",
     "sparse sensor reconstruction",
-    "transfer learning"
+    "transfer learning",
+    "optimization",
+    "self-scaled Broyden"
   ],
   "related_identifiers": [
     {
@@ -44,7 +46,7 @@
       "scheme": "url"
     },
     {
-      "identifier": "https://github.com/Ehsan-Roohi/FlowMLLab/releases/tag/v1.10.0",
+      "identifier": "https://github.com/Ehsan-Roohi/FlowMLLab/releases/tag/v1.11.0",
       "relation": "isVersionOf",
       "scheme": "url"
     },

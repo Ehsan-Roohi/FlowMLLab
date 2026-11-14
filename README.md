@@ -1,4 +1,4 @@
-Current release: **v1.10.0**
+Current release: **v1.11.0**
 
 <h1><img src="docs/assets/flowmllab-logo.png" alt="FlowMLLab — fluid-streamline F logo" width="520"></h1>
 
@@ -14,12 +14,12 @@ Developed for **MIE 690A: AI in Fluid Mechanics**, University of Massachusetts
 Amherst.
 
 <!-- course-counts:start -->
-The current checkout contains **51 student notebooks** (including 1 historical audit companion) and **36 active lecture PDFs / 546 pages** across Weeks 1–22 and their incremental units. Optional self-study supplements are counted separately.
+The current checkout contains **52 student notebooks** (including 1 historical audit companion) and **37 active lecture PDFs / 564 pages** across Weeks 1–22 and their incremental units. Optional self-study supplements are counted separately.
 
 [Inventory and counting rules](docs/COURSE_INVENTORY.md) · [Choose a learning path](START_HERE.md)
 <!-- course-counts:end -->
 
-**TensorFlow self-study:** [Complete 21-page TensorFlow/Keras guide](lectures/week01_02_tensorflow_keras.pdf) · [Updated notebook 02](notebooks/week01/02_tensorflow_for_ai_fluids.ipynb).
+**TensorFlow self-study:** [Complete 21-page TensorFlow/Keras guide](lectures/week01_02_tensorflow_keras.pdf) · [Updated notebook 02](notebooks/week01/02_tensorflow_for_ai_fluids.ipynb) · [Week 1.3 optimizer lab](weeks/week01_3/README.md).
 
 **DS2V geometry comparison:** [RGB contours of circles and vertical/horizontal ellipses](results/ds2v_geometry/README.md) · [Four-field comparison PDF](results/ds2v_geometry/all_fields_rgb.pdf).
 
@@ -58,6 +58,7 @@ Weeks 5 and 6 share a project pack and lecture guide, but have separate learning
 | [1](weeks/week01/README.md) | Python, numerical methods and CFD validation | [Week 1 labs](notebooks/week01/) | [Lecture 1](lectures/week01_numerical_foundations.pdf) · [TensorFlow/Keras guide](lectures/week01_02_tensorflow_keras.pdf) |
 | [1.1](weeks/week01_1/README.md) | Specification, verification, physical gates and accountable AI use | [Week 1.1 lab](notebooks/week01_1/W1_1_AI_Assisted_Scientific_Software.ipynb) | [Lecture 1.1](lectures/week01_1_ai_assisted_scientific_software.pdf) |
 | [1.2](weeks/week01_2/README.md) | SIMPLE, PISO and PIMPLE pressure-velocity coupling; Re=100 cavity | [Week 1.2 lab](notebooks/week01_2/W1_2_Cavity_Pressure_Velocity.ipynb) | [Lecture 1.2](lectures/week01_2_pressure_velocity.pdf) |
+| [1.3](weeks/week01_3/README.md) | Controlled optimizer comparisons, target scaling and validation | [Week 1.3 lab](notebooks/week01_3/W1_3_Keras_Optimizers.ipynb) | [Lecture PDF](lectures/week01_3_keras_optimizers.pdf) |
 | [2](weeks/week02/README.md) | Features, scaling, baselines and model validity | [Week 2 lab](notebooks/week02/AI_in_Fluids_Week2_Colab_Expanded.ipynb) | [Lecture 2](lectures/week02_supervised_learning_rarefaction.pdf) |
 | [2.1](weeks/week02_1/README.md) | Bayesian prediction, calibration and uncertainty | [Week 2.1 lab](notebooks/week02_1/Probabilistic_UQ_CFD.ipynb) | [Lecture 2.1](lectures/week02_1_probabilistic_uq.pdf) |
 | [3](weeks/week03/README.md) | Maxwellian sampling and particle simulation | [Week 3 labs](notebooks/week03/) | [Lecture 3](lectures/week03_kinetic_dsmc.pdf) |
@@ -846,10 +847,10 @@ Student submissions are not included.
 · [Citation metadata](CITATION.cff)
 · [Workshop, support, and consulting details](docs/RESULTS_GUIDE.md#workshops-support-and-consulting)
 
-Current published release: **v1.10.0** · [GitHub release](https://github.com/Ehsan-Roohi/FlowMLLab/releases/tag/v1.10.0)
-· [v1.10.0 Zenodo archive · DOI 10.5281/zenodo.23210097](https://doi.org/10.5281/zenodo.23210097)
-· [all-version Zenodo DOI 10.5281/zenodo.22074169](https://doi.org/10.5281/zenodo.22074169)
-· [Release notes](RELEASE_NOTES_v1.10.0.md).
+Current published release: **v1.11.0** · [GitHub release](https://github.com/Ehsan-Roohi/FlowMLLab/releases/tag/v1.11.0)
+· [Zenodo version history](https://doi.org/10.5281/zenodo.22074169)
+· [Release notes](RELEASE_NOTES_v1.11.0.md).
+Previous v1.10.0 archive: [10.5281/zenodo.23210097](https://doi.org/10.5281/zenodo.23210097).
 Previous v1.9.1 archive: [10.5281/zenodo.22941037](https://doi.org/10.5281/zenodo.22941037).
 The frozen v1.8.0 evidence archive remains at
 [10.5281/zenodo.22840293](https://doi.org/10.5281/zenodo.22840293).

@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "course_version": "1.10.0",
+  "course_version": "1.11.0",
   "scope": "Current working-tree assets for numbered Weeks 1–22, including incremental and preparatory material. This is not a new published release or proof of execution.",
   "rules": {
     "active_lecture_pdfs": "lectures/week*.pdf only; exclude lectures/versions, lectures/source figure PDFs and separately listed optional supplements.",
@@ -9,9 +9,9 @@
     "historical_baseline": "At review base c9562b8: 34 active PDFs / 444 pages; 51 student notebooks including one historical companion. Current counts below are regenerated and may change."
   },
   "counts": {
-    "active_lecture_pdfs": 36,
-    "lecture_pages": 546,
-    "student_notebooks": 51,
+    "active_lecture_pdfs": 37,
+    "lecture_pages": 564,
+    "student_notebooks": 52,
     "historical_student_companions": 1,
     "optional_notebooks": 1,
     "optional_pdfs": 1
@@ -28,6 +28,10 @@
     {
       "path": "lectures/week01_2_pressure_velocity.pdf",
       "pages": 62
+    },
+    {
+      "path": "lectures/week01_3_keras_optimizers.pdf",
+      "pages": 18
     },
     {
       "path": "lectures/week01_numerical_foundations.pdf",
@@ -181,6 +185,10 @@
     },
     {
       "path": "notebooks/week01_2/W1_2_Cavity_Pressure_Velocity.ipynb",
+      "role": "student"
+    },
+    {
+      "path": "notebooks/week01_3/W1_3_Keras_Optimizers.ipynb",
       "role": "student"
     },
     {
@@ -404,6 +412,18 @@
       "estimate_status": "Planning estimate carried from course guides, or explicitly unmeasured; not a timing measurement of this revision.",
       "execution_status": "Colab link is an entry point, not a guarantee of a fresh hosted Run All.",
       "keywords": ""
+    },
+    {
+      "id": "1.3",
+      "title": "Optimizers for Scientific Machine Learning with TensorFlow and Keras",
+      "page": "weeks/week01_3/README.md",
+      "setup": "notebooks/week01_3/README.md",
+      "prerequisites": "Week 1 TensorFlow/Keras Notebook 02, especially dense networks, gradients and train/validation/test roles.",
+      "mode": "CPU teaching lab with generated analytic data.",
+      "compute_estimate": "See the notebook run settings and timings.",
+      "estimate_status": "Use the notebook run timings for this revision.",
+      "execution_status": "Runs locally on CPU with TensorFlow and SciPy. The Colab link is an entry point.",
+      "keywords": "Keras TensorFlow normalization Adam momentum L-BFGS SOAP self-scaled Broyden validation PINN"
     },
     {
       "id": "2",

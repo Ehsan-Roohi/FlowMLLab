@@ -1,5 +1,5 @@
 cff-version: 1.2.0
-message: "If you use FlowMLLab, please cite this v1.10.0 software release and the relevant research-case articles."
+message: "If you use FlowMLLab, please cite this v1.11.0 software release and the relevant research-case articles."
 title: "FlowMLLab: An Open-Source Framework for Reproducible CFD-to-Scientific-Machine-Learning Experiments"
 type: software
 authors:
@@ -7,7 +7,7 @@ authors:
     given-names: Ehsan
     orcid: "https://orcid.org/0000-0001-5739-3210"
 repository-code: "https://github.com/Ehsan-Roohi/FlowMLLab"
-url: "https://github.com/Ehsan-Roohi/FlowMLLab/releases/tag/v1.10.0"
+url: "https://github.com/Ehsan-Roohi/FlowMLLab/releases/tag/v1.11.0"
 license: MIT
 abstract: >-
   FlowMLLab integrates transparent continuum and particle solvers, case-wise
@@ -20,6 +20,9 @@ abstract: >-
   add CPU laboratories on Q/K/V attention, a small character language model,
   sparse sensor reconstruction, autonomous wake prediction and controlled
   transfer comparisons, with separate student and instructor notebooks.
+  Week 1.3 adds a CPU optimizer laboratory with matched comparisons and six
+  student exercises, including a teaching implementation of SOAP and
+  self-scaled Broyden.
 keywords:
   - computational fluid dynamics
   - scientific machine learning
@@ -35,6 +38,9 @@ keywords:
   - transformers
   - attention
   - language modeling
-version: "1.10.0"
-doi: "10.5281/zenodo.23210097"
-date-released: "2026-10-07"
+version: "1.11.0"
+date-released: "2026-11-14"
+identifiers:
+  - type: doi
+    value: "10.5281/zenodo.22074169"
+    description: "Zenodo concept DOI covering all versions"

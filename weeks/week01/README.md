@@ -24,6 +24,8 @@ Python, numerical methods and CFD validation.
 
 The notebook generates its own demonstration data and runs on a CPU. Open it through the Colab link above and check its **2026-11-05** revision label; an older Google Drive copy will not update automatically. Keep your existing work separately.
 
+**Continue the Keras experiment:** [Week 1.3 — Optimizers for Scientific Machine Learning with TensorFlow and Keras](../week01_3/README.md) resumes the sine example from Notebook 02 and compares optimizers on more demanding analytic functions. [Open the Week 1.3 notebook in Colab](https://colab.research.google.com/github/Ehsan-Roohi/FlowMLLab/blob/main/notebooks/week01_3/W1_3_Keras_Optimizers.ipynb).
+
 **Moving to Week 2:** finish Sections 1–9 and the readiness checklist at the end of notebook 02. If you can identify input/target shapes, perform a gradient update and explain the three data roles, continue to [AI in Fluids — Week 2](https://colab.research.google.com/github/Ehsan-Roohi/FlowMLLab/blob/main/notebooks/week02/AI_in_Fluids_Week2_Colab_Expanded.ipynb). Its first sections revisit a neuron and one update. The channel-residual and convolution examples can be revisited alongside later topics.
 
 **Module guides:** [Week 1 labs](../../notebooks/week01/)

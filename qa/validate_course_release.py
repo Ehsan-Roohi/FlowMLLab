@@ -482,6 +482,15 @@ def validate_notebooks() -> tuple[int, int]:
         if optional_bridge:
             assert (ROOT / 'notebooks/optional_geometry_time_bridge/README.md').is_file(), path
             assert 'geometry_time_bridge' in full_source and 'RUN_EXERCISES' in full_source, path
+        week01_3_lab = relative == 'notebooks/week01_3/W1_3_Keras_Optimizers.ipynb'
+        if week01_3_lab:
+            code = [cell for cell in cells if cell.get("cell_type") == "code"]
+            assert all(cell.get("execution_count") is not None for cell in code), relative
+            assert sum("image/png" in item.get("data", {}) for cell in code
+                       for item in cell.get("outputs", [])) == 8, relative
+            assert all(item.get("output_type") != "error" for cell in code
+                       for item in cell.get("outputs", [])), relative
+        # Week 1.3 generates its data in the notebook and needs no clone.
         # Weeks 14 and 15 are documented full-checkout modules.  Week 15's
         # evidence archives are release assets and cannot be bootstrapped by a
         # fresh Colab clone alone. Weeks 17-22 have an exact portable contract
@@ -489,7 +498,7 @@ def validate_notebooks() -> tuple[int, int]:
         assert week14_lab or week15_local or optional_bridge or week01_2_lab or transformer_week is not None or colab_url in full_source, (
             f"missing direct Colab launcher: {path}"
         )
-        assert week14_lab or week15_local or week16_lab or optional_bridge or week01_2_lab or transformer_week is not None or "FLOWMLLAB_COLAB_BOOTSTRAP_V1" in full_source, (
+        assert week14_lab or week15_local or week16_lab or optional_bridge or week01_2_lab or week01_3_lab or transformer_week is not None or "FLOWMLLAB_COLAB_BOOTSTRAP_V1" in full_source, (
             f"missing Colab repository bootstrap: {path}"
         )
         reconstruction_lab = relative == 'notebooks/week11/W11_Lab2_Reconstruction_and_Identification.ipynb'
@@ -547,7 +556,7 @@ def validate_notebooks() -> tuple[int, int]:
             )
             assert 'no double-step motif is used in training or validation' in full_source
             assert 'Selection reads no double-step arrays.' in full_source
-        assert week14_lab or week15_local or reconstruction_lab or week16_lab or optional_bridge or week01_2_lab or transformer_week is not None or any(
+        assert week14_lab or week15_local or reconstruction_lab or week16_lab or optional_bridge or week01_2_lab or week01_3_lab or transformer_week is not None or any(
             marker in full_source
             for marker in (
                 "MIE690A article-aligned validation v3",

@@ -114,6 +114,7 @@ cells; each week's README states it (75 to 90 minutes for Weeks 11 to 13).
 | [Week 1](weeks/week01/README.md) | CPU teaching exercises and retained evidence; full regeneration is separate. | 10–40 min per lab; classroom work longer. |
 | [Week 1.1](weeks/week01_1/README.md) | CPU teaching exercises and retained evidence; full regeneration is separate. | Under 1 min for the numerical audit. |
 | [Week 1.2](weeks/week01_2/README.md) | CPU teaching exercises and retained evidence; full regeneration is separate. | Not measured for this revision; inspect the setup before a full solve. |
+| [Week 1.3](weeks/week01_3/README.md) | CPU teaching lab with generated analytic data. | See the notebook run settings and timings. |
 | [Week 2](weeks/week02/README.md) | CPU teaching exercises and retained evidence; full regeneration is separate. | 20–45 min. |
 | [Week 2.1](weeks/week02_1/README.md) | CPU teaching exercises and retained evidence; full regeneration is separate. | Under 1 min for retained-evidence path. |
 | [Week 3](weeks/week03/README.md) | CPU teaching exercises and retained evidence; full regeneration is separate. | 20–40 min Maxwellian; 30–120 min mini-DSMC. |

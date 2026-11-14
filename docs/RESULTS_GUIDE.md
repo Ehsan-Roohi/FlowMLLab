@@ -555,10 +555,10 @@ If FlowMLLab supports your teaching or research, you can also support its contin
 
 Use [CITATION.cff](../CITATION.cff) when citing the release.
 
-Version 1.10.0 is the current release: [six new Transformer/language-modeling
-laboratories, review corrections and CFD contour previews](../RELEASE_NOTES_v1.10.0.md).
-Use the [GitHub release](https://github.com/Ehsan-Roohi/FlowMLLab/releases/tag/v1.10.0)
-for the versioned source, Python distributions and portable Weeks 17–22 package.
+Version 1.11.0 adds the [Week 1.3 optimizer laboratory](../weeks/week01_3/README.md).
+Use the [GitHub release](https://github.com/Ehsan-Roohi/FlowMLLab/releases/tag/v1.11.0) for the versioned source and Python distributions.
+The [v1.10.0 release](https://github.com/Ehsan-Roohi/FlowMLLab/releases/tag/v1.10.0)
+contains the portable Weeks 17–22 package.
 The v1.10.0 source snapshot is archived at
 [10.5281/zenodo.23210097](https://doi.org/10.5281/zenodo.23210097).
 The preceding v1.9.1 archive remains at
