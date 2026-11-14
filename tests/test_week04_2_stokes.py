@@ -22,10 +22,10 @@ def test_week04_lab4_is_executed_and_colab_link_is_current():
     assert "PINN" not in source
 
 
-def test_week04_companion_is_ten_pages_and_not_pinn_material():
+def test_week04_companion_is_eleven_pages_and_not_pinn_material():
     path = ROOT / "lectures/week04_2_stokes_to_navier_stokes.pdf"
     reader = PdfReader(path)
-    assert len(reader.pages) == 10
+    assert len(reader.pages) == 11
     text = "\n".join(page.extract_text() or "" for page in reader.pages)
     assert "Stokes-to-Navier-Stokes correction" in text
     assert "constant and diverse lids" in text
