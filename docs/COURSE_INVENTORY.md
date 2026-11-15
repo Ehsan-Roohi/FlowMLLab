@@ -8,7 +8,7 @@ Course version **v1.12.0**. These counts describe the current checkout; they do 
 | --- | ---: |
 | Active lecture PDFs | 37 |
 | Pages in those PDFs | 578 |
-| Student notebooks, including historical companion | 55 |
+| Student notebooks, including historical companion | 57 |
 | Historical student audit companion (included above) | 1 |
 | Optional self-study notebooks (separate) | 1 |
 | Optional self-study PDFs (separate) | 1 |
@@ -116,6 +116,8 @@ The historical Week 15 audit remains available for provenance; use the complete 
 | [W14_pyCALC_RANS_PINN_NN.ipynb](../notebooks/week14/W14_pyCALC_RANS_PINN_NN.ipynb) | student |
 | [W15_Complete_Geometry_Generalization.ipynb](../notebooks/week15/W15_Complete_Geometry_Generalization.ipynb) | student |
 | [W15_Geometry_Operators_Step_Audit.ipynb](../notebooks/week15/W15_Geometry_Operators_Step_Audit.ipynb) | historical audit companion |
+| [W15_Original_Transolver_Double_Step.ipynb](../notebooks/week15/W15_Original_Transolver_Double_Step.ipynb) | student |
+| [W15_Original_Transolver_Step.ipynb](../notebooks/week15/W15_Original_Transolver_Step.ipynb) | student |
 | [W16_Supersonic_Shape_Optimization.ipynb](../notebooks/week16/W16_Supersonic_Shape_Optimization.ipynb) | student |
 | [W17_CFD_Transformer.ipynb](../notebooks/week17/W17_CFD_Transformer.ipynb) | student |
 | [W18_CFD_Transformer.ipynb](../notebooks/week18/W18_CFD_Transformer.ipynb) | student |

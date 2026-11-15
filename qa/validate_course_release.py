@@ -482,6 +482,23 @@ def validate_notebooks() -> tuple[int, int]:
         if optional_bridge:
             assert (ROOT / 'notebooks/optional_geometry_time_bridge/README.md').is_file(), path
             assert 'geometry_time_bridge' in full_source and 'RUN_EXERCISES' in full_source, path
+        cavity_followon = relative in {
+            'notebooks/week04/W4_Lab5_All_Re_Ghia_Validation.ipynb',
+            'notebooks/week04/W4_Lab6_Ghia_Profile_Optimizer_Depth.ipynb',
+            'notebooks/week13/W13_Deep_Cavity_D5_Regional_Accuracy.ipynb',
+        }
+        if cavity_followon:
+            code = [cell for cell in cells if cell.get('cell_type') == 'code']
+            setup = ''.join(code[0].get('source', []))
+            for fragment in ('flowmllab/ghia.py', 'Path.cwd()', 'Path.cwd().parents',
+                             'https://github.com/Ehsan-Roohi/FlowMLLab.git',
+                             'subprocess.run', 'check=True', 'sys.path.insert'):
+                assert fragment in setup, (relative, fragment)
+            assert all(c.get('execution_count') is not None for c in code), relative
+            assert all(o.get('output_type') != 'error' for c in code for o in c.get('outputs', [])), relative
+            if 'Lab5_' in relative: assert 'RUN_NEW_CFD = False' in full_source
+            if 'Lab6_' in relative: assert 'TRAIN_NEW_PROFILE_MODEL = False' in full_source and 'verify_frozen_models' in full_source
+            if 'D5_' in relative: assert 'load_bundle' in full_source and 'does not retrain' in full_source
         week01_3_lab = relative == 'notebooks/week01_3/W1_3_Keras_Optimizers.ipynb'
         if week01_3_lab:
             code = [cell for cell in cells if cell.get("cell_type") == "code"]
@@ -498,7 +515,7 @@ def validate_notebooks() -> tuple[int, int]:
         assert week14_lab or week15_local or optional_bridge or week01_2_lab or transformer_week is not None or colab_url in full_source, (
             f"missing direct Colab launcher: {path}"
         )
-        assert week14_lab or week15_local or week16_lab or optional_bridge or week01_2_lab or week01_3_lab or transformer_week is not None or "FLOWMLLAB_COLAB_BOOTSTRAP_V1" in full_source, (
+        assert week14_lab or week15_local or week16_lab or optional_bridge or week01_2_lab or week01_3_lab or cavity_followon or transformer_week is not None or "FLOWMLLAB_COLAB_BOOTSTRAP_V1" in full_source, (
             f"missing Colab repository bootstrap: {path}"
         )
         reconstruction_lab = relative == 'notebooks/week11/W11_Lab2_Reconstruction_and_Identification.ipynb'

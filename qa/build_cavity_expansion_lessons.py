@@ -44,8 +44,8 @@ Ghia's Tables I and II give 17 samples on each centreline, not a full flow field
 The square cavity has width $L$, lid speed $U$, $Re=UL/\nu$, and a discontinuous
 moving lid at its upper corners. A smooth-lid or deep cavity is a different problem.
 
-[Benchmark source and anomaly policy](../../references/ghia/README.md) ·
-[Experiment, results and limitations](../../results/cavity_ghia_allre/README.md) ·
+[Benchmark source and anomaly policy](../../references/ghia/README.md) Â·
+[Experiment, results and limitations](../../results/cavity_ghia_allre/README.md) Â·
 [Setup](../../START_HERE.md).
 
 Three suspicious **printed** entries remain in the raw tables. We show both the
@@ -231,9 +231,9 @@ recirculation, pressure and derivatives. It does not retrain the paper's network
 Width W, lid scale U, density rho, and height h measured from the floor set the
 units. Arrays have shape [h,x], 605 by 121, and exclude the exact walls by 0.002 W.
 
-[Lecture](../../lectures/week13_rectangular_cavity_pinn.pdf) ·
-[Data and provenance](../../data/week13_d5/README.md) ·
-[Results](../../results/week13_d5/README.md) · [Setup](../../START_HERE.md).
+[Lecture](../../lectures/week13_rectangular_cavity_pinn.pdf) Â·
+[Data and provenance](../../data/week13_d5/README.md) Â·
+[Results](../../results/week13_d5/README.md) Â· [Setup](../../START_HERE.md).
 Prerequisites: Week 1 validation, Week 1.3 optimization, Week 13 PINN basics.
 The CPU route needs NumPy, pandas and Matplotlib; no GPU or TensorFlow is required.
 '''),code(BOOT),md(r'''## 1. Verify the field identity before comparing
@@ -352,6 +352,7 @@ print('Actual retained h/W:',actual_h)
 plt.show()''')]
     doc=nb.v4.new_notebook(cells=cells,metadata={'kernelspec':{'display_name':'Python 3','language':'python','name':'python3'},
         'language_info':{'name':'python'},TAG:True})
+    doc.cells[0].source += '\n\n[Open in Colab](https://colab.research.google.com/github/Ehsan-Roohi/FlowMLLab/blob/main/notebooks/week13/W13_Deep_Cavity_D5_Regional_Accuracy.ipynb)'
     execute(doc,ROOT);nb.write(doc,ROOT/'notebooks/week13/W13_Deep_Cavity_D5_Regional_Accuracy.ipynb')
 
 
@@ -370,6 +371,7 @@ def main():
         doc=nb.v4.new_notebook(cells=[nb.from_dict(json.loads(json.dumps(c))) for c in cells],
             metadata={'kernelspec':{'display_name':'Python 3','language':'python','name':'python3'},
                       'language_info':{'name':'python'},TAG:True})
+        doc.cells[0].source += f'\n\n[Open in Colab](https://colab.research.google.com/github/Ehsan-Roohi/FlowMLLab/blob/main/notebooks/week04/{filename})'
         execute(doc,ROOT);nb.write(doc,ROOT/'notebooks/week04'/filename)
         print('Built separate lab',filename,flush=True)
     navigation=[md('## Optional continuation: all seven Ghia Reynolds numbers\n\nThe original cells, outputs and worked-example scope above are preserved. New material lives in two separate notebooks: [Lab 5: seven-Re validation and CFD qualification](../week04/W4_Lab5_All_Re_Ghia_Validation.ipynb) and [Lab 6: CPU profile surrogates, network depth, optimizers and weights](../week04/W4_Lab6_Ghia_Profile_Optimizer_Depth.ipynb). The profile study does not imply that missing high-Re full fields have been validated. [Retained results](../../results/cavity_ghia_allre/README.md).')]

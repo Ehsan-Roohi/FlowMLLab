@@ -1,0 +1,24 @@
+{
+  "date": "2026-11-15",
+  "scope": "Cavity teaching extension; three separate new notebooks",
+  "original_notebooks": 9,
+  "original_cells_preserved": 287,
+  "original_lecture_pages_preserved": 120,
+  "new_lecture_pages_visually_inspected": 14,
+  "physical_figure_pngs_inspected": 15,
+  "new_documents_local_links_checked": 36,
+  "new_documents_missing_links": 0,
+  "scientific_checks": {
+    "earlier_targeted_tests_passed": 10,
+    "frozen_fits": 15,
+    "D5_regional_values_reproduced": 128
+  },
+  "final_windows_retest": "Collection blocked by WinError 10106 in Python asyncio; not a scientific assertion failure. Clean Linux release checks are required before publication.",
+  "limitations": [
+    "Four highest-Re square-cavity full fields are not newly qualified.",
+    "Profile regression does not validate a PDE, pressure or a 2D neural field.",
+    "D5 data are retained author trajectories; historical workflow differences are not isolated optimizer effects.",
+    "The Colab network-clone branch and older notebooks have not been freshly rerun."
+  ],
+  "release_gate": "The v1.12.0 workflow runs numerical checks and three fresh Jupyter kernels before creating a GitHub release."
+}

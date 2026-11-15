@@ -11,7 +11,7 @@
   "counts": {
     "active_lecture_pdfs": 37,
     "lecture_pages": 578,
-    "student_notebooks": 55,
+    "student_notebooks": 57,
     "historical_student_companions": 1,
     "optional_notebooks": 1,
     "optional_pdfs": 1
@@ -358,6 +358,14 @@
     {
       "path": "notebooks/week15/W15_Geometry_Operators_Step_Audit.ipynb",
       "role": "historical audit companion"
+    },
+    {
+      "path": "notebooks/week15/W15_Original_Transolver_Double_Step.ipynb",
+      "role": "student"
+    },
+    {
+      "path": "notebooks/week15/W15_Original_Transolver_Step.ipynb",
+      "role": "student"
     },
     {
       "path": "notebooks/week16/W16_Supersonic_Shape_Optimization.ipynb",
