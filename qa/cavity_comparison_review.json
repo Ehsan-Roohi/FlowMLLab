@@ -1,0 +1,49 @@
+{
+  "source_and_frozen_hashes_unchanged": true,
+  "generator_hash_verified": true,
+  "figure_pairs": 6,
+  "rgb_pngs": 6,
+  "notebook_code_cells": 8,
+  "notebook_error_outputs": 0,
+  "new_gallery_embedded_images": 6,
+  "notebook_audit": {
+    "code_cells": 8,
+    "jupyter_kernel_executed": false,
+    "method": "Sequential plain-Python cells in a fresh process; socket-free runner",
+    "reason": "Managed runtime denied local kernel sockets"
+  },
+  "training_enabled": false,
+  "lecture_pages": 28,
+  "previous_lecture_pages_preserved": 21,
+  "new_pages": 7,
+  "original_homepage_headings_preserved": true,
+  "visual_review": "Each new lecture page 22-28 and both new vector vorticity PDFs rendered with Poppler at 140 dpi and individually inspected; legends outside axes, no clipping or text overlap. Other four figure pairs preserve the previously inspected plots.",
+  "historical_sources_checked": [
+    "Ghia et al. 1982 pp387,410",
+    "Computer History Museum Amdahl CPU catalogue",
+    "Apple 29 October 2024 launch"
+  ],
+  "limitations": [
+    "Re1000 training, Re7500 held out",
+    "Vorticity and pressure derived from velocity",
+    "Pressure not independently validated; 8.90 percent mesh sensitivity at Re7500",
+    "Historical CPU and modern wall timings are not a matched speedup benchmark",
+    "Hardware prices nominal and not per-solve costs"
+  ],
+  "deliverables_sha256": {
+    "results/cavity_field_deeponet/flow_comparison/streamlines_overlay_Re1000_Re7500.pdf": "1f795bcde76fdab287cb111d85e59513ae53ab59fc8958cb7f89608b6d3dfa2a",
+    "results/cavity_field_deeponet/flow_comparison/corner_streamlines_overlay_Re1000_Re7500.pdf": "646ff23ccd3ed600d194f71e2a94e3d1033cb8067854a483271ea1f09a88b721",
+    "results/cavity_field_deeponet/flow_comparison/pressure_contours_overlay_Re1000_Re7500.pdf": "ebef237c6111d21083764df45fadca28f38137eb60e4c23994763e1033ca49e0",
+    "results/cavity_field_deeponet/flow_comparison/pressure_fields_and_signed_error_Re1000_Re7500.pdf": "9f18429ba56934bdbf3daedf26d9949bab267864ccd1aa3bfb3fa97415584bb0",
+    "results/cavity_field_deeponet/flow_comparison/vorticity_contours_overlay_Re1000_Re7500.pdf": "d74b384c709b9e68dfcef6f488061d8d71b216f8aa135f2663da031862a14709",
+    "results/cavity_field_deeponet/flow_comparison/vorticity_fields_and_signed_error_Re1000_Re7500.pdf": "97ccad67e8074bf006af996dc613466e24832387ceab6f7d7068c1b2d45fa369",
+    "results/cavity_field_deeponet/flow_comparison/streamlines_overlay_Re1000_Re7500.png": "8b8dd260bb6ae4019cb9915dd80bb814a3cc1419595e91e76c9ad1e4e66f81b5",
+    "results/cavity_field_deeponet/flow_comparison/corner_streamlines_overlay_Re1000_Re7500.png": "7562d4e03349afceaf35bac69f849e22b64d06807919efe943076c7c1a78c614",
+    "results/cavity_field_deeponet/flow_comparison/pressure_contours_overlay_Re1000_Re7500.png": "38733751933ca41838427178f1a784e2f359e5c19e1af35b5abd0daab7c5c605",
+    "results/cavity_field_deeponet/flow_comparison/pressure_fields_and_signed_error_Re1000_Re7500.png": "c9f41a902baa21e286812aeb9dc585af927393b2f83560100d8198d088be111d",
+    "results/cavity_field_deeponet/flow_comparison/vorticity_contours_overlay_Re1000_Re7500.png": "8e81103c56b8c4e405e7d4784f1117248889f08ce93a0bab50d7881090b168a7",
+    "results/cavity_field_deeponet/flow_comparison/vorticity_fields_and_signed_error_Re1000_Re7500.png": "d8b28bda1d7d62d7f1feade940bb0b036f6f2d9a9724e7ca26bbdb6986829693",
+    "lectures/week04_cavity_surrogates_deeponet.pdf": "029bbc782fd8e2c676a6df7d67dddcbb60e5409dfcda7289b4b1cd6d5d5f39a7",
+    "notebooks/week04/W4_Lab8_High_Re_Field_DeepONet.ipynb": "022ce1cdc7b6e2d5802da259a679a336bebc6e4ebc4f6c86da1bb283dce92429"
+  }
+}

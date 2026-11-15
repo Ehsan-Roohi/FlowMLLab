@@ -142,7 +142,96 @@ mesh = pd.read_csv(ROOT/'results/cavity_highre_ghia/mesh_sensitivity.csv')
 display(mesh[(mesh.cells==256)&mesh.Re.isin(op.TEST)][[
     'Re','cells','reference_cells','velocity_relative_l2','u_linf_U','v_linf_U']])
 """)
-    md(r"""## 6. Engineering exercises and required deliverables
+    md(r"""## 6. Overlaid flow structures, vorticity and reconstructed pressure
+
+The next six comparisons use Re=1000 (a training-case reconstruction) and
+Re=7500 (the held-out test). Black solid curves are CFD and orange dashed
+curves are the frozen three-seed POD-DeepONet mean. Streamlines use matched
+seeds; all contour levels are identical between methods and between Re.
+
+Vorticity is derived from each velocity field using the same centered curl,
+
+$$\omega=\frac{\partial v}{\partial x}-\frac{\partial u}{\partial y},\qquad
+E_\omega=\frac{\|\widehat\omega-\omega_{\rm CFD}\|_2}{\|\omega_{\rm CFD}\|_2}.$$
+
+Here $u,v$ are velocity components, $x,y$ are positions, $L$ is the cavity
+width and $U$ the lid speed. Plotted vorticity is nondimensionalized by $U/L$.
+Only the common 511-by-511 interior nodes are used; there is no wall extrapolation.
+Vorticity is not a separately trained output. At Re7500 its discrepancy is
+0.2931%, larger than the 0.0844% velocity discrepancy: differentiation exposes
+small-scale errors. Inspect signed extrema and their locations as well as L2.
+
+Pressure is reconstructed from each velocity by integrating its steady momentum
+pressure gradient in a least-squares sense. One zero-interior-mean gauge is used
+per entire field. Pressure is **postprocessed, not learned or independently
+pressure-validated**. At Re7500 its neural/CFD discrepancy is 0.05373%, while
+256-to-512 CFD pressure sensitivity is 8.90%. Excellent surrogate agreement
+with one discretization does not remove discretization uncertainty.
+
+RGB fields share one full-range symmetric-log scale for each variable across
+both Re and both methods; the linear thresholds are 1 for vorticity and 0.02
+for pressure. Signed differences use the explicitly shown linear scales.
+The code verifies the retained figure hashes before displaying them.""")
+    code("""
+import hashlib
+from flowmllab import cavity_comparison as comparison
+GALLERY = OUT/'flow_comparison'
+receipt = json.loads((GALLERY/'verification.json').read_text())
+for relative, expected in receipt['source_hashes'].items():
+    assert hashlib.sha256((ROOT/relative).read_bytes()).hexdigest() == expected
+for name, expected in receipt['output_sha256'].items():
+    assert hashlib.sha256((GALLERY/name).read_bytes()).hexdigest() == expected
+for stem in ['streamlines_overlay', 'corner_streamlines_overlay',
+             'vorticity_contours_overlay', 'vorticity_fields_and_signed_error',
+             'pressure_contours_overlay', 'pressure_fields_and_signed_error']:
+    display(Image(filename=str(GALLERY/(stem+'_Re1000_Re7500.png'))))
+display(pd.read_csv(GALLERY/'vorticity_metrics.csv'))
+display(pd.read_csv(GALLERY/'comparison_metrics.csv'))
+display(pd.read_csv(GALLERY/'pressure_mesh_sensitivity.csv'))
+# Independently re-evaluate the derivative error on the already-loaded held-out velocities.
+fields = cases[7500]
+omega_cfd = comparison.vorticity(fields['CFD'])['w']
+omega_nn = comparison.vorticity(fields['Selected NN'])['w']
+recomputed_error = np.linalg.norm(omega_nn-omega_cfd) / np.linalg.norm(omega_cfd)
+recorded = pd.read_csv(GALLERY/'vorticity_metrics.csv').set_index('Re').loc[7500,'relative_l2']
+np.testing.assert_allclose(recomputed_error, recorded, rtol=1e-11)
+print(f'Re7500 independently recomputed vorticity discrepancy: {100*recomputed_error:.4f}%')
+""")
+    md(r"""## 7. Historical computing: time, hardware price and run cost
+
+Ghia, Ghia and Shin used an **Amdahl 470 V/6** and coupled strongly implicit
+multigrid. They report 1.5 CPU minutes at Re1000 on 129-by-129 nodes, and
+16-20 minutes for high-Re cases up to Re10000 on 257-by-257 nodes
+([paper, pp. 387 and 410](https://doi.org/10.1016/0021-9991(82)90058-4)).
+The [Computer History Museum](https://www.computerhistory.org/revolution/mainframe-computers/7/169/677)
+lists this 1975 mainframe at 3.5 MIPS, up to 8 MB and \$3.75 million.
+As a dated desktop example, the [October 2024 Mac mini M4 launch](https://www.apple.com/newsroom/2024/10/apples-new-mac-mini-is-more-mighty-more-mini-and-built-for-apple-intelligence/)
+started at \$599 with 16 GB and 10 CPU cores. These are nominal hardware prices,
+not inflation-adjusted prices or per-solve bills; the Mac did not produce our
+Unity timings. MIPS is not modern floating-point throughput.
+
+The table below sums actual one-core Unity Newton-solve wall timers for the
+continuation sequence from an available Re1000 seed through Re10000. It excludes
+seed creation, queue, transfer, training and temporal checks. Ghia's CPU timing,
+initial state and algorithm differ, so dividing those times does not establish
+a controlled speedup. No monetary run charge was recorded.
+
+For an explicitly assumed one-core rate $r$ (currency per core-hour), a scenario
+cost is $C=r\,t/3600$, with $t$ in seconds. Keep scenario estimates separate
+from invoices and from the hardware purchase price.""")
+    code("""
+history = json.loads((GALLERY/'historical_cost_context.json').read_text())
+timing = pd.DataFrame(history['flowmllab_timing'])
+timing['summed_solve_wall_minutes'] = timing.summed_solve_wall_seconds / 60
+display(timing[['nodes', 'core_allocation', 'summed_solve_wall_seconds',
+                'summed_solve_wall_minutes', 'last_continuation_step_wall_seconds']])
+ASSUMED_RATE_PER_CORE_HOUR = 0.10  # a classroom scenario, NOT Unity's price
+scenario = timing[['nodes', 'summed_solve_wall_seconds']].copy()
+scenario['illustrative_cost'] = scenario.summed_solve_wall_seconds / 3600 * ASSUMED_RATE_PER_CORE_HOUR
+display(scenario)
+print('Scenario only: excludes seed creation and all unrecorded costs; not an invoice.')
+""")
+    md(r"""## 8. Engineering exercises and required deliverables
 
 **A — Optimizer/depth/weighting.** Using Section 2, report mean and seed range
 at each validation Re for all five configurations. Compare Adam versus hybrid
@@ -170,7 +259,21 @@ and score validation cases. Record runtime and parameter count. Published test
 results are already visible, so further test-based experimentation is exploratory.
 Predeclare fresh withheld cases for a new blind research claim.
 
-Submit one CSV for A-D, the two signed physical-profile comparisons, and a short
+**F — Flow structure and derivatives.** From Section 6 identify the primary
+and corner vortices at both Re. Explain why Re1000 is not a held-out validation.
+Report the vorticity L2 and maximum signed discrepancy, including its $(x/L,y/L)$
+location. Compare velocity, vorticity and pressure errors with the mesh-sensitivity
+rows. Explain why derivatives amplify differences and why the pressure plot is
+not an independently trained/validated pressure result. Keep all signs and scales.
+
+**G — Cost accounting.** From Section 7 distinguish the final continuation step
+from the complete timed sequence. Recalculate the scenario at 0.05 and 0.50 per
+core-hour. List the missing costs and explain why neither a price ratio nor a
+ratio of the historical and current timings is a controlled speedup. Explain
+what matched grid, tolerance, initialization, precision and timing scope would
+be needed for such a claim.
+
+Submit one CSV for A-D and F-G, the two signed physical-profile comparisons, and a short
 interpretation separating representation, optimization and discretization errors.
 Record software version and model/data hashes.""")
     code("""

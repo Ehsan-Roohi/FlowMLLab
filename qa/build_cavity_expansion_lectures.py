@@ -31,7 +31,9 @@ def build(targets=None):
     }
     for s in styles.values():s.textColor=colors.black
     source=ROOT/'lectures/source/cavity_expansion.json'
-    content=json.loads(source.read_text(encoding='utf8'));manifest={}
+    content=json.loads(source.read_text(encoding='utf8'))
+    manifest_path=ROOT/'qa/cavity_lecture_manifest.json'
+    manifest=json.loads(manifest_path.read_text()) if manifest_path.exists() else {}
     for name,pages in content.items():
         if targets and name not in targets:continue
         path=ROOT/'lectures'/f'{name}.pdf';base=PdfReader(path)
@@ -66,6 +68,13 @@ def build(targets=None):
                     story.extend([table,Spacer(1,12)])
                 else:raise ValueError(kind)
         def footer(c,doc):
+            footnote=pages[doc.page-1].get('footnote')
+            if footnote:
+                note=Paragraph(footnote,styles['small'])
+                _,height=note.wrap(475,180)
+                if height>155:raise RuntimeError('Footnote exceeds reserved region')
+                c.setStrokeColor(colors.black);c.line(60,50+height+7,220,50+height+7)
+                note.drawOn(c,60,50)
             c.setFillColor(colors.black);c.setFont(fonts['regular'],9)
             c.drawString(60,809,'FlowMLLab | Cavity research and validation extension')
             c.line(60,799,535,799);c.drawCentredString(297.5,28,str(base_count+doc.page))

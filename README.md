@@ -246,6 +246,43 @@ sensitivity is larger than some surrogate errors.
 [Run the new field-neural lab](notebooks/week04/W4_Lab8_High_Re_Field_DeepONet.ipynb) ·
 [Both tests, signed profiles, seed variation and limitations](results/cavity_field_deeponet/README.md).
 
+<!-- cavity-flow-comparison:start -->
+**Streamlines, vorticity and pressure: CFD overlaid with the neural field.**
+The panels below place Re=1000 (training) beside Re=7500 (held-out test).
+Black solid curves are CFD; orange dashed curves are the frozen POD–DeepONet mean.
+The same streamline seeds and contour levels are used for both methods.
+
+<img src="results/cavity_field_deeponet/flow_comparison/streamlines_overlay_Re1000_Re7500.png" width="760" alt="Overlaid CFD and POD-DeepONet streamlines; Re1000 training case at left and Re7500 held-out test at right">
+
+<details>
+<summary>Enlarge the corner vortices</summary>
+
+<img src="results/cavity_field_deeponet/flow_comparison/corner_streamlines_overlay_Re1000_Re7500.png" width="760" alt="Matched corner enlargements showing black CFD and orange neural streamline differences">
+
+</details>
+
+<img src="results/cavity_field_deeponet/flow_comparison/vorticity_contours_overlay_Re1000_Re7500.png" width="760" alt="Signed vorticity contours from the same centered velocity curl for CFD and the frozen neural model">
+
+<img src="results/cavity_field_deeponet/flow_comparison/pressure_contours_overlay_Re1000_Re7500.png" width="760" alt="Overlaid pressure contours reconstructed independently from CFD and neural velocities using the same momentum-gradient integration">
+
+Vorticity and pressure are **derived from velocity, not separately trained outputs**.
+Pressure still has 8.90% 256-to-512 mesh sensitivity at Re=7500; close contours
+show agreement with the retained discretization, not mesh-independent pressure accuracy.
+
+<details>
+<summary>RGB fields and signed discrepancies</summary>
+
+<img src="results/cavity_field_deeponet/flow_comparison/vorticity_fields_and_signed_error_Re1000_Re7500.png" width="760" alt="CFD-derived and neural-derived signed vorticity with one common colour normalization and linear signed differences">
+
+<img src="results/cavity_field_deeponet/flow_comparison/pressure_fields_and_signed_error_Re1000_Re7500.png" width="760" alt="Reconstructed pressure fields with one common colour normalization and linear signed differences">
+
+</details>
+
+[Vector PDFs, definitions and numerical checks](results/cavity_field_deeponet/flow_comparison/README.md) ·
+[Executed Lab 8](notebooks/week04/W4_Lab8_High_Re_Field_DeepONet.ipynb) ·
+[Week 4 lecture](lectures/week04_cavity_surrogates_deeponet.pdf)
+<!-- cavity-flow-comparison:end -->
+
 ### Week 4.1 — Classical reduced-order models
 
 **[Open Week 4.1: lecture, notebooks and guide](weeks/week04_1/README.md)**

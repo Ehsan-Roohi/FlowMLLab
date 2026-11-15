@@ -13,9 +13,9 @@
   },
   "week04_cavity_surrogates_deeponet": {
     "base_pages_preserved": 11,
-    "new_pages": 10,
-    "total_pages": 21,
-    "sha256": "7bc9baf5cf074e7cfe8ceb71a4d2987796e2b0ebdc9d96359e4c3bbf85082d99"
+    "new_pages": 17,
+    "total_pages": 28,
+    "sha256": "029bbc782fd8e2c676a6df7d67dddcbb60e5409dfcda7289b4b1cd6d5d5f39a7"
   },
   "week13_rectangular_cavity_pinn": {
     "base_pages_preserved": 12,

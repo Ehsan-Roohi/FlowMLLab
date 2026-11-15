@@ -2,7 +2,7 @@
 
 A training-only POD basis and a tanh branch predict both velocity components on
 the native 513-by-513 grid. This is a supervised scalar-parameter surrogate,
-not a data-free PINN. No Ghia sample enters fitting. Pressure is not predicted.
+not a data-free PINN. No Ghia sample enters fitting. Pressure is not a trained output. The [physical comparison gallery](flow_comparison/README.md) adds velocity-derived vorticity and reconstructed pressure, with their numerical limitations.
 
 [Run Lab 8](../../notebooks/week04/W4_Lab8_High_Re_Field_DeepONet.ipynb) |
 [Frozen design and validation amendment](../../docs/CAVITY_FIELD_NEURAL_PROTOCOL.md) |
@@ -30,6 +30,10 @@ CFD solution, not speed-only errors, Ghia profile errors or exact physical error
 <img src="re7500_fields.png" width="900" alt="Held-out Re7500 physical velocity fields and shared-scale errors">
 
 <img src="re7500_profiles.png" width="800" alt="Re7500 signed velocity profile errors and Ghia samples">
+
+## Overlaid flow structures
+
+[Streamlines, corner enlargements, vorticity, reconstructed pressure and signed differences](flow_comparison/README.md) compare Re1000 (training) with Re7500 (held out). All six figures also appear in Lab 8 and the Week 4 lecture.
 
 ## What improved, and what remains limited
 

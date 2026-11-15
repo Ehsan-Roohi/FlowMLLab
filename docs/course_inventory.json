@@ -10,7 +10,7 @@
   },
   "counts": {
     "active_lecture_pdfs": 37,
-    "lecture_pages": 584,
+    "lecture_pages": 591,
     "student_notebooks": 59,
     "historical_student_companions": 1,
     "optional_notebooks": 1,
@@ -63,7 +63,7 @@
     },
     {
       "path": "lectures/week04_cavity_surrogates_deeponet.pdf",
-      "pages": 21
+      "pages": 28
     },
     {
       "path": "lectures/week05_06_project_guide.pdf",

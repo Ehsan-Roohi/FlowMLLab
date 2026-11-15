@@ -7,7 +7,7 @@ Course version **v1.13.0**. These counts describe the current checkout; they do 
 | Asset | Count |
 | --- | ---: |
 | Active lecture PDFs | 37 |
-| Pages in those PDFs | 584 |
+| Pages in those PDFs | 591 |
 | Student notebooks, including historical companion | 59 |
 | Historical student audit companion (included above) | 1 |
 | Optional self-study notebooks (separate) | 1 |
@@ -35,7 +35,7 @@ Course version **v1.13.0**. These counts describe the current checkout; they do 
 | [week04_2_grid51_validation.pdf](../lectures/week04_2_grid51_validation.pdf) | 4 |
 | [week04_2_pinn_cavity.pdf](../lectures/week04_2_pinn_cavity.pdf) | 12 |
 | [week04_2_stokes_to_navier_stokes.pdf](../lectures/week04_2_stokes_to_navier_stokes.pdf) | 11 |
-| [week04_cavity_surrogates_deeponet.pdf](../lectures/week04_cavity_surrogates_deeponet.pdf) | 21 |
+| [week04_cavity_surrogates_deeponet.pdf](../lectures/week04_cavity_surrogates_deeponet.pdf) | 28 |
 | [week05_06_project_guide.pdf](../lectures/week05_06_project_guide.pdf) | 59 |
 | [week05_modal_sensing.pdf](../lectures/week05_modal_sensing.pdf) | 5 |
 | [week07_1_hypersonic_rarefied_cylinder.pdf](../lectures/week07_1_hypersonic_rarefied_cylinder.pdf) | 17 |

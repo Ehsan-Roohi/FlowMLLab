@@ -1,0 +1,77 @@
+{
+  "sources": {
+    "ghia": {
+      "title": "Ghia, Ghia and Shin (1982), Journal of Computational Physics 48, 387-411",
+      "url": "https://doi.org/10.1016/0021-9991(82)90058-4",
+      "inspected_copy": "https://paperzz.com/doc/9460470/high-re-solutions-for-incompressible-flow",
+      "pages": [
+        387,
+        410
+      ]
+    },
+    "hardware": {
+      "title": "Computer History Museum: Amdahl 470V/6 Computer - CPU",
+      "url": "https://www.computerhistory.org/revolution/mainframe-computers/7/169/677",
+      "introduced": 1975,
+      "price_nominal_usd": 3750000,
+      "speed_MIPS": 3.5,
+      "maximum_memory_MB": 8
+    },
+    "desktop": {
+      "title": "Apple Mac mini M4 launch, 29 October 2024",
+      "url": "https://www.apple.com/newsroom/2024/10/apples-new-mac-mini-is-more-mighty-more-mini-and-built-for-apple-intelligence/",
+      "launch_price_usd": 599,
+      "memory_GB": 16,
+      "cpu_cores": 10,
+      "not_a_current_price_quote": true
+    }
+  },
+  "accessed": "2026-11-15",
+  "ghia_timing": {
+    "Re1000_nodes": 129,
+    "Re1000_CPU_minutes": 1.5,
+    "high_Re_up_to": 10000,
+    "high_Re_nodes": 257,
+    "high_Re_CPU_minutes": [
+      16,
+      20
+    ]
+  },
+  "flowmllab_timing": [
+    {
+      "cells": 128,
+      "nodes": 129,
+      "host": "uri-cpu074",
+      "core_allocation": 1,
+      "summed_solve_wall_seconds": 29.507424689712934,
+      "last_continuation_step_wall_seconds": 1.4882974099600688,
+      "cumulative_compute_seconds": 30.08844169205986,
+      "metadata": "results/cavity_highre_ghia/n128/re10000.json",
+      "metadata_sha256": "5e3e60eb2ef77ac6d723d381d78725c32c9d39548e4635dc3d34116384050f1c"
+    },
+    {
+      "cells": 256,
+      "nodes": 257,
+      "host": "uri-cpu092",
+      "core_allocation": 1,
+      "summed_solve_wall_seconds": 277.5005430839956,
+      "last_continuation_step_wall_seconds": 12.111297523835674,
+      "cumulative_compute_seconds": 279.5881334519945,
+      "metadata": "results/cavity_highre_ghia/n256/re10000.json",
+      "metadata_sha256": "acf073ed2539c851d41bd3af4763bf7d263944f1dc77de35203a08c70de62be9"
+    },
+    {
+      "cells": 512,
+      "nodes": 513,
+      "host": "uri-cpu092",
+      "core_allocation": 1,
+      "summed_solve_wall_seconds": 2443.006519345101,
+      "last_continuation_step_wall_seconds": 98.65674669598229,
+      "cumulative_compute_seconds": 2451.6356309491675,
+      "metadata": "results/cavity_highre_ghia/n512/re10000.json",
+      "metadata_sha256": "baca7517234534822fd789d3b133009e301ec7ef6d4d72dc2bc9168f80f20b10"
+    }
+  ],
+  "timing_scope": "Sum of time.perf_counter durations of Newton continuation solves from the retained Re1000 seed to Re10000. Excludes creation of that seed, job queue, data transfer, training and temporal audits.",
+  "cost_scope": "Hardware purchase price is not a per-solve bill. Historical nominal prices are not inflation adjusted. The Mac mini was not used for the Unity timing. No equal-work hardware speedup or measured monetary saving is claimed."
+}

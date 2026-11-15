@@ -688,6 +688,199 @@
           "text": "Methods in context: FFV-PINN solves separate data-free square-cavity cases with finite-volume residuals and correction loss; Roohi-McDevitt assesses regional accuracy in a regularized D/W=5 cavity. Neither should be conflated with this supervised parameter surrogate. Primary-source links: docs/CAVITY_ALL_RE_NEURAL_LITERATURE.md."
         }
       ]
+    },
+    {
+      "extension_id": "flow_comparison_20261115",
+      "title": "CFD and neural streamlines on the same axes",
+      "blocks": [
+        {
+          "type": "body",
+          "text": "Compare Re=1000, a training-case reconstruction, with Re=7500, a whole-Re held-out test. These are the same frozen three-seed POD-DeepONet weights used in the earlier test tables; no refitting was performed."
+        },
+        {
+          "type": "figure",
+          "path": "results/cavity_field_deeponet/flow_comparison/streamlines_overlay_Re1000_Re7500.png",
+          "caption": "CFD: black solid; POD-DeepONet: orange dashed. Re1000 is left and Re7500 right. Both use identical prescribed seeds and integration settings.",
+          "max_height": 290
+        },
+        {
+          "type": "body",
+          "text": "Each seed is integrated independently. Streamline density is a display choice, not a measure of velocity magnitude. The near-overlap of curves is a statement about this retained CFD discretization; it does not prove mesh independence or temporal stability."
+        },
+        {
+          "type": "body",
+          "text": "Read the flow: locate the clockwise primary vortex and the weaker corner recirculations. Compare their displacement and shape before interpreting a global error percentage. Lab 8 Section 6 supplies the figures, CSV metrics and hash checks."
+        }
+      ]
+    },
+    {
+      "extension_id": "flow_comparison_20261115",
+      "title": "Weak vortices need a matched close-up",
+      "blocks": [
+        {
+          "type": "figure",
+          "path": "results/cavity_field_deeponet/flow_comparison/corner_streamlines_overlay_Re1000_Re7500.png",
+          "caption": "Rows: Re1000 and Re7500. Columns: lower-left, lower-right and upper-left corners. Each column uses the same spatial bounds across Reynolds numbers.",
+          "max_height": 405
+        },
+        {
+          "type": "body",
+          "text": "The upper-left recirculation visible at Re7500 is not present in the corresponding Re1000 window. Small differences in the lower-right vortex are easier to see in this enlargement than in the full-cavity picture."
+        },
+        {
+          "type": "body",
+          "text": "Exercise F: distinguish a change with Reynolds number from a difference between CFD and the neural surrogate. Record the region and coordinates of the disagreement; do not use streamline density as a speed scale."
+        }
+      ]
+    },
+    {
+      "extension_id": "flow_comparison_20261115",
+      "title": "Vorticity exposes velocity-gradient differences",
+      "blocks": [
+        {
+          "type": "math",
+          "latex": "\\omega=\\partial_xv-\\partial_yu,\\qquad E_\\omega=\\|\\widehat\\omega-\\omega_{\\rm CFD}\\|_2/\\|\\omega_{\\rm CFD}\\|_2."
+        },
+        {
+          "type": "body",
+          "text": "u,v are velocity components; x,y are positions. Vorticity is scaled by U/L, with lid speed U and cavity width L. The same centered curl acts on both fields at 511 by 511 interior nodes. There is no wall extrapolation or separately trained vorticity output."
+        },
+        {
+          "type": "figure",
+          "path": "results/cavity_field_deeponet/flow_comparison/vorticity_contours_overlay_Re1000_Re7500.png",
+          "caption": "Black/orange contours use the same signed levels for both methods and both Re. The full level list is retained in the figure verification record.",
+          "max_height": 270
+        },
+        {
+          "type": "body",
+          "text": "Relative vorticity discrepancies are 0.01440% at Re1000 (training) and 0.2931% at Re7500 (test). The latter exceeds the 0.0844% velocity discrepancy: small spatial velocity errors can produce larger derivative errors. The u=-y, v=x test verifies the positive sign omega=2."
+        }
+      ]
+    },
+    {
+      "extension_id": "flow_comparison_20261115",
+      "title": "Vorticity fields and signed discrepancies",
+      "blocks": [
+        {
+          "type": "figure",
+          "path": "results/cavity_field_deeponet/flow_comparison/vorticity_fields_and_signed_error_Re1000_Re7500.png",
+          "caption": "Each row compares CFD-derived vorticity, neural-derived vorticity and their signed difference. Re1000 is above; Re7500 below. All values are retained.",
+          "max_height": 400
+        },
+        {
+          "type": "body",
+          "text": "The four physical fields share one symmetric-log normalization, with a linear threshold of 1 in omega L/U. Each difference map has its own displayed linear scale. Do not compare error colours between rows without reading those scales."
+        },
+        {
+          "type": "body",
+          "text": "At Re7500 the largest signed difference is +0.22715 U/L at x/L=0.99609, y/L=0.97852. The lid discontinuity makes the near-corner gradients sensitive to both discretization and surrogate error. Use the signed map and location together with the global norm."
+        }
+      ]
+    },
+    {
+      "extension_id": "flow_comparison_20261115",
+      "title": "Pressure from a common reconstruction operator",
+      "blocks": [
+        {
+          "type": "math",
+          "latex": "\\nabla p^*=Re^{-1}\\nabla^2\\mathbf{u}^*-(\\mathbf{u}^*\\!\\cdot\\nabla)\\mathbf{u}^*,\\qquad p^*=p/(\\rho U^2)."
+        },
+        {
+          "type": "body",
+          "text": "Starred velocity and coordinates are nondimensionalized by U and L; rho is the constant density. Centered steady momentum gradients are integrated by the same least-squares operator for both fields. One zero-interior-mean pressure gauge is fixed for each entire field."
+        },
+        {
+          "type": "figure",
+          "path": "results/cavity_field_deeponet/flow_comparison/pressure_contours_overlay_Re1000_Re7500.png",
+          "caption": "Black: CFD-derived pressure; orange: neural-velocity-derived pressure. Both Re and both methods use identical pressure contour levels.",
+          "max_height": 270
+        },
+        {
+          "type": "body",
+          "text": "Pressure is postprocessed, not a direct network output or a comparison against an independent pressure solver. Exact affine-gradient and second-order Kovasznay tests verify the reconstruction implementation. A least-squares scalar pressure cannot exactly balance a non-integrable momentum-gradient field."
+        },
+        {
+          "type": "body",
+          "text": "At Re7500 the derived-pressure discrepancy is 0.05373%, but CFD pressure changes by 8.90% between 256 and 512 cells on matched nodes after one constant gauge alignment. Surrogate agreement does not remove this mesh sensitivity."
+        }
+      ]
+    },
+    {
+      "extension_id": "flow_comparison_20261115",
+      "title": "Pressure colour scales and numerical limits",
+      "blocks": [
+        {
+          "type": "figure",
+          "path": "results/cavity_field_deeponet/flow_comparison/pressure_fields_and_signed_error_Re1000_Re7500.png",
+          "caption": "Pressure fields share one full-extrema symmetric-log scale; signed differences use the displayed linear scales. Re1000 is above and Re7500 below.",
+          "max_height": 400
+        },
+        {
+          "type": "body",
+          "text": "The pressure scale has a linear threshold of 0.02 rho U squared. No extrema are clipped and no local pressure offsets are fitted. Both methods use the same interior points; no wall pressure is extrapolated."
+        },
+        {
+          "type": "body",
+          "text": "For Re1000 the derived-pressure discrepancy is 0.006901% and the 256-to-512 sensitivity is 1.274%. This is a training case. Retain the separate limitations from Lab 8: supervised vector accuracy, derivative accuracy, nonlinear momentum residual, grid sensitivity and stability answer different questions."
+        }
+      ]
+    },
+    {
+      "extension_id": "flow_comparison_20261115",
+      "title": "Historical computing: separate time from price",
+      "blocks": [
+        {
+          "type": "body",
+          "text": "Ghia et al. used an Amdahl 470 V/6 with coupled strongly implicit multigrid. Their reported CPU times were 1.5 min at Re1000 on 129 by 129 nodes, and 16-20 min for high-Re calculations up to Re10000 on 257 by 257 nodes [1]."
+        },
+        {
+          "type": "table",
+          "widths": [
+            150,
+            155,
+            155
+          ],
+          "rows": [
+            [
+              "Retained Unity calculation",
+              "257 by 257 nodes",
+              "513 by 513 nodes"
+            ],
+            [
+              "Allocated CPU cores",
+              "1",
+              "1"
+            ],
+            [
+              "Sum of continuation solve wall times",
+              "277.50 s (4.63 min)",
+              "2443.01 s (40.72 min)"
+            ],
+            [
+              "Final continuation step only",
+              "12.11 s",
+              "98.66 s"
+            ]
+          ]
+        },
+        {
+          "type": "body",
+          "text": "Our timings start from an already available Re1000 seed and end at Re10000. They exclude seed creation, queue, transfer, training and temporal audits. CPU time and wall time, initialization, solver and tolerances differ from Ghia; their ratio is not a controlled hardware or algorithm speedup."
+        },
+        {
+          "type": "math",
+          "latex": "C_{\\rm scenario}=r\\,t/3600"
+        },
+        {
+          "type": "body",
+          "text": "r is an assumed currency/core-hour rate; t is the recorded wall solve time in seconds. At a hypothetical rate of 0.10, the 257-node sequence costs 0.00771 currency units for this timed portion alone. This is a classroom estimate, not a Unity bill. Exercise G varies the assumed rate and lists omitted costs."
+        },
+        {
+          "type": "small",
+          "text": "[1] <link href=\"https://doi.org/10.1016/0021-9991(82)90058-4\" color=\"black\">Ghia, Ghia and Shin (1982), J. Comput. Phys. 48, 387-411, pp. 387 and 410.</link> Measured timers and source hashes: results/cavity_field_deeponet/flow_comparison/historical_cost_context.json."
+        }
+      ],
+      "footnote": "Hardware-price context. The <link href=\"https://www.computerhistory.org/revolution/mainframe-computers/7/169/677\" color=\"black\">Computer History Museum</link> records the 1975 Amdahl 470V/6 at 3.5 MIPS, up to 8 MB and $3.75 million. As a dated desktop example, <link href=\"https://www.apple.com/newsroom/2024/10/apples-new-mac-mini-is-more-mighty-more-mini-and-built-for-apple-intelligence/\" color=\"black\">Apple announced the Mac mini M4 on 29 October 2024</link> with 10 CPU cores, 16 GB and a $599 starting price. These nominal hardware prices are not inflation-adjusted or per-solve bills. Ghia's installed configuration and purchase invoice are unknown. The Mac was not used for our Unity timings; MIPS is not modern floating-point throughput."
     }
   ],
   "week13_rectangular_cavity_pinn": [

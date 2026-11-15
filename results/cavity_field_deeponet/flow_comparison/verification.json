@@ -1,0 +1,379 @@
+{
+  "source_hashes": {
+    "results/cavity_field_deeponet/frozen_selection.json": "51a39e29b31538559bacaf767ce0e24adebca928733cb76cdf6cc484ea815410",
+    "results/cavity_field_deeponet/trunk.npz": "b75106eb8a7ccabdcba2bd1d7d1ef5a0297a21c17a69d242c45eab9ab3b81cfb",
+    "results/cavity_field_deeponet/frozen_predictions.npz": "f9c7907ec7a7494f0d41fa6d623a3a1ad6469f4976af13e79751c5a1704fa25c",
+    "results/cavity_highre_ghia/n512/re100.npz": "937bf0cccf195947452b2d230bb61d49ca1b72d485014a28f40c9721eee87567",
+    "results/cavity_highre_ghia/n512/re250.npz": "0de7e80efadc7407372c236b68bb305b3e792b7d46a34f2d8bef067fb06afe1a",
+    "results/cavity_highre_ghia/n512/re500.npz": "61dcbfd2672520c5a8eeeea4b47c482ff8dfec745891308cd50d4da1a1de2dba",
+    "results/cavity_highre_ghia/n512/re750.npz": "3d08b86be802a4c78c950e2a171fdd06a16af03c4140de4373339d03b8f8df28",
+    "results/cavity_highre_ghia/n512/re1000.npz": "e8b18585357c2ed7473ccb688f0aa67a06d99dcad60149dd8d80d5b80112585e",
+    "results/cavity_highre_ghia/n512/re2500.npz": "198d31b83aa05bbd5a1ef017887f9f35708772fffbf4b51567956df05f45319e",
+    "results/cavity_highre_ghia/n512/re4000.npz": "b664c0ed0c8f2c539833c7ebdc6c74f77941725ed869f33826b1808488829353",
+    "results/cavity_highre_ghia/n512/re5000.npz": "6ef58c72df456db98e9901a2ede4f78cefd16bd297d0e7a31ba3f01e2128a4fe",
+    "results/cavity_highre_ghia/n512/re6000.npz": "41ab8b8d6fe5bbcfb5c438f056a135e61150cb61a79cf921ef3091971d6035cf",
+    "results/cavity_highre_ghia/n512/re9000.npz": "f7f43d61457aea4ae62e3670119f49803fe05c5ece13103b049c04fef19c3ce7",
+    "results/cavity_highre_ghia/n512/re10000.npz": "eb66dfcdc7795d031bae5bcc185a9ebef79d3ed0cfebe3d8605f82e8ce7eb3ef",
+    "results/cavity_field_deeponet/models/hybrid_2-seed7.npz": "eb59e8ac9e0a6789d68b2a3bd718912ee426b1f7243f197e0163a9fc1f424b5e",
+    "results/cavity_field_deeponet/models/hybrid_2-seed23.npz": "2a35d3ab750de13e8e0f19c54259376cfc4f608d5d8e2d4c0a796adbcc038e22",
+    "results/cavity_field_deeponet/models/hybrid_2-seed61.npz": "819698588a4c17069d2922b23c1180af4cfa31befdc4961b7678ad4a8e628589",
+    "results/cavity_highre_ghia/n512/re7500.npz": "cc92ec96737bebdfb43e8e18babc39d553375827c239cbd1fac48bb7bc6b2723",
+    "results/cavity_highre_ghia/n128/re1000.npz": "1bb5a959c931c7db688a61f1b709597ce7b3b895d9d52c88d9d036ac1449561b",
+    "results/cavity_highre_ghia/n256/re1000.npz": "0957fcc3a20a99c2d26e1534aeb58e7d86b6b6e9499e6240a3e0f1cc6ae5f32f",
+    "results/cavity_highre_ghia/n128/re7500.npz": "f8e3fb52f27d7b11c0686dc07a0417b28b971ba97f3e40033754849540e4d364",
+    "results/cavity_highre_ghia/n256/re7500.npz": "5565c13320c28bb21566feb06e5d02f8796d9c59cd9d35a29656f17f1fb4f00f"
+  },
+  "source_files_unchanged": true,
+  "vorticity": {
+    "definition": "omega=dv/dx-du/dy; centered curl of each velocity field on the same 511x511 interior nodes; no extrapolated wall values",
+    "is_direct_neural_output": false,
+    "levels": [
+      -200.0,
+      -100.0,
+      -50.0,
+      -20.0,
+      -10.0,
+      -5.0,
+      -3.0,
+      -2.2,
+      -2.0,
+      -1.8,
+      -1.0,
+      -0.5,
+      0.0,
+      0.5,
+      1.0,
+      2.0,
+      5.0,
+      10.0,
+      20.0,
+      50.0,
+      100.0,
+      200.0
+    ],
+    "common_color_bounds": [
+      -283.730680878821,
+      283.730680878821
+    ],
+    "color_scale": "Symmetric-log, linthresh=1, full extrema retained; differences linear per Re",
+    "solid_body_rotation_test": "passed: u=-y, v=x gives omega=+2",
+    "metrics": [
+      {
+        "Re": 1000,
+        "role": "training",
+        "relative_l2": 0.00014401780729568524,
+        "rms": 0.0008236599371535666,
+        "linf": 0.009360610740621667,
+        "linf_signed": -0.009360610740621667,
+        "linf_x": 0.123046875,
+        "linf_y": 0.998046875,
+        "cfd_min": -283.730680878821,
+        "cfd_max": 130.47788726143438,
+        "nn_min": -283.7306069550585,
+        "nn_max": 130.47115995935437
+      },
+      {
+        "Re": 7500,
+        "role": "held_out_test",
+        "relative_l2": 0.0029314106114115574,
+        "rms": 0.02355244645820535,
+        "linf": 0.22714818880777443,
+        "linf_signed": 0.22714818880777443,
+        "linf_x": 0.99609375,
+        "linf_y": 0.978515625,
+        "cfd_min": -266.9223805308179,
+        "cfd_max": 172.01558005829224,
+        "nn_min": -266.9298825681656,
+        "nn_max": 171.99203222088462
+      }
+    ]
+  },
+  "model": "hybrid_2",
+  "seeds": [
+    7,
+    23,
+    61
+  ],
+  "prediction_provenance": {
+    "1000": {
+      "role": "training case",
+      "coefficients": [
+        -5.610684395279528,
+        -21.615708902139602,
+        5.704513802882352,
+        -3.515103483402502,
+        -2.2351925554803027,
+        0.7874292341651246,
+        0.27447350458508774,
+        -0.1505220361487836,
+        0.008370633093718494,
+        0.0008700740585751281
+      ],
+      "mixing_weights": [
+        0.00010422026620812708,
+        -0.00043370073462847825,
+        0.0010345033659211605,
+        -0.0014872553638757835,
+        1.0011680012087836,
+        -0.003109497160996108,
+        0.012633887685039757,
+        -0.018253602614322684,
+        0.010793160716484243,
+        -0.00975840459096454,
+        0.007308687222334867
+      ]
+    },
+    "7500": {
+      "role": "held-out test",
+      "coefficients": [
+        36.071900208462466,
+        10.15290786561534,
+        -3.675249916702054,
+        -1.191438136666904,
+        0.3169591261068167,
+        0.5918572587967608,
+        0.32810022126728905,
+        0.180336968097369,
+        -0.01314697142416617,
+        0.001271053883107494
+      ],
+      "mixing_weights": [
+        0.00010920998131269677,
+        0.0001239214553439838,
+        -0.0032270615900623772,
+        0.014279827673188888,
+        -0.017598364451905518,
+        0.05921901583490749,
+        -0.3087161817559051,
+        0.15010425834241772,
+        0.6931025621483239,
+        0.3869093509619874,
+        0.025693461400348838
+      ]
+    }
+  },
+  "streamline_seeds": [
+    [
+      0.5,
+      0.025
+    ],
+    [
+      0.5,
+      0.06
+    ],
+    [
+      0.5,
+      0.12
+    ],
+    [
+      0.5,
+      0.2
+    ],
+    [
+      0.5,
+      0.3
+    ],
+    [
+      0.5,
+      0.4
+    ],
+    [
+      0.5,
+      0.48
+    ],
+    [
+      0.5,
+      0.53
+    ],
+    [
+      0.025,
+      0.02
+    ],
+    [
+      0.06,
+      0.04
+    ],
+    [
+      0.12,
+      0.08
+    ],
+    [
+      0.978,
+      0.015
+    ],
+    [
+      0.95,
+      0.025
+    ],
+    [
+      0.92,
+      0.05
+    ],
+    [
+      0.88,
+      0.09
+    ],
+    [
+      0.82,
+      0.14
+    ],
+    [
+      0.025,
+      0.985
+    ],
+    [
+      0.035,
+      0.96
+    ],
+    [
+      0.055,
+      0.935
+    ],
+    [
+      0.09,
+      0.9
+    ]
+  ],
+  "streamlines": "Same prescribed seeds, independent per-seed occupancy masks and integration settings for both methods; no other trajectory can suppress a seed; black solid and orange dashed.",
+  "pressure_method": "Unweighted least-squares integration of centered steady momentum gradients on 511x511 interior nodes; uniform zero-interior-mean gauge for both fields; no local recentering.",
+  "generator_sha256_lf": "b7afc9b80591d2edb3fef52edd71fab99042292e32c3846abefa507131945e7a",
+  "pressure_is_model_output": false,
+  "pressure_is_postprocessed": true,
+  "pressure_reference_is_independent_pressure_solver": false,
+  "pressure_verification": {
+    "test": "Unforced exact Kovasznay solution, Re=40; plus affine-gradient gauge test",
+    "grids": [
+      {
+        "cells": 64,
+        "relative_l2": 0.0007443145845823446,
+        "gradient_fit_relative": 0.0008159241614982407
+      },
+      {
+        "cells": 128,
+        "relative_l2": 0.00018680045198068092,
+        "gradient_fit_relative": 0.00020154796064508103
+      },
+      {
+        "cells": 256,
+        "relative_l2": 4.678486235480948e-05,
+        "gradient_fit_relative": 5.00838967387436e-05
+      }
+    ],
+    "orders": [
+      1.9944145595464302,
+      1.99738423176757
+    ],
+    "affine_linf": 1.3322676295501878e-15
+  },
+  "pressure_levels": {
+    "1000": {
+      "levels": [
+        -0.45,
+        -0.24,
+        -0.12,
+        -0.08,
+        -0.06,
+        -0.04,
+        -0.03,
+        -0.02,
+        -0.01,
+        0.0,
+        0.01,
+        0.02,
+        0.04,
+        0.08,
+        0.16,
+        0.32,
+        0.64,
+        1.28,
+        1.6
+      ],
+      "extrema": [
+        -0.4762506126290088,
+        1.6666880803615496
+      ]
+    },
+    "7500": {
+      "levels": [
+        -0.45,
+        -0.24,
+        -0.12,
+        -0.08,
+        -0.06,
+        -0.04,
+        -0.03,
+        -0.02,
+        -0.01,
+        0.0,
+        0.01,
+        0.02,
+        0.04,
+        0.08,
+        0.16,
+        0.32,
+        0.64,
+        1.28,
+        1.6
+      ],
+      "extrema": [
+        -0.06780606899073541,
+        0.8090409455383426
+      ]
+    }
+  },
+  "pressure_grid_sensitivity": [
+    {
+      "Re": 1000,
+      "cells": 128,
+      "pressure_rms": 0.0022283822293439667,
+      "pressure_relative_l2": 0.050570271606977815,
+      "gauge_offset": 0.000528185868765084
+    },
+    {
+      "Re": 1000,
+      "cells": 256,
+      "pressure_rms": 0.000571830352985145,
+      "pressure_relative_l2": 0.012743533779629057,
+      "gauge_offset": 0.00017740458639004176
+    },
+    {
+      "Re": 7500,
+      "cells": 128,
+      "pressure_rms": 0.014669131435437308,
+      "pressure_relative_l2": 0.3714994778948727,
+      "gauge_offset": 0.0005414829964528633
+    },
+    {
+      "Re": 7500,
+      "cells": 256,
+      "pressure_rms": 0.003541700330738743,
+      "pressure_relative_l2": 0.08901147746743678,
+      "gauge_offset": 0.0001811105552211791
+    }
+  ],
+  "pressure_color_scale": "Same full-extrema symmetric-log norm across both Re and both methods; linthresh=0.02. Signed errors use linear scales.",
+  "limitations": [
+    "Re1000 was in training; Re7500 was held out of all fitting and selection.",
+    "Pressure is derived from velocity, not learned, and is not independently pressure-validated.",
+    "A scalar pressure cannot exactly balance a non-integrable sampled momentum gradient; fit residuals are reported.",
+    "The CFD reference retains significant mesh sensitivity.",
+    "No geometry/physics or frozen models changed; no refitting."
+  ],
+  "output_sha256": {
+    "streamlines_overlay_Re1000_Re7500.pdf": "1f795bcde76fdab287cb111d85e59513ae53ab59fc8958cb7f89608b6d3dfa2a",
+    "streamlines_overlay_Re1000_Re7500.png": "8b8dd260bb6ae4019cb9915dd80bb814a3cc1419595e91e76c9ad1e4e66f81b5",
+    "corner_streamlines_overlay_Re1000_Re7500.pdf": "646ff23ccd3ed600d194f71e2a94e3d1033cb8067854a483271ea1f09a88b721",
+    "corner_streamlines_overlay_Re1000_Re7500.png": "7562d4e03349afceaf35bac69f849e22b64d06807919efe943076c7c1a78c614",
+    "pressure_contours_overlay_Re1000_Re7500.pdf": "ebef237c6111d21083764df45fadca28f38137eb60e4c23994763e1033ca49e0",
+    "pressure_contours_overlay_Re1000_Re7500.png": "38733751933ca41838427178f1a784e2f359e5c19e1af35b5abd0daab7c5c605",
+    "pressure_fields_and_signed_error_Re1000_Re7500.pdf": "9f18429ba56934bdbf3daedf26d9949bab267864ccd1aa3bfb3fa97415584bb0",
+    "pressure_fields_and_signed_error_Re1000_Re7500.png": "c9f41a902baa21e286812aeb9dc585af927393b2f83560100d8198d088be111d",
+    "vorticity_contours_overlay_Re1000_Re7500.pdf": "d74b384c709b9e68dfcef6f488061d8d71b216f8aa135f2663da031862a14709",
+    "vorticity_contours_overlay_Re1000_Re7500.png": "8e81103c56b8c4e405e7d4784f1117248889f08ce93a0bab50d7881090b168a7",
+    "vorticity_fields_and_signed_error_Re1000_Re7500.pdf": "97ccad67e8074bf006af996dc613466e24832387ceab6f7d7068c1b2d45fa369",
+    "vorticity_fields_and_signed_error_Re1000_Re7500.png": "d8b28bda1d7d62d7f1feade940bb0b036f6f2d9a9724e7ca26bbdb6986829693",
+    "vorticity_metrics.csv": "2adbed9386f6a964a3488843139e3b0e95103c90c7696c45c1112389b4bbdfdf",
+    "comparison_metrics.csv": "5c13c3e0414cfba81a746e54c05327903f3a3d167b7b33f543f2f7cc4640d7e4",
+    "pressure_mesh_sensitivity.csv": "a8849d7d218157a644f397e7248f4a12c7198b19dc1e8b92722001e1d3774d7f"
+  }
+}
