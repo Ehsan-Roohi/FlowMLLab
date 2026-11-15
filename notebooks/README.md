@@ -1,12 +1,12 @@
 # Notebook guide
 
-**Browse by week:** [Open the weekly pages](../weeks/README.md) for each topic’s image, lecture, notebooks and guide.
+**Browse by week:** [Open the weekly pages](../weeks/README.md) for each topicâ€™s image, lecture, notebooks and guide.
 
 Most notebooks below open directly from GitHub in Google Colab and bootstrap
 their documented dependencies. Exceptions are labelled explicitly: P6 needs
 CUDA, Week 14 uses a separate environment whose hosted Run All remains
 unverified, and Week 15 runs from a local clone plus its linked Zenodo evidence
-archive. Weeks 17–22 use their documented CPU local/ZIP setup; their
+archive. Weeks 17â€“22 use their documented CPU local/ZIP setup; their
 interactive Colab acceptance is still open. Read each module's setup page before launching it.
 
 ## Notebook entry points, in course order
@@ -21,7 +21,7 @@ self-study notebooks separate.
 | Module | Notebook | Launch |
 | --- | --- | --- |
 | Week 1 | Python for CFD and AI | [Open in Colab](https://colab.research.google.com/github/Ehsan-Roohi/FlowMLLab/blob/main/notebooks/week01/01_python_for_cfd_ai_fluids.ipynb) |
-| Week 1 | TensorFlow for AI in fluids — expanded self-study lab (2026-11-02) | [Open in Colab](https://colab.research.google.com/github/Ehsan-Roohi/FlowMLLab/blob/main/notebooks/week01/02_tensorflow_for_ai_fluids.ipynb) |
+| Week 1 | TensorFlow for AI in fluids â€” expanded self-study lab (2026-11-02) | [Open in Colab](https://colab.research.google.com/github/Ehsan-Roohi/FlowMLLab/blob/main/notebooks/week01/02_tensorflow_for_ai_fluids.ipynb) |
 | Week 1 | Cavity CFD and Ghia validation | [Open in Colab](https://colab.research.google.com/github/Ehsan-Roohi/FlowMLLab/blob/main/notebooks/week01/03_cavity_ghia.ipynb) |
 | Week 1.1 | AI-assisted scientific software and executable acceptance gates | [Open in Colab](https://colab.research.google.com/github/Ehsan-Roohi/FlowMLLab/blob/main/notebooks/week01_1/W1_1_AI_Assisted_Scientific_Software.ipynb) |
 | Week 1.2 | Cavity pressure-velocity coupling: SIMPLE, PISO and PIMPLE (Re=100) | [Open in Colab](https://colab.research.google.com/github/Ehsan-Roohi/FlowMLLab/blob/main/notebooks/week01_2/W1_2_Cavity_Pressure_Velocity.ipynb) |
@@ -36,6 +36,8 @@ self-study notebooks separate.
 | Week 4.1 | Classical POD-Galerkin/POD-DEIM | [Open in Colab](https://colab.research.google.com/github/Ehsan-Roohi/FlowMLLab/blob/main/notebooks/week04/W4_1_Classical_ROM_Cavity.ipynb) |
 | Week 4.2 | Lab 4: Stokes-to-Navier-Stokes correction | [Open in Colab](https://colab.research.google.com/github/Ehsan-Roohi/FlowMLLab/blob/main/notebooks/week04/W4_Lab4_Stokes_to_Navier_Stokes.ipynb) |
 | Week 4.2 | Lab 4 addendum: 51 x 51 grid validation | [Open in Colab](https://colab.research.google.com/github/Ehsan-Roohi/FlowMLLab/blob/main/notebooks/week04/W4_Lab4_Grid51_Validation.ipynb) |
+| Week 4 | Lab 5: all seven Ghia Reynolds numbers | [Open in Colab](https://colab.research.google.com/github/Ehsan-Roohi/FlowMLLab/blob/main/notebooks/week04/W4_Lab5_All_Re_Ghia_Validation.ipynb) |
+| Week 4 | Lab 6: profile surrogates, optimizers and depth | [Open in Colab](https://colab.research.google.com/github/Ehsan-Roohi/FlowMLLab/blob/main/notebooks/week04/W4_Lab6_Ghia_Profile_Optimizer_Depth.ipynb) |
 | Weeks 5 to 6 | P0 setup and data audit | [Open in Colab](https://colab.research.google.com/github/Ehsan-Roohi/FlowMLLab/blob/main/notebooks/week05_06/P0_Project_Setup.ipynb) |
 | Weeks 5 to 6 | P1 Reynolds-number generalization | [Open in Colab](https://colab.research.google.com/github/Ehsan-Roohi/FlowMLLab/blob/main/notebooks/week05_06/P1_Re_Generalization.ipynb) |
 | Weeks 5 to 6 | P2 physics-guided DNN/PINN objectives | [Open in Colab](https://colab.research.google.com/github/Ehsan-Roohi/FlowMLLab/blob/main/notebooks/week05_06/P2_Physics_Guided_DNN.ipynb) |
@@ -62,9 +64,12 @@ self-study notebooks separate.
 | Week 11 | Hydrofoil vapor-cloud detection | [Open in Colab](https://colab.research.google.com/github/Ehsan-Roohi/FlowMLLab/blob/main/notebooks/week11/W11_Cavitation_Cloud_Detection.ipynb) |
 | Week 12 | Noisy DSMC moment reconstruction | [Open in Colab](https://colab.research.google.com/github/Ehsan-Roohi/FlowMLLab/blob/main/notebooks/week12/W12_DSMC_Moment_Reconstruction.ipynb) |
 | Week 13 | Rectangular-cavity PINNs | [Open in Colab](https://colab.research.google.com/github/Ehsan-Roohi/FlowMLLab/blob/main/notebooks/week13/W13_Rectangular_Cavity_PINN_Research.ipynb) |
+| Week 13 | D/W=5 regional accuracy with author CFD/PINN fields | [Open in Colab](https://colab.research.google.com/github/Ehsan-Roohi/FlowMLLab/blob/main/notebooks/week13/W13_Deep_Cavity_D5_Regional_Accuracy.ipynb) |
 | Week 14 | RANS, inverse PINN and neural closures (local checkout) | [Notebook](week14/W14_pyCALC_RANS_PINN_NN.ipynb) and [setup](week14/README.md) |
 | Week 15 | Geometry-aware neural operators (local checkout) | [Complete post-audit notebook](week15/W15_Complete_Geometry_Generalization.ipynb), [historical audit notebook](week15/W15_Geometry_Operators_Step_Audit.ipynb), and [OpenFOAM/evidence guide](week15/README.md) |
-| Week 16 | Supersonic shape optimization with Gmsh/SU2 evidence | [Executed notebook](week16/W16_Supersonic_Shape_Optimization.ipynb) · [Assignment and guide](week16/README.md) |
+| Week 15 | Original Transolver: central-obstacle channel (local checkout) | [Notebook](week15/W15_Original_Transolver_Step.ipynb) |
+| Week 15 | Original Transolver: double-step channel (local checkout) | [Notebook](week15/W15_Original_Transolver_Double_Step.ipynb) |
+| Week 16 | Supersonic shape optimization with Gmsh/SU2 evidence | [Executed notebook](week16/W16_Supersonic_Shape_Optimization.ipynb) Â· [Assignment and guide](week16/README.md) |
 
 ## Weekly laboratories
 
@@ -75,16 +80,16 @@ self-study notebooks separate.
   `Re=100` cavity field, and requires a complete AI-use disclosure and bounded
   claim.
 - `week02/`: supervised-learning foundations and a rarefied-flow surrogate.
-- `week02_1/`: the incremental probabilistic-UQ lecture/lab pair. It connects Gaussian observation models, exact Bayesian regression, POD–Gaussian-process fields, proper scores, validation scaling, and blind under-coverage between Weeks 2 and 3.
+- `week02_1/`: the incremental probabilistic-UQ lecture/lab pair. It connects Gaussian observation models, exact Bayesian regression, PODâ€“Gaussian-process fields, proper scores, validation scaling, and blind under-coverage between Weeks 2 and 3.
 - `week03/`: Maxwellian sampling/noise and a mini DSMC cavity.
 - `week04/`: CFD data production, scalar/field surrogates, a POD-DeepONet laboratory, the classical ROM lab, and a Stokes-to-Navier-Stokes correction lab (with a 51 x 51 addendum) using constant/diverse lid families, development-only selection, three-seed evidence, physical diagnostics, and explicit same-grid limitations.
 - `week05_06/`: the combined two-week guided-project pack (P0 to P6). Week 5 establishes the setup, baseline, controlled modification, and checkpoint; Week 6 completes the same selected track, physical validation, reproducibility package, and final report. The sparse-sensing companion lab uses the Week 7 cylinder wakes and can be taken after Week 7.
-- `week07/`: D2Q9 BGK/TRT cylinder flow, a concise collide–stream–boundary algorithm walkthrough, physically gated force and Strouhal diagnostics, an executed three-grid study with a retained formal asymptotic/GCI failure, Reynolds-regime classification, strong temporal baselines, and separate one-step/recursive audits of a four-frame multi-scale CNN on a retained held-out interpolation case.
+- `week07/`: D2Q9 BGK/TRT cylinder flow, a concise collideâ€“streamâ€“boundary algorithm walkthrough, physically gated force and Strouhal diagnostics, an executed three-grid study with a retained formal asymptotic/GCI failure, Reynolds-regime classification, strong temporal baselines, and separate one-step/recursive audits of a four-frame multi-scale CNN on a retained held-out interpolation case.
 - `week07_1/`: incremental rarefied hypersonic-cylinder operator lab using a compact author-released derivative of 20 DSMC Mach cases, frozen whole-case splits, a strong structured field-interpolation baseline, reviewed Fusion-DeepONet anatomy, a fast CPU teaching analog, and empirical ensemble-coverage checks.
 - `week07_2/`: causal POD-space Kalman filtering of the retained Re110 LBM wake with validation-selected sensors and covariance inflation, matched sensor-only/open-loop/persistence baselines, and an explicit marginal-coverage failure.
 - `week07_3/`: masked-autoencoder pretraining on the unlabelled Re90/Re100 LBM wakes (PyTorch, CPU), zero-shot, linear-probe, fine-tuned and from-scratch completion of the Re110 wake against the number of labelled frames, gappy-POD baselines with matched information, validation-only selection on Re105, and a retained classical-baseline win.
 - `week08/`: two CPU labs that start from exact branch-aware gas dynamics, then compare bracketed roots, interpolation, and physics-guided MLP evidence across five inverse problems, edge holdouts, dimensional scaling, and application workloads.
-- `week09/`: three CPU labs based on the Roohi–Mahdavi micro-step and micro-nozzle studies. Lab 1 uses two author-permitted, checksummed derivatives of nine real DSMC height fields with file-level case separation; Lab 2 reproduces shock-centered POD and fresh full-field predictions from checksummed derivatives of 15 public DSMC snapshots before evaluating three held-out pressures; Lab 3 is a short data-alignment audit on a quasi-1D moving-throat family.
+- `week09/`: three CPU labs based on the Roohiâ€“Mahdavi micro-step and micro-nozzle studies. Lab 1 uses two author-permitted, checksummed derivatives of nine real DSMC height fields with file-level case separation; Lab 2 reproduces shock-centered POD and fresh full-field predictions from checksummed derivatives of 15 public DSMC snapshots before evaluating three held-out pressures; Lab 3 is a short data-alignment audit on a quasi-1D moving-throat family.
 - `week10/`: one complete CPU article-reproduction lab with 14 rarefied-cavity fields, mono/diatomic shock profiles, the DSMC algorithm, full provenance audit, log-Knudsen synthesis, POD-branch operators, physical interpretation, and retained numerical gates.
 - `week10_1/`: a CPU Lennard-Jones collision-map teaching model with analytic scattering checks, transport integrals and localized surrogate errors.
 - `week11/`: manufactured shock/vortex controls and a small pixel classifier; a matched U-Net reconstruction-then-identification comparison on retained LBM wakes; and hydrofoil vapor-cloud detection on retained CFD fields.
@@ -135,7 +140,7 @@ for full paper reproduction.
 
 The additive `week04/W4_1_Classical_ROM_Cavity.ipynb` lab comes after the
 original Week-4 sequence without modifying it. It implements dynamic centered
-POD–Galerkin and POD–DEIM for the same lid-driven cavity, validates the added
+PODâ€“Galerkin and PODâ€“DEIM for the same lid-driven cavity, validates the added
 snapshot FOM against the fixed 65x65 archive and Ghia centerlines, performs grid
 and time-step refinement, freezes rank on `Re=300`, opens `Re=175,275,375` once,
 and reports offline/online timing plus break-even query count. Its executed
@@ -148,7 +153,7 @@ Stokes field as a low-fidelity input. Its retained evidence is in
 `../results/stokes_refined/`; the original test cases are regression tests, not
 a newly blind benchmark.
 
-The Week-1 cavity notebook first reproduces the manuscript's Ghia velocity and Botella–Peyret pressure validations. The Week-3 DSMC notebook first validates the executed HS–NTC solver directly against Mohammadzadeh wall-pressure data. Both store paper-ready PNG/PDF files and metric JSON under `../results/article_figures/`. See [`../ARTICLE_FIGURE_MAP.md`](../ARTICLE_FIGURE_MAP.md) for every notebook-to-figure contract.
+The Week-1 cavity notebook first reproduces the manuscript's Ghia velocity and Botellaâ€“Peyret pressure validations. The Week-3 DSMC notebook first validates the executed HSâ€“NTC solver directly against Mohammadzadeh wall-pressure data. Both store paper-ready PNG/PDF files and metric JSON under `../results/article_figures/`. See [`../ARTICLE_FIGURE_MAP.md`](../ARTICLE_FIGURE_MAP.md) for every notebook-to-figure contract.
 
 ## Research-project notebooks
 
@@ -158,7 +163,7 @@ The Week-1 cavity notebook first reproduces the manuscript's Ghia velocity and B
 - `week05_06/P3_POD_Study.ipynb`: POD rank, basis choice, and coefficient learnability.
 - `week05_06/P4_Uncertainty_Study.ipynb`: seed variability, data sufficiency, and error indicators.
 - `week05_06/P5_Rarefied_Cavity.ipynb`: noisy particle labels and Knudsen generalization.
-- `week05_06/P6_FP_Cavity_Closure.ipynb`: offline and closed-loop Fokker–Planck closure evaluation.
+- `week05_06/P6_FP_Cavity_Closure.ipynb`: offline and closed-loop Fokkerâ€“Planck closure evaluation.
 
 Each project notebook includes:
 
@@ -189,12 +194,12 @@ Run notebooks in order. Restart and run all before submission. A notebook with s
 
 | Module | Laboratory | Read / setup |
 | --- | --- | --- |
-| Week 17 | Attention as a learned kernel | [Open student notebook](week17/W17_CFD_Transformer.ipynb) · [Setup](week17/README.md) |
-| Week 18 | Language modeling and causal decoding | [Open student notebook](week18/W18_CFD_Transformer.ipynb) · [Setup](week18/README.md) |
-| Week 19 | Tokenization and sensor design | [Open student notebook](week19/W19_CFD_Transformer.ipynb) · [Setup](week19/README.md) |
-| Week 20 | Learning with missing sensors | [Open student notebook](week20/W20_CFD_Transformer.ipynb) · [Setup](week20/README.md) |
-| Week 21 | Autonomous prediction and phase | [Open student notebook](week21/W21_CFD_Transformer.ipynb) · [Setup](week21/README.md) |
-| Week 22 | Transfer and information budgets | [Open student notebook](week22/W22_CFD_Transformer.ipynb) · [Setup](week22/README.md) |
+| Week 17 | Attention as a learned kernel | [Open student notebook](week17/W17_CFD_Transformer.ipynb) Â· [Setup](week17/README.md) |
+| Week 18 | Language modeling and causal decoding | [Open student notebook](week18/W18_CFD_Transformer.ipynb) Â· [Setup](week18/README.md) |
+| Week 19 | Tokenization and sensor design | [Open student notebook](week19/W19_CFD_Transformer.ipynb) Â· [Setup](week19/README.md) |
+| Week 20 | Learning with missing sensors | [Open student notebook](week20/W20_CFD_Transformer.ipynb) Â· [Setup](week20/README.md) |
+| Week 21 | Autonomous prediction and phase | [Open student notebook](week21/W21_CFD_Transformer.ipynb) Â· [Setup](week21/README.md) |
+| Week 22 | Transfer and information budgets | [Open student notebook](week22/W22_CFD_Transformer.ipynb) Â· [Setup](week22/README.md) |
 
 Separate solutions are in the [instructor directory](../instructor/).
 
@@ -202,7 +207,7 @@ Separate solutions are in the [instructor directory](../instructor/).
 
 The [separate inventory](../docs/COURSE_INVENTORY.md#optional-self-study) records
 available optional notebooks and their prerequisites. They are not required
-units in the Weeks 1–22 sequence.
+units in the Weeks 1â€“22 sequence.
 
 - [Geometry/time operator evaluation](optional_geometry_time_bridge/Geometry_Time_Operator_Bridge.ipynb)
-  · [Local setup and prerequisites](optional_geometry_time_bridge/README.md).
+  Â· [Local setup and prerequisites](optional_geometry_time_bridge/README.md).

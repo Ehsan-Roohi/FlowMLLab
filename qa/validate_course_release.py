@@ -573,7 +573,7 @@ def validate_notebooks() -> tuple[int, int]:
             )
             assert 'no double-step motif is used in training or validation' in full_source
             assert 'Selection reads no double-step arrays.' in full_source
-        assert week14_lab or week15_local or reconstruction_lab or week16_lab or optional_bridge or week01_2_lab or week01_3_lab or transformer_week is not None or any(
+        assert week14_lab or week15_local or reconstruction_lab or week16_lab or optional_bridge or week01_2_lab or week01_3_lab or cavity_followon or transformer_week is not None or any(
             marker in full_source
             for marker in (
                 "MIE690A article-aligned validation v3",
