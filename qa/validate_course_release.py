@@ -485,6 +485,8 @@ def validate_notebooks() -> tuple[int, int]:
         cavity_followon = relative in {
             'notebooks/week04/W4_Lab5_All_Re_Ghia_Validation.ipynb',
             'notebooks/week04/W4_Lab6_Ghia_Profile_Optimizer_Depth.ipynb',
+            'notebooks/week04/W4_Lab7_High_Re_CFD_Ghia.ipynb',
+            'notebooks/week04/W4_Lab8_High_Re_Field_DeepONet.ipynb',
             'notebooks/week13/W13_Deep_Cavity_D5_Regional_Accuracy.ipynb',
         }
         if cavity_followon:
@@ -498,6 +500,8 @@ def validate_notebooks() -> tuple[int, int]:
             assert all(o.get('output_type') != 'error' for c in code for o in c.get('outputs', [])), relative
             if 'Lab5_' in relative: assert 'RUN_NEW_CFD = False' in full_source
             if 'Lab6_' in relative: assert 'TRAIN_NEW_PROFILE_MODEL = False' in full_source and 'verify_frozen_models' in full_source
+            if 'Lab7_' in relative: assert 'high.load_cases' in full_source and 'No Ghia values enter' in full_source
+            if 'Lab8_' in relative: assert 'RUN_NEW_CPU_EXPERIMENT = False' in full_source and 'frozen_selection.json' in full_source
             if 'D5_' in relative: assert 'load_bundle' in full_source and 'does not retrain' in full_source
         week01_3_lab = relative == 'notebooks/week01_3/W1_3_Keras_Optimizers.ipynb'
         if week01_3_lab:

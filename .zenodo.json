@@ -1,7 +1,7 @@
 {
   "title": "FlowMLLab: An Open-Source Framework for Reproducible CFD-to-Scientific-Machine-Learning Experiments",
-  "description": "FlowMLLab v1.12.1 corrects the cavity validation lesson so its default output shows actual native CFD against Ghia at Re=100,400,1000, grid changes, signed errors and recomputed raw/screened norms. The homepage now shows this validation figure and held-out neural-profile predictions, and distinguishes the existing low-Re full-field POD-DeepONet from the seven-Re centreline regression experiment. Eight retained CFD archives are hash-checked and their original metrics reproduced; earlier notebooks, raw solver fields and frozen neural fits are preserved. The four higher-Re CFD fields remain missing; the neural fit does not substitute for them. This patch retains the three cavity labs and four lecture additions of v1.12.0 within the broader FlowMLLab CFD and scientific-machine-learning course.",
-  "version": "1.12.1",
+  "description": "FlowMLLab v1.13.0 adds 45 actual cavity CFD fields on three grids, all seven Ghia cases, high-Re mesh/time sensitivity, and a full-field POD-DeepONet with whole-Re tests, matched interpolation baselines and retained validation-driven training-data augmentation. Two new executed student notebooks and six Week-4 lecture pages explain representation, optimization and physical/numerical limits. Earlier notebooks, frozen profile models and original lecture pages are preserved. High-Re mesh sensitivity remains material; neural error is relative to the stated CFD discretization, not exact physical truth.",
+  "version": "1.13.0",
   "publication_date": "2026-11-15",
   "creators": [
     {
@@ -46,7 +46,7 @@
       "scheme": "url"
     },
     {
-      "identifier": "https://github.com/Ehsan-Roohi/FlowMLLab/releases/tag/v1.12.1",
+      "identifier": "https://github.com/Ehsan-Roohi/FlowMLLab/releases/tag/v1.13.0",
       "relation": "isVersionOf",
       "scheme": "url"
     },

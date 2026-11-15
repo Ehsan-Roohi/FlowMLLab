@@ -1,0 +1,14 @@
+{
+  "native_fields": 45,
+  "grids": [
+    128,
+    256,
+    512
+  ],
+  "temporal_pairs": 4,
+  "frozen_models": 15,
+  "target_leakage_detected": false,
+  "heldout_scores_recomputed": true,
+  "source_hashes_match": true,
+  "scientific_scope": "specified discrete steady branch; mesh independence not established"
+}

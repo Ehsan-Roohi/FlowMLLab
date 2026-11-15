@@ -1,0 +1,61 @@
+name: Publish FlowMLLab v1.13.0
+
+on:
+  push:
+    tags: [v1.13.0]
+    branches: [codex/cavity-highre-fields]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: publish-flowmllab-v1.13.0
+
+jobs:
+  release:
+    if: github.repository == 'Ehsan-Roohi/FlowMLLab' && (github.ref == 'refs/tags/v1.13.0' || github.ref == 'refs/heads/codex/cavity-highre-fields')
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    env:
+      OPENBLAS_NUM_THREADS: '1'
+      OMP_NUM_THREADS: '1'
+      MPLBACKEND: Agg
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          persist-credentials: false
+          fetch-depth: 0
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.12'
+          cache: pip
+      - name: Check the course and build the Python distributions
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y poppler-utils
+          python -m pip install -e '.[test]' build twine
+          python qa/update_course_inventory.py
+          python qa/validate_course_release.py
+          python qa/validate_cavity_expansion.py
+          python qa/validate_cavity_highre.py
+          python qa/check_cavity_notebooks.py
+          python -m pytest -q qa/test_release_integrity.py tests/test_course_navigation.py tests/test_ghia_allre.py tests/test_cavity_validation.py tests/test_deep_cavity_audit.py tests/test_pressure_velocity_experiments.py tests/test_cavity_steady.py tests/test_cavity_field_operator.py
+          python -m build
+          python -m twine check dist/*
+      - name: Verify the isolated wheel
+        run: |
+          python -m venv /tmp/flowmllab-release
+          /tmp/flowmllab-release/bin/python -m pip install dist/*.whl
+          cd /tmp
+          /tmp/flowmllab-release/bin/python -c 'from importlib.metadata import version; import flowmllab; assert version("flowmllab") == flowmllab.__version__ == "1.13.0"'
+          /tmp/flowmllab-release/bin/flowmllab smoke
+      - name: Publish the reviewed tag
+        if: github.ref == 'refs/tags/v1.13.0'
+        run: |
+          sha256sum dist/* results/cavity_highre_ghia/highre_cfd_ghia.png results/cavity_highre_ghia/ghia_scores.csv results/cavity_highre_ghia/mesh_sensitivity.csv results/cavity_field_deeponet/re3200_fields.png results/cavity_field_deeponet/re7500_fields.png results/cavity_field_deeponet/test_scores.csv qa/cavity_highre_validation.json output/qa/cavity_notebook_execution.json lectures/week01_numerical_foundations.pdf lectures/week01_2_pressure_velocity.pdf lectures/week04_cavity_surrogates_deeponet.pdf lectures/week13_rectangular_cavity_pinn.pdf notebooks/week04/W4_Lab5_All_Re_Ghia_Validation.ipynb notebooks/week04/W4_Lab6_Ghia_Profile_Optimizer_Depth.ipynb notebooks/week13/W13_Deep_Cavity_D5_Regional_Accuracy.ipynb notebooks/week04/W4_Lab7_High_Re_CFD_Ghia.ipynb notebooks/week04/W4_Lab8_High_Re_Field_DeepONet.ipynb > release_assets_v1.13.0_sha256.txt
+          gh release create v1.13.0 --verify-tag --latest \
+            --title 'FlowMLLab v1.13.0 - High-Re cavity CFD and held-out full-field neural tests' \
+            --notes-file RELEASE_NOTES_v1.13.0.md \
+            dist/* results/cavity_highre_ghia/highre_cfd_ghia.png results/cavity_highre_ghia/ghia_scores.csv results/cavity_highre_ghia/mesh_sensitivity.csv results/cavity_field_deeponet/re3200_fields.png results/cavity_field_deeponet/re7500_fields.png results/cavity_field_deeponet/test_scores.csv qa/cavity_highre_validation.json output/qa/cavity_notebook_execution.json lectures/week01_numerical_foundations.pdf lectures/week01_2_pressure_velocity.pdf lectures/week04_cavity_surrogates_deeponet.pdf lectures/week13_rectangular_cavity_pinn.pdf notebooks/week04/W4_Lab5_All_Re_Ghia_Validation.ipynb notebooks/week04/W4_Lab6_Ghia_Profile_Optimizer_Depth.ipynb notebooks/week13/W13_Deep_Cavity_D5_Regional_Accuracy.ipynb notebooks/week04/W4_Lab7_High_Re_CFD_Ghia.ipynb notebooks/week04/W4_Lab8_High_Re_Field_DeepONet.ipynb release_assets_v1.13.0_sha256.txt

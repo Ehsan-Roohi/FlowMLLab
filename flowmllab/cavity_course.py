@@ -12,6 +12,8 @@ def coverage(root):
         path=root/f'results/week01_2_formulations/streamfunction-vorticity-re{re}-n128.npz'
         if re==100:
             path=root/'results/week01_2_pressure_velocity/simple-re100-n64.npz'
+        new_field=root/f'results/cavity_highre_ghia/n512/re{re}.npz'
+        if new_field.exists():path=new_field
         rows.append({'Re':re,'reference_samples':34,'flagged_samples':sum(k[0]==re for k in FLAGGED),
                      'profile_study_role':case_roles()[re],
                      'retained_field':path.relative_to(root).as_posix() if path.exists() else None,

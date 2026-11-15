@@ -89,8 +89,14 @@ printed entry. These are numerical solutions, not curves fitted to Ghia.
 
 [Open the executed CFD validation lab](notebooks/week04/W4_Lab5_All_Re_Ghia_Validation.ipynb)
 · [Grid comparisons, signed errors and source fields](results/cavity_cfd_ghia/README.md).
-Reference tables cover all seven Ghia Reynolds numbers; retained CFD fields for
-3200, 5000, 7500 and 10000 are still missing.
+**New higher-Re CFD.** The four cases below were independently solved on
+128, 256 and 512 cells per side; circles remain the original Ghia samples.
+
+<img src="results/cavity_highre_ghia/highre_cfd_ghia.png" width="760" alt="New three-grid CFD against Ghia at Re3200,5000,7500 and10000">
+
+[Run the new CFD lab](notebooks/week04/W4_Lab7_High_Re_CFD_Ghia.ipynb) ·
+[Native fields and mesh/time sensitivity](results/cavity_highre_ghia/README.md).
+These are converged discrete roots; remaining high-Re mesh sensitivity is reported.
 
 
 ### Week 1.1 — AI-assisted scientific software
@@ -221,6 +227,24 @@ not a high-Re full-field DeepONet or PINN result.
 [Open the optimizer/depth lab](notebooks/week04/W4_Lab6_Ghia_Profile_Optimizer_Depth.ipynb)
 · [All seven profile figures and frozen results](results/cavity_ghia_allre/README.md).
 
+
+### Full-field neural follow-on to Week 4
+
+The new POD-DeepONet learns our matched CFD velocity fields across Re=100–10000.
+Re=3200 and 7500 are withheld in full. Architecture and interpolation convention
+are selected on Re=400 and 6500; neither test field is used for fitting or selection.
+
+<img src="results/cavity_field_deeponet/re3200_fields.png" width="760" alt="Held-out full-field CFD, POD-DeepONet, interpolation and linear-scale vector errors">
+
+| Re | Neural mean | Linear in Re | Linear in log Re |
+| --- | --- | --- | --- |
+| 3200 | 0.0951% | 0.8400% | 0.5394% |
+| 7500 | 0.0844% | 0.4703% | 0.3139% |
+
+Errors compare with the 512-cell CFD discretization. Its remaining mesh
+sensitivity is larger than some surrogate errors.
+[Run the new field-neural lab](notebooks/week04/W4_Lab8_High_Re_Field_DeepONet.ipynb) ·
+[Both tests, signed profiles, seed variation and limitations](results/cavity_field_deeponet/README.md).
 
 ### Week 4.1 — Classical reduced-order models
 
@@ -889,8 +913,8 @@ This fixed Re105 frame-245 example uses 84 total target labels and seed 17. Vort
 
 [Software manuscript archive](manuscript/README.md) · [Citation](CITATION.cff) · [Data provenance and reuse](DATA_PROVENANCE.md) · [Contributing](CONTRIBUTING.md)
 
-Current release: **v1.12.1**
+Current release: **v1.13.0**
 
-[GitHub release v1.12.1](https://github.com/Ehsan-Roohi/FlowMLLab/releases/tag/v1.12.1) · [Zenodo v1.12.1](https://doi.org/10.5281/zenodo.24247466) · [Release history](https://github.com/Ehsan-Roohi/FlowMLLab/releases)
+[GitHub release v1.13.0](https://github.com/Ehsan-Roohi/FlowMLLab/releases/tag/v1.13.0) · [Zenodo archive (all versions)](https://doi.org/10.5281/zenodo.22074169) · [Release history](https://github.com/Ehsan-Roohi/FlowMLLab/releases)
 
 **Ehsan Roohi** · University of Massachusetts Amherst · [roohie@umass.edu](mailto:roohie@umass.edu)

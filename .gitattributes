@@ -11,6 +11,7 @@
 *.toml text eol=lf
 *.tex text eol=lf
 *.bib text eol=lf
+*.sbatch text eol=lf
 *.yml text eol=lf
 *.yaml text eol=lf
 *.html text eol=lf
@@ -38,3 +39,7 @@ data/aescte_dsmc/raw/** -text -whitespace
 data/nozzle_bird_pr/*.dat -text -whitespace
 data/week13_deep_cavity/audit.json -text
 data/week13_deep_cavity/loss_continuation.dat -text
+
+# Frozen cavity evidence is identified by raw SHA256; preserve its original bytes.
+results/cavity_highre_ghia/** -text -whitespace
+results/cavity_field_deeponet/** -text -whitespace

@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "course_version": "1.12.1",
+  "course_version": "1.13.0",
   "scope": "Current working-tree assets for numbered Weeks 1–22, including incremental and preparatory material. This is not a new published release or proof of execution.",
   "rules": {
     "active_lecture_pdfs": "lectures/week*.pdf only; exclude lectures/versions, lectures/source figure PDFs and separately listed optional supplements.",
@@ -10,8 +10,8 @@
   },
   "counts": {
     "active_lecture_pdfs": 37,
-    "lecture_pages": 578,
-    "student_notebooks": 57,
+    "lecture_pages": 584,
+    "student_notebooks": 59,
     "historical_student_companions": 1,
     "optional_notebooks": 1,
     "optional_pdfs": 1
@@ -63,7 +63,7 @@
     },
     {
       "path": "lectures/week04_cavity_surrogates_deeponet.pdf",
-      "pages": 15
+      "pages": 21
     },
     {
       "path": "lectures/week05_06_project_guide.pdf",
@@ -237,6 +237,14 @@
     },
     {
       "path": "notebooks/week04/W4_Lab6_Ghia_Profile_Optimizer_Depth.ipynb",
+      "role": "student"
+    },
+    {
+      "path": "notebooks/week04/W4_Lab7_High_Re_CFD_Ghia.ipynb",
+      "role": "student"
+    },
+    {
+      "path": "notebooks/week04/W4_Lab8_High_Re_Field_DeepONet.ipynb",
       "role": "student"
     },
     {

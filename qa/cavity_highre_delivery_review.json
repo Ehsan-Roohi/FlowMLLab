@@ -1,0 +1,55 @@
+{
+  "lecture_checks": [
+    {
+      "pdf": "lectures/week01_numerical_foundations.pdf",
+      "sha256": "feb9e0a788949fc62fd3a429afcc3fe06521966220364b9041668c962f751b82",
+      "pages": 37,
+      "original_pages": 35,
+      "extension_fonts": [
+        "TimesNewRomanPS-BoldMT",
+        "TimesNewRomanPSMT"
+      ],
+      "text_black": true,
+      "text_outside_page": false
+    },
+    {
+      "pdf": "lectures/week01_2_pressure_velocity.pdf",
+      "sha256": "9ce5c72b7cb6f1369c6e3a8d3e6a0c846b21ecaa333b377cc5b278a5a2b484ff",
+      "pages": 64,
+      "original_pages": 62,
+      "extension_fonts": [
+        "TimesNewRomanPS-BoldMT",
+        "TimesNewRomanPSMT"
+      ],
+      "text_black": true,
+      "text_outside_page": false
+    },
+    {
+      "pdf": "lectures/week04_cavity_surrogates_deeponet.pdf",
+      "sha256": "7bc9baf5cf074e7cfe8ceb71a4d2987796e2b0ebdc9d96359e4c3bbf85082d99",
+      "pages": 21,
+      "original_pages": 11,
+      "extension_fonts": [
+        "TimesNewRomanPS-BoldMT",
+        "TimesNewRomanPSMT"
+      ],
+      "text_black": true,
+      "text_outside_page": false
+    },
+    {
+      "pdf": "lectures/week13_rectangular_cavity_pinn.pdf",
+      "sha256": "ff7cb94d428049c42e4f08a801f590abe09cb8b1fd60622df8468f3ec338349e",
+      "pages": 18,
+      "original_pages": 12,
+      "extension_fonts": [
+        "TimesNewRomanPS-BoldMT",
+        "TimesNewRomanPSMT"
+      ],
+      "text_black": true,
+      "text_outside_page": false
+    }
+  ],
+  "visual_review": "Week 4 pages 16-21 and Week 1 pages 36-37 inspected individually at 125 dpi; final physical figures inspected at native render size. Legends outside curves; full axes and shared color scales retained.",
+  "scope": "Added/revised extension material only; original 120 PDF pages separately verified unchanged.",
+  "review_date": "2026-11-15"
+}

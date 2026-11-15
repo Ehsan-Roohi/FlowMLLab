@@ -1,0 +1,11 @@
+{
+  "frozen_selection_sha256": "51a39e29b31538559bacaf767ce0e24adebca928733cb76cdf6cc484ea815410",
+  "physical_audit": "wall/divergence preservation is separate from nonlinear PDE accuracy",
+  "plot_scope": "native 513 by 513 fields; shared speed and linear error scales within each Reynolds case",
+  "files_sha256": {
+    "re3200_fields.png": "aa3a84ca878bec35de892873c0381a1cfd163ca25138c5bd9f3d7e68003033d5",
+    "re3200_profiles.png": "8082b65943b9bc003d3577413dc2183ef95bd80f826dea51c3e64c8d121dbc7f",
+    "re7500_fields.png": "0ec77d408fb9aeec55d3a7fabdaa62a4e18ebeb508d842cebe17a8bfd4eb6770",
+    "re7500_profiles.png": "984054f12885740f0f81706c16d29530e2e8ae69a0e9ef6c4fdd54d5f6f1d79c"
+  }
+}

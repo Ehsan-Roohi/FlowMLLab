@@ -1,4 +1,4 @@
-"""Execute the three new cavity notebooks in fresh Jupyter kernels before release."""
+"""Execute the five cavity notebooks in fresh Jupyter kernels before release."""
 from pathlib import Path
 import hashlib,json,time
 import nbformat
@@ -8,6 +8,8 @@ NOTEBOOKS=[
  'notebooks/week04/W4_Lab5_All_Re_Ghia_Validation.ipynb',
  'notebooks/week04/W4_Lab6_Ghia_Profile_Optimizer_Depth.ipynb',
  'notebooks/week13/W13_Deep_Cavity_D5_Regional_Accuracy.ipynb',
+ 'notebooks/week04/W4_Lab7_High_Re_CFD_Ghia.ipynb',
+ 'notebooks/week04/W4_Lab8_High_Re_Field_DeepONet.ipynb',
 ]
 
 def main():
@@ -23,7 +25,7 @@ def main():
                          'seconds':time.perf_counter()-start,'fresh_kernel_passed':True})
         print('Fresh kernel passed:',rel,flush=True)
     out=ROOT/'output/qa/cavity_notebook_execution.json';out.parent.mkdir(parents=True,exist_ok=True)
-    out.write_text(json.dumps({'scope':'Three new cavity notebooks; older notebooks are not rerun',
+    out.write_text(json.dumps({'scope':'Five cavity notebooks; older notebooks are not rerun',
                               'notebooks':evidence},indent=2)+'\n',encoding='utf-8')
 
 if __name__=='__main__':main()

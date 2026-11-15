@@ -81,7 +81,7 @@
       "blocks": [
         {
           "type": "body",
-          "text": "A selectable Reynolds number does not certify the solver. The retained course fields cover the original low-Re work plus Re = 400/1000 formulation studies. Re = 3200, 5000, 7500 and 10000 currently have tabulated references but no newly qualified full fields in this extension."
+          "text": "A selectable Reynolds number does not certify a solver. New Lab 7 now supplies actual CFD at all four higher Ghia Reynolds numbers on 128, 256 and 512 cells per side. Matched low-Re and additional training fields complete 45 solutions. All pass independent discrete-equation checks; material high-Re mesh sensitivity remains."
         },
         {
           "type": "heading",
@@ -138,7 +138,7 @@
         },
         {
           "type": "body",
-          "text": "Exercise: identify the largest signed near-wall error, explain why an aggregate norm may hide it, and calculate both masked and unfiltered errors for the three suspicious entries. Missing high-Re fields must remain labelled missing in any neural-training manifest."
+          "text": "Exercise: identify the largest signed near-wall error, explain why an aggregate norm may hide it, and calculate both masked and unfiltered errors for the three suspicious entries. Use the new field/hash manifest in Lab 7; distinguish a converged discrete solution from a mesh-independent physical reference."
         }
       ]
     }
@@ -437,6 +437,255 @@
         {
           "type": "small",
           "text": "Sources and exact proposed ablations: docs/CAVITY_RESEARCH_ROADMAP.md. JAX-PI: github.com/PredictiveIntelligenceLab/jaxpi/tree/main/examples/ldc. PirateNets: arxiv.org/abs/2402.00326. D/W=5 paper: arxiv.org/abs/2610.38814v2."
+        }
+      ]
+    },
+    {
+      "title": "New CFD: solving the four higher Ghia cases",
+      "blocks": [
+        {
+          "type": "body",
+          "text": "Lab 7 adds Re=3200,5000,7500,10000 on three uniform grids. Central streamfunction-vorticity differences and Thom wall vorticity match the earlier Week-4 spatial formulation. Damped Newton with Reynolds continuation solves the steady equations; Ghia values are never used in the solve. Newton iteration is not physical time."
+        },
+        {
+          "type": "math",
+          "latex": "\\nabla_h^2\\psi+\\omega=0,\\qquad Re^{-1}\\nabla_h^2\\omega-uD_x\\omega-vD_y\\omega=0."
+        },
+        {
+          "type": "figure",
+          "path": "results/cavity_highre_ghia/highre_cfd_ghia.png",
+          "caption": "Our 128/256/512-cell profiles against the original Ghia samples. Crosses retain predeclared suspicious printed entries; raw and screened errors are both reported.",
+          "max_height": 320
+        },
+        {
+          "type": "body",
+          "text": "Each native field is checked independently for array identity, Poisson and vorticity residuals, wall values, velocity/streamfunction consistency and divergence. Residuals below 1e-6 establish discrete roots; they do not establish grid independence."
+        },
+        {
+          "type": "small",
+          "text": "Files: results/cavity_highre_ghia/verification.json, ghia_scores.csv. Exercises: Lab 7, Sections 3 and 7."
+        }
+      ]
+    },
+    {
+      "title": "Mesh and time sensitivity are separate questions",
+      "blocks": [
+        {
+          "type": "figure",
+          "path": "results/cavity_highre_ghia/highre_streamlines.png",
+          "caption": "Finest-grid black streamlines. Automatic seeding can miss small vortices; inspect signed streamfunction contours in the corner exercise.",
+          "max_height": 180
+        },
+        {
+          "type": "table",
+          "widths": [
+            70,
+            130,
+            130,
+            130
+          ],
+          "rows": [
+            [
+              "Re",
+              "256-to-512 vector difference",
+              "Short-time perturbation ratio",
+              "dt-pair RMS/U"
+            ],
+            [
+              "3200",
+              "2.03%",
+              "0.813",
+              "1.07e-12"
+            ],
+            [
+              "5000",
+              "3.14%",
+              "0.880",
+              "2.23e-12"
+            ],
+            [
+              "7500",
+              "4.72%",
+              "0.940",
+              "8.73e-12"
+            ],
+            [
+              "10000",
+              "6.32%",
+              "1.087",
+              "2.57e-11"
+            ]
+          ]
+        },
+        {
+          "type": "body",
+          "text": "The vector mesh difference uses common native samples and is not an exact-error bound. Both temporal runs use the same 256-cell initial perturbation, dt=0.002/0.001, and tU/L=0..10. Tiny paired differences test temporal discretization, not total CFD accuracy."
+        },
+        {
+          "type": "body",
+          "text": "The Re=10000 perturbation grows by 8.7% over this finite horizon. Neither this observation nor decay of one perturbation proves long-time stability. A steady 2-D root also need not be a stable physical 3-D flow. Pressure is not reconstructed."
+        },
+        {
+          "type": "body",
+          "text": "Engineering task: compare signed profiles and corner extrema across all grids; state which numerical criterion fails as well as which passes."
+        }
+      ]
+    },
+    {
+      "title": "A full-field POD-DeepONet with whole-Re tests",
+      "blocks": [
+        {
+          "type": "body",
+          "text": "Lab 8 learns both velocity components from our matched native CFD fields. It is supervised parameter-to-field learning, not a data-free PINN. Stack q=[u;v], compute the mean and orthonormal POD modes only from training fields, and learn the coefficients with a tanh branch."
+        },
+        {
+          "type": "math",
+          "latex": "\\widehat{\\mathbf{q}}(Re)=\\overline{\\mathbf{q}}+\\Phi\\,\\mathbf{a}_\\theta(\\log_{10}Re-3)."
+        },
+        {
+          "type": "table",
+          "widths": [
+            80,
+            380
+          ],
+          "rows": [
+            [
+              "Role",
+              "Complete Reynolds cases"
+            ],
+            [
+              "Training",
+              "100,250,500,750,1000,2500,4000,5000,6000,9000,10000"
+            ],
+            [
+              "Validation",
+              "400,6500"
+            ],
+            [
+              "Test",
+              "3200,7500"
+            ]
+          ]
+        },
+        {
+          "type": "body",
+          "text": "Two and five layers, Adam and Adam-to-L-BFGS, global/per-mode coefficient scales, and a capacity-matched depth control use three seeds and the same maximum evaluation budget. Select by mean validation vector error; retain all seed outcomes."
+        },
+        {
+          "type": "math",
+          "latex": "J=\\frac{1}{n_{\\rm tr}r}\\sum_{j,k}\\left[f_{\\theta,k}(z_j)-a_{jk}/s_k\\right]^2."
+        },
+        {
+          "type": "body",
+          "text": "s_k is either one common training RMS or each mode RMS. Per-mode weights emphasize weak modes but can harm optimization/generalization. More layers are not automatically better. Interpolation receives precisely the same training fields."
+        }
+      ]
+    },
+    {
+      "title": "Representational error and held-out prediction",
+      "blocks": [
+        {
+          "type": "body",
+          "text": "The original nine-case POD had a 3.251% projection floor at validation Re=400. Adding independent training solves at 500 and 750 addressed missing spatial content; test cases were unchanged and unscored. This validation-led amendment is retained, not presented as a fixed design chosen in advance."
+        },
+        {
+          "type": "math",
+          "latex": "\\mathbf{q}_{\\rm proj}=\\overline{\\mathbf{q}}+\\Phi\\Phi^T(\\mathbf{q}_{\\rm true}-\\overline{\\mathbf{q}})."
+        },
+        {
+          "type": "body",
+          "text": "Projection uses target truth and is only an oracle lower bound. It is not the neural prediction. The model, basis and test coefficients were hash-frozen before scoring. The reported neural field is the selected three-seed average."
+        },
+        {
+          "type": "table",
+          "widths": [
+            60,
+            130,
+            130,
+            140
+          ],
+          "rows": [
+            [
+              "Re",
+              "Neural mean",
+              "Linear in Re",
+              "Linear in log Re"
+            ],
+            [
+              "3200",
+              "0.0951%",
+              "0.8400%",
+              "0.5394%"
+            ],
+            [
+              "7500",
+              "0.0844%",
+              "0.4703%",
+              "0.3139%"
+            ]
+          ]
+        },
+        {
+          "type": "body",
+          "text": "These percentages measure the full velocity-vector discrepancy against the 512-cell CFD solution. They are not speed-only errors or proof of exact physical accuracy. The 256-to-512 sensitivities at the two tests are 2.03% and 4.72%."
+        },
+        {
+          "type": "figure",
+          "path": "results/cavity_field_deeponet/re3200_profiles.png",
+          "caption": "Signed profiles distinguish the Adam baseline, selected neural result and interpolation, alongside CFD and actual Ghia samples.",
+          "max_height": 275
+        }
+      ]
+    },
+    {
+      "title": "Look at the flow and where the errors occur",
+      "blocks": [
+        {
+          "type": "figure",
+          "path": "results/cavity_field_deeponet/re7500_fields.png",
+          "caption": "Held-out Re=7500: CFD, neural and interpolation speed use one colour scale; the vector-error maps share a linear scale. Native samples are retained.",
+          "max_height": 390
+        },
+        {
+          "type": "body",
+          "text": "A fixed linear CFD basis preserves the common wall values and discrete continuity. Its nonlinear vorticity-transport residual is generally nonzero. Compute this residual separately: small supervised error and small divergence do not imply satisfaction of nonlinear momentum."
+        },
+        {
+          "type": "body",
+          "text": "Inspect both centreline components, vortex structure and spatial errors. A small global norm can hide local failure; use regional diagnostics for weak recirculation. No pressure or long-time-stability claim follows from these velocity comparisons."
+        }
+      ]
+    },
+    {
+      "title": "Engineering work: five measured comparisons",
+      "blocks": [
+        {
+          "type": "body",
+          "text": "A. From the Lab 8 validation table, report per-Re mean and seed range for all five configurations. Compare optimizer at fixed depth, depth at fixed width, the capacity-matched control, and coefficient scaling. Identify both improvements and deterioration."
+        },
+        {
+          "type": "body",
+          "text": "B. Compare the retained first-round and final validation errors. Explain the role of the projection floor and the two extra training fields; separate this change in information from optimizer effects."
+        },
+        {
+          "type": "body",
+          "text": "C. For each held-out Re, report vector/component L2, maximum signed centreline error and its location. Compare the selected ensemble with both interpolation conventions. Supply physical profiles, not bar charts."
+        },
+        {
+          "type": "body",
+          "text": "D. Compare neural error with the native mesh sensitivity and independently computed nonlinear residual. Explain why a mesh difference is not a certified error bound and exact divergence does not establish momentum balance."
+        },
+        {
+          "type": "body",
+          "text": "E. Enable the optional CPU cell and change one architecture or optimizer setting. Keep fitting and selection on training/validation only. Published test scores are disclosed; further test-based tuning is exploratory and needs fresh withheld cases for a blind claim."
+        },
+        {
+          "type": "body",
+          "text": "Deliverables: one CSV of measured results, two signed-profile figures, and an interpretation separating representation, optimization and CFD discretization. Record source/model/data hashes. Earlier laboratories remain available and unchanged."
+        },
+        {
+          "type": "small",
+          "text": "Methods in context: FFV-PINN solves separate data-free square-cavity cases with finite-volume residuals and correction loss; Roohi-McDevitt assesses regional accuracy in a regularized D/W=5 cavity. Neither should be conflated with this supervised parameter surrogate. Primary-source links: docs/CAVITY_ALL_RE_NEURAL_LITERATURE.md."
         }
       ]
     }

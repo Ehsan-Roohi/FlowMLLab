@@ -3,24 +3,24 @@
     "base_pages_preserved": 35,
     "new_pages": 2,
     "total_pages": 37,
-    "sha256": "7ba97b0473c555a5c1081b7d0dcb5ae6555aa0d610a2e6e77aa51d9b9f7aa98f"
+    "sha256": "feb9e0a788949fc62fd3a429afcc3fe06521966220364b9041668c962f751b82"
   },
   "week01_2_pressure_velocity": {
     "base_pages_preserved": 62,
     "new_pages": 2,
     "total_pages": 64,
-    "sha256": "170b0cb33d56d0efa8b134c3c06376fe898a9962d4a478a034b5edd8aaebc759"
+    "sha256": "9ce5c72b7cb6f1369c6e3a8d3e6a0c846b21ecaa333b377cc5b278a5a2b484ff"
   },
   "week04_cavity_surrogates_deeponet": {
     "base_pages_preserved": 11,
-    "new_pages": 4,
-    "total_pages": 15,
-    "sha256": "059bdb53b46bbaec7a2f49498d03ff995d6fbc66003d7eb7740419110e4abd05"
+    "new_pages": 10,
+    "total_pages": 21,
+    "sha256": "7bc9baf5cf074e7cfe8ceb71a4d2987796e2b0ebdc9d96359e4c3bbf85082d99"
   },
   "week13_rectangular_cavity_pinn": {
     "base_pages_preserved": 12,
     "new_pages": 6,
     "total_pages": 18,
-    "sha256": "a1147f61e5b21690781fcc365349d123b59a232dc5549e5a4ccaf81e45f9ceaf"
+    "sha256": "ff7cb94d428049c42e4f08a801f590abe09cb8b1fd60622df8468f3ec338349e"
   }
 }

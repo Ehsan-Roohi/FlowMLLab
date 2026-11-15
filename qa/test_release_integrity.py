@@ -6,7 +6,7 @@ from pathlib import Path
 
 
 ROOT = Path(__file__).resolve().parents[1]
-VERSION = "1.12.1"
+VERSION = "1.13.0"
 
 
 def test_release_metadata_is_synchronized() -> None:
