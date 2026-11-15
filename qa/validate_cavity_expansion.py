@@ -24,11 +24,7 @@ def main():
         document=nbformat.read(path,as_version=4)
         additions=[c for c in document.cells if c.metadata.get(TAG)]
         if not additions:continue
-        for c in additions:
-            if c.cell_type=='code' and c.source.startswith('from pathlib import Path\nimport sys, subprocess'):
-                c.source=BOOT.strip()
         nbformat.validate(document)
-        nbformat.write(document,path)
         rel=path.relative_to(ROOT).as_posix()
         old_count=0
         if path.name not in {'W13_Deep_Cavity_D5_Regional_Accuracy.ipynb', 'W4_Lab5_All_Re_Ghia_Validation.ipynb', 'W4_Lab6_Ghia_Profile_Optimizer_Depth.ipynb'}:

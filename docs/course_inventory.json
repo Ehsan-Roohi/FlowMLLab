@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "course_version": "1.12.0",
+  "course_version": "1.12.1",
   "scope": "Current working-tree assets for numbered Weeks 1–22, including incremental and preparatory material. This is not a new published release or proof of execution.",
   "rules": {
     "active_lecture_pdfs": "lectures/week*.pdf only; exclude lectures/versions, lectures/source figure PDFs and separately listed optional supplements.",

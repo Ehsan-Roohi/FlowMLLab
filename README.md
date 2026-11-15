@@ -79,6 +79,20 @@ Follow the captions for data provenance and validity limits; the
 At Re = 400, the moving lid drives a large clockwise vortex and weaker corner recirculation. The black streamlines come from the retained 65 × 65 solution. The right panels compare both velocity centerlines with Ghia et al. The cross marks the published point omitted from the qualified horizontal-profile error norm.
 [Cavity benchmark and Ghia comparison](results/article_figures/fig02_cavity_benchmark.png) · [Figure contract](ARTICLE_FIGURE_MAP.md)
 
+**Our CFD against Ghia at three Reynolds numbers.** Solid curves below come
+from FlowMLLab's retained solver fields; circles are the corresponding published
+Ghia samples. Re=100 uses SIMPLE on 64 cells; Re=400 and 1000 use the independent
+finite-difference solver on 128 cells. The cross preserves the flagged Re=400
+printed entry. These are numerical solutions, not curves fitted to Ghia.
+
+<img src="results/cavity_cfd_ghia/cfd_ghia_validation.png" width="760" alt="FlowMLLab CFD curves versus Ghia velocity samples at Reynolds numbers 100, 400 and 1000; both centreline components and the flagged printed point are visible">
+
+[Open the executed CFD validation lab](notebooks/week04/W4_Lab5_All_Re_Ghia_Validation.ipynb)
+· [Grid comparisons, signed errors and source fields](results/cavity_cfd_ghia/README.md).
+Reference tables cover all seven Ghia Reynolds numbers; retained CFD fields for
+3200, 5000, 7500 and 10000 are still missing.
+
+
 ### Week 1.1 — AI-assisted scientific software
 
 **[Open Week 1.1: lecture, notebooks and guide](weeks/week01_1/README.md)**
@@ -178,6 +192,35 @@ extend the existing validation and surrogate labs, with whole-Re testing and an 
 Complete-case testing combines field error, wall/divergence checks, reference
 centerlines and measured inference cost.
 [Model and validation evidence](results/pod_deeponet/README.md)
+
+The full-field POD-DeepONet above uses CFD labels over Re=100–400 and tests
+complete fields at Re=175, 275 and 375. Its Ghia checks at 100 and 400 are
+benchmark checks, not unseen-Re tests.
+
+**Neural learning across the seven Ghia cases.** A separate CPU MLP learns
+centreline velocity profiles directly from Ghia samples. Training uses Re=100,
+1000, 5000 and 10000; validation uses 400; Re=3200 and 7500 are held out in full.
+The figure shows the Adam baseline, the validation-selected five-layer
+Adam-to-L-BFGS network with wall-data weights, and linear interpolation in log Re.
+The lower panels retain the signed error at actual reference sample locations.
+
+<img src="results/cavity_ghia_allre/re3200_profiles.png" width="760" alt="Held-out Re 3200 Ghia profiles: baseline and improved neural predictions versus linear interpolation, with signed u and v discrepancies">
+
+<details>
+<summary>View the second held-out case: Re=7500</summary>
+
+<img src="results/cavity_ghia_allre/re7500_profiles.png" width="760" alt="Held-out Re 7500 Ghia profiles and signed prediction errors for Adam, the selected network and interpolation">
+
+</details>
+
+The selected network's mean u/v RMSE is 0.01974 U at Re=3200 and 0.00563 U at
+Re=7500, compared with Adam's 0.03395 U and 0.03800 U. Interpolation is still
+better at 0.01629 U and 0.00518 U. These numbers average individual-seed errors;
+plotted neural curves are three-seed means. This is a profile-regression test,
+not a high-Re full-field DeepONet or PINN result.
+[Open the optimizer/depth lab](notebooks/week04/W4_Lab6_Ghia_Profile_Optimizer_Depth.ipynb)
+· [All seven profile figures and frozen results](results/cavity_ghia_allre/README.md).
+
 
 ### Week 4.1 — Classical reduced-order models
 
@@ -846,8 +889,8 @@ This fixed Re105 frame-245 example uses 84 total target labels and seed 17. Vort
 
 [Software manuscript archive](manuscript/README.md) · [Citation](CITATION.cff) · [Data provenance and reuse](DATA_PROVENANCE.md) · [Contributing](CONTRIBUTING.md)
 
-Current release: **v1.12.0**
+Current release: **v1.12.1**
 
-[GitHub release v1.12.0](https://github.com/Ehsan-Roohi/FlowMLLab/releases/tag/v1.12.0) · [Zenodo v1.12.0](https://doi.org/10.5281/zenodo.24246302) · [Release history](https://github.com/Ehsan-Roohi/FlowMLLab/releases)
+[GitHub release v1.12.1](https://github.com/Ehsan-Roohi/FlowMLLab/releases/tag/v1.12.1) · [Zenodo archive series](https://doi.org/10.5281/zenodo.22074169) · [Release history](https://github.com/Ehsan-Roohi/FlowMLLab/releases)
 
 **Ehsan Roohi** · University of Massachusetts Amherst · [roohie@umass.edu](mailto:roohie@umass.edu)

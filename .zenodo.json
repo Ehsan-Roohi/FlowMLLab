@@ -1,7 +1,7 @@
 {
   "title": "FlowMLLab: An Open-Source Framework for Reproducible CFD-to-Scientific-Machine-Learning Experiments",
-  "description": "FlowMLLab v1.12.0 adds three separate cavity notebooks while preserving existing lesson cells and outputs: seven-Reynolds-number Ghia validation, a three-seed CPU centreline-surrogate study of optimizer, depth and weighting, and an author-supplied D/W=5 CFD/PINN regional assessment at four Reynolds numbers. Four existing lecture PDFs gain matching reading sections. The neural study reports both improvements over Adam and losses to linear interpolation; it is not a full-field or PDE benchmark. The deep-cavity bundle reproduces 128 retained regional values, not a new independent-seed training study. The four highest-Re square-cavity full fields remain unqualified. The broader course covers continuum and rarefied CFD, reduced-order models, PINNs, neural operators and attention-based learning. Case-specific data provenance and scientific limitations are documented in the repository.",
-  "version": "1.12.0",
+  "description": "FlowMLLab v1.12.1 corrects the cavity validation lesson so its default output shows actual native CFD against Ghia at Re=100,400,1000, grid changes, signed errors and recomputed raw/screened norms. The homepage now shows this validation figure and held-out neural-profile predictions, and distinguishes the existing low-Re full-field POD-DeepONet from the seven-Re centreline regression experiment. Eight retained CFD archives are hash-checked and their original metrics reproduced; earlier notebooks, raw solver fields and frozen neural fits are preserved. The four higher-Re CFD fields remain missing; the neural fit does not substitute for them. This patch retains the three cavity labs and four lecture additions of v1.12.0 within the broader FlowMLLab CFD and scientific-machine-learning course.",
+  "version": "1.12.1",
   "publication_date": "2026-11-15",
   "creators": [
     {
@@ -46,7 +46,7 @@
       "scheme": "url"
     },
     {
-      "identifier": "https://github.com/Ehsan-Roohi/FlowMLLab/releases/tag/v1.12.0",
+      "identifier": "https://github.com/Ehsan-Roohi/FlowMLLab/releases/tag/v1.12.1",
       "relation": "isVersionOf",
       "scheme": "url"
     },

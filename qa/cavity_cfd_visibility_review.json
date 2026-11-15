@@ -1,0 +1,25 @@
+{
+  "version": "1.12.1",
+  "base_commit": "5c145165d9fce4bfadcd61f2ab1b17dce82ffd73",
+  "problem": "Lab 5 default plots only showed reference markers; native CFD and neural results were difficult to find.",
+  "native_CFD_archives_recomputed_and_hash_checked": 8,
+  "CFD_Re": [
+    100,
+    400,
+    1000
+  ],
+  "CFD_high_Re_missing": [
+    3200,
+    5000,
+    7500,
+    10000
+  ],
+  "local_targeted_tests_passed": 9,
+  "course_release_gate": "pass: 58 notebooks, 649 code cells, 38 PDFs, 388 Python files",
+  "original_notebook_cells_preserved": 287,
+  "frozen_models_hash_checked": 15,
+  "visual_review": "Five new CFD figures inspected at full resolution; right edge of streamline panel corrected; legends outside data axes.",
+  "scope": "Only Lab 5 student content changed; original data, other notebooks and PDFs unchanged. Existing neural predictions displayed without retraining.",
+  "validation_tool": "Now read-only, so checking lessons cannot rewrite their source or formatting.",
+  "fresh_kernel_release_check": "Required by publish-v1.12.1.yml before publication."
+}

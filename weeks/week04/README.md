@@ -19,7 +19,7 @@ CFD datasets, field surrogates and operator learning.
 | Lab 1: CFD data production | [Open notebook](../../notebooks/week04/W4_Lab1_CFD_Data_Production_Student.ipynb) | [Open in Colab](https://colab.research.google.com/github/Ehsan-Roohi/FlowMLLab/blob/main/notebooks/week04/W4_Lab1_CFD_Data_Production_Student.ipynb) |
 | Lab 2: scalar and field surrogates | [Open notebook](../../notebooks/week04/W4_Lab2_Scalar_and_Field_Surrogates_Student.ipynb) | [Open in Colab](https://colab.research.google.com/github/Ehsan-Roohi/FlowMLLab/blob/main/notebooks/week04/W4_Lab2_Scalar_and_Field_Surrogates_Student.ipynb) |
 | Lab 3: POD-DeepONet cavity | [Open notebook](../../notebooks/week04/W4_Lab3_DeepONet_Cavity_Student.ipynb) | [Open in Colab](https://colab.research.google.com/github/Ehsan-Roohi/FlowMLLab/blob/main/notebooks/week04/W4_Lab3_DeepONet_Cavity_Student.ipynb) |
-| Lab 5: all-Re Ghia validation | [Open notebook](../../notebooks/week04/W4_Lab5_All_Re_Ghia_Validation.ipynb) | [Open in Colab](https://colab.research.google.com/github/Ehsan-Roohi/FlowMLLab/blob/main/notebooks/week04/W4_Lab5_All_Re_Ghia_Validation.ipynb) |
+| Lab 5: our CFD versus Ghia and seven-Re coverage | [Open notebook](../../notebooks/week04/W4_Lab5_All_Re_Ghia_Validation.ipynb) | [Open in Colab](https://colab.research.google.com/github/Ehsan-Roohi/FlowMLLab/blob/main/notebooks/week04/W4_Lab5_All_Re_Ghia_Validation.ipynb) |
 | Lab 6: profile surrogates, optimizers and depth | [Open notebook](../../notebooks/week04/W4_Lab6_Ghia_Profile_Optimizer_Depth.ipynb) | [Open in Colab](https://colab.research.google.com/github/Ehsan-Roohi/FlowMLLab/blob/main/notebooks/week04/W4_Lab6_Ghia_Profile_Optimizer_Depth.ipynb) |
 
 **Module guides:** [Week 4 labs](../../notebooks/week04/)
@@ -45,6 +45,20 @@ Read the lecture, then work through the notebooks in the listed order. Read each
 Complete-case testing combines field error, wall/divergence checks, reference
 centerlines and measured inference cost.
 [Model and validation evidence](../../results/pod_deeponet/README.md)
+
+## CFD validation and all-seven-Re profile learning
+
+[Lab 5](../../notebooks/week04/W4_Lab5_All_Re_Ghia_Validation.ipynb) opens our CFD
+solutions at Re=100,400,1000, shows grid changes and signed Ghia discrepancies,
+and then displays the frozen neural predictions at Re=3200 and 7500.
+[Lab 6](../../notebooks/week04/W4_Lab6_Ghia_Profile_Optimizer_Depth.ipynb) provides
+the full seven-Re profile-regression protocol and optimizer/depth exercises.
+High-Re profile fitting does not create missing CFD fields.
+
+<img src="../../results/cavity_cfd_ghia/cfd_ghia_validation.png" width="760" alt="FlowMLLab CFD versus Ghia at three Reynolds numbers">
+
+[Native CFD results](../../results/cavity_cfd_ghia/README.md) ·
+[Neural predictions and interpolation baseline](../../results/cavity_ghia_allre/README.md)
 
 ---
 

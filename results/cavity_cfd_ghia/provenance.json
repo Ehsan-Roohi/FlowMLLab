@@ -1,0 +1,60 @@
+{
+  "purpose": "Recomputed native CFD/Ghia comparisons, no fitted CFD curves",
+  "sources": [
+    {
+      "path": "results/week01_2_pressure_velocity/simple-re100-n32.npz",
+      "sha256": "643f7f3758403a5b3f0da5448edcc65946aa04509a29e5eb49ac9325185cb29f",
+      "metadata_sha256_lf": "5fa7fc8f847dc97ea9adb83da9c45ea71ea8f96840b65028169eb38e510d3997"
+    },
+    {
+      "path": "results/week01_2_pressure_velocity/simple-re100-n64.npz",
+      "sha256": "4ce6777c09aea15ef9235246dad10ca95f0c33eb4ebcf5aa274b04bd59644b08",
+      "metadata_sha256_lf": "cb1152cbf53c39e6b9dbad8f778400f5f00792927b11441aaac3b5f5d22a3132"
+    },
+    {
+      "path": "results/week01_2_formulations/streamfunction-vorticity-re400-n32.npz",
+      "sha256": "bee636d538bba0384b9798e70d23b5f2bbfd77e5ca495d5493e3f23673d49e4e",
+      "metadata_sha256_lf": "db361b0eee2a33476649d1713cc5d4fc61446ac9dbc06dda1f5489f3f8234c81"
+    },
+    {
+      "path": "results/week01_2_formulations/streamfunction-vorticity-re400-n64.npz",
+      "sha256": "452c840729aecbb74f9486c72f584ae07c0c374410de09144de48d9b8440b1ed",
+      "metadata_sha256_lf": "efa96a9650ca96696b484d0b2dd19d5bb8b11c16ccc43d172ce1d7c56504096a"
+    },
+    {
+      "path": "results/week01_2_formulations/streamfunction-vorticity-re400-n128.npz",
+      "sha256": "0189db217fbca28715aba673fe3285180094230c028f92e2f8848cf7982db84e",
+      "metadata_sha256_lf": "b8e56b79cb9807add330e38a44b45cc51dce38e25b76434f20961e322da83712"
+    },
+    {
+      "path": "results/week01_2_formulations/streamfunction-vorticity-re1000-n32.npz",
+      "sha256": "71aa482837048e8c2ecb32ab461c945f291f98f202d1b6cf761826850bca5555",
+      "metadata_sha256_lf": "184a573ea1e64baa76c49a355b4e07164831cce73ee4e11f0d244048d5178b78"
+    },
+    {
+      "path": "results/week01_2_formulations/streamfunction-vorticity-re1000-n64.npz",
+      "sha256": "3002469df010b5ce884aae92b48042c493708eb8f9eddf6c0fb6a5a86b222037",
+      "metadata_sha256_lf": "87705d1dcb8dfc621b3db6fa9a5f1f93b16bd7262ef0d1f43e56eb9b08234b95"
+    },
+    {
+      "path": "results/week01_2_formulations/streamfunction-vorticity-re1000-n128.npz",
+      "sha256": "8b72232e01afa6429ba9f72199b901fe7f90d266ed169cd846be1980132e4313",
+      "metadata_sha256_lf": "c05d496942e249215d74712a8ff0004cbe7d0d4d1e24af8e5b7bacd4f9f39417"
+    }
+  ],
+  "plots": {
+    "cfd_ghia_validation.png": "2c7c1eb55d9f534cec1361f843355bc4c991758f8a193362ddc977f3680c965c",
+    "cfd_streamlines.png": "f8343caa7b4ce1ddfd47e4afb6de80d4f575cc6227f5ef1b6d253aae97ad16b6",
+    "re1000_cfd_profiles.png": "8d236d1feba892067742eea48d5daa3b50f64ea71ea62022d44591c350a722f4",
+    "re100_cfd_profiles.png": "dcf66b74e2379668556a7181248f3e0cf4e212ae3ca7b084b40193776b747a2c",
+    "re400_cfd_profiles.png": "db4e08fa811baa833b4accf4ddbd397fb1708d91017a4aad36310f4dc592a77d"
+  },
+  "raw_and_screened_scores_retained": true,
+  "high_Re_CFD_missing": [
+    3200,
+    5000,
+    7500,
+    10000
+  ],
+  "limits": "Native iteration gates differ by method; no new mesh/time qualification. No changes to source archives or frozen neural models."
+}

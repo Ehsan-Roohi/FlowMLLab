@@ -36,7 +36,7 @@ from flowmllab import ghia, cavity_course as course
 def md(s): return nb.v4.new_markdown_cell(s.strip().replace('\\\\','\\'),metadata={TAG:True})
 def code(s): return nb.v4.new_code_cell(s.strip(),metadata={TAG:True})
 
-INTRO=r'''# Lab 5: validation across all seven Ghia Reynolds numbers
+INTRO=r'''# Lab 5: our CFD against Ghia and seven-Re coverage
 
 This standalone CPU lab follows the original Week 1/1.2 and Week 4 CFD lessons.
 It widens the **reference and experimental parameter range** to $Re=100,400,1000,3200,5000,7500,10000$.
@@ -61,30 +61,103 @@ profile, so a reference zero crossing causes no pointwise division by zero.
 The code stores velocities already divided by $U$.
 '''
 
-REFERENCE=[md(INTRO),code(BOOT),code('''coverage = pd.DataFrame(course.coverage(ROOT))
-display(coverage)
-for re in ghia.REYNOLDS:
-    print(f'Re = {re}: original samples; markers are not a reconstructed 2D field')
-    course.plot_reference(re)
-    plt.show()'''),md(r'''### CFD admission before neural training
+REFERENCE=[md(INTRO + """
 
-The coverage table explicitly distinguishes a tabulated reference from a retained
-full field. Re=3200, 5000, 7500 and 10000 do **not** acquire validated CFD fields
-because their names appear in a dropdown. A small update at a small time step
-does not prove a steady solution. At high Re, a coarse discretization and the lid
-corner singularity can dominate the discrepancy.
+**Start with our computed solutions below.** This notebook now opens the native
+FlowMLLab CFD archives, recomputes their errors, and plots CFD curves against
+Ghia markers by default. It does not fit a curve through Ghia and call it CFD.
+Retained CFD is available at Re=100, 400 and 1000; the four higher-Re fields are
+still missing. The later neural section has a different data source and purpose.
+"""),code(BOOT),md("""### 1. Our CFD solutions, mesh changes and Ghia validation
 
-For each new case save the grid, time step, convection scheme, residual history,
-physical time, wall treatment and signed centreline differences. Compare at least
-three grids and halve the time step; inspect steady residuals, vortex locations,
-mass balance and both velocity profiles. If the solution remains time dependent,
-report this and do not average it into a supposedly steady Ghia validation.
+Re=100 uses the existing staggered-grid SIMPLE runs on 32/64 cells. Re=400 and
+1000 use the existing independent finite-difference streamfunction-vorticity
+runs on 32/64/128 cells. Every archive is checked against its recorded SHA256.
+For SIMPLE, centreline velocities come from the native MAC faces with the
+prescribed wall values. For FD, we interpolate the actual two-dimensional field.
 
-The experimental pressure-velocity wrapper accepts all seven Re values. The
-existing qualified Re=100 implementation and original low-Re field datasets
-retain their original scope. Ghia velocity agreement does not validate pressure.
-'''),code('''# Optional expensive study: choose ONE case, inspect it, then refine.
-# This switch is deliberately off for a quick classroom Run All.
+Table A recomputes the profile errors from these fields. Both the original
+printed-data score and the predeclared sensitivity score are shown. Native
+momentum and vorticity defects belong to different equations; their magnitudes
+cannot rank the methods. A passed iteration gate does not establish mesh or
+physical-time convergence.
+"""),code("""if not (ROOT/'flowmllab/cavity_validation.py').is_file():
+    raise RuntimeError('Use FlowMLLab v1.12.1 or later. Save your work, then update the checkout; do not overwrite your edited notebook.')
+from flowmllab import cavity_validation as validation
+cfd = validation.load_evidence(ROOT)
+cfd_scores = pd.DataFrame(validation.score_rows(cfd))
+print('Table A: measured errors of our retained CFD against Ghia')
+columns = ['Re', 'method', 'cells', 'recorded_converged',
+           'u_published_relative_l2', 'v_published_relative_l2',
+           'v_screened_relative_l2', 'u_screened_rmse_U', 'v_screened_rmse_U',
+           'recorded_steady_defect', 'native_equation']
+display(cfd_scores[columns])
+print('The relative-L2 columns are fractions (multiply by 100 for percent).')
+print('Source archives and hashes:')
+display(cfd_scores[['Re','cells','source','sha256']])"""),code("""print('Actual FlowMLLab CFD streamlines: SIMPLE at Re=100; FD at Re=400 and 1000.')
+validation.plot_streamlines(cfd)
+plt.show()
+for re in (100, 400, 1000):
+    print(f'Re={re}: our CFD on retained grids versus Ghia, then signed sample errors')
+    validation.plot_profiles(cfd, re)
+    plt.show()"""),md("""Read the changes in the velocity profiles before reading the scalar score.
+At Re=400, the marked printed v value near x/L=0.9063 strongly affects the
+all-point norm. Its signed discrepancy remains visible; screening does not
+replace the published value. At Re=100, these two SIMPLE grids do not give a
+monotone Ghia-error reduction. Report that outcome rather than claiming a
+successful convergence study. The original source and histories remain in
+[Re=100 evidence](../../results/week01_2_pressure_velocity/README.md) and
+[Re=400/1000 evidence](../../results/week01_2_formulations/README.md).
+
+### 2. What we have for neural learning on the Ghia cases
+
+There are two different retained experiments:
+
+* **Full fields:** the existing POD-DeepONet learns 65 by 65 velocity and pressure
+  fields from our CFD over Re=100--400. Its blind cases are Re=175, 275 and 375.
+  Ghia checks at Re=100 and 400 are not unseen-Re tests of that model.
+  [Full-field results and protocol](../../results/pod_deeponet/README.md).
+* **All-seven-Re profile study:** a small MLP learns u(y) and v(x) directly from
+  Ghia centreline samples. Training uses Re=100,1000,5000,10000; validation uses
+  400; complete test cases are 3200 and 7500. Adam, L-BFGS, their sequence, network
+  depth and wall-data weights are compared across three seeds. These results do
+  not supply the missing high-Re CFD fields or demonstrate a high-Re PINN solve.
+
+The figures below show the frozen baseline, selected network and interpolation
+against the held-out Ghia samples. Their lower panels show signed discrepancies
+at measured reference locations. Curves are three-seed means; Table B averages
+individual-seed errors. The original printed-data sensitivities remain in the
+CSV. [Lab 6](W4_Lab6_Ghia_Profile_Optimizer_Depth.ipynb) gives the complete training
+protocol, all seven plots, source models and architecture/optimizer exercises.
+"""),code("""course.verify_frozen_models(ROOT)
+neural_folder = ROOT/'results/cavity_ghia_allre'
+measured = pd.read_csv(neural_folder/'scores.csv')
+per_seed = measured.groupby(['model','Re','role','seed'])['rmse_U'].mean().reset_index()
+test = per_seed[(per_seed.role == 'test') & per_seed.model.isin(
+    ['adam_2','hybrid_5_wall','linear_logRe'])]
+print('Table B: mean u/v RMSE divided by U, averaged over individual seeds')
+display(test.groupby(['model','Re']).rmse_U.mean().unstack('Re'))
+for re in (3200, 7500):
+    print(f'Re={re}: held-out Ghia-profile prediction; these curves are not a CFD solve')
+    display(Image(filename=str(neural_folder/f're{re}_profiles.png'), width=800))
+print('The selected neural model improves over Adam, but log-Re interpolation wins both tests.')"""),md("""### 3. Coverage and the remaining high-Re CFD work
+
+Table C gives all seven reference cases and explicitly identifies the missing
+CFD fields. A Ghia table is not a full field, and a profile-regression prediction
+does not fill that gap. For each additional CFD case retain grid, time step,
+convection, residual history, wall treatment and both velocity profiles. Compare
+three grids and a halved time step, and inspect stationarity, mass balance and
+vortex locations before using the field for machine learning. Pressure requires
+an independent validation: Ghia's velocity samples do not provide one.
+"""),code("""print('Table C: reference and retained CFD coverage')
+display(pd.DataFrame(course.coverage(ROOT)))
+# Reference-only figures are optional: the default plots above contain OUR solutions.
+SHOW_REFERENCE_ONLY = False
+if SHOW_REFERENCE_ONLY:
+    for re in ghia.REYNOLDS:
+        print(f'Re={re}: published samples only')
+        course.plot_reference(re)
+        plt.show()"""),code("""# Optional new CFD: choose one case and audit it before treating it as a field label.
 RUN_NEW_CFD = False
 RE_TO_SOLVE = 3200
 CELLS = 128
@@ -95,25 +168,30 @@ if RUN_NEW_CFD:
     display({k:field[k] for k in ['status','steps','steady_vorticity_linf',
                                 'continuity_linf','ghia_u_relative_l2','ghia_v_relative_l2']})
     display(course.compare_field(RE_TO_SOLVE,field['x'],field['y'],field['u'],field['v']))
-    # A passed steady gate is necessary, but mesh/time-step comparisons are still required.
 else:
-    print('No new CFD solve requested. High-Re full-field validation remains unqualified.')'''),md(r'''### Specific student tasks: validation across Reynolds number
+    print('Retained CFD and neural results above were loaded and evaluated; no new CFD run requested.')"""),md(r"""### Specific student tasks
 
-1. **Reference sensitivity.** For each of the three flagged entries, report the
-   coordinate and printed value. Compute both scores using the same prediction.
-   Explain which conclusion changes. Do not choose a mask after inspecting your error.
-2. **Mesh study.** Start with Re=400 or 1000, using the retained 32/64/128-cell
-   results. Make a table with grid size, time step, steady residual, $E_u$, $E_v$,
-   and vortex centre. Decide what is and is not converged. Then design the same
-   table for one of 3200/5000/7500/10000; label missing runs as missing.
-3. **Numerical method.** Keep Re, grid, boundary conditions and stopping criteria
-   fixed while comparing SIMPLE, PISO and PIMPLE. Compare pressure solves and
-   elapsed time at the same achieved accuracy. SIMPLE iteration count is not
-   physical time; PISO/PIMPLE time steps require a separate temporal-accuracy check.
-4. **Data acceptance.** Write a one-paragraph acceptance/rejection decision for
-   each of the seven Re values. A benchmark table alone is not a field-training
-   case. Include signs and near-wall behaviour in your plots, not only an error norm.
-''')]
+1. **Table A and the three CFD figures:** report the u/v errors for every retained
+   grid. Locate the largest signed discrepancy and explain the nonmonotone
+   Re=100 result. For Re=400, explain the difference between raw and screened v
+   norms using the marked sample. Do not choose a mask from your observed error.
+2. **Spatial evidence:** identify the primary vortex in each actual CFD field.
+   Describe which corner structures the present grids resolve. Ghia's two
+   centreline tables alone cannot validate a complete vortex map or pressure.
+3. **Table B and the two test figures:** compare Adam, the selected network and
+   interpolation separately at Re=3200 and 7500. State where the neural model
+   gains and loses, and distinguish seed-mean error from error of the mean curve.
+4. **Information and test sets:** list the different training labels and blind
+   Re values of the full-field POD-DeepONet and the centreline MLP. Explain why
+   a successful profile fit is not independent validation of a flow solver.
+5. **Table C:** write an admission decision for each Re. Design a three-grid and
+   two-time-step CFD experiment for one missing high-Re field. Keep missing,
+   nonstationary and failed cases explicitly marked.
+6. **Algorithm comparison:** use the original Week 1.2 matched SIMPLE/PISO/PIMPLE
+   runs to compare pressure solves and elapsed time at equal achieved accuracy.
+   SIMPLE iterations are not physical time. Do not infer an algorithm ranking
+   by comparing the different Re/method combinations in this notebook.
+""")]
 
 MLINTRO=r'''# Lab 6: whole-Re generalization, network depth and optimization
 
@@ -389,4 +467,16 @@ def main():
     print('Built D/W=5 notebook and preserved earlier lessons',flush=True)
 
 
-if __name__=='__main__':main()
+if __name__=='__main__':
+    if '--only-validation' in sys.argv:
+        filename='W4_Lab5_All_Re_Ghia_Validation.ipynb'
+        doc=nb.v4.new_notebook(cells=[nb.from_dict(json.loads(json.dumps(c))) for c in REFERENCE],
+            metadata={'kernelspec':{'display_name':'Python 3','language':'python','name':'python3'},
+                      'language_info':{'name':'python'},TAG:True})
+        doc.cells[0].source += f'\n\n[Open in Colab](https://colab.research.google.com/github/Ehsan-Roohi/FlowMLLab/blob/main/notebooks/week04/{filename})'
+        execute(doc,ROOT)
+        with (ROOT/'notebooks/week04'/filename).open('w',encoding='utf-8',newline='\n') as handle:
+            nb.write(doc,handle)
+        print('Rebuilt the validation lab only; other notebooks unchanged.',flush=True)
+    else:
+        main()

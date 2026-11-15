@@ -8,6 +8,10 @@ The new neural experiment is supervised **centreline regression**, not a PINN or
 a DeepONet field solve. See the [new Lab 6](../../notebooks/week04/W4_Lab6_Ghia_Profile_Optimizer_Depth.ipynb)
 and [benchmark data/policy](../../references/ghia/README.md).
 
+See [our actual CFD versus Ghia](../cavity_cfd_ghia/README.md) for native solver
+curves, grid comparisons and signed errors at Re=100,400,1000. Lab 5 now displays
+that CFD evidence and the two held-out neural predictions by default.
+
 ## Split and comparison
 
 - Train: Re=100,1000,5000,10000. Validation/model selection: Re=400.
