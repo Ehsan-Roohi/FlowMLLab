@@ -1,0 +1,11 @@
+{
+  "source_sha256": "bbb24c18c733c49a9eeaf4d947b21d3be07eead8fd0c1dcc76a7293a61266d0b",
+  "source": "authors assessment_bundle_r1/reference_metrics/matched_region_metrics_20261030.json",
+  "source_section": "detailed_workflows",
+  "sampling_grid_x_h": [
+    161,
+    801
+  ],
+  "article": "https://arxiv.org/abs/2610.38814v2",
+  "scope": "Exact retained metric values; not recomputed from the different common-grid bundle"
+}

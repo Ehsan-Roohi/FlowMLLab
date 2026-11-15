@@ -1,0 +1,105 @@
+{
+  "numeric_values_reproduced": 128,
+  "original_sha256": "5e86d355262cda07cd341381de0697b958b04ffe7e6b096ae4a6c2d878e27ed3",
+  "data_sha256": "e491c85e542f0414e7527f00bd01440813588d0aa63d625f74a27ee8f997ada7",
+  "all_retained_arrays_exact": true,
+  "pressure_mean_roundoff": [
+    {
+      "Re": 100,
+      "region": "Interior",
+      "absolute_difference": 1.9340464998467194e-20,
+      "absolute_bound": 1.0370897812608673e-17
+    },
+    {
+      "Re": 100,
+      "region": "Upper-left",
+      "absolute_difference": 0.0,
+      "absolute_bound": 9.56933271897628e-17
+    },
+    {
+      "Re": 100,
+      "region": "Floor_0.4",
+      "absolute_difference": 0.0,
+      "absolute_bound": 1.8355137453919888e-19
+    },
+    {
+      "Re": 100,
+      "region": "Floor_0.65",
+      "absolute_difference": 1.3552527156068805e-20,
+      "absolute_bound": 1.8355135636093662e-19
+    },
+    {
+      "Re": 250,
+      "region": "Interior",
+      "absolute_difference": 2.578728082166373e-20,
+      "absolute_bound": 4.4374678708340515e-18
+    },
+    {
+      "Re": 250,
+      "region": "Upper-left",
+      "absolute_difference": 0.0,
+      "absolute_bound": 3.683792202491465e-17
+    },
+    {
+      "Re": 250,
+      "region": "Floor_0.4",
+      "absolute_difference": 0.0,
+      "absolute_bound": 4.341191809693507e-19
+    },
+    {
+      "Re": 250,
+      "region": "Floor_0.65",
+      "absolute_difference": 0.0,
+      "absolute_bound": 4.341191809666836e-19
+    },
+    {
+      "Re": 500,
+      "region": "Interior",
+      "absolute_difference": 5.157456164332746e-20,
+      "absolute_bound": 3.699042745179343e-18
+    },
+    {
+      "Re": 500,
+      "region": "Upper-left",
+      "absolute_difference": 0.0,
+      "absolute_bound": 2.388128905165116e-17
+    },
+    {
+      "Re": 500,
+      "region": "Floor_0.4",
+      "absolute_difference": 0.0,
+      "absolute_bound": 9.500521352388484e-19
+    },
+    {
+      "Re": 500,
+      "region": "Floor_0.65",
+      "absolute_difference": 1.0842021724855044e-19,
+      "absolute_bound": 9.500521352383088e-19
+    },
+    {
+      "Re": 1000,
+      "region": "Interior",
+      "absolute_difference": 3.2234101027056553e-21,
+      "absolute_bound": 4.734550320906748e-18
+    },
+    {
+      "Re": 1000,
+      "region": "Upper-left",
+      "absolute_difference": 0.0,
+      "absolute_bound": 4.5666902816339553e-17
+    },
+    {
+      "Re": 1000,
+      "region": "Floor_0.4",
+      "absolute_difference": 0.0,
+      "absolute_bound": 1.256668269986299e-19
+    },
+    {
+      "Re": 1000,
+      "region": "Floor_0.65",
+      "absolute_difference": 1.3552527156068805e-20,
+      "absolute_bound": 1.2566682700486066e-19
+    }
+  ],
+  "original_unchanged": true
+}

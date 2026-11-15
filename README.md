@@ -166,6 +166,9 @@ HS–NTC wall-pressure validation.
 
 **[Open Week 4: lecture, notebooks and guide](weeks/week04/README.md)**
 
+[All seven Ghia Reynolds numbers and the CPU optimizer/depth comparison](results/cavity_ghia_allre/README.md)
+extend the existing validation and surrogate labs, with whole-Re testing and an explicit full-field coverage audit.
+
 **Problem:** Map Reynolds number to cavity fields.<br>
 **CFD / data:** FlowMLLab finite-difference streamfunction–vorticity Navier–Stokes solver.<br>
 **Learning method:** POD–DeepONet: learned parameter-to-coefficient map with a fixed POD spatial basis.
@@ -574,6 +577,9 @@ archived research reconstruction shown above.
 
 **[Open Week 13: lecture, notebooks and guide](weeks/week13/README.md)**
 
+The separate [D/W=5 regional-accuracy notebook](notebooks/week13/W13_Deep_Cavity_D5_Regional_Accuracy.ipynb)
+adds the authors' retained CFD/PINN fields at Re=100,250,500,1000 and regional velocity, pressure and vorticity comparisons.
+
 The front page retains only two representative comparisons. The notebook has three parts:
 build and train a small streamfunction PINN on CPU and judge it against the Week 1 CFD
 reference; inspect the deep-cavity field beside CFD; audit the four-case research matrix.
@@ -835,8 +841,8 @@ This fixed Re105 frame-245 example uses 84 total target labels and seed 17. Vort
 
 [Software manuscript archive](manuscript/README.md) · [Citation](CITATION.cff) · [Data provenance and reuse](DATA_PROVENANCE.md) · [Contributing](CONTRIBUTING.md)
 
-Current release: **v1.11.0**
+Current release: **v1.12.0**
 
-[GitHub release v1.11.0](https://github.com/Ehsan-Roohi/FlowMLLab/releases/tag/v1.11.0) · [Zenodo archive v1.11.0](https://doi.org/10.5281/zenodo.24220731) · [Release history](https://github.com/Ehsan-Roohi/FlowMLLab/releases)
+[GitHub release v1.12.0](https://github.com/Ehsan-Roohi/FlowMLLab/releases/tag/v1.12.0) · [Zenodo archive series](https://doi.org/10.5281/zenodo.22074169) · [Release history](https://github.com/Ehsan-Roohi/FlowMLLab/releases)
 
 **Ehsan Roohi** · University of Massachusetts Amherst · [roohie@umass.edu](mailto:roohie@umass.edu)

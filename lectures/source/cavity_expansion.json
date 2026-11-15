@@ -1,0 +1,644 @@
+{
+  "week01_numerical_foundations": [
+    {
+      "title": "Cavity validation across all seven Ghia Reynolds numbers",
+      "blocks": [
+        {
+          "type": "body",
+          "text": "The first worked cavity remains the introduction. Extend its validation to Re = 100, 400, 1000, 3200, 5000, 7500 and 10000. With cavity width L, lid speed U and kinematic viscosity nu, Re = UL/nu. The reference is a square cavity with a discontinuous moving lid, not a Gaussian-regularized or deep-cavity problem."
+        },
+        {
+          "type": "heading",
+          "text": "What the benchmark actually supplies"
+        },
+        {
+          "type": "body",
+          "text": "Ghia, Ghia and Shin (1982), Tables I and II, supply 17 samples of u/U on x/L = 0.5 and 17 of v/U on y/L = 0.5 at each Re. These are profiles, not a dense two-dimensional velocity/pressure field. The shared module flowmllab/ghia.py is now the single source for the seven cases; the notebook shows every case."
+        },
+        {
+          "type": "table",
+          "widths": [
+            70,
+            100,
+            120,
+            170
+          ],
+          "rows": [
+            [
+              "Re",
+              "Component",
+              "Coordinate",
+              "Printed value and concern"
+            ],
+            [
+              "400",
+              "v/U",
+              "x/L = 0.9063",
+              "-0.23827; isolated anomaly"
+            ],
+            [
+              "3200",
+              "u/U",
+              "y/L = 0.4531",
+              "-0.86636; suspected decimal"
+            ],
+            [
+              "10000",
+              "u/U",
+              "y/L = 0.5",
+              "+0.03111; suspected sign"
+            ]
+          ]
+        },
+        {
+          "type": "body",
+          "text": "Retain these printed entries. Report an unfiltered score and a second score using the predeclared mask. No replacement value is invented, and the mask is not selected to make a model look good. A flag is a disclosed sensitivity policy, not an author-issued erratum."
+        },
+        {
+          "type": "heading",
+          "text": "A reliable error definition"
+        },
+        {
+          "type": "body",
+          "text": "For N retained coordinates, use a shared profile norm and RMS in lid-speed units:"
+        },
+        {
+          "type": "math",
+          "latex": "E_u=\\frac{\\sqrt{\\sum_i(\\widehat u_i-u_i)^2}}{\\sqrt{\\sum_i u_i^2}},\\qquad \\frac{e_{\\mathrm{RMS},u}}{U}=\\sqrt{\\frac{1}{N}\\sum_i\\left(\\frac{\\widehat u_i-u_i}{U}\\right)^2}."
+        },
+        {
+          "type": "body",
+          "text": "Here hats denote predictions and unhatted values the reference samples. Define the v error analogously. Interpolate to the original reference coordinates. Do not divide by the local velocity at a zero crossing or extrapolate interior samples to a wall."
+        },
+        {
+          "type": "small",
+          "text": "Source: Ghia et al., JCP 48 (1982), 387-411, DOI 10.1016/0021-9991(82)90058-4. Data and anomaly policy: references/ghia/README.md. Follow-on lesson: notebooks/week04/W4_Lab5_All_Re_Ghia_Validation.ipynb."
+        }
+      ]
+    },
+    {
+      "title": "From a comparison plot to a validation decision",
+      "blocks": [
+        {
+          "type": "body",
+          "text": "A selectable Reynolds number does not certify the solver. The retained course fields cover the original low-Re work plus Re = 400/1000 formulation studies. Re = 3200, 5000, 7500 and 10000 currently have tabulated references but no newly qualified full fields in this extension."
+        },
+        {
+          "type": "heading",
+          "text": "Three independent questions"
+        },
+        {
+          "type": "body",
+          "text": "1. Have the discrete equations been solved? Check continuity, Poisson/momentum residuals and a steady residual expressed per unit physical time. A small update at a tiny time step can be misleading."
+        },
+        {
+          "type": "body",
+          "text": "2. Does refinement change the answer? Compare at least three grids and halve the time step at fixed physics. Track both signed centreline profiles, primary/secondary vortices and corner resolution. A steady gate alone is not mesh convergence."
+        },
+        {
+          "type": "body",
+          "text": "3. Is the reference matched? Match Re, geometry, lid profile, normalization and observable. Centreline velocity agreement does not validate pressure reconstructed from momentum or every point of a two-dimensional field."
+        },
+        {
+          "type": "heading",
+          "text": "Required engineering table"
+        },
+        {
+          "type": "table",
+          "widths": [
+            110,
+            350
+          ],
+          "rows": [
+            [
+              "Column",
+              "What the student must record"
+            ],
+            [
+              "Configuration",
+              "Re, grid, time step, convection scheme, wall/lid treatment"
+            ],
+            [
+              "Convergence",
+              "Steps, physical time, steady residual and continuity norm"
+            ],
+            [
+              "Agreement",
+              "E_u, E_v, RMS/U, printed-data sensitivity and vortex position"
+            ],
+            [
+              "Decision",
+              "Admit / reject / unavailable, with a stated reason"
+            ]
+          ]
+        },
+        {
+          "type": "body",
+          "text": "Start with the retained Re = 400 and 1000 cases at 32, 64 and 128 cells. Fill the table before attempting higher Re. If a solution remains unsteady or a grid is unresolved, keep that outcome visible and do not convert its time average into an unqualified steady benchmark."
+        },
+        {
+          "type": "body",
+          "text": "Exercise: identify the largest signed near-wall error, explain why an aggregate norm may hide it, and calculate both masked and unfiltered errors for the three suspicious entries. Missing high-Re fields must remain labelled missing in any neural-training manifest."
+        }
+      ]
+    }
+  ],
+  "week01_2_pressure_velocity": [
+    {
+      "title": "Extending SIMPLE, PISO and PIMPLE to the seven-Re benchmark",
+      "blocks": [
+        {
+          "type": "body",
+          "text": "The experimental wrapper now accepts all Ghia cases: Re = 100, 400, 1000, 3200, 5000, 7500, 10000. The original Re = 100 qualification and the retained Re = 400/1000 results are preserved. Accepting a configuration changes the available experiment, not its validation status."
+        },
+        {
+          "type": "heading",
+          "text": "Separate coupling, spatial error and temporal error"
+        },
+        {
+          "type": "body",
+          "text": "At matched Re, mesh, lid treatment and spatial discretization, coupling algorithms can be compared by pressure solves and elapsed time needed to reach the same physical accuracy. If convection or resolution differs, the difference cannot be assigned to the pressure-correction algorithm alone."
+        },
+        {
+          "type": "body",
+          "text": "SIMPLE iterations are not physical time steps. PISO and PIMPLE may advance physical time, but convergence of inner corrections does not establish time-step accuracy. Repeat with a smaller time step and compare a physical observable at the same time; for a steady study, also verify stationarity."
+        },
+        {
+          "type": "table",
+          "widths": [
+            110,
+            350
+          ],
+          "rows": [
+            [
+              "Required output",
+              "Reason"
+            ],
+            [
+              "E_u and E_v at Ghia coordinates",
+              "Tests both velocity components with a common norm denominator"
+            ],
+            [
+              "Signed wall-region discrepancies",
+              "Reveals displaced extrema and boundary-layer resolution"
+            ],
+            [
+              "Steady residual and continuity",
+              "Separates a solved discrete problem from a small step update"
+            ],
+            [
+              "Mesh and time-step sensitivity",
+              "Separates discretization error from coupling convergence"
+            ],
+            [
+              "Pressure recovery diagnostics",
+              "Ghia velocity samples do not supply an independent pressure reference"
+            ]
+          ]
+        },
+        {
+          "type": "body",
+          "text": "Use the existing 32/64/128-cell Re = 400/1000 runs first. For each of the four higher Re values, prepare the same table and leave uncomputed entries blank. Explicit central-convection time stepping can fail on an unsuitable grid; report the failure, refine or change the qualified discretization, and retain the reason."
+        },
+        {
+          "type": "small",
+          "text": "Canonical samples and three predeclared anomaly masks: references/ghia/README.md. Experimental API: flowmllab/pressure_velocity_experiments.py. Every score also has an unfiltered printed-data version. The optional new-solve notebook cell is off by default."
+        }
+      ]
+    },
+    {
+      "title": "Exercise: a defensible high-Re acceptance gate",
+      "blocks": [
+        {
+          "type": "heading",
+          "text": "Before a run"
+        },
+        {
+          "type": "body",
+          "text": "Declare the discrete equations, grid sequence, time-step sequence, lid-corner convention and stopping tolerances. Record a reference-only row for every Re, even when no field exists. Decide which observable will establish convergence before looking at the desired answer."
+        },
+        {
+          "type": "heading",
+          "text": "After a run"
+        },
+        {
+          "type": "body",
+          "text": "Interpolate u at x/L = 0.5 and v at y/L = 0.5 using the actual mesh coordinates. Compare at the original Ghia nodes. Report RMS in U units and relative L2 using the entire reference profile norm, both screened and unfiltered. Plot signed differences. Explain any mismatch between a small residual and poor reference agreement."
+        },
+        {
+          "type": "heading",
+          "text": "Required submission"
+        },
+        {
+          "type": "body",
+          "text": "Submit one table with Re, algorithm, grid, time step, runtime, pressure solves, continuity, steady residual, E_u, E_v and an acceptance decision. Add two physical-profile plots and one mesh-sensitivity plot per chosen Re. Explain why a failed high-Re case must not be silently included in the Week 4 neural training set."
+        },
+        {
+          "type": "body",
+          "text": "Compare algorithm timings only after the reference/accuracy gate is matched. Warm up numerical libraries and repeat timings; count linear solves and residual evaluations. A smaller iteration count can still cost more time per iteration. Record machine and thread settings."
+        },
+        {
+          "type": "small",
+          "text": "The new seven-Re centreline neural exercise is in Week 4 Lab 6. It uses sparse published samples and cannot replace the full-field CFD acceptance process described here. Ghia et al. (1982): DOI 10.1016/0021-9991(82)90058-4."
+        }
+      ]
+    }
+  ],
+  "week04_cavity_surrogates_deeponet": [
+    {
+      "title": "Seven-Re learning: define the information budget",
+      "blocks": [
+        {
+          "type": "body",
+          "text": "The existing full-field surrogate and DeepONet lessons retain their original CFD data. The new CPU exercise learns only Ghia centreline profiles at Re = 100,400,1000,3200,5000,7500,10000. A profile regressor is neither a Navier-Stokes solver nor a dense-field neural operator."
+        },
+        {
+          "type": "table",
+          "widths": [
+            110,
+            350
+          ],
+          "rows": [
+            [
+              "Role",
+              "Whole Reynolds numbers"
+            ],
+            [
+              "Training",
+              "100, 1000, 5000, 10000"
+            ],
+            [
+              "Validation / selection",
+              "400"
+            ],
+            [
+              "Frozen test",
+              "3200, 7500"
+            ]
+          ]
+        },
+        {
+          "type": "body",
+          "text": "Keep every point from one Re in the same split. Inputs are normalized position t, log10(Re)-3 and a component tag. The tanh MLP enforces endpoints with u_pred(t) = t + t(1-t)N_theta and v_pred(t) = t(1-t)N_theta. Values are normalized by U. No pressure or off-centreline field is inferred."
+        },
+        {
+          "type": "heading",
+          "text": "Architecture, initialization and data weights"
+        },
+        {
+          "type": "body",
+          "text": "Compare 2 versus 5 hidden layers, width 24, Xavier initialization and seeds 7,23,61. The models have 721 and 2521 parameters; this is not a capacity-matched depth experiment. Uniform case/component weights are compared with threefold weights at t &lt; 0.12 or t &gt; 0.88, renormalized per case/component. These are regression data weights, not PINN PDE/boundary weights."
+        },
+        {
+          "type": "math",
+          "latex": "J(\\theta)=\\sum_i w_i\\,[f_\\theta(z_i)-y_i]^2,\\qquad \\sum_i w_i=1."
+        },
+        {
+          "type": "body",
+          "text": "Here z contains the inputs, y the normalized sampled velocity, theta all network parameters, and w the fixed data weights. Audit unweighted wall and core errors even when training uses wall weights."
+        },
+        {
+          "type": "small",
+          "text": "Data and masks: references/ghia/. Implementation: flowmllab/ghia_surrogate.py. Split, selection and model hashes: results/cavity_ghia_allre/frozen_selection.json. The disclosed tests cannot remain independent after further test-informed tuning."
+        }
+      ]
+    },
+    {
+      "title": "Why optimizer and depth can help - and why they can fail",
+      "blocks": [
+        {
+          "type": "body",
+          "text": "Adam combines first and second gradient moments, with componentwise products and divisions:"
+        },
+        {
+          "type": "math",
+          "latex": "m_t=\\beta_1m_{t-1}+(1-\\beta_1)g_t,\\quad v_t=\\beta_2v_{t-1}+(1-\\beta_2)g_t^2,"
+        },
+        {
+          "type": "math",
+          "latex": "\\widehat m_t=\\frac{m_t}{1-\\beta_1^t},\\quad \\widehat v_t=\\frac{v_t}{1-\\beta_2^t},\\quad \\theta_{t+1}=\\theta_t-\\alpha\\frac{\\widehat m_t}{\\sqrt{\\widehat v_t}+\\epsilon}."
+        },
+        {
+          "type": "small",
+          "text": "g is the objective gradient, alpha the learning rate, beta1/beta2 the moment-decay factors and epsilon a small stabilizer. Bias correction accounts for the initially zero moments."
+        },
+        {
+          "type": "body",
+          "text": "L-BFGS builds an approximate inverse Hessian H_t from recent s_t = theta_(t+1)-theta_t and y_t = g_(t+1)-g_t, and takes direction d_t = -H_t g_t with a line search. Its evaluations need the same deterministic objective. Changing samples or weights inside a line search destroys that comparison."
+        },
+        {
+          "type": "body",
+          "text": "Adam may provide a useful starting point before curvature-based refinement. More depth can represent sharper profiles but adds parameters and changes the conditioning. Wall weighting prioritizes steep near-wall structure but can damage the core. These are mechanisms to test, not universal guarantees."
+        },
+        {
+          "type": "table",
+          "widths": [
+            260,
+            100,
+            100
+          ],
+          "rows": [
+            [
+              "Method: mean per-component/seed RMSE",
+              "Test Re=3200",
+              "Test Re=7500"
+            ],
+            [
+              "Adam, 2 layers",
+              "0.033949 U",
+              "0.038002 U"
+            ],
+            [
+              "L-BFGS, 2 layers",
+              "0.050537 U",
+              "0.017614 U"
+            ],
+            [
+              "Adam then L-BFGS, 2 layers",
+              "0.039900 U",
+              "0.013904 U"
+            ],
+            [
+              "Adam then L-BFGS, 5 layers",
+              "0.026175 U",
+              "0.007462 U"
+            ],
+            [
+              "5 layers, hybrid, wall weights",
+              "0.019739 U",
+              "0.005627 U"
+            ],
+            [
+              "Linear interpolation in log Re",
+              "0.016294 U",
+              "0.005176 U"
+            ]
+          ]
+        },
+        {
+          "type": "body",
+          "text": "Each fit used 1200 joint function/gradient evaluations. Re=400 selected the five-layer wall-weighted hybrid. It improves on Adam but loses to the interpolant on both tests. Equal evaluations are not equal FLOPs or runtime; the recorded shared-machine timings are not a controlled speed benchmark."
+        },
+        {
+          "type": "small",
+          "text": "Staged optimization and loss conditioning: Rathore et al., ICML 2024, proceedings.mlr.press/v235/rathore24a.html. This paper motivates a test; the table above is FlowMLLab's separate measured profile experiment."
+        }
+      ]
+    },
+    {
+      "title": "Held-out Re=3200: physical profiles and signed errors",
+      "blocks": [
+        {
+          "type": "figure",
+          "path": "results/cavity_ghia_allre/re3200_profiles.png",
+          "caption": "Reference markers are the original sparse samples. The suspicious printed u entry is shown separately. Neural lines are means over three initializations; error is evaluated at actual retained reference coordinates. The table on the preceding page averages individual errors, not the error of the mean prediction."
+        },
+        {
+          "type": "body",
+          "text": "Find the worst signed error in each velocity component. Compare hybrid_5_wall against the interpolant and the two-layer Adam baseline. Explain why the suspicious printed point dominates an unfiltered error without automatically proving the predicted flow is wrong there. Report both scoring conventions."
+        },
+        {
+          "type": "body",
+          "text": "All seven Reynolds-number figures and per-seed scores are displayed in Lab 6. No physical interpretation away from the two centrelines is supported by this experiment."
+        }
+      ]
+    },
+    {
+      "title": "Exercises: from a better network to a better method",
+      "blocks": [
+        {
+          "type": "body",
+          "text": "1. Rebuild the test table from scores.csv: average u/v within each seed, then report seed mean and standard deviation. Identify which architecture/optimizer changes improve on the neural baseline and which still lose to interpolation."
+        },
+        {
+          "type": "body",
+          "text": "2. Make an approximately parameter-matched 2/5-layer comparison. Declare seeds, learning rate, budget and weighting before training. Select only on Re=400. Add a warm-up and repeated timing if you make an efficiency claim."
+        },
+        {
+          "type": "body",
+          "text": "3. Change near-wall data weight from 1 to 3 or 5. Report unweighted wall and core errors, signed profiles and validation loss. Explain the difference between optimizing a weighted objective and measuring uniform-domain accuracy."
+        },
+        {
+          "type": "body",
+          "text": "4. Compare linear interpolation in Re versus log Re using validation only. Freeze the convention. The present log-Re interpolant is the baseline for the retained test table, not a claim that it is optimal for every dataset."
+        },
+        {
+          "type": "body",
+          "text": "5. Design the full-field extension: admit CFD fields at all seven Re using mesh/time-step checks, then freeze whole-Re splits. Fit normalization and POD bases using only training fields. Compare field interpolation, POD regression and DeepONet before attributing value to a deeper network."
+        },
+        {
+          "type": "heading",
+          "text": "Research next steps with evidence boundaries"
+        },
+        {
+          "type": "body",
+          "text": "JAX-PI's cavity example motivates Re continuation, gradient-norm weighting and modified MLPs. PirateNets motivates residual connections rather than blindly adding layers. The authors' D/W=5 paper motivates regional velocity/pressure/vorticity audits and controlled SOAP/self-scaled-Broyden comparisons. None of these has been newly validated at all seven full-field Re values by the profile experiment."
+        },
+        {
+          "type": "small",
+          "text": "Sources and exact proposed ablations: docs/CAVITY_RESEARCH_ROADMAP.md. JAX-PI: github.com/PredictiveIntelligenceLab/jaxpi/tree/main/examples/ldc. PirateNets: arxiv.org/abs/2402.00326. D/W=5 paper: arxiv.org/abs/2610.38814v2."
+        }
+      ]
+    }
+  ],
+  "week13_rectangular_cavity_pinn": [
+    {
+      "title": "The authors' D/W=5 cavity: a separate research notebook",
+      "blocks": [
+        {
+          "type": "body",
+          "text": "This extension uses retained CFD/PINN fields from Ehsan Roohi and Christopher J. McDevitt's regional-accuracy study. It complements the earlier square/D=2 matrix and near-matched D=2.2 example. D/W=5 describes geometric depth; it does not mean a five-layer neural network."
+        },
+        {
+          "type": "table",
+          "widths": [
+            130,
+            330
+          ],
+          "rows": [
+            [
+              "Identity",
+              "Retained assessment"
+            ],
+            [
+              "Geometry and lid",
+              "Depth/width 5; matched Gaussian-regularized lid"
+            ],
+            [
+              "Reynolds numbers",
+              "100, 250, 500, 1000"
+            ],
+            [
+              "Common grid",
+              "121 x 605 nodes in x and h; arrays indexed [h,x]"
+            ],
+            [
+              "Reference times",
+              "120,160,160,317 for the four Re values"
+            ],
+            [
+              "Normalization",
+              "x/W, h/W, u/U, v/U, p/(rho U squared), omega W/U"
+            ],
+            [
+              "Pressure convention",
+              "One frozen whole-interior gauge, preserved in every region"
+            ]
+          ]
+        },
+        {
+          "type": "body",
+          "text": "The portable notebook checks the bundle hash and recomputes regional errors. All retained arrays equal the original author arrays; redundant speed arrays alone were removed. It reproduces field assessment on CPU, not the complete training/optimizer/RNG history or a fresh independent-seed experiment."
+        },
+        {
+          "type": "body",
+          "text": "The Re=1000 common-grid field is the control trajectory. The separate refined-workflow result uses a 161x801 assessment and is tabulated separately. Never substitute that number into the common-grid series or call the two grids interchangeable."
+        },
+        {
+          "type": "small",
+          "text": "Paper: Roohi & McDevitt, arxiv.org/abs/2610.38814v2; ancillary analysis/figure code is linked there. Notebook: notebooks/week13/W13_Deep_Cavity_D5_Regional_Accuracy.ipynb. Portable assessment code: flowmllab/deep_cavity_audit.py. Data identity: data/week13_d5/README.md."
+        }
+      ]
+    },
+    {
+      "title": "Weak recirculation needs regional and dimensional diagnostics",
+      "blocks": [
+        {
+          "type": "body",
+          "text": "A streamfunction gives u = partial psi/partial h and v = -partial psi/partial x. This enforces continuity analytically but does not remove momentum or wall constraints. Sampled vorticity omega = partial v/partial x - partial u/partial h can expose errors hidden by bulk velocity agreement."
+        },
+        {
+          "type": "heading",
+          "text": "Fixed regions and velocity errors"
+        },
+        {
+          "type": "body",
+          "text": "The interior excludes 0.02 W beside every wall. Upper-left adds x/W &lt; 0.25 and h/W &gt; 4.75; floor regions use h/W &lt; 0.4 or 0.65 within that interior. Use equal sampled-node weights as in the retained assessment. Moving a region boundary changes the question."
+        },
+        {
+          "type": "math",
+          "latex": "e_{u,R}=\\sqrt{\\langle(\\widehat u-u)^2+(\\widehat v-v)^2\\rangle_R},\\quad a_{u,R}=\\sqrt{\\langle u^2+v^2\\rangle_R},"
+        },
+        {
+          "type": "math",
+          "latex": "E_{u,R}=100\\,e_{u,R}/a_{u,R}\\quad (\\%)."
+        },
+        {
+          "type": "body",
+          "text": "Angle brackets denote an arithmetic mean over retained points in region R; hats denote PINN predictions and unhatted fields CFD. All arrays use lid-speed units. Report absolute error, reference amplitude and their ratio. A tiny floor error alone does not establish extremely accurate relative flow."
+        },
+        {
+          "type": "heading",
+          "text": "Pressure: one gauge, two complementary parts"
+        },
+        {
+          "type": "math",
+          "latex": "\\delta p=\\widehat p-p,\\quad b_R=\\langle\\delta p\\rangle_R,\\quad s_R=\\sqrt{\\langle(\\delta p-b_R)^2\\rangle_R},\\quad e_{p,R}^2=b_R^2+s_R^2."
+        },
+        {
+          "type": "body",
+          "text": "Here b is the signed regional offset, s the local shape RMS and e_p the globally gauged pressure RMS. Re-centering every region erases b and changes the metric. A small shape error alone does not establish a small global-gauge pressure error."
+        },
+        {
+          "type": "body",
+          "text": "The supplied vorticity is sampled finite differences on the common grid. It is not a native automatic-differentiation versus spectral-derivative comparison. Subsampling this grid tests assessment resolution, not convergence of the underlying CFD mesh."
+        },
+        {
+          "type": "small",
+          "text": "The notebook checks 128 retained regional values. Cancellation-level differences in nearly zero pressure means are bounded by machine precision times the regional pressure RMS. Original arrays remain exactly preserved."
+        }
+      ]
+    },
+    {
+      "title": "Re=1000: matched common-grid flow behaviour",
+      "blocks": [
+        {
+          "type": "figure",
+          "path": "results/week13_d5/re1000_fields.png",
+          "max_height": 560,
+          "caption": "The CFD/PINN speed pair shares complete extrema and a symmetric-log display scale to expose the lower recirculation. The signed u discrepancy uses a linear diverging scale. These are the retained common-grid control fields; the refined workflow is a separate assessment. The notebook also shows Re=100,250,500."
+        }
+      ]
+    },
+    {
+      "title": "Re=1000: profiles expose regional trade-offs",
+      "blocks": [
+        {
+          "type": "figure",
+          "path": "results/week13_d5/re1000_profiles.png",
+          "caption": "u, globally gauged pressure and sampled vorticity at three actual retained heights above the floor. Each row has its own physical units and local magnitude. A small absolute lower-cavity velocity does not remove the need to inspect relative disagreement, pressure offset and rotation."
+        },
+        {
+          "type": "body",
+          "text": "Exercise: choose a height in the lowest vortex, use horizontal_profile to return its nearest actual retained row, and compare signed u/v profiles. Then change the floor-region cutoff without changing any field. Explain why the norm and configuration ranking can change."
+        }
+      ]
+    },
+    {
+      "title": "Optimization workflows: retain gains and losses",
+      "blocks": [
+        {
+          "type": "body",
+          "text": "The separate 161x801 Re=1000 assessment compares Control, Soft residual, Refined and Half envelope. Control-to-refined interior velocity discrepancy decreases from 5.624% to 2.658%; globally gauged pressure RMS decreases from 0.002793 to 0.001167 rho U squared. These are retained author results, not new trials in this extension."
+        },
+        {
+          "type": "body",
+          "text": "The ranking depends on the observable and region: Half envelope has lower interior pressure RMS than Refined in the retained table. Sampled vorticity and the upper corner retain substantial discrepancies. A workflow should not be labelled universally best from its velocity norm alone."
+        },
+        {
+          "type": "heading",
+          "text": "What the optimization history does not isolate"
+        },
+        {
+          "type": "body",
+          "text": "The study includes transferred initialization, prescribed regional collocation, residual-scaling/envelope choices and a SOAP-to-self-scaled-Broyden refinement. Prior training histories differ. Equal final-stage steps do not create an equal-total-budget experiment, and one trajectory is not a multi-seed uncertainty study. A gain cannot be assigned to one optimizer or sampling choice without a controlled ablation."
+        },
+        {
+          "type": "heading",
+          "text": "A controlled follow-up"
+        },
+        {
+          "type": "body",
+          "text": "Fix Re, geometry, lid, precision, initialization and audit samples. Compare Adam, L-BFGS and the self-scaled-Broyden route using counted objective/gradient evaluations. Freeze collocation and loss weights during a quasi-Newton line-search stage. Separately test gradient balancing, regional sampling and residual-network depth. Match parameter count where possible and include at least three seeds."
+        },
+        {
+          "type": "small",
+          "text": "Measured tables: results/week13_d5/regional_metrics.csv (recomputed common grid) and workflow_metrics.csv (retained detailed-grid assessment), each with provenance. Original FlowMLLab Adam/SSBroyden2 training route: qa/WEEK13_PINN_MATRIX_PROTOCOL.md."
+        }
+      ]
+    },
+    {
+      "title": "Student deliverables for the deep-cavity notebook",
+      "blocks": [
+        {
+          "type": "body",
+          "text": "Table A: for every Re, report Interior and Floor_0.4 sample count, absolute vector RMS, reference RMS and relative velocity error. Verify the arithmetic and explain why a discrepancy of order 1e-9 U does not establish nine-digit accuracy or a solver noise floor."
+        },
+        {
+          "type": "body",
+          "text": "Table B: rank the four detailed Re=1000 workflows by velocity, pressure and sampled vorticity in Interior, Upper-left and Floor_0.4. Identify an improvement and a deterioration. Keep the detailed-grid table separate from the common-grid series."
+        },
+        {
+          "type": "body",
+          "text": "Profile study: plot signed u, v, pressure and vorticity on actual retained rows near the floor and lid. Display legends outside the curves, units and actual sample heights. Do not create a fictitious wall value from interior-only data."
+        },
+        {
+          "type": "body",
+          "text": "Gauge experiment: add a constant 0.001 to a copy of the predicted pressure. Recompute regional RMS, signed offset and local shape; verify their decomposition. Restore the original arrays and preserve the supplied data hash."
+        },
+        {
+          "type": "body",
+          "text": "Derivative experiment: recompute second-order sampled vorticity and repeat after subsampling by two. Explain why this is an assessment-grid sensitivity check rather than a new native CFD mesh study."
+        },
+        {
+          "type": "body",
+          "text": "Experiment design: propose an isolated 2/5-layer architecture comparison, an optimizer comparison and a weighting comparison. Declare parameter/evaluation budgets, seeds, validation rule and independent field reference before running. Distinguish geometric depth D/W from network depth."
+        },
+        {
+          "type": "small",
+          "text": "Submit the executed notebook, Tables A/B, four physical-profile figures and a one-page interpretation. For further sources and concrete development proposals, read docs/CAVITY_RESEARCH_ROADMAP.md. No new full-training or all-Re CFD accuracy is implied by this retained-field exercise."
+        }
+      ]
+    }
+  ]
+}

@@ -1,5 +1,12 @@
 # Week 13 - Physics-informed neural networks for the lid-driven cavity
 
+**Additional research notebook:** [D/W=5 regional accuracy](W13_Deep_Cavity_D5_Regional_Accuracy.ipynb)
+loads the authors' retained matched CFD/PINN fields for Re=100,250,500,1000,
+recomputes regional errors and compares the detailed optimization workflows.
+[Data and provenance](../../data/week13_d5/README.md) · [Results](../../results/week13_d5/README.md).
+This is a separate geometry from the earlier examples below; geometric depth is
+also distinct from the number of network layers. Lecture 13 now includes its reading section.
+
 [Notebook](W13_Rectangular_Cavity_PINN_Research.ipynb) ·
 [Open in Colab](https://colab.research.google.com/github/Ehsan-Roohi/FlowMLLab/blob/main/notebooks/week13/W13_Rectangular_Cavity_PINN_Research.ipynb) ·
 [Lecture](../../lectures/week13_rectangular_cavity_pinn.pdf) ·

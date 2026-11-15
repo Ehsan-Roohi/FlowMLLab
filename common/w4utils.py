@@ -22,32 +22,7 @@ from scipy.fft import dstn, idstn
 from scipy.sparse import coo_matrix
 from scipy.sparse.linalg import lsqr
 
-GHIA = {
-    100: {
-        "y": np.array([1.0000, .9766, .9688, .9609, .9531, .8516, .7344, .6172,
-                       .5000, .4531, .2813, .1719, .1016, .0703, .0625, .0547, 0.0]),
-        "u": np.array([1.0, .84123, .78871, .73722, .68717, .23151, .00332,
-                       -.13641, -.20581, -.21090, -.15662, -.10150, -.06434,
-                       -.04775, -.04192, -.03717, 0.0]),
-        "x": np.array([1.0000, .9688, .9609, .9531, .9453, .9063, .8594, .8047,
-                       .5000, .2344, .2266, .1563, .0938, .0781, .0703, .0625, 0.0]),
-        "v": np.array([0.0, -.05906, -.07391, -.08864, -.10313, -.16914,
-                       -.22445, -.24533, .05454, .17527, .17507, .16077,
-                       .12317, .10890, .10091, .09233, 0.0]),
-    },
-    400: {
-        "y": np.array([1.0000, .9766, .9688, .9609, .9531, .8516, .7344, .6172,
-                       .5000, .4531, .2813, .1719, .1016, .0703, .0625, .0547, 0.0]),
-        "u": np.array([1.0, .75837, .68439, .61756, .55892, .29093, .16256,
-                       .02135, -.11477, -.17119, -.32726, -.24299, -.14612,
-                       -.10338, -.09266, -.08186, 0.0]),
-        "x": np.array([1.0000, .9688, .9609, .9531, .9453, .9063, .8594, .8047,
-                       .5000, .2344, .2266, .1563, .0938, .0781, .0703, .0625, 0.0]),
-        "v": np.array([0.0, -.12146, -.15663, -.19254, -.22847, -.23827,
-                       -.44993, -.38598, .05186, .30174, .30203, .28124,
-                       .22965, .20920, .19713, .18360, 0.0]),
-    },
-}
+from flowmllab.ghia import GHIA, valid_mask as _ghia_valid_mask
 
 CASES = (
     {"Re": 100, "split": "train"},
@@ -345,18 +320,8 @@ def pressure_centerlines(p):
 
 
 def ghia_valid_mask(reynolds, component):
-    """Exclude only the anomalous Re=400, x/L=.9063 Ghia v reference.
-
-    The source table value is retained exactly in GHIA for reproducibility.
-    All other reference entries, including other Reynolds numbers, are used.
-    """
-    key = int(round(float(reynolds)))
-    if component not in ("u", "v"):
-        raise ValueError("component must be 'u' or 'v'")
-    coordinates = GHIA[key]["x" if component == "v" else "y"]
-    if key == 400 and component == "v":
-        return ~np.isclose(coordinates, 0.9063, rtol=0, atol=1e-5)
-    return np.ones(len(coordinates), dtype=bool)
+    """Shared predeclared benchmark-screening mask; raw tables are retained."""
+    return _ghia_valid_mask(reynolds, component)
 
 
 def ghia_errors(result):
@@ -364,8 +329,8 @@ def ghia_errors(result):
     if key not in GHIA: return np.nan,np.nan
     ref=GHIA[key]; uc,vc=centerline_profiles(result)
     ui=np.interp(ref["y"],result["y"],uc); vi=np.interp(ref["x"],result["x"],vc)
-    valid_v=ghia_valid_mask(key,"v")
-    return (float(np.linalg.norm(ui-ref["u"])/np.linalg.norm(ref["u"])),
+    valid_u=ghia_valid_mask(key,"u"); valid_v=ghia_valid_mask(key,"v")
+    return (float(np.linalg.norm((ui-ref["u"])[valid_u])/np.linalg.norm(ref["u"][valid_u])),
             float(np.linalg.norm((vi-ref["v"])[valid_v])/np.linalg.norm(ref["v"][valid_v])))
 
 

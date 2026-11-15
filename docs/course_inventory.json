@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "course_version": "1.11.0",
+  "course_version": "1.12.0",
   "scope": "Current working-tree assets for numbered Weeks 1–22, including incremental and preparatory material. This is not a new published release or proof of execution.",
   "rules": {
     "active_lecture_pdfs": "lectures/week*.pdf only; exclude lectures/versions, lectures/source figure PDFs and separately listed optional supplements.",
@@ -10,8 +10,8 @@
   },
   "counts": {
     "active_lecture_pdfs": 37,
-    "lecture_pages": 564,
-    "student_notebooks": 52,
+    "lecture_pages": 578,
+    "student_notebooks": 55,
     "historical_student_companions": 1,
     "optional_notebooks": 1,
     "optional_pdfs": 1
@@ -27,7 +27,7 @@
     },
     {
       "path": "lectures/week01_2_pressure_velocity.pdf",
-      "pages": 62
+      "pages": 64
     },
     {
       "path": "lectures/week01_3_keras_optimizers.pdf",
@@ -35,7 +35,7 @@
     },
     {
       "path": "lectures/week01_numerical_foundations.pdf",
-      "pages": 35
+      "pages": 37
     },
     {
       "path": "lectures/week02_1_probabilistic_uq.pdf",
@@ -63,7 +63,7 @@
     },
     {
       "path": "lectures/week04_cavity_surrogates_deeponet.pdf",
-      "pages": 11
+      "pages": 15
     },
     {
       "path": "lectures/week05_06_project_guide.pdf",
@@ -127,7 +127,7 @@
     },
     {
       "path": "lectures/week13_rectangular_cavity_pinn.pdf",
-      "pages": 12
+      "pages": 18
     },
     {
       "path": "lectures/week14_rans_pinn_nn.pdf",
@@ -232,6 +232,14 @@
       "role": "student"
     },
     {
+      "path": "notebooks/week04/W4_Lab5_All_Re_Ghia_Validation.ipynb",
+      "role": "student"
+    },
+    {
+      "path": "notebooks/week04/W4_Lab6_Ghia_Profile_Optimizer_Depth.ipynb",
+      "role": "student"
+    },
+    {
       "path": "notebooks/week05_06/P0_Project_Setup.ipynb",
       "role": "student"
     },
@@ -329,6 +337,10 @@
     },
     {
       "path": "notebooks/week12/W12_DSMC_Moment_Reconstruction.ipynb",
+      "role": "student"
+    },
+    {
+      "path": "notebooks/week13/W13_Deep_Cavity_D5_Regional_Accuracy.ipynb",
       "role": "student"
     },
     {

@@ -1,0 +1,87 @@
+{
+  "selected": "hybrid_5_wall",
+  "selection": "mean u/v RMSE on Re=400, averaged over predeclared seeds",
+  "seeds": [
+    7,
+    23,
+    61
+  ],
+  "roles": {
+    "100": "train",
+    "400": "validation",
+    "1000": "train",
+    "3200": "test",
+    "5000": "train",
+    "7500": "test",
+    "10000": "train"
+  },
+  "configs": [
+    {
+      "name": "adam_2",
+      "depth": 2,
+      "width": 24,
+      "optimizer": "adam",
+      "weighting": "uniform",
+      "evaluations": 1200,
+      "learning_rate": 0.004
+    },
+    {
+      "name": "lbfgs_2",
+      "depth": 2,
+      "width": 24,
+      "optimizer": "lbfgs",
+      "weighting": "uniform",
+      "evaluations": 1200,
+      "learning_rate": 0.004
+    },
+    {
+      "name": "hybrid_2",
+      "depth": 2,
+      "width": 24,
+      "optimizer": "hybrid",
+      "weighting": "uniform",
+      "evaluations": 1200,
+      "learning_rate": 0.004
+    },
+    {
+      "name": "hybrid_5",
+      "depth": 5,
+      "width": 24,
+      "optimizer": "hybrid",
+      "weighting": "uniform",
+      "evaluations": 1200,
+      "learning_rate": 0.004
+    },
+    {
+      "name": "hybrid_5_wall",
+      "depth": 5,
+      "width": 24,
+      "optimizer": "hybrid",
+      "weighting": "wall",
+      "evaluations": 1200,
+      "learning_rate": 0.004
+    }
+  ],
+  "source_sha256": {
+    "flowmllab\\ghia.py": "49f3141ea0840c0d1a204dba2ca7b1c358cdad9924f083340099f72251d8b680",
+    "flowmllab\\ghia_surrogate.py": "b4069ad478c6f3b1ef4033ba62d0ae2ed9e183a6f8646cc2dc3c4a2d8f46abd7",
+    "qa\\run_ghia_profile_study.py": "8dd90c4517e026f9d433445bd8089bf5abbba9c280960b3a16e2fa4cc2309e71"
+  },
+  "models_sha256": {
+    "adam_2_seed23.npz": "bd750527c57b06d15314fe8f92876cbb2f0f56fd615a8d979b98f23ee4b1de38",
+    "adam_2_seed61.npz": "d729e179bb1d10bb7a8242477c448cd7849fa9e5452b0fc61bb697469dcc4a29",
+    "adam_2_seed7.npz": "3f92a54fd634da92faa11017a316468c071ae4f1129e302faa7b103c38834a0e",
+    "hybrid_2_seed23.npz": "8262c8b252fa13cbd2178903ec69a4303b7a1ecb1394d5523dbf72022920b564",
+    "hybrid_2_seed61.npz": "825df19c1e04a08164d0424dc8a67d330bb683da7535ca22dd068ff2580e1d55",
+    "hybrid_2_seed7.npz": "019bad720c61c50fd027f30e4d13471e3c3ee9817f248b3b0594dea1d10a52ae",
+    "hybrid_5_seed23.npz": "68c21c63971e26d39350951c7f7477ad1b6cb4d33b5250d05e46ec3f8ae04c4b",
+    "hybrid_5_seed61.npz": "d3605fd722c3297531e6edcfbb91113fa52c874bab8913ea9b4e82e5d9309011",
+    "hybrid_5_seed7.npz": "1b2fe147de22515a3b883101dc6229073066408ec37b14e6d5944ef536832ba4",
+    "hybrid_5_wall_seed23.npz": "7c87838a906140e37c2e02568ba72094cbcace1a8a3381f4cc0dbb4514d4ff13",
+    "hybrid_5_wall_seed61.npz": "acd82d769b40043521744e827abb4942cf29067bf82886a29b9b7c0e165371a9",
+    "hybrid_5_wall_seed7.npz": "6457041e133a71be1931ab1243295fc494f2c64cfb2b95604be9d4eb7bbe96e8",
+    "lbfgs_2_seed23.npz": "1baa0e84f98d427ba71567450a59da0a1800a961c21976ca624d6506bb8e591e",
+    "lbfgs_2_seed61.npz": "051401d934b406bbd2ac6082d573199647e1904856d144b3c32f47515d519dec",
+    "lbfgs_2_seed7.npz": "fa08640f91bf5ee82442cd189cb6546c674076b5d994375f7309ba06810ff3b4"
+  }
+}

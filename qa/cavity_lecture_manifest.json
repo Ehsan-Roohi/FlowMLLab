@@ -1,0 +1,26 @@
+{
+  "week01_numerical_foundations": {
+    "base_pages_preserved": 35,
+    "new_pages": 2,
+    "total_pages": 37,
+    "sha256": "7ba97b0473c555a5c1081b7d0dcb5ae6555aa0d610a2e6e77aa51d9b9f7aa98f"
+  },
+  "week01_2_pressure_velocity": {
+    "base_pages_preserved": 62,
+    "new_pages": 2,
+    "total_pages": 64,
+    "sha256": "170b0cb33d56d0efa8b134c3c06376fe898a9962d4a478a034b5edd8aaebc759"
+  },
+  "week04_cavity_surrogates_deeponet": {
+    "base_pages_preserved": 11,
+    "new_pages": 4,
+    "total_pages": 15,
+    "sha256": "059bdb53b46bbaec7a2f49498d03ff995d6fbc66003d7eb7740419110e4abd05"
+  },
+  "week13_rectangular_cavity_pinn": {
+    "base_pages_preserved": 12,
+    "new_pages": 6,
+    "total_pages": 18,
+    "sha256": "a1147f61e5b21690781fcc365349d123b59a232dc5549e5a4ccaf81e45f9ceaf"
+  }
+}

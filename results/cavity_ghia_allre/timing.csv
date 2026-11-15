@@ -1,0 +1,16 @@
+model,seed,seconds,evaluations,parameters,status
+adam_2,7,6.215622899995651,1200,721,fixed Adam evaluation budget
+adam_2,23,3.667422099999385,1200,721,fixed Adam evaluation budget
+adam_2,61,4.834419199993135,1200,721,fixed Adam evaluation budget
+lbfgs_2,7,17.31795019999845,1200,721,fixed joint function/gradient evaluation budget
+lbfgs_2,23,24.343449599997257,1200,721,fixed joint function/gradient evaluation budget
+lbfgs_2,61,0.4385449000110384,1200,721,fixed joint function/gradient evaluation budget
+hybrid_2,7,0.3597083999920869,1200,721,fixed joint function/gradient evaluation budget
+hybrid_2,23,0.414815299998736,1200,721,fixed joint function/gradient evaluation budget
+hybrid_2,61,0.6392918000055943,1200,721,fixed joint function/gradient evaluation budget
+hybrid_5,7,0.9772090000042226,1200,2521,fixed joint function/gradient evaluation budget
+hybrid_5,23,1.0792503999982728,1200,2521,fixed joint function/gradient evaluation budget
+hybrid_5,61,0.8403386999998474,1200,2521,fixed joint function/gradient evaluation budget
+hybrid_5_wall,7,0.6742881999962265,1200,2521,fixed joint function/gradient evaluation budget
+hybrid_5_wall,23,0.689110300008906,1200,2521,fixed joint function/gradient evaluation budget
+hybrid_5_wall,61,0.6995006000070134,1200,2521,fixed joint function/gradient evaluation budget

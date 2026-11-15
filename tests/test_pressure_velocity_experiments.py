@@ -40,9 +40,10 @@ class ExperimentalPressureVelocityTests(unittest.TestCase):
 
     def test_experiment_does_not_unlock_baseline_config(self):
         with self.assertRaises(ValueError):CavityConfig(reynolds=400)
-        for re in [0,-1,float('nan'),float('inf'),5000]:
+        for re in [0,-1,float('nan'),float('inf'),1234]:
             with self.assertRaises(ValueError):ExperimentalConfig(reynolds=re)
-        self.assertEqual(ExperimentalConfig(reynolds=1000).reynolds,1000)
+        for re in (100,400,1000,3200,5000,7500,10000):
+            self.assertEqual(ExperimentalConfig(reynolds=re).reynolds,re)
         with self.assertRaises(ValueError):ExperimentalConfig(dt=-1)
 
 if __name__=='__main__':unittest.main()

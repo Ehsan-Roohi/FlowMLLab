@@ -1,5 +1,9 @@
 # Week 1.2 - Pressure-velocity coupling
 
+<!-- cavity-seven-re -->
+Separate follow-on notebooks cover [all seven Ghia Reynolds numbers](../../notebooks/week04/W4_Lab5_All_Re_Ghia_Validation.ipynb) and [CPU profile-surrogate optimization and depth](../../notebooks/week04/W4_Lab6_Ghia_Profile_Optimizer_Depth.ipynb). Earlier notebook cells and outputs are preserved. [Benchmark data](../../references/ghia/README.md) · [Measured results](../../results/cavity_ghia_allre/README.md) · [Research ideas and sources](../../docs/CAVITY_RESEARCH_ROADMAP.md).
+<!-- /cavity-seven-re -->
+
 An independent Re=100 extension after the original Week 1. The original
 streamfunction-vorticity notebook remains unchanged.
 

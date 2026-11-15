@@ -13,6 +13,13 @@ Streamfunction PINNs: build one on CPU, then audit deep-cavity and four-case res
 | Notebook | Read | Run / setup |
 | --- | --- | --- |
 | Rectangular-cavity PINNs | [Open notebook](../../notebooks/week13/W13_Rectangular_Cavity_PINN_Research.ipynb) | [Open in Colab](https://colab.research.google.com/github/Ehsan-Roohi/FlowMLLab/blob/main/notebooks/week13/W13_Rectangular_Cavity_PINN_Research.ipynb) |
+| D/W=5: regional accuracy with author fields | [Open notebook](../../notebooks/week13/W13_Deep_Cavity_D5_Regional_Accuracy.ipynb) | CPU field assessment; use the updated checkout |
+
+The second notebook extends this module with the authors' matched Re=100,250,500,1000
+CFD/PINN fields and separate detailed-workflow comparison. It retains the earlier
+examples below. [Data identity](../../data/week13_d5/README.md) ·
+[Physical results](../../results/week13_d5/README.md) ·
+[Development ideas and primary sources](../../docs/CAVITY_RESEARCH_ROADMAP.md).
 
 **Module guides:** [Week 13 lab](../../notebooks/week13/README.md)
 

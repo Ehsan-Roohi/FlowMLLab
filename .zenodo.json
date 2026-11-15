@@ -1,8 +1,8 @@
 {
   "title": "FlowMLLab: An Open-Source Framework for Reproducible CFD-to-Scientific-Machine-Learning Experiments",
-  "description": "FlowMLLab v1.11.0 adds Week 1.3, a reproducible CPU optimizer laboratory and an 18-page lecture. Students compare Momentum, Adam, L-BFGS and staged optimization across four analytic profiles on matched data, then test SOAP and self-scaled Broyden on a fifth profile with rising frequency. The notebook includes fixed splits, a matched evaluation budget, signed errors, and six exercises. The deep-cavity optimizer sequence is tested on a small regression problem. The broader course covers continuum and rarefied CFD, reduced-order modeling, physics-informed neural networks, neural operators, computer vision, and attention and language-modeling laboratories. Case-specific data licenses and scientific limitations are documented in the repository.",
-  "version": "1.11.0",
-  "publication_date": "2026-11-14",
+  "description": "FlowMLLab v1.12.0 adds three separate cavity notebooks while preserving existing lesson cells and outputs: seven-Reynolds-number Ghia validation, a three-seed CPU centreline-surrogate study of optimizer, depth and weighting, and an author-supplied D/W=5 CFD/PINN regional assessment at four Reynolds numbers. Four existing lecture PDFs gain matching reading sections. The neural study reports both improvements over Adam and losses to linear interpolation; it is not a full-field or PDE benchmark. The deep-cavity bundle reproduces 128 retained regional values, not a new independent-seed training study. The four highest-Re square-cavity full fields remain unqualified. The broader course covers continuum and rarefied CFD, reduced-order models, PINNs, neural operators and attention-based learning. Case-specific data provenance and scientific limitations are documented in the repository.",
+  "version": "1.12.0",
+  "publication_date": "2026-11-15",
   "creators": [
     {
       "name": "Roohi, Ehsan",
@@ -46,7 +46,7 @@
       "scheme": "url"
     },
     {
-      "identifier": "https://github.com/Ehsan-Roohi/FlowMLLab/releases/tag/v1.11.0",
+      "identifier": "https://github.com/Ehsan-Roohi/FlowMLLab/releases/tag/v1.12.0",
       "relation": "isVersionOf",
       "scheme": "url"
     },
@@ -62,6 +62,16 @@
     },
     {
       "identifier": "https://lbpw.larc.nasa.gov/sbpw1/test-cases/seeb-alr/",
+      "relation": "references",
+      "scheme": "url"
+    },
+    {
+      "identifier": "https://doi.org/10.1016/0021-9991(82)90058-4",
+      "relation": "references",
+      "scheme": "url"
+    },
+    {
+      "identifier": "https://arxiv.org/abs/2610.38814v2",
       "relation": "references",
       "scheme": "url"
     }

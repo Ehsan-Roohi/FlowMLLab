@@ -1,0 +1,77 @@
+{
+  "notebooks": {
+    "notebooks/week01/03_cavity_ghia.ipynb": {
+      "original_cells_preserved": 42,
+      "new_cells": 1,
+      "new_code_cells": 0
+    },
+    "notebooks/week01_2/W1_2_Cavity_Pressure_Velocity.ipynb": {
+      "original_cells_preserved": 77,
+      "new_cells": 1,
+      "new_code_cells": 0
+    },
+    "notebooks/week04/W4_1_Classical_ROM_Cavity.ipynb": {
+      "original_cells_preserved": 30,
+      "new_cells": 1,
+      "new_code_cells": 0
+    },
+    "notebooks/week04/W4_Lab1_CFD_Data_Production_Student.ipynb": {
+      "original_cells_preserved": 13,
+      "new_cells": 1,
+      "new_code_cells": 0
+    },
+    "notebooks/week04/W4_Lab2_Scalar_and_Field_Surrogates_Student.ipynb": {
+      "original_cells_preserved": 22,
+      "new_cells": 1,
+      "new_code_cells": 0
+    },
+    "notebooks/week04/W4_Lab3_DeepONet_Cavity_Student.ipynb": {
+      "original_cells_preserved": 31,
+      "new_cells": 1,
+      "new_code_cells": 0
+    },
+    "notebooks/week04/W4_Lab4_Grid51_Validation.ipynb": {
+      "original_cells_preserved": 11,
+      "new_cells": 1,
+      "new_code_cells": 0
+    },
+    "notebooks/week04/W4_Lab4_Stokes_to_Navier_Stokes.ipynb": {
+      "original_cells_preserved": 30,
+      "new_cells": 1,
+      "new_code_cells": 0
+    },
+    "notebooks/week04/W4_Lab5_All_Re_Ghia_Validation.ipynb": {
+      "original_cells_preserved": 0,
+      "new_cells": 6,
+      "new_code_cells": 3
+    },
+    "notebooks/week04/W4_Lab6_Ghia_Profile_Optimizer_Depth.ipynb": {
+      "original_cells_preserved": 0,
+      "new_cells": 6,
+      "new_code_cells": 4
+    },
+    "notebooks/week13/W13_Deep_Cavity_D5_Regional_Accuracy.ipynb": {
+      "original_cells_preserved": 0,
+      "new_cells": 12,
+      "new_code_cells": 6
+    },
+    "notebooks/week13/W13_Rectangular_Cavity_PINN_Research.ipynb": {
+      "original_cells_preserved": 31,
+      "new_cells": 1,
+      "new_code_cells": 0
+    }
+  },
+  "lecture_base_pages": {
+    "week01_numerical_foundations": 35,
+    "week01_2_pressure_velocity": 62,
+    "week04_cavity_surrogates_deeponet": 11,
+    "week13_rectangular_cavity_pinn": 12
+  },
+  "scope": "New extension cells executed; original code/output preservation checked. Not a new hosted Run All.",
+  "frozen_models_hash_checked": 15,
+  "frozen_study_sources_unchanged": true,
+  "deep_cavity_regional_numbers_reproduced": 128,
+  "deep_cavity_regions_recomputed": 16,
+  "bootstrap_local_passed": true,
+  "colab_clone_branch_tested": false
+}

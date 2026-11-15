@@ -13,32 +13,12 @@ from pathlib import Path
 import numpy as np
 
 
-GHIA = {
-    100: {
-        "y": np.array([1.0000, .9766, .9688, .9609, .9531, .8516, .7344, .6172,
-                       .5000, .4531, .2813, .1719, .1016, .0703, .0625, .0547, 0.0]),
-        "u": np.array([1.0, .84123, .78871, .73722, .68717, .23151, .00332,
-                       -.13641, -.20581, -.21090, -.15662, -.10150, -.06434,
-                       -.04775, -.04192, -.03717, 0.0]),
-        "x": np.array([1.0000, .9688, .9609, .9531, .9453, .9063, .8594, .8047,
-                       .5000, .2344, .2266, .1563, .0938, .0781, .0703, .0625, 0.0]),
-        "v": np.array([0.0, -.05906, -.07391, -.08864, -.10313, -.16914,
-                       -.22445, -.24533, .05454, .17527, .17507, .16077,
-                       .12317, .10890, .10091, .09233, 0.0]),
-    },
-    400: {
-        "y": np.array([1.0000, .9766, .9688, .9609, .9531, .8516, .7344, .6172,
-                       .5000, .4531, .2813, .1719, .1016, .0703, .0625, .0547, 0.0]),
-        "u": np.array([1.0, .75837, .68439, .61756, .55892, .29093, .16256,
-                       .02135, -.11477, -.17119, -.32726, -.24299, -.14612,
-                       -.10338, -.09266, -.08186, 0.0]),
-        "x": np.array([1.0000, .9688, .9609, .9531, .9453, .9063, .8594, .8047,
-                       .5000, .2344, .2266, .1563, .0938, .0781, .0703, .0625, 0.0]),
-        "v": np.array([0.0, -.12146, -.15663, -.19254, -.22847, -.23827,
-                       -.44993, -.38598, .05186, .30174, .30203, .28124,
-                       .22965, .20920, .19713, .18360, 0.0]),
-    },
-}
+# Resolve the shared reference also when opened from this notebook directory.
+import sys
+_REPOSITORY = Path(__file__).resolve().parents[2]
+if str(_REPOSITORY) not in sys.path:
+    sys.path.insert(0,str(_REPOSITORY))
+from flowmllab.ghia import GHIA, valid_mask
 
 
 CASE_MAP = {
@@ -169,7 +149,7 @@ def centerline_profiles(result):
     return result["u"][:, mid] / result["U"], result["v"][mid, :] / result["U"]
 
 
-def ghia_errors(result):
+def ghia_errors(result, screened=True):
     Re_key = int(round(float(result["Re"])))
     if Re_key not in GHIA:
         return np.nan, np.nan
@@ -177,8 +157,10 @@ def ghia_errors(result):
     uc, vc = centerline_profiles(result)
     ui = np.interp(ref["y"], result["y"], uc)
     vi = np.interp(ref["x"], result["x"], vc)
-    return (float(np.linalg.norm(ui-ref["u"]) / np.linalg.norm(ref["u"])),
-            float(np.linalg.norm(vi-ref["v"]) / np.linalg.norm(ref["v"])))
+    mu=valid_mask(Re_key,'u') if screened else np.ones(len(ui),bool)
+    mv=valid_mask(Re_key,'v') if screened else np.ones(len(vi),bool)
+    return (float(np.linalg.norm((ui-ref["u"])[mu]) / np.linalg.norm(ref["u"][mu])),
+            float(np.linalg.norm((vi-ref["v"])[mv]) / np.linalg.norm(ref["v"][mv])))
 
 
 def physical_metrics(result):
@@ -188,12 +170,14 @@ def physical_metrics(result):
     interior = div[1:-1, 1:-1]
     j, i = np.unravel_index(np.argmin(psi), psi.shape)
     eu, ev = ghia_errors(result)
+    eu_raw, ev_raw = ghia_errors(result,screened=False)
     return {
         "div_l2": float(np.sqrt(np.mean(interior**2))),
         "div_linf": float(np.max(np.abs(interior))),
         "vortex_x": float(x[i]), "vortex_y": float(y[j]),
         "psi_min": float(psi[j, i]), "speed_max": float(np.max(np.hypot(u, v))),
         "ghia_Eu": eu, "ghia_Ev": ev,
+        "ghia_Eu_published": eu_raw, "ghia_Ev_published": ev_raw,
     }
 
 
