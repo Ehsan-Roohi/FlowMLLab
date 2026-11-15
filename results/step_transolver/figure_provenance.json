@@ -1,0 +1,18 @@
+{
+  "builder_sha256": "cd2af8270d646f232acacf0347b4cc361df2628cab7e1f6024461de1d45c9797",
+  "inputs": {
+    "results/step_operator_audit/wake_predictions.tgz": "190bb252c2739fc2acfa0841233652144b82eb9ca3a01ad6ddb2ae0f0429ade1",
+    "results/step_transolver/seed_17/g011_Re100_medium_prediction.npz": "71977bc9eb3ab242d19e394e6ac292c61baf5939504b4e0ea55049b2e59dc97d",
+    "results/step_transolver/seed_17/g011_Re25_medium_prediction.npz": "a12c05689411091a587c07c8a45d8859162857d2f8d0bea24b1bdfcc33afd663",
+    "results/step_transolver/seed_17/g011_Re50_medium_prediction.npz": "5c42cc0a8b71f839bb17531b8458af1e97ff3f12c6efea8418469ce3fca47875",
+    "results/step_transolver/seed_29/g011_Re100_medium_prediction.npz": "afc3834103fc4ae7470a72e32ab99dedeb80cd6518d0cdc8c79021427ae54e2c",
+    "results/step_transolver/seed_29/g011_Re25_medium_prediction.npz": "6d603c1fc7eec841c85433c83fcb4f9f16e0529104f8502a9ad327b0125f85ea",
+    "results/step_transolver/seed_29/g011_Re50_medium_prediction.npz": "c75734fc5b4771457b6807468f7ea44324090048b55aeec25adc5fe3cf0db6f9",
+    "results/step_transolver/seed_43/g011_Re100_medium_prediction.npz": "b7b2ea572852c43d90879a99461b40890d5a3b4629b15019780eafc82d86d550",
+    "results/step_transolver/seed_43/g011_Re25_medium_prediction.npz": "5c82ffb2af8ca701006f8d93ef558af66312cf1d648c8e4b1a40777621a2d106",
+    "results/step_transolver/seed_43/g011_Re50_medium_prediction.npz": "759667d717145e86f648079de262b0f5fa73f5045dab6e7aee7189a4c9ce9e7c"
+  },
+  "plot_seed": 17,
+  "metrics": "recomputed from saved fields; identical truth and fluid masks asserted",
+  "no_best_seed_selection": true
+}

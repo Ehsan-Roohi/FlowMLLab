@@ -1,0 +1,29 @@
+[
+  {
+    "Re": 25,
+    "velocity_percent_mean": 25.66554896036784,
+    "velocity_percent_std": 1.8283693019633742,
+    "pressure_percent_mean": 71.37722269694011,
+    "pressure_percent_std": 0.8760893699619983,
+    "reverse_iou_mean": 0.47442497171992065,
+    "reverse_iou_std": 0.1438340165693402
+  },
+  {
+    "Re": 50,
+    "velocity_percent_mean": 28.604150772094727,
+    "velocity_percent_std": 0.8871914113167693,
+    "pressure_percent_mean": 93.37439982096355,
+    "pressure_percent_std": 11.452465562484123,
+    "reverse_iou_mean": 0.6407297557166715,
+    "reverse_iou_std": 0.037068829711740345
+  },
+  {
+    "Re": 100,
+    "velocity_percent_mean": 36.43418502807617,
+    "velocity_percent_std": 1.5667031673825793,
+    "pressure_percent_mean": 73.07850138346355,
+    "pressure_percent_std": 1.6974298247900235,
+    "reverse_iou_mean": 0.5678460371921955,
+    "reverse_iou_std": 0.0860857172004356
+  }
+]
