@@ -67,3 +67,8 @@ data reads, every model hash and frozen prediction hash are recorded in
 records target access after freezing. Source, weights, Adam moments and the
 training RNG initialization state are retained. SciPy's internal L-BFGS history
 is not serialized; these are completed fits, not resumable mid-L-BFGS checkpoints.
+
+For a cross-platform audit of the retained frozen run, execute
+`python qa/validate_cavity_highre.py`. It resolves the historical Windows
+model paths without modifying the frozen manifest or its hashes. The original
+training/scoring script is retained byte-for-byte as campaign provenance.

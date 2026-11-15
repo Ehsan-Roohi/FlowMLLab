@@ -17,8 +17,8 @@ def main():
     assert not set(map(int,info['data_read_during_training']))&set(op.TEST)
     for name,expected in info['source_sha256_lf'].items():
         import hashlib
-        assert hashlib.sha256((ROOT/name).read_bytes().replace(b'\r\n',b'\n')).hexdigest()==expected,name
-    for name,expected in info['model_sha256'].items():assert cfd.file_hash(ROOT/name)==expected
+        assert hashlib.sha256((ROOT/name.replace(chr(92),'/')).read_bytes().replace(b'\r\n',b'\n')).hexdigest()==expected,name
+    for name,expected in info['model_sha256'].items():assert cfd.file_hash(ROOT/name.replace(chr(92),'/'))==expected
     out=ROOT/'results/cavity_field_deeponet'
     with (out/'test_scores.csv').open() as stream:rows=list(csv.DictReader(stream))
     for re,predictions in fields.items():
