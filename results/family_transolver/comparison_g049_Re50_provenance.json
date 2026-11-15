@@ -1,0 +1,6 @@
+{
+  "reference/geom_author_fresh_lr1e-3_seed17_best_predictions_g049_Re50.npz": "b38198d1863826f822b54e19a97624906621aedb506100b31b5efd65f9820af1",
+  "reference/smart_author_lr1e-3_seed17_best_predictions_g049_Re50.npz": "7bf50dae607a0e25c5f93d029a387ea80c650032accb1d00813f4b82147056bd",
+  "reference/domino_author_lr1e-3_seed17_best_predictions_g049_Re50.npz": "1bb24f0cd76e8ed2a6a81b73f73f9344eca017294a9868bde624c33f32fa2b87",
+  "seed_17/g049_Re50_medium_prediction.npz": "b5dcd48849cd30a466fb7ec26fa5b5024f451efeb0dbae9102f654405e00a331"
+}

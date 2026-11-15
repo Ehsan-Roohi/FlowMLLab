@@ -1,0 +1,26 @@
+[
+  {
+    "figure": "g049_Re25.png",
+    "inputs": {
+      "seed_17/g049_Re25_medium_prediction.npz": "6342018d5849ede7d5bd59967ee21924c5f762ace26ef5de61efd74f2fd5fdee",
+      "seed_29/g049_Re25_medium_prediction.npz": "a0aa29742e8a45c9e1f27dd94fffbb9af1e47d0697f32c74cc910953e6de5b66",
+      "seed_43/g049_Re25_medium_prediction.npz": "06f7862a71f95b4075d3d1f2acbd52f813ea233f6cd3e20447af899dcf8b0216"
+    }
+  },
+  {
+    "figure": "g049_Re50.png",
+    "inputs": {
+      "seed_17/g049_Re50_medium_prediction.npz": "b5dcd48849cd30a466fb7ec26fa5b5024f451efeb0dbae9102f654405e00a331",
+      "seed_29/g049_Re50_medium_prediction.npz": "f45c930073b33a4d516860a397fdcceb7b835a98324fe797a52c9b8ae6b00122",
+      "seed_43/g049_Re50_medium_prediction.npz": "fe560829be7d4b094ec8b6883064a4839fbac246c9ab8af9a436b8cbdab5350f"
+    }
+  },
+  {
+    "figure": "g049_Re100.png",
+    "inputs": {
+      "seed_17/g049_Re100_medium_prediction.npz": "b8b8900505a6ec84752a782be8fbab3ecb60c45b26bf4fb1c7add636421790f4",
+      "seed_29/g049_Re100_medium_prediction.npz": "b851973ca5980ab6d07f3345aa20de4fcb01db2f8d52c5664e5302c03a53ceb3",
+      "seed_43/g049_Re100_medium_prediction.npz": "ed555d2c9050e2ac32919a056e937950bcc6c23612050b823e10633a2e7500cb"
+    }
+  }
+]

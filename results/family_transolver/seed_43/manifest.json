@@ -1,0 +1,552 @@
+{
+  "model": "Original Transolver, compact irregular-mesh configuration",
+  "model_config": {
+    "space_dim": 2,
+    "fun_dim": 2,
+    "out_dim": 3,
+    "n_layers": 3,
+    "n_hidden": 64,
+    "n_head": 4,
+    "slice_num": 16,
+    "mlp_ratio": 2,
+    "dropout": 0.0,
+    "Time_Input": false,
+    "unified_pos": false
+  },
+  "parameters": 100351,
+  "seed": 43,
+  "epochs": 1200,
+  "steps_per_epoch": 16,
+  "points_per_update": 1024,
+  "input_features": [
+    "x/L",
+    "y/H",
+    "stored geometric SDF",
+    "Re"
+  ],
+  "targets": [
+    "u",
+    "v",
+    "Re*p_kinematic"
+  ],
+  "split": {
+    "train": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      14,
+      15,
+      16,
+      20,
+      21,
+      22,
+      23,
+      24,
+      25,
+      26,
+      27,
+      28,
+      29,
+      30,
+      31,
+      34,
+      35,
+      36,
+      37,
+      38,
+      39,
+      40,
+      41,
+      42,
+      43,
+      46,
+      47,
+      48,
+      49,
+      50,
+      51,
+      52,
+      53,
+      54,
+      55,
+      56,
+      57,
+      58,
+      59,
+      60,
+      61,
+      62,
+      63,
+      64,
+      65,
+      66,
+      67,
+      68,
+      69,
+      70,
+      71,
+      72,
+      73,
+      74,
+      75,
+      76,
+      77,
+      81,
+      82,
+      83,
+      84,
+      85,
+      86,
+      87,
+      88,
+      89,
+      90,
+      91,
+      92,
+      93,
+      94,
+      95,
+      96,
+      97,
+      98,
+      99,
+      100,
+      101,
+      102,
+      103,
+      104,
+      105,
+      106,
+      107,
+      108,
+      109,
+      110,
+      111,
+      112
+    ],
+    "validation": [
+      17,
+      18,
+      19,
+      44,
+      45,
+      78,
+      79,
+      80
+    ],
+    "test": [
+      32,
+      33,
+      113,
+      114,
+      115,
+      116,
+      117,
+      118,
+      119,
+      120,
+      121,
+      122,
+      123,
+      124,
+      125,
+      126,
+      127,
+      128,
+      129
+    ]
+  },
+  "geometry_ids": {
+    "train": [
+      1,
+      2,
+      3,
+      4,
+      6,
+      8,
+      9,
+      10,
+      11,
+      13,
+      14,
+      15,
+      16,
+      17,
+      19,
+      20,
+      21,
+      22,
+      23,
+      24,
+      25,
+      26,
+      27,
+      28,
+      29,
+      30,
+      31,
+      33,
+      34,
+      35,
+      36,
+      37,
+      38,
+      39,
+      40,
+      41,
+      42,
+      43,
+      44
+    ],
+    "validation": [
+      7,
+      18,
+      32
+    ],
+    "test": [
+      12,
+      45,
+      46,
+      47,
+      48,
+      49,
+      50,
+      51
+    ]
+  },
+  "dataset_sha256": "28d4d4c440cdc4c1ac1d13749ce00b0690d99f29cf20fd56c65fc00b6a8058fd",
+  "split_source_sha256": "8b78351580fb1ceb1323b2088281f29d9232d66485c670cf5d3138fc28e72b8d",
+  "quarantined_geometry_ids": [
+    5
+  ],
+  "source_sha256": {
+    "qa/train_family_transolver.py": "bf5f46180a5ccca56faab5cf32be3abb29082bebefbd031c7075316fe6c0edff",
+    "qa/train_week15_vanilla_deeponet.py": "a89a0cd8598f1eafd6b3e0d24d1a0228873c21b6caca87aa28f9d482e2b6cba1",
+    "flowmllab/vendor/transolver/Embedding.py": "b48e822b55cce60641d644ef1e0a190a96f7f5759917151c45e9cf2820b2effb",
+    "flowmllab/vendor/transolver/Physics_Attention.py": "c303f984249ed18ad4ff0917e8c2bfe2e6472b28a3db57f8b2173ae43fc2d5c5",
+    "flowmllab/vendor/transolver/Transolver_Irregular_Mesh.py": "b4fe8877805869b4dc168a504f8003155c571d86f3f131c96c4ec2887ef62df7",
+    "flowmllab/vendor/transolver/__init__.py": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+  },
+  "checkpoint_sha256": "89c73e8ae9040e5df1e6b67f3b995c98ebb12feebd6f18c05da353031542e2a5",
+  "checkpoint_epoch": 1175,
+  "selection": "Minimum mean per-case scaled MSE over all fluid points of 8 validation cases; every 25 epochs plus epoch 1.",
+  "inference": "Entire fluid point cloud per case in one call; no target-derived sampling; no query chunking.",
+  "training": "Uniform training case and uniform fluid-point sample; unweighted normalized MSE; AdamW; cosine LR 1e-3 to 1e-5; clip 1.0.",
+  "training_seconds": 375.88101889799873,
+  "test_inference_seconds": 1.534847433998948,
+  "software": {
+    "python": "3.12.14",
+    "torch": "2.15.0+cpu",
+    "numpy": "2.3.5"
+  },
+  "hardware": {
+    "device": "cpu",
+    "threads": 1,
+    "processor": ""
+  },
+  "limitation": "Same 100/8/19 post-audit family split with g005 quarantined; 19,200 updates match the fresh suite ceiling, but losses, sampled-point exposure and architecture tuning differ. Not equal-FLOP superiority evidence. Historically inspected test.",
+  "history": [
+    {
+      "epoch": 1,
+      "training_mse": 1.2796259531751275,
+      "validation_mse": 1.3480677865445614,
+      "elapsed_seconds": 0.9260246420017211
+    },
+    {
+      "epoch": 25,
+      "training_mse": 0.6982685071416199,
+      "validation_mse": 0.6498460220173001,
+      "elapsed_seconds": 7.356991358989035
+    },
+    {
+      "epoch": 50,
+      "training_mse": 0.2471479196101427,
+      "validation_mse": 0.5087191481143236,
+      "elapsed_seconds": 14.131536604996654
+    },
+    {
+      "epoch": 75,
+      "training_mse": 0.20550238015130162,
+      "validation_mse": 0.4406725149601698,
+      "elapsed_seconds": 20.993790281994734
+    },
+    {
+      "epoch": 100,
+      "training_mse": 0.3170886938460171,
+      "validation_mse": 0.4438744857907295,
+      "elapsed_seconds": 28.073883965000277
+    },
+    {
+      "epoch": 125,
+      "training_mse": 0.27755091711878777,
+      "validation_mse": 0.5138451801612973,
+      "elapsed_seconds": 43.25799406100123
+    },
+    {
+      "epoch": 150,
+      "training_mse": 0.19926458701957017,
+      "validation_mse": 0.2782821236178279,
+      "elapsed_seconds": 54.422139547998086
+    },
+    {
+      "epoch": 175,
+      "training_mse": 0.21176434855442494,
+      "validation_mse": 0.3265538446139544,
+      "elapsed_seconds": 65.72844702500151
+    },
+    {
+      "epoch": 200,
+      "training_mse": 0.13225475593935698,
+      "validation_mse": 0.1833288533380255,
+      "elapsed_seconds": 76.57896522399096
+    },
+    {
+      "epoch": 225,
+      "training_mse": 0.14491925976471975,
+      "validation_mse": 0.17794341989792883,
+      "elapsed_seconds": 87.4621657020034
+    },
+    {
+      "epoch": 250,
+      "training_mse": 0.10436080303043127,
+      "validation_mse": 0.21967417420819402,
+      "elapsed_seconds": 100.29826754199166
+    },
+    {
+      "epoch": 275,
+      "training_mse": 0.04604337175260298,
+      "validation_mse": 0.14499904471449554,
+      "elapsed_seconds": 108.7339301059983
+    },
+    {
+      "epoch": 300,
+      "training_mse": 0.11149578273762017,
+      "validation_mse": 0.0889590367441997,
+      "elapsed_seconds": 115.32821201399202
+    },
+    {
+      "epoch": 325,
+      "training_mse": 0.10536090628011152,
+      "validation_mse": 0.11479000910185277,
+      "elapsed_seconds": 125.94089619399165
+    },
+    {
+      "epoch": 350,
+      "training_mse": 0.14680684852646664,
+      "validation_mse": 0.07851029385346919,
+      "elapsed_seconds": 133.46596163399226
+    },
+    {
+      "epoch": 375,
+      "training_mse": 0.06867983975098468,
+      "validation_mse": 0.05136316909920424,
+      "elapsed_seconds": 139.87112497800263
+    },
+    {
+      "epoch": 400,
+      "training_mse": 0.09719343157485127,
+      "validation_mse": 0.047969114035367966,
+      "elapsed_seconds": 147.18314464199648
+    },
+    {
+      "epoch": 425,
+      "training_mse": 0.09115382406162098,
+      "validation_mse": 0.12117143941577524,
+      "elapsed_seconds": 154.40538106799067
+    },
+    {
+      "epoch": 450,
+      "training_mse": 0.04122188832843676,
+      "validation_mse": 0.0888852677308023,
+      "elapsed_seconds": 161.76871516299434
+    },
+    {
+      "epoch": 475,
+      "training_mse": 0.0753756005433388,
+      "validation_mse": 0.04872835299465805,
+      "elapsed_seconds": 169.05498379599885
+    },
+    {
+      "epoch": 500,
+      "training_mse": 0.04943649479537271,
+      "validation_mse": 0.07493314071325585,
+      "elapsed_seconds": 176.42992766899988
+    },
+    {
+      "epoch": 525,
+      "training_mse": 0.0314536115329247,
+      "validation_mse": 0.04739756876369938,
+      "elapsed_seconds": 183.80280535199563
+    },
+    {
+      "epoch": 550,
+      "training_mse": 0.050914317136630416,
+      "validation_mse": 0.035632810613606125,
+      "elapsed_seconds": 191.219554529991
+    },
+    {
+      "epoch": 575,
+      "training_mse": 0.027611448836978525,
+      "validation_mse": 0.055862323788460344,
+      "elapsed_seconds": 198.33280631499656
+    },
+    {
+      "epoch": 600,
+      "training_mse": 0.03350926248822361,
+      "validation_mse": 0.04804850718937814,
+      "elapsed_seconds": 205.84904070099583
+    },
+    {
+      "epoch": 625,
+      "training_mse": 0.024859749639290385,
+      "validation_mse": 0.025987243396230042,
+      "elapsed_seconds": 213.07602779899025
+    },
+    {
+      "epoch": 650,
+      "training_mse": 0.05638020214973949,
+      "validation_mse": 0.028636551927775145,
+      "elapsed_seconds": 220.19873746999656
+    },
+    {
+      "epoch": 675,
+      "training_mse": 0.009125480879447423,
+      "validation_mse": 0.03709430748131126,
+      "elapsed_seconds": 227.28773648299102
+    },
+    {
+      "epoch": 700,
+      "training_mse": 0.022449219337431714,
+      "validation_mse": 0.02391754905693233,
+      "elapsed_seconds": 234.27393359599228
+    },
+    {
+      "epoch": 725,
+      "training_mse": 0.03528786214883439,
+      "validation_mse": 0.03073445800691843,
+      "elapsed_seconds": 241.3549659010023
+    },
+    {
+      "epoch": 750,
+      "training_mse": 0.061695935524767265,
+      "validation_mse": 0.039959127723705024,
+      "elapsed_seconds": 248.4366542659991
+    },
+    {
+      "epoch": 775,
+      "training_mse": 0.026278328703483567,
+      "validation_mse": 0.025718537450302392,
+      "elapsed_seconds": 256.17231407899817
+    },
+    {
+      "epoch": 800,
+      "training_mse": 0.01767916230892297,
+      "validation_mse": 0.023356956604402512,
+      "elapsed_seconds": 265.3515678650001
+    },
+    {
+      "epoch": 825,
+      "training_mse": 0.02011141399270855,
+      "validation_mse": 0.019506972923409194,
+      "elapsed_seconds": 272.1142724569945
+    },
+    {
+      "epoch": 850,
+      "training_mse": 0.03273823372728657,
+      "validation_mse": 0.019986451254226267,
+      "elapsed_seconds": 279.0982406609983
+    },
+    {
+      "epoch": 875,
+      "training_mse": 0.00844728150696028,
+      "validation_mse": 0.03818659731769003,
+      "elapsed_seconds": 285.8501905769954
+    },
+    {
+      "epoch": 900,
+      "training_mse": 0.014343126094900072,
+      "validation_mse": 0.016783115308498964,
+      "elapsed_seconds": 292.63727224500326
+    },
+    {
+      "epoch": 925,
+      "training_mse": 0.009577002769219689,
+      "validation_mse": 0.018160585139412433,
+      "elapsed_seconds": 299.2694677059917
+    },
+    {
+      "epoch": 950,
+      "training_mse": 0.035759712583967485,
+      "validation_mse": 0.0274368122627493,
+      "elapsed_seconds": 305.8317032909981
+    },
+    {
+      "epoch": 975,
+      "training_mse": 0.022933010521228425,
+      "validation_mse": 0.017642929160501808,
+      "elapsed_seconds": 312.552734486002
+    },
+    {
+      "epoch": 1000,
+      "training_mse": 0.011287691289908253,
+      "validation_mse": 0.013972379267215729,
+      "elapsed_seconds": 319.0651942359982
+    },
+    {
+      "epoch": 1025,
+      "training_mse": 0.00726723087427672,
+      "validation_mse": 0.01596977689769119,
+      "elapsed_seconds": 325.52331259498897
+    },
+    {
+      "epoch": 1050,
+      "training_mse": 0.007415633604978211,
+      "validation_mse": 0.01277775497874245,
+      "elapsed_seconds": 332.21648622599605
+    },
+    {
+      "epoch": 1075,
+      "training_mse": 0.02953609662654344,
+      "validation_mse": 0.019986670900834724,
+      "elapsed_seconds": 338.7737331209937
+    },
+    {
+      "epoch": 1100,
+      "training_mse": 0.027357211874914356,
+      "validation_mse": 0.014835845213383436,
+      "elapsed_seconds": 348.24010694799654
+    },
+    {
+      "epoch": 1125,
+      "training_mse": 0.013639045908348635,
+      "validation_mse": 0.012969799659913406,
+      "elapsed_seconds": 357.4172370239976
+    },
+    {
+      "epoch": 1150,
+      "training_mse": 0.010552616295171902,
+      "validation_mse": 0.013825685513438657,
+      "elapsed_seconds": 363.56155833900266
+    },
+    {
+      "epoch": 1175,
+      "training_mse": 0.012035788458888419,
+      "validation_mse": 0.012670300697209314,
+      "elapsed_seconds": 369.695605639994
+    },
+    {
+      "epoch": 1200,
+      "training_mse": 0.03265255759470165,
+      "validation_mse": 0.014751168375369161,
+      "elapsed_seconds": 375.87258151799324
+    }
+  ]
+}

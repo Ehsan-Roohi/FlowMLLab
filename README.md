@@ -642,22 +642,7 @@ not silently present saved solver fields as a fresh Run-All CFD calculation.
 
 ### Week 15 — Geometry-aware neural operators
 
-#### Original Transolver — new same-case step-flow comparison
-
-Original Transolver has now been trained on the historical **g011** split
-(106 train / 21 validation / 3 test cases), separately from GeoTransolver.
-Three seeds completed; nine saved fields were reproduced from checkpoints.
-Mean velocity errors at Re=25/50/100 are **25.67%, 28.60%, 36.43%**.
-It improves velocity relative to the retained Geo-DeepONet run at Re=25 only;
-centered-pressure errors are worse. Losses and budgets differ, so this is not
-a universal architecture ranking.
-
-[Code, results and all three figures](results/step_transolver/README.md) ·
-[Executable comparison notebook](notebooks/week15/W15_Original_Transolver_Step.ipynb)
-
-![Same g011/Re100 CFD reference with original Transolver added as the fifth row](results/step_transolver/speed_Re100.png)
-
-#### Existing double-step-family benchmark
+Original Transolver: [double-step test, weights and results](results/family_transolver/README.md) · [additional g011 test](results/step_transolver/README.md).
 
 
 **[Open Week 15: lecture, notebooks and guide](weeks/week15/README.md)**
@@ -683,17 +668,20 @@ its floor drops in two steps and then rises again, so it shares the test
 family's two-descending-step motif without belonging to the test family, and it
 is kept out of training, validation and the test alike. The split was
 reconstructed from the masks: no training or validation mask contains the two
-consecutive descending steps that define the test family. The enlarged training
-examples appear first inside the comparison figure, with solid gray, fluid white,
-and the physical 5:1 aspect ratio.
+consecutive descending steps that define the test family. The training geometries and historical comparison remain available in the
+expandable section below the compact figure. The plots retain the physical
+5:1 aspect ratio.
 
-The displayed `g049/Re=100` comparison, selected because its larger vortex is
-easier to inspect on the course homepage, places the CFD field above historical
-ordinary DeepONet, historical Geom-DeepONet, historical Geo-FNO, and the
-validation-tuned Geom-DeepONet, SMART and DoMINO models. Every row uses its own
-streamlines, one shared banded speed scale, and no reverse-flow threshold overlay.
+The compact `g049/Re=100` figure compares CFD, validation-tuned Geom-DeepONet, SMART, DoMINO and original Transolver on the same post-audit split. Each row uses its own streamlines and a shared speed scale. The complete historical figure and training geometries remain available below.
+
+<p align="center"><a href="results/family_transolver/comparison_g049_Re100.png"><img src="results/family_transolver/comparison_g049_Re100.png" width="600" alt="Week 15 double-step comparison including original Transolver"></a></p>
+
+<details>
+<summary>Historical comparison and training geometries</summary>
 
 ![CFD and six neural-operator predictions for the retrospective g049/Re100 double-step case, chosen for its larger recirculation vortex](results/week15_postaudit/core_g049_Re100.png)
+
+</details>
 
 The historical seed-17 Geom-DeepONet run remains best in global velocity error
 (9.86%), while

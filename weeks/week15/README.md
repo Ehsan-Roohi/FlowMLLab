@@ -1,26 +1,20 @@
 # Week 15 — Geometry-aware neural operators
 
-### Original Transolver — new same-case step-flow comparison
-
-Original Transolver has now been trained on the historical **g011** split
-(106 train / 21 validation / 3 test cases), separately from GeoTransolver.
-Three seeds completed; nine saved fields were reproduced from checkpoints.
-Mean velocity errors at Re=25/50/100 are **25.67%, 28.60%, 36.43%**.
-It improves velocity relative to the retained Geo-DeepONet run at Re=25 only;
-centered-pressure errors are worse. Losses and budgets differ, so this is not
-a universal architecture ranking.
-
-[Code, results and all three figures](../../results/step_transolver/README.md) ·
-[Executable comparison notebook](../../notebooks/week15/W15_Original_Transolver_Step.ipynb)
-
-![Same g011/Re100 CFD reference with original Transolver added as the fifth row](../../results/step_transolver/speed_Re100.png)
+Original Transolver: [run/verify notebook](../../notebooks/week15/W15_Original_Transolver_Double_Step.ipynb) · [double-step test, weights and results](../../results/family_transolver/README.md) · [additional g011 test](../../results/step_transolver/README.md).
 
 
 [Course home](../../README.md) · [All weeks](../README.md) · [← Week 14](../week14/README.md) · [Week 16 →](../week16/README.md)
 
 Geometry and topology generalization across DeepONet, Geom-DeepONet, Geo-FNO, SMART, GeoTransolver and DoMINO.
 
+<p align="center"><a href="../../results/family_transolver/comparison_g049_Re100.png"><img src="../../results/family_transolver/comparison_g049_Re100.png" width="600" alt="Week 15 double-step comparison including original Transolver"></a></p>
+
+<details>
+<summary>Historical comparison and training geometries</summary>
+
 ![CFD and six neural-operator predictions for the retrospective g049/Re100 double-step case, chosen for its larger recirculation vortex](../../results/week15_postaudit/core_g049_Re100.png)
+
+</details>
 
 ## Lecture and notebooks
 
