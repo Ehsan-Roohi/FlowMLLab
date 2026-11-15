@@ -54,14 +54,68 @@ uses its own velocity streamlines, common column color scales and the true 5:1
 physical domain aspect. Gray cells are solid or excluded derivative stencils.
 Historical figures are preserved; these add the new fifth row to the comparison.
 
+Each quantity now occupies the full GitHub content width. The three-column
+scientific overview remains available as a download, rather than a tiny inline image.
+
 ### Re = 100
-![CFD, Geo-DeepONet, FNO, U-FNO and original Transolver at Re 100](fields_Re100.png)
+
+![Full-width speed and streamline comparison at Re 100](speed_Re100.png)
+
+<details>
+<summary>Pressure comparison — Re 100</summary>
+
+![Full-width centered-pressure comparison at Re 100](pressure_Re100.png)
+
+</details>
+
+<details>
+<summary>Vorticity comparison — Re 100</summary>
+
+![Full-width vorticity comparison at Re 100](vorticity_Re100.png)
+
+</details>
+
+[Download the three-column overview](fields_Re100.png)
 
 ### Re = 50
-![Same five rows at Re 50](fields_Re50.png)
+
+![Full-width speed and streamline comparison at Re 50](speed_Re50.png)
+
+<details>
+<summary>Pressure comparison — Re 50</summary>
+
+![Full-width centered-pressure comparison at Re 50](pressure_Re50.png)
+
+</details>
+
+<details>
+<summary>Vorticity comparison — Re 50</summary>
+
+![Full-width vorticity comparison at Re 50](vorticity_Re50.png)
+
+</details>
+
+[Download the three-column overview](fields_Re50.png)
 
 ### Re = 25
-![Same five rows at Re 25](fields_Re25.png)
+
+![Full-width speed and streamline comparison at Re 25](speed_Re25.png)
+
+<details>
+<summary>Pressure comparison — Re 25</summary>
+
+![Full-width centered-pressure comparison at Re 25](pressure_Re25.png)
+
+</details>
+
+<details>
+<summary>Vorticity comparison — Re 25</summary>
+
+![Full-width vorticity comparison at Re 25](vorticity_Re25.png)
+
+</details>
+
+[Download the three-column overview](fields_Re25.png)
 
 ## Reproduce
 

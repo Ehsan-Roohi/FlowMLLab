@@ -38,6 +38,60 @@ def load_fields(re):
 def curl(a,x,y):
     return np.gradient(a[:,:,1],x,axis=1)-np.gradient(a[:,:,0],y,axis=0)
 
+def build_readable_fields(re):
+    """Full-width stacked panels sized for an approximately 800 px GitHub column."""
+    fields=load_fields(re);ref=fields['geom'];ny,nx=map(int,ref['shape'])
+    xy=ref['coordinates'].reshape(ny,nx,2);x,y=xy[0,:,0],xy[:,0,1]
+    mask=ref['mask'].reshape(ny,nx)
+    interior=binary_erosion(mask,structure=np.ones((3,3)),border_value=0)
+    keys=['geom','fno','ufno','transolver_17']
+    arrays=[ref['truth']]+[fields[k]['prediction'] for k in keys]
+    names=['CFD reference','Geo-DeepONet','FNO','U-FNO','Transolver (original)']
+    metrics=[None]+[case_metrics(ref['truth'],a,ref['mask']) for a in arrays[1:]]
+    arrays=[a.reshape(ny,nx,3).astype(float) for a in arrays]
+    quantities={
+        'speed':([np.ma.masked_where(~mask,np.hypot(a[:,:,0],a[:,:,1])) for a in arrays],
+                 'Speed and flow structure','Speed (stored units)','viridis'),
+        'pressure':([np.ma.masked_where(~mask,a[:,:,2]-a[:,:,2][mask].mean()) for a in arrays],
+                    'Pressure comparison','Mean-centered p* = Re p','RdBu_r'),
+        'vorticity':([np.ma.masked_where(~interior,curl(a,x,y)) for a in arrays],
+                     'Vorticity comparison','Vorticity (stored velocity / H)','RdBu_r')}
+    for kind,(values,title,unit,cmap) in quantities.items():
+        lim=max(float(np.max(np.abs(v))) for v in values)
+        fig=plt.figure(figsize=(8,12.6),facecolor='white')
+        fig.text(.08,.971,title,fontsize=21,weight='bold',color='#172f43')
+        fig.text(.08,.943,f'g011  /  Re = {re}  /  seed 17',fontsize=14,color='#40566a')
+        images=[]
+        for i,(a,v,name,m) in enumerate(zip(arrays,values,names,metrics)):
+            bottom=.735-i*.154
+            ax=fig.add_axes([.08,bottom,.88,.112])
+            cm=plt.get_cmap(cmap).copy();cm.set_bad('#dce1e7')
+            images.append(ax.pcolormesh(x,y,v,cmap=cm,shading='nearest',
+                          vmin=0 if kind=='speed' else -lim,vmax=lim))
+            if kind=='speed':
+                ax.streamplot(np.linspace(x[0],x[-1],len(x)),np.linspace(y[0],y[-1],len(y)),
+                  np.ma.masked_where(~mask,a[:,:,0]),np.ma.masked_where(~mask,a[:,:,1]),
+                  color='white',density=1.0,linewidth=.65,arrowsize=.75)
+            ax.set_xlim(0,5);ax.set_ylim(0,1)
+            ax.set_aspect('equal');ax.set_facecolor('#dce1e7')
+            ax.set_xticks(range(6));ax.set_yticks([0,.5,1]);ax.tick_params(labelsize=11)
+            ax.set_ylabel('y/H',fontsize=12)
+            if i<4:ax.tick_params(labelbottom=False)
+            else:ax.set_xlabel('x/H',fontsize=12)
+            ax.text(0,1.10,name,transform=ax.transAxes,fontsize=14,weight='bold',color='#172f43')
+            if m:
+                metric=(f'Velocity error {m["velocity_percent"]:.2f}%' if kind=='speed'
+                        else f'Pressure error {m["pressure_percent"]:.2f}%' if kind=='pressure'
+                        else 'Interior fluid cells only')
+                ax.text(1,1.10,metric,transform=ax.transAxes,ha='right',fontsize=11,color='#40566a')
+        cax=fig.add_axes([.08,.891,.88,.017])
+        cb=fig.colorbar(images[0],cax=cax,orientation='horizontal')
+        cb.ax.tick_params(labelsize=11);cb.set_label(unit,fontsize=11,labelpad=3)
+        fig.text(.08,.035,'Shared color scale. True 5:1 geometry. Gray = excluded cells.',fontsize=11,color='#40566a')
+        fig.text(.08,.015,'Same CFD reference; training settings differ across models.',fontsize=11,color='#40566a')
+        fig.savefig(OUT/f'{kind}_Re{re}.png',dpi=150)
+        plt.close(fig)
+
 def build_fields(re, save=True):
     fields=load_fields(re);ref=fields['geom'];ny,nx=map(int,ref['shape'])
     xy=ref['coordinates'].reshape(ny,nx,2);x,y=xy[0,:,0],xy[:,0,1]
@@ -95,6 +149,7 @@ def main():
                 seed=int(key.rsplit('_',1)[1]) if key.startswith('transolver') else 17,
                 **case_metrics(f['truth'],f['prediction'],f['mask'])))
         plt.close(build_fields(re))
+        build_readable_fields(re)
     with (OUT/'comparison.csv').open('w',newline='') as f:
         w=csv.DictWriter(f,fieldnames=list(records[0]));w.writeheader();w.writerows(records)
     summaries=[]
@@ -108,6 +163,7 @@ def main():
     provenance={'builder_sha256':sha256(Path(__file__)),'inputs':{str(p.relative_to(ROOT)):sha256(p) for p in inputs},
                 'plot_seed':17,'metrics':'recomputed from saved fields; identical truth and fluid masks asserted',
                 'no_best_seed_selection':True}
+    provenance['github_layout']='Separate full-width, five-row speed/pressure/vorticity figures; shared scales and 5:1 aspect retained.'
     (OUT/'figure_provenance.json').write_text(json.dumps(provenance,indent=2)+'\n')
     print(json.dumps(summaries,indent=2))
 

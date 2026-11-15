@@ -1,5 +1,5 @@
 {
-  "builder_sha256": "cd2af8270d646f232acacf0347b4cc361df2628cab7e1f6024461de1d45c9797",
+  "builder_sha256": "5da6dff7177adde3e0954cfd487ccb2c25928070b7942931d662b5188a45a065",
   "inputs": {
     "results/step_operator_audit/wake_predictions.tgz": "190bb252c2739fc2acfa0841233652144b82eb9ca3a01ad6ddb2ae0f0429ade1",
     "results/step_transolver/seed_17/g011_Re100_medium_prediction.npz": "71977bc9eb3ab242d19e394e6ac292c61baf5939504b4e0ea55049b2e59dc97d",
@@ -14,5 +14,6 @@
   },
   "plot_seed": 17,
   "metrics": "recomputed from saved fields; identical truth and fluid masks asserted",
-  "no_best_seed_selection": true
+  "no_best_seed_selection": true,
+  "github_layout": "Separate full-width, five-row speed/pressure/vorticity figures; shared scales and 5:1 aspect retained."
 }

@@ -13,7 +13,7 @@ a universal architecture ranking.
 [Code, results and all three figures](../../results/step_transolver/README.md) ·
 [Executable comparison notebook](../../notebooks/week15/W15_Original_Transolver_Step.ipynb)
 
-![Same g011/Re100 CFD reference with original Transolver added as the fifth row](../../results/step_transolver/fields_Re100.png)
+![Same g011/Re100 CFD reference with original Transolver added as the fifth row](../../results/step_transolver/speed_Re100.png)
 
 
 ## Complete post-audit edition
