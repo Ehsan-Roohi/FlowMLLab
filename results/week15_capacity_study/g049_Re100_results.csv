@@ -1,0 +1,10 @@
+case,protocol,model,capacity,seed,test_cases,velocity_error_pct,pressure_error_pct,vorticity_error_pct,filtered_reverse_iou,reverse_velocity_error_pct,extent_abs_error_H,parameter_entries,real_scalar_parameters,evidence_status,checkpoint_available
+g049_Re100,native_capacity,DeepONet,large,17,1,14.436291694641113,44.25212478637695,28.710662841796875,0.5865102639296188,112.20812225341797,0.85,5925123,5925123,previously_verified_summary,False
+g049_Re100,native_capacity,Geom-DeepONet,large,17,1,13.445074081420898,35.551902770996094,21.132265090942383,0.5179817498658078,98.85494232177734,0.016666666666666607,5465089,5465089,previously_verified_summary,False
+g049_Re100,native_capacity,SMART,large,17,1,10.803688049316406,38.97336959838867,22.218544006347656,0.7374677002583979,56.798885345458984,0.25,11380676,11380676,previously_verified_summary,False
+g049_Re100,native_capacity,DoMINO,large,17,1,16.65517234802246,102.91171264648438,18.33420753479004,0.7171336206896551,64.10631561279297,0.16666666666666652,2941051,2941051,previously_verified_summary,False
+g049_Re100,native_capacity,Geo-FNO,large,17,1,13.180060386657715,37.17748260498047,23.75387191772461,0.5588688946015424,95.39813232421875,0.5,6730325,12038741,previously_verified_summary,False
+g049_Re100,native_capacity,GeoTransolver,large,17,1,23.884170532226562,122.34320068359375,34.36735153198242,0.6082981715893109,43.44955825805664,1.8166666666666664,9367179,9367179,previously_verified_summary,False
+g049_Re100,original_transolver,Original Transolver,small,17,1,21.5030098,,,0.650102459,,,100351,100351,previously_verified_summary,True
+g049_Re100,original_transolver,Original Transolver scratch,large,17,1,5.3602338,,,0.74650913,,,3859011,3859011,previously_verified_summary,False
+g049_Re100,original_transolver,Original Transolver GeoPT transfer,large,17,1,4.5732784,,,0.800768386,,,3859011,3859011,previously_verified_summary,False

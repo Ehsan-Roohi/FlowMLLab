@@ -1,0 +1,293 @@
+{
+  "schema_version": 1,
+  "record_type": "Retained configuration descriptions; exact six-model training adapters unavailable after reset. Not an executable config.",
+  "GeoPT_scope": "Compatible-backbone transfer only for original Transolver; the six other architectures were initialized from scratch.",
+  "models": [
+    {
+      "name": "DeepONet",
+      "large": {
+        "hidden_layers_per_branch_and_trunk": 8,
+        "hidden_width": 256,
+        "latent_per_output": 256,
+        "outputs": 3,
+        "strategy": "split_both",
+        "activation": "tanh; extra final trunk tanh after FNN",
+        "parameters": 5925123,
+        "inputs": {
+          "branch": "18000 raster SDF values / sqrt(18000) + Re/100",
+          "trunk": "x,y"
+        }
+      },
+      "small": {
+        "hidden_layers_per_branch_and_trunk": 2,
+        "hidden_width": 128,
+        "latent_per_output": 64,
+        "parameters": null
+      },
+      "note": "Geometry-aware DeepONet. This is not the historical Re-only ordinary DeepONet baseline."
+    },
+    {
+      "name": "Geom-DeepONet",
+      "large": {
+        "h": 128,
+        "max_hidden_width": 256,
+        "branch0": [
+          256,
+          256,
+          256,
+          128
+        ],
+        "trunk0": [
+          256,
+          256,
+          256,
+          128
+        ],
+        "branch1": [
+          256,
+          256,
+          256,
+          384
+        ],
+        "trunk1": [
+          256,
+          256,
+          256,
+          384
+        ],
+        "activation_dense": "swish",
+        "activation_trunk1": "SIREN w0=10",
+        "output": "linear",
+        "parameters": 5465089,
+        "affine_layers_per_branch_trunk_path": 8
+      },
+      "small": {
+        "h": 32,
+        "branch0": [
+          50,
+          50,
+          32
+        ],
+        "trunk0": [
+          50,
+          50,
+          32
+        ],
+        "branch1": [
+          64,
+          64,
+          96
+        ],
+        "trunk1": [
+          64,
+          64,
+          96
+        ],
+        "trunk1_activation": "SIREN w0=10",
+        "parameters": null
+      }
+    },
+    {
+      "name": "SMART",
+      "large": {
+        "latent_width": 256,
+        "encoder_blocks": 8,
+        "decoder_blocks": 8,
+        "heads": 8,
+        "latent_geometry_points": 32,
+        "subsampled_geometry_points": 128,
+        "spatial_dim": 2,
+        "surface_channels": 1,
+        "volume_channels": 3,
+        "parameter_channels": 1,
+        "position_scale_factor": 20,
+        "dropout": 0,
+        "parameters": 11380676
+      },
+      "small": {
+        "latent_width": 64,
+        "encoder_blocks": 2,
+        "decoder_blocks": 2,
+        "heads": 4,
+        "parameters": null
+      },
+      "shared": "Official source; initialize_weights; decode[:,:,1:] gives the three physical fields."
+    },
+    {
+      "name": "DoMINO",
+      "large": {
+        "geometry_convolution_base_neurons": 32,
+        "geometry_processor_base_filters": 8,
+        "basis_base_layer": 256,
+        "aggregation_base_layer": 256,
+        "position_encoder_base_neurons": 256,
+        "parameter_model_base_layer": 256,
+        "parameters": 2941051
+      },
+      "small": {
+        "geometry_convolution_base_neurons": 8,
+        "geometry_processor_base_filters": 2,
+        "other_base_widths": 32,
+        "parameters": null,
+        "result_status": "cancelled control; no confirmed completion"
+      },
+      "shared": {
+        "mode": "volume",
+        "interpolation_resolution": [
+          32,
+          16,
+          8
+        ],
+        "encode_parameters": true,
+        "volume_neighbors": 2,
+        "loop": "two-loop",
+        "geo_conv_radii": [
+          0.15,
+          0.6
+        ],
+        "geo_conv_neighbors": [
+          8,
+          16
+        ],
+        "local_geometry_radii": [
+          0.15,
+          0.5
+        ],
+        "local_geometry_neighbors": [
+          8,
+          16
+        ],
+        "geometry_adapter": "2D boundary extruded across 8 z levels for geometry encoding; no 3D CFD is claimed"
+      }
+    },
+    {
+      "name": "Geo-FNO",
+      "large": {
+        "width": 48,
+        "spectral_operators": 8,
+        "operators": "input nonuniform FFT + 6 regular Fourier/local/position layers + output nonuniform FFT",
+        "modes": [
+          12,
+          12
+        ],
+        "grid": [
+          40,
+          40
+        ],
+        "IPHI_width": 64,
+        "geometry_code_input": 18001,
+        "parameter_entries": 6730325,
+        "real_scalar_parameters": 12038741
+      },
+      "small": {
+        "width": 32,
+        "spectral_operators": 5,
+        "IPHI_width": 32,
+        "parameters": null,
+        "result_status": "cancelled control; no confirmed completion"
+      },
+      "shared": {
+        "context_points_per_case": 512,
+        "context_rng": "40000 + case index",
+        "context_features": "normalized xy, local SDF, Re/100",
+        "query_coordinates": "x/5,y",
+        "source_patch": "hard-coded CUDA center/B tensors changed to registered buffers; additional regular layers repeat the author equation"
+      }
+    },
+    {
+      "name": "GeoTransolver",
+      "large": {
+        "layers": 8,
+        "hidden_width": 256,
+        "heads": 8,
+        "slices": 32,
+        "local_hidden_width": 32,
+        "parameters": 9367179
+      },
+      "small": {
+        "layers": 2,
+        "hidden_width": 64,
+        "heads": 4,
+        "slices": 16,
+        "local_hidden_width": 8,
+        "parameters": null,
+        "result_status": "cancelled control; no confirmed completion"
+      },
+      "shared": {
+        "functional_dim": 3,
+        "out_dim": 3,
+        "geometry_dim": 3,
+        "global_dim": 1,
+        "local_features": true,
+        "radii": [
+          0.1,
+          0.5
+        ],
+        "neighbors": [
+          8,
+          16
+        ],
+        "dropout": 0,
+        "use_te": false,
+        "query": "physical xy + SDF",
+        "positions": "xy,z=0",
+        "geometry": "boundary xy,z=0",
+        "global_parameter": "Re/100"
+      }
+    },
+    {
+      "name": "Original Transolver",
+      "large": {
+        "blocks": 8,
+        "hidden_width": 256,
+        "heads": 8,
+        "slices": 32,
+        "mlp_ratio": 2,
+        "parameters": 3859011
+      },
+      "small": {
+        "blocks": 3,
+        "hidden_width": 64,
+        "parameters": 100351
+      },
+      "GeoPT_transfer": {
+        "loaded_parameters": 3855680,
+        "method": "shape-filtered compatible backbone",
+        "new_parameters": "2D input projection and task output head",
+        "official_weight_sha256": "c0b1b9c4e5d533dbc249190d3d1fbe8e6b066b36d325cf4377cc0d613c02d1c2",
+        "source": "https://huggingface.co/GeoPT/GeoPT_Pretrained_Models/tree/45df8bd3d02f9ab36a25d86d0a048e9d72572fd3",
+        "claim_limit": "Not a reproduction of the original 3D prompt setup."
+      }
+    }
+  ],
+  "upstream_pins": {
+    "Geom-DeepONet": {
+      "repo": "https://github.com/ncsa/GeomDeepONet",
+      "commit": "0a65f3d5b133fb6f248b0b11caa970d0cd724fb5",
+      "path": "Example2/Code/Baseline_GDON_DistanceSplit.py",
+      "sha256": "7b76d5295eda22490d51c1fb77c85fb9c25128afca14c0bcb66ba56ed377f931"
+    },
+    "Geo-FNO": {
+      "repo": "https://github.com/neuraloperator/Geo-FNO",
+      "commit": "d499bde15104f4ac34db6eaf57d3528a101e4ef6",
+      "path": "elasticity/elas_geofno.py",
+      "sha256": "6231b63aa3cf4d321f671e8bda396229c335c13715e9226166970915d1a829a0"
+    },
+    "DeepXDE": {
+      "repo": "https://github.com/lululxvi/deepxde",
+      "commit": "0049ad080e9d1dbd1b1f34a18fec855d1c5679e9",
+      "paths": [
+        "deepxde/nn/pytorch/deeponet.py",
+        "deepxde/nn/deeponet_strategy.py"
+      ]
+    },
+    "NVIDIA_PhysicsNeMo": {
+      "repo": "https://github.com/NVIDIA/physicsnemo",
+      "commit": "94dbdf829d1a4e93e3f31ecb77713392c471388e"
+    },
+    "SMART": {
+      "source_file": "smart_author.py",
+      "sha256": "d8e8a90f1dea99e0874d8e3197a4519ad34590f045fcee0f67d2198912241d14"
+    }
+  }
+}

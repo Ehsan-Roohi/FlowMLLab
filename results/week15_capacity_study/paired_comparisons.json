@@ -1,0 +1,42 @@
+{
+  "meaning": "Positive velocity reduction means lower error for the larger model; negative means deterioration. Changes describe this one seed only.",
+  "paired_native_capacity": [
+    {
+      "model": "DeepONet",
+      "velocity_error_reduction_pct": 18.817716130331718,
+      "filtered_iou_change": 0.10090461298476938,
+      "extent_error_change_H": 0.1210526315789473,
+      "cases_with_lower_velocity_error": 16,
+      "case_win_count_provenance": "Retained run summary; per-case arrays unavailable for re-counting",
+      "case_count": 19,
+      "seed_count": 1
+    },
+    {
+      "model": "Geom-DeepONet",
+      "velocity_error_reduction_pct": 12.15879989568758,
+      "filtered_iou_change": 0.008334922603267847,
+      "extent_error_change_H": -0.06754385964912274,
+      "cases_with_lower_velocity_error": 14,
+      "case_win_count_provenance": "Retained run summary; per-case arrays unavailable for re-counting",
+      "case_count": 19,
+      "seed_count": 1
+    },
+    {
+      "model": "SMART",
+      "velocity_error_reduction_pct": -7.257548760089159,
+      "filtered_iou_change": -0.028067529154014448,
+      "extent_error_change_H": 0.04649122807017553,
+      "cases_with_lower_velocity_error": 6,
+      "case_win_count_provenance": "Retained run summary; per-case arrays unavailable for re-counting",
+      "case_count": 19,
+      "seed_count": 1
+    }
+  ],
+  "cancelled_controls": [
+    "DoMINO small",
+    "Geo-FNO small",
+    "GeoTransolver small"
+  ],
+  "cross_protocol_ranking_permitted": false,
+  "checkpoint_replay_performed_by_this_script": false
+}

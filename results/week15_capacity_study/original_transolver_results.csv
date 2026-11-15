@@ -1,0 +1,4 @@
+protocol,model,capacity,seed,test_cases,velocity_error_pct,pressure_error_pct,vorticity_error_pct,filtered_reverse_iou,reverse_velocity_error_pct,extent_abs_error_H,parameter_entries,real_scalar_parameters,evidence_status,checkpoint_available
+original_transolver,Original Transolver,small,17,19,14.426055230592427,210.42786307083932,,0.41859670376788155,,,100351,100351,previously_verified_summary,True
+original_transolver,Original Transolver scratch,large,17,19,5.512791181865492,59.323251824629935,,0.5525939706160283,,,3859011,3859011,previously_verified_summary,False
+original_transolver,Original Transolver GeoPT transfer,large,17,19,6.115033802233245,57.261428331073965,,0.49113876808703527,,,3859011,3859011,previously_verified_summary,False

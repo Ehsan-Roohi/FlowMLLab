@@ -1,0 +1,11 @@
+{
+  "scope": "Retained-summary analysis and figure display; no training or missing-checkpoint replay",
+  "execution_mode": "Sequential cells in a fresh Python process using in-process IPython",
+  "external_kernel_status": "Not verified: host denied socket binding for TCP and IPC Jupyter transports",
+  "notebook": "notebooks/week15/W15_Larger_Networks_Analysis.ipynb",
+  "status": "passed",
+  "code_cells_executed": 8,
+  "error_outputs": 0,
+  "elapsed_seconds": 0.097,
+  "notebook_sha256": "b75a3b1d48a65b3cb16fea148d5c2a1f48cba5d5ff8e13ea44f153902aca13e3"
+}

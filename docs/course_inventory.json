@@ -11,7 +11,7 @@
   "counts": {
     "active_lecture_pdfs": 37,
     "lecture_pages": 597,
-    "student_notebooks": 59,
+    "student_notebooks": 60,
     "historical_student_companions": 1,
     "optional_notebooks": 1,
     "optional_pdfs": 1
@@ -366,6 +366,10 @@
     {
       "path": "notebooks/week15/W15_Geometry_Operators_Step_Audit.ipynb",
       "role": "historical audit companion"
+    },
+    {
+      "path": "notebooks/week15/W15_Larger_Networks_Analysis.ipynb",
+      "role": "student"
     },
     {
       "path": "notebooks/week15/W15_Original_Transolver_Double_Step.ipynb",

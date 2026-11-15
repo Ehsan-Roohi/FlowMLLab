@@ -1,0 +1,49 @@
+{
+  "scope": "Figure identity checks in this publication; raw arrays unavailable for contour regeneration",
+  "display": "Shared banded speed scale per figure, physical 5:1 domain, solid gray, each field own streamlines",
+  "protocol_warning": "Original Transolver uses a separate training protocol from the six-model capacity suite",
+  "figures": [
+    {
+      "path": "figures/CFD_vs_Large_Networks_Re100.png",
+      "sha256": "fa222829fb47d11250abecf6aa95ee5f677048b3bcd537094e9099cf63954428",
+      "size_bytes": 310748,
+      "dimensions_pixels": [
+        1600,
+        1200
+      ],
+      "geometry": "g049",
+      "Re": 100,
+      "seed": 17,
+      "provenance": "Retained numerical raster figure recovered after environment reset; identical bytes preserved",
+      "raw_prediction_arrays_available": false
+    },
+    {
+      "path": "figures/DoubleStep_All_Large_Models_Re100.png",
+      "sha256": "98e07850cdb0cb736cd4c0bd7a5aea42aacb49a1ca36f67682f35701244058b2",
+      "size_bytes": 475653,
+      "dimensions_pixels": [
+        1800,
+        1339
+      ],
+      "geometry": "g049",
+      "Re": 100,
+      "seed": 17,
+      "provenance": "Retained numerical raster figure recovered after environment reset; identical bytes preserved",
+      "raw_prediction_arrays_available": false
+    },
+    {
+      "path": "figures/DoubleStep_All_Large_Models_Re25.png",
+      "sha256": "4def80144519b3ddca070ce0c384f96adcb12f08e37da44ad900e2aa3a963c46",
+      "size_bytes": 453733,
+      "dimensions_pixels": [
+        1800,
+        1339
+      ],
+      "geometry": "g049",
+      "Re": 25,
+      "seed": 17,
+      "provenance": "Retained numerical raster figure recovered after environment reset; identical bytes preserved",
+      "raw_prediction_arrays_available": false
+    }
+  ]
+}

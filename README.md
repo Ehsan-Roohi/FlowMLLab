@@ -12,6 +12,12 @@ Developed for **MIE 690A: AI in Fluid Mechanics** at the University of Massachus
 
 [Course map](COURSE_MAP.md) · [Notebooks](notebooks/README.md) · [Lectures](lectures/README.md) · [Results gallery](#results-gallery) · [Technical guide](docs/RESULTS_GUIDE.md) · [Attention and language modeling](docs/TRANSFORMER_COURSE.md)
 
+## Featured extension: do larger networks predict two-step flow better?
+
+[**Week 15 capacity study**](weeks/week15/larger_networks.md) compares six enlarged geometry-aware models and a separate original-Transolver/GeoPT experiment on the retained CFD dataset. In the three completed matched small/large controls, mean velocity error fell by **18.82% for geometry-aware DeepONet** and **12.16% for Geom-DeepONet**, but rose by **7.26% for SMART**. These are **single-seed findings**; a larger model alone does not guarantee a better vortex prediction.
+
+[Configurations, evidence and exercises](weeks/week15/larger_networks.md) · [Two-step contours at Re=100](results/week15_capacity_study/figures/DoubleStep_All_Large_Models_Re100.png) · [Re=25](results/week15_capacity_study/figures/DoubleStep_All_Large_Models_Re25.png) · [Analysis notebook](notebooks/week15/W15_Larger_Networks_Analysis.ipynb)
+
 ## Continue through the course
 
 Each week has a guide, a notebook link and its lecture or companion reading.
@@ -752,6 +758,30 @@ not silently present saved solver fields as a fresh Run-All CFD calculation.
 
 ### Week 15 — Geometry-aware neural operators
 
+#### Larger-network extension: capacity, pretraining and metric tradeoffs
+
+**[Read the new teaching section](weeks/week15/larger_networks.md)** · [Results and artifact availability](results/week15_capacity_study/README.md) · [Run the lightweight analysis notebook](notebooks/week15/W15_Larger_Networks_Analysis.ipynb)
+
+All six enlarged configurations completed one training seed (17). Three architectures also have completed controls under the same suite protocol:
+
+| Matched architecture | Small velocity error | Large velocity error | Change in error |
+| --- | ---: | ---: | ---: |
+| Geometry-aware DeepONet | 17.0001% | 13.8010% | −18.82% |
+| Geom-DeepONet | 12.3153% | 10.8179% | −12.16% |
+| SMART | 9.9427% | 10.6642% | +7.26% |
+
+These are arithmetic means over 19 retrospective test cases across eight geometries. The other three small controls were discontinued and are excluded. Separate-process checkpoint replay confirmed saved predictions before the execution environment reset; it does not replace a second training seed. The new weights and prediction arrays are currently unavailable; retained figures and recorded summary values support a retrospective teaching analysis.
+
+**Double-step g049, Re=100: CFD and enlarged models.**
+
+<p align="center"><a href="results/week15_capacity_study/figures/DoubleStep_All_Large_Models_Re100.png"><img src="results/week15_capacity_study/figures/DoubleStep_All_Large_Models_Re100.png" width="760" alt="Two-step g049 at Re 100: CFD, six enlarged geometry-aware models and enlarged original Transolver trained from scratch"></a></p>
+
+The field panels use a shared speed scale and each prediction's own streamlines. The original Transolver row belongs to a **different training protocol** from the six-model suite; the figure supports visual inspection, not a controlled architecture ranking. [Inspect the harder Re=25 comparison](results/week15_capacity_study/figures/DoubleStep_All_Large_Models_Re25.png). The separate Transolver scratch/GeoPT experiment and its specifications are explained in the [capacity study](weeks/week15/larger_networks.md).
+
+Students calculate paired capacity effects, compare velocity with reverse-flow location, audit artifact availability and design a finite follow-up experiment. Read the configuration and weight-availability tables before planning a rerun.
+
+#### Earlier Week 15 experiments and figures
+
 Original Transolver: [double-step test, weights and results](results/family_transolver/README.md) · [additional g011 test](results/step_transolver/README.md).
 
 
@@ -763,7 +793,7 @@ The notebook exposes the split, training choices and unresolved low-Reynolds-num
 
 **Problem:** Predict velocity and pressure across changing channel geometry, including double-step cases excluded from training and validation.<br>
 **CFD / data:** Retained channel-flow CFD fields and geometry masks: 100 training, 8 validation and 19 retrospective test cases; three `g005` cases are quarantined. This update generates no new CFD.<br>
-**Learning method:** Compare DeepONet, Geom-DeepONet, Geo-FNO, SMART, GeoTransolver and DoMINO. The fresh suite uses a 19,200-update ceiling and three seeds; learning rates are selected using validation cases only.
+**Learning method (earlier post-audit suite):** Compare DeepONet, Geom-DeepONet, Geo-FNO, SMART, GeoTransolver and DoMINO. That suite uses a 19,200-update ceiling and three seeds; learning rates are selected using validation cases only.
 
 **Results:** Historical Geom-DeepONet has 9.86% global velocity error; tuned Geom-DeepONet has 10.53%. Tuned DoMINO has the largest mean reverse-flow IoU (0.534), but 15.59% velocity error. Low-Reynolds-number reverse-flow magnitude remains inaccurate.
 
@@ -778,23 +808,23 @@ its floor drops in two steps and then rises again, so it shares the test
 family's two-descending-step motif without belonging to the test family, and it
 is kept out of training, validation and the test alike. The split was
 reconstructed from the masks: no training or validation mask contains the two
-consecutive descending steps that define the test family. All retained model configurations appear below. The unchanged original figures also retain the training-geometry panels. Every flow panel preserves the physical 5:1 aspect ratio.
+consecutive descending steps that define the test family. The earlier retained model configurations appear below. The unchanged original figures also retain the training-geometry panels. Every flow panel preserves the physical 5:1 aspect ratio.
 
-Both test geometries are shown below with all their retained models. The double-step comparison includes historical DeepONet/Geom-DeepONet/Geo-FNO, tuned Geom-DeepONet/SMART/DoMINO, matched GeoTransolver, both explicitly labeled company-inspired proxies, and original Transolver. Color bands use the original RGB/rainbow style and a shared speed scale within each figure; each field supplies its own streamlines.
+Both test geometries are shown below with the earlier retained configurations; the enlarged configurations appear above. The double-step comparison includes historical DeepONet/Geom-DeepONet/Geo-FNO, tuned Geom-DeepONet/SMART/DoMINO, matched GeoTransolver, both explicitly labeled company-inspired proxies, and original Transolver. Color bands use the original RGB/rainbow style and a shared speed scale within each figure; each field supplies its own streamlines.
 
 **Central-obstacle channel (g011): all four models and CFD.**
 
 <p align="center"><a href="results/step_transolver/all_models_g011_Re100.png"><img src="results/step_transolver/all_models_g011_Re100.png" width="760" alt="Central-obstacle channel: CFD, Geo-DeepONet, FNO, U-FNO and original Transolver"></a></p>
 
-**Double-step channel (g049): all retained models and CFD.**
+**Double-step channel (g049): earlier compact configurations and CFD.**
 
-<p align="center"><a href="results/family_transolver/all_models_g049_Re100.png"><img src="results/family_transolver/all_models_g049_Re100.png" width="760" alt="Double-step: CFD and all ten retained model configurations, including original Transolver, in the original rainbow color scheme"></a></p>
+<p align="center"><a href="results/family_transolver/all_models_g049_Re100.png"><img src="results/family_transolver/all_models_g049_Re100.png" width="760" alt="Earlier two-step comparison: CFD and ten compact or historical configurations, including original Transolver"></a></p>
 
 Unchanged original figures: [historical/core comparison](results/week15_postaudit/core_g049_Re100.png) · [extended comparison](results/week15_postaudit/extended_g049_Re100.png).
 
-The historical seed-17 Geom-DeepONet run remains best in global velocity error
+Within the earlier post-audit suite, the historical seed-17 Geom-DeepONet run had the lowest global velocity error
 (9.86%), while
-the learning-rate-selected Geom model is the strongest new global-field model
+the learning-rate-selected Geom model was the strongest newly trained global-field model in that earlier suite
 (10.53%). DoMINO has the best mean reverse-flow IoU in the tuned suite (0.534),
 but its test velocity error is 15.59%, so this is a topology-localized gain rather
 than the best overall field reconstruction.

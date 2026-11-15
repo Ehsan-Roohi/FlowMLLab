@@ -1,0 +1,132 @@
+{
+  "schema_version": 1,
+  "status": "Retained-result publication after transient execution-environment reset",
+  "audit_note": "Training completion and fresh-process replay were observed before reset. This release retains summaries and raster figures. It does not supply all new weights, raw prediction arrays, training histories, or exact six-model adapters. Reported metrics cannot currently be remeasured from the published new artifacts alone.",
+  "artifacts": [
+    {
+      "kind": "data and effective split verification",
+      "status": "freshly checked surviving dataset and split",
+      "paths": [
+        "data_split_verification.json"
+      ],
+      "scope": "Dataset SHA256 and mask-derived effective 100/8/19/3 membership; does not validate missing model results"
+    },
+    {
+      "kind": "summary metrics",
+      "status": "retained and published",
+      "paths": [
+        "native_capacity_results.csv",
+        "original_transolver_results.csv",
+        "g049_Re100_results.csv",
+        "reported_results.json"
+      ],
+      "provenance": "Transcribed from previously verified run summaries preserved in the project conversation; not a fresh checkpoint evaluation"
+    },
+    {
+      "kind": "summary analysis",
+      "status": "published and rerunnable",
+      "paths": [
+        "build_results.py",
+        "analyze_results.py",
+        "paired_comparisons.json"
+      ],
+      "scope": "Recreates reported tables and arithmetic comparisons only"
+    },
+    {
+      "kind": "architecture and protocol descriptions",
+      "status": "retained and published",
+      "paths": [
+        "architectures.json",
+        "protocols.json"
+      ],
+      "scope": "Descriptive record, not executable training configuration or full environment lock"
+    },
+    {
+      "kind": "large-model figures",
+      "status": "retained raster figures",
+      "paths": [
+        "figures/DoubleStep_All_Large_Models_Re25.png",
+        "figures/DoubleStep_All_Large_Models_Re100.png",
+        "figures/CFD_vs_Large_Networks_Re100.png"
+      ],
+      "scope": "One geometry g049 at two Reynolds numbers; each row uses the corresponding model's own field/streamlines; not the aggregate 19-case result"
+    },
+    {
+      "kind": "new native-suite trained weights",
+      "status": "unavailable after environment reset",
+      "paths": [],
+      "models": [
+        "DeepONet small/large",
+        "Geom-DeepONet small/large",
+        "SMART small/large",
+        "DoMINO large",
+        "Geo-FNO large",
+        "GeoTransolver large"
+      ],
+      "historically_replayed": true
+    },
+    {
+      "kind": "compact original Transolver trained weights",
+      "status": "available in existing main repository",
+      "paths": [
+        "../family_transolver/seed_17/best.pt"
+      ],
+      "note": "This compact baseline checkpoint survives. It is not a checkpoint for either new large original-Transolver run or for the six-model suite."
+    },
+    {
+      "kind": "new original-Transolver trained weights",
+      "status": "unavailable after environment reset",
+      "paths": [],
+      "historical_sha256": {
+        "large_scratch_best.pt": "cce7120dd732a1c0d1efe5262830ba4a68e898d3a17bcba92b47f9c5b53a845c",
+        "large_GeoPT_best.pt": "63e1dbd31e85b8f501151eb8f2cd956592b87a4d0211d766b882b0d9e2665635"
+      },
+      "note": "A historical checksum identifies a missing file; it is not a download link or proof that the file is present in this release"
+    },
+    {
+      "kind": "new per-case predictions, full metric ledgers and training histories",
+      "status": "unavailable after environment reset",
+      "paths": [],
+      "note": "Only the retained aggregate values and selected g049 case values are published here; missing values remain null"
+    },
+    {
+      "kind": "six-model training adapters",
+      "status": "unavailable after environment reset",
+      "paths": [],
+      "note": "Upstream source pins and descriptive architecture records survive; do not label this as full retraining reproducibility"
+    },
+    {
+      "kind": "original Transolver experiment source",
+      "status": "recovered source published in this release",
+      "url": "https://github.com/Ehsan-Roohi/FlowMLLab/tree/692202f9b0c16ca3a81f1386b48358d3315e6071",
+      "note": "Recovered from the historical commit; corrected trainer invocation and scratch-versus-GeoPT manifest label for future runs, with training and selection logic retained. Large trained weights remain unavailable. Historical run status text is superseded by retained completed summaries.",
+      "paths": [
+        "../../qa/train_family_transolver_large.py",
+        "../../qa/download_geopt_checkpoint.py"
+      ]
+    },
+    {
+      "kind": "official GeoPT pretrained source",
+      "status": "upstream reference",
+      "url": "https://huggingface.co/GeoPT/GeoPT_Pretrained_Models/tree/45df8bd3d02f9ab36a25d86d0a048e9d72572fd3",
+      "historical_weight_sha256": "c0b1b9c4e5d533dbc249190d3d1fbe8e6b066b36d325cf4377cc0d613c02d1c2",
+      "note": "Official pretrained weights differ from the missing fine-tuned experiment checkpoint"
+    },
+    {
+      "kind": "DoMINO, Geo-FNO and GeoTransolver small controls",
+      "status": "cancelled by user",
+      "paths": [],
+      "note": "No confirmed completion; no capacity-benefit claim is made for these three models"
+    }
+  ],
+  "next_experiment_archive_requirements": [
+    "Frozen data and split checksums",
+    "Source snapshot and executable environment lock",
+    "Best and resumable optimizer checkpoints",
+    "All per-case predictions and metrics",
+    "Training and validation histories",
+    "Fresh-process replay evidence and checksums",
+    "Durable off-host copy before reporting completion",
+    "Independent seeds if uncertainty is to be claimed"
+  ]
+}

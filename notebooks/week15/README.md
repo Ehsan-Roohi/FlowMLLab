@@ -2,13 +2,25 @@
 
 Original Transolver: [run/verify notebook](../../notebooks/week15/W15_Original_Transolver_Double_Step.ipynb) · [double-step test, weights and results](../../results/family_transolver/README.md) · [additional g011 test](../../results/step_transolver/README.md).
 
+## Larger-network extension
+
+[**Does a larger network improve two-step flow prediction?**](../../weeks/week15/larger_networks.md) · [Configurations, results and artifact availability](../../results/week15_capacity_study/README.md) · [Analysis notebook](../../notebooks/week15/W15_Larger_Networks_Analysis.ipynb)
+
+Study six enlarged geometry-aware models and the separate original-Transolver/GeoPT experiment. With completed matched controls, enlargement reduced mean velocity error for geometry-aware DeepONet (**18.82%**) and Geom-DeepONet (**12.16%**), while SMART's error increased (**7.26%**). Each configuration has **one training seed**; the three remaining compact controls were discontinued.
+
+<p align="center"><a href="../../results/week15_capacity_study/figures/DoubleStep_All_Large_Models_Re100.png"><img src="../../results/week15_capacity_study/figures/DoubleStep_All_Large_Models_Re100.png" width="760" alt="Double-step g049 Re 100 CFD and enlarged network predictions; original Transolver uses a separate protocol"></a></p>
+
+[View Re=25](../../results/week15_capacity_study/figures/DoubleStep_All_Large_Models_Re25.png). The shared contour scale makes flow differences visible; the separate Transolver protocol prevents treating this figure as a controlled cross-architecture ranking. The extension includes architecture specifications, recorded results, metric tradeoffs, future-experiment choices and student exercises. New weights and full prediction arrays are currently unavailable; see the artifact ledger before planning reproduction.
+
+## Earlier configurations
+
 **Central-obstacle channel (g011): all four models and CFD.**
 
 <p align="center"><a href="../../results/step_transolver/all_models_g011_Re100.png"><img src="../../results/step_transolver/all_models_g011_Re100.png" width="760" alt="Central-obstacle channel: CFD, Geo-DeepONet, FNO, U-FNO and original Transolver"></a></p>
 
-**Double-step channel (g049): all retained models and CFD.**
+**Double-step channel (g049): earlier compact configurations and CFD.**
 
-<p align="center"><a href="../../results/family_transolver/all_models_g049_Re100.png"><img src="../../results/family_transolver/all_models_g049_Re100.png" width="760" alt="Double-step: CFD and all ten retained model configurations, including original Transolver, in the original rainbow color scheme"></a></p>
+<p align="center"><a href="../../results/family_transolver/all_models_g049_Re100.png"><img src="../../results/family_transolver/all_models_g049_Re100.png" width="760" alt="Earlier two-step comparison: CFD and ten compact or historical configurations, including original Transolver"></a></p>
 
 Unchanged original figures: [historical/core comparison](../../results/week15_postaudit/core_g049_Re100.png) · [extended comparison](../../results/week15_postaudit/extended_g049_Re100.png).
 
