@@ -1,0 +1,24 @@
+{
+  "version": "1.13.0",
+  "tag_commit": "188564ea4fce174ad8b31261b1fae5b8ca0d7cc5",
+  "github_release": "https://github.com/Ehsan-Roohi/FlowMLLab/releases/tag/v1.13.0",
+  "release_assets": 20,
+  "successful_release_workflow": "https://github.com/Ehsan-Roohi/FlowMLLab/actions/runs/43735867150",
+  "checks": {
+    "targeted_tests_passed": 24,
+    "fresh_notebook_kernels_passed": 5,
+    "native_fields_reaudited": 45,
+    "preserved_original_lecture_pages": 120,
+    "isolated_wheel_smoke_passed": true
+  },
+  "zenodo": {
+    "record_id": 24250424,
+    "doi": "10.5281/zenodo.24250424",
+    "concept_doi": "10.5281/zenodo.22074169",
+    "archive": "Ehsan-Roohi/FlowMLLab-v1.13.0.zip",
+    "server_reported_size": 861708697,
+    "server_reported_checksum": "md5:e71ec4c1a395c13953b40d56e1b4af98",
+    "verification": "Public record version, concept identity, archive name and server checksum inspected; archive not downloaded."
+  },
+  "scientific_scope": "Velocity errors are relative to the retained 512-cell discrete CFD solutions; mesh independence and nonlinear PDE satisfaction by the surrogate are not established."
+}
