@@ -102,8 +102,11 @@ def main():
     if args.resume and (dest/'latest_training.pt').exists():
         ck=torch.load(dest/'latest_training.pt',map_location=args.device,weights_only=False)
         model.load_state_dict(ck['model']);opt.load_state_dict(ck['optimizer']);sched.load_state_dict(ck['scheduler'])
-        rng.bit_generator.state=ck['rng'];torch.set_rng_state(ck['torch_rng'].cpu())
-        history=ck['history'];best=ck['best'];best_epoch=ck['best_epoch'];first_epoch=ck['epoch']+1
+        rng.bit_generator.state=ck['rng'];
+        if 'torch_rng' in ck:torch.set_rng_state(ck['torch_rng'].cpu())
+        history=ck.get('history',json.loads((dest/'history.json').read_text()))
+        chosen=min(history,key=lambda r:r['validation_mse'])
+        best=ck.get('best',chosen['validation_mse']);best_epoch=ck.get('best_epoch',chosen['epoch']);first_epoch=ck['epoch']+1
 
     def infer(ci):
         # One complete fluid cloud. Do not chunk the query set: attention is contextual.
