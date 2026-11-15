@@ -8,6 +8,6 @@ Three separate notebooks extend the cavity teaching route. Existing notebook cel
 - Four existing lectures gain fourteen pages with theory, physical figures and specific engineering exercises. Their 120 original pages remain intact.
 - Shared reference utilities, analytical-gradient tests, frozen model/data hashes, build sources and a literature-backed development roadmap accompany the lessons.
 
-The profile experiment is not a PDE/full-field validation. Newly qualified fields at Re=3200/5000/7500/10000 and a fresh controlled deep-cavity optimizer ablation are not included. Retained D5 workflows have unequal training histories. New notebook sections are executed sequentially on CPU; this is not a fresh hosted Run All certification of every older notebook.
+The profile experiment is not a PDE/full-field validation. Newly qualified fields at Re=3200/5000/7500/10000 and a fresh controlled deep-cavity optimizer ablation are not included. Retained D5 workflows have unequal training histories. All three new notebooks passed execution in fresh Jupyter kernels on CPU, along with sixteen targeted tests and the full course release checks. Earlier notebooks retain their existing outputs and have preservation checks; this is not a fresh hosted Run All certification of every older notebook.
 
 The [Zenodo concept DOI](https://doi.org/10.5281/zenodo.22074169) identifies the archive series. This release preserves subsequent repository updates as well as the cavity additions.

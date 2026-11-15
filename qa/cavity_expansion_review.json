@@ -20,5 +20,14 @@
     "D5 data are retained author trajectories; historical workflow differences are not isolated optimizer effects.",
     "The Colab network-clone branch and older notebooks have not been freshly rerun."
   ],
-  "release_gate": "The v1.12.0 workflow runs numerical checks and three fresh Jupyter kernels before creating a GitHub release."
+  "release_gate": "The v1.12.0 workflow runs numerical checks and three fresh Jupyter kernels before creating a GitHub release.",
+  "clean_linux_pre_release": {
+    "url": "https://github.com/Ehsan-Roohi/FlowMLLab/actions/runs/43712851197",
+    "tested_commit": "03210641ddb9611bfc40dbd48bcbf0631a2c36f7",
+    "targeted_tests_passed": 16,
+    "fresh_jupyter_notebooks_passed": 3,
+    "full_course_release_gate": "pass",
+    "isolated_wheel": "pass",
+    "scope": "Pre-release check; subsequent changes repair punctuation and document this result. The tag workflow repeats the gate before creating the release."
+  }
 }

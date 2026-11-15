@@ -44,8 +44,8 @@ Ghia's Tables I and II give 17 samples on each centreline, not a full flow field
 The square cavity has width $L$, lid speed $U$, $Re=UL/\nu$, and a discontinuous
 moving lid at its upper corners. A smooth-lid or deep cavity is a different problem.
 
-[Benchmark source and anomaly policy](../../references/ghia/README.md) Â·
-[Experiment, results and limitations](../../results/cavity_ghia_allre/README.md) Â·
+[Benchmark source and anomaly policy](../../references/ghia/README.md) ·
+[Experiment, results and limitations](../../results/cavity_ghia_allre/README.md) ·
 [Setup](../../START_HERE.md).
 
 Three suspicious **printed** entries remain in the raw tables. We show both the
@@ -231,9 +231,9 @@ recirculation, pressure and derivatives. It does not retrain the paper's network
 Width W, lid scale U, density rho, and height h measured from the floor set the
 units. Arrays have shape [h,x], 605 by 121, and exclude the exact walls by 0.002 W.
 
-[Lecture](../../lectures/week13_rectangular_cavity_pinn.pdf) Â·
-[Data and provenance](../../data/week13_d5/README.md) Â·
-[Results](../../results/week13_d5/README.md) Â· [Setup](../../START_HERE.md).
+[Lecture](../../lectures/week13_rectangular_cavity_pinn.pdf) ·
+[Data and provenance](../../data/week13_d5/README.md) ·
+[Results](../../results/week13_d5/README.md) · [Setup](../../START_HERE.md).
 Prerequisites: Week 1 validation, Week 1.3 optimization, Week 13 PINN basics.
 The CPU route needs NumPy, pandas and Matplotlib; no GPU or TensorFlow is required.
 '''),code(BOOT),md(r'''## 1. Verify the field identity before comparing
