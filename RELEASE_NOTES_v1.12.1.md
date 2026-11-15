@@ -20,3 +20,5 @@ Validation before publication: native archive/metric checks; original-notebook
 preservation; three fresh Jupyter kernels; targeted numerical tests; course
 release checks; distribution build and isolated-wheel smoke test. New comparison
 figures were inspected at full resolution, with legends outside the axes.
+
+Archived release: [Zenodo DOI 10.5281/zenodo.24247466](https://doi.org/10.5281/zenodo.24247466).

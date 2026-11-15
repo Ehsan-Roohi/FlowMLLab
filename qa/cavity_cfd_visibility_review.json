@@ -21,5 +21,19 @@
   "visual_review": "Five new CFD figures inspected at full resolution; right edge of streamline panel corrected; legends outside data axes.",
   "scope": "Only Lab 5 student content changed; original data, other notebooks and PDFs unchanged. Existing neural predictions displayed without retraining.",
   "validation_tool": "Now read-only, so checking lessons cannot rewrite their source or formatting.",
-  "fresh_kernel_release_check": "Required by publish-v1.12.1.yml before publication."
+  "fresh_kernel_release_check": "Passed on the released tag.",
+  "published_release": {
+    "version": "1.12.1",
+    "commit": "1c8e66216ddcad2ec5d4829a5887d7f8e27d57a8",
+    "github": "https://github.com/Ehsan-Roohi/FlowMLLab/releases/tag/v1.12.1",
+    "doi": "10.5281/zenodo.24247466",
+    "verified_assets": 5
+  },
+  "clean_linux_release_checks": {
+    "url": "https://github.com/Ehsan-Roohi/FlowMLLab/actions/runs/43721119338",
+    "targeted_tests_passed": 18,
+    "fresh_jupyter_kernels_passed": 3,
+    "course_gate": "passed",
+    "isolated_wheel": "passed"
+  }
 }
