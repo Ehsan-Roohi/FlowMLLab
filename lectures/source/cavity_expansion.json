@@ -881,6 +881,349 @@
         }
       ],
       "footnote": "Hardware-price context. The <link href=\"https://www.computerhistory.org/revolution/mainframe-computers/7/169/677\" color=\"black\">Computer History Museum</link> records the 1975 Amdahl 470V/6 at 3.5 MIPS, up to 8 MB and $3.75 million. As a dated desktop example, <link href=\"https://www.apple.com/newsroom/2024/10/apples-new-mac-mini-is-more-mighty-more-mini-and-built-for-apple-intelligence/\" color=\"black\">Apple announced the Mac mini M4 on 29 October 2024</link> with 10 CPU cores, 16 GB and a $599 starting price. These nominal hardware prices are not inflation-adjusted or per-solve bills. Ghia's installed configuration and purchase invoice are unknown. The Mac was not used for our Unity timings; MIPS is not modern floating-point throughput."
+    },
+    {
+      "title": "Measured experience: choosing a cavity solver",
+      "benchmark_unit": "matched-cavity-solver-benchmark",
+      "blocks": [
+        {
+          "type": "body",
+          "text": "<b>Question:</b> would replacing the sparse-direct linear solve with Newton-Krylov and multigrid make our high-Re cavity calculations faster? A matched experiment answered this for our current implementation: <b>the candidate took 1.95-2.17 times as long</b> in the four repeated warm-case comparisons. We retain the existing production solver for these workloads."
+        },
+        {
+          "type": "heading",
+          "text": "What changed, and what stayed fixed?"
+        },
+        {
+          "type": "body",
+          "text": "Both methods solve the same discrete steady streamfunction-vorticity equations. The grid, no-slip walls and moving lid, initial field, exact Jacobian, damped Newton iteration, line search and final acceptance tests are fixed. Only the method used to obtain the Newton correction changes."
+        },
+        {
+          "type": "math",
+          "latex": "F(q_k)=0\\;\\mathrm{at\\ convergence},\\quad J_k\\delta q_k=-F(q_k),\\quad q_{k+1}=q_k+\\alpha_k\\delta q_k"
+        },
+        {
+          "type": "small",
+          "text": "Here q collects the interior streamfunction and vorticity unknowns; F is the discrete equation residual; J is its Jacobian; k is the Newton iteration; delta q is the correction; and alpha is the accepted line-search step. The direct method factorizes the sparse Jacobian. GMRES is the Generalized Minimal Residual iterative method."
+        },
+        {
+          "type": "math",
+          "latex": "\\widetilde J_k=R_k J_k C,\\quad M_k^{-1}\\widetilde J_k z_k=-M_k^{-1}R_k F(q_k),\\quad\\delta q_k=Cz_k"
+        },
+        {
+          "type": "small",
+          "text": "R is an invertible diagonal row scaling; C is an invertible diagonal variable scaling; z is the scaled Newton correction. The preconditioner acts on the scaled Jacobian J-tilde. These transformations preserve the original correction equation."
+        },
+        {
+          "type": "body",
+          "text": "The operator M<super>-1</super> applies one coupled geometric Galerkin multigrid V-cycle. It uses bilinear prolongation, scaled-transpose restriction, ILUT smoothing (incomplete LU with threshold dropping), and a direct solve on the coarsest grid. Invertible row and variable scaling help the linear algebra; checks against the original unscaled equations are still required."
+        },
+        {
+          "type": "heading",
+          "text": "Why record a result that did not improve runtime?"
+        },
+        {
+          "type": "body",
+          "text": "A plausible method is not automatically a practical improvement. Preserving its failed pilots, setup cost and accepted solutions makes the result reusable: future work can target the measured bottleneck instead of repeating the same unsupported assumption. This is a CFD solver experiment, not neural-network training."
+        }
+      ]
+    },
+    {
+      "title": "Matched timings: include the cost of setup",
+      "benchmark_unit": "matched-cavity-solver-benchmark",
+      "blocks": [
+        {
+          "type": "body",
+          "text": "The table gives <b>median solve wall time over three repetitions</b> per method, grid and warm case. Each trial uses one CPU core and one BLAS/OpenMP thread on the same Intel Xeon Gold 5220 node (2.20 GHz). Python 3.12.3, NumPy 2.2.6 and SciPy 1.15.3 were recorded. Paired methods run sequentially in fresh processes, in AB, BA, AB order; the two grid studies use separate cores of the same allocation."
+        },
+        {
+          "type": "table",
+          "rows": [
+            [
+              "Nodes per side",
+              "Target Re",
+              "Direct (s)",
+              "GMRES/MG (s)",
+              "MG/direct"
+            ],
+            [
+              "257",
+              "7500",
+              "14.248",
+              "29.270",
+              "2.054"
+            ],
+            [
+              "257",
+              "10000",
+              "14.855",
+              "28.998",
+              "1.952"
+            ],
+            [
+              "513",
+              "7500",
+              "130.158",
+              "283.005",
+              "2.174"
+            ],
+            [
+              "513",
+              "10000",
+              "133.804",
+              "273.301",
+              "2.043"
+            ]
+          ],
+          "widths": [
+            84,
+            73,
+            91,
+            119,
+            98
+          ]
+        },
+        {
+          "type": "body",
+          "text": "Re=7500 starts from the same retained Re=6500 solution; Re=10000 starts from the same retained Re=9000 solution. A grid with 257 or 513 nodes has 256 or 512 cells per side. <b>These are warm continuation steps, not cold starts.</b> Minima, maxima and per-trial values are retained with the notebook evidence."
+        },
+        {
+          "type": "heading",
+          "text": "A separate, longer continuation test"
+        },
+        {
+          "type": "body",
+          "text": "On 257-by-257 nodes, the same 20-root path from Re=1000 to 10000 took <b>247.442 s</b> with the direct method and <b>561.950 s</b> with GMRES/MG: 2.271 times as long. Both start from the same retained 128-cell Re=1000 seed, interpolated to the target grid. There is only <b>one repetition per method</b> for this comparison."
+        },
+        {
+          "type": "heading",
+          "text": "What the timer includes"
+        },
+        {
+          "type": "body",
+          "text": "Solve time includes residual evaluation, Jacobian assembly, preconditioner construction, linear solves and line search. It excludes queueing, imports, seed generation, initial file I/O, checkpoint writes and post-run verification. A failed pilot is not a fast successful solve. Memory records are whole-process peak RSS, not just factor storage; the candidate also used slightly more memory in these runs."
+        },
+        {
+          "type": "small",
+          "text": "The main evaluation contains 26 successful trials, forming 13 matched pairs. The same source and packed initial-state hashes were checked for every pair. Neither this timing table nor historical Ghia timings establish a universal or hardware-independent algorithm ranking."
+        }
+      ]
+    },
+    {
+      "title": "Diagnosis: few iterations, expensive preparation",
+      "benchmark_unit": "matched-cavity-solver-benchmark",
+      "blocks": [
+        {
+          "type": "figure",
+          "path": "results/cavity_solver_benchmark/nonlinear_convergence.png",
+          "caption": "513-by-513 nodes; representative repeat 0. The original equation residual is the maximum of the Poisson and steady-vorticity defects. The dotted line is the final 10<super>-8</super> residual threshold. Both methods take four Newton steps; the candidate takes eight GMRES iterations in total.",
+          "width": 465,
+          "max_height": 195
+        },
+        {
+          "type": "math",
+          "latex": "T_{\\rm solve}=T_{\\rm residual/J}+T_{\\rm setup}+T_{\\rm Krylov}+T_{\\rm search/other}"
+        },
+        {
+          "type": "small",
+          "text": "T denotes elapsed time in each non-overlapping phase. Setup constructs the multigrid hierarchy and its incomplete factors; Krylov includes preconditioner applications. In the recorded profiling, linear_total_seconds already contains setup: do not add setup to that total again."
+        },
+        {
+          "type": "table",
+          "rows": [
+            [
+              "Nodes / Re",
+              "Setup (s)",
+              "Setup / solve",
+              "Needed setup cut"
+            ],
+            [
+              "257 / 7500",
+              "26.15",
+              "89.4%",
+              "57.4%"
+            ],
+            [
+              "257 / 10000",
+              "25.90",
+              "89.3%",
+              "54.6%"
+            ],
+            [
+              "513 / 7500",
+              "269.49",
+              "95.2%",
+              "56.7%"
+            ],
+            [
+              "513 / 10000",
+              "260.16",
+              "95.2%",
+              "53.6%"
+            ]
+          ],
+          "widths": [
+            112,
+            91,
+            120,
+            142
+          ]
+        },
+        {
+          "type": "body",
+          "text": "The strong ILUT hierarchy is rebuilt at every Newton step. Its construction accounts for <b>89.3-95.2%</b> of warm solve time, computed as median setup time divided by median solve time. It makes each linear solve converge in few iterations, but the setup cost overwhelms that benefit."
+        },
+        {
+          "type": "small",
+          "text": "The final column is a conditional cost-model calculation, not an achieved acceleration: it is the setup reduction needed to tie the direct median if all other costs remain fixed. Reusing a hierarchy can change iteration count and robustness; it needs a fresh correctness and timing test. No reuse improvement was implemented or measured here."
+        }
+      ]
+    },
+    {
+      "title": "Check the flow before declaring a faster solve",
+      "benchmark_unit": "matched-cavity-solver-benchmark",
+      "blocks": [
+        {
+          "type": "figure",
+          "path": "results/cavity_solver_benchmark/physical_profiles.png",
+          "caption": "513-by-513 nodes; representative repeat 0. Solid black: direct Newton. Dashed red: Newton with GMRES/MG. Left: vertical-centreline u; middle: horizontal-centreline v; right: signed horizontal-centreline vorticity. U is lid speed and L is cavity width. The almost coincident curves are expected, not a missing method.",
+          "width": 465,
+          "max_height": 295
+        },
+        {
+          "type": "math",
+          "latex": "D_u=\\left[\\frac{\\sum_i((u_i^{MG}-u_i^{D})^2+(v_i^{MG}-v_i^{D})^2)}{\\sum_i((u_i^D)^2+(v_i^D)^2)}\\right]^{1/2}"
+        },
+        {
+          "type": "small",
+          "text": "Superscripts MG and D denote the candidate and direct solvers; i ranges over every common native grid node. Vorticity uses the analogous relative L2 norm. The complete-field audit is separate from these centreline plots."
+        },
+        {
+          "type": "body",
+          "text": "Across five representative full-field pairs, the largest velocity discrepancy was <b>2.11 x 10<super>-14</super></b> and the largest vorticity discrepancy was <b>1.71 x 10<super>-14</super></b>. These quantify agreement between two numerical solvers. They are <b>not</b> errors against Ghia observations, a continuum exact solution, or experimental flow."
+        },
+        {
+          "type": "body",
+          "text": "A tiny nonlinear residual identifies a discrete steady root. It does not remove mesh error, prove the high-Re branch is temporally stable, or establish three-dimensional flow accuracy. Keep the existing mesh-sensitivity, Ghia-validation and temporal checks separate."
+        }
+      ]
+    },
+    {
+      "title": "Keep the unsuccessful attempts in the record",
+      "benchmark_unit": "matched-cavity-solver-benchmark",
+      "blocks": [
+        {
+          "type": "body",
+          "text": "Candidate settings were explored only on the smaller 128-cell pilot grid. Each setting was tried at both Re=7500 and 10000. The bounded pilot selected the fastest setting that passed both cases; the selection was frozen before any larger-grid candidate evaluation."
+        },
+        {
+          "type": "table",
+          "rows": [
+            [
+              "ILUT fill / drop",
+              "Outcome across two pilot cases"
+            ],
+            [
+              "4 / 10<super>-3</super>",
+              "2 singular incomplete-factor failures"
+            ],
+            [
+              "8 / 10<super>-4</super>",
+              "1 singular factor; 1 original-equation gate failure"
+            ],
+            [
+              "12 / 10<super>-5</super>",
+              "2 original-equation gate failures"
+            ],
+            [
+              "20 / 10<super>-6</super>",
+              "2 successful trials; slower than the stronger setting"
+            ],
+            [
+              "40 / 10<super>-8</super>",
+              "2 successful trials; selected for the main evaluation"
+            ]
+          ],
+          "widths": [
+            110,
+            355
+          ]
+        },
+        {
+          "type": "small",
+          "text": "Fill factor controls permitted incomplete-factor storage; drop tolerance removes sufficiently small entries during factorization. A singular incomplete factor does not prove that the original PDE system has no solution. A small residual in a scaled or preconditioned system must not replace a check of the original equations."
+        },
+        {
+          "type": "heading",
+          "text": "Acceptance was not weakened to make the candidate pass"
+        },
+        {
+          "type": "body",
+          "text": "Final checks require original nonlinear max residual below 10<super>-8</super>, combined velocity relative L2 difference below 10<super>-8</super>, and vorticity relative L2 difference below 10<super>-7</super> against the retained same-grid CFD solution. These are agreement checks. The unchanged outer linear-defect gate is 10<super>-5</super>; the candidate additionally enforces an original unscaled linear-defect threshold of 10<super>-7</super>. The inner tolerances are therefore not identical."
+        },
+        {
+          "type": "heading",
+          "text": "Reproducibility without repeating the expensive work"
+        },
+        {
+          "type": "body",
+          "text": "The compact records, plots and hashes are in <link href=\"https://github.com/Ehsan-Roohi/FlowMLLab/tree/main/results/cavity_solver_benchmark\"><u>results/cavity_solver_benchmark</u></link>. Lab 7 audits and reanalyses these records on CPU. The full archive retains inputs, all 40 trial records, frozen code, failed pilots, recovery states and representative fields. Full-grid runs are deliberate reproduction work, not a prerequisite for the exercises."
+        },
+        {
+          "type": "small",
+          "text": "This candidate is not Ghia et al.'s coupled strongly implicit multigrid algorithm. The result evaluates one implementation on two grids. It does not imply that multigrid or Newton-Krylov methods are generally slower than sparse direct solves."
+        }
+      ]
+    },
+    {
+      "title": "Engineering exercises: learn from the evidence",
+      "benchmark_unit": "matched-cavity-solver-benchmark",
+      "blocks": [
+        {
+          "type": "body",
+          "text": "Use the executed appendix in <b>Week 4 Lab 7, Section 8</b>. Lab 8, Section 9 links the result to the cost of generating CFD labels. Run All reads frozen data; it does not run the PDE solver, submit a cluster job or train a model."
+        },
+        {
+          "type": "heading",
+          "text": "A. Reproduce the performance decision"
+        },
+        {
+          "type": "body",
+          "text": "From the raw production trials, reproduce four warm-case rows: direct and candidate median seconds, min/max ranges, and the ratio candidate/direct. Audit all 13 pairs for matched seeds, source, grid, tolerance and thread count. List the six failed pilot trials separately. Explain why neither a failed short run nor the one-repeat continuation pair should be pooled into the three-repeat medians."
+        },
+        {
+          "type": "heading",
+          "text": "B. Distinguish numerical agreement from validation"
+        },
+        {
+          "type": "body",
+          "text": "Inspect both physical profiles and residual histories, then report the two maximum full-field discrepancies from the five-pair audit. State which data would be needed to claim physical accuracy, mesh independence and temporal stability. The nearly 10<super>-14</super> agreement between solvers is not a new neural-network or Ghia validation result."
+        },
+        {
+          "type": "heading",
+          "text": "C. Set an improvement target before another run"
+        },
+        {
+          "type": "math",
+          "latex": "T_{\\rm hyp}(r)=T_{\\rm MG}-T_{\\rm setup}+rT_{\\rm setup},\\quad r_* = \\frac{T_D-(T_{\\rm MG}-T_{\\rm setup})}{T_{\\rm setup}}"
+        },
+        {
+          "type": "body",
+          "text": "Here <i>r</i> is the retained fraction of setup cost (0 to 1); <i>T</i><sub>D</sub> and <i>T</i><sub>MG</sub> are measured direct and candidate medians; <i>T</i><sub>setup</sub> is median setup time. Compute 100(1-<i>r</i><sub>*</sub>) for each warm case: about <b>53.6-57.4% setup reduction</b> is needed just to tie the baseline under this model. Propose when a reused hierarchy would be rebuilt and which original-equation checks must still pass. Label this a proposal, not a measured speedup."
+        },
+        {
+          "type": "heading",
+          "text": "D. Keep the neural cost comparison honest"
+        },
+        {
+          "type": "body",
+          "text": "For a surrogate, write total cost as CFD label generation plus training plus per-query inference. State which of these costs this benchmark actually measured. Do not substitute a warm continuation timer for an arbitrary cold CFD solve, or infer improved prediction accuracy from faster label generation."
+        },
+        {
+          "type": "small",
+          "text": "Submit one numerical timing/setup table, a separate failure list, annotated physical-profile observations, and a short proposed-reuse protocol. Include the evidence manifest hash and software version. A correct decision to keep the baseline is a useful engineering outcome."
+        }
+      ]
     }
   ],
   "week13_rectangular_cavity_pinn": [

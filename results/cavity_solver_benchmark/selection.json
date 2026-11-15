@@ -1,0 +1,39 @@
+{
+  "fill": 40.0,
+  "drop": 1e-08,
+  "summed_pilot_solve_seconds": 7.6120796031318605,
+  "pilot_results": {
+    "pilot_strong/n128/04_warm7500_gmres_mg_r0/result.json": "6fd7d3cc122836044482ee2bf928748c1bf03514e60ff1d63aa3e58adcb757b5",
+    "pilot_strong/n128/05_warm10000_gmres_mg_r0/result.json": "21d62728fc2528b933a3bc156ef80c08c47b03b51631c95eb8a186a3b899fda3"
+  },
+  "frozen_utc": "2026-11-15T19:43:37.758088+00:00",
+  "eligible_pilot_candidates": [
+    {
+      "fill": 20.0,
+      "drop": 1e-06,
+      "summed_pilot_solve_seconds": 9.733604912180454,
+      "pilot_results": {
+        "pilot_strong/n128/02_warm7500_gmres_mg_r0/result.json": "0c21489efb08446bcdd3d3d4631f5611d08592962da9244e0adeb53c5c59960c",
+        "pilot_strong/n128/03_warm10000_gmres_mg_r0/result.json": "13a22626beee20f5bc4ca8f28f11195de405e188c8e3bf2ed01400904ef84d51"
+      }
+    },
+    {
+      "fill": 40.0,
+      "drop": 1e-08,
+      "summed_pilot_solve_seconds": 7.6120796031318605,
+      "pilot_results": {
+        "pilot_strong/n128/04_warm7500_gmres_mg_r0/result.json": "6fd7d3cc122836044482ee2bf928748c1bf03514e60ff1d63aa3e58adcb757b5",
+        "pilot_strong/n128/05_warm10000_gmres_mg_r0/result.json": "21d62728fc2528b933a3bc156ef80c08c47b03b51631c95eb8a186a3b899fda3"
+      }
+    }
+  ],
+  "rule": "Both 128-cell cases pass unchanged gates, then minimum summed solve wall time; no fine-grid tuning",
+  "source_sha256": {
+    "flowmllab/cavity_steady.py": "a06c580ec90e04dcd997882590711759ba478b75500bb46a4b848cc9b6cd6039",
+    "flowmllab/cavity_krylov.py": "9ab6905069f7b8d35a9e70034ace07f114394b13cb10ea9c7d05ba574a5ca5b0",
+    "qa/benchmark_cavity_solvers.py": "968ffb51a925b254b2d6b009bbe1f548aa626194ecce10cb65e667b72178c85a",
+    "qa/run_cavity_solver_matrix.py": "8cf8590b7c750ae317805e78d10bde865c5468e9fadb424bd156c823d1e56ec5",
+    "qa/cavity_solver_benchmark_unity.sbatch": "7d590b1fc509b866a4ebc05982c6b8383959d10f7a53b4bea12cc547db6ef481",
+    "tests/test_cavity_krylov.py": "c0402d11229bd3bc0f5385baeb61e8bdfc545e0496305bc6cb87abb9702f3f2f"
+  }
+}

@@ -176,6 +176,8 @@ supervised neural results distinct from the CFD evidence in this notebook.
 Submit: one numerical table for A/B/D, the signed profile plot for B, the physical
 corner-vortex comparison for C, and a concise interpretation for D/E. Include
 source version and native field hashes so the results are traceable.''')
+    from cavity_solver_benchmark_lesson import benchmark_cells
+    cells.extend(benchmark_cells('cfd'))
     doc=nb.v4.new_notebook(cells=cells,metadata={'kernelspec':{'display_name':'Python 3','language':'python','name':'python3'},
             'language_info':{'name':'python'},'flowmllab':{'unit':'week04','lab':7,'scope':'new high-Re CFD; previous notebooks preserved'}})
     execute(doc,ROOT)

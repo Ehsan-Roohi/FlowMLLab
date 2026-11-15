@@ -1,0 +1,18 @@
+{
+  "schema": 1,
+  "description": "Byte-verified compact frozen records from the completed matched cavity solver benchmark; no new simulation.",
+  "sha256": {
+    "REPORT.md": "357b7d411c9752c15f2b561c00252b38ab946bb40cc578069634d8d2139c5bc0",
+    "timings.csv": "347a182014b91668ffb6c92122f5478efad2f2dd1fe503169900f33788b8ac7b",
+    "verified_summary.json": "37ec22902ec474390392132366577f8c6ada8518c403827dfef30bdfae425d44",
+    "paired_fields_audit.json": "869437171192822c4622e4fc78661caba9d0a6a546626a14eabb36ce856a2324",
+    "evidence.json": "e50c2cab30c909a41b69c11d19c53318d407f9fc1fa79b22c4f803870b23e8a6",
+    "physical_profiles.png": "329729d162a8ee96c523ffc293c7d98d6109d0183d5868b9bbb4c5cec800f9c2",
+    "nonlinear_convergence.png": "d294fbf1b2dce6fc6ac07dfc4a8f39bc947b6ae4210c5279e0e0652866bf4e25",
+    "baseline_source_audit.json": "b5200b1a6eee5055a6a2d1a2e47c80c572f2e99bbedea9143f80e72efeca116e",
+    "selection.json": "8e3d407d71efe4d5bd05ffbfca1ae70c02155d480265166df53c07684e6e8824"
+  },
+  "full_archive_sha256": "fbfd423b06883c36268849d08647ebcc68d797ae49aeb82ae55090dd1c27313e",
+  "full_archive_bytes": 146274361,
+  "archive_scope": "All inputs, frozen source, 40 trial records including failed pilots, recoveries and representative full fields retained separately; not fetched by Run All."
+}

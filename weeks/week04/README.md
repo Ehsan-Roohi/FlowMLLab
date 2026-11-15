@@ -67,3 +67,10 @@ The historical profile fit remains separate. New Labs 7 and 8 now add the actual
 [Course home](../../README.md) · [All weeks](../README.md) · [← Week 3](../week03/README.md) · [Week 4.1 →](../week04_1/README.md)
 
 [New CFD evidence](../../results/cavity_highre_ghia/README.md) · [Full-field neural tests](../../results/cavity_field_deeponet/README.md).
+
+## Measured solver experience
+
+Labs 7 and 8 now end with a measured CPU solver comparison: why fewer Krylov
+iterations did not reduce cavity solve time. The appendix includes successful
+and failed trials, signed physical profiles, setup-cost analysis and exercises
+using saved records. [Evidence and lesson links](../../results/cavity_solver_benchmark/README.md).

@@ -1,0 +1,7 @@
+{
+  "verified_utc": "2026-11-15T20:20:48.310294+00:00",
+  "baseline_commit": "36e0aabd055da55cc761ca6f84cc4c97b3c0cd70",
+  "solver_path": "flowmllab/cavity_steady.py",
+  "git_object_and_local_and_staged_lf_sha256": "a06c580ec90e04dcd997882590711759ba478b75500bb46a4b848cc9b6cd6039",
+  "original_solver_unchanged": true
+}

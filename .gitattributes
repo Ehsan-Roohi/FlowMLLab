@@ -43,3 +43,4 @@ data/week13_deep_cavity/loss_continuation.dat -text
 # Frozen cavity evidence is identified by raw SHA256; preserve its original bytes.
 results/cavity_highre_ghia/** -text -whitespace
 results/cavity_field_deeponet/** -text -whitespace
+results/cavity_solver_benchmark/** -text -whitespace

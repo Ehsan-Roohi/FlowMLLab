@@ -294,6 +294,8 @@ if RUN_NEW_CPU_EXPERIMENT:
 else:
     print('No training requested; frozen results remain unchanged.')
 """)
+    from cavity_solver_benchmark_lesson import benchmark_cells
+    cells.extend(benchmark_cells('neural'))
     doc=nb.v4.new_notebook(cells=cells,metadata={'kernelspec':{'display_name':'Python 3','language':'python','name':'python3'},
         'language_info':{'name':'python'},'flowmllab':{'unit':'week04','lab':8,'scope':'full-field neural comparison'}})
     execute(doc,ROOT)

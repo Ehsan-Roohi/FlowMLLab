@@ -1,0 +1,68 @@
+{
+  "baseline_commit": "36e0aabd055da55cc761ca6f84cc4c97b3c0cd70",
+  "scope": "Append measured CFD solver experience to existing Week4 Labs7/8 and shared lecture. No new production solve or neural fit.",
+  "notebooks": [
+    {
+      "path": "notebooks/week04/W4_Lab7_High_Re_CFD_Ghia.ipynb",
+      "prior_cells_and_outputs_preserved": 14,
+      "new_cells": 7,
+      "new_code_cells_executed": 3,
+      "execution_method": "Fresh Python namespace, sequential socket-free execution; no hosted Jupyter/Colab certification",
+      "local_working_copy_sha256": "073eecceaeba726ed6e17f8621f2833ba5e283f70f000b76eff90ee125b83357",
+      "git_lf_sha256": "4a4143f11e02e2f2f06a1f2febdbd635dd9018080adec6a55c22549019767d1a"
+    },
+    {
+      "path": "notebooks/week04/W4_Lab8_High_Re_Field_DeepONet.ipynb",
+      "prior_cells_and_outputs_preserved": 16,
+      "new_cells": 3,
+      "new_code_cells_executed": 1,
+      "execution_method": "Fresh Python namespace, sequential socket-free execution; no hosted Jupyter/Colab certification",
+      "local_working_copy_sha256": "b02a5a944efffc6fc75cb39b296150257f76a0ba4e5f501daf272ff4761f83ac",
+      "git_lf_sha256": "e9af2a86123485e9338fc8cd46d7cbf792ee2c20228dc91b1b2fb5f856d4317f"
+    }
+  ],
+  "lecture": {
+    "path": "lectures/week04_cavity_surrogates_deeponet.pdf",
+    "sha256": "0f77544fce9c4850c2e8851a58af023219437f65dce7fd02ae52f7d794200974",
+    "prior_pages_text_and_72dpi_renders_unchanged": 28,
+    "new_pages": [
+      29,
+      30,
+      31,
+      32,
+      33,
+      34
+    ],
+    "total_pages": 34,
+    "new_pages_visual_review": "All six pages inspected individually at135dpi; final revised pages32-34 reinspected. No overlaps, clipping, raw formula delimiters, missing plots or in-axes legends observed.",
+    "new_page_text_bounds_checked": true
+  },
+  "independent_reviews": [
+    {
+      "agent": "benchmark_science_review",
+      "result": "pass; clarified unmeasured conditioning claim, scaled Jacobian relation and available profile selection"
+    },
+    {
+      "agent": "benchmark_curriculum_map",
+      "result": "pass; preserved original cells/objects; corrected exercise letters and compact-hash verification wording"
+    },
+    {
+      "agent": "benchmark_notebook_appendix",
+      "result": "implemented and executed4newcells; deterministic idempotent append helper"
+    }
+  ],
+  "solver_admission_tests": {
+    "passed": 3,
+    "seconds": 11.97
+  },
+  "inventory_check": {
+    "passed": true,
+    "repository_targets_checked": 349,
+    "active_lecture_pdfs": 37,
+    "lecture_pages": 597,
+    "student_notebooks": 59
+  },
+  "frozen_evidence_files_verified": 9,
+  "original_production_solver_unchanged": true,
+  "new_measurement_claims": false
+}
