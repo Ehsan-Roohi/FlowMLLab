@@ -10,4 +10,4 @@ Three separate notebooks extend the cavity teaching route. Existing notebook cel
 
 The profile experiment is not a PDE/full-field validation. Newly qualified fields at Re=3200/5000/7500/10000 and a fresh controlled deep-cavity optimizer ablation are not included. Retained D5 workflows have unequal training histories. All three new notebooks passed execution in fresh Jupyter kernels on CPU, along with sixteen targeted tests and the full course release checks. Earlier notebooks retain their existing outputs and have preservation checks; this is not a fresh hosted Run All certification of every older notebook.
 
-The [Zenodo concept DOI](https://doi.org/10.5281/zenodo.22074169) identifies the archive series. This release preserves subsequent repository updates as well as the cavity additions.
+The [Zenodo v1.12.0 DOI](https://doi.org/10.5281/zenodo.24246302) identifies this release; the [concept DOI](https://doi.org/10.5281/zenodo.22074169) identifies the archive series. This release preserves subsequent repository updates as well as the cavity additions.

@@ -42,7 +42,7 @@ keywords:
   - attention
   - language modeling
 version: "1.12.0"
-doi: "10.5281/zenodo.22074169"
+doi: "10.5281/zenodo.24246302"
 date-released: "2026-11-15"
 identifiers:
   - type: doi

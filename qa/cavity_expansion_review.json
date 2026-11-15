@@ -29,5 +29,22 @@
     "full_course_release_gate": "pass",
     "isolated_wheel": "pass",
     "scope": "Pre-release check; subsequent changes repair punctuation and document this result. The tag workflow repeats the gate before creating the release."
+  },
+  "published_release": {
+    "tag": "v1.12.0",
+    "commit": "04e6a0b558ca09b9b8b1d97ece318a730efbad84",
+    "github": "https://github.com/Ehsan-Roohi/FlowMLLab/releases/tag/v1.12.0",
+    "zenodo_doi": "10.5281/zenodo.24246302",
+    "tag_validation": "https://github.com/Ehsan-Roohi/FlowMLLab/actions/runs/43713285484",
+    "fresh_kernels": 3,
+    "targeted_tests_passed": 16,
+    "wheel": "passed"
+  },
+  "separate_legacy_workflows": {
+    "week7_run": 43713285496,
+    "week8_run": 43713285527,
+    "failure": "LaTeX cannot locate lectures/source/lecture_typography.tex when invoked from lectures/source.",
+    "relevant_workflow_and_tex_sources_unchanged_from_previous_main": "37d4076cccb72a4aa17820235352150349cfc6cd",
+    "scope": "These are separate pre-existing rebuild-path failures, not the successful cavity release gate. No older notebook or PDF is overwritten by the failed CI jobs."
   }
 }
