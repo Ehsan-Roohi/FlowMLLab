@@ -1,0 +1,92 @@
+{
+  "builder_sha256": "c9821265464b83dcbd6de80e66086a63b8a55d6a240d6f617f0f4a2a7469bacf",
+  "family_inputs": {
+    "results/family_transolver/reference/deeponet_seed17_g049_Re100.npz": "5e3d2ef694ea0a45bbb410d13ff5f5051944d7130d3283d21325503e182a209a",
+    "results/family_transolver/reference/geom_seed17_g049_Re100.npz": "707118259b1a040e251cb660df5a364f44e65eca514e88cc0b12f07be97fd84c",
+    "results/family_transolver/reference/geofno_seed17_g049_Re100.npz": "bc071db6ba49f2c41e2d0336f9f213c8757363a83a51bacdcf69f62904ad71e3",
+    "results/family_transolver/reference/geom_author_fresh_lr1e-3_seed17_best_predictions_g049_Re100.npz": "693f7795827bd1c55ffa13a702645084cafc5f770acaa8ca5b203bcd9f44f2bf",
+    "results/family_transolver/reference/smart_author_lr1e-3_seed17_best_predictions_g049_Re100.npz": "a7ffc93d37ec7408f193a6125af098380bc62a9dd04e0a261371bb4b44baef68",
+    "results/family_transolver/reference/domino_author_lr1e-3_seed17_best_predictions_g049_Re100.npz": "91051a18ae3ff48922ee4806e14790587ebe63420c26e568c7570acb4e094f13",
+    "results/family_transolver/reference/geotransolver_author_seed17_g049_Re100.npz": "f23cdafe40ecc509fbcc32f023cd9d431c89a4445cccf3fd0e0a4ad1e53d6e7d",
+    "results/family_transolver/reference/px_context_proxy_seed17_g049_Re100.npz": "f8a347636be23832dbfaa310b8fd084552ecc579567fc7d5456927f1e4a7b0de",
+    "results/family_transolver/reference/lift_wall_proxy_seed17_g049_Re100.npz": "c660fdc60f6aff8e0eb18b7be2975b283d8a488d4e7cf4c43a236a1e881c98bc",
+    "results/family_transolver/seed_17/g049_Re100_medium_prediction.npz": "b8b8900505a6ec84752a782be8fbab3ecb60c45b26bf4fb1c7add636421790f4"
+  },
+  "central_obstacle_metrics": [
+    {
+      "model": "Geo-DeepONet",
+      "velocity_percent": 24.92154312133789,
+      "reverse_iou": 0.7089508002371073
+    },
+    {
+      "model": "FNO",
+      "velocity_percent": 24.66322898864746,
+      "reverse_iou": 0.6241648106904232
+    },
+    {
+      "model": "U-FNO",
+      "velocity_percent": 26.775602340698242,
+      "reverse_iou": 0.6563876651982379
+    },
+    {
+      "model": "Original Transolver",
+      "velocity_percent": 34.88078689575195,
+      "reverse_iou": 0.6264044943820225
+    }
+  ],
+  "double_step_metrics": [
+    {
+      "model": "Historical ordinary DeepONet",
+      "velocity_percent": 13.319303512573242,
+      "reverse_iou": 0.5069637883008357
+    },
+    {
+      "model": "Historical Geom-DeepONet",
+      "velocity_percent": 8.990737915039062,
+      "reverse_iou": 0.5559174809989142
+    },
+    {
+      "model": "Historical Geo-FNO",
+      "velocity_percent": 9.557740211486816,
+      "reverse_iou": 0.7067120622568094
+    },
+    {
+      "model": "LR-tuned Geom-DeepONet",
+      "velocity_percent": 10.624849319458008,
+      "reverse_iou": 0.6572052401746725
+    },
+    {
+      "model": "LR-tuned SMART",
+      "velocity_percent": 12.909769058227539,
+      "reverse_iou": 0.7390014829461197
+    },
+    {
+      "model": "LR-tuned DoMINO",
+      "velocity_percent": 13.504866600036621,
+      "reverse_iou": 0.844845908607864
+    },
+    {
+      "model": "Matched GeoTransolver",
+      "velocity_percent": 33.331573486328125,
+      "reverse_iou": 0.5148923621350634
+    },
+    {
+      "model": "PhysicsX-inspired proxy",
+      "velocity_percent": 71.53846740722656,
+      "reverse_iou": 0.33576199149969643
+    },
+    {
+      "model": "LIFT wall-feature proxy",
+      "velocity_percent": 58.2825927734375,
+      "reverse_iou": 0.47275267815556593
+    },
+    {
+      "model": "Original Transolver",
+      "velocity_percent": 21.503009796142578,
+      "reverse_iou": 0.6501024590163934
+    }
+  ],
+  "colormap": "jet, 14 discrete speed bands; common full-range scale per figure",
+  "original_archived_figures": "retained unchanged in results/week15_postaudit",
+  "no_retraining": true
+}

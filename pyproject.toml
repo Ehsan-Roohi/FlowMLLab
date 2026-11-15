@@ -51,6 +51,10 @@ dependencies = [
 ]
 
 [project.optional-dependencies]
+transolver = [
+  "torch>=2.6,<3",
+  "einops>=0.8,<1",
+]
 transformer = [
   "torch>=2.6,<3",
   "nbformat>=5.10,<6",
@@ -93,3 +97,4 @@ include = ["flowmllab*"]
 
 [tool.setuptools.package-data]
 flowmllab = ["assets/*.npz"]
+"flowmllab.vendor.transolver" = ["LICENSE", "PROVENANCE.md"]
