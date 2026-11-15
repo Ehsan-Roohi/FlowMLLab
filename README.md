@@ -668,20 +668,19 @@ its floor drops in two steps and then rises again, so it shares the test
 family's two-descending-step motif without belonging to the test family, and it
 is kept out of training, validation and the test alike. The split was
 reconstructed from the masks: no training or validation mask contains the two
-consecutive descending steps that define the test family. The training geometries and historical comparison remain available in the
-expandable section below the compact figure. The plots retain the physical
-5:1 aspect ratio.
+consecutive descending steps that define the test family. All retained model configurations appear below. The unchanged original figures also retain the training-geometry panels. Every flow panel preserves the physical 5:1 aspect ratio.
 
-The compact `g049/Re=100` figure compares CFD, validation-tuned Geom-DeepONet, SMART, DoMINO and original Transolver on the same post-audit split. Each row uses its own streamlines and a shared speed scale. The complete historical figure and training geometries remain available below.
+Both test geometries are shown below with all their retained models. The double-step comparison includes historical DeepONet/Geom-DeepONet/Geo-FNO, tuned Geom-DeepONet/SMART/DoMINO, matched GeoTransolver, both explicitly labeled company-inspired proxies, and original Transolver. Color bands use the original RGB/rainbow style and a shared speed scale within each figure; each field supplies its own streamlines.
 
-<p align="center"><a href="results/family_transolver/comparison_g049_Re100.png"><img src="results/family_transolver/comparison_g049_Re100.png" width="600" alt="Week 15 double-step comparison including original Transolver"></a></p>
+**Central-obstacle channel (g011): all four models and CFD.**
 
-<details>
-<summary>Historical comparison and training geometries</summary>
+<p align="center"><a href="results/step_transolver/all_models_g011_Re100.png"><img src="results/step_transolver/all_models_g011_Re100.png" width="760" alt="Central-obstacle channel: CFD, Geo-DeepONet, FNO, U-FNO and original Transolver"></a></p>
 
-![CFD and six neural-operator predictions for the retrospective g049/Re100 double-step case, chosen for its larger recirculation vortex](results/week15_postaudit/core_g049_Re100.png)
+**Double-step channel (g049): all retained models and CFD.**
 
-</details>
+<p align="center"><a href="results/family_transolver/all_models_g049_Re100.png"><img src="results/family_transolver/all_models_g049_Re100.png" width="760" alt="Double-step: CFD and all ten retained model configurations, including original Transolver, in the original rainbow color scheme"></a></p>
+
+Unchanged original figures: [historical/core comparison](results/week15_postaudit/core_g049_Re100.png) · [extended comparison](results/week15_postaudit/extended_g049_Re100.png).
 
 The historical seed-17 Geom-DeepONet run remains best in global velocity error
 (9.86%), while

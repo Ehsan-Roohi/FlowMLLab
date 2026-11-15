@@ -7,14 +7,15 @@ Original Transolver: [run/verify notebook](../../notebooks/week15/W15_Original_T
 
 Geometry and topology generalization across DeepONet, Geom-DeepONet, Geo-FNO, SMART, GeoTransolver and DoMINO.
 
-<p align="center"><a href="../../results/family_transolver/comparison_g049_Re100.png"><img src="../../results/family_transolver/comparison_g049_Re100.png" width="600" alt="Week 15 double-step comparison including original Transolver"></a></p>
+**Central-obstacle channel (g011): all four models and CFD.**
 
-<details>
-<summary>Historical comparison and training geometries</summary>
+<p align="center"><a href="../../results/step_transolver/all_models_g011_Re100.png"><img src="../../results/step_transolver/all_models_g011_Re100.png" width="760" alt="Central-obstacle channel: CFD, Geo-DeepONet, FNO, U-FNO and original Transolver"></a></p>
 
-![CFD and six neural-operator predictions for the retrospective g049/Re100 double-step case, chosen for its larger recirculation vortex](../../results/week15_postaudit/core_g049_Re100.png)
+**Double-step channel (g049): all retained models and CFD.**
 
-</details>
+<p align="center"><a href="../../results/family_transolver/all_models_g049_Re100.png"><img src="../../results/family_transolver/all_models_g049_Re100.png" width="760" alt="Double-step: CFD and all ten retained model configurations, including original Transolver, in the original rainbow color scheme"></a></p>
+
+Unchanged original figures: [historical/core comparison](../../results/week15_postaudit/core_g049_Re100.png) · [extended comparison](../../results/week15_postaudit/extended_g049_Re100.png).
 
 ## Lecture and notebooks
 

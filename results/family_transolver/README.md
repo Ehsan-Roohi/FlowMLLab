@@ -5,15 +5,17 @@ comparison: **100 train / 8 validation / 19 retrospective test cases**.
 The three g005 cases are quarantined, including removal from the older 103-case
 recovered training split. No new CFD was generated.
 
-<p align="center"><a href="comparison_g049_Re100.png"><img src="comparison_g049_Re100.png" width="600" alt="Double-step comparison including original Transolver"></a></p>
+<p align="center"><a href="all_models_g049_Re100.png"><img src="all_models_g049_Re100.png" width="760" alt="Double-step comparison including original Transolver"></a></p>
 
 The plotted case is the existing homepage case g049/Re=100, with fixed seed 17.
-Geom-DeepONet, SMART and DoMINO fields are copied from the frozen
+All historical, tuned and matched model fields are copied from the frozen
 [post-audit archive](https://doi.org/10.5281/zenodo.22840293); their SHA-256 hashes
 were checked against the repository's existing figure provenance. CFD velocities, mean-centered fluid pressure and
 fluid masks are checked again when rebuilding this figure. All panels use a
 common speed scale, their own streamlines and the physical 5:1 aspect ratio.
-Click the image for full resolution.
+The rainbow/jet palette restores the original style. All ten model configurations are visible. Click the image for full resolution.
+
+Unchanged originals: [core](../week15_postaudit/core_g049_Re100.png) · [extended](../week15_postaudit/extended_g049_Re100.png).
 
 ## Results
 
@@ -62,6 +64,7 @@ python qa/train_family_transolver.py --seed 29
 python qa/train_family_transolver.py --seed 43
 python qa/verify_family_transolver.py
 python qa/plot_family_transolver.py
+python qa/plot_week15_all_models.py
 ```
 
 [Executable notebook](../../notebooks/week15/W15_Original_Transolver_Double_Step.ipynb) ·

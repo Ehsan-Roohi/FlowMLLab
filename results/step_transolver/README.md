@@ -59,6 +59,8 @@ scientific overview remains available as a download, rather than a tiny inline i
 
 ### Re = 100
 
+<img src="all_models_g011_Re100.png" width="760" alt="All retained central-obstacle models, rainbow colors">
+
 ![Full-width speed and streamline comparison at Re 100](speed_Re100.png)
 
 <details>
