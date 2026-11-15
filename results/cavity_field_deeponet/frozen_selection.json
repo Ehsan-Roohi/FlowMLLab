@@ -1,0 +1,167 @@
+{
+  "training_signature": "1deda652dac4251e6fc611e112693f30172ee98a3b1ba98ec1ff6e50bfbfe202",
+  "train_re": [
+    100,
+    250,
+    500,
+    750,
+    1000,
+    2500,
+    4000,
+    5000,
+    6000,
+    9000,
+    10000
+  ],
+  "validation_re": [
+    400,
+    6500
+  ],
+  "test_re": [
+    3200,
+    7500
+  ],
+  "selected_configuration": "hybrid_2",
+  "validation_ranking": {
+    "adam_2": 0.00396373461255273,
+    "hybrid_2": 0.0022312557939997623,
+    "hybrid_5": 0.0028838444568839833,
+    "hybrid_5_balanced": 0.019908375193236735,
+    "hybrid_5_capacity_matched": 0.03340633896346464
+  },
+  "selected_baseline_coordinate": "log",
+  "baseline_validation_ranking": {
+    "linear": 0.016526851805782887,
+    "log": 0.011975539995768898
+  },
+  "candidate_models": [
+    {
+      "name": "adam_2-seed7",
+      "configuration": "adam_2",
+      "seed": 7
+    },
+    {
+      "name": "adam_2-seed23",
+      "configuration": "adam_2",
+      "seed": 23
+    },
+    {
+      "name": "adam_2-seed61",
+      "configuration": "adam_2",
+      "seed": 61
+    },
+    {
+      "name": "hybrid_2-seed7",
+      "configuration": "hybrid_2",
+      "seed": 7
+    },
+    {
+      "name": "hybrid_2-seed23",
+      "configuration": "hybrid_2",
+      "seed": 23
+    },
+    {
+      "name": "hybrid_2-seed61",
+      "configuration": "hybrid_2",
+      "seed": 61
+    },
+    {
+      "name": "hybrid_5-seed7",
+      "configuration": "hybrid_5",
+      "seed": 7
+    },
+    {
+      "name": "hybrid_5-seed23",
+      "configuration": "hybrid_5",
+      "seed": 23
+    },
+    {
+      "name": "hybrid_5-seed61",
+      "configuration": "hybrid_5",
+      "seed": 61
+    },
+    {
+      "name": "hybrid_5_balanced-seed7",
+      "configuration": "hybrid_5_balanced",
+      "seed": 7
+    },
+    {
+      "name": "hybrid_5_balanced-seed23",
+      "configuration": "hybrid_5_balanced",
+      "seed": 23
+    },
+    {
+      "name": "hybrid_5_balanced-seed61",
+      "configuration": "hybrid_5_balanced",
+      "seed": 61
+    },
+    {
+      "name": "hybrid_5_capacity_matched-seed7",
+      "configuration": "hybrid_5_capacity_matched",
+      "seed": 7
+    },
+    {
+      "name": "hybrid_5_capacity_matched-seed23",
+      "configuration": "hybrid_5_capacity_matched",
+      "seed": 23
+    },
+    {
+      "name": "hybrid_5_capacity_matched-seed61",
+      "configuration": "hybrid_5_capacity_matched",
+      "seed": 61
+    }
+  ],
+  "selected_indices": [
+    3,
+    4,
+    5
+  ],
+  "model_sha256": {
+    "results\\cavity_field_deeponet\\models\\adam_2-seed7.npz": "6f37cf4766c19f61ef49e053e6664cb28e26247de46ca4d51994d716e84725d2",
+    "results\\cavity_field_deeponet\\models\\adam_2-seed23.npz": "352587798cd449c3186e6ed1a5b488ea8c8d757f874a99115aa8ff07ad77bbd0",
+    "results\\cavity_field_deeponet\\models\\adam_2-seed61.npz": "dc941e9d271aed1f404ebf404203ea67c6a0867e69539a966df3c3125aa50a93",
+    "results\\cavity_field_deeponet\\models\\hybrid_2-seed7.npz": "eb59e8ac9e0a6789d68b2a3bd718912ee426b1f7243f197e0163a9fc1f424b5e",
+    "results\\cavity_field_deeponet\\models\\hybrid_2-seed23.npz": "2a35d3ab750de13e8e0f19c54259376cfc4f608d5d8e2d4c0a796adbcc038e22",
+    "results\\cavity_field_deeponet\\models\\hybrid_2-seed61.npz": "819698588a4c17069d2922b23c1180af4cfa31befdc4961b7678ad4a8e628589",
+    "results\\cavity_field_deeponet\\models\\hybrid_5-seed7.npz": "a38cc9452631d5e9aba75f1a7e2e80e137c00a5702e3628da2329b1feabbfc89",
+    "results\\cavity_field_deeponet\\models\\hybrid_5-seed23.npz": "f21f0bb1b16d0baa28fe6ad42b42d8972e734dc2ceaedbad78620a856064977c",
+    "results\\cavity_field_deeponet\\models\\hybrid_5-seed61.npz": "96c3ae1c5605ad1308b586a8edb4f562a1ca97ff353598d6ecfb86dc7a0ffad4",
+    "results\\cavity_field_deeponet\\models\\hybrid_5_balanced-seed7.npz": "0ca1133cfcadb58b3c6841b6d09fbabad40335f1bbfb61654874b0b5fdffa07c",
+    "results\\cavity_field_deeponet\\models\\hybrid_5_balanced-seed23.npz": "a0335018ecc41595df817170f8f77d75bdc3214ad0b3d9dcd87f09dc0b5fd5bd",
+    "results\\cavity_field_deeponet\\models\\hybrid_5_balanced-seed61.npz": "866e556a1294da74e15b3b641262ae2033b5ca86ebbad84d5f2e9f56000098b6",
+    "results\\cavity_field_deeponet\\models\\hybrid_5_capacity_matched-seed7.npz": "2be432f9d1537f29956cbf8584d94625dceee9b56889638a609f56657aa84ccf",
+    "results\\cavity_field_deeponet\\models\\hybrid_5_capacity_matched-seed23.npz": "68941201574288e956dfa9460bfa5894be5388095d79f168c1418df13ac05f78",
+    "results\\cavity_field_deeponet\\models\\hybrid_5_capacity_matched-seed61.npz": "f5fcadf744ad84ce953377c6b3d2e0a07534c8499cb4d9a229828fa8742c0584"
+  },
+  "trunk_sha256": "b75106eb8a7ccabdcba2bd1d7d1ef5a0297a21c17a69d242c45eab9ab3b81cfb",
+  "frozen_predictions_sha256": "f9c7907ec7a7494f0d41fa6d623a3a1ad6469f4976af13e79751c5a1704fa25c",
+  "data_read_during_training": {
+    "100": "937bf0cccf195947452b2d230bb61d49ca1b72d485014a28f40c9721eee87567",
+    "250": "0de7e80efadc7407372c236b68bb305b3e792b7d46a34f2d8bef067fb06afe1a",
+    "500": "61dcbfd2672520c5a8eeeea4b47c482ff8dfec745891308cd50d4da1a1de2dba",
+    "750": "3d08b86be802a4c78c950e2a171fdd06a16af03c4140de4373339d03b8f8df28",
+    "1000": "e8b18585357c2ed7473ccb688f0aa67a06d99dcad60149dd8d80d5b80112585e",
+    "2500": "198d31b83aa05bbd5a1ef017887f9f35708772fffbf4b51567956df05f45319e",
+    "4000": "b664c0ed0c8f2c539833c7ebdc6c74f77941725ed869f33826b1808488829353",
+    "5000": "6ef58c72df456db98e9901a2ede4f78cefd16bd297d0e7a31ba3f01e2128a4fe",
+    "6000": "41ab8b8d6fe5bbcfb5c438f056a135e61150cb61a79cf921ef3091971d6035cf",
+    "9000": "f7f43d61457aea4ae62e3670119f49803fe05c5ece13103b049c04fef19c3ce7",
+    "10000": "eb66dfcdc7795d031bae5bcc185a9ebef79d3ed0cfebe3d8605f82e8ce7eb3ef",
+    "400": "79f717a27bffe2c21103d4965b4c3df5561772ee13ec2ce5ee5bb4e1d520639c",
+    "6500": "35c7573cc57fba9ab11b6d5c511d280e76081b2e08e005c5425fa3811f4ecbab"
+  },
+  "source_sha256_lf": {
+    "flowmllab/cavity_field_operator.py": "291b5db656de7165daaeab547d5abf291bb4ca1a3829b11af21dd6ac419577be",
+    "qa/run_cavity_field_operator.py": "6a766c50925f408ca795a09f14fc8e1c2803411a78486da81c9a91357afcfaa1",
+    "docs/CAVITY_FIELD_NEURAL_PROTOCOL.md": "6fa2d02e9dd4549176f01a5ff6f9815da9db46ab325d214a430aa67690e26cbf"
+  },
+  "rank": 10,
+  "seeds": [
+    7,
+    23,
+    61
+  ],
+  "selection_rule": "mean full-field velocity relative L2 over both validation Re and three seeds",
+  "target_read_during_training": false,
+  "prospectively_unknown_physics_claim": false
+}

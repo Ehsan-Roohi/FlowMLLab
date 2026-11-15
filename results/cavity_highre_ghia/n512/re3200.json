@@ -1,0 +1,143 @@
+{
+  "config": {
+    "cells": 512,
+    "method": "steady-newton-central-thom",
+    "lid": 1.0,
+    "length": 1.0,
+    "targets": [
+      3200,
+      5000,
+      7500,
+      10000
+    ],
+    "nonlinear_tolerance": 1e-08,
+    "acceptance_steady_linf": 1e-06,
+    "source_sha256_lf": {
+      "flowmllab/cavity_steady.py": "a06c580ec90e04dcd997882590711759ba478b75500bb46a4b848cc9b6cd6039",
+      "qa/run_cavity_highre.py": "abbb223dcee3177e4dda610672342009e1650d3c3dc1076e77caa89b75927dc9"
+    },
+    "seed_sha256": "8b72232e01afa6429ba9f72199b901fe7f90d266ed169cd846be1980132e4313",
+    "start_reynolds": 1000,
+    "max_continuation_increment": 500,
+    "min_continuation_increment": 15.625,
+    "pressure": "not reconstructed; velocity/vorticity validation only"
+  },
+  "signature": "f5f1c85342375142bb40b192b50d7385ee0d378b24c0d7e22a532e90c4642be2",
+  "reynolds": 3200,
+  "cells": 512,
+  "converged": true,
+  "poisson_linf": 2.028199830306221e-11,
+  "steady_vorticity_linf": 4.920011065223662e-10,
+  "continuity_linf": 2.842170943040401e-14,
+  "vortex_x": 0.517578125,
+  "vortex_y": 0.541015625,
+  "psi_min": -0.12103729788235455,
+  "branch": "2-D steady Navier-Stokes root; temporal stability not inferred",
+  "field_sha256": "ac878212200a15ab465a25ab525911c6047a334640a9b24c373812d4292dea59",
+  "newton_history": [
+    {
+      "iteration": 0,
+      "poisson_linf": 2.0437207481904807e-11,
+      "steady_vorticity_linf": 5059.416388022597,
+      "linear_relative_residual": 3.734008362390334e-15,
+      "accepted_step": 1.0
+    },
+    {
+      "iteration": 1,
+      "poisson_linf": 2.0209833806461575e-11,
+      "steady_vorticity_linf": 9.396364817778704,
+      "linear_relative_residual": 2.0294573028671879e-13,
+      "accepted_step": 1.0
+    },
+    {
+      "iteration": 2,
+      "poisson_linf": 1.957056738888241e-11,
+      "steady_vorticity_linf": 0.0009006829141071648,
+      "linear_relative_residual": 2.744836612796459e-13,
+      "accepted_step": 1.0
+    },
+    {
+      "iteration": 3,
+      "poisson_linf": 2.028199830306221e-11,
+      "steady_vorticity_linf": 4.920011065223662e-10
+    }
+  ],
+  "continuation_history": [
+    {
+      "reynolds": 1000.0,
+      "success": true,
+      "iterations": 4,
+      "seconds": 137.4962595209945,
+      "final": {
+        "iteration": 4,
+        "poisson_linf": 2.0262458377828807e-11,
+        "steady_vorticity_linf": 1.0732037480920553e-10
+      }
+    },
+    {
+      "reynolds": 1500.0,
+      "success": true,
+      "iterations": 5,
+      "seconds": 167.2025452540256,
+      "final": {
+        "iteration": 5,
+        "poisson_linf": 2.027489287570461e-11,
+        "steady_vorticity_linf": 4.6338044512594934e-11
+      }
+    },
+    {
+      "reynolds": 2000.0,
+      "success": true,
+      "iterations": 4,
+      "seconds": 133.20399660384282,
+      "final": {
+        "iteration": 4,
+        "poisson_linf": 1.9716006605108305e-11,
+        "steady_vorticity_linf": 3.8052050399528525e-10
+      }
+    },
+    {
+      "reynolds": 2500.0,
+      "success": true,
+      "iterations": 4,
+      "seconds": 135.00095695094205,
+      "final": {
+        "iteration": 4,
+        "poisson_linf": 2.013944566670034e-11,
+        "steady_vorticity_linf": 2.7768010113504715e-11
+      }
+    },
+    {
+      "reynolds": 3000.0,
+      "success": true,
+      "iterations": 4,
+      "seconds": 133.083383748075,
+      "final": {
+        "iteration": 4,
+        "poisson_linf": 2.0437207481904807e-11,
+        "steady_vorticity_linf": 2.9103830456733704e-11
+      }
+    },
+    {
+      "reynolds": 3200,
+      "success": true,
+      "iterations": 3,
+      "seconds": 100.78282519103959,
+      "final": {
+        "iteration": 3,
+        "poisson_linf": 2.028199830306221e-11,
+        "steady_vorticity_linf": 4.920011065223662e-10
+      }
+    }
+  ],
+  "cumulative_compute_seconds": 808.7647349811159,
+  "host": "uri-cpu092",
+  "slurm_job_id": "1767993",
+  "utc": "2026-11-15T14:26:11.792722+00:00",
+  "environment": {
+    "python": "3.12.3",
+    "numpy": "2.2.6",
+    "scipy": "1.15.3"
+  },
+  "ghia_used_during_solution": false
+}

@@ -1,0 +1,10 @@
+{
+  "frozen_selection_sha256": "51a39e29b31538559bacaf767ce0e24adebca928733cb76cdf6cc484ea815410",
+  "heldout_field_sha256": {
+    "3200": "ac878212200a15ab465a25ab525911c6047a334640a9b24c373812d4292dea59",
+    "7500": "cc92ec96737bebdfb43e8e18babc39d553375827c239cbd1fac48bb7bc6b2723"
+  },
+  "test_scores_sha256": "04fd4445ec56a4c41788e6d7a45191a816211e6a43f54a2829cef2c959b7bfe5",
+  "test_targets_loaded_only_after_freeze": true,
+  "split_scope": "held out of this model fitting/selection; benchmark physics already disclosed"
+}

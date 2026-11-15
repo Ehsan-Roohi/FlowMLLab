@@ -1,0 +1,332 @@
+{
+  "config": {
+    "name": "hybrid_5_balanced",
+    "depth": 5,
+    "width": 32,
+    "optimizer": "hybrid",
+    "scaling": "per_mode",
+    "evaluations": 4000,
+    "adam_evaluations": 1200,
+    "learning_rate": 0.003
+  },
+  "seed": 23,
+  "evaluations": 1201,
+  "best_training_loss": 1.5448567926794315e-22,
+  "history": [
+    {
+      "evaluations": 1,
+      "phase": "Adam",
+      "best_training_loss": 1.0434342938946397,
+      "elapsed_seconds": 0.0004048999981023371
+    },
+    {
+      "evaluations": 25,
+      "phase": "Adam",
+      "best_training_loss": 0.8734137914090354,
+      "elapsed_seconds": 0.10404590002144687
+    },
+    {
+      "evaluations": 50,
+      "phase": "Adam",
+      "best_training_loss": 0.7117450807349932,
+      "elapsed_seconds": 0.17757570001413114
+    },
+    {
+      "evaluations": 75,
+      "phase": "Adam",
+      "best_training_loss": 0.5381748076641355,
+      "elapsed_seconds": 0.28002289999858476
+    },
+    {
+      "evaluations": 100,
+      "phase": "Adam",
+      "best_training_loss": 0.33109677784627034,
+      "elapsed_seconds": 0.370882100018207
+    },
+    {
+      "evaluations": 125,
+      "phase": "Adam",
+      "best_training_loss": 0.19936272764631904,
+      "elapsed_seconds": 0.39329999999608845
+    },
+    {
+      "evaluations": 150,
+      "phase": "Adam",
+      "best_training_loss": 0.1351894492500118,
+      "elapsed_seconds": 0.4037845999991987
+    },
+    {
+      "evaluations": 175,
+      "phase": "Adam",
+      "best_training_loss": 0.0889945608219923,
+      "elapsed_seconds": 0.41010959999402985
+    },
+    {
+      "evaluations": 200,
+      "phase": "Adam",
+      "best_training_loss": 0.05806804943922878,
+      "elapsed_seconds": 0.41643010001280345
+    },
+    {
+      "evaluations": 225,
+      "phase": "Adam",
+      "best_training_loss": 0.01894090876990746,
+      "elapsed_seconds": 0.41980210001929663
+    },
+    {
+      "evaluations": 250,
+      "phase": "Adam",
+      "best_training_loss": 0.002083432876081776,
+      "elapsed_seconds": 0.42467830001260154
+    },
+    {
+      "evaluations": 275,
+      "phase": "Adam",
+      "best_training_loss": 4.061202261191436e-05,
+      "elapsed_seconds": 0.4289483000175096
+    },
+    {
+      "evaluations": 300,
+      "phase": "Adam",
+      "best_training_loss": 4.095511583474446e-06,
+      "elapsed_seconds": 0.4372702999971807
+    },
+    {
+      "evaluations": 325,
+      "phase": "Adam",
+      "best_training_loss": 1.050462367693379e-06,
+      "elapsed_seconds": 0.44380040001124144
+    },
+    {
+      "evaluations": 350,
+      "phase": "Adam",
+      "best_training_loss": 8.666212790895578e-07,
+      "elapsed_seconds": 0.44927690000622533
+    },
+    {
+      "evaluations": 375,
+      "phase": "Adam",
+      "best_training_loss": 8.666212790895578e-07,
+      "elapsed_seconds": 0.4531448000052478
+    },
+    {
+      "evaluations": 400,
+      "phase": "Adam",
+      "best_training_loss": 8.666212790895578e-07,
+      "elapsed_seconds": 0.5421552000043448
+    },
+    {
+      "evaluations": 425,
+      "phase": "Adam",
+      "best_training_loss": 3.8453095490103753e-07,
+      "elapsed_seconds": 0.6709476000105496
+    },
+    {
+      "evaluations": 450,
+      "phase": "Adam",
+      "best_training_loss": 1.299930505882241e-08,
+      "elapsed_seconds": 0.7005750999960583
+    },
+    {
+      "evaluations": 475,
+      "phase": "Adam",
+      "best_training_loss": 1.0015855376980565e-09,
+      "elapsed_seconds": 0.7125829000142403
+    },
+    {
+      "evaluations": 500,
+      "phase": "Adam",
+      "best_training_loss": 1.1384942788676348e-10,
+      "elapsed_seconds": 0.7206337999959942
+    },
+    {
+      "evaluations": 525,
+      "phase": "Adam",
+      "best_training_loss": 5.66649459208712e-12,
+      "elapsed_seconds": 0.7282788000011351
+    },
+    {
+      "evaluations": 550,
+      "phase": "Adam",
+      "best_training_loss": 1.5913529788865543e-12,
+      "elapsed_seconds": 0.7359132000128739
+    },
+    {
+      "evaluations": 575,
+      "phase": "Adam",
+      "best_training_loss": 2.2149676749530598e-14,
+      "elapsed_seconds": 0.7415735000104178
+    },
+    {
+      "evaluations": 600,
+      "phase": "Adam",
+      "best_training_loss": 1.6448743529306913e-15,
+      "elapsed_seconds": 0.7483199000125751
+    },
+    {
+      "evaluations": 625,
+      "phase": "Adam",
+      "best_training_loss": 1.0101046531332182e-16,
+      "elapsed_seconds": 0.7518748000147752
+    },
+    {
+      "evaluations": 650,
+      "phase": "Adam",
+      "best_training_loss": 2.5956421426784577e-17,
+      "elapsed_seconds": 0.7823525000130758
+    },
+    {
+      "evaluations": 675,
+      "phase": "Adam",
+      "best_training_loss": 6.654465799081482e-19,
+      "elapsed_seconds": 0.8124340000213124
+    },
+    {
+      "evaluations": 700,
+      "phase": "Adam",
+      "best_training_loss": 6.654465799081482e-19,
+      "elapsed_seconds": 0.8575335000059567
+    },
+    {
+      "evaluations": 725,
+      "phase": "Adam",
+      "best_training_loss": 6.654465799081482e-19,
+      "elapsed_seconds": 0.89220309999655
+    },
+    {
+      "evaluations": 750,
+      "phase": "Adam",
+      "best_training_loss": 6.654465799081482e-19,
+      "elapsed_seconds": 0.9186510000145063
+    },
+    {
+      "evaluations": 775,
+      "phase": "Adam",
+      "best_training_loss": 6.654465799081482e-19,
+      "elapsed_seconds": 0.951067799993325
+    },
+    {
+      "evaluations": 800,
+      "phase": "Adam",
+      "best_training_loss": 6.654465799081482e-19,
+      "elapsed_seconds": 0.9854376000002958
+    },
+    {
+      "evaluations": 825,
+      "phase": "Adam",
+      "best_training_loss": 6.654465799081482e-19,
+      "elapsed_seconds": 1.1184831999999005
+    },
+    {
+      "evaluations": 850,
+      "phase": "Adam",
+      "best_training_loss": 6.654465799081482e-19,
+      "elapsed_seconds": 1.1354195000021718
+    },
+    {
+      "evaluations": 875,
+      "phase": "Adam",
+      "best_training_loss": 6.654465799081482e-19,
+      "elapsed_seconds": 1.1430255000013858
+    },
+    {
+      "evaluations": 900,
+      "phase": "Adam",
+      "best_training_loss": 6.654465799081482e-19,
+      "elapsed_seconds": 1.1492507999937516
+    },
+    {
+      "evaluations": 925,
+      "phase": "Adam",
+      "best_training_loss": 6.654465799081482e-19,
+      "elapsed_seconds": 1.1528330000001006
+    },
+    {
+      "evaluations": 950,
+      "phase": "Adam",
+      "best_training_loss": 6.654465799081482e-19,
+      "elapsed_seconds": 1.1571570000087377
+    },
+    {
+      "evaluations": 975,
+      "phase": "Adam",
+      "best_training_loss": 6.654465799081482e-19,
+      "elapsed_seconds": 1.1610104000137653
+    },
+    {
+      "evaluations": 1000,
+      "phase": "Adam",
+      "best_training_loss": 6.654465799081482e-19,
+      "elapsed_seconds": 1.16500680000172
+    },
+    {
+      "evaluations": 1025,
+      "phase": "Adam",
+      "best_training_loss": 6.654465799081482e-19,
+      "elapsed_seconds": 1.1684562000154983
+    },
+    {
+      "evaluations": 1050,
+      "phase": "Adam",
+      "best_training_loss": 6.654465799081482e-19,
+      "elapsed_seconds": 1.1718282999936491
+    },
+    {
+      "evaluations": 1075,
+      "phase": "Adam",
+      "best_training_loss": 6.654465799081482e-19,
+      "elapsed_seconds": 1.1763674000103492
+    },
+    {
+      "evaluations": 1100,
+      "phase": "Adam",
+      "best_training_loss": 6.654465799081482e-19,
+      "elapsed_seconds": 1.1817471999966074
+    },
+    {
+      "evaluations": 1125,
+      "phase": "Adam",
+      "best_training_loss": 2.941743506052384e-19,
+      "elapsed_seconds": 1.1853094999969471
+    },
+    {
+      "evaluations": 1150,
+      "phase": "Adam",
+      "best_training_loss": 1.5337819797878023e-20,
+      "elapsed_seconds": 1.188536200003
+    },
+    {
+      "evaluations": 1175,
+      "phase": "Adam",
+      "best_training_loss": 1.2180406958007246e-21,
+      "elapsed_seconds": 1.1934758000134025
+    },
+    {
+      "evaluations": 1200,
+      "phase": "Adam",
+      "best_training_loss": 1.5448567926794315e-22,
+      "elapsed_seconds": 1.1981045000138693
+    },
+    {
+      "evaluations": 1201,
+      "phase": "L-BFGS",
+      "best_training_loss": 1.5448567926794315e-22,
+      "elapsed_seconds": 1.198723700013943
+    }
+  ],
+  "status": "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL",
+  "training_seconds": 1.198734500008868,
+  "adam_steps": 1200,
+  "rng_state": {
+    "bit_generator": "PCG64",
+    "state": {
+      "state": 6532837426029475620297869750255617370,
+      "inc": 18438579778062455872196599375400725907
+    },
+    "has_uint32": 0,
+    "uinteger": 0
+  },
+  "training_signature": "1deda652dac4251e6fc611e112693f30172ee98a3b1ba98ec1ff6e50bfbfe202",
+  "model_sha256": "a0335018ecc41595df817170f8f77d75bdc3214ad0b3d9dcd87f09dc0b5fd5bd",
+  "parameters": 4618
+}

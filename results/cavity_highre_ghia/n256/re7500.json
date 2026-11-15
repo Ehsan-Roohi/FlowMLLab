@@ -1,0 +1,242 @@
+{
+  "config": {
+    "cells": 256,
+    "method": "steady-newton-central-thom",
+    "lid": 1.0,
+    "length": 1.0,
+    "targets": [
+      3200,
+      5000,
+      7500,
+      10000
+    ],
+    "nonlinear_tolerance": 1e-08,
+    "acceptance_steady_linf": 1e-06,
+    "source_sha256_lf": {
+      "flowmllab/cavity_steady.py": "a06c580ec90e04dcd997882590711759ba478b75500bb46a4b848cc9b6cd6039",
+      "qa/run_cavity_highre.py": "abbb223dcee3177e4dda610672342009e1650d3c3dc1076e77caa89b75927dc9"
+    },
+    "seed_sha256": "8b72232e01afa6429ba9f72199b901fe7f90d266ed169cd846be1980132e4313",
+    "start_reynolds": 1000,
+    "max_continuation_increment": 500,
+    "min_continuation_increment": 15.625,
+    "pressure": "not reconstructed; velocity/vorticity validation only"
+  },
+  "signature": "f551e1e25864e86cd0a85e5dbafbd7fc854868a7cbb4896cf124b716a492c9bd",
+  "reynolds": 7500,
+  "cells": 256,
+  "converged": true,
+  "poisson_linf": 5.062172903080864e-12,
+  "steady_vorticity_linf": 3.6132306036051887e-09,
+  "continuity_linf": 1.4210854715202004e-14,
+  "vortex_x": 0.515625,
+  "vortex_y": 0.53125,
+  "psi_min": -0.11485581404817671,
+  "branch": "2-D steady Navier-Stokes root; temporal stability not inferred",
+  "field_sha256": "5565c13320c28bb21566feb06e5d02f8796d9c59cd9d35a29656f17f1fb4f00f",
+  "newton_history": [
+    {
+      "iteration": 0,
+      "poisson_linf": 5.07172082109264e-12,
+      "steady_vorticity_linf": 818.6082783178153,
+      "linear_relative_residual": 3.333264878848984e-15,
+      "accepted_step": 1.0
+    },
+    {
+      "iteration": 1,
+      "poisson_linf": 4.845013279464183e-12,
+      "steady_vorticity_linf": 5.1005028890290305,
+      "linear_relative_residual": 3.887786994000369e-14,
+      "accepted_step": 1.0
+    },
+    {
+      "iteration": 2,
+      "poisson_linf": 4.906741679633342e-12,
+      "steady_vorticity_linf": 0.0012520421234967216,
+      "linear_relative_residual": 7.563329405489303e-14,
+      "accepted_step": 1.0
+    },
+    {
+      "iteration": 3,
+      "poisson_linf": 5.062172903080864e-12,
+      "steady_vorticity_linf": 3.6132306036051887e-09
+    }
+  ],
+  "continuation_history": [
+    {
+      "reynolds": 1000.0,
+      "success": true,
+      "iterations": 4,
+      "seconds": 15.133768480969593,
+      "final": {
+        "iteration": 4,
+        "poisson_linf": 4.784617146924575e-12,
+        "steady_vorticity_linf": 7.971290294506161e-12
+      }
+    },
+    {
+      "reynolds": 1500.0,
+      "success": true,
+      "iterations": 5,
+      "seconds": 18.17868280201219,
+      "final": {
+        "iteration": 5,
+        "poisson_linf": 4.8903103788688895e-12,
+        "steady_vorticity_linf": 5.911410250192262e-12
+      }
+    },
+    {
+      "reynolds": 2000.0,
+      "success": true,
+      "iterations": 4,
+      "seconds": 15.893490354996175,
+      "final": {
+        "iteration": 4,
+        "poisson_linf": 4.7908343958624755e-12,
+        "steady_vorticity_linf": 3.0870950240569073e-10
+      }
+    },
+    {
+      "reynolds": 2500.0,
+      "success": true,
+      "iterations": 4,
+      "seconds": 14.85297040687874,
+      "final": {
+        "iteration": 4,
+        "poisson_linf": 5.162759109111903e-12,
+        "steady_vorticity_linf": 4.673594844462059e-12
+      }
+    },
+    {
+      "reynolds": 3000.0,
+      "success": true,
+      "iterations": 4,
+      "seconds": 14.526212583994493,
+      "final": {
+        "iteration": 4,
+        "poisson_linf": 4.467759495696555e-12,
+        "steady_vorticity_linf": 3.637978807091713e-12
+      }
+    },
+    {
+      "reynolds": 3200,
+      "success": true,
+      "iterations": 3,
+      "seconds": 11.377135907066986,
+      "final": {
+        "iteration": 3,
+        "poisson_linf": 4.674927112091609e-12,
+        "steady_vorticity_linf": 5.617266651825048e-10
+      }
+    },
+    {
+      "reynolds": 3700.0,
+      "success": true,
+      "iterations": 4,
+      "seconds": 15.08568698191084,
+      "final": {
+        "iteration": 4,
+        "poisson_linf": 4.849454171562684e-12,
+        "steady_vorticity_linf": 3.637978807091713e-12
+      }
+    },
+    {
+      "reynolds": 4200.0,
+      "success": true,
+      "iterations": 4,
+      "seconds": 15.0377640100196,
+      "final": {
+        "iteration": 4,
+        "poisson_linf": 4.972910971901001e-12,
+        "steady_vorticity_linf": 3.467448550509289e-12
+      }
+    },
+    {
+      "reynolds": 4700.0,
+      "success": true,
+      "iterations": 4,
+      "seconds": 15.03088384703733,
+      "final": {
+        "iteration": 4,
+        "poisson_linf": 4.594102875898898e-12,
+        "steady_vorticity_linf": 2.234656903965515e-12
+      }
+    },
+    {
+      "reynolds": 5000,
+      "success": true,
+      "iterations": 3,
+      "seconds": 11.266090529970825,
+      "final": {
+        "iteration": 3,
+        "poisson_linf": 4.913847106990943e-12,
+        "steady_vorticity_linf": 1.0773533176688943e-09
+      }
+    },
+    {
+      "reynolds": 5500.0,
+      "success": true,
+      "iterations": 4,
+      "seconds": 15.7996019939892,
+      "final": {
+        "iteration": 4,
+        "poisson_linf": 4.7482018317168695e-12,
+        "steady_vorticity_linf": 2.2737367544323206e-12
+      }
+    },
+    {
+      "reynolds": 6000.0,
+      "success": true,
+      "iterations": 4,
+      "seconds": 15.732587995007634,
+      "final": {
+        "iteration": 4,
+        "poisson_linf": 4.955147403506999e-12,
+        "steady_vorticity_linf": 7.275957614183426e-12
+      }
+    },
+    {
+      "reynolds": 6500.0,
+      "success": true,
+      "iterations": 4,
+      "seconds": 15.450099834008142,
+      "final": {
+        "iteration": 4,
+        "poisson_linf": 4.7482018317168695e-12,
+        "steady_vorticity_linf": 5.4569682106375694e-12
+      }
+    },
+    {
+      "reynolds": 7000.0,
+      "success": true,
+      "iterations": 3,
+      "seconds": 11.733682010089979,
+      "final": {
+        "iteration": 3,
+        "poisson_linf": 5.07172082109264e-12,
+        "steady_vorticity_linf": 6.170942867811391e-09
+      }
+    },
+    {
+      "reynolds": 7500.0,
+      "success": true,
+      "iterations": 3,
+      "seconds": 11.725619117030874,
+      "final": {
+        "iteration": 3,
+        "poisson_linf": 5.062172903080864e-12,
+        "steady_vorticity_linf": 3.6132306036051887e-09
+      }
+    }
+  ],
+  "cumulative_compute_seconds": 218.3608539858833,
+  "host": "uri-cpu092",
+  "slurm_job_id": "1768011",
+  "utc": "2026-11-15T14:16:21.299641+00:00",
+  "environment": {
+    "python": "3.12.3",
+    "numpy": "2.2.6",
+    "scipy": "1.15.3"
+  },
+  "ghia_used_during_solution": false
+}

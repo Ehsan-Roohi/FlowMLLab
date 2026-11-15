@@ -1,0 +1,84 @@
+{
+  "config": {
+    "reynolds": 9000,
+    "cells": 256,
+    "method": "steady-newton-central-thom",
+    "lid": 1.0,
+    "length": 1.0,
+    "nonlinear_tolerance": 1e-08,
+    "acceptance_steady_linf": 1e-06,
+    "start_reynolds": 10000,
+    "seed_sha256": "9ff7761ab992b7544553de4fbf31f52554a2cf4312840922de4924ce77f879ce",
+    "source_sha256_lf": {
+      "flowmllab/cavity_steady.py": "a06c580ec90e04dcd997882590711759ba478b75500bb46a4b848cc9b6cd6039",
+      "qa/run_cavity_extra_reference.py": "251684d417dbd6c488eae55eca5b651a1f3c606c502dbbff5e2758f207c498f2"
+    }
+  },
+  "signature": "36091b60ca003fbcb579d1fd8a3d34e86bf377305daa8e820640de028dd32a5b",
+  "reynolds": 9000,
+  "cells": 256,
+  "converged": true,
+  "poisson_linf": 4.913625062386018e-12,
+  "steady_vorticity_linf": 9.259621958079833e-10,
+  "continuity_linf": 1.4210854715202004e-14,
+  "vortex_x": 0.51171875,
+  "vortex_y": 0.53125,
+  "psi_min": -0.11332449995318124,
+  "field_sha256": "a9d94be10142eedc0cc63ec5f71fadf6f1cac206c0fdecf360051ce5efcc83c0",
+  "newton_history": [
+    {
+      "iteration": 0,
+      "poisson_linf": 4.872102721265037e-12,
+      "steady_vorticity_linf": 601.8506964993744,
+      "linear_relative_residual": 3.0288733500515592e-15,
+      "accepted_step": 1.0
+    },
+    {
+      "iteration": 1,
+      "poisson_linf": 4.7766235411472735e-12,
+      "steady_vorticity_linf": 3.5603748658004406,
+      "linear_relative_residual": 2.1533878925722447e-14,
+      "accepted_step": 1.0
+    },
+    {
+      "iteration": 2,
+      "poisson_linf": 4.6420645105627045e-12,
+      "steady_vorticity_linf": 0.00045407516171280804,
+      "linear_relative_residual": 1.1118831019958973e-13,
+      "accepted_step": 1.0
+    },
+    {
+      "iteration": 3,
+      "poisson_linf": 4.913625062386018e-12,
+      "steady_vorticity_linf": 9.259621958079833e-10
+    }
+  ],
+  "continuation_history": [
+    {
+      "reynolds": 9500.0,
+      "success": true,
+      "iterations": 3,
+      "final": {
+        "iteration": 3,
+        "poisson_linf": 4.872102721265037e-12,
+        "steady_vorticity_linf": 1.3211767235787875e-09
+      }
+    },
+    {
+      "reynolds": 9000.0,
+      "success": true,
+      "iterations": 3,
+      "final": {
+        "iteration": 3,
+        "poisson_linf": 4.913625062386018e-12,
+        "steady_vorticity_linf": 9.259621958079833e-10
+      }
+    }
+  ],
+  "cumulative_compute_seconds": 24.285658533219248,
+  "host": "uri-cpu102",
+  "slurm_job_id": "1769311",
+  "utc": "2026-11-15T14:45:42.466325+00:00",
+  "ghia_used_during_solution": false,
+  "branch": "2-D steady Navier-Stokes root"
+}

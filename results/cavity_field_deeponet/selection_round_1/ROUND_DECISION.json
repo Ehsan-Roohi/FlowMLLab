@@ -1,0 +1,22 @@
+{
+  "reason": "Validation Re400 POD projection floor 3.251048%; branch optimization cannot remove missing spatial content",
+  "validation_projection_relative_l2": {
+    "400": 0.032510483915755874,
+    "6500": 3.822628746494961e-05
+  },
+  "selected_validation_mean_relative_l2": 0.020686120210914864,
+  "added_training_re": [
+    500,
+    750
+  ],
+  "unchanged_validation_re": [
+    400,
+    6500
+  ],
+  "unchanged_test_re": [
+    3200,
+    7500
+  ],
+  "test_targets_opened_for_model_scoring": false,
+  "scope": "Validation-driven training-data augmentation before any test scoring; retain the initial scientific trial"
+}

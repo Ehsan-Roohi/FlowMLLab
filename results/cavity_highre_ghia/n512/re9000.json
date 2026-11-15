@@ -1,0 +1,248 @@
+{
+  "config": {
+    "cells": 512,
+    "method": "steady-newton-central-thom",
+    "lid": 1.0,
+    "length": 1.0,
+    "targets": [
+      3200,
+      5000,
+      7500,
+      10000
+    ],
+    "nonlinear_tolerance": 1e-08,
+    "acceptance_steady_linf": 1e-06,
+    "source_sha256_lf": {
+      "flowmllab/cavity_steady.py": "a06c580ec90e04dcd997882590711759ba478b75500bb46a4b848cc9b6cd6039",
+      "qa/run_cavity_highre.py": "abbb223dcee3177e4dda610672342009e1650d3c3dc1076e77caa89b75927dc9"
+    },
+    "seed_sha256": "8b72232e01afa6429ba9f72199b901fe7f90d266ed169cd846be1980132e4313",
+    "start_reynolds": 1000,
+    "max_continuation_increment": 500,
+    "min_continuation_increment": 15.625,
+    "pressure": "not reconstructed; velocity/vorticity validation only",
+    "reynolds": 9000,
+    "captured_completed_continuation_root": true,
+    "captured_checkpoint_sha256": "dffb579c3ba6e19ba45ef9248e4c7ae866149217b6bebe8fab7a9e7060918371"
+  },
+  "signature": "8287a54683f7f24f93dc8a625efec1a5ba370ae3f66cae0651a8ce1ee34102f4",
+  "parent_continuation_signature": "f5f1c85342375142bb40b192b50d7385ee0d378b24c0d7e22a532e90c4642be2",
+  "reynolds": 9000,
+  "cells": 512,
+  "converged": true,
+  "poisson_linf": 3.238409540529119e-11,
+  "steady_vorticity_linf": 3.3559190981691245e-09,
+  "continuity_linf": 2.842170943040401e-14,
+  "wall_linf": 0.0,
+  "streamfunction_velocity_linf": 0.0,
+  "field_sha256": "f7f43d61457aea4ae62e3670119f49803fe05c5ece13103b049c04fef19c3ce7",
+  "captured_checkpoint_sha256": "dffb579c3ba6e19ba45ef9248e4c7ae866149217b6bebe8fab7a9e7060918371",
+  "continuation_history": [
+    {
+      "reynolds": 1000.0,
+      "success": true,
+      "iterations": 4,
+      "seconds": 137.4962595209945,
+      "final": {
+        "iteration": 4,
+        "poisson_linf": 2.0262458377828807e-11,
+        "steady_vorticity_linf": 1.0732037480920553e-10
+      }
+    },
+    {
+      "reynolds": 1500.0,
+      "success": true,
+      "iterations": 5,
+      "seconds": 167.2025452540256,
+      "final": {
+        "iteration": 5,
+        "poisson_linf": 2.027489287570461e-11,
+        "steady_vorticity_linf": 4.6338044512594934e-11
+      }
+    },
+    {
+      "reynolds": 2000.0,
+      "success": true,
+      "iterations": 4,
+      "seconds": 133.20399660384282,
+      "final": {
+        "iteration": 4,
+        "poisson_linf": 1.9716006605108305e-11,
+        "steady_vorticity_linf": 3.8052050399528525e-10
+      }
+    },
+    {
+      "reynolds": 2500.0,
+      "success": true,
+      "iterations": 4,
+      "seconds": 135.00095695094205,
+      "final": {
+        "iteration": 4,
+        "poisson_linf": 2.013944566670034e-11,
+        "steady_vorticity_linf": 2.7768010113504715e-11
+      }
+    },
+    {
+      "reynolds": 3000.0,
+      "success": true,
+      "iterations": 4,
+      "seconds": 133.083383748075,
+      "final": {
+        "iteration": 4,
+        "poisson_linf": 2.0437207481904807e-11,
+        "steady_vorticity_linf": 2.9103830456733704e-11
+      }
+    },
+    {
+      "reynolds": 3200,
+      "success": true,
+      "iterations": 3,
+      "seconds": 100.78282519103959,
+      "final": {
+        "iteration": 3,
+        "poisson_linf": 2.028199830306221e-11,
+        "steady_vorticity_linf": 4.920011065223662e-10
+      }
+    },
+    {
+      "reynolds": 3700.0,
+      "success": true,
+      "iterations": 4,
+      "seconds": 134.33837943780236,
+      "final": {
+        "iteration": 4,
+        "poisson_linf": 1.9974244480636116e-11,
+        "steady_vorticity_linf": 1.8118839761882555e-11
+      }
+    },
+    {
+      "reynolds": 4200.0,
+      "success": true,
+      "iterations": 4,
+      "seconds": 131.45554387709126,
+      "final": {
+        "iteration": 4,
+        "poisson_linf": 2.0792922938994707e-11,
+        "steady_vorticity_linf": 1.7337242752546445e-11
+      }
+    },
+    {
+      "reynolds": 4700.0,
+      "success": true,
+      "iterations": 4,
+      "seconds": 133.57438873313367,
+      "final": {
+        "iteration": 4,
+        "poisson_linf": 1.9874990542234627e-11,
+        "steady_vorticity_linf": 1.5006662579253316e-11
+      }
+    },
+    {
+      "reynolds": 5000,
+      "success": true,
+      "iterations": 3,
+      "seconds": 100.92988763703033,
+      "final": {
+        "iteration": 3,
+        "poisson_linf": 1.9968471320908066e-11,
+        "steady_vorticity_linf": 9.624727681512013e-10
+      }
+    },
+    {
+      "reynolds": 5500.0,
+      "success": true,
+      "iterations": 4,
+      "seconds": 132.77785696811043,
+      "final": {
+        "iteration": 4,
+        "poisson_linf": 2.0443868820052558e-11,
+        "steady_vorticity_linf": 2.7284841053187847e-11
+      }
+    },
+    {
+      "reynolds": 6000.0,
+      "success": true,
+      "iterations": 4,
+      "seconds": 134.51672479487024,
+      "final": {
+        "iteration": 4,
+        "poisson_linf": 2.04007921666971e-11,
+        "steady_vorticity_linf": 1.4210854715202004e-11
+      }
+    },
+    {
+      "reynolds": 6500.0,
+      "success": true,
+      "iterations": 4,
+      "seconds": 127.74390450189821,
+      "final": {
+        "iteration": 4,
+        "poisson_linf": 2.053357484044227e-11,
+        "steady_vorticity_linf": 1.6370904631912708e-11
+      }
+    },
+    {
+      "reynolds": 7000.0,
+      "success": true,
+      "iterations": 4,
+      "seconds": 127.91412538103759,
+      "final": {
+        "iteration": 4,
+        "poisson_linf": 1.9456880551160793e-11,
+        "steady_vorticity_linf": 3.2741809263825417e-11
+      }
+    },
+    {
+      "reynolds": 7500.0,
+      "success": true,
+      "iterations": 3,
+      "seconds": 96.86753358109854,
+      "final": {
+        "iteration": 3,
+        "poisson_linf": 1.953703865353873e-11,
+        "steady_vorticity_linf": 7.2701595854596235e-09
+      }
+    },
+    {
+      "reynolds": 8000.0,
+      "success": true,
+      "iterations": 3,
+      "seconds": 109.84165856800973,
+      "final": {
+        "iteration": 3,
+        "poisson_linf": 1.9522383709613678e-11,
+        "steady_vorticity_linf": 4.924913810100406e-09
+      }
+    },
+    {
+      "reynolds": 8500.0,
+      "success": true,
+      "iterations": 3,
+      "seconds": 101.13811107701622,
+      "final": {
+        "iteration": 3,
+        "poisson_linf": 2.0023760427534398e-11,
+        "steady_vorticity_linf": 3.378318069735542e-09
+      }
+    },
+    {
+      "reynolds": 9000.0,
+      "success": true,
+      "iterations": 3,
+      "seconds": 104.91618402907625,
+      "final": {
+        "iteration": 3,
+        "poisson_linf": 2.0728974092776298e-11,
+        "steady_vorticity_linf": 3.3558804624078675e-09
+      }
+    }
+  ],
+  "cumulative_compute_seconds": 2249.9671615432017,
+  "slurm_job_id": "1767993_2",
+  "vortex_x": 0.51171875,
+  "vortex_y": 0.53125,
+  "psi_min": -0.1199812166826653,
+  "ghia_used_during_solution": false,
+  "branch": "2-D steady Navier-Stokes root captured after convergence",
+  "conversion_source_sha256_lf": "4a341bff71000b2c573265051e6d742d8e7520926af2a7d05e95a8b430bb7f88"
+}

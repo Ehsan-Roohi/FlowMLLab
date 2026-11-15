@@ -1,0 +1,192 @@
+{
+  "config": {
+    "reynolds": 5000,
+    "cells": 256,
+    "dt": 0.002,
+    "duration": 10.0,
+    "perturbation_streamfunction_amplitude": 0.0001,
+    "perturbation": "amplitude*sin(pi*x)^2*sin(pi*y)^2",
+    "method": "SSPRK3; fresh DST Poisson/Thom boundaries each stage",
+    "initial_omega_sha256": "51bcaeeb993ae439e5d99665f8c563bbccf45a861d0605ce6f4ec038f36eb324",
+    "steady_field_sha256": "680a77d2a01116a9654d9feccafdf4d645dcf7d989b8e37e9c959bd362dcad2e",
+    "source_sha256_lf": {
+      "qa/run_cavity_highre_temporal.py": "6cf97f72bea52a1b728d3c438edd31e365132acdcb83a5b8d02ed147caaf600d",
+      "flowmllab/cavity_steady.py": "a06c580ec90e04dcd997882590711759ba478b75500bb46a4b848cc9b6cd6039"
+    }
+  },
+  "signature": "8da1f100eac58f21d49597abd3349781f6bc0cb10ef279af4bab6e9d33f1ba58",
+  "observations": [
+    {
+      "time": 0.0,
+      "velocity_departure_rms_U": 0.00019161466545991116,
+      "velocity_departure_linf_U": 0.0003141277252307617,
+      "advective_cfl": 0.512,
+      "u_center": -0.03112945040937376,
+      "v_center": 0.011788603431519107
+    },
+    {
+      "time": 0.5,
+      "velocity_departure_rms_U": 0.00019083248779579238,
+      "velocity_departure_linf_U": 0.00030847053576543715,
+      "advective_cfl": 0.512,
+      "u_center": -0.03111235671374324,
+      "v_center": 0.011814007773793378
+    },
+    {
+      "time": 1.0,
+      "velocity_departure_rms_U": 0.00019010850765784532,
+      "velocity_departure_linf_U": 0.00030125708799566553,
+      "advective_cfl": 0.512,
+      "u_center": -0.031085812226223197,
+      "v_center": 0.011829270300335537
+    },
+    {
+      "time": 1.5,
+      "velocity_departure_rms_U": 0.0001886118989847994,
+      "velocity_departure_linf_U": 0.0003080500672627551,
+      "advective_cfl": 0.512,
+      "u_center": -0.031055316920692633,
+      "v_center": 0.011831693330275783
+    },
+    {
+      "time": 2.0,
+      "velocity_departure_rms_U": 0.00018760334552325907,
+      "velocity_departure_linf_U": 0.0003104052512465927,
+      "advective_cfl": 0.512,
+      "u_center": -0.031026237782157295,
+      "v_center": 0.011820342267618855
+    },
+    {
+      "time": 2.5,
+      "velocity_departure_rms_U": 0.00018713644016064761,
+      "velocity_departure_linf_U": 0.0003070977249208795,
+      "advective_cfl": 0.512,
+      "u_center": -0.031005192362455247,
+      "v_center": 0.011795983229365703
+    },
+    {
+      "time": 3.0,
+      "velocity_departure_rms_U": 0.00018594755315209198,
+      "velocity_departure_linf_U": 0.0003150519452290723,
+      "advective_cfl": 0.512,
+      "u_center": -0.030999099642887273,
+      "v_center": 0.011764552999267153
+    },
+    {
+      "time": 3.5,
+      "velocity_departure_rms_U": 0.00018430628703643763,
+      "velocity_departure_linf_U": 0.000315818417371716,
+      "advective_cfl": 0.512,
+      "u_center": -0.03100941322246875,
+      "v_center": 0.011735838018974931
+    },
+    {
+      "time": 4.0,
+      "velocity_departure_rms_U": 0.00018315353758599216,
+      "velocity_departure_linf_U": 0.0003035687754842087,
+      "advective_cfl": 0.512,
+      "u_center": -0.031031487910485822,
+      "v_center": 0.01171655067648203
+    },
+    {
+      "time": 4.5,
+      "velocity_departure_rms_U": 0.00018203804352777745,
+      "velocity_departure_linf_U": 0.00030137423179077416,
+      "advective_cfl": 0.512,
+      "u_center": -0.03105924358934864,
+      "v_center": 0.011709206516190562
+    },
+    {
+      "time": 5.0,
+      "velocity_departure_rms_U": 0.00018031836550550737,
+      "velocity_departure_linf_U": 0.000304142986447431,
+      "advective_cfl": 0.512,
+      "u_center": -0.031086384719708704,
+      "v_center": 0.011714347988068141
+    },
+    {
+      "time": 5.5,
+      "velocity_departure_rms_U": 0.0001789355209359997,
+      "velocity_departure_linf_U": 0.000298045547866721,
+      "advective_cfl": 0.512,
+      "u_center": -0.031107486380530958,
+      "v_center": 0.011729780631949183
+    },
+    {
+      "time": 6.0,
+      "velocity_departure_rms_U": 0.00017826063752924063,
+      "velocity_departure_linf_U": 0.0002901790149554273,
+      "advective_cfl": 0.512,
+      "u_center": -0.031120012914318096,
+      "v_center": 0.011751561170594726
+    },
+    {
+      "time": 6.5,
+      "velocity_departure_rms_U": 0.00017743645618319945,
+      "velocity_departure_linf_U": 0.00029532437313939397,
+      "advective_cfl": 0.512,
+      "u_center": -0.031122876621363815,
+      "v_center": 0.011776256769394422
+    },
+    {
+      "time": 7.0,
+      "velocity_departure_rms_U": 0.00017615959553541407,
+      "velocity_departure_linf_U": 0.0002936074209642925,
+      "advective_cfl": 0.512,
+      "u_center": -0.031114838661348898,
+      "v_center": 0.011800367135137435
+    },
+    {
+      "time": 7.5,
+      "velocity_departure_rms_U": 0.0001746493597605281,
+      "velocity_departure_linf_U": 0.0002814295430386693,
+      "advective_cfl": 0.512,
+      "u_center": -0.03109643148477481,
+      "v_center": 0.011818933378716423
+    },
+    {
+      "time": 8.0,
+      "velocity_departure_rms_U": 0.00017309527460935396,
+      "velocity_departure_linf_U": 0.00028205627729605,
+      "advective_cfl": 0.512,
+      "u_center": -0.031071725874960876,
+      "v_center": 0.011827253387405534
+    },
+    {
+      "time": 8.5,
+      "velocity_departure_rms_U": 0.00017164666630476122,
+      "velocity_departure_linf_U": 0.0002900236644478582,
+      "advective_cfl": 0.512,
+      "u_center": -0.03104619557065469,
+      "v_center": 0.011823413700263075
+    },
+    {
+      "time": 9.0,
+      "velocity_departure_rms_U": 0.00017059803728374488,
+      "velocity_departure_linf_U": 0.0002898986366304257,
+      "advective_cfl": 0.512,
+      "u_center": -0.031024732163848157,
+      "v_center": 0.011807953933995918
+    },
+    {
+      "time": 9.5,
+      "velocity_departure_rms_U": 0.00016976819449878507,
+      "velocity_departure_linf_U": 0.00028813565756813375,
+      "advective_cfl": 0.512,
+      "u_center": -0.0310123343584916,
+      "v_center": 0.011783668147781867
+    },
+    {
+      "time": 10.0,
+      "velocity_departure_rms_U": 0.00016855717223090798,
+      "velocity_departure_linf_U": 0.00029033740135453456,
+      "advective_cfl": 0.512,
+      "u_center": -0.031012719800278532,
+      "v_center": 0.01175658767235177
+    }
+  ],
+  "final_sha256": "fa9ab1d1abdcc11d20ace2967a8937d104dd1c76d290236a5e5f50878309cffc",
+  "elapsed_seconds_this_attempt": 128.3251807829365,
+  "slurm_job_id": "1768149",
+  "claim": "matched finite-horizon time-discretization audit, not asymptotic stability"
+}

@@ -1,0 +1,88 @@
+{
+  "config": {
+    "reynolds": 500,
+    "cells": 128,
+    "method": "steady-newton-central-thom",
+    "lid": 1.0,
+    "length": 1.0,
+    "nonlinear_tolerance": 1e-08,
+    "acceptance_steady_linf": 1e-06,
+    "start_reynolds": 1000,
+    "seed_sha256": "1bb5a959c931c7db688a61f1b709597ce7b3b895d9d52c88d9d036ac1449561b",
+    "source_sha256_lf": {
+      "flowmllab/cavity_steady.py": "a06c580ec90e04dcd997882590711759ba478b75500bb46a4b848cc9b6cd6039",
+      "qa/run_cavity_lowre_support.py": "928c89accb70752455bb0ce44f03ec0a94c73ba7b7c769b046c784923f1cf4d6"
+    }
+  },
+  "signature": "f85fb8586ec88f6dea01563e62a0e30c358547fe945f7e9fcf09a6e3a44bb570",
+  "reynolds": 500,
+  "cells": 128,
+  "converged": true,
+  "poisson_linf": 1.1515233211412124e-12,
+  "steady_vorticity_linf": 1.8758328224066645e-12,
+  "continuity_linf": 7.105427357601002e-15,
+  "vortex_x": 0.546875,
+  "vortex_y": 0.59375,
+  "psi_min": -0.11384399153694277,
+  "field_sha256": "9c16be5cfacc6ee6681eb1c7bd27c8e712f02f0cef505ab7d26dde156218af00",
+  "newton_history": [
+    {
+      "iteration": 0,
+      "poisson_linf": 1.1382006448457105e-12,
+      "steady_vorticity_linf": 4907.110799873335,
+      "linear_relative_residual": 1.7509660281883465e-15,
+      "accepted_step": 1.0
+    },
+    {
+      "iteration": 1,
+      "poisson_linf": 1.2922996006636822e-12,
+      "steady_vorticity_linf": 64.27982670842016,
+      "linear_relative_residual": 2.459391393955778e-14,
+      "accepted_step": 1.0
+    },
+    {
+      "iteration": 2,
+      "poisson_linf": 1.1177725411926076e-12,
+      "steady_vorticity_linf": 0.38576615510783085,
+      "linear_relative_residual": 5.741195697855393e-14,
+      "accepted_step": 1.0
+    },
+    {
+      "iteration": 3,
+      "poisson_linf": 1.184163878065192e-12,
+      "steady_vorticity_linf": 0.0011621070759337826,
+      "linear_relative_residual": 1.790757449717549e-13,
+      "accepted_step": 1.0
+    },
+    {
+      "iteration": 4,
+      "poisson_linf": 1.1222134332911082e-12,
+      "steady_vorticity_linf": 1.057235604617901e-07,
+      "linear_relative_residual": 8.009687870835827e-14,
+      "accepted_step": 1.0
+    },
+    {
+      "iteration": 5,
+      "poisson_linf": 1.1515233211412124e-12,
+      "steady_vorticity_linf": 1.8758328224066645e-12
+    }
+  ],
+  "continuation_history": [
+    {
+      "reynolds": 500.0,
+      "success": true,
+      "iterations": 5,
+      "final": {
+        "iteration": 5,
+        "poisson_linf": 1.1515233211412124e-12,
+        "steady_vorticity_linf": 1.8758328224066645e-12
+      }
+    }
+  ],
+  "cumulative_compute_seconds": 2.5652521459851414,
+  "host": "gypsum-gpu045",
+  "slurm_job_id": "1772032",
+  "utc": "2026-11-15T15:21:01.627478+00:00",
+  "ghia_used_during_solution": false,
+  "branch": "2-D steady Navier-Stokes root"
+}

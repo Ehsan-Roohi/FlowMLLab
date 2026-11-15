@@ -1,0 +1,69 @@
+{
+  "config": {
+    "cells": 128,
+    "reynolds": 400,
+    "method": "steady-newton-central-thom",
+    "lid": 1.0,
+    "length": 1.0,
+    "nonlinear_tolerance": 1e-08,
+    "acceptance_steady_linf": 1e-06,
+    "source_sha256_lf": {
+      "flowmllab/cavity_steady.py": "a06c580ec90e04dcd997882590711759ba478b75500bb46a4b848cc9b6cd6039",
+      "qa/run_cavity_ml_reference.py": "4cab6f2960f9c6828a51b6c81c0a79260ed4aa7de4fe05012151404c5f8eb040"
+    },
+    "seed_sha256": "0189db217fbca28715aba673fe3285180094230c028f92e2f8848cf7982db84e",
+    "mesh_sequence": [
+      128,
+      256,
+      512
+    ]
+  },
+  "signature": "14f322ca8a45fc70555fbadfd4e7b8494acba1261d2c9691166e0d6ea77b5593",
+  "reynolds": 400,
+  "cells": 128,
+  "converged": true,
+  "poisson_linf": 1.2012613126444194e-12,
+  "steady_vorticity_linf": 2.506912646221826e-12,
+  "continuity_linf": 7.105427357601002e-15,
+  "vortex_x": 0.5546875,
+  "vortex_y": 0.609375,
+  "psi_min": -0.11277086468000054,
+  "field_sha256": "00fc355bdcd423cde89acb57b0ad853abb814b82a5c7291c67ea6ec808ac540b",
+  "newton_history": [
+    {
+      "iteration": 0,
+      "poisson_linf": 4.25481871957345e-12,
+      "steady_vorticity_linf": 1.4968455752661924e-08,
+      "linear_relative_residual": 7.785161987782206e-13,
+      "accepted_step": 1.0
+    },
+    {
+      "iteration": 1,
+      "poisson_linf": 1.2012613126444194e-12,
+      "steady_vorticity_linf": 2.506912646221826e-12
+    }
+  ],
+  "continuation_history": [
+    {
+      "reynolds": 400,
+      "cells": 128,
+      "success": true,
+      "iterations": 1,
+      "final": {
+        "iteration": 1,
+        "poisson_linf": 1.2012613126444194e-12,
+        "steady_vorticity_linf": 2.506912646221826e-12
+      }
+    }
+  ],
+  "cumulative_compute_seconds": 0.5199691370362416,
+  "host": "uri-cpu088",
+  "slurm_job_id": "1768929",
+  "utc": "2026-11-15T14:32:55.963008+00:00",
+  "environment": {
+    "numpy": "2.2.6",
+    "scipy": "1.15.3"
+  },
+  "ghia_used_during_solution": false,
+  "branch": "2-D steady Navier-Stokes root"
+}
