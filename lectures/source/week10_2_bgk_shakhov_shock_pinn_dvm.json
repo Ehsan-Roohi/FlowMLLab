@@ -343,7 +343,7 @@
       "blocks": [
         {
           "type": "p",
-          "text": "The transient cases start from a smooth local-Maxwellian transition on x in [−0.5, 0.5]. Both sides initially have zero mean velocity. This is not a stationary shock initialized at Rankine–Hugoniot end states."
+          "text": "The transient cases start from a smooth local-Maxwellian transition on x in [−0.5, 0.5], with R<sub>g</sub> = 1 and γ = 5/3. Both reservoirs initially rest: local Mach is zero, and no stationary upstream Mach number is prescribed. The initial pressure ratio is 10 and density ratio is 8. A propagating-front Mach would need a separate speed measurement."
         },
         {
           "type": "equation",
@@ -357,7 +357,7 @@
         },
         {
           "type": "p",
-          "text": "The source uses constant τ = Kn = 1 and final time t = 0.02. Inflow is prescribed only for velocities entering the domain. Transient quadrature uses 48 × 20 × 20 uniform rectangular velocity nodes in [−7, 7]<super>3</super>, distinct from the Gauss–Legendre teaching experiment in Table D."
+          "text": "The source uses constant τ = Kn = 1, final time t = 0.02, and Pr = 1 (BGK) or 2/3 (Shakhov). This Kn is the source relaxation-law convention. Only incoming boundary velocities are prescribed. Research quadrature uses 48 × 20 × 20 uniform velocity nodes in [−7, 7]<super>3</super>; the fresh CPU model instead integrates transverse velocities analytically."
         },
         {
           "type": "equation",
@@ -635,7 +635,7 @@
         {
           "type": "figure",
           "path": "results/week10_2_kinetic_shock/tube_bgk_profiles.png",
-          "caption": "Transient BGK at t = 0.02 and constant τ = 1. Retained PINN predictions and the identified matched DVM reference are compared on their actual common support. The legend identifies methods and references."
+          "caption": "Transient BGK tube: t = 0.02, x in [−0.5, 0.5], constant τ = Kn = 1, Pr = 1, R<sub>g</sub> = 1, γ = 5/3. Left/right states (ρ, u, T) are (1, 0, 1) and (0.125, 0, 0.8), joined by H = [1 + tanh(20x)]/2. No stationary upstream Mach is imposed. Parent and final PINNs share the model-matched 3200-cell DVM and comparison nodes."
         },
         {
           "type": "p",
@@ -661,7 +661,7 @@
         {
           "type": "figure",
           "path": "results/week10_2_kinetic_shock/tube_shakhov_profiles.png",
-          "caption": "Transient Shakhov at t = 0.02, Pr = 2/3 and constant τ = 1. The DVM solves the same Shakhov model. This page has its own model-matched comparison."
+          "caption": "Transient Shakhov tube: t = 0.02, x in [−0.5, 0.5], constant τ = Kn = 1, Pr = 2/3, R<sub>g</sub> = 1, γ = 5/3. Left/right states (ρ, u, T) are (1, 0, 1) and (0.125, 0, 0.8), joined by H = [1 + tanh(20x)]/2. No stationary upstream Mach is imposed. Parent and final PINNs are compared with the Shakhov 3200-cell DVM on matching nodes."
         },
         {
           "type": "p",
@@ -687,7 +687,7 @@
         {
           "type": "figure",
           "path": "results/week10_2_kinetic_shock/m2_optimizer_profiles.png",
-          "caption": "Stationary Shakhov Mach 2, illustrated with seed 141001. The curves compare its Adam, SSB and split-half stages with matched DVM. The table below reports the mean of all three individual-seed errors. The last continuation changes accumulated computation and aspects of the numerical objective."
+          "caption": "Stationary Shakhov shock, upstream M₁ = 2, Pr = 2/3, τ = 1/ρ, R<sub>g</sub> = 1, γ = 5/3, ρ₁ = T₁ = 1. Seed 141001 is shown on 81 common core nodes in [−10, 10]. Adam, SSB and split-half stages share a matched DVM; the table averages three seeds. Stages change cumulative work and numerical objective."
         },
         {
           "type": "table",
@@ -735,7 +735,7 @@
         {
           "type": "figure",
           "path": "results/week10_2_kinetic_shock/supervised_bgk_profiles.png",
-          "caption": "BGK teaching common-overlap rescore against the 6400-cell reference, without extrapolation. Legends distinguish equation-trained, five-field supervised S0 and final eight-moment data-assisted profiles. S0 comes from the stage0 export; model170 is a different eight-moment source object."
+          "caption": "Transient BGK tube: t = 0.02, x in [−0.5, 0.5], constant τ = Kn = 1, Pr = 1, R<sub>g</sub> = 1, γ = 5/3. Left/right states (ρ, u, T) are (1, 0, 1) and (0.125, 0, 0.8), joined by H = [1 + tanh(20x)]/2. No stationary upstream Mach is imposed. Equation-trained, five-field S0 and final eight-moment states share 399 common nodes and the 6400-cell DVM. S0 is the stage0 export, not model170."
         },
         {
           "type": "p",
@@ -1015,7 +1015,7 @@
         {
           "type": "figure",
           "path": "results/week10_2_kinetic_shock/pinn_from_scratch_profiles.png",
-          "caption": "Fresh CPU BGK baseline: seed 1729, depth 2, width 24, t = 0.02. Compare initial and trained reconstructed moments with the independent 800-cell DVM at its cell centers, using 48 axial nodes and PINN time order 12. Table H reports nine fields."
+          "caption": "Transient BGK tube: t = 0.02, x in [−0.5, 0.5], constant τ = Kn = 1, Pr = 1, R<sub>g</sub> = 1, γ = 5/3. Left/right states (ρ, u, T) are (1, 0, 1) and (0.125, 0, 0.8), joined by H = [1 + tanh(20x)]/2. No stationary upstream Mach is imposed. Fresh CPU PINN: seed 1729, depth 2, width 24; independent 800-cell DVM at its cell centers, 48 axial velocity nodes and PINN time order 12. Table H reports nine moments."
         },
         {
           "type": "p",

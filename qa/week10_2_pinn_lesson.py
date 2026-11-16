@@ -17,6 +17,13 @@ def append_pinn_cells(md, code):
         Incoming molecules at the left/right boundaries have reservoir states
         $(\rho,u,T)=(1,0,1)$ and $(0.125,0,0.8)$. Outgoing molecules leave freely.
 
+        Here $\gamma=5/3$, BGK has $\Pr=1$, and the source convention is
+        $\tau=\mathrm{Kn}=1$. The initial pressure ratio is 10. Both sides
+        initially rest, so **no stationary upstream Mach number is prescribed**.
+        The local Mach evolves from zero; this is not the separate steady
+        $M_1=2$ Shakhov experiment. These conditions also label the initial,
+        trained and DVM profiles in Table H and the optimizer comparisons in J.
+
         A tanh network maps $(t/t_f,2x)$ to three raw values $(a_\rho,a_u,a_T)$.
         Its source macros are $\rho_\theta=\rho_0\exp[0.5(t/t_f)a_\rho]$,
         $u_\theta=(t/t_f)a_u$, and $T_\theta=T_0\exp[0.5(t/t_f)a_T]$.

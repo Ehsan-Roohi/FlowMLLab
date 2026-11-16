@@ -55,6 +55,25 @@ whole-profile amplitude per field, never a pointwise near-zero denominator.
 
 ## Data roles and limitations
 
+### Physical conditions and Mach-number interpretation
+
+All tube profiles, including `supervised_s0_current` and the fresh CPU lesson,
+use x ∈ [−0.5, 0.5], t = 0.02, constant τ = Kn = 1 in the source scaling,
+R_g = 1 and γ = 5/3. The initial density, velocity and temperature are
+(ρ, u, T) = (1 − H)(1, 0, 1) + H(0.125, 0, 0.8),
+where H(x) = [1 + tanh(20x)]/2. The initial distribution is the local Maxwellian
+of those fields. Boundary reservoirs prescribe only incoming molecules;
+outgoing molecules leave freely. BGK has Pr = 1; Shakhov uses Pr = 2/3.
+
+Thus p_left/p_right = 10 and ρ_left/ρ_right = 8. Both reservoirs start at rest;
+there is **no prescribed stationary upstream Mach number**. Local Mach
+|u|/sqrt(γR_gT) evolves from zero. A moving shock's speed-based Mach would
+require a separate front-tracking measurement. Neither should be confused with
+the stationary M₁ = 2 Shakhov case, whose upstream ρ₁ = T₁ = 1 and
+u₁ = 2 sqrt(5/3), with τ = 1/ρ and Pr = 2/3.
+
+### Reference information used by each method
+
 The data-assisted lineage uses 160 locations for three macro fields and 42
 locations for five moment fields: 690 scalar reference observations. Exact
 locations are retained in `OBSERVATION_LOCATIONS_FROZEN.npz` and accessible

@@ -1,9 +1,9 @@
 {
-  "checked_utc": "2026-11-16T17:14:43.657457+00:00",
+  "checked_utc": "2026-11-16T23:38:01.960498+00:00",
   "software_version": "1.15.0",
   "source_commit": "add5388f7da5f7eace95fff97d34d6ed58b90169",
-  "notebook_sha256": "a9bd168a9166470c449975e62cfaa931d7dc5bf53561f9bbe85370c1c3881db1",
-  "lecture_sha256": "14b774e9bb2e326d8ea7a2e1cc286c56788f7507db24082b6f56807889d8d3b3",
+  "notebook_sha256": "68b2446c532fc37cec12ca90f385454c17bdbc7e657c24be1ed9a8aa57fd3604",
+  "lecture_sha256": "92682e0a50092fc3f67c41a418a2ac531b56fbccc3890da69c8ecd7f1a7e5092",
   "previous_course_base": "3e9417906040319b4a58d15db926320867f0479b",
   "previous_numbered_notebook_blobs_unchanged": 62,
   "focused_tests": {
@@ -34,15 +34,28 @@
   "lecture": {
     "pages": 27,
     "tnr_text_fraction": 1.0,
+    "fonts": [
+      "TimesNewRomanPS-BoldMT",
+      "TimesNewRomanPS-ItalicMT",
+      "TimesNewRomanPSMT"
+    ],
     "text_colors": {
-      "#000000": 41614
+      "#000000": 42334
     },
     "outside_page_text": 0,
     "missing_glyph_candidates": 0,
-    "all_pages_individually_reviewed": true,
-    "odd_pages": "independent trainer reviewer",
-    "even_pages": "independent course reviewer",
-    "root_additional_review": "pages21-27 and all three fresh physical/loss figures"
+    "individually_reviewed_changed_pages": [
+      8,
+      15,
+      16,
+      17,
+      18,
+      26
+    ],
+    "render_dpi": 145,
+    "unchanged_page_text_count": 21,
+    "all_pages_individually_reviewed_in_this_revision": false,
+    "all_changed_pages_individually_reviewed": true
   },
   "new_training_evidence": {
     "configurations": 7,
@@ -59,5 +72,49 @@
   "release_qa": "FLOWMLLAB_RELEASE_QA_PASS",
   "release_qa_limit": "Unrelated Week9 upstream-source check requires an external cache. New Week10.2 source and artifact hashes verified.",
   "local_link_and_inventory_gate": "pass",
-  "hosted_colab_run_all": false
+  "hosted_colab_run_all": false,
+  "last_scientific_execution_validation_utc": "2026-11-16T17:14:43.657457+00:00",
+  "validation_scope": "Current documentation/figure-condition review; original execution and test results below are retained evidence, not rerun claims.",
+  "documentation_update": {
+    "base_commit": "d0ed80267e14bf5a793186fc913cc1a709da1c35",
+    "notebook_changed_markdown_cells": [
+      "w10-2-case-map",
+      "w10-2-transient",
+      "w10-2-steady-study",
+      "w10-2-supervision",
+      "w10-2-fresh-intro"
+    ],
+    "code_and_embedded_outputs_unchanged": true,
+    "code_and_outputs_sha256": "3148d3d4856be445c51e6b944d62ffc2820f849e32a9c1e2db8bed216dd642da",
+    "notebook_and_builder_markdown_match": true,
+    "homepage_image_paths_and_order_preserved": 61,
+    "homepage_headings_preserved": 45,
+    "local_links_in_changed_guides_resolve": true,
+    "science_recomputed": false,
+    "previous_artifact_hashes": {
+      "notebook_sha256": "a9bd168a9166470c449975e62cfaa931d7dc5bf53561f9bbe85370c1c3881db1",
+      "lecture_sha256": "14b774e9bb2e326d8ea7a2e1cc286c56788f7507db24082b6f56807889d8d3b3"
+    },
+    "previous_lecture_review": {
+      "pages": 27,
+      "tnr_text_fraction": 1.0,
+      "text_colors": {
+        "#000000": 41614
+      },
+      "outside_page_text": 0,
+      "missing_glyph_candidates": 0,
+      "all_pages_individually_reviewed": true,
+      "odd_pages": "independent trainer reviewer",
+      "even_pages": "independent course reviewer",
+      "root_additional_review": "pages21-27 and all three fresh physical/loss figures"
+    },
+    "unresolved_source_metadata": {
+      "week07_1": "Matching archive Kn and wall temperature are not established in retained metadata.",
+      "week09_nozzle": "Legacy PIN=100 kPa/POUT=25 kPa input is identified; exact generating input and case Kn remain unresolved.",
+      "week10_1": "Mach 10 argon dimensions/freestream/wall/time verified; no verified case Kn in contour manifest.",
+      "week11_airfoil": "Re1e6 case/time verified; matching Mach, angle and time normalization absent from figure metadata.",
+      "week11_movie_S9": "Preview alone does not establish Mach, Re or angle; separate from still image.",
+      "week11_hydrofoil": "Plunging3_003 and t=1.58 s verified; Re, cavitation number and plunge kinematics absent from compact metadata."
+    }
+  }
 }

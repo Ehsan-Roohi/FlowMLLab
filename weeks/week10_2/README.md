@@ -35,12 +35,24 @@ supports a seven-configuration controlled study.
 
 ![Random-start and trained CPU PINN compared with an independent BGK DVM](../../results/week10_2_kinetic_shock/pinn_from_scratch_profiles.png)
 
+**Transient BGK tube:** t = 0.02, x ∈ [−0.5, 0.5], constant τ = Kn = 1 in
+the source convention, Pr = 1, γ = 5/3 and R_g = 1. Left/right (ρ, u, T) =
+(1, 0, 1)/(0.125, 0, 0.8), smoothed by H = [1 + tanh(20x)]/2; pressure ratio 10.
+**No stationary upstream Mach is prescribed:** both reservoirs initially rest.
+The initial and trained CPU PINNs share the independent 800-cell DVM reference.
+
 This short-time problem has a collision fraction below 2%, so an untrained
 characteristic prediction can already look good. Report the actual change after
 training; low errors alone do not demonstrate that the network learned the whole
 solution. The small CPU model is distinct from the retained research results below.
 
 ![BGK shock-tube density, temperature and signed nonequilibrium moments for matched DVM and three learning routes](../../results/week10_2_kinetic_shock/supervised_bgk_profiles.png)
+
+**Same transient BGK initial states and t = 0.02, τ = Kn = 1, Pr = 1**,
+with a **6400-cell DVM** and **399 common comparison nodes**. There is no imposed
+stationary upstream Mach here either. The notebook separately studies a
+**stationary M₁ = 2 Shakhov shock**, Pr = 2/3 and τ = 1/ρ; it is not either
+of the two figures above.
 
 All displayed methods use the same declared comparison nodes and 6400-cell
 reference. The five-field state can reproduce lower moments while missing

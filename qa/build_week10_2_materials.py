@@ -254,7 +254,7 @@ def build_notebook(execute=False):
         components**. Do not replace this model with a scalar Burgers equation.
     ''')
     code('w10-2-setup', BOOT)
-    md('w10-2-case-map', '''
+    md('w10-2-case-map', r'''
         ## 1. Table A - Case and data-role registry
 
         Check the collision model, relaxation law, time/domain and reference role
@@ -263,6 +263,22 @@ def build_notebook(execute=False):
         grid coordinates and case identities; it does not fit shifts or rescale a
         prediction to improve its score. Read the data-assisted comparison's
         metadata for its explicit common-grid interpolation.
+
+        **Conditions behind the figures.** All cases use a monatomic gas,
+        $R_g=1$, $\gamma=5/3$ and three molecular velocity components.
+
+        | Figure / table | Physical problem | Mach and collision parameters | Reference |
+        | --- | --- | --- | --- |
+        | CPU PINN, H-J | Transient BGK tube, $t=0.02$, $x\in[-0.5,0.5]$ | No prescribed stationary upstream Mach; constant $\tau=\mathrm{Kn}=1$, $\Pr=1$ | Independent CPU DVM, 400/800 cells |
+        | Saved tube profiles, E | Same transient initial states, BGK or Shakhov | No prescribed stationary upstream Mach; $\tau=\mathrm{Kn}=1$; $\Pr=1$ or $2/3$, respectively | Model-matched 3200-cell DVM |
+        | Moment supervision, G | Same transient BGK tube and final time | Same $\tau=\mathrm{Kn}=1$, $\Pr=1$ | 6400-cell DVM, 399 common comparison nodes |
+        | Stationary optimizer path, F | Steady normal shock; 81 retained core nodes, $x\in[-10,10]$ | Upstream $M_1=2$; Shakhov, $\Pr=2/3$, $\tau=1/\rho$ | Matched stationary DVM |
+
+        The source's Kn convention is tied to its nondimensional relaxation law;
+        it is not an imported DSMC mean-free-path estimate. In a transient tube,
+        local $M(t,x)=|u|/\sqrt{\gamma R_gT}$ evolves from zero. A propagating
+        shock's speed-based Mach would require a separate front-tracking measurement;
+        neither quantity should be labelled as a prescribed stationary $M_1$.
     ''')
     code('w10-2-registry', '''
         manifest = ks.load_manifest()
@@ -466,6 +482,12 @@ def build_notebook(execute=False):
         boundary populations are prescribed. This is a smoothed kinetic Riemann
         problem, not a discontinuous Euler Sod result.
 
+        The tuples above mean $(\rho,u,T)$. Thus $p_L/p_R=10$ and
+        $\rho_L/\rho_R=8$; $R_g=1$ and $\gamma=5/3$. Both reservoirs start at
+        rest: **there is no prescribed stationary upstream Mach number**.
+        BGK has $\Pr=1$ and Shakhov uses $\Pr=2/3$. These conditions apply to
+        both profile figures directly below, each with its own 3200-cell DVM.
+
         The maximum collision weight over this short interval is
         $1-e^{-t_f/\tau}\approx0.0198$. Interpret differences as a predominantly
         short-time transport test. Compare each PINN with its own collision-model
@@ -487,6 +509,11 @@ def build_notebook(execute=False):
         ## 7. Table F - Independent stationary Mach-2 runs
 
         These are Shakhov shocks with $\Pr=2/3$ and $\tau=1/\rho$.
+        Upstream $\rho_1=T_1=1$, $R_g=1$, $\gamma=5/3$, and
+        $u_1=M_1\sqrt{\gamma R_gT_1}=2\sqrt{5/3}$. The exported comparison
+        covers 81 core nodes in $[-10,10]$; this is the comparison interval,
+        not a claim about the full solver domain. Unlike Table E, this case
+        **does prescribe upstream $M_1=2$**.
         Three initializations (141001, 141002, 141003) were retained at Adam,
         SSB and split-half SSB stages. The stages change objective/quadrature and
         cumulative work: this is a recorded optimization path, not an equal-budget
@@ -548,6 +575,12 @@ def build_notebook(execute=False):
     ''')
     md('w10-2-supervision', r'''
         ## 8. Table G - Moment supervision and its reference-data roles
+
+        **Figure conditions:** transient BGK tube, $t=0.02$,
+        $x\in[-0.5,0.5]$, constant $\tau=\mathrm{Kn}=1$, $\Pr=1$,
+        $R_g=1$, $\gamma=5/3$. The left/right $(\rho,u,T)$ states are
+        $(1,0,1)$ and $(0.125,0,0.8)$ with the same $H(x)$ smoothing as
+        Section 6. Both start at rest; no stationary upstream Mach is imposed.
 
         Compare the equation-trained BGK result, the five-field state S0 and
         the final eight-moment state against the **same 6400-cell DVM reference**

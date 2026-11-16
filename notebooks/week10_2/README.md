@@ -33,6 +33,15 @@ integral differ from a network that directly predicts every plotted moment.
 
 ## What runs, and what is read
 
+**Physical conditions:** the tube figures use a monatomic gas (R_g = 1, γ = 5/3),
+x ∈ [−0.5, 0.5], t = 0.02, and constant τ = Kn = 1 in the source scaling.
+The initial left/right (ρ, u, T) states are (1, 0, 1) and (0.125, 0, 0.8),
+joined by H = [1 + tanh(20x)]/2. BGK has Pr = 1; the Shakhov tube has Pr = 2/3.
+Both reservoirs start at rest, so **the tubes have no prescribed stationary
+upstream Mach number**. Local Mach evolves with the solution. The separate
+stationary experiment is **M₁ = 2, Shakhov, Pr = 2/3, τ = 1/ρ**, with upstream
+ρ₁ = T₁ = 1. Section 1 puts this distinction beside the figure/table registry.
+
 | Tables | Work | Evidence |
 | --- | --- | --- |
 | A | Verify case identities, coordinates and hashes | Published source extract |
@@ -71,7 +80,9 @@ Zero loss weights are explicitly incomplete-consistency ablations.
 
 Keep model identities, relaxation laws, velocity quadrature and reference windows
 fixed when making a matched comparison. Report both improvements and regressions.
-Use one Mach number per figure and put legends outside the plotted curves.
+For stationary shocks, use one upstream Mach number per figure. For transient
+tubes, state the initial states and time instead of assigning an unmeasured
+shock Mach. Put legends outside the plotted curves.
 
 ## Sources and rebuild
 

@@ -55,16 +55,24 @@ default is retained, and no universal architecture or optimizer ranking is claim
 
 ## Physical figures
 
+**Tube conditions (all transient figures below):** x ∈ [−0.5, 0.5], t = 0.02,
+constant τ = Kn = 1 in the source scaling, monatomic R_g = 1, γ = 5/3.
+Initial left/right (ρ, u, T) = (1, 0, 1)/(0.125, 0, 0.8), with
+H = [1 + tanh(20x)]/2 smoothing and incoming Maxwellian reservoirs.
+Both sides initially rest: **no stationary upstream Mach number is imposed**.
+BGK has Pr = 1; the Shakhov tube uses Pr = 2/3. See the
+[physical definition](../../data/week10_2_kinetic_shock/README.md#physical-conditions-and-mach-number-interpretation).
+
 | Figure | What it shows |
 | --- | --- |
 | [Kinetic model schematic](kinetic_model_schematic.png) | One physical coordinate, three molecular velocity components and two collision targets |
 | [Moment hierarchy](moment_hierarchy.png) | Why the transverse fourth-moment marginal is needed for separate R and Delta |
 | [Homogeneous relaxation](collision_rates.png) | Analytic stress and heat-flux time histories; fresh collision-rate quadrature is checked in Table D |
-| [BGK tube](tube_bgk_profiles.png) | Parent and final equation-trained profiles against their matched BGK DVM |
-| [Shakhov tube](tube_shakhov_profiles.png) | Parent and final profiles against the Shakhov reference, with signed heat flux and stress |
-| [Mach-2 optimizer path](m2_optimizer_profiles.png) | Seed141001 physical profiles and signed discrepancies; Table F retains all three seeds |
-| [Moment-supervision comparison](supervised_bgk_profiles.png) | Equation-trained, five-field S0 and final eight-moment states against the same 6400-cell BGK reference |
-| [Fresh PINN and DVM](pinn_from_scratch_profiles.png) | Random-start and trained CPU BGK predictions against a newly solved independent DVM |
+| [BGK tube](tube_bgk_profiles.png) | Pr = 1 tube above; parent/final equation-trained profiles against the matched 3200-cell BGK DVM |
+| [Shakhov tube](tube_shakhov_profiles.png) | Pr = 2/3 tube above; parent/final profiles against the matched 3200-cell Shakhov DVM |
+| [Mach-2 optimizer path](m2_optimizer_profiles.png) | Stationary M₁ = 2, Shakhov Pr = 2/3, τ = 1/ρ, upstream ρ₁ = T₁ = 1; seed 141001, 81 common core nodes in [−10, 10]; Table F retains all three seeds |
+| [Moment-supervision comparison](supervised_bgk_profiles.png) | Pr = 1 tube above; equation-trained, five-field S0 and final eight-moment states against the same 6400-cell BGK reference, 399 common nodes |
+| [Fresh PINN and DVM](pinn_from_scratch_profiles.png) | Pr = 1 tube above; random-start and trained CPU BGK predictions against the independent 800-cell DVM; 400/800-cell sensitivity is separate |
 | [Fresh optimizer comparison](pinn_optimizer_profiles.png) | Signed heat flux and stress for the declared Adam, L-BFGS and hybrid runs |
 | [Training components](pinn_training_history.png) | Unweighted scaled density/momentum/energy residuals versus actual gradient work and elapsed time |
 
