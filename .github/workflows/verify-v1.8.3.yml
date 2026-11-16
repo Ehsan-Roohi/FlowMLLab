@@ -1,4 +1,4 @@
-name: Verify FlowMLLab v1.8.3
+name: Verify Week 15 retained evidence
 
 on:
   workflow_dispatch:
@@ -49,6 +49,20 @@ jobs:
           from nbclient import NotebookClient
           path = Path('notebooks/week15/W15_Complete_Geometry_Generalization.ipynb')
           notebook = nbformat.read(path, as_version=4)
+          nbformat.validate(notebook)
+          published_cells = [
+              cell for cell in notebook.cells
+              if cell.cell_type == 'code' and cell.source.strip()
+          ]
+          assert published_cells, 'The current notebook has no executable cells'
+          for cell in published_cells:
+              cell.outputs = []
+              cell.execution_count = None
+          # Require the downloaded, hash-verified archive rather than the notebook's preview fallback.
+          evidence_check = nbformat.v4.new_code_cell(
+              "assert FULL_EVIDENCE_AVAILABLE, 'The frozen Week 15 evidence was not loaded'"
+          )
+          notebook.cells.append(evidence_check)
           NotebookClient(
               notebook,
               timeout=600,
@@ -61,8 +75,11 @@ jobs:
               for output in cell.get('outputs', []) if output.output_type == 'error'
           ]
           assert not errors
-          assert sum(cell.cell_type == 'code' for cell in notebook.cells) == 15
-          print('WEEK15_REAL_KERNEL_PASS: 15 code cells')
+          executed_cells = published_cells + [evidence_check]
+          assert [cell.execution_count for cell in executed_cells] == list(
+              range(1, len(executed_cells) + 1)
+          ), 'Every current notebook cell and the evidence check must execute'
+          print(f'WEEK15_REAL_KERNEL_PASS: {len(published_cells)} published code cells + frozen-evidence check')
           PY
       - name: Run release gates
         run: |

@@ -5,6 +5,9 @@ on:
   push:
     paths:
       - ".github/workflows/week8-materials.yml"
+      - "lectures/source/lecture_typography.tex"
+      - "qa/lecture_typography.py"
+      - "qa/LECTURE_TYPOGRAPHY.md"
       - "flowmllab/gas_dynamics.py"
       - "notebooks/week08/make_week8_notebooks.py"
       - "lectures/source/week08_gas_dynamics_sciml.tex"
@@ -33,9 +36,22 @@ jobs:
       - name: Install Python and LaTeX dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install -y latexmk poppler-utils texlive-latex-extra texlive-fonts-recommended
+          sudo apt-get install -y latexmk poppler-utils texlive-latex-extra texlive-fonts-recommended texlive-xetex fontconfig fonts-dejavu-core cabextract curl
           python -m pip install --upgrade pip
-          python -m pip install -e .
+          python -m pip install -e '.[test]'
+
+      - name: Install the recorded Times New Roman build fonts
+        run: |
+          # Exact original installer documented in qa/LECTURE_TYPOGRAPHY.md.
+          font_installer="$RUNNER_TEMP/flowmllab-times32.exe"
+          font_dir="$HOME/.local/share/fonts/msttcorefonts"
+          curl --fail --location --retry 3 --output "$font_installer" \
+            https://downloads.sourceforge.net/corefonts/times32.exe
+          printf '%s  %s\n' 'db56595ec6ef5d3de5c24994f001f03b2a13e37cee27bc25c58f6f43e8f807ab' "$font_installer" | sha256sum --check -
+          mkdir -p "$font_dir"
+          cabextract -q -d "$font_dir" "$font_installer"
+          fc-cache -f "$font_dir"
+          python qa/lecture_typography.py
 
       - name: Rebuild figures and student notebooks
         run: |
@@ -44,14 +60,15 @@ jobs:
           python notebooks/week08/make_week8_notebooks.py
 
       - name: Rebuild Week 8 lecture PDF
-        working-directory: lectures/source
         run: |
-          latexmk -pdf -interaction=nonstopmode -halt-on-error week08_gas_dynamics_sciml.tex
-          cp week08_gas_dynamics_sciml.pdf ../week08_gas_dynamics_sciml.pdf
+          mkdir -p "$RUNNER_TEMP/week8-lecture"
+          latexmk -xelatex -interaction=nonstopmode -halt-on-error \
+            -outdir="$RUNNER_TEMP/week8-lecture" lectures/source/week08_gas_dynamics_sciml.tex
+          cp "$RUNNER_TEMP/week8-lecture/week08_gas_dynamics_sciml.pdf" lectures/week08_gas_dynamics_sciml.pdf
 
       - name: Run software and release gates
         run: |
-          python -m unittest discover -s tests -v
+          python -m pytest -q tests
           python qa/validate_course_release.py
 
       - name: Verify generated teaching artifacts

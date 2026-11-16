@@ -1,0 +1,146 @@
+name: Verify v1.14.0 public archives and citation
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - .github/workflows/finalize-v1.14.0.yml
+      - CITATION.cff
+      - RELEASE_NOTES_v1.14.0.md
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: finalize-flowmllab-v1.14.0
+
+jobs:
+  verify-publication:
+    if: github.repository == 'Ehsan-Roohi/FlowMLLab'
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.12'
+      - name: Verify immutable tag, all release assets and the Zenodo archive
+        run: |
+          python - <<'PY'
+          import hashlib
+          import json
+          import os
+          from pathlib import Path
+          import re
+          import subprocess
+          import tempfile
+          import urllib.request
+          import zipfile
+
+          repo = 'Ehsan-Roohi/FlowMLLab'
+          tag = 'v1.14.0'
+          expected_commit = '85b2762b5e21dc5e5530bb49a017f41ef7961949'
+          commit = subprocess.check_output(['git', 'rev-parse', tag + '^{commit}'], text=True).strip()
+          assert commit == expected_commit, (commit, expected_commit)
+
+          def open_url(url):
+              request = urllib.request.Request(url, headers={'User-Agent': 'FlowMLLab-release-verification/1.14.0'})
+              return urllib.request.urlopen(request, timeout=120)
+
+          def read_json(url):
+              with open_url(url) as response:
+                  return json.load(response)
+
+          release = read_json(f'https://api.github.com/repos/{repo}/releases/tags/{tag}')
+          assert release['tag_name'] == tag and not release['draft'] and not release['prerelease']
+          assets = {item['name']: item for item in release['assets']}
+          assert len(assets) == len(release['assets']) == 37
+          checksum_name = 'release_assets_v1.14.0_sha256.txt'
+          with open_url(assets[checksum_name]['browser_download_url']) as response:
+              checksum_bytes = response.read()
+          ledger = {}
+          for line in checksum_bytes.decode('utf-8').splitlines():
+              digest, name = line.split(None, 1)
+              name = name.lstrip('*')
+              assert re.fullmatch(r'[0-9a-f]{64}', digest) and name not in ledger
+              ledger[name] = digest
+          assert set(ledger) == set(assets) - {checksum_name}
+          verified_assets = {}
+          for name, asset in assets.items():
+              digest = hashlib.sha256()
+              size = 0
+              with open_url(asset['browser_download_url']) as response:
+                  while chunk := response.read(1024 * 1024):
+                      digest.update(chunk)
+                      size += len(chunk)
+              actual = digest.hexdigest()
+              assert size == asset['size'], name
+              assert asset['digest'] == 'sha256:' + actual, name
+              assert actual == (hashlib.sha256(checksum_bytes).hexdigest() if name == checksum_name else ledger[name]), name
+              verified_assets[name] = {'bytes': size, 'sha256': actual}
+          print(f'Verified {len(verified_assets)} public GitHub release files', flush=True)
+
+          record = read_json('https://zenodo.org/api/records/24269205')
+          assert record['doi'] == '10.5281/zenodo.24269205'
+          assert record['metadata']['version'] == '1.14.0'
+          assert record['submitted'] is True and record['state'] == 'done'
+          assert any(item['identifier'] == release['html_url'] for item in record['metadata']['related_identifiers'])
+          assert len(record['files']) == 1
+          archived = record['files'][0]
+          assert archived['key'] == 'Ehsan-Roohi/FlowMLLab-v1.14.0.zip'
+          assert archived['size'] == 1621332019
+          assert archived['checksum'] == 'md5:09184183c5c87733e8248fcf63ccbd3e'
+          sha256, md5 = hashlib.sha256(), hashlib.md5()
+          size = 0
+          checked_members = {}
+          with tempfile.TemporaryDirectory(prefix='flowmllab-zenodo-', dir=os.environ['RUNNER_TEMP']) as directory:
+              archive_path = Path(directory) / 'v1.14.0.zip'
+              with open_url(archived['links']['self']) as response, archive_path.open('wb') as output:
+                  while chunk := response.read(4 * 1024 * 1024):
+                      output.write(chunk)
+                      size += len(chunk)
+                      sha256.update(chunk)
+                      md5.update(chunk)
+              assert size == archived['size']
+              assert 'md5:' + md5.hexdigest() == archived['checksum']
+              with zipfile.ZipFile(archive_path) as archive:
+                  comment = archive.comment.decode('ascii', errors='replace').strip()
+                  if re.fullmatch(r'[0-9a-f]{40}', comment):
+                      assert comment == commit
+                  for path in ['.zenodo.json', 'flowmllab/__init__.py',
+                               'results/cavity_pinn_campaign/evaluation_manifest.json',
+                               'results/cavity_pinn_stratified/evaluation_manifest.json',
+                               'results/deep_cavity_ablation/evaluation_manifest.json',
+                               'notebooks/week04/W4_Lab9_Label_Free_Ghia_PINN_Audit.ipynb',
+                               'notebooks/week13/W13_D5_Controlled_Optimizer_Study.ipynb',
+                               'lectures/week04_cavity_surrogates_deeponet.pdf',
+                               'lectures/week13_rectangular_cavity_pinn.pdf']:
+                      names = [name for name in archive.namelist() if name.endswith('/' + path)]
+                      assert len(names) == 1, (path, names)
+                      content = archive.read(names[0])
+                      expected = subprocess.check_output(['git', 'show', f'{tag}:{path}'])
+                      assert content == expected, path
+                      checked_members[path] = hashlib.sha256(content).hexdigest()
+          receipt = {'tag': tag, 'commit': commit, 'github_release': release['html_url'],
+                     'verified_assets': verified_assets, 'zenodo_doi': record['doi'],
+                     'zenodo_archive': {'bytes': size, 'md5': md5.hexdigest(),
+                                        'sha256': sha256.hexdigest(), 'zip_comment': comment,
+                                        'tag_matched_members': checked_members}}
+          Path('publication_v1.14.0_verified.json').write_text(json.dumps(receipt, indent=2) + '\n')
+          print(json.dumps({'status': 'pass', 'github_assets': len(verified_assets),
+                            'zenodo_archive_bytes': size, 'tag_matched_members': len(checked_members)}))
+          PY
+      - name: Update release citation and protocol links
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh release edit v1.14.0 --notes-file RELEASE_NOTES_v1.14.0.md
+      - uses: actions/upload-artifact@v4
+        with:
+          name: publication-v1.14.0-verification
+          path: publication_v1.14.0_verified.json
+          if-no-files-found: error
+          retention-days: 90

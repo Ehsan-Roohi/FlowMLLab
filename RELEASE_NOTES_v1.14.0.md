@@ -42,7 +42,11 @@ pressure truth. Fresh case-specific PINNs do not demonstrate held-out-Re
 operator generalization.
 
 Protocols:
-[baseline](docs/CAVITY_PINN_CAMPAIGN_PROTOCOL.md),
-[sampling comparison](docs/CAVITY_PINN_STRATIFIED_PROTOCOL.md),
-[D5 optimizer comparison](docs/DEEP_CAVITY_ABLATION_PROTOCOL.md).
+[baseline](https://github.com/Ehsan-Roohi/FlowMLLab/blob/v1.14.0/docs/CAVITY_PINN_CAMPAIGN_PROTOCOL.md),
+[sampling comparison](https://github.com/Ehsan-Roohi/FlowMLLab/blob/v1.14.0/docs/CAVITY_PINN_STRATIFIED_PROTOCOL.md),
+[D5 optimizer comparison](https://github.com/Ehsan-Roohi/FlowMLLab/blob/v1.14.0/docs/DEEP_CAVITY_ABLATION_PROTOCOL.md).
 Numerical and teaching admission receipts are retained under qa/.
+
+Archived software: [Zenodo v1.14.0, DOI 10.5281/zenodo.24269205](https://doi.org/10.5281/zenodo.24269205).
+Release CI executed both new notebooks in fresh Jupyter kernels, passed 401 tests
+(5 optional tests skipped), and checked the independently installed Linux wheel.

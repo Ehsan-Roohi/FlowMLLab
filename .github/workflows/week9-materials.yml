@@ -5,6 +5,9 @@ on:
   push:
     paths:
       - ".github/workflows/week9-materials.yml"
+      - "lectures/source/lecture_typography.tex"
+      - "qa/lecture_typography.py"
+      - "qa/LECTURE_TYPOGRAPHY.md"
       - "flowmllab/mahdavi_deeponet.py"
       - "flowmllab/step_geom_deeponet.py"
       - "notebooks/week09/make_week9_notebooks.py"
@@ -70,22 +73,36 @@ jobs:
       - name: Install PDF build and validation utilities
         run: |
           sudo apt-get update
-          sudo apt-get install -y latexmk poppler-utils texlive-latex-extra texlive-fonts-recommended
+          sudo apt-get install -y latexmk poppler-utils texlive-latex-extra texlive-fonts-recommended texlive-xetex fontconfig fonts-dejavu-core cabextract curl
 
       - name: Install package
         run: |
           python -m pip install --upgrade pip
           python -m pip install -r requirements.txt
-          python -m pip install -e . --no-deps
+          python -m pip install -e '.[test]'
+
+      - name: Install the recorded Times New Roman build fonts
+        run: |
+          # Exact original installer documented in qa/LECTURE_TYPOGRAPHY.md.
+          font_installer="$RUNNER_TEMP/flowmllab-times32.exe"
+          font_dir="$HOME/.local/share/fonts/msttcorefonts"
+          curl --fail --location --retry 3 --output "$font_installer" \
+            https://downloads.sourceforge.net/corefonts/times32.exe
+          printf '%s  %s\n' 'db56595ec6ef5d3de5c24994f001f03b2a13e37cee27bc25c58f6f43e8f807ab' "$font_installer" | sha256sum --check -
+          mkdir -p "$font_dir"
+          cabextract -q -d "$font_dir" "$font_installer"
+          fc-cache -f "$font_dir"
+          python qa/lecture_typography.py
 
       - name: Rebuild student notebooks
         run: python notebooks/week09/make_week9_notebooks.py
 
       - name: Rebuild Week 9 lecture PDF
-        working-directory: lectures/source
         run: |
-          latexmk -pdf -interaction=nonstopmode -halt-on-error week09_rarefied_deeponet_case_studies.tex
-          cp week09_rarefied_deeponet_case_studies.pdf ../week09_rarefied_deeponet_case_studies.pdf
+          mkdir -p "$RUNNER_TEMP/week9-lecture"
+          latexmk -xelatex -interaction=nonstopmode -halt-on-error \
+            -outdir="$RUNNER_TEMP/week9-lecture" lectures/source/week09_rarefied_deeponet_case_studies.tex
+          cp "$RUNNER_TEMP/week9-lecture/week09_rarefied_deeponet_case_studies.pdf" lectures/week09_rarefied_deeponet_case_studies.pdf
 
       - name: Reproduce independent step validation
         run: |
@@ -116,7 +133,7 @@ jobs:
 
       - name: Run software and release gates
         run: |
-          python -m unittest discover -s tests -v
+          python -m pytest -q tests
           flowmllab mahdavi --root . \
             --step-source .external/roohi-step-dnn-mahdavi \
             --require-step-data
