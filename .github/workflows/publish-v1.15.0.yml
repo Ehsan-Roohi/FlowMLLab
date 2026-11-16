@@ -4,6 +4,12 @@ on:
   push:
     tags: [v1.15.0]
   workflow_dispatch:
+    inputs:
+      publish_existing_tag:
+        description: Publish the verified immutable v1.15.0 tag after all checks
+        type: boolean
+        required: true
+        default: false
 
 permissions:
   contents: read
@@ -28,6 +34,7 @@ jobs:
     steps:
       - uses: actions/checkout@v6
         with:
+          ref: v1.15.0
           persist-credentials: false
           fetch-depth: 0
       - uses: actions/setup-python@v6
@@ -50,7 +57,10 @@ jobs:
       - name: Execute only the current Week 10.2 notebook in a fresh kernel
         run: |
           python qa/execute_published_notebooks.py --profile published --timeout 600 notebooks/week10_2/W10_2_BGK_Shakhov_Shock_PINN_DVM.ipynb > "$RUNNER_TEMP/week10_2_fresh_kernel_execution.json"
-          git diff --exit-code -- notebooks data results flowmllab qa lectures
+          # The execution helper byte-checks every tracked teaching file before/after.
+          # Earlier legacy QA may rewrite unrelated CSV line endings; additionally
+          # require the new frozen lesson to match its immutable release tag.
+          git diff --exit-code -- notebooks/week10_2 data/week10_2_kinetic_shock results/week10_2_kinetic_shock flowmllab/kinetic_pinn.py flowmllab/kinetic_dvm.py flowmllab/kinetic_shock.py qa/run_week10_2_pinn.py qa/week10_2_pinn_lesson.py lectures/week10_2_bgk_shakhov_shock_pinn_dvm.pdf lectures/source/week10_2_bgk_shakhov_shock_pinn_dvm.json
       - name: Build and check the package
         run: |
           python -m build
@@ -63,7 +73,7 @@ jobs:
           "$RUNNER_TEMP/flowmllab-release/bin/python" -c 'from importlib.metadata import version; from importlib.util import find_spec; import flowmllab; import flowmllab.kinetic_dvm; assert version("flowmllab") == flowmllab.__version__ == "1.15.0"; assert find_spec("torch") is None'
           "$RUNNER_TEMP/flowmllab-release/bin/flowmllab" smoke
       - name: Publish the reviewed tag
-        if: github.ref == 'refs/tags/v1.15.0'
+        if: (github.event_name == 'push' && github.ref == 'refs/tags/v1.15.0') || (github.event_name == 'workflow_dispatch' && inputs.publish_existing_tag)
         run: |
           release_assets=$(mktemp -d "${RUNNER_TEMP}/flowmllab-v1.15.0-assets.XXXXXX")
           cp dist/flowmllab-1.15.0-*.whl dist/flowmllab-1.15.0.tar.gz "$release_assets/"

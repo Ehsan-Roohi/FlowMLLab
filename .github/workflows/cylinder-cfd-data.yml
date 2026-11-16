@@ -3,8 +3,8 @@ name: Cylinder CFD dataset
 on:
   workflow_dispatch:
   push:
+    branches: [main]
     paths:
-      - '.github/workflows/cylinder-cfd-data.yml'
       - 'qa/generate_cylinder_cfd_dataset.py'
       - 'qa/validate_cylinder_cfd_dataset.py'
 

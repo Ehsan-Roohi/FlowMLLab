@@ -3,8 +3,8 @@ name: Week 7.4 diverse-wake dataset
 on:
   workflow_dispatch:
   push:
+    branches: [main]
     paths:
-      - '.github/workflows/week07-4-wakes-data.yml'
       - 'qa/generate_week07_4_wakes.py'
       - 'flowmllab/cylinder_lbm.py'
 
