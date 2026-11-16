@@ -1,8 +1,8 @@
 """Build only the additive Week 10.2 lesson; never rewrite earlier notebooks.
 
 Scientific source extracts are owned by data/week10_2_kinetic_shock/manifest.json.
-Default notebook execution reads those files and performs bounded CPU moment
-calculations. It does not launch shock training, CFD, or a cluster job.
+Default notebook execution reads those files, performs CPU moment calculations,
+trains a bounded fresh BGK PINN, and runs its independent CPU DVM reference.
 """
 from __future__ import annotations
 
@@ -218,7 +218,7 @@ from IPython.display import display
 from flowmllab import kinetic_shock as ks
 print('Mode: fresh CPU collision/moment calculations + retained PINN/DVM rescoring.')
 print('Data source commit:',ks.UPSTREAM_COMMIT)
-print('No neural training or spatial shock solve is launched by Run All.')
+print('Run All also trains a fresh CPU BGK PINN and solves independent DVM references in Sections 10-12.')
 '''
 
 
@@ -244,9 +244,11 @@ def build_notebook(execute=False):
         jumps, and Week 10 profile validation. The lecture introduces the PINN
         residual; prior completion of the full Week 13 research audit is optional.
 
-        **Two execution modes are kept distinct.** Tables B-D are fresh CPU
-        calculations. Tables E-G re-evaluate saved scientific predictions.
-        Full historical network training is a separate research workflow.
+        **Fresh work and retained research are kept distinct.** Tables B-D are
+        fresh CPU calculations; E-G re-evaluate saved scientific predictions.
+        Sections 10-14 train a new CPU BGK PINN, solve an independent DVM, and let
+        you change depth, optimizer and loss weights (Tables H-J). Full historical
+        paper training remains a separate research workflow.
         All variables are nondimensional, with gas constant $R_g=1$ and
         $\gamma=5/3$. One spatial dimension still has **three molecular velocity
         components**. Do not replace this model with a scalar Burgers equation.
@@ -595,7 +597,7 @@ def build_notebook(execute=False):
         fig.legend(*axes[0].get_legend_handles_labels(),loc='upper center',ncol=2,frameon=False)
         fig.tight_layout(rect=(0,0,1,.82)); plt.show()
         print('These are source-discussed tail regions, not newly selected independent test sets.')
-        print('Elapsed Run All CPU wall time in this environment (includes plotting/imports):',
+        print('Elapsed time for the preceding audit sections (includes plotting/imports):',
               round(time.perf_counter()-START,2),'s')
     ''')
     md('w10-2-exercises', r'''
@@ -649,6 +651,8 @@ def build_notebook(execute=False):
         [pinned PINNs-DVM repository](https://github.com/Ehsan-Roohi/PINNs-DVM/tree/add5388f7da5f7eace95fff97d34d6ed58b90169),
         [extract provenance and reuse notice](../../data/week10_2_kinetic_shock/README.md).
     ''')
+    from qa.week10_2_pinn_lesson import append_pinn_cells
+    append_pinn_cells(md, code)
     doc = nbf.v4.new_notebook(cells=cells, metadata={
         'kernelspec': {'display_name': 'Python 3', 'language': 'python', 'name': 'python3'},
         'language_info': {'name': 'python'}, 'flowmllab_unit': '10.2'})
@@ -667,17 +671,18 @@ def build_notebook(execute=False):
         outputs = [item for cell in doc.cells if cell.cell_type == 'code'
                    for item in cell.get('outputs', [])]
         embedded_figures = sum('image/png' in item.get('data', {}) for item in outputs)
-        if embedded_figures < 6:
-            raise RuntimeError('Executed notebook must retain all six inline figure outputs.')
+        if embedded_figures < 9:
+            raise RuntimeError('Executed notebook must retain the original and fresh-training figures.')
         RESULTS.mkdir(parents=True, exist_ok=True)
         (RESULTS/'execution.json').write_text(json.dumps({
-            'mode': 'fresh CPU collision/moment exercise and retained-profile rescoring',
+            'mode': 'fresh CPU collision/moments, BGK PINN training and independent DVM; retained research rescoring',
             'jupyter_kernel_executed': True, 'seconds_in_build_environment': seconds,
             'code_cells': sum(c.cell_type=='code' for c in cells),
             'embedded_png_figures': embedded_figures,
             'python_version': sys.version.split()[0],
             'upstream_commit': ks.UPSTREAM_COMMIT,
-            'new_shock_solve': False, 'new_neural_training': False}, indent=2)+'\n', encoding='utf-8')
+            'new_shock_solve': True, 'new_neural_training': True,
+            'DVM_used_in_training': False}, indent=2)+'\n', encoding='utf-8')
     BOOK.parent.mkdir(parents=True, exist_ok=True)
     nbf.write(doc, BOOK)
     print('Wrote', BOOK.relative_to(ROOT), 'executed=', execute, flush=True)

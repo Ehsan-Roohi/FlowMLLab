@@ -674,8 +674,16 @@ article's potential or network.
 **[Open Week 10.2: lecture, notebook and guide](weeks/week10_2/README.md)**
 
 **Problem:** Determine whether accurate density and temperature also imply accurate heat flux, stress and fourth-order moments.<br>
-**Computation:** Fresh CPU collision and conservation exercises, followed by rescoring saved BGK/Shakhov PINN and matched DVM profiles.<br>
-**Learning method:** Compare equation-trained and moment-supervised models from [Roohi's kinetic-shock study](https://arxiv.org/abs/2605.29211v2).
+**Computation:** Train a BGK PINN from random weights on CPU and compare its initial and trained fields with an independent DVM. Check reference space/time and velocity sensitivity.<br>
+**Learning method:** Change network depth, optimizer and density/momentum/energy loss weights. Then audit equation-trained and moment-supervised research models from [Roohi's kinetic-shock study](https://arxiv.org/abs/2605.29211v2).
+
+<img src="results/week10_2_kinetic_shock/pinn_from_scratch_profiles.png" width="760" alt="Fresh CPU training: random-start and trained characteristic PINN versus independently solved BGK DVM">
+
+The CPU experiment exposes both the gains and limits of training: exact initial
+and inflow transport already contributes most of this short-time solution.
+DVM targets are excluded from fitting. The twelve investigations cover physical
+diagnostics, network capacity, optimizer work, loss weighting and numerical sensitivity.
+The retained research comparison below is a separate experiment.
 
 <img src="results/week10_2_kinetic_shock/supervised_bgk_profiles.png" width="760" alt="Matched BGK shock-tube density, temperature and signed higher moments: DVM, five-field S0, final eight-moment and equation-trained predictions">
 
@@ -687,7 +695,7 @@ that global error norms can hide. Training/reference roles are documented;
 these saved results are not a new training run or a held-out generalization test.
 
 [Physical profiles and scores](results/week10_2_kinetic_shock/README.md) ·
-[Seven numerical investigations](notebooks/week10_2/README.md) ·
+[Twelve numerical investigations](notebooks/week10_2/README.md) ·
 [Data provenance](data/week10_2_kinetic_shock/README.md)
 
 ### Week 11 — Shock and vortex identification
@@ -1086,8 +1094,8 @@ This fixed Re105 frame-245 example uses 84 total target labels and seed 17. Vort
 
 [Software manuscript archive](manuscript/README.md) · [Citation](CITATION.cff) · [Data provenance and reuse](DATA_PROVENANCE.md) · [Contributing](CONTRIBUTING.md)
 
-Current release: **v1.14.1**
+Current release: **v1.15.0**
 
-[GitHub release v1.14.1](https://github.com/Ehsan-Roohi/FlowMLLab/releases/tag/v1.14.1) · [Zenodo v1.14.1 archive](https://doi.org/10.5281/zenodo.24281118) · [Release history](https://github.com/Ehsan-Roohi/FlowMLLab/releases)
+[GitHub release v1.15.0](https://github.com/Ehsan-Roohi/FlowMLLab/releases/tag/v1.15.0) · [Zenodo archive (all versions)](https://doi.org/10.5281/zenodo.22074169) · [Release history](https://github.com/Ehsan-Roohi/FlowMLLab/releases)
 
 **Ehsan Roohi** · University of Massachusetts Amherst · [roohie@umass.edu](mailto:roohie@umass.edu)

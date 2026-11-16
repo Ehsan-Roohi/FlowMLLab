@@ -21,6 +21,15 @@ EXPECTED_DATA_SHA256 = "09b96b744ee4d18126d8dcc92feb60e128774a1b4d41bb3d8c90a63c
 
 REQUIRED = [
     "flowmllab/kinetic_shock.py",
+    "flowmllab/kinetic_pinn.py",
+    "flowmllab/kinetic_dvm.py",
+    "qa/week10_2_pinn_lesson.py",
+    "qa/run_week10_2_pinn.py",
+    "results/week10_2_kinetic_shock/pinn_cpu_report.json",
+    "results/week10_2_kinetic_shock/pinn_training_protocol.json",
+    "results/week10_2_kinetic_shock/pinn_cpu_metrics.csv",
+    "results/week10_2_kinetic_shock/pinn_cpu_profiles.npz",
+    "results/week10_2_kinetic_shock/pinn_cpu_states.npz",
     "data/week10_2_kinetic_shock/manifest.json",
     "data/week10_2_kinetic_shock/README.md",
     "notebooks/week10_2/W10_2_BGK_Shakhov_Shock_PINN_DVM.ipynb",
@@ -515,14 +524,25 @@ def validate_notebooks() -> tuple[int, int]:
             code = [cell for cell in cells if cell.get('cell_type') == 'code']
             assert all(cell.get('execution_count') is not None for cell in code), relative
             outputs = [item for cell in code for item in cell.get('outputs', [])]
-            assert sum('image/png' in item.get('data', {}) for item in outputs) >= 6, relative
+            assert sum('image/png' in item.get('data', {}) for item in outputs) >= 9, relative
             assert all(item.get('output_type') != 'error' for item in outputs), relative
             assert not any('FigureCanvasAgg is non-interactive' in ''.join(item.get('text', []))
                            for item in outputs), relative
             for fragment in ('2605.29211v2', 'ks.collision_experiment', 'ks.transverse_counterexample',
                              'five_field_S0', 'common-overlap nodes', '400-cell', '6400-cell',
-                             'No neural training or spatial shock solve is launched by Run All.'):
+                             'kp.train(config)', 'LOSS_WEIGHTS', 'DEPTH = 2',
+                             'kd.solve(kd.DVMConfig', 'Table H', 'Table I',
+                             'RUN_CONTROLLED_STUDY = False'):
                 assert fragment in full_source, (relative, fragment)
+            receipt = json.loads((ROOT/'results/week10_2_kinetic_shock/execution.json').read_text())
+            assert receipt['new_shock_solve'] and receipt['new_neural_training'], relative
+            assert receipt['DVM_used_in_training'] is False, relative
+            report = json.loads((ROOT/'results/week10_2_kinetic_shock/pinn_cpu_report.json').read_text())
+            assert report['DVM_data_used_for_training_or_model_selection'] is False, relative
+            assert len(report['runs']) == 7, relative
+            for filename, expected in report['artifact_sha256'].items():
+                artifact = ROOT/'results/week10_2_kinetic_shock'/filename
+                assert hashlib.sha256(artifact.read_bytes()).hexdigest() == expected, filename
         week01_3_lab = relative == 'notebooks/week01_3/W1_3_Keras_Optimizers.ipynb'
         if week01_3_lab:
             code = [cell for cell in cells if cell.get("cell_type") == "code"]

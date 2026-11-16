@@ -12,13 +12,14 @@ and a small, hash-verified extract from its public scientific repository.
 
 ## Before running
 
-Use Python 3.10-3.13 and the core FlowMLLab environment:
+Use Python 3.10-3.13 and the CPU PyTorch teaching extra:
 
 ```sh
-python -m pip install -e .
+python -m pip install "torch>=2.5,<3" --index-url https://download.pytorch.org/whl/cpu
+python -m pip install -e ".[kinetic-pinn]"
 ```
 
-Run the notebook from top to bottom on CPU. It needs NumPy, pandas and Matplotlib;
+Run the notebook from top to bottom on CPU. It uses NumPy, pandas, Matplotlib and PyTorch;
 it does not need a GPU or a neural-network checkpoint. A fresh Colab session uses
 a sparse clone of the package and this module's data, then installs the package
 constraints. Existing edited checkouts are preserved. Local fresh-kernel execution
@@ -41,18 +42,32 @@ integral differ from a network that directly predicts every plotted moment.
 | E | Compare transient BGK and Shakhov profiles with their matched DVM | Saved PINN predictions, freshly rescored |
 | F | Compare three independent Mach-2 initializations and optimizer stages | Saved PINN/DVM profiles and source assessment limits |
 | G | Compare equation-trained, five-field and eight-moment BGK states | A declared common-overlap reference grid and explicit data roles |
+| H | Train a new CPU BGK PINN; compare initial and trained nine-moment profiles | Random weights, physics-only loss and an independently computed DVM |
+| I | Refine the DVM in space/time and velocity; reevaluate frozen PINN quadrature | Fresh numerical sensitivity, no retraining or convergence-order claim |
+| J | Change depth, optimizer and energy-loss weight in seven declared configurations | Optional fresh sweep, with published protocol and measured results available |
 
-The bounded collision exercise is not a new spatial shock solve. Full historical
-training and reference-generation budgets belong to the upstream research
-workflow. The source includes failed criteria; a saved final state is not an
-automatic convergence certificate.
+Run All trains one small BGK model from scratch with two 24-neuron hidden layers,
+100 Adam updates followed by 20 L-BFGS outer steps, and a 120-second training
+ceiling. It solves independent 400/800-cell references and checks velocity order
+48/64. The seven-model sweep is optional. Actual work, stop reason and CPU timing
+are printed; first-use imports and hardware affect runtime. Full historical
+training budgets remain separate. A saved final state is not an automatic
+convergence certificate.
 
 ## Student work
 
-Seven specific investigations finish the notebook. They require parameter sweeps,
+Seven research-audit and five fresh-training investigations finish their respective
+sections. They require parameter sweeps,
 measured tables, signed physical profiles, seed comparisons, density-thickness
 sampling sensitivity, and an audit of which reference information was used during
-training and selection. Each exercise names its corresponding table A-G.
+training and selection. Each exercise names its corresponding table A-J.
+
+In Section 10, edit `DEPTH`, `WIDTH`, `OPTIMIZER`, `LOSS_WEIGHTS`, point count and
+training budget, then rerun from the training cell. `kp.train(config)` always
+creates a fresh initialization; it never resumes a previous fit. The independent
+physics audit is not used for updates. DVM scores are computed after fitting;
+using them to choose hyperparameters turns that reference into development data.
+Zero loss weights are explicitly incomplete-consistency ablations.
 
 Keep model identities, relaxation laws, velocity quadrature and reference windows
 fixed when making a matched comparison. Report both improvements and regressions.
@@ -63,6 +78,8 @@ Use one Mach number per figure and put legends outside the plotted curves.
 [Data provenance and reuse notice](../../data/week10_2_kinetic_shock/README.md) ·
 [Results and metrics](../../results/week10_2_kinetic_shock/README.md) ·
 [Teaching implementation](../../flowmllab/kinetic_shock.py) ·
+[Fresh PINN](../../flowmllab/kinetic_pinn.py) ·
+[Independent DVM](../../flowmllab/kinetic_dvm.py) ·
 [Bounded tests](../../tests/test_kinetic_shock.py)
 
 The additive builder [qa/build_week10_2_materials.py](../../qa/build_week10_2_materials.py)

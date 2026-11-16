@@ -22,7 +22,7 @@
         },
         {
           "type": "p",
-          "text": "The companion notebook combines <b>fresh CPU quadrature experiments</b> with <b>retained research shock predictions</b>. Its tables have fixed roles: A identifies cases and data; B checks steady jumps and fluxes; C tests moment identifiability; D audits collision quadrature; E compares transient profiles; F examines stationary optimization stages; G distinguishes three equation-trained or data-assisted constructions."
+          "text": "The companion notebook combines <b>fresh CPU quadrature experiments</b>, <b>retained research shock predictions</b> and a <b>new PINN trained from random initialization</b>. Tables A–G identify the retained cases, check jumps and moment information, audit quadrature and compare research profiles. The added training section fits a small BGK model and compares its reconstructed physical fields with a separately computed DVM reference."
         },
         {
           "type": "p",
@@ -497,7 +497,7 @@
         },
         {
           "type": "p",
-          "text": "This lesson makes no fresh timing or speedup claim. Retained research cost and measured classroom execution time describe different computations."
+          "text": "Retained research cost and newly measured CPU teaching cost describe different computations. The new training section records its own work and stop reason; a short classroom run does not establish a research-scale speedup."
         }
       ]
     },
@@ -793,6 +793,268 @@
         {
           "type": "p",
           "text": "The manifest records selected hashes, transformations and reference identities. The paper’s CC BY 4.0 status differs from the repository’s unspecified software license. This author-requested adaptation retains attribution and assigns no blanket new license to upstream code or data."
+        }
+      ]
+    },
+    {
+      "title": "Train a kinetic PINN from random initialization",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "The added exercise trains a new neural model on the CPU. It loads no saved research weights. The physical case is the transient BGK tube already defined on page 8: τ = 1 and t<sub>f</sub> = 0.02. The initial condition is a single local Maxwellian built from the smooth density and temperature profiles, not a mixture of the left and right Maxwellians."
+        },
+        {
+          "type": "p",
+          "text": "The network takes normalized time and position and predicts the density, streamwise velocity and temperature of a collision source. Positive density and temperature lifting follow the construction on page 9. The trained observables are then integrated from the characteristic reconstruction. A source-network temperature and the temperature of its reconstructed distribution are distinct quantities until self-consistency is satisfied."
+        },
+        {
+          "type": "table",
+          "headers": [
+            "Control",
+            "Default and available changes"
+          ],
+          "rows": [
+            [
+              "Architecture",
+              "2 tanh hidden layers, width 24; 747 parameters; seed 1729"
+            ],
+            [
+              "Optimizer",
+              "adam, lbfgs or adam_lbfgs; default 100 Adam + 20 L-BFGS outer steps"
+            ],
+            [
+              "Learning rates",
+              "Adam 0.003; L-BFGS 1 with strong-Wolfe search"
+            ],
+            [
+              "Loss weights",
+              "Density, momentum, energy: (1, 1, 1)"
+            ],
+            [
+              "Quadrature",
+              "32 axial nodes on [−7, 7]; 8 characteristic-time nodes"
+            ],
+            [
+              "Collocation",
+              "64 fixed points; a separate frozen audit set"
+            ],
+            [
+              "Work and arithmetic",
+              "Float64 CPU, one thread; 120-second safeguard"
+            ]
+          ],
+          "widths": [
+            0.29,
+            0.71
+          ]
+        },
+        {
+          "type": "p",
+          "text": "The notebook builds a <b>PINNConfig</b>, calls <b>train</b> and evaluates the initial and trained states with <b>evaluate</b>. Freeze the configuration before comparison, train and freeze the weights, then evaluate against DVM. DVM fields do not enter the objective or determine the default settings. An inspected benchmark used to revise choices is no longer an untouched blind assessment."
+        },
+        {
+          "type": "p",
+          "text": "This is a fresh teaching computation with its own discretization and budget. It is not a rerun of the full historical training campaign or a newly trained Shakhov network."
+        }
+      ]
+    },
+    {
+      "title": "Characteristics build transport, initial data and inflow into the model",
+      "blocks": [
+        {
+          "type": "equation",
+          "latex": "g_{M,\\theta}=\\frac{\\rho_\\theta}{\\sqrt{2\\pi T_\\theta}}\\exp\\left[-\\frac{(v-u_\\theta)^2}{2T_\\theta}\\right]",
+          "explanation": "The learned source fields define a one-dimensional Maxwellian reduction at each point on a molecular trajectory."
+        },
+        {
+          "type": "equation",
+          "latex": "\\mathbf{z}_{M,\\theta}=(g_{M,\\theta},\\,2T_\\theta g_{M,\\theta},\\,8T_\\theta^2g_{M,\\theta})",
+          "explanation": "The three components are the BGK source reductions for g, h and k. Transverse Gaussian integration is analytic over the infinite transverse plane."
+        },
+        {
+          "type": "equation",
+          "latex": "\\mathbf{z}_\\theta=e^{-\\ell/\\tau}\\mathbf{z}_{\\mathrm{in}}+\\frac{1}{\\tau}\\int_{t-\\ell}^{t}e^{-(t-s)/\\tau}\\mathbf{z}_{M,\\theta}(s)\\,\\mathrm{d}s",
+          "explanation": "Here z = (g,h,k), and the source is sampled at x(s) = x − v(t − s). Positive Gauss–Legendre time weights approximate the source integral."
+        },
+        {
+          "type": "p",
+          "text": "Trace backward to the first initial-plane or incoming-boundary intersection. Positive velocities can reach the left reservoir; negative velocities can reach the right reservoir. A zero velocity reaches the initial plane. The reservoir supplies the exact incoming Maxwellian reductions. Outgoing populations are not overwritten with prescribed boundary macroscopic fields."
+        },
+        {
+          "type": "p",
+          "text": "Initial and inflow data are enforced at the distribution level. Their numerical moments still have finite velocity-quadrature error. Do not claim that hard distribution data make all discrete moments exact."
+        },
+        {
+          "type": "p",
+          "text": "This is a neural integral-equation PINN: self-consistency makes the learned Maxwellian source a source for the nonlinear BGK equation. Autograd differentiates through the quadrature with respect to network weights; no time or position derivatives are needed in this training objective."
+        },
+        {
+          "type": "p",
+          "text": "Reconstruct k along the same characteristics. Setting k = 8T<super>2</super>g using the final reconstructed temperature would impose a false transverse closure on a mixture of contributions with different source temperatures. All nine reported observables come from reconstructed g, h and k."
+        }
+      ]
+    },
+    {
+      "title": "The loss learns a self-consistent collision source",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "At a collocation point, reconstruct g and h by characteristic integration and evaluate their axial velocity quadrature. Compare the resulting conserved moments with the moments of the network source. The residuals below use quadrature weights w<sub>j</sub> and fixed upstream scales."
+        },
+        {
+          "type": "equation",
+          "latex": "r_\\rho=\\frac{\\rho_\\theta-\\sum_jw_jg_j}{\\rho_L}",
+          "explanation": "The density residual compares the source with reconstructed mass."
+        },
+        {
+          "type": "equation",
+          "latex": "r_p=\\frac{\\rho_\\theta u_\\theta-\\sum_jw_jv_jg_j}{\\rho_L\\sqrt{T_L}}",
+          "explanation": "The momentum residual uses momentum, not a separately fitted velocity label."
+        },
+        {
+          "type": "equation",
+          "latex": "r_E=\\frac{\\frac{1}{2}\\rho_\\theta(u_\\theta^2+3T_\\theta)-\\frac{1}{2}\\sum_jw_j(v_j^2g_j+h_j)}{\\rho_LT_L}",
+          "explanation": "The total-energy residual includes longitudinal and transverse kinetic energy. The three upstream scales are all one in this nondimensional case."
+        },
+        {
+          "type": "equation",
+          "latex": "\\mathcal{L}=\\lambda_\\rho\\langle r_\\rho^2\\rangle+\\lambda_p\\langle r_p^2\\rangle+\\lambda_E\\langle r_E^2\\rangle",
+          "explanation": "The brackets denote an average over the fixed collocation set; the three nonnegative weights are student controls."
+        },
+        {
+          "type": "p",
+          "text": "The 64 seeded points put half the positions in the central interval [−0.15, 0.15] and half across [−0.5, 0.5]. One quarter of times equal t<sub>f</sub>; the rest stratify the open time interval. Points remain fixed. The loss uses no DVM normalization, time division or supervised moment labels. Initial and incoming data enter through reconstruction, not penalty terms."
+        },
+        {
+          "type": "p",
+          "text": "Record the three unweighted component losses as well as the weighted sum. A zero weight is an ablation that omits one consistency equation, not complete BGK closure. Increasing a weight can reduce its residual while another component or a derived heat-flux/stress profile deteriorates. Weight changes also alter optimization scales; a smaller weighted total alone is not a fair accuracy ranking."
+        },
+        {
+          "type": "p",
+          "text": "Evaluate the frozen model on a separate final-time grid and inspect reconstructed moments. A small training residual is neither a guarantee of small higher-moment error nor proof that the velocity and time quadratures are resolved."
+        }
+      ]
+    },
+    {
+      "title": "Adam, L-BFGS and a controlled hybrid comparison",
+      "blocks": [
+        {
+          "type": "equation",
+          "latex": "\\mathbf{m}_k=\\beta_1\\mathbf{m}_{k-1}+(1-\\beta_1)\\mathbf{g}_k,\\quad \\mathbf{v}_k=\\beta_2\\mathbf{v}_{k-1}+(1-\\beta_2)\\mathbf{g}_k^2",
+          "explanation": "Adam keeps moving estimates of the gradient and its elementwise square; g<sub>k</sub> is the gradient of the weighted physics loss."
+        },
+        {
+          "type": "equation",
+          "latex": "\\theta_{k+1}=\\theta_k-\\eta\\frac{\\widehat{\\mathbf{m}}_k}{\\sqrt{\\widehat{\\mathbf{v}}_k}+\\epsilon}",
+          "explanation": "The hats divide the moving estimates by 1 − β<sub>1</sub><super>k</super> and 1 − β<sub>2</sub><super>k</super>, respectively. The learning rate η controls the update scale."
+        },
+        {
+          "type": "equation",
+          "latex": "\\mathbf{p}_k=-\\mathbf{H}_k\\mathbf{g}_k,\\qquad \\theta_{k+1}=\\theta_k+\\alpha_k\\mathbf{p}_k",
+          "explanation": "L-BFGS approximates inverse-curvature action from recent parameter and gradient changes; it does not form the full dense Hessian."
+        },
+        {
+          "type": "p",
+          "text": "A strong-Wolfe search requires sufficient decrease relative to the initial directional derivative, and bounds the magnitude of the new directional derivative by a chosen fraction of its initial magnitude. It may test several step lengths. Each closure must use identical collocation points, quadrature and weights: resampling changes the objective being searched."
+        },
+        {
+          "type": "p",
+          "text": "The hybrid performs Adam and then L-BFGS on the fixed objective. It is not automatically more accurate or cheaper. Compare initialized copies of the same architecture with the same seed and points; record completed outer updates, closure evaluations, elapsed time and stop reason. A completed L-BFGS call can have zero parameter change or require several gradient evaluations."
+        },
+        {
+          "type": "p",
+          "text": "For depth or width experiments, record the changed parameter count. The same random seed across different architectures is reproducible initialization, not identical starting weights. Compare more than one seed before asserting a robust capacity effect."
+        },
+        {
+          "type": "p",
+          "text": "Keep the physical case and reference access fixed. A step cap or elapsed-time stop is a budget outcome, not evidence of convergence. In this short-time problem, hardwired transport can already give accurate initial profiles; compare both the initialized and trained predictions."
+        }
+      ]
+    },
+    {
+      "title": "An independent finite-volume BGK reference",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "The new NumPy DVM evolves g, h and k on uniform physical cells at each axial velocity. The notebook uses 400 and 800 cells with 48 Gauss–Legendre velocity nodes on [−7, 7], plus an 800-cell, 64-node check. Analytic transverse integration matches the fresh PINN; the paper’s finite rectangular velocity reference remains separately labelled."
+        },
+        {
+          "type": "equation",
+          "latex": "\\mathcal{L}_{i,j}(\\mathbf{z})=-\\frac{\\mathbf{F}_{i+1/2,j}-\\mathbf{F}_{i-1/2,j}}{\\Delta x}+\\frac{\\mathbf{z}_{M,i,j}-\\mathbf{z}_{i,j}}{\\tau}",
+          "explanation": "Here z = (g,h,k). The finite-volume operator combines face transport with a local Maxwellian relaxation source."
+        },
+        {
+          "type": "p",
+          "text": "MUSCL reconstruction uses minmod slopes: keep the smaller magnitude and common sign when neighboring differences have the same sign; otherwise use zero slope. Upwind flux selects the left face state for positive velocity and the right state for negative velocity. Incoming boundary faces receive reservoir Maxwellians; outgoing populations use interior data."
+        },
+        {
+          "type": "equation",
+          "latex": "\\mathbf{z}^{(1)}=\\mathbf{z}^{n}+\\Delta t\\,\\mathcal{L}(\\mathbf{z}^{n})",
+          "explanation": "The first SSPRK2 stage is a forward-Euler predictor."
+        },
+        {
+          "type": "equation",
+          "latex": "\\mathbf{z}^{n+1}=\\frac{1}{2}\\mathbf{z}^{n}+\\frac{1}{2}\\left[\\mathbf{z}^{(1)}+\\Delta t\\,\\mathcal{L}(\\mathbf{z}^{(1)})\\right]",
+          "explanation": "Recompute density, velocity, temperature and all three Maxwellian reductions at both stages. Freezing the first-stage target changes this algorithm."
+        },
+        {
+          "type": "equation",
+          "latex": "\\Delta t\\leq\\frac{\\mathrm{CFL}}{\\max_j|v_j|/\\Delta x+1/\\tau}",
+          "explanation": "The implementation uses a combined transport/collision restriction and shortens the step to end exactly at the requested final time."
+        },
+        {
+          "type": "p",
+          "text": "Track stage minima of g, h, k, density and temperature; apply no clipping. Positive separate reductions alone do not establish a realizable full distribution: also inspect the necessary transverse condition gk ≥ h<super>2</super>. The saved balance separates boundary flux from the finite-quadrature collision defect, rather than silently correcting that defect.",
+          "explanation": "Use CFL = 0.4. The combined transport/collision restriction is shortened as needed to end exactly at t = 0.02."
+        }
+      ]
+    },
+    {
+      "title": "Read the initial, trained and DVM profiles together",
+      "blocks": [
+        {
+          "type": "figure",
+          "path": "results/week10_2_kinetic_shock/pinn_from_scratch_profiles.png",
+          "caption": "Fresh CPU BGK baseline: seed 1729, depth 2, width 24, t = 0.02. Compare initial and trained reconstructed moments with the independent 800-cell DVM at its cell centers, using 48 axial nodes and PINN time order 12. Table H reports nine fields."
+        },
+        {
+          "type": "p",
+          "text": "The collision weight is at most 1 − exp(−0.02) = 0.0198013. Much short-time transport is already prescribed, so retain the initialized baseline."
+        },
+        {
+          "type": "p",
+          "text": "The measured training loss fell from 0.003030 to 0.0008090, and the unused physics-audit loss from 0.003488 to 0.0009058. Relative L<sub>2</sub> errors improved for heat flux (0.3011 → 0.2364%) and stress (0.9829 → 0.5510%), while velocity (1.0029 → 1.3684%) and temperature (0.01297 → 0.01342%) worsened."
+        },
+        {
+          "type": "p",
+          "text": "Table I tests DVM 400-to-800 cells, DVM velocity order 48-to-64, and frozen-PINN quadrature 48 × 12 to 64 × 16. The fixed-CFL spatial/time changes are 0.1213% for heat flux and 0.1374% for stress. These are sensitivity measures, not uncertainty bounds; this check alone does not establish that small training gains are numerically resolved. Restrict finer DVM distributions before forming coarse-cell moments."
+        },
+        {
+          "type": "p",
+          "text": "Table J retains all seven predeclared configurations. Depth 3 gave heat-flux/stress errors of 0.1095%/0.1746%, but the two-layer baseline remains the default declared before DVM scoring. One seed and unequal work do not establish a generally best architecture or optimizer."
+        }
+      ]
+    },
+    {
+      "title": "Five further investigations: train, measure and interpret",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "Continue the original seven investigations with tasks 8–12. State which results you freshly generated and which published runs you inspected. Preserve the physical case, initial and final states, configurations, seeds, hashes, work counts and stop reasons."
+        },
+        {
+          "type": "list",
+          "items": [
+            "<b>8. Depth — Tables H/J.</b> Train depths 1, 2 and 3 at width 24 with seed 1729 and the same physics points. Report parameter counts, initial/final errors, training/audit residuals and work. Overlay signed heat flux and stress with DVM. Repeat with seed 1730 before claiming a depth advantage.",
+            "<b>9. Optimizer — Tables H/J.</b> Compare 120 Adam updates, 40 L-BFGS outer steps and the 100 + 20 hybrid. Verify identical initialization and collocation hashes. Plot component losses against gradient calls and time; include setup, update and diagnostic costs. These budgets are unequal work. Repeat under a closer common work constraint before claiming efficiency.",
+            "<b>10. Weights — Tables H/J.</b> Set the energy weight to 0.1, 1 and 10 with density/momentum weights fixed at 1. Report unweighted residuals, the weighted sum, and signed q, σ and Δ profiles/errors. Identify improvements and regressions. Optional zero energy weight is incomplete consistency, not the original BGK problem.",
+            "<b>11. Sampling and quadrature — Tables H/I.</b> Compare 32, 64 and 128 collocation points at fixed depth/seed. Then change velocity or characteristic-time quadrature separately, reevaluating the same frozen model to separate integration from fitting. Report DVM spatial/time and velocity sensitivity before attributing a small gain to training.",
+            "<b>12. Did the network learn? — Tables H/I.</b> Quantify initial-to-trained changes in all nine fields and independent physics-audit residuals. Explain the small collision fraction at t<sub>f</sub>/τ = 0.02. Use signed profiles to defend one improvement and one limitation."
+          ]
+        },
+        {
+          "type": "p",
+          "text": "Two spatial resolutions at fixed CFL test combined spatial/time sensitivity; minmod prevents assuming a factor-four reduction. Keep failed cases. Disclose any later DVM-based tuning as development use. This short BGK experiment does not establish long-time, stationary or Shakhov performance."
         }
       ]
     }

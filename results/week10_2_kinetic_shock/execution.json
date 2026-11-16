@@ -1,11 +1,12 @@
 {
-  "mode": "fresh CPU collision/moment exercise and retained-profile rescoring",
+  "mode": "fresh CPU collision/moments, BGK PINN training and independent DVM; retained research rescoring",
   "jupyter_kernel_executed": true,
-  "seconds_in_build_environment": 124.52173329999641,
-  "code_cells": 14,
+  "seconds_in_build_environment": 94.3113949000035,
+  "code_cells": 22,
+  "embedded_png_figures": 9,
+  "python_version": "3.12.14",
   "upstream_commit": "add5388f7da5f7eace95fff97d34d6ed58b90169",
-  "new_shock_solve": false,
-  "new_neural_training": false,
-  "embedded_png_figures": 6,
-  "python_version": "3.12.14"
+  "new_shock_solve": true,
+  "new_neural_training": true,
+  "DVM_used_in_training": false
 }

@@ -1,51 +1,63 @@
 {
-  "checked_utc": "2026-11-16T16:00:09.532996+00:00",
+  "checked_utc": "2026-11-16T17:14:43.657457+00:00",
+  "software_version": "1.15.0",
   "source_commit": "add5388f7da5f7eace95fff97d34d6ed58b90169",
-  "notebook_sha256": "5620b3d3dab3efc2efa86551beee071ebac6bffd9dc3a799e9016d96372cd57c",
-  "lecture_sha256": "a3cec3cefb9b375dbd2cc4522ff98a942d77cc07c5167984afd196389da008fa",
-  "previous_course_base": "c9b0daf69e563c7b1d1bc2fe61b9b2b5d9c79ef2",
+  "notebook_sha256": "a9bd168a9166470c449975e62cfaa931d7dc5bf53561f9bbe85370c1c3881db1",
+  "lecture_sha256": "14b774e9bb2e326d8ea7a2e1cc286c56788f7507db24082b6f56807889d8d3b3",
+  "previous_course_base": "3e9417906040319b4a58d15db926320867f0479b",
   "previous_numbered_notebook_blobs_unchanged": 62,
   "focused_tests": {
-    "passed": 27,
+    "passed": 57,
     "failed": 0,
     "scope": [
+      "tests/test_kinetic_pinn.py",
+      "tests/test_kinetic_dvm.py",
       "tests/test_kinetic_shock.py",
       "tests/test_course_navigation.py",
-      "tests/test_course_release_summary.py"
-    ]
+      "tests/test_course_release_summary.py",
+      "qa/test_release_integrity.py"
+    ],
+    "note": "20 new trainer physics/work tests passed independently;37 DVM/data/navigation/release tests passed in the integrated run. Optional Torch import guard preserves core-only testing."
   },
   "new_notebook": {
-    "mode": "fresh CPU collision/moment exercise and retained-profile rescoring",
+    "mode": "fresh CPU collision/moments, BGK PINN training and independent DVM; retained research rescoring",
     "jupyter_kernel_executed": true,
-    "seconds_in_build_environment": 124.52173329999641,
-    "code_cells": 14,
+    "seconds_in_build_environment": 94.3113949000035,
+    "code_cells": 22,
+    "embedded_png_figures": 9,
+    "python_version": "3.12.14",
     "upstream_commit": "add5388f7da5f7eace95fff97d34d6ed58b90169",
-    "new_shock_solve": false,
-    "new_neural_training": false,
-    "embedded_png_figures": 6,
-    "python_version": "3.12.14"
+    "new_shock_solve": true,
+    "new_neural_training": true,
+    "DVM_used_in_training": false
   },
   "lecture": {
-    "pages": 20,
+    "pages": 27,
     "tnr_text_fraction": 1.0,
     "text_colors": {
-      "#000000": 29073
+      "#000000": 41614
     },
     "outside_page_text": 0,
     "missing_glyph_candidates": 0,
     "all_pages_individually_reviewed": true,
-    "odd_pages": "independent course reviewer",
-    "even_pages": "independent scientific reviewer",
-    "final_renderer_padding_verified": true
+    "odd_pages": "independent trainer reviewer",
+    "even_pages": "independent course reviewer",
+    "root_additional_review": "pages21-27 and all three fresh physical/loss figures"
   },
-  "saved_figures_individually_reviewed": 7,
-  "metric_csv_independent_recalculation": {
-    "rows": 126,
-    "maximum_rounding_difference": 3.95e-10
+  "new_training_evidence": {
+    "configurations": 7,
+    "all_requested_updates_completed": true,
+    "frozen_source_hashes_verified": true,
+    "DVM_used_in_fitting_or_selection": false,
+    "report_sha256": "73c4d15f160bb810d262b6ca3d625b6634561801939bfe7bfb79549d6055ccdc",
+    "metrics_sha256": "6ebfeac62a64db3ef016444880d20400568b01f1b98715bfa452009e6c94dce0"
+  },
+  "saved_figures_reviewed": {
+    "previous_retained": 7,
+    "fresh": 3
   },
   "release_qa": "FLOWMLLAB_RELEASE_QA_PASS",
-  "release_qa_limit": "The unrelated Week9 upstream-source cross-check was not performed without its external cache. New Week10.2 extraction hashes and numerical profiles were independently checked.",
+  "release_qa_limit": "Unrelated Week9 upstream-source check requires an external cache. New Week10.2 source and artifact hashes verified.",
   "local_link_and_inventory_gate": "pass",
-  "hosted_colab_run_all": false,
-  "research_training_or_spatial_shock_solve_launched": false
+  "hosted_colab_run_all": false
 }

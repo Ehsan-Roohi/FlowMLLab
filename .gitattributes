@@ -87,3 +87,9 @@ lectures/source/cavity_expansion.json -text -whitespace
 # Pinned kinetic-shock data and the reviewed notebook carry raw SHA256 identities.
 data/week10_2_kinetic_shock/** -text -whitespace
 notebooks/week10_2/W10_2_BGK_Shakhov_Shock_PINN_DVM.ipynb -text -whitespace
+flowmllab/kinetic_pinn.py -text
+flowmllab/kinetic_dvm.py -text
+qa/run_week10_2_pinn.py -text
+# Preserve hash-bound Windows records, including their original CRLF bytes.
+results/week10_2_kinetic_shock/pinn_*.json -text -whitespace
+results/week10_2_kinetic_shock/pinn_*.csv -text -whitespace

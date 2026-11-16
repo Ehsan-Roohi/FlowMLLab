@@ -422,6 +422,14 @@ article's potential or network.
 **[Open Week 10.2: lecture, notebook and guide](../weeks/week10_2/README.md)**
 
 Fresh CPU calculations check BGK/Shakhov collision moments and conservation.
+Students also train a BGK PINN from random weights, change depth, optimizer and
+loss weights, and compare initial/trained fields with an independent CPU DVM.
+Reference space/time, velocity and frozen-network quadrature sensitivity are
+reported separately. The short-time collision fraction is below 2%, so the
+initial prediction is an essential control.
+
+<img src="../results/week10_2_kinetic_shock/pinn_from_scratch_profiles.png" width="760" alt="Initial and trained CPU BGK PINN with an independent DVM reference">
+
 The research comparison then rescores saved PINN and matched DVM profiles from
 [Roohi's kinetic-shock study](https://arxiv.org/abs/2605.29211v2).
 
@@ -435,7 +443,7 @@ norms. The data have explicit training, scaling and assessment roles; this is
 neither new research training nor an independent held-out test.
 
 [Physical profiles, scores and limitations](../results/week10_2_kinetic_shock/README.md) ·
-[Seven investigations](../notebooks/week10_2/README.md) ·
+[Twelve investigations](../notebooks/week10_2/README.md) ·
 [Data provenance](../data/week10_2_kinetic_shock/README.md)
 
 ### Week 11 — Shock and vortex identification

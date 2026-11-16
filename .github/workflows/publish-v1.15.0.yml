@@ -1,0 +1,83 @@
+name: Publish FlowMLLab v1.15.0
+
+on:
+  push:
+    tags: [v1.15.0]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: publish-flowmllab-v1.15.0
+
+jobs:
+  release:
+    if: github.repository == 'Ehsan-Roohi/FlowMLLab'
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    permissions:
+      contents: write
+    env:
+      OPENBLAS_NUM_THREADS: '1'
+      OMP_NUM_THREADS: '1'
+      MPLBACKEND: Agg
+      PYTHONDONTWRITEBYTECODE: '1'
+      FLOWMLLAB_D5_SOURCE: data/week13_d5/author_source
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          persist-credentials: false
+          fetch-depth: 0
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.12'
+          cache: pip
+      - name: Install the CPU scientific test environment
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y poppler-utils
+          python -m pip install torch==2.14.1 --index-url https://download.pytorch.org/whl/cpu
+          python -m pip install -e '.[test,kinetic-pinn]' build twine
+          python -m pip install -r requirements-cavity-pinn-reference.txt
+          python -c 'import torch; assert torch.__version__.split("+")[0] == "2.14.1"; assert torch.version.cuda is None'
+      - name: Check inventory, course evidence, metadata and all tests
+        run: |
+          python qa/update_course_inventory.py
+          python qa/validate_course_release.py
+          python -m pytest -q tests qa
+      - name: Execute only the current Week 10.2 notebook in a fresh kernel
+        run: |
+          python qa/execute_published_notebooks.py --profile published --timeout 600 notebooks/week10_2/W10_2_BGK_Shakhov_Shock_PINN_DVM.ipynb > "$RUNNER_TEMP/week10_2_fresh_kernel_execution.json"
+          git diff --exit-code -- notebooks data results flowmllab qa lectures
+      - name: Build and check the package
+        run: |
+          python -m build
+          python -m twine check dist/*
+      - name: Verify the isolated core wheel without Torch
+        run: |
+          python -m venv "$RUNNER_TEMP/flowmllab-release"
+          "$RUNNER_TEMP/flowmllab-release/bin/python" -m pip install dist/flowmllab-1.15.0-*.whl
+          cd "$RUNNER_TEMP"
+          "$RUNNER_TEMP/flowmllab-release/bin/python" -c 'from importlib.metadata import version; from importlib.util import find_spec; import flowmllab; import flowmllab.kinetic_dvm; assert version("flowmllab") == flowmllab.__version__ == "1.15.0"; assert find_spec("torch") is None'
+          "$RUNNER_TEMP/flowmllab-release/bin/flowmllab" smoke
+      - name: Publish the reviewed tag
+        if: github.ref == 'refs/tags/v1.15.0'
+        run: |
+          release_assets=$(mktemp -d "${RUNNER_TEMP}/flowmllab-v1.15.0-assets.XXXXXX")
+          cp dist/flowmllab-1.15.0-*.whl dist/flowmllab-1.15.0.tar.gz "$release_assets/"
+          cp lectures/week10_2_bgk_shakhov_shock_pinn_dvm.pdf "$release_assets/"
+          cp notebooks/week10_2/W10_2_BGK_Shakhov_Shock_PINN_DVM.ipynb "$release_assets/"
+          cp results/week10_2_kinetic_shock/pinn_cpu_report.json "$release_assets/"
+          cp results/week10_2_kinetic_shock/pinn_training_protocol.json "$release_assets/"
+          cp results/week10_2_kinetic_shock/pinn_cpu_metrics.csv "$release_assets/"
+          cp results/week10_2_kinetic_shock/pinn_from_scratch_profiles.png "$release_assets/"
+          cp results/week10_2_kinetic_shock/pinn_optimizer_profiles.png "$release_assets/"
+          cp results/week10_2_kinetic_shock/pinn_training_history.png "$release_assets/"
+          cp data/week10_2_kinetic_shock/manifest.json "$release_assets/week10_2_retained_source_manifest.json"
+          cp output/qa/release_qa_report.json "$release_assets/"
+          cp "$RUNNER_TEMP/week10_2_fresh_kernel_execution.json" "$release_assets/"
+          (cd "$release_assets" && sha256sum -- *) > "$RUNNER_TEMP/release_assets_v1.15.0_sha256.txt"
+          mv "$RUNNER_TEMP/release_assets_v1.15.0_sha256.txt" "$release_assets/"
+          gh release create v1.15.0 --verify-tag --latest --title 'FlowMLLab v1.15.0 - Trainable kinetic shock PINN laboratory' --notes-file RELEASE_NOTES_v1.15.0.md "$release_assets"/*

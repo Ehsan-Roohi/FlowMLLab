@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "course_version": "1.14.1",
+  "course_version": "1.15.0",
   "scope": "Current working-tree assets for numbered Weeks 1–22, including incremental and preparatory material. This is not a new published release or proof of execution.",
   "rules": {
     "active_lecture_pdfs": "lectures/week*.pdf only; exclude lectures/versions, lectures/source figure PDFs and separately listed optional supplements.",
@@ -10,7 +10,7 @@
   },
   "counts": {
     "active_lecture_pdfs": 38,
-    "lecture_pages": 666,
+    "lecture_pages": 673,
     "student_notebooks": 63,
     "historical_student_companions": 1,
     "optional_notebooks": 1,
@@ -115,7 +115,7 @@
     },
     {
       "path": "lectures/week10_2_bgk_shakhov_shock_pinn_dvm.pdf",
-      "pages": 20
+      "pages": 27
     },
     {
       "path": "lectures/week10_dsmc_data_driven_surrogates.pdf",
@@ -689,8 +689,8 @@
       "page": "weeks/week10_2/README.md",
       "setup": "notebooks/week10_2/README.md",
       "prerequisites": "Weeks 2, 3, 8 and 10: data roles, Maxwellians and moments, shock jumps and profile validation. The PINN introduction is self-contained.",
-      "mode": "Fresh CPU collision/moment calculations and retained PINN/DVM profile rescoring; no research training or spatial shock solve.",
-      "compute_estimate": "Allow a few minutes for Run All after setup; see the measured execution receipt for the tested host.",
+      "mode": "Fresh CPU moments, random-start BGK PINN training and independent DVM, plus retained research audits.",
+      "compute_estimate": "One bounded training run by default; the seven-model sweep is optional. See the measured execution receipt.",
       "estimate_status": "Planning allowance; the current measured kernel execution is recorded separately in results/week10_2_kinetic_shock/execution.json.",
       "execution_status": "All code cells executed in a fresh local CPU kernel. Colab bootstrap is supplied; a hosted Colab Run All has not been claimed.",
       "keywords": "BGK Shakhov kinetic shock PINN DVM heat flux stress higher moments conservation quadrature SSBroyden"

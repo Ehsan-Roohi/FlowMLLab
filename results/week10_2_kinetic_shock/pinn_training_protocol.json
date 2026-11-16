@@ -1,0 +1,199 @@
+{
+  "created_utc": "2026-11-16T16:59:13.194238+00:00",
+  "case": "BGK smoothed tube; tau=1; t_final=.02; x=[-.5,.5]",
+  "frozen_before_training_and_DVM_scoring": true,
+  "configurations": {
+    "default": {
+      "seed": 1729,
+      "depth": 2,
+      "width": 24,
+      "optimizer": "adam_lbfgs",
+      "adam_steps": 100,
+      "lbfgs_steps": 20,
+      "learning_rate": 0.003,
+      "lbfgs_learning_rate": 1.0,
+      "lbfgs_history_size": 20,
+      "collocation_points": 64,
+      "velocity_order": 32,
+      "time_order": 8,
+      "vmax": 7.0,
+      "weights": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "max_seconds": 120.0,
+      "threads": 1
+    },
+    "adam": {
+      "seed": 1729,
+      "depth": 2,
+      "width": 24,
+      "optimizer": "adam",
+      "adam_steps": 120,
+      "lbfgs_steps": 0,
+      "learning_rate": 0.003,
+      "lbfgs_learning_rate": 1.0,
+      "lbfgs_history_size": 20,
+      "collocation_points": 64,
+      "velocity_order": 32,
+      "time_order": 8,
+      "vmax": 7.0,
+      "weights": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "max_seconds": 120.0,
+      "threads": 1
+    },
+    "lbfgs": {
+      "seed": 1729,
+      "depth": 2,
+      "width": 24,
+      "optimizer": "lbfgs",
+      "adam_steps": 0,
+      "lbfgs_steps": 40,
+      "learning_rate": 0.003,
+      "lbfgs_learning_rate": 1.0,
+      "lbfgs_history_size": 20,
+      "collocation_points": 64,
+      "velocity_order": 32,
+      "time_order": 8,
+      "vmax": 7.0,
+      "weights": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "max_seconds": 120.0,
+      "threads": 1
+    },
+    "depth1": {
+      "seed": 1729,
+      "depth": 1,
+      "width": 24,
+      "optimizer": "adam_lbfgs",
+      "adam_steps": 100,
+      "lbfgs_steps": 20,
+      "learning_rate": 0.003,
+      "lbfgs_learning_rate": 1.0,
+      "lbfgs_history_size": 20,
+      "collocation_points": 64,
+      "velocity_order": 32,
+      "time_order": 8,
+      "vmax": 7.0,
+      "weights": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "max_seconds": 120.0,
+      "threads": 1
+    },
+    "depth3": {
+      "seed": 1729,
+      "depth": 3,
+      "width": 24,
+      "optimizer": "adam_lbfgs",
+      "adam_steps": 100,
+      "lbfgs_steps": 20,
+      "learning_rate": 0.003,
+      "lbfgs_learning_rate": 1.0,
+      "lbfgs_history_size": 20,
+      "collocation_points": 64,
+      "velocity_order": 32,
+      "time_order": 8,
+      "vmax": 7.0,
+      "weights": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "max_seconds": 120.0,
+      "threads": 1
+    },
+    "energy0p1": {
+      "seed": 1729,
+      "depth": 2,
+      "width": 24,
+      "optimizer": "adam_lbfgs",
+      "adam_steps": 100,
+      "lbfgs_steps": 20,
+      "learning_rate": 0.003,
+      "lbfgs_learning_rate": 1.0,
+      "lbfgs_history_size": 20,
+      "collocation_points": 64,
+      "velocity_order": 32,
+      "time_order": 8,
+      "vmax": 7.0,
+      "weights": [
+        1.0,
+        1.0,
+        0.1
+      ],
+      "max_seconds": 120.0,
+      "threads": 1
+    },
+    "energy10": {
+      "seed": 1729,
+      "depth": 2,
+      "width": 24,
+      "optimizer": "adam_lbfgs",
+      "adam_steps": 100,
+      "lbfgs_steps": 20,
+      "learning_rate": 0.003,
+      "lbfgs_learning_rate": 1.0,
+      "lbfgs_history_size": 20,
+      "collocation_points": 64,
+      "velocity_order": 32,
+      "time_order": 8,
+      "vmax": 7.0,
+      "weights": [
+        1.0,
+        1.0,
+        10.0
+      ],
+      "max_seconds": 120.0,
+      "threads": 1
+    }
+  },
+  "evaluation_quadrature": {
+    "velocity_order": 48,
+    "time_order": 12,
+    "vmax": 7.0
+  },
+  "DVM_configurations": [
+    {
+      "cells": 400,
+      "velocity_order": 48,
+      "vmax": 7.0,
+      "final_time": 0.02,
+      "tau": 1.0,
+      "cfl": 0.4
+    },
+    {
+      "cells": 800,
+      "velocity_order": 48,
+      "vmax": 7.0,
+      "final_time": 0.02,
+      "tau": 1.0,
+      "cfl": 0.4
+    }
+  ],
+  "velocity_sensitivity": {
+    "cells": 800,
+    "velocity_order": 64,
+    "vmax": 7.0,
+    "final_time": 0.02,
+    "tau": 1.0,
+    "cfl": 0.4
+  },
+  "selection": "final completed update in every declared run; no best-DVM selection",
+  "optimizer_budget_note": "Illustrative predetermined update budgets; compare actual gradient/function evaluations and seconds, not outer steps alone.",
+  "source_hashes": {
+    "flowmllab/kinetic_pinn.py": "033572551ec3218f9721ffe1c7296c3e84db1c50c5d2228fc25c95b9141e4f2c",
+    "flowmllab/kinetic_dvm.py": "7f72c591c47dd40bb6f51a5f236729502dd15dddc6df8ebdcafbf70faa47bce9",
+    "qa/run_week10_2_pinn.py": "7fd52aa852e6736be320956f911022ddff3897f15d405e44b2ee50ff71066620"
+  }
+}

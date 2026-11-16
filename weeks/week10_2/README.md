@@ -3,8 +3,8 @@
 [Course home](../../README.md) · [All weeks](../README.md) · [← Week 10.1](../week10_1/README.md) · [Week 11 →](../week11/README.md)
 
 How much of a distribution has a network learned when its density looks right?
-Use signed heat flux, stress and fourth-order moments to answer that question
-with matched one-dimensional kinetic-shock data.
+Train a small BGK PINN from random weights on CPU, then use signed heat flux,
+stress and fourth-order moments to compare it with an independent DVM.
 
 ## Lecture and notebook
 
@@ -26,6 +26,20 @@ counterexample showing why g and h cannot determine separate R and Delta.
 The retained experiments then compare transient shock tubes, three stationary
 Mach-2 initializations and moment-supervised BGK states with matched DVM profiles.
 
+The added from-scratch section exposes hidden depth and width, Adam/L-BFGS/hybrid
+optimization, and density/momentum/energy loss weights. Every fit starts fresh;
+DVM targets do not enter its loss. The CPU DVM uses matched initial/inflow states
+and a separate finite-volume algorithm. Tables H-I compare initial and trained
+predictions and check reference space/time and velocity sensitivity. Table J
+supports a seven-configuration controlled study.
+
+![Random-start and trained CPU PINN compared with an independent BGK DVM](../../results/week10_2_kinetic_shock/pinn_from_scratch_profiles.png)
+
+This short-time problem has a collision fraction below 2%, so an untrained
+characteristic prediction can already look good. Report the actual change after
+training; low errors alone do not demonstrate that the network learned the whole
+solution. The small CPU model is distinct from the retained research results below.
+
 ![BGK shock-tube density, temperature and signed nonequilibrium moments for matched DVM and three learning routes](../../results/week10_2_kinetic_shock/supervised_bgk_profiles.png)
 
 All displayed methods use the same declared comparison nodes and 6400-cell
@@ -41,7 +55,8 @@ comparison is not an independent held-out generalization test.
 
 ## Assignment
 
-Complete the notebook's seven investigations linked to tables A-G. Vary one
+Complete the seven research-audit investigations linked to tables A-G and the
+five fresh-training investigations linked to H-J. Vary one
 numerical control at a time, retain signed physical curves, quantify seed effects,
 and distinguish reference-data availability from an independent test. Report
 the source's failed criteria alongside low global error norms.

@@ -1,7 +1,7 @@
 {
   "title": "FlowMLLab: An Open-Source Framework for Reproducible CFD-to-Scientific-Machine-Learning Experiments",
-  "description": "FlowMLLab v1.14.1 provides integrated teaching explanations and reproducible cavity PINN studies: 42 case-specific, label-free runs across all seven Ghia Reynolds numbers, 12 matched-work area-weighted sampling trials at Re100/Re7500, and a matched three-seed D/W=5 comparison of Adam-to-L-BFGS and SOAP-to-compact-self-scaled-Broyden. Frozen native fields, direct Ghia profiles, independent residual audits, sampling coverage, signed physical errors and explicit failures distinguish data integrity from numerical accuracy. Neither Ghia PINN sampling design passes the preregistered combined gates; the finite D5 optimizer study also misses accurate flow recovery. Mixed gains and losses remain separate from the accurate supervised POD-DeepONet results. Additive notebooks and lecture appendices preserve earlier course material. Post-v1.13 additions also include high-Re streamline/pressure/vorticity comparisons, measured solver experience and the Week15 network-capacity study. New software is MIT licensed; author-supplied research inputs retain the attribution and license scope in their notices.",
-  "version": "1.14.1",
+  "description": "FlowMLLab v1.15.0 adds an English Week 10.2 laboratory that trains a characteristic-integral BGK PINN from random initialization on the CPU. Students control network depth and width, Adam/L-BFGS/hybrid optimization and conserved-moment loss weights. An independent NumPy reduced-BGK MUSCL/minmod-SSPRK2 DVM is evaluated only after training. Seven declared demonstrations retain initialized and trained physical profiles, individual loss components, computational work, reference errors and failures; paired spatial references and separate quadrature checks measure numerical sensitivity without a blanket convergence claim. An expanded lecture connects the trainable model with the retained BGK/Shakhov and stationary Mach-2 scientific evidence. Earlier course and cavity studies remain available with their stated limitations. New teaching software is MIT licensed; upstream research inputs retain their own attribution and license scope.",
+  "version": "1.15.0",
   "publication_date": "2026-11-16",
   "creators": [
     {
@@ -32,7 +32,11 @@
     "sparse sensor reconstruction",
     "transfer learning",
     "optimization",
-    "self-scaled Broyden"
+    "self-scaled Broyden",
+    "kinetic theory",
+    "BGK",
+    "Shakhov",
+    "discrete velocity method"
   ],
   "related_identifiers": [
     {
@@ -46,7 +50,7 @@
       "scheme": "url"
     },
     {
-      "identifier": "https://github.com/Ehsan-Roohi/FlowMLLab/releases/tag/v1.14.1",
+      "identifier": "https://github.com/Ehsan-Roohi/FlowMLLab/releases/tag/v1.15.0",
       "relation": "isVersionOf",
       "scheme": "url"
     },
@@ -72,6 +76,16 @@
     },
     {
       "identifier": "https://arxiv.org/abs/2610.38814v2",
+      "relation": "references",
+      "scheme": "url"
+    },
+    {
+      "identifier": "https://arxiv.org/abs/2605.29211v2",
+      "relation": "references",
+      "scheme": "url"
+    },
+    {
+      "identifier": "https://github.com/Ehsan-Roohi/PINNs-DVM/tree/add5388f7da5f7eace95fff97d34d6ed58b90169",
       "relation": "references",
       "scheme": "url"
     }

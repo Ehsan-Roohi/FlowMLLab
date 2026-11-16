@@ -1,5 +1,5 @@
 cff-version: 1.2.0
-message: "If you use FlowMLLab, please cite this v1.14.1 software release and the relevant research-case articles."
+message: "If you use FlowMLLab, please cite this v1.15.0 software release and the relevant research-case articles."
 title: "FlowMLLab: An Open-Source Framework for Reproducible CFD-to-Scientific-Machine-Learning Experiments"
 type: software
 authors:
@@ -7,7 +7,7 @@ authors:
     given-names: Ehsan
     orcid: "https://orcid.org/0000-0001-5739-3210"
 repository-code: "https://github.com/Ehsan-Roohi/FlowMLLab"
-url: "https://github.com/Ehsan-Roohi/FlowMLLab/releases/tag/v1.14.1"
+url: "https://github.com/Ehsan-Roohi/FlowMLLab/releases/tag/v1.15.0"
 license: MIT
 abstract: >-
   FlowMLLab integrates transparent continuum and particle solvers, case-wise
@@ -34,6 +34,12 @@ abstract: >-
   frozen-field assessment and separate data-integrity and accuracy decisions.
   The finite Ghia baseline fails its preregistered physical/accuracy gates;
   these results remain distinct from the supervised POD-DeepONet study.
+  Week 10.2 adds fresh CPU training of a characteristic BGK PINN with
+  configurable architecture, optimizer and conserved-moment loss weights.
+  An independent reduced-BGK finite-volume solver provides post-training
+  comparisons and numerical-sensitivity checks. Seven declared controlled
+  demonstrations retain initialized and trained profiles, measured work,
+  and failures alongside the attributed BGK/Shakhov research evidence.
   Earlier course material is preserved. Research inputs retain their stated
   attribution and license scope.
 keywords:
@@ -51,8 +57,12 @@ keywords:
   - transformers
   - attention
   - language modeling
-version: "1.14.1"
-doi: "10.5281/zenodo.24281118"
+  - kinetic theory
+  - BGK
+  - Shakhov
+  - physics-informed neural networks
+version: "1.15.0"
+doi: "10.5281/zenodo.22074169"
 date-released: "2026-11-16"
 identifiers:
   - type: doi

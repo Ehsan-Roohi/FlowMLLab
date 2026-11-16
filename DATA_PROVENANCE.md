@@ -109,7 +109,17 @@ extract does not relicense the complete upstream project under FlowMLLab's MIT
 license. See the [extract notice](data/week10_2_kinetic_shock/README.md).
 
 Fresh CPU calculations cover equilibrium jumps, collision integrals and moment
-identifiability. Saved transient, stationary Mach-2 and supervised neural
+identifiability. The added from-scratch section independently implements a CPU
+characteristic BGK PINN and a NumPy finite-volume DVM. Its seven configurations
+are declared in the [training protocol](results/week10_2_kinetic_shock/pinn_training_protocol.json)
+before DVM evaluation; source hashes, initialization, fixed physics points,
+initial/final parameters and measured work are retained. DVM targets do not
+enter fitting, scaling or model selection. The primary teaching reference uses
+analytic transverse integration; the paper's finite transverse quadrature is
+labelled separately. The saved parameter arrays support prediction reproduction,
+not complete optimizer restart.
+
+Saved transient, stationary Mach-2 and supervised neural
 profiles are rescored, not retrained. The five-field S0 trained on 400-cell DVM
 observations; the final eight-moment state used 6400-cell targets, scales and
 some acceptance guards. Equation-trained predictions use the 6400-cell reference

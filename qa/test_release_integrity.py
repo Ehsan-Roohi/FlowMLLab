@@ -6,7 +6,7 @@ from pathlib import Path
 
 
 ROOT = Path(__file__).resolve().parents[1]
-VERSION = "1.14.1"
+VERSION = "1.15.0"
 
 
 def test_release_metadata_is_synchronized() -> None:
@@ -19,6 +19,8 @@ def test_release_metadata_is_synchronized() -> None:
     assert flowmllab.__version__ == VERSION
     assert f'version: "{VERSION}"' in citation
     assert f"releases/tag/v{VERSION}" in citation
+    assert "10.5281/zenodo.22074169" in citation
+    assert "10.5281/zenodo.24281118" not in citation  # This DOI belongs to v1.14.1.
     assert f"Current release: **v{VERSION}**" in readme
     assert zenodo["version"] == VERSION
     assert f"v{VERSION}" in zenodo["description"]
