@@ -1,0 +1,931 @@
+{
+  "schema_version": 1,
+  "upstream_repository": "Ehsan-Roohi/PINNs-DVM",
+  "upstream_commit": "add5388f7da5f7eace95fff97d34d6ed58b90169",
+  "paper_url": "https://arxiv.org/abs/2605.29211v2",
+  "paper_license": "CC BY 4.0",
+  "upstream_software_license": "none assigned; no upstream code copied",
+  "units": "nondimensional_R1_gamma5over3",
+  "gas_constant": 1,
+  "gamma": 1.6666666666666667,
+  "velocity_dimensions": 3,
+  "stress_convention": "integral (cx^2-c^2/3) f dv",
+  "field_conventions": {
+    "q": "0.5 integral c^2 cx f dv",
+    "m": "integral (cx^3-3cx c^2/5) f dv",
+    "R": "integral (c^2-7T)(cx^2-c^2/3) f dv",
+    "Delta": "integral c^4 f dv - 15 rho T^2",
+    "S": "R+Delta/3"
+  },
+  "cases": {
+    "tube_bgk": {
+      "path": "upstream/data/shocktube/bgk_matched_fields.csv",
+      "sha256": "e5dbaef26825e1066f9cc8faad396379e8227f209c541c703cc8776c02819952",
+      "bytes": 1974439,
+      "rows": 3200,
+      "x_endpoints": [
+        -0.49984375,
+        0.49984375000000003
+      ],
+      "x_sha256": "6a4b0b23dce7eb4138f7bd9247167bec1b063823d169608145f1ded9094b6cff",
+      "case_id": "tube_bgk",
+      "format": "matched_csv",
+      "units": "nondimensional_R1_gamma5over3",
+      "problem": "transient_shock_tube",
+      "collision_model": "BGK",
+      "Pr": 1.0,
+      "tau_law": "constant_1",
+      "time": 0.02,
+      "columns": [
+        "rho",
+        "u",
+        "T",
+        "q",
+        "sigma",
+        "m",
+        "R",
+        "Delta",
+        "S"
+      ],
+      "methods": [
+        "parent",
+        "final",
+        "reference"
+      ],
+      "method_roles": {
+        "parent": "equation-trained 1000 Adam + 100 SSB endpoint",
+        "final": "same run with 200 further SSB updates",
+        "reference": "collision-matched 3200-cell DVM"
+      },
+      "reference_role": "post-solve comparison; no field-target training",
+      "convergence_certified": false,
+      "clipping_applied": false,
+      "upstream_path": "data/shocktube/bgk_matched_fields.csv",
+      "upstream_git_blob": "a02915b8ba52d8f55626970ef56843d8ee9eb420",
+      "alignment": "upstream supplied common comparison grid; no additional interpolation, shift, scaling or smoothing"
+    },
+    "tube_shakhov": {
+      "path": "upstream/data/shocktube/shakhov_matched_fields.csv",
+      "sha256": "92cf9cedeea9e7e04d0877f1469a15c67de330eb9f69f724d4145d9b2565bf47",
+      "bytes": 1974365,
+      "rows": 3200,
+      "x_endpoints": [
+        -0.49984375,
+        0.49984375000000003
+      ],
+      "x_sha256": "6a4b0b23dce7eb4138f7bd9247167bec1b063823d169608145f1ded9094b6cff",
+      "case_id": "tube_shakhov",
+      "format": "matched_csv",
+      "units": "nondimensional_R1_gamma5over3",
+      "problem": "transient_shock_tube",
+      "collision_model": "Shakhov",
+      "Pr": 0.6666666666666666,
+      "tau_law": "constant_1",
+      "time": 0.02,
+      "columns": [
+        "rho",
+        "u",
+        "T",
+        "q",
+        "sigma",
+        "m",
+        "R",
+        "Delta",
+        "S"
+      ],
+      "methods": [
+        "parent",
+        "final",
+        "reference"
+      ],
+      "method_roles": {
+        "parent": "equation-trained 1000 Adam + 100 SSB endpoint",
+        "final": "same run with 200 further SSB updates",
+        "reference": "collision-matched 3200-cell DVM"
+      },
+      "reference_role": "post-solve comparison; no field-target training",
+      "convergence_certified": false,
+      "clipping_applied": false,
+      "upstream_path": "data/shocktube/shakhov_matched_fields.csv",
+      "upstream_git_blob": "c10ecd40aac681d3b50d0325e1490637071f7c2d",
+      "alignment": "upstream supplied common comparison grid; no additional interpolation, shift, scaling or smoothing"
+    },
+    "m2_seed141001_adam20000": {
+      "path": "upstream/data/independent_m2/evaluation/seed141001_adam20000_core.npz",
+      "sha256": "5818232317ba3e81360d2fa1df6ab39348abd76c88a8b62d140c52c484a42334",
+      "bytes": 10092,
+      "rows": 81,
+      "x_endpoints": [
+        -10.0,
+        10.0
+      ],
+      "x_sha256": "64418071b1f29c50b8d3eadafa05c3549eb8423328c3bb89e8dfcb82e58baa58",
+      "case_id": "m2_seed141001_adam20000",
+      "format": "m2_core_npz",
+      "npz_keys": [
+        "x",
+        "fields",
+        "reference",
+        "flux_defect_percent"
+      ],
+      "profile_keys": {
+        "prediction": "fields",
+        "reference": "reference"
+      },
+      "units": "nondimensional_R1_gamma5over3",
+      "problem": "steady_normal_shock",
+      "collision_model": "Shakhov",
+      "Pr": 0.6666666666666666,
+      "tau_law": "1/rho",
+      "mach": 2,
+      "seed": 141001,
+      "stage": "adam20000",
+      "columns": [
+        "rho",
+        "u",
+        "T",
+        "q",
+        "sigma"
+      ],
+      "methods": [
+        "prediction",
+        "reference"
+      ],
+      "method_roles": {
+        "prediction": "independent equation-trained initialization, sequential optimizer stage",
+        "reference": "saved Shakhov DVM interpolation at the unchanged 81 core nodes"
+      },
+      "reference_role": "post-solve comparison; no field-target training",
+      "window": "core [-10,10]",
+      "convergence_certified": false,
+      "all_acceptance_tolerances_pass": false,
+      "clipping_applied": false,
+      "stage_warning": "sequential Adam, SSB, split-half quadrature SSB; not an equal-budget optimizer benchmark",
+      "upstream_path": "data/independent_m2/evaluation/seed141001_adam20000_core.npz",
+      "upstream_git_blob": "11e059dabb7f781220f3817c5c3da1243dd8684b",
+      "alignment": "exact supplied common grid/reference; no further phase or amplitude adjustment"
+    },
+    "m2_seed141001_ssb500": {
+      "path": "upstream/data/independent_m2/evaluation/seed141001_ssb500_core.npz",
+      "sha256": "31c5e52e1be13952eb77aa02c279490ba29a77ff474969bf1fbf761ca4d3bcbc",
+      "bytes": 10092,
+      "rows": 81,
+      "x_endpoints": [
+        -10.0,
+        10.0
+      ],
+      "x_sha256": "64418071b1f29c50b8d3eadafa05c3549eb8423328c3bb89e8dfcb82e58baa58",
+      "case_id": "m2_seed141001_ssb500",
+      "format": "m2_core_npz",
+      "npz_keys": [
+        "x",
+        "fields",
+        "reference",
+        "flux_defect_percent"
+      ],
+      "profile_keys": {
+        "prediction": "fields",
+        "reference": "reference"
+      },
+      "units": "nondimensional_R1_gamma5over3",
+      "problem": "steady_normal_shock",
+      "collision_model": "Shakhov",
+      "Pr": 0.6666666666666666,
+      "tau_law": "1/rho",
+      "mach": 2,
+      "seed": 141001,
+      "stage": "ssb500",
+      "columns": [
+        "rho",
+        "u",
+        "T",
+        "q",
+        "sigma"
+      ],
+      "methods": [
+        "prediction",
+        "reference"
+      ],
+      "method_roles": {
+        "prediction": "independent equation-trained initialization, sequential optimizer stage",
+        "reference": "saved Shakhov DVM interpolation at the unchanged 81 core nodes"
+      },
+      "reference_role": "post-solve comparison; no field-target training",
+      "window": "core [-10,10]",
+      "convergence_certified": false,
+      "all_acceptance_tolerances_pass": false,
+      "clipping_applied": false,
+      "stage_warning": "sequential Adam, SSB, split-half quadrature SSB; not an equal-budget optimizer benchmark",
+      "upstream_path": "data/independent_m2/evaluation/seed141001_ssb500_core.npz",
+      "upstream_git_blob": "ac4d535e2b52dfa1bdffdc3b97328984a10a52dc",
+      "alignment": "exact supplied common grid/reference; no further phase or amplitude adjustment"
+    },
+    "m2_seed141001_fixed500": {
+      "path": "upstream/data/independent_m2/evaluation/seed141001_fixed500_core.npz",
+      "sha256": "196fff81dc2edd3c400ba2f83b28221e7c6ed6dc67c438405838f8ab4f4a755d",
+      "bytes": 10092,
+      "rows": 81,
+      "x_endpoints": [
+        -10.0,
+        10.0
+      ],
+      "x_sha256": "64418071b1f29c50b8d3eadafa05c3549eb8423328c3bb89e8dfcb82e58baa58",
+      "case_id": "m2_seed141001_fixed500",
+      "format": "m2_core_npz",
+      "npz_keys": [
+        "x",
+        "fields",
+        "reference",
+        "flux_defect_percent"
+      ],
+      "profile_keys": {
+        "prediction": "fields",
+        "reference": "reference"
+      },
+      "units": "nondimensional_R1_gamma5over3",
+      "problem": "steady_normal_shock",
+      "collision_model": "Shakhov",
+      "Pr": 0.6666666666666666,
+      "tau_law": "1/rho",
+      "mach": 2,
+      "seed": 141001,
+      "stage": "fixed500",
+      "columns": [
+        "rho",
+        "u",
+        "T",
+        "q",
+        "sigma"
+      ],
+      "methods": [
+        "prediction",
+        "reference"
+      ],
+      "method_roles": {
+        "prediction": "independent equation-trained initialization, sequential optimizer stage",
+        "reference": "saved Shakhov DVM interpolation at the unchanged 81 core nodes"
+      },
+      "reference_role": "post-solve comparison; no field-target training",
+      "window": "core [-10,10]",
+      "convergence_certified": false,
+      "all_acceptance_tolerances_pass": false,
+      "clipping_applied": false,
+      "stage_warning": "sequential Adam, SSB, split-half quadrature SSB; not an equal-budget optimizer benchmark",
+      "upstream_path": "data/independent_m2/evaluation/seed141001_fixed500_core.npz",
+      "upstream_git_blob": "95f1c85fa9a2a28ebffce8b38bb2a28767f76862",
+      "alignment": "exact supplied common grid/reference; no further phase or amplitude adjustment"
+    },
+    "m2_seed141002_adam20000": {
+      "path": "upstream/data/independent_m2/evaluation/seed141002_adam20000_core.npz",
+      "sha256": "4ca76aa5aad148f760b7d609e3587b62d4b0e865c21c3f177597c8d3ef1f5fc7",
+      "bytes": 10092,
+      "rows": 81,
+      "x_endpoints": [
+        -10.0,
+        10.0
+      ],
+      "x_sha256": "64418071b1f29c50b8d3eadafa05c3549eb8423328c3bb89e8dfcb82e58baa58",
+      "case_id": "m2_seed141002_adam20000",
+      "format": "m2_core_npz",
+      "npz_keys": [
+        "x",
+        "fields",
+        "reference",
+        "flux_defect_percent"
+      ],
+      "profile_keys": {
+        "prediction": "fields",
+        "reference": "reference"
+      },
+      "units": "nondimensional_R1_gamma5over3",
+      "problem": "steady_normal_shock",
+      "collision_model": "Shakhov",
+      "Pr": 0.6666666666666666,
+      "tau_law": "1/rho",
+      "mach": 2,
+      "seed": 141002,
+      "stage": "adam20000",
+      "columns": [
+        "rho",
+        "u",
+        "T",
+        "q",
+        "sigma"
+      ],
+      "methods": [
+        "prediction",
+        "reference"
+      ],
+      "method_roles": {
+        "prediction": "independent equation-trained initialization, sequential optimizer stage",
+        "reference": "saved Shakhov DVM interpolation at the unchanged 81 core nodes"
+      },
+      "reference_role": "post-solve comparison; no field-target training",
+      "window": "core [-10,10]",
+      "convergence_certified": false,
+      "all_acceptance_tolerances_pass": false,
+      "clipping_applied": false,
+      "stage_warning": "sequential Adam, SSB, split-half quadrature SSB; not an equal-budget optimizer benchmark",
+      "upstream_path": "data/independent_m2/evaluation/seed141002_adam20000_core.npz",
+      "upstream_git_blob": "fc97e7ec959123dd266c913525cf9a79a1e05d2f",
+      "alignment": "exact supplied common grid/reference; no further phase or amplitude adjustment"
+    },
+    "m2_seed141002_ssb500": {
+      "path": "upstream/data/independent_m2/evaluation/seed141002_ssb500_core.npz",
+      "sha256": "75a5146edb623843400226d0a7b2799f699aabb65afa7dea2cbd2c4dcfd33d05",
+      "bytes": 10092,
+      "rows": 81,
+      "x_endpoints": [
+        -10.0,
+        10.0
+      ],
+      "x_sha256": "64418071b1f29c50b8d3eadafa05c3549eb8423328c3bb89e8dfcb82e58baa58",
+      "case_id": "m2_seed141002_ssb500",
+      "format": "m2_core_npz",
+      "npz_keys": [
+        "x",
+        "fields",
+        "reference",
+        "flux_defect_percent"
+      ],
+      "profile_keys": {
+        "prediction": "fields",
+        "reference": "reference"
+      },
+      "units": "nondimensional_R1_gamma5over3",
+      "problem": "steady_normal_shock",
+      "collision_model": "Shakhov",
+      "Pr": 0.6666666666666666,
+      "tau_law": "1/rho",
+      "mach": 2,
+      "seed": 141002,
+      "stage": "ssb500",
+      "columns": [
+        "rho",
+        "u",
+        "T",
+        "q",
+        "sigma"
+      ],
+      "methods": [
+        "prediction",
+        "reference"
+      ],
+      "method_roles": {
+        "prediction": "independent equation-trained initialization, sequential optimizer stage",
+        "reference": "saved Shakhov DVM interpolation at the unchanged 81 core nodes"
+      },
+      "reference_role": "post-solve comparison; no field-target training",
+      "window": "core [-10,10]",
+      "convergence_certified": false,
+      "all_acceptance_tolerances_pass": false,
+      "clipping_applied": false,
+      "stage_warning": "sequential Adam, SSB, split-half quadrature SSB; not an equal-budget optimizer benchmark",
+      "upstream_path": "data/independent_m2/evaluation/seed141002_ssb500_core.npz",
+      "upstream_git_blob": "7aacc0123ff47c7a73486ab37c4dc91531e1a130",
+      "alignment": "exact supplied common grid/reference; no further phase or amplitude adjustment"
+    },
+    "m2_seed141002_fixed500": {
+      "path": "upstream/data/independent_m2/evaluation/seed141002_fixed500_core.npz",
+      "sha256": "cb834bd87a38272512fd90b5da8d173e6a208e57276162437f5e45723df0c72f",
+      "bytes": 10092,
+      "rows": 81,
+      "x_endpoints": [
+        -10.0,
+        10.0
+      ],
+      "x_sha256": "64418071b1f29c50b8d3eadafa05c3549eb8423328c3bb89e8dfcb82e58baa58",
+      "case_id": "m2_seed141002_fixed500",
+      "format": "m2_core_npz",
+      "npz_keys": [
+        "x",
+        "fields",
+        "reference",
+        "flux_defect_percent"
+      ],
+      "profile_keys": {
+        "prediction": "fields",
+        "reference": "reference"
+      },
+      "units": "nondimensional_R1_gamma5over3",
+      "problem": "steady_normal_shock",
+      "collision_model": "Shakhov",
+      "Pr": 0.6666666666666666,
+      "tau_law": "1/rho",
+      "mach": 2,
+      "seed": 141002,
+      "stage": "fixed500",
+      "columns": [
+        "rho",
+        "u",
+        "T",
+        "q",
+        "sigma"
+      ],
+      "methods": [
+        "prediction",
+        "reference"
+      ],
+      "method_roles": {
+        "prediction": "independent equation-trained initialization, sequential optimizer stage",
+        "reference": "saved Shakhov DVM interpolation at the unchanged 81 core nodes"
+      },
+      "reference_role": "post-solve comparison; no field-target training",
+      "window": "core [-10,10]",
+      "convergence_certified": false,
+      "all_acceptance_tolerances_pass": false,
+      "clipping_applied": false,
+      "stage_warning": "sequential Adam, SSB, split-half quadrature SSB; not an equal-budget optimizer benchmark",
+      "upstream_path": "data/independent_m2/evaluation/seed141002_fixed500_core.npz",
+      "upstream_git_blob": "74c1797ed5d9e92acfe5937c823ea1d7a93af986",
+      "alignment": "exact supplied common grid/reference; no further phase or amplitude adjustment"
+    },
+    "m2_seed141003_adam20000": {
+      "path": "upstream/data/independent_m2/evaluation/seed141003_adam20000_core.npz",
+      "sha256": "83960ee127b4f0f0ad2fefb82d85ee9fdc426d1f02d47a71dda87b02bec95d3a",
+      "bytes": 10092,
+      "rows": 81,
+      "x_endpoints": [
+        -10.0,
+        10.0
+      ],
+      "x_sha256": "64418071b1f29c50b8d3eadafa05c3549eb8423328c3bb89e8dfcb82e58baa58",
+      "case_id": "m2_seed141003_adam20000",
+      "format": "m2_core_npz",
+      "npz_keys": [
+        "x",
+        "fields",
+        "reference",
+        "flux_defect_percent"
+      ],
+      "profile_keys": {
+        "prediction": "fields",
+        "reference": "reference"
+      },
+      "units": "nondimensional_R1_gamma5over3",
+      "problem": "steady_normal_shock",
+      "collision_model": "Shakhov",
+      "Pr": 0.6666666666666666,
+      "tau_law": "1/rho",
+      "mach": 2,
+      "seed": 141003,
+      "stage": "adam20000",
+      "columns": [
+        "rho",
+        "u",
+        "T",
+        "q",
+        "sigma"
+      ],
+      "methods": [
+        "prediction",
+        "reference"
+      ],
+      "method_roles": {
+        "prediction": "independent equation-trained initialization, sequential optimizer stage",
+        "reference": "saved Shakhov DVM interpolation at the unchanged 81 core nodes"
+      },
+      "reference_role": "post-solve comparison; no field-target training",
+      "window": "core [-10,10]",
+      "convergence_certified": false,
+      "all_acceptance_tolerances_pass": false,
+      "clipping_applied": false,
+      "stage_warning": "sequential Adam, SSB, split-half quadrature SSB; not an equal-budget optimizer benchmark",
+      "upstream_path": "data/independent_m2/evaluation/seed141003_adam20000_core.npz",
+      "upstream_git_blob": "3dbe036e17ed0557071799d4869c751010fa2b15",
+      "alignment": "exact supplied common grid/reference; no further phase or amplitude adjustment"
+    },
+    "m2_seed141003_ssb500": {
+      "path": "upstream/data/independent_m2/evaluation/seed141003_ssb500_core.npz",
+      "sha256": "8c99d30ac66886ec97a1e36aecf1037a566d44d724d2f6ba8f602c761987761b",
+      "bytes": 10092,
+      "rows": 81,
+      "x_endpoints": [
+        -10.0,
+        10.0
+      ],
+      "x_sha256": "64418071b1f29c50b8d3eadafa05c3549eb8423328c3bb89e8dfcb82e58baa58",
+      "case_id": "m2_seed141003_ssb500",
+      "format": "m2_core_npz",
+      "npz_keys": [
+        "x",
+        "fields",
+        "reference",
+        "flux_defect_percent"
+      ],
+      "profile_keys": {
+        "prediction": "fields",
+        "reference": "reference"
+      },
+      "units": "nondimensional_R1_gamma5over3",
+      "problem": "steady_normal_shock",
+      "collision_model": "Shakhov",
+      "Pr": 0.6666666666666666,
+      "tau_law": "1/rho",
+      "mach": 2,
+      "seed": 141003,
+      "stage": "ssb500",
+      "columns": [
+        "rho",
+        "u",
+        "T",
+        "q",
+        "sigma"
+      ],
+      "methods": [
+        "prediction",
+        "reference"
+      ],
+      "method_roles": {
+        "prediction": "independent equation-trained initialization, sequential optimizer stage",
+        "reference": "saved Shakhov DVM interpolation at the unchanged 81 core nodes"
+      },
+      "reference_role": "post-solve comparison; no field-target training",
+      "window": "core [-10,10]",
+      "convergence_certified": false,
+      "all_acceptance_tolerances_pass": false,
+      "clipping_applied": false,
+      "stage_warning": "sequential Adam, SSB, split-half quadrature SSB; not an equal-budget optimizer benchmark",
+      "upstream_path": "data/independent_m2/evaluation/seed141003_ssb500_core.npz",
+      "upstream_git_blob": "ad9173b72240612f974ce9255718a0ade7313856",
+      "alignment": "exact supplied common grid/reference; no further phase or amplitude adjustment"
+    },
+    "m2_seed141003_fixed500": {
+      "path": "upstream/data/independent_m2/evaluation/seed141003_fixed500_core.npz",
+      "sha256": "74410ac5107551ecf81751a03da237d67b8823ed31a6c5159e2b1f717fd3a9cd",
+      "bytes": 10092,
+      "rows": 81,
+      "x_endpoints": [
+        -10.0,
+        10.0
+      ],
+      "x_sha256": "64418071b1f29c50b8d3eadafa05c3549eb8423328c3bb89e8dfcb82e58baa58",
+      "case_id": "m2_seed141003_fixed500",
+      "format": "m2_core_npz",
+      "npz_keys": [
+        "x",
+        "fields",
+        "reference",
+        "flux_defect_percent"
+      ],
+      "profile_keys": {
+        "prediction": "fields",
+        "reference": "reference"
+      },
+      "units": "nondimensional_R1_gamma5over3",
+      "problem": "steady_normal_shock",
+      "collision_model": "Shakhov",
+      "Pr": 0.6666666666666666,
+      "tau_law": "1/rho",
+      "mach": 2,
+      "seed": 141003,
+      "stage": "fixed500",
+      "columns": [
+        "rho",
+        "u",
+        "T",
+        "q",
+        "sigma"
+      ],
+      "methods": [
+        "prediction",
+        "reference"
+      ],
+      "method_roles": {
+        "prediction": "independent equation-trained initialization, sequential optimizer stage",
+        "reference": "saved Shakhov DVM interpolation at the unchanged 81 core nodes"
+      },
+      "reference_role": "post-solve comparison; no field-target training",
+      "window": "core [-10,10]",
+      "convergence_certified": false,
+      "all_acceptance_tolerances_pass": false,
+      "clipping_applied": false,
+      "stage_warning": "sequential Adam, SSB, split-half quadrature SSB; not an equal-budget optimizer benchmark",
+      "upstream_path": "data/independent_m2/evaluation/seed141003_fixed500_core.npz",
+      "upstream_git_blob": "5d55ecff0b613aec55844211cb3f0991a2b28ebd",
+      "alignment": "exact supplied common grid/reference; no further phase or amplitude adjustment"
+    },
+    "supervised_s0_current": {
+      "path": "supervised_s0_current.npz",
+      "sha256": "bb41404c668322e88181968ffe1f8ce2b3d6cbc8993f39346fca9479165d1cd4",
+      "bytes": 161684,
+      "rows": 399,
+      "x_endpoints": [
+        -0.4975,
+        0.49750000000000005
+      ],
+      "x_sha256": "1b4d301b39de400119449b0d2eab9535cfe5de04dd1340d644ad43523fdf26e6",
+      "case_id": "supervised_s0_current",
+      "format": "supervised_comparison_npz",
+      "npz_keys": [
+        "x",
+        "columns",
+        "case_id",
+        "five_field_S0",
+        "original_envelope",
+        "common_tail_initial",
+        "data_assisted",
+        "equation_trained",
+        "reference"
+      ],
+      "profile_keys": {
+        "five_field_S0": "five_field_S0",
+        "original_envelope": "original_envelope",
+        "common_tail_initial": "common_tail_initial",
+        "data_assisted": "data_assisted",
+        "equation_trained": "equation_trained",
+        "reference": "reference"
+      },
+      "units": "nondimensional_R1_gamma5over3",
+      "problem": "transient_shock_tube",
+      "collision_model": "BGK",
+      "Pr": 1.0,
+      "tau_law": "constant_1",
+      "time": 0.02,
+      "columns": [
+        "rho",
+        "u",
+        "T",
+        "q",
+        "sigma",
+        "m",
+        "R",
+        "Delta",
+        "S"
+      ],
+      "methods": [
+        "five_field_S0",
+        "original_envelope",
+        "common_tail_initial",
+        "data_assisted",
+        "equation_trained",
+        "reference"
+      ],
+      "method_roles": {
+        "five_field_S0": "actual five-field S0 base state, checkpoint a0734fccb6cc0766bf046c8a23f8f98bf15e2e03b39d6e96ed70e1a170d09003",
+        "original_envelope": "eight-moment model after 170 accepted updates; not the five-field S0 model",
+        "common_tail_initial": "same state with common-tail envelope replacement before 35 updates",
+        "data_assisted": "common-tail eight-moment final state after 35 accepted output-layer updates",
+        "equation_trained": "independently equation-trained BGK characteristic-PINN endpoint",
+        "reference": "6400-cell DVM supplied in assessment arrays"
+      },
+      "reference_role": "observations, reference-derived scales, acceptance checks, and comparison for data-assisted lineage",
+      "method_reference_roles": {
+        "five_field_S0": {
+          "training_reference_cells": 400,
+          "comparison_reference_cells": 6400,
+          "comparison_role": "post-solve reevaluation on 48x20x20 velocity grid",
+          "trained_on_comparison_reference": false
+        },
+        "data_assisted": {
+          "training_reference_cells": 6400,
+          "comparison_reference_cells": 6400,
+          "comparison_role": "same reference supplies observations, scales and some acceptance guards",
+          "trained_on_comparison_reference": true
+        },
+        "equation_trained": {
+          "training_reference_cells": null,
+          "native_comparison_reference_cells": 3200,
+          "comparison_reference_cells": 6400,
+          "comparison_role": "post-solve only",
+          "trained_on_comparison_reference": false
+        }
+      },
+      "paper_admission": false,
+      "all_criteria_pass": false,
+      "convergence_certified": false,
+      "admission_flag_scope": "final common-tail 35-update data-assisted state; not a shared admission flag for all methods",
+      "clipping_applied": false,
+      "observed_reference_count": 690,
+      "observation_sets": {
+        "upstream_path": "code/supervised_shocktube/supervised_base_eight_moment/accepted_state/inputs/OBSERVATION_LOCATIONS_FROZEN.npz",
+        "path": "upstream/code/supervised_shocktube/supervised_base_eight_moment/accepted_state/inputs/OBSERVATION_LOCATIONS_FROZEN.npz",
+        "git_blob_sha1": "f5376ce93a657dca595ac87042986425883f05f6",
+        "sha256": "c9724c94719342c116a81502a8fdb837235f8e6f8bc5d6d0c10dd17a2b1a4cff",
+        "bytes": 4932,
+        "url": "https://raw.githubusercontent.com/Ehsan-Roohi/PINNs-DVM/add5388f7da5f7eace95fff97d34d6ed58b90169/code/supervised_shocktube/supervised_base_eight_moment/accepted_state/inputs/OBSERVATION_LOCATIONS_FROZEN.npz"
+      },
+      "independent_test_claim": false,
+      "contamination": {
+        "reference_used_for_training": true,
+        "reference_derived_scales": true,
+        "reference_used_in_some_acceptance_guards": true,
+        "excluding_observation_neighbors_is_not_independent_test": true
+      },
+      "contamination_scope": "final data-assisted lineage; consult method_reference_roles for each comparator",
+      "failed_criteria": {
+        "E4": "64 separate physics points, predeclared 0.1% tolerance failed",
+        "E8": "64 points unused by any stage; criterion added after first assessment; 0.1% tolerance failed"
+      },
+      "alignment": "linear interpolation of assessment fields to original equation-trained x nodes within common coverage; no shift, rescaling, smoothing or extrapolation",
+      "dropped_equation_nodes_outside_assessment_coverage": 2,
+      "original_equation_node_count": 401,
+      "five_field_reference_grid_and_values_exactly_match_eight_moment_assessment": true,
+      "source_reference_x_endpoints": [
+        -0.499921875,
+        0.49992187500000007
+      ],
+      "metric_difference_from_paper": "teaching common-overlap spatial trapezoidal norm; not paper's unweighted full401-node score",
+      "source_files": [
+        {
+          "upstream_path": "code/supervised_shocktube/supervised_base_eight_moment/accepted_state/evidence/ASSESSMENT_FIELDS.npz",
+          "path": "upstream/code/supervised_shocktube/supervised_base_eight_moment/accepted_state/evidence/ASSESSMENT_FIELDS.npz",
+          "git_blob_sha1": "ccbd573e1b901fad8d56aacef7786d0e5150fb19",
+          "sha256": "b7cdcda81d096ea353375a9f8b998b5f0b8bc03ad71d8b6e0e25d722d58a4191",
+          "bytes": 1788855,
+          "url": "https://raw.githubusercontent.com/Ehsan-Roohi/PINNs-DVM/add5388f7da5f7eace95fff97d34d6ed58b90169/code/supervised_shocktube/supervised_base_eight_moment/accepted_state/evidence/ASSESSMENT_FIELDS.npz"
+        },
+        {
+          "upstream_path": "code/supervised_shocktube/supervised_base_eight_moment/comparison_inputs/EQUATION_TRAINED_BGK_FIELDS.npz",
+          "path": "upstream/code/supervised_shocktube/supervised_base_eight_moment/comparison_inputs/EQUATION_TRAINED_BGK_FIELDS.npz",
+          "git_blob_sha1": "34f93e3768b5ad6b246fea16c6ee64f669d00df3",
+          "sha256": "ef062c38e35529d49532588dcbde4759e3b3876e3e7b05e91b8f90c4b8f0d79d",
+          "bytes": 33006,
+          "url": "https://raw.githubusercontent.com/Ehsan-Roohi/PINNs-DVM/add5388f7da5f7eace95fff97d34d6ed58b90169/code/supervised_shocktube/supervised_base_eight_moment/comparison_inputs/EQUATION_TRAINED_BGK_FIELDS.npz"
+        },
+        {
+          "upstream_path": "code/supervised_shocktube/supervised_base_eight_moment/manuscript_checks/stage0/STAGE0_FIELDS.npz",
+          "path": "upstream/code/supervised_shocktube/supervised_base_eight_moment/manuscript_checks/stage0/STAGE0_FIELDS.npz",
+          "git_blob_sha1": "ca32341f0758290e04217111e1623ba70b37a0ed",
+          "sha256": "6a9f806aea15f1714a0296bf066a60e52bf3c82d110ed11ca9904fc834d78e71",
+          "bytes": 869918,
+          "url": "https://raw.githubusercontent.com/Ehsan-Roohi/PINNs-DVM/add5388f7da5f7eace95fff97d34d6ed58b90169/code/supervised_shocktube/supervised_base_eight_moment/manuscript_checks/stage0/STAGE0_FIELDS.npz"
+        }
+      ]
+    }
+  },
+  "source_receipts": [
+    {
+      "path": "upstream/data/independent_m2/evaluation/seed141001_adam20000_core.npz",
+      "source": "existing_verified_extract",
+      "sha256": "5818232317ba3e81360d2fa1df6ab39348abd76c88a8b62d140c52c484a42334",
+      "git_blob_sha1": "11e059dabb7f781220f3817c5c3da1243dd8684b",
+      "bytes": 10092
+    },
+    {
+      "path": "upstream/data/independent_m2/evaluation/seed141001_fixed500_core.npz",
+      "source": "existing_verified_extract",
+      "sha256": "196fff81dc2edd3c400ba2f83b28221e7c6ed6dc67c438405838f8ab4f4a755d",
+      "git_blob_sha1": "95f1c85fa9a2a28ebffce8b38bb2a28767f76862",
+      "bytes": 10092
+    },
+    {
+      "path": "upstream/data/independent_m2/evaluation/seed141001_ssb500_core.npz",
+      "source": "existing_verified_extract",
+      "sha256": "31c5e52e1be13952eb77aa02c279490ba29a77ff474969bf1fbf761ca4d3bcbc",
+      "git_blob_sha1": "ac4d535e2b52dfa1bdffdc3b97328984a10a52dc",
+      "bytes": 10092
+    },
+    {
+      "path": "upstream/data/independent_m2/evaluation/seed141002_adam20000_core.npz",
+      "source": "existing_verified_extract",
+      "sha256": "4ca76aa5aad148f760b7d609e3587b62d4b0e865c21c3f177597c8d3ef1f5fc7",
+      "git_blob_sha1": "fc97e7ec959123dd266c913525cf9a79a1e05d2f",
+      "bytes": 10092
+    },
+    {
+      "path": "upstream/data/independent_m2/evaluation/seed141002_fixed500_core.npz",
+      "source": "existing_verified_extract",
+      "sha256": "cb834bd87a38272512fd90b5da8d173e6a208e57276162437f5e45723df0c72f",
+      "git_blob_sha1": "74c1797ed5d9e92acfe5937c823ea1d7a93af986",
+      "bytes": 10092
+    },
+    {
+      "path": "upstream/data/independent_m2/evaluation/seed141002_ssb500_core.npz",
+      "source": "existing_verified_extract",
+      "sha256": "75a5146edb623843400226d0a7b2799f699aabb65afa7dea2cbd2c4dcfd33d05",
+      "git_blob_sha1": "7aacc0123ff47c7a73486ab37c4dc91531e1a130",
+      "bytes": 10092
+    },
+    {
+      "path": "upstream/data/independent_m2/evaluation/seed141003_adam20000_core.npz",
+      "source": "existing_verified_extract",
+      "sha256": "83960ee127b4f0f0ad2fefb82d85ee9fdc426d1f02d47a71dda87b02bec95d3a",
+      "git_blob_sha1": "3dbe036e17ed0557071799d4869c751010fa2b15",
+      "bytes": 10092
+    },
+    {
+      "path": "upstream/data/independent_m2/evaluation/seed141003_fixed500_core.npz",
+      "source": "existing_verified_extract",
+      "sha256": "74410ac5107551ecf81751a03da237d67b8823ed31a6c5159e2b1f717fd3a9cd",
+      "git_blob_sha1": "5d55ecff0b613aec55844211cb3f0991a2b28ebd",
+      "bytes": 10092
+    },
+    {
+      "path": "upstream/data/independent_m2/evaluation/seed141003_ssb500_core.npz",
+      "source": "existing_verified_extract",
+      "sha256": "8c99d30ac66886ec97a1e36aecf1037a566d44d724d2f6ba8f602c761987761b",
+      "git_blob_sha1": "ad9173b72240612f974ce9255718a0ade7313856",
+      "bytes": 10092
+    },
+    {
+      "path": "upstream/data/shocktube/bgk_matched_fields.csv",
+      "source": "existing_verified_extract",
+      "sha256": "e5dbaef26825e1066f9cc8faad396379e8227f209c541c703cc8776c02819952",
+      "git_blob_sha1": "a02915b8ba52d8f55626970ef56843d8ee9eb420",
+      "bytes": 1974439
+    },
+    {
+      "path": "upstream/data/shocktube/shakhov_matched_fields.csv",
+      "source": "existing_verified_extract",
+      "sha256": "92cf9cedeea9e7e04d0877f1469a15c67de330eb9f69f724d4145d9b2565bf47",
+      "git_blob_sha1": "c10ecd40aac681d3b50d0325e1490637071f7c2d",
+      "bytes": 1974365
+    },
+    {
+      "path": "upstream/data/independent_m2/evaluation/RESULT.json",
+      "source": "existing_verified_extract",
+      "sha256": "1f28cca29cdf8a17c2b71f909a00aa38d502afb08e22cddd960b814dd17c729e",
+      "git_blob_sha1": "19999573d4a2a5a2aea773f3e15b394cdd6dbf20",
+      "bytes": 44558
+    },
+    {
+      "path": "upstream/code/supervised_shocktube/supervised_base_eight_moment/README.txt",
+      "source": "existing_verified_extract",
+      "sha256": "f899400017b0f6afceb2981f6bcf6545c1d24ce7b38a2a474eba8ab32effc53f",
+      "git_blob_sha1": "f6bab34afcc0f3b5cc0e2b39364a8f6ff6894d9c",
+      "bytes": 4675
+    },
+    {
+      "path": "upstream/code/supervised_shocktube/supervised_base_eight_moment/STATUS_NOTE.txt",
+      "source": "existing_verified_extract",
+      "sha256": "bb69af84bab0b5398bb1591cee77a43d39e84d894cdcb9ae4c8e24aaea4cbe06",
+      "git_blob_sha1": "37112d1ea6e5f24f41f95a05c00221f95193308c",
+      "bytes": 863
+    },
+    {
+      "path": "upstream/code/supervised_shocktube/supervised_base_eight_moment/accepted_state/evidence/ASSESSMENT_FIELDS.npz",
+      "source": "existing_verified_extract",
+      "sha256": "b7cdcda81d096ea353375a9f8b998b5f0b8bc03ad71d8b6e0e25d722d58a4191",
+      "git_blob_sha1": "ccbd573e1b901fad8d56aacef7786d0e5150fb19",
+      "bytes": 1788855
+    },
+    {
+      "path": "upstream/code/supervised_shocktube/supervised_base_eight_moment/accepted_state/evidence/ASSESSMENT.json",
+      "source": "existing_verified_extract",
+      "sha256": "8552670867a1c3d3bcc5096eb15d90ed07ff45bbff48898494df923c39a1161c",
+      "git_blob_sha1": "2ab002aa11fa51bcb5ca3080d465095002575322",
+      "bytes": 41528
+    },
+    {
+      "path": "upstream/code/supervised_shocktube/supervised_base_eight_moment/accepted_state/evidence/TRAIN_RESULT.json",
+      "source": "existing_verified_extract",
+      "sha256": "dea4ae4f63090b01afaee35fc9f3e05c9b1239c9055cb48dad53669fa5b605a0",
+      "git_blob_sha1": "d80593f629b4fce30f83b3e0cf262ad45589a161",
+      "bytes": 2085
+    },
+    {
+      "path": "upstream/code/supervised_shocktube/supervised_base_eight_moment/accepted_state/inputs/OBSERVATION_LOCATIONS_FROZEN.npz",
+      "source": "existing_verified_extract",
+      "sha256": "c9724c94719342c116a81502a8fdb837235f8e6f8bc5d6d0c10dd17a2b1a4cff",
+      "git_blob_sha1": "f5376ce93a657dca595ac87042986425883f05f6",
+      "bytes": 4932
+    },
+    {
+      "path": "upstream/code/supervised_shocktube/supervised_base_eight_moment/accepted_state/inputs/REFERENCE6400_FIELDS.npz",
+      "source": "existing_verified_extract",
+      "sha256": "c4fe0f1fbd0789b3793729791b9d9490465578b151c78bf3bac17571b3eeb090",
+      "git_blob_sha1": "1ad4d5b081eaf0bd73528d9c9b9c9176fecaeb6f",
+      "bytes": 420386
+    },
+    {
+      "path": "upstream/code/supervised_shocktube/supervised_base_eight_moment/comparison_inputs/EQUATION_TRAINED_BGK_FIELDS.npz",
+      "source": "existing_verified_extract",
+      "sha256": "ef062c38e35529d49532588dcbde4759e3b3876e3e7b05e91b8f90c4b8f0d79d",
+      "git_blob_sha1": "34f93e3768b5ad6b246fea16c6ee64f669d00df3",
+      "bytes": 33006
+    },
+    {
+      "path": "upstream/code/supervised_shocktube/supervised_base_eight_moment/comparison_inputs/REFERENCE_3200_FIELDS.npz",
+      "source": "existing_verified_extract",
+      "sha256": "abd59cf3b39d9ce2da171bb6a465c00c904d3ca6c7965a65ea69b511a467cbdc",
+      "git_blob_sha1": "04a996c4cb98b22623bb4b1aee7c9c061e0c79ff",
+      "bytes": 212217
+    },
+    {
+      "path": "upstream/code/supervised_shocktube/supervised_base_eight_moment/manuscript_checks/FACTS_AFTER_REVIEW.json",
+      "source": "existing_verified_extract",
+      "sha256": "aa757950a7df7d423d3922514a584b35e4b175d6bdb1860cf2143f0c53ffbcd4",
+      "git_blob_sha1": "b2032b57d3464874bda7cd097d4e566d398ddcba",
+      "bytes": 18917
+    },
+    {
+      "path": "upstream/code/supervised_shocktube/supervised_base_eight_moment/manuscript_checks/FACTS_HELDOUT_AND_SCALES.json",
+      "source": "existing_verified_extract",
+      "sha256": "1cb0135635a3fce422ec62d10dba12e688a390879dde7b980d1561143fa1a841",
+      "git_blob_sha1": "485baf880dd42d3bf14a9a06ccfa8509567d8c2a",
+      "bytes": 1677
+    },
+    {
+      "path": "upstream/code/supervised_shocktube/supervised_base_eight_moment/manuscript_checks/stage0/STAGE0_FIELDS.npz",
+      "source": "existing_verified_extract",
+      "sha256": "6a9f806aea15f1714a0296bf066a60e52bf3c82d110ed11ca9904fc834d78e71",
+      "git_blob_sha1": "ca32341f0758290e04217111e1623ba70b37a0ed",
+      "bytes": 869918
+    }
+  ],
+  "created_utc": "2026-11-16T15:33:40.153000+00:00",
+  "no_upstream_code_executed": true,
+  "no_checkpoints_included": true,
+  "new_training_or_shock_solver_run": false
+}

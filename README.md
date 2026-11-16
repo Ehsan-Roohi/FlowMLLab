@@ -39,6 +39,7 @@ Each week has a guide, a notebook link and its lecture or companion reading.
 | [9](weeks/week09/README.md) | Geometry-dependent and shock-aligned operators | [Week 9 labs](notebooks/week09/README.md) | [Lecture 9](lectures/week09_rarefied_deeponet_case_studies.pdf) |
 | [10](weeks/week10/README.md) | Cavity and mono/diatomic shock reproduction | [Week 10 lab](notebooks/week10/README.md) | [Lecture 10](lectures/week10_dsmc_data_driven_surrogates.pdf) |
 | [10.1](weeks/week10_1/README.md) | Molecular scattering and DSMC cylinder contours | [CPU scattering lab](notebooks/week10_1/W10_1_Collision_Map_Surrogate_Audit.ipynb) · [Research fields](results/abinitio_deeponet_cylinder/README.md) | [Lecture companion](lectures/week10_1_abinitio_collision_deeponet.md) |
+| [10.2](weeks/week10_2/README.md) | One-dimensional kinetic shocks: BGK, Shakhov and PINN/DVM comparison | [Kinetic-shock lab](notebooks/week10_2/W10_2_BGK_Shakhov_Shock_PINN_DVM.ipynb) | [Lecture 10.2](lectures/week10_2_bgk_shakhov_shock_pinn_dvm.pdf) |
 | [11](weeks/week11/README.md) | Shock/vortex identification; alpha and pressure methods for vapor clouds | [Week 11 lab](notebooks/week11/README.md) | [Lecture 11](lectures/week11_shock_vortex_identification.pdf) |
 | [12](weeks/week12/README.md) | Additive moments, observation-conditioned reconstruction and support | [Week 12 lab](notebooks/week12/README.md) | [Lecture 12](lectures/week12_dsmc_moment_reconstruction.pdf) |
 | [13](weeks/week13/README.md) | Streamfunction PINNs: build one on CPU, then audit deep-cavity and four-case research runs | [Week 13 lab](notebooks/week13/README.md) | [Lecture 13](lectures/week13_rectangular_cavity_pinn.pdf) |
@@ -667,6 +668,27 @@ solve a reduced Lennard-Jones scattering problem, check analytic limits and
 audit a fitted surrogate using transport integrals. This executable analog is
 separate from the Jäger research fields above; it does not reproduce the
 article's potential or network.
+
+### Week 10.2 — Kinetic shocks: what do the learned moments miss?
+
+**[Open Week 10.2: lecture, notebook and guide](weeks/week10_2/README.md)**
+
+**Problem:** Determine whether accurate density and temperature also imply accurate heat flux, stress and fourth-order moments.<br>
+**Computation:** Fresh CPU collision and conservation exercises, followed by rescoring saved BGK/Shakhov PINN and matched DVM profiles.<br>
+**Learning method:** Compare equation-trained and moment-supervised models from [Roohi's kinetic-shock study](https://arxiv.org/abs/2605.29211v2).
+
+<img src="results/week10_2_kinetic_shock/supervised_bgk_profiles.png" width="760" alt="Matched BGK shock-tube density, temperature and signed higher moments: DVM, five-field S0, final eight-moment and equation-trained predictions">
+
+All curves use the same 399 comparison nodes and 6400-cell DVM reference.
+Five-field supervision can leave large fourth-order errors. Eight-moment
+supervision improves that state, while equation training remains more accurate
+for several nonequilibrium moments. The notebook also checks small tail signs
+that global error norms can hide. Training/reference roles are documented;
+these saved results are not a new training run or a held-out generalization test.
+
+[Physical profiles and scores](results/week10_2_kinetic_shock/README.md) ·
+[Seven numerical investigations](notebooks/week10_2/README.md) ·
+[Data provenance](data/week10_2_kinetic_shock/README.md)
 
 ### Week 11 — Shock and vortex identification
 

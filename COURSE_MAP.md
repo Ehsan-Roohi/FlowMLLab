@@ -50,8 +50,9 @@ Every module links to its notebook. The [notebook launcher](notebooks/README.md)
 | [10B](notebooks/week10/W10_DSMC_Data_Driven_Surrogates_Student.ipynb) | Rarefied-cavity parameter synthesis | Reproduce complete held-out fields at $Kn=0.05$ and $0.5$ for two lid speeds | Shared contour scales, normalized RMSE denominators, profiles, and higher-moment diagnosis |
 | [10C](notebooks/week10/W10_DSMC_Data_Driven_Surrogates_Student.ipynb) | Mono/diatomic shock operators | Fit POD trunks and Mach branches; compare interpolation and one-sided extrapolation | Density/velocity/temperature profiles; translational overshoot; rotational lag; fixed error gates |
 | [10.1](notebooks/week10_1/W10_1_Collision_Map_Surrogate_Audit.ipynb) | Classical scattering, surrogate audit and a separate research companion | Solve a reduced Lennard-Jones collision map on CPU; inspect author-supplied Jäger cylinder fields separately | Analytic deflection checks and transport-integral errors; Lennard-Jones is not the article potential; asynchronous research contours do not establish speedup or convergence |
+| [10.2](notebooks/week10_2/W10_2_BGK_Shakhov_Shock_PINN_DVM.ipynb) | BGK/Shakhov shocks and lower-/higher-moment consistency | Compute collision moments and jump fluxes on CPU; compare saved PINN/DVM profiles and supervision routes | Seven investigations: quadrature, conservation, identifiability, signed tails, seed effects and sampling sensitivity; fresh calculations are separate from retained predictions |
 
-Lettered rows are learning threads inside one notebook: 8A is Week 8 Lab 1, 8B and 8C are Week 8 Lab 2, 9A and 9B are Week 9 Lab 1, 9C is Week 9 Lab 2, and 10A to 10C are the Week 10 notebook. "9 Lab 3" and "10.1" are separate notebooks.
+Lettered rows are learning threads inside one notebook: 8A is Week 8 Lab 1, 8B and 8C are Week 8 Lab 2, 9A and 9B are Week 9 Lab 1, 9C is Week 9 Lab 2, and 10A to 10C are the Week 10 notebook. "9 Lab 3", "10.1" and "10.2" are separate notebooks.
 
 ## Research applications and final PINN module
 
@@ -99,7 +100,7 @@ Take the extension weeks after the core; none replaces the Weeks 5 to 6 project.
 - Weeks 7, 7.1, 7.2, 7.3 and 7.4: unsteady external flow (LBM cylinder), the rarefied hypersonic cylinder with operator learning, sparse-sensor state estimation, self-supervised reconstruction, and diverse-wake transfer to lift with an explicit target-label budget.
 - Week 8: compressible-flow branches, exact-to-ML comparisons and a qualified multidimensional-CFD bridge.
 - Week 9 (Labs 1 to 3): geometry-dependent and shock-aligned rarefied-flow operators, and the data-alignment audit that precedes any operator fit.
-- Weeks 10 and 10.1: an end-to-end DSMC article reproduction and the collision-map surrogate companion.
+- Weeks 10, 10.1 and 10.2: DSMC article reproduction, collision-map surrogates, then BGK/Shakhov collision physics and kinetic PINN/DVM moment comparisons.
 - Weeks 11 and 12: feature identification (shocks, vortices, vapour clouds) and noisy-moment reconstruction.
 - Week 16: data-based supersonic shape optimization; new CFD needs Gmsh/SU2. NASA reference convergence/physical checks remain a separate deferred extension.
 - Weeks 13 to 15: physics-informed networks for the cavity, RANS closures, and geometry-aware neural operators. Week 14 needs a separate environment (see its README); Week 15 runs from a full checkout.

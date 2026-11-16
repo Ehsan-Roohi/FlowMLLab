@@ -260,6 +260,18 @@
       "keywords": "collision scattering Lennard Jones quadrature"
     },
     {
+      "id": "10.2",
+      "title": "One-dimensional kinetic shocks: BGK, Shakhov, PINNs and DVM",
+      "page": "weeks/week10_2/README.md",
+      "setup": "notebooks/week10_2/README.md",
+      "prerequisites": "Weeks 2, 3, 8 and 10: data roles, Maxwellians and moments, shock jumps and profile validation. The PINN introduction is self-contained.",
+      "mode": "Fresh CPU collision/moment calculations and retained PINN/DVM profile rescoring; no research training or spatial shock solve.",
+      "compute_estimate": "Allow a few minutes for Run All after setup; see the measured execution receipt for the tested host.",
+      "estimate_status": "Planning allowance; the current measured kernel execution is recorded separately in results/week10_2_kinetic_shock/execution.json.",
+      "execution_status": "All code cells executed in a fresh local CPU kernel. Colab bootstrap is supplied; a hosted Colab Run All has not been claimed.",
+      "keywords": "BGK Shakhov kinetic shock PINN DVM heat flux stress higher moments conservation quadrature SSBroyden"
+    },
+    {
       "id": "11",
       "title": "Shock and vortex identification",
       "page": "weeks/week11/README.md",

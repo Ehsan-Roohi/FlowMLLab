@@ -9,9 +9,9 @@
     "historical_baseline": "At review base c9562b8: 34 active PDFs / 444 pages; 51 student notebooks including one historical companion. Current counts below are regenerated and may change."
   },
   "counts": {
-    "active_lecture_pdfs": 37,
-    "lecture_pages": 646,
-    "student_notebooks": 62,
+    "active_lecture_pdfs": 38,
+    "lecture_pages": 666,
+    "student_notebooks": 63,
     "historical_student_companions": 1,
     "optional_notebooks": 1,
     "optional_pdfs": 1
@@ -112,6 +112,10 @@
     {
       "path": "lectures/week10_1_collision_map_audit.pdf",
       "pages": 1
+    },
+    {
+      "path": "lectures/week10_2_bgk_shakhov_shock_pinn_dvm.pdf",
+      "pages": 20
     },
     {
       "path": "lectures/week10_dsmc_data_driven_surrogates.pdf",
@@ -333,6 +337,10 @@
     },
     {
       "path": "notebooks/week10_1/W10_1_Collision_Map_Surrogate_Audit.ipynb",
+      "role": "student"
+    },
+    {
+      "path": "notebooks/week10_2/W10_2_BGK_Shakhov_Shock_PINN_DVM.ipynb",
       "role": "student"
     },
     {
@@ -674,6 +682,18 @@
       "estimate_status": "Planning estimate carried from course guides, or explicitly unmeasured; not a timing measurement of this revision.",
       "execution_status": "Colab link is an entry point, not a guarantee of a fresh hosted Run All.",
       "keywords": "collision scattering Lennard Jones quadrature"
+    },
+    {
+      "id": "10.2",
+      "title": "One-dimensional kinetic shocks: BGK, Shakhov, PINNs and DVM",
+      "page": "weeks/week10_2/README.md",
+      "setup": "notebooks/week10_2/README.md",
+      "prerequisites": "Weeks 2, 3, 8 and 10: data roles, Maxwellians and moments, shock jumps and profile validation. The PINN introduction is self-contained.",
+      "mode": "Fresh CPU collision/moment calculations and retained PINN/DVM profile rescoring; no research training or spatial shock solve.",
+      "compute_estimate": "Allow a few minutes for Run All after setup; see the measured execution receipt for the tested host.",
+      "estimate_status": "Planning allowance; the current measured kernel execution is recorded separately in results/week10_2_kinetic_shock/execution.json.",
+      "execution_status": "All code cells executed in a fresh local CPU kernel. Colab bootstrap is supplied; a hosted Colab Run All has not been claimed.",
+      "keywords": "BGK Shakhov kinetic shock PINN DVM heat flux stress higher moments conservation quadrature SSBroyden"
     },
     {
       "id": "11",

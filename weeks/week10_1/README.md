@@ -1,6 +1,6 @@
 # Week 10.1 — Ab initio collision DeepONet
 
-[Course home](../../README.md) · [All weeks](../README.md) · [← Week 10](../week10/README.md) · [Week 11 →](../week11/README.md)
+[Course home](../../README.md) · [All weeks](../README.md) · [← Week 10](../week10/README.md) · [Week 10.2 →](../week10_2/README.md)
 
 Molecular scattering and DSMC cylinder contours.
 
@@ -50,4 +50,4 @@ article's potential or network.
 
 ---
 
-[Course home](../../README.md) · [All weeks](../README.md) · [← Week 10](../week10/README.md) · [Week 11 →](../week11/README.md)
+[Course home](../../README.md) · [All weeks](../README.md) · [← Week 10](../week10/README.md) · [Week 10.2 →](../week10_2/README.md)

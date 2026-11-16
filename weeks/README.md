@@ -29,6 +29,7 @@ Each page brings the topic image, lecture, notebooks and learning guide together
 | [Week 9](week09/README.md) | Rarefied micro-step and micro-nozzle |
 | [Week 10](week10/README.md) | DSMC cavity and molecular shocks |
 | [Week 10.1](week10_1/README.md) | Ab initio collision DeepONet |
+| [Week 10.2](week10_2/README.md) | One-dimensional kinetic shocks: BGK, Shakhov, PINNs and DVM |
 | [Week 11](week11/README.md) | Shock and vortex identification |
 | [Week 12](week12/README.md) | DSMC moment reconstruction |
 | [Week 13](week13/README.md) | Rectangular-cavity PINN research audit |

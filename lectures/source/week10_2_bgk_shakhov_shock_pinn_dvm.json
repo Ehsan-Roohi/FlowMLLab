@@ -1,0 +1,800 @@
+{
+  "title": "One-dimensional kinetic shocks: BGK/Shakhov PINNs and DVM",
+  "subtitle": "FlowMLLab Week 10.2 | English lecture notes | Ehsan Roohi",
+  "paper": {
+    "title": "Physics-informed neural networks (PINNs) for kinetic shock waves: simultaneous accuracy of lower- and higher-order moments, with and without moment supervision",
+    "url": "https://arxiv.org/abs/2605.29211v2",
+    "repository": "https://github.com/Ehsan-Roohi/PINNs-DVM",
+    "commit": "add5388f7da5f7eace95fff97d34d6ed58b90169"
+  },
+  "pages": [
+    {
+      "title": "The question: can correct bulk fields hide an incorrect distribution?",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "A kinetic model describes how molecules populate velocity space. Density, velocity and temperature are only a few integrals of that distribution. Two predictions can agree on these bulk fields and disagree strongly on heat flux, stress or fourth-order moments. This lecture asks how to detect that disagreement, and what can be concluded from a physics-informed neural network (PINN) when its available numerical reference also changes under refinement."
+        },
+        {
+          "type": "figure",
+          "path": "results/week10_2_kinetic_shock/kinetic_model_schematic.png",
+          "caption": "One physical coordinate and three molecular velocity coordinates. BGK and Shakhov are alternative collision models; a discrete-velocity method (DVM) and a PINN are numerical approaches to a specified model. Match the model, case, units, time and reference."
+        },
+        {
+          "type": "p",
+          "text": "The companion notebook combines <b>fresh CPU quadrature experiments</b> with <b>retained research shock predictions</b>. Its tables have fixed roles: A identifies cases and data; B checks steady jumps and fluxes; C tests moment identifiability; D audits collision quadrature; E compares transient profiles; F examines stationary optimization stages; G distinguishes three equation-trained or data-assisted constructions."
+        },
+        {
+          "type": "p",
+          "text": "Weeks 3 and 8 supply kinetic moments and gas-dynamic jumps. Week 10 supplies the habit of tracing a prediction to its dataset. This unit adds deterministic kinetic equations and distribution-level neural approximation; the existing DSMC lessons remain separate."
+        }
+      ]
+    },
+    {
+      "title": "One-dimensional flow still has three velocity dimensions",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "The physical position is x and time is t. The molecular velocity is the three-component vector v. The mean flow points along x, while molecules retain transverse motion. Eliminating transverse energy would change the gas model. Throughout this lecture the variables are nondimensional, the gas is monatomic, and its heat-capacity ratio is 5/3."
+        },
+        {
+          "type": "equation",
+          "latex": "\\mathbf{c}=\\mathbf{v}-u\\mathbf{e}_x,\\qquad e=|\\mathbf{c}|^2",
+          "explanation": "The peculiar velocity c measures molecular motion relative to the local mean; e is the squared peculiar speed, not the specific internal energy."
+        },
+        {
+          "type": "equation",
+          "latex": "\\rho=\\int f\\,\\mathrm{d}^3v,\\quad \\rho u=\\int v_x f\\,\\mathrm{d}^3v,\\quad 3\\rho T=\\int e f\\,\\mathrm{d}^3v",
+          "explanation": "All velocity integrals refer to the complete three-dimensional velocity domain unless a numerical truncation is stated."
+        },
+        {
+          "type": "equation",
+          "latex": "p=\\rho T,\\qquad \\gamma=\\frac{5}{3}",
+          "explanation": "The nondimensional gas constant is one. The equilibrium internal energy per unit mass is 3T/2."
+        },
+        {
+          "type": "equation",
+          "latex": "\\mathcal{M}[f]=\\frac{\\rho}{(2\\pi T)^{3/2}}\\exp\\!\\left(-\\frac{e}{2T}\\right)",
+          "explanation": "The Maxwellian uses the density, mean velocity and temperature of f, computed consistently with the same quadrature."
+        },
+        {
+          "type": "p",
+          "text": "A distribution has units and a normalization convention even after nondimensionalization. The source uses p = ρT; importing a dimensional pressure or a temperature with a different thermal-speed scaling would silently change the target. Table A records the normalization and collision model before any error is calculated."
+        },
+        {
+          "type": "p",
+          "text": "Integrate a Maxwellian as a first test. Recover its prescribed density, velocity and temperature, then confirm that central deviatoric stress, heat flux and the higher nonequilibrium moments vanish. A finite velocity grid approaches these identities with quadrature and domain refinement."
+        }
+      ]
+    },
+    {
+      "title": "BGK and Shakhov describe different relaxation physics",
+      "blocks": [
+        {
+          "type": "equation",
+          "latex": "\\partial_t f+v_x\\partial_x f=\\frac{\\mathcal{T}[f]-f}{\\tau}",
+          "explanation": "Transport is shared by both models. The target distribution and relaxation time define the collision model."
+        },
+        {
+          "type": "equation",
+          "latex": "\\mathcal{T}_{\\mathrm{BGK}}[f]=\\mathcal{M}[f]",
+          "explanation": "BGK relaxes toward the local Maxwellian and has model Prandtl number Pr = 1."
+        },
+        {
+          "type": "equation",
+          "latex": "\\mathcal{T}_{\\mathrm{S}}[f]=\\mathcal{M}[f]\\left[1+\\frac{(1-\\mathrm{Pr})q c_x}{5\\rho T^2}\\left(\\frac{e}{T}-5\\right)\\right]",
+          "explanation": "The Shakhov correction changes the heat-flux relaxation rate. The monatomic Shakhov cases use Pr = 2/3."
+        },
+        {
+          "type": "table",
+          "headers": [
+            "Case family in the source",
+            "Relaxation time"
+          ],
+          "rows": [
+            [
+              "Stationary Shakhov, Mach 2–5",
+              "μ = T; τ = μ/p = 1/ρ"
+            ],
+            [
+              "Stationary BGK, Mach 6, 7, 8 and 12",
+              "Constant τ = 1"
+            ],
+            [
+              "Transient BGK and Shakhov tube cases",
+              "Constant τ = Kn = 1"
+            ]
+          ],
+          "widths": [
+            0.58,
+            0.42
+          ]
+        },
+        {
+          "type": "p",
+          "text": "These are three declared case settings, not interchangeable definitions of τ. A change from constant relaxation time to 1/ρ changes the spatial collision scale. Comparing solutions with different τ laws would mix modeling and numerical error."
+        },
+        {
+          "type": "p",
+          "text": "The Shakhov target is a Maxwellian multiplied by a polynomial correction. It can be negative in velocity tails when q is nonzero. Record this behavior; do not silently clip negative target values. Clipping changes the collision moments and can destroy the intended conservation and heat-relaxation identities."
+        },
+        {
+          "type": "p",
+          "text": "At Pr = 1 the Shakhov correction vanishes, giving a direct check against BGK. At equilibrium q = 0, both targets reduce to the same Maxwellian. These identities support a small CPU exercise independent of neural shock training."
+        }
+      ]
+    },
+    {
+      "title": "Reduced distributions: retain the transverse information you need",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "For planar flow, transverse velocity integrals can be represented by three functions of x, t and the remaining velocity v = v<sub>x</sub>. Let r<super>2</super> = v<sub>y</sub><super>2</super> + v<sub>z</sub><super>2</super>. The definitions below have <b>no factor of one half in h</b>."
+        },
+        {
+          "type": "equation",
+          "latex": "g=\\int f\\,\\mathrm{d}v_y\\mathrm{d}v_z,\\quad h=\\int r^2f\\,\\mathrm{d}v_y\\mathrm{d}v_z,\\quad k=\\int r^4f\\,\\mathrm{d}v_y\\mathrm{d}v_z",
+          "explanation": "g retains mass, h retains the transverse second moment, and k retains transverse fourth-order information."
+        },
+        {
+          "type": "figure",
+          "path": "results/week10_2_kinetic_shock/moment_hierarchy.png",
+          "caption": "Moment dependency map. The g and h reductions determine bulk fields, heat flux, normal stress, the selected third moment and the combined fourth-order diagnostic S. Separate R and Δ additionally require k."
+        },
+        {
+          "type": "equation",
+          "latex": "g_M=\\frac{\\rho e^{-c^2/(2T)}}{\\sqrt{2\\pi T}},\\quad h_M=2Tg_M,\\quad k_M=8T^2g_M",
+          "explanation": "Here c = v − u. These Maxwellian reductions integrate the transverse velocity plane to infinity."
+        },
+        {
+          "type": "p",
+          "text": "Knowing g and h does not generally determine k. Setting k = 8T<super>2</super>g would impose an additional transverse-Maxwellian assumption, not recover information from g and h. Table C constructs two positive distributions that expose the distinction."
+        },
+        {
+          "type": "p",
+          "text": "The analytic infinite-domain reductions differ from the finite rectangular transverse sums used in the transient implementation. Preserve the source quadrature when reproducing a saved result; a change of integration domain is a numerical experiment that must be identified."
+        }
+      ]
+    },
+    {
+      "title": "Signed central moments and reduced Shakhov targets",
+      "blocks": [
+        {
+          "type": "equation",
+          "latex": "\\rho=\\int g\\,\\mathrm{d}v,\\quad \\rho u=\\int vg\\,\\mathrm{d}v,\\quad 3\\rho T=\\int(c^2g+h)\\,\\mathrm{d}v",
+          "explanation": "Recover the mean first; central moments must use the same u in every integrand."
+        },
+        {
+          "type": "equation",
+          "latex": "\\sigma=\\frac{1}{3}\\int(2c^2g-h)\\,\\mathrm{d}v,\\qquad q=\\frac{1}{2}\\int(c^3g+ch)\\,\\mathrm{d}v",
+          "explanation": "σ uses the kinetic central-moment sign convention and can have either sign. The Cauchy viscous-stress convention reverses that sign. Positive q denotes heat flux in the positive x direction."
+        },
+        {
+          "type": "equation",
+          "latex": "m=\\frac{1}{5}\\int(2c^3g-3ch)\\,\\mathrm{d}v",
+          "explanation": "m denotes m<sub>xxx</sub> = ∫[c<sub>x</sub><super>3</super> − (3/5)c<sub>x</sub> e]f d<super>3</super>v; it is not simply the raw third moment."
+        },
+        {
+          "type": "p",
+          "text": "For infinite transverse integration, define A and use it to reduce the Shakhov target. The transverse-energy target is not a simple multiple of the mass target."
+        },
+        {
+          "type": "equation",
+          "latex": "A=\\frac{(1-\\mathrm{Pr})qc}{5\\rho T^2}",
+          "explanation": "A depends on the remaining velocity through c."
+        },
+        {
+          "type": "equation",
+          "latex": "g_S=g_M[1+A(c^2/T-3)]",
+          "explanation": "The mass reduction has the constant −3 in its correction."
+        },
+        {
+          "type": "equation",
+          "latex": "h_S=2Tg_M[1+A(c^2/T-1)],\\quad k_S=8T^2g_M[1+A(c^2/T+1)]",
+          "explanation": "The h and k constants are respectively −1 and +1, from transverse Gaussian moment integration."
+        },
+        {
+          "type": "p",
+          "text": "A sign error in σ can be hidden by plotting absolute values. A missing factor in h alters temperature and heat flux. The notebook therefore reports signed profiles and checks moment definitions before interpreting a model ranking."
+        }
+      ]
+    },
+    {
+      "title": "Fourth-order moments and a positive counterexample",
+      "blocks": [
+        {
+          "type": "equation",
+          "latex": "R=\\frac{1}{3}\\int(2c^4g+c^2h-k)\\,\\mathrm{d}v-7T\\sigma",
+          "explanation": "R removes the equilibrium-coupled deviatoric contribution."
+        },
+        {
+          "type": "equation",
+          "latex": "\\Delta=\\int(c^4g+2c^2h+k)\\,\\mathrm{d}v-15\\rho T^2",
+          "explanation": "Δ measures the excess contracted fourth moment. R and Δ vanish for a Maxwellian."
+        },
+        {
+          "type": "equation",
+          "latex": "S=R+\\frac{\\Delta}{3}=\\int(c^4g+c^2h)\\,\\mathrm{d}v-7T\\sigma-5\\rho T^2",
+          "explanation": "The k terms cancel in S. Agreement in S does not establish separate agreement in R and Δ."
+        },
+        {
+          "type": "p",
+          "text": "Construct g as a standard normal distribution. In case A use a transverse two-dimensional Gaussian with temperature 1. In case B use an equal mixture of transverse Gaussians with temperatures 0.5 and 1.5. Both complete distributions are positive and their transverse means are zero."
+        },
+        {
+          "type": "table",
+          "headers": [
+            "Quantity",
+            "Case A",
+            "Case B"
+          ],
+          "rows": [
+            [
+              "ρ, u, T",
+              "1, 0, 1",
+              "1, 0, 1"
+            ],
+            [
+              "h",
+              "2g",
+              "2g"
+            ],
+            [
+              "k",
+              "8g",
+              "10g"
+            ],
+            [
+              "σ, q, m, S",
+              "0, 0, 0, 0",
+              "0, 0, 0, 0"
+            ],
+            [
+              "R",
+              "0",
+              "−2/3"
+            ],
+            [
+              "Δ",
+              "0",
+              "2"
+            ]
+          ],
+          "widths": [
+            0.36,
+            0.32,
+            0.32
+          ]
+        },
+        {
+          "type": "p",
+          "text": "Table C must recover this result by integration. It is a derived teaching counterexample, not a saved shock simulation. It proves that g and h alone do not identify both fourth-order moments. Adding two target names to a report cannot restore missing distributional information."
+        }
+      ]
+    },
+    {
+      "title": "Stationary shocks: jumps, incoming states and conserved fluxes",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "For a steady normal shock, upstream density and temperature equal one. The upstream Mach number M determines the equilibrium states through the monatomic Rankine–Hugoniot relations."
+        },
+        {
+          "type": "equation",
+          "latex": "\\rho_1=T_1=1,\\quad u_1=M\\sqrt{5/3},\\quad \\rho_2=\\frac{4M^2}{M^2+3}",
+          "explanation": "The downstream density follows from conservation across the shock."
+        },
+        {
+          "type": "equation",
+          "latex": "u_2=\\frac{u_1}{\\rho_2},\\qquad T_2=\\frac{5M^2-1}{4\\rho_2}",
+          "explanation": "The end states do not specify the internal kinetic structure or shock thickness."
+        },
+        {
+          "type": "equation",
+          "latex": "J_m=\\rho u,\\qquad J_p=\\rho u^2+\\rho T+\\sigma",
+          "explanation": "Mass and momentum fluxes are spatially constant in the steady problem."
+        },
+        {
+          "type": "equation",
+          "latex": "J_E=\\frac{1}{2}\\rho u^3+\\frac{5}{2}\\rho Tu+u\\sigma+q",
+          "explanation": "The energy flux contains signed stress-work and heat-flux terms."
+        },
+        {
+          "type": "table",
+          "headers": [
+            "Mach-2 quantity",
+            "Expected value"
+          ],
+          "rows": [
+            [
+              "u₁; ρ₂",
+              "2.5819888975; 2.2857142857"
+            ],
+            [
+              "u₂; T₂",
+              "1.1296201426; 2.0781250000"
+            ],
+            [
+              "J<sub>m</sub>; J<sub>p</sub>",
+              "2.5819888975; 7.6666666667"
+            ],
+            [
+              "J<sub>E</sub>",
+              "15.0616019019"
+            ]
+          ],
+          "widths": [
+            0.43,
+            0.57
+          ]
+        },
+        {
+          "type": "p",
+          "text": "Table B recomputes these targets. Report each profile flux defect as J/J<sub>target</sub> − 1, or multiply by 100 when explicitly reporting percent. Small flux defects are necessary consistency evidence. They do not establish agreement of the complete velocity distribution or its higher moments with DVM."
+        },
+        {
+          "type": "p",
+          "text": "Incoming populations use the appropriate far-field equilibrium: positive velocities enter from the left and negative velocities from the right. This velocity-dependent condition differs from prescribing all populations at both ends."
+        }
+      ]
+    },
+    {
+      "title": "The transient tube is a different experiment",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "The transient cases start from a smooth local-Maxwellian transition on x in [−0.5, 0.5]. Both sides initially have zero mean velocity. This is not a stationary shock initialized at Rankine–Hugoniot end states."
+        },
+        {
+          "type": "equation",
+          "latex": "H(x)=\\frac{1+\\tanh(20x)}{2}",
+          "explanation": "H selects the right-hand state through a smooth transition."
+        },
+        {
+          "type": "equation",
+          "latex": "(\\rho,u,T)=(1-H)(1,0,1)+H(0.125,0,0.8)",
+          "explanation": "The initial distribution is the Maxwellian associated with these local fields."
+        },
+        {
+          "type": "p",
+          "text": "The source uses constant τ = Kn = 1 and final time t = 0.02. Inflow is prescribed only for velocities entering the domain. Transient quadrature uses 48 × 20 × 20 uniform rectangular velocity nodes in [−7, 7]<super>3</super>, distinct from the Gauss–Legendre teaching experiment in Table D."
+        },
+        {
+          "type": "equation",
+          "latex": "\\partial_t\\mathbf{U}+\\partial_x\\mathbf{F}=0",
+          "explanation": "The invariants give a time-dependent conservation law. Spatially constant flux is not the correct transient test."
+        },
+        {
+          "type": "equation",
+          "latex": "\\mathbf{U}=\\left(\\rho,\\rho u,\\frac{1}{2}\\rho u^2+\\frac{3}{2}\\rho T\\right)",
+          "explanation": "A transient finite-volume check balances the change of integrated U against boundary flux over a time interval."
+        },
+        {
+          "type": "p",
+          "text": "The elapsed time is only 0.02 relaxation times. The characteristic collision-source weight is at most 1 − exp(−0.02) = 0.0198013. Transport dominates this short experiment. Nearly coincident BGK and Shakhov profiles do not establish equivalent collision models."
+        },
+        {
+          "type": "p",
+          "text": "The retained DVM uses upwind transport with frozen exponential relaxation and CFL 0.4. Source comparisons include 1600/3200 spatial references and a later 6400-cell BGK reference. Grid identity is part of every Table E or G comparison."
+        }
+      ]
+    },
+    {
+      "title": "The transient network predicts the collision source",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "The transient PINN takes normalized inputs (t/t<sub>f</sub>, 2x), uses two 32-unit tanh hidden layers, and outputs raw quantities r<sub>ρ</sub>, r<sub>u</sub>, r<sub>T</sub>, plus r<sub>q</sub> for Shakhov. It does <b>not</b> directly output f, g or h. The source fields use the initial profiles ρ₀(x), T₀(x) and the time factor a."
+        },
+        {
+          "type": "equation",
+          "latex": "a=t/t_f,\\quad \\rho_\\theta=\\rho_0e^{a r_\\rho/2},\\quad u_\\theta=a r_u,\\quad T_\\theta=T_0e^{a r_T/2}",
+          "explanation": "This lifting preserves the initial macroscopic fields; the density and temperature source fields are positive."
+        },
+        {
+          "type": "equation",
+          "latex": "q_\\theta=a\\rho_0T_0^{3/2}r_q",
+          "explanation": "The additional Shakhov output supplies the target heat flux. BGK does not need this output."
+        },
+        {
+          "type": "equation",
+          "latex": "f_\\theta=e^{-\\ell/\\tau}f_{\\mathrm{in}}+\\frac{1}{\\tau}\\int_{t-\\ell}^{t}e^{-(t-s)/\\tau}\\mathcal{T}_\\theta(s)\\,\\mathrm{d}s",
+          "explanation": "Along x(s) = x − v<sub>x</sub>(t − s), ℓ ends at the initial plane or the incoming boundary. The source integral uses 16 Gauss–Legendre time nodes."
+        },
+        {
+          "type": "p",
+          "text": "The loss matches moments integrated from reconstructed f to the source network moments: density, streamwise momentum and energy, with heat-flux consistency added for Shakhov. Reported endpoint observables are integrated from f; they are not simply the source network outputs."
+        },
+        {
+          "type": "p",
+          "text": "The stationary M2 construction is different: a three-layer, 64-unit tanh network uses scaled position, a localized position feature, streamwise velocity, transverse squared speed and a prescribed blend s(x). Its bounded scalar correction modifies B = (1 − s)M₁ + sM₂. B is positive, but the signed multiplicative correction does not guarantee a nonnegative distribution."
+        },
+        {
+          "type": "p",
+          "text": "These representation choices explain why a small moment-consistency loss can coexist with distributional defects. Preserve the actual source architecture when interpreting its gates."
+        }
+      ]
+    },
+    {
+      "title": "Loss functions and the roles of reference data",
+      "blocks": [
+        {
+          "type": "equation",
+          "latex": "\\mathcal{R}_\\theta=\\partial_t f_\\theta+v_x\\partial_x f_\\theta-\\frac{\\mathcal{T}[f_\\theta]-f_\\theta}{\\tau}",
+          "explanation": "A direct distribution PINN can use this differential residual, with automatic differentiation. A steady residual omits the time derivative; the transient source instead uses characteristic reconstruction and moment consistency."
+        },
+        {
+          "type": "equation",
+          "latex": "\\mathcal{L}=w_r\\mathcal{L}_r+w_b\\mathcal{L}_b+w_m\\mathcal{L}_m+w_d\\mathcal{L}_d",
+          "explanation": "Schematic terms: equation residual, initial/incoming boundaries, moment consistency and optional data supervision. Actual source stages retain their declared terms and weights."
+        },
+        {
+          "type": "equation",
+          "latex": "\\mathcal{L}_d=\\sum_a\\frac{1}{N_a}\\sum_i\\left[\\frac{M_a[f_\\theta](x_i,t_i)-y_{a,i}}{s_a}\\right]^2",
+          "explanation": "Every supervised moment has locations, targets, a scale s<sub>a</sub> and a count N<sub>a</sub>. Loss magnitude depends on these choices."
+        },
+        {
+          "type": "p",
+          "text": "<b>Equation-trained</b> means DVM targets are not fitting observations for that construction; it does not erase reference comparisons made during research. <b>Data-assisted</b> means numerical moment observations enter fitting. Those same observations cannot then be presented as independent validation."
+        },
+        {
+          "type": "p",
+          "text": "Five-field S0 supervises ρ, u, T, q and σ. The later eight-moment construction adds m, R and Δ. S is a derived ninth diagnostic. The final source records 160 observations for each bulk field and 42 for each of the five remaining moments: 690 observations. Its higher-moment window is [−0.104, 0.134]."
+        },
+        {
+          "type": "p",
+          "text": "Reference-derived scales and some full-profile acceptance guards also use reference information. Excluding observation-bracketing nodes reduces direct reuse, but neighboring numerical samples remain correlated. Tables A and G therefore record fitting, guard access and assessment separately."
+        }
+      ]
+    },
+    {
+      "title": "Optimization stages are trajectories, not a controlled ranking",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "A smaller final loss can result from additional updates, changed collocation points, changed quadrature, changed objectives or a better optimizer. Isolating an optimizer effect requires holding these other factors fixed and matching a declared compute budget. The retained stationary M2 sequence does not meet that design."
+        },
+        {
+          "type": "table",
+          "headers": [
+            "Stage",
+            "What is compared"
+          ],
+          "rows": [
+            [
+              "Adam, 20,000 updates",
+              "Earlier checkpoint of each seed trajectory"
+            ],
+            [
+              "SSBroyden, 500 updates",
+              "Continuation after Adam"
+            ],
+            [
+              "Split-half SSBroyden, 500 updates",
+              "Further continuation with changed sampling/quadrature and incoming gate"
+            ]
+          ],
+          "widths": [
+            0.42,
+            0.58
+          ]
+        },
+        {
+          "type": "p",
+          "text": "Table F retains source seeds 141001, 141002 and 141003. Evaluate each seed before averaging errors. The error of an averaged profile differs from the mean of individual errors because cancellations can reduce the former."
+        },
+        {
+          "type": "p",
+          "text": "Mean heat-flux error can improve while mean stress error worsens. Both belong in the conclusion. Avoid selecting the best-looking seed or reporting only the field that benefits from the final stage."
+        },
+        {
+          "type": "p",
+          "text": "The final M2 records pass flux, phase, quadrature and positive-macroscopic-field checks. All three nevertheless fail the projection and tail gates; two fail the kinetic gate. Several necessary physical checks do not establish complete acceptance."
+        },
+        {
+          "type": "p",
+          "text": "Characteristic repair is a separate intervention. In the paper’s M7 example, two deterministic characteristic updates improve an existing neural field without updating its weights. This demonstrates a hybrid correction, not additional neural training or an optimizer win."
+        },
+        {
+          "type": "p",
+          "text": "This lesson makes no fresh timing or speedup claim. Retained research cost and measured classroom execution time describe different computations."
+        }
+      ]
+    },
+    {
+      "title": "Measure errors on declared grids and retain their signs",
+      "blocks": [
+        {
+          "type": "equation",
+          "latex": "\\varepsilon_2(\\phi)=100\\frac{\\|\\phi_{\\mathrm{pred}}-\\phi_{\\mathrm{ref}}\\|_2}{\\|\\phi_{\\mathrm{ref}}\\|_2}",
+          "explanation": "An unweighted percent relative L2 on the stated samples. It reproduces a source metric only when the source uses this convention; the notebook teaching rescore instead uses the spatial integral below."
+        },
+        {
+          "type": "equation",
+          "latex": "\\varepsilon_{\\mathrm{trap}}(\\phi)=100\\sqrt{\\frac{\\int(\\phi_{\\mathrm{pred}}-\\phi_{\\mathrm{ref}})^2\\,\\mathrm{d}x}{\\int\\phi_{\\mathrm{ref}}^2\\,\\mathrm{d}x}}",
+          "explanation": "Tables E–G approximate both spatial integrals with trapezoidal weights on the declared common grid. Table G uses 399 common-overlap nodes without extrapolation."
+        },
+        {
+          "type": "equation",
+          "latex": "e_i=\\phi_{\\mathrm{pred},i}-\\phi_{\\mathrm{ref},i}",
+          "explanation": "Signed pointwise error locates improvement and deterioration; a norm alone cannot show their positions."
+        },
+        {
+          "type": "p",
+          "text": "For a moment that crosses zero, pointwise reference division creates artificial singularities. Use a declared global norm or physical amplitude for normalized errors and retain the physical signed profile. A small global norm can coexist with a wrong sign in a small-amplitude tail."
+        },
+        {
+          "type": "p",
+          "text": "Compare arrays on their actual shared support. If interpolation is required, identify which field is interpolated, onto which grid and over what overlap. Do not extrapolate outside the supplied domain and call the result measured coverage. The notebook common-overlap rescore is distinguished from the paper’s published assessment grid."
+        },
+        {
+          "type": "p",
+          "text": "Stationary shocks have a translational phase. A midpoint shift may remove location error, but changes the question. Report unshifted error and the shift before interpreting a centered comparison. A shift selected using the assessment reference uses target information."
+        },
+        {
+          "type": "equation",
+          "latex": "\\delta_\\rho=\\frac{\\rho_2-\\rho_1}{\\max_x|\\mathrm{d}\\rho/\\mathrm{d}x|}",
+          "explanation": "One explicit teaching thickness diagnostic. Declare the derivative estimate, grid, end states and units; this is not an automatically adopted paper metric."
+        },
+        {
+          "type": "p",
+          "text": "Thickness is sensitive to mesh and differentiation. A grid study holds model, domain, time and comparison definition fixed. Changing reference families as well as resolution does not isolate discretization error. This distinction matters when model error and reference-refinement differences have similar magnitudes."
+        }
+      ]
+    },
+    {
+      "title": "A fresh CPU audit of homogeneous collision physics",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "Table D integrates a positive mixture of three-dimensional Maxwellians. It checks the collision model with controllable velocity quadrature without solving a new spatial shock. The exact infinite-domain mixture has ρ = 1, u = 0.2, T = 1.19, σ = 0.56 and q = −1.071."
+        },
+        {
+          "type": "equation",
+          "latex": "f=0.7\\mathcal{M}(1,0.8,0.7)+0.3\\mathcal{M}(1,-1.2,1.4)",
+          "explanation": "Arguments are density, streamwise mean velocity and temperature. Each component has zero transverse mean."
+        },
+        {
+          "type": "equation",
+          "latex": "\\dot{\\sigma}=-\\sigma/\\tau,\\qquad \\dot{q}=-\\mathrm{Pr}\\,q/\\tau",
+          "explanation": "At homogeneous constant macroscopic state, stress relaxes at rate 1/τ and heat flux at rate Pr/τ."
+        },
+        {
+          "type": "figure",
+          "path": "results/week10_2_kinetic_shock/collision_rates.png",
+          "caption": "Analytic homogeneous relaxation, with model and normalization indicated. Table D supplies fresh quadrature checks of initial rates and invariant integrals. These curves are not new spatial shock predictions."
+        },
+        {
+          "type": "p",
+          "text": "At one relaxation time, σ/σ<sub>0</sub> = 0.367879 for both models. For q/q<sub>0</sub> the values are 0.367879 for BGK and 0.513417 for Shakhov. Negative initial q approaches zero from below, so its initial derivative is positive."
+        },
+        {
+          "type": "p",
+          "text": "Inspect the minimum Shakhov target and conserved collision moments as well as the rates. This distinguishes tail positivity from quadrature error and explains why clipping is not a neutral repair."
+        }
+      ]
+    },
+    {
+      "title": "Numerical investigations 1–3: exact targets before shocks",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "<b>Preliminary reading — Table A.</b> Classify each case by stationary/transient, BGK/Shakhov and equation-trained/data-assisted. Check source commit, τ law, reference grid and data role. Preserve unknown entries. This registry reading supports the seven investigations below."
+        },
+        {
+          "type": "list",
+          "items": [
+            "<b>Investigation 1 — Table B.</b> Set M = 2, γ = 5/3. Recover ρ₂ = 2.2857142857, u₂ = 1.1296201426, T₂ = 2.078125 and J<sub>E</sub> = 15.0616019019. Check all fluxes at both end states. Then omit uσ from the energy flux of one retained M2 profile. Compare the internal defect and explain why equilibrium jump checks alone miss this omission.",
+            "<b>Investigation 2 — Table C.</b> Integrate the positive constructions on page 6. Report ρ, u, T, h/g, k/g, σ, q, m, R, Δ and S. Identical g and h must yield (R, Δ) = (0, 0) and (−2/3, 2), with S = 0 in both.",
+            "<b>Investigation 3 — Table D.</b> Use the page-13 mixture, τ = 1, Gauss–Legendre orders [12, 20, 32], cutoffs [4, 6, 8] and Pr in [1, 2/3]: 18 combinations on [−V, V]<super>3</super>. Report computed moments, invariant integrals, stress/heat rates, target minimum and deviations from analytic values."
+          ]
+        },
+        {
+          "type": "table",
+          "headers": [
+            "Infinite-domain collision target",
+            "BGK",
+            "Shakhov"
+          ],
+          "rows": [
+            [
+              "Mass, momentum, total-energy rates",
+              "0, 0, 0",
+              "0, 0, 0"
+            ],
+            [
+              "Stress rate",
+              "−0.56",
+              "−0.56"
+            ],
+            [
+              "Heat-flux rate",
+              "+1.071",
+              "+0.714"
+            ]
+          ],
+          "widths": [
+            0.52,
+            0.24,
+            0.24
+          ]
+        },
+        {
+          "type": "p",
+          "text": "<b>Interpretation 1.</b> At fixed cutoff, does increasing order eliminate truncation error? Support your answer with two rows."
+        },
+        {
+          "type": "p",
+          "text": "<b>Interpretation 2.</b> If clipping removes a negative target tail, which conservation or relaxation integral changes? Decide whether the altered operator remains the declared Shakhov model."
+        }
+      ]
+    },
+    {
+      "title": "Transient BGK: similar profiles can conceal a mixed change",
+      "blocks": [
+        {
+          "type": "figure",
+          "path": "results/week10_2_kinetic_shock/tube_bgk_profiles.png",
+          "caption": "Transient BGK at t = 0.02 and constant τ = 1. Retained PINN predictions and the identified matched DVM reference are compared on their actual common support. The legend identifies methods and references."
+        },
+        {
+          "type": "p",
+          "text": "The paper’s 100-to-300-SSB continuation comparison against the same 3200-cell reference reduces heat-flux error from 0.410617% to 0.410026%. Stress error increases from 0.356950% to 0.360440%. The small changes have different directions."
+        },
+        {
+          "type": "p",
+          "text": "Table E recomputes each retained available field: ρ, u, T, q, σ, m, R, Δ and derived S. State the reference and samples beside the values. Do not combine the 3200-cell continuation statement with a later 6400-cell assessment as though only the network changed."
+        },
+        {
+          "type": "p",
+          "text": "First locate the transition, extrema and zero crossings. Then inspect where the prediction departs from the reference. Tiny global bulk-field errors cannot substitute for heat-flux or higher-moment assessment."
+        },
+        {
+          "type": "p",
+          "text": "This short-time case mainly tests characteristic transport with a small collision contribution. The homogeneous audit more clearly exhibits the BGK heat-relaxation rate."
+        }
+      ]
+    },
+    {
+      "title": "Transient Shakhov: match the model before comparing methods",
+      "blocks": [
+        {
+          "type": "figure",
+          "path": "results/week10_2_kinetic_shock/tube_shakhov_profiles.png",
+          "caption": "Transient Shakhov at t = 0.02, Pr = 2/3 and constant τ = 1. The DVM solves the same Shakhov model. This page has its own model-matched comparison."
+        },
+        {
+          "type": "p",
+          "text": "Against the same 3200-cell Shakhov reference, extending 100 to 300 SSB updates reduces q error from 0.412103% to 0.410056%, while σ error increases from 0.356831% to 0.360561%. Additional updates do not guarantee simultaneous improvement of all observables."
+        },
+        {
+          "type": "p",
+          "text": "The collision-source weight is below 0.02 at this final time, so differences from the preceding BGK page can be subtle. That agrees with the short timescale; it does not remove the Prandtl-number distinction."
+        },
+        {
+          "type": "p",
+          "text": "Table E keeps model labels separate. Compare signed q, σ and available higher moments against the Shakhov DVM on the declared overlap. Leave a missing source moment unavailable rather than deriving it from an assumed transverse Maxwellian."
+        },
+        {
+          "type": "p",
+          "text": "Table D connects this evidence with collision physics: at identical macroscopic state Shakhov relaxes q more slowly than BGK while their stress rates agree. Transport and the evolving local state make the spatial problem richer than that homogeneous identity."
+        }
+      ]
+    },
+    {
+      "title": "Stationary Mach 2: three seeds and incomplete physical acceptance",
+      "blocks": [
+        {
+          "type": "figure",
+          "path": "results/week10_2_kinetic_shock/m2_optimizer_profiles.png",
+          "caption": "Stationary Shakhov Mach 2, illustrated with seed 141001. The curves compare its Adam, SSB and split-half stages with matched DVM. The table below reports the mean of all three individual-seed errors. The last continuation changes accumulated computation and aspects of the numerical objective."
+        },
+        {
+          "type": "table",
+          "headers": [
+            "Stage",
+            "Mean q error (%)",
+            "Mean σ error (%)"
+          ],
+          "rows": [
+            [
+              "Adam 20,000",
+              "20.1871",
+              "16.5819"
+            ],
+            [
+              "SSB 500",
+              "2.11274",
+              "1.08211"
+            ],
+            [
+              "Split-half SSB 500",
+              "1.03734",
+              "1.27447"
+            ]
+          ],
+          "widths": [
+            0.42,
+            0.29,
+            0.29
+          ]
+        },
+        {
+          "type": "p",
+          "text": "These paper-reported values are means of three individual-seed errors, not the error of an ensemble-mean profile. The final continuation improves mean q but worsens mean σ. Table F retains seed rows to reveal whether this tradeoff is consistent across trajectories."
+        },
+        {
+          "type": "p",
+          "text": "All three final runs fail projection and tail gates; two also fail the kinetic gate. Flux, phase, quadrature and positive-macroscopic-field checks pass. The evidence supports a substantial but incomplete improvement under a staged workflow, not a successful all-gates solve or an isolated optimizer ranking."
+        }
+      ]
+    },
+    {
+      "title": "Supervision: identify S0, eight moments and equation training",
+      "blocks": [
+        {
+          "type": "figure",
+          "path": "results/week10_2_kinetic_shock/supervised_bgk_profiles.png",
+          "caption": "BGK teaching common-overlap rescore against the 6400-cell reference, without extrapolation. Legends distinguish equation-trained, five-field supervised S0 and final eight-moment data-assisted profiles. S0 comes from the stage0 export; model170 is a different eight-moment source object."
+        },
+        {
+          "type": "p",
+          "text": "The five-field S0 values below are the <b>paper’s full 6400-reference assessment</b>: q/σ errors are 2.8759%/3.0891%, while m/R/Δ errors are 105.88%/141.09%/138.64%. Its fourth-order profiles can have the wrong core sign. The final-versus-equation examples below instead use the paper’s <b>401-node matched grid</b>. Table G independently rescores all three methods on <b>399 common-overlap nodes with trapezoidal weights</b>."
+        },
+        {
+          "type": "p",
+          "text": "The final eight-moment data-assisted result reduces those failures, but q, σ, m, R and Δ remain less accurate than the equation-trained result on that matched reference. Better bulk-field errors do not establish uniform improvement."
+        },
+        {
+          "type": "p",
+          "text": "For example, final data-assisted versus equation-trained paper errors are 0.3306% versus 0.2051% in q, 0.6654% versus 0.1806% in σ, and 1.9655% versus 0.8535% in R. Table G includes all fields and source flags. The comparison describes retained constructions; it does not isolate supervision as a causal effect under equal budgets."
+        }
+      ]
+    },
+    {
+      "title": "Read failures, refinements and repairs as part of the result",
+      "blocks": [
+        {
+          "type": "list",
+          "items": [
+            "<b>Reference sensitivity.</b> The paper-reported 3200-to-6400 BGK difference is about 0.2048% for q, 0.1802% for σ and 0.8511% for R. Equation-trained errors against 6400 have similar magnitudes. This limits inference about error against an unknown continuum-in-space solution.",
+            "<b>Supervised acceptance.</b> The final eight-moment record retains paper_admission = false and all_criteria_pass = false. It used 35 updates in 40 attempts and stopped at the attempt cap. The physical E4 audit at 64 separately declared points and E8 at 64 unused points added after first assessment failed the 0.1% tolerance.",
+            "<b>Small tails matter.</b> The final data-assisted source reports a wrong stress sign for x &lt; −0.23 and wrong R/Δ signs for x &gt; 0.19 at amplitudes below 0.5% of their extrema. A global norm does not certify every local sign.",
+            "<b>Characteristic repair.</b> For stationary BGK M7, two characteristic updates reduce q/σ errors from 3.36838%/1.34126% to 0.41606%/0.43422%, with zero neural-weight updates. A boundary residual nevertheless increases. This is a hybrid correction with multiple diagnostics.",
+            "<b>Domain and reference.</b> M8 has a small core stress error after repair but 1.6681% on the full overlap. M12 error values vary with reference family; those comparisons are not a controlled grid-refinement sequence."
+          ]
+        },
+        {
+          "type": "p",
+          "text": "A defensible result states its model, domain, reference, observable, intervention and failed checks. Acknowledge useful improvement without converting it into a stronger claim than the evidence supports. These reported examples are reading evidence; the notebook does not regenerate M7, M8 or M12 shocks."
+        }
+      ]
+    },
+    {
+      "title": "Investigations 4–7 and a reproducible scientific claim",
+      "blocks": [
+        {
+          "type": "list",
+          "items": [
+            "<b>Investigation 4 — Table E.</b> For each transient model, report signed q and σ errors and the stated global norm on the declared common samples. Identify a continuation improvement and a deterioration. Explain why constant spatial energy flux is inappropriate at t = 0.02.",
+            "<b>Investigation 5 — Table F.</b> Compute each of the three seed errors at every stage, then their mean. Identify the heat-flux gain and stress regression. Distinguish mean individual errors from error of an averaged profile, and retain failed gates and optimization confounders.",
+            "<b>Investigation 6 — Density thickness.</b> Choose one M2 stage and its matched DVM. Subsample each retained density profile at strides 1, 2 and 4 over the common interval. Record sample counts, derivative convention, maximum density slope and δ<sub>ρ</sub>. Explain differences as sampling/differentiation sensitivity: these are not new CFD solutions or a solver mesh-refinement study.",
+            "<b>Investigation 7 — Table G.</b> Compare equation-trained, five-field S0 and final eight-moment BGK against the identified reference. Report eight moments plus derived S, global errors and signed tails. Audit observation/guard access, reference refinement and final admission flags. Write a short claim separating fresh CPU diagnostics from retained predictions."
+          ]
+        },
+        {
+          "type": "p",
+          "text": "<b>Primary reading.</b> Ehsan Roohi, <i>Physics-informed neural networks (PINNs) for kinetic shock waves: simultaneous accuracy of lower- and higher-order moments, with and without moment supervision</i>, arXiv:2605.29211v2, revised 13 November 2026. https://arxiv.org/abs/2605.29211v2"
+        },
+        {
+          "type": "p",
+          "text": "<b>Pinned source.</b> https://github.com/Ehsan-Roohi/PINNs-DVM — commit add5388f7da5f7eace95fff97d34d6ed58b90169. Relevant code families: shocktube, stationary_neural/M2, stationary_characteristic/portable and supervised_shocktube/supervised_base_eight_moment."
+        },
+        {
+          "type": "p",
+          "text": "The manifest records selected hashes, transformations and reference identities. The paper’s CC BY 4.0 status differs from the repository’s unspecified software license. This author-requested adaptation retains attribution and assigns no blanket new license to upstream code or data."
+        }
+      ]
+    }
+  ]
+}

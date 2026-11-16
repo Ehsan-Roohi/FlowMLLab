@@ -97,6 +97,27 @@ Unexecuted comparison designs are not scientific results.
 Do not pursue external benchmark adoption until source-data integrity,
 fair-comparison and licensing gates are resolved.
 
+## Week 10.2: BGK/Shakhov kinetic PINN/DVM profiles
+
+This additive lesson uses Ehsan Roohi's [arXiv:2605.29211v2](https://arxiv.org/abs/2605.29211v2)
+and a compact extraction from the [PINNs-DVM repository at add5388](https://github.com/Ehsan-Roohi/PINNs-DVM/tree/add5388f7da5f7eace95fff97d34d6ed58b90169).
+The [manifest](data/week10_2_kinetic_shock/manifest.json) records exact source
+paths, Git blob identifiers, SHA256 values, derived arrays and comparison grids.
+No upstream software or checkpoints are copied. The original repository has no
+general software license; the author's authorization for this teaching data
+extract does not relicense the complete upstream project under FlowMLLab's MIT
+license. See the [extract notice](data/week10_2_kinetic_shock/README.md).
+
+Fresh CPU calculations cover equilibrium jumps, collision integrals and moment
+identifiability. Saved transient, stationary Mach-2 and supervised neural
+profiles are rescored, not retrained. The five-field S0 trained on 400-cell DVM
+observations; the final eight-moment state used 6400-cell targets, scales and
+some acceptance guards. Equation-trained predictions use the 6400-cell reference
+only for this post-solve comparison. The 399-node common-overlap trapezoidal
+scores differ from the paper's full-6400 S0 assessment and its 401-node
+unweighted final/equation comparison. Failed physical criteria and tail-sign
+errors remain explicit. No new spatial shock simulation is claimed.
+
 ## Week 16: new supersonic-shape CFD campaign
 
 All meshes and flow solutions were generated for this module using Gmsh 4.15.2 and the official SU2 8.5.0 Linux OpenMP binary. The 44-case dataset contains 24 training, six validation, eight test and six extrapolation geometries. Additional runs establish a Taylor-Maccoll cone benchmark, mesh and domain sensitivity, recomputed optimal shapes, and Mach 1.7/1.9 stress tests. This is an axisymmetric nonlifting teaching geometry, not the Beihang aircraft or TMS-10. The motivating paper is cited in the lecture; its PDF, figures, code and data are not redistributed. All module code and educational prose are independently authored with AI assistance and checked through retained computations and visual review. No restricted teaching material was incorporated. See `results/week16_lowboom/README.md`, the dataset SHA-256, and `numerical_evidence.zip`.

@@ -1,0 +1,51 @@
+{
+  "checked_utc": "2026-11-16T16:00:09.532996+00:00",
+  "source_commit": "add5388f7da5f7eace95fff97d34d6ed58b90169",
+  "notebook_sha256": "5620b3d3dab3efc2efa86551beee071ebac6bffd9dc3a799e9016d96372cd57c",
+  "lecture_sha256": "a3cec3cefb9b375dbd2cc4522ff98a942d77cc07c5167984afd196389da008fa",
+  "previous_course_base": "c9b0daf69e563c7b1d1bc2fe61b9b2b5d9c79ef2",
+  "previous_numbered_notebook_blobs_unchanged": 62,
+  "focused_tests": {
+    "passed": 27,
+    "failed": 0,
+    "scope": [
+      "tests/test_kinetic_shock.py",
+      "tests/test_course_navigation.py",
+      "tests/test_course_release_summary.py"
+    ]
+  },
+  "new_notebook": {
+    "mode": "fresh CPU collision/moment exercise and retained-profile rescoring",
+    "jupyter_kernel_executed": true,
+    "seconds_in_build_environment": 124.52173329999641,
+    "code_cells": 14,
+    "upstream_commit": "add5388f7da5f7eace95fff97d34d6ed58b90169",
+    "new_shock_solve": false,
+    "new_neural_training": false,
+    "embedded_png_figures": 6,
+    "python_version": "3.12.14"
+  },
+  "lecture": {
+    "pages": 20,
+    "tnr_text_fraction": 1.0,
+    "text_colors": {
+      "#000000": 29073
+    },
+    "outside_page_text": 0,
+    "missing_glyph_candidates": 0,
+    "all_pages_individually_reviewed": true,
+    "odd_pages": "independent course reviewer",
+    "even_pages": "independent scientific reviewer",
+    "final_renderer_padding_verified": true
+  },
+  "saved_figures_individually_reviewed": 7,
+  "metric_csv_independent_recalculation": {
+    "rows": 126,
+    "maximum_rounding_difference": 3.95e-10
+  },
+  "release_qa": "FLOWMLLAB_RELEASE_QA_PASS",
+  "release_qa_limit": "The unrelated Week9 upstream-source cross-check was not performed without its external cache. New Week10.2 extraction hashes and numerical profiles were independently checked.",
+  "local_link_and_inventory_gate": "pass",
+  "hosted_colab_run_all": false,
+  "research_training_or_spatial_shock_solve_launched": false
+}

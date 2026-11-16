@@ -1,0 +1,10 @@
+Status note, 11 November 2026
+
+The run records in accepted_state/evidence (TRAIN_RESULT.json, ASSESSMENT.json) carry the flags
+paper_admission: false and all_criteria_pass: false. They record the position when the run was assessed:
+two checks on the sampled physical measures at points not used by the refinement, with tolerance 0.1 %,
+were not met. Criterion E4 (the 64 separate points) was set before the run; criterion E8 (64 points used
+by no stage) was added after the first assessment (RUNS_DECLARED_2.json). The author subsequently decided
+to report this state in the manuscript together with these limitations (section 5.2.7 and Appendix A.2).
+The records are kept unaltered, except that the local folder named in the "run" field of the two
+ASSESSMENT.json files is relocated to a symbolic root (RELOCATED_PATHS.json gives the original hashes).

@@ -1,6 +1,6 @@
 # Week 11 — Shock and vortex identification
 
-[Course home](../../README.md) · [All weeks](../README.md) · [← Week 10.1](../week10_1/README.md) · [Week 12 →](../week12/README.md)
+[Course home](../../README.md) · [All weeks](../README.md) · [← Week 10.2](../week10_2/README.md) · [Week 12 →](../week12/README.md)
 
 Shock/vortex identification; alpha and pressure methods for vapor clouds.
 
@@ -101,4 +101,4 @@ input information, so this is not a blind or matched-input accuracy ranking.
 
 ---
 
-[Course home](../../README.md) · [All weeks](../README.md) · [← Week 10.1](../week10_1/README.md) · [Week 12 →](../week12/README.md)
+[Course home](../../README.md) · [All weeks](../README.md) · [← Week 10.2](../week10_2/README.md) · [Week 12 →](../week12/README.md)

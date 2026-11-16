@@ -6,9 +6,9 @@ Course version **v1.14.1**. These counts describe the current checkout; they do 
 
 | Asset | Count |
 | --- | ---: |
-| Active lecture PDFs | 37 |
-| Pages in those PDFs | 646 |
-| Student notebooks, including historical companion | 62 |
+| Active lecture PDFs | 38 |
+| Pages in those PDFs | 666 |
+| Student notebooks, including historical companion | 63 |
 | Historical student audit companion (included above) | 1 |
 | Optional self-study notebooks (separate) | 1 |
 | Optional self-study PDFs (separate) | 1 |
@@ -48,6 +48,7 @@ Course version **v1.14.1**. These counts describe the current checkout; they do 
 | [week09_3_nozzle_data_alignment.pdf](../lectures/week09_3_nozzle_data_alignment.pdf) | 3 |
 | [week09_rarefied_deeponet_case_studies.pdf](../lectures/week09_rarefied_deeponet_case_studies.pdf) | 19 |
 | [week10_1_collision_map_audit.pdf](../lectures/week10_1_collision_map_audit.pdf) | 1 |
+| [week10_2_bgk_shakhov_shock_pinn_dvm.pdf](../lectures/week10_2_bgk_shakhov_shock_pinn_dvm.pdf) | 20 |
 | [week10_dsmc_data_driven_surrogates.pdf](../lectures/week10_dsmc_data_driven_surrogates.pdf) | 14 |
 | [week11_shock_vortex_identification.pdf](../lectures/week11_shock_vortex_identification.pdf) | 17 |
 | [week12_dsmc_moment_reconstruction.pdf](../lectures/week12_dsmc_moment_reconstruction.pdf) | 13 |
@@ -110,6 +111,7 @@ The historical Week 15 audit remains available for provenance; use the complete 
 | [W9_Lab3_Nozzle_Data_Alignment_Audit.ipynb](../notebooks/week09/W9_Lab3_Nozzle_Data_Alignment_Audit.ipynb) | student |
 | [W10_DSMC_Data_Driven_Surrogates_Student.ipynb](../notebooks/week10/W10_DSMC_Data_Driven_Surrogates_Student.ipynb) | student |
 | [W10_1_Collision_Map_Surrogate_Audit.ipynb](../notebooks/week10_1/W10_1_Collision_Map_Surrogate_Audit.ipynb) | student |
+| [W10_2_BGK_Shakhov_Shock_PINN_DVM.ipynb](../notebooks/week10_2/W10_2_BGK_Shakhov_Shock_PINN_DVM.ipynb) | student |
 | [W11_Cavitation_Cloud_Detection.ipynb](../notebooks/week11/W11_Cavitation_Cloud_Detection.ipynb) | student |
 | [W11_Lab2_Reconstruction_and_Identification.ipynb](../notebooks/week11/W11_Lab2_Reconstruction_and_Identification.ipynb) | student |
 | [W11_Shock_Vortex_Identification.ipynb](../notebooks/week11/W11_Shock_Vortex_Identification.ipynb) | student |
@@ -158,6 +160,7 @@ Compute planning estimates are not measurements of this revision or classroom wo
 | [Week 9: Rarefied micro-step and micro-nozzle](../weeks/week09/README.md) | Weeks 3–4 rarefaction and branch/trunk operators; Week 8 gas-dynamics branches. | Colab link is an entry point, not a guarantee of a fresh hosted Run All. [Setup](../notebooks/week09/README.md) |
 | [Week 10: DSMC cavity and molecular shocks](../weeks/week10/README.md) | Week 3 DSMC and Week 4 surrogate validation; distinguish source and teaching models. | Colab link is an entry point, not a guarantee of a fresh hosted Run All. [Setup](../notebooks/week10/README.md) |
 | [Week 10.1: Ab initio collision DeepONet](../weeks/week10_1/README.md) | Week 3 molecular collisions; numerical quadrature and Week 2 regression. | Colab link is an entry point, not a guarantee of a fresh hosted Run All. [Setup](../notebooks/week10_1/README.md) |
+| [Week 10.2: One-dimensional kinetic shocks: BGK, Shakhov, PINNs and DVM](../weeks/week10_2/README.md) | Weeks 2, 3, 8 and 10: data roles, Maxwellians and moments, shock jumps and profile validation. The PINN introduction is self-contained. | All code cells executed in a fresh local CPU kernel. Colab bootstrap is supplied; a hosted Colab Run All has not been claimed. [Setup](../notebooks/week10_2/README.md) |
 | [Week 11: Shock and vortex identification](../weeks/week11/README.md) | Week 7 velocity fields; spatial derivatives, classification and validation splits. | Colab link is an entry point, not a guarantee of a fresh hosted Run All. [Setup](../notebooks/week11/README.md) |
 | [Week 12: DSMC moment reconstruction](../weeks/week12/README.md) | Weeks 3 and 10 DSMC sampling; Week 11 noisy derivatives helpful. | Colab link is an entry point, not a guarantee of a fresh hosted Run All. [Setup](../notebooks/week12/README.md) |
 | [Week 13: Rectangular-cavity PINN research audit](../weeks/week13/README.md) | Weeks 1–2 and 4: cavity equations, optimization and held-out validation; PINN foundations reading. | Colab link is an entry point, not a guarantee of a fresh hosted Run All. [Setup](../notebooks/week13/README.md) |

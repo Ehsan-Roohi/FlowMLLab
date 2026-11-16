@@ -1,0 +1,199 @@
+{
+  "upstream_repository": "Ehsan-Roohi/PINNs-DVM",
+  "upstream_commit": "add5388f7da5f7eace95fff97d34d6ed58b90169",
+  "paper": "https://arxiv.org/abs/2605.29211v2",
+  "files": [
+    {
+      "upstream_path": "data/independent_m2/evaluation/seed141001_adam20000_core.npz",
+      "path": "upstream/data/independent_m2/evaluation/seed141001_adam20000_core.npz",
+      "git_blob_sha1": "11e059dabb7f781220f3817c5c3da1243dd8684b",
+      "sha256": "5818232317ba3e81360d2fa1df6ab39348abd76c88a8b62d140c52c484a42334",
+      "bytes": 10092,
+      "url": "https://raw.githubusercontent.com/Ehsan-Roohi/PINNs-DVM/add5388f7da5f7eace95fff97d34d6ed58b90169/data/independent_m2/evaluation/seed141001_adam20000_core.npz"
+    },
+    {
+      "upstream_path": "data/independent_m2/evaluation/seed141001_fixed500_core.npz",
+      "path": "upstream/data/independent_m2/evaluation/seed141001_fixed500_core.npz",
+      "git_blob_sha1": "95f1c85fa9a2a28ebffce8b38bb2a28767f76862",
+      "sha256": "196fff81dc2edd3c400ba2f83b28221e7c6ed6dc67c438405838f8ab4f4a755d",
+      "bytes": 10092,
+      "url": "https://raw.githubusercontent.com/Ehsan-Roohi/PINNs-DVM/add5388f7da5f7eace95fff97d34d6ed58b90169/data/independent_m2/evaluation/seed141001_fixed500_core.npz"
+    },
+    {
+      "upstream_path": "data/independent_m2/evaluation/seed141001_ssb500_core.npz",
+      "path": "upstream/data/independent_m2/evaluation/seed141001_ssb500_core.npz",
+      "git_blob_sha1": "ac4d535e2b52dfa1bdffdc3b97328984a10a52dc",
+      "sha256": "31c5e52e1be13952eb77aa02c279490ba29a77ff474969bf1fbf761ca4d3bcbc",
+      "bytes": 10092,
+      "url": "https://raw.githubusercontent.com/Ehsan-Roohi/PINNs-DVM/add5388f7da5f7eace95fff97d34d6ed58b90169/data/independent_m2/evaluation/seed141001_ssb500_core.npz"
+    },
+    {
+      "upstream_path": "data/independent_m2/evaluation/seed141002_adam20000_core.npz",
+      "path": "upstream/data/independent_m2/evaluation/seed141002_adam20000_core.npz",
+      "git_blob_sha1": "fc97e7ec959123dd266c913525cf9a79a1e05d2f",
+      "sha256": "4ca76aa5aad148f760b7d609e3587b62d4b0e865c21c3f177597c8d3ef1f5fc7",
+      "bytes": 10092,
+      "url": "https://raw.githubusercontent.com/Ehsan-Roohi/PINNs-DVM/add5388f7da5f7eace95fff97d34d6ed58b90169/data/independent_m2/evaluation/seed141002_adam20000_core.npz"
+    },
+    {
+      "upstream_path": "data/independent_m2/evaluation/seed141002_fixed500_core.npz",
+      "path": "upstream/data/independent_m2/evaluation/seed141002_fixed500_core.npz",
+      "git_blob_sha1": "74c1797ed5d9e92acfe5937c823ea1d7a93af986",
+      "sha256": "cb834bd87a38272512fd90b5da8d173e6a208e57276162437f5e45723df0c72f",
+      "bytes": 10092,
+      "url": "https://raw.githubusercontent.com/Ehsan-Roohi/PINNs-DVM/add5388f7da5f7eace95fff97d34d6ed58b90169/data/independent_m2/evaluation/seed141002_fixed500_core.npz"
+    },
+    {
+      "upstream_path": "data/independent_m2/evaluation/seed141002_ssb500_core.npz",
+      "path": "upstream/data/independent_m2/evaluation/seed141002_ssb500_core.npz",
+      "git_blob_sha1": "7aacc0123ff47c7a73486ab37c4dc91531e1a130",
+      "sha256": "75a5146edb623843400226d0a7b2799f699aabb65afa7dea2cbd2c4dcfd33d05",
+      "bytes": 10092,
+      "url": "https://raw.githubusercontent.com/Ehsan-Roohi/PINNs-DVM/add5388f7da5f7eace95fff97d34d6ed58b90169/data/independent_m2/evaluation/seed141002_ssb500_core.npz"
+    },
+    {
+      "upstream_path": "data/independent_m2/evaluation/seed141003_adam20000_core.npz",
+      "path": "upstream/data/independent_m2/evaluation/seed141003_adam20000_core.npz",
+      "git_blob_sha1": "3dbe036e17ed0557071799d4869c751010fa2b15",
+      "sha256": "83960ee127b4f0f0ad2fefb82d85ee9fdc426d1f02d47a71dda87b02bec95d3a",
+      "bytes": 10092,
+      "url": "https://raw.githubusercontent.com/Ehsan-Roohi/PINNs-DVM/add5388f7da5f7eace95fff97d34d6ed58b90169/data/independent_m2/evaluation/seed141003_adam20000_core.npz"
+    },
+    {
+      "upstream_path": "data/independent_m2/evaluation/seed141003_fixed500_core.npz",
+      "path": "upstream/data/independent_m2/evaluation/seed141003_fixed500_core.npz",
+      "git_blob_sha1": "5d55ecff0b613aec55844211cb3f0991a2b28ebd",
+      "sha256": "74410ac5107551ecf81751a03da237d67b8823ed31a6c5159e2b1f717fd3a9cd",
+      "bytes": 10092,
+      "url": "https://raw.githubusercontent.com/Ehsan-Roohi/PINNs-DVM/add5388f7da5f7eace95fff97d34d6ed58b90169/data/independent_m2/evaluation/seed141003_fixed500_core.npz"
+    },
+    {
+      "upstream_path": "data/independent_m2/evaluation/seed141003_ssb500_core.npz",
+      "path": "upstream/data/independent_m2/evaluation/seed141003_ssb500_core.npz",
+      "git_blob_sha1": "ad9173b72240612f974ce9255718a0ade7313856",
+      "sha256": "8c99d30ac66886ec97a1e36aecf1037a566d44d724d2f6ba8f602c761987761b",
+      "bytes": 10092,
+      "url": "https://raw.githubusercontent.com/Ehsan-Roohi/PINNs-DVM/add5388f7da5f7eace95fff97d34d6ed58b90169/data/independent_m2/evaluation/seed141003_ssb500_core.npz"
+    },
+    {
+      "upstream_path": "data/shocktube/bgk_matched_fields.csv",
+      "path": "upstream/data/shocktube/bgk_matched_fields.csv",
+      "git_blob_sha1": "a02915b8ba52d8f55626970ef56843d8ee9eb420",
+      "sha256": "e5dbaef26825e1066f9cc8faad396379e8227f209c541c703cc8776c02819952",
+      "bytes": 1974439,
+      "url": "https://raw.githubusercontent.com/Ehsan-Roohi/PINNs-DVM/add5388f7da5f7eace95fff97d34d6ed58b90169/data/shocktube/bgk_matched_fields.csv"
+    },
+    {
+      "upstream_path": "data/shocktube/shakhov_matched_fields.csv",
+      "path": "upstream/data/shocktube/shakhov_matched_fields.csv",
+      "git_blob_sha1": "c10ecd40aac681d3b50d0325e1490637071f7c2d",
+      "sha256": "92cf9cedeea9e7e04d0877f1469a15c67de330eb9f69f724d4145d9b2565bf47",
+      "bytes": 1974365,
+      "url": "https://raw.githubusercontent.com/Ehsan-Roohi/PINNs-DVM/add5388f7da5f7eace95fff97d34d6ed58b90169/data/shocktube/shakhov_matched_fields.csv"
+    },
+    {
+      "upstream_path": "data/independent_m2/evaluation/RESULT.json",
+      "path": "upstream/data/independent_m2/evaluation/RESULT.json",
+      "git_blob_sha1": "19999573d4a2a5a2aea773f3e15b394cdd6dbf20",
+      "sha256": "1f28cca29cdf8a17c2b71f909a00aa38d502afb08e22cddd960b814dd17c729e",
+      "bytes": 44558,
+      "url": "https://raw.githubusercontent.com/Ehsan-Roohi/PINNs-DVM/add5388f7da5f7eace95fff97d34d6ed58b90169/data/independent_m2/evaluation/RESULT.json"
+    },
+    {
+      "upstream_path": "code/supervised_shocktube/supervised_base_eight_moment/README.txt",
+      "path": "upstream/code/supervised_shocktube/supervised_base_eight_moment/README.txt",
+      "git_blob_sha1": "f6bab34afcc0f3b5cc0e2b39364a8f6ff6894d9c",
+      "sha256": "f899400017b0f6afceb2981f6bcf6545c1d24ce7b38a2a474eba8ab32effc53f",
+      "bytes": 4675,
+      "url": "https://raw.githubusercontent.com/Ehsan-Roohi/PINNs-DVM/add5388f7da5f7eace95fff97d34d6ed58b90169/code/supervised_shocktube/supervised_base_eight_moment/README.txt"
+    },
+    {
+      "upstream_path": "code/supervised_shocktube/supervised_base_eight_moment/STATUS_NOTE.txt",
+      "path": "upstream/code/supervised_shocktube/supervised_base_eight_moment/STATUS_NOTE.txt",
+      "git_blob_sha1": "37112d1ea6e5f24f41f95a05c00221f95193308c",
+      "sha256": "bb69af84bab0b5398bb1591cee77a43d39e84d894cdcb9ae4c8e24aaea4cbe06",
+      "bytes": 863,
+      "url": "https://raw.githubusercontent.com/Ehsan-Roohi/PINNs-DVM/add5388f7da5f7eace95fff97d34d6ed58b90169/code/supervised_shocktube/supervised_base_eight_moment/STATUS_NOTE.txt"
+    },
+    {
+      "upstream_path": "code/supervised_shocktube/supervised_base_eight_moment/accepted_state/evidence/ASSESSMENT_FIELDS.npz",
+      "path": "upstream/code/supervised_shocktube/supervised_base_eight_moment/accepted_state/evidence/ASSESSMENT_FIELDS.npz",
+      "git_blob_sha1": "ccbd573e1b901fad8d56aacef7786d0e5150fb19",
+      "sha256": "b7cdcda81d096ea353375a9f8b998b5f0b8bc03ad71d8b6e0e25d722d58a4191",
+      "bytes": 1788855,
+      "url": "https://raw.githubusercontent.com/Ehsan-Roohi/PINNs-DVM/add5388f7da5f7eace95fff97d34d6ed58b90169/code/supervised_shocktube/supervised_base_eight_moment/accepted_state/evidence/ASSESSMENT_FIELDS.npz"
+    },
+    {
+      "upstream_path": "code/supervised_shocktube/supervised_base_eight_moment/accepted_state/evidence/ASSESSMENT.json",
+      "path": "upstream/code/supervised_shocktube/supervised_base_eight_moment/accepted_state/evidence/ASSESSMENT.json",
+      "git_blob_sha1": "2ab002aa11fa51bcb5ca3080d465095002575322",
+      "sha256": "8552670867a1c3d3bcc5096eb15d90ed07ff45bbff48898494df923c39a1161c",
+      "bytes": 41528,
+      "url": "https://raw.githubusercontent.com/Ehsan-Roohi/PINNs-DVM/add5388f7da5f7eace95fff97d34d6ed58b90169/code/supervised_shocktube/supervised_base_eight_moment/accepted_state/evidence/ASSESSMENT.json"
+    },
+    {
+      "upstream_path": "code/supervised_shocktube/supervised_base_eight_moment/accepted_state/evidence/TRAIN_RESULT.json",
+      "path": "upstream/code/supervised_shocktube/supervised_base_eight_moment/accepted_state/evidence/TRAIN_RESULT.json",
+      "git_blob_sha1": "d80593f629b4fce30f83b3e0cf262ad45589a161",
+      "sha256": "dea4ae4f63090b01afaee35fc9f3e05c9b1239c9055cb48dad53669fa5b605a0",
+      "bytes": 2085,
+      "url": "https://raw.githubusercontent.com/Ehsan-Roohi/PINNs-DVM/add5388f7da5f7eace95fff97d34d6ed58b90169/code/supervised_shocktube/supervised_base_eight_moment/accepted_state/evidence/TRAIN_RESULT.json"
+    },
+    {
+      "upstream_path": "code/supervised_shocktube/supervised_base_eight_moment/accepted_state/inputs/OBSERVATION_LOCATIONS_FROZEN.npz",
+      "path": "upstream/code/supervised_shocktube/supervised_base_eight_moment/accepted_state/inputs/OBSERVATION_LOCATIONS_FROZEN.npz",
+      "git_blob_sha1": "f5376ce93a657dca595ac87042986425883f05f6",
+      "sha256": "c9724c94719342c116a81502a8fdb837235f8e6f8bc5d6d0c10dd17a2b1a4cff",
+      "bytes": 4932,
+      "url": "https://raw.githubusercontent.com/Ehsan-Roohi/PINNs-DVM/add5388f7da5f7eace95fff97d34d6ed58b90169/code/supervised_shocktube/supervised_base_eight_moment/accepted_state/inputs/OBSERVATION_LOCATIONS_FROZEN.npz"
+    },
+    {
+      "upstream_path": "code/supervised_shocktube/supervised_base_eight_moment/accepted_state/inputs/REFERENCE6400_FIELDS.npz",
+      "path": "upstream/code/supervised_shocktube/supervised_base_eight_moment/accepted_state/inputs/REFERENCE6400_FIELDS.npz",
+      "git_blob_sha1": "1ad4d5b081eaf0bd73528d9c9b9c9176fecaeb6f",
+      "sha256": "c4fe0f1fbd0789b3793729791b9d9490465578b151c78bf3bac17571b3eeb090",
+      "bytes": 420386,
+      "url": "https://raw.githubusercontent.com/Ehsan-Roohi/PINNs-DVM/add5388f7da5f7eace95fff97d34d6ed58b90169/code/supervised_shocktube/supervised_base_eight_moment/accepted_state/inputs/REFERENCE6400_FIELDS.npz"
+    },
+    {
+      "upstream_path": "code/supervised_shocktube/supervised_base_eight_moment/comparison_inputs/EQUATION_TRAINED_BGK_FIELDS.npz",
+      "path": "upstream/code/supervised_shocktube/supervised_base_eight_moment/comparison_inputs/EQUATION_TRAINED_BGK_FIELDS.npz",
+      "git_blob_sha1": "34f93e3768b5ad6b246fea16c6ee64f669d00df3",
+      "sha256": "ef062c38e35529d49532588dcbde4759e3b3876e3e7b05e91b8f90c4b8f0d79d",
+      "bytes": 33006,
+      "url": "https://raw.githubusercontent.com/Ehsan-Roohi/PINNs-DVM/add5388f7da5f7eace95fff97d34d6ed58b90169/code/supervised_shocktube/supervised_base_eight_moment/comparison_inputs/EQUATION_TRAINED_BGK_FIELDS.npz"
+    },
+    {
+      "upstream_path": "code/supervised_shocktube/supervised_base_eight_moment/comparison_inputs/REFERENCE_3200_FIELDS.npz",
+      "path": "upstream/code/supervised_shocktube/supervised_base_eight_moment/comparison_inputs/REFERENCE_3200_FIELDS.npz",
+      "git_blob_sha1": "04a996c4cb98b22623bb4b1aee7c9c061e0c79ff",
+      "sha256": "abd59cf3b39d9ce2da171bb6a465c00c904d3ca6c7965a65ea69b511a467cbdc",
+      "bytes": 212217,
+      "url": "https://raw.githubusercontent.com/Ehsan-Roohi/PINNs-DVM/add5388f7da5f7eace95fff97d34d6ed58b90169/code/supervised_shocktube/supervised_base_eight_moment/comparison_inputs/REFERENCE_3200_FIELDS.npz"
+    },
+    {
+      "upstream_path": "code/supervised_shocktube/supervised_base_eight_moment/manuscript_checks/FACTS_AFTER_REVIEW.json",
+      "path": "upstream/code/supervised_shocktube/supervised_base_eight_moment/manuscript_checks/FACTS_AFTER_REVIEW.json",
+      "git_blob_sha1": "b2032b57d3464874bda7cd097d4e566d398ddcba",
+      "sha256": "aa757950a7df7d423d3922514a584b35e4b175d6bdb1860cf2143f0c53ffbcd4",
+      "bytes": 18917,
+      "url": "https://raw.githubusercontent.com/Ehsan-Roohi/PINNs-DVM/add5388f7da5f7eace95fff97d34d6ed58b90169/code/supervised_shocktube/supervised_base_eight_moment/manuscript_checks/FACTS_AFTER_REVIEW.json"
+    },
+    {
+      "upstream_path": "code/supervised_shocktube/supervised_base_eight_moment/manuscript_checks/FACTS_HELDOUT_AND_SCALES.json",
+      "path": "upstream/code/supervised_shocktube/supervised_base_eight_moment/manuscript_checks/FACTS_HELDOUT_AND_SCALES.json",
+      "git_blob_sha1": "485baf880dd42d3bf14a9a06ccfa8509567d8c2a",
+      "sha256": "1cb0135635a3fce422ec62d10dba12e688a390879dde7b980d1561143fa1a841",
+      "bytes": 1677,
+      "url": "https://raw.githubusercontent.com/Ehsan-Roohi/PINNs-DVM/add5388f7da5f7eace95fff97d34d6ed58b90169/code/supervised_shocktube/supervised_base_eight_moment/manuscript_checks/FACTS_HELDOUT_AND_SCALES.json"
+    },
+    {
+      "upstream_path": "code/supervised_shocktube/supervised_base_eight_moment/manuscript_checks/stage0/STAGE0_FIELDS.npz",
+      "path": "upstream/code/supervised_shocktube/supervised_base_eight_moment/manuscript_checks/stage0/STAGE0_FIELDS.npz",
+      "git_blob_sha1": "ca32341f0758290e04217111e1623ba70b37a0ed",
+      "sha256": "6a9f806aea15f1714a0296bf066a60e52bf3c82d110ed11ca9904fc834d78e71",
+      "bytes": 869918,
+      "url": "https://raw.githubusercontent.com/Ehsan-Roohi/PINNs-DVM/add5388f7da5f7eace95fff97d34d6ed58b90169/code/supervised_shocktube/supervised_base_eight_moment/manuscript_checks/stage0/STAGE0_FIELDS.npz"
+    }
+  ]
+}

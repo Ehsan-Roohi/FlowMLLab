@@ -79,7 +79,10 @@ number locates its files; it does not make every extension a beginner requiremen
 Week 1.2 pressure–velocity coupling follow the Week 1 cavity exercise. Week 2.1
 scalar uncertainty follows Week 2; its POD–GP fields follow Week 4. Week 3 starts
 kinetic/particle methods, while Week 8 starts compressible-flow relations before
-the rarefied and shock examples. Geometry-aware operators (Week 15) build on
+the rarefied and shock examples. [Week 10.2](weeks/week10_2/README.md) follows
+Weeks 2, 3, 8 and 10: begin with CPU collision and moment calculations, then
+audit retained kinetic PINN/DVM profiles. Its PINN introduction is self-contained;
+the full Week 13 research audit is optional. Geometry-aware operators (Week 15) build on
 Week 4 field learning; Week 16 then uses checked CFD in a design loop.
 
 Reading saved results, executing a compact CPU exercise and regenerating a full
@@ -186,6 +189,7 @@ cells; each week's README states it (75 to 90 minutes for Weeks 11 to 13).
 | [Week 9](weeks/week09/README.md) | CPU teaching exercises and retained evidence; full regeneration is separate. | About 6–8 min for Labs 1–2; Lab 3 under 2 min. |
 | [Week 10](weeks/week10/README.md) | CPU teaching exercises and retained evidence; full regeneration is separate. | Under 2 min retained-data path. |
 | [Week 10.1](weeks/week10_1/README.md) | CPU teaching exercises and retained evidence; full regeneration is separate. | Under 5 min CPU teaching path. |
+| [Week 10.2](weeks/week10_2/README.md) | Fresh CPU collision/moment calculations and retained PINN/DVM profile rescoring; no research training or spatial shock solve. | Allow a few minutes for Run All after setup; see the measured execution receipt for the tested host. |
 | [Week 11](weeks/week11/README.md) | CPU teaching exercises and retained evidence; full regeneration is separate. | 5–15 min per lab. |
 | [Week 12](weeks/week12/README.md) | CPU teaching exercises and retained evidence; full regeneration is separate. | About 2 min including compact training. |
 | [Week 13](weeks/week13/README.md) | CPU teaching exercises and retained evidence; full regeneration is separate. | About 3 min compact CPU lab; A100 research runs excluded. |

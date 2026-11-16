@@ -83,3 +83,7 @@ qa/validate_cavity_pinn_curriculum.py -text -whitespace
 qa/cavity_pinn_studies_validation.json -text -whitespace
 qa/cavity_pinn_curriculum_validation.json -text -whitespace
 lectures/source/cavity_expansion.json -text -whitespace
+
+# Pinned kinetic-shock data and the reviewed notebook carry raw SHA256 identities.
+data/week10_2_kinetic_shock/** -text -whitespace
+notebooks/week10_2/W10_2_BGK_Shakhov_Shock_PINN_DVM.ipynb -text -whitespace

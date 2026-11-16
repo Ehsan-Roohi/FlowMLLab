@@ -20,6 +20,13 @@ EXPECTED_DATA_SHA256 = "09b96b744ee4d18126d8dcc92feb60e128774a1b4d41bb3d8c90a63c
 
 
 REQUIRED = [
+    "flowmllab/kinetic_shock.py",
+    "data/week10_2_kinetic_shock/manifest.json",
+    "data/week10_2_kinetic_shock/README.md",
+    "notebooks/week10_2/W10_2_BGK_Shakhov_Shock_PINN_DVM.ipynb",
+    "lectures/week10_2_bgk_shakhov_shock_pinn_dvm.pdf",
+    "lectures/source/week10_2_bgk_shakhov_shock_pinn_dvm.json",
+    "results/week10_2_kinetic_shock/execution.json",
     "notebooks/week15/W15_Geometry_Operators_Step_Audit.ipynb",
     "lectures/week15_geometry_generalization.pdf",
     "results/step_operator_audit/source/dataset.npz",
@@ -503,6 +510,19 @@ def validate_notebooks() -> tuple[int, int]:
             if 'Lab7_' in relative: assert 'high.load_cases' in full_source and 'No Ghia values enter' in full_source
             if 'Lab8_' in relative: assert 'RUN_NEW_CPU_EXPERIMENT = False' in full_source and 'frozen_selection.json' in full_source
             if 'D5_' in relative: assert 'load_bundle' in full_source and 'does not retrain' in full_source
+        kinetic_shock_lab = relative == 'notebooks/week10_2/W10_2_BGK_Shakhov_Shock_PINN_DVM.ipynb'
+        if kinetic_shock_lab:
+            code = [cell for cell in cells if cell.get('cell_type') == 'code']
+            assert all(cell.get('execution_count') is not None for cell in code), relative
+            outputs = [item for cell in code for item in cell.get('outputs', [])]
+            assert sum('image/png' in item.get('data', {}) for item in outputs) >= 6, relative
+            assert all(item.get('output_type') != 'error' for item in outputs), relative
+            assert not any('FigureCanvasAgg is non-interactive' in ''.join(item.get('text', []))
+                           for item in outputs), relative
+            for fragment in ('2605.29211v2', 'ks.collision_experiment', 'ks.transverse_counterexample',
+                             'five_field_S0', 'common-overlap nodes', '400-cell', '6400-cell',
+                             'No neural training or spatial shock solve is launched by Run All.'):
+                assert fragment in full_source, (relative, fragment)
         week01_3_lab = relative == 'notebooks/week01_3/W1_3_Keras_Optimizers.ipynb'
         if week01_3_lab:
             code = [cell for cell in cells if cell.get("cell_type") == "code"]
@@ -577,7 +597,7 @@ def validate_notebooks() -> tuple[int, int]:
             )
             assert 'no double-step motif is used in training or validation' in full_source
             assert 'Selection reads no double-step arrays.' in full_source
-        assert week14_lab or week15_local or reconstruction_lab or week16_lab or optional_bridge or week01_2_lab or week01_3_lab or cavity_followon or transformer_week is not None or any(
+        assert week14_lab or week15_local or reconstruction_lab or week16_lab or optional_bridge or week01_2_lab or week01_3_lab or cavity_followon or kinetic_shock_lab or transformer_week is not None or any(
             marker in full_source
             for marker in (
                 "MIE690A article-aligned validation v3",

@@ -417,6 +417,27 @@ audit a fitted surrogate using transport integrals. This executable analog is
 separate from the Jäger research fields above; it does not reproduce the
 article's potential or network.
 
+### Week 10.2 — Kinetic shocks: what do the learned moments miss?
+
+**[Open Week 10.2: lecture, notebook and guide](../weeks/week10_2/README.md)**
+
+Fresh CPU calculations check BGK/Shakhov collision moments and conservation.
+The research comparison then rescores saved PINN and matched DVM profiles from
+[Roohi's kinetic-shock study](https://arxiv.org/abs/2605.29211v2).
+
+<img src="../results/week10_2_kinetic_shock/supervised_bgk_profiles.png" width="760" alt="Matched BGK shock-tube density, temperature and signed higher moments: DVM, five-field S0, final eight-moment and equation-trained predictions">
+
+All methods are compared at 399 common nodes against the same 6400-cell DVM.
+Five-field supervision leaves large fourth-order errors; eight-moment
+supervision improves that state. Equation training still wins on several
+nonequilibrium moments. Small signed tails provide a second check beyond global
+norms. The data have explicit training, scaling and assessment roles; this is
+neither new research training nor an independent held-out test.
+
+[Physical profiles, scores and limitations](../results/week10_2_kinetic_shock/README.md) ·
+[Seven investigations](../notebooks/week10_2/README.md) ·
+[Data provenance](../data/week10_2_kinetic_shock/README.md)
+
 ### Week 11 — Shock and vortex identification
 
 **[Open Week 11: lecture, notebooks and guide](../weeks/week11/README.md)**
