@@ -164,7 +164,10 @@ def build_pressure_validation(
     sys.path.insert(0, str(root / "common"))
     import w4utils  # noqa: PLC0415
     sys.path.insert(0, str(root))
-    from flowmllab.cavity_visuals import RGB, field_normalization, flow_structure
+    from matplotlib.colors import LinearSegmentedColormap, SymLogNorm
+    from matplotlib.lines import Line2D
+    import hashlib
+    from PIL import Image as PILImage
 
     coarse = _load_npz(source / "re1000_n65.npz")
     fine = _load_npz(source / "re1000_n129.npz")
@@ -185,34 +188,97 @@ def build_pressure_validation(
     global_mismatch = _gradient_mismatch(fine, 0, w4utils)
     interior_mismatch = _gradient_mismatch(fine, 4, w4utils)
 
-    _style()
-    fig, axes = plt.subplots(2, 2, figsize=(15.8, 10.1), constrained_layout=True)
-    norm = field_normalization('pressure', [pf])
-    levels = norm.inverse(np.linspace(0., 1., 65))
-    im = axes[0, 0].contourf(*np.meshgrid(xf, yf), pf, levels=levels, cmap=RGB, norm=norm, extend="both")
-    flow_structure(axes[0, 0], xf, yf, fine['u'], fine['v'])
-    axes[0, 0].set(title=r"(a) Recovered pressure, $Re=1000$, $129^2$ grid", xlabel=r"$x/L$", ylabel=r"$y/L$", aspect="equal")
-    fig.colorbar(im, ax=axes[0, 0], shrink=0.9, label=r"$(p-p_c)/(\rho U_{lid}^2)$")
-    axes[0, 1].plot(pc[:, mc], yc, "--", color="#00a652", label=rf"FlowMLLab $65^2$ ($E={100*evc:.1f}\%$)")
-    axes[0, 1].plot(pf[:, mf], yf, color="#1D4ED8", label=rf"FlowMLLab $129^2$ ($E={100*evf:.2f}\%$)")
-    axes[0, 1].scatter(vertical["p_over_rhoU2"], vertical["coordinate"], s=42, facecolors="white", edgecolors="black", linewidths=1.2, zorder=3, label="Botella--Peyret")
-    axes[0, 1].set(title="(b) Vertical centerline", xlabel=r"$(p-p_c)/(\rho U_{lid}^2)$", ylabel=r"$y/L$")
-    axes[1, 0].plot(xc, pc[mc, ::-1], "--", color="#00a652", label=rf"FlowMLLab $65^2$ ($E={100*ehc:.1f}\%$)")
-    axes[1, 0].plot(xf, pf[mf, ::-1], color="#ed2024", label=rf"FlowMLLab $129^2$ ($E={100*ehf:.2f}\%$)")
-    axes[1, 0].scatter(horizontal["coordinate"], horizontal["p_over_rhoU2"], s=42, facecolors="white", edgecolors="black", linewidths=1.2, zorder=3, label="Botella--Peyret")
-    axes[1, 0].set(title="(c) Horizontal centerline (lid-direction mapped)", xlabel=r"$x/L$", ylabel=r"$(p-p_c)/(\rho U_{lid}^2)$")
-    positions, width = np.arange(2), 0.34
-    axes[1, 1].bar(positions - width / 2, 100 * np.array([evc, ehc]), width, color="#00a652", label=r"$65^2$")
-    axes[1, 1].bar(positions + width / 2, 100 * np.array([evf, ehf]), width, color=["#1D4ED8", "#ed2024"], label=r"$129^2$")
-    axes[1, 1].set(title="(d) Literature error decreases under refinement", ylabel=r"centerline relative $L_2$ error (\%)", xticks=positions, xticklabels=["vertical", "horizontal"], ylim=(0, 24))
-    axes[1, 1].text(0.98, 0.95, f"129² grid\nsteady residual: {float(fine['final_residual']):.2e}\ngradient mismatch: {100*interior_mismatch:.2f}% interior\n({100*global_mismatch:.1f}% including corners)", transform=axes[1, 1].transAxes, ha="right", va="top", fontsize=12, bbox={"boxstyle": "round,pad=0.45", "facecolor": "white", "edgecolor": "0.65"})
-    for axis in (axes[0, 1], axes[1, 0], axes[1, 1]):
-        axis.grid(alpha=0.25)
-        axis.legend(loc="best", framealpha=0.96)
-    fig.suptitle("Pressure recovery validated against the Re=1000 benchmark", fontsize=19, fontweight="bold")
-    paths = _save(fig, output_dir, "fig08_pressure_recovery")
+    # Cyan and yellow anchors avoid the muddy green-to-red blend. This map is
+    # local to this figure; earlier course figures keep their rendering rules.
+    rainbow = LinearSegmentedColormap.from_list(
+        "pressure_rgb_rainbow",
+        ["#173ed5", "#00bfff", "#00cf72", "#e6ef00", "#ffad00", "#e51f29"],
+        N=256,
+    )
+    norm = SymLogNorm(linthresh=.01, linscale=1., base=10,
+                      vmin=float(pf.min()), vmax=float(pf.max()))
+    levels = np.unique(np.r_[norm.inverse(np.linspace(0., 1., 161)), 0.])
+    levels[0], levels[-1] = float(pf.min()), float(pf.max())
+    style = {
+        "font.family": "serif", "font.serif": ["Times New Roman", "Liberation Serif", "DejaVu Serif"],
+        "mathtext.fontset": "stix", "font.size": 14, "axes.labelsize": 16,
+        "xtick.labelsize": 12, "ytick.labelsize": 12, "axes.linewidth": 1.0,
+        "xtick.direction": "out", "ytick.direction": "out", "savefig.dpi": 300,
+        "pdf.fonttype": 42, "ps.fonttype": 42,
+    }
+    with plt.rc_context(style):
+        fig = plt.figure(figsize=(13.6, 7.4))
+        grid = fig.add_gridspec(2, 2, width_ratios=(1.35, 1),
+                               left=.065, right=.98, bottom=.12, top=.91,
+                               wspace=.35, hspace=.40)
+        field = fig.add_subplot(grid[:, 0])
+        ax_vertical = fig.add_subplot(grid[0, 1])
+        ax_horizontal = fig.add_subplot(grid[1, 1])
+        im = field.contourf(xf, yf, pf, levels=levels, cmap=rainbow, norm=norm)
+        # Matching polygon edges suppress PDF-viewer hairline seams without
+        # smoothing, resampling, or rasterizing the native pressure contours.
+        im.set_edgecolor("face")
+        im.set_linewidth(.5)
+        field.streamplot(xf, yf, fine['u'], fine['v'], density=1.45,
+                         color="#161b22", linewidth=.60, arrowsize=.72,
+                         minlength=.025, zorder=4)
+        field.set(xlabel=r"$x/L$", ylabel=r"$y/L$", aspect="equal",
+                  xlim=(0, 1), ylim=(0, 1), xticks=np.linspace(0, 1, 6),
+                  yticks=np.linspace(0, 1, 6))
+        field.grid(False)
+        cbar = fig.colorbar(im, ax=field, orientation="horizontal", pad=.10,
+                            fraction=.045, shrink=.98, aspect=32)
+        cbar.set_ticks([float(pf.min()), -.01, 0., .01, .1, float(pf.max())])
+        cbar.set_ticklabels([f"{pf.min():.3f}", "-0.01", "0", "0.01", "0.1", f"{pf.max():.3f}"])
+        cbar.set_label(r"$p^*=(p-p_c)/(\rho U_{\mathrm{lid}}^2)$  (symmetric-log)", fontsize=14, labelpad=8)
+        cbar.ax.minorticks_off()
+        cbar.solids.set_edgecolor("face")
+        cbar.solids.set_rasterized(False)
+        coarse_style = dict(color="#0878c9", ls="--", lw=1.8)
+        fine_style = dict(color="#e4242b", lw=2.25)
+        markers = dict(s=33, facecolors="white", edgecolors="#18202a", linewidths=1.1, zorder=5)
+        ax_vertical.plot(pc[:, mc], yc, **coarse_style)
+        ax_vertical.plot(pf[:, mf], yf, **fine_style)
+        ax_vertical.scatter(vertical["p_over_rhoU2"], vertical["coordinate"], **markers)
+        ax_vertical.set(xlabel=r"$p^*\quad (x/L=0.5)$", ylabel=r"$y/L$", ylim=(-.02, 1.02))
+        # Retain the established reflected abscissa for the published lid convention.
+        ax_horizontal.plot(xc, pc[mc, ::-1], **coarse_style)
+        ax_horizontal.plot(xf, pf[mf, ::-1], **fine_style)
+        ax_horizontal.scatter(horizontal["coordinate"], horizontal["p_over_rhoU2"], **markers)
+        ax_horizontal.set(xlabel=r"$x_{\mathrm{ref}}/L\quad (y/L=0.5)$", ylabel=r"$p^*$", xlim=(-.02, 1.02))
+        for axis in (ax_vertical, ax_horizontal):
+            axis.grid(color="#dce2e8", lw=.65, alpha=.65)
+            axis.set_axisbelow(True)
+            axis.spines['top'].set_visible(False)
+            axis.spines['right'].set_visible(False)
+        handles = [Line2D([], [], **coarse_style, label=r"CFD $65\times65$"),
+                   Line2D([], [], **fine_style, label=r"CFD $129\times129$"),
+                   Line2D([], [], color="#18202a", marker='o', mfc='white',
+                          ls='none', ms=5.5, label="Botella-Peyret")]
+        fig.legend(handles=handles, loc="upper center", bbox_to_anchor=(.779, .99),
+                   ncol=3, frameon=False, fontsize=11.2, handlelength=2.0,
+                   columnspacing=1.0, handletextpad=.5)
+        paths = _save(fig, output_dir, "fig08_pressure_recovery")
+    with PILImage.open(paths['png']) as rendered:
+        rendered.convert('RGB').save(paths['png'], dpi=(300, 300))
     metrics = {"vertical_relative_l2_n65": evc, "vertical_relative_l2_n129": evf, "horizontal_relative_l2_n65": ehc, "horizontal_relative_l2_n129": ehf, "gradient_mismatch_interior": interior_mismatch, "gradient_mismatch_global": global_mismatch}
     (output_dir / "fig08_pressure_recovery_metrics.json").write_text(json.dumps(metrics, indent=2) + "\n")
+    render = {
+        "Re": 1000, "field_grid": [129, 129], "gauge": "p(0.5,0.5)=0",
+        "pressure_definition": "p*=(p-p_c)/(rho U_lid^2)",
+        "color_map": "blue-cyan-green-yellow-orange-red", "png_mode": "RGB",
+        "color_normalization": "SymLogNorm, base 10, linthresh 0.01, linscale 1",
+        "color_limits": [float(pf.min()), float(pf.max())],
+        "clipping": False, "field_smoothing": False, "regridding": False,
+        "contours": "161 levels spaced uniformly in color coordinates, plus zero; native-cell level crossings",
+        "streamlines": "integrated from retained native u,v; density 1.45",
+        "horizontal_profile_mapping": "x_ref/L=1-x/L; unchanged from the retained validation protocol",
+        "sources_sha256": {p.name: hashlib.sha256(p.read_bytes()).hexdigest() for p in
+                           (source / 're1000_n65.npz', source / 're1000_n129.npz',
+                            source / 'botella_pressure_reference.csv')},
+        "outputs_sha256": {p.name: hashlib.sha256(p.read_bytes()).hexdigest() for p in paths.values()},
+    }
+    (output_dir / "fig08_pressure_recovery_render.json").write_text(json.dumps(render, indent=2) + "\n")
     return {"figure": paths, "metrics": metrics}
 
 

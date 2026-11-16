@@ -201,6 +201,14 @@ the Week 7 module.
 
 ![Independent cavity pressure-recovery validation](../results/article_figures/fig08_pressure_recovery.png)
 
+**Re = 1000 square cavity**. Left: recovered pressure on a **129 × 129** grid
+with black velocity streamlines. The RGB colour scale shows
+$p^*=(p-p_c)/(\rho U_{\mathrm{lid}}^2)$, with $p_c=p(L/2,L/2)$;
+it is symmetric-log, linear for $|p^*|\leq0.01$, and retains the full extrema.
+Right: vertical and horizontal pressure profiles on **65 × 65 and 129 × 129** grids
+against Botella–Peyret. The horizontal reference coordinate is reflected,
+$x_{\mathrm{ref}}/L=1-x/L$, to match the published lid-motion convention.
+
 This existing pressure benchmark illustrates the independent physical checks
 expected in a final evidence bundle; it is not a learned Fokker–Planck result.
 Week 6 completes the selected Week-5 track, including optional closure testing.

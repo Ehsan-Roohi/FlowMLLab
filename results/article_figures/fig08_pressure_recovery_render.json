@@ -1,0 +1,31 @@
+{
+  "Re": 1000,
+  "field_grid": [
+    129,
+    129
+  ],
+  "gauge": "p(0.5,0.5)=0",
+  "pressure_definition": "p*=(p-p_c)/(rho U_lid^2)",
+  "color_map": "blue-cyan-green-yellow-orange-red",
+  "png_mode": "RGB",
+  "color_normalization": "SymLogNorm, base 10, linthresh 0.01, linscale 1",
+  "color_limits": [
+    -0.11167989133524106,
+    0.950916481007261
+  ],
+  "clipping": false,
+  "field_smoothing": false,
+  "regridding": false,
+  "contours": "161 levels spaced uniformly in color coordinates, plus zero; native-cell level crossings",
+  "streamlines": "integrated from retained native u,v; density 1.45",
+  "horizontal_profile_mapping": "x_ref/L=1-x/L; unchanged from the retained validation protocol",
+  "sources_sha256": {
+    "re1000_n65.npz": "a9ca338c52f43163ef9bc938d9613f291d424591c5965b4e2d66f572a57ddf07",
+    "re1000_n129.npz": "47110c2c5140f41f78770db52c202813019d5187ca64c332e090c7799bea5cba",
+    "botella_pressure_reference.csv": "6da54b6a65db7acededadae767922e97dc9e8d3dfe83ab782392be871443ef4e"
+  },
+  "outputs_sha256": {
+    "fig08_pressure_recovery.png": "01e4a921b09e3707ed5fe68279300bf157d36a4b4ea41de5f5a1c81a63342149",
+    "fig08_pressure_recovery.pdf": "3c3b7b9c3ade675c4069f4f0d3ff59912b967534721b37db7dd18d76ac21bb89"
+  }
+}
