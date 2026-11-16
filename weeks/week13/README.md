@@ -29,7 +29,7 @@ examples below. [Data identity](../../data/week13_d5/README.md) ·
 
 ## Suggested route
 
-Read the lecture, then work through the notebooks in the listed order. Read each notebook’s setup instructions before running its cells; use the figures and evidence below to interpret the results.
+Start with Part A of the main notebook: build and train the small streamfunction PINN on CPU, then compare residuals and velocity errors. Continue to the rectangular-cavity research audit and D/W=5 studies. The [seven-Re label-free audit in Week 4 Lab 9](../../notebooks/week04/W4_Lab9_Label_Free_Ghia_PINN_Audit.ipynb) is an advanced follow-on from these foundations; its Week 4 file location does not make it a beginner prerequisite.
 
 ## Experiment and results
 

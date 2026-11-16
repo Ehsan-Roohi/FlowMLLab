@@ -1,6 +1,6 @@
 # Week 2 — Supervised learning and rarefaction
 
-[Course home](../../README.md) · [All weeks](../README.md) · [← Week 1.1](../week01_1/README.md) · [Week 2.1 →](../week02_1/README.md)
+[Course home](../../README.md) · [All weeks](../README.md) · [← Week 1.3](../week01_3/README.md) · [Week 2.1 →](../week02_1/README.md)
 
 Features, scaling, baselines and model validity.
 
@@ -22,7 +22,7 @@ Features, scaling, baselines and model validity.
 
 ## Suggested route
 
-Read the lecture, then work through the notebooks in the listed order. Read each notebook’s setup instructions before running its cells; use the figures and evidence below to interpret the results.
+Complete Week 1 Python and the Keras readiness checklist. Sections 1–3 revisit a neuron, one gradient update and activations; treat them as a refresher if these are already familiar. Focus next on scaling, data splits and a baseline. Then take [Week 1.3 optimizers](../week01_3/README.md) or continue to Week 3/4 according to the [learning path](../../START_HERE.md#learning-order-and-optional-branches).
 
 ## Experiment and results
 
@@ -38,4 +38,4 @@ CFD/DSMC result. [Run the lab](../../notebooks/week02/AI_in_Fluids_Week2_Colab_E
 
 ---
 
-[Course home](../../README.md) · [All weeks](../README.md) · [← Week 1.1](../week01_1/README.md) · [Week 2.1 →](../week02_1/README.md)
+[Course home](../../README.md) · [All weeks](../README.md) · [← Week 1.3](../week01_3/README.md) · [Week 2.1 →](../week02_1/README.md)

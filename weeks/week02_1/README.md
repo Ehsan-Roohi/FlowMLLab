@@ -20,7 +20,7 @@ Bayesian prediction, calibration and uncertainty.
 
 ## Suggested route
 
-Read the lecture, then work through the notebooks in the listed order. Read each notebook’s setup instructions before running its cells; use the figures and evidence below to interpret the results.
+After Week 2 regression, scaling and data splits, complete the scalar Bayesian sections. Return to the POD–Gaussian-process field sections after [Week 4 POD and field surrogates](../week04/README.md). Read the retained calibration results before changing the model; the POD section is not a prerequisite for starting the course.
 
 ## Experiment and results
 

@@ -1,6 +1,6 @@
 # Week 1.1 — AI-assisted scientific software
 
-[Course home](../../README.md) · [All weeks](../README.md) · [← Week 1](../week01/README.md) · [Week 2 →](../week02/README.md)
+[Course home](../../README.md) · [All weeks](../README.md) · [← Week 1](../week01/README.md) · [Week 1.2 →](../week01_2/README.md)
 
 Specification, verification, physical gates and accountable AI use.
 
@@ -41,4 +41,4 @@ decision. [Run the lab](../../notebooks/week01_1/W1_1_AI_Assisted_Scientific_Sof
 
 ---
 
-[Course home](../../README.md) · [All weeks](../README.md) · [← Week 1](../week01/README.md) · [Week 2 →](../week02/README.md)
+[Course home](../../README.md) · [All weeks](../README.md) · [← Week 1](../week01/README.md) · [Week 1.2 →](../week01_2/README.md)

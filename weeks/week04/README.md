@@ -23,6 +23,7 @@ CFD datasets, field surrogates and operator learning.
 | Lab 6: profile surrogates, optimizers and depth | [Open notebook](../../notebooks/week04/W4_Lab6_Ghia_Profile_Optimizer_Depth.ipynb) | [Open in Colab](https://colab.research.google.com/github/Ehsan-Roohi/FlowMLLab/blob/main/notebooks/week04/W4_Lab6_Ghia_Profile_Optimizer_Depth.ipynb) |
 | Lab 7: new high-Re CFD and mesh/time checks | [Open notebook](../../notebooks/week04/W4_Lab7_High_Re_CFD_Ghia.ipynb) | [Open in Colab](https://colab.research.google.com/github/Ehsan-Roohi/FlowMLLab/blob/main/notebooks/week04/W4_Lab7_High_Re_CFD_Ghia.ipynb) |
 | Lab 8: full-field POD-DeepONet and interpolation | [Open notebook](../../notebooks/week04/W4_Lab8_High_Re_Field_DeepONet.ipynb) | [Open in Colab](https://colab.research.google.com/github/Ehsan-Roohi/FlowMLLab/blob/main/notebooks/week04/W4_Lab8_High_Re_Field_DeepONet.ipynb) |
+| Advanced Lab 9: label-free PINN audit (after Week 13 Part A) | [Open notebook](../../notebooks/week04/W4_Lab9_Label_Free_Ghia_PINN_Audit.ipynb) | [Prerequisites and CPU setup](../../START_HERE.md#fresh-cavity-pinn-studies) |
 
 **Module guides:** [Week 4 labs](../../notebooks/week04/)
 
@@ -34,7 +35,7 @@ CFD datasets, field surrogates and operator learning.
 
 ## Suggested route
 
-Read the lecture, then work through the notebooks in the listed order. Read each notebook’s setup instructions before running its cells; use the figures and evidence below to interpret the results.
+Begin with Labs 1–3: qualify CFD, build simple surrogates, then learn the POD coefficients. Lab 5 audits seven-Re coverage; take Lab 7 mesh/time checks before Lab 8 high-Re field learning. Lab 6 is a separate profile-regression and optimizer branch, with Ghia samples as labels. Weeks 4.1/4.2 are optional ROM and Stokes-correction extensions. **Lab 9 is an advanced return visit after [Week 13 Part A](../week13/README.md), not the next introductory lesson.**
 
 ## Experiment and results
 

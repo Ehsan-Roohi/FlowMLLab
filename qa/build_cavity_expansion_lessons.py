@@ -66,8 +66,10 @@ REFERENCE=[md(INTRO + """
 **Start with our computed solutions below.** This notebook now opens the native
 FlowMLLab CFD archives, recomputes their errors, and plots CFD curves against
 Ghia markers by default. It does not fit a curve through Ghia and call it CFD.
-Retained CFD is available at Re=100, 400 and 1000; the four higher-Re fields are
-still missing. The later neural section has a different data source and purpose.
+Retained CFD now covers all seven Ghia Reynolds numbers. Table A revisits the
+earlier Re=100/400/1000 grids; Table C lists the current field archives, including
+the 512-cell cases. [Lab 7](W4_Lab7_High_Re_CFD_Ghia.ipynb) supplies their mesh/time
+checks. Availability alone does not establish grid-independent accuracy.
 """),code(BOOT),md("""### 1. Our CFD solutions, mesh changes and Ghia validation
 
 Re=100 uses the existing staggered-grid SIMPLE runs on 32/64 cells. Re=400 and
@@ -111,17 +113,22 @@ successful convergence study. The original source and histories remain in
 
 ### 2. What we have for neural learning on the Ghia cases
 
-There are two different retained experiments:
+There are three distinct retained supervised experiments:
 
-* **Full fields:** the existing POD-DeepONet learns 65 by 65 velocity and pressure
+* **Low-Re full fields:** the introductory POD-DeepONet learns 65 by 65 velocity and pressure
   fields from our CFD over Re=100--400. Its blind cases are Re=175, 275 and 375.
   Ghia checks at Re=100 and 400 are not unseen-Re tests of that model.
   [Full-field results and protocol](../../results/pod_deeponet/README.md).
 * **All-seven-Re profile study:** a small MLP learns u(y) and v(x) directly from
   Ghia centreline samples. Training uses Re=100,1000,5000,10000; validation uses
   400; complete test cases are 3200 and 7500. Adam, L-BFGS, their sequence, network
-  depth and wall-data weights are compared across three seeds. These results do
-  not supply the missing high-Re CFD fields or demonstrate a high-Re PINN solve.
+  depth and wall-data weights are compared across three seeds. These are profile
+  fits, not independent CFD solutions or label-free PINNs.
+* **High-Re full fields:** a separate POD-DeepONet learns our matched CFD velocity
+  fields over Re=100--10000, with Re=3200 and 7500 withheld in full and Re=400/6500
+  used for selection. [Lab 8](W4_Lab8_High_Re_Field_DeepONet.ipynb) compares frozen
+  predictions with interpolation. Its small surrogate errors are relative to the
+  retained 512-cell discretization, whose mesh sensitivity is reported separately.
 
 The figures below show the frozen baseline, selected network and interpolation
 against the held-out Ghia samples. Their lower panels show signed discrepancies
@@ -140,15 +147,21 @@ display(test.groupby(['model','Re']).rmse_U.mean().unstack('Re'))
 for re in (3200, 7500):
     print(f'Re={re}: held-out Ghia-profile prediction; these curves are not a CFD solve')
     display(Image(filename=str(neural_folder/f're{re}_profiles.png'), width=800))
-print('The selected neural model improves over Adam, but log-Re interpolation wins both tests.')"""),md("""### 3. Coverage and the remaining high-Re CFD work
+print('The selected neural model improves over Adam, but log-Re interpolation wins both tests.')"""),md("""### 3. Current coverage and numerical qualification
 
-Table C gives all seven reference cases and explicitly identifies the missing
-CFD fields. A Ghia table is not a full field, and a profile-regression prediction
-does not fill that gap. For each additional CFD case retain grid, time step,
-convection, residual history, wall treatment and both velocity profiles. Compare
-three grids and a halved time step, and inspect stationarity, mass balance and
-vortex locations before using the field for machine learning. Pressure requires
-an independent validation: Ghia's velocity samples do not provide one.
+Table C checks the actual files in this checkout. Retained 512-cell CFD fields
+are present for all seven reference cases; this table reports availability,
+not a new solve or a claim of mesh independence. A Ghia profile table and a
+full-field CFD archive remain different forms of evidence.
+
+Use [Lab 7](W4_Lab7_High_Re_CFD_Ghia.ipynb) and its
+[mesh/time evidence](../../results/cavity_highre_ghia/README.md) to inspect grid,
+time step, convection, residual history, wall treatment and both velocity
+profiles. Compare the retained three-grid and time-step checks, stationarity,
+mass balance and vortex locations before admitting a field as a learning label.
+Pressure needs separate qualification: Ghia's velocity samples do not validate it.
+If a file is absent in your checkout, Table C reports that local absence; recover
+the matching published evidence before using it.
 """),code("""print('Table C: reference and retained CFD coverage')
 display(pd.DataFrame(course.coverage(ROOT)))
 # Reference-only figures are optional: the default plots above contain OUR solutions.
@@ -181,12 +194,15 @@ else:
 3. **Table B and the two test figures:** compare Adam, the selected network and
    interpolation separately at Re=3200 and 7500. State where the neural model
    gains and loses, and distinguish seed-mean error from error of the mean curve.
-4. **Information and test sets:** list the different training labels and blind
-   Re values of the full-field POD-DeepONet and the centreline MLP. Explain why
-   a successful profile fit is not independent validation of a flow solver.
-5. **Table C:** write an admission decision for each Re. Design a three-grid and
-   two-time-step CFD experiment for one missing high-Re field. Keep missing,
-   nonstationary and failed cases explicitly marked.
+4. **Information and test sets:** list the labels, selection cases and blind
+   Re values for the low-Re field model, the centreline MLP and the high-Re field
+   model in Lab 8. Explain why profile fitting and a label-free PINN solve are
+   different claims, even when evaluated at the same Reynolds number.
+5. **Table C and Lab 7:** select one high-Re case and inspect its three-grid and
+   time-step evidence. Write an admission decision that separates file presence,
+   iterative convergence, mesh sensitivity and benchmark agreement. State a
+   further check if the retained evidence is insufficient; do not call a missing
+   local download a missing scientific experiment.
 6. **Algorithm comparison:** use the original Week 1.2 matched SIMPLE/PISO/PIMPLE
    runs to compare pressure solves and elapsed time at equal achieved accuracy.
    SIMPLE iterations are not physical time. Do not infer an algorithm ranking
@@ -452,7 +468,7 @@ def main():
         doc.cells[0].source += f'\n\n[Open in Colab](https://colab.research.google.com/github/Ehsan-Roohi/FlowMLLab/blob/main/notebooks/week04/{filename})'
         execute(doc,ROOT);nb.write(doc,ROOT/'notebooks/week04'/filename)
         print('Built separate lab',filename,flush=True)
-    navigation=[md('## Optional continuation: all seven Ghia Reynolds numbers\n\nThe original cells, outputs and worked-example scope above are preserved. New material lives in two separate notebooks: [Lab 5: seven-Re validation and CFD qualification](../week04/W4_Lab5_All_Re_Ghia_Validation.ipynb) and [Lab 6: CPU profile surrogates, network depth, optimizers and weights](../week04/W4_Lab6_Ghia_Profile_Optimizer_Depth.ipynb). The profile study does not imply that missing high-Re full fields have been validated. [Retained results](../../results/cavity_ghia_allre/README.md).')]
+    navigation=[md('## Optional continuation: all seven Ghia Reynolds numbers\n\nContinue with [Lab 5: seven-Re CFD coverage and qualification](../week04/W4_Lab5_All_Re_Ghia_Validation.ipynb). [Lab 6](../week04/W4_Lab6_Ghia_Profile_Optimizer_Depth.ipynb) fits Ghia centreline samples with matched optimizer/depth comparisons; [Lab 7](../week04/W4_Lab7_High_Re_CFD_Ghia.ipynb) qualifies our high-Re full fields before [Lab 8](../week04/W4_Lab8_High_Re_Field_DeepONet.ipynb) compares field predictions with interpolation. All seven Ghia Reynolds numbers have retained CFD, with mesh/steady limits reported in the corresponding study. [Profile evidence](../../results/cavity_ghia_allre/README.md) · [Field evidence](../../results/cavity_highre_ghia/README.md).')]
     for name in ['week01/03_cavity_ghia.ipynb','week01_2/W1_2_Cavity_Pressure_Velocity.ipynb',
                  'week04/W4_Lab1_CFD_Data_Production_Student.ipynb',
                  'week04/W4_Lab2_Scalar_and_Field_Surrogates_Student.ipynb',

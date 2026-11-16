@@ -237,6 +237,8 @@ def make(kind):
     if kind=='ghia':
         md(r'''# Week 4, Lab 9 — Label-free PINNs across the Ghia cases
 
+**Prerequisites:** complete Week 4 CFD/POD foundations and [Week 13 Part A: build a small streamfunction PINN](../week13/W13_Rectangular_Cavity_PINN_Research.ipynb) before this research audit. This is an advanced branch; its Week 4 location does not make it a prerequisite for introductory field learning.
+
 This additive lab studies case-specific PINNs at
 $Re=100,400,1000,3200,5000,7500,10000$. The admitted matrix has three seeds (7, 23, 61) and both declared collars per Re.
 Each model uses four tanh layers of width 64, float64, 2048 fixed points, 2000 Adam

@@ -1,5 +1,9 @@
 # Week 1.2 - Pressure-velocity coupling
 
+[Course home](../../README.md) · [All weeks](../README.md) · [← Week 1.1](../week01_1/README.md) · [Week 1.3 →](../week01_3/README.md)
+
+**Optional numerical branch:** complete the Week 1 cavity lab first. You can start Week 2 supervised learning without finishing this algorithm comparison.
+
 <!-- cavity-seven-re -->
 Separate follow-on notebooks cover [all seven Ghia Reynolds numbers](../../notebooks/week04/W4_Lab5_All_Re_Ghia_Validation.ipynb) and [CPU profile-surrogate optimization and depth](../../notebooks/week04/W4_Lab6_Ghia_Profile_Optimizer_Depth.ipynb). Earlier notebook cells and outputs are preserved. [Benchmark data](../../references/ghia/README.md) · [Measured results](../../results/cavity_ghia_allre/README.md) · [Research ideas and sources](../../docs/CAVITY_RESEARCH_ROADMAP.md).
 <!-- /cavity-seven-re -->

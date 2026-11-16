@@ -12,12 +12,6 @@ Developed for **MIE 690A: AI in Fluid Mechanics** at the University of Massachus
 
 [Course map](COURSE_MAP.md) · [Notebooks](notebooks/README.md) · [Lectures](lectures/README.md) · [Results gallery](#results-gallery) · [Technical guide](docs/RESULTS_GUIDE.md) · [Attention and language modeling](docs/TRANSFORMER_COURSE.md)
 
-## Featured extension: do larger networks predict two-step flow better?
-
-[**Week 15 capacity study**](weeks/week15/larger_networks.md) compares six enlarged geometry-aware models and a separate original-Transolver/GeoPT experiment on the retained CFD dataset. In the three completed matched small/large controls, mean velocity error fell by **18.82% for geometry-aware DeepONet** and **12.16% for Geom-DeepONet**, but rose by **7.26% for SMART**. These are **single-seed findings**; a larger model alone does not guarantee a better vortex prediction.
-
-[Configurations, evidence and exercises](weeks/week15/larger_networks.md) · [Two-step contours at Re=100](results/week15_capacity_study/figures/DoubleStep_All_Large_Models_Re100.png) · [Re=25](results/week15_capacity_study/figures/DoubleStep_All_Large_Models_Re25.png) · [Analysis notebook](notebooks/week15/W15_Larger_Networks_Analysis.ipynb)
-
 ## Continue through the course
 
 Each week has a guide, a notebook link and its lecture or companion reading.
@@ -66,6 +60,25 @@ Each week has a guide, a notebook link and its lecture or companion reading.
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.22074169.svg)](https://doi.org/10.5281/zenodo.22074169)
 
+## Choose a learning path
+
+Week numbers and notebook addresses stay fixed; the order below follows prerequisites.
+The gallery is an overview, not a requirement to run every research experiment.
+
+| Stage | Route | What to establish before continuing |
+| --- | --- | --- |
+| Foundations | [Week 1: Python, Keras and cavity validation](weeks/week01/README.md) → [Week 2: supervised learning](weeks/week02/README.md) → [Week 1.3: optimizers](weeks/week01_3/README.md) | Array shapes, training/validation/test roles, scaling and a fair baseline |
+| Field models | [Week 4: CFD → POD → DeepONet](weeks/week04/README.md) → [Weeks 5–6: one project](notebooks/week05_06/README.md) | Qualify CFD labels, withhold complete cases, and separate discretization error from prediction error |
+| Dynamics and attention | [Week 7: wakes](weeks/week07/README.md) → [7.2: sensing](weeks/week07_2/README.md) → [7.3: attention primer and pretraining](weeks/week07_3/README.md) → [7.4: transfer](weeks/week07_4/README.md) | Understand observations and time splits before pretraining; [Weeks 17–22](docs/TRANSFORMER_COURSE.md) develop attention and forecasting in depth |
+| Physics-informed models | [Week 13 Part A: a small CPU PINN](weeks/week13/README.md) → [Week 4 Lab 9: seven-Re audit](notebooks/week04/W4_Lab9_Label_Free_Ghia_PINN_Audit.ipynb) → [deep-cavity studies](notebooks/week13/README.md) | Distinguish residual reduction from field accuracy before comparing research runs |
+
+**Optional branches:** [Week 1.1](weeks/week01_1/README.md) develops software verification;
+[Week 1.2](weeks/week01_2/README.md) compares numerical algorithms after the cavity lab.
+Start scalar [Week 2.1 uncertainty](weeks/week02_1/README.md) after Week 2 and return
+to its POD–GP section after Week 4. Kinetic and compressible-flow routes begin with
+[Week 3](weeks/week03/README.md) and [Week 8](weeks/week08/README.md).
+[Full route and readiness guide](START_HERE.md#learning-order-and-optional-branches).
+
 ## Results gallery
 
 The figures below connect each week to an experiment or teaching example.
@@ -85,25 +98,8 @@ Follow the captions for data provenance and validity limits; the
 At Re = 400, the moving lid drives a large clockwise vortex and weaker corner recirculation. The black streamlines come from the retained 65 × 65 solution. The right panels compare both velocity centerlines with Ghia et al. The cross marks the published point omitted from the qualified horizontal-profile error norm.
 [Cavity benchmark and Ghia comparison](results/article_figures/fig02_cavity_benchmark.png) · [Figure contract](ARTICLE_FIGURE_MAP.md)
 
-**Our CFD against Ghia at three Reynolds numbers.** Solid curves below come
-from FlowMLLab's retained solver fields; circles are the corresponding published
-Ghia samples. Re=100 uses SIMPLE on 64 cells; Re=400 and 1000 use the independent
-finite-difference solver on 128 cells. The cross preserves the flagged Re=400
-printed entry. These are numerical solutions, not curves fitted to Ghia.
-
-<img src="results/cavity_cfd_ghia/cfd_ghia_validation.png" width="760" alt="FlowMLLab CFD curves versus Ghia velocity samples at Reynolds numbers 100, 400 and 1000; both centreline components and the flagged printed point are visible">
-
-[Open the executed CFD validation lab](notebooks/week04/W4_Lab5_All_Re_Ghia_Validation.ipynb)
-· [Grid comparisons, signed errors and source fields](results/cavity_cfd_ghia/README.md).
-**New higher-Re CFD.** The four cases below were independently solved on
-128, 256 and 512 cells per side; circles remain the original Ghia samples.
-
-<img src="results/cavity_highre_ghia/highre_cfd_ghia.png" width="760" alt="New three-grid CFD against Ghia at Re3200,5000,7500 and10000">
-
-[Run the new CFD lab](notebooks/week04/W4_Lab7_High_Re_CFD_Ghia.ipynb) ·
-[Native fields and mesh/time sensitivity](results/cavity_highre_ghia/README.md).
-These are converged discrete roots; remaining high-Re mesh sensitivity is reported.
-
+Continue to the [Week 4 validation and neural studies](#week-4--cavity-surrogates-and-deeponet)
+for all seven Ghia Reynolds numbers, mesh checks and held-out field predictions.
 
 ### Week 1.1 — AI-assisted scientific software
 
@@ -132,8 +128,9 @@ decision. [Run the lab](notebooks/week01_1/W1_1_AI_Assisted_Scientific_Software.
 
 The four panels use the same streamline levels on the retained Re = 100 solutions.
 
-Compare SIMPLE, PISO and PIMPLE on the same lid-driven cavity and check their
-converged velocity fields against an independent streamfunction–vorticity solver.
+This optional numerical branch follows the Week 1 cavity lab. Compare SIMPLE,
+PISO and PIMPLE on the same cavity and check their converged velocity fields
+against an independent streamfunction–vorticity solver.
 
 ### Week 1.3 — Optimizers for scientific machine learning
 
@@ -141,8 +138,8 @@ converged velocity fields against an independent streamfunction–vorticity solv
 
 <img src="docs/assets/showcase/week01-3-optimizer-comparison.png" width="680" alt="Convergence, predicted profile and signed validation error for four optimizer routes">
 
-Four routes fit the same signal from identical starting weights and training
-samples. The lower panels show which routes resolve the narrow peak and where
+After Keras basics and Week 2 data splitting/scaling, four routes fit the same
+signal from identical starting weights and training samples. The lower panels show which routes resolve the narrow peak and where
 errors remain. A separate exercise tests the SOAP and self-scaled Broyden
 sequence used in the deep-cavity study. [Read the lecture](lectures/week01_3_keras_optimizers.pdf).
 
@@ -170,7 +167,8 @@ CFD/DSMC result. [Run the lab](notebooks/week02/AI_in_Fluids_Week2_Colab_Expande
 
 ![Probabilistic CFD prediction, uncertainty and blind calibration checks](results/probabilistic_uq/probabilistic_uq_validation.png)
 
-Bayesian and POD–Gaussian-process predictions are checked with proper scores
+Start with scalar Bayesian regression after Week 2; return to the POD–GP field
+section after Week 4. Bayesian and POD–Gaussian-process predictions use proper scores
 and blind coverage; the retained under-coverage is part of the lesson.
 [UQ evidence](results/probabilistic_uq/README.md)
 
@@ -192,8 +190,43 @@ HS–NTC wall-pressure validation.
 
 **[Open Week 4: lecture, notebooks and guide](weeks/week04/README.md)**
 
-[All seven Ghia Reynolds numbers and the CPU optimizer/depth comparison](results/cavity_ghia_allre/README.md)
-extend the existing validation and surrogate labs, with whole-Re testing and an explicit full-field coverage audit.
+The cavity is reused here for four distinct questions. Start with CFD qualification,
+then distinguish learning the published centreline samples from learning our full fields.
+
+| Investigation | Data and test | Open |
+| --- | --- | --- |
+| CFD qualification | Our solutions versus Ghia at all seven Re; inspect mesh and time sensitivity | [Lab 5: coverage](notebooks/week04/W4_Lab5_All_Re_Ghia_Validation.ipynb) · [Lab 7: high-Re fields](notebooks/week04/W4_Lab7_High_Re_CFD_Ghia.ipynb) |
+| Profile learning | Ghia samples as labels; whole-Re tests at 3200 and 7500 | [Lab 6: optimizers and depth](notebooks/week04/W4_Lab6_Ghia_Profile_Optimizer_Depth.ipynb) |
+| Full-field learning | Our CFD as labels; compare frozen predictions with interpolation | [Lab 3: low-Re introduction](notebooks/week04/W4_Lab3_DeepONet_Cavity_Student.ipynb) · [Lab 8: high-Re extension](notebooks/week04/W4_Lab8_High_Re_Field_DeepONet.ipynb) |
+| Label-free PINNs | PDE and wall constraints; CFD/Ghia used only to audit accuracy | [Advanced Lab 9](notebooks/week04/W4_Lab9_Label_Free_Ghia_PINN_Audit.ipynb), after [Week 13 Part A](weeks/week13/README.md) |
+
+**High-Re CFD validation before learning.** The four cases below were independently solved on
+128, 256 and 512 cells per side; circles remain the original Ghia samples.
+
+<img src="results/cavity_highre_ghia/highre_cfd_ghia.png" width="760" alt="New three-grid CFD against Ghia at Re3200,5000,7500 and10000">
+
+[Open the high-Re CFD lab](notebooks/week04/W4_Lab7_High_Re_CFD_Ghia.ipynb) ·
+[Native fields and mesh/time sensitivity](results/cavity_highre_ghia/README.md).
+These are converged discrete roots; remaining high-Re mesh sensitivity is reported.
+
+<details>
+<summary>Earlier CFD grids at Re=100, 400 and 1000</summary>
+
+**Our CFD against Ghia at three Reynolds numbers.** Solid curves below come
+from FlowMLLab's retained solver fields; circles are the corresponding published
+Ghia samples. Re=100 uses SIMPLE on 64 cells; Re=400 and 1000 use the independent
+finite-difference solver on 128 cells. The cross preserves the flagged Re=400
+printed entry. These are numerical solutions, not curves fitted to Ghia.
+
+<img src="results/cavity_cfd_ghia/cfd_ghia_validation.png" width="760" alt="FlowMLLab CFD curves versus Ghia velocity samples at Reynolds numbers 100, 400 and 1000; both centreline components and the flagged printed point are visible">
+
+[Open the executed CFD validation lab](notebooks/week04/W4_Lab5_All_Re_Ghia_Validation.ipynb)
+· [Grid comparisons, signed errors and source fields](results/cavity_cfd_ghia/README.md).
+
+</details>
+
+<details>
+<summary>Start with the low-Re POD–DeepONet worked example</summary>
 
 **Problem:** Map Reynolds number to cavity fields.<br>
 **CFD / data:** FlowMLLab finite-difference streamfunction–vorticity Navier–Stokes solver.<br>
@@ -208,6 +241,11 @@ centerlines and measured inference cost.
 The full-field POD-DeepONet above uses CFD labels over Re=100–400 and tests
 complete fields at Re=175, 275 and 375. Its Ghia checks at 100 and 400 are
 benchmark checks, not unseen-Re tests.
+
+</details>
+
+<details>
+<summary>Separate profile-learning experiment: all seven Ghia cases</summary>
 
 **Neural learning across the seven Ghia cases.** A separate CPU MLP learns
 centreline velocity profiles directly from Ghia samples. Training uses Re=100,
@@ -233,10 +271,11 @@ not a high-Re full-field DeepONet or PINN result.
 [Open the optimizer/depth lab](notebooks/week04/W4_Lab6_Ghia_Profile_Optimizer_Depth.ipynb)
 · [All seven profile figures and frozen results](results/cavity_ghia_allre/README.md).
 
+</details>
 
-### Full-field neural follow-on to Week 4
+#### Full-field neural follow-on to Week 4
 
-The new POD-DeepONet learns our matched CFD velocity fields across Re=100–10000.
+The high-Re POD-DeepONet learns our matched CFD velocity fields across Re=100–10000.
 Re=3200 and 7500 are withheld in full. Architecture and interpolation convention
 are selected on Re=400 and 6500; neither test field is used for fitting or selection.
 
@@ -249,7 +288,7 @@ are selected on Re=400 and 6500; neither test field is used for fitting or selec
 
 Errors compare with the 512-cell CFD discretization. Its remaining mesh
 sensitivity is larger than some surrogate errors.
-[Run the new field-neural lab](notebooks/week04/W4_Lab8_High_Re_Field_DeepONet.ipynb) ·
+[Open the field-neural lab](notebooks/week04/W4_Lab8_High_Re_Field_DeepONet.ipynb) ·
 [Both tests, signed profiles, seed variation and limitations](results/cavity_field_deeponet/README.md).
 
 <!-- cavity-flow-comparison:start -->
@@ -267,6 +306,9 @@ The same streamline seeds and contour levels are used for both methods.
 
 </details>
 
+<details>
+<summary>Derived vorticity and pressure: matched contours and mesh limits</summary>
+
 <img src="results/cavity_field_deeponet/flow_comparison/vorticity_contours_overlay_Re1000_Re7500.png" width="760" alt="Signed vorticity contours from the same centered velocity curl for CFD and the frozen neural model">
 
 <img src="results/cavity_field_deeponet/flow_comparison/pressure_contours_overlay_Re1000_Re7500.png" width="760" alt="Overlaid pressure contours reconstructed independently from CFD and neural velocities using the same momentum-gradient integration">
@@ -274,6 +316,8 @@ The same streamline seeds and contour levels are used for both methods.
 Vorticity and pressure are **derived from velocity, not separately trained outputs**.
 Pressure still has 8.90% 256-to-512 mesh sensitivity at Re=7500; close contours
 show agreement with the retained discretization, not mesh-independent pressure accuracy.
+
+</details>
 
 <details>
 <summary>RGB fields and signed discrepancies</summary>
@@ -293,8 +337,8 @@ show agreement with the retained discretization, not mesh-independent pressure a
 <details>
 <summary>What can fail in a data-free PINN? A 42-run Ghia audit</summary>
 
-The new [Lab 9](notebooks/week04/W4_Lab9_Label_Free_Ghia_PINN_Audit.ipynb)
-tests all seven Reynolds numbers without CFD or Ghia training labels, with
+After the [Week 13 Part A PINN introduction](weeks/week13/README.md),
+[Lab 9](notebooks/week04/W4_Lab9_Label_Free_Ghia_PINN_Audit.ipynb) tests all seven Reynolds numbers without CFD or Ghia training labels, with
 three independent initializations and two corner collars. **None of the 42
 finite-budget runs passes all preregistered accuracy and physics checks.**
 The high-Re networks miss the interior circulation despite exact wall values
@@ -340,6 +384,23 @@ cost tradeoff. [Run the ROM lab](notebooks/week04/W4_1_Classical_ROM_Cavity.ipyn
 **CFD / data:** Constant and spatially diverse lid conditions, solved independently on 25 × 25 and 51 × 51 grids.<br>
 **Learning method:** A POD-based neural correction conditioned on the Stokes field and Reynolds number; pressure is recovered afterwards.
 
+The 51 × 51 refinement solves all 184 cases again and retrains the selected
+three-seed POD correction. Mean same-family velocity errors are 0.097% for
+constant lids and 0.810% for diverse lids, compared with 0.107% and 0.917%
+at 25 × 25. The 25-to-51 CFD velocity change is still about 20.6% for constant
+tests and 17.8% for diverse tests when the fine solution is sampled on the
+coarse grid. This is a better resolved surrogate experiment, not a claim of
+mesh-independent CFD accuracy.
+
+![Week 4.2 diverse-lid 51 by 51 speed, streamlines, vorticity and errors](figures/Cavity_diverse_grid51_streamlines_vorticity.png)
+
+[Open the 51 × 51 validation notebook](notebooks/week04/W4_Lab4_Grid51_Validation.ipynb)
+· [Read the 51 × 51 PDF addendum](lectures/week04_2_grid51_validation.pdf)
+· [Inspect the refined data and metrics](results/stokes_grid51/README.md)
+
+<details>
+<summary>Earlier 25 × 25 fields and the coarse-to-fine comparison</summary>
+
 ![Week 4.2 diverse-lid example: Navier–Stokes reference, Stokes-corrected prediction and absolute errors in velocity and recovered pressure](figures/Cavity_diverse_velocity_pressure.png)
 
 ![Week 4.2 diverse-lid speed contours with streamlines and primary and corner recirculation markers, plus interior vorticity and error](figures/Cavity_diverse_streamlines_vorticity.png)
@@ -356,19 +417,8 @@ validated corner vortices. [See the constant-lid vortex figure](figures/Cavity_c
 · [Read the lecture companion](lectures/week04_2_stokes_to_navier_stokes.pdf)
 · [Inspect the retained results](results/stokes_refined/README.md)
 
-The 51 × 51 refinement solves all 184 cases again and retrains the selected
-three-seed POD correction. Mean same-family velocity errors are 0.097% for
-constant lids and 0.810% for diverse lids, compared with 0.107% and 0.917%
-at 25 × 25. The 25-to-51 CFD velocity change is still about 20.6% for constant
-tests and 17.8% for diverse tests when the fine solution is sampled on the
-coarse grid. This is a better resolved surrogate experiment, not a claim of
-mesh-independent CFD accuracy.
+</details>
 
-![Week 4.2 diverse-lid 51 by 51 speed, streamlines, vorticity and errors](figures/Cavity_diverse_grid51_streamlines_vorticity.png)
-
-[Open the 51 × 51 validation notebook](notebooks/week04/W4_Lab4_Grid51_Validation.ipynb)
-· [Read the 51 × 51 PDF addendum](lectures/week04_2_grid51_validation.pdf)
-· [Inspect the refined data and metrics](results/stokes_grid51/README.md)
 
 ### Week 5 — Physics-guided projects
 
@@ -380,7 +430,9 @@ mesh-independent CFD accuracy.
 
 ![Animated cavity comparison for three retained blind POD–DeepONet cases](assets/flowmllab_blind_demo.gif)
 
-Use this retained cavity experiment as a project starting point: freeze a baseline,
+Weeks 5–6 form one project: complete P0, choose one track, and finish it in Week 6.
+This animation revisits the Week 4 low-Re model; the new task is to design a controlled
+comparison rather than repeat its worked example. Use it as a starting point: freeze a baseline,
 change one modeling choice and evaluate complete unseen cases.
 [Project pack](notebooks/week05_06/README.md) · [Interactive demo](demo/README.md)
 
@@ -814,7 +866,7 @@ The notebook exposes the split, training choices and unresolved low-Reynolds-num
 
 [Complete executed notebook](notebooks/week15/W15_Complete_Geometry_Generalization.ipynb) ·
 [data and reproduction guide](notebooks/week15/README.md) ·
-[24-page lecture](lectures/week15_geometry_generalization.pdf) ·
+[Lecture](lectures/week15_geometry_generalization.pdf) ·
 [post-audit evidence summary](results/week15_postaudit/README.md).
 
 The frozen split contains 100 training, 8 validation and 19 retrospective
@@ -915,12 +967,6 @@ instructor solutions and a lecture. Current PDF page counts are listed in the
 
 [17 · Attention](weeks/week17/README.md) · [18 · Language modeling](weeks/week18/README.md) · [19 · Sensors and tokens](weeks/week19/README.md) · [20 · Missing observations](weeks/week20/README.md) · [21 · Autonomous prediction](weeks/week21/README.md) · [22 · Transfer audits](weeks/week22/README.md)
 
-![Week 17 contour preview: CFD velocity reference with sixteen sensors, SensorSet prediction and absolute reconstruction error](docs/assets/transformer-contours/week17.png)
-
-*From sparse sensors to a flow field: the retained CFD reference, SensorSet prediction and spatial error at one fixed Re105 snapshot. Field panels share a color scale; the error has its own scale.*
-
-[Contour sources and reproduction](docs/assets/transformer-contours/README.md)
-
 [Setup and prerequisites](docs/TRANSFORMER_COURSE.md) · [Six figures and experiments](#transformer-labs) · [Review corrections and validation](docs/TRANSFORMER_SECOND_REVIEW_RESPONSE.md) · [Original Weeks 17–22 release notes](RELEASE_NOTES_v1.10.0.md). Interactive Colab and student workload acceptance remain open. See the [original release and its assets](https://github.com/Ehsan-Roohi/FlowMLLab/releases/tag/v1.10.0).
 
 ### Week 17 — Attention as a learned kernel
@@ -937,7 +983,7 @@ The velocity contours compare the CFD reference, reconstruction from 16 sensors 
 
 ![Re105 velocity contours: CFD reference with sixteen sensors, SensorSet reconstruction and absolute error](docs/assets/transformer-contours/week17.png)
 
-[Student notebook](notebooks/week17/W17_CFD_Transformer.ipynb) · [Lecture](lectures/week17_cfd_transformer.pdf) · [Setup and assignment](notebooks/week17/README.md)
+[Contour sources and reproduction](docs/assets/transformer-contours/README.md) · [Student notebook](notebooks/week17/W17_CFD_Transformer.ipynb) · [Lecture](lectures/week17_cfd_transformer.pdf) · [Setup and assignment](notebooks/week17/README.md)
 
 
 ### Week 18 — Language modeling and causal decoding

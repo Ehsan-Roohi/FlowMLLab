@@ -1,5 +1,7 @@
 # Explore FlowMLLab by week
 
+**Recommended progression:** [Foundations → field models → advanced studies](../START_HERE.md#learning-order-and-optional-branches). The numbered index preserves notebook addresses; optional branches have explicit prerequisites.
+
 [← Course home](../README.md)
 
 Each page brings the topic image, lecture, notebooks and learning guide together. Weeks 5 and 6 have separate pages and share a project pack.

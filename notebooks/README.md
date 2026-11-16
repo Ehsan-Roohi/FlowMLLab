@@ -1,5 +1,7 @@
 # Notebook guide
 
+**Recommended progression:** [Foundations → field models → advanced studies](../START_HERE.md#learning-order-and-optional-branches). The numbered index preserves notebook addresses; optional branches have explicit prerequisites.
+
 **Browse by week:** [Open the weekly pages](../weeks/README.md) for each topic’s image, lecture, notebooks and guide.
 
 Most notebooks below open directly from GitHub in Google Colab and bootstrap

@@ -43,6 +43,49 @@ hosted Run All. Week 14 has a separate environment, Week 15 needs the documented
 evidence archive, and Weeks 17–22 use the local/ZIP setup with interactive Colab
 acceptance still open.
 
+### Learning order and optional branches
+
+Use these prerequisites alongside the numbered week index. An incremental unit's
+number locates its files; it does not make every extension a beginner requirement.
+
+1. **Build the foundations.** In [Week 1](weeks/week01/README.md), learn Python,
+   use Notebook 02 for tensors, gradients and Keras, and validate the cavity in
+   Notebook 03. Continue to [Week 2](weeks/week02/README.md) for regression,
+   scaling, baselines and data splits. Its opening neuron/gradient sections are
+   a refresher; use their checks to decide how much review you need.
+2. **Compare optimizers after the data protocol is clear.** Return to
+   [Week 1.3](weeks/week01_3/README.md) for matched starting weights, scaling,
+   validation-only selection and work budgets. The SOAP/Broyden research
+   comparison is an extension, not the first neural-network exercise.
+3. **Move from scalars to fields.** In [Week 4](weeks/week04/README.md), take
+   Labs 1–3 for CFD data, surrogates and POD–DeepONet. Use Lab 5 to inspect
+   seven-Re coverage, Lab 7 to qualify high-Re CFD and Lab 8 to assess learned
+   fields. Lab 6 separately fits Ghia profiles; it is not a CFD solver.
+   Weeks 4.1 and 4.2 are reduced-model and Stokes-correction branches. Complete
+   P0 and choose **one** [Weeks 5–6 project](notebooks/week05_06/README.md).
+4. **Learn dynamics before pretraining.** Take [Week 7](weeks/week07/README.md)
+   and [7.2 sensing](weeks/week07_2/README.md), then the short attention primer
+   in [7.3](weeks/week07_3/README.md#before-this-lab-patches-and-attention) before
+   its masked-autoencoder experiment and Week 7.4. Weeks 17–22 later derive and
+   test these mechanisms in depth; the whole sequence is not a prerequisite
+   for Week 7.3. The Week 5 sparse-sensing companion also belongs after Week 7.
+5. **Build a PINN before auditing research runs.** Start with
+   [Week 13 Part A](weeks/week13/README.md), then inspect
+   [Week 4 Lab 9](notebooks/week04/W4_Lab9_Label_Free_Ghia_PINN_Audit.ipynb).
+   Continue to deep cavities and the D/W=5 optimizer study only after you can
+   distinguish PDE residual, boundary constraints and field error.
+
+**Branches with their own prerequisites:** Week 1.1 software verification and
+Week 1.2 pressure–velocity coupling follow the Week 1 cavity exercise. Week 2.1
+scalar uncertainty follows Week 2; its POD–GP fields follow Week 4. Week 3 starts
+kinetic/particle methods, while Week 8 starts compressible-flow relations before
+the rarefied and shock examples. Geometry-aware operators (Week 15) build on
+Week 4 field learning; Week 16 then uses checked CFD in a design loop.
+
+Reading saved results, executing a compact CPU exercise and regenerating a full
+research protocol are separate choices. Follow each module's resource and data
+requirements; higher Reynolds number alone does not define teaching difficulty.
+
 ## 2. Create an environment
 
 ### Choose what you will execute
@@ -105,7 +148,7 @@ You should be able to answer all five questions before selecting a project:
 
 The notebook writes a project card only after the dataset audit and baseline succeed.
 
-## 4. Follow the weekly order
+## 4. Follow the learning loop
 
 Each week has the same learning loop:
 

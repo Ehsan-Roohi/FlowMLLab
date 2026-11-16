@@ -22,7 +22,32 @@ Masked-autoencoder pretraining on unlabelled wakes; error versus number of label
 
 ## Suggested route
 
-Read the lecture, then work through the notebooks in the listed order. Read each notebook’s setup instructions before running its cells; use the figures and evidence below to interpret the results.
+Complete Week 7 wake dynamics and Week 7.2 sparse-sensor reconstruction. Read the attention primer below before opening the masked-autoencoder notebook. Compare label budgets with the gappy-POD baseline, then continue to Week 7.4 transfer. Weeks 17–22 later provide the full attention and forecasting sequence.
+
+## Before this lab: patches and attention
+
+The masked autoencoder uses a **Transformer**, so read this short mechanism
+before inspecting pretraining results. A patch is a small block of the flow
+field flattened into a token; the mask hides some tokens during training.
+The encoder processes visible tokens, and the decoder predicts the hidden
+field values. Reconstruction loss uses the declared hidden-pixel mask.
+
+For a token matrix $X$, learned matrices $W_Q$, $W_K$ and $W_V$ form
+$Q=XW_Q$, $K=XW_K$ and $V=XW_V$. One attention head computes
+
+$$A=\operatorname{softmax}(QK^T/\sqrt{d_k}),\qquad Z=AV.$$
+
+Here each row of $Q$ is a query, each row of $K$ is a key, each row of $V$ is a
+value, and $d_k$ is the query/key width. Row-wise softmax makes each row of $A$
+sum to one; $Z$ mixes the values using those weights. Position information
+locates the patches. Multiple heads learn different mixtures. These weights
+describe the model's computation, not proof of a physical causal connection.
+
+Before running the lab, explain which pixels are visible, which enter the
+reconstruction loss, and which labelled frames are reserved for evaluation.
+For a worked Q/K/V calculation, read the opening attention example in
+[Week 17](../../notebooks/week17/W17_CFD_Transformer.ipynb); completing all six
+Transformer units is not required here.
 
 ## Experiment and results
 
