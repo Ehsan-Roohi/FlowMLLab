@@ -5,6 +5,8 @@ on:
   push:
     paths:
       - ".github/workflows/week9-materials.yml"
+      - "notebooks/week09/*.ipynb"
+      - "qa/execute_published_notebooks.py"
       - "lectures/source/lecture_typography.tex"
       - "qa/lecture_typography.py"
       - "qa/LECTURE_TYPOGRAPHY.md"
@@ -94,15 +96,20 @@ jobs:
           fc-cache -f "$font_dir"
           python qa/lecture_typography.py
 
-      - name: Rebuild student notebooks
-        run: python notebooks/week09/make_week9_notebooks.py
+      # Published notebooks are canonical; legacy generators omit later additions.
+      - name: Execute the published notebooks without replacing them
+        run: >-
+          python qa/execute_published_notebooks.py
+          notebooks/week09/W9_Lab1_Microstep_Zonal_DeepONet_Student.ipynb
+          notebooks/week09/W9_Lab2_Shock_Aligned_Nozzle_DeepONet_Student.ipynb
 
-      - name: Rebuild Week 9 lecture PDF
+      - name: Check Week 9 lecture source compilation
         run: |
           mkdir -p "$RUNNER_TEMP/week9-lecture"
           latexmk -xelatex -interaction=nonstopmode -halt-on-error \
             -outdir="$RUNNER_TEMP/week9-lecture" lectures/source/week09_rarefied_deeponet_case_studies.tex
-          cp "$RUNNER_TEMP/week9-lecture/week09_rarefied_deeponet_case_studies.pdf" lectures/week09_rarefied_deeponet_case_studies.pdf
+          test -s "$RUNNER_TEMP/week9-lecture/week09_rarefied_deeponet_case_studies.pdf"
+          pdfinfo "$RUNNER_TEMP/week9-lecture/week09_rarefied_deeponet_case_studies.pdf"
 
       - name: Reproduce independent step validation
         run: |

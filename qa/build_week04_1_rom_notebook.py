@@ -116,7 +116,7 @@ print("frozen evidence:", RESULTS)
 """
     ),
     markdown(
-        r"""## 3. Validate the added FOM path before reducing it
+        r"""## 3. Validate the full-order model before reducing it
 
 The snapshot collector is not accepted merely because it uses familiar formulas. At $Re=100$ and (400), it was run for exactly the time steps recorded in the fixed 65×65 FlowMLLab archive. Velocity and vorticity must match the already accepted Week-4 implementation to numerical round-off. Those two reproduced fields are then checked against the independent Ghia centerline data already used elsewhere in the course.
 

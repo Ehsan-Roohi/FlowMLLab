@@ -5,6 +5,8 @@ on:
   push:
     paths:
       - ".github/workflows/week7-materials.yml"
+      - "notebooks/week07/*.ipynb"
+      - "qa/execute_published_notebooks.py"
       - "lectures/source/lecture_typography.tex"
       - "qa/lecture_typography.py"
       - "qa/LECTURE_TYPOGRAPHY.md"
@@ -50,15 +52,19 @@ jobs:
           fc-cache -f "$font_dir"
           python qa/lecture_typography.py
 
-      - name: Rebuild notebook from its reviewable source
-        run: python notebooks/week07/make_week7_notebook.py
+      # Published notebooks are canonical; legacy generators omit later additions.
+      - name: Execute the published notebook against retained evidence
+        run: >-
+          python qa/execute_published_notebooks.py --profile week7-retained
+          notebooks/week07/W7_Lattice_Boltzmann_Cylinder_Student.ipynb
 
-      - name: Rebuild Week 7 lecture PDF
+      - name: Check Week 7 lecture source compilation
         run: |
           mkdir -p "$RUNNER_TEMP/week7-lecture"
           latexmk -xelatex -interaction=nonstopmode -halt-on-error \
             -outdir="$RUNNER_TEMP/week7-lecture" lectures/source/week07_cylinder_lbm_neural_surrogate.tex
-          cp "$RUNNER_TEMP/week7-lecture/week07_cylinder_lbm_neural_surrogate.pdf" lectures/week07_cylinder_lbm_neural_surrogate.pdf
+          test -s "$RUNNER_TEMP/week7-lecture/week07_cylinder_lbm_neural_surrogate.pdf"
+          pdfinfo "$RUNNER_TEMP/week7-lecture/week07_cylinder_lbm_neural_surrogate.pdf"
 
       - name: Run software and release gates
         run: |

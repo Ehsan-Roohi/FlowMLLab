@@ -1375,6 +1375,16 @@ def validate_pdfs() -> int:
     return len(pdfs)
 
 
+
+def source_crosscheck_detail(record: dict[str, object]) -> str:
+    """Render the already-validated result; supplied-source success has no reason key."""
+    if "reason" in record:
+        return str(record["reason"])
+    fields = {key: record[key] for key in ("source_commit", "height_percent", "compact_archive_match")
+              if key in record}
+    return json.dumps(fields, sort_keys=True)
+
+
 def main() -> None:
     missing = [name for name in REQUIRED if not (ROOT / name).is_file()]
     assert not missing, "missing release files: " + ", ".join(missing)
@@ -1441,7 +1451,7 @@ def main() -> None:
         ("python", "pass", f"{len(python_files)} files parsed"),
         ("core_dataset", "pass", actual),
         ("week7_grid", "pass", "formal asymptotic failure retained"),
-        ("week9_upstream_source", source_check["status"], source_check["reason"]),
+        ("week9_upstream_source", source_check["status"], source_crosscheck_detail(source_check)),
         ("full_report", "written", str(report_path.relative_to(ROOT))),
     ]
     print("FLOWMLLAB_RELEASE_QA_PASS")

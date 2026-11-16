@@ -1,7 +1,7 @@
 {
   "title": "FlowMLLab: An Open-Source Framework for Reproducible CFD-to-Scientific-Machine-Learning Experiments",
-  "description": "FlowMLLab v1.14.0 adds reproducible cavity PINN studies: 42 case-specific, label-free runs across all seven Ghia Reynolds numbers, 12 matched-work area-weighted sampling trials at Re100/Re7500, and a matched three-seed D/W=5 comparison of Adam-to-L-BFGS and SOAP-to-compact-self-scaled-Broyden. Frozen native fields, direct Ghia profiles, independent residual audits, sampling coverage, signed physical errors and explicit failures distinguish data integrity from numerical accuracy. Neither Ghia PINN sampling design passes the preregistered combined gates; the finite D5 optimizer study also misses accurate flow recovery. Mixed gains and losses remain separate from the accurate supervised POD-DeepONet results. Additive notebooks and lecture appendices preserve earlier course material. Post-v1.13 additions also include high-Re streamline/pressure/vorticity comparisons, measured solver experience and the Week15 network-capacity study. New software is MIT licensed; author-supplied research inputs retain the attribution and license scope in their notices.",
-  "version": "1.14.0",
+  "description": "FlowMLLab v1.14.1 provides integrated teaching explanations and reproducible cavity PINN studies: 42 case-specific, label-free runs across all seven Ghia Reynolds numbers, 12 matched-work area-weighted sampling trials at Re100/Re7500, and a matched three-seed D/W=5 comparison of Adam-to-L-BFGS and SOAP-to-compact-self-scaled-Broyden. Frozen native fields, direct Ghia profiles, independent residual audits, sampling coverage, signed physical errors and explicit failures distinguish data integrity from numerical accuracy. Neither Ghia PINN sampling design passes the preregistered combined gates; the finite D5 optimizer study also misses accurate flow recovery. Mixed gains and losses remain separate from the accurate supervised POD-DeepONet results. Additive notebooks and lecture appendices preserve earlier course material. Post-v1.13 additions also include high-Re streamline/pressure/vorticity comparisons, measured solver experience and the Week15 network-capacity study. New software is MIT licensed; author-supplied research inputs retain the attribution and license scope in their notices.",
+  "version": "1.14.1",
   "publication_date": "2026-11-16",
   "creators": [
     {
@@ -46,7 +46,7 @@
       "scheme": "url"
     },
     {
-      "identifier": "https://github.com/Ehsan-Roohi/FlowMLLab/releases/tag/v1.14.0",
+      "identifier": "https://github.com/Ehsan-Roohi/FlowMLLab/releases/tag/v1.14.1",
       "relation": "isVersionOf",
       "scheme": "url"
     },

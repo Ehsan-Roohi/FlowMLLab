@@ -5,6 +5,8 @@ on:
   push:
     paths:
       - ".github/workflows/week8-materials.yml"
+      - "notebooks/week08/*.ipynb"
+      - "qa/execute_published_notebooks.py"
       - "lectures/source/lecture_typography.tex"
       - "qa/lecture_typography.py"
       - "qa/LECTURE_TYPOGRAPHY.md"
@@ -53,18 +55,25 @@ jobs:
           fc-cache -f "$font_dir"
           python qa/lecture_typography.py
 
-      - name: Rebuild figures and student notebooks
+      - name: Rebuild deterministic numerical figures
         run: |
           python qa/run_week8_scattered_baseline.py
           python qa/build_week8_gas_dynamics_figures.py
-          python notebooks/week08/make_week8_notebooks.py
 
-      - name: Rebuild Week 8 lecture PDF
+      # Published notebooks are canonical; legacy generators omit later additions.
+      - name: Execute the published notebooks without replacing them
+        run: >-
+          python qa/execute_published_notebooks.py
+          notebooks/week08/W8_Lab1_Exact_Gas_Dynamics_Student.ipynb
+          notebooks/week08/W8_Lab2_Gas_Dynamics_SciML_Evidence_Student.ipynb
+
+      - name: Check Week 8 lecture source compilation
         run: |
           mkdir -p "$RUNNER_TEMP/week8-lecture"
           latexmk -xelatex -interaction=nonstopmode -halt-on-error \
             -outdir="$RUNNER_TEMP/week8-lecture" lectures/source/week08_gas_dynamics_sciml.tex
-          cp "$RUNNER_TEMP/week8-lecture/week08_gas_dynamics_sciml.pdf" lectures/week08_gas_dynamics_sciml.pdf
+          test -s "$RUNNER_TEMP/week8-lecture/week08_gas_dynamics_sciml.pdf"
+          pdfinfo "$RUNNER_TEMP/week8-lecture/week08_gas_dynamics_sciml.pdf"
 
       - name: Run software and release gates
         run: |

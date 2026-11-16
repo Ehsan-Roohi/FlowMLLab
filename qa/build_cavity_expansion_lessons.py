@@ -462,7 +462,7 @@ def main():
     deep_notebook()
     path=ROOT/'notebooks/week13/W13_Rectangular_Cavity_PINN_Research.ipynb'
     doc=nb.read(path,as_version=4);doc.cells=[c for c in doc.cells if not c.metadata.get(TAG)]
-    doc.cells.append(md('## Continue to the authors\' D/W=5 research cavity\n\nThe separate [D/W=5 regional-accuracy notebook](W13_Deep_Cavity_D5_Regional_Accuracy.ipynb) now supplies matched CFD/PINN fields for Re=100,250,500,1000, signed profiles, regional velocity/pressure/vorticity metrics and the retained optimization-workflow comparison. It complements the D=1/2 matrix and the near-matched D=2.2 case above. Geometric depth and network depth are separate variables.'))
+    doc.cells.append(md('## Continue to the authors\' D/W=5 research cavity\n\nThe separate [D/W=5 regional-accuracy notebook](W13_Deep_Cavity_D5_Regional_Accuracy.ipynb) supplies matched CFD/PINN fields for Re=100,250,500,1000, signed profiles, regional velocity/pressure/vorticity metrics and the retained optimization-workflow comparison. It complements the D=1/2 matrix and the near-matched D=2.2 case above. Geometric depth and network depth are separate variables.'))
     nb.write(doc,path)
     print('Built D/W=5 notebook and preserved earlier lessons',flush=True)
 

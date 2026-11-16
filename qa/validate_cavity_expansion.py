@@ -14,8 +14,24 @@ def git_bytes(path):
     return subprocess.check_output(['git','-c',f'safe.directory={ROOT}','-C',str(ROOT),'show','042669e6ed6f7b6fdb67b57cdf41b24e95890ee1:'+path])
 
 
+def preserved_cell_source(path, before, after, prose_changes):
+    if before.cell_type != after.cell_type:
+        return False
+    if before.source == after.source:
+        return True
+    # Only these exact prose substitutions may differ from the original lesson.
+    # A changed executable cell never qualifies, including through a reused ID.
+    if before.cell_type != 'markdown' or before.get('id') != after.get('id'):
+        return False
+    expected = prose_changes.get(path, {}).get(before.get('id'))
+    actual = {'before_sha256': hashlib.sha256(before.source.encode('utf-8')).hexdigest(),
+              'after_sha256': hashlib.sha256(after.source.encode('utf-8')).hexdigest()}
+    return expected == actual
+
+
 def main():
     receipt={'notebooks':{},'lecture_base_pages':{},'scope':'New extension cells executed; original code/output preservation checked. Not a new hosted Run All.'}
+    prose_changes=json.loads((ROOT/'qa/notebook_prose_changes_v1.14.1.json').read_text())['cells']
     # The current bootstrap is executed once in a clean namespace. It resolves
     # the local updated checkout; the optional network-clone branch is untested.
     import os
@@ -32,7 +48,7 @@ def main():
             kept=[c for c in document.cells if not c.metadata.get(TAG)]
             assert len(kept)==len(old.cells),(rel,'old cell count')
             for a,b in zip(old.cells,kept):
-                assert a.source==b.source,(rel,'old cell source changed')
+                assert preserved_cell_source(rel,a,b,prose_changes),(rel,'unapproved old cell source change')
                 if a.cell_type=='code':assert a.outputs==b.outputs,(rel,'old outputs changed')
             old_count=len(old.cells)
         for c in additions:

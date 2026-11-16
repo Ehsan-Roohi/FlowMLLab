@@ -1,5 +1,5 @@
 cff-version: 1.2.0
-message: "If you use FlowMLLab, please cite this v1.14.0 software release and the relevant research-case articles."
+message: "If you use FlowMLLab, please cite this v1.14.1 software release and the relevant research-case articles."
 title: "FlowMLLab: An Open-Source Framework for Reproducible CFD-to-Scientific-Machine-Learning Experiments"
 type: software
 authors:
@@ -7,7 +7,7 @@ authors:
     given-names: Ehsan
     orcid: "https://orcid.org/0000-0001-5739-3210"
 repository-code: "https://github.com/Ehsan-Roohi/FlowMLLab"
-url: "https://github.com/Ehsan-Roohi/FlowMLLab/releases/tag/v1.14.0"
+url: "https://github.com/Ehsan-Roohi/FlowMLLab/releases/tag/v1.14.1"
 license: MIT
 abstract: >-
   FlowMLLab integrates transparent continuum and particle solvers, case-wise
@@ -28,7 +28,7 @@ abstract: >-
   separate from centreline regression. The validation notebook displays native
   CFD profiles, signed errors and grid changes by default; the course home
   presents the CFD/Ghia comparison and held-out neural-profile predictions.
-  Version 1.14.0 adds a 42-run, case-specific, label-free Ghia PINN audit and
+  The cavity studies include a 42-run, case-specific, label-free Ghia PINN audit and
   12 matched-work sampling trials at Re100/Re7500 and a matched three-seed
   D/W=5 optimizer study, with reproducible source,
   frozen-field assessment and separate data-integrity and accuracy decisions.
@@ -51,8 +51,8 @@ keywords:
   - transformers
   - attention
   - language modeling
-version: "1.14.0"
-doi: "10.5281/zenodo.24269205"
+version: "1.14.1"
+doi: "10.5281/zenodo.22074169"
 date-released: "2026-11-16"
 identifiers:
   - type: doi

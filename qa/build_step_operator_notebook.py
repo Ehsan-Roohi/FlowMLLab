@@ -469,8 +469,8 @@ hash, environment, split/scalers, checkpoints, histories and reference-solver re
 md(r"""
 ## 9. The project's ordinary DeepONet — code and retained V5 evidence
 
-The project already contains an ordinary DeepONet implementation in
-`qa/step_architecture_v5.py`; omitting it would be misleading. Its branch receives
+The ordinary DeepONet implementation is in
+`qa/step_architecture_v5.py`. Its branch receives
 only normalized step height, its trunk receives normalized `(x,y)`, and a rank-48
 inner product returns two velocity components. The exact project architecture is:
 
@@ -480,8 +480,7 @@ inner product returns two velocity components. The exact project architecture is
 - an operator contraction producing `(u,v)`.
 
 That V5 experiment concerns the author's **rarefied DSMC height family**, not the
-continuum 130-case OpenFOAM archive below. It is nevertheless direct evidence for
-the requested lesson: ordinary DeepONet had 14.01%/23.31% terminal global error for
+continuum 130-case OpenFOAM archive below. In that study, ordinary DeepONet had 14.01%/23.31% terminal global error for
 uniform/zonal sampling and 190.44%/93.41% vortex-region error, and no seed met the
 predeclared checkpoint ceiling. Geo-DeepONet-uniform produced eligible checkpoints
 for all three seeds. We keep the studies separate instead of attaching DSMC scores
@@ -755,7 +754,7 @@ trusted under geometry change merely because it interpolates Reynolds number wel
 Use the casebooks to inspect every failure; do not summarize this experiment with one
 bar height.
 
-The new fixed-domain ordinary DeepONet makes that limitation directly measurable on
+The fixed-domain ordinary DeepONet makes that limitation directly measurable on
 the same 12 OpenFOAM geometry-holdout cases: three-seed mean velocity error is 28.96%,
 centered-pressure error is 299.57%, and reverse-flow IoU is 0.406. At g009/Re100 its
 three velocity errors span only 46.61–47.14%, so the failure is repeatable rather than

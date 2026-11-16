@@ -1,0 +1,66 @@
+{
+  "scope": "Exact permitted teaching-prose substitutions; executable source and outputs are not exempted",
+  "base_commit": "f14814f82e9ff4790c99b03df58c0e9ce2672e2a",
+  "cells": {
+    "notebooks/week01/02_tensorflow_for_ai_fluids.ipynb": {
+      "0d0e0eb4": {
+        "before_sha256": "813ef83976dc17ae16730ca7dad528efbd33e304355d58422c65160fdfd9b81d",
+        "after_sha256": "a40356d4744d0d25a87ede30dd2e983183354b4724d4e4000224bf0745059b5d"
+      }
+    },
+    "notebooks/week01_2/W1_2_Cavity_Pressure_Velocity.ipynb": {
+      "829339c3": {
+        "before_sha256": "d31feec8490d318c6b49f5f3538eb0eb94edcd8e2b8bb9eab51dc6b8a5be6f4a",
+        "after_sha256": "92e9a5e9ce91d1d4034406c2942c8d355d4977bbeaa71a11657eb13dae7528b4"
+      }
+    },
+    "notebooks/week04/W4_1_Classical_ROM_Cavity.ipynb": {
+      "w41-004": {
+        "before_sha256": "8599f23eb0266d8a786f6c93f55e2a067737ef0a55c44d49b9326526cfaa0dd0",
+        "after_sha256": "a5b2d3aa7b068793b0ebdffa8f24d95d21746163d661787ba8000215a09e669b"
+      }
+    },
+    "notebooks/week05_06/P5_Rarefied_Cavity.ipynb": {
+      "18ba0fa4": {
+        "before_sha256": "651c1632441a724e9e1f92304d6ff131330f6421659c4567b79eb5816ff83bfe",
+        "after_sha256": "7011a3723ef7b8964255c15f012dc130c6d97d22c4ef7912bea7376b2a44d5e4"
+      },
+      "ffd6b2a3": {
+        "before_sha256": "3d383d76db7b4139ae3d223231426602e493dd96d08299a0b55503131241fa1a",
+        "after_sha256": "d12f88c10fc4a8e9718633dfbb2f14542d674756f9c996265d396a2fe0a9c175"
+      },
+      "fd619d9a": {
+        "before_sha256": "e56b51ad7fbbba6bc8a9c99114a239d0e88381a6964c15fdad9039f1b246ab93",
+        "after_sha256": "4ebd261cfcc10653df0ee2f4339efd8a1c65f57ac025a63e4d001d253e4d6ac0"
+      }
+    },
+    "notebooks/week13/W13_Rectangular_Cavity_PINN_Research.ipynb": {
+      "ee3e0d3a": {
+        "before_sha256": "a9356e15f86201325d87ffc158ca567250ad383a9e455cad9d051aa89374dcd4",
+        "after_sha256": "feb63b5d1b514e4d5fe4cc6ec51eb93ac924995567c5096a95c1272ea83494ec"
+      }
+    },
+    "notebooks/week14/W14_pyCALC_RANS_PINN_NN.ipynb": {
+      "w14-00": {
+        "before_sha256": "ae573b330496864094d5ff19744f9c7901404e1d3759245777632bc54e7b74d7",
+        "after_sha256": "720e5916e7d9f57c97e1aca3de49024e6f3ae129a1073c18bad9740b840a4c1a"
+      }
+    },
+    "notebooks/week15/W15_Geometry_Operators_Step_Audit.ipynb": {
+      "56fe34c7": {
+        "before_sha256": "adffcce6ca9c8c86ada8328f3670c3e860078cce6e3b2e4b686dca2ca8677805",
+        "after_sha256": "315aa266ad7651169c169eb8704ba1e579edeb61a60f2a36d5017cc9d8ae87e2"
+      },
+      "e0dd7955": {
+        "before_sha256": "d4fe849142b5211d5fac54387d89ba5dc5fbd76c1c7f0dae86b5e0de5d1437ed",
+        "after_sha256": "fb4fdf8f35d3ef30bab262dd53901a9d44fb0795032d2abdb3cd8f6602a3f53f"
+      }
+    },
+    "notebooks/week15/W15_Original_Transolver_Step.ipynb": {
+      "a72d17f6": {
+        "before_sha256": "265f83ba50df898cb5a9d761e90a411c1e58019af76269a6a60f3f49cd800a57",
+        "after_sha256": "daa466e4c300b19dd8a7048c264d08d78771099992a260bb087b58c233d7b701"
+      }
+    }
+  }
+}

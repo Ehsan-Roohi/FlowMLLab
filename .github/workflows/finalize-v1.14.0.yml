@@ -1,12 +1,6 @@
 name: Verify v1.14.0 public archives and citation
 
 on:
-  push:
-    branches: [main]
-    paths:
-      - .github/workflows/finalize-v1.14.0.yml
-      - CITATION.cff
-      - RELEASE_NOTES_v1.14.0.md
   workflow_dispatch:
 
 permissions:

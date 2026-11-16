@@ -257,7 +257,7 @@ def improve_practical_cells(book,guide,markdown):
             cell.source=value
             if cell.cell_type=='code':cell.outputs=[];cell.execution_count=None
     if '**How to use this notebook.**' not in byid['829339c3'].source:
-        byid['829339c3'].source+='\n\n**How to use this notebook.** Run cells sequentially. The default executes small algebra examples and loads previously executed (retained) CFD results. Set a `RUN_*` switch to `True` only when ready to launch the corresponding new solve. When opening an updated lesson, start with a fresh Colab runtime: setup reuses an existing checkout. Download any outputs you want to keep before ending a temporary runtime.\n'
+        byid['829339c3'].source+='\n\n**How to use this notebook.** Run cells sequentially. The default executes small algebra examples and loads previously executed (retained) CFD results. Set a `RUN_*` switch to `True` only when ready to launch the corresponding new solve. Start with a fresh Colab runtime; setup reuses an existing checkout. Download any outputs you want to keep before ending a temporary runtime.\n'
     source('pressure-recorded-evidence','## Recorded cavity evidence\n\nAll four formulations are included. The following tables distinguish reference-profile error, equation defects and recorded solver-call time. Matching spacing does not make the FV and FD spatial equations identical.')
     source('f5e083c3','''## Run selected FV methods again
 

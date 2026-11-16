@@ -15,12 +15,11 @@ cells=[md(r'''
 **Lars Davidson / pyCALC-RANS research workflow; FlowMLLab teaching adaptation.**
 Instructor: Ehsan Roohi. DNS: Myoungkyu Lee and Robert D. Moser.
 
-This notebook corrects the supplied audit's baseline labeling and distinguishes
-three things: **the original NN training protocol**, a **FlowMLLab interpolation
+This notebook distinguishes three evidence sources: **the original NN training protocol**, a **FlowMLLab interpolation
 control**, and **retained fresh executions of the original CFD solver**.
 It is not Davidson's original notebook or a new blind research benchmark.
 
-The companion review documents the exact differences from the supplied notebook.
+The companion technical notes document the implementation and its verification.
 Read [the 2026 primary paper](https://arxiv.org/abs/2511.12493v3) and
 [the code-update notes](https://www.cfd-sweden.se/lada/Using-Physical-Informed-Neural-Network-PINN-and-NN-improve-a-k-omega-turbulence-model.html).
 

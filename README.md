@@ -1018,8 +1018,8 @@ This fixed Re105 frame-245 example uses 84 total target labels and seed 17. Vort
 
 [Software manuscript archive](manuscript/README.md) · [Citation](CITATION.cff) · [Data provenance and reuse](DATA_PROVENANCE.md) · [Contributing](CONTRIBUTING.md)
 
-Current release: **v1.14.0**
+Current release: **v1.14.1**
 
-[GitHub release v1.14.0](https://github.com/Ehsan-Roohi/FlowMLLab/releases/tag/v1.14.0) · [Zenodo v1.14.0 archive](https://doi.org/10.5281/zenodo.24269205) · [Release history](https://github.com/Ehsan-Roohi/FlowMLLab/releases)
+[GitHub release v1.14.1](https://github.com/Ehsan-Roohi/FlowMLLab/releases/tag/v1.14.1) · [Zenodo v1.14.1 archive](https://doi.org/10.5281/zenodo.22074169) · [Release history](https://github.com/Ehsan-Roohi/FlowMLLab/releases)
 
 **Ehsan Roohi** · University of Massachusetts Amherst · [roohie@umass.edu](mailto:roohie@umass.edu)
