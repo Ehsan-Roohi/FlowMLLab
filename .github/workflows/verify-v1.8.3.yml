@@ -5,6 +5,7 @@ on:
   push:
     branches: [main]
     paths:
+      - .gitattributes
       - notebooks/week15/W15_Complete_Geometry_Generalization.ipynb
       - results/week15_postaudit/**
       - lectures/week15_geometry_generalization.pdf

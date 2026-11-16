@@ -40,6 +40,12 @@ data/nozzle_bird_pr/*.dat -text -whitespace
 data/week13_deep_cavity/audit.json -text
 data/week13_deep_cavity/loss_continuation.dat -text
 
+# Preserve retained Transolver CSV bytes, including their original CRLF endings.
+results/step_transolver/comparison.csv -text
+results/step_transolver/seed_17/case_metrics.csv -text
+results/step_transolver/seed_29/case_metrics.csv -text
+results/step_transolver/seed_43/case_metrics.csv -text
+
 # Frozen cavity evidence is identified by raw SHA256; preserve its original bytes.
 results/cavity_highre_ghia/** -text -whitespace
 results/cavity_field_deeponet/** -text -whitespace
