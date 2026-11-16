@@ -1,14 +1,14 @@
 {
-  "revision": "2026-11-05",
+  "revision": "2026-11-15",
   "python": "3.12.14",
   "tensorflow": "2.20.0",
-  "numpy": "2.2.6",
+  "numpy": "2.4.6",
   "keras": "3.15.1",
-  "code_cells_executed": 25,
+  "code_cells_executed": 26,
   "error_outputs": 0,
   "retained_plot_outputs": 9,
-  "execution_seconds": 339.13,
-  "notebook_sha256": "3f9bb54dc6616c1a77db11f66addda8c82a757d89e58d822b2bc6263267d15a9",
+  "execution_seconds": 34.5,
+  "notebook_sha256": "25195fa935ff13219d4b5c6bc1005ebb0686697ced73b501ae9b29c7633cb540",
   "checks": [
     "tensor shapes and dtypes",
     "broadcasting mismatch demonstration",
@@ -19,8 +19,12 @@
     "finite held-out error after validation-only weight selection",
     "watched vs unwatched coordinates",
     "analytic first and second derivatives",
-    "channel momentum residual and both wall conditions"
+    "channel momentum residual and both wall conditions",
+    "optional compact and larger runs shared identical training and validation coordinates",
+    "97 and 1153 parameters with exactly 480 optimizer updates per run",
+    "capacity comparison preserved the selected reference model",
+    "visually inspected reference and prediction profiles and signed validation errors"
   ],
-  "execution_scope": "Fresh CPU kernel; analytic teaching data; no new CFD or research training",
-  "post_execution_change": "Markdown revision and companion PDF link only; executed code unchanged."
+  "execution_scope": "Fresh in-process IPython on CPU. Analytic teaching data; no CFD, hosted Colab, or separate kernel validation.",
+  "post_execution_change": "Existing worked-example outputs retained. Optional capacity cell tested in both off and on modes without saving its outputs."
 }
