@@ -1,0 +1,16 @@
+{
+  "reynolds": 100,
+  "seed": 23,
+  "width": 64,
+  "depth": 4,
+  "collar": 0.01,
+  "collocation": 2048,
+  "adam_steps": 2000,
+  "lbfgs_steps": 500,
+  "adam_lr": 0.001,
+  "chunk_size": 2048,
+  "lbfgs_history": 50,
+  "audit_points": 2048,
+  "audit_seed": 983451,
+  "export_grid": 129
+}

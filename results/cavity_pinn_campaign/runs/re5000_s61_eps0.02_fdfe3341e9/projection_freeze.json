@@ -1,0 +1,55 @@
+{
+  "schema_version": 1,
+  "identity": {
+    "run_id": "re5000_s61_eps0.02_fdfe3341e9",
+    "Re": 5000,
+    "seed": 61,
+    "config": {
+      "reynolds": 5000,
+      "seed": 61,
+      "width": 64,
+      "depth": 4,
+      "collar": 0.02,
+      "collocation": 2048,
+      "adam_steps": 2000,
+      "lbfgs_steps": 500,
+      "adam_lr": 0.001,
+      "chunk_size": 2048,
+      "lbfgs_history": 50,
+      "audit_points": 2048,
+      "audit_seed": 983451,
+      "export_grid": 129
+    },
+    "model_sha256": "81ae99dd4837bc51f9cf0f9d1e8ea92ce2e9b1b8085a9796c72c930212c66cbf",
+    "config_sha256": "fdfe3341e98c9e3762646b8206a72f56b2f36af3cdd6b97c4864240c33842297",
+    "source_canonical_sha256": "507a6e0a6d632a173c8bdc8748564beffee77ce3664aeffcee25edc5ca305b9e",
+    "projection_runtime": {
+      "torch": "2.5.1+cu118",
+      "device": "cuda",
+      "cuda": "11.8"
+    },
+    "evaluation_device": "cuda",
+    "ghia_source_sha256": "49f3141ea0840c0d1a204dba2ca7b1c358cdad9924f083340099f72251d8b680",
+    "evaluator_source_sha256": "1d7118052fcf0eea1550433484cb799a598e8a4c23130b1c3a85cd2b3610817c",
+    "checkpoint_sha256": "9cddb5a74a3f8f1bb9210956a51b406fe2d8ff9cc80c4cb38ab2e280466a1255",
+    "original_freeze_manifest_sha256": "b75b125d4c920a18edde27508b3e64c6e3742db9c5e5ec242a7a7ad737668733",
+    "original_prediction_sha256": "f94bdd1db06323dc58bce45f5ea80635145f8f2447c4585057c3c1b6ea157d72",
+    "original_frozen_at_utc": "2026-11-16T00:29:44Z",
+    "training_runtime_history": [
+      {
+        "torch": "2.5.1+cu118",
+        "device": "cuda",
+        "cuda": "11.8"
+      }
+    ],
+    "coordinate_sha256": "672bcd26625e7d34c06ddeb7e3454d4fd2684dd9b7ee09a53e135d5fe8c4ff56",
+    "ghia_coordinate_sha256": "bfff04f64f06753ed86b17502e72e43a287e381183517897e1a0ffbab6b255d2",
+    "reference_file_sha256": "6ef58c72df456db98e9901a2ede4f78cefd16bd297d0e7a31ba3f01e2128a4fe"
+  },
+  "prediction_sha256": "1d54c8076d40dcfd1989139bd6dfe93fba8e3522ce6e4b275b08737b9a14cd29",
+  "at_utc": "2026-11-16T00:55:44.089157Z",
+  "coordinates_read_at_utc": "2026-11-16T00:55:38.231982Z",
+  "subset": "exact native interior x[1:-1], y[1:-1]; no interpolation; boundaries audited separately",
+  "reference_values_read": false,
+  "pressure": "PINN centre gauge; this CFD bundle contains no pressure reference"
+}

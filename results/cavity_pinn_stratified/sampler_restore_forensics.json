@@ -1,0 +1,522 @@
+{
+  "schema_version": 1,
+  "scope": "Read-only diagnosis of original frozen stratified checkpoints; no fitting, mutation, submission or target access",
+  "workspace": "/scratch3/workspace/roohie_umass_edu-flowml-ghia-highre-20261115/pinn-stratified-v1",
+  "observations": [
+    {
+      "host": "login1",
+      "torch": "2.5.1+cu118",
+      "requested_cpu_dispatch": "avx2",
+      "actual_cpu_dispatch": "AVX2",
+      "runs": [
+        {
+          "run": "ghia_re100_seed23_eps0.01_chunk2048",
+          "checkpoint_file_hash_match": true,
+          "full_state_hash_match": true,
+          "saved_model_hash_match": true,
+          "saved_objective_hash_match": true,
+          "initial_model_match": true,
+          "points_equal": false,
+          "changed_coordinates": 6,
+          "max_abs_point_difference": 6.938893903907228e-18,
+          "changed_points_strata": [
+            0
+          ],
+          "weights_equal": true,
+          "stratum_ids_equal": true,
+          "audit_points_equal": true
+        },
+        {
+          "run": "ghia_re100_seed23_eps0.02_chunk2048",
+          "checkpoint_file_hash_match": true,
+          "full_state_hash_match": true,
+          "saved_model_hash_match": true,
+          "saved_objective_hash_match": true,
+          "initial_model_match": true,
+          "points_equal": false,
+          "changed_coordinates": 6,
+          "max_abs_point_difference": 6.938893903907228e-18,
+          "changed_points_strata": [
+            0
+          ],
+          "weights_equal": true,
+          "stratum_ids_equal": true,
+          "audit_points_equal": true
+        },
+        {
+          "run": "ghia_re100_seed61_eps0.01_chunk2048",
+          "checkpoint_file_hash_match": true,
+          "full_state_hash_match": true,
+          "saved_model_hash_match": true,
+          "saved_objective_hash_match": true,
+          "initial_model_match": true,
+          "points_equal": true,
+          "changed_coordinates": 0,
+          "max_abs_point_difference": 0,
+          "changed_points_strata": [],
+          "weights_equal": true,
+          "stratum_ids_equal": true,
+          "audit_points_equal": true
+        },
+        {
+          "run": "ghia_re100_seed61_eps0.02_chunk2048",
+          "checkpoint_file_hash_match": true,
+          "full_state_hash_match": true,
+          "saved_model_hash_match": true,
+          "saved_objective_hash_match": true,
+          "initial_model_match": true,
+          "points_equal": true,
+          "changed_coordinates": 0,
+          "max_abs_point_difference": 0,
+          "changed_points_strata": [],
+          "weights_equal": true,
+          "stratum_ids_equal": true,
+          "audit_points_equal": true
+        },
+        {
+          "run": "ghia_re100_seed7_eps0.01_chunk2048",
+          "checkpoint_file_hash_match": true,
+          "full_state_hash_match": true,
+          "saved_model_hash_match": true,
+          "saved_objective_hash_match": true,
+          "initial_model_match": true,
+          "points_equal": false,
+          "changed_coordinates": 4,
+          "max_abs_point_difference": 6.938893903907228e-18,
+          "changed_points_strata": [
+            0
+          ],
+          "weights_equal": true,
+          "stratum_ids_equal": true,
+          "audit_points_equal": true
+        },
+        {
+          "run": "ghia_re100_seed7_eps0.02_chunk2048",
+          "checkpoint_file_hash_match": true,
+          "full_state_hash_match": true,
+          "saved_model_hash_match": true,
+          "saved_objective_hash_match": true,
+          "initial_model_match": true,
+          "points_equal": false,
+          "changed_coordinates": 5,
+          "max_abs_point_difference": 1.1102230246251565e-16,
+          "changed_points_strata": [
+            0
+          ],
+          "weights_equal": true,
+          "stratum_ids_equal": true,
+          "audit_points_equal": true
+        },
+        {
+          "run": "ghia_re7500_seed23_eps0.01_chunk2048",
+          "checkpoint_file_hash_match": true,
+          "full_state_hash_match": true,
+          "saved_model_hash_match": true,
+          "saved_objective_hash_match": true,
+          "initial_model_match": true,
+          "points_equal": true,
+          "changed_coordinates": 0,
+          "max_abs_point_difference": 0,
+          "changed_points_strata": [],
+          "weights_equal": true,
+          "stratum_ids_equal": true,
+          "audit_points_equal": true
+        },
+        {
+          "run": "ghia_re7500_seed23_eps0.02_chunk2048",
+          "checkpoint_file_hash_match": true,
+          "full_state_hash_match": true,
+          "saved_model_hash_match": true,
+          "saved_objective_hash_match": true,
+          "initial_model_match": true,
+          "points_equal": true,
+          "changed_coordinates": 0,
+          "max_abs_point_difference": 0,
+          "changed_points_strata": [],
+          "weights_equal": true,
+          "stratum_ids_equal": true,
+          "audit_points_equal": true
+        },
+        {
+          "run": "ghia_re7500_seed61_eps0.01_chunk2048",
+          "checkpoint_file_hash_match": true,
+          "full_state_hash_match": true,
+          "saved_model_hash_match": true,
+          "saved_objective_hash_match": true,
+          "initial_model_match": true,
+          "points_equal": true,
+          "changed_coordinates": 0,
+          "max_abs_point_difference": 0,
+          "changed_points_strata": [],
+          "weights_equal": true,
+          "stratum_ids_equal": true,
+          "audit_points_equal": true
+        },
+        {
+          "run": "ghia_re7500_seed61_eps0.02_chunk2048",
+          "checkpoint_file_hash_match": true,
+          "full_state_hash_match": true,
+          "saved_model_hash_match": true,
+          "saved_objective_hash_match": true,
+          "initial_model_match": true,
+          "points_equal": true,
+          "changed_coordinates": 0,
+          "max_abs_point_difference": 0,
+          "changed_points_strata": [],
+          "weights_equal": true,
+          "stratum_ids_equal": true,
+          "audit_points_equal": true
+        },
+        {
+          "run": "ghia_re7500_seed7_eps0.01_chunk2048",
+          "checkpoint_file_hash_match": true,
+          "full_state_hash_match": true,
+          "saved_model_hash_match": true,
+          "saved_objective_hash_match": true,
+          "initial_model_match": true,
+          "points_equal": true,
+          "changed_coordinates": 0,
+          "max_abs_point_difference": 0,
+          "changed_points_strata": [],
+          "weights_equal": true,
+          "stratum_ids_equal": true,
+          "audit_points_equal": true
+        },
+        {
+          "run": "ghia_re7500_seed7_eps0.02_chunk2048",
+          "checkpoint_file_hash_match": true,
+          "full_state_hash_match": true,
+          "saved_model_hash_match": true,
+          "saved_objective_hash_match": true,
+          "initial_model_match": true,
+          "points_equal": true,
+          "changed_coordinates": 0,
+          "max_abs_point_difference": 0,
+          "changed_points_strata": [],
+          "weights_equal": true,
+          "stratum_ids_equal": true,
+          "audit_points_equal": true
+        }
+      ],
+      "basis": [
+        {
+          "seed": 7,
+          "collar": 0.01,
+          "uniform": "7273a0eaead0ecf724df65bbf277187e2954d2f7b5f391509dd7c6b49465ceae",
+          "radius": "01cf4204f81b423e60c48f1ae976b84642deed2870da5fbc277f33ccb5dfa110",
+          "angle": "7567c9d3e377b87a6a20f3e8f5d9686d82b2e2645cc4dd60bb0f314bea4f5321",
+          "sin": "cc4c381a3c6b8ae221528fc9e5e2ea5a91c4bcca3813a480270c91a2d10ced99",
+          "cos": "e24eecb2e3a60e3fb94ad4fc968e94c346f84b4014558860763d3feb0b5679d6"
+        },
+        {
+          "seed": 7,
+          "collar": 0.02,
+          "uniform": "7273a0eaead0ecf724df65bbf277187e2954d2f7b5f391509dd7c6b49465ceae",
+          "radius": "acea6e7be748cb47824b696fdf8113befc7c3a6d2f4101d54549592faf979a49",
+          "angle": "7567c9d3e377b87a6a20f3e8f5d9686d82b2e2645cc4dd60bb0f314bea4f5321",
+          "sin": "cc4c381a3c6b8ae221528fc9e5e2ea5a91c4bcca3813a480270c91a2d10ced99",
+          "cos": "e24eecb2e3a60e3fb94ad4fc968e94c346f84b4014558860763d3feb0b5679d6"
+        },
+        {
+          "seed": 23,
+          "collar": 0.01,
+          "uniform": "58aeed49e7f6191c894f81b03e2ff78ac5899c136583f4dfff2fb4e64c6f8827",
+          "radius": "fc9a60b989c6e6096796dd01c52333cfbef7153fd1df66c5692aeb791826cbf7",
+          "angle": "565ccbe874209822432a6c6ac7af3cb62b7cf6ecef99a6252287072280d88dcf",
+          "sin": "515083a74539ea363f207e273fb0cf4e228834dbe9887c6c4718b537a7d0b12e",
+          "cos": "e41fef9494d19f7489c11f1746835ad018b1b987394d134bccfa263b19bb0ece"
+        },
+        {
+          "seed": 23,
+          "collar": 0.02,
+          "uniform": "58aeed49e7f6191c894f81b03e2ff78ac5899c136583f4dfff2fb4e64c6f8827",
+          "radius": "61eb1d0a32b1af7d6f82e80179a3e2aa685f8ba6bdeb7d3b6f27174d1ac1c045",
+          "angle": "565ccbe874209822432a6c6ac7af3cb62b7cf6ecef99a6252287072280d88dcf",
+          "sin": "515083a74539ea363f207e273fb0cf4e228834dbe9887c6c4718b537a7d0b12e",
+          "cos": "e41fef9494d19f7489c11f1746835ad018b1b987394d134bccfa263b19bb0ece"
+        },
+        {
+          "seed": 61,
+          "collar": 0.01,
+          "uniform": "32e8900631f92093c7721d58c97c0a2bdb875a52396f4c50c195096c1d615788",
+          "radius": "62516398685101f6ae38931d1dc4195db38568daee91b931b26617e8b568a74c",
+          "angle": "9ff44b31061bfa860091ef57f40f8d61488da47c5c05c36ab566a12f5de6da6e",
+          "sin": "9344124a605e36ad9475276b34035f26bff5a05b2bc894b4bd8f3d5a3b6e32ff",
+          "cos": "bf3c98f9699e51a1bf594c303dec1dfd91a94fea0294ee23d46dfd43ac772b50"
+        },
+        {
+          "seed": 61,
+          "collar": 0.02,
+          "uniform": "32e8900631f92093c7721d58c97c0a2bdb875a52396f4c50c195096c1d615788",
+          "radius": "1be0c2fb4bfd161272d6b63168981e9f08eb5b76d463e6dffffc9972549bb718",
+          "angle": "9ff44b31061bfa860091ef57f40f8d61488da47c5c05c36ab566a12f5de6da6e",
+          "sin": "9344124a605e36ad9475276b34035f26bff5a05b2bc894b4bd8f3d5a3b6e32ff",
+          "cos": "bf3c98f9699e51a1bf594c303dec1dfd91a94fea0294ee23d46dfd43ac772b50"
+        }
+      ]
+    },
+    {
+      "host": "login1",
+      "torch": "2.5.1+cu118",
+      "requested_cpu_dispatch": "avx512",
+      "actual_cpu_dispatch": "AVX512",
+      "runs": [
+        {
+          "run": "ghia_re100_seed23_eps0.01_chunk2048",
+          "checkpoint_file_hash_match": true,
+          "full_state_hash_match": true,
+          "saved_model_hash_match": true,
+          "saved_objective_hash_match": true,
+          "initial_model_match": true,
+          "points_equal": false,
+          "changed_coordinates": 6,
+          "max_abs_point_difference": 6.938893903907228e-18,
+          "changed_points_strata": [
+            0
+          ],
+          "weights_equal": true,
+          "stratum_ids_equal": true,
+          "audit_points_equal": true
+        },
+        {
+          "run": "ghia_re100_seed23_eps0.02_chunk2048",
+          "checkpoint_file_hash_match": true,
+          "full_state_hash_match": true,
+          "saved_model_hash_match": true,
+          "saved_objective_hash_match": true,
+          "initial_model_match": true,
+          "points_equal": false,
+          "changed_coordinates": 6,
+          "max_abs_point_difference": 6.938893903907228e-18,
+          "changed_points_strata": [
+            0
+          ],
+          "weights_equal": true,
+          "stratum_ids_equal": true,
+          "audit_points_equal": true
+        },
+        {
+          "run": "ghia_re100_seed61_eps0.01_chunk2048",
+          "checkpoint_file_hash_match": true,
+          "full_state_hash_match": true,
+          "saved_model_hash_match": true,
+          "saved_objective_hash_match": true,
+          "initial_model_match": true,
+          "points_equal": true,
+          "changed_coordinates": 0,
+          "max_abs_point_difference": 0,
+          "changed_points_strata": [],
+          "weights_equal": true,
+          "stratum_ids_equal": true,
+          "audit_points_equal": true
+        },
+        {
+          "run": "ghia_re100_seed61_eps0.02_chunk2048",
+          "checkpoint_file_hash_match": true,
+          "full_state_hash_match": true,
+          "saved_model_hash_match": true,
+          "saved_objective_hash_match": true,
+          "initial_model_match": true,
+          "points_equal": true,
+          "changed_coordinates": 0,
+          "max_abs_point_difference": 0,
+          "changed_points_strata": [],
+          "weights_equal": true,
+          "stratum_ids_equal": true,
+          "audit_points_equal": true
+        },
+        {
+          "run": "ghia_re100_seed7_eps0.01_chunk2048",
+          "checkpoint_file_hash_match": true,
+          "full_state_hash_match": true,
+          "saved_model_hash_match": true,
+          "saved_objective_hash_match": true,
+          "initial_model_match": true,
+          "points_equal": false,
+          "changed_coordinates": 4,
+          "max_abs_point_difference": 6.938893903907228e-18,
+          "changed_points_strata": [
+            0
+          ],
+          "weights_equal": true,
+          "stratum_ids_equal": true,
+          "audit_points_equal": true
+        },
+        {
+          "run": "ghia_re100_seed7_eps0.02_chunk2048",
+          "checkpoint_file_hash_match": true,
+          "full_state_hash_match": true,
+          "saved_model_hash_match": true,
+          "saved_objective_hash_match": true,
+          "initial_model_match": true,
+          "points_equal": false,
+          "changed_coordinates": 5,
+          "max_abs_point_difference": 1.1102230246251565e-16,
+          "changed_points_strata": [
+            0
+          ],
+          "weights_equal": true,
+          "stratum_ids_equal": true,
+          "audit_points_equal": true
+        },
+        {
+          "run": "ghia_re7500_seed23_eps0.01_chunk2048",
+          "checkpoint_file_hash_match": true,
+          "full_state_hash_match": true,
+          "saved_model_hash_match": true,
+          "saved_objective_hash_match": true,
+          "initial_model_match": true,
+          "points_equal": true,
+          "changed_coordinates": 0,
+          "max_abs_point_difference": 0,
+          "changed_points_strata": [],
+          "weights_equal": true,
+          "stratum_ids_equal": true,
+          "audit_points_equal": true
+        },
+        {
+          "run": "ghia_re7500_seed23_eps0.02_chunk2048",
+          "checkpoint_file_hash_match": true,
+          "full_state_hash_match": true,
+          "saved_model_hash_match": true,
+          "saved_objective_hash_match": true,
+          "initial_model_match": true,
+          "points_equal": true,
+          "changed_coordinates": 0,
+          "max_abs_point_difference": 0,
+          "changed_points_strata": [],
+          "weights_equal": true,
+          "stratum_ids_equal": true,
+          "audit_points_equal": true
+        },
+        {
+          "run": "ghia_re7500_seed61_eps0.01_chunk2048",
+          "checkpoint_file_hash_match": true,
+          "full_state_hash_match": true,
+          "saved_model_hash_match": true,
+          "saved_objective_hash_match": true,
+          "initial_model_match": true,
+          "points_equal": true,
+          "changed_coordinates": 0,
+          "max_abs_point_difference": 0,
+          "changed_points_strata": [],
+          "weights_equal": true,
+          "stratum_ids_equal": true,
+          "audit_points_equal": true
+        },
+        {
+          "run": "ghia_re7500_seed61_eps0.02_chunk2048",
+          "checkpoint_file_hash_match": true,
+          "full_state_hash_match": true,
+          "saved_model_hash_match": true,
+          "saved_objective_hash_match": true,
+          "initial_model_match": true,
+          "points_equal": true,
+          "changed_coordinates": 0,
+          "max_abs_point_difference": 0,
+          "changed_points_strata": [],
+          "weights_equal": true,
+          "stratum_ids_equal": true,
+          "audit_points_equal": true
+        },
+        {
+          "run": "ghia_re7500_seed7_eps0.01_chunk2048",
+          "checkpoint_file_hash_match": true,
+          "full_state_hash_match": true,
+          "saved_model_hash_match": true,
+          "saved_objective_hash_match": true,
+          "initial_model_match": true,
+          "points_equal": true,
+          "changed_coordinates": 0,
+          "max_abs_point_difference": 0,
+          "changed_points_strata": [],
+          "weights_equal": true,
+          "stratum_ids_equal": true,
+          "audit_points_equal": true
+        },
+        {
+          "run": "ghia_re7500_seed7_eps0.02_chunk2048",
+          "checkpoint_file_hash_match": true,
+          "full_state_hash_match": true,
+          "saved_model_hash_match": true,
+          "saved_objective_hash_match": true,
+          "initial_model_match": true,
+          "points_equal": true,
+          "changed_coordinates": 0,
+          "max_abs_point_difference": 0,
+          "changed_points_strata": [],
+          "weights_equal": true,
+          "stratum_ids_equal": true,
+          "audit_points_equal": true
+        }
+      ],
+      "basis": [
+        {
+          "seed": 7,
+          "collar": 0.01,
+          "uniform": "7273a0eaead0ecf724df65bbf277187e2954d2f7b5f391509dd7c6b49465ceae",
+          "radius": "01cf4204f81b423e60c48f1ae976b84642deed2870da5fbc277f33ccb5dfa110",
+          "angle": "7567c9d3e377b87a6a20f3e8f5d9686d82b2e2645cc4dd60bb0f314bea4f5321",
+          "sin": "cc4c381a3c6b8ae221528fc9e5e2ea5a91c4bcca3813a480270c91a2d10ced99",
+          "cos": "e24eecb2e3a60e3fb94ad4fc968e94c346f84b4014558860763d3feb0b5679d6"
+        },
+        {
+          "seed": 7,
+          "collar": 0.02,
+          "uniform": "7273a0eaead0ecf724df65bbf277187e2954d2f7b5f391509dd7c6b49465ceae",
+          "radius": "acea6e7be748cb47824b696fdf8113befc7c3a6d2f4101d54549592faf979a49",
+          "angle": "7567c9d3e377b87a6a20f3e8f5d9686d82b2e2645cc4dd60bb0f314bea4f5321",
+          "sin": "cc4c381a3c6b8ae221528fc9e5e2ea5a91c4bcca3813a480270c91a2d10ced99",
+          "cos": "e24eecb2e3a60e3fb94ad4fc968e94c346f84b4014558860763d3feb0b5679d6"
+        },
+        {
+          "seed": 23,
+          "collar": 0.01,
+          "uniform": "58aeed49e7f6191c894f81b03e2ff78ac5899c136583f4dfff2fb4e64c6f8827",
+          "radius": "fc9a60b989c6e6096796dd01c52333cfbef7153fd1df66c5692aeb791826cbf7",
+          "angle": "565ccbe874209822432a6c6ac7af3cb62b7cf6ecef99a6252287072280d88dcf",
+          "sin": "515083a74539ea363f207e273fb0cf4e228834dbe9887c6c4718b537a7d0b12e",
+          "cos": "e41fef9494d19f7489c11f1746835ad018b1b987394d134bccfa263b19bb0ece"
+        },
+        {
+          "seed": 23,
+          "collar": 0.02,
+          "uniform": "58aeed49e7f6191c894f81b03e2ff78ac5899c136583f4dfff2fb4e64c6f8827",
+          "radius": "61eb1d0a32b1af7d6f82e80179a3e2aa685f8ba6bdeb7d3b6f27174d1ac1c045",
+          "angle": "565ccbe874209822432a6c6ac7af3cb62b7cf6ecef99a6252287072280d88dcf",
+          "sin": "515083a74539ea363f207e273fb0cf4e228834dbe9887c6c4718b537a7d0b12e",
+          "cos": "e41fef9494d19f7489c11f1746835ad018b1b987394d134bccfa263b19bb0ece"
+        },
+        {
+          "seed": 61,
+          "collar": 0.01,
+          "uniform": "32e8900631f92093c7721d58c97c0a2bdb875a52396f4c50c195096c1d615788",
+          "radius": "62516398685101f6ae38931d1dc4195db38568daee91b931b26617e8b568a74c",
+          "angle": "9ff44b31061bfa860091ef57f40f8d61488da47c5c05c36ab566a12f5de6da6e",
+          "sin": "9344124a605e36ad9475276b34035f26bff5a05b2bc894b4bd8f3d5a3b6e32ff",
+          "cos": "bf3c98f9699e51a1bf594c303dec1dfd91a94fea0294ee23d46dfd43ac772b50"
+        },
+        {
+          "seed": 61,
+          "collar": 0.02,
+          "uniform": "32e8900631f92093c7721d58c97c0a2bdb875a52396f4c50c195096c1d615788",
+          "radius": "1be0c2fb4bfd161272d6b63168981e9f08eb5b76d463e6dffffc9972549bb718",
+          "angle": "9ff44b31061bfa860091ef57f40f8d61488da47c5c05c36ab566a12f5de6da6e",
+          "sin": "9344124a605e36ad9475276b34035f26bff5a05b2bc894b4bd8f3d5a3b6e32ff",
+          "cos": "bf3c98f9699e51a1bf594c303dec1dfd91a94fea0294ee23d46dfd43ac772b50"
+        }
+      ]
+    }
+  ],
+  "conclusions": [
+    "All 12 complete checkpoint state, file, final-model and saved weighted-objective hashes pass.",
+    "Initial-model regeneration, saved weights, stratum IDs and independent audit locations match for all 12.",
+    "On login1 the four RTX8000-trained Re100 seed7/23 arms differ only in 4-6 annular scalar coordinates; maximum absolute difference is 1.1102230246251565e-16. The remaining eight match exactly.",
+    "This is inverse to the parent-observed RTX8000 evaluation rejection pattern.",
+    "Setting ATEN_CPU_CAPABILITY to AVX2 versus AVX512 on login1 does not change these results or the sampled basis hashes; the precise platform math-library dispatch difference is not isolated.",
+    "Safe evaluation recovery must use the exact saved sample/model/optimizer/RNG state and preserve all original hashes; never replace samples with regenerated approximations."
+  ],
+  "diagnostic_python": "from pathlib import Path\nimport sys,json,torch,os,platform\nroot=Path('/scratch3/workspace/roohie_umass_edu-flowml-ghia-highre-20261115/pinn-stratified-v1')\nsys.path.insert(0,str(root/'source_v1/flowmllab'))\nimport cavity_pinn_stratified as c\ntorch.set_num_threads(1)\nreport={'host':platform.node(),'torch':str(torch.__version__),'requested_cpu_dispatch':os.environ.get('ATEN_CPU_CAPABILITY'),'actual_cpu_dispatch':torch.backends.cpu.get_cpu_capability(),'runs':[],'basis':[]}\nfor path in sorted((root/'runs').glob('*/checkpoint.pt')):\n state=torch.load(path,map_location='cpu',weights_only=False)\n saved_digest=state.pop('checkpoint_state_sha256')\n cfg=c.Config(**state['config']);fresh=c.Trainer(cfg,'cpu',state['baseline_contract'])\n diff=fresh.points-state['points'];mask=diff!=0\n receipt=json.loads((path.parent/'current_receipt.json').read_text())\n report['runs'].append({'run':path.parent.name,'checkpoint_file_hash_match':c.file_sha256(path)==receipt['checkpoint_sha256'],'full_state_hash_match':c.state_hash(state)==saved_digest,'saved_model_hash_match':c.tensor_hash(state['model'])==state['model_sha256'],'saved_objective_hash_match':c.tensor_hash(dict(points=state['points'],weights=state['weights'],stratum_ids=state['stratum_ids']))==state['objective_hash'],'initial_model_match':fresh.initial_model_sha256==state['initial_model_sha256'],'points_equal':bool(torch.equal(fresh.points,state['points'])),'changed_coordinates':int(mask.sum()),'max_abs_point_difference':float(diff.abs().max()),'changed_points_strata':sorted(set(state['stratum_ids'][mask.any(1)].tolist())),'weights_equal':bool(torch.equal(fresh.weights,state['weights'])),'stratum_ids_equal':bool(torch.equal(fresh.stratum_ids,state['stratum_ids'])),'audit_points_equal':bool(torch.equal(fresh.audit_points,state['audit_points']))})\nfor seed in (7,23,61):\n for eps in (.01,.02):\n  g=torch.Generator().manual_seed(seed+104729)\n  z=torch.cat([torch.rand((256,2),generator=g,dtype=torch.float64) for _ in range(2)])\n  r=torch.sqrt(eps**2+(.05**2-eps**2)*z[:,0]);angle=z[:,1]*c.math.pi/2\n  report['basis'].append({'seed':seed,'collar':eps,**{name:c.tensor_hash({name:a}) for name,a in {'uniform':z,'radius':r,'angle':angle,'sin':torch.sin(angle),'cos':torch.cos(angle)}.items()}})\nprint(json.dumps(report))\n",
+  "verified_at_utc": "2026-11-16T02:22:09.743903+00:00",
+  "diagnostic_python_sha256": "2590e70cbdab9c34f341248fd25aa6bef88a2e5c67409c54b3c3b752554c3130"
+}

@@ -1,0 +1,20 @@
+{
+  "schema": 1,
+  "archive_sha256": "d041091ee84b5e1150fc186b2f15087852f0e1d2929be78ce96d81558c953235",
+  "checkpoint_sha256": "44437a56bff6495965a76d94f81acdc239b9797696d3137980068c16bdfd6531",
+  "members": {
+    "config.json": {
+      "archive_member": "runs/full_matrix/ghia_re100_seed61_eps0.01_chunk2048/config.json",
+      "sha256": "62047e2348f5e773ddada7c2cd167176816edba2a3c4ffff79a55d94126b3804"
+    },
+    "current_receipt.json": {
+      "archive_member": "runs/full_matrix/ghia_re100_seed61_eps0.01_chunk2048/current_receipt.json",
+      "sha256": "13e01a1acbc18941b9d26385e87995f059c7c1efdadbe560a17023573cbe71ea"
+    },
+    "frozen_manifest.json": {
+      "archive_member": "runs/full_matrix/ghia_re100_seed61_eps0.01_chunk2048/frozen_manifest.json",
+      "sha256": "aa696dc1888f052b142cd0f483be886e28a92cdbe78ee64c5e0819878c525efd"
+    }
+  },
+  "extraction_scope": "metadata only; checkpoint bytes were streamed for SHA256 verification, not extracted"
+}

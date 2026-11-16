@@ -1,0 +1,19 @@
+{
+  "reynolds": 7500,
+  "seed": 23,
+  "width": 64,
+  "depth": 4,
+  "collar": 0.01,
+  "collocation": 2048,
+  "adam_steps": 2000,
+  "lbfgs_steps": 500,
+  "adam_lr": 0.001,
+  "chunk_size": 2048,
+  "lbfgs_history": 50,
+  "audit_points": 2048,
+  "audit_seed": 983451,
+  "export_grid": 129,
+  "closure_budget": 3049,
+  "study_kind": "controlled_variant",
+  "sampling": "fixed_conditional_uniform_area_strata_v1"
+}

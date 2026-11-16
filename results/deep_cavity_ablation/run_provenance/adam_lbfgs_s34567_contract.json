@@ -1,0 +1,52 @@
+{
+  "schema": "flowmllab-d5-controlled-v1",
+  "purpose": "controlled_pilot",
+  "method": "adam_lbfgs",
+  "seed": 34567,
+  "Re": 1000.0,
+  "W": 1.0,
+  "D": 5.0,
+  "width": 64,
+  "depth": 6,
+  "points": 8192,
+  "chunk_size": 8192,
+  "warm_evaluations": 2000,
+  "qn_evaluations": 8000,
+  "audit_points_per_region": 1024,
+  "audit_seed": 20264,
+  "grid_nx": 121,
+  "grid_nh": 605,
+  "dtype": "float64",
+  "adaptive_sampling": false,
+  "sampling": "authored_balanced_mixture_frozen_both_phases",
+  "sample_seed": 34567603710,
+  "initialization": "fresh_Xavier_normal_zero_bias_no_transfer",
+  "source_sha256": {
+    "cavity.py": "29ff1f7ba495de25c088b4eefcd200202f1a2da020248d4b3e2a43a7e07ba1dd",
+    "optimizer.py": "1a69e52dd45f463ad9187434f22f12d98c24e969c9b908c9c094d29d87548d4d",
+    "pinn_d5_balanced_experiment.py": "7b7c0b6836f1834644071a54518046a1b437514fd1bc2cd5ba0ee5a570f31010"
+  },
+  "adapter_sha256": "2a2280c9b3a9720b882dc814ee5e859daa7bb53b070ccbb81aba75e37a19c15e",
+  "runner_sha256": "23418e0d9d845d2bc9d3e0d3def2792b61e014104ddcbe619700076456bee97e",
+  "torch": "2.5.1+cu118",
+  "numpy": "2.2.6",
+  "SOAP_version_new_runtime": "3.3.0",
+  "historical_SOAP_version": "not_recovered",
+  "first_order": {
+    "lr": 0.002,
+    "betas": [
+      0.99,
+      0.999
+    ],
+    "weight_decay": 0.0,
+    "SOAP_precondition_frequency": 1
+  },
+  "quasi_Newton": {
+    "line_search": "strong_wolfe",
+    "c1": 0.0001,
+    "c2": 0.9,
+    "LBFGS_history_size": 100,
+    "SSB_capacity": 8000,
+    "SSB_generators_dropped_allowed": 0
+  }
+}

@@ -1,0 +1,79 @@
+{
+  "regions": {
+    "interior": {
+      "sample_count": 261121,
+      "reference_velocity_rms_U": 0.3007214975975713,
+      "velocity_error_rms_U": 0.28601381163615675,
+      "velocity_relative_l2": 0.9510920034686163,
+      "u_error_signed_mean_U": -0.0001238791232362862,
+      "v_error_signed_mean_U": -0.0001087927036052461,
+      "omega_error_rms_U_over_W": 6.230542267751299,
+      "omega_error_signed_mean_U_over_W": 0.024184124230808533,
+      "omega_relative_l2": 0.8147578626906807
+    },
+    "lower_quarter": {
+      "sample_count": 65408,
+      "reference_velocity_rms_U": 0.28365313176439216,
+      "velocity_error_rms_U": 0.25375217971755704,
+      "velocity_relative_l2": 0.894586208652646,
+      "u_error_signed_mean_U": 0.1610873517035028,
+      "v_error_signed_mean_U": -6.3067184564445595e-06,
+      "omega_error_rms_U_over_W": 3.790141272776203,
+      "omega_error_signed_mean_U_over_W": -0.7750150386230029,
+      "omega_relative_l2": 0.9650205327210477
+    },
+    "upper_quarter": {
+      "sample_count": 65408,
+      "reference_velocity_rms_U": 0.33974655440950324,
+      "velocity_error_rms_U": 0.3391228982845174,
+      "velocity_relative_l2": 0.9981643489333696,
+      "u_error_signed_mean_U": -0.23790152686570357,
+      "v_error_signed_mean_U": -0.00037015060001836466,
+      "omega_error_rms_U_over_W": 10.268308671565809,
+      "omega_error_signed_mean_U_over_W": -0.6733032701177909,
+      "omega_relative_l2": 0.7717139945839713
+    }
+  },
+  "quadrature": "tensor trapezoid over exact sampled interior rectangle",
+  "sampled_rectangle": [
+    0.001953125,
+    0.998046875,
+    0.001953125,
+    0.998046875
+  ],
+  "pressure_comparison": "unavailable: retained CFD bundle has no pressure field",
+  "ghia": {
+    "u": {
+      "screened_relative_l2": 0.7966076909078995,
+      "published_relative_l2": 0.7965651757037957,
+      "screened_rmse_U": 0.34080513566161874,
+      "screened_linf_U": 0.6016421742653502,
+      "n_screened": 16,
+      "n_published": 17,
+      "prediction_evaluation": "direct frozen network at original tabulated coordinates; no interpolation"
+    },
+    "v": {
+      "screened_relative_l2": 0.8675091845522775,
+      "published_relative_l2": 0.8675091845522775,
+      "screened_rmse_U": 0.3291258334751245,
+      "screened_linf_U": 0.45260125589025607,
+      "n_screened": 17,
+      "n_published": 17,
+      "prediction_evaluation": "direct frozen network at original tabulated coordinates; no interpolation"
+    }
+  },
+  "numeric_checks": {
+    "outer_momentum_rms_le_1e_2": false,
+    "divergence_rms_le_1e_10": true,
+    "both_screened_ghia_relative_l2_le_0_02": false,
+    "interior_velocity_relative_l2_le_0_05": false
+  },
+  "CFD_grid_sensitivity": {
+    "cells": 256,
+    "reference_cells": 512,
+    "velocity_relative_l2": 0.06322591868670657,
+    "source_sha256": "0dbba1ea555a38b1cce54712cc7b0e693f117eb74df98c1705a464ed46768d8b",
+    "interpretation": "retained comparison protocol; sensitivity, not an exact-error bound"
+  },
+  "acceptance": "Not automatically accepted: paired collar sensitivity and physical-vortex review remain required"
+}

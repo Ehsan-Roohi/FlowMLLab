@@ -1,0 +1,317 @@
+{
+  "schema_version": 1,
+  "campaign_kind": "ghia_uniform_vs_stratified_matched_work",
+  "generated_at_utc": "2026-11-16T02:50:33.828199+00:00",
+  "source_comparison": {
+    "path": "results/cavity_pinn_stratified/comparison/comparison_manifest.json",
+    "sha256": "c97d1368634593a9d5f78187566be3887d981e2491276891f57667e04daa945c"
+  },
+  "source_inputs": {
+    "baseline_manifest": {
+      "path": "results/cavity_pinn_campaign/evaluation_manifest.json",
+      "sha256": "5b10dedc528cb35641003bae1325ad17cbdddcf433b21c6babd5efd197268652"
+    },
+    "variant_raw_manifest": {
+      "path": "results/cavity_pinn_stratified/evaluation_manifest.json",
+      "sha256": "599ae30ad6a61c79ec967de8d604fd9063b602ed4d0a497b5c4622163637f435"
+    },
+    "experiment_manifest": {
+      "path": "results/cavity_pinn_stratified/experiment_manifest.json",
+      "sha256": "11a488e49db5a51501769faa86d31ab712e98035c084eaebdc6388d4f7da8678"
+    }
+  },
+  "generator": {
+    "path": "qa/plot_cavity_pinn_stratified.py",
+    "sha256": "f73bafbd4e69f0c96a29e5e72d10d399f3bc9c967cfeb131f9713fd2a7f5f0f9"
+  },
+  "helper_sources": [
+    {
+      "path": "qa/plot_cavity_pinn_campaign.py",
+      "sha256": "2490d51f952a4c6511d4d11607e11b09bcdc5331cd009dfb03a588931fa2d7ec"
+    },
+    {
+      "path": "qa/compare_cavity_pinn_stratified.py",
+      "sha256": "f9dda2b33dadd6538afcc1a8ca7e6316a55f878627e9ee2ee0affd1696712ef8"
+    },
+    {
+      "path": "qa/lecture_typography.py",
+      "sha256": "7dadadcff3802a39bf1cdca61107f09307b494316690b4fd861f94f26fd6d9de"
+    }
+  ],
+  "figures": [
+    {
+      "path": "results/cavity_pinn_stratified/figures/re100_eps0.02_centerlines.png",
+      "sha256": "23994523c62c331f211c6672c25550e9996a14a3c6b74a6903f97a8a81ce863d",
+      "kind": "signed_profiles_all_paired_seeds",
+      "Re": 100,
+      "collar": 0.02,
+      "seeds": [
+        7,
+        23,
+        61
+      ]
+    },
+    {
+      "path": "results/cavity_pinn_stratified/figures/re100_eps0.01_centerlines.png",
+      "sha256": "4077271382bd2fecd89fd42cae4a963f16193e1932096e07040923cd3adf3fff",
+      "kind": "signed_profiles_all_paired_seeds",
+      "Re": 100,
+      "collar": 0.01,
+      "seeds": [
+        7,
+        23,
+        61
+      ]
+    },
+    {
+      "path": "results/cavity_pinn_stratified/figures/re7500_eps0.02_centerlines.png",
+      "sha256": "dfab7f2f16daf0c25f66b1f341a17d0b74c14b15efde1db3031e2563a9cfeb31",
+      "kind": "signed_profiles_all_paired_seeds",
+      "Re": 7500,
+      "collar": 0.02,
+      "seeds": [
+        7,
+        23,
+        61
+      ]
+    },
+    {
+      "path": "results/cavity_pinn_stratified/figures/re7500_eps0.01_centerlines.png",
+      "sha256": "04e7be62d584f126ea1f5008187514ef3f7b93309ed5687f9d179b8970f93a76",
+      "kind": "signed_profiles_all_paired_seeds",
+      "Re": 7500,
+      "collar": 0.01,
+      "seeds": [
+        7,
+        23,
+        61
+      ]
+    },
+    {
+      "path": "results/cavity_pinn_stratified/figures/all_pairs_centerlines.pdf",
+      "sha256": "77f15b6c016316ec7ca21b77fd3a68fdf56d19ced86018893a4378bce7289c77"
+    },
+    {
+      "path": "results/cavity_pinn_stratified/figures/paired_speed.png",
+      "sha256": "108c1a13e8a7c790393a60a8963223648cd86a766df73389d455d12cbc9db688",
+      "kind": "matched_speed_fields",
+      "Re": [
+        100,
+        7500
+      ],
+      "seed": 7,
+      "collar": 0.02
+    },
+    {
+      "path": "results/cavity_pinn_stratified/figures/paired_curl.png",
+      "sha256": "e2bc6f96a83a2720c61f7fffcb3a7d65bef8f90b7fa552a3c2c0bb263374f48a",
+      "kind": "matched_curl_fields",
+      "Re": [
+        100,
+        7500
+      ],
+      "seed": 7,
+      "collar": 0.02
+    },
+    {
+      "path": "results/cavity_pinn_stratified/figures/re100_signed_errors.png",
+      "sha256": "a0d30bb7e222c76d7bc411d85e18255813bd071102e28d2f4b5fc27f45543f66",
+      "kind": "signed_native_and_common_curl_errors",
+      "Re": 100,
+      "seed": 7,
+      "collar": 0.02
+    },
+    {
+      "path": "results/cavity_pinn_stratified/figures/re100_streamlines.png",
+      "sha256": "0b20a609d23fa4771b97cafaa1e8ffb7f1ae0da855b890acb1bb5b92b915f370",
+      "kind": "three_method_streamfunction_overlay",
+      "Re": 100,
+      "seed": 7,
+      "collar": 0.02,
+      "levels": [
+        -0.10040327350583006,
+        -0.04421299056628602,
+        -0.019469370535025343,
+        -0.008573416640112018,
+        -0.003775338948566271,
+        -0.0016624858880502568,
+        -0.0007320824343509234,
+        -0.00032237548272588554,
+        -0.00014195935728862313,
+        -6.251238137403428e-05,
+        -2.752758183532493e-05,
+        -1.212188281816546e-05,
+        -5.337920487762315e-06,
+        -2.3505750353380294e-06,
+        -1.0350852938745367e-06,
+        1.2755124824729333e-10,
+        3.6226601851973867e-10,
+        1.028893640614985e-09,
+        2.9222230890537734e-09,
+        8.299582624589675e-09,
+        2.3572146835885723e-08,
+        6.694868062477154e-08,
+        1.901449990364968e-07,
+        5.400423178050157e-07,
+        1.5338068658026315e-06,
+        4.3562576931845065e-06,
+        1.237247107998745e-05
+      ]
+    },
+    {
+      "path": "results/cavity_pinn_stratified/figures/re7500_signed_errors.png",
+      "sha256": "4317b434446eda08a4fcf40fb28196111464d27cdcb4b83e32497f1818696f76",
+      "kind": "signed_native_and_common_curl_errors",
+      "Re": 7500,
+      "seed": 7,
+      "collar": 0.02
+    },
+    {
+      "path": "results/cavity_pinn_stratified/figures/re7500_streamlines.png",
+      "sha256": "a3de883c32eb857709ca6f72e171fef33c056478917246b5349a5d9475c957e6",
+      "kind": "three_method_streamfunction_overlay",
+      "Re": 7500,
+      "seed": 7,
+      "collar": 0.02,
+      "levels": [
+        -0.11678274972585272,
+        -0.051425759655478236,
+        -0.022645542790790868,
+        -0.009972057033773149,
+        -0.004391235944464273,
+        -0.0019336986395733539,
+        -0.0008515120744995673,
+        -0.00037496681136339576,
+        -0.00016511816312958676,
+        -7.27104558831639e-05,
+        -3.201834549593653e-05,
+        -1.409940889305496e-05,
+        -6.208732151971621e-06,
+        -2.7340404996633764e-06,
+        -1.2039458734623994e-06,
+        4.973685537988826e-08,
+        1.4126065263768615e-07,
+        4.012029275114546e-07,
+        1.1394807119899914e-06,
+        3.2363081223033948e-06,
+        9.19163453341446e-06,
+        2.610571744192438e-05,
+        7.414442781423697e-05,
+        0.00021058207605786987,
+        0.0005980868969404555,
+        0.0016986627873948833,
+        0.004824474971849161
+      ]
+    },
+    {
+      "path": "results/cavity_pinn_stratified/figures/physical_comparison.pdf",
+      "sha256": "1c0011951f8dc3e33e7a301f87c0e8cc41515cb16f983957bd539c0b76efb101"
+    }
+  ],
+  "represented_pairs": 12,
+  "profile_axis_limits": {
+    "100": {
+      "u": [
+        -0.28077355553281086,
+        1.0667701853595304
+      ],
+      "u_error": [
+        -0.09086615989100902,
+        0.09086615989100902
+      ],
+      "v": [
+        -0.277744384535564,
+        0.20661020358250737
+      ],
+      "v_error": [
+        -0.09285781499894666,
+        0.09285781499894666
+      ]
+    },
+    "7500": {
+      "u": [
+        -0.5265959401703896,
+        1.0795855703406365
+      ],
+      "u_error": [
+        -0.8496435203501458,
+        0.8496435203501458
+      ],
+      "v": [
+        -0.6268198710502307,
+        0.5062425822064539
+      ],
+      "v_error": [
+        -0.6436014628500261,
+        0.6436014628500261
+      ]
+    }
+  },
+  "shared_scales": {
+    "speed_vmax": 0.9881065241126341,
+    "curl_absmax": 167.85660351768172,
+    "curl_symlog_linthresh": 0.25,
+    "signed_error_absmax": {
+      "u": 0.6388430515392574,
+      "v": 0.6462983092941068,
+      "curl": 123.54414589836729
+    }
+  },
+  "representative_selection": "Predeclared Re100/Re7500, seed7, collar0.02; no best-seed selection",
+  "matched_work": "Exact per-pair closure and residual-point caps; caps can differ across pairs",
+  "native_grid": [
+    511,
+    511
+  ],
+  "common_centered_curl_grid": [
+    509,
+    509
+  ],
+  "original_42_baseline_gallery": "unchanged",
+  "pressure_reference": "unavailable",
+  "scientific_acceptance": "Not inferred from completed execution or plotting. See every paired metric and physical profile.",
+  "limits": [
+    "one bounded intervention; no additional architecture/sampling search",
+    "three paired seeds are descriptive, not a universal optimizer/accuracy claim",
+    "finite punctured-domain fit does not establish full-domain corner integrability",
+    "CFD is a numerical reference; native sampled support and Ghia screening are unchanged",
+    "optimizer-step seconds exclude failed allocations and requeue/scheduler time; they are not campaign wall time or a controlled hardware speed comparison",
+    "checkpoint bytes were verified by the upstream GPU scorer/bridge; this compact consumer verifies their bound identities",
+    "completed-pass target-access chronology does not erase an earlier failed partial evaluation; supplied attempt/forensic receipts remain explicit"
+  ],
+  "evaluation_chronology": {
+    "all_projections_frozen_before_completed_pass_reference_read": true,
+    "all_projections_frozen_before_first_reference_read": false,
+    "all_training_endpoints_frozen_before_prior_target_access": true,
+    "prior_scored_case_count": 4,
+    "disclosure": "The earlier failed evaluation scored 4 cases and accessed targets. All 12 original trained endpoints had already frozen then. The repaired completed pass restores exact saved states, freezes all native projections before its own reference read, and performs no fitting or model selection."
+  },
+  "evaluation_provenance": {
+    "completed_pass_receipt": {
+      "path": "results/cavity_pinn_stratified/completed_pass/projection_barrier.json",
+      "sha256": "5586634d0214128800954ea162e0f5e9c86e8d40738065922b7f0541f2493c6d"
+    },
+    "prior_failed_attempt": {
+      "path": "results/cavity_pinn_stratified/prior_evaluation_attempt.json",
+      "sha256": "d232892f44b447b125baebde2a8632c8fc778b9473394747c372e364cb6507b7"
+    },
+    "checkpoint_forensics": {
+      "path": "results/cavity_pinn_stratified/sampler_restore_forensics.json",
+      "sha256": "834814f4aec9c6542de4e0096a46795bf40de103b5a5ca5d3c75d76a9c29af68"
+    },
+    "evaluation_wrapper_source": {
+      "path": "qa/evaluate_cavity_pinn_stratified.py",
+      "sha256": "5625fdba3f85c40f338ec559f08247b14b700575243675a833498b571580fe8f"
+    }
+  },
+  "visual_review": {
+    "status": "complete",
+    "reviewer": "Independent agent /root/deep_cavity_optimizer_campaign",
+    "individual_rgb_images": 10,
+    "individual_standalone_pdf_pages": 10,
+    "pdf_render_dpi": 150,
+    "independent_pdf_receipt_sha256": "dee435b0f404b48192a4b10be5568316ca9487b8a00c820a5760f6b7957be22e",
+    "scope": "Presentation only; failed scientific accuracy criteria retained."
+  },
+  "presentation_source_update": "Removed a stray U+00C2 from the generated gallery links; numerical arrays and all figure images/PDFs unchanged."
+}

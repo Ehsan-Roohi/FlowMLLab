@@ -1,0 +1,43 @@
+{
+  "schema": 1,
+  "baseline_config": {
+    "reynolds": 7500,
+    "seed": 7,
+    "width": 64,
+    "depth": 4,
+    "collar": 0.01,
+    "collocation": 2048,
+    "adam_steps": 2000,
+    "lbfgs_steps": 500,
+    "adam_lr": 0.001,
+    "chunk_size": 2048,
+    "lbfgs_history": 50,
+    "audit_points": 2048,
+    "audit_seed": 983451,
+    "export_grid": 129
+  },
+  "baseline_config_sha256": "9b59c9ff268cd185d4a95c2f99e97a6c7c112d36325219fba754a64aeebf3a6e",
+  "baseline_checkpoint_sha256": "2fd0eab088e3a86d34823356fe4095f3a5200ef4caab2c460484689819514c61",
+  "baseline_frozen_model_sha256": "343a735a3d65c1085137cf87f71b7770bdda97fc5e23cfd7ae02501f4f9686bd",
+  "baseline_source_sha256": "507a6e0a6d632a173c8bdc8748564beffee77ce3664aeffcee25edc5ca305b9e",
+  "baseline_closure_calls": 3023,
+  "baseline_residual_point_evaluations": 6191104,
+  "archive_sha256": "d041091ee84b5e1150fc186b2f15087852f0e1d2929be78ce96d81558c953235",
+  "metadata": {
+    "config.json": {
+      "archive_member": "runs/full_matrix/ghia_re7500_seed7_eps0.01_chunk2048/config.json",
+      "sha256": "7d0fd35c41b2a413e17dcb991ae2c1d351182d38aa783a6f94cdee4cca5e1418"
+    },
+    "current_receipt.json": {
+      "archive_member": "runs/full_matrix/ghia_re7500_seed7_eps0.01_chunk2048/current_receipt.json",
+      "sha256": "0b80f2bcf18791a6fb693fa3c26773f1f76b9cbf050345d82a5c73b2dbefbd9a"
+    },
+    "frozen_manifest.json": {
+      "archive_member": "runs/full_matrix/ghia_re7500_seed7_eps0.01_chunk2048/frozen_manifest.json",
+      "sha256": "d3de5652adf20f82e43a08ef862080e9d1335084ec4c42b123b00455587cbd30"
+    }
+  },
+  "baseline_provenance_sha256": "a4c495ae7f84df666558cceefdb3c9e8ca7a53b52df19c83567a4da47e501927",
+  "runner_source_sha256": "f3ae548c2c260cdaac1b88be7dc0faf5914b7d6f166de088a605d1ddf7f2ebc8",
+  "runner_raw_sha256": "490597c3993bd949d595030d8b090c73165e3d9c5c0f2497c05ce62a6f73135d"
+}

@@ -1,0 +1,96 @@
+name: Publish FlowMLLab v1.14.0
+
+on:
+  push:
+    tags: [v1.14.0]
+    branches: [codex/cavity-pinn-studies]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: publish-flowmllab-v1.14.0
+
+jobs:
+  release:
+    if: github.repository == 'Ehsan-Roohi/FlowMLLab' && (github.ref == 'refs/tags/v1.14.0' || github.ref == 'refs/heads/codex/cavity-pinn-studies')
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    env:
+      OPENBLAS_NUM_THREADS: '1'
+      OMP_NUM_THREADS: '1'
+      MPLBACKEND: Agg
+      PYTHONDONTWRITEBYTECODE: '1'
+      FLOWMLLAB_D5_SOURCE: data/week13_d5/author_source
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          persist-credentials: false
+          fetch-depth: 0
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.12'
+          cache: pip
+      - name: Install the reference scientific test environment
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y poppler-utils
+          python -m pip install -e '.[test]' build twine
+          python -m pip install torch==2.5.1 --index-url https://download.pytorch.org/whl/cpu
+          python -m pip install -r requirements-cavity-pinn-reference.txt
+      - name: Check source, frozen evidence, notebook execution and metadata
+        run: |
+          python qa/update_course_inventory.py
+          python qa/validate_course_release.py
+          python qa/validate_cavity_expansion.py
+          python qa/validate_cavity_highre.py
+          python qa/validate_cavity_pinn_studies.py --require-d5 --require-stratified
+          python qa/validate_cavity_pinn_curriculum.py --execution-mode jupyter
+          python -m pytest -q tests qa
+          python -m build
+          python -m twine check dist/*
+      - name: Verify the isolated wheel
+        run: |
+          python -m venv /tmp/flowmllab-release
+          /tmp/flowmllab-release/bin/python -m pip install dist/*.whl
+          cd /tmp
+          /tmp/flowmllab-release/bin/python -c 'from importlib.metadata import version; import flowmllab; assert version("flowmllab") == flowmllab.__version__ == "1.14.0"'
+          /tmp/flowmllab-release/bin/flowmllab smoke
+      - name: Publish the reviewed tag
+        if: github.ref == 'refs/tags/v1.14.0'
+        run: |
+          release_assets=$(mktemp -d "${RUNNER_TEMP}/flowmllab-v1.14.0-assets.XXXXXX")
+          cp dist/* "$release_assets/"
+          cp qa/cavity_pinn_studies_validation.json "$release_assets/"
+          cp qa/cavity_pinn_curriculum_validation.json "$release_assets/"
+          cp qa/cavity_pinn_lecture_review.json "$release_assets/"
+          cp qa/cavity_pinn_figure_review.json "$release_assets/"
+          cp lectures/week04_cavity_surrogates_deeponet.pdf "$release_assets/"
+          cp lectures/week13_rectangular_cavity_pinn.pdf "$release_assets/"
+          cp notebooks/week04/W4_Lab9_Label_Free_Ghia_PINN_Audit.ipynb "$release_assets/"
+          cp notebooks/week13/W13_D5_Controlled_Optimizer_Study.ipynb "$release_assets/"
+          cp results/cavity_pinn_campaign/evaluation_manifest.json "$release_assets/ghia_evaluation_manifest.json"
+          cp results/cavity_pinn_campaign/sampling_coverage.json "$release_assets/ghia_sampling_coverage.json"
+          cp results/cavity_pinn_stratified/figures/figure_manifest.json "$release_assets/stratified_figure_manifest.json"
+          cp results/cavity_pinn_campaign/figures/figure_manifest.json "$release_assets/ghia_figure_manifest.json"
+          cp results/cavity_pinn_campaign/figures/all_reynolds_centerlines.pdf "$release_assets/ghia_all_reynolds_centerlines.pdf"
+          cp results/cavity_pinn_campaign/figures/representative_physical_fields.pdf "$release_assets/ghia_representative_physical_fields.pdf"
+          cp results/deep_cavity_ablation/evaluation_manifest.json "$release_assets/d5_evaluation_manifest.json"
+          cp results/deep_cavity_ablation/lesson_figures/controlled_pilot_figures.pdf "$release_assets/d5_controlled_pilot_figures.pdf"
+          cp results/deep_cavity_ablation/lesson_figures/figure_manifest.json "$release_assets/d5_lesson_figure_manifest.json"
+          cp results/cavity_pinn_stratified/evaluation_manifest.json "$release_assets/stratified_evaluation_manifest.json"
+          cp results/cavity_pinn_stratified/experiment_manifest.json "$release_assets/stratified_experiment_manifest.json"
+          cp results/cavity_pinn_stratified/comparison/comparison_manifest.json "$release_assets/stratified_comparison_manifest.json"
+          cp results/cavity_pinn_stratified/comparison/paired_metrics.csv "$release_assets/stratified_paired_metrics.csv"
+          cp results/cavity_pinn_stratified/comparison/paired_signed_profiles.csv "$release_assets/stratified_paired_signed_profiles.csv"
+          for figure in results/deep_cavity_ablation/*.pdf; do
+            cp "$figure" "$release_assets/d5_$(basename "$figure")"
+          done
+          for figure in results/cavity_pinn_stratified/figures/*.pdf; do
+            cp "$figure" "$release_assets/stratified_$(basename "$figure")"
+          done
+          (cd "$release_assets" && sha256sum -- *) > "$RUNNER_TEMP/release_assets_v1.14.0_sha256.txt"
+          mv "$RUNNER_TEMP/release_assets_v1.14.0_sha256.txt" "$release_assets/"
+          gh release create v1.14.0 --verify-tag --latest --title 'FlowMLLab v1.14.0 - Cavity PINN evidence and controlled optimizer studies' --notes-file RELEASE_NOTES_v1.14.0.md "$release_assets"/*

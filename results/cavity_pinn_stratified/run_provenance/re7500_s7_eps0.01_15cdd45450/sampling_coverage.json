@@ -1,0 +1,24 @@
+{
+  "objective_sha256": "6c316fcb71a64ead8476e6d3e6c55e949a8749f54d682fbfa0fca6f17269dc14",
+  "total_area": 0.9998429203673205,
+  "collar": 0.01,
+  "top_corner_radius": 0.05,
+  "counts": {
+    "top_corner_annuli": 512,
+    "remaining_wall_band": 512,
+    "interior": 1024
+  },
+  "areas": {
+    "top_corner_annuli": 0.0037699111843077526,
+    "remaining_wall_band": 0.1860730091830127,
+    "interior": 0.81
+  },
+  "weight_sums": {
+    "top_corner_annuli": 0.0037705034536052607,
+    "remaining_wall_band": 0.18610224205483555,
+    "interior": 0.8101272544915594
+  },
+  "minimum_corner_radius": 0.010021002113169695,
+  "measure": "normalized area on the square excluding only two upper quarter-disks",
+  "adaptive_sampling": false
+}

@@ -1,0 +1,379 @@
+{
+  "schema_version": 1,
+  "status": "passed",
+  "checked_at_utc": "2026-11-16T03:14:30.338175+00:00",
+  "validator": {
+    "path": "qa/validate_cavity_pinn_curriculum.py",
+    "sha256": "3c583754ffc73401132b25ee866a335363a66db7ffeaf922722e6d17d498d3d0"
+  },
+  "execution_mode": "sequential",
+  "reviewed_evidence": {
+    "studies": {
+      "path": "qa/cavity_pinn_studies_validation.json",
+      "sha256": "660321b9841df6fc9ba2b5c49d39141e310c142a45b5a52e6c5e8a83dfd05268"
+    },
+    "lecture_review": {
+      "path": "qa/cavity_pinn_lecture_review.json",
+      "sha256": "8c1a95b5c62153c23d2fb6be35ff7e0b76ff879e840b7d094b8dd556f60f332f"
+    },
+    "figure_review": {
+      "path": "qa/cavity_pinn_figure_review.json",
+      "sha256": "73266ac1ef3734bea060be9d316f539069a058ce534329b67dc590ef89b03d55"
+    },
+    "scientific_manifests": [
+      {
+        "path": "results/cavity_pinn_campaign/evaluation_manifest.json",
+        "sha256": "5b10dedc528cb35641003bae1325ad17cbdddcf433b21c6babd5efd197268652"
+      },
+      {
+        "path": "results/cavity_pinn_campaign/sampling_coverage.json",
+        "sha256": "280b0a6549fb2363ee46845e76711336e5a9c5f87fa42ae911a8006f4f1af145"
+      },
+      {
+        "path": "results/deep_cavity_ablation/evaluation_manifest.json",
+        "sha256": "2e14fbdc9b20fb0375962849cea24221701bc3e2b77014c0d09c4c674876ce4b"
+      },
+      {
+        "path": "results/cavity_pinn_stratified/experiment_manifest.json",
+        "sha256": "11a488e49db5a51501769faa86d31ab712e98035c084eaebdc6388d4f7da8678"
+      },
+      {
+        "path": "results/cavity_pinn_stratified/comparison/comparison_manifest.json",
+        "sha256": "c97d1368634593a9d5f78187566be3887d981e2491276891f57667e04daa945c"
+      },
+      {
+        "path": "results/cavity_pinn_stratified/evaluation_manifest.json",
+        "sha256": "599ae30ad6a61c79ec967de8d604fd9063b602ed4d0a497b5c4622163637f435"
+      }
+    ],
+    "lecture_sources": {
+      "source": {
+        "path": "lectures/source/cavity_expansion.json",
+        "sha256": "0d48d45a928cf80bdd863f75e491553f168e92394121a73867d43966f3cbea98"
+      },
+      "preparer": {
+        "path": "qa/prepare_cavity_pinn_lecture_extension.py",
+        "sha256": "3ffeb8e48cefce8132691e4d9bc3ce32319899d4a0601b0af8287bac7eca3e8e"
+      }
+    },
+    "pdfs": {
+      "week04_cavity_surrogates_deeponet": {
+        "path": "lectures/week04_cavity_surrogates_deeponet.pdf",
+        "sha256": "f7e9a57c0966959142bc84316f040306dc576d85931dc96c0ef6197ea8b36d6b",
+        "pages": 65,
+        "preserved_pages": 34,
+        "individually_reviewed_pages": 31
+      },
+      "week13_rectangular_cavity_pinn": {
+        "path": "lectures/week13_rectangular_cavity_pinn.pdf",
+        "sha256": "ac372bedd03fd51185de39b279f0659445aa107ad5e3f5f59c836ef3a4e429ad",
+        "pages": 36,
+        "preserved_pages": 18,
+        "individually_reviewed_pages": 18
+      }
+    },
+    "figure_pdfs": [
+      {
+        "path": "results/cavity_pinn_campaign/figures/all_reynolds_centerlines.pdf",
+        "sha256": "227b50fe109a2eaac837ef402e841449079555f2dba0933d367a45e8a7547838",
+        "pages": 7,
+        "individually_reviewed_pages": 7
+      },
+      {
+        "path": "results/cavity_pinn_campaign/figures/representative_physical_fields.pdf",
+        "sha256": "bcb76da4c35ffa59a86a2820120fda6bf9a98ef31f6b7b4c32b2f6c369fe2d84",
+        "pages": 4,
+        "individually_reviewed_pages": 4
+      },
+      {
+        "path": "results/cavity_pinn_campaign/figures/paired_velocity_vorticity.pdf",
+        "sha256": "d92b83556a1b713d9cffa066bca2b417f137314b7e158678159d5055ff41a09d",
+        "pages": 2,
+        "individually_reviewed_pages": 2
+      },
+      {
+        "path": "results/deep_cavity_ablation/lesson_figures/controlled_pilot_figures.pdf",
+        "sha256": "4748af9b3f36bc2da560190c32fbb6c43a75f716fff4d42c740e5a1e5c56e7b8",
+        "pages": 10,
+        "individually_reviewed_pages": 10
+      },
+      {
+        "path": "results/cavity_pinn_stratified/figures/all_pairs_centerlines.pdf",
+        "sha256": "77f15b6c016316ec7ca21b77fd3a68fdf56d19ced86018893a4378bce7289c77",
+        "pages": 4,
+        "individually_reviewed_pages": 4
+      },
+      {
+        "path": "results/cavity_pinn_stratified/figures/physical_comparison.pdf",
+        "sha256": "1c0011951f8dc3e33e7a301f87c0e8cc41515cb16f983957bd539c0b76efb101",
+        "pages": 6,
+        "individually_reviewed_pages": 6
+      }
+    ],
+    "images": [
+      {
+        "path": "results/cavity_pinn_campaign/figures/re100_centerlines.png",
+        "sha256": "df149fd625f641a863cb3533b97aa30dc49baa81632a5ee1665229e7bf4e9a4d"
+      },
+      {
+        "path": "results/cavity_pinn_campaign/figures/re400_centerlines.png",
+        "sha256": "ef2d5537ca9bfac1d609d8dc57298683da45b5731ab3082e5d36497113c826f3"
+      },
+      {
+        "path": "results/cavity_pinn_campaign/figures/re1000_centerlines.png",
+        "sha256": "0eb066f30059c96051c9742753b39dda8c05c7dcd09d3e703a05279b0c59f883"
+      },
+      {
+        "path": "results/cavity_pinn_campaign/figures/re3200_centerlines.png",
+        "sha256": "d426153b94fcf58a972250d7ce3227f28e51f98c3e3224ca114a57f9bd9cbd2f"
+      },
+      {
+        "path": "results/cavity_pinn_campaign/figures/re5000_centerlines.png",
+        "sha256": "9ef39600aae0a9bdbdb1cdfc5ba27b17b8858bd9b819e4966c5b6ab24fde94e6"
+      },
+      {
+        "path": "results/cavity_pinn_campaign/figures/re7500_centerlines.png",
+        "sha256": "8f41707515464b7a4cff397108be257f7378972f9993eaf24e817693d042de32"
+      },
+      {
+        "path": "results/cavity_pinn_campaign/figures/re10000_centerlines.png",
+        "sha256": "d7306184155e4d013f598469b576d56449750262cbece7a9b63a09fbfb52eb60"
+      },
+      {
+        "path": "results/cavity_pinn_campaign/figures/re1000_fields.png",
+        "sha256": "1551e1e0105fa5cfa7c8f25e1b7542210477fb07162591661be4bebe83eac205"
+      },
+      {
+        "path": "results/cavity_pinn_campaign/figures/re1000_streamlines.png",
+        "sha256": "1b56c55581d10e22b3d9c67e83abe320ad44ea81ecd082f8097505669a52b3a6"
+      },
+      {
+        "path": "results/cavity_pinn_campaign/figures/re7500_fields.png",
+        "sha256": "357a21c6f15ee0a55af4bb317dcad8bedf1be70b0fd78ab075b8373928f648c4"
+      },
+      {
+        "path": "results/cavity_pinn_campaign/figures/re7500_streamlines.png",
+        "sha256": "d8b64dc23196cdcdd33bdee03b0eaf814804f3b148255d2de672c8ca3f30bc43"
+      },
+      {
+        "path": "results/cavity_pinn_campaign/figures/paired_speed.png",
+        "sha256": "422b9415cb62d9934a8aa765f67796ade58b51d5630a93bb98db413ad8af3d56"
+      },
+      {
+        "path": "results/cavity_pinn_campaign/figures/paired_curl.png",
+        "sha256": "a301fff47003969b7f10f738615ee255f27ca5d89de25fff47eb57131a68fc1a"
+      },
+      {
+        "path": "results/deep_cavity_ablation/lesson_figures/optimizer_objective_history.png",
+        "sha256": "74b57b55cadf1a0de355713ee6ce03364909f8e13691f1aef33038213b4699e1"
+      },
+      {
+        "path": "results/deep_cavity_ablation/lesson_figures/profiles_upper_s12345.png",
+        "sha256": "a48057ab51ab3c7483e89d3e2d357121e7d59b9be7ef1d718006e6764f99028b"
+      },
+      {
+        "path": "results/deep_cavity_ablation/lesson_figures/profiles_floor_s12345.png",
+        "sha256": "95d9f0334f7e25ed6ef0ce328d05e90c850e2e520684bb2b381a78dcc875a058"
+      },
+      {
+        "path": "results/deep_cavity_ablation/lesson_figures/streamlines_s12345.png",
+        "sha256": "5b60eb65df64b29d821b46ae71b8ea3dfadb40044fa00f5fe7420dfcb3361da3"
+      },
+      {
+        "path": "results/deep_cavity_ablation/lesson_figures/profiles_upper_s23456.png",
+        "sha256": "633057282eec4d64a460a3c9da36451b60b8db05037c5cb159b5693dc48753f0"
+      },
+      {
+        "path": "results/deep_cavity_ablation/lesson_figures/profiles_floor_s23456.png",
+        "sha256": "f908676ac9c366cb4969e046db326d3dcffe6a5d9e61f106c073077a8abb8454"
+      },
+      {
+        "path": "results/deep_cavity_ablation/lesson_figures/streamlines_s23456.png",
+        "sha256": "b284e3c058050dd86c6a0965cf4076ea09d832e21c33b701886850453c81a51c"
+      },
+      {
+        "path": "results/deep_cavity_ablation/lesson_figures/profiles_upper_s34567.png",
+        "sha256": "b66fc6cf66f3f27bde280379a3d0ecb694c891dcf2a22fe30f904774ffe6714b"
+      },
+      {
+        "path": "results/deep_cavity_ablation/lesson_figures/profiles_floor_s34567.png",
+        "sha256": "3cdd3709b895d3954df419bf63cf6f4dc52fa93da8dfdff3e29b78a71b83e438"
+      },
+      {
+        "path": "results/deep_cavity_ablation/lesson_figures/streamlines_s34567.png",
+        "sha256": "2d78aef6b7710e6aeeaa4a87ad4ca76f9d670d1b8f9cf11a343a31034ecd4508"
+      },
+      {
+        "path": "results/cavity_pinn_stratified/figures/re100_eps0.02_centerlines.png",
+        "sha256": "23994523c62c331f211c6672c25550e9996a14a3c6b74a6903f97a8a81ce863d"
+      },
+      {
+        "path": "results/cavity_pinn_stratified/figures/re100_eps0.01_centerlines.png",
+        "sha256": "4077271382bd2fecd89fd42cae4a963f16193e1932096e07040923cd3adf3fff"
+      },
+      {
+        "path": "results/cavity_pinn_stratified/figures/re7500_eps0.02_centerlines.png",
+        "sha256": "dfab7f2f16daf0c25f66b1f341a17d0b74c14b15efde1db3031e2563a9cfeb31"
+      },
+      {
+        "path": "results/cavity_pinn_stratified/figures/re7500_eps0.01_centerlines.png",
+        "sha256": "04e7be62d584f126ea1f5008187514ef3f7b93309ed5687f9d179b8970f93a76"
+      },
+      {
+        "path": "results/cavity_pinn_stratified/figures/paired_speed.png",
+        "sha256": "108c1a13e8a7c790393a60a8963223648cd86a766df73389d455d12cbc9db688"
+      },
+      {
+        "path": "results/cavity_pinn_stratified/figures/paired_curl.png",
+        "sha256": "e2bc6f96a83a2720c61f7fffcb3a7d65bef8f90b7fa552a3c2c0bb263374f48a"
+      },
+      {
+        "path": "results/cavity_pinn_stratified/figures/re100_signed_errors.png",
+        "sha256": "a0d30bb7e222c76d7bc411d85e18255813bd071102e28d2f4b5fc27f45543f66"
+      },
+      {
+        "path": "results/cavity_pinn_stratified/figures/re100_streamlines.png",
+        "sha256": "0b20a609d23fa4771b97cafaa1e8ffb7f1ae0da855b890acb1bb5b92b915f370"
+      },
+      {
+        "path": "results/cavity_pinn_stratified/figures/re7500_signed_errors.png",
+        "sha256": "4317b434446eda08a4fcf40fb28196111464d27cdcb4b83e32497f1818696f76"
+      },
+      {
+        "path": "results/cavity_pinn_stratified/figures/re7500_streamlines.png",
+        "sha256": "a3de883c32eb857709ca6f72e171fef33c056478917246b5349a5d9475c957e6"
+      }
+    ],
+    "image_hashes_by_family": {
+      "ghia": [
+        "0eb066f30059c96051c9742753b39dda8c05c7dcd09d3e703a05279b0c59f883",
+        "1551e1e0105fa5cfa7c8f25e1b7542210477fb07162591661be4bebe83eac205",
+        "1b56c55581d10e22b3d9c67e83abe320ad44ea81ecd082f8097505669a52b3a6",
+        "357a21c6f15ee0a55af4bb317dcad8bedf1be70b0fd78ab075b8373928f648c4",
+        "422b9415cb62d9934a8aa765f67796ade58b51d5630a93bb98db413ad8af3d56",
+        "8f41707515464b7a4cff397108be257f7378972f9993eaf24e817693d042de32",
+        "9ef39600aae0a9bdbdb1cdfc5ba27b17b8858bd9b819e4966c5b6ab24fde94e6",
+        "a301fff47003969b7f10f738615ee255f27ca5d89de25fff47eb57131a68fc1a",
+        "d426153b94fcf58a972250d7ce3227f28e51f98c3e3224ca114a57f9bd9cbd2f",
+        "d7306184155e4d013f598469b576d56449750262cbece7a9b63a09fbfb52eb60",
+        "d8b64dc23196cdcdd33bdee03b0eaf814804f3b148255d2de672c8ca3f30bc43",
+        "df149fd625f641a863cb3533b97aa30dc49baa81632a5ee1665229e7bf4e9a4d",
+        "ef2d5537ca9bfac1d609d8dc57298683da45b5731ab3082e5d36497113c826f3"
+      ],
+      "d5": [
+        "2d78aef6b7710e6aeeaa4a87ad4ca76f9d670d1b8f9cf11a343a31034ecd4508",
+        "3cdd3709b895d3954df419bf63cf6f4dc52fa93da8dfdff3e29b78a71b83e438",
+        "5b60eb65df64b29d821b46ae71b8ea3dfadb40044fa00f5fe7420dfcb3361da3",
+        "633057282eec4d64a460a3c9da36451b60b8db05037c5cb159b5693dc48753f0",
+        "74b57b55cadf1a0de355713ee6ce03364909f8e13691f1aef33038213b4699e1",
+        "95d9f0334f7e25ed6ef0ce328d05e90c850e2e520684bb2b381a78dcc875a058",
+        "a48057ab51ab3c7483e89d3e2d357121e7d59b9be7ef1d718006e6764f99028b",
+        "b284e3c058050dd86c6a0965cf4076ea09d832e21c33b701886850453c81a51c",
+        "b66fc6cf66f3f27bde280379a3d0ecb694c891dcf2a22fe30f904774ffe6714b",
+        "f908676ac9c366cb4969e046db326d3dcffe6a5d9e61f106c073077a8abb8454"
+      ],
+      "stratified": [
+        "04e7be62d584f126ea1f5008187514ef3f7b93309ed5687f9d179b8970f93a76",
+        "0b20a609d23fa4771b97cafaa1e8ffb7f1ae0da855b890acb1bb5b92b915f370",
+        "108c1a13e8a7c790393a60a8963223648cd86a766df73389d455d12cbc9db688",
+        "23994523c62c331f211c6672c25550e9996a14a3c6b74a6903f97a8a81ce863d",
+        "4077271382bd2fecd89fd42cae4a963f16193e1932096e07040923cd3adf3fff",
+        "4317b434446eda08a4fcf40fb28196111464d27cdcb4b83e32497f1818696f76",
+        "a0d30bb7e222c76d7bc411d85e18255813bd071102e28d2f4b5fc27f45543f66",
+        "a3de883c32eb857709ca6f72e171fef33c056478917246b5349a5d9475c957e6",
+        "dfab7f2f16daf0c25f66b1f341a17d0b74c14b15efde1db3031e2563a9cfeb31",
+        "e2bc6f96a83a2720c61f7fffcb3a7d65bef8f90b7fa552a3c2c0bb263374f48a"
+      ]
+    }
+  },
+  "notebooks": {
+    "ghia": {
+      "path": "notebooks/week04/W4_Lab9_Label_Free_Ghia_PINN_Audit.ipynb",
+      "sha256": "31a8ea5fed1b9e8430962ae84026eaff5de3bd4877a1e6b0ddda51fd436c5ca3",
+      "execution_method": "Sequential plain-Python code cells in a fresh child process; no Jupyter-kernel certification",
+      "jupyter_kernel_executed": false,
+      "original_code_cells": 8,
+      "completed_original_code_cells": 8,
+      "validation_initialization_cells": 0,
+      "post_execution_probe": {
+        "ghia_cases": 42,
+        "stratified_pairs": 12
+      },
+      "output_count": 48,
+      "displayed_png_sha256": [
+        "04e7be62d584f126ea1f5008187514ef3f7b93309ed5687f9d179b8970f93a76",
+        "085e79c64d76a7bb06633e1715580a58185e99f15899f9259f18e4464ba86c8a",
+        "0b20a609d23fa4771b97cafaa1e8ffb7f1ae0da855b890acb1bb5b92b915f370",
+        "0eb066f30059c96051c9742753b39dda8c05c7dcd09d3e703a05279b0c59f883",
+        "108c1a13e8a7c790393a60a8963223648cd86a766df73389d455d12cbc9db688",
+        "1551e1e0105fa5cfa7c8f25e1b7542210477fb07162591661be4bebe83eac205",
+        "1b56c55581d10e22b3d9c67e83abe320ad44ea81ecd082f8097505669a52b3a6",
+        "23994523c62c331f211c6672c25550e9996a14a3c6b74a6903f97a8a81ce863d",
+        "357a21c6f15ee0a55af4bb317dcad8bedf1be70b0fd78ab075b8373928f648c4",
+        "4077271382bd2fecd89fd42cae4a963f16193e1932096e07040923cd3adf3fff",
+        "4317b434446eda08a4fcf40fb28196111464d27cdcb4b83e32497f1818696f76",
+        "4d3bbeecb0fa5165477a3e3bd9b452a5a5906cc0f65db240604869b27401344f",
+        "5c13eed4af63916d236d73c962e6763afd7aa534224ff4c2bb8ca432a3e87b87",
+        "8f41707515464b7a4cff397108be257f7378972f9993eaf24e817693d042de32",
+        "9ef39600aae0a9bdbdb1cdfc5ba27b17b8858bd9b819e4966c5b6ab24fde94e6",
+        "a0d30bb7e222c76d7bc411d85e18255813bd071102e28d2f4b5fc27f45543f66",
+        "a3de883c32eb857709ca6f72e171fef33c056478917246b5349a5d9475c957e6",
+        "d426153b94fcf58a972250d7ce3227f28e51f98c3e3224ca114a57f9bd9cbd2f",
+        "d7306184155e4d013f598469b576d56449750262cbece7a9b63a09fbfb52eb60",
+        "d8b64dc23196cdcdd33bdee03b0eaf814804f3b148255d2de672c8ca3f30bc43",
+        "df149fd625f641a863cb3533b97aa30dc49baa81632a5ee1665229e7bf4e9a4d",
+        "dfab7f2f16daf0c25f66b1f341a17d0b74c14b15efde1db3031e2563a9cfeb31",
+        "e2bc6f96a83a2720c61f7fffcb3a7d65bef8f90b7fa552a3c2c0bb263374f48a",
+        "ef2d5537ca9bfac1d609d8dc57298683da45b5731ab3082e5d36497113c826f3",
+        "efd483bbee2f96ea69301e8e8a26e6e8e217bb949d7fd53a1c47b173ff8140ac",
+        "f55d9718d8153490dc5a28eab0ea2e16c47ff27ff67d2f450096a1825f36a16d"
+      ],
+      "missing_local_links": [],
+      "source_notebook_unchanged": true,
+      "displayed_current_gallery_families": [
+        "ghia",
+        "stratified"
+      ]
+    },
+    "d5": {
+      "path": "notebooks/week13/W13_D5_Controlled_Optimizer_Study.ipynb",
+      "sha256": "52d99a41657948eb256f808a5b962f08a0557aa5a04dbc2aa96f94006b9801a3",
+      "execution_method": "Sequential plain-Python code cells in a fresh child process; no Jupyter-kernel certification",
+      "jupyter_kernel_executed": false,
+      "original_code_cells": 6,
+      "completed_original_code_cells": 6,
+      "validation_initialization_cells": 0,
+      "post_execution_probe": {
+        "d5_controlled_arms": 6
+      },
+      "output_count": 35,
+      "displayed_png_sha256": [
+        "144d0a141804ef996e4215fcde8ab44585406d7756a52ad7c8485bd3178b983f",
+        "2d78aef6b7710e6aeeaa4a87ad4ca76f9d670d1b8f9cf11a343a31034ecd4508",
+        "3cdd3709b895d3954df419bf63cf6f4dc52fa93da8dfdff3e29b78a71b83e438",
+        "5b60eb65df64b29d821b46ae71b8ea3dfadb40044fa00f5fe7420dfcb3361da3",
+        "633057282eec4d64a460a3c9da36451b60b8db05037c5cb159b5693dc48753f0",
+        "73eadec696ffcf54b5314016786f79e6bb188128b761cd15b2b128d72d463206",
+        "74b57b55cadf1a0de355713ee6ce03364909f8e13691f1aef33038213b4699e1",
+        "7a61d8103229d746f51ccc42b93bb06c168073fc0de18fb77f24ad4e7671aa36",
+        "7d9639c9daf7e78dbd319ffdeedf080945e41852a15e8e25aa4f00244f5b4651",
+        "8bc44bd91dc91e54df4847675f6052535dc5b3566a7c75cb2e960567e4701a87",
+        "95d9f0334f7e25ed6ef0ce328d05e90c850e2e520684bb2b381a78dcc875a058",
+        "9c71a1264c88418eb37a39c32e7ee767ddb9bb9e1106d4ba948b11fbb25dc658",
+        "a48057ab51ab3c7483e89d3e2d357121e7d59b9be7ef1d718006e6764f99028b",
+        "b284e3c058050dd86c6a0965cf4076ea09d832e21c33b701886850453c81a51c",
+        "b66fc6cf66f3f27bde280379a3d0ecb694c891dcf2a22fe30f904774ffe6714b",
+        "ceef54fd0c4d9777f4141dbc62e238e957b7ac690b3d8a544fd4d547bdcae351",
+        "cf6da181edf8cbbbc6a582f4e7db760e4cbaf91a6072d691dc6c0b454bc762fd",
+        "f908676ac9c366cb4969e046db326d3dcffe6a5d9e61f106c073077a8abb8454"
+      ],
+      "missing_local_links": [],
+      "source_notebook_unchanged": true,
+      "displayed_current_gallery_families": [
+        "d5"
+      ]
+    }
+  },
+  "visual_QA": "Hash-binding of recorded individual visual inspections; this machine gate does not itself certify visual appearance",
+  "scientific_scope": "Integrity and teaching delivery only; no model fitting, accuracy promotion or new endpoint selection"
+}

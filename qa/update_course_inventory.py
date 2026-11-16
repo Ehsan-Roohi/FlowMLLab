@@ -99,10 +99,11 @@ def site_modules(inv: dict) -> str:
     cards=[]
     for m in inv['modules']:
         route=REPO+m['page'];setup=REPO+m['setup']
+        followup_links=''.join(f'<p><a href="{esc(REPO+x["page"], quote=True)}">{esc(x["title"])}</a></p>' for x in m.get('followups', []))
         cards.append(f'''<article class="module" data-search="{esc((m['id']+' '+m['title']+' '+m['mode']+' '+m['prerequisites']+' '+m.get('keywords','')).lower(), quote=True)}">
 <h3><span class="eyebrow">Week {esc(m['id'])}</span><a href="{route}">{esc(m['title'])}</a></h3>
 <p class="mode">{esc(m['mode'])}</p>
-<details><summary>Prerequisites, time and setup</summary><p><strong>Before this unit:</strong> {esc(m['prerequisites'])}</p><p><strong>Compute planning estimate:</strong> {esc(m['compute_estimate'])} Not a timing measurement of this revision; study and discussion take longer.</p><p>{esc(m['execution_status'])}</p><p><a href="{setup}">Read the setup guide</a></p></details></article>''')
+<details><summary>Prerequisites, time and setup</summary><p><strong>Before this unit:</strong> {esc(m['prerequisites'])}</p><p><strong>Compute planning estimate:</strong> {esc(m['compute_estimate'])} Not a timing measurement of this revision; study and discussion take longer.</p><p>{esc(m['execution_status'])}</p><p><a href="{setup}">Read the setup guide</a></p></details>{followup_links}</article>''')
     return '\n'.join(cards)
 
 

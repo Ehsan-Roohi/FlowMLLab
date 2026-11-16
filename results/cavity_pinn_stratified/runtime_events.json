@@ -1,0 +1,57 @@
+{
+  "timestamp_utc": "2026-11-16T01:54:22.563153+00:00",
+  "event": "CUDA illegal memory access during first full-size training closure",
+  "failed_array_task": "1811989_10",
+  "failed_allocation": "1812319",
+  "failed_node": "gypsum-gpu083",
+  "root_cause": "not established; node excluded for this checkpoint-safe retry",
+  "checkpoint_sha256": "aadfe2b8e45f798cdc9de38e3b75c91ce2cf889b6f10af9ca31379b1d7abba67",
+  "verified_saved_training_closures": 0,
+  "physics_or_schedule_changed": false,
+  "duplicate_active_trajectory": false,
+  "original_log_sha256": "d96be9211b345d3518c427cae7a138967771634153078c2a20710c0428f2b523",
+  "actions": [
+    {
+      "command": [
+        "scontrol",
+        "requeuehold",
+        "1811989_10"
+      ],
+      "returncode": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "scontrol",
+        "update",
+        "JobId=1811989_10",
+        "ExcNodeList=gypsum-gpu083"
+      ],
+      "returncode": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "scontrol",
+        "release",
+        "1811989_10"
+      ],
+      "returncode": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "scontrol",
+        "update",
+        "JobId=1812305",
+        "Dependency=afterok:1811989"
+      ],
+      "returncode": 0,
+      "stdout": "",
+      "stderr": ""
+    }
+  ]
+}

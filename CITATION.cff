@@ -1,5 +1,5 @@
 cff-version: 1.2.0
-message: "If you use FlowMLLab, please cite this v1.13.0 software release and the relevant research-case articles."
+message: "If you use FlowMLLab, please cite this v1.14.0 software release and the relevant research-case articles."
 title: "FlowMLLab: An Open-Source Framework for Reproducible CFD-to-Scientific-Machine-Learning Experiments"
 type: software
 authors:
@@ -7,7 +7,7 @@ authors:
     given-names: Ehsan
     orcid: "https://orcid.org/0000-0001-5739-3210"
 repository-code: "https://github.com/Ehsan-Roohi/FlowMLLab"
-url: "https://github.com/Ehsan-Roohi/FlowMLLab/releases/tag/v1.13.0"
+url: "https://github.com/Ehsan-Roohi/FlowMLLab/releases/tag/v1.14.0"
 license: MIT
 abstract: >-
   FlowMLLab integrates transparent continuum and particle solvers, case-wise
@@ -28,10 +28,14 @@ abstract: >-
   separate from centreline regression. The validation notebook displays native
   CFD profiles, signed errors and grid changes by default; the course home
   presents the CFD/Ghia comparison and held-out neural-profile predictions.
-  Version 1.13.0 adds 45 native CFD fields on three grids and separate high-Re
-  CFD and full-field POD-DeepONet labs. Whole-Re neural tests compare against
-  matched interpolation; mesh sensitivity and nonlinear residual limits
-  remain explicit.
+  Version 1.14.0 adds a 42-run, case-specific, label-free Ghia PINN audit and
+  12 matched-work sampling trials at Re100/Re7500 and a matched three-seed
+  D/W=5 optimizer study, with reproducible source,
+  frozen-field assessment and separate data-integrity and accuracy decisions.
+  The finite Ghia baseline fails its preregistered physical/accuracy gates;
+  these results remain distinct from the supervised POD-DeepONet study.
+  Earlier course material is preserved. Research inputs retain their stated
+  attribution and license scope.
 keywords:
   - computational fluid dynamics
   - scientific machine learning
@@ -47,9 +51,9 @@ keywords:
   - transformers
   - attention
   - language modeling
-version: "1.13.0"
-doi: "10.5281/zenodo.24250424"
-date-released: "2026-11-15"
+version: "1.14.0"
+doi: "10.5281/zenodo.22074169"
+date-released: "2026-11-16"
 identifiers:
   - type: doi
     value: "10.5281/zenodo.22074169"

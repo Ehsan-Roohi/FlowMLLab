@@ -1,0 +1,90 @@
+{
+  "schema_version": 1,
+  "identity": {
+    "run_id": "re100_s7_eps0.01_db7f443a5b",
+    "Re": 100,
+    "seed": 7,
+    "config": {
+      "reynolds": 100,
+      "seed": 7,
+      "width": 64,
+      "depth": 4,
+      "collar": 0.01,
+      "collocation": 2048,
+      "adam_steps": 2000,
+      "lbfgs_steps": 500,
+      "adam_lr": 0.001,
+      "chunk_size": 2048,
+      "lbfgs_history": 50,
+      "audit_points": 2048,
+      "audit_seed": 983451,
+      "export_grid": 129,
+      "closure_budget": 3017,
+      "study_kind": "controlled_variant",
+      "sampling": "fixed_conditional_uniform_area_strata_v1"
+    },
+    "model_sha256": "f80210b58ae75836f174bb2dce32d0ba29dc6b65882bdfc9d7acb7fa1a620743",
+    "config_sha256": "db7f443a5b4ec083505198f3a9fea8d58f038a1af9e546cd6f7773cb74ac154a",
+    "source_canonical_sha256": "35cda31dee8162fc3baaf3c3a029a011c699c3ed8f867d93745fb1398f2b83a0",
+    "projection_runtime": {
+      "torch": "2.5.1+cu118",
+      "cuda": "11.8",
+      "device": "cuda",
+      "gpu_name": "Quadro RTX 8000",
+      "gpu_capability": [
+        7,
+        5
+      ],
+      "hostname": "gypsum-gpu182",
+      "slurm_job_id": "1814335",
+      "slurm_restart_count": "0",
+      "phase": "lbfgs"
+    },
+    "evaluation_device": "cuda",
+    "ghia_source_sha256": "49f3141ea0840c0d1a204dba2ca7b1c358cdad9924f083340099f72251d8b680",
+    "evaluator_source_sha256": "1d7118052fcf0eea1550433484cb799a598e8a4c23130b1c3a85cd2b3610817c",
+    "checkpoint_sha256": "1ab1c70dbeabff28c8249ea674cc2474e657a9463a3d8bffc86249231134c877",
+    "original_freeze_manifest_sha256": "3fd66c2295246d40f9fb13c29451e9bd2641e46bbe5bde8769484b3b9b8a55cc",
+    "original_prediction_sha256": "5e60cd7e194433bd687812b8674373e4f9898048f83afe7981f79c9388a3b0c4",
+    "original_frozen_at_utc": "2026-11-16T02:02:48Z",
+    "training_runtime_history": [
+      {
+        "torch": "2.5.1+cu118",
+        "cuda": "11.8",
+        "device": "cuda",
+        "gpu_name": "Quadro RTX 8000",
+        "gpu_capability": [
+          7,
+          5
+        ],
+        "hostname": "gypsum-gpu182",
+        "slurm_job_id": "1812005",
+        "slurm_restart_count": "0",
+        "phase": "adam"
+      },
+      {
+        "torch": "2.5.1+cu118",
+        "cuda": "11.8",
+        "device": "cuda",
+        "gpu_name": "Quadro RTX 8000",
+        "gpu_capability": [
+          7,
+          5
+        ],
+        "hostname": "gypsum-gpu182",
+        "slurm_job_id": "1812005",
+        "slurm_restart_count": "0",
+        "phase": "lbfgs"
+      }
+    ],
+    "coordinate_sha256": "672bcd26625e7d34c06ddeb7e3454d4fd2684dd9b7ee09a53e135d5fe8c4ff56",
+    "ghia_coordinate_sha256": "bfff04f64f06753ed86b17502e72e43a287e381183517897e1a0ffbab6b255d2",
+    "reference_file_sha256": "937bf0cccf195947452b2d230bb61d49ca1b72d485014a28f40c9721eee87567"
+  },
+  "prediction_sha256": "27c07a2fa81dbe80ca4a1013af413a68d2615dd5b7c5c2d29ceb6bcab142c6e1",
+  "at_utc": "2026-11-16T02:14:32.636206Z",
+  "coordinates_read_at_utc": "2026-11-16T02:14:26.583579Z",
+  "subset": "exact native interior x[1:-1], y[1:-1]; no interpolation; boundaries audited separately",
+  "reference_values_read": false,
+  "pressure": "PINN centre gauge; this CFD bundle contains no pressure reference"
+}

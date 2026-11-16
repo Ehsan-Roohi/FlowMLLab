@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "course_version": "1.13.0",
+  "course_version": "1.14.0",
   "scope": "Current working-tree assets for numbered Weeks 1–22, including incremental and preparatory material. This is not a new published release or proof of execution.",
   "rules": {
     "active_lecture_pdfs": "lectures/week*.pdf only; exclude lectures/versions, lectures/source figure PDFs and separately listed optional supplements.",
@@ -10,8 +10,8 @@
   },
   "counts": {
     "active_lecture_pdfs": 37,
-    "lecture_pages": 597,
-    "student_notebooks": 60,
+    "lecture_pages": 646,
+    "student_notebooks": 62,
     "historical_student_companions": 1,
     "optional_notebooks": 1,
     "optional_pdfs": 1
@@ -63,7 +63,7 @@
     },
     {
       "path": "lectures/week04_cavity_surrogates_deeponet.pdf",
-      "pages": 34
+      "pages": 65
     },
     {
       "path": "lectures/week05_06_project_guide.pdf",
@@ -127,7 +127,7 @@
     },
     {
       "path": "lectures/week13_rectangular_cavity_pinn.pdf",
-      "pages": 18
+      "pages": 36
     },
     {
       "path": "lectures/week14_rans_pinn_nn.pdf",
@@ -248,6 +248,10 @@
       "role": "student"
     },
     {
+      "path": "notebooks/week04/W4_Lab9_Label_Free_Ghia_PINN_Audit.ipynb",
+      "role": "student"
+    },
+    {
       "path": "notebooks/week05_06/P0_Project_Setup.ipynb",
       "role": "student"
     },
@@ -345,6 +349,10 @@
     },
     {
       "path": "notebooks/week12/W12_DSMC_Moment_Reconstruction.ipynb",
+      "role": "student"
+    },
+    {
+      "path": "notebooks/week13/W13_D5_Controlled_Optimizer_Study.ipynb",
       "role": "student"
     },
     {
@@ -503,7 +511,13 @@
       "compute_estimate": "20–90 min per lab; training settings matter.",
       "estimate_status": "Planning estimate carried from course guides, or explicitly unmeasured; not a timing measurement of this revision.",
       "execution_status": "Colab link is an entry point, not a guarantee of a fresh hosted Run All.",
-      "keywords": "POD DeepONet operator learning"
+      "keywords": "POD DeepONet operator learning",
+      "followups": [
+        {
+          "page": "notebooks/week04/W4_Lab9_Label_Free_Ghia_PINN_Audit.ipynb",
+          "title": "Label-free Ghia PINN audit: failed cases and physical checks"
+        }
+      ]
     },
     {
       "id": "4.1",
@@ -695,7 +709,13 @@
       "compute_estimate": "About 3 min compact CPU lab; A100 research runs excluded.",
       "estimate_status": "Planning estimate carried from course guides, or explicitly unmeasured; not a timing measurement of this revision.",
       "execution_status": "Colab link is an entry point, not a guarantee of a fresh hosted Run All.",
-      "keywords": "PINN streamfunction cavity"
+      "keywords": "PINN streamfunction cavity",
+      "followups": [
+        {
+          "page": "notebooks/week13/W13_D5_Controlled_Optimizer_Study.ipynb",
+          "title": "Matched D/W=5 optimizer study and attributed research source"
+        }
+      ]
     },
     {
       "id": "14",

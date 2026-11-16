@@ -95,7 +95,13 @@
       "compute_estimate": "20–90 min per lab; training settings matter.",
       "estimate_status": "Planning estimate carried from course guides, or explicitly unmeasured; not a timing measurement of this revision.",
       "execution_status": "Colab link is an entry point, not a guarantee of a fresh hosted Run All.",
-      "keywords": "POD DeepONet operator learning"
+      "keywords": "POD DeepONet operator learning",
+      "followups": [
+        {
+          "page": "notebooks/week04/W4_Lab9_Label_Free_Ghia_PINN_Audit.ipynb",
+          "title": "Label-free Ghia PINN audit: failed cases and physical checks"
+        }
+      ]
     },
     {
       "id": "4.1",
@@ -287,7 +293,13 @@
       "compute_estimate": "About 3 min compact CPU lab; A100 research runs excluded.",
       "estimate_status": "Planning estimate carried from course guides, or explicitly unmeasured; not a timing measurement of this revision.",
       "execution_status": "Colab link is an entry point, not a guarantee of a fresh hosted Run All.",
-      "keywords": "PINN streamfunction cavity"
+      "keywords": "PINN streamfunction cavity",
+      "followups": [
+        {
+          "page": "notebooks/week13/W13_D5_Controlled_Optimizer_Study.ipynb",
+          "title": "Matched D/W=5 optimizer study and attributed research source"
+        }
+      ]
     },
     {
       "id": "14",

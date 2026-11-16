@@ -1,0 +1,175 @@
+{
+  "schema": 1,
+  "archive_sha256": "d041091ee84b5e1150fc186b2f15087852f0e1d2929be78ce96d81558c953235",
+  "scope": "Verified original training metadata only; no model weights or scientific target arrays.",
+  "controls": [
+    {
+      "Re": 100,
+      "seed": 7,
+      "collar": "0.01",
+      "closure_cap": 3017,
+      "residual_points": 6178816,
+      "directory": "ghia_re100_seed7_eps0.01_chunk2048",
+      "sha256": {
+        "config.json": "717e38b01114bcb1eb149a925547520a044eebb62219272772249a4b63f3bd99",
+        "current_receipt.json": "70149c3e5c542545149125a4fc727650e3397135f78334ce34fab776a781b8fe",
+        "frozen_manifest.json": "fc0a2073dedf2d32d16c672dae9f2e9929a21b9226c577cc662bdd75b4503793",
+        "baseline_provenance.json": "cce908cd070a0984f27dc0cf06a4f2a5c94c200b1b7b3a5636f0898f273041b8"
+      }
+    },
+    {
+      "Re": 100,
+      "seed": 7,
+      "collar": "0.02",
+      "closure_cap": 3017,
+      "residual_points": 6178816,
+      "directory": "ghia_re100_seed7_eps0.02_chunk2048",
+      "sha256": {
+        "config.json": "df97969fcfafe869126bf65ad3ea4a4de607d2e44645729508451387ae3134a0",
+        "current_receipt.json": "49a1a093249499eba286e0887d8b3c4cac81ce5d9fa820d61f0345a708a33cbb",
+        "frozen_manifest.json": "29e980c3ee3162d7d5a74d23c6809ed29006f959bdd18edd7da0ddf7fe83c574",
+        "baseline_provenance.json": "5f68e162c5d57afbd1e660f9b2f843354e5fa2050a44f9049250b0e8442f4e57"
+      }
+    },
+    {
+      "Re": 100,
+      "seed": 23,
+      "collar": "0.01",
+      "closure_cap": 3029,
+      "residual_points": 6203392,
+      "directory": "ghia_re100_seed23_eps0.01_chunk2048",
+      "sha256": {
+        "config.json": "ad139a7ba6fe2354acb09ba6ea948fde65de612a908c5c5541678cfbf6469ddf",
+        "current_receipt.json": "05026bab5f95de8057e31f00cda411563791ae10035740bd7b4950006a4cbaac",
+        "frozen_manifest.json": "ac3bb5b3cc3aa7c0905b8c0803e7dea66b0b36d06873f26f6bbc2ee2808cb58e",
+        "baseline_provenance.json": "8b7e3cfb6d54e51a48a0e203ee32a3f56355138dd540dbb98a5bc6b0e9319a92"
+      }
+    },
+    {
+      "Re": 100,
+      "seed": 23,
+      "collar": "0.02",
+      "closure_cap": 3011,
+      "residual_points": 6166528,
+      "directory": "ghia_re100_seed23_eps0.02_chunk2048",
+      "sha256": {
+        "config.json": "18a6dc5599f5a07256a6628235b7c1dabb8c4fcddf80bdcef282dc43af650aa9",
+        "current_receipt.json": "ab45552af56015d65325fd55e97bc2b6160464fe160ecfcd6dff16ac088687ab",
+        "frozen_manifest.json": "e2a26b134e7bf6fb52ca60cdaace45c6c75ee9365d8fd859937233bef1196d78",
+        "baseline_provenance.json": "1bb747cacc324dbdb6b5d92b4e2a58727241d046a292c55e5aa569b236e31511"
+      }
+    },
+    {
+      "Re": 100,
+      "seed": 61,
+      "collar": "0.01",
+      "closure_cap": 3005,
+      "residual_points": 6154240,
+      "directory": "ghia_re100_seed61_eps0.01_chunk2048",
+      "sha256": {
+        "config.json": "62047e2348f5e773ddada7c2cd167176816edba2a3c4ffff79a55d94126b3804",
+        "current_receipt.json": "13e01a1acbc18941b9d26385e87995f059c7c1efdadbe560a17023573cbe71ea",
+        "frozen_manifest.json": "aa696dc1888f052b142cd0f483be886e28a92cdbe78ee64c5e0819878c525efd",
+        "baseline_provenance.json": "13c041b7d8759dd3c867e092247642f1b15f4d73bafe23e0c4f120b968775f2b"
+      }
+    },
+    {
+      "Re": 100,
+      "seed": 61,
+      "collar": "0.02",
+      "closure_cap": 3005,
+      "residual_points": 6154240,
+      "directory": "ghia_re100_seed61_eps0.02_chunk2048",
+      "sha256": {
+        "config.json": "ddb94f1109b66a0ce19292a4c083299a66cb7e8362d2db82171583ff150b962a",
+        "current_receipt.json": "3c0208b27e0e2be3aace2d3e5807088d5b4fc0b5b61c563033668e7e2fc24517",
+        "frozen_manifest.json": "21259b95821c0d9dc3f382c4c02dbade2e6c5ebb38f9d580c1928a9c38788c45",
+        "baseline_provenance.json": "020a3e33c9ee01ed7f3d908878fd430fa93acd8d22b5eb5b3243fedeca215e5c"
+      }
+    },
+    {
+      "Re": 7500,
+      "seed": 7,
+      "collar": "0.01",
+      "closure_cap": 3023,
+      "residual_points": 6191104,
+      "directory": "ghia_re7500_seed7_eps0.01_chunk2048",
+      "sha256": {
+        "config.json": "7d0fd35c41b2a413e17dcb991ae2c1d351182d38aa783a6f94cdee4cca5e1418",
+        "current_receipt.json": "0b80f2bcf18791a6fb693fa3c26773f1f76b9cbf050345d82a5c73b2dbefbd9a",
+        "frozen_manifest.json": "d3de5652adf20f82e43a08ef862080e9d1335084ec4c42b123b00455587cbd30",
+        "baseline_provenance.json": "a4c495ae7f84df666558cceefdb3c9e8ca7a53b52df19c83567a4da47e501927"
+      }
+    },
+    {
+      "Re": 7500,
+      "seed": 7,
+      "collar": "0.02",
+      "closure_cap": 3023,
+      "residual_points": 6191104,
+      "directory": "ghia_re7500_seed7_eps0.02_chunk2048",
+      "sha256": {
+        "config.json": "7a016ee68ea1d8a0061f2a82af33b7b75af13903e2621c327cd7ffdf39237442",
+        "current_receipt.json": "0ec2a66b52f6b8e181d0e15a5e1e1e2056acef55ceeeb156bc9db27963bb3da7",
+        "frozen_manifest.json": "193e113989c5e885820839279e9fff1b3b5d3a7338075c04d1e3ecf6d6be6d44",
+        "baseline_provenance.json": "50fe60ab2c553df817c30d0b91a5d587c73f3e2152eff8a11ab65e0f4b75eb5d"
+      }
+    },
+    {
+      "Re": 7500,
+      "seed": 23,
+      "collar": "0.01",
+      "closure_cap": 3049,
+      "residual_points": 6244352,
+      "directory": "ghia_re7500_seed23_eps0.01_chunk2048",
+      "sha256": {
+        "config.json": "782740ac7178164658e152d627d86ffc8f216d83a15a3147174611a36e7ab286",
+        "current_receipt.json": "84dfd3c3bd5345358f019a7e4801d8d4a6b36b71d733dcc547c20f0c0b4576c8",
+        "frozen_manifest.json": "7b5e275ea37d243065529e8e969670e3b86573641d15567aaccf8708a90df3d3",
+        "baseline_provenance.json": "be0255572c2894325b99913365e3921db19c01eb73ceffdac04c629276b95c82"
+      }
+    },
+    {
+      "Re": 7500,
+      "seed": 23,
+      "collar": "0.02",
+      "closure_cap": 3015,
+      "residual_points": 6174720,
+      "directory": "ghia_re7500_seed23_eps0.02_chunk2048",
+      "sha256": {
+        "config.json": "9b322947dbdae7cbe689cbc3d2fa0ad4335f5b1e9cf6c0b8561b42af5acceebc",
+        "current_receipt.json": "72ce9d9e31b921855361fd0d2d8a0d571a0863944b18f079cd09ce1c4b450922",
+        "frozen_manifest.json": "42bfb25ae4132bb885eba60364ed2b168ffb44eb6181b676e66dd9358fd39e59",
+        "baseline_provenance.json": "2fdd01c8dfdacc5fce9b5ed1a9103b82ab84b2e699ae21b19f008f01bdceee32"
+      }
+    },
+    {
+      "Re": 7500,
+      "seed": 61,
+      "collar": "0.01",
+      "closure_cap": 3008,
+      "residual_points": 6160384,
+      "directory": "ghia_re7500_seed61_eps0.01_chunk2048",
+      "sha256": {
+        "config.json": "e9444c7c4739beb6aebb38562ca88e47b3b7d84aeece28aabdede2e34a3d2a57",
+        "current_receipt.json": "17bc6dbd4b68dea361bf7c5f33eff31eff466556a51a2d7f3f950212a2ab2f92",
+        "frozen_manifest.json": "9268e6aeb8a723a554286d6ac846cdf5d6901e76e822689ec80cc4a673123932",
+        "baseline_provenance.json": "588aa33b944a5ef0a07b15200a0dc10d8c451aae48c83ba43caead5cf0c2c8d2"
+      }
+    },
+    {
+      "Re": 7500,
+      "seed": 61,
+      "collar": "0.02",
+      "closure_cap": 3008,
+      "residual_points": 6160384,
+      "directory": "ghia_re7500_seed61_eps0.02_chunk2048",
+      "sha256": {
+        "config.json": "2caeb7171869158a5452ba69ac3ee9d6ed65976fc0a3fb90c94b59e8c474f50b",
+        "current_receipt.json": "37802b5b6638ea046d6b2eb51adb8b5ec2c193e8261a4fd63a1eb6e001cb1351",
+        "frozen_manifest.json": "570d0cdac03a2ff9085e5069f4675b423dbe439d0e7fb1c6f02c9776051e8d62",
+        "baseline_provenance.json": "d27e53f8d18bb021a7ac4c0677490369504d3a81a686aa62fa3d19e8a1bfa31f"
+      }
+    }
+  ]
+}

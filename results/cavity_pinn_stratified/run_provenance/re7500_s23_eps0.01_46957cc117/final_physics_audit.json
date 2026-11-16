@@ -1,0 +1,139 @@
+{
+  "boundary": {
+    "top": {
+      "u_max_abs_error": 2.220446049250313e-16,
+      "v_max_abs_error": 0.0
+    },
+    "bottom": {
+      "u_max_abs_error": 0.0,
+      "v_max_abs_error": 0.0
+    },
+    "left": {
+      "u_max_abs_error": 0.0,
+      "v_max_abs_error": 2.220446049250313e-16
+    },
+    "right": {
+      "u_max_abs_error": 0.0,
+      "v_max_abs_error": 2.220446049250313e-16
+    }
+  },
+  "outer_uniform": {
+    "count": 2048,
+    "minimum_corner_distance": 0.025910664478707525,
+    "rx_rms": 0.11131274351190604,
+    "ry_rms": 0.07270687873227076,
+    "momentum_rms": 0.1329541916719308,
+    "momentum_max": 2.508011530154238,
+    "divergence_rms": 1.5020577121986218e-15,
+    "finite": true
+  },
+  "corner_shells": [
+    {
+      "r_min": 0.0001,
+      "r_max": 0.001,
+      "count": 256,
+      "minimum_corner_distance": 0.00011446457424925959,
+      "rx_rms": 347.14512726082415,
+      "ry_rms": 150.81780752463692,
+      "momentum_rms": 378.49141396796864,
+      "momentum_max": 1992.32398144583,
+      "divergence_rms": 6.175805050543207e-13,
+      "finite": true
+    },
+    {
+      "r_min": 0.001,
+      "r_max": 0.002,
+      "count": 256,
+      "minimum_corner_distance": 0.0010016974376378834,
+      "rx_rms": 129.36678606702435,
+      "ry_rms": 67.26014847446409,
+      "momentum_rms": 145.80703998819195,
+      "momentum_max": 313.86156603859564,
+      "divergence_rms": 2.281451579733889e-13,
+      "finite": true
+    },
+    {
+      "r_min": 0.002,
+      "r_max": 0.005,
+      "count": 256,
+      "minimum_corner_distance": 0.002041133385177,
+      "rx_rms": 52.18459835128455,
+      "ry_rms": 30.53807481859078,
+      "momentum_rms": 60.46326420820116,
+      "momentum_max": 179.2928642740919,
+      "divergence_rms": 9.720313260540781e-14,
+      "finite": true
+    },
+    {
+      "r_min": 0.005,
+      "r_max": 0.01,
+      "count": 256,
+      "minimum_corner_distance": 0.005012734579630581,
+      "rx_rms": 21.55696498680387,
+      "ry_rms": 14.06783427883234,
+      "momentum_rms": 25.741148007402042,
+      "momentum_max": 75.88661033009251,
+      "divergence_rms": 4.4475181357949126e-14,
+      "finite": true
+    },
+    {
+      "r_min": 0.01,
+      "r_max": 0.02,
+      "count": 256,
+      "minimum_corner_distance": 0.010187290271860149,
+      "rx_rms": 6.675978246942362,
+      "ry_rms": 3.916141997692622,
+      "momentum_rms": 7.739822588389193,
+      "momentum_max": 28.00853718748109,
+      "divergence_rms": 2.556469325887013e-14,
+      "finite": true
+    },
+    {
+      "r_min": 0.02,
+      "r_max": 0.05,
+      "count": 256,
+      "minimum_corner_distance": 0.020053127568998477,
+      "rx_rms": 1.210314875921503,
+      "ry_rms": 1.0897630955221147,
+      "momentum_rms": 1.6286330781483056,
+      "momentum_max": 5.87672475298575,
+      "divergence_rms": 1.0643842564183334e-14,
+      "finite": true
+    }
+  ],
+  "interpretation": "Raw unweighted samples; no full-domain integrability or corner-consistency claim.",
+  "weighted_accepted_endpoint": {
+    "weighted_momentum_loss": 0.0327305327583354,
+    "weighted_momentum_rms": 0.18091581677215346,
+    "model_sha256": "eca22d061ad117c8a49096a09d938c9404b94b3d6a3e49e792619e0f7d0d5e16",
+    "included_in_training_budget": false,
+    "objective_evaluations": 1,
+    "residual_point_evaluations": 2048,
+    "purpose": "accepted endpoint diagnostic only; no stopping or selection"
+  },
+  "stratified_coverage": {
+    "objective_sha256": "00bfe8a6797e27e6680586ea491e1749cfefb222cd11a9888da218ffcc265d63",
+    "total_area": 0.9998429203673205,
+    "collar": 0.01,
+    "top_corner_radius": 0.05,
+    "counts": {
+      "top_corner_annuli": 512,
+      "remaining_wall_band": 512,
+      "interior": 1024
+    },
+    "areas": {
+      "top_corner_annuli": 0.0037699111843077526,
+      "remaining_wall_band": 0.1860730091830127,
+      "interior": 0.81
+    },
+    "weight_sums": {
+      "top_corner_annuli": 0.0037705034536052607,
+      "remaining_wall_band": 0.18610224205483555,
+      "interior": 0.8101272544915594
+    },
+    "minimum_corner_radius": 0.01041728099908693,
+    "measure": "normalized area on the square excluding only two upper quarter-disks",
+    "adaptive_sampling": false
+  },
+  "training_work_excludes_audits": true
+}

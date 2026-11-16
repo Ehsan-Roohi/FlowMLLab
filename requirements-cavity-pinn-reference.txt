@@ -1,0 +1,9 @@
+# Exact Linux/Python3.12 reference runtime used on Unity.
+# Install the CUDA11.8 wheel separately from PyTorch's official index:
+# python -m pip install torch==2.5.1 --index-url https://download.pytorch.org/whl/cu118
+# Then: python -m pip install -r requirements-cavity-pinn-reference.txt
+# This experiment runtime does not replace the project's newer optional extras.
+numpy==2.2.6
+scipy==1.15.3
+pytorch-optimizer==3.3.0
+pytest==8.3.4

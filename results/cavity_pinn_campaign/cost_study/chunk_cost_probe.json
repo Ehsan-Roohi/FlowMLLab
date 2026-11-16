@@ -1,0 +1,70 @@
+{
+  "job_id": "1807966",
+  "device": "Quadro RTX 8000",
+  "torch": "2.5.1+cu118",
+  "source_sha256": "507a6e0a6d632a173c8bdc8748564beffee77ce3664aeffcee25edc5ca305b9e",
+  "initial_model_sha256": "71791d46ce619c7e4f17eb921e9d58f8d88cc19965d0fc5353c7840edb808722",
+  "kind": "computational batch-size cost probe; no reference labels accessed; not solution-accuracy evidence",
+  "rows": [
+    {
+      "chunk_size": 256,
+      "initial_loss": 0.3829857191299771,
+      "gradient_max_abs_difference": 0.0,
+      "times_seconds": [
+        1.6250659640063532,
+        1.589854944992112,
+        1.578029873984633,
+        1.5797410959785338,
+        1.5673056230007205
+      ],
+      "median_last3_seconds": 1.578029873984633,
+      "peak_allocated_bytes": 108201984,
+      "peak_reserved_bytes": 109051904
+    },
+    {
+      "chunk_size": 512,
+      "initial_loss": 0.3829857191299771,
+      "gradient_max_abs_difference": 2.220446049250313e-16,
+      "times_seconds": [
+        0.7837158859765623,
+        0.7840749570168555,
+        0.7904936950071715,
+        0.8061159029894043,
+        0.8347304160124622
+      ],
+      "median_last3_seconds": 0.8061159029894043,
+      "peak_allocated_bytes": 148881408,
+      "peak_reserved_bytes": 150994944
+    },
+    {
+      "chunk_size": 1024,
+      "initial_loss": 0.3829857191299771,
+      "gradient_max_abs_difference": 2.220446049250313e-16,
+      "times_seconds": [
+        0.41664963599760085,
+        0.4173651150194928,
+        0.4172556330158841,
+        0.41643533000024036,
+        0.4185690520098433
+      ],
+      "median_last3_seconds": 0.4172556330158841,
+      "peak_allocated_bytes": 230240256,
+      "peak_reserved_bytes": 230686720
+    },
+    {
+      "chunk_size": 2048,
+      "initial_loss": 0.3829857191299771,
+      "gradient_max_abs_difference": 2.220446049250313e-16,
+      "times_seconds": [
+        0.20717442900058813,
+        0.20734175498364493,
+        0.20716543201706372,
+        0.2064699270122219,
+        0.21207273998879828
+      ],
+      "median_last3_seconds": 0.20716543201706372,
+      "peak_allocated_bytes": 392855040,
+      "peak_reserved_bytes": 394264576
+    }
+  ]
+}

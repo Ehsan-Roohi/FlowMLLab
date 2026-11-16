@@ -40,6 +40,7 @@ self-study notebooks separate.
 | Week 4 | Lab 6: profile surrogates, optimizers and depth | [Open in Colab](https://colab.research.google.com/github/Ehsan-Roohi/FlowMLLab/blob/main/notebooks/week04/W4_Lab6_Ghia_Profile_Optimizer_Depth.ipynb) |
 | Week 4 | Lab 7: high-Re CFD, Ghia and mesh/time sensitivity | [Open in Colab](https://colab.research.google.com/github/Ehsan-Roohi/FlowMLLab/blob/main/notebooks/week04/W4_Lab7_High_Re_CFD_Ghia.ipynb) |
 | Week 4 | Lab 8: full-field POD-DeepONet and whole-Re tests | [Open in Colab](https://colab.research.google.com/github/Ehsan-Roohi/FlowMLLab/blob/main/notebooks/week04/W4_Lab8_High_Re_Field_DeepONet.ipynb) |
+| Week 4 | Lab 9: data-free Ghia PINNs, sampling and physical audits | [Open in Colab](https://colab.research.google.com/github/Ehsan-Roohi/FlowMLLab/blob/main/notebooks/week04/W4_Lab9_Label_Free_Ghia_PINN_Audit.ipynb) |
 | Weeks 5 to 6 | P0 setup and data audit | [Open in Colab](https://colab.research.google.com/github/Ehsan-Roohi/FlowMLLab/blob/main/notebooks/week05_06/P0_Project_Setup.ipynb) |
 | Weeks 5 to 6 | P1 Reynolds-number generalization | [Open in Colab](https://colab.research.google.com/github/Ehsan-Roohi/FlowMLLab/blob/main/notebooks/week05_06/P1_Re_Generalization.ipynb) |
 | Weeks 5 to 6 | P2 physics-guided DNN/PINN objectives | [Open in Colab](https://colab.research.google.com/github/Ehsan-Roohi/FlowMLLab/blob/main/notebooks/week05_06/P2_Physics_Guided_DNN.ipynb) |
@@ -67,10 +68,12 @@ self-study notebooks separate.
 | Week 12 | Noisy DSMC moment reconstruction | [Open in Colab](https://colab.research.google.com/github/Ehsan-Roohi/FlowMLLab/blob/main/notebooks/week12/W12_DSMC_Moment_Reconstruction.ipynb) |
 | Week 13 | Rectangular-cavity PINNs | [Open in Colab](https://colab.research.google.com/github/Ehsan-Roohi/FlowMLLab/blob/main/notebooks/week13/W13_Rectangular_Cavity_PINN_Research.ipynb) |
 | Week 13 | D/W=5 regional accuracy with author CFD/PINN fields | [Open in Colab](https://colab.research.google.com/github/Ehsan-Roohi/FlowMLLab/blob/main/notebooks/week13/W13_Deep_Cavity_D5_Regional_Accuracy.ipynb) |
+| Week 13 | D/W=5 controlled optimizer comparison | [Open in Colab](https://colab.research.google.com/github/Ehsan-Roohi/FlowMLLab/blob/main/notebooks/week13/W13_D5_Controlled_Optimizer_Study.ipynb) |
 | Week 14 | RANS, inverse PINN and neural closures (local checkout) | [Notebook](week14/W14_pyCALC_RANS_PINN_NN.ipynb) and [setup](week14/README.md) |
 | Week 15 | Geometry-aware neural operators (local checkout) | [Complete post-audit notebook](week15/W15_Complete_Geometry_Generalization.ipynb), [historical audit notebook](week15/W15_Geometry_Operators_Step_Audit.ipynb), and [OpenFOAM/evidence guide](week15/README.md) |
 | Week 15 | Original Transolver: central-obstacle channel (local checkout) | [Notebook](week15/W15_Original_Transolver_Step.ipynb) |
 | Week 15 | Original Transolver: double-step channel (local checkout) | [Notebook](week15/W15_Original_Transolver_Double_Step.ipynb) |
+| Week 15 | Larger networks and held-out geometry analysis (local checkout) | [Notebook](week15/W15_Larger_Networks_Analysis.ipynb) |
 | Week 16 | Supersonic shape optimization with Gmsh/SU2 evidence | [Executed notebook](week16/W16_Supersonic_Shape_Optimization.ipynb) · [Assignment and guide](week16/README.md) |
 
 ## Weekly laboratories

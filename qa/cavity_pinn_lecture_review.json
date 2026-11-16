@@ -1,0 +1,400 @@
+{
+  "status": "complete",
+  "evidence_status": {
+    "ghia": "complete_failed_baseline",
+    "d5": "complete",
+    "stratified": "complete"
+  },
+  "reviewed_at_utc": "2026-11-16T03:03:01.214235+00:00",
+  "pdfs": {
+    "week04_cavity_surrogates_deeponet": {
+      "sha256": "f7e9a57c0966959142bc84316f040306dc576d85931dc96c0ef6197ea8b36d6b",
+      "total_pages": 65,
+      "original_pages": 34,
+      "old_page_text_changes": [],
+      "old_page_rgb72_changes": [],
+      "added_page_visual_reviews": [
+        {
+          "page": 35,
+          "png_sha256": "81fb167bcb30f2bc62a5603f570fefd12c723c15f1eede86e7d5a5ad4a741f96",
+          "render_dpi": 120,
+          "visual_review": "Individual readable Poppler page inspected: text, equations, tables and physical figures legible; full axes, external legends, no clipping or overlap.",
+          "review_basis": "Current render exactly matches previously individually reviewed PNG."
+        },
+        {
+          "page": 36,
+          "png_sha256": "50a70699161c6cbb454ca9440e6954f2c3757324a8c0686466c78fd7d7de068c",
+          "render_dpi": 120,
+          "visual_review": "Individual readable Poppler page inspected: text, equations, tables and physical figures legible; full axes, external legends, no clipping or overlap.",
+          "review_basis": "Current render exactly matches previously individually reviewed PNG."
+        },
+        {
+          "page": 37,
+          "png_sha256": "ecd5eae036872656e044a5986d0ec1826d1d16e0f654739f93c8f27c6b9805ba",
+          "render_dpi": 120,
+          "visual_review": "Individual readable Poppler page inspected: text, equations, tables and physical figures legible; full axes, external legends, no clipping or overlap.",
+          "review_basis": "Current render exactly matches previously individually reviewed PNG."
+        },
+        {
+          "page": 38,
+          "png_sha256": "7f6f6b842f7f63d93dcccc52e7d4b4f31aef262b512fdbfb11919a8afe8cd4db",
+          "render_dpi": 120,
+          "visual_review": "Individual readable Poppler page inspected: text, equations, tables and physical figures legible; full axes, external legends, no clipping or overlap.",
+          "review_basis": "Current render exactly matches previously individually reviewed PNG."
+        },
+        {
+          "page": 39,
+          "png_sha256": "b32d94ac31400471ce119a6c153aa85d1b72060b1b7cfb3ef0f73b91c097fc37",
+          "render_dpi": 120,
+          "visual_review": "Individual readable Poppler page inspected: text, equations, tables and physical figures legible; full axes, external legends, no clipping or overlap.",
+          "review_basis": "Current render exactly matches previously individually reviewed PNG."
+        },
+        {
+          "page": 40,
+          "png_sha256": "125f079dd71b1c2e88011a157368a92b9cf221c57151a69440a074d17bb1fe80",
+          "render_dpi": 120,
+          "visual_review": "Individual readable Poppler page inspected: text, equations, tables and physical figures legible; full axes, external legends, no clipping or overlap.",
+          "review_basis": "Current render exactly matches previously individually reviewed PNG."
+        },
+        {
+          "page": 41,
+          "png_sha256": "83a808a42bf07df2f3fe3deabb1ffcbd74d59964b41eab1c6360f796284020b7",
+          "render_dpi": 120,
+          "visual_review": "Individual readable Poppler page inspected: text, equations, tables and physical figures legible; full axes, external legends, no clipping or overlap.",
+          "review_basis": "Current render exactly matches previously individually reviewed PNG."
+        },
+        {
+          "page": 42,
+          "png_sha256": "ebba54fbd84012c66cfdcbf247bd85380f189f72394e996f3f901820884e5de7",
+          "render_dpi": 120,
+          "visual_review": "Individual readable Poppler page inspected: text, equations, tables and physical figures legible; full axes, external legends, no clipping or overlap.",
+          "review_basis": "Current render exactly matches previously individually reviewed PNG."
+        },
+        {
+          "page": 43,
+          "png_sha256": "c8c2a19fd7e27b8167647bde6f9d9be027db2837a89f184c68273bbb9b4239d6",
+          "render_dpi": 120,
+          "visual_review": "Individual readable Poppler page inspected: text, equations, tables and physical figures legible; full axes, external legends, no clipping or overlap.",
+          "review_basis": "Current render exactly matches previously individually reviewed PNG."
+        },
+        {
+          "page": 44,
+          "png_sha256": "fa6c8070720af76d2d1b7476ff504d8e12cd946af112bb0f211422bcc1b56b03",
+          "render_dpi": 120,
+          "visual_review": "Individual readable Poppler page inspected: text, equations, tables and physical figures legible; full axes, external legends, no clipping or overlap.",
+          "review_basis": "Current render exactly matches previously individually reviewed PNG."
+        },
+        {
+          "page": 45,
+          "png_sha256": "876d427d5477070a38e20e9341b48bb3f20dc2f6538f9b607d398d70d77a1f88",
+          "render_dpi": 120,
+          "visual_review": "Individual readable Poppler page inspected: text, equations, tables and physical figures legible; full axes, external legends, no clipping or overlap.",
+          "review_basis": "Current render exactly matches previously individually reviewed PNG."
+        },
+        {
+          "page": 46,
+          "png_sha256": "36b9ec032527dbbcedbef377d9b155acddbea3c5d79470d949a2388605ac20ab",
+          "render_dpi": 120,
+          "visual_review": "Individual readable Poppler page inspected: text, equations, tables and physical figures legible; full axes, external legends, no clipping or overlap.",
+          "review_basis": "Current render exactly matches previously individually reviewed PNG."
+        },
+        {
+          "page": 47,
+          "png_sha256": "acd511fb57bbbfc53e0d2baf3b4176190c99562be3d453af47baae49700a8eb6",
+          "render_dpi": 120,
+          "visual_review": "Individual readable Poppler page inspected: text, equations, tables and physical figures legible; full axes, external legends, no clipping or overlap.",
+          "review_basis": "Current render exactly matches previously individually reviewed PNG."
+        },
+        {
+          "page": 48,
+          "png_sha256": "103168c4bef2cfdde6cf4ed37cea6f6db53d0c7042a3fb70b3f5d04ea7de4f93",
+          "render_dpi": 120,
+          "visual_review": "Individual readable Poppler page inspected: text, equations, tables and physical figures legible; full axes, external legends, no clipping or overlap.",
+          "review_basis": "Current render exactly matches previously individually reviewed PNG."
+        },
+        {
+          "page": 49,
+          "png_sha256": "301835ef784c965559318f2f421a3a5a5a14dcd6c4cbc5ca100204d139ed74bf",
+          "render_dpi": 120,
+          "visual_review": "Individual readable Poppler page inspected: text, equations, tables and physical figures legible; full axes, external legends, no clipping or overlap.",
+          "review_basis": "Current render exactly matches previously individually reviewed PNG."
+        },
+        {
+          "page": 50,
+          "png_sha256": "4ec5bb6e984051a6c90ed7564faa18b54e7703962fe95293ffe466e0898e6e4f",
+          "render_dpi": 120,
+          "visual_review": "Individual readable Poppler page inspected: text, equations, tables and physical figures legible; full axes, external legends, no clipping or overlap.",
+          "review_basis": "Current render exactly matches previously individually reviewed PNG."
+        },
+        {
+          "page": 51,
+          "png_sha256": "0c0b9acbc1a36ae54066d4f0a05768e3b7eb5469117bda11a9bfbef024d598ff",
+          "render_dpi": 120,
+          "visual_review": "Individual readable Poppler page inspected: text, equations, tables and physical figures legible; full axes, external legends, no clipping or overlap.",
+          "review_basis": "Current render exactly matches previously individually reviewed PNG."
+        },
+        {
+          "page": 52,
+          "png_sha256": "cdbcd16414fcf58bed239f4f4d4408a61733efb62f44a80ea822de5b6870ab03",
+          "render_dpi": 120,
+          "visual_review": "Individual readable Poppler page inspected: text, equations, tables and physical figures legible; full axes, external legends, no clipping or overlap.",
+          "review_basis": "Current appended page individually inspected at readable resolution."
+        },
+        {
+          "page": 53,
+          "png_sha256": "e2c371933330d6a1bf54f467f8f3ed1e71f9dafcfcf0fa447b19cab8bbfcf2f2",
+          "render_dpi": 120,
+          "visual_review": "Individual readable Poppler page inspected: text, equations, tables and physical figures legible; full axes, external legends, no clipping or overlap.",
+          "review_basis": "Current appended page individually inspected at readable resolution."
+        },
+        {
+          "page": 54,
+          "png_sha256": "fe5ec74124e68a047ac9bfba4cad99fe2519c9e879e3d27390ea6d2bf01d77bc",
+          "render_dpi": 120,
+          "visual_review": "Individual readable Poppler page inspected: text, equations, tables and physical figures legible; full axes, external legends, no clipping or overlap.",
+          "review_basis": "Current appended page individually inspected at readable resolution."
+        },
+        {
+          "page": 55,
+          "png_sha256": "300c3de4249c51f62f16735636a76f78cac8150d954cfc016a273fc2c0401cc4",
+          "render_dpi": 120,
+          "visual_review": "Individual readable Poppler page inspected: text, equations, tables and physical figures legible; full axes, external legends, no clipping or overlap.",
+          "review_basis": "Current appended page individually inspected at readable resolution."
+        },
+        {
+          "page": 56,
+          "png_sha256": "0f6b430d47829b95b5a5352d3f3014e87c07ef068515e609d33c2619ae4f2c35",
+          "render_dpi": 120,
+          "visual_review": "Individual readable Poppler page inspected: text, equations, tables and physical figures legible; full axes, external legends, no clipping or overlap.",
+          "review_basis": "Current appended page individually inspected at readable resolution."
+        },
+        {
+          "page": 57,
+          "png_sha256": "20a4583d56bbe7892c5307c083c9b5752a1781ebaa18679967dcbd00ca2016da",
+          "render_dpi": 120,
+          "visual_review": "Individual readable Poppler page inspected: text, equations, tables and physical figures legible; full axes, external legends, no clipping or overlap.",
+          "review_basis": "Current appended page individually inspected at readable resolution."
+        },
+        {
+          "page": 58,
+          "png_sha256": "e484ed3814ed5ce41135ef12af108668d1bcd081e1aab6ef390654811a5f0236",
+          "render_dpi": 120,
+          "visual_review": "Individual readable Poppler page inspected: text, equations, tables and physical figures legible; full axes, external legends, no clipping or overlap.",
+          "review_basis": "Current appended page individually inspected at readable resolution."
+        },
+        {
+          "page": 59,
+          "png_sha256": "3e71bde1d83e22bf7e7184e83acf167370992000789889f0132b7d21da4cb452",
+          "render_dpi": 120,
+          "visual_review": "Individual readable Poppler page inspected: text, equations, tables and physical figures legible; full axes, external legends, no clipping or overlap.",
+          "review_basis": "Current appended page individually inspected at readable resolution."
+        },
+        {
+          "page": 60,
+          "png_sha256": "0dab2b8b46c4e2123cfe1c8b9392949964a161028a446cdc960dc740f02b655c",
+          "render_dpi": 120,
+          "visual_review": "Individual readable Poppler page inspected: text, equations, tables and physical figures legible; full axes, external legends, no clipping or overlap.",
+          "review_basis": "Current appended page individually inspected at readable resolution."
+        },
+        {
+          "page": 61,
+          "png_sha256": "3fc47eff7c356b7f6045741add0339ad6841bf86a5b028d6a2ccaf6f7b295dc1",
+          "render_dpi": 120,
+          "visual_review": "Individual readable Poppler page inspected: text, equations, tables and physical figures legible; full axes, external legends, no clipping or overlap.",
+          "review_basis": "Current appended page individually inspected at readable resolution."
+        },
+        {
+          "page": 62,
+          "png_sha256": "d2c801be10bba0a76664dca18360a6fb3bc21468243c8d807201192395fe5ed8",
+          "render_dpi": 120,
+          "visual_review": "Individual readable Poppler page inspected: text, equations, tables and physical figures legible; full axes, external legends, no clipping or overlap.",
+          "review_basis": "Current appended page individually inspected at readable resolution."
+        },
+        {
+          "page": 63,
+          "png_sha256": "b397fc69610a4e813ac14e3b192b561c18c38ab968abf2fe9062ad4e111fafac",
+          "render_dpi": 120,
+          "visual_review": "Individual readable Poppler page inspected: text, equations, tables and physical figures legible; full axes, external legends, no clipping or overlap.",
+          "review_basis": "Current appended page individually inspected at readable resolution."
+        },
+        {
+          "page": 64,
+          "png_sha256": "79d65726e3961a90af06b281cca321586e30b3cea1cff78f4ec22ac520982ae4",
+          "render_dpi": 120,
+          "visual_review": "Individual readable Poppler page inspected: text, equations, tables and physical figures legible; full axes, external legends, no clipping or overlap.",
+          "review_basis": "Current appended page individually inspected at readable resolution."
+        },
+        {
+          "page": 65,
+          "png_sha256": "729cd6cd07380f9b8ba8aeed086b4f9ecf57749e14e6ee74abe78cba26a92863",
+          "render_dpi": 120,
+          "visual_review": "Individual readable Poppler page inspected: text, equations, tables and physical figures legible; full axes, external legends, no clipping or overlap.",
+          "review_basis": "Current appended page individually inspected at readable resolution."
+        }
+      ],
+      "text_fonts": [
+        "TimesNewRomanPS-BoldMT",
+        "TimesNewRomanPSMT"
+      ],
+      "text_colors": [
+        0
+      ],
+      "out_of_bounds": []
+    },
+    "week13_rectangular_cavity_pinn": {
+      "sha256": "ac372bedd03fd51185de39b279f0659445aa107ad5e3f5f59c836ef3a4e429ad",
+      "total_pages": 36,
+      "original_pages": 18,
+      "old_page_text_changes": [],
+      "old_page_rgb72_changes": [],
+      "added_page_visual_reviews": [
+        {
+          "page": 19,
+          "png_sha256": "9e0f8b1723785c3d819bf06a7f92267e3fbf4966907e0fb48301f47a78aa8d2e",
+          "render_dpi": 120,
+          "visual_review": "Individual readable Poppler page inspected: text, equations, tables and physical figures legible; full axes, external legends, no clipping or overlap.",
+          "review_basis": "Current render exactly matches previously individually reviewed PNG."
+        },
+        {
+          "page": 20,
+          "png_sha256": "d9a04d147277742354e3adbc585d08d11cf84709306df661ba926d480f61e0cc",
+          "render_dpi": 120,
+          "visual_review": "Individual readable Poppler page inspected: text, equations, tables and physical figures legible; full axes, external legends, no clipping or overlap.",
+          "review_basis": "Current render exactly matches previously individually reviewed PNG."
+        },
+        {
+          "page": 21,
+          "png_sha256": "5e7a14129031c6625058285eed069c007195b0405588bec4b67d94f66571c86b",
+          "render_dpi": 120,
+          "visual_review": "Individual readable Poppler page inspected: text, equations, tables and physical figures legible; full axes, external legends, no clipping or overlap.",
+          "review_basis": "Current render exactly matches previously individually reviewed PNG."
+        },
+        {
+          "page": 22,
+          "png_sha256": "96cf182bfc06de7b6068b9784aa3e3e1c1148a582f38cfe4d42f5416c87e3ed5",
+          "render_dpi": 120,
+          "visual_review": "Individual readable Poppler page inspected: text, equations, tables and physical figures legible; full axes, external legends, no clipping or overlap.",
+          "review_basis": "Current render exactly matches previously individually reviewed PNG."
+        },
+        {
+          "page": 23,
+          "png_sha256": "de18b5ef1b20657282526d6d6b1f58e1a0380ecedc7fceb375f9193b857654f1",
+          "render_dpi": 120,
+          "visual_review": "Individual readable Poppler page inspected: text, equations, tables and physical figures legible; full axes, external legends, no clipping or overlap.",
+          "review_basis": "Current render exactly matches previously individually reviewed PNG."
+        },
+        {
+          "page": 24,
+          "png_sha256": "9bf1f48ca1c90091205d6fd7901338333f46f13dd57b09cc92277a1a1a910fc1",
+          "render_dpi": 120,
+          "visual_review": "Individual readable Poppler page inspected: text, equations, tables and physical figures legible; full axes, external legends, no clipping or overlap.",
+          "review_basis": "Current render exactly matches previously individually reviewed PNG."
+        },
+        {
+          "page": 25,
+          "png_sha256": "a169cbadbe525195ca8753d123ef8ff5fbbaf2a5d8d6fca7cc3f48ab1fef92f9",
+          "render_dpi": 120,
+          "visual_review": "Individual readable Poppler page inspected: text, equations, tables and physical figures legible; full axes, external legends, no clipping or overlap.",
+          "review_basis": "Current appended page individually inspected at readable resolution."
+        },
+        {
+          "page": 26,
+          "png_sha256": "41f66191e335748e68a628b8cce205955b2993b342d49bc8019b7626514f9686",
+          "render_dpi": 120,
+          "visual_review": "Individual readable Poppler page inspected: text, equations, tables and physical figures legible; full axes, external legends, no clipping or overlap.",
+          "review_basis": "Current appended page individually inspected at readable resolution."
+        },
+        {
+          "page": 27,
+          "png_sha256": "c07975ed72af6aaf3fce81885416e17eefcc68ad5be1713d608e9ea8524f769d",
+          "render_dpi": 120,
+          "visual_review": "Individual readable Poppler page inspected: text, equations, tables and physical figures legible; full axes, external legends, no clipping or overlap.",
+          "review_basis": "Current appended page individually inspected at readable resolution."
+        },
+        {
+          "page": 28,
+          "png_sha256": "814dc2b8cccdebac2aa17ea1777d70586d2d0c68229bfd4e9dfc9fecee6edcd1",
+          "render_dpi": 120,
+          "visual_review": "Individual readable Poppler page inspected: text, equations, tables and physical figures legible; full axes, external legends, no clipping or overlap.",
+          "review_basis": "Current appended page individually inspected at readable resolution."
+        },
+        {
+          "page": 29,
+          "png_sha256": "45c4f9dcee06282e773d0f2486a30800a53ad3f652f428539c8c53886a0eee9c",
+          "render_dpi": 120,
+          "visual_review": "Individual readable Poppler page inspected: text, equations, tables and physical figures legible; full axes, external legends, no clipping or overlap.",
+          "review_basis": "Current appended page individually inspected at readable resolution."
+        },
+        {
+          "page": 30,
+          "png_sha256": "f180cdb29a5b219019532d21bbfde982e6876f120fb2b329ff286a3c99ca9d7e",
+          "render_dpi": 120,
+          "visual_review": "Individual readable Poppler page inspected: text, equations, tables and physical figures legible; full axes, external legends, no clipping or overlap.",
+          "review_basis": "Current appended page individually inspected at readable resolution."
+        },
+        {
+          "page": 31,
+          "png_sha256": "d4572ec01498bc96f847788310177c4dea0881cad7f0c4863ea6303862d6e15e",
+          "render_dpi": 120,
+          "visual_review": "Individual readable Poppler page inspected: text, equations, tables and physical figures legible; full axes, external legends, no clipping or overlap.",
+          "review_basis": "Current appended page individually inspected at readable resolution."
+        },
+        {
+          "page": 32,
+          "png_sha256": "7ed96d557c99ccfb61da6d51f5789677095d12259ba04818a8bed0c6019e66af",
+          "render_dpi": 120,
+          "visual_review": "Individual readable Poppler page inspected: text, equations, tables and physical figures legible; full axes, external legends, no clipping or overlap.",
+          "review_basis": "Current appended page individually inspected at readable resolution."
+        },
+        {
+          "page": 33,
+          "png_sha256": "1d4f3afa793d5ee7e176df7ee791cebb22cb39b623b352feefe7f5fb1278e38c",
+          "render_dpi": 120,
+          "visual_review": "Individual readable Poppler page inspected: text, equations, tables and physical figures legible; full axes, external legends, no clipping or overlap.",
+          "review_basis": "Current appended page individually inspected at readable resolution."
+        },
+        {
+          "page": 34,
+          "png_sha256": "80b0783c6d4732c93d01e3e2a8f71538f7c83ed71ef459752b6289581a349b39",
+          "render_dpi": 120,
+          "visual_review": "Individual readable Poppler page inspected: text, equations, tables and physical figures legible; full axes, external legends, no clipping or overlap.",
+          "review_basis": "Current appended page individually inspected at readable resolution."
+        },
+        {
+          "page": 35,
+          "png_sha256": "581ed3b0fd556dfc2b1537d81c1c895fac42924fa70a69147f2de7694cca6bb9",
+          "render_dpi": 120,
+          "visual_review": "Individual readable Poppler page inspected: text, equations, tables and physical figures legible; full axes, external legends, no clipping or overlap.",
+          "review_basis": "Current appended page individually inspected at readable resolution."
+        },
+        {
+          "page": 36,
+          "png_sha256": "489dfab3a82100292b5b1e448f36b634559738cd72392cfd8070031ff6bc598e",
+          "render_dpi": 120,
+          "visual_review": "Individual readable Poppler page inspected: text, equations, tables and physical figures legible; full axes, external legends, no clipping or overlap.",
+          "review_basis": "Current appended page individually inspected at readable resolution."
+        }
+      ],
+      "text_fonts": [
+        "TimesNewRomanPS-BoldMT",
+        "TimesNewRomanPSMT"
+      ],
+      "text_colors": [
+        0
+      ],
+      "out_of_bounds": []
+    }
+  },
+  "preserved_pages": 52,
+  "individually_reviewed_added_pages": 49,
+  "source": {
+    "path": "lectures/source/cavity_expansion.json",
+    "sha256": "0d48d45a928cf80bdd863f75e491553f168e92394121a73867d43966f3cbea98"
+  },
+  "preparer": {
+    "path": "qa/prepare_cavity_pinn_lecture_extension.py",
+    "sha256": "3ffeb8e48cefce8132691e4d9bc3ce32319899d4a0601b0af8287bac7eca3e8e"
+  },
+  "scientific_interpretation": "Completed finite-budget studies retain all failed accuracy criteria; completion is not physical validation.",
+  "standalone_pdf_note": "D5 standalone figure footer/navigation update only; reviewed lecture pages and source JSON remain unchanged."
+}

@@ -1,0 +1,384 @@
+{
+  "run_id": "re100_s61_eps0.01_6d1d4acfdd",
+  "Re": 100,
+  "seed": 61,
+  "collar": 0.01,
+  "method": "Adam-to-L-BFGS, fixed collocation",
+  "outcome": "scored",
+  "config": {
+    "reynolds": 100,
+    "seed": 61,
+    "width": 64,
+    "depth": 4,
+    "collar": 0.01,
+    "collocation": 2048,
+    "adam_steps": 2000,
+    "lbfgs_steps": 500,
+    "adam_lr": 0.001,
+    "chunk_size": 2048,
+    "lbfgs_history": 50,
+    "audit_points": 2048,
+    "audit_seed": 983451,
+    "export_grid": 129,
+    "closure_budget": 3005,
+    "study_kind": "controlled_variant",
+    "sampling": "fixed_conditional_uniform_area_strata_v1"
+  },
+  "prediction": {
+    "path": "results/cavity_pinn_stratified/completed_pass/runs/re100_s61_eps0.01_6d1d4acfdd/prediction_native_interior.npz",
+    "sha256": "75f19a73a02828c73f9ed10f9537fb85294221f6dfa8ae5410e0c587a9cf1a8f"
+  },
+  "reference": {
+    "path": "results/cavity_pinn_stratified/completed_pass/references/re100_n512_interior.npz",
+    "sha256": "185f36a2d430416c38eba87937af1942c5f1a2d07d4b21561f7f8cb4ea247242"
+  },
+  "history": {
+    "path": "results/cavity_pinn_stratified/completed_pass/runs/re100_s61_eps0.01_6d1d4acfdd/training_history.csv",
+    "sha256": "9cff32ea3ab2c6862ca5753ba223e0dd3e72d87a55e1d8b4d3c7071ad3ceb73a",
+    "metric_name": "training_collar_momentum_rms",
+    "metric_label": "Training momentum RMS outside collar",
+    "independent_audit": false,
+    "time_scope": "optimizer-step time; excludes admission, checkpoint I/O and final reference evaluation",
+    "work_scope": "training closure residual points only; final audits reported separately",
+    "loss_location": "last closure; not a recomputed accepted endpoint"
+  },
+  "ghia_profiles": {
+    "path": "results/cavity_pinn_stratified/completed_pass/runs/re100_s61_eps0.01_6d1d4acfdd/ghia_signed_profiles.csv",
+    "sha256": "9215b4a1924be046d2dfd16f5a8378739e264cb539fa9816727e4e417f5038e6"
+  },
+  "freeze": {
+    "prediction_sha256": "75f19a73a02828c73f9ed10f9537fb85294221f6dfa8ae5410e0c587a9cf1a8f",
+    "at_utc": "2026-11-16T02:45:11.489417Z",
+    "model_sha256": "c1f258c22defa5cf647f2b0cc8c3fdd6dc27039386fca039467722c62a36f0c1"
+  },
+  "score": {
+    "prediction_sha256": "75f19a73a02828c73f9ed10f9537fb85294221f6dfa8ae5410e0c587a9cf1a8f",
+    "reference_accessed_at_utc": "2026-11-16T02:46:08.415784Z",
+    "cfd_values_accessed_at_utc": "2026-11-16T02:46:10.422406Z"
+  },
+  "source": {
+    "run_id": "re100_s61_eps0.01_6d1d4acfdd",
+    "Re": 100,
+    "seed": 61,
+    "config": {
+      "reynolds": 100,
+      "seed": 61,
+      "width": 64,
+      "depth": 4,
+      "collar": 0.01,
+      "collocation": 2048,
+      "adam_steps": 2000,
+      "lbfgs_steps": 500,
+      "adam_lr": 0.001,
+      "chunk_size": 2048,
+      "lbfgs_history": 50,
+      "audit_points": 2048,
+      "audit_seed": 983451,
+      "export_grid": 129,
+      "closure_budget": 3005,
+      "study_kind": "controlled_variant",
+      "sampling": "fixed_conditional_uniform_area_strata_v1"
+    },
+    "model_sha256": "c1f258c22defa5cf647f2b0cc8c3fdd6dc27039386fca039467722c62a36f0c1",
+    "config_sha256": "6d1d4acfddd287cad1db3d0c6ba88aa973988a3c6a6ce2c83d576ce3a39f2373",
+    "source_canonical_sha256": "35cda31dee8162fc3baaf3c3a029a011c699c3ed8f867d93745fb1398f2b83a0",
+    "projection_runtime": {
+      "torch": "2.5.1+cu118",
+      "cuda": "11.8",
+      "device": "cuda",
+      "gpu_name": "Quadro RTX 8000",
+      "hostname": "gypsum-gpu182",
+      "slurm_job_id": "1816436",
+      "role": "frozen inference only",
+      "restoration": {
+        "adapter_sha256": "5625fdba3f85c40f338ec559f08247b14b700575243675a833498b571580fe8f",
+        "checkpoint_sha256": "33d2f3e8a22c6d9bc88f5e551ca0b95891a0136d0d734f747f82a0257c412831",
+        "complete_checkpoint_state_sha256": "8a6f4eee51e86d4558bbf35051bc0a1f9eb9fb966bfb9fd454d3c313b97a81d0",
+        "serialized_objective_sha256": "38b6e396e00fb11d4b2833aae6f3bddf289834814bc5d71effe07cd233d972f2",
+        "serialized_rng_state_sha256": "1ce89e308646b994b023e0f50f0760d201288fb9e65d4dc8af3fff7ca7d36852",
+        "fresh_sampler_regeneration_required": false,
+        "saved_objective_tensors_preserved": true,
+        "training_continuation_certified": false,
+        "policy": "Read-only inference from exact saved final tensors; all complete-state hashes verified"
+      }
+    },
+    "evaluation_device": "cuda",
+    "ghia_source_sha256": "49f3141ea0840c0d1a204dba2ca7b1c358cdad9924f083340099f72251d8b680",
+    "evaluator_source_sha256": "1d7118052fcf0eea1550433484cb799a598e8a4c23130b1c3a85cd2b3610817c",
+    "evaluation_wrapper_sha256": "5625fdba3f85c40f338ec559f08247b14b700575243675a833498b571580fe8f",
+    "restoration": {
+      "adapter_sha256": "5625fdba3f85c40f338ec559f08247b14b700575243675a833498b571580fe8f",
+      "checkpoint_sha256": "33d2f3e8a22c6d9bc88f5e551ca0b95891a0136d0d734f747f82a0257c412831",
+      "complete_checkpoint_state_sha256": "8a6f4eee51e86d4558bbf35051bc0a1f9eb9fb966bfb9fd454d3c313b97a81d0",
+      "serialized_objective_sha256": "38b6e396e00fb11d4b2833aae6f3bddf289834814bc5d71effe07cd233d972f2",
+      "serialized_rng_state_sha256": "1ce89e308646b994b023e0f50f0760d201288fb9e65d4dc8af3fff7ca7d36852",
+      "fresh_sampler_regeneration_required": false,
+      "saved_objective_tensors_preserved": true,
+      "training_continuation_certified": false,
+      "policy": "Read-only inference from exact saved final tensors; all complete-state hashes verified"
+    },
+    "checkpoint_sha256": "33d2f3e8a22c6d9bc88f5e551ca0b95891a0136d0d734f747f82a0257c412831",
+    "original_freeze_manifest_sha256": "8495c1ec330dacb637b957c2419518abc5e813e1a86874bf1bedaab8877b7227",
+    "original_prediction_sha256": "dfa37d75fc7918cc27c8d8e33d57063662fea72bc729af466e0d5c878a76a158",
+    "original_frozen_at_utc": "2026-11-16T02:05:28Z",
+    "training_runtime_history": [
+      {
+        "torch": "2.5.1+cu118",
+        "cuda": "11.8",
+        "device": "cuda",
+        "gpu_name": "NVIDIA GeForce GTX TITAN X",
+        "gpu_capability": [
+          5,
+          2
+        ],
+        "hostname": "gypsum-gpu092",
+        "slurm_job_id": "1812313",
+        "slurm_restart_count": "0",
+        "phase": "adam"
+      },
+      {
+        "torch": "2.5.1+cu118",
+        "cuda": "11.8",
+        "device": "cuda",
+        "gpu_name": "NVIDIA GeForce GTX TITAN X",
+        "gpu_capability": [
+          5,
+          2
+        ],
+        "hostname": "gypsum-gpu092",
+        "slurm_job_id": "1812313",
+        "slurm_restart_count": "0",
+        "phase": "lbfgs"
+      }
+    ],
+    "coordinate_sha256": "672bcd26625e7d34c06ddeb7e3454d4fd2684dd9b7ee09a53e135d5fe8c4ff56",
+    "ghia_coordinate_sha256": "bfff04f64f06753ed86b17502e72e43a287e381183517897e1a0ffbab6b255d2",
+    "reference_file_sha256": "937bf0cccf195947452b2d230bb61d49ca1b72d485014a28f40c9721eee87567"
+  },
+  "native_subset": "exact native interior x[1:-1], y[1:-1]; no interpolation; boundaries audited separately",
+  "reference_source": {
+    "path": "results/cavity_highre_ghia/n512/re100.npz",
+    "sha256": "937bf0cccf195947452b2d230bb61d49ca1b72d485014a28f40c9721eee87567"
+  },
+  "scores": {
+    "regions": {
+      "interior": {
+        "sample_count": 261121,
+        "reference_velocity_rms_U": 0.2598928293102186,
+        "velocity_error_rms_U": 0.050866676376463436,
+        "velocity_relative_l2": 0.1957217385007068,
+        "u_error_signed_mean_U": -1.432394095805737e-05,
+        "v_error_signed_mean_U": -3.2572788913015004e-06,
+        "omega_error_rms_U_over_W": 0.48403950229350534,
+        "omega_error_signed_mean_U_over_W": 0.0028729415975852777,
+        "omega_relative_l2": 0.11339288923183109
+      },
+      "lower_quarter": {
+        "sample_count": 65408,
+        "reference_velocity_rms_U": 0.0566173582483034,
+        "velocity_error_rms_U": 0.022202693252614075,
+        "velocity_relative_l2": 0.39215346564283404,
+        "u_error_signed_mean_U": 0.014717247223627845,
+        "v_error_signed_mean_U": 2.482882297036881e-07,
+        "omega_error_rms_U_over_W": 0.14290997920329532,
+        "omega_error_signed_mean_U_over_W": -0.10833698224623983,
+        "omega_relative_l2": 0.42929456194490645
+      },
+      "upper_quarter": {
+        "sample_count": 65408,
+        "reference_velocity_rms_U": 0.4267578619755932,
+        "velocity_error_rms_U": 0.050725531498159344,
+        "velocity_relative_l2": 0.11886255888370816,
+        "u_error_signed_mean_U": -0.034394426739606,
+        "v_error_signed_mean_U": -1.1658012592346468e-05,
+        "omega_error_rms_U_over_W": 0.5375945989826457,
+        "omega_error_signed_mean_U_over_W": -0.19806685750836853,
+        "omega_relative_l2": 0.06512558944683837
+      }
+    },
+    "quadrature": "tensor trapezoid over exact sampled interior rectangle",
+    "sampled_rectangle": [
+      0.001953125,
+      0.998046875,
+      0.001953125,
+      0.998046875
+    ],
+    "pressure_comparison": "unavailable: retained CFD bundle has no pressure field",
+    "ghia": {
+      "u": {
+        "screened_relative_l2": 0.08289514433659004,
+        "published_relative_l2": 0.08289514433659004,
+        "screened_rmse_U": 0.03787474218817603,
+        "screened_linf_U": 0.08413533323241575,
+        "n_screened": 17,
+        "n_published": 17,
+        "prediction_evaluation": "direct frozen network at original tabulated coordinates; no interpolation"
+      },
+      "v": {
+        "screened_relative_l2": 0.3143766304742634,
+        "published_relative_l2": 0.3143766304742634,
+        "screened_rmse_U": 0.04193925975460498,
+        "screened_linf_U": 0.08597945833235801,
+        "n_screened": 17,
+        "n_published": 17,
+        "prediction_evaluation": "direct frozen network at original tabulated coordinates; no interpolation"
+      }
+    },
+    "numeric_checks": {
+      "outer_momentum_rms_le_1e_2": false,
+      "divergence_rms_le_1e_10": true,
+      "both_screened_ghia_relative_l2_le_0_02": false,
+      "interior_velocity_relative_l2_le_0_05": false
+    },
+    "CFD_grid_sensitivity": {
+      "cells": 256,
+      "reference_cells": 512,
+      "velocity_relative_l2": 0.0038283334836814033,
+      "source_sha256": "0dbba1ea555a38b1cce54712cc7b0e693f117eb74df98c1705a464ed46768d8b",
+      "interpretation": "retained comparison protocol; sensitivity, not an exact-error bound"
+    },
+    "acceptance": "Not automatically accepted: paired collar sensitivity and physical-vortex review remain required"
+  },
+  "physics_audit": {
+    "boundary": {
+      "top": {
+        "u_max_abs_error": 2.220446049250313e-16,
+        "v_max_abs_error": 0.0
+      },
+      "bottom": {
+        "u_max_abs_error": 0.0,
+        "v_max_abs_error": 0.0
+      },
+      "left": {
+        "u_max_abs_error": 0.0,
+        "v_max_abs_error": 2.220446049250313e-16
+      },
+      "right": {
+        "u_max_abs_error": 0.0,
+        "v_max_abs_error": 2.220446049250313e-16
+      }
+    },
+    "outer_uniform": {
+      "count": 2048,
+      "minimum_corner_distance": 0.025910664478707525,
+      "rx_rms": 0.15801229896503236,
+      "ry_rms": 0.08532400333898234,
+      "momentum_rms": 0.17957748235790988,
+      "momentum_max": 3.7751324802761563,
+      "divergence_rms": 1.0637824857214496e-15,
+      "finite": true
+    },
+    "corner_shells": [
+      {
+        "r_min": 0.0001,
+        "r_max": 0.001,
+        "count": 256,
+        "minimum_corner_distance": 0.00011446457424925959,
+        "rx_rms": 382.5909336329769,
+        "ry_rms": 161.81873560152772,
+        "momentum_rms": 415.40477331132104,
+        "momentum_max": 2992.2034670510234,
+        "divergence_rms": 6.132114404332009e-13,
+        "finite": true
+      },
+      {
+        "r_min": 0.001,
+        "r_max": 0.002,
+        "count": 256,
+        "minimum_corner_distance": 0.0010016974376378834,
+        "rx_rms": 144.2940653354926,
+        "ry_rms": 61.64482630447906,
+        "momentum_rms": 156.91036263151267,
+        "momentum_max": 420.3485255792784,
+        "divergence_rms": 2.2393203018714039e-13,
+        "finite": true
+      },
+      {
+        "r_min": 0.002,
+        "r_max": 0.005,
+        "count": 256,
+        "minimum_corner_distance": 0.002041133385177,
+        "rx_rms": 58.76276292376326,
+        "ry_rms": 23.35571999724528,
+        "momentum_rms": 63.23410442968358,
+        "momentum_max": 222.28096086691923,
+        "divergence_rms": 9.811458967910898e-14,
+        "finite": true
+      },
+      {
+        "r_min": 0.005,
+        "r_max": 0.01,
+        "count": 256,
+        "minimum_corner_distance": 0.005012734579630581,
+        "rx_rms": 21.20650510186448,
+        "ry_rms": 13.453946834626214,
+        "momentum_rms": 25.114229911831917,
+        "momentum_max": 87.87962587985011,
+        "divergence_rms": 4.415026639405436e-14,
+        "finite": true
+      },
+      {
+        "r_min": 0.01,
+        "r_max": 0.02,
+        "count": 256,
+        "minimum_corner_distance": 0.010187290271860149,
+        "rx_rms": 5.434464362297025,
+        "ry_rms": 6.642295463934345,
+        "momentum_rms": 8.582161262483895,
+        "momentum_max": 21.61724718858884,
+        "divergence_rms": 2.5103963980345055e-14,
+        "finite": true
+      },
+      {
+        "r_min": 0.02,
+        "r_max": 0.05,
+        "count": 256,
+        "minimum_corner_distance": 0.020053127568998477,
+        "rx_rms": 1.7198899377055097,
+        "ry_rms": 1.2181091579952528,
+        "momentum_rms": 2.1075605136300513,
+        "momentum_max": 6.532145108952589,
+        "divergence_rms": 9.784177500994456e-15,
+        "finite": true
+      }
+    ],
+    "interpretation": "Raw unweighted samples; no full-domain integrability or corner-consistency claim.",
+    "weighted_accepted_endpoint": {
+      "weighted_momentum_loss": 0.047629218910893265,
+      "weighted_momentum_rms": 0.218241194349035,
+      "model_sha256": "c1f258c22defa5cf647f2b0cc8c3fdd6dc27039386fca039467722c62a36f0c1",
+      "included_in_training_budget": false,
+      "objective_evaluations": 1,
+      "residual_point_evaluations": 2048,
+      "purpose": "accepted endpoint diagnostic only; no stopping or selection"
+    },
+    "stratified_coverage": {
+      "objective_sha256": "38b6e396e00fb11d4b2833aae6f3bddf289834814bc5d71effe07cd233d972f2",
+      "total_area": 0.9998429203673205,
+      "collar": 0.01,
+      "top_corner_radius": 0.05,
+      "counts": {
+        "top_corner_annuli": 512,
+        "remaining_wall_band": 512,
+        "interior": 1024
+      },
+      "areas": {
+        "top_corner_annuli": 0.0037699111843077526,
+        "remaining_wall_band": 0.1860730091830127,
+        "interior": 0.81
+      },
+      "weight_sums": {
+        "top_corner_annuli": 0.0037705034536052607,
+        "remaining_wall_band": 0.18610224205483555,
+        "interior": 0.8101272544915594
+      },
+      "minimum_corner_radius": 0.01001325630689931,
+      "measure": "normalized area on the square excluding only two upper quarter-disks",
+      "adaptive_sampling": false
+    },
+    "training_work_excludes_audits": true
+  },
+  "pressure_reference_available": false,
+  "physical_review_status": "pending",
+  "history_metric": "training_collar_momentum_rms"
+}

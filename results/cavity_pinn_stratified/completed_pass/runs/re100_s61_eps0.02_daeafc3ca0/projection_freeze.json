@@ -1,0 +1,108 @@
+{
+  "schema_version": 1,
+  "identity": {
+    "run_id": "re100_s61_eps0.02_daeafc3ca0",
+    "Re": 100,
+    "seed": 61,
+    "config": {
+      "reynolds": 100,
+      "seed": 61,
+      "width": 64,
+      "depth": 4,
+      "collar": 0.02,
+      "collocation": 2048,
+      "adam_steps": 2000,
+      "lbfgs_steps": 500,
+      "adam_lr": 0.001,
+      "chunk_size": 2048,
+      "lbfgs_history": 50,
+      "audit_points": 2048,
+      "audit_seed": 983451,
+      "export_grid": 129,
+      "closure_budget": 3005,
+      "study_kind": "controlled_variant",
+      "sampling": "fixed_conditional_uniform_area_strata_v1"
+    },
+    "model_sha256": "d86ce7c55859125e2c3626bc9edb570ef4a40714e5650f872044089cb11dbdf1",
+    "config_sha256": "daeafc3ca0e40d12d7f62f0e540f5c55fe96df9cda7099bc61b098d10f1b2605",
+    "source_canonical_sha256": "35cda31dee8162fc3baaf3c3a029a011c699c3ed8f867d93745fb1398f2b83a0",
+    "projection_runtime": {
+      "torch": "2.5.1+cu118",
+      "cuda": "11.8",
+      "device": "cuda",
+      "gpu_name": "Quadro RTX 8000",
+      "hostname": "gypsum-gpu182",
+      "slurm_job_id": "1816436",
+      "role": "frozen inference only",
+      "restoration": {
+        "adapter_sha256": "5625fdba3f85c40f338ec559f08247b14b700575243675a833498b571580fe8f",
+        "checkpoint_sha256": "56babf1302cf3f6e48f306ca8eb9b1c418db78a107d67fcb8d5126b1bdc5a6bd",
+        "complete_checkpoint_state_sha256": "e318c9ead04fc6f00b27721e342e6abfb126a0527f7693b50dc9d301a12a1079",
+        "serialized_objective_sha256": "256d70285df98af01a6feb18df644b6caa9d80b75dee9c12687dff5895bf4b38",
+        "serialized_rng_state_sha256": "1ce89e308646b994b023e0f50f0760d201288fb9e65d4dc8af3fff7ca7d36852",
+        "fresh_sampler_regeneration_required": false,
+        "saved_objective_tensors_preserved": true,
+        "training_continuation_certified": false,
+        "policy": "Read-only inference from exact saved final tensors; all complete-state hashes verified"
+      }
+    },
+    "evaluation_device": "cuda",
+    "ghia_source_sha256": "49f3141ea0840c0d1a204dba2ca7b1c358cdad9924f083340099f72251d8b680",
+    "evaluator_source_sha256": "1d7118052fcf0eea1550433484cb799a598e8a4c23130b1c3a85cd2b3610817c",
+    "evaluation_wrapper_sha256": "5625fdba3f85c40f338ec559f08247b14b700575243675a833498b571580fe8f",
+    "restoration": {
+      "adapter_sha256": "5625fdba3f85c40f338ec559f08247b14b700575243675a833498b571580fe8f",
+      "checkpoint_sha256": "56babf1302cf3f6e48f306ca8eb9b1c418db78a107d67fcb8d5126b1bdc5a6bd",
+      "complete_checkpoint_state_sha256": "e318c9ead04fc6f00b27721e342e6abfb126a0527f7693b50dc9d301a12a1079",
+      "serialized_objective_sha256": "256d70285df98af01a6feb18df644b6caa9d80b75dee9c12687dff5895bf4b38",
+      "serialized_rng_state_sha256": "1ce89e308646b994b023e0f50f0760d201288fb9e65d4dc8af3fff7ca7d36852",
+      "fresh_sampler_regeneration_required": false,
+      "saved_objective_tensors_preserved": true,
+      "training_continuation_certified": false,
+      "policy": "Read-only inference from exact saved final tensors; all complete-state hashes verified"
+    },
+    "checkpoint_sha256": "56babf1302cf3f6e48f306ca8eb9b1c418db78a107d67fcb8d5126b1bdc5a6bd",
+    "original_freeze_manifest_sha256": "1d2364d85179963a74a0dbcde231d8b2f6da2901c7ec237d425d0b9f129e4592",
+    "original_prediction_sha256": "3e7f8d2dd627b51c6e04e89a02ed3ed7b2c93fdc50646ccd17a4ec94f326e173",
+    "original_frozen_at_utc": "2026-11-16T02:06:29Z",
+    "training_runtime_history": [
+      {
+        "torch": "2.5.1+cu118",
+        "cuda": "11.8",
+        "device": "cuda",
+        "gpu_name": "NVIDIA GeForce GTX TITAN X",
+        "gpu_capability": [
+          5,
+          2
+        ],
+        "hostname": "gypsum-gpu094",
+        "slurm_job_id": "1812314",
+        "slurm_restart_count": "0",
+        "phase": "adam"
+      },
+      {
+        "torch": "2.5.1+cu118",
+        "cuda": "11.8",
+        "device": "cuda",
+        "gpu_name": "NVIDIA GeForce GTX TITAN X",
+        "gpu_capability": [
+          5,
+          2
+        ],
+        "hostname": "gypsum-gpu094",
+        "slurm_job_id": "1812314",
+        "slurm_restart_count": "0",
+        "phase": "lbfgs"
+      }
+    ],
+    "coordinate_sha256": "672bcd26625e7d34c06ddeb7e3454d4fd2684dd9b7ee09a53e135d5fe8c4ff56",
+    "ghia_coordinate_sha256": "bfff04f64f06753ed86b17502e72e43a287e381183517897e1a0ffbab6b255d2",
+    "reference_file_sha256": "937bf0cccf195947452b2d230bb61d49ca1b72d485014a28f40c9721eee87567"
+  },
+  "prediction_sha256": "cf412cdb326b7d9a616e9f395a57aeddb7aad12f123655917022bdb91fcde2b0",
+  "at_utc": "2026-11-16T02:45:17.781770Z",
+  "coordinates_read_at_utc": "2026-11-16T02:45:11.965378Z",
+  "subset": "exact native interior x[1:-1], y[1:-1]; no interpolation; boundaries audited separately",
+  "reference_values_read": false,
+  "pressure": "PINN centre gauge; this CFD bundle contains no pressure reference"
+}

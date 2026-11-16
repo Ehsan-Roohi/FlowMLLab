@@ -1,0 +1,40 @@
+{
+  "schema": 1,
+  "experiment": "constant-lid punctured-collocation PINN",
+  "config": {
+    "reynolds": 7500,
+    "seed": 23,
+    "width": 64,
+    "depth": 4,
+    "collar": 0.01,
+    "collocation": 2048,
+    "adam_steps": 2000,
+    "lbfgs_steps": 500,
+    "adam_lr": 0.001,
+    "chunk_size": 2048,
+    "lbfgs_history": 50,
+    "audit_points": 2048,
+    "audit_seed": 983451,
+    "export_grid": 129
+  },
+  "frozen_model": {
+    "model_sha256": "57c3d90d750ee71e7717adf7e421a896136f6d3b3a46ea15f563e218eed66d6c",
+    "config_sha256": "b154d78fd6403280f7f00b70c295217f24437695361c8f6a58aa47e4bf200a6d",
+    "objective_sha256": "1c31669e86a351d67a53685ef464ddb4e2f20583bc5f658c6f44b3cbd3aa2742",
+    "reference_labels_used": false,
+    "endpoint_rule": "last complete step of the preregistered finite budget",
+    "frozen_utc": "2026-11-16T00:29:27Z"
+  },
+  "source_sha256": "507a6e0a6d632a173c8bdc8748564beffee77ce3664aeffcee25edc5ca305b9e",
+  "prediction_file": "frozen_predictions.npz",
+  "prediction_sha256": "457bbae79c771cc20c0f764ac41278e8667d7bc63e06baca41491337c69b6c63",
+  "frozen_utc": "2026-11-16T00:29:27Z",
+  "prediction_grid_n": 129,
+  "physics_audit_file": "final_physics_audit.json",
+  "physics_audit_sha256": "75eb8c63b59f37a2faeeb6dbc733f96f3691617f2d56b4bc0f293c3fe5570210",
+  "reference_labels_used": false,
+  "reference_evaluation_performed": false,
+  "array_layout": "(y,x); exact top corner values are NaN and explicitly masked",
+  "pressure_gauge": "p(0.5,0.5)=0",
+  "limits": "finite budget; explicit collar; no accepted standard-Ghia accuracy claim"
+}

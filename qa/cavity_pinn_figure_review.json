@@ -1,0 +1,770 @@
+{
+  "status": "complete",
+  "figure_manifest_sha256": "5cfcd236f8315955cade2022bde5de0caadded61ecbd1fc783de4ad8867549b8",
+  "images": [
+    {
+      "path": "results/cavity_pinn_campaign/figures/re100_centerlines.png",
+      "sha256": "df149fd625f641a863cb3533b97aa30dc49baa81632a5ee1665229e7bf4e9a4d",
+      "mode": "RGB",
+      "dimensions": [
+        1720,
+        1540
+      ],
+      "visual_review": "Passed; signed quantities, full axes, external legends and readable scales inspected"
+    },
+    {
+      "path": "results/cavity_pinn_campaign/figures/re400_centerlines.png",
+      "sha256": "ef2d5537ca9bfac1d609d8dc57298683da45b5731ab3082e5d36497113c826f3",
+      "mode": "RGB",
+      "dimensions": [
+        1720,
+        1540
+      ],
+      "visual_review": "Passed; signed quantities, full axes, external legends and readable scales inspected"
+    },
+    {
+      "path": "results/cavity_pinn_campaign/figures/re1000_centerlines.png",
+      "sha256": "0eb066f30059c96051c9742753b39dda8c05c7dcd09d3e703a05279b0c59f883",
+      "mode": "RGB",
+      "dimensions": [
+        1720,
+        1540
+      ],
+      "visual_review": "Passed; signed quantities, full axes, external legends and readable scales inspected"
+    },
+    {
+      "path": "results/cavity_pinn_campaign/figures/re3200_centerlines.png",
+      "sha256": "d426153b94fcf58a972250d7ce3227f28e51f98c3e3224ca114a57f9bd9cbd2f",
+      "mode": "RGB",
+      "dimensions": [
+        1720,
+        1540
+      ],
+      "visual_review": "Passed; signed quantities, full axes, external legends and readable scales inspected"
+    },
+    {
+      "path": "results/cavity_pinn_campaign/figures/re5000_centerlines.png",
+      "sha256": "9ef39600aae0a9bdbdb1cdfc5ba27b17b8858bd9b819e4966c5b6ab24fde94e6",
+      "mode": "RGB",
+      "dimensions": [
+        1720,
+        1540
+      ],
+      "visual_review": "Passed; signed quantities, full axes, external legends and readable scales inspected"
+    },
+    {
+      "path": "results/cavity_pinn_campaign/figures/re7500_centerlines.png",
+      "sha256": "8f41707515464b7a4cff397108be257f7378972f9993eaf24e817693d042de32",
+      "mode": "RGB",
+      "dimensions": [
+        1720,
+        1540
+      ],
+      "visual_review": "Passed; signed quantities, full axes, external legends and readable scales inspected"
+    },
+    {
+      "path": "results/cavity_pinn_campaign/figures/re10000_centerlines.png",
+      "sha256": "d7306184155e4d013f598469b576d56449750262cbece7a9b63a09fbfb52eb60",
+      "mode": "RGB",
+      "dimensions": [
+        1720,
+        1540
+      ],
+      "visual_review": "Passed; signed quantities, full axes, external legends and readable scales inspected"
+    },
+    {
+      "path": "results/cavity_pinn_campaign/figures/re1000_fields.png",
+      "sha256": "1551e1e0105fa5cfa7c8f25e1b7542210477fb07162591661be4bebe83eac205",
+      "mode": "RGB",
+      "dimensions": [
+        2300,
+        2240
+      ],
+      "visual_review": "Passed; signed quantities, full axes, external legends and readable scales inspected"
+    },
+    {
+      "path": "results/cavity_pinn_campaign/figures/re1000_streamlines.png",
+      "sha256": "1b56c55581d10e22b3d9c67e83abe320ad44ea81ecd082f8097505669a52b3a6",
+      "mode": "RGB",
+      "dimensions": [
+        2420,
+        919
+      ],
+      "visual_review": "Passed; signed quantities, full axes, external legends and readable scales inspected"
+    },
+    {
+      "path": "results/cavity_pinn_campaign/figures/re7500_fields.png",
+      "sha256": "357a21c6f15ee0a55af4bb317dcad8bedf1be70b0fd78ab075b8373928f648c4",
+      "mode": "RGB",
+      "dimensions": [
+        2300,
+        2240
+      ],
+      "visual_review": "Passed; signed quantities, full axes, external legends and readable scales inspected"
+    },
+    {
+      "path": "results/cavity_pinn_campaign/figures/re7500_streamlines.png",
+      "sha256": "d8b64dc23196cdcdd33bdee03b0eaf814804f3b148255d2de672c8ca3f30bc43",
+      "mode": "RGB",
+      "dimensions": [
+        2420,
+        919
+      ],
+      "visual_review": "Passed; signed quantities, full axes, external legends and readable scales inspected"
+    },
+    {
+      "path": "results/cavity_pinn_campaign/figures/paired_speed.png",
+      "sha256": "422b9415cb62d9934a8aa765f67796ade58b51d5630a93bb98db413ad8af3d56",
+      "mode": "RGB",
+      "dimensions": [
+        1739,
+        1520
+      ],
+      "visual_review": "Passed; signed quantities, full axes, external legends and readable scales inspected"
+    },
+    {
+      "path": "results/cavity_pinn_campaign/figures/paired_curl.png",
+      "sha256": "a301fff47003969b7f10f738615ee255f27ca5d89de25fff47eb57131a68fc1a",
+      "mode": "RGB",
+      "dimensions": [
+        1739,
+        1520
+      ],
+      "visual_review": "Passed; signed quantities, full axes, external legends and readable scales inspected"
+    }
+  ],
+  "pdfs": [
+    {
+      "path": "results/cavity_pinn_campaign/figures/all_reynolds_centerlines.pdf",
+      "sha256": "227b50fe109a2eaac837ef402e841449079555f2dba0933d367a45e8a7547838",
+      "pages": 7,
+      "review_dpi": 120,
+      "individual_page_reviews": [
+        {
+          "page": 1,
+          "png_sha256": "7e3f34fadb32add95891cd3746f285d2e705415353664b696f9e1816a3ac1a97",
+          "status": "Passed readable individual Poppler rendering"
+        },
+        {
+          "page": 2,
+          "png_sha256": "e41e9e8e43038208220ea623a8c18c4230e8596df2c5fff87c819d47ac49337a",
+          "status": "Passed readable individual Poppler rendering"
+        },
+        {
+          "page": 3,
+          "png_sha256": "9f065698c4f27a727421316a8a3bfdb665d2e09450e6ea4c9860de4402d743f8",
+          "status": "Passed readable individual Poppler rendering"
+        },
+        {
+          "page": 4,
+          "png_sha256": "2c07ed6922ce0bef9ba897b3976a435bd08ba28c9a5ca2e6b367f6dc6e975896",
+          "status": "Passed readable individual Poppler rendering"
+        },
+        {
+          "page": 5,
+          "png_sha256": "0d3ca62ad9fba0498a687033fa4769b936cf42ddbef174450a42f76461ad0643",
+          "status": "Passed readable individual Poppler rendering"
+        },
+        {
+          "page": 6,
+          "png_sha256": "26f1e971cba534b6ee005f0c9eb994e72c4ccac9dbe07a488e2e7b8ff3d3bcd5",
+          "status": "Passed readable individual Poppler rendering"
+        },
+        {
+          "page": 7,
+          "png_sha256": "b9b3b7badaa3d3f140eaa7e4ac88dc0b495d45e69016ab700110bae018238cfd",
+          "status": "Passed readable individual Poppler rendering"
+        }
+      ],
+      "out_of_bounds_text": []
+    },
+    {
+      "path": "results/cavity_pinn_campaign/figures/representative_physical_fields.pdf",
+      "sha256": "bcb76da4c35ffa59a86a2820120fda6bf9a98ef31f6b7b4c32b2f6c369fe2d84",
+      "pages": 4,
+      "review_dpi": 120,
+      "individual_page_reviews": [
+        {
+          "page": 1,
+          "png_sha256": "a57fac75c72e5c41c155a337d8f8d773abdfed551ba92dc7c1629e1cf3fe77f2",
+          "status": "Passed readable individual Poppler rendering"
+        },
+        {
+          "page": 2,
+          "png_sha256": "5562d3342577ca72fdedca23ef410b21fd4ec99d7faa6836362837a2cc0ade1b",
+          "status": "Passed readable individual Poppler rendering"
+        },
+        {
+          "page": 3,
+          "png_sha256": "78401d52139f9fca04ed0a34218ad89b190a4640d26fbfd4417830cfc2c777d9",
+          "status": "Passed readable individual Poppler rendering"
+        },
+        {
+          "page": 4,
+          "png_sha256": "52bfa2840029a600c1f200dd3d423bb6f8875227e00c99e686a65395721b0d7a",
+          "status": "Passed readable individual Poppler rendering"
+        }
+      ],
+      "out_of_bounds_text": []
+    },
+    {
+      "path": "results/cavity_pinn_campaign/figures/paired_velocity_vorticity.pdf",
+      "sha256": "d92b83556a1b713d9cffa066bca2b417f137314b7e158678159d5055ff41a09d",
+      "pages": 2,
+      "review_dpi": 120,
+      "individual_page_reviews": [
+        {
+          "page": 1,
+          "png_sha256": "5bbc91bfe3bb840e93a9d1ff6ab90dc25467a17e56178ff14648cb77e99f3046",
+          "status": "Passed readable individual Poppler rendering"
+        },
+        {
+          "page": 2,
+          "png_sha256": "fd6214fd82aad648b2aa6f7c77738bd28e1a344868b8d54afa550c35ec581f17",
+          "status": "Passed readable individual Poppler rendering"
+        }
+      ],
+      "out_of_bounds_text": []
+    }
+  ],
+  "manufactured_centered_curl_max_abs_error": 1.5543122344752192e-15,
+  "native_frozen_scores_unchanged": true,
+  "notebooks": [
+    {
+      "path": "notebooks/week04/W4_Lab9_Label_Free_Ghia_PINN_Audit.ipynb",
+      "sha256": "31a8ea5fed1b9e8430962ae84026eaff5de3bd4877a1e6b0ddda51fd436c5ca3",
+      "cells": 19,
+      "execution": "Fresh sequential execution of every code cell in a clean Python namespace using actual completed results; no fitting; independent Jupyter execution remains a CI responsibility.",
+      "errors": 0,
+      "missing_local_links": [],
+      "direct_colab_launcher": "https://colab.research.google.com/github/Ehsan-Roohi/FlowMLLab/blob/main/notebooks/week04/W4_Lab9_Label_Free_Ghia_PINN_Audit.ipynb",
+      "bootstrap_checks": "PASS: local checkout, isolated clone stub, reuse without pull, pre-existing non-checkout preserved; no live network test",
+      "output_contract": "Additive course evidence explicitly distinguished from manuscript figures and scientific acceptance",
+      "code_cells": 8,
+      "evidence_records": 42,
+      "stratified_pairs": 12
+    },
+    {
+      "path": "notebooks/week13/W13_D5_Controlled_Optimizer_Study.ipynb",
+      "sha256": "52d99a41657948eb256f808a5b962f08a0557aa5a04dbc2aa96f94006b9801a3",
+      "cells": 16,
+      "execution": "Fresh sequential execution of every code cell in a clean Python namespace using actual completed results; no fitting; independent Jupyter execution remains a CI responsibility.",
+      "errors": 0,
+      "missing_local_links": [],
+      "direct_colab_launcher": "https://colab.research.google.com/github/Ehsan-Roohi/FlowMLLab/blob/main/notebooks/week13/W13_D5_Controlled_Optimizer_Study.ipynb",
+      "bootstrap_checks": "PASS: local checkout, isolated clone stub, reuse without pull, pre-existing non-checkout preserved; no live network test",
+      "output_contract": "Additive course evidence explicitly distinguished from manuscript figures and scientific acceptance",
+      "code_cells": 6,
+      "evidence_records": 6
+    }
+  ],
+  "notebook_builder_sha256": "f7665f566f7417419f18e4ac675bc51e2ae7f38dfe274867c53cad749415c446",
+  "reviewed_at_utc": "2026-11-16T03:14:09.676613+00:00",
+  "scientific_acceptance": "Presentation and provenance passed. Finite-budget Ghia, D5 and stratified outcomes retain their failed physical-accuracy criteria; no accuracy acceptance is inferred.",
+  "d5": {
+    "figure_manifest_path": "results/deep_cavity_ablation/lesson_figures/figure_manifest.json",
+    "figure_manifest_sha256": "b536b1485d69d4201c38b26309e31fd3eb40e2c0288a5a5e36aa36d0c2ab09ce",
+    "images": [
+      {
+        "path": "results/deep_cavity_ablation/lesson_figures/optimizer_objective_history.png",
+        "sha256": "74b57b55cadf1a0de355713ee6ce03364909f8e13691f1aef33038213b4699e1",
+        "mode": "RGB",
+        "dimensions": [
+          2401,
+          813
+        ],
+        "visual_review": "Independently inspected individually at readable resolution: signed physical quantities and full axes preserved; legends external; no clipping or overlap.",
+        "original_source_path": "results/deep_cavity_ablation/optimizer_objective_history.png",
+        "original_source_sha256": "b96adc60ffb5fed0d03ae9dbfde3a2b21eb3f5fd9c5065294d210da66568ac49",
+        "rgb_pixels_equal_original": true
+      },
+      {
+        "path": "results/deep_cavity_ablation/lesson_figures/profiles_upper_s12345.png",
+        "sha256": "a48057ab51ab3c7483e89d3e2d357121e7d59b9be7ef1d718006e6764f99028b",
+        "mode": "RGB",
+        "dimensions": [
+          2401,
+          1759
+        ],
+        "visual_review": "Independently inspected individually at readable resolution: signed physical quantities and full axes preserved; legends external; no clipping or overlap.",
+        "original_source_path": "results/deep_cavity_ablation/profiles_upper_s12345.png",
+        "original_source_sha256": "7be840f80a8412603b6b90f3f122760ca739bc99a45f0bcccae14d0de994096d",
+        "rgb_pixels_equal_original": true
+      },
+      {
+        "path": "results/deep_cavity_ablation/lesson_figures/profiles_floor_s12345.png",
+        "sha256": "95d9f0334f7e25ed6ef0ce328d05e90c850e2e520684bb2b381a78dcc875a058",
+        "mode": "RGB",
+        "dimensions": [
+          2401,
+          1759
+        ],
+        "visual_review": "Independently inspected individually at readable resolution: signed physical quantities and full axes preserved; legends external; no clipping or overlap.",
+        "original_source_path": "results/deep_cavity_ablation/profiles_floor_s12345.png",
+        "original_source_sha256": "ce0d1747842cd78780b878ab4c58f6ce1102becce610ea932e56f6cd66d94400",
+        "rgb_pixels_equal_original": true
+      },
+      {
+        "path": "results/deep_cavity_ablation/lesson_figures/streamlines_s12345.png",
+        "sha256": "5b60eb65df64b29d821b46ae71b8ea3dfadb40044fa00f5fe7420dfcb3361da3",
+        "mode": "RGB",
+        "dimensions": [
+          1880,
+          1891
+        ],
+        "visual_review": "Independently inspected individually at readable resolution: signed physical quantities and full axes preserved; legends external; no clipping or overlap.",
+        "original_source_path": "results/deep_cavity_ablation/streamlines_s12345.png",
+        "original_source_sha256": "9126f80f9f26134d1b7ac2ad6d8d255057a62251c8f3f22dbfeb88aadecae625",
+        "rgb_pixels_equal_original": true
+      },
+      {
+        "path": "results/deep_cavity_ablation/lesson_figures/profiles_upper_s23456.png",
+        "sha256": "633057282eec4d64a460a3c9da36451b60b8db05037c5cb159b5693dc48753f0",
+        "mode": "RGB",
+        "dimensions": [
+          2401,
+          1759
+        ],
+        "visual_review": "Independently inspected individually at readable resolution: signed physical quantities and full axes preserved; legends external; no clipping or overlap.",
+        "original_source_path": "results/deep_cavity_ablation/profiles_upper_s23456.png",
+        "original_source_sha256": "d417b89eb70aa3ab6e63790d4b05f9f40e07f715b6daaf88980cd24317127d5c",
+        "rgb_pixels_equal_original": true
+      },
+      {
+        "path": "results/deep_cavity_ablation/lesson_figures/profiles_floor_s23456.png",
+        "sha256": "f908676ac9c366cb4969e046db326d3dcffe6a5d9e61f106c073077a8abb8454",
+        "mode": "RGB",
+        "dimensions": [
+          2401,
+          1759
+        ],
+        "visual_review": "Independently inspected individually at readable resolution: signed physical quantities and full axes preserved; legends external; no clipping or overlap.",
+        "original_source_path": "results/deep_cavity_ablation/profiles_floor_s23456.png",
+        "original_source_sha256": "e3d3d0cf52c69353522760b5dde96d161f70a383f34ad3932d22621ff537765e",
+        "rgb_pixels_equal_original": true
+      },
+      {
+        "path": "results/deep_cavity_ablation/lesson_figures/streamlines_s23456.png",
+        "sha256": "b284e3c058050dd86c6a0965cf4076ea09d832e21c33b701886850453c81a51c",
+        "mode": "RGB",
+        "dimensions": [
+          1880,
+          1891
+        ],
+        "visual_review": "Independently inspected individually at readable resolution: signed physical quantities and full axes preserved; legends external; no clipping or overlap.",
+        "original_source_path": "results/deep_cavity_ablation/streamlines_s23456.png",
+        "original_source_sha256": "3808d9664194496dda31ae4d6a00d7a089117592b0079a11da497c5123bc3890",
+        "rgb_pixels_equal_original": true
+      },
+      {
+        "path": "results/deep_cavity_ablation/lesson_figures/profiles_upper_s34567.png",
+        "sha256": "b66fc6cf66f3f27bde280379a3d0ecb694c891dcf2a22fe30f904774ffe6714b",
+        "mode": "RGB",
+        "dimensions": [
+          2401,
+          1759
+        ],
+        "visual_review": "Independently inspected individually at readable resolution: signed physical quantities and full axes preserved; legends external; no clipping or overlap.",
+        "original_source_path": "results/deep_cavity_ablation/profiles_upper_s34567.png",
+        "original_source_sha256": "2f30709d5775e8d4efc1df259c1602d8c83d94e41bbd4501737469263ae69f26",
+        "rgb_pixels_equal_original": true
+      },
+      {
+        "path": "results/deep_cavity_ablation/lesson_figures/profiles_floor_s34567.png",
+        "sha256": "3cdd3709b895d3954df419bf63cf6f4dc52fa93da8dfdff3e29b78a71b83e438",
+        "mode": "RGB",
+        "dimensions": [
+          2401,
+          1759
+        ],
+        "visual_review": "Independently inspected individually at readable resolution: signed physical quantities and full axes preserved; legends external; no clipping or overlap.",
+        "original_source_path": "results/deep_cavity_ablation/profiles_floor_s34567.png",
+        "original_source_sha256": "df05363b8f1393dde6bee8bf33d13de6f3b6a2d20e2d21334d6449d471f3d554",
+        "rgb_pixels_equal_original": true
+      },
+      {
+        "path": "results/deep_cavity_ablation/lesson_figures/streamlines_s34567.png",
+        "sha256": "2d78aef6b7710e6aeeaa4a87ad4ca76f9d670d1b8f9cf11a343a31034ecd4508",
+        "mode": "RGB",
+        "dimensions": [
+          1880,
+          1891
+        ],
+        "visual_review": "Independently inspected individually at readable resolution: signed physical quantities and full axes preserved; legends external; no clipping or overlap.",
+        "original_source_path": "results/deep_cavity_ablation/streamlines_s34567.png",
+        "original_source_sha256": "ceefb493f9b0b003a78cef3e5effc3644d96d8c16149e75c97f3b9bb0da1c409",
+        "rgb_pixels_equal_original": true
+      }
+    ],
+    "pdfs": [
+      {
+        "path": "results/deep_cavity_ablation/lesson_figures/controlled_pilot_figures.pdf",
+        "sha256": "4748af9b3f36bc2da560190c32fbb6c43a75f716fff4d42c740e5a1e5c56e7b8",
+        "pages": 10,
+        "status": "passed_individual_visual_review",
+        "individual_page_reviews": [
+          {
+            "page": 1,
+            "png_sha256": "99d82649fb4ade320266264dd2c32dd6b277a10e60d57a3ed390e5c0e98e8d54",
+            "dimensions": [
+              1638,
+              605
+            ],
+            "mode": "RGB",
+            "visual_review": "Individually inspected at 150 dpi: complete axes, signed profiles, legends outside curves, readable labels; no clipping or overlap."
+          },
+          {
+            "page": 2,
+            "png_sha256": "32ee7b1bae9d34ed7ba0df8780b2c464a70799a09c3f1137197c8438b74708e7",
+            "dimensions": [
+              1638,
+              1250
+            ],
+            "mode": "RGB",
+            "visual_review": "Individually inspected at 150 dpi: complete axes, signed profiles, legends outside curves, readable labels; no clipping or overlap."
+          },
+          {
+            "page": 3,
+            "png_sha256": "fd6b110c8b408a5aff23b4727d59d7728b698817a17d708580e508047089191d",
+            "dimensions": [
+              1638,
+              1250
+            ],
+            "mode": "RGB",
+            "visual_review": "Individually inspected at 150 dpi: complete axes, signed profiles, legends outside curves, readable labels; no clipping or overlap."
+          },
+          {
+            "page": 4,
+            "png_sha256": "10a360d4430f1c1ea4f95347c682303b74adeffffb1ada2d3bea310ab2d81ef3",
+            "dimensions": [
+              1283,
+              1340
+            ],
+            "mode": "RGB",
+            "visual_review": "Individually inspected at 150 dpi: complete axes, signed profiles, legends outside curves, readable labels; no clipping or overlap."
+          },
+          {
+            "page": 5,
+            "png_sha256": "51605b8df313ad48cdf7e6ddbc80dbba986b3f79c529933c4409128cef5d57aa",
+            "dimensions": [
+              1638,
+              1250
+            ],
+            "mode": "RGB",
+            "visual_review": "Individually inspected at 150 dpi: complete axes, signed profiles, legends outside curves, readable labels; no clipping or overlap."
+          },
+          {
+            "page": 6,
+            "png_sha256": "4ddb88ffff7b646fda1db845ae2ac56734a19330826fa553d35c041944257506",
+            "dimensions": [
+              1638,
+              1250
+            ],
+            "mode": "RGB",
+            "visual_review": "Individually inspected at 150 dpi: complete axes, signed profiles, legends outside curves, readable labels; no clipping or overlap."
+          },
+          {
+            "page": 7,
+            "png_sha256": "6a7ee8aca223537e17a044e1d35f8df05e2a1cdf27a62100eea980479f5ea0f4",
+            "dimensions": [
+              1283,
+              1340
+            ],
+            "mode": "RGB",
+            "visual_review": "Individually inspected at 150 dpi: complete axes, signed profiles, legends outside curves, readable labels; no clipping or overlap."
+          },
+          {
+            "page": 8,
+            "png_sha256": "d1447c914c7646dabd8331bf7720c3cee684726060352ea7e27d146b7460bfe4",
+            "dimensions": [
+              1638,
+              1250
+            ],
+            "mode": "RGB",
+            "visual_review": "Individually inspected at 150 dpi: complete axes, signed profiles, legends outside curves, readable labels; no clipping or overlap."
+          },
+          {
+            "page": 9,
+            "png_sha256": "ae1722ebf265f8ccd29bedfef3f80d7be62f42dad81d188a0a7f85884b2f986e",
+            "dimensions": [
+              1638,
+              1250
+            ],
+            "mode": "RGB",
+            "visual_review": "Individually inspected at 150 dpi: complete axes, signed profiles, legends outside curves, readable labels; no clipping or overlap."
+          },
+          {
+            "page": 10,
+            "png_sha256": "d762562d9e854ed25c58e35c174ed90ed78f4ee8bde7e13b1e43a2606f30d5aa",
+            "dimensions": [
+              1283,
+              1340
+            ],
+            "mode": "RGB",
+            "visual_review": "Individually inspected at 150 dpi: complete axes, signed profiles, legends outside curves, readable labels; no clipping or overlap."
+          }
+        ],
+        "out_of_bounds_text": [],
+        "page_labels": [
+          "1: All-seed history",
+          "2: s12345 upper profiles",
+          "3: s12345 floor profiles",
+          "4: s12345 streamlines",
+          "5: s23456 upper profiles",
+          "6: s23456 floor profiles",
+          "7: s23456 streamlines",
+          "8: s34567 upper profiles",
+          "9: s34567 floor profiles",
+          "10: s34567 streamlines"
+        ],
+        "visible_footer_review": "All ten pages freshly re-rendered and individually reviewed after addition of the visible Re1000 / D/W=5 / seed / region / page footer. Footers are outside scientific plots and complete.",
+        "scientific_caption_limits": "Objective history includes evaluated trials; active time includes I/O and audits. Floor pressure is shown as cut-mean fluctuation, not absolute pressure-offset accuracy. Neither weak-flow recovery nor optimizer superiority is implied.",
+        "review_dpi": 150
+      }
+    ],
+    "independent_review": {
+      "reviewer": "/root/deep_cavity_optimizer_campaign",
+      "original_png_review_manifest_sha256": "6f956e8dd7b37cc8f2507ec6fe8e17b05ce5af78e8f686da3ba8d2bd335db675",
+      "all_twenty_png_review_set_digest": "0221b1ce1551bc783480b1d458e7a86010aed3d0093320af729b66d1d76009f5",
+      "standalone_pdf_receipt_sha256": "dee435b0f404b48192a4b10be5568316ca9487b8a00c820a5760f6b7957be22e",
+      "status": "All final individual images and standalone pages passed; no contact-sheet-only acceptance."
+    }
+  },
+  "stratified": {
+    "figure_manifest_path": "results/cavity_pinn_stratified/figures/figure_manifest.json",
+    "figure_manifest_sha256": "30df1cf90a8aaf23dd4c7ebb227fcb2cb1f5c3f6e43a3d0b1f1b6f0a0c62d168",
+    "images": [
+      {
+        "path": "results/cavity_pinn_stratified/figures/re100_eps0.02_centerlines.png",
+        "sha256": "23994523c62c331f211c6672c25550e9996a14a3c6b74a6903f97a8a81ce863d",
+        "mode": "RGB",
+        "dimensions": [
+          1839,
+          1620
+        ],
+        "visual_review": "Independently inspected individually at readable resolution: signed physical quantities and full axes preserved; legends external; no clipping or overlap."
+      },
+      {
+        "path": "results/cavity_pinn_stratified/figures/re100_eps0.01_centerlines.png",
+        "sha256": "4077271382bd2fecd89fd42cae4a963f16193e1932096e07040923cd3adf3fff",
+        "mode": "RGB",
+        "dimensions": [
+          1839,
+          1620
+        ],
+        "visual_review": "Independently inspected individually at readable resolution: signed physical quantities and full axes preserved; legends external; no clipping or overlap."
+      },
+      {
+        "path": "results/cavity_pinn_stratified/figures/re7500_eps0.02_centerlines.png",
+        "sha256": "dfab7f2f16daf0c25f66b1f341a17d0b74c14b15efde1db3031e2563a9cfeb31",
+        "mode": "RGB",
+        "dimensions": [
+          1839,
+          1620
+        ],
+        "visual_review": "Independently inspected individually at readable resolution: signed physical quantities and full axes preserved; legends external; no clipping or overlap."
+      },
+      {
+        "path": "results/cavity_pinn_stratified/figures/re7500_eps0.01_centerlines.png",
+        "sha256": "04e7be62d584f126ea1f5008187514ef3f7b93309ed5687f9d179b8970f93a76",
+        "mode": "RGB",
+        "dimensions": [
+          1839,
+          1620
+        ],
+        "visual_review": "Independently inspected individually at readable resolution: signed physical quantities and full axes preserved; legends external; no clipping or overlap."
+      },
+      {
+        "path": "results/cavity_pinn_stratified/figures/paired_speed.png",
+        "sha256": "108c1a13e8a7c790393a60a8963223648cd86a766df73389d455d12cbc9db688",
+        "mode": "RGB",
+        "dimensions": [
+          2240,
+          1700
+        ],
+        "visual_review": "Independently inspected individually at readable resolution: signed physical quantities and full axes preserved; legends external; no clipping or overlap."
+      },
+      {
+        "path": "results/cavity_pinn_stratified/figures/paired_curl.png",
+        "sha256": "e2bc6f96a83a2720c61f7fffcb3a7d65bef8f90b7fa552a3c2c0bb263374f48a",
+        "mode": "RGB",
+        "dimensions": [
+          2240,
+          1700
+        ],
+        "visual_review": "Independently inspected individually at readable resolution: signed physical quantities and full axes preserved; legends external; no clipping or overlap."
+      },
+      {
+        "path": "results/cavity_pinn_stratified/figures/re100_signed_errors.png",
+        "sha256": "a0d30bb7e222c76d7bc411d85e18255813bd071102e28d2f4b5fc27f45543f66",
+        "mode": "RGB",
+        "dimensions": [
+          1839,
+          2320
+        ],
+        "visual_review": "Independently inspected individually at readable resolution: signed physical quantities and full axes preserved; legends external; no clipping or overlap."
+      },
+      {
+        "path": "results/cavity_pinn_stratified/figures/re100_streamlines.png",
+        "sha256": "0b20a609d23fa4771b97cafaa1e8ffb7f1ae0da855b890acb1bb5b92b915f370",
+        "mode": "RGB",
+        "dimensions": [
+          2420,
+          940
+        ],
+        "visual_review": "Independently inspected individually at readable resolution: signed physical quantities and full axes preserved; legends external; no clipping or overlap."
+      },
+      {
+        "path": "results/cavity_pinn_stratified/figures/re7500_signed_errors.png",
+        "sha256": "4317b434446eda08a4fcf40fb28196111464d27cdcb4b83e32497f1818696f76",
+        "mode": "RGB",
+        "dimensions": [
+          1839,
+          2320
+        ],
+        "visual_review": "Independently inspected individually at readable resolution: signed physical quantities and full axes preserved; legends external; no clipping or overlap."
+      },
+      {
+        "path": "results/cavity_pinn_stratified/figures/re7500_streamlines.png",
+        "sha256": "a3de883c32eb857709ca6f72e171fef33c056478917246b5349a5d9475c957e6",
+        "mode": "RGB",
+        "dimensions": [
+          2420,
+          940
+        ],
+        "visual_review": "Independently inspected individually at readable resolution: signed physical quantities and full axes preserved; legends external; no clipping or overlap."
+      }
+    ],
+    "pdfs": [
+      {
+        "path": "results/cavity_pinn_stratified/figures/all_pairs_centerlines.pdf",
+        "sha256": "77f15b6c016316ec7ca21b77fd3a68fdf56d19ced86018893a4378bce7289c77",
+        "pages": 4,
+        "status": "passed_individual_visual_review",
+        "individual_page_reviews": [
+          {
+            "page": 1,
+            "png_sha256": "f03634530830fe5aedc560dd897fe19abbdf3d2d3e3a459774ff362344e636da",
+            "dimensions": [
+              1380,
+              1215
+            ],
+            "mode": "RGB",
+            "visual_review": "Individually inspected at 150 dpi: complete axes, signed profiles, legends outside curves, readable labels; no clipping or overlap."
+          },
+          {
+            "page": 2,
+            "png_sha256": "a72df504b832b27548f896d4045238d2829d85dceea30950982cdcc0f83274b8",
+            "dimensions": [
+              1380,
+              1215
+            ],
+            "mode": "RGB",
+            "visual_review": "Individually inspected at 150 dpi: complete axes, signed profiles, legends outside curves, readable labels; no clipping or overlap."
+          },
+          {
+            "page": 3,
+            "png_sha256": "64529f6675da657590b4a6567483ff23323c346e8286f6616053e4914a57726c",
+            "dimensions": [
+              1380,
+              1215
+            ],
+            "mode": "RGB",
+            "visual_review": "Individually inspected at 150 dpi: complete axes, signed profiles, legends outside curves, readable labels; no clipping or overlap."
+          },
+          {
+            "page": 4,
+            "png_sha256": "a84809b7e669f2c1f9d6710058a9740d763cd61e403ca797c357b0f1bfdfcd64",
+            "dimensions": [
+              1380,
+              1215
+            ],
+            "mode": "RGB",
+            "visual_review": "Individually inspected at 150 dpi: complete axes, signed profiles, legends outside curves, readable labels; no clipping or overlap."
+          }
+        ],
+        "out_of_bounds_text": [],
+        "review_dpi": 150
+      },
+      {
+        "path": "results/cavity_pinn_stratified/figures/physical_comparison.pdf",
+        "sha256": "1c0011951f8dc3e33e7a301f87c0e8cc41515cb16f983957bd539c0b76efb101",
+        "pages": 6,
+        "status": "passed_individual_visual_review",
+        "individual_page_reviews": [
+          {
+            "page": 1,
+            "png_sha256": "17b38a6e37f259b215bcdc7955593b1954b048b59b47165cd1f6addd128b0f14",
+            "dimensions": [
+              1680,
+              1275
+            ],
+            "mode": "RGB",
+            "visual_review": "Individually inspected at 150 dpi: complete axes, signed profiles, legends outside curves, readable labels; no clipping or overlap."
+          },
+          {
+            "page": 2,
+            "png_sha256": "e02549ba471dd51b8d6b5c6b1a1d96a4b8b0898da6a58837c9206938831d5b08",
+            "dimensions": [
+              1680,
+              1275
+            ],
+            "mode": "RGB",
+            "visual_review": "Individually inspected at 150 dpi: complete axes, signed profiles, legends outside curves, readable labels; no clipping or overlap."
+          },
+          {
+            "page": 3,
+            "png_sha256": "251ac4174921e3b2061816e7cbe1a9c5b700a4b04e94deca13b3c0e47efc36e8",
+            "dimensions": [
+              1380,
+              1740
+            ],
+            "mode": "RGB",
+            "visual_review": "Individually inspected at 150 dpi: complete axes, signed profiles, legends outside curves, readable labels; no clipping or overlap."
+          },
+          {
+            "page": 4,
+            "png_sha256": "a7b895e06a98aad8a5f1d8eaa635e3a580e03ecbc67e11643d05bd2c907e3fae",
+            "dimensions": [
+              1815,
+              705
+            ],
+            "mode": "RGB",
+            "visual_review": "Individually inspected at 150 dpi: complete axes, signed profiles, legends outside curves, readable labels; no clipping or overlap."
+          },
+          {
+            "page": 5,
+            "png_sha256": "2a0b8fc7ad2db6e1dd77c2a1d6af9935f17ee7430f07671b68600da60ce3a08b",
+            "dimensions": [
+              1380,
+              1740
+            ],
+            "mode": "RGB",
+            "visual_review": "Individually inspected at 150 dpi: complete axes, signed profiles, legends outside curves, readable labels; no clipping or overlap."
+          },
+          {
+            "page": 6,
+            "png_sha256": "fd356917eb812a04c295dad3c74bec359985aa0ff495b6dd9a2888b383a74141",
+            "dimensions": [
+              1815,
+              705
+            ],
+            "mode": "RGB",
+            "visual_review": "Individually inspected at 150 dpi: complete axes, signed profiles, legends outside curves, readable labels; no clipping or overlap."
+          }
+        ],
+        "out_of_bounds_text": [],
+        "review_dpi": 150
+      }
+    ],
+    "independent_review": {
+      "reviewer": "/root/deep_cavity_optimizer_campaign",
+      "original_png_review_manifest_sha256": "460d0acd1d298d15dd88e523c3b61636a6e83bc77c706ed3ea6d9449e457be9b",
+      "all_twenty_png_review_set_digest": "0221b1ce1551bc783480b1d458e7a86010aed3d0093320af729b66d1d76009f5",
+      "standalone_pdf_receipt_sha256": "dee435b0f404b48192a4b10be5568316ca9487b8a00c820a5760f6b7957be22e",
+      "status": "All final individual images and standalone pages passed; no contact-sheet-only acceptance."
+    }
+  },
+  "total_reviewed_rgb_images": 33,
+  "total_individually_reviewed_figure_pdf_pages": 33
+}

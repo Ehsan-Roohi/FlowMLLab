@@ -1,0 +1,1317 @@
+{
+  "schema_version": 1,
+  "scope": "Read-only post-freeze coverage diagnosis of all 42 completed constant-lid Ghia PINNs; no model selection, refitting, job submission or reference-value use in this audit",
+  "created_at_utc": "2026-11-16T01:07:10.640722+00:00",
+  "recovery_archive": {
+    "filename": "ghia_full_recovery.tar.gz",
+    "sha256": "d041091ee84b5e1150fc186b2f15087852f0e1d2929be78ce96d81558c953235",
+    "bytes": 464718015,
+    "all_checkpoint_bytes_rehashed": true
+  },
+  "sampler_source": {
+    "path": "flowmllab/cavity_pinn_campaign.py",
+    "canonical_sha256": "507a6e0a6d632a173c8bdc8748564beffee77ce3664aeffcee25edc5ca305b9e",
+    "raw_sha256": "181456f8813044088d86988e61300d33850dcb3141bf9721fd544e28a1085d14",
+    "reconstruction": "uniform_points(N, torch.Generator.manual_seed(seed+104729), collar); exact tensor hashes checked against every frozen objective"
+  },
+  "summary": {
+    "runs": 42,
+    "pairs": 21,
+    "identical_objective_pairs": 14,
+    "identical_model_pairs_among_identical_objectives": 13,
+    "seeds_with_zero_added_annulus_points": [
+      7,
+      61
+    ],
+    "seed_with_one_added_annulus_point": 23,
+    "collar_independence_established": false
+  },
+  "expected_annulus_population": {
+    "N": 2048,
+    "annulus_area_both_upper_quarter_disks": 0.000471238898038469,
+    "sampling_domain_area_for_collar_0_01": 0.9998429203673205,
+    "formula": "N * [(pi/2)*(0.02^2-0.01^2)] / [1-(pi/2)*0.01^2]",
+    "expected_count": 0.9652488841229468,
+    "probability_of_zero_for_IID_draws": 0.38080173390205774
+  },
+  "common_independent_audit": {
+    "n": 2048,
+    "seed": 983451,
+    "point_sha256": "68804f7d423fee8f8d0b2b74a9564cf452a38fcf2a3e40ff0a2d92e57c707fbb",
+    "minimum_corner_radius": 0.025910664478707525,
+    "points_in_radius_0_02_to_0_05": 7
+  },
+  "numerical_execution_caveat": {
+    "observed_runtime": "Retained run receipts report torch2.5.1+cu118, CUDA11.8, devicecuda; per-run GPU model is not present in those receipts",
+    "observed_nonidentity": [
+      {
+        "Re": 1000,
+        "seed": 61
+      }
+    ],
+    "interpretation": "Different final weights for an identical objective cannot be attributed to changing the collar. Floating-point or hardware execution sensitivity is a possibility, not established causation. Same-runtime/device restart admission does not guarantee identical trajectories across different GPUs."
+  },
+  "pairs": [
+    {
+      "Re": 100,
+      "seed": 7,
+      "identical_collocation_tensors": true,
+      "identical_discrete_momentum_objective": true,
+      "identical_frozen_model": true,
+      "collar_test_information": "none: identical sampled objective",
+      "runs": [
+        {
+          "collar": 0.01,
+          "archive_run_path": "runs\\full_matrix\\ghia_re100_seed7_eps0.01_chunk2048",
+          "checkpoint_sha256": "f2dfeb97692fc6b2022ab4a28e63fd2e8c1a4b038013b3680e7d174b7f7a7dfb",
+          "configuration_sha256": "2c826f76335ead327a092380332635b16260dcb933f03af64fb386af7b1c41ed",
+          "frozen_manifest_sha256": "fc0a2073dedf2d32d16c672dae9f2e9929a21b9226c577cc662bdd75b4503793",
+          "model_sha256": "7c105bf745e6b5d857cb2d83b23f7f398869098604608212ab47a93b6fa6c660",
+          "source_canonical_sha256": "507a6e0a6d632a173c8bdc8748564beffee77ce3664aeffcee25edc5ca305b9e",
+          "runtime_history": [
+            {
+              "torch": "2.5.1+cu118",
+              "device": "cuda",
+              "cuda": "11.8"
+            }
+          ],
+          "coverage": {
+            "n": 2048,
+            "minimum_corner_radius": 0.0280245763960302,
+            "points_in_radius_0_01_to_0_02": 0,
+            "points_in_radius_0_02_to_0_05": 3,
+            "points_within_0_01_of_any_wall": 88,
+            "points_above_y_0_99": 26,
+            "point_sha256": "44f7b5249cb3317e856cb99b1d4d5fe05fa49cc8705d3f5904038070d3509320"
+          }
+        },
+        {
+          "collar": 0.02,
+          "archive_run_path": "runs\\full_matrix\\ghia_re100_seed7_eps0.02_chunk2048",
+          "checkpoint_sha256": "cc102952d216e7d26ad779290d7434aa5c7415b3e58a83c60f2ea56e318d650b",
+          "configuration_sha256": "62d1c7ccc25e9deb6b1e2ddf6747e752539cac6911f6a1902108462c6da86af9",
+          "frozen_manifest_sha256": "29e980c3ee3162d7d5a74d23c6809ed29006f959bdd18edd7da0ddf7fe83c574",
+          "model_sha256": "7c105bf745e6b5d857cb2d83b23f7f398869098604608212ab47a93b6fa6c660",
+          "source_canonical_sha256": "507a6e0a6d632a173c8bdc8748564beffee77ce3664aeffcee25edc5ca305b9e",
+          "runtime_history": [
+            {
+              "torch": "2.5.1+cu118",
+              "device": "cuda",
+              "cuda": "11.8"
+            }
+          ],
+          "coverage": {
+            "n": 2048,
+            "minimum_corner_radius": 0.0280245763960302,
+            "points_in_radius_0_01_to_0_02": 0,
+            "points_in_radius_0_02_to_0_05": 3,
+            "points_within_0_01_of_any_wall": 88,
+            "points_above_y_0_99": 26,
+            "point_sha256": "44f7b5249cb3317e856cb99b1d4d5fe05fa49cc8705d3f5904038070d3509320"
+          }
+        }
+      ]
+    },
+    {
+      "Re": 100,
+      "seed": 23,
+      "identical_collocation_tensors": false,
+      "identical_discrete_momentum_objective": false,
+      "identical_frozen_model": false,
+      "collar_test_information": "one new annulus point replaces one retained-domain point",
+      "runs": [
+        {
+          "collar": 0.01,
+          "archive_run_path": "runs\\full_matrix\\ghia_re100_seed23_eps0.01_chunk2048",
+          "checkpoint_sha256": "a0ffc60abfd15745621468e32fbd936bd5087fcc32add61d33df7f0e32840071",
+          "configuration_sha256": "74e2354a298a97242d2c77f136bc9c44ef9263606affbe599f0786a231253417",
+          "frozen_manifest_sha256": "ac3bb5b3cc3aa7c0905b8c0803e7dea66b0b36d06873f26f6bbc2ee2808cb58e",
+          "model_sha256": "1a811d6a4f902f80fa1c623099aca687a569ce87a9248d30f699b31cff87ac35",
+          "source_canonical_sha256": "507a6e0a6d632a173c8bdc8748564beffee77ce3664aeffcee25edc5ca305b9e",
+          "runtime_history": [
+            {
+              "torch": "2.5.1+cu118",
+              "device": "cuda",
+              "cuda": "11.8"
+            }
+          ],
+          "coverage": {
+            "n": 2048,
+            "minimum_corner_radius": 0.01674653559370807,
+            "points_in_radius_0_01_to_0_02": 1,
+            "points_in_radius_0_02_to_0_05": 11,
+            "points_within_0_01_of_any_wall": 99,
+            "points_above_y_0_99": 22,
+            "point_sha256": "1c31669e86a351d67a53685ef464ddb4e2f20583bc5f658c6f44b3cbd3aa2742"
+          }
+        },
+        {
+          "collar": 0.02,
+          "archive_run_path": "runs\\full_matrix\\ghia_re100_seed23_eps0.02_chunk2048",
+          "checkpoint_sha256": "649a133381807bf182711d187829e765ac4414fe2db1ca91e5258021b9cfefe7",
+          "configuration_sha256": "83805bfe22940477cf248efd10a63d73eb336e7814f6e6d84c02c960192f7bfb",
+          "frozen_manifest_sha256": "e2a26b134e7bf6fb52ca60cdaace45c6c75ee9365d8fd859937233bef1196d78",
+          "model_sha256": "590d29c2003b95362ad48e9caa819e8268c34d7d0fc2b56b8cc9c8a858b38e36",
+          "source_canonical_sha256": "507a6e0a6d632a173c8bdc8748564beffee77ce3664aeffcee25edc5ca305b9e",
+          "runtime_history": [
+            {
+              "torch": "2.5.1+cu118",
+              "device": "cuda",
+              "cuda": "11.8"
+            }
+          ],
+          "coverage": {
+            "n": 2048,
+            "minimum_corner_radius": 0.022062935730778225,
+            "points_in_radius_0_01_to_0_02": 0,
+            "points_in_radius_0_02_to_0_05": 11,
+            "points_within_0_01_of_any_wall": 98,
+            "points_above_y_0_99": 21,
+            "point_sha256": "083b92616c25331eb1d08c421d3a3b3cbb76ab6a51202a4c81fb4736252a1237"
+          }
+        }
+      ]
+    },
+    {
+      "Re": 100,
+      "seed": 61,
+      "identical_collocation_tensors": true,
+      "identical_discrete_momentum_objective": true,
+      "identical_frozen_model": true,
+      "collar_test_information": "none: identical sampled objective",
+      "runs": [
+        {
+          "collar": 0.01,
+          "archive_run_path": "runs\\full_matrix\\ghia_re100_seed61_eps0.01_chunk2048",
+          "checkpoint_sha256": "44437a56bff6495965a76d94f81acdc239b9797696d3137980068c16bdfd6531",
+          "configuration_sha256": "de2509420ac3956f64bdb024dde653f0267ef666385158077f353f6a5a4de19b",
+          "frozen_manifest_sha256": "aa696dc1888f052b142cd0f483be886e28a92cdbe78ee64c5e0819878c525efd",
+          "model_sha256": "8904051419e5c34c63b65a1ec26a1ea5d73a2e32aa0d070461e499eb1742201b",
+          "source_canonical_sha256": "507a6e0a6d632a173c8bdc8748564beffee77ce3664aeffcee25edc5ca305b9e",
+          "runtime_history": [
+            {
+              "torch": "2.5.1+cu118",
+              "device": "cuda",
+              "cuda": "11.8"
+            }
+          ],
+          "coverage": {
+            "n": 2048,
+            "minimum_corner_radius": 0.02167076136668294,
+            "points_in_radius_0_01_to_0_02": 0,
+            "points_in_radius_0_02_to_0_05": 6,
+            "points_within_0_01_of_any_wall": 75,
+            "points_above_y_0_99": 14,
+            "point_sha256": "9f75ae603836f0eaa5b85e864506a4dbc6d1f18d7a9a0a17f0a129ff95f1a166"
+          }
+        },
+        {
+          "collar": 0.02,
+          "archive_run_path": "runs\\full_matrix\\ghia_re100_seed61_eps0.02_chunk2048",
+          "checkpoint_sha256": "1e64704294492ab0def36f1500cbae2b76a83185878b7689043d9d25b13ed830",
+          "configuration_sha256": "078ff8b31a146026bcf0dee84b271da6174e9d1b527708b49e61630c66ba7ffd",
+          "frozen_manifest_sha256": "21259b95821c0d9dc3f382c4c02dbade2e6c5ebb38f9d580c1928a9c38788c45",
+          "model_sha256": "8904051419e5c34c63b65a1ec26a1ea5d73a2e32aa0d070461e499eb1742201b",
+          "source_canonical_sha256": "507a6e0a6d632a173c8bdc8748564beffee77ce3664aeffcee25edc5ca305b9e",
+          "runtime_history": [
+            {
+              "torch": "2.5.1+cu118",
+              "device": "cuda",
+              "cuda": "11.8"
+            }
+          ],
+          "coverage": {
+            "n": 2048,
+            "minimum_corner_radius": 0.02167076136668294,
+            "points_in_radius_0_01_to_0_02": 0,
+            "points_in_radius_0_02_to_0_05": 6,
+            "points_within_0_01_of_any_wall": 75,
+            "points_above_y_0_99": 14,
+            "point_sha256": "9f75ae603836f0eaa5b85e864506a4dbc6d1f18d7a9a0a17f0a129ff95f1a166"
+          }
+        }
+      ]
+    },
+    {
+      "Re": 400,
+      "seed": 7,
+      "identical_collocation_tensors": true,
+      "identical_discrete_momentum_objective": true,
+      "identical_frozen_model": true,
+      "collar_test_information": "none: identical sampled objective",
+      "runs": [
+        {
+          "collar": 0.01,
+          "archive_run_path": "runs\\full_matrix\\ghia_re400_seed7_eps0.01_chunk2048",
+          "checkpoint_sha256": "d45f690bc0498f217b650ea1dbc4273ca3e94017063606e80be3063e1bea3c7e",
+          "configuration_sha256": "62c49bac9cc7b93c17a2b9bd75e21736557c651285577aaa6ec2f1ccff3edb19",
+          "frozen_manifest_sha256": "3997ee72245343fc7fb8b69142f2cdabe236a5dedc0bb655b2ea209a186f35b2",
+          "model_sha256": "be283c913418ed2ba3d39fd400bab2c132263ac1e4ac8f07b29a88dc954b0688",
+          "source_canonical_sha256": "507a6e0a6d632a173c8bdc8748564beffee77ce3664aeffcee25edc5ca305b9e",
+          "runtime_history": [
+            {
+              "torch": "2.5.1+cu118",
+              "device": "cuda",
+              "cuda": "11.8"
+            }
+          ],
+          "coverage": {
+            "n": 2048,
+            "minimum_corner_radius": 0.0280245763960302,
+            "points_in_radius_0_01_to_0_02": 0,
+            "points_in_radius_0_02_to_0_05": 3,
+            "points_within_0_01_of_any_wall": 88,
+            "points_above_y_0_99": 26,
+            "point_sha256": "44f7b5249cb3317e856cb99b1d4d5fe05fa49cc8705d3f5904038070d3509320"
+          }
+        },
+        {
+          "collar": 0.02,
+          "archive_run_path": "runs\\full_matrix\\ghia_re400_seed7_eps0.02_chunk2048",
+          "checkpoint_sha256": "42f7b35d0f4d77c4d468a8e991cb654319837b69f0c691259c81de431fbd84ef",
+          "configuration_sha256": "e33f778ac08375e3eba14233f508f54623063c554d7daf950d32d4b706d6cd64",
+          "frozen_manifest_sha256": "363bf381e3acfa8738fe6154652ef3065ddd18e2ed7d127d8f95abbb402657cb",
+          "model_sha256": "be283c913418ed2ba3d39fd400bab2c132263ac1e4ac8f07b29a88dc954b0688",
+          "source_canonical_sha256": "507a6e0a6d632a173c8bdc8748564beffee77ce3664aeffcee25edc5ca305b9e",
+          "runtime_history": [
+            {
+              "torch": "2.5.1+cu118",
+              "device": "cuda",
+              "cuda": "11.8"
+            }
+          ],
+          "coverage": {
+            "n": 2048,
+            "minimum_corner_radius": 0.0280245763960302,
+            "points_in_radius_0_01_to_0_02": 0,
+            "points_in_radius_0_02_to_0_05": 3,
+            "points_within_0_01_of_any_wall": 88,
+            "points_above_y_0_99": 26,
+            "point_sha256": "44f7b5249cb3317e856cb99b1d4d5fe05fa49cc8705d3f5904038070d3509320"
+          }
+        }
+      ]
+    },
+    {
+      "Re": 400,
+      "seed": 23,
+      "identical_collocation_tensors": false,
+      "identical_discrete_momentum_objective": false,
+      "identical_frozen_model": false,
+      "collar_test_information": "one new annulus point replaces one retained-domain point",
+      "runs": [
+        {
+          "collar": 0.01,
+          "archive_run_path": "runs\\full_matrix\\ghia_re400_seed23_eps0.01_chunk2048",
+          "checkpoint_sha256": "46b0554ed285cf5ca9bb1210729d008ca44d13b005ce6a8939efb1bcb8dc1c6f",
+          "configuration_sha256": "fcbe10e56c82070dacb7e51fd0a18aca588ba70bdb4bd498589a4fd4e652c21a",
+          "frozen_manifest_sha256": "cece9503608612d14739fbe6e3606fd62463f0c8a82f75a7585b586856406818",
+          "model_sha256": "ac3e4b30325f0d3c0cfd8c4e3f86adac77bd989aec70a1ec2f08048434603561",
+          "source_canonical_sha256": "507a6e0a6d632a173c8bdc8748564beffee77ce3664aeffcee25edc5ca305b9e",
+          "runtime_history": [
+            {
+              "torch": "2.5.1+cu118",
+              "device": "cuda",
+              "cuda": "11.8"
+            }
+          ],
+          "coverage": {
+            "n": 2048,
+            "minimum_corner_radius": 0.01674653559370807,
+            "points_in_radius_0_01_to_0_02": 1,
+            "points_in_radius_0_02_to_0_05": 11,
+            "points_within_0_01_of_any_wall": 99,
+            "points_above_y_0_99": 22,
+            "point_sha256": "1c31669e86a351d67a53685ef464ddb4e2f20583bc5f658c6f44b3cbd3aa2742"
+          }
+        },
+        {
+          "collar": 0.02,
+          "archive_run_path": "runs\\full_matrix\\ghia_re400_seed23_eps0.02_chunk2048",
+          "checkpoint_sha256": "3617be1228fff4e8ae7520e5b8b031fc4c1c1fa01142bf237159b4130423c45e",
+          "configuration_sha256": "69abc57ce6fc176db552534a96e8130c3aa8a42cfa877e6f8b46dc3821b1f1d4",
+          "frozen_manifest_sha256": "1721841baee7c210f2680e26d88bf3ba2283ab35337f0def5975e15fd9566ec7",
+          "model_sha256": "d03ad8d9271f9d5c2da2b5629ce5d624244695986a80d1d9b0f4d51def975424",
+          "source_canonical_sha256": "507a6e0a6d632a173c8bdc8748564beffee77ce3664aeffcee25edc5ca305b9e",
+          "runtime_history": [
+            {
+              "torch": "2.5.1+cu118",
+              "device": "cuda",
+              "cuda": "11.8"
+            }
+          ],
+          "coverage": {
+            "n": 2048,
+            "minimum_corner_radius": 0.022062935730778225,
+            "points_in_radius_0_01_to_0_02": 0,
+            "points_in_radius_0_02_to_0_05": 11,
+            "points_within_0_01_of_any_wall": 98,
+            "points_above_y_0_99": 21,
+            "point_sha256": "083b92616c25331eb1d08c421d3a3b3cbb76ab6a51202a4c81fb4736252a1237"
+          }
+        }
+      ]
+    },
+    {
+      "Re": 400,
+      "seed": 61,
+      "identical_collocation_tensors": true,
+      "identical_discrete_momentum_objective": true,
+      "identical_frozen_model": true,
+      "collar_test_information": "none: identical sampled objective",
+      "runs": [
+        {
+          "collar": 0.01,
+          "archive_run_path": "runs\\full_matrix\\ghia_re400_seed61_eps0.01_chunk2048",
+          "checkpoint_sha256": "97b42b8b4e3384e19bf791c88b9c26cb8145960e3d0dcb56ab47110c3ef1677b",
+          "configuration_sha256": "85273f71763d89ff1c7ac00379a029a722f9a29444a3d309f5c921f202e95dab",
+          "frozen_manifest_sha256": "089662a5631923542636adb6be415129f57898fc687712c9b90afd5ccbb30ab6",
+          "model_sha256": "a8ed7036e11124b0bb641265f16b150c748af6005e1d12676d7ad1702c5e5692",
+          "source_canonical_sha256": "507a6e0a6d632a173c8bdc8748564beffee77ce3664aeffcee25edc5ca305b9e",
+          "runtime_history": [
+            {
+              "torch": "2.5.1+cu118",
+              "device": "cuda",
+              "cuda": "11.8"
+            }
+          ],
+          "coverage": {
+            "n": 2048,
+            "minimum_corner_radius": 0.02167076136668294,
+            "points_in_radius_0_01_to_0_02": 0,
+            "points_in_radius_0_02_to_0_05": 6,
+            "points_within_0_01_of_any_wall": 75,
+            "points_above_y_0_99": 14,
+            "point_sha256": "9f75ae603836f0eaa5b85e864506a4dbc6d1f18d7a9a0a17f0a129ff95f1a166"
+          }
+        },
+        {
+          "collar": 0.02,
+          "archive_run_path": "runs\\full_matrix\\ghia_re400_seed61_eps0.02_chunk2048",
+          "checkpoint_sha256": "b5966ff9f8146d4425051f1911f66c875b2a1883a67d49738341703378c3aaea",
+          "configuration_sha256": "d000a06523430f893964afce17045587e6e6d194af64ba91920bcb7ba17e50b1",
+          "frozen_manifest_sha256": "b2cf6e96612ff3e4b2419553342ecfaba06d28f5a86791d99166628357eab513",
+          "model_sha256": "a8ed7036e11124b0bb641265f16b150c748af6005e1d12676d7ad1702c5e5692",
+          "source_canonical_sha256": "507a6e0a6d632a173c8bdc8748564beffee77ce3664aeffcee25edc5ca305b9e",
+          "runtime_history": [
+            {
+              "torch": "2.5.1+cu118",
+              "device": "cuda",
+              "cuda": "11.8"
+            }
+          ],
+          "coverage": {
+            "n": 2048,
+            "minimum_corner_radius": 0.02167076136668294,
+            "points_in_radius_0_01_to_0_02": 0,
+            "points_in_radius_0_02_to_0_05": 6,
+            "points_within_0_01_of_any_wall": 75,
+            "points_above_y_0_99": 14,
+            "point_sha256": "9f75ae603836f0eaa5b85e864506a4dbc6d1f18d7a9a0a17f0a129ff95f1a166"
+          }
+        }
+      ]
+    },
+    {
+      "Re": 1000,
+      "seed": 7,
+      "identical_collocation_tensors": true,
+      "identical_discrete_momentum_objective": true,
+      "identical_frozen_model": true,
+      "collar_test_information": "none: identical sampled objective",
+      "runs": [
+        {
+          "collar": 0.01,
+          "archive_run_path": "runs\\full_matrix\\ghia_re1000_seed7_eps0.01_chunk2048",
+          "checkpoint_sha256": "3d2ca8470850499d6cfcd471d2a2b3aba6e267be9ff28aa3400e5e2d21c03b12",
+          "configuration_sha256": "d43e72ce288b5bbf9c252b20514e24390e3f38ba5f59f4fbac7a97b02d85064f",
+          "frozen_manifest_sha256": "da20772ba6c2f651570fa0548d58a2c9634026610acd50bcee1bdf8b4122ebef",
+          "model_sha256": "2b392aa329b246545a899a9ea6d3185ed68bc4dabfd095e405857e76766c0428",
+          "source_canonical_sha256": "507a6e0a6d632a173c8bdc8748564beffee77ce3664aeffcee25edc5ca305b9e",
+          "runtime_history": [
+            {
+              "torch": "2.5.1+cu118",
+              "device": "cuda",
+              "cuda": "11.8"
+            }
+          ],
+          "coverage": {
+            "n": 2048,
+            "minimum_corner_radius": 0.0280245763960302,
+            "points_in_radius_0_01_to_0_02": 0,
+            "points_in_radius_0_02_to_0_05": 3,
+            "points_within_0_01_of_any_wall": 88,
+            "points_above_y_0_99": 26,
+            "point_sha256": "44f7b5249cb3317e856cb99b1d4d5fe05fa49cc8705d3f5904038070d3509320"
+          }
+        },
+        {
+          "collar": 0.02,
+          "archive_run_path": "runs\\full_matrix\\ghia_re1000_seed7_eps0.02_chunk2048",
+          "checkpoint_sha256": "dd060c2af0c09879c29724afb58f78ef8955d3e43a5a565613f2fc47c805294d",
+          "configuration_sha256": "46e52f2c19b88a0203561a561a473e10659fd255e99950078c9345fa93857b4a",
+          "frozen_manifest_sha256": "254a43650631a40775121db5acd2420a770e8faa968f7b1bd8536836d3acfcda",
+          "model_sha256": "2b392aa329b246545a899a9ea6d3185ed68bc4dabfd095e405857e76766c0428",
+          "source_canonical_sha256": "507a6e0a6d632a173c8bdc8748564beffee77ce3664aeffcee25edc5ca305b9e",
+          "runtime_history": [
+            {
+              "torch": "2.5.1+cu118",
+              "device": "cuda",
+              "cuda": "11.8"
+            }
+          ],
+          "coverage": {
+            "n": 2048,
+            "minimum_corner_radius": 0.0280245763960302,
+            "points_in_radius_0_01_to_0_02": 0,
+            "points_in_radius_0_02_to_0_05": 3,
+            "points_within_0_01_of_any_wall": 88,
+            "points_above_y_0_99": 26,
+            "point_sha256": "44f7b5249cb3317e856cb99b1d4d5fe05fa49cc8705d3f5904038070d3509320"
+          }
+        }
+      ]
+    },
+    {
+      "Re": 1000,
+      "seed": 23,
+      "identical_collocation_tensors": false,
+      "identical_discrete_momentum_objective": false,
+      "identical_frozen_model": false,
+      "collar_test_information": "one new annulus point replaces one retained-domain point",
+      "runs": [
+        {
+          "collar": 0.01,
+          "archive_run_path": "runs\\full_matrix\\ghia_re1000_seed23_eps0.01_chunk2048",
+          "checkpoint_sha256": "0519f8031c73c1905b5d9a6c6566befc040a1e35e54cad307d87ed205c57626a",
+          "configuration_sha256": "85d0daf35002d58d9a6edbb4511e7bac52d91a21d8c901273b34877579adafc3",
+          "frozen_manifest_sha256": "0c38dc5223d4b1d359f73389abca2e6769cc6882a33dee001fd5eda5ed3006a6",
+          "model_sha256": "203315280d6f9ab5b7ec712292582054d0ab7a39f0fefa080152ab79a4ea5416",
+          "source_canonical_sha256": "507a6e0a6d632a173c8bdc8748564beffee77ce3664aeffcee25edc5ca305b9e",
+          "runtime_history": [
+            {
+              "torch": "2.5.1+cu118",
+              "device": "cuda",
+              "cuda": "11.8"
+            }
+          ],
+          "coverage": {
+            "n": 2048,
+            "minimum_corner_radius": 0.01674653559370807,
+            "points_in_radius_0_01_to_0_02": 1,
+            "points_in_radius_0_02_to_0_05": 11,
+            "points_within_0_01_of_any_wall": 99,
+            "points_above_y_0_99": 22,
+            "point_sha256": "1c31669e86a351d67a53685ef464ddb4e2f20583bc5f658c6f44b3cbd3aa2742"
+          }
+        },
+        {
+          "collar": 0.02,
+          "archive_run_path": "runs\\full_matrix\\ghia_re1000_seed23_eps0.02_chunk2048",
+          "checkpoint_sha256": "e64054de4383d9a9789e2f250f52eee2423494f0d0e95f2404b8013c3bbf5001",
+          "configuration_sha256": "687ff66778c2fe760aefa2f72fe36b36c849b21043722a1759673c028754bec2",
+          "frozen_manifest_sha256": "feb0fa80e95ef430072a8f41374e3fd97ed6e8ce5c8f0bbd1e977023c9ed21d0",
+          "model_sha256": "306854cc14b3d6c08535c40b236c4ae4529eca291d9d8b005bf2006142744ee0",
+          "source_canonical_sha256": "507a6e0a6d632a173c8bdc8748564beffee77ce3664aeffcee25edc5ca305b9e",
+          "runtime_history": [
+            {
+              "torch": "2.5.1+cu118",
+              "device": "cuda",
+              "cuda": "11.8"
+            }
+          ],
+          "coverage": {
+            "n": 2048,
+            "minimum_corner_radius": 0.022062935730778225,
+            "points_in_radius_0_01_to_0_02": 0,
+            "points_in_radius_0_02_to_0_05": 11,
+            "points_within_0_01_of_any_wall": 98,
+            "points_above_y_0_99": 21,
+            "point_sha256": "083b92616c25331eb1d08c421d3a3b3cbb76ab6a51202a4c81fb4736252a1237"
+          }
+        }
+      ]
+    },
+    {
+      "Re": 1000,
+      "seed": 61,
+      "identical_collocation_tensors": true,
+      "identical_discrete_momentum_objective": true,
+      "identical_frozen_model": false,
+      "collar_test_information": "none: identical sampled objective",
+      "runs": [
+        {
+          "collar": 0.01,
+          "archive_run_path": "runs\\full_matrix\\ghia_re1000_seed61_eps0.01_chunk2048",
+          "checkpoint_sha256": "a941b4ea5d0cb3df286a3271905203c61d00dbeb977cebf53ee5484aa0d83250",
+          "configuration_sha256": "08b0c28dad9dffc0ee6d6caa5e469c85ef475930f002e1058a1908be20381d79",
+          "frozen_manifest_sha256": "7de0b24558ecd1a47113b7c9fc7ffd3248074e05852bab46c42632e5140a7cde",
+          "model_sha256": "7955823fab330d0bb7a6dfa85fdbd81f75dddb9f8d696c597bad80f5f0de5e17",
+          "source_canonical_sha256": "507a6e0a6d632a173c8bdc8748564beffee77ce3664aeffcee25edc5ca305b9e",
+          "runtime_history": [
+            {
+              "torch": "2.5.1+cu118",
+              "device": "cuda",
+              "cuda": "11.8"
+            }
+          ],
+          "coverage": {
+            "n": 2048,
+            "minimum_corner_radius": 0.02167076136668294,
+            "points_in_radius_0_01_to_0_02": 0,
+            "points_in_radius_0_02_to_0_05": 6,
+            "points_within_0_01_of_any_wall": 75,
+            "points_above_y_0_99": 14,
+            "point_sha256": "9f75ae603836f0eaa5b85e864506a4dbc6d1f18d7a9a0a17f0a129ff95f1a166"
+          }
+        },
+        {
+          "collar": 0.02,
+          "archive_run_path": "runs\\full_matrix\\ghia_re1000_seed61_eps0.02_chunk2048",
+          "checkpoint_sha256": "1689b225b73eedc88bf6316c0070104e7a913e63aab9ba1ee35f78f1708fef92",
+          "configuration_sha256": "7ddd97151b026f544af290f5bc29df31c2695d86a4b4a39f9605a0a8531ca7fe",
+          "frozen_manifest_sha256": "ae816f9b5a45b24720648a45ed1b9c5bea2784b68de447c3689470abd72bd3d3",
+          "model_sha256": "d021044e50e783dccaf5174ac4676aa56be5d87d3aed995905efd35686c406ef",
+          "source_canonical_sha256": "507a6e0a6d632a173c8bdc8748564beffee77ce3664aeffcee25edc5ca305b9e",
+          "runtime_history": [
+            {
+              "torch": "2.5.1+cu118",
+              "device": "cuda",
+              "cuda": "11.8"
+            }
+          ],
+          "coverage": {
+            "n": 2048,
+            "minimum_corner_radius": 0.02167076136668294,
+            "points_in_radius_0_01_to_0_02": 0,
+            "points_in_radius_0_02_to_0_05": 6,
+            "points_within_0_01_of_any_wall": 75,
+            "points_above_y_0_99": 14,
+            "point_sha256": "9f75ae603836f0eaa5b85e864506a4dbc6d1f18d7a9a0a17f0a129ff95f1a166"
+          }
+        }
+      ]
+    },
+    {
+      "Re": 3200,
+      "seed": 7,
+      "identical_collocation_tensors": true,
+      "identical_discrete_momentum_objective": true,
+      "identical_frozen_model": true,
+      "collar_test_information": "none: identical sampled objective",
+      "runs": [
+        {
+          "collar": 0.01,
+          "archive_run_path": "runs\\full_matrix\\ghia_re3200_seed7_eps0.01_chunk2048",
+          "checkpoint_sha256": "15de3b41dc0ff694fccf724414f521bbaa67827abaed343ece6f7178b39a4255",
+          "configuration_sha256": "d1adbdafc6dcb96ff6da827eaf19065aef334a9a5685c83dcd29e2dcf7c71e50",
+          "frozen_manifest_sha256": "54f1662c634ba83419fcf74fb168b52ad0e0de3caa8907a92fd3cd0fe7c9f229",
+          "model_sha256": "f4b9f6a0ab3ddc709637ff76385e2dbe4b341d93c61d3b0a1adee7ca39921846",
+          "source_canonical_sha256": "507a6e0a6d632a173c8bdc8748564beffee77ce3664aeffcee25edc5ca305b9e",
+          "runtime_history": [
+            {
+              "torch": "2.5.1+cu118",
+              "device": "cuda",
+              "cuda": "11.8"
+            }
+          ],
+          "coverage": {
+            "n": 2048,
+            "minimum_corner_radius": 0.0280245763960302,
+            "points_in_radius_0_01_to_0_02": 0,
+            "points_in_radius_0_02_to_0_05": 3,
+            "points_within_0_01_of_any_wall": 88,
+            "points_above_y_0_99": 26,
+            "point_sha256": "44f7b5249cb3317e856cb99b1d4d5fe05fa49cc8705d3f5904038070d3509320"
+          }
+        },
+        {
+          "collar": 0.02,
+          "archive_run_path": "runs\\full_matrix\\ghia_re3200_seed7_eps0.02_chunk2048",
+          "checkpoint_sha256": "2ce20429f35d4072adc5b97fa10b32a5200cdb7fa178665bacd200f8648c2126",
+          "configuration_sha256": "0c18c5111ed59b96d9f41f5d8ea8e3359fa0a9cb08cd032b49ce7dc8e26ed091",
+          "frozen_manifest_sha256": "3f8483f61f23a3503f1221dcf751bc882f6051dc62993dbd540b7b3e32966260",
+          "model_sha256": "f4b9f6a0ab3ddc709637ff76385e2dbe4b341d93c61d3b0a1adee7ca39921846",
+          "source_canonical_sha256": "507a6e0a6d632a173c8bdc8748564beffee77ce3664aeffcee25edc5ca305b9e",
+          "runtime_history": [
+            {
+              "torch": "2.5.1+cu118",
+              "device": "cuda",
+              "cuda": "11.8"
+            }
+          ],
+          "coverage": {
+            "n": 2048,
+            "minimum_corner_radius": 0.0280245763960302,
+            "points_in_radius_0_01_to_0_02": 0,
+            "points_in_radius_0_02_to_0_05": 3,
+            "points_within_0_01_of_any_wall": 88,
+            "points_above_y_0_99": 26,
+            "point_sha256": "44f7b5249cb3317e856cb99b1d4d5fe05fa49cc8705d3f5904038070d3509320"
+          }
+        }
+      ]
+    },
+    {
+      "Re": 3200,
+      "seed": 23,
+      "identical_collocation_tensors": false,
+      "identical_discrete_momentum_objective": false,
+      "identical_frozen_model": false,
+      "collar_test_information": "one new annulus point replaces one retained-domain point",
+      "runs": [
+        {
+          "collar": 0.01,
+          "archive_run_path": "runs\\full_matrix\\ghia_re3200_seed23_eps0.01_chunk2048",
+          "checkpoint_sha256": "a2137a89d0377d1da8eedc3af205193e8440d13307085901618e7985f038711d",
+          "configuration_sha256": "6f10f86258898d5e73f8e6801cf2944805bd4675b260b250dbe2971f9bee2b33",
+          "frozen_manifest_sha256": "bf4875d75f8d255cc7d4c497e14c3b50dfeeb572744e11ea0aaf5d63326b1ff7",
+          "model_sha256": "ec3931fefaf3d1c189d04937992174df3b2c4211abb6d9b12d8a74d4da5a0e2e",
+          "source_canonical_sha256": "507a6e0a6d632a173c8bdc8748564beffee77ce3664aeffcee25edc5ca305b9e",
+          "runtime_history": [
+            {
+              "torch": "2.5.1+cu118",
+              "device": "cuda",
+              "cuda": "11.8"
+            }
+          ],
+          "coverage": {
+            "n": 2048,
+            "minimum_corner_radius": 0.01674653559370807,
+            "points_in_radius_0_01_to_0_02": 1,
+            "points_in_radius_0_02_to_0_05": 11,
+            "points_within_0_01_of_any_wall": 99,
+            "points_above_y_0_99": 22,
+            "point_sha256": "1c31669e86a351d67a53685ef464ddb4e2f20583bc5f658c6f44b3cbd3aa2742"
+          }
+        },
+        {
+          "collar": 0.02,
+          "archive_run_path": "runs\\full_matrix\\ghia_re3200_seed23_eps0.02_chunk2048",
+          "checkpoint_sha256": "d629f2a72b78f77253c08b7e658f5b6c80ca8b64e2599bd5f7a771f5335074d4",
+          "configuration_sha256": "f176c64205f6d0084600792054f961d3525674d00e638866fabc834a56c47563",
+          "frozen_manifest_sha256": "299780f5b34ae1727e748195de4ee9c13bb8849ba3900a8583088d1fb725d6b4",
+          "model_sha256": "c7766f03f58e2d11728061dd8dc99ba4a24151b13dbd8f42a6a3c26f3bcb9310",
+          "source_canonical_sha256": "507a6e0a6d632a173c8bdc8748564beffee77ce3664aeffcee25edc5ca305b9e",
+          "runtime_history": [
+            {
+              "torch": "2.5.1+cu118",
+              "device": "cuda",
+              "cuda": "11.8"
+            }
+          ],
+          "coverage": {
+            "n": 2048,
+            "minimum_corner_radius": 0.022062935730778225,
+            "points_in_radius_0_01_to_0_02": 0,
+            "points_in_radius_0_02_to_0_05": 11,
+            "points_within_0_01_of_any_wall": 98,
+            "points_above_y_0_99": 21,
+            "point_sha256": "083b92616c25331eb1d08c421d3a3b3cbb76ab6a51202a4c81fb4736252a1237"
+          }
+        }
+      ]
+    },
+    {
+      "Re": 3200,
+      "seed": 61,
+      "identical_collocation_tensors": true,
+      "identical_discrete_momentum_objective": true,
+      "identical_frozen_model": true,
+      "collar_test_information": "none: identical sampled objective",
+      "runs": [
+        {
+          "collar": 0.01,
+          "archive_run_path": "runs\\full_matrix\\ghia_re3200_seed61_eps0.01_chunk2048",
+          "checkpoint_sha256": "b67371927405ff310a58a529bd35a41e7a77123008f282b4a099ad87917a9417",
+          "configuration_sha256": "ed85d0ff835553eceb43b131c0e73f5822651ebbec2113a46f3f7daf137528f4",
+          "frozen_manifest_sha256": "7e82f6d6bec8ff10337eaa8c994e8774138c4d8392b3c2c18b2c95d1d126c94d",
+          "model_sha256": "69642d10614ecdf5246626a280ff322566545403efb5b1492253f5b5634c0451",
+          "source_canonical_sha256": "507a6e0a6d632a173c8bdc8748564beffee77ce3664aeffcee25edc5ca305b9e",
+          "runtime_history": [
+            {
+              "torch": "2.5.1+cu118",
+              "device": "cuda",
+              "cuda": "11.8"
+            }
+          ],
+          "coverage": {
+            "n": 2048,
+            "minimum_corner_radius": 0.02167076136668294,
+            "points_in_radius_0_01_to_0_02": 0,
+            "points_in_radius_0_02_to_0_05": 6,
+            "points_within_0_01_of_any_wall": 75,
+            "points_above_y_0_99": 14,
+            "point_sha256": "9f75ae603836f0eaa5b85e864506a4dbc6d1f18d7a9a0a17f0a129ff95f1a166"
+          }
+        },
+        {
+          "collar": 0.02,
+          "archive_run_path": "runs\\full_matrix\\ghia_re3200_seed61_eps0.02_chunk2048",
+          "checkpoint_sha256": "80f85a26dc85eed6c38262f780174a45f4e5dcc7d93048f7628f4501e6aff8cf",
+          "configuration_sha256": "10f4acbef45224012bbd7543b05b9025a991b02a532bbb6a452971ef01ad08ee",
+          "frozen_manifest_sha256": "bfc350fe43bd1de290ca7497788985da969a531dedb424333ccc4deb5f37d7cf",
+          "model_sha256": "69642d10614ecdf5246626a280ff322566545403efb5b1492253f5b5634c0451",
+          "source_canonical_sha256": "507a6e0a6d632a173c8bdc8748564beffee77ce3664aeffcee25edc5ca305b9e",
+          "runtime_history": [
+            {
+              "torch": "2.5.1+cu118",
+              "device": "cuda",
+              "cuda": "11.8"
+            }
+          ],
+          "coverage": {
+            "n": 2048,
+            "minimum_corner_radius": 0.02167076136668294,
+            "points_in_radius_0_01_to_0_02": 0,
+            "points_in_radius_0_02_to_0_05": 6,
+            "points_within_0_01_of_any_wall": 75,
+            "points_above_y_0_99": 14,
+            "point_sha256": "9f75ae603836f0eaa5b85e864506a4dbc6d1f18d7a9a0a17f0a129ff95f1a166"
+          }
+        }
+      ]
+    },
+    {
+      "Re": 5000,
+      "seed": 7,
+      "identical_collocation_tensors": true,
+      "identical_discrete_momentum_objective": true,
+      "identical_frozen_model": true,
+      "collar_test_information": "none: identical sampled objective",
+      "runs": [
+        {
+          "collar": 0.01,
+          "archive_run_path": "runs\\full_matrix\\ghia_re5000_seed7_eps0.01_chunk2048",
+          "checkpoint_sha256": "db79ad53f18c0001368c1a08f0270ca220ba45f7fbb5b0a7937a0e8547149e75",
+          "configuration_sha256": "6722e0b0d6a849e662379c069e945b8a92018fdf9970d1b30b083cba249821a9",
+          "frozen_manifest_sha256": "4ae4c6e5a1a49c7bc2fc4a108d2de222057cda8cdf994900680cd15aa3807cb2",
+          "model_sha256": "1d4d2a62fafa8358bf0dd90b86c76e228b93aa2a32d47a8295c6ef6893aa0a39",
+          "source_canonical_sha256": "507a6e0a6d632a173c8bdc8748564beffee77ce3664aeffcee25edc5ca305b9e",
+          "runtime_history": [
+            {
+              "torch": "2.5.1+cu118",
+              "device": "cuda",
+              "cuda": "11.8"
+            }
+          ],
+          "coverage": {
+            "n": 2048,
+            "minimum_corner_radius": 0.0280245763960302,
+            "points_in_radius_0_01_to_0_02": 0,
+            "points_in_radius_0_02_to_0_05": 3,
+            "points_within_0_01_of_any_wall": 88,
+            "points_above_y_0_99": 26,
+            "point_sha256": "44f7b5249cb3317e856cb99b1d4d5fe05fa49cc8705d3f5904038070d3509320"
+          }
+        },
+        {
+          "collar": 0.02,
+          "archive_run_path": "runs\\full_matrix\\ghia_re5000_seed7_eps0.02_chunk2048",
+          "checkpoint_sha256": "ad7942eafd1963756357d9ddf042c4cb5f601d95ce34e0ccf5a5f26ff142fe2f",
+          "configuration_sha256": "24c68ac8a0258e1b13f943d59d99c465a47994567b107b4b519cc92d65961f0a",
+          "frozen_manifest_sha256": "0204be628eb779db198101db4688e3724a5c09e5d45acea789700537ff9f5f34",
+          "model_sha256": "1d4d2a62fafa8358bf0dd90b86c76e228b93aa2a32d47a8295c6ef6893aa0a39",
+          "source_canonical_sha256": "507a6e0a6d632a173c8bdc8748564beffee77ce3664aeffcee25edc5ca305b9e",
+          "runtime_history": [
+            {
+              "torch": "2.5.1+cu118",
+              "device": "cuda",
+              "cuda": "11.8"
+            }
+          ],
+          "coverage": {
+            "n": 2048,
+            "minimum_corner_radius": 0.0280245763960302,
+            "points_in_radius_0_01_to_0_02": 0,
+            "points_in_radius_0_02_to_0_05": 3,
+            "points_within_0_01_of_any_wall": 88,
+            "points_above_y_0_99": 26,
+            "point_sha256": "44f7b5249cb3317e856cb99b1d4d5fe05fa49cc8705d3f5904038070d3509320"
+          }
+        }
+      ]
+    },
+    {
+      "Re": 5000,
+      "seed": 23,
+      "identical_collocation_tensors": false,
+      "identical_discrete_momentum_objective": false,
+      "identical_frozen_model": false,
+      "collar_test_information": "one new annulus point replaces one retained-domain point",
+      "runs": [
+        {
+          "collar": 0.01,
+          "archive_run_path": "runs\\full_matrix\\ghia_re5000_seed23_eps0.01_chunk2048",
+          "checkpoint_sha256": "8e269a0ba9ccf75c4d7895ba863faebff337ff5acbef12fef1f7ca93ee464960",
+          "configuration_sha256": "1f3efdd87a9c03e7998f083169cbcf7e2c14347b6e7d9d80cca5de815afc242c",
+          "frozen_manifest_sha256": "5a14d2dd66b9cebd6f12ff3af943df4b251ada64a363eee28218afb112d62026",
+          "model_sha256": "d9cb8cd7952ea53b0be27d5ede6828dce710f5a54648113f67397d875ac92897",
+          "source_canonical_sha256": "507a6e0a6d632a173c8bdc8748564beffee77ce3664aeffcee25edc5ca305b9e",
+          "runtime_history": [
+            {
+              "torch": "2.5.1+cu118",
+              "device": "cuda",
+              "cuda": "11.8"
+            }
+          ],
+          "coverage": {
+            "n": 2048,
+            "minimum_corner_radius": 0.01674653559370807,
+            "points_in_radius_0_01_to_0_02": 1,
+            "points_in_radius_0_02_to_0_05": 11,
+            "points_within_0_01_of_any_wall": 99,
+            "points_above_y_0_99": 22,
+            "point_sha256": "1c31669e86a351d67a53685ef464ddb4e2f20583bc5f658c6f44b3cbd3aa2742"
+          }
+        },
+        {
+          "collar": 0.02,
+          "archive_run_path": "runs\\full_matrix\\ghia_re5000_seed23_eps0.02_chunk2048",
+          "checkpoint_sha256": "ef2bad07143e25fde95b0145377239a6069905f3931d29a2d49b389d5c46e5c0",
+          "configuration_sha256": "498897cafe957c7a7f93746c64cea57568ce077f5ad9272017b14feb781cacd0",
+          "frozen_manifest_sha256": "9a55ef18bad56ef570dbc9f3a2ee5ab887e4b99f8857e40725efb535d25f821e",
+          "model_sha256": "8898e74896262e4564577246c9cc20439d578c87bb994b8b5b497f1f6284a765",
+          "source_canonical_sha256": "507a6e0a6d632a173c8bdc8748564beffee77ce3664aeffcee25edc5ca305b9e",
+          "runtime_history": [
+            {
+              "torch": "2.5.1+cu118",
+              "device": "cuda",
+              "cuda": "11.8"
+            }
+          ],
+          "coverage": {
+            "n": 2048,
+            "minimum_corner_radius": 0.022062935730778225,
+            "points_in_radius_0_01_to_0_02": 0,
+            "points_in_radius_0_02_to_0_05": 11,
+            "points_within_0_01_of_any_wall": 98,
+            "points_above_y_0_99": 21,
+            "point_sha256": "083b92616c25331eb1d08c421d3a3b3cbb76ab6a51202a4c81fb4736252a1237"
+          }
+        }
+      ]
+    },
+    {
+      "Re": 5000,
+      "seed": 61,
+      "identical_collocation_tensors": true,
+      "identical_discrete_momentum_objective": true,
+      "identical_frozen_model": true,
+      "collar_test_information": "none: identical sampled objective",
+      "runs": [
+        {
+          "collar": 0.01,
+          "archive_run_path": "runs\\full_matrix\\ghia_re5000_seed61_eps0.01_chunk2048",
+          "checkpoint_sha256": "aedf62d7bcf682963b280ed004267d3ffe18a2ac99d4f6338025fe1582c4d460",
+          "configuration_sha256": "f4202eaa1cab489fffcd2be5b8afb92dde0446899df08d27c604ba9a26702b30",
+          "frozen_manifest_sha256": "06592e1767724011ec3f20be38c4d28244834ebc92928f03b69c85afe27502dc",
+          "model_sha256": "81ae99dd4837bc51f9cf0f9d1e8ea92ce2e9b1b8085a9796c72c930212c66cbf",
+          "source_canonical_sha256": "507a6e0a6d632a173c8bdc8748564beffee77ce3664aeffcee25edc5ca305b9e",
+          "runtime_history": [
+            {
+              "torch": "2.5.1+cu118",
+              "device": "cuda",
+              "cuda": "11.8"
+            }
+          ],
+          "coverage": {
+            "n": 2048,
+            "minimum_corner_radius": 0.02167076136668294,
+            "points_in_radius_0_01_to_0_02": 0,
+            "points_in_radius_0_02_to_0_05": 6,
+            "points_within_0_01_of_any_wall": 75,
+            "points_above_y_0_99": 14,
+            "point_sha256": "9f75ae603836f0eaa5b85e864506a4dbc6d1f18d7a9a0a17f0a129ff95f1a166"
+          }
+        },
+        {
+          "collar": 0.02,
+          "archive_run_path": "runs\\full_matrix\\ghia_re5000_seed61_eps0.02_chunk2048",
+          "checkpoint_sha256": "9cddb5a74a3f8f1bb9210956a51b406fe2d8ff9cc80c4cb38ab2e280466a1255",
+          "configuration_sha256": "fdfe3341e98c9e3762646b8206a72f56b2f36af3cdd6b97c4864240c33842297",
+          "frozen_manifest_sha256": "b75b125d4c920a18edde27508b3e64c6e3742db9c5e5ec242a7a7ad737668733",
+          "model_sha256": "81ae99dd4837bc51f9cf0f9d1e8ea92ce2e9b1b8085a9796c72c930212c66cbf",
+          "source_canonical_sha256": "507a6e0a6d632a173c8bdc8748564beffee77ce3664aeffcee25edc5ca305b9e",
+          "runtime_history": [
+            {
+              "torch": "2.5.1+cu118",
+              "device": "cuda",
+              "cuda": "11.8"
+            }
+          ],
+          "coverage": {
+            "n": 2048,
+            "minimum_corner_radius": 0.02167076136668294,
+            "points_in_radius_0_01_to_0_02": 0,
+            "points_in_radius_0_02_to_0_05": 6,
+            "points_within_0_01_of_any_wall": 75,
+            "points_above_y_0_99": 14,
+            "point_sha256": "9f75ae603836f0eaa5b85e864506a4dbc6d1f18d7a9a0a17f0a129ff95f1a166"
+          }
+        }
+      ]
+    },
+    {
+      "Re": 7500,
+      "seed": 7,
+      "identical_collocation_tensors": true,
+      "identical_discrete_momentum_objective": true,
+      "identical_frozen_model": true,
+      "collar_test_information": "none: identical sampled objective",
+      "runs": [
+        {
+          "collar": 0.01,
+          "archive_run_path": "runs\\full_matrix\\ghia_re7500_seed7_eps0.01_chunk2048",
+          "checkpoint_sha256": "2fd0eab088e3a86d34823356fe4095f3a5200ef4caab2c460484689819514c61",
+          "configuration_sha256": "9b59c9ff268cd185d4a95c2f99e97a6c7c112d36325219fba754a64aeebf3a6e",
+          "frozen_manifest_sha256": "d3de5652adf20f82e43a08ef862080e9d1335084ec4c42b123b00455587cbd30",
+          "model_sha256": "343a735a3d65c1085137cf87f71b7770bdda97fc5e23cfd7ae02501f4f9686bd",
+          "source_canonical_sha256": "507a6e0a6d632a173c8bdc8748564beffee77ce3664aeffcee25edc5ca305b9e",
+          "runtime_history": [
+            {
+              "torch": "2.5.1+cu118",
+              "device": "cuda",
+              "cuda": "11.8"
+            }
+          ],
+          "coverage": {
+            "n": 2048,
+            "minimum_corner_radius": 0.0280245763960302,
+            "points_in_radius_0_01_to_0_02": 0,
+            "points_in_radius_0_02_to_0_05": 3,
+            "points_within_0_01_of_any_wall": 88,
+            "points_above_y_0_99": 26,
+            "point_sha256": "44f7b5249cb3317e856cb99b1d4d5fe05fa49cc8705d3f5904038070d3509320"
+          }
+        },
+        {
+          "collar": 0.02,
+          "archive_run_path": "runs\\full_matrix\\ghia_re7500_seed7_eps0.02_chunk2048",
+          "checkpoint_sha256": "f9670d19d1db1fd6c572818162ee181f2cfc0a51281551885dcf6324e6327348",
+          "configuration_sha256": "3d6a05f8dbfbbd9eb114c0fa53258e75541577d1c8141690a84fbfa2540e0007",
+          "frozen_manifest_sha256": "193e113989c5e885820839279e9fff1b3b5d3a7338075c04d1e3ecf6d6be6d44",
+          "model_sha256": "343a735a3d65c1085137cf87f71b7770bdda97fc5e23cfd7ae02501f4f9686bd",
+          "source_canonical_sha256": "507a6e0a6d632a173c8bdc8748564beffee77ce3664aeffcee25edc5ca305b9e",
+          "runtime_history": [
+            {
+              "torch": "2.5.1+cu118",
+              "device": "cuda",
+              "cuda": "11.8"
+            }
+          ],
+          "coverage": {
+            "n": 2048,
+            "minimum_corner_radius": 0.0280245763960302,
+            "points_in_radius_0_01_to_0_02": 0,
+            "points_in_radius_0_02_to_0_05": 3,
+            "points_within_0_01_of_any_wall": 88,
+            "points_above_y_0_99": 26,
+            "point_sha256": "44f7b5249cb3317e856cb99b1d4d5fe05fa49cc8705d3f5904038070d3509320"
+          }
+        }
+      ]
+    },
+    {
+      "Re": 7500,
+      "seed": 23,
+      "identical_collocation_tensors": false,
+      "identical_discrete_momentum_objective": false,
+      "identical_frozen_model": false,
+      "collar_test_information": "one new annulus point replaces one retained-domain point",
+      "runs": [
+        {
+          "collar": 0.01,
+          "archive_run_path": "runs\\full_matrix\\ghia_re7500_seed23_eps0.01_chunk2048",
+          "checkpoint_sha256": "079f7f26fb375d7e33f128e2bb99ed9bdb1b48c4843efc5f8a0d5c1dab06e0f1",
+          "configuration_sha256": "b154d78fd6403280f7f00b70c295217f24437695361c8f6a58aa47e4bf200a6d",
+          "frozen_manifest_sha256": "7b5e275ea37d243065529e8e969670e3b86573641d15567aaccf8708a90df3d3",
+          "model_sha256": "57c3d90d750ee71e7717adf7e421a896136f6d3b3a46ea15f563e218eed66d6c",
+          "source_canonical_sha256": "507a6e0a6d632a173c8bdc8748564beffee77ce3664aeffcee25edc5ca305b9e",
+          "runtime_history": [
+            {
+              "torch": "2.5.1+cu118",
+              "device": "cuda",
+              "cuda": "11.8"
+            }
+          ],
+          "coverage": {
+            "n": 2048,
+            "minimum_corner_radius": 0.01674653559370807,
+            "points_in_radius_0_01_to_0_02": 1,
+            "points_in_radius_0_02_to_0_05": 11,
+            "points_within_0_01_of_any_wall": 99,
+            "points_above_y_0_99": 22,
+            "point_sha256": "1c31669e86a351d67a53685ef464ddb4e2f20583bc5f658c6f44b3cbd3aa2742"
+          }
+        },
+        {
+          "collar": 0.02,
+          "archive_run_path": "runs\\full_matrix\\ghia_re7500_seed23_eps0.02_chunk2048",
+          "checkpoint_sha256": "185ce45293e0ec65bd92cb305b866d0a520c0d88f44d730f0164bf73187317d2",
+          "configuration_sha256": "5927e5475deb2b6c460eda381b1ce715857829c2199de093c95b03298d35274d",
+          "frozen_manifest_sha256": "42bfb25ae4132bb885eba60364ed2b168ffb44eb6181b676e66dd9358fd39e59",
+          "model_sha256": "02262fb043554b9303f4653313c0cacd838bf72680e03ebe48f34ac16c3ac3bf",
+          "source_canonical_sha256": "507a6e0a6d632a173c8bdc8748564beffee77ce3664aeffcee25edc5ca305b9e",
+          "runtime_history": [
+            {
+              "torch": "2.5.1+cu118",
+              "device": "cuda",
+              "cuda": "11.8"
+            }
+          ],
+          "coverage": {
+            "n": 2048,
+            "minimum_corner_radius": 0.022062935730778225,
+            "points_in_radius_0_01_to_0_02": 0,
+            "points_in_radius_0_02_to_0_05": 11,
+            "points_within_0_01_of_any_wall": 98,
+            "points_above_y_0_99": 21,
+            "point_sha256": "083b92616c25331eb1d08c421d3a3b3cbb76ab6a51202a4c81fb4736252a1237"
+          }
+        }
+      ]
+    },
+    {
+      "Re": 7500,
+      "seed": 61,
+      "identical_collocation_tensors": true,
+      "identical_discrete_momentum_objective": true,
+      "identical_frozen_model": true,
+      "collar_test_information": "none: identical sampled objective",
+      "runs": [
+        {
+          "collar": 0.01,
+          "archive_run_path": "runs\\full_matrix\\ghia_re7500_seed61_eps0.01_chunk2048",
+          "checkpoint_sha256": "6bc08f9c838e4462cc385513838f4fc15adf1b6414fee8f3dabe32c614cf9a5f",
+          "configuration_sha256": "d669c03a88c213f9cefef737bb3f2c6506a4c62a402beafb49fc683221a48ebc",
+          "frozen_manifest_sha256": "9268e6aeb8a723a554286d6ac846cdf5d6901e76e822689ec80cc4a673123932",
+          "model_sha256": "7c7831527fd380ec7f1143af48b51216dae4ff524bb19e2d8002199212730d44",
+          "source_canonical_sha256": "507a6e0a6d632a173c8bdc8748564beffee77ce3664aeffcee25edc5ca305b9e",
+          "runtime_history": [
+            {
+              "torch": "2.5.1+cu118",
+              "device": "cuda",
+              "cuda": "11.8"
+            }
+          ],
+          "coverage": {
+            "n": 2048,
+            "minimum_corner_radius": 0.02167076136668294,
+            "points_in_radius_0_01_to_0_02": 0,
+            "points_in_radius_0_02_to_0_05": 6,
+            "points_within_0_01_of_any_wall": 75,
+            "points_above_y_0_99": 14,
+            "point_sha256": "9f75ae603836f0eaa5b85e864506a4dbc6d1f18d7a9a0a17f0a129ff95f1a166"
+          }
+        },
+        {
+          "collar": 0.02,
+          "archive_run_path": "runs\\full_matrix\\ghia_re7500_seed61_eps0.02_chunk2048",
+          "checkpoint_sha256": "fe844c8c76878fc667f46da32c86bd20f3dc7f4edb7d63eda936e87f668b4835",
+          "configuration_sha256": "79673e146a5ec8265058c6a4dfd03324342a0bcf5a0d042817b493a215f3f166",
+          "frozen_manifest_sha256": "570d0cdac03a2ff9085e5069f4675b423dbe439d0e7fb1c6f02c9776051e8d62",
+          "model_sha256": "7c7831527fd380ec7f1143af48b51216dae4ff524bb19e2d8002199212730d44",
+          "source_canonical_sha256": "507a6e0a6d632a173c8bdc8748564beffee77ce3664aeffcee25edc5ca305b9e",
+          "runtime_history": [
+            {
+              "torch": "2.5.1+cu118",
+              "device": "cuda",
+              "cuda": "11.8"
+            }
+          ],
+          "coverage": {
+            "n": 2048,
+            "minimum_corner_radius": 0.02167076136668294,
+            "points_in_radius_0_01_to_0_02": 0,
+            "points_in_radius_0_02_to_0_05": 6,
+            "points_within_0_01_of_any_wall": 75,
+            "points_above_y_0_99": 14,
+            "point_sha256": "9f75ae603836f0eaa5b85e864506a4dbc6d1f18d7a9a0a17f0a129ff95f1a166"
+          }
+        }
+      ]
+    },
+    {
+      "Re": 10000,
+      "seed": 7,
+      "identical_collocation_tensors": true,
+      "identical_discrete_momentum_objective": true,
+      "identical_frozen_model": true,
+      "collar_test_information": "none: identical sampled objective",
+      "runs": [
+        {
+          "collar": 0.01,
+          "archive_run_path": "runs\\full_matrix\\ghia_re10000_seed7_eps0.01_chunk2048",
+          "checkpoint_sha256": "114c357a08cc2c4bcb8ee52b5cd991d2e9b957456c52f9287f8a28a06fe01708",
+          "configuration_sha256": "52926c6dcc723d10a2b7d744c028178be1426934a07948dfc04eea70dcf3a3ab",
+          "frozen_manifest_sha256": "b25327ae25c7330ff01ea5d8f5b8c6a38c7d439c833d8c9128e421d947c03aab",
+          "model_sha256": "932d80dccfdfbeb3da666e677b4968e019a467bf8dea5a20071a0ced30955bfa",
+          "source_canonical_sha256": "507a6e0a6d632a173c8bdc8748564beffee77ce3664aeffcee25edc5ca305b9e",
+          "runtime_history": [
+            {
+              "torch": "2.5.1+cu118",
+              "device": "cuda",
+              "cuda": "11.8"
+            }
+          ],
+          "coverage": {
+            "n": 2048,
+            "minimum_corner_radius": 0.0280245763960302,
+            "points_in_radius_0_01_to_0_02": 0,
+            "points_in_radius_0_02_to_0_05": 3,
+            "points_within_0_01_of_any_wall": 88,
+            "points_above_y_0_99": 26,
+            "point_sha256": "44f7b5249cb3317e856cb99b1d4d5fe05fa49cc8705d3f5904038070d3509320"
+          }
+        },
+        {
+          "collar": 0.02,
+          "archive_run_path": "runs\\full_matrix\\ghia_re10000_seed7_eps0.02_chunk2048",
+          "checkpoint_sha256": "acd28df75cea59cfc99519c7e640a9311752214aa769f4e9c8efedb7e24c8035",
+          "configuration_sha256": "2292ad7ef18a75ee72ef86dbf1474638084cd450aa5b95534c5e169606a8ec7f",
+          "frozen_manifest_sha256": "9af2eb13f8ccad2fe061d69318970fa7521b2906dc4725461cf309d28d93c936",
+          "model_sha256": "932d80dccfdfbeb3da666e677b4968e019a467bf8dea5a20071a0ced30955bfa",
+          "source_canonical_sha256": "507a6e0a6d632a173c8bdc8748564beffee77ce3664aeffcee25edc5ca305b9e",
+          "runtime_history": [
+            {
+              "torch": "2.5.1+cu118",
+              "device": "cuda",
+              "cuda": "11.8"
+            }
+          ],
+          "coverage": {
+            "n": 2048,
+            "minimum_corner_radius": 0.0280245763960302,
+            "points_in_radius_0_01_to_0_02": 0,
+            "points_in_radius_0_02_to_0_05": 3,
+            "points_within_0_01_of_any_wall": 88,
+            "points_above_y_0_99": 26,
+            "point_sha256": "44f7b5249cb3317e856cb99b1d4d5fe05fa49cc8705d3f5904038070d3509320"
+          }
+        }
+      ]
+    },
+    {
+      "Re": 10000,
+      "seed": 23,
+      "identical_collocation_tensors": false,
+      "identical_discrete_momentum_objective": false,
+      "identical_frozen_model": false,
+      "collar_test_information": "one new annulus point replaces one retained-domain point",
+      "runs": [
+        {
+          "collar": 0.01,
+          "archive_run_path": "runs\\full_matrix\\ghia_re10000_seed23_eps0.01_chunk2048",
+          "checkpoint_sha256": "a135d77dba30be8c023fe8637cea75bf99a81c356f573755f924685164b7212f",
+          "configuration_sha256": "31a5ad1c977f868b62b7709937665f995a1fbabd869851f2d5bc7d60f7e857a7",
+          "frozen_manifest_sha256": "4f51eb709d8a08ec92e1ce366ebf14fa73c574502200b5e5ee221e35f59dd8dc",
+          "model_sha256": "4608570b592b585e8d2aa01ee00505b66d40a22420181bcf38fb1508d78bb562",
+          "source_canonical_sha256": "507a6e0a6d632a173c8bdc8748564beffee77ce3664aeffcee25edc5ca305b9e",
+          "runtime_history": [
+            {
+              "torch": "2.5.1+cu118",
+              "device": "cuda",
+              "cuda": "11.8"
+            }
+          ],
+          "coverage": {
+            "n": 2048,
+            "minimum_corner_radius": 0.01674653559370807,
+            "points_in_radius_0_01_to_0_02": 1,
+            "points_in_radius_0_02_to_0_05": 11,
+            "points_within_0_01_of_any_wall": 99,
+            "points_above_y_0_99": 22,
+            "point_sha256": "1c31669e86a351d67a53685ef464ddb4e2f20583bc5f658c6f44b3cbd3aa2742"
+          }
+        },
+        {
+          "collar": 0.02,
+          "archive_run_path": "runs\\full_matrix\\ghia_re10000_seed23_eps0.02_chunk2048",
+          "checkpoint_sha256": "c4823bb491d696cad825f43733d972e65899afa7042a1ec2552282c06618a5cb",
+          "configuration_sha256": "407a90251ddd62b87796998a2e5655efccafec82acd35c68d79e6dba371471a5",
+          "frozen_manifest_sha256": "4a08b828a87a5c244dfd8bd1d9d836647590ce686487a3607a5c94849f9dcb8d",
+          "model_sha256": "d10d24e700f67fc0d728ce9e005bbe1b2bde62192a49dfab5bee2ae8eaa8a16a",
+          "source_canonical_sha256": "507a6e0a6d632a173c8bdc8748564beffee77ce3664aeffcee25edc5ca305b9e",
+          "runtime_history": [
+            {
+              "torch": "2.5.1+cu118",
+              "device": "cuda",
+              "cuda": "11.8"
+            }
+          ],
+          "coverage": {
+            "n": 2048,
+            "minimum_corner_radius": 0.022062935730778225,
+            "points_in_radius_0_01_to_0_02": 0,
+            "points_in_radius_0_02_to_0_05": 11,
+            "points_within_0_01_of_any_wall": 98,
+            "points_above_y_0_99": 21,
+            "point_sha256": "083b92616c25331eb1d08c421d3a3b3cbb76ab6a51202a4c81fb4736252a1237"
+          }
+        }
+      ]
+    },
+    {
+      "Re": 10000,
+      "seed": 61,
+      "identical_collocation_tensors": true,
+      "identical_discrete_momentum_objective": true,
+      "identical_frozen_model": true,
+      "collar_test_information": "none: identical sampled objective",
+      "runs": [
+        {
+          "collar": 0.01,
+          "archive_run_path": "runs\\full_matrix\\ghia_re10000_seed61_eps0.01_chunk2048",
+          "checkpoint_sha256": "7b90b4394d23cfface4a764219dc8ea1c935ce5432776c608da0e361d5859860",
+          "configuration_sha256": "7675638082c46d10e3ede09a85d5bd527aa06c47e69a44385ab48af9a9b663dc",
+          "frozen_manifest_sha256": "33983fa5eb0a56bdf4d7d73c07f7d5676f90dc8bdf9a168dde667047d6d47c6b",
+          "model_sha256": "721cde12907720160028a91772c94f5fc784871b6c5b73886f10826631083dea",
+          "source_canonical_sha256": "507a6e0a6d632a173c8bdc8748564beffee77ce3664aeffcee25edc5ca305b9e",
+          "runtime_history": [
+            {
+              "torch": "2.5.1+cu118",
+              "device": "cuda",
+              "cuda": "11.8"
+            }
+          ],
+          "coverage": {
+            "n": 2048,
+            "minimum_corner_radius": 0.02167076136668294,
+            "points_in_radius_0_01_to_0_02": 0,
+            "points_in_radius_0_02_to_0_05": 6,
+            "points_within_0_01_of_any_wall": 75,
+            "points_above_y_0_99": 14,
+            "point_sha256": "9f75ae603836f0eaa5b85e864506a4dbc6d1f18d7a9a0a17f0a129ff95f1a166"
+          }
+        },
+        {
+          "collar": 0.02,
+          "archive_run_path": "runs\\full_matrix\\ghia_re10000_seed61_eps0.02_chunk2048",
+          "checkpoint_sha256": "9ddb3c1b666c94bd199e817be1aca99d352b7ca199f19b63a02f7d6eb0bf36e7",
+          "configuration_sha256": "7f6479bbc5ac7da5dae53e3bc106b033195c096569b9cb28d67288d0ecb1cc15",
+          "frozen_manifest_sha256": "17f0075863522573a299fb8434b304ed9bd9427487a25082dae917571141b4a0",
+          "model_sha256": "721cde12907720160028a91772c94f5fc784871b6c5b73886f10826631083dea",
+          "source_canonical_sha256": "507a6e0a6d632a173c8bdc8748564beffee77ce3664aeffcee25edc5ca305b9e",
+          "runtime_history": [
+            {
+              "torch": "2.5.1+cu118",
+              "device": "cuda",
+              "cuda": "11.8"
+            }
+          ],
+          "coverage": {
+            "n": 2048,
+            "minimum_corner_radius": 0.02167076136668294,
+            "points_in_radius_0_01_to_0_02": 0,
+            "points_in_radius_0_02_to_0_05": 6,
+            "points_within_0_01_of_any_wall": 75,
+            "points_above_y_0_99": 14,
+            "point_sha256": "9f75ae603836f0eaa5b85e864506a4dbc6d1f18d7a9a0a17f0a129ff95f1a166"
+          }
+        }
+      ]
+    }
+  ],
+  "interpretation": "Zero differences from identical collocation sets are repeated-objective agreement, not evidence of continuum collar independence. Explicit annulus coverage and an independently audited spatial refinement are required before a collar-robustness claim."
+}

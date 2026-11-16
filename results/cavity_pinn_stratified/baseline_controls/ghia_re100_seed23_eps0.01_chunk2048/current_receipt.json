@@ -1,0 +1,59 @@
+{
+  "finished": true,
+  "adam_completed": 2000,
+  "lbfgs_completed": 500,
+  "closure_calls": 3029,
+  "residual_point_evaluations": 6203392,
+  "elapsed_training_seconds": 923.7856922121719,
+  "process_seconds": 926.5359905357473,
+  "checkpoint_sha256": "a0ffc60abfd15745621468e32fbd936bd5087fcc32add61d33df7f0e32840071",
+  "runtime_history": [
+    {
+      "torch": "2.5.1+cu118",
+      "device": "cuda",
+      "cuda": "11.8"
+    }
+  ],
+  "stop_requested": false,
+  "source_sha256": "507a6e0a6d632a173c8bdc8748564beffee77ce3664aeffcee25edc5ca305b9e",
+  "frozen_manifest": {
+    "schema": 1,
+    "experiment": "constant-lid punctured-collocation PINN",
+    "config": {
+      "reynolds": 100,
+      "seed": 23,
+      "width": 64,
+      "depth": 4,
+      "collar": 0.01,
+      "collocation": 2048,
+      "adam_steps": 2000,
+      "lbfgs_steps": 500,
+      "adam_lr": 0.001,
+      "chunk_size": 2048,
+      "lbfgs_history": 50,
+      "audit_points": 2048,
+      "audit_seed": 983451,
+      "export_grid": 129
+    },
+    "frozen_model": {
+      "model_sha256": "1a811d6a4f902f80fa1c623099aca687a569ce87a9248d30f699b31cff87ac35",
+      "config_sha256": "74e2354a298a97242d2c77f136bc9c44ef9263606affbe599f0786a231253417",
+      "objective_sha256": "1c31669e86a351d67a53685ef464ddb4e2f20583bc5f658c6f44b3cbd3aa2742",
+      "reference_labels_used": false,
+      "endpoint_rule": "last complete step of the preregistered finite budget",
+      "frozen_utc": "2026-11-16T00:31:14Z"
+    },
+    "source_sha256": "507a6e0a6d632a173c8bdc8748564beffee77ce3664aeffcee25edc5ca305b9e",
+    "prediction_file": "frozen_predictions.npz",
+    "prediction_sha256": "2fb2e81979e2ea6d15b7ad38a65d4f3f2f4cebf109382c9096008d444bc5f8cb",
+    "frozen_utc": "2026-11-16T00:31:14Z",
+    "prediction_grid_n": 129,
+    "physics_audit_file": "final_physics_audit.json",
+    "physics_audit_sha256": "f0a98ab8a70b73d978328d7f8a8b046b947c2b9552ae2f0b2e045d863235cc22",
+    "reference_labels_used": false,
+    "reference_evaluation_performed": false,
+    "array_layout": "(y,x); exact top corner values are NaN and explicitly masked",
+    "pressure_gauge": "p(0.5,0.5)=0",
+    "limits": "finite budget; explicit collar; no accepted standard-Ghia accuracy claim"
+  }
+}

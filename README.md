@@ -289,6 +289,36 @@ show agreement with the retained discretization, not mesh-independent pressure a
 [Week 4 lecture](lectures/week04_cavity_surrogates_deeponet.pdf)
 <!-- cavity-flow-comparison:end -->
 
+<!-- cavity-pinn-audit:start -->
+<details>
+<summary>What can fail in a data-free PINN? A 42-run Ghia audit</summary>
+
+The new [Lab 9](notebooks/week04/W4_Lab9_Label_Free_Ghia_PINN_Audit.ipynb)
+tests all seven Reynolds numbers without CFD or Ghia training labels, with
+three independent initializations and two corner collars. **None of the 42
+finite-budget runs passes all preregistered accuracy and physics checks.**
+The high-Re networks miss the interior circulation despite exact wall values
+and incompressibility. These case-specific PINNs are separate from the accurate
+supervised POD-DeepONet above.
+
+<img src="results/cavity_pinn_campaign/figures/paired_speed.png" width="760" alt="Re1000 and Re7500: retained CFD, failed finite-budget label-free PINN and full-range velocity error on the same nodes and scales">
+
+The lab explains the training/audit residual gap and why 14 of 21 nominal
+collar comparisons actually used identical collocation points. It retains all
+seeds, signed profiles and failures.
+
+A [12-case sampling comparison](results/cavity_pinn_stratified/README.md)
+then tests fixed area-weighted corner, wall and interior samples at the same
+objective/gradient work as each original counterpart. Velocity error improves
+in two pairs and worsens in ten; all six Re=7500 pairs worsen. The lab explains
+why better sample coverage alone does not guarantee the correct circulation.
+[Full physical evidence](results/cavity_pinn_campaign/README.md) ·
+[Protocol](docs/CAVITY_PINN_CAMPAIGN_PROTOCOL.md) ·
+[Week 4 lecture](lectures/week04_cavity_surrogates_deeponet.pdf)
+
+</details>
+<!-- cavity-pinn-audit:end -->
+
 ### Week 4.1 — Classical reduced-order models
 
 **[Open Week 4.1: lecture, notebooks and guide](weeks/week04_1/README.md)**
@@ -690,6 +720,13 @@ archived research reconstruction shown above.
 The separate [D/W=5 regional-accuracy notebook](notebooks/week13/W13_Deep_Cavity_D5_Regional_Accuracy.ipynb)
 adds the authors' retained CFD/PINN fields at Re=100,250,500,1000 and regional velocity, pressure and vorticity comparisons.
 
+The new [controlled optimizer notebook](notebooks/week13/W13_D5_Controlled_Optimizer_Study.ipynb)
+compares six fresh D/W=5 runs with matched starts, samples and work. It exposes
+different velocity, pressure and vorticity rankings across three paired seeds.
+Both finite-budget pipelines miss accurate deep-cavity flow; the
+[full comparison](results/deep_cavity_ablation/README.md) preserves those failures
+separately from the historical paper results.
+
 The front page retains only two representative comparisons. The notebook has three parts:
 build and train a small streamfunction PINN on CPU and judge it against the Week 1 CFD
 reference; inspect the deep-cavity field beside CFD; audit the four-case research matrix.
@@ -981,8 +1018,8 @@ This fixed Re105 frame-245 example uses 84 total target labels and seed 17. Vort
 
 [Software manuscript archive](manuscript/README.md) · [Citation](CITATION.cff) · [Data provenance and reuse](DATA_PROVENANCE.md) · [Contributing](CONTRIBUTING.md)
 
-Current release: **v1.13.0**
+Current release: **v1.14.0**
 
-[GitHub release v1.13.0](https://github.com/Ehsan-Roohi/FlowMLLab/releases/tag/v1.13.0) · [Zenodo v1.13.0](https://doi.org/10.5281/zenodo.24250424) · [Release history](https://github.com/Ehsan-Roohi/FlowMLLab/releases)
+[GitHub release v1.14.0](https://github.com/Ehsan-Roohi/FlowMLLab/releases/tag/v1.14.0) · [Zenodo archive](https://doi.org/10.5281/zenodo.22074169) · [Release history](https://github.com/Ehsan-Roohi/FlowMLLab/releases)
 
 **Ehsan Roohi** · University of Massachusetts Amherst · [roohie@umass.edu](mailto:roohie@umass.edu)

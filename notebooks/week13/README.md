@@ -88,3 +88,14 @@ representations at equal precision, capacity and residual-evaluation budget.
 The CPU route now separates the network/lifting, analytic Kovasznay preflight, collocation/mask, Adam, and fixed-objective L-BFGS. Before training, derivatives and residuals pass at D=1 and D=2.2, an intentionally missing metric factor fails at D=2.2, and random network weights satisfy all four walls. Adam resampling is optional and refreshes the mask; L-BFGS never resamples. The continuation plot is display-only and does not overwrite the retained image.
 
 Keep three near-matched error records distinct: the earlier Re=100 qualification (about 3.10%), the Re=100 square row of the A100 matrix (about 3.34%), and the Re=1000, D=2.2 checkpoint 55118 versus Nektar++ t=120 comparison (about 3.59%). Checkpoint 65711 supplies later training history only. Residual consistency and reference agreement are complementary evidence.
+
+## Matched D/W=5 optimizer study
+
+[The new controlled-study notebook](../../notebooks/week13/W13_D5_Controlled_Optimizer_Study.ipynb)
+compares fresh Adam-to-L-BFGS and SOAP-to-compact-self-scaled-Broyden training
+at identical architecture, sample locations and objective-evaluation budgets.
+Read the [protocol](../../docs/DEEP_CAVITY_ABLATION_PROTOCOL.md),
+[attributed author source](../../data/week13_d5/author_source/NOTICE.md), and
+[results](../../results/deep_cavity_ablation/README.md).
+This additive study preserves the earlier lessons and distinguishes new paired
+runs from historical paper checkpoints with different training histories.

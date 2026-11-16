@@ -1,0 +1,88 @@
+{
+  "schema_version": 1,
+  "evaluation_wrapper_sha256": "5625fdba3f85c40f338ec559f08247b14b700575243675a833498b571580fe8f",
+  "scope": "All twelve native predictions frozen before THIS completed-pass target read",
+  "target_access_started_at_utc": "2026-11-16T02:46:08.415784Z",
+  "prior_evaluation_receipt": {
+    "path": "results/cavity_pinn_stratified/prior_evaluation_attempt.json",
+    "sha256": "d232892f44b447b125baebde2a8632c8fc778b9473394747c372e364cb6507b7"
+  },
+  "sampler_forensics": {
+    "path": "results/cavity_pinn_stratified/sampler_restore_forensics.json",
+    "sha256": "834814f4aec9c6542de4e0096a46795bf40de103b5a5ca5d3c75d76a9c29af68"
+  },
+  "predictions": [
+    {
+      "run_id": "re100_s7_eps0.01_db7f443a5b",
+      "at_utc": "2026-11-16T02:45:24.098549Z",
+      "prediction_sha256": "369198fceb9b5cddfa92798f9e7e7864d786e417ba3d1329284ff08d538e3819",
+      "model_sha256": "f80210b58ae75836f174bb2dce32d0ba29dc6b65882bdfc9d7acb7fa1a620743"
+    },
+    {
+      "run_id": "re100_s7_eps0.02_544275326a",
+      "at_utc": "2026-11-16T02:45:30.466260Z",
+      "prediction_sha256": "4036e2653d1cbb49583d638556dbfd7e1910298c25e56b58e4df27c0fd89bf4f",
+      "model_sha256": "8dfa199340f472ba8ca3847fea5355f7256ab9f9b308a818094b581188a29d7d"
+    },
+    {
+      "run_id": "re100_s23_eps0.01_5fb047f286",
+      "at_utc": "2026-11-16T02:44:58.853057Z",
+      "prediction_sha256": "3bbe6d92218127e66d0192c16f1d00f679862bfe5a81a4475d90a0c2cc3af61b",
+      "model_sha256": "6cea074e74d0d2ec55aacdcd2358f058ccd7b31cd004731519ce786b5a783566"
+    },
+    {
+      "run_id": "re100_s23_eps0.02_b0034d6d51",
+      "at_utc": "2026-11-16T02:45:05.107483Z",
+      "prediction_sha256": "f0e43d7a77c4fb1fb2a83e638a0f70fccda9c814607cbec69a6cb86b0c902148",
+      "model_sha256": "1f58b10a68190a4b171d0967df19408bed123ddbc0d2c653b11ae9fb87534f7c"
+    },
+    {
+      "run_id": "re100_s61_eps0.01_6d1d4acfdd",
+      "at_utc": "2026-11-16T02:45:11.489417Z",
+      "prediction_sha256": "75f19a73a02828c73f9ed10f9537fb85294221f6dfa8ae5410e0c587a9cf1a8f",
+      "model_sha256": "c1f258c22defa5cf647f2b0cc8c3fdd6dc27039386fca039467722c62a36f0c1"
+    },
+    {
+      "run_id": "re100_s61_eps0.02_daeafc3ca0",
+      "at_utc": "2026-11-16T02:45:17.781770Z",
+      "prediction_sha256": "cf412cdb326b7d9a616e9f395a57aeddb7aad12f123655917022bdb91fcde2b0",
+      "model_sha256": "d86ce7c55859125e2c3626bc9edb570ef4a40714e5650f872044089cb11dbdf1"
+    },
+    {
+      "run_id": "re7500_s7_eps0.01_15cdd45450",
+      "at_utc": "2026-11-16T02:46:01.999847Z",
+      "prediction_sha256": "86f2cf7da0438cb53c302f1c4f6e47e9afb087c635ac79bc7912662777d6878b",
+      "model_sha256": "768633d87f4d12f6c4eb2908cd45cdfa2836344aa707dd466c68142541aff844"
+    },
+    {
+      "run_id": "re7500_s7_eps0.02_51c0eed288",
+      "at_utc": "2026-11-16T02:46:08.412725Z",
+      "prediction_sha256": "6c6a5118f8c6745d955e53d10ceefa287ea7e843c2c37242572b7ba56329e3ad",
+      "model_sha256": "d148bbcc1dd07dd7c2e2eb9271965db9811a24d732da9d3408d3250ee8096c2e"
+    },
+    {
+      "run_id": "re7500_s23_eps0.01_46957cc117",
+      "at_utc": "2026-11-16T02:45:36.795094Z",
+      "prediction_sha256": "8dd949ad9f28e0fa3c6450f8e603fab6e1212b67cde65169040abd433fe39163",
+      "model_sha256": "eca22d061ad117c8a49096a09d938c9404b94b3d6a3e49e792619e0f7d0d5e16"
+    },
+    {
+      "run_id": "re7500_s23_eps0.02_85fb091ffb",
+      "at_utc": "2026-11-16T02:45:43.128912Z",
+      "prediction_sha256": "cfa7f2c4457f46624056ffa0ad3a4ee572ec3f4757c76d06514b624eff82adec",
+      "model_sha256": "8d7cc5bca697f6facaa2a5f4557f41d9698d9618f7bb79b396e60c58ac0ace01"
+    },
+    {
+      "run_id": "re7500_s61_eps0.01_748f0e451f",
+      "at_utc": "2026-11-16T02:45:49.386551Z",
+      "prediction_sha256": "ef540c3c70491408c93828a26c7a7bf85dab0568f5d53ae26c05a8c61756e2ff",
+      "model_sha256": "f0b618b50be9e8fd35fbff6c173c350b3d3d22b2794f0609c573c55a6163a93b"
+    },
+    {
+      "run_id": "re7500_s61_eps0.02_90d7c554dd",
+      "at_utc": "2026-11-16T02:45:55.627437Z",
+      "prediction_sha256": "7452e6633463a4b25a7acf5648c5d07a14803bcae23e2593a34b4049d6e59acf",
+      "model_sha256": "e283d5965ea1e584c7cd20f5f0242a297017bd4a94bfb649ad229bc1462ddb7d"
+    }
+  ]
+}

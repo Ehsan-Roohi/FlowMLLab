@@ -74,3 +74,13 @@ Labs 7 and 8 now end with a measured CPU solver comparison: why fewer Krylov
 iterations did not reduce cavity solve time. The appendix includes successful
 and failed trials, signed physical profiles, setup-cost analysis and exercises
 using saved records. [Evidence and lesson links](../../results/cavity_solver_benchmark/README.md).
+
+## Label-free PINN audit
+
+[Lab 9](../../notebooks/week04/W4_Lab9_Label_Free_Ghia_PINN_Audit.ipynb)
+examines a fresh 42-run experiment across all seven Ghia Reynolds numbers.
+It separates exact boundary/continuity identities from field accuracy,
+independent residuals, seed sensitivity and actual corner-sampling coverage.
+The finite baseline failed its accuracy gates; the supervised field-model
+results remain separate. [All outcomes and physical figures](../../results/cavity_pinn_campaign/README.md).
+The existing Week 4 labs are preserved, and the lecture adds theory and results.

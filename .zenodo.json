@@ -1,8 +1,8 @@
 {
   "title": "FlowMLLab: An Open-Source Framework for Reproducible CFD-to-Scientific-Machine-Learning Experiments",
-  "description": "FlowMLLab v1.13.0 adds 45 actual cavity CFD fields on three grids, all seven Ghia cases, high-Re mesh/time sensitivity, and a full-field POD-DeepONet with whole-Re tests, matched interpolation baselines and retained validation-driven training-data augmentation. Two new executed student notebooks and six Week-4 lecture pages explain representation, optimization and physical/numerical limits. Earlier notebooks, frozen profile models and original lecture pages are preserved. High-Re mesh sensitivity remains material; neural error is relative to the stated CFD discretization, not exact physical truth.",
-  "version": "1.13.0",
-  "publication_date": "2026-11-15",
+  "description": "FlowMLLab v1.14.0 adds reproducible cavity PINN studies: 42 case-specific, label-free runs across all seven Ghia Reynolds numbers, 12 matched-work area-weighted sampling trials at Re100/Re7500, and a matched three-seed D/W=5 comparison of Adam-to-L-BFGS and SOAP-to-compact-self-scaled-Broyden. Frozen native fields, direct Ghia profiles, independent residual audits, sampling coverage, signed physical errors and explicit failures distinguish data integrity from numerical accuracy. Neither Ghia PINN sampling design passes the preregistered combined gates; the finite D5 optimizer study also misses accurate flow recovery. Mixed gains and losses remain separate from the accurate supervised POD-DeepONet results. Additive notebooks and lecture appendices preserve earlier course material. Post-v1.13 additions also include high-Re streamline/pressure/vorticity comparisons, measured solver experience and the Week15 network-capacity study. New software is MIT licensed; author-supplied research inputs retain the attribution and license scope in their notices.",
+  "version": "1.14.0",
+  "publication_date": "2026-11-16",
   "creators": [
     {
       "name": "Roohi, Ehsan",
@@ -46,7 +46,7 @@
       "scheme": "url"
     },
     {
-      "identifier": "https://github.com/Ehsan-Roohi/FlowMLLab/releases/tag/v1.13.0",
+      "identifier": "https://github.com/Ehsan-Roohi/FlowMLLab/releases/tag/v1.14.0",
       "relation": "isVersionOf",
       "scheme": "url"
     },

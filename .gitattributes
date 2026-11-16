@@ -44,3 +44,36 @@ data/week13_deep_cavity/loss_continuation.dat -text
 results/cavity_highre_ghia/** -text -whitespace
 results/cavity_field_deeponet/** -text -whitespace
 results/cavity_solver_benchmark/** -text -whitespace
+results/cavity_pinn_campaign/** -text -whitespace
+results/deep_cavity_ablation/** -text -whitespace
+data/week13_d5/author_source/*.py -text -whitespace
+
+# Exact training/scoring source hashes bind the retained experiment artifacts.
+flowmllab/deep_cavity_training.py -text -whitespace
+qa/run_deep_cavity_ablation.py -text -whitespace
+qa/evaluate_deep_cavity_ablation.py -text -whitespace
+results/cavity_pinn_stratified/** -text -whitespace
+flowmllab/cavity_pinn_campaign.py -text -whitespace
+flowmllab/cavity_pinn_stratified.py -text -whitespace
+qa/run_cavity_pinn_stratified.py -text -whitespace
+qa/bridge_cavity_pinn_stratified.py -text -whitespace
+qa/compare_cavity_pinn_stratified.py -text -whitespace
+qa/plot_cavity_pinn_campaign.py -text -whitespace
+qa/build_cavity_pinn_campaign_lesson.py -text -whitespace
+qa/prepare_cavity_pinn_lecture_extension.py -text -whitespace
+qa/validate_cavity_pinn_studies.py -text -whitespace
+qa/plot_cavity_pinn_stratified.py -text -whitespace
+notebooks/week04/W4_Lab9_Label_Free_Ghia_PINN_Audit.ipynb -text -whitespace
+notebooks/week13/W13_D5_Controlled_Optimizer_Study.ipynb -text -whitespace
+qa/cavity_pinn_figure_review.json -text -whitespace
+qa/cavity_pinn_lecture_review.json -text -whitespace
+qa/cavity_pinn_lecture_prior_pages.json -text -whitespace
+qa/cavity_pinn_lecture_cleanup.json -text -whitespace
+qa/evaluate_cavity_pinn_stratified.py -text -whitespace
+
+qa/evaluate_cavity_pinn_campaign.py -text -whitespace
+qa/run_cavity_pinn_campaign.py -text -whitespace
+qa/validate_cavity_pinn_curriculum.py -text -whitespace
+qa/cavity_pinn_studies_validation.json -text -whitespace
+qa/cavity_pinn_curriculum_validation.json -text -whitespace
+lectures/source/cavity_expansion.json -text -whitespace

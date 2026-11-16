@@ -77,6 +77,17 @@ If TensorFlow is unavailable on your platform, continue with the data-audit,
 interpolation, POD, and plotting sections. Use Google Colab for
 TensorFlow-specific cells.
 
+### Fresh cavity PINN studies
+
+The new Week 4 Lab 9 and D/W=5 optimizer notebook read retained results on CPU;
+opening them does not launch research training. For an optional fresh PyTorch
+run, use `python -m pip install -e ".[pinn,test]"` and the experiment protocol.
+Exact reproduction of the archived Unity runs uses Python 3.12 and the separate
+[reference runtime](requirements-cavity-pinn-reference.txt), including its
+explicit PyTorch 2.5.1 CUDA11.8 installation command. This historical runtime
+is separate from the newer package extras. Original author files retain the
+attribution and license scope stated in their accompanying notice.
+
 ## 3. Run the 20-minute evidence chain
 
 After completing the Week 4 foundations, open

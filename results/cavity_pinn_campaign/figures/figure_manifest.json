@@ -1,0 +1,235 @@
+{
+  "schema_version": 1,
+  "generated_at_utc": "2026-11-16T01:24:35.971945+00:00",
+  "source_evaluation": {
+    "path": "results/cavity_pinn_campaign/evaluation_manifest.json",
+    "sha256": "5b10dedc528cb35641003bae1325ad17cbdddcf433b21c6babd5efd197268652"
+  },
+  "generator": {
+    "path": "qa/plot_cavity_pinn_campaign.py",
+    "sha256": "2490d51f952a4c6511d4d11607e11b09bcdc5331cd009dfb03a588931fa2d7ec"
+  },
+  "partial_diagnostic": false,
+  "figures": [
+    {
+      "path": "results/cavity_pinn_campaign/figures/re100_centerlines.png",
+      "sha256": "df149fd625f641a863cb3533b97aa30dc49baa81632a5ee1665229e7bf4e9a4d",
+      "kind": "signed_ghia_centerlines",
+      "Re": 100
+    },
+    {
+      "path": "results/cavity_pinn_campaign/figures/re400_centerlines.png",
+      "sha256": "ef2d5537ca9bfac1d609d8dc57298683da45b5731ab3082e5d36497113c826f3",
+      "kind": "signed_ghia_centerlines",
+      "Re": 400
+    },
+    {
+      "path": "results/cavity_pinn_campaign/figures/re1000_centerlines.png",
+      "sha256": "0eb066f30059c96051c9742753b39dda8c05c7dcd09d3e703a05279b0c59f883",
+      "kind": "signed_ghia_centerlines",
+      "Re": 1000
+    },
+    {
+      "path": "results/cavity_pinn_campaign/figures/re3200_centerlines.png",
+      "sha256": "d426153b94fcf58a972250d7ce3227f28e51f98c3e3224ca114a57f9bd9cbd2f",
+      "kind": "signed_ghia_centerlines",
+      "Re": 3200
+    },
+    {
+      "path": "results/cavity_pinn_campaign/figures/re5000_centerlines.png",
+      "sha256": "9ef39600aae0a9bdbdb1cdfc5ba27b17b8858bd9b819e4966c5b6ab24fde94e6",
+      "kind": "signed_ghia_centerlines",
+      "Re": 5000
+    },
+    {
+      "path": "results/cavity_pinn_campaign/figures/re7500_centerlines.png",
+      "sha256": "8f41707515464b7a4cff397108be257f7378972f9993eaf24e817693d042de32",
+      "kind": "signed_ghia_centerlines",
+      "Re": 7500
+    },
+    {
+      "path": "results/cavity_pinn_campaign/figures/re10000_centerlines.png",
+      "sha256": "d7306184155e4d013f598469b576d56449750262cbece7a9b63a09fbfb52eb60",
+      "kind": "signed_ghia_centerlines",
+      "Re": 10000
+    },
+    {
+      "path": "results/cavity_pinn_campaign/figures/all_reynolds_centerlines.pdf",
+      "sha256": "227b50fe109a2eaac837ef402e841449079555f2dba0933d367a45e8a7547838"
+    },
+    {
+      "path": "results/cavity_pinn_campaign/figures/re1000_fields.png",
+      "sha256": "1551e1e0105fa5cfa7c8f25e1b7542210477fb07162591661be4bebe83eac205",
+      "kind": "native_fields_and_derived_centered_curl",
+      "Re": 1000,
+      "run_id": "re1000_s7_eps0.02_46e52f2c19",
+      "prediction": {
+        "path": "results/cavity_pinn_campaign/runs/re1000_s7_eps0.02_46e52f2c19/prediction_native_interior.npz",
+        "sha256": "4cb83ed5212c2e362eec5c2d718a0dd07840cf6ab7254438c9998b17df8a7628"
+      },
+      "reference": {
+        "path": "results/cavity_pinn_campaign/references/re1000_n512_interior.npz",
+        "sha256": "818320140b1fef6be888a2ace48cef371f8ab36bbca89406bc55dcc8a555ede9"
+      }
+    },
+    {
+      "path": "results/cavity_pinn_campaign/figures/re1000_streamlines.png",
+      "sha256": "1b56c55581d10e22b3d9c67e83abe320ad44ea81ecd082f8097505669a52b3a6",
+      "kind": "matched_streamfunction_contours",
+      "Re": 1000,
+      "run_id": "re1000_s7_eps0.02_46e52f2c19",
+      "levels": [
+        -0.11516058924045369,
+        -0.05071143467648456,
+        -0.02233098687588162,
+        -0.009833541055032233,
+        -0.004330239868863248,
+        -0.0019068387691631328,
+        -0.0008396842211279359,
+        -0.0003697583679403933,
+        -0.00016282460384725052,
+        -7.170047770842578e-05,
+        -3.157359749168687e-05,
+        -1.390356229732496e-05,
+        -6.122490305594501e-06,
+        -2.6960635512318163e-06,
+        -1.1872225694892135e-06,
+        3.053753517608985e-07,
+        8.67315015388984e-07,
+        2.4633138581144416e-06,
+        6.9962067483142276e-06,
+        1.987035013988195e-05,
+        5.643498382557707e-05,
+        0.0001602844125529874,
+        0.00045523345921138944,
+        0.001292936094562896,
+        0.0036721460402305383,
+        0.010429484177514273,
+        0.029621409120807154
+      ]
+    },
+    {
+      "path": "results/cavity_pinn_campaign/figures/re7500_fields.png",
+      "sha256": "357a21c6f15ee0a55af4bb317dcad8bedf1be70b0fd78ab075b8373928f648c4",
+      "kind": "native_fields_and_derived_centered_curl",
+      "Re": 7500,
+      "run_id": "re7500_s7_eps0.02_3d6a05f8db",
+      "prediction": {
+        "path": "results/cavity_pinn_campaign/runs/re7500_s7_eps0.02_3d6a05f8db/prediction_native_interior.npz",
+        "sha256": "282a4cd8e1ef90ad4b25266f9bf91257b65acd7836af31a83ae21d4970b823c4"
+      },
+      "reference": {
+        "path": "results/cavity_pinn_campaign/references/re7500_n512_interior.npz",
+        "sha256": "b7d7956cf07b4b9814b984af6d788dd3932e291487d77aeb8d65f6f49deb80f3"
+      }
+    },
+    {
+      "path": "results/cavity_pinn_campaign/figures/re7500_streamlines.png",
+      "sha256": "d8b64dc23196cdcdd33bdee03b0eaf814804f3b148255d2de672c8ca3f30bc43",
+      "kind": "matched_streamfunction_contours",
+      "Re": 7500,
+      "run_id": "re7500_s7_eps0.02_3d6a05f8db",
+      "levels": [
+        -0.11678274972585272,
+        -0.051425759655478236,
+        -0.022645542790790868,
+        -0.009972057033773149,
+        -0.004391235944464273,
+        -0.0019336986395733539,
+        -0.0008515120744995673,
+        -0.00037496681136339576,
+        -0.00016511816312958676,
+        -7.27104558831639e-05,
+        -3.201834549593653e-05,
+        -1.409940889305496e-05,
+        -6.208732151971621e-06,
+        -2.7340404996633764e-06,
+        -1.2039458734623994e-06,
+        3.203333093476266e-08,
+        9.097980158659789e-08,
+        2.5839723984976376e-07,
+        7.338896370138067e-07,
+        2.0843643671635306e-06,
+        5.919929368098287e-06,
+        1.681354962470586e-05,
+        4.775317970951719e-05,
+        0.00013562669533021568,
+        0.00038520158444086,
+        0.0010940343292629945,
+        0.003107233100671978
+      ]
+    },
+    {
+      "path": "results/cavity_pinn_campaign/figures/representative_physical_fields.pdf",
+      "sha256": "bcb76da4c35ffa59a86a2820120fda6bf9a98ef31f6b7b4c32b2f6c369fe2d84"
+    },
+    {
+      "path": "results/cavity_pinn_campaign/figures/paired_speed.png",
+      "sha256": "422b9415cb62d9934a8aa765f67796ade58b51d5630a93bb98db413ad8af3d56",
+      "kind": "paired_speed_fields",
+      "Re": [
+        1000,
+        7500
+      ],
+      "seed": 7,
+      "collar": 0.02
+    },
+    {
+      "path": "results/cavity_pinn_campaign/figures/paired_curl.png",
+      "sha256": "a301fff47003969b7f10f738615ee255f27ca5d89de25fff47eb57131a68fc1a",
+      "kind": "paired_centered_curl_fields",
+      "Re": [
+        1000,
+        7500
+      ],
+      "seed": 7,
+      "collar": 0.02
+    },
+    {
+      "path": "results/cavity_pinn_campaign/figures/paired_velocity_vorticity.pdf",
+      "sha256": "d92b83556a1b713d9cffa066bca2b417f137314b7e158678159d5055ff41a09d"
+    }
+  ],
+  "summary": {
+    "scored_endpoints": 42,
+    "non_scored_endpoints": 0,
+    "numeric_pass_counts": {
+      "both_screened_ghia_relative_l2_le_0_02": 0,
+      "divergence_rms_le_1e_10": 42,
+      "interior_velocity_relative_l2_le_0_05": 3,
+      "outer_momentum_rms_le_1e_2": 0
+    },
+    "all_four_numeric_targets": 0,
+    "collar_pairs": 21,
+    "collar_pairs_within_2_percent": 13,
+    "physical_acceptance": "Not implied by the numeric counts; inspect all signed profiles and representative fields.",
+    "sampling_coverage": {
+      "runs": 42,
+      "pairs": 21,
+      "identical_objective_pairs": 14,
+      "identical_model_pairs_among_identical_objectives": 13,
+      "seeds_with_zero_added_annulus_points": [
+        7,
+        61
+      ],
+      "seed_with_one_added_annulus_point": 23,
+      "collar_independence_established": false
+    }
+  },
+  "shared_scales": {
+    "speed_vmax": 0.9728281348200988,
+    "vector_error_vmax": 0.7404071878091089,
+    "signed_velocity_absmax": 0.7402295284354751,
+    "curl_absmax": 167.85660351768172,
+    "curl_error_absmax": 123.54414589836729,
+    "curl_symlog_linthresh": 0.25
+  },
+  "selection": "Predeclared Re1000/Re7500, seed7, collar0.02; no reference-based selection",
+  "derived_vorticity": "(v[i,j+1]-v[i,j-1])/(x[j+1]-x[j-1]) - (u[i+1,j]-u[i-1,j])/(y[i+1]-y[i-1]); common 509 x 509 interior",
+  "native_vorticity": "Original native PINN AD and retained CFD transported omega scores unchanged",
+  "visual_review": "Passed: all 13 RGB figures and all 13 PDF pages individually inspected; no clipping or overlapping legends. This is presentation review, not scientific acceptance.",
+  "sampling_coverage": {
+    "path": "results/cavity_pinn_campaign/sampling_coverage.json",
+    "sha256": "280b0a6549fb2363ee46845e76711336e5a9c5f87fa42ae911a8006f4f1af145"
+  }
+}

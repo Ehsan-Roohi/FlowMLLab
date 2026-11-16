@@ -1,0 +1,12 @@
+{
+  "kind": "computational batch-size cost probe; no reference labels accessed; not solution-accuracy evidence",
+  "source_probe": {
+    "path": "results/cavity_pinn_campaign/cost_study/chunk_cost_probe.json",
+    "sha256": "c39e8e89b9d1e6dbb20b76574b7a6c8e05b822a68ead077ca79daed63e937d1c"
+  },
+  "figure": {
+    "path": "results/cavity_pinn_campaign/cost_study/chunk_cost_profile.png",
+    "sha256": "5c13eed4af63916d236d73c962e6763afd7aa534224ff4c2bb8ca432a3e87b87"
+  },
+  "timing_scope": "five consecutive Adam updates per chunk; median of last three; not independent replicates"
+}

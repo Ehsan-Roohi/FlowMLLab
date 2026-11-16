@@ -1,0 +1,29 @@
+{
+  "kind": "author-supplied research source, byte-identical retained experiment files",
+  "paper": "https://arxiv.org/abs/2610.38814v2",
+  "source_workspace": "cavity-re1000-d5-20260930/pinn-balanced-20261001/code",
+  "attribution": "The paper credits the lifting, amplitude envelope and optimizer implementation to C. J. McDevitt; the balanced sampling and execution wrappers are project extensions.",
+  "redistribution_scope": "Included as author-supplied source under the user's explicit request to publish the paper's data and code; no new inherited-source license is asserted.",
+  "files": {
+    "cavity.py": {
+      "sha256": "29ff1f7ba495de25c088b4eefcd200202f1a2da020248d4b3e2a43a7e07ba1dd",
+      "bytes": 14528
+    },
+    "train.py": {
+      "sha256": "62f21872b6358518ded273c37ebb255d72f35881cf1f3689b3a8142cdb8ebc7b",
+      "bytes": 20505
+    },
+    "optimizer.py": {
+      "sha256": "1a69e52dd45f463ad9187434f22f12d98c24e969c9b908c9c094d29d87548d4d",
+      "bytes": 15591
+    },
+    "pinn_d5_balanced_experiment.py": {
+      "sha256": "7b7c0b6836f1834644071a54518046a1b437514fd1bc2cd5ba0ee5a570f31010",
+      "bytes": 4096
+    },
+    "pinn_d5_balanced_run.py": {
+      "sha256": "f4ef1e305651877951e2c8f71247da7af603e5bdaf2c976dea02a4c2501fc74e",
+      "bytes": 6693
+    }
+  }
+}

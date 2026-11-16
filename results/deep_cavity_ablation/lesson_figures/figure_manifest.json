@@ -1,0 +1,208 @@
+{
+  "schema_version": 1,
+  "campaign_kind": "d5_gaussian_lid",
+  "source_evaluation": {
+    "path": "results/deep_cavity_ablation/evaluation_manifest.json",
+    "sha256": "2e14fbdc9b20fb0375962849cea24221701bc3e2b77014c0d09c4c674876ce4b"
+  },
+  "figures": [
+    {
+      "path": "results/deep_cavity_ablation/lesson_figures/optimizer_objective_history.png",
+      "sha256": "74b57b55cadf1a0de355713ee6ce03364909f8e13691f1aef33038213b4699e1",
+      "source": {
+        "path": "results/deep_cavity_ablation/optimizer_objective_history.png",
+        "sha256": "b96adc60ffb5fed0d03ae9dbfde3a2b21eb3f5fd9c5065294d210da66568ac49"
+      },
+      "conversion": "RGB channels preserved exactly; removed only fully opaque alpha channel"
+    },
+    {
+      "path": "results/deep_cavity_ablation/lesson_figures/profiles_upper_s12345.png",
+      "sha256": "a48057ab51ab3c7483e89d3e2d357121e7d59b9be7ef1d718006e6764f99028b",
+      "source": {
+        "path": "results/deep_cavity_ablation/profiles_upper_s12345.png",
+        "sha256": "7be840f80a8412603b6b90f3f122760ca739bc99a45f0bcccae14d0de994096d"
+      },
+      "conversion": "RGB channels preserved exactly; removed only fully opaque alpha channel"
+    },
+    {
+      "path": "results/deep_cavity_ablation/lesson_figures/profiles_floor_s12345.png",
+      "sha256": "95d9f0334f7e25ed6ef0ce328d05e90c850e2e520684bb2b381a78dcc875a058",
+      "source": {
+        "path": "results/deep_cavity_ablation/profiles_floor_s12345.png",
+        "sha256": "ce0d1747842cd78780b878ab4c58f6ce1102becce610ea932e56f6cd66d94400"
+      },
+      "conversion": "RGB channels preserved exactly; removed only fully opaque alpha channel"
+    },
+    {
+      "path": "results/deep_cavity_ablation/lesson_figures/streamlines_s12345.png",
+      "sha256": "5b60eb65df64b29d821b46ae71b8ea3dfadb40044fa00f5fe7420dfcb3361da3",
+      "source": {
+        "path": "results/deep_cavity_ablation/streamlines_s12345.png",
+        "sha256": "9126f80f9f26134d1b7ac2ad6d8d255057a62251c8f3f22dbfeb88aadecae625"
+      },
+      "conversion": "RGB channels preserved exactly; removed only fully opaque alpha channel"
+    },
+    {
+      "path": "results/deep_cavity_ablation/lesson_figures/profiles_upper_s23456.png",
+      "sha256": "633057282eec4d64a460a3c9da36451b60b8db05037c5cb159b5693dc48753f0",
+      "source": {
+        "path": "results/deep_cavity_ablation/profiles_upper_s23456.png",
+        "sha256": "d417b89eb70aa3ab6e63790d4b05f9f40e07f715b6daaf88980cd24317127d5c"
+      },
+      "conversion": "RGB channels preserved exactly; removed only fully opaque alpha channel"
+    },
+    {
+      "path": "results/deep_cavity_ablation/lesson_figures/profiles_floor_s23456.png",
+      "sha256": "f908676ac9c366cb4969e046db326d3dcffe6a5d9e61f106c073077a8abb8454",
+      "source": {
+        "path": "results/deep_cavity_ablation/profiles_floor_s23456.png",
+        "sha256": "e3d3d0cf52c69353522760b5dde96d161f70a383f34ad3932d22621ff537765e"
+      },
+      "conversion": "RGB channels preserved exactly; removed only fully opaque alpha channel"
+    },
+    {
+      "path": "results/deep_cavity_ablation/lesson_figures/streamlines_s23456.png",
+      "sha256": "b284e3c058050dd86c6a0965cf4076ea09d832e21c33b701886850453c81a51c",
+      "source": {
+        "path": "results/deep_cavity_ablation/streamlines_s23456.png",
+        "sha256": "3808d9664194496dda31ae4d6a00d7a089117592b0079a11da497c5123bc3890"
+      },
+      "conversion": "RGB channels preserved exactly; removed only fully opaque alpha channel"
+    },
+    {
+      "path": "results/deep_cavity_ablation/lesson_figures/profiles_upper_s34567.png",
+      "sha256": "b66fc6cf66f3f27bde280379a3d0ecb694c891dcf2a22fe30f904774ffe6714b",
+      "source": {
+        "path": "results/deep_cavity_ablation/profiles_upper_s34567.png",
+        "sha256": "2f30709d5775e8d4efc1df259c1602d8c83d94e41bbd4501737469263ae69f26"
+      },
+      "conversion": "RGB channels preserved exactly; removed only fully opaque alpha channel"
+    },
+    {
+      "path": "results/deep_cavity_ablation/lesson_figures/profiles_floor_s34567.png",
+      "sha256": "3cdd3709b895d3954df419bf63cf6f4dc52fa93da8dfdff3e29b78a71b83e438",
+      "source": {
+        "path": "results/deep_cavity_ablation/profiles_floor_s34567.png",
+        "sha256": "df05363b8f1393dde6bee8bf33d13de6f3b6a2d20e2d21334d6449d471f3d554"
+      },
+      "conversion": "RGB channels preserved exactly; removed only fully opaque alpha channel"
+    },
+    {
+      "path": "results/deep_cavity_ablation/lesson_figures/streamlines_s34567.png",
+      "sha256": "2d78aef6b7710e6aeeaa4a87ad4ca76f9d670d1b8f9cf11a343a31034ecd4508",
+      "source": {
+        "path": "results/deep_cavity_ablation/streamlines_s34567.png",
+        "sha256": "ceefb493f9b0b003a78cef3e5effc3644d96d8c16149e75c97f3b9bb0da1c409"
+      },
+      "conversion": "RGB channels preserved exactly; removed only fully opaque alpha channel"
+    },
+    {
+      "path": "results/deep_cavity_ablation/lesson_figures/controlled_pilot_figures.pdf",
+      "sha256": "4748af9b3f36bc2da560190c32fbb6c43a75f716fff4d42c740e5a1e5c56e7b8",
+      "source_pdfs": [
+        {
+          "path": "results/deep_cavity_ablation/optimizer_objective_history.pdf",
+          "sha256": "00f1da9cac390b7e063a6dffa9a88b87661fd8d9224cc60921cfc2097e7a06db"
+        },
+        {
+          "path": "results/deep_cavity_ablation/profiles_upper_s12345.pdf",
+          "sha256": "b47d9452789ec6e78cc6b48087c39197aa0cae3f68891bea1691153150c14732"
+        },
+        {
+          "path": "results/deep_cavity_ablation/profiles_floor_s12345.pdf",
+          "sha256": "8f2d7ec0b880a3993447d9618e3a17622d85450f962f81335634e9c6e912c1af"
+        },
+        {
+          "path": "results/deep_cavity_ablation/streamlines_s12345.pdf",
+          "sha256": "02490ea662438e199dddfc5a5e5ca4746535c2cbf7cd95335c4d89c1a5c66ad5"
+        },
+        {
+          "path": "results/deep_cavity_ablation/profiles_upper_s23456.pdf",
+          "sha256": "d1dc0cc36d7ae0c40a7d811fd40c93a5ddbb32fb27c6f526605b224c6f865b3f"
+        },
+        {
+          "path": "results/deep_cavity_ablation/profiles_floor_s23456.pdf",
+          "sha256": "9e148a798c46f0c2f4547db056a64901cc9efc0d912508959036d1f14fc70cde"
+        },
+        {
+          "path": "results/deep_cavity_ablation/streamlines_s23456.pdf",
+          "sha256": "c399b6da7717ed1ca7f4568315c3b186456c88117b22176cd2b51e2af9a897d2"
+        },
+        {
+          "path": "results/deep_cavity_ablation/profiles_upper_s34567.pdf",
+          "sha256": "b4730f5ac5ecd73420fd6e74f8bce79c010a184f4b76e1d38193be69cf98f492"
+        },
+        {
+          "path": "results/deep_cavity_ablation/profiles_floor_s34567.pdf",
+          "sha256": "439619cf7fb5e4bfcf047f6dd7fe4a1c0c7d326ae880ec5a09ada67e1f4d0c0d"
+        },
+        {
+          "path": "results/deep_cavity_ablation/streamlines_s34567.pdf",
+          "sha256": "aaf046b69a0d1b726f2b2611e38f27f1c9f15d6b1094397122fc6c7af1cdf7e3"
+        }
+      ],
+      "assembly": "Original scientific vector page contents translated upward by 24 points without resampling; external black Times New Roman seed/region footers, outline bookmarks and page labels added; no scientific recomputation",
+      "page_index": [
+        {
+          "page": 1,
+          "label": "Re1000, D/W=5: all-seed objective histories",
+          "source": "results/deep_cavity_ablation/optimizer_objective_history.pdf"
+        },
+        {
+          "page": 2,
+          "label": "Re1000, D/W=5: seed 12345, upper profiles",
+          "source": "results/deep_cavity_ablation/profiles_upper_s12345.pdf"
+        },
+        {
+          "page": 3,
+          "label": "Re1000, D/W=5: seed 12345, floor profiles",
+          "source": "results/deep_cavity_ablation/profiles_floor_s12345.pdf"
+        },
+        {
+          "page": 4,
+          "label": "Re1000, D/W=5: seed 12345, streamlines",
+          "source": "results/deep_cavity_ablation/streamlines_s12345.pdf"
+        },
+        {
+          "page": 5,
+          "label": "Re1000, D/W=5: seed 23456, upper profiles",
+          "source": "results/deep_cavity_ablation/profiles_upper_s23456.pdf"
+        },
+        {
+          "page": 6,
+          "label": "Re1000, D/W=5: seed 23456, floor profiles",
+          "source": "results/deep_cavity_ablation/profiles_floor_s23456.pdf"
+        },
+        {
+          "page": 7,
+          "label": "Re1000, D/W=5: seed 23456, streamlines",
+          "source": "results/deep_cavity_ablation/streamlines_s23456.pdf"
+        },
+        {
+          "page": 8,
+          "label": "Re1000, D/W=5: seed 34567, upper profiles",
+          "source": "results/deep_cavity_ablation/profiles_upper_s34567.pdf"
+        },
+        {
+          "page": 9,
+          "label": "Re1000, D/W=5: seed 34567, floor profiles",
+          "source": "results/deep_cavity_ablation/profiles_floor_s34567.pdf"
+        },
+        {
+          "page": 10,
+          "label": "Re1000, D/W=5: seed 34567, streamlines",
+          "source": "results/deep_cavity_ablation/streamlines_s34567.pdf"
+        }
+      ]
+    }
+  ],
+  "visual_review": {
+    "status": "complete",
+    "reviewer": "Independent agent /root/deep_cavity_optimizer_campaign",
+    "individual_rgb_images": 10,
+    "individual_standalone_pdf_pages": 10,
+    "pdf_render_dpi": 150,
+    "independent_pdf_receipt_sha256": "dee435b0f404b48192a4b10be5568316ca9487b8a00c820a5760f6b7957be22e",
+    "scope": "Presentation only; failed scientific accuracy criteria retained."
+  }
+}

@@ -78,3 +78,14 @@ relative L2; the separate frozen four-case matrix reports 3.343% for its
 ---
 
 [Course home](../../README.md) · [All weeks](../README.md) · [← Week 12](../week12/README.md) · [Week 14 →](../week14/README.md)
+
+## Matched D/W=5 optimizer study
+
+[The new controlled-study notebook](../../notebooks/week13/W13_D5_Controlled_Optimizer_Study.ipynb)
+compares fresh Adam-to-L-BFGS and SOAP-to-compact-self-scaled-Broyden training
+at identical architecture, sample locations and objective-evaluation budgets.
+Read the [protocol](../../docs/DEEP_CAVITY_ABLATION_PROTOCOL.md),
+[attributed author source](../../data/week13_d5/author_source/NOTICE.md), and
+[results](../../results/deep_cavity_ablation/README.md).
+This additive study preserves the earlier lessons and distinguishes new paired
+runs from historical paper checkpoints with different training histories.

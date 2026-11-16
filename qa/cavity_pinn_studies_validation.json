@@ -1,0 +1,195 @@
+{
+  "schema_version": 1,
+  "checked_at_utc": "2026-11-16T02:49:41.474983+00:00",
+  "validator_sha256": "10ee3ece7ec4223448adc8f2e66bc798ff794f6eacc88afe2425e6f271c63cff",
+  "purpose": "Release evidence integrity, explicitly separate from scientific acceptance",
+  "visual_QA": "Not performed by this numerical/provenance validator",
+  "ghia": {
+    "integrity": "passed",
+    "manifest_sha256": "5b10dedc528cb35641003bae1325ad17cbdddcf433b21c6babd5efd197268652",
+    "verified_cases": 42,
+    "verified_collar_pairs": 21,
+    "sampling_coverage_sha256": "280b0a6549fb2363ee46845e76711336e5a9c5f87fa42ae911a8006f4f1af145",
+    "uninformative_identical_objective_pairs": 14,
+    "source_serializations_verified": [
+      "canonical_LF",
+      "raw"
+    ],
+    "all_projections_frozen_before_first_reference_read": true,
+    "all_projections_frozen_before_completed_pass_reference_read": true,
+    "native_grid": "511 x 511 exact original interior nodes; no interpolation",
+    "vorticity_comparison": "native AD PINN omega versus retained CFD transported omega",
+    "scientific_acceptance": {
+      "accepted_cases": 0,
+      "numeric_gate_pass_cases": 0,
+      "failed_gate_counts": {
+        "outer_momentum_rms_le_1e_2": 42,
+        "divergence_rms_le_1e_10": 0,
+        "both_screened_ghia_relative_l2_le_0_02": 42,
+        "interior_velocity_relative_l2_le_0_05": 39
+      },
+      "status": "No case is promoted by integrity verification; physical review and meaningful collar refinement remain separate"
+    },
+    "velocity_relative_l2_range_by_Re": {
+      "100": [
+        0.03315667968037137,
+        0.1293585653968242
+      ],
+      "400": [
+        0.6893373432449476,
+        1.1857244154386737
+      ],
+      "1000": [
+        1.0303640005879042,
+        1.1546090875567943
+      ],
+      "3200": [
+        0.9724259557931538,
+        1.0891400678275227
+      ],
+      "5000": [
+        0.924646582358358,
+        1.0987873228042744
+      ],
+      "7500": [
+        0.9532151732582682,
+        1.070258362428829
+      ],
+      "10000": [
+        0.9510920034686163,
+        1.0752480851973993
+      ]
+    },
+    "pressure_truth": "unavailable",
+    "checkpoint_scope": "Checkpoint identities bound to frozen provenance and independently byte-verified external recoveries; binaries remain external"
+  },
+  "d5": {
+    "integrity": "passed",
+    "manifest_sha256": "2e14fbdc9b20fb0375962849cea24221701bc3e2b77014c0d09c4c674876ce4b",
+    "verified_arms": 6,
+    "paired_seeds": [
+      12345,
+      23456,
+      34567
+    ],
+    "all_arms_frozen_before_reference_read": true,
+    "raw_and_derived_predictions_verified_separately": true,
+    "pressure_gauge": "one common Interior shift; local-shape diagnostics remain separate",
+    "vorticity": "identical second-order sampled curl for reference and derived prediction; native AD omega retained",
+    "scientific_acceptance": "Finite controlled pilot only; this validator establishes neither convergence nor optimizer superiority",
+    "velocity_NRMSE_percent_by_region": {
+      "adam_lbfgs_s12345": {
+        "Interior": 97.05612304008383,
+        "Upper-left": 176.42193107662177,
+        "Floor_0.4": 104.38961922490425,
+        "Floor_0.65": 105.31599598357256
+      },
+      "soap_ssb_s12345": {
+        "Interior": 106.58773343493402,
+        "Upper-left": 164.44109771021039,
+        "Floor_0.4": 99.98393948660573,
+        "Floor_0.65": 99.98466555408808
+      },
+      "adam_lbfgs_s23456": {
+        "Interior": 116.6971130408111,
+        "Upper-left": 248.2556005229864,
+        "Floor_0.4": 101.87260950352065,
+        "Floor_0.65": 102.26544234272377
+      },
+      "soap_ssb_s23456": {
+        "Interior": 104.9621114370101,
+        "Upper-left": 152.7113132348483,
+        "Floor_0.4": 99.99436902817685,
+        "Floor_0.65": 100.00161576812899
+      },
+      "adam_lbfgs_s34567": {
+        "Interior": 100.26913459701204,
+        "Upper-left": 175.9641631793028,
+        "Floor_0.4": 99.68604046532498,
+        "Floor_0.65": 99.6277182725484
+      },
+      "soap_ssb_s34567": {
+        "Interior": 101.40974351240095,
+        "Upper-left": 152.2456659555885,
+        "Floor_0.4": 99.99677342690158,
+        "Floor_0.65": 100.00846325896075
+      }
+    },
+    "checkpoint_scope": "Binary recoveries remain external; hashes verified through retained original run manifests"
+  },
+  "stratified": {
+    "integrity": "passed",
+    "experiment_manifest_sha256": "11a488e49db5a51501769faa86d31ab712e98035c084eaebdc6388d4f7da8678",
+    "comparison_manifest_sha256": "c97d1368634593a9d5f78187566be3887d981e2491276891f57667e04daa945c",
+    "verified_cases": 12,
+    "verified_matched_baseline_pairs": 12,
+    "verified_descriptive_collar_groups": 6,
+    "unequal_work_collar_groups": 2,
+    "verified_signed_published_samples": 408,
+    "native_integrity": {
+      "integrity": "passed",
+      "manifest_sha256": "599ae30ad6a61c79ec967de8d604fd9063b602ed4d0a497b5c4622163637f435",
+      "verified_cases": 12,
+      "verified_collar_pairs": 4,
+      "sampling_coverage_sha256": null,
+      "uninformative_identical_objective_pairs": 0,
+      "source_serializations_verified": [
+        "canonical_LF",
+        "raw"
+      ],
+      "all_projections_frozen_before_first_reference_read": false,
+      "all_projections_frozen_before_completed_pass_reference_read": true,
+      "native_grid": "511 x 511 exact original interior nodes; no interpolation",
+      "vorticity_comparison": "native AD PINN omega versus retained CFD transported omega",
+      "scientific_acceptance": {
+        "accepted_cases": 0,
+        "numeric_gate_pass_cases": 0,
+        "failed_gate_counts": {
+          "outer_momentum_rms_le_1e_2": 12,
+          "divergence_rms_le_1e_10": 0,
+          "both_screened_ghia_relative_l2_le_0_02": 12,
+          "interior_velocity_relative_l2_le_0_05": 11
+        },
+        "status": "No case is promoted by integrity verification; physical review and meaningful collar refinement remain separate"
+      },
+      "velocity_relative_l2_range_by_Re": {
+        "100": [
+          0.04741461675729114,
+          0.1957217385007068
+        ],
+        "7500": [
+          0.9970762632514357,
+          1.1212272606828602
+        ]
+      },
+      "pressure_truth": "unavailable",
+      "checkpoint_scope": "Checkpoint identities bound to frozen provenance and independently byte-verified external recoveries; binaries remain external"
+    },
+    "scientific_acceptance": {
+      "accepted_cases": 0,
+      "numeric_gate_pass_cases": 0,
+      "failed_gate_counts": {
+        "outer_momentum_rms_le_1e_2": 12,
+        "divergence_rms_le_1e_10": 0,
+        "both_screened_ghia_relative_l2_le_0_02": 12,
+        "interior_velocity_relative_l2_le_0_05": 11
+      },
+      "status": "No case is promoted by integrity verification; physical review and meaningful collar refinement remain separate"
+    },
+    "timing_scope": "Optimizer-step seconds exclude failed allocations, requeue/scheduler time, checkpoint I/O and independent audits; they are not campaign wall time",
+    "runtime_events": {
+      "path": "results/cavity_pinn_stratified/runtime_events.json",
+      "sha256": "d02fe06d6ef7afdc74974bbe63eddbfee45419fd63d629ad3683975b4bdbb84a"
+    },
+    "evaluation_chronology": {
+      "all_projections_frozen_before_completed_pass_reference_read": true,
+      "all_projections_frozen_before_first_reference_read": false,
+      "all_training_endpoints_frozen_before_prior_target_access": true,
+      "prior_scored_case_count": 4,
+      "disclosure": "The earlier failed evaluation scored 4 cases and accessed targets. All 12 original trained endpoints had already frozen then. The repaired completed pass restores exact saved states, freezes all native projections before its own reference read, and performs no fitting or model selection."
+    },
+    "scope": "One finite sampling intervention; paired improvements and losses remain descriptive, not general convergence or optimizer superiority"
+  },
+  "release_evidence_check": "passed_for_available_evidence",
+  "all_studies_present": true
+}
