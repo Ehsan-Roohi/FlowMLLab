@@ -50,13 +50,18 @@ def arrow(ax, start, end, color='black', style='->', lw=1.6):
                 arrowprops=dict(arrowstyle=style, color=color, lw=lw,
                                 shrinkA=0, shrinkB=0, mutation_scale=13))
 
-def save(fig, name):
+def save(fig, name, *, rgb=False):
     OUT.mkdir(parents=True, exist_ok=True)
     for ext in ['pdf', 'png']:
         target = OUT / f'{name}.{ext}'
         tmp = OUT / f'.{name}.tmp.{ext}'
-        opts = {'metadata': {'CreationDate': None, 'ModDate': None}} if ext == 'pdf' else {'dpi': 190}
+        opts = {'metadata': {'CreationDate': None, 'ModDate': None}} if ext == 'pdf' else {'dpi': 300 if rgb else 190}
+        if ext=='pdf' and rgb:opts['dpi']=300
         fig.savefig(tmp, facecolor='white', **opts)
+        if rgb and ext=='png':
+            from PIL import Image
+            with Image.open(tmp) as source: rendered=source.convert('RGB')
+            rendered.save(tmp,dpi=(300,300))
         tmp.replace(target)
     plt.close(fig)
 
@@ -289,21 +294,11 @@ def profiles(rows,re,name=None):
     fig.legend(handles,labels,loc='outside lower center',ncols=2,fontsize=12,frameon=False)
     save(fig,name or f'profiles_re{re}')
 
-def fields(rows,key,re=100,cells=64):
-    from flowmllab.cavity_visuals import RGB,flow_structure,field_normalization
+def fields(rows,key,re=100,cells=64,name=None):
+    from flowmllab.pressure_velocity_visuals import comparison_figure,color_normalization,values_for
     rr=[next(r for r in rows if r['config']['method']==m and r['config']['reynolds']==re and r['config']['cells']==cells) for m in METHODS]
-    vals=[np.hypot(r['u'],r['v']) if key=='speed' else r[key] for r in rr]
-    norm=field_normalization(key,vals)
-    fig,axes=plt.subplots(2,2,figsize=(6.6,6.6),layout='constrained')
-    for ax,r,z,label in zip(axes.flat,rr,vals,NAMES):
-        im=ax.pcolormesh(r['x'],r['y'],z,cmap=RGB,norm=norm,shading='nearest',rasterized=True)
-        flow_structure(ax,r['x'],r['y'],r['u'],r['v'])
-        ax.set(aspect='equal',xlim=(0,1),ylim=(0,1),xlabel=r'$x/L$',ylabel=r'$y/L$',title=label)
-        ax.set_xticks([0,.5,1]);ax.set_yticks([0,.5,1])
-    label={'speed':r'$|\boldsymbol{u}|/U$','p':r'$p/(\rho U^2)$','omega':r'$\omega L/U$'}[key]
-    cb=fig.colorbar(im,ax=list(axes.flat),location='bottom',shrink=.85,aspect=30,pad=.05,label=label)
-    if key=='speed':cb.set_ticks([0,.25,.5,.75,1])
-    save(fig,'field_'+key+f'_re{re}')
+    norm=color_normalization(key,[values_for(r,key) for r in rows])
+    save(comparison_figure(rr,key,norm=norm),name or 'field_'+key+f'_re{re}',rgb=True)
 
 def convergence(rows):
     fig,axes=plt.subplots(2,1,figsize=(6.6,5.9),layout='constrained')
@@ -320,19 +315,14 @@ def convergence(rows):
     save(fig,'convergence_re100')
 
 def refinement(rows,re):
-    from flowmllab.cavity_visuals import RGB,flow_structure
-    fig,axes=plt.subplots(2,2,figsize=(6.6,6.4),layout='constrained')
-    for ax,(m,n) in zip(axes.flat,[('simple',64),('streamfunction-vorticity',64),('streamfunction-vorticity',128)]):
-        r=next(r for r in rows if r['config']['method']==m and r['config']['reynolds']==re and r['config']['cells']==n)
-        im=ax.pcolormesh(r['x'],r['y'],np.hypot(r['u'],r['v']),cmap=RGB,vmin=0,vmax=1,shading='nearest',rasterized=True)
-        flow_structure(ax,r['x'],r['y'],r['u'],r['v'])
-        title=('SIMPLE' if m=='simple' else r'$\psi$-$\omega$ (FD)')+f', h=1/{n}'
-        ax.set(aspect='equal',xlabel=r'$x/L$',ylabel=r'$y/L$',title=title,xlim=(0,1),ylim=(0,1))
-        ax.set_xticks([0,.5,1]);ax.set_yticks([0,.5,1])
-    axes[1,1].axis('off')
-    axes[1,1].text(.05,.7,'Color: speed / U\n\nBlack curves: velocity\nstreamlines\n\nSame lid speed and\ncolor limits in all panels.',transform=axes[1,1].transAxes,fontsize=14,va='center')
-    fig.colorbar(im,ax=list(axes.flat),location='bottom',label=r'$|\boldsymbol{u}|/U$',shrink=.85,aspect=30,pad=.05)
-    save(fig,f'refinement_re{re}')
+    from flowmllab.pressure_velocity_visuals import comparison_figure,color_normalization,values_for
+    cases=[('simple',64),('streamfunction-vorticity',64),('streamfunction-vorticity',128)]
+    selected=[next(r for r in rows if r['config']['method']==m and r['config']['reynolds']==re and r['config']['cells']==n) for m,n in cases]
+    labels=['SIMPLE\n'+r'$h/L=1/64$',r'$\psi$-$\omega$ (FD)'+'\n'+r'$h/L=1/64$',r'$\psi$-$\omega$ (FD)'+'\n'+r'$h/L=1/128$']
+    norm=color_normalization('speed',[values_for(r,'speed') for r in rows])
+    fig=comparison_figure(selected,'speed',norm=norm,labels=labels,columns=3,
+                          condition=rf'$Re={re}$; matched lid speed')
+    save(fig,f'refinement_re{re}',rgb=True)
 
 SUPPLEMENT_CAPTIONS = {}
 
@@ -341,10 +331,7 @@ def supplementary(rows,include_historical=True):
     for re in ([400,1000] if include_historical else []):
         for key,title in [('speed','speed'),('p','zero-mean pressure'),('omega','signed vorticity')]:
             fields(rows,key,re=re,cells=32)
-            SUPPLEMENT_CAPTIONS[f'field_{key}_re{re}']=(f'Retained Re={re} {title} at h=1/32, with computed velocity streamlines. '
-                'All four formulations are shown on the same physical color scale. '
-                + ('Signed fields use symmetric logarithmic normalization. ' if key != 'speed' else 'Speed uses a linear color scale. ') +
-                'These coarse-grid solutions are distinct from the selected fine-grid comparisons.')
+            SUPPLEMENT_CAPTIONS[f'field_{key}_re{re}']=supplementary_field_caption(re,key)
         fig,axes=plt.subplots(2,1,figsize=(6.6,5.9),layout='constrained')
         for m,color,label in zip(METHODS,COLORS,NAMES):
             r=next(r for r in rows if r['config']['method']==m and r['config']['reynolds']==re and r['config']['cells']==32)
@@ -430,6 +417,24 @@ CAPTIONS = {
 CAPTIONS['coupling_refinement_errors'] = 'Signed CFD minus Ghia velocity discrepancies at the actual tabulated centerline positions for Re=400 and 1000. Colors identify SIMPLE, PISO and PIMPLE; solid curves use 32 cells and dashed curves 64. Nearly coincident method curves reflect their common steady discrete equations. Lines connect measured samples only. The qualified Re=400 horizontal-profile curve has a gap at the excluded printed sample; its original value remains in Figure 17 and the all-point table.'
 CAPTIONS['linear_pressure_profiles'] = 'Fixed-operator projection on 32 cells per side, first analytic trial field, d=0.05. The upper panel compares zero-mean pressure on y/L=0.5. The lower panel shows remaining cell divergence along the bottom cell row, y/L=1/64, including the gauge-cell region. Its symmetric-log scale is linear below absolute divergence 1e-10. These are synthetic projection fields, not a cavity solution or a Ghia benchmark. LU and two Jacobi-preconditioned GMRES tolerances use the same matrix and right-hand side.'
 CAPTIONS['startup_time_profiles'] = 'Unit-square cavity at Re=100, 16 MAC cells per side, tU/L=0.2, unit lid speed and initially stationary fluid. Upper panels show both centerline velocity components; lower panels show their signed differences from the fine PIMPLE comparison. Red is PISO and blue PIMPLE; line style denotes the time step. The black comparison uses dt=0.003125, six outer and four inner corrections. Spatial equations and backward Euler are common. The coarse mesh and impulsive lid startup limit accuracy claims.'
+
+# One scale per quantity across the complete retained 26-case atlas.
+CAPTIONS['field_speed_re100'] = 'Retained Re=100 speed and computed velocity streamlines at h=1/64. The linear RGB color scale, from 0 to 1, is shared with the higher-Re panels. Filled contours interpolate between native samples without filtering; streamline density is a plotting choice, not a vorticity measure.'
+CAPTIONS['field_omega_re100'] = 'Retained Re=100 signed vorticity and computed velocity streamlines at h=1/64. The RGB scale spans -250 to 250 and is shared with the higher-Re panels. Symmetric-log normalization is linear for absolute vorticity up to 1. All native wall extrema are retained; colors report nondimensional physical values.'
+CAPTIONS['field_p_re100'] = 'Retained Re=100 zero-mean pressure and computed velocity streamlines at h=1/64. The RGB scale spans -2 to 2 and is shared with Re=400 and 1000. Symmetric-log normalization is linear for absolute pressure up to 0.01; native extrema are not clipped. FD pressure is reconstructed after the vorticity solve. This is a formulation comparison, not an independent pressure benchmark.'
+for _re in [400,1000]:
+    CAPTIONS[f'field_p_re{_re}_n64'] = (f'Retained Re={_re} zero-mean pressure and computed velocity streamlines at h=1/64: 64 FV pressure cells per side and 65 boundary-inclusive FD nodes. The common RGB pressure scale spans -2 to 2, with symmetric-log normalization linear below absolute pressure 0.01. FD pressure is reconstructed from the converged velocity field; Ghia provides no pressure reference.')
+
+
+def supplementary_field_caption(re,key):
+    title={'speed':'speed','p':'zero-mean pressure','omega':'signed vorticity'}[key]
+    scale={'speed':'The common linear speed scale is 0 to 1.',
+           'p':'The common pressure scale is -2 to 2; symmetric-log normalization is linear below absolute pressure 0.01.',
+           'omega':'The common vorticity scale is -250 to 250; symmetric-log normalization is linear below absolute vorticity 1.'}[key]
+    return (f'Retained Re={re} {title} at h=1/32, with computed velocity streamlines. '
+            f'{scale} The same limits are used in the finer-grid atlas. '
+            'Filled contours interpolate native samples without filtering or clipping. '
+            'These coarse-grid solutions are distinct from the selected fine-grid comparisons.')
 
 def caption_tex(name):
     # Mathematical labels remain properly typeset in captions as well as figures.

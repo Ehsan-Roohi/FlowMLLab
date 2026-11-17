@@ -4,6 +4,13 @@
 
 An extension after Week 1 (and optionally Week 1.1), connecting finite-volume conservation to pressure correction. The baseline case is Re=100; separate retained experiments compare Re=400 and 1000.
 
+The notebook and lecture show RGB speed, signed vorticity and zero-mean
+pressure contours with computed velocity streamlines. Each quantity uses one
+color scale across the retained Reynolds numbers. Figures 24–25 add pressure
+comparisons at Re=400 and 1000 on the same spacing as the Re=100 pressure panel;
+all earlier exercises, tables and comparisons remain available.
+[Field definitions and rendering checks](../../results/week01_2_visuals/README.md).
+
 The final worked exercise separates equation convergence, mesh accuracy and
 solver cost using retained, hash-checked fields. Tables 6a–6c compare SIMPLE,
 PISO and PIMPLE on 32 and 64 cells at Re=400 and 1000, show grid-refinement

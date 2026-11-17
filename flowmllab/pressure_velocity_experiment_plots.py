@@ -1,6 +1,6 @@
 """Physical fields and matched diagnostics for experimental cavity runs."""
 import numpy as np
-from .cavity_visuals import RGB, flow_structure, field_normalization
+from .pressure_velocity_visuals import experiment_field_figures
 from .pressure_velocity import centerlines,GHIA_X,GHIA_Y
 from .pressure_velocity_experiments import REFERENCE, benchmark_valid_mask
 
@@ -70,18 +70,5 @@ def comparison_figures(rows):
         group=[r for r in rows if r['config']['reynolds']==re]
         central=[r for r in group if r['config']['convection']=='central']
         selected.append(max(central or group,key=lambda r:(r['config']['cells'],r['config']['method']=='simple')))
-    fig,axes=plt.subplots(len(selected),3,figsize=(13,4.2*len(selected)),squeeze=False,layout='constrained')
-    pressure_max=max(np.abs(r['p']).max() for r in selected)
-    omega_max=max(np.abs(r['omega']).max() for r in selected)
-    for i,r in enumerate(selected):
-        x,y=r['x'],r['y'];cfg=r['config']
-        data=[np.hypot(r['u'],r['v']),r['p'],r['omega']]
-        limits=[(0,1),(-pressure_max,pressure_max),(-omega_max,omega_max)]
-        for key,ax,z,title,cmap,(lo,hi) in zip(['speed','p','omega'],axes[i],data,['Speed / U','Zero-mean pressure / rho U^2','Vorticity L / U'],[RGB,RGB,RGB],limits):
-            im=ax.pcolormesh(x,y,z,cmap=cmap,norm=field_normalization(key,[np.hypot(q['u'],q['v']) if key=='speed' else q['p'] if key=='p' else q['omega'] for q in selected]),shading='nearest',rasterized=True)
-            ax.set(aspect='equal',xlim=(0,1),ylim=(0,1),xlabel='x / L',ylabel='y / L',title=f"Re={cfg['reynolds']}, N={cfg['cells']}: {title}")
-            fig.colorbar(im,ax=ax,shrink=.8)
-            flow_structure(ax,x,y,r['u'],r['v'])
-    fig.suptitle('Finest retained solution per Re; velocity streamlines and shared field limits')
-    output['fields']=fig
+    output.update(experiment_field_figures(selected))
     return output

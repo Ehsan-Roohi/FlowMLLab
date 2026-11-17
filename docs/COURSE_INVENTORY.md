@@ -7,7 +7,7 @@ Course version **v1.15.0**. These counts describe the current checkout; they do 
 | Asset | Count |
 | --- | ---: |
 | Active lecture PDFs | 38 |
-| Pages in those PDFs | 681 |
+| Pages in those PDFs | 683 |
 | Student notebooks, including historical companion | 63 |
 | Historical student audit companion (included above) | 1 |
 | Optional self-study notebooks (separate) | 1 |
@@ -26,7 +26,7 @@ Course version **v1.15.0**. These counts describe the current checkout; they do 
 | --- | ---: |
 | [week01_02_tensorflow_keras.pdf](../lectures/week01_02_tensorflow_keras.pdf) | 21 |
 | [week01_1_ai_assisted_scientific_software.pdf](../lectures/week01_1_ai_assisted_scientific_software.pdf) | 10 |
-| [week01_2_pressure_velocity.pdf](../lectures/week01_2_pressure_velocity.pdf) | 72 |
+| [week01_2_pressure_velocity.pdf](../lectures/week01_2_pressure_velocity.pdf) | 74 |
 | [week01_3_keras_optimizers.pdf](../lectures/week01_3_keras_optimizers.pdf) | 18 |
 | [week01_numerical_foundations.pdf](../lectures/week01_numerical_foundations.pdf) | 37 |
 | [week02_1_probabilistic_uq.pdf](../lectures/week02_1_probabilistic_uq.pdf) | 10 |

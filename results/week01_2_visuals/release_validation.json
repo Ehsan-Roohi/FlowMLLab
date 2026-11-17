@@ -1,0 +1,45 @@
+{
+  "baseline_commit": "b6ee10ff4726bd5110f18b72660d553ccbc9c48d",
+  "lecture_pages": 74,
+  "original_notebook_cells_preserved": 87,
+  "original_cells_retained_in_order": true,
+  "original_exercise_text_preserved": true,
+  "added_pressure_markdown_cells": 2,
+  "old_pdf_pages_identical_pixels_except_footer": 67,
+  "restyled_existing_pdf_pages": [
+    50,
+    51,
+    52,
+    57,
+    58
+  ],
+  "new_pressure_pages": [
+    69,
+    70
+  ],
+  "all_13_changed_field_images_manually_inspected": true,
+  "rendered_pdf_pages_manually_inspected": [
+    50,
+    51,
+    52,
+    57,
+    58,
+    69,
+    70,
+    71,
+    73,
+    74
+  ],
+  "manual_review": "Full individual figures and pages inspected at readable resolution; no clipped axes, colorbar labels or overlapping captions found. Original references and seven-Re appendix retained.",
+  "executed_notebook_cells": 17,
+  "scientific_calls_and_solver_sources_preserved": true,
+  "optional_run_plotting_smoke_check": "Retained Re=400 four-method arrays; three fields rendered and text bounds checked; no new solve.",
+  "verified_native_field_archives": 26,
+  "native_arrays_unchanged": true,
+  "png_rgb_mode_and_300_dpi_verified": true,
+  "tex_overflow_missing_characters_or_undefined_references": false,
+  "pdf_sha256": "e95e6bed32eff3eb54812eaa5745856498ec962c1784d64136e32f5f4ad5d41a",
+  "notebook_sha256": "b31b775b96e83e410be9a597f2b47c44c6e09eaccd9a802964ea9186bef5692a",
+  "hosted_colab_executed": false,
+  "fresh_cfd_runs": 0
+}

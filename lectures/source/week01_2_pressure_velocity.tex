@@ -62,15 +62,15 @@ The table includes all four formulations and reports recorded solver-call second
 The finite-difference centerline errors decrease on refinement in this retained comparison. The finite-volume Ghia errors are not monotone between the two supplied grids. That behavior is retained rather than interpreted as proof of grid independence. More resolution and reference evidence are needed for an asymptotic accuracy claim.
 \newpage
 \topic{17}{Velocity structure and vorticity}
-\lessonfigure{field_speed_re100}{Retained Re=100 speed and velocity streamlines at h=1/64. All panels use the same physical color limits. Streamline arrows show circulation direction; their density does not measure vorticity.}{field-speed-re100}
+\lessonfigure{field_speed_re100}{Retained Re=100 speed and computed velocity streamlines at h=1/64. The linear RGB color scale, from 0 to 1, is shared with the higher-Re panels. Filled contours interpolate between native samples without filtering; streamline density is a plotting choice, not a vorticity measure.}{field-speed-re100}
 Negative vorticity denotes clockwise local rotation; positive vorticity denotes counterclockwise local rotation. Speed is $|\boldsymbol u|=\sqrt{u^2+v^2}$ and signed vorticity is $\omega=\partial v/\partial x-\partial u/\partial y$. The moving lid drives a clockwise primary circulation and a lower-cavity return flow. Black streamlines follow computed velocity; they are not vorticity contours. Small corner eddies depend on resolution and convergence as well as display density.
 \newpage
 \topic{17 continued}{Signed vorticity and circulation}
-\lessonfigure{field_omega_re100}{Retained Re=100 signed vorticity with velocity streamlines at h=1/64. One symmetric logarithmic color scale is shared by all panels, linear for absolute vorticity up to 1. The displayed colorbar values are nondimensional physical vorticity, including wall peaks.}{field-omega-re100}
+\lessonfigure{field_omega_re100}{Retained Re=100 signed vorticity and computed velocity streamlines at h=1/64. The RGB scale spans -250 to 250 and is shared with the higher-Re panels. Symmetric-log normalization is linear for absolute vorticity up to 1. All native wall extrema are retained; colors report nondimensional physical values.}{field-omega-re100}
 Signed fields use a common symmetric-logarithmic color scale across methods, resolving interior values while retaining strong wall gradients. Colorbar values remain physical nondimensional field values. Similar converged fields are expected when the same discrete steady equations are solved; the comparison is useful for checking consistency.
 \newpage
 \topic{18}{Pressure and native convergence histories}
-\lessonfigure{field_p_re100}{Retained Re=100 zero-mean pressure and velocity streamlines at h=1/64. One symmetric logarithmic color scale is shared, linear for absolute pressure up to 0.01. FD pressure is reconstructed after the vorticity solve. No independent pressure benchmark is claimed.}{field-p-re100}
+\lessonfigure{field_p_re100}{Retained Re=100 zero-mean pressure and computed velocity streamlines at h=1/64. The RGB scale spans -2 to 2 and is shared with Re=400 and 1000. Symmetric-log normalization is linear for absolute pressure up to 0.01; native extrema are not clipped. FD pressure is reconstructed after the vorticity solve. This is a formulation comparison, not an independent pressure benchmark.}{field-p-re100}
 All pressures are reported with zero mean. Pressure gradients, rather than the arbitrary mean, affect velocity. Differences near the discontinuous lid corners should not be interpreted as reference-pressure validation. Ghia supplies velocity data, not pressure data.
 \newpage
 \topic{18 continued}{Native convergence histories}
@@ -140,6 +140,8 @@ Control & Purpose\\\midrule
 \input{week01_2_refinement_study.tex}
 \newpage
 \input{week01_2_literature_studies.tex}
+\newpage
+\input{week01_2_pressure_contours.tex}
 \newpage
 \topic{23}{References}
 The textbook treatments develop finite-volume conservation, staggered pressure--velocity coupling and pressure correction. The paper and official algorithm documentation provide the PISO origin and practical inner/outer-loop distinctions.

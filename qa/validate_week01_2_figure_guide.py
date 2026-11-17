@@ -29,8 +29,8 @@ def sha(path):return hashlib.sha256(path.read_bytes()).hexdigest()
 
 def main():
     guide=json.loads((ASSETS/'figure_index.json').read_text(encoding='utf-8'))
-    assert len(guide)==36
-    assert sorted(int(v['number']) for v in guide.values() if v['lecture'])==list(range(1,24))
+    assert len(guide)==38
+    assert sorted(int(v['number']) for v in guide.values() if v['lecture'])==list(range(1,26))
     for name,entry in guide.items():
         for ext in ['pdf','png']:assert (ASSETS/(name+'.'+ext)).is_file(),name
         with pdfplumber.open(ASSETS/(name+'.pdf')) as p:
@@ -54,7 +54,7 @@ def main():
                 assert c['text']!='\x00' and c['x0']>=20 and c['x1']<=page.width-20,(i,c)
                 assert c['top']>=15 and c['bottom']<=page.height-15,(i,c)
             links.extend(a.get('uri','') for a in page.hyperlinks)
-    assert found==list(range(1,24)),found
+    assert found==list(range(1,26)),found
     for video in ['OOILoJ1zuiw','ahdW5TKacok']:assert any(video in link for link in links)
     assert any('the-pimple-algorithm' in link for link in links)
     book=nbformat.read(NOTE,4);nbformat.validate(book)
@@ -111,13 +111,13 @@ def main():
         entry['lecture_page']=pages_by_figure.get(entry['number'])
         entry['png_sha256']=sha(ASSETS/entry['image'])
     (ASSETS/'figure_index.json').write_text(json.dumps(guide,indent=2)+'\n',encoding='utf-8',newline='\n')
-    report={'lecture_pages':LECTURE_PAGES,'lecture_figures':23,'notebook_supplementary_figures':13,
+    report={'lecture_pages':LECTURE_PAGES,'lecture_figures':25,'notebook_supplementary_figures':13,
         'all_figure_numbers_and_captions_checked':True,'all_diagrams_at_text_width_inches':6.6,
         'vector_text_within_figure_bounds':True,'all_pdf_text_within_page_bounds':True,
         'archived_fields_sha256_checked':len(rows),'solver_sources':'unchanged; fresh controls audited separately',
         'executed_cheap_cells':executed,'fresh_cfd_trajectories':0,
         'pdf_sha256':sha(pdf),'notebook_sha256':sha(NOTE),
-        'hosted_colab_run':False,'visual_review':'Programmatic text/page bounds checked; current manual rendered-page review is recorded in results/week01_2_literature/release_validation.json.'}
+        'hosted_colab_run':False,'visual_review':'Programmatic text/page bounds checked; current manual rendered-page review is recorded in results/week01_2_visuals/release_validation.json.'}
     (ROOT/'output/week01_2_figure_validation.json').write_text(json.dumps(report,indent=2)+'\n',encoding='utf-8',newline='\n')
     (ROOT/'results/week01_2_formulations/figure_guide_validation.json').write_text(json.dumps(report,indent=2)+'\n',encoding='utf-8',newline='\n')
     print(json.dumps(report,indent=2))

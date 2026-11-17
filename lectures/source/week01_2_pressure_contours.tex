@@ -1,0 +1,28 @@
+\topic{Field comparison}{Pressure across formulations at $Re=400$}
+\lessonfigure{field_p_re400_n64}{Retained Re=400 zero-mean pressure and computed velocity streamlines at h=1/64: 64 FV pressure cells per side and 65 boundary-inclusive FD nodes. The common RGB pressure scale spans -2 to 2, with symmetric-log normalization linear below absolute pressure 0.01. FD pressure is reconstructed from the converged velocity field; Ghia provides no pressure reference.}{field-p-re400-n64}
+The cavity has unit side length and a unit-speed upper lid; the other walls are
+stationary. Pressure is nondimensionalized by $\rho U_{\rm lid}^2$ and reported
+with zero spatial mean, as in Figure~\ref{fig:field-p-re100}.
+The common color limits make pressure differences comparable across Reynolds
+numbers. The color mapping is nonlinear, so use the numerical colorbar labels
+rather than color distance to judge magnitude. Black curves follow velocity.
+
+\textbf{Read the physics.} Locate the low-pressure vortex core and the pressure
+rise near the upper-right turning region. Explain why similar streamline
+patterns do not by themselves validate reconstructed pressure. Use the
+pressure-gradient discrepancy in the retained measurement table as a separate
+consistency check; it is not a comparison with an exact pressure field.
+\newpage
+\topic{Field comparison}{Pressure across formulations at $Re=1000$}
+\lessonfigure{field_p_re1000_n64}{Retained Re=1000 zero-mean pressure and computed velocity streamlines at h=1/64: 64 FV pressure cells per side and 65 boundary-inclusive FD nodes. The common RGB pressure scale spans -2 to 2, with symmetric-log normalization linear below absolute pressure 0.01. FD pressure is reconstructed from the converged velocity field; Ghia provides no pressure reference.}{field-p-re1000-n64}
+Use Figures~\ref{fig:field-p-re100}, \ref{fig:field-p-re400-n64} and
+\ref{fig:field-p-re1000-n64} to compare pressure at the same $h/L=1/64$.
+The geometry, lid speed, pressure gauge and color scale are common. The
+discontinuous lid velocity produces demanding corner gradients; changing the
+plot palette does not improve their spatial resolution.
+
+\textbf{Separate appearance from accuracy.} Identify a pressure feature that
+changes with Reynolds number and one region where formulation differences
+remain. Compare against the Ghia velocity profiles and native residuals already
+provided, then explain why neither test establishes pressure accuracy. The
+32-cell pressure panels in the notebook provide a distinct coarse-grid check.

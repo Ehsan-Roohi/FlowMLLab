@@ -10,7 +10,7 @@
   },
   "counts": {
     "active_lecture_pdfs": 38,
-    "lecture_pages": 681,
+    "lecture_pages": 683,
     "student_notebooks": 63,
     "historical_student_companions": 1,
     "optional_notebooks": 1,
@@ -27,7 +27,7 @@
     },
     {
       "path": "lectures/week01_2_pressure_velocity.pdf",
-      "pages": 72
+      "pages": 74
     },
     {
       "path": "lectures/week01_3_keras_optimizers.pdf",

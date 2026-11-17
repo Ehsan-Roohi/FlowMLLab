@@ -1,6 +1,6 @@
 {
-  "lecture_pages": 72,
-  "lecture_figures": 23,
+  "lecture_pages": 74,
+  "lecture_figures": 25,
   "notebook_supplementary_figures": 13,
   "all_figure_numbers_and_captions_checked": true,
   "all_diagrams_at_text_width_inches": 6.6,
@@ -28,8 +28,8 @@
     "literature-startup-controls"
   ],
   "fresh_cfd_trajectories": 0,
-  "pdf_sha256": "aee0980895b65fef3d7c782ef13c0cbf92c1e9ffa424e93ed9b77f8ccb8296a4",
-  "notebook_sha256": "41ab5fc2f14d6fad55bcfea771674ee85e67b45c994ee77b8717c662c9680683",
+  "pdf_sha256": "e95e6bed32eff3eb54812eaa5745856498ec962c1784d64136e32f5f4ad5d41a",
+  "notebook_sha256": "b31b775b96e83e410be9a597f2b47c44c6e09eaccd9a802964ea9186bef5692a",
   "hosted_colab_run": false,
-  "visual_review": "Programmatic text/page bounds checked; current manual rendered-page review is recorded in results/week01_2_literature/release_validation.json."
+  "visual_review": "Programmatic text/page bounds checked; current manual rendered-page review is recorded in results/week01_2_visuals/release_validation.json."
 }

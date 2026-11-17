@@ -97,27 +97,27 @@
   },
   "field_speed_re100": {
     "number": "13",
-    "caption": "Retained Re=100 speed and velocity streamlines at h=1/64. All panels use the same physical color limits. Streamline arrows show circulation direction; their density does not measure vorticity.",
+    "caption": "Retained Re=100 speed and computed velocity streamlines at h=1/64. The linear RGB color scale, from 0 to 1, is shared with the higher-Re panels. Filled contours interpolate between native samples without filtering; streamline density is a plotting choice, not a vorticity measure.",
     "image": "field_speed_re100.png",
     "lecture": true,
     "lecture_page": 50,
-    "png_sha256": "51f1173064fe72de5eb846c9e151d0f27a472b3eaff3b393064cb9c91e536298"
+    "png_sha256": "6c08712718bac37fa4557b9ad1470d2a8d53bad6a0452d93770a6fdedddf49aa"
   },
   "field_omega_re100": {
     "number": "14",
-    "caption": "Retained Re=100 signed vorticity with velocity streamlines at h=1/64. One symmetric logarithmic color scale is shared by all panels, linear for absolute vorticity up to 1. The displayed colorbar values are nondimensional physical vorticity, including wall peaks.",
+    "caption": "Retained Re=100 signed vorticity and computed velocity streamlines at h=1/64. The RGB scale spans -250 to 250 and is shared with the higher-Re panels. Symmetric-log normalization is linear for absolute vorticity up to 1. All native wall extrema are retained; colors report nondimensional physical values.",
     "image": "field_omega_re100.png",
     "lecture": true,
     "lecture_page": 51,
-    "png_sha256": "5491e27bb64bc560325b9c7dc2cda542905dab28c872ffca8b3a75c8a6624649"
+    "png_sha256": "ba38941d0cf8030674bc2f372d445560f00e2817ec5d80166b7fb4df60ea8bb2"
   },
   "field_p_re100": {
     "number": "15",
-    "caption": "Retained Re=100 zero-mean pressure and velocity streamlines at h=1/64. One symmetric logarithmic color scale is shared, linear for absolute pressure up to 0.01. FD pressure is reconstructed after the vorticity solve. No independent pressure benchmark is claimed.",
+    "caption": "Retained Re=100 zero-mean pressure and computed velocity streamlines at h=1/64. The RGB scale spans -2 to 2 and is shared with Re=400 and 1000. Symmetric-log normalization is linear for absolute pressure up to 0.01; native extrema are not clipped. FD pressure is reconstructed after the vorticity solve. This is a formulation comparison, not an independent pressure benchmark.",
     "image": "field_p_re100.png",
     "lecture": true,
     "lecture_page": 52,
-    "png_sha256": "3438b0de16dda6796b4d94692a87ac9619c06f6b798de590c19d922385b47a5a"
+    "png_sha256": "f14ea3e11ad002950da90f0979c2bcef0df4b960399b11100339447685dc8f64"
   },
   "convergence_re100": {
     "number": "16",
@@ -149,7 +149,7 @@
     "image": "refinement_re400.png",
     "lecture": true,
     "lecture_page": 57,
-    "png_sha256": "a3a1941512115dd51facc6da1cfb8d70eda2617dd74a8c5ab16d917c3ccc0460"
+    "png_sha256": "e46a906b421aea24bed33fed762606bfee3e71d6d9f1629b0c52d19939642ed3"
   },
   "refinement_re1000": {
     "number": "20",
@@ -157,31 +157,71 @@
     "image": "refinement_re1000.png",
     "lecture": true,
     "lecture_page": 58,
-    "png_sha256": "163ec652d8acdaafee7b4ea2fd2e7f968098868b4637573db9da87729771860c"
+    "png_sha256": "848e4462fe0327612e41b8fee68145d94d9d3129e4b5faf976314600ad5d40cb"
+  },
+  "coupling_refinement_errors": {
+    "number": "21",
+    "caption": "Signed CFD minus Ghia velocity discrepancies at the actual tabulated centerline positions for Re=400 and 1000. Colors identify SIMPLE, PISO and PIMPLE; solid curves use 32 cells and dashed curves 64. Nearly coincident method curves reflect their common steady discrete equations. Lines connect measured samples only. The qualified Re=400 horizontal-profile curve has a gap at the excluded printed sample; its original value remains in Figure 17 and the all-point table.",
+    "image": "coupling_refinement_errors.png",
+    "lecture": true,
+    "lecture_page": 62,
+    "png_sha256": "31f4f06bf3c12578d3fd06bf48a9f58c119ceecdc1a7cbabd036af1bf1ec9a2c"
+  },
+  "linear_pressure_profiles": {
+    "number": "22",
+    "caption": "Fixed-operator projection on 32 cells per side, first analytic trial field, d=0.05. The upper panel compares zero-mean pressure on y/L=0.5. The lower panel shows remaining cell divergence along the bottom cell row, y/L=1/64, including the gauge-cell region. Its symmetric-log scale is linear below absolute divergence 1e-10. These are synthetic projection fields, not a cavity solution or a Ghia benchmark. LU and two Jacobi-preconditioned GMRES tolerances use the same matrix and right-hand side.",
+    "image": "linear_pressure_profiles.png",
+    "lecture": true,
+    "lecture_page": 66,
+    "png_sha256": "4b8a452bf39b016a07a072a65094d4bfe281d6e2f781d40d7aefb99086c24847"
+  },
+  "startup_time_profiles": {
+    "number": "23",
+    "caption": "Unit-square cavity at Re=100, 16 MAC cells per side, tU/L=0.2, unit lid speed and initially stationary fluid. Upper panels show both centerline velocity components; lower panels show their signed differences from the fine PIMPLE comparison. Red is PISO and blue PIMPLE; line style denotes the time step. The black comparison uses dt=0.003125, six outer and four inner corrections. Spatial equations and backward Euler are common. The coarse mesh and impulsive lid startup limit accuracy claims.",
+    "image": "startup_time_profiles.png",
+    "lecture": true,
+    "lecture_page": 68,
+    "png_sha256": "04e837376cb52e88de0061d91371fc92cc59ba088f44eb39f29efdf0a74d5821"
+  },
+  "field_p_re400_n64": {
+    "number": "24",
+    "caption": "Retained Re=400 zero-mean pressure and computed velocity streamlines at h=1/64: 64 FV pressure cells per side and 65 boundary-inclusive FD nodes. The common RGB pressure scale spans -2 to 2, with symmetric-log normalization linear below absolute pressure 0.01. FD pressure is reconstructed from the converged velocity field; Ghia provides no pressure reference.",
+    "image": "field_p_re400_n64.png",
+    "lecture": true,
+    "lecture_page": 69,
+    "png_sha256": "795e6ce06d6fbddfbde26e5f5d0acbe41b5c3f2e086ff2b967bbff1b698489bd"
+  },
+  "field_p_re1000_n64": {
+    "number": "25",
+    "caption": "Retained Re=1000 zero-mean pressure and computed velocity streamlines at h=1/64: 64 FV pressure cells per side and 65 boundary-inclusive FD nodes. The common RGB pressure scale spans -2 to 2, with symmetric-log normalization linear below absolute pressure 0.01. FD pressure is reconstructed from the converged velocity field; Ghia provides no pressure reference.",
+    "image": "field_p_re1000_n64.png",
+    "lecture": true,
+    "lecture_page": 70,
+    "png_sha256": "02b2e1495d674de263d1e7ce812d73b8ff7bbd5a83a4a1d7842ba3515dd9e343"
   },
   "field_speed_re400": {
     "number": "S1",
-    "caption": "Retained Re=400 speed at h=1/32, with computed velocity streamlines. All four formulations are shown on the same physical color scale. Speed uses a linear color scale. These coarse-grid solutions are distinct from the selected fine-grid comparisons.",
+    "caption": "Retained Re=400 speed at h=1/32, with computed velocity streamlines. The common linear speed scale is 0 to 1. The same limits are used in the finer-grid atlas. Filled contours interpolate native samples without filtering or clipping. These coarse-grid solutions are distinct from the selected fine-grid comparisons.",
     "image": "field_speed_re400.png",
     "lecture": false,
     "lecture_page": null,
-    "png_sha256": "03e01b6b787972cb3e0bbda7105aebc30fc13d070b93484d1430b2bd9562a13e"
+    "png_sha256": "8fb65b83e92ec078590edde820b968cc9b1c554d7c86f93557ecfbb2a4a8a42a"
   },
   "field_p_re400": {
     "number": "S2",
-    "caption": "Retained Re=400 zero-mean pressure at h=1/32, with computed velocity streamlines. All four formulations are shown on the same physical color scale. Signed fields use symmetric logarithmic normalization. These coarse-grid solutions are distinct from the selected fine-grid comparisons.",
+    "caption": "Retained Re=400 zero-mean pressure at h=1/32, with computed velocity streamlines. The common pressure scale is -2 to 2; symmetric-log normalization is linear below absolute pressure 0.01. The same limits are used in the finer-grid atlas. Filled contours interpolate native samples without filtering or clipping. These coarse-grid solutions are distinct from the selected fine-grid comparisons.",
     "image": "field_p_re400.png",
     "lecture": false,
     "lecture_page": null,
-    "png_sha256": "9e118d8b1747119d2a51fb34883d5a2384e05f721c00f13e126caba591940cc3"
+    "png_sha256": "bc3e6ee3121b1b835b638e95ac2d41ec448f13822e4ba9824740d01d599a07d9"
   },
   "field_omega_re400": {
     "number": "S3",
-    "caption": "Retained Re=400 signed vorticity at h=1/32, with computed velocity streamlines. All four formulations are shown on the same physical color scale. Signed fields use symmetric logarithmic normalization. These coarse-grid solutions are distinct from the selected fine-grid comparisons.",
+    "caption": "Retained Re=400 signed vorticity at h=1/32, with computed velocity streamlines. The common vorticity scale is -250 to 250; symmetric-log normalization is linear below absolute vorticity 1. The same limits are used in the finer-grid atlas. Filled contours interpolate native samples without filtering or clipping. These coarse-grid solutions are distinct from the selected fine-grid comparisons.",
     "image": "field_omega_re400.png",
     "lecture": false,
     "lecture_page": null,
-    "png_sha256": "aa4c7416b5fe992b5168224a81a6b9b245d6c7d4662a2ac9171e30b9a1feb64d"
+    "png_sha256": "02c64cb6d19121f1f837ea4694ab251719ac65c8820ed4ff21ce64483f607670"
   },
   "convergence_re400": {
     "number": "S4",
@@ -193,27 +233,27 @@
   },
   "field_speed_re1000": {
     "number": "S5",
-    "caption": "Retained Re=1000 speed at h=1/32, with computed velocity streamlines. All four formulations are shown on the same physical color scale. Speed uses a linear color scale. These coarse-grid solutions are distinct from the selected fine-grid comparisons.",
+    "caption": "Retained Re=1000 speed at h=1/32, with computed velocity streamlines. The common linear speed scale is 0 to 1. The same limits are used in the finer-grid atlas. Filled contours interpolate native samples without filtering or clipping. These coarse-grid solutions are distinct from the selected fine-grid comparisons.",
     "image": "field_speed_re1000.png",
     "lecture": false,
     "lecture_page": null,
-    "png_sha256": "616b097d74e58a8392e63133f5f36ce5f891d7ecbac921013254cc824932b4da"
+    "png_sha256": "3de5b0e59260fabac3fa5446ef3288ec55c71c9d97b343017d6278e25dd22575"
   },
   "field_p_re1000": {
     "number": "S6",
-    "caption": "Retained Re=1000 zero-mean pressure at h=1/32, with computed velocity streamlines. All four formulations are shown on the same physical color scale. Signed fields use symmetric logarithmic normalization. These coarse-grid solutions are distinct from the selected fine-grid comparisons.",
+    "caption": "Retained Re=1000 zero-mean pressure at h=1/32, with computed velocity streamlines. The common pressure scale is -2 to 2; symmetric-log normalization is linear below absolute pressure 0.01. The same limits are used in the finer-grid atlas. Filled contours interpolate native samples without filtering or clipping. These coarse-grid solutions are distinct from the selected fine-grid comparisons.",
     "image": "field_p_re1000.png",
     "lecture": false,
     "lecture_page": null,
-    "png_sha256": "f0ded27b8a2e8a226e98cad94c30ae1d913a9ca1fc57deb8a06f83dbe1d13762"
+    "png_sha256": "a0a7a99cfa3ca90a79bb8ce63a17262e38ba9a05cb3c9ce2e6045155314a1376"
   },
   "field_omega_re1000": {
     "number": "S7",
-    "caption": "Retained Re=1000 signed vorticity at h=1/32, with computed velocity streamlines. All four formulations are shown on the same physical color scale. Signed fields use symmetric logarithmic normalization. These coarse-grid solutions are distinct from the selected fine-grid comparisons.",
+    "caption": "Retained Re=1000 signed vorticity at h=1/32, with computed velocity streamlines. The common vorticity scale is -250 to 250; symmetric-log normalization is linear below absolute vorticity 1. The same limits are used in the finer-grid atlas. Filled contours interpolate native samples without filtering or clipping. These coarse-grid solutions are distinct from the selected fine-grid comparisons.",
     "image": "field_omega_re1000.png",
     "lecture": false,
     "lecture_page": null,
-    "png_sha256": "5041cabd32e963084d1a6018c75afaab11b6ecc7fa69affe5502e409a3f82a5d"
+    "png_sha256": "20f6ffae61ef504fbeea00075fbeee26f187f438444e4693509d961b88d4d58e"
   },
   "convergence_re1000": {
     "number": "S8",
@@ -262,29 +302,5 @@
     "lecture": false,
     "lecture_page": null,
     "png_sha256": "fc6933031b0b2bfaf687e4693f71c6bdfdc2dd2c921b0c99c2ea698fa295de55"
-  },
-  "coupling_refinement_errors": {
-    "number": "21",
-    "caption": "Signed CFD minus Ghia velocity discrepancies at the actual tabulated centerline positions for Re=400 and 1000. Colors identify SIMPLE, PISO and PIMPLE; solid curves use 32 cells and dashed curves 64. Nearly coincident method curves reflect their common steady discrete equations. Lines connect measured samples only. The qualified Re=400 horizontal-profile curve has a gap at the excluded printed sample; its original value remains in Figure 17 and the all-point table.",
-    "image": "coupling_refinement_errors.png",
-    "lecture": true,
-    "lecture_page": 62,
-    "png_sha256": "31f4f06bf3c12578d3fd06bf48a9f58c119ceecdc1a7cbabd036af1bf1ec9a2c"
-  },
-  "linear_pressure_profiles": {
-    "number": "22",
-    "caption": "Fixed-operator projection on 32 cells per side, first analytic trial field, d=0.05. The upper panel compares zero-mean pressure on y/L=0.5. The lower panel shows remaining cell divergence along the bottom cell row, y/L=1/64, including the gauge-cell region. Its symmetric-log scale is linear below absolute divergence 1e-10. These are synthetic projection fields, not a cavity solution or a Ghia benchmark. LU and two Jacobi-preconditioned GMRES tolerances use the same matrix and right-hand side.",
-    "image": "linear_pressure_profiles.png",
-    "lecture": true,
-    "lecture_page": 66,
-    "png_sha256": "4b8a452bf39b016a07a072a65094d4bfe281d6e2f781d40d7aefb99086c24847"
-  },
-  "startup_time_profiles": {
-    "number": "23",
-    "caption": "Unit-square cavity at Re=100, 16 MAC cells per side, tU/L=0.2, unit lid speed and initially stationary fluid. Upper panels show both centerline velocity components; lower panels show their signed differences from the fine PIMPLE comparison. Red is PISO and blue PIMPLE; line style denotes the time step. The black comparison uses dt=0.003125, six outer and four inner corrections. Spatial equations and backward Euler are common. The coarse mesh and impulsive lid startup limit accuracy claims.",
-    "image": "startup_time_profiles.png",
-    "lecture": true,
-    "lecture_page": 68,
-    "png_sha256": "04e837376cb52e88de0061d91371fc92cc59ba088f44eb39f29efdf0a74d5821"
   }
 }

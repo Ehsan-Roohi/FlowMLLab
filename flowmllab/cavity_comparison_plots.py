@@ -2,7 +2,7 @@
 import numpy as np
 from .pressure_velocity import centerlines,GHIA_Y,GHIA_X
 from .pressure_velocity_experiments import REFERENCE, benchmark_valid_mask
-from .cavity_visuals import RGB,field_normalization,field_scale_note,flow_structure
+from .pressure_velocity_visuals import experiment_field_figures
 
 def all_formulation_figures(rows):
     import matplotlib.pyplot as plt
@@ -50,16 +50,5 @@ def all_formulation_figures(rows):
         for j,value in enumerate(values):axes[i,2].text(j,value,f'{value:.2f}s',ha='center',va='bottom',fontsize=9)
     fig.suptitle('Separate native convergence measures; timings depend on settings and host')
     output['convergence']=fig
-    fig,axes=plt.subplots(len(rows),3,figsize=(12,3.8*len(rows)),squeeze=False,layout='constrained')
-    keys=['speed','p','omega'];titles=['Speed / U','Pressure / rho U^2','Vorticity L / U']
-    for j,(key,title) in enumerate(zip(keys,titles)):
-        values=[np.hypot(r['u'],r['v']) if key=='speed' else r[key] for r in rows]
-        norm=field_normalization(key,values)
-        for i,(r,value) in enumerate(zip(rows,values)):
-            ax=axes[i,j];im=ax.pcolormesh(r['x'],r['y'],value,cmap=RGB,norm=norm,shading='nearest')
-            flow_structure(ax,r['x'],r['y'],r['u'],r['v'])
-            c=r['config'];ax.set(aspect='equal',xlim=(0,1),ylim=(0,1),xlabel='x/L',ylabel='y/L',title=f"Re={c['reynolds']}: {c['method']}")
-        fig.colorbar(im,ax=list(axes[:,j]),label=title,shrink=.8)
-    fig.suptitle('Computed fields: all requested methods; signed fields use symmetric-log color scales')
-    output['fields']=fig
+    output.update(experiment_field_figures(rows))
     return output

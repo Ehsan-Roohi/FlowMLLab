@@ -18,7 +18,7 @@ def expand(path):
 
 def main():
     names=re.findall(r'\\lessonfigure\{([^}]+)\}',expand(SOURCE/'week01_2_pressure_velocity.tex'))
-    assert len(names)==23 and len(set(names))==23,names
+    assert len(names)==25 and len(set(names))==25,names
     index={name:{'number':str(i),'caption':caption_tex(name),'image':name+'.png','lecture':True}
            for i,name in enumerate(names,1)}
     extra=json.loads((ASSETS/'supplementary_captions.json').read_text(encoding='utf-8'))
