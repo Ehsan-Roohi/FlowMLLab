@@ -163,6 +163,11 @@ def link_errors(files: dict[Path,str]) -> list[str]:
         for url in urls:
             u=urlparse(html.unescape(url));path=unquote(u.path)
             if not path or u.scheme in ('mailto','data'):continue
+            # These exact paths are generated, then checked by build_site/check_site.
+            if relative == 'docs/index.html' and not u.scheme and path in {
+                'build.json', 'assets/cavity/manifest.json',
+                'assets/cavity/re7500-speed-cfd.png', 'assets/cavity/re7500-profiles.csv',
+            }:continue
             if u.scheme or u.netloc:
                 prefixes=['/Ehsan-Roohi/FlowMLLab/blob/main/','/Ehsan-Roohi/FlowMLLab/tree/main/'] if u.netloc=='github.com' else ['/github/Ehsan-Roohi/FlowMLLab/blob/main/'] if u.netloc=='colab.research.google.com' else []
                 prefix=next((p for p in prefixes if path.startswith(p)),None)

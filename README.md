@@ -6,6 +6,8 @@ Developed for **MIE 690A: AI in Fluid Mechanics** at the University of Massachus
 
 ## Start here
 
+[**Open the interactive labs**](https://ehsan-roohi.github.io/FlowMLLab/) — explore cavity fields, compare CFD with neural predictions, and follow the complete course.
+
 - [**Open your first lab**](notebooks/week01/01_python_for_cfd_ai_fluids.ipynb) to learn the Python tools used in the course.
 - [**Browse all weeks**](#continue-through-the-course) for guides, notebooks and lectures.
 - [**Install FlowMLLab**](START_HERE.md) for setup, prerequisites and reproduction instructions.

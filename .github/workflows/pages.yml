@@ -1,0 +1,62 @@
+name: Publish interactive course site
+on:
+  push:
+    branches: [main]
+  pull_request:
+    paths:
+      - 'docs/**'
+      - 'course/**'
+      - 'qa/build_site.py'
+      - 'qa/build_cavity_explorer.py'
+      - 'qa/check_site.py'
+      - '.github/workflows/pages.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: pages-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      OMP_NUM_THREADS: '1'
+      OPENBLAS_NUM_THREADS: '1'
+      MKL_NUM_THREADS: '1'
+      MPLCONFIGDIR: /tmp/flowmllab-matplotlib
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: pip
+      - name: Install the build runtime
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y poppler-utils
+          python -m pip install -e .
+      - name: Build from the course catalogue and verified scientific data
+        run: python qa/build_site.py --output tmp/pages-site
+      - name: Validate the published artifact
+        run: |
+          node --check docs/assets/cavity-explorer.js
+          python qa/check_site.py tmp/pages-site
+      - uses: actions/upload-pages-artifact@v4
+        with:
+          path: tmp/pages-site
+  deploy:
+    if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/configure-pages@v5
+      - name: Publish to the existing GitHub Pages URL
+        id: deployment
+        uses: actions/deploy-pages@v4
