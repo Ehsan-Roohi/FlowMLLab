@@ -1,8 +1,6 @@
 <h1><img src="docs/assets/flowmllab-logo.png" alt="FlowMLLab" width="440"></h1>
 
-[Read the FlowMLLab paper in *AI Thermal Fluids*.](https://doi.org/10.1016/j.aitf.2026.100064)
-
-FlowMLLab is an open course and software toolkit for **scientific machine learning in fluid mechanics**. Run flow solvers, train predictive models, and test their predictions against physical benchmarks. The course spans continuum and rarefied flows, reduced-order models, physics-informed networks, neural operators, and attention for flow reconstruction.
+FlowMLLab is an open course and software toolkit for **scientific machine learning in fluid mechanics**. Run flow solvers, train predictive models, and test their predictions against physical benchmarks. The course spans continuum and rarefied flows, reduced-order models, physics-informed networks, neural operators, and attention for flow reconstruction. The framework and its applications are described in the [FlowMLLab paper in *AI Thermal Fluids*](https://doi.org/10.1016/j.aitf.2026.100064).
 
 Developed for **MIE 690A: AI in Fluid Mechanics** at the University of Massachusetts Amherst.
 
