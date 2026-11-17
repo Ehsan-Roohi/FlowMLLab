@@ -28,9 +28,9 @@ training data, frozen test coefficients or test-selection rule was changed.
 
 [Vector PDF](vorticity_contours_overlay_Re1000_Re7500.pdf)
 
-### RGB vorticity and signed difference
+### Vorticity and signed difference
 
-<img src="vorticity_fields_and_signed_error_Re1000_Re7500.png" width="900" alt="RGB vorticity and signed difference for CFD and frozen POD-DeepONet at Re1000 and Re7500">
+<img src="vorticity_fields_and_signed_error_Re1000_Re7500.png" width="900" alt="Vorticity and signed difference for CFD and frozen POD-DeepONet at Re1000 and Re7500">
 
 [Vector PDF](vorticity_fields_and_signed_error_Re1000_Re7500.pdf)
 
@@ -40,9 +40,9 @@ training data, frozen test coefficients or test-selection rule was changed.
 
 [Vector PDF](pressure_contours_overlay_Re1000_Re7500.pdf)
 
-### RGB pressure and signed difference
+### Pressure and signed difference
 
-<img src="pressure_fields_and_signed_error_Re1000_Re7500.png" width="900" alt="RGB pressure and signed difference for CFD and frozen POD-DeepONet at Re1000 and Re7500">
+<img src="pressure_fields_and_signed_error_Re1000_Re7500.png" width="900" alt="Pressure and signed difference for CFD and frozen POD-DeepONet at Re1000 and Re7500">
 
 [Vector PDF](pressure_fields_and_signed_error_Re1000_Re7500.pdf)
 
@@ -55,7 +55,7 @@ Streamline density is a visualization choice, not a speed measurement.
 Vorticity is `omega = dv/dx - du/dy`, computed with the same centered stencil
 from both velocity fields at 511×511 interior nodes. It is not an independently
 trained network output or the wall-vorticity boundary stencil. The sign and all
-interior extrema are retained. The four RGB vorticity fields use one symmetric-log
+interior extrema are retained. The four vorticity fields use one symmetric-log
 scale (linear threshold 1 in omega L/U); signed discrepancies use linear scales
 shown separately for each Re. Contour levels are recorded in verification.json.
 [Vorticity metrics](vorticity_metrics.csv) report global L2, RMS, maximum signed
@@ -66,7 +66,7 @@ same interior grid, with one zero-interior-mean gauge per entire field. The same
 operator is used independently for CFD and neural velocities. Pressure is not a
 network output, and no independent pressure-solver reference was used. The
 reconstruction passes affine-gradient and second-order Kovasznay checks.
-The RGB pressure fields share a full-extrema symmetric-log scale with threshold
+The pressure fields share a full-extrema symmetric-log scale with threshold
 0.02 rho U²; signed discrepancies use linear scales. No values are clipped.
 
 At Re7500 the derived-pressure neural/CFD L2 discrepancy is 0.05373%, while the

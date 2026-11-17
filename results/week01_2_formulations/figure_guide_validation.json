@@ -28,8 +28,39 @@
     "literature-startup-controls"
   ],
   "fresh_cfd_trajectories": 0,
-  "pdf_sha256": "e95e6bed32eff3eb54812eaa5745856498ec962c1784d64136e32f5f4ad5d41a",
-  "notebook_sha256": "b31b775b96e83e410be9a597f2b47c44c6e09eaccd9a802964ea9186bef5692a",
+  "pdf_sha256": "949f5857f74c038d27fe831231f51c3a61999f039897ae377628a0fd1b51de54",
+  "notebook_sha256": "d4bd771bc423ba4932bd2d8c04153de191e0664e4a89762bcee5f604780f726e",
   "hosted_colab_run": false,
-  "visual_review": "Programmatic text/page bounds checked; current manual rendered-page review is recorded in results/week01_2_visuals/release_validation.json."
+  "visual_review": "Programmatic text/page bounds checked; current manual rendered-page review is recorded in results/week01_2_visuals/release_validation.json.",
+  "editorial_verification": {
+    "baseline_commit": "d5bbe4c1142df6a4ed3bc9ac4070bf271936ef86",
+    "lecture_pages": 74,
+    "changed_pdf_pages": [
+      50,
+      51,
+      52,
+      69,
+      70
+    ],
+    "pixel_identical_pdf_pages": 69,
+    "figure_assets_unchanged": 38,
+    "all_text_inside_page": true,
+    "tex_overflow_or_missing_symbols": false,
+    "pdf_sha256": "949f5857f74c038d27fe831231f51c3a61999f039897ae377628a0fd1b51de54",
+    "notebook_sha256": "d4bd771bc423ba4932bd2d8c04153de191e0664e4a89762bcee5f604780f726e",
+    "manually_reviewed_pdf_pages": [
+      50,
+      51,
+      52,
+      69,
+      70
+    ],
+    "notebook_code_and_outputs_preserved": {
+      "notebooks/week01/03_cavity_ghia.ipynb": 16,
+      "notebooks/week01_2/W1_2_Cavity_Pressure_Velocity.ipynb": 17,
+      "notebooks/week04/W4_Lab8_High_Re_Field_DeepONet.ipynb": 9
+    },
+    "scope": "Caption wording and native HTML equation display only; no solver, data, figure or exercise changes.",
+    "execution_provenance": "Previously verified code and saved outputs are unchanged from the baseline commit; no fresh numerical execution was needed for this editorial pass."
+  }
 }

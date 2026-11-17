@@ -11,7 +11,7 @@ The floor reference velocities are extremely small. Absolute errors near 1e-8 to
 - [Complete physical figure set](lesson_figures/controlled_pilot_figures.pdf)
 - [Objective histories: all seeds](optimizer_objective_history.pdf)
 - [Upper profiles, first predeclared seed](profiles_upper_s12345.pdf) · [Floor profiles](profiles_floor_s12345.pdf) · [Streamlines](streamlines_s12345.pdf)
-- [RGB presentation copies and hashes](lesson_figures/figure_manifest.json): scientific RGB pixels are unchanged; only fully opaque alpha channels were removed. All three seeds are shown in the notebook.
+- [Presentation copies and hashes](lesson_figures/figure_manifest.json): scientific color values are unchanged; only fully opaque alpha channels were removed. All three seeds are shown in the notebook.
 - [Teaching notebook](../../notebooks/week13/W13_D5_Controlled_Optimizer_Study.ipynb) · [Lecture](../../lectures/week13_rectangular_cavity_pinn.pdf)
 - [Protocol](../../docs/DEEP_CAVITY_ABLATION_PROTOCOL.md) · [Attributed original source](../../data/week13_d5/author_source/NOTICE.md)
 

@@ -97,7 +97,7 @@
   },
   "field_speed_re100": {
     "number": "13",
-    "caption": "Retained Re=100 speed and computed velocity streamlines at h=1/64. The linear RGB color scale, from 0 to 1, is shared with the higher-Re panels. Filled contours interpolate between native samples without filtering; streamline density is a plotting choice, not a vorticity measure.",
+    "caption": "Retained Re=100 speed and computed velocity streamlines at h=1/64. The linear color scale, from 0 to 1, is shared with the higher-Re panels. Filled contours interpolate between native samples without filtering; streamline density is a plotting choice, not a vorticity measure.",
     "image": "field_speed_re100.png",
     "lecture": true,
     "lecture_page": 50,
@@ -105,7 +105,7 @@
   },
   "field_omega_re100": {
     "number": "14",
-    "caption": "Retained Re=100 signed vorticity and computed velocity streamlines at h=1/64. The RGB scale spans -250 to 250 and is shared with the higher-Re panels. Symmetric-log normalization is linear for absolute vorticity up to 1. All native wall extrema are retained; colors report nondimensional physical values.",
+    "caption": "Retained Re=100 signed vorticity and computed velocity streamlines at h=1/64. The scale spans -250 to 250 and is shared with the higher-Re panels. Symmetric-log normalization is linear for absolute vorticity up to 1. All native wall extrema are retained; colors report nondimensional physical values.",
     "image": "field_omega_re100.png",
     "lecture": true,
     "lecture_page": 51,
@@ -113,7 +113,7 @@
   },
   "field_p_re100": {
     "number": "15",
-    "caption": "Retained Re=100 zero-mean pressure and computed velocity streamlines at h=1/64. The RGB scale spans -2 to 2 and is shared with Re=400 and 1000. Symmetric-log normalization is linear for absolute pressure up to 0.01; native extrema are not clipped. FD pressure is reconstructed after the vorticity solve. This is a formulation comparison, not an independent pressure benchmark.",
+    "caption": "Retained Re=100 zero-mean pressure and computed velocity streamlines at h=1/64. The scale spans -2 to 2 and is shared with Re=400 and 1000. Symmetric-log normalization is linear for absolute pressure up to 0.01; native extrema are not clipped. FD pressure is reconstructed after the vorticity solve. This is a formulation comparison, not an independent pressure benchmark.",
     "image": "field_p_re100.png",
     "lecture": true,
     "lecture_page": 52,
@@ -185,7 +185,7 @@
   },
   "field_p_re400_n64": {
     "number": "24",
-    "caption": "Retained Re=400 zero-mean pressure and computed velocity streamlines at h=1/64: 64 FV pressure cells per side and 65 boundary-inclusive FD nodes. The common RGB pressure scale spans -2 to 2, with symmetric-log normalization linear below absolute pressure 0.01. FD pressure is reconstructed from the converged velocity field; Ghia provides no pressure reference.",
+    "caption": "Retained Re=400 zero-mean pressure and computed velocity streamlines at h=1/64: 64 FV pressure cells per side and 65 boundary-inclusive FD nodes. The common pressure scale spans -2 to 2, with symmetric-log normalization linear below absolute pressure 0.01. FD pressure is reconstructed from the converged velocity field; Ghia provides no pressure reference.",
     "image": "field_p_re400_n64.png",
     "lecture": true,
     "lecture_page": 69,
@@ -193,7 +193,7 @@
   },
   "field_p_re1000_n64": {
     "number": "25",
-    "caption": "Retained Re=1000 zero-mean pressure and computed velocity streamlines at h=1/64: 64 FV pressure cells per side and 65 boundary-inclusive FD nodes. The common RGB pressure scale spans -2 to 2, with symmetric-log normalization linear below absolute pressure 0.01. FD pressure is reconstructed from the converged velocity field; Ghia provides no pressure reference.",
+    "caption": "Retained Re=1000 zero-mean pressure and computed velocity streamlines at h=1/64: 64 FV pressure cells per side and 65 boundary-inclusive FD nodes. The common pressure scale spans -2 to 2, with symmetric-log normalization linear below absolute pressure 0.01. FD pressure is reconstructed from the converged velocity field; Ghia provides no pressure reference.",
     "image": "field_p_re1000_n64.png",
     "lecture": true,
     "lecture_page": 70,

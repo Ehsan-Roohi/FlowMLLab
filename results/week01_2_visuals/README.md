@@ -1,4 +1,4 @@
-# Week 1.2: RGB field atlas
+# Week 1.2: velocity, pressure and vorticity
 
 [Notebook](../../notebooks/week01_2/W1_2_Cavity_Pressure_Velocity.ipynb) ·
 [Lecture](../../lectures/week01_2_pressure_velocity.pdf)
@@ -14,7 +14,7 @@ calculation is repeated for this presentation update.
 | Pressure | p/(rho U_lid²), zero spatial mean | -2 to 2 | Symmetric log; linear for absolute pressure <= 0.01 |
 | Vorticity | omega L/U_lid | -250 to 250 | Symmetric log; linear for absolute vorticity <= 1 |
 
-RGB colors pass through blue, cyan, green, yellow and red. The colorbar labels
+The colorbar labels
 are physical values. Rounded limits contain every native extremum in the
 retained archive. Filled contours interpolate native samples without
 filtering; nearest samples fill half-cell edge bands. Thin black curves are
@@ -30,7 +30,7 @@ validates sampled velocity profiles, not pressure. Changing color or contour
 interpolation does not improve the numerical solution.
 
 The [render receipt](render_validation.json) records the unchanged native-array
-digest, common scales, RGB export checks and hashes of all 13 field figures.
+digest, common scales, export checks and hashes of all 13 field figures.
 The [release check](release_validation.json) records notebook preservation
 and the manual inspection of the rebuilt PDF.
 
@@ -43,6 +43,6 @@ python qa/validate_week01_2_figure_guide.py
 python qa/update_course_inventory.py --write
 ```
 
-PNG files are RGB at 300 dpi; paired PDFs preserve vector labels and
+PNG files are exported at 300 dpi; paired PDFs preserve vector labels and
 streamlines with rasterized color fills. Source plotting functions also apply
 to the notebook's optional fresh field comparisons.

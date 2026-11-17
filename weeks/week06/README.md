@@ -6,13 +6,16 @@ Closure testing, physical validation and reproducibility.
 
 ![Independent cavity pressure-recovery validation](../../results/article_figures/fig08_pressure_recovery.png)
 
-**Re = 1000 square cavity**. Left: recovered pressure on a **129 × 129** grid
-with black velocity streamlines. The RGB colour scale shows
-$p^*=(p-p_c)/(\rho U_{\mathrm{lid}}^2)$, with $p_c=p(L/2,L/2)$;
-it is symmetric-log, linear for $|p^*|\leq0.01$, and retains the full extrema.
-Right: vertical and horizontal pressure profiles on **65 × 65 and 129 × 129** grids
-against Botella–Peyret. The horizontal reference coordinate is reflected,
-$x_{\mathrm{ref}}/L=1-x/L$, to match the published lid-motion convention.
+**Re = 1000, square cavity.** Left: recovered pressure and velocity streamlines
+on a **129 × 129** grid. Right: vertical and horizontal pressure profiles on
+**65 × 65 and 129 × 129** grids compared with Botella–Peyret.
+
+Pressure is measured relative to the cavity center:
+<i>p</i><sup>*</sup> = (<i>p</i> − <i>p</i><sub>c</sub>)/(ρ<i>U</i><sub>lid</sub><sup>2</sup>),
+where <i>p</i><sub>c</sub> = <i>p</i>(<i>L</i>/2, <i>L</i>/2).
+The symmetric-log scale is linear for |<i>p</i><sup>*</sup>| ≤ 0.01.
+The reference coordinate <i>x</i><sub>ref</sub>/<i>L</i> = 1 − <i>x</i>/<i>L</i>
+matches the published lid-motion convention.
 
 ## Lecture and notebooks
 

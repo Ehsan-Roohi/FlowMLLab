@@ -168,7 +168,7 @@ pressure-validated**. At Re7500 its neural/CFD discrepancy is 0.05373%, while
 256-to-512 CFD pressure sensitivity is 8.90%. Excellent surrogate agreement
 with one discretization does not remove discretization uncertainty.
 
-RGB fields share one full-range symmetric-log scale for each variable across
+Field panels share one full-range symmetric-log scale for each variable across
 both Re and both methods; the linear thresholds are 1 for vorticity and 0.02
 for pressure. Signed differences use the explicitly shown linear scales.
 The code verifies the retained figure hashes before displaying them.""")

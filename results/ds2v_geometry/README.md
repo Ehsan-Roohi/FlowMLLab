@@ -1,6 +1,6 @@
 # Matched DS2V circle and ellipse contours
 
-The four RGB figures compare 13 native DS2V solutions at the same freestream and wall conditions. Each figure uses one spatial extent and one color mapping across every panel.
+The four field figures compare 13 native DS2V solutions at the same freestream and wall conditions. Each figure uses one spatial extent and one color mapping across every panel.
 
 - The upper row contains vertical ellipses.
 - The lower row contains the corresponding horizontal ellipses with the same two semiaxes exchanged.
@@ -14,7 +14,7 @@ The four RGB figures compare 13 native DS2V solutions at the same freestream and
 
 ![Matched Mach-number contours](mach_rgb.png)
 
-[Full-resolution RGB PNG](mach_rgb.png)
+[Full-resolution PNG](mach_rgb.png)
 
 ## Density
 
@@ -22,19 +22,19 @@ The four RGB figures compare 13 native DS2V solutions at the same freestream and
 
 The density colors use a shared square-root mapping, gamma = 0.5, to resolve the shock-region density changes while retaining the complete range up to the wall-density peak. The colorbar shows the actual density ratio. The other three fields use linear colors.
 
-[Full-resolution RGB PNG](density_rgb.png)
+[Full-resolution PNG](density_rgb.png)
 
 ## Translational temperature
 
 ![Matched translational-temperature contours](temperature_rgb.png)
 
-[Full-resolution RGB PNG](temperature_rgb.png)
+[Full-resolution PNG](temperature_rgb.png)
 
 ## Pressure
 
 ![Matched pressure contours](pressure_rgb.png)
 
-[Full-resolution RGB PNG](pressure_rgb.png)
+[Full-resolution PNG](pressure_rgb.png)
 
 ## Physical conditions and sampling
 

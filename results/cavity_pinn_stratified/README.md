@@ -8,7 +8,7 @@ Interior velocity error improves in **2/12** cases and worsens in **10/12**. Bot
 - [All physical paired metrics](comparison/paired_metrics.csv) · [Signed profiles at actual Ghia positions](comparison/paired_signed_profiles.csv)
 - [All seeds and collars: physical centreline figures](figures/all_pairs_centerlines.pdf)
 - [Matched speed, vorticity, signed errors and streamline overlays](figures/physical_comparison.pdf)
-- [RGB gallery and figure provenance](figures/README.md) · [Figure hashes](figures/figure_manifest.json)
+- [Field gallery and figure provenance](figures/README.md) · [Figure hashes](figures/figure_manifest.json)
 - [Experiment bridge](experiment_manifest.json) · [Scoring ledger](evaluation_manifest.json)
 - [Notebook](../../notebooks/week04/W4_Lab9_Label_Free_Ghia_PINN_Audit.ipynb) · [Lecture](../../lectures/week04_cavity_surrogates_deeponet.pdf) · [Protocol](../../docs/CAVITY_PINN_STRATIFIED_PROTOCOL.md)
 

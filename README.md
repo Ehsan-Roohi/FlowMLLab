@@ -381,7 +381,7 @@ show agreement with the retained discretization, not mesh-independent pressure a
 </details>
 
 <details>
-<summary>RGB fields and signed discrepancies</summary>
+<summary>Field comparisons and signed discrepancies</summary>
 
 <img src="results/cavity_field_deeponet/flow_comparison/vorticity_fields_and_signed_error_Re1000_Re7500.png" width="760" alt="CFD-derived and neural-derived signed vorticity with one common colour normalization and linear signed differences">
 
@@ -543,13 +543,16 @@ the Week 7 module.
 
 ![Independent cavity pressure-recovery validation](results/article_figures/fig08_pressure_recovery.png)
 
-**Re = 1000 square cavity**. Left: recovered pressure on a **129 × 129** grid
-with black velocity streamlines. The RGB colour scale shows
-$p^*=(p-p_c)/(\rho U_{\mathrm{lid}}^2)$, with $p_c=p(L/2,L/2)$;
-it is symmetric-log, linear for $|p^*|\leq0.01$, and retains the full extrema.
-Right: vertical and horizontal pressure profiles on **65 × 65 and 129 × 129** grids
-against Botella–Peyret. The horizontal reference coordinate is reflected,
-$x_{\mathrm{ref}}/L=1-x/L$, to match the published lid-motion convention.
+**Re = 1000, square cavity.** Left: recovered pressure and velocity streamlines
+on a **129 × 129** grid. Right: vertical and horizontal pressure profiles on
+**65 × 65 and 129 × 129** grids compared with Botella–Peyret.
+
+Pressure is measured relative to the cavity center:
+<i>p</i><sup>*</sup> = (<i>p</i> − <i>p</i><sub>c</sub>)/(ρ<i>U</i><sub>lid</sub><sup>2</sup>),
+where <i>p</i><sub>c</sub> = <i>p</i>(<i>L</i>/2, <i>L</i>/2).
+The symmetric-log scale is linear for |<i>p</i><sup>*</sup>| ≤ 0.01.
+The reference coordinate <i>x</i><sub>ref</sub>/<i>L</i> = 1 − <i>x</i>/<i>L</i>
+matches the published lid-motion convention.
 
 This existing pressure benchmark illustrates the independent physical checks
 expected in a final evidence bundle; it is not a learned Fokker–Planck result.
@@ -764,7 +767,7 @@ This isolates the value of the pre-fit audit; it is not a DSMC accuracy claim.
 **Problem:** Reconstruct rarefied cavity and mono/diatomic shock data.<br>
 **CFD / data:** Author-supplied article DSMC tables, not new particle-solver runs.<br>
 **Article learning method:** the cavity uses a family of coordinate MLP experts,
-one per training Kn: fixed Fourier features of $(x,y)$ feed three 256-unit
+one per training Kn: fixed Fourier features of (x, y) feed three 256-unit
 Swish dense layers, and neighboring experts are fused by log-Kn interpolation.
 It is **not DeepONet**. The article uses DeepONet for its diatomic-shock study.<br>
 **Displayed course reproduction:** direct log-Kn interpolation for the cavity and
@@ -1103,7 +1106,7 @@ is kept out of training, validation and the test alike. The split was
 reconstructed from the masks: no training or validation mask contains the two
 consecutive descending steps that define the test family. The compact model configurations appear below. The unchanged original figures also retain the training-geometry panels. Every flow panel preserves the physical 5:1 aspect ratio.
 
-Both test geometries are shown below with the compact model configurations. The double-step comparison includes historical DeepONet/Geom-DeepONet/Geo-FNO, tuned Geom-DeepONet/SMART/DoMINO, matched GeoTransolver, both explicitly labeled company-inspired proxies, and original Transolver. Color bands use the original RGB/rainbow style and a shared speed scale within each figure; each field supplies its own streamlines.
+Both test geometries are shown below with the compact model configurations. The double-step comparison includes historical DeepONet/Geom-DeepONet/Geo-FNO, tuned Geom-DeepONet/SMART/DoMINO, matched GeoTransolver, both explicitly labeled company-inspired proxies, and original Transolver. Fields share a speed scale within each figure; streamlines are computed from each field.
 
 **Central-obstacle channel (g011): all four models and CFD.**
 
