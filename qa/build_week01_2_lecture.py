@@ -4,8 +4,8 @@ Requires licensed Times New Roman and Tectonic on PATH or TECTONIC_BIN.
 from pathlib import Path
 import os,shutil,subprocess,sys
 ROOT=Path(__file__).resolve().parents[1]
-BASE_LECTURE_PAGES=65
-LECTURE_PAGES=67
+BASE_LECTURE_PAGES=70
+LECTURE_PAGES=72
 
 def build():
     from pypdf import PdfReader

@@ -1,0 +1,10 @@
+\begin{center}\small\begin{tabular}{lrrrr}\toprule
+Method & $\Delta t$ & Velocity discrepancy (\%) & Seconds & Pressure solves\\\midrule
+PISO & 0.05 & 6.259 & 0.021 & 8\\
+PISO & 0.025 & 3.049 & 0.042 & 16\\
+PISO & 0.0125 & 1.343 & 0.087 & 32\\
+PIMPLE & 0.05 & 6.163 & 0.055 & 24\\
+PIMPLE & 0.025 & 3.009 & 0.112 & 48\\
+PIMPLE & 0.0125 & 1.320 & 0.218 & 96\\
+\bottomrule\end{tabular}\end{center}
+The measured comparison-field change after halving its time step is 0.4453\%; doubling its outer/inner correction counts changes it by 1.891e-14\%. These are sensitivity checks, not rigorous error bounds.

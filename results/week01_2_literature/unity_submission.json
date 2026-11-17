@@ -1,0 +1,22 @@
+{
+  "job_id": "1895356",
+  "workspace": "/scratch3/workspace/roohie_umass_edu-flowml-ghia-highre-20261115",
+  "workspace_expiry": "2026-12-15T14:04:59",
+  "live_io": "/scratch3/workspace/roohie_umass_edu-flowml-ghia-highre-20261115/week01-2-literature-v1",
+  "durable_archive": "D:/ChatGPT Backup/Projects/FlowMLLab/Teaching_Current/repo/results/week01_2_literature",
+  "source_archive_sha256": "30dc15714ffab35520433d65135f3288c41fcd6b4277684c7f6e84b60b608155",
+  "submitted_utc": "2026-11-17T01:45:21.360547+00:00",
+  "command": [
+    "sbatch",
+    "--parsable",
+    "--job-name=FlowML-W12-literature",
+    "--chdir=/scratch3/workspace/roohie_umass_edu-flowml-ghia-highre-20261115/week01-2-literature-v1",
+    "--output=/scratch3/workspace/roohie_umass_edu-flowml-ghia-highre-20261115/week01-2-literature-v1/logs/study-%j.log",
+    "--export=ALL,TASK_ROOT=/scratch3/workspace/roohie_umass_edu-flowml-ghia-highre-20261115/week01-2-literature-v1,PYTHON_BIN=/scratch3/workspace/roohie_umass_edu-flowml-ghia-highre-20261115/release-venv/bin/python,SOURCE_COMMIT=a8fb2378f5636f8fa1ebdbfc6f8e6018d9605f7e",
+    "/scratch3/workspace/roohie_umass_edu-flowml-ghia-highre-20261115/week01-2-literature-v1/source/qa/week01_2_literature_unity.sbatch"
+  ],
+  "capacity": "67T shared free, not personal quota; quota tool unavailable; outputs projected below 20MB",
+  "recovery": "Short deterministic from-rest CPU study, no checkpoints. No automatic duplicate retry.",
+  "supersedes_failed_job": "1895226",
+  "reason": "Initial archive lacked package imports; no scientific calculation started. Completed module packaging and import preflight passed; scientific source unchanged."
+}

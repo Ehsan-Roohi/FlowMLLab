@@ -270,5 +270,21 @@
     "lecture": true,
     "lecture_page": 62,
     "png_sha256": "31f4f06bf3c12578d3fd06bf48a9f58c119ceecdc1a7cbabd036af1bf1ec9a2c"
+  },
+  "linear_pressure_profiles": {
+    "number": "22",
+    "caption": "Fixed-operator projection on 32 cells per side, first analytic trial field, d=0.05. The upper panel compares zero-mean pressure on y/L=0.5. The lower panel shows remaining cell divergence along the bottom cell row, y/L=1/64, including the gauge-cell region. Its symmetric-log scale is linear below absolute divergence 1e-10. These are synthetic projection fields, not a cavity solution or a Ghia benchmark. LU and two Jacobi-preconditioned GMRES tolerances use the same matrix and right-hand side.",
+    "image": "linear_pressure_profiles.png",
+    "lecture": true,
+    "lecture_page": 66,
+    "png_sha256": "4b8a452bf39b016a07a072a65094d4bfe281d6e2f781d40d7aefb99086c24847"
+  },
+  "startup_time_profiles": {
+    "number": "23",
+    "caption": "Unit-square cavity at Re=100, 16 MAC cells per side, tU/L=0.2, unit lid speed and initially stationary fluid. Upper panels show both centerline velocity components; lower panels show their signed differences from the fine PIMPLE comparison. Red is PISO and blue PIMPLE; line style denotes the time step. The black comparison uses dt=0.003125, six outer and four inner corrections. Spatial equations and backward Euler are common. The coarse mesh and impulsive lid startup limit accuracy claims.",
+    "image": "startup_time_profiles.png",
+    "lecture": true,
+    "lecture_page": 68,
+    "png_sha256": "04e837376cb52e88de0061d91371fc92cc59ba088f44eb39f29efdf0a74d5821"
   }
 }

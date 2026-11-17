@@ -428,6 +428,8 @@ CAPTIONS = {
 }
 
 CAPTIONS['coupling_refinement_errors'] = 'Signed CFD minus Ghia velocity discrepancies at the actual tabulated centerline positions for Re=400 and 1000. Colors identify SIMPLE, PISO and PIMPLE; solid curves use 32 cells and dashed curves 64. Nearly coincident method curves reflect their common steady discrete equations. Lines connect measured samples only. The qualified Re=400 horizontal-profile curve has a gap at the excluded printed sample; its original value remains in Figure 17 and the all-point table.'
+CAPTIONS['linear_pressure_profiles'] = 'Fixed-operator projection on 32 cells per side, first analytic trial field, d=0.05. The upper panel compares zero-mean pressure on y/L=0.5. The lower panel shows remaining cell divergence along the bottom cell row, y/L=1/64, including the gauge-cell region. Its symmetric-log scale is linear below absolute divergence 1e-10. These are synthetic projection fields, not a cavity solution or a Ghia benchmark. LU and two Jacobi-preconditioned GMRES tolerances use the same matrix and right-hand side.'
+CAPTIONS['startup_time_profiles'] = 'Unit-square cavity at Re=100, 16 MAC cells per side, tU/L=0.2, unit lid speed and initially stationary fluid. Upper panels show both centerline velocity components; lower panels show their signed differences from the fine PIMPLE comparison. Red is PISO and blue PIMPLE; line style denotes the time step. The black comparison uses dt=0.003125, six outer and four inner corrections. Spatial equations and backward Euler are common. The coarse mesh and impulsive lid startup limit accuracy claims.'
 
 def caption_tex(name):
     # Mathematical labels remain properly typeset in captions as well as figures.

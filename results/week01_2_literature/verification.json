@@ -1,0 +1,13 @@
+{
+  "source_checks": {
+    "flowmllab/pressure_velocity.py": "exact bytes",
+    "flowmllab/pressure_velocity_studies.py": "exact bytes",
+    "qa/run_week01_2_literature_studies.py": "exact bytes"
+  },
+  "time_cases": 9,
+  "pressure_rows": 8,
+  "field_sha256": "3d8a80d284fbdeb481edecdf63ba7bc5e424206032f2dada74d646f2edf87b01",
+  "full_pressure_residual_and_divergence_identity": true,
+  "same_physical_end_time": 0.2,
+  "reference_sensitivity_recomputed": true
+}

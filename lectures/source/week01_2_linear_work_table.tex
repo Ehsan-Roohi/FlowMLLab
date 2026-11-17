@@ -1,0 +1,11 @@
+\begin{center}\small\begin{tabular}{rlrrr}\toprule
+$N$ & Linear solve & Batch (ms) & Setup (ms) & $\|Dq\|_\infty$\\\midrule
+16 & LU each RHS & 2.22 & 2.02 & 7.97e-14\\
+16 & LU reused & 0.82 & 0.67 & 7.97e-14\\
+16 & GMRES $10^{-4}$ & 113.09 & 0.23 & 6.28e-03\\
+16 & GMRES $10^{-8}$ & 278.85 & 0.22 & 1.05e-06\\
+32 & LU each RHS & 8.68 & 8.13 & 3.38e-12\\
+32 & LU reused & 3.10 & 2.65 & 3.38e-12\\
+32 & GMRES $10^{-4}$ & 818.02 & 0.24 & 3.83e-02\\
+32 & GMRES $10^{-8}$ & 1807.16 & 0.22 & 4.21e-06\\
+\bottomrule\end{tabular}\end{center}

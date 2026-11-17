@@ -1,0 +1,52 @@
+[
+  {
+    "id": "Barton1998",
+    "supplied_filename": "Numerical Methods in Fluids - 1998 - Barton - Comparison of SIMPLE‐ and PISO‐type algorithms for transient flows.pdf",
+    "sha256": "0c0c4a8c2ad755ace590b0338b0446c8e2a34af514b2273d6dcbf688eadcf8fa",
+    "pdf_pages": 25,
+    "selected_evidence_pages_one_based": [
+      1,
+      22
+    ],
+    "source_url": "https://doi.org/10.1002/(SICI)1097-0363(19980228)26:4<459::AID-FLD645>3.0.CO;2-U",
+    "original_pdf_redistributed": false
+  },
+  {
+    "id": "BarbaForsyth2018",
+    "supplied_filename": "10.21105.jose.00021.pdf",
+    "sha256": "50630e653c0b49a482d3802545297a083d5d39b8e74bc75771ab025017cce523",
+    "pdf_pages": 3,
+    "selected_evidence_pages_one_based": [
+      1,
+      2,
+      3
+    ],
+    "source_url": "https://jose.theoj.org/papers/10.21105/jose.00021",
+    "original_pdf_redistributed": false
+  },
+  {
+    "id": "KTH2017",
+    "supplied_filename": "project.pdf",
+    "sha256": "64fddf4a327d08f5c6d4225244b2310b336585e825d6bf0ea6478d808348b007",
+    "pdf_pages": 25,
+    "selected_evidence_pages_one_based": [
+      1,
+      4,
+      5
+    ],
+    "source_url": "https://www.kth.se/social/files/58ad81f0f276542156c566ab/project.pdf",
+    "original_pdf_redistributed": false
+  },
+  {
+    "id": "BoroujerdiHamzeh2019",
+    "supplied_filename": "s40712-019-0104-7.pdf",
+    "sha256": "acf7c6118f92e66f9ea6fc1a8cc5b56c015540d6d02dece6a31e7973bfd225db",
+    "pdf_pages": 19,
+    "selected_evidence_pages_one_based": [
+      1,
+      18
+    ],
+    "source_url": "https://doi.org/10.1186/s40712-019-0104-7",
+    "original_pdf_redistributed": false
+  }
+]

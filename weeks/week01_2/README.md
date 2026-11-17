@@ -27,8 +27,8 @@ The four panels use the same streamline levels on the retained Re = 100 solution
 5. Recompute one method and explain its measured cost and benchmark error.
 6. Use the three flowcharts to distinguish frozen inner corrections from
    outer coefficient updates. Inspect the measured one-step coupling study.
-7. Discuss the comparative papers and design a matched-error transient test
-   before expanding the Reynolds-number qualification.
+7. Use the four readings to predict, run and explain the fixed-operator
+   pressure-solver and matched-time startup experiments (Tables L and T2).
 8. Use the notebook's separate experimental Re=400/1000 section: reproduce the
    retained runs, refine 32 to 64 cells, and compare central/upwind errors.
    [Measured higher-Re study](../../results/week01_2_higher_re/README.md).
@@ -43,7 +43,11 @@ Distinguish steady iteration from physical time. Re=100 is the introductory
 qualification; Re=400 and 1000 extend the retained steady comparison with
 explicit equation-defect and Ghia profile checks. These cases do not establish
 transient accuracy, grid independence or turbulence qualification. The next
-experiment is temporal refinement for a changing lid.
+extension is a smooth time-varying lid. The retained startup study separately
+checks time-step and correction-count sensitivity on a fixed Re=100 mesh.
+
+[Reading-based CPU experiments and measured profiles](../../results/week01_2_literature/README.md)
+include optional rerun controls, repeated timings and explicit deliverables.
 
 [Source](../../flowmllab/pressure_velocity.py) | [Tests](../../tests/test_pressure_velocity.py) | [Retained configurations and field hashes](../../results/week01_2_pressure_velocity/manifest.json)
 

@@ -1,0 +1,735 @@
+{
+  "started_from_rest": true,
+  "pressure_trial_fields": "Analytic synthetic trial velocities; not cavity CFD snapshots.",
+  "time_config": "Re100, 16 MAC cells/side, unit lid/square, central convection, backward Euler, t=0.2.",
+  "pressure_config": "Fixed L=-0.05*D*G, impermeable walls, pinned solve then zero mean; three analytic RHS; Jacobi GMRES restart50 max200 cycles.",
+  "pressure_rows": [
+    {
+      "cells": 16,
+      "method": "LU each RHS",
+      "rhs_count": 3,
+      "repeats": 3,
+      "total_seconds_median": 0.0022212988696992397,
+      "setup_seconds_median": 0.0020243781618773937,
+      "solve_seconds_median": 0.0001899444032460451,
+      "timing_samples": [
+        {
+          "setup_seconds": 0.0020234365947544575,
+          "solve_seconds": 0.0001899444032460451,
+          "total_seconds": 0.0022133809980005026
+        },
+        {
+          "setup_seconds": 0.00203951308503747,
+          "solve_seconds": 0.0001873208675533533,
+          "total_seconds": 0.002226833952590823
+        },
+        {
+          "setup_seconds": 0.0020243781618773937,
+          "solve_seconds": 0.000196920707821846,
+          "total_seconds": 0.0022212988696992397
+        }
+      ],
+      "gmres_iterations_all_rhs": 0,
+      "solver_info": [
+        0,
+        0,
+        0
+      ],
+      "linear_solver_converged": true,
+      "max_divergence_linf": 7.971401316808624e-14,
+      "max_pressure_relative_l2_vs_lu": 0.0,
+      "rhs_diagnostics": [
+        {
+          "full_residual_relative_l2": 3.137362626583683e-14,
+          "divergence_linf": 7.971401316808624e-14,
+          "pressure_relative_l2_vs_lu": 0.0
+        },
+        {
+          "full_residual_relative_l2": 2.5737877998821517e-14,
+          "divergence_linf": 7.53563877964325e-14,
+          "pressure_relative_l2_vs_lu": 0.0
+        },
+        {
+          "full_residual_relative_l2": 2.57305020498907e-14,
+          "divergence_linf": 7.1803674117632e-14,
+          "pressure_relative_l2_vs_lu": 0.0
+        }
+      ]
+    },
+    {
+      "cells": 16,
+      "method": "LU reused",
+      "rhs_count": 3,
+      "repeats": 3,
+      "total_seconds_median": 0.0008170530200004578,
+      "setup_seconds_median": 0.0006691771559417248,
+      "solve_seconds_median": 0.0001489149872213602,
+      "timing_samples": [
+        {
+          "setup_seconds": 0.0006647889968007803,
+          "solve_seconds": 0.0001489149872213602,
+          "total_seconds": 0.0008137039840221405
+        },
+        {
+          "setup_seconds": 0.0006691771559417248,
+          "solve_seconds": 0.000147875864058733,
+          "total_seconds": 0.0008170530200004578
+        },
+        {
+          "setup_seconds": 0.0006954949349164963,
+          "solve_seconds": 0.0001695919781923294,
+          "total_seconds": 0.0008650869131088257
+        }
+      ],
+      "gmres_iterations_all_rhs": 0,
+      "solver_info": [
+        0,
+        0,
+        0
+      ],
+      "linear_solver_converged": true,
+      "max_divergence_linf": 7.971401316808624e-14,
+      "max_pressure_relative_l2_vs_lu": 0.0,
+      "rhs_diagnostics": [
+        {
+          "full_residual_relative_l2": 3.137362626583683e-14,
+          "divergence_linf": 7.971401316808624e-14,
+          "pressure_relative_l2_vs_lu": 0.0
+        },
+        {
+          "full_residual_relative_l2": 2.5737877998821517e-14,
+          "divergence_linf": 7.53563877964325e-14,
+          "pressure_relative_l2_vs_lu": 0.0
+        },
+        {
+          "full_residual_relative_l2": 2.57305020498907e-14,
+          "divergence_linf": 7.1803674117632e-14,
+          "pressure_relative_l2_vs_lu": 0.0
+        }
+      ]
+    },
+    {
+      "cells": 16,
+      "method": "GMRES Jacobi rtol=0.0001",
+      "rhs_count": 3,
+      "repeats": 3,
+      "total_seconds_median": 0.1130914930254221,
+      "setup_seconds_median": 0.00022720498964190483,
+      "solve_seconds_median": 0.11284820502623916,
+      "timing_samples": [
+        {
+          "setup_seconds": 0.00024328799918293953,
+          "solve_seconds": 0.11284820502623916,
+          "total_seconds": 0.1130914930254221
+        },
+        {
+          "setup_seconds": 0.00022720498964190483,
+          "solve_seconds": 0.11402126797474921,
+          "total_seconds": 0.11424847296439111
+        },
+        {
+          "setup_seconds": 0.00021706405095756054,
+          "solve_seconds": 0.11089221993461251,
+          "total_seconds": 0.11110928398557007
+        }
+      ],
+      "gmres_iterations_all_rhs": 332,
+      "solver_info": [
+        0,
+        0,
+        0
+      ],
+      "linear_solver_converged": true,
+      "max_divergence_linf": 0.006280619132969206,
+      "max_pressure_relative_l2_vs_lu": 0.00015408124158940853,
+      "rhs_diagnostics": [
+        {
+          "full_residual_relative_l2": 0.0003196106166743793,
+          "divergence_linf": 0.0019326109824335247,
+          "pressure_relative_l2_vs_lu": 0.00010733873981588438
+        },
+        {
+          "full_residual_relative_l2": 0.0005977065152840876,
+          "divergence_linf": 0.004235211552564538,
+          "pressure_relative_l2_vs_lu": 0.00011827355009791913
+        },
+        {
+          "full_residual_relative_l2": 0.0008875823187577831,
+          "divergence_linf": 0.006280619132969206,
+          "pressure_relative_l2_vs_lu": 0.00015408124158940853
+        }
+      ]
+    },
+    {
+      "cells": 16,
+      "method": "GMRES Jacobi rtol=1e-08",
+      "rhs_count": 3,
+      "repeats": 3,
+      "total_seconds_median": 0.27885384298861027,
+      "setup_seconds_median": 0.00021966011263430119,
+      "solve_seconds_median": 0.2786348429508507,
+      "timing_samples": [
+        {
+          "setup_seconds": 0.0004548549186438322,
+          "solve_seconds": 0.27906808513216674,
+          "total_seconds": 0.2795229400508106
+        },
+        {
+          "setup_seconds": 0.00021966011263430119,
+          "solve_seconds": 0.27846618788316846,
+          "total_seconds": 0.27868584799580276
+        },
+        {
+          "setup_seconds": 0.00021900003775954247,
+          "solve_seconds": 0.2786348429508507,
+          "total_seconds": 0.27885384298861027
+        }
+      ],
+      "gmres_iterations_all_rhs": 815,
+      "solver_info": [
+        0,
+        0,
+        0
+      ],
+      "linear_solver_converged": true,
+      "max_divergence_linf": 1.050630479726422e-06,
+      "max_pressure_relative_l2_vs_lu": 2.6729772289761377e-08,
+      "rhs_diagnostics": [
+        {
+          "full_residual_relative_l2": 6.53036778266031e-09,
+          "divergence_linf": 3.9072961199870804e-08,
+          "pressure_relative_l2_vs_lu": 1.973124011689565e-09
+        },
+        {
+          "full_residual_relative_l2": 1.58481101122697e-08,
+          "divergence_linf": 1.1238433481053356e-07,
+          "pressure_relative_l2_vs_lu": 2.948836678822665e-09
+        },
+        {
+          "full_residual_relative_l2": 1.4804361589573086e-07,
+          "divergence_linf": 1.050630479726422e-06,
+          "pressure_relative_l2_vs_lu": 2.6729772289761377e-08
+        }
+      ]
+    },
+    {
+      "cells": 32,
+      "method": "LU each RHS",
+      "rhs_count": 3,
+      "repeats": 3,
+      "total_seconds_median": 0.008676439989358187,
+      "setup_seconds_median": 0.008132839342579246,
+      "solve_seconds_median": 0.0005436006467789412,
+      "timing_samples": [
+        {
+          "setup_seconds": 0.008432937785983086,
+          "solve_seconds": 0.0005477441009134054,
+          "total_seconds": 0.008980681886896491
+        },
+        {
+          "setup_seconds": 0.008132839342579246,
+          "solve_seconds": 0.0005436006467789412,
+          "total_seconds": 0.008676439989358187
+        },
+        {
+          "setup_seconds": 0.008129287045449018,
+          "solve_seconds": 0.0005210819654166698,
+          "total_seconds": 0.008650369010865688
+        }
+      ],
+      "gmres_iterations_all_rhs": 0,
+      "solver_info": [
+        0,
+        0,
+        0
+      ],
+      "linear_solver_converged": true,
+      "max_divergence_linf": 3.3782698860562732e-12,
+      "max_pressure_relative_l2_vs_lu": 0.0,
+      "rhs_diagnostics": [
+        {
+          "full_residual_relative_l2": 2.7776075202295607e-13,
+          "divergence_linf": 3.2659153159642074e-12,
+          "pressure_relative_l2_vs_lu": 0.0
+        },
+        {
+          "full_residual_relative_l2": 2.4928485779230355e-13,
+          "divergence_linf": 3.3211211558636933e-12,
+          "pressure_relative_l2_vs_lu": 0.0
+        },
+        {
+          "full_residual_relative_l2": 2.577588932098876e-13,
+          "divergence_linf": 3.3782698860562732e-12,
+          "pressure_relative_l2_vs_lu": 0.0
+        }
+      ]
+    },
+    {
+      "cells": 32,
+      "method": "LU reused",
+      "rhs_count": 3,
+      "repeats": 3,
+      "total_seconds_median": 0.0030964079778641462,
+      "setup_seconds_median": 0.002648589899763465,
+      "solve_seconds_median": 0.0004516227636486292,
+      "timing_samples": [
+        {
+          "setup_seconds": 0.002648589899763465,
+          "solve_seconds": 0.0004478180781006813,
+          "total_seconds": 0.0030964079778641462
+        },
+        {
+          "setup_seconds": 0.0026244709733873606,
+          "solve_seconds": 0.00045255408622324467,
+          "total_seconds": 0.0030770250596106052
+        },
+        {
+          "setup_seconds": 0.002823305083438754,
+          "solve_seconds": 0.0004516227636486292,
+          "total_seconds": 0.0032749278470873833
+        }
+      ],
+      "gmres_iterations_all_rhs": 0,
+      "solver_info": [
+        0,
+        0,
+        0
+      ],
+      "linear_solver_converged": true,
+      "max_divergence_linf": 3.3782698860562732e-12,
+      "max_pressure_relative_l2_vs_lu": 0.0,
+      "rhs_diagnostics": [
+        {
+          "full_residual_relative_l2": 2.7776075202295607e-13,
+          "divergence_linf": 3.2659153159642074e-12,
+          "pressure_relative_l2_vs_lu": 0.0
+        },
+        {
+          "full_residual_relative_l2": 2.4928485779230355e-13,
+          "divergence_linf": 3.3211211558636933e-12,
+          "pressure_relative_l2_vs_lu": 0.0
+        },
+        {
+          "full_residual_relative_l2": 2.577588932098876e-13,
+          "divergence_linf": 3.3782698860562732e-12,
+          "pressure_relative_l2_vs_lu": 0.0
+        }
+      ]
+    },
+    {
+      "cells": 32,
+      "method": "GMRES Jacobi rtol=0.0001",
+      "rhs_count": 3,
+      "repeats": 3,
+      "total_seconds_median": 0.8180245568510145,
+      "setup_seconds_median": 0.00024125399067997932,
+      "solve_seconds_median": 0.8178013598080724,
+      "timing_samples": [
+        {
+          "setup_seconds": 0.00022319704294204712,
+          "solve_seconds": 0.8178013598080724,
+          "total_seconds": 0.8180245568510145
+        },
+        {
+          "setup_seconds": 0.0008174290414899588,
+          "solve_seconds": 0.8816610621288419,
+          "total_seconds": 0.8824784911703318
+        },
+        {
+          "setup_seconds": 0.00024125399067997932,
+          "solve_seconds": 0.7788514110725373,
+          "total_seconds": 0.7790926650632173
+        }
+      ],
+      "gmres_iterations_all_rhs": 1969,
+      "solver_info": [
+        0,
+        0,
+        0
+      ],
+      "linear_solver_converged": true,
+      "max_divergence_linf": 0.03826753626513288,
+      "max_pressure_relative_l2_vs_lu": 0.0002605912660383729,
+      "rhs_diagnostics": [
+        {
+          "full_residual_relative_l2": 0.003028022119889498,
+          "divergence_linf": 0.03826753626513288,
+          "pressure_relative_l2_vs_lu": 0.0002605912660383729
+        },
+        {
+          "full_residual_relative_l2": 0.0024442723402434492,
+          "divergence_linf": 0.03502008492561265,
+          "pressure_relative_l2_vs_lu": 0.00022589128193062003
+        },
+        {
+          "full_residual_relative_l2": 0.0023757898044882695,
+          "divergence_linf": 0.033827540608094286,
+          "pressure_relative_l2_vs_lu": 0.0002231656182753305
+        }
+      ]
+    },
+    {
+      "cells": 32,
+      "method": "GMRES Jacobi rtol=1e-08",
+      "rhs_count": 3,
+      "repeats": 3,
+      "total_seconds_median": 1.8071642918512225,
+      "setup_seconds_median": 0.0002192491665482521,
+      "solve_seconds_median": 1.8069122447632253,
+      "timing_samples": [
+        {
+          "setup_seconds": 0.0002192491665482521,
+          "solve_seconds": 1.7913717217743397,
+          "total_seconds": 1.791590970940888
+        },
+        {
+          "setup_seconds": 0.0002520470879971981,
+          "solve_seconds": 1.8069122447632253,
+          "total_seconds": 1.8071642918512225
+        },
+        {
+          "setup_seconds": 0.00018610293045639992,
+          "solve_seconds": 1.8921424511354417,
+          "total_seconds": 1.892328554065898
+        }
+      ],
+      "gmres_iterations_all_rhs": 4471,
+      "solver_info": [
+        0,
+        0,
+        0
+      ],
+      "linear_solver_converged": true,
+      "max_divergence_linf": 4.210203714244409e-06,
+      "max_pressure_relative_l2_vs_lu": 2.6809654971565348e-08,
+      "rhs_diagnostics": [
+        {
+          "full_residual_relative_l2": 5.64881933189783e-08,
+          "divergence_linf": 7.12754197967902e-07,
+          "pressure_relative_l2_vs_lu": 4.9157663995113786e-09
+        },
+        {
+          "full_residual_relative_l2": 2.9378668200118534e-07,
+          "divergence_linf": 4.210203714244409e-06,
+          "pressure_relative_l2_vs_lu": 2.6809654971565348e-08
+        },
+        {
+          "full_residual_relative_l2": 1.9044639041339128e-07,
+          "divergence_linf": 2.7104908230657365e-06,
+          "pressure_relative_l2_vs_lu": 1.8054262123048167e-08
+        }
+      ]
+    }
+  ],
+  "time_rows": [
+    {
+      "case": "reference_coarse",
+      "config": {
+        "method": "pimple",
+        "cells": 16,
+        "reynolds": 100.0,
+        "convection": "central",
+        "dt": 0.00625,
+        "velocity_relaxation": 0.7,
+        "pressure_relaxation": 0.3,
+        "pressure_correctors": 4,
+        "outer_correctors": 6,
+        "tolerance": 1e-07,
+        "max_iterations": 34,
+        "check_every": 1,
+        "end_time": 0.2
+      },
+      "physical_time": 0.2,
+      "steps": 32,
+      "pressure_solves": 768,
+      "runtime_seconds_median": 1.0937749731820077,
+      "runtime_samples": [
+        1.0971091180108488,
+        1.0883822520263493,
+        1.0937749731820077
+      ],
+      "continuity_linf": 8.881784197001252e-16,
+      "max_nonlinear_step_defect": 2.842170943040401e-14,
+      "last_nonlinear_step_defect": 1.4210854715202004e-14,
+      "velocity_discrepancy_vs_fine": 0.004453381729235252
+    },
+    {
+      "case": "reference_fine",
+      "config": {
+        "method": "pimple",
+        "cells": 16,
+        "reynolds": 100.0,
+        "convection": "central",
+        "dt": 0.003125,
+        "velocity_relaxation": 0.7,
+        "pressure_relaxation": 0.3,
+        "pressure_correctors": 4,
+        "outer_correctors": 6,
+        "tolerance": 1e-07,
+        "max_iterations": 66,
+        "check_every": 1,
+        "end_time": 0.2
+      },
+      "physical_time": 0.1999999999999998,
+      "steps": 64,
+      "pressure_solves": 1536,
+      "runtime_seconds_median": 2.177906293887645,
+      "runtime_samples": [
+        2.177906293887645,
+        2.17577745905146,
+        2.1792340059764683
+      ],
+      "continuity_linf": 5.273559366969494e-16,
+      "max_nonlinear_step_defect": 5.684341886080802e-14,
+      "last_nonlinear_step_defect": 5.684341886080802e-14,
+      "velocity_discrepancy_vs_fine": 0.0
+    },
+    {
+      "case": "reference_loops",
+      "config": {
+        "method": "pimple",
+        "cells": 16,
+        "reynolds": 100.0,
+        "convection": "central",
+        "dt": 0.003125,
+        "velocity_relaxation": 0.7,
+        "pressure_relaxation": 0.3,
+        "pressure_correctors": 8,
+        "outer_correctors": 12,
+        "tolerance": 1e-07,
+        "max_iterations": 66,
+        "check_every": 1,
+        "end_time": 0.2
+      },
+      "physical_time": 0.1999999999999998,
+      "steps": 64,
+      "pressure_solves": 6144,
+      "runtime_seconds_median": 6.3306097919121385,
+      "runtime_samples": [
+        6.29269199911505,
+        6.3306097919121385,
+        6.361703298985958
+      ],
+      "continuity_linf": 1.1657341758564144e-15,
+      "max_nonlinear_step_defect": 5.684341886080802e-14,
+      "last_nonlinear_step_defect": 5.684341886080802e-14,
+      "velocity_discrepancy_vs_fine": 1.8911721954405485e-16
+    },
+    {
+      "case": "piso_dt0.05",
+      "config": {
+        "method": "piso",
+        "cells": 16,
+        "reynolds": 100.0,
+        "convection": "central",
+        "dt": 0.05,
+        "velocity_relaxation": 0.7,
+        "pressure_relaxation": 0.3,
+        "pressure_correctors": 2,
+        "outer_correctors": 1,
+        "tolerance": 1e-07,
+        "max_iterations": 6,
+        "check_every": 1,
+        "end_time": 0.2
+      },
+      "physical_time": 0.2,
+      "steps": 4,
+      "pressure_solves": 8,
+      "runtime_seconds_median": 0.021406076150014997,
+      "runtime_samples": [
+        0.021660839207470417,
+        0.02131433505564928,
+        0.021406076150014997
+      ],
+      "continuity_linf": 4.975186929101483e-15,
+      "max_nonlinear_step_defect": 0.15251053555010863,
+      "last_nonlinear_step_defect": 0.13855207523378255,
+      "velocity_discrepancy_vs_fine": 0.06258706439375608
+    },
+    {
+      "case": "piso_dt0.025",
+      "config": {
+        "method": "piso",
+        "cells": 16,
+        "reynolds": 100.0,
+        "convection": "central",
+        "dt": 0.025,
+        "velocity_relaxation": 0.7,
+        "pressure_relaxation": 0.3,
+        "pressure_correctors": 2,
+        "outer_correctors": 1,
+        "tolerance": 1e-07,
+        "max_iterations": 10,
+        "check_every": 1,
+        "end_time": 0.2
+      },
+      "physical_time": 0.19999999999999998,
+      "steps": 8,
+      "pressure_solves": 16,
+      "runtime_seconds_median": 0.042497389018535614,
+      "runtime_samples": [
+        0.042497389018535614,
+        0.042340470012277365,
+        0.043869424844160676
+      ],
+      "continuity_linf": 1.880440247958859e-15,
+      "max_nonlinear_step_defect": 0.07779397546512268,
+      "last_nonlinear_step_defect": 0.06715691920662437,
+      "velocity_discrepancy_vs_fine": 0.03048869844653716
+    },
+    {
+      "case": "piso_dt0.0125",
+      "config": {
+        "method": "piso",
+        "cells": 16,
+        "reynolds": 100.0,
+        "convection": "central",
+        "dt": 0.0125,
+        "velocity_relaxation": 0.7,
+        "pressure_relaxation": 0.3,
+        "pressure_correctors": 2,
+        "outer_correctors": 1,
+        "tolerance": 1e-07,
+        "max_iterations": 18,
+        "check_every": 1,
+        "end_time": 0.2
+      },
+      "physical_time": 0.2,
+      "steps": 16,
+      "pressure_solves": 32,
+      "runtime_seconds_median": 0.08659603702835739,
+      "runtime_samples": [
+        0.08693011081777513,
+        0.08659603702835739,
+        0.08635661494918168
+      ],
+      "continuity_linf": 1.186550857568136e-15,
+      "max_nonlinear_step_defect": 0.0391730954152294,
+      "last_nonlinear_step_defect": 0.032888503684890935,
+      "velocity_discrepancy_vs_fine": 0.01342879818571642
+    },
+    {
+      "case": "pimple_dt0.05",
+      "config": {
+        "method": "pimple",
+        "cells": 16,
+        "reynolds": 100.0,
+        "convection": "central",
+        "dt": 0.05,
+        "velocity_relaxation": 0.7,
+        "pressure_relaxation": 0.3,
+        "pressure_correctors": 2,
+        "outer_correctors": 3,
+        "tolerance": 1e-07,
+        "max_iterations": 6,
+        "check_every": 1,
+        "end_time": 0.2
+      },
+      "physical_time": 0.2,
+      "steps": 4,
+      "pressure_solves": 24,
+      "runtime_seconds_median": 0.0545724609401077,
+      "runtime_samples": [
+        0.0545724609401077,
+        0.05375606403686106,
+        0.05581819801591337
+      ],
+      "continuity_linf": 7.618905506490137e-15,
+      "max_nonlinear_step_defect": 0.00022155228919906733,
+      "last_nonlinear_step_defect": 0.00022155228919906733,
+      "velocity_discrepancy_vs_fine": 0.06163197812006228
+    },
+    {
+      "case": "pimple_dt0.025",
+      "config": {
+        "method": "pimple",
+        "cells": 16,
+        "reynolds": 100.0,
+        "convection": "central",
+        "dt": 0.025,
+        "velocity_relaxation": 0.7,
+        "pressure_relaxation": 0.3,
+        "pressure_correctors": 2,
+        "outer_correctors": 3,
+        "tolerance": 1e-07,
+        "max_iterations": 10,
+        "check_every": 1,
+        "end_time": 0.2
+      },
+      "physical_time": 0.19999999999999998,
+      "steps": 8,
+      "pressure_solves": 48,
+      "runtime_seconds_median": 0.1122247651219368,
+      "runtime_samples": [
+        0.11504584806971252,
+        0.1097253558691591,
+        0.1122247651219368
+      ],
+      "continuity_linf": 9.471590178833367e-16,
+      "max_nonlinear_step_defect": 3.069895189611316e-05,
+      "last_nonlinear_step_defect": 3.069895189611316e-05,
+      "velocity_discrepancy_vs_fine": 0.030091697369399678
+    },
+    {
+      "case": "pimple_dt0.0125",
+      "config": {
+        "method": "pimple",
+        "cells": 16,
+        "reynolds": 100.0,
+        "convection": "central",
+        "dt": 0.0125,
+        "velocity_relaxation": 0.7,
+        "pressure_relaxation": 0.3,
+        "pressure_correctors": 2,
+        "outer_correctors": 3,
+        "tolerance": 1e-07,
+        "max_iterations": 18,
+        "check_every": 1,
+        "end_time": 0.2
+      },
+      "physical_time": 0.2,
+      "steps": 16,
+      "pressure_solves": 96,
+      "runtime_seconds_median": 0.2175342501141131,
+      "runtime_samples": [
+        0.22742097405716777,
+        0.21737351082265377,
+        0.2175342501141131
+      ],
+      "continuity_linf": 1.384309333829492e-15,
+      "max_nonlinear_step_defect": 3.8263118860015766e-06,
+      "last_nonlinear_step_defect": 3.8263118860015766e-06,
+      "velocity_discrepancy_vs_fine": 0.013201996973887471
+    }
+  ],
+  "reference_checks": {
+    "reference_dt_change": 0.004453381729235252,
+    "reference_loop_change": 1.8911721954405485e-16,
+    "meaning": "Observed reference sensitivity, not a rigorous error bound. No steady Ghia score is used for startup."
+  },
+  "provenance": {
+    "completed_utc": "2026-11-17T01:46:25.741931+00:00",
+    "host": "uri-cpu075",
+    "python": "3.12.3",
+    "numpy": "2.2.6",
+    "scipy": "1.15.3",
+    "slurm_job": "1895356",
+    "source_commit": "a8fb2378f5636f8fa1ebdbfc6f8e6018d9605f7e",
+    "threads": {
+      "OMP_NUM_THREADS": "1",
+      "OPENBLAS_NUM_THREADS": "1",
+      "MKL_NUM_THREADS": "1"
+    },
+    "source_sha256": {
+      "flowmllab/pressure_velocity.py": "d502568afece2262dbb759c1e315e384cf9c88ac46e98992ee7950a77a0aba5d",
+      "flowmllab/pressure_velocity_studies.py": "1cc81f95e7598fbfdd7eb78fa13d876d61c5ba8e3f2a8b81a2e508ee8279803a",
+      "qa/run_week01_2_literature_studies.py": "7e2eb6e16cdbe049dee3cfc337f35986b17d66aa86f8c6aa23dd836b08d59ff7"
+    },
+    "fields_sha256": "3d8a80d284fbdeb481edecdf63ba7bc5e424206032f2dada74d646f2edf87b01"
+  },
+  "limits": [
+    "One host, small fixed meshes, three repeat timings; no universal speed ranking.",
+    "Fixed-operator LU reuse is invalid when momentum coefficients, time step or boundary conditions change.",
+    "Reference sensitivity is measured; neither continuum/grid independence nor second-order time accuracy is claimed."
+  ]
+}

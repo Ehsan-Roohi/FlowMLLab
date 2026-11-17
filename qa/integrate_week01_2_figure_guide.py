@@ -18,7 +18,7 @@ def expand(path):
 
 def main():
     names=re.findall(r'\\lessonfigure\{([^}]+)\}',expand(SOURCE/'week01_2_pressure_velocity.tex'))
-    assert len(names)==21 and len(set(names))==21,names
+    assert len(names)==23 and len(set(names))==23,names
     index={name:{'number':str(i),'caption':caption_tex(name),'image':name+'.png','lecture':True}
            for i,name in enumerate(names,1)}
     extra=json.loads((ASSETS/'supplementary_captions.json').read_text(encoding='utf-8'))
@@ -31,6 +31,11 @@ def main():
     def md(id,source):return nbformat.v4.new_markdown_cell(source,id=id)
     path=ROOT/'notebooks/week01_2/W1_2_Cavity_Pressure_Velocity.ipynb'
     nb=nbformat.read(path,4)
+    if any(c.id=='literature-reading-map' for c in nb.cells):
+        # The reviewed extension has dedicated runnable cells. Refresh the
+        # figure index without replacing that integrated lesson from LaTeX.
+        print(json.dumps({'lecture_figures':len(names),'supplementary_figures':len(extra),'reviewed_literature_cells_preserved':True}))
+        return
     if any(c.id.startswith('coupling-page-') for c in nb.cells):
         from qa.sync_week01_2_teaching import sync_notebook
         nb=sync_notebook(nb)

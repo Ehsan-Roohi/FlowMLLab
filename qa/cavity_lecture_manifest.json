@@ -6,10 +6,10 @@
     "sha256": "feb9e0a788949fc62fd3a429afcc3fe06521966220364b9041668c962f751b82"
   },
   "week01_2_pressure_velocity": {
-    "base_pages_preserved": 65,
+    "base_pages_preserved": 70,
     "new_pages": 2,
-    "total_pages": 67,
-    "sha256": "d0e18e37cd46b19258d013657e768e895479b9075a1a0a968912cac73c651ced"
+    "total_pages": 72,
+    "sha256": "aee0980895b65fef3d7c782ef13c0cbf92c1e9ffa424e93ed9b77f8ccb8296a4"
   },
   "week04_cavity_surrogates_deeponet": {
     "base_pages_preserved": 11,

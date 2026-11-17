@@ -1,0 +1,119 @@
+\topic{22 continued}{From a reading to a controlled experiment}
+Read with a prediction in mind. Before running a case, write down the quantity
+you expect to change, the quantities held fixed, and the evidence that would
+make you reject your explanation. Then compute, compare and explain the result.
+
+\textbf{Four complementary sources.}
+\begin{enumerate}
+\item \href{https://jose.theoj.org/papers/10.21105/jose.00021}{L. A. Barba and G. F. Forsyth (2018), \emph{CFD Python: the 12 steps to Navier--Stokes equations}, JOSE 1(9), 21.}
+Use its progression from a worked example to a small parameter change and a
+challenge. The finite-difference lessons include cavity and channel flow;
+they are not a performance comparison of our three FV algorithms.
+\item \href{https://www.kth.se/social/files/58ad81f0f276542156c566ab/project.pdf}{KTH, \emph{Computational Fluid Dynamics SG2212/SG3114}, Spring 2017, Task 1, Q2--Q6.}
+Its MATLAB projection exercise connects stability, boundary conditions,
+pressure-solver cost and mass balance. Q6 motivates the fixed-operator
+experiment on the next pages. Our analytic trial fields and Python code are
+new; they are not the KTH cavity trajectories.
+\item \href{https://doi.org/10.1186/s40712-019-0104-7}{A. A. Boroujerdi and M. Hamzeh (2019), \emph{Comparison of varieties of numerical methods applied to lid-driven cavity flow}, IJMME 14, 7.}
+Separate coupling from spatial discretization. Their algorithms are SIMPLE,
+SIMPLEC and SIMPLER; their grid arrangements and first-/second-order upwind
+schemes differ from this lesson. A ranking in their configurations is not a
+universal Reynolds-number rule for SIMPLE/PISO/PIMPLE.
+\item \href{https://doi.org/10.1002/(SICI)1097-0363(19980228)26:4<459::AID-FLD645>3.0.CO;2-U}{I. E. Barton (1998), \emph{Comparison of SIMPLE- and PISO-type algorithms for transient flows}, IJNMF 26, 459--483.}
+Compare cost at a specified physical accuracy. That paper studies square-cylinder
+and backward-facing-step flows and several time discretizations. Our startup
+cavity keeps backward Euler fixed. We borrow the experimental question, not
+the paper's geometries, second-order schemes or performance conclusions.
+\end{enumerate}
+\textbf{Use the existing evidence.} Tables 6a--6c and Figure 21 already separate
+the mesh and convection effects. Explain why changing both a coupling algorithm
+and an advection scheme would prevent a clean attribution of improved accuracy.
+The new Tables L and T2 add linear-solver and physical-time experiments.
+\newpage
+\topic{22 continued}{Table L: pressure-solver work and conservation}
+Freeze the positive-semidefinite pressure operator $A=-D d G$ with $d=0.05$ on a closed
+unit square. $D$ maps face velocities to cell divergence; $G$ maps cell pressure
+to face gradients. For each analytic trial velocity $q^*$, solve
+\[
+ b=-Dq^*,\qquad Ap=b,\qquad q=q^*-dGp.
+\]
+The normal wall velocity is zero, so $\sum_P b_P=0$. Remove one pressure degree
+of freedom during the solve and subtract the mean afterward. The residual
+of the \emph{full} operator, including the omitted gauge row, obeys
+\[
+ r=b-Ap,\qquad Dq=-r.
+\]
+Thus a loose linear solve can leave a mass defect even when the pressure
+profile looks unchanged. Relative residual tolerances are not absolute
+cell-divergence limits.
+\input{week01_2_linear_work_table.tex}
+Each batch has three different analytic right-hand sides at one fixed matrix.
+Times are medians of three batches after an untimed warm-up on one Unity CPU.
+Batch cost includes setup and solves; matrix assembly and diagnostics are outside
+the timer. GMRES uses Jacobi preconditioning, restart 50 and a zero initial guess.
+The setup and solve medians need not add to the median batch time.
+
+\textbf{Exercise L.} Predict which cost LU reuse removes. Change the number of
+right-hand sides from 3 to 6; report the batch cost and worst cell divergence
+in one table. Tighten GMRES from $10^{-4}$ to $10^{-8}$ and compare \emph{both}
+quantities. Record any nonzero solver return code instead of calling it a success.
+
+\textbf{Reuse condition.} Reuse an LU factor only while every matrix entry is
+unchanged. Changing the time step, grid, coefficients or boundary conditions
+can invalidate it. In the cavity solver $d=1/\mathrm{diag}(A_{\rm momentum})$
+generally changes between momentum assemblies; this fixed-Poisson experiment
+does not license unconditional reuse inside SIMPLE or PIMPLE.
+\newpage
+\topic{22 continued}{Pressure agreement can hide a mass defect}
+\lessonfigure{linear_pressure_profiles}{Fixed-operator projection on 32 cells per side, first analytic trial field, d=0.05. The upper panel compares zero-mean pressure on y/L=0.5. The lower panel shows remaining cell divergence along the bottom cell row, y/L=1/64, including the gauge-cell region. Its symmetric-log scale is linear below absolute divergence 1e-10. These are synthetic projection fields, not a cavity solution or a Ghia benchmark. LU and two Jacobi-preconditioned GMRES tolerances use the same matrix and right-hand side.}{linear-pressure-profiles}
+\textbf{Explain the evidence.} Use the full residual identity to explain why
+nearly overlapping pressure curves can coexist with different mass defects.
+Distinguish the residual on the reduced linear system from conservation in
+every pressure cell. Compare the largest defect with the declared acceptance
+target, not only with the number of iterations.
+
+\textbf{One-variable extension.} Keep the trial fields and grid fixed, change
+only the GMRES tolerance, and estimate the tolerance needed for your chosen
+absolute continuity target. A result on these small matrices is not evidence
+that one linear solver is fastest on all CFD grids.
+\newpage
+\topic{22 continued}{Table T2: matched-time startup comparison}
+All trajectories start from rest at $Re=100$ in the unit square with unit lid
+speed, on the same 16-cell MAC mesh. Stop at $tU/L=0.2$. Hold central spatial
+discretization and backward Euler fixed. PISO uses two inner corrections;
+PIMPLE uses three outer passes and two inner corrections. Each trajectory is
+repeated three times on one CPU; the table gives median solver-call wall time.
+\input{week01_2_startup_table.tex}
+The comparison is PIMPLE at $\Delta t=0.003125$, six outer passes and four inner
+corrections. It is checked against $\Delta t=0.00625$ and against twelve outer
+passes/eight inner corrections at the fine step. For the native face-velocity
+vector $q$, the table reports
+\[
+ E_t=100\,\frac{\|q_{\Delta t}(T)-q_{\rm comparison}(T)\|_2}
+                         {\|q_{\rm comparison}(T)\|_2}.
+\]
+This is a discrepancy from a numerical comparison on the same mesh. It includes
+time and splitting/nonlinear-coupling effects. It is not error against an exact
+continuum solution. Steady Ghia profiles do not score a startup field.
+
+The earlier Exercise B (Table T) uses cell-centered velocities and a different
+comparison time step. Align the norm and comparison field before comparing
+its percentages with Table T2. The earlier exercise remains available.
+
+\textbf{Exercise T2.} First halve $\Delta t$ at fixed correction counts. Then
+hold $\Delta t$ fixed and increase the correction counts. Compare profile
+changes, the full nonlinear step defect and cost. Report whether the observed
+reference sensitivity is small enough to support each ranking. More iterations
+do not change backward Euler into a second-order time scheme.
+
+\textbf{Report.} Submit Tables L and T2, two spatial profile comparisons,
+the reference-sensitivity checks, and a short recommendation tied to a stated
+accuracy target. Treat repeated timings as measurements on this host.
+\newpage
+\topic{22 continued}{Startup profiles at one physical time}
+\lessonfigure{startup_time_profiles}{Unit-square cavity at Re=100, 16 MAC cells per side, tU/L=0.2, unit lid speed and initially stationary fluid. Upper panels show both centerline velocity components; lower panels show their signed differences from the fine PIMPLE comparison. Red is PISO and blue PIMPLE; line style denotes the time step. The black comparison uses dt=0.003125, six outer and four inner corrections. Spatial equations and backward Euler are common. The coarse mesh and impulsive lid startup limit accuracy claims.}{startup-time-profiles}
+Locate the wall or return-flow regions where changing $\Delta t$ matters most.
+Compare both velocity components before reducing the field to a single norm.
+If reference sensitivity is comparable to a claimed improvement, refine the
+comparison before selecting a winner. A low final continuity defect establishes
+mass balance; it does not establish temporal accuracy or grid independence.

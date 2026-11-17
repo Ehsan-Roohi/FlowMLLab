@@ -1,6 +1,6 @@
 {
-  "lecture_pages": 67,
-  "lecture_figures": 21,
+  "lecture_pages": 72,
+  "lecture_figures": 23,
   "notebook_supplementary_figures": 13,
   "all_figure_numbers_and_captions_checked": true,
   "all_diagrams_at_text_width_inches": 6.6,
@@ -22,11 +22,14 @@
     "1b614a07",
     "1a08e6d5",
     "ee106a2c",
-    "student-review-refinement-evidence"
+    "student-review-refinement-evidence",
+    "literature-retained-tables",
+    "literature-linear-controls",
+    "literature-startup-controls"
   ],
   "fresh_cfd_trajectories": 0,
-  "pdf_sha256": "d0e18e37cd46b19258d013657e768e895479b9075a1a0a968912cac73c651ced",
-  "notebook_sha256": "6cc577c42622cad4a3de5ad2e2578f26b954d26aad41cf0b7e30ab852ec8691f",
+  "pdf_sha256": "aee0980895b65fef3d7c782ef13c0cbf92c1e9ffa424e93ed9b77f8ccb8296a4",
+  "notebook_sha256": "41ab5fc2f14d6fad55bcfea771674ee85e67b45c994ee77b8717c662c9680683",
   "hosted_colab_run": false,
-  "visual_review": "Programmatic text/page bounds checked; manual rendered-page review is recorded separately in refinement_release_validation.json."
+  "visual_review": "Programmatic text/page bounds checked; current manual rendered-page review is recorded in results/week01_2_literature/release_validation.json."
 }

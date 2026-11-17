@@ -12,10 +12,17 @@ The saved table outputs can be read without rerunning CFD. Historical source
 measurements remain in the provenance archive; they are not substituted for
 verified course results.
 
+The [reading-based CPU exercises](../../results/week01_2_literature/README.md)
+add a fixed-operator LU/GMRES pressure comparison (Table L) and a Re=100
+startup study at the same physical end time (Table T2). Students change one
+control, inspect physical profiles and conservation, and report reference
+sensitivity before comparing cost. The four readings are linked in the
+notebook and lecture. Fresh runs are optional and generate their own profiles.
+
 [Expanded comparison and teaching supplement](COMPARISON_AND_TEACHING.md)
 adds three algorithm flowcharts, a primary-source literature review, a measured
 15-configuration one-step coupling experiment, and a staged higher-Re and
-transient-accuracy plan. The lecture follows the same staged experiment. A smaller nonlinear
+transient experiments. The lecture follows the same staged sequence. A smaller nonlinear
 step defect is distinguished explicitly from a smaller physical time error.
 
 The illustrated lesson locates stored and interpolated velocities on separate
@@ -71,8 +78,9 @@ three times within one physical time step. Old-time velocities are fixed
 across those outer loops. One outer loop is exactly the implemented PISO limit.
 
 The recorded FV schemes use central face convection and central diffusion.
-First-order upwind is an optional teaching control, not part of the retained
-comparison. PISO/PIMPLE use backward Euler (first-order time accuracy), dt=0.05,
+First-order upwind is a separate retained control in the higher-Re experiment,
+not part of the original central-scheme baseline. PISO/PIMPLE use backward Euler
+(first-order time accuracy), dt=0.05 in the baseline,
 and march until the same steady FV momentum/continuity tolerances pass.
 Sparse LU via SciPy solves linear systems; no multigrid or packaged CFD solver.
 
@@ -95,9 +103,10 @@ Agreement among the three FV methods establishes their common discrete steady
 limit; it does not independently validate continuum accuracy. Ghia validates
 velocity profiles, not pressure. Two grids establish a refinement trend, not
 asymptotic order. PIMPLE's possible benefit at larger time steps is not claimed
-by a steady run. The next study should refine dt for startup or an oscillating
-lid, then compare methods at matched temporal error. A transient reference
-pressure recovery must include acceleration terms.
+by a steady run. Table T2 separately refines dt for startup and tests the
+numerical comparator's sensitivity. A smooth oscillating-lid extension would
+also need phase/amplitude checks. A transient reference pressure recovery
+must include acceleration terms.
 
 At Re=100, the retained FV errors against Ghia increase slightly from 32 to 64 cells,
 while the FD reference errors decrease. This nonmonotone FV trend is reported
@@ -240,14 +249,16 @@ Editable source: [LaTeX lecture](../../lectures/source/week01_2_pressure_velocit
 
 ## Figures and companion explanations
 
-The lecture has 21 numbered figures with captions; the notebook uses the same identifiers and adds 13 S-numbered supplements. Stored velocities, interpolated momentum-face values and north-face transport are shown separately at full width. Physical fields and centerline curves are redrawn from hash-checked archived arrays; recorded runtimes are unchanged. The end of the lecture and notebook links free SIMPLE/PISO YouTube lectures and CFD Direct readings for pressure correction and PIMPLE.
+The lecture has 23 numbered figures with captions; the notebook uses the same identifiers and adds 13 S-numbered supplements. Stored velocities, interpolated momentum-face values and north-face transport are shown separately at full width. Physical fields and centerline curves are redrawn from hash-checked archived arrays; recorded runtimes are unchanged. The end of the lecture and notebook links free SIMPLE/PISO YouTube lectures and CFD Direct readings for pressure correction and PIMPLE.
 
 To reproduce the figures and their notebook guide:
 
 ```bash
 python qa/refresh_week01_2_figures.py
+python qa/refresh_week01_2_refinement.py
+python qa/refresh_week01_2_literature.py
+python qa/integrate_week01_2_literature.py
 python qa/integrate_week01_2_figure_guide.py
-python qa/sync_week01_2_teaching.py
 python qa/build_week01_2_lecture.py
 python qa/validate_week01_2_figure_guide.py
 ```

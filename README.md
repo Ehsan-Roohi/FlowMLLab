@@ -146,6 +146,8 @@ PISO and PIMPLE on the same cavity and check their converged velocity fields
 against an independent streamfunction–vorticity solver. Start at **Re=100**,
 then use the retained **Re=400 and 1000** experiments to separate mesh error,
 coupling convergence and measured solver work on 32 and 64 cells per side.
+Then use the [CPU experiments](results/week01_2_literature/README.md) to distinguish
+pressure-solver tolerance, mass conservation and startup time-step accuracy.
 
 ### Week 1.3 — Optimizers for scientific machine learning
 

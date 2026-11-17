@@ -1,9 +1,10 @@
 # Pressure-velocity coupling: evidence, flowcharts and teaching experiments
 
-This supplement belongs to Week 1.2. All measured runs below are **Re=100**.
-The time-dependent-lid study remains a proposal. A separate retained
-Re=400/1000 experimental investigation is linked in README.md; it does not
-extend the original Re=100 qualification. The problem is a **lid-driven cavity**, not cavitation.
+This supplement belongs to Week 1.2. The original steady and one-step
+comparisons use **Re=100**. Retained extensions now cover Re=400/1000 steady
+refinement, Re=100 startup at a matched physical time, and a fixed-operator
+pressure-solver experiment. A smooth time-varying lid remains a proposal.
+The problem is a **lid-driven cavity**, not cavitation.
 
 ## What the comparative literature actually says
 
@@ -12,6 +13,14 @@ must specify spatial discretization, grid placement, relaxation, time scheme,
 correction counts, linear solver, stopping conditions and accuracy target.
 The following sources answer different questions; they are not a single
 controlled comparison of our three implementations.
+
+The [reading-to-experiment guide](../../results/week01_2_literature/README.md)
+connects four additional sources to exercises: Barba and Forsyth's incremental
+notebook teaching, KTH's pressure-solver cost and divergence questions,
+Boroujerdi and Hamzeh's separation of coupling and spatial discretization,
+and Barton's transient SIMPLE/PISO comparison. Tables L and T2 and Figures
+22–23 contain our independently executed CPU experiments, not reproduced
+results from those sources.
 
 | Source | Evidence relevant to this class | Boundary of the evidence |
 | --- | --- | --- |
@@ -166,9 +175,10 @@ universally ceases to work. Three distinct difficulties must be separated:
   three-dimensional. A failure to reach a 2D steady state does not by itself
   identify an algorithm bug or establish the need for a turbulence model.
 
-The current public solver deliberately remains qualified at Re=100 and rejects
-other Reynolds numbers. A future higher-Re branch needs its own validation;
-the table below does not silently expand the released claim.
+The original `CavityConfig` keeps its Re=100 scope. The separate
+`ExperimentalConfig` supplies the measured Re=400/1000 comparisons without
+changing that baseline. Its equation-defect, mesh and Ghia checks are recorded
+in the higher-Re results and refinement tables.
 
 ## 7. Recommended classroom sequence and assessment
 
@@ -177,8 +187,9 @@ the table below does not silently expand the released claim.
 | A | Re=100 steady cavity; 32 and 64 cells; three methods and independent FD reference | Same discrete steady solution; different costs; ranking changes with mesh | Executed; FV Ghia errors are nonmonotone on these two grids |
 | B | Re=100 single-step inner/outer correction sweep | Mass conservation is distinct from momentum consistency; PIMPLE reduces nonlinear step defects at extra cost | 15 configurations executed; not temporal-accuracy validation |
 | C | Re=100 SIMPLE relaxation sweep, e.g. `(alpha_u,alpha_p)=(0.5,0.5),(0.7,0.3),(0.9,0.1)` | Robustness versus speed; accept only the same unrelaxed final residual and fields | Proposed; these pairs are trials, not assured optimal/stable settings |
-| D | Re=100 startup to matched final times, then a smooth ramped/oscillating lid; halve dt | PISO/PIMPLE cost at matched time error, and phase/amplitude errors; a large stable dt can be inaccurate | Proposed; variable-lid boundary API and temporal reference still required |
-| E | Re=400, then 1000 on 64/128/256 cells with independently validated convection and benchmark tables | Separate mesh error, numerical boundedness and coupling failures; inspect secondary vortices and lid-wall stress | Separate experimental Re=400/1000 investigation now exists; see README.md and results/week01_2_higher_re. This is not the original Re=100 qualified package |
+| D | Re=100 startup on 16 cells to tU/L=0.2; halve dt and independently check reference correction counts | Separate time discretization from within-step coupling; compare physical profiles and cost | Nine configurations executed, each timed three times; Table T2 and Figure 23. A smooth time-varying lid remains a future extension |
+| E | Re=400 and 1000, all three FV methods on 32/64 cells; central/upwind at fixed mesh | Separate mesh error, convection effects and coupling convergence | Twelve central-scheme FV cases retained, with separate upwind controls and FD evidence; Tables 6a–6c. These are refinement trends, not an asymptotic-order claim |
+| L | Fixed pressure operator, three analytic RHS fields, LU and Jacobi-preconditioned GMRES | Separate setup from solve work and solver tolerance from absolute mass balance | Eight configurations with warm-up and three timed batches; Table L and Figure 22. These are projection trial fields, not cavity solutions |
 
 Keep spatial equations, grid, initial fields, physical final time and linear
 solver settings fixed in a coupling comparison. For transient studies, SIMPLE
@@ -192,7 +203,8 @@ nonconverged configurations. Do not select settings merely to make a chosen
 algorithm win. A matched-grid, dt-refined numerical reference also has error;
 document its own refinement.
 
-**Recommended next numerical extension:** stage D at Re=100, before a higher-Re
-claim. It isolates the intended benefit of PIMPLE without changing viscosity,
-mesh and convection simultaneously. Stage E can follow as a separate
-verification/benchmark exercise. Week 1 remains unchanged.
+**Suggested classroom order:** complete A and B, then use L to understand
+linear-solver cost and D to distinguish time and coupling errors. Use E for
+spatial verification and benchmark comparisons. Repeat the small CPU cases
+before expanding a mesh; preserve a fixed accuracy target and retain failed
+trials. The original Week 1 notebook remains unchanged.

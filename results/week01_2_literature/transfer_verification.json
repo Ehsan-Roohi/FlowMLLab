@@ -1,0 +1,9 @@
+{
+  "remote_job": "1895356",
+  "state": "COMPLETED",
+  "exit": "0:0",
+  "sha256_matches": {
+    "fields.npz": "3d8a80d284fbdeb481edecdf63ba7bc5e424206032f2dada74d646f2edf87b01",
+    "study.json": "d7ba8b69d32f5618e81cb124f9edb42a4556c9fe90823490683f280afd6780a5"
+  }
+}
