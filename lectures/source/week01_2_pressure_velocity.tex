@@ -78,8 +78,8 @@ All pressures are reported with zero mean. Pressure gradients, rather than the a
 The finite-volume histories evaluate momentum and mass balance. The streamfunction solver's native vorticity-update norm is kept separate in the notebook because it is a different quantity. Timing comparisons still include that formulation. A small relaxed update alone is not a momentum-equation convergence test.
 \newpage
 \topic{19}{Accuracy and recorded cost at $Re=400$ and 1000}
-\lessonfigure{profiles_re400}{Retained Re=400 centerline velocities. Color identifies formulation and line style identifies spacing. Black markers are Ghia samples; the red cross retains the isolated published horizontal-profile anomaly at x/L=0.9063, excluded only from the qualified error norm. Selected fine cases do not constitute a complete refinement matrix.}{profiles-re400}
-The retained study includes all four methods at $h=1/32$, plus selected finer meshes. A converged coarse-grid streamfunction result can have large reference error. At $Re=1000$, its 128-cell-spacing relative profile errors are approximately 2.0\% for $u$ and 1.7\% for $v$, using $\|f_{\rm computed}-f_{\rm Ghia}\|_2/\|f_{\rm Ghia}\|_2$ at the tabulated samples.
+\lessonfigure{profiles_re400}{Retained Re=400 centerline velocities. Color identifies formulation and line style identifies spacing. Black markers are Ghia samples; the red cross retains the isolated published horizontal-profile anomaly at x/L=0.9063, excluded only from the qualified error norm. All three FV algorithms are included at both 32 and 64 cells; FD also includes 128-cell spacing.}{profiles-re400}
+The retained study includes all four methods at $h=1/32$ and $h=1/64$, plus the independent FD solution at $h=1/128$. A converged coarse-grid streamfunction result can have large reference error. At $Re=1000$, its 128-cell-spacing relative profile errors are approximately 2.0\% for $u$ and 1.7\% for $v$, using $\|f_{\rm computed}-f_{\rm Ghia}\|_2/\|f_{\rm Ghia}\|_2$ at the tabulated samples.
 \newpage
 \topic{19 continued}{Centerline accuracy at $Re=1000$}
 \lessonfigure{profiles_re1000}{Retained Re=1000 centerline velocities. Color identifies formulation and line style identifies spacing; black markers are Ghia et al. (1982) samples. Finer FD solutions show the effect of spatial resolution separately from the coupling algorithm.}{profiles-re1000}
@@ -98,7 +98,7 @@ This tests pressure-recovery consistency; it is not a Ghia pressure error.
 \lessonfigure{refinement_re400}{Retained Re=400 speed and computed velocity streamlines: SIMPLE at h=1/64, and independent streamfunction-vorticity solutions at h=1/64 and 1/128. The color scale and lid speed are common. Small recirculation structures must be supported by the resolved velocity field.}{refinement-re400}
 Each panel states Reynolds number, formulation and spacing. The sampled primary-vortex location and resolved corner circulation change with refinement. More inner pressure corrections cannot reproduce an unresolved boundary layer or secondary vortex.
 
-The fine-grid study is selected rather than a complete four-method refinement matrix. A result at one mesh does not demonstrate asymptotic order. Native steady-equation checks, Ghia errors and recorded initial failed attempts remain available with the data.
+These field panels select three cases from the complete 32/64 comparison; the 128-cell study remains FD-only. A result at one mesh does not demonstrate asymptotic order. Native steady-equation checks, Ghia errors and recorded initial failed attempts remain available with the data.
 
 \newpage
 \topic{20 continued}{Refined circulation at $Re=1000$}
@@ -136,6 +136,8 @@ Control & Purpose\\\midrule
 \textbf{Higher Reynolds number.} At $Re=400$ and 1000, separate spatial refinement from coupling changes. Retain failed configurations. State the cost before proposing a fine-grid run. Native FD and FV residual magnitudes must not be interpreted as the same error.
 
 \textbf{Transient extension.} Specify a final physical time, run a sequence of halved time steps, and compare common field or phase errors. Keep the time scheme fixed when comparing coupling algorithms. The current steady SIMPLE iteration is not a transient trajectory.
+\newpage
+\input{week01_2_refinement_study.tex}
 \newpage
 \topic{23}{References}
 The textbook treatments develop finite-volume conservation, staggered pressure--velocity coupling and pressure correction. The paper and official algorithm documentation provide the PISO origin and practical inner/outer-loop distinctions.

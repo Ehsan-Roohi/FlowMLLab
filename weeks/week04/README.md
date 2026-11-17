@@ -53,7 +53,9 @@ centerlines and measured inference cost.
 
 [Lab 5](../../notebooks/week04/W4_Lab5_All_Re_Ghia_Validation.ipynb) opens our CFD
 solutions at Re=100,400,1000, shows grid changes and signed Ghia discrepancies,
-and then displays the frozen neural predictions at Re=3200 and 7500.
+before the higher-Re CFD checks in [Lab 7](../../notebooks/week04/W4_Lab7_High_Re_CFD_Ghia.ipynb).
+Its frozen profile predictions at Re=3200 and 7500 are a separate learning example,
+not the CFD reference. Complete those CFD checks before the Lab 8 full-field tests.
 [Lab 6](../../notebooks/week04/W4_Lab6_Ghia_Profile_Optimizer_Depth.ipynb) provides
 the full seven-Re profile-regression protocol and optimizer/depth exercises.
 The historical profile fit remains separate. New Labs 7 and 8 now add the actual high-Re CFD and full-field neural experiment.

@@ -1,26 +1,32 @@
 {
-  "lecture_pages": 62,
-  "lecture_figures": 20,
+  "lecture_pages": 67,
+  "lecture_figures": 21,
   "notebook_supplementary_figures": 13,
   "all_figure_numbers_and_captions_checked": true,
   "all_diagrams_at_text_width_inches": 6.6,
   "vector_text_within_figure_bounds": true,
   "all_pdf_text_within_page_bounds": true,
-  "archived_fields_sha256_checked": 22,
+  "archived_fields_sha256_checked": 26,
   "solver_sources": "unchanged; fresh controls audited separately",
   "executed_cheap_cells": [
+    "ed71508c",
     "visual-checkerboard-check",
     "visual-hat-arithmetic",
+    "13faeb86",
     "prereq-source-relaxation",
     "beginner-simple-complete-pass",
+    "pressure-algebra-examples",
     "51fefcd5",
+    "327cdaea",
+    "guided-physical-time-study",
     "1b614a07",
+    "1a08e6d5",
     "ee106a2c",
     "student-review-refinement-evidence"
   ],
   "fresh_cfd_trajectories": 0,
-  "pdf_sha256": "b20c8f7f4543d90b86ca13dd66c287dcb4d052d7623c7016607ed4b3643943e3",
-  "notebook_sha256": "18a3da2a187732e23d239847c768376a899f5ae65bdc8c3e5944fc08d49d5812",
+  "pdf_sha256": "d0e18e37cd46b19258d013657e768e895479b9075a1a0a968912cac73c651ced",
+  "notebook_sha256": "6cc577c42622cad4a3de5ad2e2578f26b954d26aad41cf0b7e30ab852ec8691f",
   "hosted_colab_run": false,
-  "visual_review": "All final pages rendered; all figure pages reviewed at publication scale."
+  "visual_review": "Programmatic text/page bounds checked; manual rendered-page review is recorded separately in refinement_release_validation.json."
 }

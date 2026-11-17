@@ -26,6 +26,8 @@ def execute(notebook, cwd):
                 payload=obj.data
                 if isinstance(payload,bytes):payload=base64.b64encode(payload).decode()
                 active.append(nbformat.v4.new_output('display_data',data={'image/png':payload},metadata={}))
+            elif isinstance(obj,IPython.display.Markdown):
+                active.append(nbformat.v4.new_output('display_data',data={'text/markdown':obj.data,'text/plain':obj.data},metadata={}))
             elif hasattr(obj,'_repr_html_'):
                 active.append(nbformat.v4.new_output('display_data',data={'text/html':obj._repr_html_(),'text/plain':str(obj)},metadata={}))
             else:

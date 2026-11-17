@@ -143,7 +143,9 @@ on cell corners, while the independent reference includes boundary nodes.
 
 This optional numerical branch follows the Week 1 cavity lab. Compare SIMPLE,
 PISO and PIMPLE on the same cavity and check their converged velocity fields
-against an independent streamfunction–vorticity solver.
+against an independent streamfunction–vorticity solver. Start at **Re=100**,
+then use the retained **Re=400 and 1000** experiments to separate mesh error,
+coupling convergence and measured solver work on 32 and 64 cells per side.
 
 ### Week 1.3 — Optimizers for scientific machine learning
 
@@ -222,21 +224,7 @@ then distinguish learning the published centreline samples from learning our ful
 | Full-field learning | Our CFD as labels; compare frozen predictions with interpolation | [Lab 3: low-Re introduction](notebooks/week04/W4_Lab3_DeepONet_Cavity_Student.ipynb) · [Lab 8: high-Re extension](notebooks/week04/W4_Lab8_High_Re_Field_DeepONet.ipynb) |
 | Label-free PINNs | PDE and wall constraints; CFD/Ghia used only to audit accuracy | [Advanced Lab 9](notebooks/week04/W4_Lab9_Label_Free_Ghia_PINN_Audit.ipynb), after [Week 13 Part A](weeks/week13/README.md) |
 
-**High-Re CFD validation before learning.** The four cases below were independently solved on
-128, 256 and 512 cells per side; circles remain the original Ghia samples.
-
-<img src="results/cavity_highre_ghia/highre_cfd_ghia.png" width="760" alt="New three-grid CFD against Ghia at Re3200,5000,7500 and10000">
-
-Square lid-driven cavities at **Re = 3200, 5000, 7500 and 10000**. Both
-centreline velocity components use lid-speed normalization; each case compares
-128-, 256- and 512-cell solutions with Ghia's samples.
-
-[Open the high-Re CFD lab](notebooks/week04/W4_Lab7_High_Re_CFD_Ghia.ipynb) ·
-[Native fields and mesh/time sensitivity](results/cavity_highre_ghia/README.md).
-These are converged discrete roots; remaining high-Re mesh sensitivity is reported.
-
-<details>
-<summary>Earlier CFD grids at Re=100, 400 and 1000</summary>
+**1. Start with Re = 100, 400 and 1000.**
 
 **Our CFD against Ghia at three Reynolds numbers.** Solid curves below come
 from FlowMLLab's retained solver fields; circles are the corresponding published
@@ -253,7 +241,24 @@ printed reference point are identified above.
 [Open the executed CFD validation lab](notebooks/week04/W4_Lab5_All_Re_Ghia_Validation.ipynb)
 · [Grid comparisons, signed errors and source fields](results/cavity_cfd_ghia/README.md).
 
-</details>
+**2. Extend CFD validation to Re = 3200–10000.**
+
+**High-Re CFD validation before learning.** The four cases below were independently solved on
+128, 256 and 512 cells per side; circles remain the original Ghia samples.
+
+<img src="results/cavity_highre_ghia/highre_cfd_ghia.png" width="760" alt="New three-grid CFD against Ghia at Re3200,5000,7500 and10000">
+
+Square lid-driven cavities at **Re = 3200, 5000, 7500 and 10000**. Both
+centreline velocity components use lid-speed normalization; each case compares
+128-, 256- and 512-cell solutions with Ghia's samples.
+
+[Open the high-Re CFD lab](notebooks/week04/W4_Lab7_High_Re_CFD_Ghia.ipynb) ·
+[Native fields and mesh/time sensitivity](results/cavity_highre_ghia/README.md).
+These are converged discrete roots; remaining high-Re mesh sensitivity is reported.
+
+**3. Learn from qualified data.** Start with the low-Re example below, then move to the profile-learning and full-field high-Re tests.
+
+
 
 <details>
 <summary>Start with the low-Re POD–DeepONet worked example</summary>

@@ -1,21 +1,21 @@
-# Week 1.2: pressure-velocity coupling in a Re=100 cavity
+# Week 1.2: pressure-velocity coupling from Re=100 to 1000
 
 [Open in Colab](https://colab.research.google.com/github/Ehsan-Roohi/FlowMLLab/blob/main/notebooks/week01_2/W1_2_Cavity_Pressure_Velocity.ipynb) | [Lecture](../../lectures/week01_2_pressure_velocity.pdf) | [Executed comparison](../../results/week01_2_pressure_velocity/README.md)
 
 An extension after Week 1 (and optionally Week 1.1), connecting finite-volume conservation to pressure correction. The baseline case is Re=100; separate retained experiments compare Re=400 and 1000.
 
-[Worked student study: convergence versus mesh accuracy](../../docs/reviews/student_cavity_20261026.md)
-includes a 12-case student report table, selected fresh Python checks,
-physical velocity profiles, and exercises on pressure-solve work and numerical
-diffusion. Submitted measurements and fresh author-side runs are labeled
-separately. The notebook's refinement-study section displays the comparison without running
-new CFD. Two additional reading notes explain momentum-coefficient normalization
-and old-time data in PIMPLE.
+The final worked exercise separates equation convergence, mesh accuracy and
+solver cost using retained, hash-checked fields. Tables 6a–6c compare SIMPLE,
+PISO and PIMPLE on 32 and 64 cells at Re=400 and 1000, show grid-refinement
+ratios, and contrast central and upwind convection at fixed spacing.
+The saved table outputs can be read without rerunning CFD. Historical source
+measurements remain in the provenance archive; they are not substituted for
+verified course results.
 
 [Expanded comparison and teaching supplement](COMPARISON_AND_TEACHING.md)
 adds three algorithm flowcharts, a primary-source literature review, a measured
 15-configuration one-step coupling experiment, and a staged higher-Re and
-transient-accuracy plan. The lecture contains 62 pages. A smaller nonlinear
+transient-accuracy plan. The lecture follows the same staged experiment. A smaller nonlinear
 step defect is distinguished explicitly from a smaller physical time error.
 
 The illustrated lesson locates stored and interpolated velocities on separate
@@ -99,14 +99,14 @@ by a steady run. The next study should refine dt for startup or an oscillating
 lid, then compare methods at matched temporal error. A transient reference
 pressure recovery must include acceleration terms.
 
-The retained FV errors against Ghia increase slightly from 32 to 64 cells,
+At Re=100, the retained FV errors against Ghia increase slightly from 32 to 64 cells,
 while the FD reference errors decrease. This nonmonotone FV trend is reported
 explicitly. A further mesh study and another velocity reference are needed
 before claiming asymptotic accuracy; its cause has not been established.
 
 ## Run and reproduce
 
-Run all notebook cells to view the eight executed comparisons. In the fresh-run
+Run all notebook cells to view the retained Re=100 baseline and the Re=400/1000 refinement comparisons. In the fresh-run
 cell, set `RUN_NEW=True`, leave `METHOD="all"` and `CELLS=32` to recompute
 SIMPLE, PISO and PIMPLE at Re=100. Individual method selection is also supported.
 The results use real Python computations, with no embedded encoded source.
@@ -216,8 +216,9 @@ python qa/run_week01_2_formulations.py --cells 128 --methods streamfunction-vort
 python qa/report_week01_2_formulations.py
 ```
 
-Verify archives and execute the retained-results notebook with
-`python qa/validate_week01_2_formulations.py` after the runs finish.
+Verify the current refinement archives with
+`python qa/refresh_week01_2_refinement.py`, rebuild the lecture, then run
+`python qa/validate_week01_2_figure_guide.py` to save the complete retained-results notebook outputs.
 
 ## Equations and algorithm guide
 
@@ -239,7 +240,7 @@ Editable source: [LaTeX lecture](../../lectures/source/week01_2_pressure_velocit
 
 ## Figures and companion explanations
 
-The lecture has 20 numbered figures with captions; the notebook uses the same identifiers and adds 13 S-numbered supplements. Stored velocities, interpolated momentum-face values and north-face transport are shown separately at full width. Physical fields and centerline curves are redrawn from hash-checked archived arrays; recorded runtimes are unchanged. The end of the lecture and notebook links free SIMPLE/PISO YouTube lectures and CFD Direct readings for pressure correction and PIMPLE.
+The lecture has 21 numbered figures with captions; the notebook uses the same identifiers and adds 13 S-numbered supplements. Stored velocities, interpolated momentum-face values and north-face transport are shown separately at full width. Physical fields and centerline curves are redrawn from hash-checked archived arrays; recorded runtimes are unchanged. The end of the lecture and notebook links free SIMPLE/PISO YouTube lectures and CFD Direct readings for pressure correction and PIMPLE.
 
 To reproduce the figures and their notebook guide:
 

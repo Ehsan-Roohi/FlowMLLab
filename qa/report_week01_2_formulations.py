@@ -1,4 +1,8 @@
-"""Retain hash-checked formulation comparisons and English teaching figures."""
+"""Reproduce the historical local-host comparison and append current refinement.
+
+The later Unity cases are reported separately; they must not silently enter the
+original timing group or its historical source-bundle checks.
+"""
 from pathlib import Path
 import sys,json,hashlib
 ROOT=Path(__file__).resolve().parents[1];sys.path.insert(0,str(ROOT))
@@ -16,6 +20,7 @@ def load():
  rows=[]
  for p in sorted(OUT.glob('*-re*-n*.json')):
   d=json.loads(p.read_text())
+  if d.get('slurm_job_id'):continue
   if d['status']=='failed':continue
   archive=p.with_suffix('.npz');assert hashlib.sha256(archive.read_bytes()).hexdigest()==d['field_sha256']
   with np.load(archive,allow_pickle=False) as f:r={**d,**{k:f[k] for k in f.files}}
@@ -185,6 +190,9 @@ def main():
  'Start at 32 cells; finer grids and higher Re can require longer runs and more memory. Compare benchmark errors before comparing speed. Preserve all failures. At least two resolutions are needed to investigate mesh sensitivity, and two do not establish asymptotic order. A converged iteration is not necessarily an accurate flow. Report the primary vortex position, both velocity errors and the Re=400 reference sensitivity alongside any speed comparison. Small corner vortices may remain under-resolved.','',
  'Reproduce with `python qa/run_week01_2_formulations.py` then `python qa/run_week01_2_formulations.py --cells 64 --methods simple streamfunction-vorticity`, `python qa/run_week01_2_formulations.py --cells 128 --methods streamfunction-vorticity`, and `python qa/report_week01_2_formulations.py`. Fresh notebook runs are opt-in. Raw JSON/NPZ archives retain histories, settings, source hashes, software versions, and pressure-recovery diagnostics.']
  (OUT/'README.md').write_text('\n'.join(text)+'\n')
+ if all((OUT/f'{m}-re{re}-n64.json').is_file() for re in (400,1000) for m in ('piso','pimple')):
+  from qa.refresh_week01_2_refinement import update_report
+  update_report()
  agreement=[]
  for re in [400,1000]:
   group=[r for r in base if r['config']['reynolds']==re]

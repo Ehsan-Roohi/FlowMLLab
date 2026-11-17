@@ -1,0 +1,215 @@
+{
+  "native_cases_checked": [
+    {
+      "case": "simple-re400-n32",
+      "momentum_linf_recomputed": 7.832186670886365e-07,
+      "divergence_linf_recomputed": 6.7047062346503594e-15,
+      "ghia_relative_l2_recomputed": {
+        "u": 0.036072889350818045,
+        "v": 0.08433269636004266
+      },
+      "field_sha256": "9f5a71416c8a5fed7560a808333c07d5a39740234f6f8a7cf2e3e0a8df11c275",
+      "executed_source_checks": {}
+    },
+    {
+      "case": "simple-re400-n64",
+      "momentum_linf_recomputed": 8.166014096033791e-07,
+      "divergence_linf_recomputed": 4.800760483592015e-14,
+      "ghia_relative_l2_recomputed": {
+        "u": 0.008340849223585193,
+        "v": 0.018531197015934333
+      },
+      "field_sha256": "b7337ab5807203945050a6537ee1294ad1414173d7d977b47a3c60b5ae656e03",
+      "executed_source_checks": {}
+    },
+    {
+      "case": "piso-re400-n32",
+      "momentum_linf_recomputed": 8.059234505308766e-07,
+      "divergence_linf_recomputed": 1.1872620941932865e-13,
+      "ghia_relative_l2_recomputed": {
+        "u": 0.036073978204681806,
+        "v": 0.08433486862709408
+      },
+      "field_sha256": "e06131eedfcc04f975d1bd0d2f7166b3491115dfdb3bbd5a4621ae922a91b2ee",
+      "executed_source_checks": {}
+    },
+    {
+      "case": "piso-re400-n64",
+      "momentum_linf_recomputed": 5.548075996397728e-07,
+      "divergence_linf_recomputed": 2.842170943040401e-14,
+      "ghia_relative_l2_recomputed": {
+        "u": 0.008339666032537045,
+        "v": 0.018528753903679203
+      },
+      "field_sha256": "a40a5cfb3e536adf3443659adc9e5949646f3e5be39f67a8d9e07b9b71111b8b",
+      "executed_source_checks": {
+        "flowmllab/pressure_velocity.py": "exact bytes",
+        "flowmllab/pressure_velocity_experiments.py": "exact bytes",
+        "flowmllab/ghia.py": "exact bytes",
+        "qa/run_week01_2_refinement.py": "exact bytes"
+      }
+    },
+    {
+      "case": "pimple-re400-n32",
+      "momentum_linf_recomputed": 9.139340527708484e-07,
+      "divergence_linf_recomputed": 9.389537758419664e-14,
+      "ghia_relative_l2_recomputed": {
+        "u": 0.03607525758695547,
+        "v": 0.084337512300194
+      },
+      "field_sha256": "bbe1ac8f62e17aa95c9769a138bdd6e2b756ebc2ba6d4eed5386d10dfd20308b",
+      "executed_source_checks": {}
+    },
+    {
+      "case": "pimple-re400-n64",
+      "momentum_linf_recomputed": 6.900676443599707e-07,
+      "divergence_linf_recomputed": 2.3884106498117674e-13,
+      "ghia_relative_l2_recomputed": {
+        "u": 0.008341029336799453,
+        "v": 0.018531204719229925
+      },
+      "field_sha256": "4ab7cc20f539f2a54de35611a9781646c5e36dbf82ee3a28dc7dab4d36c3cb42",
+      "executed_source_checks": {
+        "flowmllab/pressure_velocity.py": "exact bytes",
+        "flowmllab/pressure_velocity_experiments.py": "exact bytes",
+        "flowmllab/ghia.py": "exact bytes",
+        "qa/run_week01_2_refinement.py": "exact bytes"
+      }
+    },
+    {
+      "case": "simple-re1000-n32",
+      "momentum_linf_recomputed": 5.123547577312593e-07,
+      "divergence_linf_recomputed": 7.167877402736167e-15,
+      "ghia_relative_l2_recomputed": {
+        "u": 0.08674054177158065,
+        "v": 0.1415027104382235
+      },
+      "field_sha256": "36fa69c6a2299893f6a4438776ceac8bc7c0046c7b8441635f29725f98cf9182",
+      "executed_source_checks": {}
+    },
+    {
+      "case": "simple-re1000-n64",
+      "momentum_linf_recomputed": 9.55837858640507e-07,
+      "divergence_linf_recomputed": 1.7585759237714882e-14,
+      "ghia_relative_l2_recomputed": {
+        "u": 0.025903624981158436,
+        "v": 0.034641423005435365
+      },
+      "field_sha256": "a6d1567a4575715a3517d930d2a239c00834db6f1477ef5548d2c834680df131",
+      "executed_source_checks": {}
+    },
+    {
+      "case": "piso-re1000-n32",
+      "momentum_linf_recomputed": 8.970929733786992e-07,
+      "divergence_linf_recomputed": 6.861178292183467e-14,
+      "ghia_relative_l2_recomputed": {
+        "u": 0.08674695973485587,
+        "v": 0.1415133453938702
+      },
+      "field_sha256": "c1a0a41988c3db4e542fafb4912bb38bbe049c9de4190d6fc6634d97ce0aae42",
+      "executed_source_checks": {}
+    },
+    {
+      "case": "piso-re1000-n64",
+      "momentum_linf_recomputed": 8.738913988004526e-07,
+      "divergence_linf_recomputed": 3.2639429353720217e-13,
+      "ghia_relative_l2_recomputed": {
+        "u": 0.025903373148463138,
+        "v": 0.03464102507430862
+      },
+      "field_sha256": "8c5851fff81f8dd55d50bdf068f26dfbd7f00aeb44deb140ee8d954f1ec1042e",
+      "executed_source_checks": {
+        "flowmllab/pressure_velocity.py": "exact bytes",
+        "flowmllab/pressure_velocity_experiments.py": "exact bytes",
+        "flowmllab/ghia.py": "exact bytes",
+        "qa/run_week01_2_refinement.py": "exact bytes"
+      }
+    },
+    {
+      "case": "pimple-re1000-n32",
+      "momentum_linf_recomputed": 9.516411341170539e-07,
+      "divergence_linf_recomputed": 6.671052599216409e-14,
+      "ghia_relative_l2_recomputed": {
+        "u": 0.08674763124713314,
+        "v": 0.14151444405321384
+      },
+      "field_sha256": "3039e13f2bd23b70bb7e47ae68a6415121260203c1e4781ebbb1724e214af8dd",
+      "executed_source_checks": {}
+    },
+    {
+      "case": "pimple-re1000-n64",
+      "momentum_linf_recomputed": 9.012156905185975e-07,
+      "divergence_linf_recomputed": 1.6017742687779446e-13,
+      "ghia_relative_l2_recomputed": {
+        "u": 0.02590367580740004,
+        "v": 0.03464150472934466
+      },
+      "field_sha256": "b34e493ec3e30ba378e1517ad3c450cd475743feeac7389bb28bca852f58fd44",
+      "executed_source_checks": {
+        "flowmllab/pressure_velocity.py": "exact bytes",
+        "flowmllab/pressure_velocity_experiments.py": "exact bytes",
+        "flowmllab/ghia.py": "exact bytes",
+        "qa/run_week01_2_refinement.py": "exact bytes"
+      }
+    }
+  ],
+  "fixed_mesh_method_differences": [
+    {
+      "Re": 400,
+      "cells": 32,
+      "method": "piso",
+      "velocity_relative_l2_vs_simple": 2.2358241630508172e-06
+    },
+    {
+      "Re": 400,
+      "cells": 32,
+      "method": "pimple",
+      "velocity_relative_l2_vs_simple": 4.753966363259586e-06
+    },
+    {
+      "Re": 400,
+      "cells": 64,
+      "method": "piso",
+      "velocity_relative_l2_vs_simple": 2.2198504262580033e-06
+    },
+    {
+      "Re": 400,
+      "cells": 64,
+      "method": "pimple",
+      "velocity_relative_l2_vs_simple": 1.1192014904867067e-06
+    },
+    {
+      "Re": 1000,
+      "cells": 32,
+      "method": "piso",
+      "velocity_relative_l2_vs_simple": 1.8118591951882143e-05
+    },
+    {
+      "Re": 1000,
+      "cells": 32,
+      "method": "pimple",
+      "velocity_relative_l2_vs_simple": 2.00028935490912e-05
+    },
+    {
+      "Re": 1000,
+      "cells": 64,
+      "method": "piso",
+      "velocity_relative_l2_vs_simple": 6.380316108649435e-07
+    },
+    {
+      "Re": 1000,
+      "cells": 64,
+      "method": "pimple",
+      "velocity_relative_l2_vs_simple": 1.2010661573928709e-07
+    }
+  ],
+  "all_four_new_cases_from_rest_on_unity": true,
+  "timing": "Different hosts/groups retained; no cross-host speed ranking.",
+  "reference": "Ghia velocity samples; Re400 v at x=0.9063 omitted only from qualified score.",
+  "source_sha256": {
+    "flowmllab/pressure_velocity.py": "d502568afece2262dbb759c1e315e384cf9c88ac46e98992ee7950a77a0aba5d",
+    "flowmllab/pressure_velocity_experiments.py": "d52015b86d23621ddec0b453403b85ffae5eb348edc3915c274f91310371181b",
+    "qa/week01_2_refinement_evidence.py": "c8d98c74ef8562fee7bb107cd557617fbdd7b47098a930a41f66125550ddd8bd",
+    "qa/refresh_week01_2_refinement.py": "e9e954dafda714967d976b8d3f8ff88b7973734c7573c79935e5b43d15b0f984"
+  }
+}

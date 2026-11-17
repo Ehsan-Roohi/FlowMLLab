@@ -8,7 +8,8 @@
 Separate follow-on notebooks cover [all seven Ghia Reynolds numbers](../../notebooks/week04/W4_Lab5_All_Re_Ghia_Validation.ipynb) and [CPU profile-surrogate optimization and depth](../../notebooks/week04/W4_Lab6_Ghia_Profile_Optimizer_Depth.ipynb). Earlier notebook cells and outputs are preserved. [Benchmark data](../../references/ghia/README.md) · [Measured results](../../results/cavity_ghia_allre/README.md) · [Research ideas and sources](../../docs/CAVITY_RESEARCH_ROADMAP.md).
 <!-- /cavity-seven-re -->
 
-An independent Re=100 extension after the original Week 1. The original
+A pressure-coupling extension after the original Week 1: start at Re=100,
+then compare Re=400 and 1000 on 32 and 64 cells per side. The original
 streamfunction-vorticity notebook remains unchanged.
 
 ![Black streamlines for four retained lid-driven cavity solutions at Re = 100](../../docs/assets/showcase/week01-2-coupling-streamlines.png)
@@ -38,10 +39,11 @@ The four panels use the same streamline levels on the retained Re = 100 solution
 
 Velocity and pressure fields, Ghia centerlines, momentum and continuity
 residuals, grid/refinement evidence and one scientifically bounded method choice.
-Distinguish steady iteration from physical time. Only Re=100 steady behavior
-is qualified; the next experiment is temporal refinement for a changing lid.
-The new higher-Re section is an experimental 2D steady study with explicit
-accuracy gates and student deliverables, rather than a turbulence qualification.
+Distinguish steady iteration from physical time. Re=100 is the introductory
+qualification; Re=400 and 1000 extend the retained steady comparison with
+explicit equation-defect and Ghia profile checks. These cases do not establish
+transient accuracy, grid independence or turbulence qualification. The next
+experiment is temporal refinement for a changing lid.
 
 [Source](../../flowmllab/pressure_velocity.py) | [Tests](../../tests/test_pressure_velocity.py) | [Retained configurations and field hashes](../../results/week01_2_pressure_velocity/manifest.json)
 

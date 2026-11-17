@@ -1,0 +1,79 @@
+\topic{22 continued}{Worked study: convergence versus mesh accuracy}
+This exercise uses the unit square, unit lid speed and central spatial scheme.
+All three FV algorithms satisfy the same steady momentum and continuity targets,
+$10^{-6}$ and $10^{-9}$ respectively. PISO uses two pressure corrections; PIMPLE
+uses three outer passes with two corrections per pass. Both use
+$\Delta t=0.05$; SIMPLE is a steady iteration with no physical time step.
+
+\input{week01_2_refinement_table.tex}
+
+The table corresponds to notebook Tables 6a and 6b. For component $f=u$ or $v$,
+the reported percentage is
+\[
+ E_f=100\,\frac{\sqrt{\sum_{j\in\mathcal V}(f_h(s_j)-f_G(s_j))^2}}
+ {\sqrt{\sum_{j\in\mathcal V} f_G(s_j)^2}}.
+\]
+Here $f_h$ is the computed centerline velocity interpolated to reference position
+$s_j$, $f_G$ is the Ghia velocity, and $\mathcal V$ is the declared set of scored
+samples. The $u$ samples lie on $x/L=0.5$ and the $v$ samples on $y/L=0.5$.
+For $Re=400$ only the flagged printed $v$ sample at $x/L=0.9063$ is excluded
+from this qualified score; notebook Table 3 retains the all-point sensitivity.
+
+\textbf{Interpretation.} Refinement reduces the profile errors markedly at these
+two Reynolds numbers. Changing between converged coupling algorithms at fixed
+mesh has a much smaller effect. The 5\% target for both components is a classroom
+decision rule, not a general accuracy standard. Two grids establish neither
+grid independence nor an asymptotic convergence order.
+
+\textbf{Timing groups.} The four 64-cell PISO/PIMPLE cases were run independently
+from rest on Unity CPU nodes. Earlier 32-cell cases and the 64-cell SIMPLE
+cases were run on a different local host. These fields can be compared at
+matched physical settings, but their wall times cannot establish cross-host
+algorithm speedups. All configurations, hashes and native residuals are retained.
+\newpage
+\topic{22 continued}{Where refinement changes the velocity profiles}
+\lessonfigure{coupling_refinement_errors}{Signed CFD minus Ghia velocity discrepancies at the actual tabulated centerline positions for Re=400 and 1000. Colors identify SIMPLE, PISO and PIMPLE; solid curves use 32 cells and dashed curves 64. Nearly coincident method curves reflect their common steady discrete equations. Lines connect measured samples only. The qualified Re=400 horizontal-profile curve has a gap at the excluded printed sample; its original value remains in Figure 17 and the all-point table.}{coupling-refinement-errors}
+Locate the extrema of each signed discrepancy before reducing a profile to one
+norm. Identify which boundary-layer or return-flow region benefits most from
+refinement. A norm alone does not show whether an overshoot or an undershoot was
+reduced. These are velocity comparisons; Ghia provides no pressure reference.
+\newpage
+\topic{22 continued}{A reproducible numerical investigation}
+Submit one compact table, two profile comparisons and a short interpretation.
+Use the retained evidence first; launch fresh solves only for the additional
+control or refinement experiment you select.
+\begin{enumerate}
+\item \textbf{Equation convergence versus spatial accuracy: Table 6a.}
+Select $Re=1000$ at 32 cells. Report both equation defects and both profile
+errors. Repeat at 64 cells. Explain why a small algebraic defect is compatible
+with a large discrepancy from Ghia.
+\item \textbf{Work per update: Table 6a.}
+Divide total pressure solves by steps or iterations. Derive the ratios 1, 2
+and 6 from the implemented loops. Count scalar momentum solves as well.
+Seconds per iteration must be labeled with their host group; a linear solve
+count is not a universal equal-cost work unit.
+\item \textbf{Mesh effect: Table 6b and Figure 21.}
+Compute $E_{64}/E_{32}$ at fixed method and Reynolds number. Compare this change
+with changing the method at fixed mesh. State what a third mesh would add.
+\item \textbf{Numerical diffusion: Table 6c and notebook Figure S13.}
+Compare central and upwind SIMPLE at $Re=400$ on 32 cells, with the same
+equation-defect gates. The convection scheme changes the spatial equations;
+the pressure-coupling method is held fixed.
+\item \textbf{Flow structure: Figures 19--20 and native fields.}
+Locate the primary vortex using the sampled streamfunction minimum. Report
+$x/L$, $y/L$ and grid spacing. Compare corner eddies with identical streamline
+levels. Streamline density is a plotting choice, not speed or vorticity.
+\item \textbf{Time accuracy: Exercise B and Table T.}
+Compare PISO/PIMPLE at a common final physical time while halving $\Delta t$.
+Use the same time scheme and a converged inner solve. More outer corrections
+do not increase backward Euler's first-order time accuracy.
+\end{enumerate}
+\textbf{A missing reference is not a failed solution.} Ghia tabulates
+$Re=100,400,1000,3200,5000,7500,10000$; no $Re=1500$ data are supplied.
+Do not substitute a neighboring Reynolds number or describe interpolated
+reference values as published measurements. The benchmark wrapper accepts
+the tabulated values deliberately. A separate $Re=1500$ extension needs its
+own configuration, conservation and mesh checks, then an independent reference.
+
+The seven-Re CFD branch in Week 4 uses an independent streamfunction--vorticity
+solver. It is not a seven-Re qualification of SIMPLE, PISO and PIMPLE.

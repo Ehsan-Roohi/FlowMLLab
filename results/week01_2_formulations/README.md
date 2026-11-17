@@ -1,5 +1,7 @@
 # Week 1.2: streamfunction-vorticity versus pressure-velocity methods
 
+[Complete 32/64-cell FV comparison and new Unity cases](#complete-3264-cell-fv-refinement). The historical timing study is preserved below.
+
 Executed 20 October 2026. Fresh sequential CPU runs from rest, one BLAS/OMP thread. No external CFD solver. The original Week-1 and Re=100 sources are unchanged.
 
 ## What is matched, and what differs
@@ -112,3 +114,34 @@ Vortex positions are sampled grid locations, not sub-grid fitted centers. The FV
 Start at 32 cells; finer grids and higher Re can require longer runs and more memory. Compare benchmark errors before comparing speed. Preserve all failures. At least two resolutions are needed to investigate mesh sensitivity, and two do not establish asymptotic order. A converged iteration is not necessarily an accurate flow. Report the primary vortex position, both velocity errors and the Re=400 reference sensitivity alongside any speed comparison. Small corner vortices may remain under-resolved.
 
 Reproduce with `python qa/run_week01_2_formulations.py` then `python qa/run_week01_2_formulations.py --cells 64 --methods simple streamfunction-vorticity`, `python qa/run_week01_2_formulations.py --cells 128 --methods streamfunction-vorticity`, and `python qa/report_week01_2_formulations.py`. Fresh notebook runs are opt-in. Raw JSON/NPZ archives retain histories, settings, source hashes, software versions, and pressure-recovery diagnostics.
+
+<!-- complete-refinement -->
+## Complete 32/64-cell FV refinement
+
+The earlier tables and timing figures above describe the October local-host study. Four additional cases complete PISO/PIMPLE at Re=400 and 1000 on 64 cells. They were run from rest on Unity, using the unchanged spatial equations and steady gates. No model is fitted to Ghia in these solver runs.
+
+| Re | Method | Cells/side | u error % | Qualified v error % | Solver seconds | Timing group |
+|---:|---|---:|---:|---:|---:|---|
+| 400 | SIMPLE | 32 | 3.607 | 8.433 | 11.783 | Local 2026-10 |
+| 400 | SIMPLE | 64 | 0.834 | 1.853 | 71.057 | Local 2026-10 |
+| 400 | PISO | 32 | 3.607 | 8.433 | 22.264 | Local 2026-10 |
+| 400 | PISO | 64 | 0.834 | 1.853 | 36.466 | Unity 2026-11 |
+| 400 | PIMPLE | 32 | 3.608 | 8.434 | 96.939 | Local 2026-10 |
+| 400 | PIMPLE | 64 | 0.834 | 1.853 | 162.359 | Unity 2026-11 |
+| 1000 | SIMPLE | 32 | 8.674 | 14.150 | 12.450 | Local 2026-10 |
+| 1000 | SIMPLE | 64 | 2.590 | 3.464 | 62.136 | Local 2026-10 |
+| 1000 | PISO | 32 | 8.675 | 14.151 | 55.296 | Local 2026-10 |
+| 1000 | PISO | 64 | 2.590 | 3.464 | 113.198 | Unity 2026-11 |
+| 1000 | PIMPLE | 32 | 8.675 | 14.151 | 175.133 | Local 2026-10 |
+| 1000 | PIMPLE | 64 | 2.590 | 3.464 | 342.271 | Unity 2026-11 |
+
+Do not rank local and Unity timings as algorithm speedups. All are single samples; the Unity array may run cases concurrently on shared CPU nodes. Each JSON records the host, versions, source hashes, Slurm ID and full configuration. Native momentum and continuity defects are recomputed from face fields in [the verification record](refinement_verification.json).
+
+At fixed mesh, converged SIMPLE/PISO/PIMPLE velocities nearly coincide. Refinement changes the profile accuracy much more than changing the coupling algorithm. The Re400 qualified v score omits the predeclared printed anomaly; it remains in the raw reference and all-point metric. Two grids do not establish grid independence.
+
+![Signed centerline discrepancies at Re400 and Re1000](../../lectures/source/week01_2_assets/coupling_refinement_errors.png)
+
+[Case table](refinement_cases.csv) · [Refinement ratios and sampled vortex locations](refinement_pairs.csv) · [Controlled convection comparison](convection_comparison.csv).
+
+Reproduce this retained-data audit with `python qa/refresh_week01_2_refinement.py`, then rebuild the lecture and execute `python qa/validate_week01_2_figure_guide.py`. Fresh runs use `qa/run_week01_2_refinement.py --case 0 --output <new-directory>` for case IDs 0–3; the runner refuses to overwrite existing results. All normal notebook CFD switches remain off.
+<!-- /complete-refinement -->

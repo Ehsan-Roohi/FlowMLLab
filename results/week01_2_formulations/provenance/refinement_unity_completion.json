@@ -1,0 +1,89 @@
+{
+  "job_id": "1885139",
+  "submitted_utc": "2026-11-17T00:12:38.763338+00:00",
+  "workspace": "/scratch3/workspace/roohie_umass_edu-flowml-ghia-highre-20261115",
+  "workspace_expiry": "2026-12-15T14:04:59",
+  "live_io": "/scratch3/workspace/roohie_umass_edu-flowml-ghia-highre-20261115/week01-2-refinement-v1",
+  "durable_archive": "D:/ChatGPT Backup/Projects/FlowMLLab/Teaching_Current/repo/results/week01_2_formulations",
+  "source_archive_sha256": "4873fed859154d0cc5b5d0985ebad5bb2aab67b11907074c01d3703b1ea7628b",
+  "cases": [
+    "piso-re400-n64",
+    "pimple-re400-n64",
+    "piso-re1000-n64",
+    "pimple-re1000-n64"
+  ],
+  "command": [
+    "sbatch",
+    "--parsable",
+    "--job-name=FlowML-W12-refine",
+    "--chdir=/scratch3/workspace/roohie_umass_edu-flowml-ghia-highre-20261115/week01-2-refinement-v1",
+    "--output=/scratch3/workspace/roohie_umass_edu-flowml-ghia-highre-20261115/week01-2-refinement-v1/logs/case-%A_%a.log",
+    "--export=ALL,TASK_ROOT=/scratch3/workspace/roohie_umass_edu-flowml-ghia-highre-20261115/week01-2-refinement-v1,PYTHON_BIN=/scratch3/workspace/roohie_umass_edu-flowml-ghia-highre-20261115/release-venv/bin/python,SOURCE_COMMIT=b4e9adf79f432101997626b54c8cada2315dd0a0",
+    "/scratch3/workspace/roohie_umass_edu-flowml-ghia-highre-20261115/week01-2-refinement-v1/source/qa/week01_2_refinement_unity.sbatch"
+  ],
+  "capacity_check": "65T shared filesystem free at preflight; personal quota command unavailable; projected new output below 20 MB",
+  "checkpoint_writes": false,
+  "eligibility_updates": {
+    "job_id": 1885139,
+    "utc": "2026-11-17T00:29:42.937005+00:00",
+    "partitions": "cpu,cpu-preempt",
+    "reason": "Same pending array widened to available CPU resources; no duplicate submission. Deterministic fresh-from-rest cases with preserved inputs and shared scratch. A preemption restarts from rest; any existing result is protected by the no-overwrite guard.",
+    "time_limit": "00:30:00",
+    "time_limit_reason": "Bounded 64-cell tasks; original 6000-iteration budget and residual gates unchanged. Wall allowance exceeds historical 32-cell runtime by more than tenfold and permits shorter backfill slots.",
+    "updated_utc": "2026-11-17T00:40:29.307021+00:00",
+    "short_qos_updates": [
+      {
+        "task": "1885139_0",
+        "utc": "2026-11-17T00:48:22.415386+00:00",
+        "reason": "Official Unity short-QoS route for one small job; other tasks remain eligible in normal QoS. No array throttle or duplicate job.",
+        "source": "https://docs.unityhpc.org/documentation/get-started/quickstart/"
+      },
+      {
+        "task": "1885139_1",
+        "utc": "2026-11-17T00:49:48.602509+00:00",
+        "reason": "Short QoS is free; remaining normal tasks remain eligible. No other jobs changed."
+      },
+      {
+        "task": "1885139_2",
+        "utc": "2026-11-17T00:53:23.484998+00:00",
+        "reason": "Short QoS is free; remaining normal tasks remain eligible. No other jobs changed."
+      },
+      {
+        "task": "1885139_3",
+        "utc": "2026-11-17T00:55:54.559565+00:00",
+        "reason": "Short QoS is free; remaining normal tasks remain eligible. No other jobs changed."
+      }
+    ]
+  },
+  "completed_audit_utc": "2026-11-17T01:04:15.770667+00:00",
+  "sacct": [
+    "1885139_0|COMPLETED|00:00:44|0:0",
+    "1885139_0.batch|COMPLETED|00:00:44|0:0",
+    "1885139_0.extern|COMPLETED|00:00:44|0:0",
+    "1885139_1|COMPLETED|00:02:47|0:0",
+    "1885139_1.batch|COMPLETED|00:02:47|0:0",
+    "1885139_1.extern|COMPLETED|00:02:47|0:0",
+    "1885139_2|COMPLETED|00:01:58|0:0",
+    "1885139_2.batch|COMPLETED|00:01:58|0:0",
+    "1885139_2.extern|COMPLETED|00:01:58|0:0",
+    "1885139_3|COMPLETED|00:05:50|0:0",
+    "1885139_3.batch|COMPLETED|00:05:50|0:0",
+    "1885139_3.extern|COMPLETED|00:05:50|0:0"
+  ],
+  "output_sha256": {
+    "pimple-re1000-n64.json": "8205f1234d24e44f18c18ceb2ecb834f55075e84351d09c7c0182bbd84c58f0f",
+    "pimple-re1000-n64.npz": "b34e493ec3e30ba378e1517ad3c450cd475743feeac7389bb28bca852f58fd44",
+    "pimple-re400-n64.json": "5d22bf3ea28ef77d5952620d602fba57da48217ac380e3f20c611fbf387a5e7b",
+    "pimple-re400-n64.npz": "4ab7cc20f539f2a54de35611a9781646c5e36dbf82ee3a28dc7dab4d36c3cb42",
+    "piso-re1000-n64.json": "d6a9fdccdb8c80ba0123d2b7135c562b92fd3de9f643298a4c7de8620574a4d6",
+    "piso-re1000-n64.npz": "8c5851fff81f8dd55d50bdf068f26dfbd7f00aeb44deb140ee8d954f1ec1042e",
+    "piso-re400-n64.json": "5743a231deec71999a95910c86c7a1378816891601a9412913e63dcd2a3ffedb",
+    "piso-re400-n64.npz": "a40a5cfb3e536adf3443659adc9e5949646f3e5be39f67a8d9e07b9b71111b8b"
+  },
+  "source_archive_present_sha256": "4873fed859154d0cc5b5d0985ebad5bb2aab67b11907074c01d3703b1ea7628b",
+  "external_byte_verification": {
+    "matched_files": 8,
+    "exact_source_archive_retained": "D:\\ChatGPT Backup\\Projects\\FlowMLLab\\Teaching_Current\\Week01_2_Refinement_Current\\source.tar.gz",
+    "result": "All closed remote result bytes match the D: archive."
+  }
+}

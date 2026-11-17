@@ -252,8 +252,12 @@ def archived_rows():
         data=blob('results/week01_2_pressure_velocity/'+rec['name']+'.npz')
         assert hashlib.sha256(data).hexdigest()==rec['field_sha256']
         with np.load(io.BytesIO(data),allow_pickle=False) as f:rows.append({**rec,**{k:f[k] for k in f.files}})
-    paths=subprocess.check_output(['git','ls-tree','-r','--name-only','HEAD','results/week01_2_formulations'],cwd=ROOT,text=True).splitlines()
-    for name in paths:
+    # Include newly verified working-tree cases before a release commit, while
+    # keeping sparse-checkout access to the historical Git objects.
+    paths=set(subprocess.check_output(['git','ls-tree','-r','--name-only','HEAD','results/week01_2_formulations'],cwd=ROOT,text=True).splitlines())
+    paths.update(p.relative_to(ROOT).as_posix() for p in
+                 (ROOT/'results/week01_2_formulations').glob('*-re*-n*.json'))
+    for name in sorted(paths):
         if not re.search(r'/[^/]+-re(?:400|1000)-n\d+\.json$',name):continue
         rec=json.loads(blob(name))
         if rec.get('status')=='failed':continue
@@ -417,11 +421,13 @@ CAPTIONS = {
  'field_omega_re100': 'Retained Re=100 signed vorticity with velocity streamlines at h=1/64. One symmetric logarithmic color scale is shared by all panels, linear for absolute vorticity up to 1. The displayed colorbar values are nondimensional physical vorticity, including wall peaks.',
  'field_p_re100': 'Retained Re=100 zero-mean pressure and velocity streamlines at h=1/64. One symmetric logarithmic color scale is shared, linear for absolute pressure up to 0.01. FD pressure is reconstructed after the vorticity solve. No independent pressure benchmark is claimed.',
  'convergence_re100': 'Retained Re=100 finite-volume convergence histories at h=1/64. The horizontal coordinate is recorded solver-call wall time from one local run per method. Momentum and continuity are separate defects. The streamfunction-vorticity solver uses a different native stopping norm and is included in the adjacent timing tables, not on these FV residual axes.',
- 'profiles_re400': 'Retained Re=400 centerline velocities. Color identifies formulation and line style identifies spacing. Black markers are Ghia samples; the red cross retains the isolated published horizontal-profile anomaly at x/L=0.9063, excluded only from the qualified error norm. Selected fine cases do not constitute a complete refinement matrix.',
+ 'profiles_re400': 'Retained Re=400 centerline velocities. Color identifies formulation and line style identifies spacing. Black markers are Ghia samples; the red cross retains the isolated published horizontal-profile anomaly at x/L=0.9063, excluded only from the qualified error norm. All three FV algorithms are included at both 32 and 64 cells; FD also includes 128-cell spacing.',
  'profiles_re1000': 'Retained Re=1000 centerline velocities. Color identifies formulation and line style identifies spacing; black markers are Ghia et al. (1982) samples. Finer FD solutions show the effect of spatial resolution separately from the coupling algorithm.',
  'refinement_re400': 'Retained Re=400 speed and computed velocity streamlines: SIMPLE at h=1/64, and independent streamfunction-vorticity solutions at h=1/64 and 1/128. The color scale and lid speed are common. Small recirculation structures must be supported by the resolved velocity field.',
  'refinement_re1000': 'Retained Re=1000 speed and computed velocity streamlines for the same selected refinement cases. The finer grid changes resolved boundary layers and corner circulation. Additional pressure corrections alone cannot recover spatial structures absent from the mesh.'
 }
+
+CAPTIONS['coupling_refinement_errors'] = 'Signed CFD minus Ghia velocity discrepancies at the actual tabulated centerline positions for Re=400 and 1000. Colors identify SIMPLE, PISO and PIMPLE; solid curves use 32 cells and dashed curves 64. Nearly coincident method curves reflect their common steady discrete equations. Lines connect measured samples only. The qualified Re=400 horizontal-profile curve has a gap at the excluded printed sample; its original value remains in Figure 17 and the all-point table.'
 
 def caption_tex(name):
     # Mathematical labels remain properly typeset in captions as well as figures.

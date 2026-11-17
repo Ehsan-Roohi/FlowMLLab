@@ -129,11 +129,11 @@
   },
   "profiles_re400": {
     "number": "17",
-    "caption": "Retained Re=400 centerline velocities. Color identifies formulation and line style identifies spacing. Black markers are Ghia samples; the red cross retains the isolated published horizontal-profile anomaly at x/L=0.9063, excluded only from the qualified error norm. Selected fine cases do not constitute a complete refinement matrix.",
+    "caption": "Retained Re=400 centerline velocities. Color identifies formulation and line style identifies spacing. Black markers are Ghia samples; the red cross retains the isolated published horizontal-profile anomaly at x/L=0.9063, excluded only from the qualified error norm. All three FV algorithms are included at both 32 and 64 cells; FD also includes 128-cell spacing.",
     "image": "profiles_re400.png",
     "lecture": true,
     "lecture_page": 54,
-    "png_sha256": "30f0101b629a4f28297db8ecd644f55a47faaad765235c5a88d19eefe9ede5eb"
+    "png_sha256": "5b71e006f54697dffe03fe448edfafcafcb7fdedc67a6a2d51898f507c697a1e"
   },
   "profiles_re1000": {
     "number": "18",
@@ -141,7 +141,7 @@
     "image": "profiles_re1000.png",
     "lecture": true,
     "lecture_page": 55,
-    "png_sha256": "be2fa0b349b9c39b5098929d4270ea07a7ae595dc85556116319a85f4bf1b93a"
+    "png_sha256": "ce747c7d9c10b7cd6690c74282d20ecb28398fde0f6fa5d55201d5c356a58dab"
   },
   "refinement_re400": {
     "number": "19",
@@ -262,5 +262,13 @@
     "lecture": false,
     "lecture_page": null,
     "png_sha256": "fc6933031b0b2bfaf687e4693f71c6bdfdc2dd2c921b0c99c2ea698fa295de55"
+  },
+  "coupling_refinement_errors": {
+    "number": "21",
+    "caption": "Signed CFD minus Ghia velocity discrepancies at the actual tabulated centerline positions for Re=400 and 1000. Colors identify SIMPLE, PISO and PIMPLE; solid curves use 32 cells and dashed curves 64. Nearly coincident method curves reflect their common steady discrete equations. Lines connect measured samples only. The qualified Re=400 horizontal-profile curve has a gap at the excluded printed sample; its original value remains in Figure 17 and the all-point table.",
+    "image": "coupling_refinement_errors.png",
+    "lecture": true,
+    "lecture_page": 62,
+    "png_sha256": "31f4f06bf3c12578d3fd06bf48a9f58c119ceecdc1a7cbabd036af1bf1ec9a2c"
   }
 }
