@@ -8,7 +8,7 @@ This is a measured implementation result, not a universal verdict about multigri
 
 - [Lab 7: CFD audit and executable solver appendix, Section 8](../../notebooks/week04/W4_Lab7_High_Re_CFD_Ghia.ipynb)
 - [Lab 8: what this means for neural training data, Section 9](../../notebooks/week04/W4_Lab8_High_Re_Field_DeepONet.ipynb)
-- [Week 4 lecture, appendix starts at page 29](../../lectures/week04_cavity_surrogates_deeponet.pdf#page=29)
+- [Week 4 lecture, solver-benchmark evidence appendix](../../lectures/week04_cavity_surrogates_deeponet.pdf)
 - [Full measured report](REPORT.md), [summary timings](timings.csv), [raw trial records](evidence.json), [whole-field agreement audit](paired_fields_audit.json)
 
 The notebook reanalyses retained measurements on CPU. No solver or training run is needed. The six unsuccessful candidate pilots remain in the record; failed runs are not counted as fast successful solves.

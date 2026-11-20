@@ -1,0 +1,65 @@
+{
+  "protocol": "Validation-only comparison after public baseline test results were observed; later public-test rescoring is disclosed, not a new blind test.",
+  "baseline_validation_mse": 0.00022071293706290868,
+  "candidate": {
+    "config": {
+      "widths": [
+        48,
+        48,
+        48
+      ],
+      "activation": "tanh",
+      "adam_steps": 400,
+      "lbfgs_steps": 2400,
+      "learning_rate": 0.002,
+      "record_every": 20,
+      "boundary_aware": true,
+      "boundary_lifting": "corner",
+      "seed": 690
+    },
+    "parameters": 4994,
+    "seconds": 1533.7372748999987,
+    "selected": {
+      "validation": 2.0827525748438117e-05,
+      "stage": "L-BFGS",
+      "step": 2400
+    },
+    "adam_gradient_steps": 400,
+    "lbfgs_iterations": 2400,
+    "lbfgs_objective_evaluations": 2604,
+    "lbfgs_gradient_evaluations": 2604,
+    "lbfgs_message": "STOP: TOTAL NO. OF ITERATIONS REACHED LIMIT"
+  },
+  "validation_metrics": [
+    {
+      "Re": 225.0,
+      "vector_relative_l2": 0.019881763372058783,
+      "vector_rms": 0.005512294215253097,
+      "vector_max": 0.05073793963868225,
+      "wall_rms": 0.0,
+      "wall_max": 0.0,
+      "divergence_core_rms": 0.10321011420004512,
+      "reference_divergence_core_rms": 2.2155587561144246e-16,
+      "upper_left_rms": 0.012213316222908763,
+      "upper_right_rms": 0.014296832092995,
+      "lower_left_rms": 0.0015529155161137244,
+      "lower_right_rms": 0.0019913656032814015
+    },
+    {
+      "Re": 350.0,
+      "vector_relative_l2": 0.025909665300955804,
+      "vector_rms": 0.0072749374896448225,
+      "vector_max": 0.05893237181289791,
+      "wall_rms": 0.0,
+      "wall_max": 0.0,
+      "divergence_core_rms": 0.11909010007417964,
+      "reference_divergence_core_rms": 2.479500331182495e-16,
+      "upper_left_rms": 0.015806103114811208,
+      "upper_right_rms": 0.019203133805267426,
+      "lower_left_rms": 0.004656317389091814,
+      "lower_right_rms": 0.0036502979510695155
+    }
+  ],
+  "test_metrics_evaluated_in_this_script": false,
+  "candidate_selected": true
+}

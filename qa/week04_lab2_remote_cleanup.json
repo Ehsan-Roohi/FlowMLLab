@@ -1,0 +1,33 @@
+{
+  "verified_utc": "2026-11-20T22:52:35.310264+00:00",
+  "job_id": "2048425",
+  "job_state": "COMPLETED      0:0",
+  "relevant_active_writers": 0,
+  "cache_lsof_checked": true,
+  "actual_removed": [
+    {
+      "path": "/scratch3/workspace/roohie_umass_edu-flowml-ghia-highre-20261115/week04-lab2-qa-20261120/.pip-cache",
+      "apparent_bytes": 444573823,
+      "allocated_bytes": 461322752,
+      "reason": "Closed pip download cache; installed isolated venv and pinned environment retained."
+    },
+    {
+      "path": "/scratch3/workspace/roohie_umass_edu-flowml-ghia-highre-20261115/week04-lab2-qa-20261120/unity_inputs.tar.gz",
+      "apparent_bytes": 2034086,
+      "sha256_before_removal": "fd0f1f6cb9b31519de353b8ebe161d047fb30013c8f2e4df908c8e59de549376",
+      "reason": "Verified completed input/return transport archive; source, final arrays and receipt retained on D:."
+    },
+    {
+      "path": "/scratch3/workspace/roohie_umass_edu-flowml-ghia-highre-20261115/week04-lab2-qa-20261120/verified_outputs.tar.gz",
+      "apparent_bytes": 10282791,
+      "sha256_before_removal": "013debcfbd03311f36e05e6ce1d59ae751579347aca7de8dd9d2c0620aa579e2",
+      "reason": "Verified completed input/return transport archive; source, final arrays and receipt retained on D:."
+    }
+  ],
+  "retained": [
+    "/scratch3/workspace/roohie_umass_edu-flowml-ghia-highre-20261115/week04-lab2-qa-20261120/venv",
+    "/scratch3/workspace/roohie_umass_edu-flowml-ghia-highre-20261115/week04-lab2-qa-20261120/repo",
+    "D:/ChatGPT Backup/Projects/FlowMLLab/Teaching_Current/repo/results/week04_lab2"
+  ],
+  "scope": "Only isolated completed Lab2 pip cache and SHA-matched transport archives."
+}

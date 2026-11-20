@@ -329,9 +329,10 @@ import pandas as pd
 import matplotlib.pyplot as plt
 from IPython.display import Image, display
 
-ROOT = Path.cwd()
-if not (ROOT / 'results/stokes_refined').exists():
-    raise RuntimeError('Run from the FlowMLLab repository root.')
+HERE = Path.cwd().resolve()
+ROOT = next((p for p in [HERE, *HERE.parents] if (p / 'results/stokes_refined').is_dir()), None)
+if ROOT is None:
+    raise RuntimeError('Open this notebook from a complete FlowMLLab checkout.')
 R = ROOT / 'results/stokes_refined'
 print({'repository_root': '.', 'result_directory': 'results/stokes_refined'})"""),
         nbf.v4.new_markdown_cell(r"""## 1. Reynolds number and boundary-condition families
@@ -445,6 +446,9 @@ The [51 × 51 validation companion](W4_Lab4_Grid51_Validation.ipynb) recomputes 
     execute(notebook, ROOT)
     NOTEBOOK.parent.mkdir(parents=True, exist_ok=True)
     nbf.write(notebook, NOTEBOOK)
+    from qa.week04_output_audit import update as update_physical_outputs, complete_lab4_gallery
+    update_physical_outputs(keys=["lab4"])
+    complete_lab4_gallery()
 
 
 def _p(c: canvas.Canvas, text: str, x: float, y: float, width: float, style: ParagraphStyle) -> float:

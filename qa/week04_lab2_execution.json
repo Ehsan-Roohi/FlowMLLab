@@ -1,0 +1,18 @@
+{
+  "notebook": "notebooks/week04/W4_Lab2_Scalar_and_Field_Surrogates_Student.ipynb",
+  "executed_on": "2026-11-20",
+  "execution_utc": "2026-11-20T22:35:53.240504+00:00",
+  "execution_host": "cpu086",
+  "elapsed_run_all_seconds": 56.363205012000435,
+  "code_cells": 13,
+  "inline_figures": 13,
+  "error_outputs": 0,
+  "python": "3.12.3 (main, Aug 31 2026, 10:18:26) [GCC 13.3.0]",
+  "kernel": "/scratch3/workspace/roohie_umass_edu-flowml-ghia-highre-20261115/week04-lab2-qa-20261120/venv/bin/python",
+  "notebook_sha256": "54158866a5754d0cac0e053ed109ad434f67578ba1b48270d69d44e9f54b7357",
+  "executed_code_sha256": "b1e37b7aadffa74b064f186265df7c1505a22f2275c28d3ef5aa342358097a63",
+  "helper_source_sha256": "c7056f12011b6d8291729cb514fc0c9bec0b35f256cba66eb25591b2bf8d9274",
+  "cpu": "x86_64",
+  "tensorflow_intra_op_threads": 2,
+  "claim": "Fresh complete CPU execution on the recorded host; hosted Colab execution not claimed."
+}

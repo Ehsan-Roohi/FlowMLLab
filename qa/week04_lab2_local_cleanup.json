@@ -1,0 +1,28 @@
+{
+  "verified_utc": "2026-11-20T22:54:26.0891356Z",
+  "actual_removed": [
+    {
+      "Path": "D:\\ChatGPT Backup\\Projects\\FlowMLLab\\Teaching_Current\\repo\\tmp\\week04_lab2\\unity_inputs.tar.gz",
+      "Bytes": 2034086,
+      "SHA256BeforeRemoval": "fd0f1f6cb9b31519de353b8ebe161d047fb30013c8f2e4df908c8e59de549376"
+    },
+    {
+      "Path": "D:\\ChatGPT Backup\\Projects\\FlowMLLab\\Teaching_Current\\repo\\tmp\\week04_lab2\\verified_outputs.tar.gz",
+      "Bytes": 10282791,
+      "SHA256BeforeRemoval": "013debcfbd03311f36e05e6ce1d59ae751579347aca7de8dd9d2c0620aa579e2"
+    }
+  ],
+  "actual_bytes_removed": 12316877.0,
+  "proof": "39 returned artifacts verified on acceptance; seven protected scientific artifacts rechecked; six intentional plot revisions linked in presentation receipt; exact training helper retained and SHA-verified; archives opened exclusively before removal.",
+  "retained": [
+    "results/week04_lab2",
+    "results/week04_lab2/product_lifting_baseline",
+    "results/week04_lab2/training_helper_source.py",
+    "qa/week04_lab2_staging.json",
+    "qa/week04_lab2_return_manifest.json",
+    "qa/week04_lab2_presentation.json"
+  ],
+  "extracted_duplicate_payloads_found": 0,
+  "exact_resolved_parent_postchecked": true,
+  "absence_reverified_utc": "2026-11-20T22:55:11.4809097Z"
+}

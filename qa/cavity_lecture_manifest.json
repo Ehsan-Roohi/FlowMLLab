@@ -12,10 +12,10 @@
     "sha256": "949f5857f74c038d27fe831231f51c3a61999f039897ae377628a0fd1b51de54"
   },
   "week04_cavity_surrogates_deeponet": {
-    "base_pages_preserved": 11,
+    "base_pages_preserved": 49,
     "new_pages": 54,
-    "total_pages": 65,
-    "sha256": "f7e9a57c0966959142bc84316f040306dc576d85931dc96c0ef6197ea8b36d6b"
+    "total_pages": 103,
+    "sha256": "4f156163c0b861664d8a8a99d568d47db10d6f4d2479f2405972ea8f6f1f7772"
   },
   "week13_rectangular_cavity_pinn": {
     "base_pages_preserved": 12,

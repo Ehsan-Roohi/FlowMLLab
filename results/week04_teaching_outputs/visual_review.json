@@ -1,0 +1,234 @@
+{
+  "reviewed_utc": "2026-11-20T22:41:54.1026132Z",
+  "count": 44,
+  "method": "Each listed figure was opened individually at readable resolution; all new or replacement physical plots were reviewed.",
+  "checks": [
+    "Readable axes, units, Reynolds/case context and exterior legends",
+    "Shared CFD/model physical levels with native fields and no smoothing",
+    "Full linear error ranges; signed discrepancies; pressure/signed-field symlog identified",
+    "Final shortened POD-mode titles and optional Ghia flagged-sample legend verified"
+  ],
+  "scope_limit": "This is an individual visual review of the listed new/replacement figures, not every pre-existing retained figure embedded in the notebooks.",
+  "files": [
+    {
+      "file": "lab1_reproduction_Re100_fields.png",
+      "bytes": 345053,
+      "sha256": "35f4fd5c2b52c5b1b2cf5e2d23bef63a3503e144f0e1cdeec2168b3a1c9c5044"
+    },
+    {
+      "file": "lab1_reproduction_Re100_diagnostics.png",
+      "bytes": 155047,
+      "sha256": "be30cbe81a489fbc19a6dcc74678f7055a652b0d95469ec0e570f22499455725"
+    },
+    {
+      "file": "lab1_production_Re100_fields.png",
+      "bytes": 345053,
+      "sha256": "35f4fd5c2b52c5b1b2cf5e2d23bef63a3503e144f0e1cdeec2168b3a1c9c5044"
+    },
+    {
+      "file": "lab1_production_Re100_diagnostics.png",
+      "bytes": 155047,
+      "sha256": "be30cbe81a489fbc19a6dcc74678f7055a652b0d95469ec0e570f22499455725"
+    },
+    {
+      "file": "lab3_pod_velocity_modes.png",
+      "bytes": 171106,
+      "sha256": "5848f1cc5a20731aba15a512a07e6f2b65a4ae2632a8d24e6f994f0f1700450f"
+    },
+    {
+      "file": "lab3_Re175_velocity.png",
+      "bytes": 391833,
+      "sha256": "5584e7fc4991f729fee7317c8a81b4539f3224054d608b0115fe0a7842e9f3b9"
+    },
+    {
+      "file": "lab3_Re175_profiles.png",
+      "bytes": 132203,
+      "sha256": "420ea38e553c319817f6e7d0ce31c0fe5f14938273f6b04988ad1ccf1d49aa05"
+    },
+    {
+      "file": "lab3_Re175_pressure.png",
+      "bytes": 211595,
+      "sha256": "1f8815b03405b077b13eec00acf5bc66e4736ce5fdecfbec10f067860e3ca4cc"
+    },
+    {
+      "file": "lab3_Re275_velocity.png",
+      "bytes": 390103,
+      "sha256": "ba7a63c94a5b66681bdb1bad6564bf5ebdb983ce0d287b1ec33182f6ccea3648"
+    },
+    {
+      "file": "lab3_Re275_profiles.png",
+      "bytes": 137565,
+      "sha256": "988fed0ad0d668719ea488fca2c88995e78068db1b23dadd2ba3c4b56fc09173"
+    },
+    {
+      "file": "lab3_Re275_pressure.png",
+      "bytes": 219205,
+      "sha256": "ee50f071dea5101971ad72bbb316a2884e5abb25673aed18145843b09dd07aba"
+    },
+    {
+      "file": "lab3_Re375_velocity.png",
+      "bytes": 406541,
+      "sha256": "3e5b4dae65783e841f97b95242da665d192e60031f7c0ae7ee35a90265d5902e"
+    },
+    {
+      "file": "lab3_Re375_profiles.png",
+      "bytes": 133855,
+      "sha256": "4ed32b5576cc17e5e2379f2d728b8e0108d76dd86974b25494a77a3abf449db7"
+    },
+    {
+      "file": "lab3_Re375_pressure.png",
+      "bytes": 220620,
+      "sha256": "d6ec59fbbe2dc549402294c38a48ce4808abcbe1a7568adb75ad578b923ff5ea"
+    },
+    {
+      "file": "lab4_pilot_constant_constant_0_nearest_case.png",
+      "bytes": 388117,
+      "sha256": "48695f939e22d0162a82a574b055d4da622d64cbc4598ad549719b603238cdcd"
+    },
+    {
+      "file": "lab4_pilot_constant_constant_0_rbf.png",
+      "bytes": 359916,
+      "sha256": "a6c5e12f16e8b80751f9d616e893da734ee98f037d45fbfcb7733d5644489828"
+    },
+    {
+      "file": "lab4_pilot_constant_constant_0_coordinate_mlp.png",
+      "bytes": 435868,
+      "sha256": "83720a0022c55033d34c200c6f4ca828625c281c8989aa5528e80197a6791191"
+    },
+    {
+      "file": "lab4_pilot_constant_constant_0_pod_deeponet.png",
+      "bytes": 442964,
+      "sha256": "c2b941f11d6ff7f9c33f0a079848b148ad4ec47b3e6e43a72b00e03f2e6b1907"
+    },
+    {
+      "file": "lab4_pilot_constant_constant_0_u_net.png",
+      "bytes": 425659,
+      "sha256": "903d35f7ad6dc05a9c48cdda786396fa2b8424f11d4be460606c012e7f620284"
+    },
+    {
+      "file": "lab4_pilot_constant_constant_0_fno.png",
+      "bytes": 427960,
+      "sha256": "059493dac6b74fc9c6d43476c9b9aae5dc3e52b96af8988e0d8b6d2fdc3a3f8c"
+    },
+    {
+      "file": "lab4_pilot_constant_constant_0_physics_weighted_fno.png",
+      "bytes": 433926,
+      "sha256": "caede0e35231b45fc3cdd1d2b4828b5615fb2cc36932f7b9c4d25dd3600b05da"
+    },
+    {
+      "file": "lab4_pilot_profiles_1.png",
+      "bytes": 160412,
+      "sha256": "a345da3420582a8f314a72ba3ef7a576e8961ee1bc4831a6559383b3bdf72e3f"
+    },
+    {
+      "file": "lab4_pilot_profiles_2.png",
+      "bytes": 195333,
+      "sha256": "3a68b7b3517788bdcedfa254daad71ed08ce46b9b61f38fcaa25075c8958c06c"
+    },
+    {
+      "file": "lab4_pilot_profiles_3.png",
+      "bytes": 140433,
+      "sha256": "3e923a563767ab82603d114f5ccbd46da2001332e9fa978103f13253cade3538"
+    },
+    {
+      "file": "lab4_constant_correction_method1.png",
+      "bytes": 443955,
+      "sha256": "929a36d215aef6524159084be309330e68acf841137868b90db8b630d22e85b4"
+    },
+    {
+      "file": "lab4_constant_correction_method2.png",
+      "bytes": 370827,
+      "sha256": "cabb96f064293c93fb4c3cd2c59dd69dba75ecce9cea2534340cdce7e8fbf5fd"
+    },
+    {
+      "file": "lab4_constant_correction_method3.png",
+      "bytes": 360952,
+      "sha256": "35aeeb0be1f2dfc2cdc20e669682a40f42023a602f1b1b0411565719c598f001"
+    },
+    {
+      "file": "lab4_constant_correction_profiles.png",
+      "bytes": 157575,
+      "sha256": "e46e0a2492115adff79c1ab5850c0016e834d483646d78cc3c9f794f7ce51f74"
+    },
+    {
+      "file": "lab4_constant_native_pressure.png",
+      "bytes": 209203,
+      "sha256": "224b71f3d8da92ccd571844700e12f3e19bce84486990807af7d07e1917bf245"
+    },
+    {
+      "file": "lab4_constant_native_vortices.png",
+      "bytes": 546423,
+      "sha256": "d18408cdd62a30ded2ce147112de5f823b09cfdd075a8646cefa8c5a36da954d"
+    },
+    {
+      "file": "lab4_diverse_correction_method1.png",
+      "bytes": 416980,
+      "sha256": "20a418f1354533014b4a5b2e6fe95380a2b4a8dfcc6ecfe051a702f11150455d"
+    },
+    {
+      "file": "lab4_diverse_correction_method2.png",
+      "bytes": 406549,
+      "sha256": "4342935390422d0a162d6446f9206f097cd9b9a6b6c3e46f30c6bc2e64457662"
+    },
+    {
+      "file": "lab4_diverse_correction_method3.png",
+      "bytes": 365011,
+      "sha256": "4bb1dca960469bab07db224f3ed561100efc0b9191660bc599ed8a69a49194da"
+    },
+    {
+      "file": "lab4_diverse_correction_profiles.png",
+      "bytes": 160435,
+      "sha256": "e7442c1424b18fc7dc988478edc7a1d1d469ea6a66f62a340309b146911ec7c4"
+    },
+    {
+      "file": "lab4_diverse_native_pressure.png",
+      "bytes": 211798,
+      "sha256": "c807c37b1a115e49ecd661ae84dfff3438ce150d03144bf9a264868e69c629c2"
+    },
+    {
+      "file": "lab4_diverse_native_vortices.png",
+      "bytes": 603951,
+      "sha256": "986700745f0bf76385f781bedbe087bd7e7555f54eafe3dc7be01c337ee72ea2"
+    },
+    {
+      "file": "lab6_optional_validation_profiles.png",
+      "bytes": 136846,
+      "sha256": "ca95c0d24af157b3e27b78e57901d50196c4ae7031001a568a5d22937e848ec6"
+    },
+    {
+      "file": "lab6_optional_training_history.png",
+      "bytes": 51136,
+      "sha256": "15500a7da9eb83d4c49dd75972048bf0db7c852438a64b047a1f81b70c99a547"
+    },
+    {
+      "file": "lab7_Re7500_mesh_profiles_corners.png",
+      "bytes": 508428,
+      "sha256": "1d6651b8eaf4d90d58503e5c3990f9fc2937b6f2355d8bb66b7c5765e34f2d19"
+    },
+    {
+      "file": "lab9_sampling_objective.png",
+      "bytes": 70062,
+      "sha256": "1c36ecf19df22b4ed649a887fb8f707df9a8c78fc859473739ae7891a2465841"
+    },
+    {
+      "file": "rom_galerkin_physical.png",
+      "bytes": 376064,
+      "sha256": "9e736a82e7f6546ee2494f63c119f2e07e65fc826dad54daf6418d6384587185"
+    },
+    {
+      "file": "rom_deim_physical.png",
+      "bytes": 383589,
+      "sha256": "8901067433f7e3651f17a82b95d378ba70bc632234788a72c5753461a19dde14"
+    },
+    {
+      "file": "rom_physical_profiles.png",
+      "bytes": 155643,
+      "sha256": "cfe16b5bb68a825d6413b640df1ee91854d7be30ceaa3728d38b2ddf24d70925"
+    },
+    {
+      "file": "rom_time_error.png",
+      "bytes": 74699,
+      "sha256": "02cce45516728e3d71c064af8ac68c8e7ce1523e13bc5f48ce22e0e5760aa81f"
+    }
+  ]
+}

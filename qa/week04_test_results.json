@@ -1,0 +1,39 @@
+{
+  "status": "passed_after_environment_repair",
+  "recorded_utc": "2026-11-20T23:36:12.5710107Z",
+  "initial_full_suite": {
+    "command": "python -m pytest -q tests qa -p no:cacheprovider",
+    "passed": 344,
+    "skipped": 29,
+    "subtests_passed": 455,
+    "errors": 7,
+    "failed": 1,
+    "elapsed_seconds": 658.4,
+    "temporary_environment_problem": "Seven fixture paths exceeded Windows path limits; one path-boundary test used a temporary directory incorrectly placed inside the checkout."
+  },
+  "corrected_environment_rerun": {
+    "files": [
+      "tests/test_cavity_pinn_stratified_bridge.py",
+      "tests/test_cavity_pinn_studies_validation.py"
+    ],
+    "passed": 10,
+    "failed": 0,
+    "elapsed_seconds": 1713.69,
+    "temp_location": "D:\\ChatGPT Backup\\Projects\\FlowMLLabQA_Week4",
+    "original_failed_or_error_cases_resolved": 8
+  },
+  "replacement_lecture_gate": {
+    "passed": 28,
+    "failed": 0,
+    "elapsed_seconds": 135.55,
+    "receipt": "qa/week04_curriculum_gate_integration.json"
+  },
+  "week04_execution_receipt": "qa/week04_revision_validation.json",
+  "notebook_gate": {
+    "notebooks": 65,
+    "code_cells": 739,
+    "status": "passed",
+    "scope": "Structural, dependency and notebook-content checks; this is not a claim that all course notebooks were executed."
+  },
+  "scope": "The complete initial suite was not repeated. All eight environment-blocked cases passed in the targeted rerun. The11 Week4 default notebook executions and103-page review are separately hash-bound."
+}

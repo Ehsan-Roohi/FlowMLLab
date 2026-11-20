@@ -1,0 +1,26 @@
+{
+  "date": "2026-11-20",
+  "prior_attempt": "Remove-Item partially removed pip-cache but returned directory-not-empty; initial removed byte count unavailable and not claimed",
+  "removed_verified": [
+    {
+      "path": "D:\\ChatGPT Backup\\Projects\\FlowMLLab\\Teaching_Current\\repo\\tmp\\week01_4_runtime\\pip-cache",
+      "files": 345,
+      "bytes": 192051716,
+      "absent": true
+    },
+    {
+      "path": "D:\\ChatGPT Backup\\Projects\\FlowMLLab\\Teaching_Current\\repo\\tmp\\week01_4\\pdf-review",
+      "files": 18,
+      "bytes": 3352869,
+      "absent": true
+    },
+    {
+      "path": "D:\\ChatGPT Backup\\Projects\\FlowMLLab\\Teaching_Current\\repo\\tmp\\week01_4\\pdf-review",
+      "files": 25,
+      "bytes": 4386756,
+      "absent": true,
+      "stage": "Final actual-cavity lecture reviewed"
+    }
+  ],
+  "retained": "Current numerical environment, source, notebook, PDF and scientific outputs"
+}

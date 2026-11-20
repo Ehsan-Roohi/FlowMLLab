@@ -1,0 +1,26 @@
+{
+  "checked_utc": "2026-11-20T22:39:37Z",
+  "updater_byte_idempotent": true,
+  "syntax_checked": [
+    "qa/week04_output_audit.py",
+    "flowmllab/week04_teaching_plots.py",
+    "qa/build_week04_deeponet_notebook.py",
+    "qa/build_week04_1_rom_notebook.py",
+    "qa/build_week04_2_stokes_correction.py",
+    "qa/build_week04_2_grid51.py"
+  ],
+  "all_nine_notebook_hashes_match": true,
+  "source_copyedits": [
+    "lab3",
+    "lab4",
+    "lab7",
+    "lab8"
+  ],
+  "optional_lab6_plot": "Regenerated from retained current trial theta; no new fit.",
+  "build_hooks": "Keyed updater hooks added to Lab3, ROM, Stokes and grid51 generators; syntax checked. Full legacy figure/PDF regeneration was not run.",
+  "limits": [
+    "No hosted Colab execution claimed.",
+    "Optional Lab8 CPU fitting branch was source-reviewed, not executed in this verification.",
+    "Long local Run All timings were affected by concurrent laptop workload; they are not solver/optimizer benchmarks."
+  ]
+}

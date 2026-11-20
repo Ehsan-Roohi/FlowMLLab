@@ -1,0 +1,132 @@
+{
+  "status": "passed",
+  "checked_at_utc": "2026-11-20T23:17:08.398380+00:00",
+  "tests": {
+    "passed": 28,
+    "files": [
+      "tests/test_week04_lecture_replacement_gate.py",
+      "tests/test_cavity_pinn_curriculum_gate.py"
+    ],
+    "failed": 0,
+    "elapsed_seconds": 135.55
+  },
+  "cleanup": [
+    {
+      "directories": 26,
+      "deletion_verified": true,
+      "reason": "Completed synthetic test fixtures only; pytest process exited successfully before removal",
+      "path": "C:\\Users\\roohie\\AppData\\Local\\Temp\\pytest-of-roohie\\pytest-25",
+      "files": 101,
+      "removed_bytes": 1029496.0
+    }
+  ],
+  "validation_scope": "Review integrity only: no fitting, scientific endpoint changes or notebook Run All",
+  "validator": {
+    "path": "qa/validate_cavity_pinn_curriculum.py",
+    "sha256": "9b4bb1d27f13121a2bd4d7554f682ceb9bddca49cd3d795a24b42c209273bca7"
+  },
+  "test_sources": [
+    {
+      "path": "tests/test_week04_lecture_replacement_gate.py",
+      "sha256": "6e84d0de35cc725f67e60f55d44c839d980d8d4d701f8acba3dc2ba788400da4"
+    },
+    {
+      "path": "tests/test_cavity_pinn_curriculum_gate.py",
+      "sha256": "0589ef95d4576c8824b36e3b473154ecfad29836f1c8b0323f795560ad99edb2"
+    }
+  ],
+  "checks": {
+    "method": "verify_reviews()",
+    "scientific_manifest_count": 6,
+    "scientific_families": [
+      "d5",
+      "ghia",
+      "stratified"
+    ],
+    "physical_png_count": 33,
+    "standalone_figure_pdf_count": 6,
+    "current_lecture_pdfs": {
+      "week04_cavity_surrogates_deeponet": {
+        "path": "lectures/week04_cavity_surrogates_deeponet.pdf",
+        "sha256": "4f156163c0b861664d8a8a99d568d47db10d6f4d2479f2405972ea8f6f1f7772",
+        "pages": 103,
+        "guide_pages": 49,
+        "retained_evidence_pages": 54,
+        "preserved_pages": 0,
+        "individually_reviewed_pages": 103,
+        "review_mode": "fully_reviewed_replacement; no old-page identity claim",
+        "available_render_files_checked": 103
+      },
+      "week13_rectangular_cavity_pinn": {
+        "path": "lectures/week13_rectangular_cavity_pinn.pdf",
+        "sha256": "ac372bedd03fd51185de39b279f0659445aa107ad5e3f5f59c836ef3a4e429ad",
+        "pages": 36,
+        "preserved_pages": 18,
+        "individually_reviewed_pages": 18
+      }
+    },
+    "historical_week04_page_identity_claim_applied_to_replacement": false,
+    "notebook_execution_repeated": false
+  },
+  "review_bindings": {
+    "studies": {
+      "path": "qa/cavity_pinn_studies_validation.json",
+      "sha256": "660321b9841df6fc9ba2b5c49d39141e310c142a45b5a52e6c5e8a83dfd05268"
+    },
+    "lecture_review": {
+      "path": "qa/cavity_pinn_lecture_review.json",
+      "sha256": "8c1a95b5c62153c23d2fb6be35ff7e0b76ff879e840b7d094b8dd556f60f332f"
+    },
+    "figure_review": {
+      "path": "qa/cavity_pinn_figure_review.json",
+      "sha256": "73266ac1ef3734bea060be9d316f539069a058ce534329b67dc590ef89b03d55"
+    }
+  },
+  "replacement_lecture_reviews": {
+    "week04_cavity_surrogates_deeponet": {
+      "path": "qa/week04_lecture_review.json",
+      "sha256": "8ecf6bc0c750ed5e89674d60cf72ed466f266b769e6b1fa808a925a09b1daf23"
+    }
+  },
+  "lecture_sources": {
+    "source": {
+      "path": "lectures/source/cavity_expansion.json",
+      "sha256": "0d48d45a928cf80bdd863f75e491553f168e92394121a73867d43966f3cbea98"
+    },
+    "preparer": {
+      "path": "qa/prepare_cavity_pinn_lecture_extension.py",
+      "sha256": "3ffeb8e48cefce8132691e4d9bc3ce32319899d4a0601b0af8287bac7eca3e8e"
+    },
+    "week04_replacement_source": {
+      "path": "lectures/source/week04_lab_guide.py",
+      "sha256": "d72fb3183464f405ea63a92c9da11a4313d3bd8d640456e424536c96ad951d9b"
+    }
+  },
+  "scientific_manifests": [
+    {
+      "path": "results/cavity_pinn_campaign/evaluation_manifest.json",
+      "sha256": "5b10dedc528cb35641003bae1325ad17cbdddcf433b21c6babd5efd197268652"
+    },
+    {
+      "path": "results/cavity_pinn_campaign/sampling_coverage.json",
+      "sha256": "280b0a6549fb2363ee46845e76711336e5a9c5f87fa42ae911a8006f4f1af145"
+    },
+    {
+      "path": "results/deep_cavity_ablation/evaluation_manifest.json",
+      "sha256": "2e14fbdc9b20fb0375962849cea24221701bc3e2b77014c0d09c4c674876ce4b"
+    },
+    {
+      "path": "results/cavity_pinn_stratified/experiment_manifest.json",
+      "sha256": "11a488e49db5a51501769faa86d31ab712e98035c084eaebdc6388d4f7da8678"
+    },
+    {
+      "path": "results/cavity_pinn_stratified/comparison/comparison_manifest.json",
+      "sha256": "c97d1368634593a9d5f78187566be3887d981e2491276891f57667e04daa945c"
+    },
+    {
+      "path": "results/cavity_pinn_stratified/evaluation_manifest.json",
+      "sha256": "599ae30ad6a61c79ec967de8d604fd9063b602ed4d0a497b5c4622163637f435"
+    }
+  ],
+  "qualification": "Binds recorded individual visual inspections; this machine gate does not itself certify appearance or scientific accuracy."
+}

@@ -112,7 +112,7 @@ The [full evidence and report](../../results/cavity_solver_benchmark/README.md),
 [experimental solver](../../flowmllab/cavity_krylov.py), and
 [trial driver](../../qa/benchmark_cavity_solvers.py) preserve the successful and failed trials.
 The corresponding discussion is at the end of the
-[Week 4 lecture](../../lectures/week04_cavity_surrogates_deeponet.pdf#page=29).
+[Week 4 lecture](../../lectures/week04_cavity_surrogates_deeponet.pdf), in the solver-benchmark evidence appendix.
 
 ### 8.1 What changed, and what stayed fixed?
 
@@ -326,7 +326,7 @@ has a stricter additional inner residual check, while final acceptance is shared
 The following CPU-only cell verifies the evidence-file hashes and the recorded
 input hashes/pair identity, then recalculates the table. It does not reload the
 original seed NPZ files from the full benchmark archive. See the [full report](../../results/cavity_solver_benchmark/README.md)
-and the end of the [Week 4 lecture](../../lectures/week04_cavity_surrogates_deeponet.pdf#page=29)
+and the solver-benchmark evidence appendix in the [Week 4 lecture](../../lectures/week04_cavity_surrogates_deeponet.pdf)
 for failures, equations, tolerances and limitations. This is one candidate
 implementation; it is not a reproduction of Ghia's strongly implicit multigrid.
 '''

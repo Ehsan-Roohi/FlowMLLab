@@ -1,0 +1,34 @@
+{
+  "reviewed_utc": "2026-11-20T22:48:17.927024+00:00",
+  "review_scope": "All thirteen final PNG figures inspected individually at readable resolution; six revised figures re-inspected after regeneration.",
+  "reviewed_png_sha256": {
+    "fitting_cfd_fields.png": "8924fb342e8e531f1ea5a79d943af20726c04daf0c89b2d2cc1d7263f600bf1b",
+    "scalar_trends.png": "d1ac5bb3ddd29a340b048fdcf9edd813218c43065974e0eef557596b58669f14",
+    "scalar_losses.png": "45653ccdfca80873d1bc76f8ba8f33bb7026fff89411927c2098fd13166bd53e",
+    "field_losses.png": "08ed096761b55b9fe763d8ce243b348fd4304bd4b72446920aa8d1ae451fd05b",
+    "field_re175.png": "ad2cb2633b36bde084ff7d3f59065d91539b24702fd155be2d652f9a4434182b",
+    "field_re275.png": "1fa759c933f3ffa3c704ff1426b2e71b19beb70c40fb3ba8baeaa6961dd463ff",
+    "field_re375.png": "f36848a5a2b60b4763a6658e360bad5c7780b6f93c6ff9c4dbd8288c94da770e",
+    "profiles_re175.png": "ee99970a192ef8c2ef7ab1eb3dde3716af6fe03168eb5d3b70b639c6d9c2c0b1",
+    "profiles_re275.png": "5f484813cf9cf185e2518ff5339d52b4ae2abcd1f6071c9f582cbf6546d39410",
+    "profiles_re375.png": "59454cfe15e50464b64888c2f46b1a84019a36b43fbd2a7d3b86880292771ca1",
+    "wall_diagnostics_re175.png": "996878be03a91bc442383e754cdd7e9484dc97e301771dc81873d00e6839a6b5",
+    "wall_diagnostics_re275.png": "afa52305cb4528d0038049a81c5531853ae8024029c0ca072488899e78966dfd",
+    "wall_diagnostics_re375.png": "a3565654bd38568bf855ee03fd3e8554b2be964e82970fbd3508e015225a27f3"
+  },
+  "paired_vector_pdfs_present": true,
+  "observations": [
+    "Legends outside the data axes; no line-legend overlap.",
+    "Signed-error tick crowding corrected; labels and axes readable.",
+    "All physical field comparisons identify Reynolds number and use native normalized coordinates.",
+    "Within each Reynolds comparison, methods use common speed and full-range linear-error scales.",
+    "Disagreements, wall errors, divergence and unresolved corner circulation remain visible."
+  ],
+  "notebook_inline_figures": 13,
+  "notebook_error_outputs": 0,
+  "six_revised_inline_images_match_files": true,
+  "protected_scientific_artifacts_unchanged": true,
+  "current_notebook_sha256": "6f9f107de269954ee917aa26943db22138a1d9c39e24e02689c71a9ad1045406",
+  "current_helper_sha256": "dd8047beec0b2a5fe2a4906b6e079abf2659a1be8b697c38c27414344326bc42",
+  "hosted_colab_execution_verified": false
+}

@@ -468,6 +468,62 @@ def validate_transformer_notebook(notebook: dict, week: int, label: str) -> None
     assert "qa/colab_transformer_bootstrap.py" in guide.read_text(encoding="utf-8"), label
 
 
+def validate_week01_4_standalone(notebook: dict, label: str) -> dict[str, object]:
+    """Narrow no-bootstrap contract for the embedded CPU spectral/DG lesson."""
+    assert label == 'notebooks/week01_4/W1_4_Spectral_DG_CPU.ipynb', label
+    metadata = notebook.get('metadata', {}).get('flowmllab', {})
+    modules = ['flowmllab/high_order.py', 'flowmllab/high_order_cavity.py']
+    assert metadata.get('unit') == '1.4' and metadata.get('standalone') is True, label
+    assert metadata.get('algorithm_source') == modules, label
+    cells = notebook['cells']
+    code = [c for c in cells if c.get('cell_type') == 'code']
+    code_source = '\n'.join(''.join(c.get('source', [])) for c in code)
+    markdown = '\n'.join(''.join(c.get('source', [])) for c in cells if c.get('cell_type') == 'markdown')
+    assert 'needs no repository clone or downloaded fields' in markdown, label
+    expected = {}
+    for module in modules:
+        tree = ast.parse((ROOT / module).read_text(encoding='utf-8'))
+        expected.update({node.name: ast.dump(node, include_attributes=False)
+                         for node in tree.body if isinstance(node, ast.FunctionDef)})
+    tree = ast.parse(code_source)
+    actual = {node.name: ast.dump(node, include_attributes=False)
+              for node in tree.body if isinstance(node, ast.FunctionDef)}
+    assert len(expected) == 18 and all(actual.get(name) == value for name, value in expected.items()), (
+        f'Embedded Week 1.4 algorithms differ from tested source: {label}'
+    )
+    # No clone, network client, external field reader or runtime shell is needed.
+    allowed_imports = {'IPython', 'json', 'matplotlib', 'numpy', 'os', 'pandas',
+                       'pathlib', 'platform', 'scipy', 'sys', 'time'}
+    forbidden_calls = {'read_csv', 'read_table', 'read_json', 'load', 'loadtxt', 'genfromtxt',
+                       'read_text', 'read_bytes', 'urlopen', 'urlretrieve', 'system', 'popen',
+                       'run', 'Popen', 'check_call', 'check_output', 'open', '__import__',
+                       'eval', 'exec', 'get_ipython'}
+    for node in ast.walk(tree):
+        if isinstance(node, ast.Import):
+            assert all(alias.name.split('.')[0] in allowed_imports for alias in node.names), label
+        elif isinstance(node, ast.ImportFrom):
+            assert node.level == 0 and node.module and node.module.split('.')[0] in allowed_imports, label
+        elif isinstance(node, ast.Call):
+            name = node.func.attr if isinstance(node.func, ast.Attribute) else node.func.id if isinstance(node.func, ast.Name) else None
+            if name == '__import__':
+                # Existing display cells import IPython literally to render Markdown.
+                assert len(node.args) == 1 and not node.keywords and isinstance(node.args[0], ast.Constant) and node.args[0].value == 'IPython', label
+            else:
+                assert name not in forbidden_calls, f'External-input/runtime-shell call {name!r}: {label}'
+    assignments = {target.id: node.value for node in tree.body if isinstance(node, ast.Assign)
+                   for target in node.targets if isinstance(target, ast.Name)}
+    reference = ast.literal_eval(assignments['GHIA_REFERENCE'])
+    assert set(reference) == {100, 400}, label
+    assert all(len(reference[re][component]) == 17 for re in reference for component in ('x', 'y', 'u', 'v')), label
+    assert ast.literal_eval(assignments['GHIA_SOURCE_SHA256']) == digest(ROOT / 'references/ghia/published_samples.csv'), label
+    assert [c.get('execution_count') for c in code] == list(range(1, len(code) + 1)), label
+    assert sum('image/png' in output.get('data', {}) for c in code for output in c.get('outputs', [])) == 11, label
+    assert not any(output.get('output_type') == 'error' for c in code for output in c.get('outputs', [])), label
+    assert all(c.get('id') for c in cells), label
+    return {'embedded_tested_functions': len(expected), 'external_field_reads': False,
+            'repository_bootstrap_required': False, 'article_marker_required': False}
+
+
 def validate_notebooks() -> tuple[int, int]:
     count = 0
     code_cells = 0
@@ -543,6 +599,9 @@ def validate_notebooks() -> tuple[int, int]:
             for filename, expected in report['artifact_sha256'].items():
                 artifact = ROOT/'results/week10_2_kinetic_shock'/filename
                 assert hashlib.sha256(artifact.read_bytes()).hexdigest() == expected, filename
+        week01_4_lab = relative == 'notebooks/week01_4/W1_4_Spectral_DG_CPU.ipynb'
+        if week01_4_lab:
+            validate_week01_4_standalone(notebook, relative)
         week01_3_lab = relative == 'notebooks/week01_3/W1_3_Keras_Optimizers.ipynb'
         if week01_3_lab:
             code = [cell for cell in cells if cell.get("cell_type") == "code"]
@@ -551,7 +610,8 @@ def validate_notebooks() -> tuple[int, int]:
                        for item in cell.get("outputs", [])) == 8, relative
             assert all(item.get("output_type") != "error" for cell in code
                        for item in cell.get("outputs", [])), relative
-        # Week 1.3 generates its data in the notebook and needs no clone.
+        # Week 1.3 generates its data; Week 1.4 embeds tested CPU solvers.
+        # The exact standalone contract above replaces a clone/article marker.
         # Weeks 14 and 15 are documented full-checkout modules.  Week 15's
         # evidence archives are release assets and cannot be bootstrapped by a
         # fresh Colab clone alone. Weeks 17-22 have an exact portable contract
@@ -559,7 +619,7 @@ def validate_notebooks() -> tuple[int, int]:
         assert week14_lab or week15_local or optional_bridge or week01_2_lab or transformer_week is not None or colab_url in full_source, (
             f"missing direct Colab launcher: {path}"
         )
-        assert week14_lab or week15_local or week16_lab or optional_bridge or week01_2_lab or week01_3_lab or cavity_followon or transformer_week is not None or "FLOWMLLAB_COLAB_BOOTSTRAP_V1" in full_source, (
+        assert week14_lab or week15_local or week16_lab or optional_bridge or week01_2_lab or week01_3_lab or week01_4_lab or cavity_followon or transformer_week is not None or "FLOWMLLAB_COLAB_BOOTSTRAP_V1" in full_source, (
             f"missing Colab repository bootstrap: {path}"
         )
         reconstruction_lab = relative == 'notebooks/week11/W11_Lab2_Reconstruction_and_Identification.ipynb'
@@ -617,7 +677,7 @@ def validate_notebooks() -> tuple[int, int]:
             )
             assert 'no double-step motif is used in training or validation' in full_source
             assert 'Selection reads no double-step arrays.' in full_source
-        assert week14_lab or week15_local or reconstruction_lab or week16_lab or optional_bridge or week01_2_lab or week01_3_lab or cavity_followon or kinetic_shock_lab or transformer_week is not None or any(
+        assert week14_lab or week15_local or reconstruction_lab or week16_lab or optional_bridge or week01_2_lab or week01_3_lab or week01_4_lab or cavity_followon or kinetic_shock_lab or transformer_week is not None or any(
             marker in full_source
             for marker in (
                 "MIE690A article-aligned validation v3",

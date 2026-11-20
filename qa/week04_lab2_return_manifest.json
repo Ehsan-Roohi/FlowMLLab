@@ -1,0 +1,158 @@
+{
+  "results/week04_lab2/wall_diagnostics_re375.pdf": {
+    "bytes": 31317,
+    "sha256": "3ad6f27444eee857dfcd771e880adc432031aa8467a89dcbbac4660ae9b64038"
+  },
+  "results/week04_lab2/wall_diagnostics_re375.png": {
+    "bytes": 169635,
+    "sha256": "95654ace62c0e3b330054a1b6dbcae90e5693f84633f5aae92772b115cf93de6"
+  },
+  "results/week04_lab2/wall_diagnostics_re275.pdf": {
+    "bytes": 31348,
+    "sha256": "1ef192b6575fd0b8d058a2897d5ca71e3b28b009c0164e87c1b778e7c8a27091"
+  },
+  "results/week04_lab2/frozen_weights.npz": {
+    "bytes": 112726,
+    "sha256": "8a70a6dc6e20d84c8da438298184d4735e15679b59de3d5bf8617849b6e70e3c"
+  },
+  "results/week04_lab2/wall_diagnostics_re275.png": {
+    "bytes": 162860,
+    "sha256": "92c68c92f1c07da9fee296132d62ae62cece8f3f9ae59040a846b2fb4bed6e8b"
+  },
+  "results/week04_lab2/wall_diagnostics_re175.pdf": {
+    "bytes": 31169,
+    "sha256": "d1411d1ff8199a894358ff88fd43a0edce6f3657a304d9419a91a6cdeb4f3d19"
+  },
+  "results/week04_lab2/field_losses.png": {
+    "bytes": 110011,
+    "sha256": "08ed096761b55b9fe763d8ce243b348fd4304bd4b72446920aa8d1ae451fd05b"
+  },
+  "results/week04_lab2/training_histories.json": {
+    "bytes": 76073,
+    "sha256": "5f3b5a821f6505dd7ced5fbe858808b4dba00267ab810314f229bd49e2fb8245"
+  },
+  "results/week04_lab2/field_losses.pdf": {
+    "bytes": 21935,
+    "sha256": "cb90279c4bc96822eb646a00c49d171ee5d92417b97b7eaca840329b88aca1e6"
+  },
+  "results/week04_lab2/wall_diagnostics_re175.png": {
+    "bytes": 156786,
+    "sha256": "ce223e2b6be3749879e3ad7fe1d9a172664450a694580158bf8ee518641b6c17"
+  },
+  "results/week04_lab2/scalar_losses.png": {
+    "bytes": 129898,
+    "sha256": "45653ccdfca80873d1bc76f8ba8f33bb7026fff89411927c2098fd13166bd53e"
+  },
+  "results/week04_lab2/scalar_trends.png": {
+    "bytes": 182291,
+    "sha256": "d1ac5bb3ddd29a340b048fdcf9edd813218c43065974e0eef557596b58669f14"
+  },
+  "results/week04_lab2/scalar_predictions.npz": {
+    "bytes": 23617,
+    "sha256": "f2cd8f2df55d9f6f06fe0462c81649e4216fa841698bee9689ba3dcd845364dd"
+  },
+  "results/week04_lab2/scalar_losses.pdf": {
+    "bytes": 21309,
+    "sha256": "62946e4050c71fe40ca9080c96e5b8a7b59c0c3827bba62aab2bf5a8a21ec856"
+  },
+  "results/week04_lab2/week4_scalar_results.csv": {
+    "bytes": 1043,
+    "sha256": "a0f6db113916fad711f0d54da870c27f36959045cddcd272abeaa839948245c9"
+  },
+  "results/week04_lab2/scalar_trends.pdf": {
+    "bytes": 26194,
+    "sha256": "6733142563703d34102afe4307e6f107320796ab152b77b9b909bd89e8ca4705"
+  },
+  "results/week04_lab2/field_re175.pdf": {
+    "bytes": 354303,
+    "sha256": "b9b8012c2a542fc4b0f6b492d71321754125371fed95fb488b49675775c883eb"
+  },
+  "results/week04_lab2/field_re175.png": {
+    "bytes": 927436,
+    "sha256": "ad2cb2633b36bde084ff7d3f59065d91539b24702fd155be2d652f9a4434182b"
+  },
+  "results/week04_lab2/field_metrics.csv": {
+    "bytes": 2273,
+    "sha256": "346999c2fa7017fa1eaf3c160ad026051ece369b0fa7a8cb452979ef9c62fe8d"
+  },
+  "results/week04_lab2/profiles_re175.pdf": {
+    "bytes": 31127,
+    "sha256": "8628b47158a4f4cb80607d195d6a405aaf9f53cedf8dd28b7ab350e44c95c960"
+  },
+  "results/week04_lab2/profiles_re175.png": {
+    "bytes": 295510,
+    "sha256": "16c1ccf6aaa00d3c7b62417e3d3d559f4304cef1c531d108c7de4ffeaccd70ab"
+  },
+  "results/week04_lab2/fitting_cfd_fields.png": {
+    "bytes": 569271,
+    "sha256": "8924fb342e8e531f1ea5a79d943af20726c04daf0c89b2d2cc1d7263f600bf1b"
+  },
+  "results/week04_lab2/fitting_cfd_fields.pdf": {
+    "bytes": 179387,
+    "sha256": "b2cced496445f0149c5f4d4ff2045860c5d0c7b7cebf3868f015ac31ad8df3ce"
+  },
+  "results/week04_lab2/field_re375.pdf": {
+    "bytes": 416869,
+    "sha256": "af9f791fe48683ddb994339634669219c4725a8609a8b19bf717da8b74218d3c"
+  },
+  "results/week04_lab2/field_re375.png": {
+    "bytes": 968158,
+    "sha256": "f36848a5a2b60b4763a6658e360bad5c7780b6f93c6ff9c4dbd8288c94da770e"
+  },
+  "results/week04_lab2/profiles_re375.pdf": {
+    "bytes": 31379,
+    "sha256": "20423b6779c639080e349a1884387831507b0152ca23c9fb6fde0733fc9659b3"
+  },
+  "results/week04_lab2/profiles_re375.png": {
+    "bytes": 303769,
+    "sha256": "3686a41cff49f90fcd827a40cf072fcfe864af675eccaa19071455b51da25d46"
+  },
+  "results/week04_lab2/native_test_predictions.npz": {
+    "bytes": 740284,
+    "sha256": "99df10a6c3f59fc4b545fe4eecb57c17141aaf92b2a484ffda45e8aaf6f6cf44"
+  },
+  "results/week04_lab2/field_re275.pdf": {
+    "bytes": 406854,
+    "sha256": "394401b8ec63b44d448b25118a265ffc8422b33d0d2ed668dd9e2d1ab8dd7ae3"
+  },
+  "results/week04_lab2/field_re275.png": {
+    "bytes": 956087,
+    "sha256": "1fa759c933f3ffa3c704ff1426b2e71b19beb70c40fb3ba8baeaa6961dd463ff"
+  },
+  "results/week04_lab2/profiles_re275.pdf": {
+    "bytes": 31275,
+    "sha256": "1624db81e8a4bd4ec15a28e4a82554f6c8fdc5ed1085bc69bd0ab1558ca96292"
+  },
+  "results/week04_lab2/frozen_models.json": {
+    "bytes": 4808,
+    "sha256": "097232a9fc746d1cf3b85f7b7558c3bef7ae296554349909eb0b2200a08def47"
+  },
+  "results/week04_lab2/profiles_re275.png": {
+    "bytes": 297521,
+    "sha256": "9c5f73171bfc29c9324776545c1e3bd9da74e58d48f2ed161a79a0fba5918dea"
+  },
+  "notebooks/week04/W4_Lab2_Scalar_and_Field_Surrogates_Student.ipynb": {
+    "bytes": 3867175,
+    "sha256": "54158866a5754d0cac0e053ed109ad434f67578ba1b48270d69d44e9f54b7357"
+  },
+  "qa/week04_lab2_execution.json": {
+    "bytes": 935,
+    "sha256": "a846db1df8737823b534375dd39757d8df4d1a2ee4fc87095be6a6019a6bb7b3"
+  },
+  "qa/week04_lab2_gradient_check.json": {
+    "bytes": 257,
+    "sha256": "f85256c5d5f8942e3211322308eaceaa3c4b0bd4907beffaffdd57f216675be8"
+  },
+  "qa/week04_lab2_unity_run.json": {
+    "bytes": 803,
+    "sha256": "77c4fd74ea8d2d42a2c842379d05515656735b6285a4abe58318b2b93233e9a3"
+  },
+  "qa/week04_lab2_tests.txt": {
+    "bytes": 98,
+    "sha256": "d9d33fa6f0d3d2f665211b4daaca7a420ee8c9812a7e07084fcabe20033c38be"
+  },
+  "qa/week04_lab2_environment.txt": {
+    "bytes": 1545,
+    "sha256": "d44c6440c343c7951d030999a24ce5371a7af2f32667794503b4fd34dba957cf"
+  }
+}

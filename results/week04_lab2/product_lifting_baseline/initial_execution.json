@@ -1,0 +1,12 @@
+{
+  "notebook": "notebooks\\week04\\W4_Lab2_Scalar_and_Field_Surrogates_Student.ipynb",
+  "executed_on": "2026-11-20",
+  "elapsed_run_all_seconds": 208.0625046999994,
+  "code_cells": 13,
+  "inline_figures": 13,
+  "error_outputs": 0,
+  "python": "3.12.14 (main, Aug 25 2026, 14:01:42) [MSC v.1944 64 bit (AMD64)]",
+  "kernel": "D:\\ChatGPT Backup\\Projects\\FlowMLLab\\Teaching_Current\\repo\\tmp\\week01_4_runtime\\Scripts\\python.exe",
+  "notebook_sha256": "338e8c5dfc00e256485272a7ee85c535156b170449da564a414d9df7dde8183d",
+  "claim": "Fresh complete local CPU execution; hosted Colab execution not claimed."
+}

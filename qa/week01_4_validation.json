@@ -1,0 +1,51 @@
+{
+  "unit": "1.4",
+  "numerical_tests": "9 passed; scalar and full Navier-Stokes manufactured/Jacobian/wall/gauge/refinement checks",
+  "executed_code_cells": 18,
+  "inline_png_outputs": 11,
+  "core_functions_equal_to_tested_module": 18,
+  "pdf_pages": 25,
+  "protected_week01_2_files_changed": [],
+  "preservation_scope": "The pre-existing Week 1.2 notebook and lecture only; other units are validated independently.",
+  "standalone_contract": {
+    "embedded_tested_functions": 18,
+    "external_field_reads": false,
+    "repository_bootstrap_required": false,
+    "article_marker_required": false
+  },
+  "entrypoint_revision": {
+    "verified_utc": "2026-11-20T23:16:40.910198+00:00",
+    "change": "Added a direct Google Colab launcher to the first Markdown cell.",
+    "original_executed_notebook_sha256": "5639ddd49ad8dcb6c5303a7d989932a4b5c58f9afcee25624a3dae0cf6c77a43",
+    "final_notebook_sha256": "22d369172ae90eba1359ab0032e64738c41d03697e9da25b967738eaa490511d",
+    "execution_receipt_sha256": "c5a1708650b1ec5801ebef201c0d4ff5fcbce93bf9f8c2215f4009441b02f424",
+    "executed_code_sha256": "181a3ca3e2363c0d8e35a5e1ac786d85d496bf0584a77fe66d8911849fa671f5",
+    "unchanged_code_cell_payload_sha256": "f1b79ac2072b36ddf36285f4e7af6668455d2111f87ab6baa7a7ddcba94b0115",
+    "unchanged_outputs_sha256": "b46c5bc3372a8b8547b9a17566a020737d1a6771771d81a89329595379c04790",
+    "unchanged_notebook_metadata_sha256": "2e21f98368b50f93653bbde8ba2de810c7647952b1d734cc6e19b004acb810e4",
+    "unchanged_other_cells_sha256": "36c77867536a2449cf6c1ad35062b4e84c65a75fc7081feda2cc517eac2b3547",
+    "original_launcher_cell_sha256": "cd723dacb0df2d82078e7f4b32118b36bf770a51042e4aae34fbbd30f46f4577",
+    "final_launcher_cell_sha256": "ea776f5ead950001523342bcbc272f0840e63c497a65884a4ac64b68faaf2016",
+    "direct_colab_url": "https://colab.research.google.com/github/Ehsan-Roohi/FlowMLLab/blob/main/notebooks/week01_4/W1_4_Spectral_DG_CPU.ipynb",
+    "markdown_only": true,
+    "code_and_outputs_unchanged": true,
+    "numerical_or_plot_execution_performed": false,
+    "claim": "The original CPU execution SHA and 127.405-second timing remain unchanged. Only launcher Markdown and JSON serialization changed."
+  },
+  "preserved_week01_2_sha256": {
+    "notebooks/week01_2/W1_2_Cavity_Pressure_Velocity.ipynb": "d4bd771bc423ba4932bd2d8c04153de191e0664e4a89762bcee5f604780f726e",
+    "lectures/week01_2_pressure_velocity.pdf": "949f5857f74c038d27fe831231f51c3a61999f039897ae377628a0fd1b51de54"
+  },
+  "deliverables_sha256": {
+    "notebooks/week01_4/W1_4_Spectral_DG_CPU.ipynb": "22d369172ae90eba1359ab0032e64738c41d03697e9da25b967738eaa490511d",
+    "lectures/week01_4_spectral_dg.pdf": "ffa4598e7e423a7ac890be40fa1ba4036740fc1e07a9ff5e9fae5aeddf58684a",
+    "results/week01_4_spectral_dg/execution.json": "bb1786cd2a07aebb51faab9ddcb168087e5feadf427e36a8558302987ccdf982"
+  },
+  "execution_mode": "Retained fresh local CPU Run All; launcher-only Markdown amendment, without numerical rerun or hosted execution.",
+  "original_executed_notebook_sha256": "5639ddd49ad8dcb6c5303a7d989932a4b5c58f9afcee25624a3dae0cf6c77a43",
+  "original_elapsed_run_all_seconds": 127.40515010000126,
+  "visual_review": "See qa/week01_4_visual_review.json for the inspected final PDF hash and pages.",
+  "actual_cavity_cases": 6,
+  "ghia_sample_comparisons": 204,
+  "qualification": "Algebraic convergence and reference-profile scores are distinct from remaining off-grid spatial continuity defects."
+}

@@ -1,0 +1,750 @@
+{
+  "config": {
+    "name": "student_trial",
+    "depth": 3,
+    "width": 20,
+    "optimizer": "hybrid",
+    "weighting": "uniform",
+    "evaluations": 1200,
+    "learning_rate": 0.004
+  },
+  "seed": 17,
+  "training_loss": 6.027819806624763e-06,
+  "evaluations": 1200,
+  "seconds": 13.78245230000175,
+  "status": "fixed joint function/gradient evaluation budget",
+  "history": [
+    {
+      "evaluation": 1,
+      "loss": 0.20378213413094676,
+      "seconds": 0.0009608000000298489,
+      "phase": "Adam"
+    },
+    {
+      "evaluation": 10,
+      "loss": 0.10354971471191246,
+      "seconds": 0.18289720000029774,
+      "phase": "Adam"
+    },
+    {
+      "evaluation": 20,
+      "loss": 0.05988230145294369,
+      "seconds": 0.38887370000156807,
+      "phase": "Adam"
+    },
+    {
+      "evaluation": 30,
+      "loss": 0.0540859539970232,
+      "seconds": 0.544006400003127,
+      "phase": "Adam"
+    },
+    {
+      "evaluation": 40,
+      "loss": 0.0492534055341474,
+      "seconds": 0.5870781000012357,
+      "phase": "Adam"
+    },
+    {
+      "evaluation": 50,
+      "loss": 0.046267774952430514,
+      "seconds": 0.7035723000008147,
+      "phase": "Adam"
+    },
+    {
+      "evaluation": 60,
+      "loss": 0.0438682002845477,
+      "seconds": 0.8567557000023953,
+      "phase": "Adam"
+    },
+    {
+      "evaluation": 70,
+      "loss": 0.04180769144419377,
+      "seconds": 0.9247753000017838,
+      "phase": "Adam"
+    },
+    {
+      "evaluation": 80,
+      "loss": 0.04007608410025323,
+      "seconds": 0.9864100000013423,
+      "phase": "Adam"
+    },
+    {
+      "evaluation": 90,
+      "loss": 0.038651347966274945,
+      "seconds": 1.0704217000020435,
+      "phase": "Adam"
+    },
+    {
+      "evaluation": 100,
+      "loss": 0.03739054944616672,
+      "seconds": 1.147760500000004,
+      "phase": "Adam"
+    },
+    {
+      "evaluation": 110,
+      "loss": 0.03611565824246393,
+      "seconds": 1.2446295000008831,
+      "phase": "Adam"
+    },
+    {
+      "evaluation": 120,
+      "loss": 0.03474026683027377,
+      "seconds": 1.443875000000844,
+      "phase": "Adam"
+    },
+    {
+      "evaluation": 130,
+      "loss": 0.03299805825748223,
+      "seconds": 1.5724194000031275,
+      "phase": "Adam"
+    },
+    {
+      "evaluation": 140,
+      "loss": 0.030836736553634007,
+      "seconds": 1.6717470000003232,
+      "phase": "Adam"
+    },
+    {
+      "evaluation": 150,
+      "loss": 0.028376060624498496,
+      "seconds": 1.7331207000024733,
+      "phase": "Adam"
+    },
+    {
+      "evaluation": 160,
+      "loss": 0.02581065484232416,
+      "seconds": 1.7997332000013557,
+      "phase": "Adam"
+    },
+    {
+      "evaluation": 170,
+      "loss": 0.023368680153470094,
+      "seconds": 1.834054599999945,
+      "phase": "Adam"
+    },
+    {
+      "evaluation": 180,
+      "loss": 0.021138624459033584,
+      "seconds": 1.8622964000023785,
+      "phase": "Adam"
+    },
+    {
+      "evaluation": 190,
+      "loss": 0.019095748680026964,
+      "seconds": 1.909584500001074,
+      "phase": "Adam"
+    },
+    {
+      "evaluation": 200,
+      "loss": 0.01721226643091442,
+      "seconds": 1.9421002000017324,
+      "phase": "Adam"
+    },
+    {
+      "evaluation": 210,
+      "loss": 0.015470732246762877,
+      "seconds": 2.0422949000021617,
+      "phase": "Adam"
+    },
+    {
+      "evaluation": 220,
+      "loss": 0.013848078032904759,
+      "seconds": 2.191622800000914,
+      "phase": "Adam"
+    },
+    {
+      "evaluation": 230,
+      "loss": 0.012338396738247355,
+      "seconds": 2.2672536999998556,
+      "phase": "Adam"
+    },
+    {
+      "evaluation": 240,
+      "loss": 0.010958463016922437,
+      "seconds": 2.381003700000292,
+      "phase": "Adam"
+    },
+    {
+      "evaluation": 250,
+      "loss": 0.009732529228868223,
+      "seconds": 2.465678900000057,
+      "phase": "Adam"
+    },
+    {
+      "evaluation": 260,
+      "loss": 0.008670653452935176,
+      "seconds": 2.5108132000023033,
+      "phase": "Adam"
+    },
+    {
+      "evaluation": 270,
+      "loss": 0.0077625980908572175,
+      "seconds": 2.565593000002991,
+      "phase": "Adam"
+    },
+    {
+      "evaluation": 280,
+      "loss": 0.006986188499982251,
+      "seconds": 2.6278614000002563,
+      "phase": "Adam"
+    },
+    {
+      "evaluation": 290,
+      "loss": 0.006318716741896431,
+      "seconds": 2.687793799999781,
+      "phase": "Adam"
+    },
+    {
+      "evaluation": 300,
+      "loss": 0.005743428351258208,
+      "seconds": 2.741517300000851,
+      "phase": "Adam"
+    },
+    {
+      "evaluation": 310,
+      "loss": 0.00524847039676427,
+      "seconds": 2.814518600000156,
+      "phase": "Adam"
+    },
+    {
+      "evaluation": 320,
+      "loss": 0.004823257618723543,
+      "seconds": 2.8506608000025153,
+      "phase": "Adam"
+    },
+    {
+      "evaluation": 330,
+      "loss": 0.004457664295810052,
+      "seconds": 2.9366384000022663,
+      "phase": "Adam"
+    },
+    {
+      "evaluation": 340,
+      "loss": 0.004142730372843715,
+      "seconds": 3.04937030000292,
+      "phase": "Adam"
+    },
+    {
+      "evaluation": 350,
+      "loss": 0.003870773358785081,
+      "seconds": 3.114201600001252,
+      "phase": "Adam"
+    },
+    {
+      "evaluation": 360,
+      "loss": 0.0036351203009857055,
+      "seconds": 3.170258300000569,
+      "phase": "Adam"
+    },
+    {
+      "evaluation": 370,
+      "loss": 0.0034299309825693916,
+      "seconds": 3.216702300000179,
+      "phase": "Adam"
+    },
+    {
+      "evaluation": 380,
+      "loss": 0.00325009622539813,
+      "seconds": 3.2659768000012264,
+      "phase": "Adam"
+    },
+    {
+      "evaluation": 390,
+      "loss": 0.0030911745660172456,
+      "seconds": 3.29052010000305,
+      "phase": "Adam"
+    },
+    {
+      "evaluation": 400,
+      "loss": 0.0029493649615005423,
+      "seconds": 3.3572132000008423,
+      "phase": "Adam"
+    },
+    {
+      "evaluation": 410,
+      "loss": 0.0028214905496115467,
+      "seconds": 3.400076199999603,
+      "phase": "Adam"
+    },
+    {
+      "evaluation": 420,
+      "loss": 0.002704975845570752,
+      "seconds": 3.4369194000028074,
+      "phase": "Adam"
+    },
+    {
+      "evaluation": 430,
+      "loss": 0.0025978028562954588,
+      "seconds": 3.4763482000016666,
+      "phase": "Adam"
+    },
+    {
+      "evaluation": 440,
+      "loss": 0.0024984373612735333,
+      "seconds": 3.5521952000017336,
+      "phase": "Adam"
+    },
+    {
+      "evaluation": 450,
+      "loss": 0.0024057299191158413,
+      "seconds": 3.626114700000471,
+      "phase": "Adam"
+    },
+    {
+      "evaluation": 460,
+      "loss": 0.002318808614856378,
+      "seconds": 3.6895815000025323,
+      "phase": "Adam"
+    },
+    {
+      "evaluation": 470,
+      "loss": 0.0022369848578119673,
+      "seconds": 3.7402514000023075,
+      "phase": "Adam"
+    },
+    {
+      "evaluation": 480,
+      "loss": 0.0021596857083105506,
+      "seconds": 3.798113500000909,
+      "phase": "Adam"
+    },
+    {
+      "evaluation": 490,
+      "loss": 0.002086412737049594,
+      "seconds": 3.8510504000005312,
+      "phase": "Adam"
+    },
+    {
+      "evaluation": 500,
+      "loss": 0.002016721212064471,
+      "seconds": 3.876637800000026,
+      "phase": "Adam"
+    },
+    {
+      "evaluation": 510,
+      "loss": 0.001950217310060635,
+      "seconds": 3.949298200001067,
+      "phase": "Adam"
+    },
+    {
+      "evaluation": 520,
+      "loss": 0.0018865769263120451,
+      "seconds": 3.9866963000022224,
+      "phase": "Adam"
+    },
+    {
+      "evaluation": 530,
+      "loss": 0.0018255867307243087,
+      "seconds": 4.035577900001954,
+      "phase": "Adam"
+    },
+    {
+      "evaluation": 540,
+      "loss": 0.0017671845976363649,
+      "seconds": 4.066257700000278,
+      "phase": "Adam"
+    },
+    {
+      "evaluation": 550,
+      "loss": 0.0017114420929265758,
+      "seconds": 4.1117243000007875,
+      "phase": "Adam"
+    },
+    {
+      "evaluation": 560,
+      "loss": 0.0016584571562240221,
+      "seconds": 4.192737900000793,
+      "phase": "Adam"
+    },
+    {
+      "evaluation": 570,
+      "loss": 0.001608239099336189,
+      "seconds": 4.236849500000972,
+      "phase": "Adam"
+    },
+    {
+      "evaluation": 580,
+      "loss": 0.001560692155810497,
+      "seconds": 4.401091600000655,
+      "phase": "Adam"
+    },
+    {
+      "evaluation": 590,
+      "loss": 0.0015156701780529866,
+      "seconds": 4.4522284000013315,
+      "phase": "Adam"
+    },
+    {
+      "evaluation": 600,
+      "loss": 0.0014730196940959347,
+      "seconds": 4.523317800001678,
+      "phase": "Adam"
+    },
+    {
+      "evaluation": 610,
+      "loss": 0.0009971838163426814,
+      "seconds": 4.7853579000002355,
+      "phase": "L-BFGS"
+    },
+    {
+      "evaluation": 620,
+      "loss": 0.0006348659799907092,
+      "seconds": 4.860711400000582,
+      "phase": "L-BFGS"
+    },
+    {
+      "evaluation": 630,
+      "loss": 0.00043408227249279354,
+      "seconds": 5.019277400002466,
+      "phase": "L-BFGS"
+    },
+    {
+      "evaluation": 640,
+      "loss": 0.00034685727660253125,
+      "seconds": 5.126968000000488,
+      "phase": "L-BFGS"
+    },
+    {
+      "evaluation": 650,
+      "loss": 0.00027783699360055177,
+      "seconds": 5.306689799999731,
+      "phase": "L-BFGS"
+    },
+    {
+      "evaluation": 660,
+      "loss": 0.00025223169063606836,
+      "seconds": 5.457476100000349,
+      "phase": "L-BFGS"
+    },
+    {
+      "evaluation": 670,
+      "loss": 0.0002245871407757509,
+      "seconds": 5.6174060000012105,
+      "phase": "L-BFGS"
+    },
+    {
+      "evaluation": 680,
+      "loss": 0.00020361439079906316,
+      "seconds": 5.76122800000303,
+      "phase": "L-BFGS"
+    },
+    {
+      "evaluation": 690,
+      "loss": 0.0001804164254632897,
+      "seconds": 5.882619600000908,
+      "phase": "L-BFGS"
+    },
+    {
+      "evaluation": 700,
+      "loss": 0.00016713296651605608,
+      "seconds": 5.986819600002491,
+      "phase": "L-BFGS"
+    },
+    {
+      "evaluation": 710,
+      "loss": 0.00015680723675652171,
+      "seconds": 6.076814300002297,
+      "phase": "L-BFGS"
+    },
+    {
+      "evaluation": 720,
+      "loss": 0.00014387372669567264,
+      "seconds": 6.132280800000444,
+      "phase": "L-BFGS"
+    },
+    {
+      "evaluation": 730,
+      "loss": 0.00012811975879944968,
+      "seconds": 6.240731800000503,
+      "phase": "L-BFGS"
+    },
+    {
+      "evaluation": 740,
+      "loss": 0.00010984770226533372,
+      "seconds": 6.431965900002979,
+      "phase": "L-BFGS"
+    },
+    {
+      "evaluation": 750,
+      "loss": 9.173104698294471e-05,
+      "seconds": 6.533900200000062,
+      "phase": "L-BFGS"
+    },
+    {
+      "evaluation": 760,
+      "loss": 8.26977748944528e-05,
+      "seconds": 6.6478719000006095,
+      "phase": "L-BFGS"
+    },
+    {
+      "evaluation": 770,
+      "loss": 7.568736916726537e-05,
+      "seconds": 6.768078700002661,
+      "phase": "L-BFGS"
+    },
+    {
+      "evaluation": 780,
+      "loss": 6.791806043197454e-05,
+      "seconds": 6.850263899999845,
+      "phase": "L-BFGS"
+    },
+    {
+      "evaluation": 790,
+      "loss": 5.986539415898983e-05,
+      "seconds": 6.962585500001296,
+      "phase": "L-BFGS"
+    },
+    {
+      "evaluation": 800,
+      "loss": 5.361144914929825e-05,
+      "seconds": 7.082233600001928,
+      "phase": "L-BFGS"
+    },
+    {
+      "evaluation": 810,
+      "loss": 4.794076239678562e-05,
+      "seconds": 7.252541300000303,
+      "phase": "L-BFGS"
+    },
+    {
+      "evaluation": 820,
+      "loss": 4.263340285426152e-05,
+      "seconds": 7.431940300000861,
+      "phase": "L-BFGS"
+    },
+    {
+      "evaluation": 830,
+      "loss": 3.985193769993971e-05,
+      "seconds": 7.519169099999999,
+      "phase": "L-BFGS"
+    },
+    {
+      "evaluation": 840,
+      "loss": 3.6108135070395956e-05,
+      "seconds": 7.65269249999983,
+      "phase": "L-BFGS"
+    },
+    {
+      "evaluation": 850,
+      "loss": 3.3064798471204e-05,
+      "seconds": 7.799577300000237,
+      "phase": "L-BFGS"
+    },
+    {
+      "evaluation": 860,
+      "loss": 3.149075153422389e-05,
+      "seconds": 7.8495724000022165,
+      "phase": "L-BFGS"
+    },
+    {
+      "evaluation": 870,
+      "loss": 2.919171058534483e-05,
+      "seconds": 8.003846499999781,
+      "phase": "L-BFGS"
+    },
+    {
+      "evaluation": 880,
+      "loss": 2.6142619573604073e-05,
+      "seconds": 8.085004900000058,
+      "phase": "L-BFGS"
+    },
+    {
+      "evaluation": 890,
+      "loss": 2.34979033725071e-05,
+      "seconds": 8.28200730000026,
+      "phase": "L-BFGS"
+    },
+    {
+      "evaluation": 900,
+      "loss": 2.2532815373490426e-05,
+      "seconds": 8.451923200002057,
+      "phase": "L-BFGS"
+    },
+    {
+      "evaluation": 910,
+      "loss": 2.1123660225284008e-05,
+      "seconds": 8.592627699999866,
+      "phase": "L-BFGS"
+    },
+    {
+      "evaluation": 920,
+      "loss": 2.0248707317140707e-05,
+      "seconds": 8.708879200003139,
+      "phase": "L-BFGS"
+    },
+    {
+      "evaluation": 930,
+      "loss": 1.8943146431811333e-05,
+      "seconds": 8.988887400002568,
+      "phase": "L-BFGS"
+    },
+    {
+      "evaluation": 940,
+      "loss": 1.8083290300129763e-05,
+      "seconds": 9.057117899999866,
+      "phase": "L-BFGS"
+    },
+    {
+      "evaluation": 950,
+      "loss": 1.7055555329738732e-05,
+      "seconds": 9.158152800002426,
+      "phase": "L-BFGS"
+    },
+    {
+      "evaluation": 960,
+      "loss": 1.6221904953913786e-05,
+      "seconds": 9.36006240000279,
+      "phase": "L-BFGS"
+    },
+    {
+      "evaluation": 970,
+      "loss": 1.527455171293901e-05,
+      "seconds": 9.78091889999996,
+      "phase": "L-BFGS"
+    },
+    {
+      "evaluation": 980,
+      "loss": 1.4628954064123942e-05,
+      "seconds": 9.96546600000147,
+      "phase": "L-BFGS"
+    },
+    {
+      "evaluation": 990,
+      "loss": 1.4116548557092035e-05,
+      "seconds": 10.127213499999925,
+      "phase": "L-BFGS"
+    },
+    {
+      "evaluation": 1000,
+      "loss": 1.3489681679118078e-05,
+      "seconds": 10.468702400001348,
+      "phase": "L-BFGS"
+    },
+    {
+      "evaluation": 1010,
+      "loss": 1.289178538341659e-05,
+      "seconds": 10.741664299999684,
+      "phase": "L-BFGS"
+    },
+    {
+      "evaluation": 1020,
+      "loss": 1.218061679487585e-05,
+      "seconds": 10.930618000002141,
+      "phase": "L-BFGS"
+    },
+    {
+      "evaluation": 1030,
+      "loss": 1.1658008553472847e-05,
+      "seconds": 11.094978200002515,
+      "phase": "L-BFGS"
+    },
+    {
+      "evaluation": 1040,
+      "loss": 1.0889942255074355e-05,
+      "seconds": 11.65272829999958,
+      "phase": "L-BFGS"
+    },
+    {
+      "evaluation": 1050,
+      "loss": 1.0445291597658265e-05,
+      "seconds": 11.88486290000219,
+      "phase": "L-BFGS"
+    },
+    {
+      "evaluation": 1060,
+      "loss": 1.0130062411325968e-05,
+      "seconds": 12.033050900001399,
+      "phase": "L-BFGS"
+    },
+    {
+      "evaluation": 1070,
+      "loss": 9.434824814198774e-06,
+      "seconds": 12.209799300002487,
+      "phase": "L-BFGS"
+    },
+    {
+      "evaluation": 1080,
+      "loss": 8.690063268624855e-06,
+      "seconds": 12.36864930000229,
+      "phase": "L-BFGS"
+    },
+    {
+      "evaluation": 1090,
+      "loss": 8.33798986697049e-06,
+      "seconds": 12.564462000002095,
+      "phase": "L-BFGS"
+    },
+    {
+      "evaluation": 1100,
+      "loss": 8.089014732548506e-06,
+      "seconds": 12.665361800001847,
+      "phase": "L-BFGS"
+    },
+    {
+      "evaluation": 1110,
+      "loss": 7.61408181572263e-06,
+      "seconds": 12.778189600001497,
+      "phase": "L-BFGS"
+    },
+    {
+      "evaluation": 1120,
+      "loss": 7.393996445564684e-06,
+      "seconds": 12.941431700000976,
+      "phase": "L-BFGS"
+    },
+    {
+      "evaluation": 1130,
+      "loss": 7.207814122200557e-06,
+      "seconds": 13.12232920000315,
+      "phase": "L-BFGS"
+    },
+    {
+      "evaluation": 1140,
+      "loss": 6.943448044540303e-06,
+      "seconds": 13.18585990000065,
+      "phase": "L-BFGS"
+    },
+    {
+      "evaluation": 1150,
+      "loss": 6.830910524592134e-06,
+      "seconds": 13.279204500002379,
+      "phase": "L-BFGS"
+    },
+    {
+      "evaluation": 1160,
+      "loss": 6.640205450135169e-06,
+      "seconds": 13.400708200002555,
+      "phase": "L-BFGS"
+    },
+    {
+      "evaluation": 1170,
+      "loss": 6.401117700243032e-06,
+      "seconds": 13.48504750000211,
+      "phase": "L-BFGS"
+    },
+    {
+      "evaluation": 1180,
+      "loss": 6.273365376440937e-06,
+      "seconds": 13.62068790000194,
+      "phase": "L-BFGS"
+    },
+    {
+      "evaluation": 1190,
+      "loss": 6.132581189379227e-06,
+      "seconds": 13.72473760000139,
+      "phase": "L-BFGS"
+    },
+    {
+      "evaluation": 1200,
+      "loss": 6.027819806624763e-06,
+      "seconds": 13.782112799999595,
+      "phase": "L-BFGS"
+    }
+  ],
+  "validation_Re": 400,
+  "validation_rmse_U": {
+    "u": 0.039399726232122935,
+    "v": 0.04779238201391903
+  },
+  "scope": "CPU verification of optional student fit; no test targets used and no change to frozen model"
+}

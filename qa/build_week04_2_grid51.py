@@ -233,6 +233,8 @@ display(pd.read_csv(R/'vortex_metrics.csv'))"""),
     nbf.write(book, NB)
     from qa.notebook_review_updates import review_notebook_file
     review_notebook_file(NB)
+    from qa.week04_output_audit import update as update_physical_outputs
+    update_physical_outputs(keys=["grid51"])
 
 
 def pdf(compare: pd.DataFrame, shifts: pd.DataFrame) -> None:

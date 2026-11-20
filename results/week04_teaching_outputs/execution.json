@@ -1,0 +1,113 @@
+{
+  "lab3": {
+    "notebook": "notebooks/week04/W4_Lab3_DeepONet_Cavity_Student.ipynb",
+    "elapsed_seconds": 395.0227692999979,
+    "python": "3.12.14 (main, Aug 25 2026, 14:01:42) [MSC v.1944 64 bit (AMD64)]",
+    "executed_utc": "2026-11-20T22:35:09Z",
+    "code_cells": 10,
+    "png_outputs": 12,
+    "sha256": "cd6ed36f1e0f0c9740e5a885ced17e7beb4d43c1d302740620be5619d18b034f",
+    "code_sha256": "e10fd0d35fc281f220752e150e8425d4b996e814ecadb17e34fee876955f1c81",
+    "errors": 0,
+    "scope": "Fresh local CPU Run All; retained evidence explicitly distinguished from new solves/fits; no hosted Colab execution claimed"
+  },
+  "lab1": {
+    "notebook": "notebooks/week04/W4_Lab1_CFD_Data_Production_Student.ipynb",
+    "elapsed_seconds": 126.47454849999849,
+    "python": "3.12.14 (main, Aug 25 2026, 14:01:42) [MSC v.1944 64 bit (AMD64)]",
+    "executed_utc": "2026-11-20T21:34:55Z",
+    "code_cells": 6,
+    "png_outputs": 4,
+    "sha256": "4ad82dfb9b9fdf6430d17295338c009bb719936e008eb25017a4ffd25871a2e4",
+    "code_sha256": "74983dd340a86722ebebd1fdf5711de7875b1def046e391b631e213768ef7b65",
+    "errors": 0,
+    "scope": "Fresh local CPU Run All; retained evidence explicitly distinguished from new solves/fits; no hosted Colab execution claimed"
+  },
+  "lab6": {
+    "notebook": "notebooks/week04/W4_Lab6_Ghia_Profile_Optimizer_Depth.ipynb",
+    "elapsed_seconds": 32.73434629999974,
+    "python": "3.12.14 (main, Aug 25 2026, 14:01:42) [MSC v.1944 64 bit (AMD64)]",
+    "executed_utc": "2026-11-20T21:35:55Z",
+    "code_cells": 4,
+    "png_outputs": 7,
+    "sha256": "38b3e28e4c1f5a087141c57f04de6e525d26f93d1bf7c5158b3a1c2a8009e456",
+    "code_sha256": "bc940a8b4c9ca99a3b9cb0a7f3b44854b638bae46ad536a646a155f2adface11",
+    "errors": 0,
+    "scope": "Fresh local CPU Run All; retained evidence explicitly distinguished from new solves/fits; no hosted Colab execution claimed"
+  },
+  "grid51": {
+    "notebook": "notebooks/week04/W4_Lab4_Grid51_Validation.ipynb",
+    "elapsed_seconds": 48.47338379999928,
+    "python": "3.12.14 (main, Aug 25 2026, 14:01:42) [MSC v.1944 64 bit (AMD64)]",
+    "executed_utc": "2026-11-20T21:36:48Z",
+    "code_cells": 3,
+    "png_outputs": 3,
+    "sha256": "cde298950a54abe08fec79fc2aefef0fa1f410658f7827bba22592eec5e72f31",
+    "code_sha256": "58523fafbfc2f6e0993f1493bb976a8ff7dddb32d47fef8805f3f838a157adae",
+    "errors": 0,
+    "scope": "Fresh local CPU Run All; retained evidence explicitly distinguished from new solves/fits; no hosted Colab execution claimed"
+  },
+  "lab4": {
+    "notebook": "notebooks/week04/W4_Lab4_Stokes_to_Navier_Stokes.ipynb",
+    "elapsed_seconds": 1638.1110112999995,
+    "python": "3.12.14 (main, Aug 25 2026, 14:01:42) [MSC v.1944 64 bit (AMD64)]",
+    "executed_utc": "2026-11-20T22:10:18Z",
+    "code_cells": 15,
+    "png_outputs": 24,
+    "sha256": "b6c95c20fe7c29d4c54197555484f334db16343842c93255736f55404fcf2604",
+    "code_sha256": "73627739389a93abd6bb21a7b88013943bfc49576e6f2ede6edb994e28d82107",
+    "errors": 0,
+    "scope": "Fresh local CPU Run All; retained evidence explicitly distinguished from new solves/fits; no hosted Colab execution claimed",
+    "copyedit_after_execution": "Aims/captions/lecture-link text only; executed code unchanged."
+  },
+  "rom": {
+    "notebook": "notebooks/week04/W4_1_Classical_ROM_Cavity.ipynb",
+    "elapsed_seconds": 36.37716580000051,
+    "python": "3.12.14 (main, Aug 25 2026, 14:01:42) [MSC v.1944 64 bit (AMD64)]",
+    "executed_utc": "2026-11-20T21:38:47Z",
+    "code_cells": 11,
+    "png_outputs": 4,
+    "sha256": "ee7213e68df8ba0b1bf48e5eb0e5426acdfdfc390b9892e55e8b13b8bd7c7c93",
+    "code_sha256": "d7dbd4245e7ce6be6603f191430632f4a38b114479dc5d21d27f6f81d7a2ac50",
+    "errors": 0,
+    "scope": "Fresh local CPU Run All; retained evidence explicitly distinguished from new solves/fits; no hosted Colab execution claimed"
+  },
+  "lab7": {
+    "notebook": "notebooks/week04/W4_Lab7_High_Re_CFD_Ghia.ipynb",
+    "elapsed_seconds": 794.6704514000012,
+    "python": "3.12.14 (main, Aug 25 2026, 14:01:42) [MSC v.1944 64 bit (AMD64)]",
+    "executed_utc": "2026-11-20T21:58:39Z",
+    "code_cells": 10,
+    "png_outputs": 7,
+    "sha256": "2fcbfb8f422808b653544808e930c11a5ce77bb7966f08ad542a31c9c5edd905",
+    "code_sha256": "e28dd4017250b5a6a33d34f67275e7f36256e7b2aa7c1d522f7b4b7f81f9317c",
+    "errors": 0,
+    "scope": "Fresh local CPU Run All; retained evidence explicitly distinguished from new solves/fits; no hosted Colab execution claimed",
+    "copyedit_after_execution": "Aims/captions/lecture-link text only; executed code unchanged."
+  },
+  "lab8": {
+    "notebook": "notebooks/week04/W4_Lab8_High_Re_Field_DeepONet.ipynb",
+    "elapsed_seconds": 694.7422219,
+    "python": "3.12.14 (main, Aug 25 2026, 14:01:42) [MSC v.1944 64 bit (AMD64)]",
+    "executed_utc": "2026-11-20T22:10:19Z",
+    "code_cells": 9,
+    "png_outputs": 10,
+    "sha256": "1a32bcb01712a7f5f8ef3a7b0193ba66e25d6fd06f10af7cb51d3689706f583d",
+    "code_sha256": "1945715cb39d4509934722d90a2b3820ff14adeccc54f95ccd17078b72373095",
+    "errors": 0,
+    "scope": "Fresh local CPU Run All; retained evidence explicitly distinguished from new solves/fits; no hosted Colab execution claimed",
+    "copyedit_after_execution": "Aims/captions/lecture-link text only; executed code unchanged."
+  },
+  "lab9": {
+    "notebook": "notebooks/week04/W4_Lab9_Label_Free_Ghia_PINN_Audit.ipynb",
+    "elapsed_seconds": 655.2139134999961,
+    "python": "3.12.14 (main, Aug 25 2026, 14:01:42) [MSC v.1944 64 bit (AMD64)]",
+    "executed_utc": "2026-11-20T22:21:28Z",
+    "code_cells": 8,
+    "png_outputs": 30,
+    "sha256": "23aeff7c55e5215aa480300f33fc4d783d041c3725822342c5391364e595f13d",
+    "code_sha256": "11244d4d2d86e86d60f3cfb6f0360c5f808d1fe3eca1b56accc2b62a030b0c0b",
+    "errors": 0,
+    "scope": "Fresh local CPU Run All; retained evidence explicitly distinguished from new solves/fits; no hosted Colab execution claimed"
+  }
+}

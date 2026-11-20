@@ -35,7 +35,13 @@
       "compute_estimate": "Not measured for this revision; inspect the setup before a full solve.",
       "estimate_status": "Planning estimate carried from course guides, or explicitly unmeasured; not a timing measurement of this revision.",
       "execution_status": "Colab link is an entry point, not a guarantee of a fresh hosted Run All.",
-      "keywords": ""
+      "keywords": "",
+      "followups": [
+        {
+          "title": "Continue with spectral and DG methods on CPU",
+          "page": "weeks/week01_4/README.md"
+        }
+      ]
     },
     {
       "id": "1.3",
@@ -48,6 +54,18 @@
       "estimate_status": "Use the notebook run timings for this revision.",
       "execution_status": "Runs locally on CPU with TensorFlow and SciPy. The Colab link is an entry point.",
       "keywords": "Keras TensorFlow normalization Adam momentum L-BFGS SOAP self-scaled Broyden validation PINN"
+    },
+    {
+      "id": "1.4",
+      "title": "Spectral and discontinuous Galerkin methods on CPU",
+      "page": "weeks/week01_4/README.md",
+      "setup": "notebooks/week01_4/README.md",
+      "prerequisites": "Week 1 cavity foundations and Week 1.2 pressure-velocity coupling; Week 1.3 optimizers is not required.",
+      "mode": "Standalone CPU notebook with transparent NumPy/SciPy algorithms; no external CFD dependency.",
+      "compute_estimate": "Default scalar experiments plus six actual Re=100/400 cavity solves and plots take a few minutes in the retained local CPU run; study and refinement take longer.",
+      "estimate_status": "Measured locally; consult qa/week01_4_execution.json. Not a hardware-independent runtime guarantee.",
+      "execution_status": "Fresh local Restart/Run All includes actual cavity CFD and Ghia comparisons; nine numerical tests passed. Hosted Colab execution not claimed.",
+      "keywords": "spectral Chebyshev cavity Navier Stokes Ghia pressure vorticity Newton discontinuous Galerkin DG Poisson SSPRK3 finite volume h p CFL conservation"
     },
     {
       "id": "2",
@@ -89,13 +107,13 @@
       "id": "4",
       "title": "Cavity surrogates and DeepONet",
       "page": "weeks/week04/README.md",
-      "setup": "START_HERE.md",
+      "setup": "notebooks/week04/README.md",
       "prerequisites": "Week 1 cavity validation and Week 2 supervised learning. Labs 1–3 precede high-Re Labs 5/7/8; advanced Lab 9 follows Week 13 Part A PINNs.",
-      "mode": "CPU teaching exercises and retained evidence; full regeneration is separate.",
+      "mode": "Nine mapped labs: fresh CPU CFD/learning exercises and explicitly separated retained research evidence.",
       "compute_estimate": "20–90 min per lab; training settings matter.",
       "estimate_status": "Planning estimate carried from course guides, or explicitly unmeasured; not a timing measurement of this revision.",
       "execution_status": "Colab link is an entry point, not a guarantee of a fresh hosted Run All.",
-      "keywords": "POD DeepONet operator learning",
+      "keywords": "POD DeepONet coordinate networks RBF U-Net FNO Ghia validation vortices optimizer field errors",
       "followups": [
         {
           "page": "notebooks/week04/W4_Lab9_Label_Free_Ghia_PINN_Audit.ipynb",

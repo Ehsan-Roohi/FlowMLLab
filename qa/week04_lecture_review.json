@@ -1,0 +1,1637 @@
+{
+  "status": "complete",
+  "pdf": "lectures/week04_cavity_surrogates_deeponet.pdf",
+  "pre_revision": {
+    "pages": 65,
+    "sha256": "f7e9a57c0966959142bc84316f040306dc576d85931dc96c0ef6197ea8b36d6b"
+  },
+  "guide_pages": 49,
+  "retained_evidence_pages": 54,
+  "total_pages": 103,
+  "source": "lectures/source/week04_lab_guide.py",
+  "source_sha256": "d72fb3183464f405ea63a92c9da11a4313d3bd8d640456e424536c96ad951d9b",
+  "pdf_sha256": "4f156163c0b861664d8a8a99d568d47db10d6f4d2479f2405972ea8f6f1f7772",
+  "evidence_source": "lectures/source/cavity_expansion.json",
+  "evidence_source_sha256": "0d48d45a928cf80bdd863f75e491553f168e92394121a73867d43966f3cbea98",
+  "preservation": "Original teaching core expanded and reorganized; all 54 scientific evidence pages regenerated from unchanged scientific JSON with documented typography-only substitutions. Classical ROM reading guide integrated into the new core.",
+  "evidence_presentation": "qa/week04_evidence_presentation.py",
+  "evidence_presentation_sha256": "c7907bc68342882ff61296eec22c5f4538f16f054f3b1fd3d842269df38bed1b",
+  "page_map": [
+    {
+      "page": 1,
+      "title": "Week 4\nLearning cavity flows from numerical evidence",
+      "notebook": null
+    },
+    {
+      "page": 2,
+      "title": "The laboratory route and reading map",
+      "notebook": null
+    },
+    {
+      "page": 3,
+      "title": "Start on a CPU; know what each result means",
+      "notebook": null
+    },
+    {
+      "page": 4,
+      "title": "The physical problem and its variables",
+      "notebook": null
+    },
+    {
+      "page": 5,
+      "title": "The case is the unit of independence",
+      "notebook": null
+    },
+    {
+      "page": 6,
+      "title": "What to measure and what to plot",
+      "notebook": null
+    },
+    {
+      "page": 7,
+      "title": "Lab 1 | Aim: turn a CFD run into a qualified label",
+      "notebook": "W4_Lab1_CFD_Data_Production_Student.ipynb"
+    },
+    {
+      "page": 8,
+      "title": "Lab 1 | How the streamfunction-vorticity solver works",
+      "notebook": "W4_Lab1_CFD_Data_Production_Student.ipynb"
+    },
+    {
+      "page": 9,
+      "title": "Lab 1 | Read the plots; design one useful refinement",
+      "notebook": "W4_Lab1_CFD_Data_Production_Student.ipynb"
+    },
+    {
+      "page": 10,
+      "title": "Lab 2 | Aim: compare models at increasing output complexity",
+      "notebook": "W4_Lab2_Scalar_and_Field_Surrogates_Student.ipynb"
+    },
+    {
+      "page": 11,
+      "title": "Lab 2 | Interpolation and polynomial regression",
+      "notebook": "W4_Lab2_Scalar_and_Field_Surrogates_Student.ipynb"
+    },
+    {
+      "page": 12,
+      "title": "Lab 2 | What a multilayer neural network actually learns",
+      "notebook": "W4_Lab2_Scalar_and_Field_Surrogates_Student.ipynb"
+    },
+    {
+      "page": 13,
+      "title": "Lab 2 | Optimizer steps, loss curves and fair stopping",
+      "notebook": "W4_Lab2_Scalar_and_Field_Surrogates_Student.ipynb"
+    },
+    {
+      "page": 14,
+      "title": "Lab 2 | Coordinate fields and prescribed-wall lifting",
+      "notebook": "W4_Lab2_Scalar_and_Field_Surrogates_Student.ipynb"
+    },
+    {
+      "page": 15,
+      "title": "Lab 2 | How to read a complete field comparison",
+      "notebook": "W4_Lab2_Scalar_and_Field_Surrogates_Student.ipynb"
+    },
+    {
+      "page": 16,
+      "title": "Lab 2 | A controlled student investigation",
+      "notebook": "W4_Lab2_Scalar_and_Field_Surrogates_Student.ipynb"
+    },
+    {
+      "page": 17,
+      "title": "Lab 2 | Scalar outputs: every baseline stays visible",
+      "notebook": "W4_Lab2_Scalar_and_Field_Surrogates_Student.ipynb"
+    },
+    {
+      "page": 18,
+      "title": "Lab 2 | Physical field outputs at Re = 275",
+      "notebook": "W4_Lab2_Scalar_and_Field_Surrogates_Student.ipynb"
+    },
+    {
+      "page": 19,
+      "title": "Lab 2 | Signed profiles explain the field error",
+      "notebook": "W4_Lab2_Scalar_and_Field_Surrogates_Student.ipynb"
+    },
+    {
+      "page": 20,
+      "title": "Lab 3 | Aim: factor a field into spatial modes and coefficients",
+      "notebook": "W4_Lab3_DeepONet_Cavity_Student.ipynb"
+    },
+    {
+      "page": 21,
+      "title": "Lab 3 | POD: representation error before prediction error",
+      "notebook": "W4_Lab3_DeepONet_Cavity_Student.ipynb"
+    },
+    {
+      "page": 22,
+      "title": "Lab 3 | Selection, refitting and pressure meaning",
+      "notebook": "W4_Lab3_DeepONet_Cavity_Student.ipynb"
+    },
+    {
+      "page": 23,
+      "title": "Lab 3 | What the reported accuracy and speed establish",
+      "notebook": "W4_Lab3_DeepONet_Cavity_Student.ipynb"
+    },
+    {
+      "page": 24,
+      "title": "Lab 4 | Aim: learn the nonlinear correction to Stokes flow",
+      "notebook": "W4_Lab4_Stokes_to_Navier_Stokes.ipynb"
+    },
+    {
+      "page": 25,
+      "title": "Lab 4 | A derivative-aware correction model",
+      "notebook": "W4_Lab4_Stokes_to_Navier_Stokes.ipynb"
+    },
+    {
+      "page": 26,
+      "title": "Lab 4 | Family transfer, pressure and grid sensitivity",
+      "notebook": "W4_Lab4_Stokes_to_Navier_Stokes.ipynb"
+    },
+    {
+      "page": 27,
+      "title": "Lab 4 | Why the seven historical pilot methods differ",
+      "notebook": "W4_Lab4_Stokes_to_Navier_Stokes.ipynb"
+    },
+    {
+      "page": 28,
+      "title": "Lab 4 | RBF: a kernel baseline, not another CFD solver",
+      "notebook": "W4_Lab4_Stokes_to_Navier_Stokes.ipynb"
+    },
+    {
+      "page": 29,
+      "title": "Lab 5 | Aim: distinguish our solutions from benchmark samples",
+      "notebook": "W4_Lab5_All_Re_Ghia_Validation.ipynb"
+    },
+    {
+      "page": 30,
+      "title": "Lab 5 | Benchmark comparison without hiding printed anomalies",
+      "notebook": "W4_Lab5_All_Re_Ghia_Validation.ipynb"
+    },
+    {
+      "page": 31,
+      "title": "Lab 5 | A corner vortex needs full-field evidence",
+      "notebook": "W4_Lab5_All_Re_Ghia_Validation.ipynb"
+    },
+    {
+      "page": 32,
+      "title": "Lab 6 | Aim: isolate depth, optimizer and data weighting",
+      "notebook": "W4_Lab6_Ghia_Profile_Optimizer_Depth.ipynb"
+    },
+    {
+      "page": 33,
+      "title": "Lab 6 | Why an optimizer can help and still lose to interpolation",
+      "notebook": "W4_Lab6_Ghia_Profile_Optimizer_Depth.ipynb"
+    },
+    {
+      "page": 34,
+      "title": "Lab 6 | Experiments that test an engineering hypothesis",
+      "notebook": "W4_Lab6_Ghia_Profile_Optimizer_Depth.ipynb"
+    },
+    {
+      "page": 35,
+      "title": "Lab 7 | Aim: qualify the actual higher-Reynolds CFD",
+      "notebook": "W4_Lab7_High_Re_CFD_Ghia.ipynb"
+    },
+    {
+      "page": 36,
+      "title": "Lab 7 | Mesh sensitivity and physical time are distinct",
+      "notebook": "W4_Lab7_High_Re_CFD_Ghia.ipynb"
+    },
+    {
+      "page": 37,
+      "title": "Lab 7 | Measured solver cost: fewer iterations can take longer",
+      "notebook": "W4_Lab7_High_Re_CFD_Ghia.ipynb"
+    },
+    {
+      "page": 38,
+      "title": "Lab 8 | Aim: predict complete high-Re fields fairly",
+      "notebook": "W4_Lab8_High_Re_Field_DeepONet.ipynb"
+    },
+    {
+      "page": 39,
+      "title": "Lab 8 | Diagnose the basis before changing the optimizer",
+      "notebook": "W4_Lab8_High_Re_Field_DeepONet.ipynb"
+    },
+    {
+      "page": 40,
+      "title": "Lab 8 | Measured wins and remaining physical limitations",
+      "notebook": "W4_Lab8_High_Re_Field_DeepONet.ipynb"
+    },
+    {
+      "page": 41,
+      "title": "Lab 8 | Vorticity and pressure are demanding derived outputs",
+      "notebook": "W4_Lab8_High_Re_Field_DeepONet.ipynb"
+    },
+    {
+      "page": 42,
+      "title": "Lab 9 | Aim: audit a solution learned from equations",
+      "notebook": "W4_Lab9_Label_Free_Ghia_PINN_Audit.ipynb"
+    },
+    {
+      "page": 43,
+      "title": "Lab 9 | Corners, collocation and the objective being minimized",
+      "notebook": "W4_Lab9_Label_Free_Ghia_PINN_Audit.ipynb"
+    },
+    {
+      "page": 44,
+      "title": "Lab 9 | Loss, physical error and complete scientific state",
+      "notebook": "W4_Lab9_Label_Free_Ghia_PINN_Audit.ipynb"
+    },
+    {
+      "page": 45,
+      "title": "Lab 9 | Retain failed runs and interpret the intervention",
+      "notebook": "W4_Lab9_Label_Free_Ghia_PINN_Audit.ipynb"
+    },
+    {
+      "page": 46,
+      "title": "Companion Week 4.1 | From POD reconstruction to a dynamical ROM",
+      "notebook": null
+    },
+    {
+      "page": 47,
+      "title": "A coherent student report: compare like with like",
+      "notebook": null
+    },
+    {
+      "page": 48,
+      "title": "Sources and reproducible reading",
+      "notebook": null
+    },
+    {
+      "page": 49,
+      "title": "Evidence appendix | Find the result behind the lesson",
+      "notebook": null
+    }
+  ],
+  "appendix_map": [
+    {
+      "id": "E01",
+      "page": 50,
+      "title": "Seven-Re learning: define the information budget"
+    },
+    {
+      "id": "E02",
+      "page": 51,
+      "title": "Why optimizer and depth can help - and why they can fail"
+    },
+    {
+      "id": "E03",
+      "page": 52,
+      "title": "Held-out Re=3200: physical profiles and signed errors"
+    },
+    {
+      "id": "E04",
+      "page": 53,
+      "title": "Exercises: from a better network to a better method"
+    },
+    {
+      "id": "E05",
+      "page": 54,
+      "title": "New CFD: solving the four higher Ghia cases"
+    },
+    {
+      "id": "E06",
+      "page": 55,
+      "title": "Mesh and time sensitivity are separate questions"
+    },
+    {
+      "id": "E07",
+      "page": 56,
+      "title": "A full-field POD-DeepONet with whole-Re tests"
+    },
+    {
+      "id": "E08",
+      "page": 57,
+      "title": "Representational error and held-out prediction"
+    },
+    {
+      "id": "E09",
+      "page": 58,
+      "title": "Look at the flow and where the errors occur"
+    },
+    {
+      "id": "E10",
+      "page": 59,
+      "title": "Engineering work: five measured comparisons"
+    },
+    {
+      "id": "E11",
+      "page": 60,
+      "title": "CFD and neural streamlines on the same axes"
+    },
+    {
+      "id": "E12",
+      "page": 61,
+      "title": "Weak vortices need a matched close-up"
+    },
+    {
+      "id": "E13",
+      "page": 62,
+      "title": "Vorticity exposes velocity-gradient differences"
+    },
+    {
+      "id": "E14",
+      "page": 63,
+      "title": "Vorticity fields and signed discrepancies"
+    },
+    {
+      "id": "E15",
+      "page": 64,
+      "title": "Pressure from a common reconstruction operator"
+    },
+    {
+      "id": "E16",
+      "page": 65,
+      "title": "Pressure colour scales and numerical limits"
+    },
+    {
+      "id": "E17",
+      "page": 66,
+      "title": "Historical computing: separate time from price"
+    },
+    {
+      "id": "E18",
+      "page": 67,
+      "title": "Measured experience: choosing a cavity solver"
+    },
+    {
+      "id": "E19",
+      "page": 68,
+      "title": "Matched timings: include the cost of setup"
+    },
+    {
+      "id": "E20",
+      "page": 69,
+      "title": "Diagnosis: few iterations, expensive preparation"
+    },
+    {
+      "id": "E21",
+      "page": 70,
+      "title": "Check the flow before declaring a faster solve"
+    },
+    {
+      "id": "E22",
+      "page": 71,
+      "title": "Keep the unsuccessful attempts in the record"
+    },
+    {
+      "id": "E23",
+      "page": 72,
+      "title": "Engineering exercises: learn from the evidence"
+    },
+    {
+      "id": "E24",
+      "page": 73,
+      "title": "A label-free solution is a different experiment"
+    },
+    {
+      "id": "E25",
+      "page": 74,
+      "title": "The singular lid corners need their own test"
+    },
+    {
+      "id": "E26",
+      "page": 75,
+      "title": "Read the recorded loss and endpoint correctly"
+    },
+    {
+      "id": "E27",
+      "page": 76,
+      "title": "Freeze first, then inspect the physical solution"
+    },
+    {
+      "id": "E28",
+      "page": 77,
+      "title": "A measured GPU cost improvement without changing the samples"
+    },
+    {
+      "id": "E29",
+      "page": 78,
+      "title": "Lab 9 deliverables: make the evidence auditable"
+    },
+    {
+      "id": "E30",
+      "page": 79,
+      "title": "A completed optimizer budget can still fail the physics"
+    },
+    {
+      "id": "E31",
+      "page": 80,
+      "title": "A failed sensitivity test can be a sampling lesson"
+    },
+    {
+      "id": "E32",
+      "page": 81,
+      "title": "Re 100: preserve signed flow and every seed"
+    },
+    {
+      "id": "E33",
+      "page": 82,
+      "title": "Re 400: preserve signed flow and every seed"
+    },
+    {
+      "id": "E34",
+      "page": 83,
+      "title": "Re 1000: preserve signed flow and every seed"
+    },
+    {
+      "id": "E35",
+      "page": 84,
+      "title": "Re 3200: preserve signed flow and every seed"
+    },
+    {
+      "id": "E36",
+      "page": 85,
+      "title": "Re 5000: preserve signed flow and every seed"
+    },
+    {
+      "id": "E37",
+      "page": 86,
+      "title": "Re 7500: preserve signed flow and every seed"
+    },
+    {
+      "id": "E38",
+      "page": 87,
+      "title": "Re 10000: preserve signed flow and every seed"
+    },
+    {
+      "id": "E39",
+      "page": 88,
+      "title": "The high-Re speed field shows the missing solution"
+    },
+    {
+      "id": "E40",
+      "page": 89,
+      "title": "Vorticity exposes circulation and gradient errors"
+    },
+    {
+      "id": "E41",
+      "page": 90,
+      "title": "One bounded intervention: guarantee coverage without changing area weights"
+    },
+    {
+      "id": "E42",
+      "page": 91,
+      "title": "The coverage intervention mostly worsened the velocity field"
+    },
+    {
+      "id": "E43",
+      "page": 92,
+      "title": "The saved point tensor is part of reproducible scientific state"
+    },
+    {
+      "id": "E44",
+      "page": 93,
+      "title": "Re100, collar 0.02: original and stratified physical profiles"
+    },
+    {
+      "id": "E45",
+      "page": 94,
+      "title": "Re100, collar 0.01: original and stratified physical profiles"
+    },
+    {
+      "id": "E46",
+      "page": 95,
+      "title": "Re7500, collar 0.02: original and stratified physical profiles"
+    },
+    {
+      "id": "E47",
+      "page": 96,
+      "title": "Re7500, collar 0.01: original and stratified physical profiles"
+    },
+    {
+      "id": "E48",
+      "page": 97,
+      "title": "Matched speed fields after the sampling change"
+    },
+    {
+      "id": "E49",
+      "page": 98,
+      "title": "Matched vorticity fields after the sampling change"
+    },
+    {
+      "id": "E50",
+      "page": 99,
+      "title": "Signed errors: Re100, predeclared seed 7"
+    },
+    {
+      "id": "E51",
+      "page": 100,
+      "title": "Streamline overlays: Re100, predeclared seed 7"
+    },
+    {
+      "id": "E52",
+      "page": 101,
+      "title": "Signed errors: Re7500, predeclared seed 7"
+    },
+    {
+      "id": "E53",
+      "page": 102,
+      "title": "Streamline overlays: Re7500, predeclared seed 7"
+    },
+    {
+      "id": "E54",
+      "page": 103,
+      "title": "Follow-up exercises: distinguish coverage, objective and physical accuracy"
+    }
+  ],
+  "schema_version": 1,
+  "review_type": "week04_full_guide_replacement",
+  "reviewed_at_utc": "2026-11-20T23:15:17.749863+00:00",
+  "builder_sources": {
+    "lectures/source/week04_lab_guide.py": "d72fb3183464f405ea63a92c9da11a4313d3bd8d640456e424536c96ad951d9b",
+    "qa/week04_lecture_figures.py": "7f8e84341dac4d70ee0f497959652f109e5ad29973b7238d37284909f47da035",
+    "qa/build_week04_lab_guide.py": "f00a63fad6ca6ecd3d04a18abe845618316ddd034bf1ae7e2261a1e8b2919e99",
+    "qa/week04_evidence_presentation.py": "c7907bc68342882ff61296eec22c5f4538f16f054f3b1fd3d842269df38bed1b"
+  },
+  "visual_review": {
+    "pdf_sha256": "4f156163c0b861664d8a8a99d568d47db10d6f4d2479f2405972ea8f6f1f7772",
+    "dpi": 125,
+    "out_of_bounds_text": [],
+    "placeholder_glyphs": [],
+    "text_fonts": [
+      "TimesNewRomanPS-BoldMT",
+      "TimesNewRomanPS-ItalicMT",
+      "TimesNewRomanPSMT"
+    ],
+    "changed_pages_reviewed_directly": [
+      4,
+      8,
+      9,
+      10,
+      12,
+      13,
+      14,
+      16,
+      17,
+      18,
+      19,
+      22,
+      24,
+      25,
+      26,
+      27,
+      28,
+      34,
+      36,
+      40,
+      42,
+      43,
+      50,
+      51,
+      56,
+      73,
+      76,
+      90
+    ],
+    "direct_final_rechecks": [
+      4,
+      8,
+      9,
+      10,
+      12,
+      13,
+      14,
+      16,
+      17,
+      18,
+      19,
+      22,
+      24,
+      25,
+      26,
+      27,
+      28,
+      34,
+      36,
+      40,
+      42,
+      43,
+      50,
+      51,
+      56,
+      73,
+      76,
+      90
+    ],
+    "method": "Every draft page was inspected individually at readable resolution. The actual final PDF was rendered in full; all changed pages were inspected again, and unchanged pages were matched by SHA256 of decoded RGB pixels. This checks presentation; numerical and reference limitations are stated in the lecture.",
+    "draft_documents": {
+      "render_core": "d679d11d9b50636422e8a12bb13359f321e8d954022d5262ad568353348fd553",
+      "render_evidence": "c2a0bc7449b113cd8a7d8d14a4a48b48386708060b304cb63e1864b4784220cf"
+    },
+    "pages": [
+      {
+        "page": 1,
+        "image_path": "tmp/week04_lecture/render_final/page-001.png",
+        "image_sha256": "1d1283f1cdbab56575e835b30e4a200053e8f80db997cac72899585be42dd4d7",
+        "pixel_sha256": "a60327e3339208ebbf903f26820f847838dddfe8858b43dd23c1f9419f68f127",
+        "reviewer": "/root/week4_lecture_rebuild",
+        "status": "passed",
+        "review_basis": "Exact decoded RGB pixel identity to the individually reviewed 125 dpi draft page; PNG container metadata differs.",
+        "reviewed_draft_pixel_sha256": "a60327e3339208ebbf903f26820f847838dddfe8858b43dd23c1f9419f68f127"
+      },
+      {
+        "page": 2,
+        "image_path": "tmp/week04_lecture/render_final/page-002.png",
+        "image_sha256": "e829b12d689425c64392371cebece77156d7f296e2b914f6c59172d93de3a943",
+        "pixel_sha256": "48d3a5ae581aea03f9be6a7025f983d7f5d0c0c15b7e950469dde5d05b520942",
+        "reviewer": "/root",
+        "status": "passed",
+        "review_basis": "Exact decoded RGB pixel identity to the individually reviewed 125 dpi draft page; PNG container metadata differs.",
+        "reviewed_draft_pixel_sha256": "48d3a5ae581aea03f9be6a7025f983d7f5d0c0c15b7e950469dde5d05b520942"
+      },
+      {
+        "page": 3,
+        "image_path": "tmp/week04_lecture/render_final/page-003.png",
+        "image_sha256": "7020bf74430cc8b0c8da9fe9ac5e3bada6d5b3e4293243bccd3c8f9772ed7cc4",
+        "pixel_sha256": "b244921dc4679beec7effa83fd81781f6669b8e13315dac3659d489766b1d95e",
+        "reviewer": "/root/week4_lecture_rebuild",
+        "status": "passed",
+        "review_basis": "Exact decoded RGB pixel identity to the individually reviewed 125 dpi draft page; PNG container metadata differs.",
+        "reviewed_draft_pixel_sha256": "b244921dc4679beec7effa83fd81781f6669b8e13315dac3659d489766b1d95e"
+      },
+      {
+        "page": 4,
+        "image_path": "tmp/week04_lecture/render_final/page-004.png",
+        "image_sha256": "b2d9fd64deff0db0c88395842f267c6fd8319939134afeb94c472faf81fd74be",
+        "pixel_sha256": "e8b3c58641000cef7a83531162c1fc11b1ab64f71489de39843acd3e36bff4b7",
+        "reviewer": "/root/week4_lecture_rebuild",
+        "status": "passed",
+        "review_basis": "Direct individual full-page final-render inspection at 125 dpi."
+      },
+      {
+        "page": 5,
+        "image_path": "tmp/week04_lecture/render_final/page-005.png",
+        "image_sha256": "d4dddcabae4ca825d0a9c91bbed1a400379a526a76519448786893dc95d8b6bc",
+        "pixel_sha256": "960da6280aca59e44c40a04a0ac616a80962bb7468ec127fabc59a5ab7cd8015",
+        "reviewer": "/root/week4_lecture_rebuild",
+        "status": "passed",
+        "review_basis": "Exact decoded RGB pixel identity to the individually reviewed 125 dpi draft page; PNG container metadata differs.",
+        "reviewed_draft_pixel_sha256": "960da6280aca59e44c40a04a0ac616a80962bb7468ec127fabc59a5ab7cd8015"
+      },
+      {
+        "page": 6,
+        "image_path": "tmp/week04_lecture/render_final/page-006.png",
+        "image_sha256": "b03ab033ade7785b62b3292099803ec53e77f821b95db5f4a92fc4de672cf01c",
+        "pixel_sha256": "b9f267eb665f6c80101999961093ac32a16f5aed82bd532b9c29e8c25977eb23",
+        "reviewer": "/root",
+        "status": "passed",
+        "review_basis": "Exact decoded RGB pixel identity to the individually reviewed 125 dpi draft page; PNG container metadata differs.",
+        "reviewed_draft_pixel_sha256": "b9f267eb665f6c80101999961093ac32a16f5aed82bd532b9c29e8c25977eb23"
+      },
+      {
+        "page": 7,
+        "image_path": "tmp/week04_lecture/render_final/page-007.png",
+        "image_sha256": "7e4632a9fcd07dcd83800585cdf566f8f49a55eb086ef83066722cf29d6e7431",
+        "pixel_sha256": "37bd44d56fe54d9e8d2bb02bbf006e59c0c22bc1fc55a2bd714072837c883a72",
+        "reviewer": "/root/week4_lecture_rebuild",
+        "status": "passed",
+        "review_basis": "Exact decoded RGB pixel identity to the individually reviewed 125 dpi draft page; PNG container metadata differs.",
+        "reviewed_draft_pixel_sha256": "37bd44d56fe54d9e8d2bb02bbf006e59c0c22bc1fc55a2bd714072837c883a72"
+      },
+      {
+        "page": 8,
+        "image_path": "tmp/week04_lecture/render_final/page-008.png",
+        "image_sha256": "80b731963f0e2f56f7599f4003f34ac1660cda936e40ac8c8ad93676ccdc7f12",
+        "pixel_sha256": "a9409fb7f2559db0657f72d07cf5da636e6e1a0f456928f83f8d69e2b48f3b51",
+        "reviewer": "/root/week4_lecture_rebuild",
+        "status": "passed",
+        "review_basis": "Direct individual full-page final-render inspection at 125 dpi."
+      },
+      {
+        "page": 9,
+        "image_path": "tmp/week04_lecture/render_final/page-009.png",
+        "image_sha256": "bb3d1049d895bd0485c52918002676e61b389cc87cffd401ab24038f9a474d0d",
+        "pixel_sha256": "686670e898ab7023c71fd07c73a8f957e6e03d36cb4f0382f1bc3efdda886c8a",
+        "reviewer": "/root/week4_lecture_rebuild",
+        "status": "passed",
+        "review_basis": "Direct individual full-page final-render inspection at 125 dpi."
+      },
+      {
+        "page": 10,
+        "image_path": "tmp/week04_lecture/render_final/page-010.png",
+        "image_sha256": "77e832a7c2fc6150cf49ea9c3308bd7fff863a86c6b92363589d8ed264bc08eb",
+        "pixel_sha256": "bc7f83f22a4c3e3596e77932b1e04aebbeeb51f89914cdfe06274f668daee950",
+        "reviewer": "/root",
+        "status": "passed",
+        "review_basis": "Direct individual full-page final-render inspection at 125 dpi."
+      },
+      {
+        "page": 11,
+        "image_path": "tmp/week04_lecture/render_final/page-011.png",
+        "image_sha256": "72ac24df389a669d3ec6161d123b5b877832c67d632f21919927e9a31fd2f60a",
+        "pixel_sha256": "cb996d4ad34956bf2e953f8ebb0d37ab5b9123c587bf702d2b2e64bdbe0d6e56",
+        "reviewer": "/root/week4_lecture_rebuild",
+        "status": "passed",
+        "review_basis": "Exact decoded RGB pixel identity to the individually reviewed 125 dpi draft page; PNG container metadata differs.",
+        "reviewed_draft_pixel_sha256": "cb996d4ad34956bf2e953f8ebb0d37ab5b9123c587bf702d2b2e64bdbe0d6e56"
+      },
+      {
+        "page": 12,
+        "image_path": "tmp/week04_lecture/render_final/page-012.png",
+        "image_sha256": "2b4c0a42e5c5c9ef12ada6e3735f4142314317136146619174eb92895612c8a4",
+        "pixel_sha256": "3d2646805dc04f7530d06687696c8615739dc9e363012b0aaee8069e77d8bc9c",
+        "reviewer": "/root",
+        "status": "passed",
+        "review_basis": "Direct individual full-page final-render inspection at 125 dpi."
+      },
+      {
+        "page": 13,
+        "image_path": "tmp/week04_lecture/render_final/page-013.png",
+        "image_sha256": "43d69ee62cd7fd79d4fde4ae6c820ce06da7efb14f62196bd99ae51a61de3419",
+        "pixel_sha256": "780798fbfc6a7639bbfb9b8aa822ce0f23d96a0e56b5ab0f78d5a20e199ebc80",
+        "reviewer": "/root",
+        "status": "passed",
+        "review_basis": "Direct individual full-page final-render inspection at 125 dpi."
+      },
+      {
+        "page": 14,
+        "image_path": "tmp/week04_lecture/render_final/page-014.png",
+        "image_sha256": "9c437aed17591a45698fcd038d7bc03fcc8eb97b5a21878e135e8a0b2b42d9c5",
+        "pixel_sha256": "c8cf6fcc9a7724ed7f020a6ae76ce2e41e066a578db7e01a766373b6d415e2d1",
+        "reviewer": "/root",
+        "status": "passed",
+        "review_basis": "Direct individual full-page final-render inspection at 125 dpi."
+      },
+      {
+        "page": 15,
+        "image_path": "tmp/week04_lecture/render_final/page-015.png",
+        "image_sha256": "b26506783b417387aa0cce62f0e2dda45816e46d18fa13250ac8a5555be78bac",
+        "pixel_sha256": "deab883ebd918e32c4213cb52d54c7159d139ae7784aeb2f9e21b9f21c13ed0e",
+        "reviewer": "/root",
+        "status": "passed",
+        "review_basis": "Exact decoded RGB pixel identity to the individually reviewed 125 dpi draft page; PNG container metadata differs.",
+        "reviewed_draft_pixel_sha256": "deab883ebd918e32c4213cb52d54c7159d139ae7784aeb2f9e21b9f21c13ed0e"
+      },
+      {
+        "page": 16,
+        "image_path": "tmp/week04_lecture/render_final/page-016.png",
+        "image_sha256": "e19e0a3025f8dfd9bcab6b275bad89383895b284b3739b314accca07b49e7c27",
+        "pixel_sha256": "09834d69369ec3a4606d6c3d194b5a09f0e5c561fbca29e27c772e880141c427",
+        "reviewer": "/root/week4_lecture_rebuild",
+        "status": "passed",
+        "review_basis": "Direct individual full-page final-render inspection at 125 dpi."
+      },
+      {
+        "page": 17,
+        "image_path": "tmp/week04_lecture/render_final/page-017.png",
+        "image_sha256": "bb8efa2999740043e74d2bddf029e5af358b3d35b0e0a91af6e2ce4fb74a4706",
+        "pixel_sha256": "876f1145b061cfb8177a197623a44f8c498287bb0a96d8436bb8a3a4b84c058a",
+        "reviewer": "/root",
+        "status": "passed",
+        "review_basis": "Direct individual full-page final-render inspection at 125 dpi."
+      },
+      {
+        "page": 18,
+        "image_path": "tmp/week04_lecture/render_final/page-018.png",
+        "image_sha256": "57cb7a917b168d43480172fd11109490dd04c3e07068c032d10984fa9e9467b2",
+        "pixel_sha256": "41bb7e193730fe9ff578c96077be7f3016676ecd4fab9ac722a419f4f2d8cb2d",
+        "reviewer": "/root",
+        "status": "passed",
+        "review_basis": "Direct individual full-page final-render inspection at 125 dpi."
+      },
+      {
+        "page": 19,
+        "image_path": "tmp/week04_lecture/render_final/page-019.png",
+        "image_sha256": "808536e88ee8e785bf1580982a2dea4e2bd7b5d6a3b62e06bfcbd0b9523d5e23",
+        "pixel_sha256": "f511831872830c3186f448bf6a00481346e6094e2e4115330440c9c30ad55a69",
+        "reviewer": "/root",
+        "status": "passed",
+        "review_basis": "Direct individual full-page final-render inspection at 125 dpi."
+      },
+      {
+        "page": 20,
+        "image_path": "tmp/week04_lecture/render_final/page-020.png",
+        "image_sha256": "d1537a7af3acec30f089bccd100f47e69cae5f1a65ab93d4855273c77cef5e3b",
+        "pixel_sha256": "c9f407176e2c088841b5ce0a97a0d5492f6294e5efdac8c7a79cf63025df26be",
+        "reviewer": "/root/week4_lecture_rebuild",
+        "status": "passed",
+        "review_basis": "Exact decoded RGB pixel identity to the individually reviewed 125 dpi draft page; PNG container metadata differs.",
+        "reviewed_draft_pixel_sha256": "c9f407176e2c088841b5ce0a97a0d5492f6294e5efdac8c7a79cf63025df26be"
+      },
+      {
+        "page": 21,
+        "image_path": "tmp/week04_lecture/render_final/page-021.png",
+        "image_sha256": "ea6742ffef0c309a892341d750eadb7eeb798efad35a1c473bf2c690bc991bc8",
+        "pixel_sha256": "9a5871ea015cca18320ac0f6e5f414e25b38884deed742a4846de7bad72b86a5",
+        "reviewer": "/root/week4_lecture_rebuild",
+        "status": "passed",
+        "review_basis": "Exact decoded RGB pixel identity to the individually reviewed 125 dpi draft page; PNG container metadata differs.",
+        "reviewed_draft_pixel_sha256": "9a5871ea015cca18320ac0f6e5f414e25b38884deed742a4846de7bad72b86a5"
+      },
+      {
+        "page": 22,
+        "image_path": "tmp/week04_lecture/render_final/page-022.png",
+        "image_sha256": "7fb807dfb0cd675bbb79c8c5f2fd90b59197aac673143a4852861728ce422310",
+        "pixel_sha256": "c9bd734f604d6dae267f4db86457fce17588cccaa536663d335834000f4ba187",
+        "reviewer": "/root/week4_lecture_rebuild",
+        "status": "passed",
+        "review_basis": "Direct individual full-page final-render inspection at 125 dpi."
+      },
+      {
+        "page": 23,
+        "image_path": "tmp/week04_lecture/render_final/page-023.png",
+        "image_sha256": "b30e62b3ad61b4ea8e6766da31b6334dbc7b6468ae962652928897fa58ebc709",
+        "pixel_sha256": "5c76afbc51f9d11fb539a020e7868379e671e0fc4ca81f17876e51bb1af5a105",
+        "reviewer": "/root/week4_lecture_rebuild",
+        "status": "passed",
+        "review_basis": "Exact decoded RGB pixel identity to the individually reviewed 125 dpi draft page; PNG container metadata differs.",
+        "reviewed_draft_pixel_sha256": "5c76afbc51f9d11fb539a020e7868379e671e0fc4ca81f17876e51bb1af5a105"
+      },
+      {
+        "page": 24,
+        "image_path": "tmp/week04_lecture/render_final/page-024.png",
+        "image_sha256": "f2d72bf2661661242c8df81c483e314ac7eebc4852aa4c4bb62d213f3ac2ad3a",
+        "pixel_sha256": "e7019f35a589990c0dee96c47b05f0afba91caf43e230974f71b6e517ccd97d7",
+        "reviewer": "/root/week4_lecture_rebuild",
+        "status": "passed",
+        "review_basis": "Direct individual full-page final-render inspection at 125 dpi."
+      },
+      {
+        "page": 25,
+        "image_path": "tmp/week04_lecture/render_final/page-025.png",
+        "image_sha256": "ef833fe4bd22257585907a7ae9e479138cd87aa8e6d63b5c3e870623afb9a880",
+        "pixel_sha256": "59db361791473f882d0d0196f30b56eaee82f7b128062e4e26ed8d39e9d2d31c",
+        "reviewer": "/root/week4_lecture_rebuild",
+        "status": "passed",
+        "review_basis": "Direct individual full-page final-render inspection at 125 dpi."
+      },
+      {
+        "page": 26,
+        "image_path": "tmp/week04_lecture/render_final/page-026.png",
+        "image_sha256": "edcece5e56398498de072a0645649cd9c6570f3b7060fa1b5905d17977b364d2",
+        "pixel_sha256": "aa5721154f39b64e515329e5ec84ae610539c99b50feae32daa6252af39e1061",
+        "reviewer": "/root",
+        "status": "passed",
+        "review_basis": "Direct individual full-page final-render inspection at 125 dpi."
+      },
+      {
+        "page": 27,
+        "image_path": "tmp/week04_lecture/render_final/page-027.png",
+        "image_sha256": "7ea790f796ecd110eaa160ab2f9a1e1ddfc5d1fe87024b74810ee45d5a1ae4aa",
+        "pixel_sha256": "fa8fc5177c74d4b14078be4cf5a3094415a7e6e64089547ee87a640cb6210479",
+        "reviewer": "/root/week4_lecture_rebuild",
+        "status": "passed",
+        "review_basis": "Direct individual full-page final-render inspection at 125 dpi."
+      },
+      {
+        "page": 28,
+        "image_path": "tmp/week04_lecture/render_final/page-028.png",
+        "image_sha256": "f710f2480c7bc9d6350c0bf5afdd87d71112b8b303a0e972d1eca9f089b2c29d",
+        "pixel_sha256": "961e288363b18e63e4aa4243ad7845590c20ea775ac0711571edb07b1bb52186",
+        "reviewer": "/root/week4_lecture_rebuild",
+        "status": "passed",
+        "review_basis": "Direct individual full-page final-render inspection at 125 dpi."
+      },
+      {
+        "page": 29,
+        "image_path": "tmp/week04_lecture/render_final/page-029.png",
+        "image_sha256": "ba84e170a79f56b3f36b8a0d531c0db34f61a36912ed7d8d5654ce7f453c09dd",
+        "pixel_sha256": "00383226107a797a42cffef2ed778826e3c29b6c0f1c00a864dd4340e408c626",
+        "reviewer": "/root/week4_lecture_rebuild",
+        "status": "passed",
+        "review_basis": "Exact decoded RGB pixel identity to the individually reviewed 125 dpi draft page; PNG container metadata differs.",
+        "reviewed_draft_pixel_sha256": "00383226107a797a42cffef2ed778826e3c29b6c0f1c00a864dd4340e408c626"
+      },
+      {
+        "page": 30,
+        "image_path": "tmp/week04_lecture/render_final/page-030.png",
+        "image_sha256": "6f5fbb1a0fb8da67a75c1114d314d605cdd63468a766a2152a17b4eea896e01c",
+        "pixel_sha256": "cc861532279596d253fc301b115a3a34752a8311d2601002caaa1be7881cf744",
+        "reviewer": "/root/week4_lecture_rebuild",
+        "status": "passed",
+        "review_basis": "Exact decoded RGB pixel identity to the individually reviewed 125 dpi draft page; PNG container metadata differs.",
+        "reviewed_draft_pixel_sha256": "cc861532279596d253fc301b115a3a34752a8311d2601002caaa1be7881cf744"
+      },
+      {
+        "page": 31,
+        "image_path": "tmp/week04_lecture/render_final/page-031.png",
+        "image_sha256": "7fb982533ea4408370137e9c1fce807606485e7f4d49ade1096f3e4530e489aa",
+        "pixel_sha256": "58c98e9ab33b949799756d8914f5fc68c1eed4f4807fba2e2c574de49e246876",
+        "reviewer": "/root/week4_lecture_rebuild",
+        "status": "passed",
+        "review_basis": "Exact decoded RGB pixel identity to the individually reviewed 125 dpi draft page; PNG container metadata differs.",
+        "reviewed_draft_pixel_sha256": "58c98e9ab33b949799756d8914f5fc68c1eed4f4807fba2e2c574de49e246876"
+      },
+      {
+        "page": 32,
+        "image_path": "tmp/week04_lecture/render_final/page-032.png",
+        "image_sha256": "ff104c31254f75f40209d4bfba7eab5d128d9391fc9cba602410828847357c12",
+        "pixel_sha256": "23199d2628b80fa75ddcf1a860a6d36f5b1d3b29b2299d24319232525c6a8ea0",
+        "reviewer": "/root",
+        "status": "passed",
+        "review_basis": "Exact decoded RGB pixel identity to the individually reviewed 125 dpi draft page; PNG container metadata differs.",
+        "reviewed_draft_pixel_sha256": "23199d2628b80fa75ddcf1a860a6d36f5b1d3b29b2299d24319232525c6a8ea0"
+      },
+      {
+        "page": 33,
+        "image_path": "tmp/week04_lecture/render_final/page-033.png",
+        "image_sha256": "6d2b865eb7f92a66f36cf117f2934c78aacd6cbb05f0742284907ca220dbe39f",
+        "pixel_sha256": "b86837bbebab1d6945a312ad1f5c248c23841830964cecd4dec2c11911d9b09e",
+        "reviewer": "/root/week4_lecture_rebuild",
+        "status": "passed",
+        "review_basis": "Exact decoded RGB pixel identity to the individually reviewed 125 dpi draft page; PNG container metadata differs.",
+        "reviewed_draft_pixel_sha256": "b86837bbebab1d6945a312ad1f5c248c23841830964cecd4dec2c11911d9b09e"
+      },
+      {
+        "page": 34,
+        "image_path": "tmp/week04_lecture/render_final/page-034.png",
+        "image_sha256": "bbdeb85649ef0704a7f0fa4bc8382d988b575670503d744c12e32f99505cc758",
+        "pixel_sha256": "a2de304a0c788ad01724e329e41cd210dbb65f3ca331f4178ee892228d6ece43",
+        "reviewer": "/root/week4_lecture_rebuild",
+        "status": "passed",
+        "review_basis": "Direct individual full-page final-render inspection at 125 dpi."
+      },
+      {
+        "page": 35,
+        "image_path": "tmp/week04_lecture/render_final/page-035.png",
+        "image_sha256": "023e65b76d98149f2e40c24659391898880b74d150ac166616d0fbf15e7de942",
+        "pixel_sha256": "d560e15be01207f2a4f0218c07adfedc312a347b818625301e1d60da6ac0b9f3",
+        "reviewer": "/root/week4_lecture_rebuild",
+        "status": "passed",
+        "review_basis": "Exact decoded RGB pixel identity to the individually reviewed 125 dpi draft page; PNG container metadata differs.",
+        "reviewed_draft_pixel_sha256": "d560e15be01207f2a4f0218c07adfedc312a347b818625301e1d60da6ac0b9f3"
+      },
+      {
+        "page": 36,
+        "image_path": "tmp/week04_lecture/render_final/page-036.png",
+        "image_sha256": "b720b35233c76cc408aaefcaceed48fbf5e111e184db6347d2c0a5e5c5425606",
+        "pixel_sha256": "78e50b512580c361d47849ff177eb95f08ad6564e9db86cd801451a2b3040202",
+        "reviewer": "/root/week4_lecture_rebuild",
+        "status": "passed",
+        "review_basis": "Direct individual full-page final-render inspection at 125 dpi."
+      },
+      {
+        "page": 37,
+        "image_path": "tmp/week04_lecture/render_final/page-037.png",
+        "image_sha256": "4969fe1d9bb1e267a9ac9175ee029dcbd2bd29e646dc938a0f26e6f2ef953e3d",
+        "pixel_sha256": "9123a0f4ca1446c02c5b9acfa9d03865c8cb05c842017b52e4cb5d6383d5479d",
+        "reviewer": "/root",
+        "status": "passed",
+        "review_basis": "Exact decoded RGB pixel identity to the individually reviewed 125 dpi draft page; PNG container metadata differs.",
+        "reviewed_draft_pixel_sha256": "9123a0f4ca1446c02c5b9acfa9d03865c8cb05c842017b52e4cb5d6383d5479d"
+      },
+      {
+        "page": 38,
+        "image_path": "tmp/week04_lecture/render_final/page-038.png",
+        "image_sha256": "94cc2dfe74387722f570717a2a7e7d57c57139ce2e4b07bef3949cd31f90f5f2",
+        "pixel_sha256": "d91e3492419442545da82994377edcbac8512ee289c663c6cbd04bb9c7a95b12",
+        "reviewer": "/root/week4_lecture_rebuild",
+        "status": "passed",
+        "review_basis": "Exact decoded RGB pixel identity to the individually reviewed 125 dpi draft page; PNG container metadata differs.",
+        "reviewed_draft_pixel_sha256": "d91e3492419442545da82994377edcbac8512ee289c663c6cbd04bb9c7a95b12"
+      },
+      {
+        "page": 39,
+        "image_path": "tmp/week04_lecture/render_final/page-039.png",
+        "image_sha256": "d1de21ae9a810a787aa7e9c52604dd84b2f35973581f1a6ee907b0f3329f97ff",
+        "pixel_sha256": "b877801ea344a9bc705543a0fb1ba86c142f424d37f930c55e5d646a85852c32",
+        "reviewer": "/root/week4_lecture_rebuild",
+        "status": "passed",
+        "review_basis": "Exact decoded RGB pixel identity to the individually reviewed 125 dpi draft page; PNG container metadata differs.",
+        "reviewed_draft_pixel_sha256": "b877801ea344a9bc705543a0fb1ba86c142f424d37f930c55e5d646a85852c32"
+      },
+      {
+        "page": 40,
+        "image_path": "tmp/week04_lecture/render_final/page-040.png",
+        "image_sha256": "2d3c5ff41b8b8f8555e3ed4fea1f574cd09e3e391fa069da7a29b9f075276b5a",
+        "pixel_sha256": "e4d28fd57dec9cd8a500063493634c42a364732f85b057f5b811590798b8c074",
+        "reviewer": "/root/week4_lecture_rebuild",
+        "status": "passed",
+        "review_basis": "Direct individual full-page final-render inspection at 125 dpi."
+      },
+      {
+        "page": 41,
+        "image_path": "tmp/week04_lecture/render_final/page-041.png",
+        "image_sha256": "48499825d87e61261b60423818a68ec12634ef48db16e2b509c36a327bda73b7",
+        "pixel_sha256": "fae21e3304b48cdb233987cc3adccaac6c3276090b495e35958b0cbd716aa20d",
+        "reviewer": "/root/week4_lecture_rebuild",
+        "status": "passed",
+        "review_basis": "Exact decoded RGB pixel identity to the individually reviewed 125 dpi draft page; PNG container metadata differs.",
+        "reviewed_draft_pixel_sha256": "fae21e3304b48cdb233987cc3adccaac6c3276090b495e35958b0cbd716aa20d"
+      },
+      {
+        "page": 42,
+        "image_path": "tmp/week04_lecture/render_final/page-042.png",
+        "image_sha256": "713abdd725d6a8a45ccc2a484d3226eaa26244586d41951d34952b93ec5c6dd9",
+        "pixel_sha256": "82038f69f6ee364e85ca841c8e405388466abf04a83d0c198767de0edc8f4a1e",
+        "reviewer": "/root/week4_lecture_rebuild",
+        "status": "passed",
+        "review_basis": "Direct individual full-page final-render inspection at 125 dpi."
+      },
+      {
+        "page": 43,
+        "image_path": "tmp/week04_lecture/render_final/page-043.png",
+        "image_sha256": "921e774d4a59cca480201e00bcb9ca81d12a49818d645e8c3fa583ed9eca70bb",
+        "pixel_sha256": "3eb671f16016cb9d83ecdce85a2320c05083d1e77f996d5a66d057443305d913",
+        "reviewer": "/root/week4_lecture_rebuild",
+        "status": "passed",
+        "review_basis": "Direct individual full-page final-render inspection at 125 dpi."
+      },
+      {
+        "page": 44,
+        "image_path": "tmp/week04_lecture/render_final/page-044.png",
+        "image_sha256": "4de92fe76ef877c7f8f9f93d897ceb8755e0cac9985b8056e2ab380648fc0f1c",
+        "pixel_sha256": "8e0b317fd9e745fdd2f9af76721119568f39ad9469f94b6a3b478ddc7fa50716",
+        "reviewer": "/root",
+        "status": "passed",
+        "review_basis": "Exact decoded RGB pixel identity to the individually reviewed 125 dpi draft page; PNG container metadata differs.",
+        "reviewed_draft_pixel_sha256": "8e0b317fd9e745fdd2f9af76721119568f39ad9469f94b6a3b478ddc7fa50716"
+      },
+      {
+        "page": 45,
+        "image_path": "tmp/week04_lecture/render_final/page-045.png",
+        "image_sha256": "22006e1a3f69b05b8aa63eccf3580cdccda4bd7e29531a9a7da55b300bb90627",
+        "pixel_sha256": "f700d4c4a2c4fbc6b41c622a064c6b6ed4c58751697a0eb095057700af2cc263",
+        "reviewer": "/root/week4_lecture_rebuild",
+        "status": "passed",
+        "review_basis": "Exact decoded RGB pixel identity to the individually reviewed 125 dpi draft page; PNG container metadata differs.",
+        "reviewed_draft_pixel_sha256": "f700d4c4a2c4fbc6b41c622a064c6b6ed4c58751697a0eb095057700af2cc263"
+      },
+      {
+        "page": 46,
+        "image_path": "tmp/week04_lecture/render_final/page-046.png",
+        "image_sha256": "bcf5090bb6ff34fb3b9a751e0a13f44a9a8b90f755a82d9b4c58edb004230cf0",
+        "pixel_sha256": "5dc13a74190bb524552de4178388995cf3e94a358ff6ea7ff6ad8024fb013e33",
+        "reviewer": "/root/week4_lecture_rebuild",
+        "status": "passed",
+        "review_basis": "Exact decoded RGB pixel identity to the individually reviewed 125 dpi draft page; PNG container metadata differs.",
+        "reviewed_draft_pixel_sha256": "5dc13a74190bb524552de4178388995cf3e94a358ff6ea7ff6ad8024fb013e33"
+      },
+      {
+        "page": 47,
+        "image_path": "tmp/week04_lecture/render_final/page-047.png",
+        "image_sha256": "d4ac254de680c47d9764c9fb673f741106edc792a1700eca6df1985399fda13e",
+        "pixel_sha256": "b62826d89c2087a591982ad7acc263fc05d9971e5a08e33aad4cdfd2ab9f8eeb",
+        "reviewer": "/root/week4_lecture_rebuild",
+        "status": "passed",
+        "review_basis": "Exact decoded RGB pixel identity to the individually reviewed 125 dpi draft page; PNG container metadata differs.",
+        "reviewed_draft_pixel_sha256": "b62826d89c2087a591982ad7acc263fc05d9971e5a08e33aad4cdfd2ab9f8eeb"
+      },
+      {
+        "page": 48,
+        "image_path": "tmp/week04_lecture/render_final/page-048.png",
+        "image_sha256": "3bb057a777466d703ebc0dc95442d999d46fa829c143b9a71977fa959dee5797",
+        "pixel_sha256": "869d4b6982363b54bd1a99909b9d824a179351beaf971e40f985df99fa514dfa",
+        "reviewer": "/root/week4_lecture_rebuild",
+        "status": "passed",
+        "review_basis": "Exact decoded RGB pixel identity to the individually reviewed 125 dpi draft page; PNG container metadata differs.",
+        "reviewed_draft_pixel_sha256": "869d4b6982363b54bd1a99909b9d824a179351beaf971e40f985df99fa514dfa"
+      },
+      {
+        "page": 49,
+        "image_path": "tmp/week04_lecture/render_final/page-049.png",
+        "image_sha256": "37f095643a9313a5a5672058b1aa75e8343281508d3707e21079efb893e5b6ae",
+        "pixel_sha256": "b4352057647c8b9717025ccf66483da18d5051cc579b65c830b7a6336b38aa80",
+        "reviewer": "/root/week4_lecture_rebuild",
+        "status": "passed",
+        "review_basis": "Exact decoded RGB pixel identity to the individually reviewed 125 dpi draft page; PNG container metadata differs.",
+        "reviewed_draft_pixel_sha256": "b4352057647c8b9717025ccf66483da18d5051cc579b65c830b7a6336b38aa80"
+      },
+      {
+        "page": 50,
+        "image_path": "tmp/week04_lecture/render_final/page-050.png",
+        "image_sha256": "cec6af78553f7511fb940bdf8ba499f8a8b6e72c5c69fcbbe36835f4f8e01be2",
+        "pixel_sha256": "1c2add5141a5e4907f4def6ce04864a18471f735529657d0d6737abca166c8e4",
+        "reviewer": "/root/week4_lecture_rebuild",
+        "status": "passed",
+        "review_basis": "Direct individual full-page final-render inspection at 125 dpi."
+      },
+      {
+        "page": 51,
+        "image_path": "tmp/week04_lecture/render_final/page-051.png",
+        "image_sha256": "2112889b14dab43bc6608417e34617123a19b2e76371493e3f01e9aaa2bd0a25",
+        "pixel_sha256": "831c22912042efdaed607485faf5d011111819d644fcd78e985ab4f800527fc2",
+        "reviewer": "/root/week4_lecture_rebuild",
+        "status": "passed",
+        "review_basis": "Direct individual full-page final-render inspection at 125 dpi."
+      },
+      {
+        "page": 52,
+        "image_path": "tmp/week04_lecture/render_final/page-052.png",
+        "image_sha256": "0d3224ea2f729a549e5e13ecfb93ce1ff01b4c0eb3f6c1a9b3d58b3c422cf098",
+        "pixel_sha256": "c259a203f5d0fe45d9aad96d5b7bc41f6b3f74970223092f3dcf5eedd004bbf4",
+        "reviewer": "/root/week4_lecture_rebuild",
+        "status": "passed",
+        "review_basis": "Exact decoded RGB pixel identity to the individually reviewed 125 dpi draft page; PNG container metadata differs.",
+        "reviewed_draft_pixel_sha256": "c259a203f5d0fe45d9aad96d5b7bc41f6b3f74970223092f3dcf5eedd004bbf4"
+      },
+      {
+        "page": 53,
+        "image_path": "tmp/week04_lecture/render_final/page-053.png",
+        "image_sha256": "3b9a65eae13fbc3211a8f67cf241961986f4ec29eb13acaa68383e13991665f3",
+        "pixel_sha256": "e4b4a8d34906f187798e6b0dadf7e064d61be95f1a9bfd6b2a3a7b20686c61bd",
+        "reviewer": "/root/week4_lecture_rebuild",
+        "status": "passed",
+        "review_basis": "Exact decoded RGB pixel identity to the individually reviewed 125 dpi draft page; PNG container metadata differs.",
+        "reviewed_draft_pixel_sha256": "e4b4a8d34906f187798e6b0dadf7e064d61be95f1a9bfd6b2a3a7b20686c61bd"
+      },
+      {
+        "page": 54,
+        "image_path": "tmp/week04_lecture/render_final/page-054.png",
+        "image_sha256": "47c2be80bf3b3e209e35102b02e10540bfff21eab5460225aec3754180891039",
+        "pixel_sha256": "5489fe15effb0e6aca641a946cd5d8a40727466c293b68a17163c922260bea0b",
+        "reviewer": "/root/week4_lecture_rebuild",
+        "status": "passed",
+        "review_basis": "Exact decoded RGB pixel identity to the individually reviewed 125 dpi draft page; PNG container metadata differs.",
+        "reviewed_draft_pixel_sha256": "5489fe15effb0e6aca641a946cd5d8a40727466c293b68a17163c922260bea0b"
+      },
+      {
+        "page": 55,
+        "image_path": "tmp/week04_lecture/render_final/page-055.png",
+        "image_sha256": "0502f33af698beac960b71db19246386130b4b40a9d2f9b705cb636b76d22e62",
+        "pixel_sha256": "d46b89bc400824f6034626316ecdcddb20870b9b1e5b5bd9eb50edd9b30bd30d",
+        "reviewer": "/root/week4_lecture_rebuild",
+        "status": "passed",
+        "review_basis": "Exact decoded RGB pixel identity to the individually reviewed 125 dpi draft page; PNG container metadata differs.",
+        "reviewed_draft_pixel_sha256": "d46b89bc400824f6034626316ecdcddb20870b9b1e5b5bd9eb50edd9b30bd30d"
+      },
+      {
+        "page": 56,
+        "image_path": "tmp/week04_lecture/render_final/page-056.png",
+        "image_sha256": "581658fa33d95eedc417b4b3edf90b8a2822176d99c51631c4dda03487f02a23",
+        "pixel_sha256": "6aed14c14fb4fb357663c60675477004f7975f2c7a6f085ad166710c009d5545",
+        "reviewer": "/root/week4_lecture_rebuild",
+        "status": "passed",
+        "review_basis": "Direct individual full-page final-render inspection at 125 dpi."
+      },
+      {
+        "page": 57,
+        "image_path": "tmp/week04_lecture/render_final/page-057.png",
+        "image_sha256": "80bbf362d7f4d4f502acdd74db18d28674cee86b3ccc56c8a6bc09f62beb9322",
+        "pixel_sha256": "19ab95ad2c56efe20e24c9958f5239b50d79d89b722881a9d9db0de347731f96",
+        "reviewer": "/root/week4_lecture_rebuild",
+        "status": "passed",
+        "review_basis": "Exact decoded RGB pixel identity to the individually reviewed 125 dpi draft page; PNG container metadata differs.",
+        "reviewed_draft_pixel_sha256": "19ab95ad2c56efe20e24c9958f5239b50d79d89b722881a9d9db0de347731f96"
+      },
+      {
+        "page": 58,
+        "image_path": "tmp/week04_lecture/render_final/page-058.png",
+        "image_sha256": "f909709e3090f23a7db06113689cdbf94408f67917d3883d9d1c4918a0ec0ee0",
+        "pixel_sha256": "558278b55e19cadc12ef0892d04f100a44f3fc2f31a91c6dd7fdffa5b29560ef",
+        "reviewer": "/root/week4_lecture_rebuild",
+        "status": "passed",
+        "review_basis": "Exact decoded RGB pixel identity to the individually reviewed 125 dpi draft page; PNG container metadata differs.",
+        "reviewed_draft_pixel_sha256": "558278b55e19cadc12ef0892d04f100a44f3fc2f31a91c6dd7fdffa5b29560ef"
+      },
+      {
+        "page": 59,
+        "image_path": "tmp/week04_lecture/render_final/page-059.png",
+        "image_sha256": "600798e2dafd1a8a922d5fd8eae21e22b873d33de3635fa797c54a46dd1b3e93",
+        "pixel_sha256": "a977ea8f169b41a3b5c62a2ca86e13f3e788772798f1e735bb5ed07873b76356",
+        "reviewer": "/root/week4_lecture_rebuild",
+        "status": "passed",
+        "review_basis": "Exact decoded RGB pixel identity to the individually reviewed 125 dpi draft page; PNG container metadata differs.",
+        "reviewed_draft_pixel_sha256": "a977ea8f169b41a3b5c62a2ca86e13f3e788772798f1e735bb5ed07873b76356"
+      },
+      {
+        "page": 60,
+        "image_path": "tmp/week04_lecture/render_final/page-060.png",
+        "image_sha256": "20361580c520d73ed089e2d17921994b59427315786fea0f1c1672109a73becd",
+        "pixel_sha256": "ae22cb0866999f42dc8937dc10649560904041b7503c1ac40788f21888a71d4f",
+        "reviewer": "/root/week4_lecture_rebuild",
+        "status": "passed",
+        "review_basis": "Exact decoded RGB pixel identity to the individually reviewed 125 dpi draft page; PNG container metadata differs.",
+        "reviewed_draft_pixel_sha256": "ae22cb0866999f42dc8937dc10649560904041b7503c1ac40788f21888a71d4f"
+      },
+      {
+        "page": 61,
+        "image_path": "tmp/week04_lecture/render_final/page-061.png",
+        "image_sha256": "e145ee36c86403e028c6e837d931f695104d6e0e7e471d0fad86ae35b7531d8e",
+        "pixel_sha256": "6fac0ef7ef42a9b64b93b023bc8b75c015d99359d14eac919c7d7a1abde07de8",
+        "reviewer": "/root/week4_lecture_rebuild",
+        "status": "passed",
+        "review_basis": "Exact decoded RGB pixel identity to the individually reviewed 125 dpi draft page; PNG container metadata differs.",
+        "reviewed_draft_pixel_sha256": "6fac0ef7ef42a9b64b93b023bc8b75c015d99359d14eac919c7d7a1abde07de8"
+      },
+      {
+        "page": 62,
+        "image_path": "tmp/week04_lecture/render_final/page-062.png",
+        "image_sha256": "28079212e88c21358871730498732f7716496fb9f2136ad9584933fdbe3c0f26",
+        "pixel_sha256": "5f7c5782226ef7b4cd97466d0e57dfdb158b820dc8e82baa641ef0ab16ad170b",
+        "reviewer": "/root/week4_lecture_rebuild",
+        "status": "passed",
+        "review_basis": "Exact decoded RGB pixel identity to the individually reviewed 125 dpi draft page; PNG container metadata differs.",
+        "reviewed_draft_pixel_sha256": "5f7c5782226ef7b4cd97466d0e57dfdb158b820dc8e82baa641ef0ab16ad170b"
+      },
+      {
+        "page": 63,
+        "image_path": "tmp/week04_lecture/render_final/page-063.png",
+        "image_sha256": "9277c4f1cf9ee5ce65d7b06e60e017d1fbd6e06a68045c8c835f2850005da469",
+        "pixel_sha256": "c77dc22181e523fa55e7476ce9ff99473af6662a0bbef4e23f2b1453dca38636",
+        "reviewer": "/root/week4_lecture_rebuild",
+        "status": "passed",
+        "review_basis": "Exact decoded RGB pixel identity to the individually reviewed 125 dpi draft page; PNG container metadata differs.",
+        "reviewed_draft_pixel_sha256": "c77dc22181e523fa55e7476ce9ff99473af6662a0bbef4e23f2b1453dca38636"
+      },
+      {
+        "page": 64,
+        "image_path": "tmp/week04_lecture/render_final/page-064.png",
+        "image_sha256": "749a41fd3540c40f08e486064d3564aeac43278eb897520ec5ef440c5523ed2a",
+        "pixel_sha256": "d673b58d5062489e303ea3cd2f9742388627608e3e7a2be6dd3903f37136c5fc",
+        "reviewer": "/root/week4_lecture_rebuild",
+        "status": "passed",
+        "review_basis": "Exact decoded RGB pixel identity to the individually reviewed 125 dpi draft page; PNG container metadata differs.",
+        "reviewed_draft_pixel_sha256": "d673b58d5062489e303ea3cd2f9742388627608e3e7a2be6dd3903f37136c5fc"
+      },
+      {
+        "page": 65,
+        "image_path": "tmp/week04_lecture/render_final/page-065.png",
+        "image_sha256": "a715774206c34f47af7c7c9d7729d7be59196cfa7018288df93da6d4f5304876",
+        "pixel_sha256": "909a03c6f1be08ee2820c27ce3acffc6f171caf1b1d5bf1aca70eddc4c13f9e6",
+        "reviewer": "/root/week4_lecture_rebuild",
+        "status": "passed",
+        "review_basis": "Exact decoded RGB pixel identity to the individually reviewed 125 dpi draft page; PNG container metadata differs.",
+        "reviewed_draft_pixel_sha256": "909a03c6f1be08ee2820c27ce3acffc6f171caf1b1d5bf1aca70eddc4c13f9e6"
+      },
+      {
+        "page": 66,
+        "image_path": "tmp/week04_lecture/render_final/page-066.png",
+        "image_sha256": "80c42ff57723eb382aec0345b623ab9d5ddb95173d33a7ac7a5852974945a277",
+        "pixel_sha256": "38c0bdf6a374c99406d2c7800e011f2a402b26231526cc7df89b50cb17f62c09",
+        "reviewer": "/root/week4_lecture_rebuild",
+        "status": "passed",
+        "review_basis": "Exact decoded RGB pixel identity to the individually reviewed 125 dpi draft page; PNG container metadata differs.",
+        "reviewed_draft_pixel_sha256": "38c0bdf6a374c99406d2c7800e011f2a402b26231526cc7df89b50cb17f62c09"
+      },
+      {
+        "page": 67,
+        "image_path": "tmp/week04_lecture/render_final/page-067.png",
+        "image_sha256": "b6639e60608e7e00b752d3aecd2ddff3c4cfba1c19f572036f202a938fb7e96a",
+        "pixel_sha256": "cccd820cc9af36c5d70061984dd733efd7f7eaef3fd40566f6940ca11ecd0aaf",
+        "reviewer": "/root/week4_lecture_rebuild",
+        "status": "passed",
+        "review_basis": "Exact decoded RGB pixel identity to the individually reviewed 125 dpi draft page; PNG container metadata differs.",
+        "reviewed_draft_pixel_sha256": "cccd820cc9af36c5d70061984dd733efd7f7eaef3fd40566f6940ca11ecd0aaf"
+      },
+      {
+        "page": 68,
+        "image_path": "tmp/week04_lecture/render_final/page-068.png",
+        "image_sha256": "0e52b6012a0383ab8d2e935a967f1b9e33e2c394c4ac198b9b98cb592ea3e678",
+        "pixel_sha256": "285586024d87993aebc947974f974147d189395b467c0de3cbbbb7045f672486",
+        "reviewer": "/root/week4_lecture_rebuild",
+        "status": "passed",
+        "review_basis": "Exact decoded RGB pixel identity to the individually reviewed 125 dpi draft page; PNG container metadata differs.",
+        "reviewed_draft_pixel_sha256": "285586024d87993aebc947974f974147d189395b467c0de3cbbbb7045f672486"
+      },
+      {
+        "page": 69,
+        "image_path": "tmp/week04_lecture/render_final/page-069.png",
+        "image_sha256": "c8b60b11f56c862cc5c759093f0fb9a63bada058cbed8c0ac55c4e5e69d04da2",
+        "pixel_sha256": "710ed0b8a64531225ed8f75cf324a12be714e4ad14917abf0f7ace7074362d83",
+        "reviewer": "/root/week4_lecture_rebuild",
+        "status": "passed",
+        "review_basis": "Exact decoded RGB pixel identity to the individually reviewed 125 dpi draft page; PNG container metadata differs.",
+        "reviewed_draft_pixel_sha256": "710ed0b8a64531225ed8f75cf324a12be714e4ad14917abf0f7ace7074362d83"
+      },
+      {
+        "page": 70,
+        "image_path": "tmp/week04_lecture/render_final/page-070.png",
+        "image_sha256": "404f9b49992eb54520b29137787c62a62d3001c345dffbec2f76b1b7b71aeb21",
+        "pixel_sha256": "6014aa68af080e1e5a7b7515bbbd6f682c66fab31cc53801db845d781168be84",
+        "reviewer": "/root/week4_lecture_rebuild",
+        "status": "passed",
+        "review_basis": "Exact decoded RGB pixel identity to the individually reviewed 125 dpi draft page; PNG container metadata differs.",
+        "reviewed_draft_pixel_sha256": "6014aa68af080e1e5a7b7515bbbd6f682c66fab31cc53801db845d781168be84"
+      },
+      {
+        "page": 71,
+        "image_path": "tmp/week04_lecture/render_final/page-071.png",
+        "image_sha256": "e5408cb31463f2fb73c2f488311ca93f5f136b1559fe9d46b10599dd03c0e75f",
+        "pixel_sha256": "f689e51cf81b4e221754271fd8ff313048e0d42d3ac0209263578b0e9deceb0b",
+        "reviewer": "/root/week4_lecture_rebuild",
+        "status": "passed",
+        "review_basis": "Exact decoded RGB pixel identity to the individually reviewed 125 dpi draft page; PNG container metadata differs.",
+        "reviewed_draft_pixel_sha256": "f689e51cf81b4e221754271fd8ff313048e0d42d3ac0209263578b0e9deceb0b"
+      },
+      {
+        "page": 72,
+        "image_path": "tmp/week04_lecture/render_final/page-072.png",
+        "image_sha256": "baf978297c989796564147a36e051a9d4d6ed714b4cfad05ea9149e9e21717ef",
+        "pixel_sha256": "bfcdb66e83965529d7ae52dfac7244b5cd4c601c93562fe28d5177c64b047b6b",
+        "reviewer": "/root/week4_lecture_rebuild",
+        "status": "passed",
+        "review_basis": "Exact decoded RGB pixel identity to the individually reviewed 125 dpi draft page; PNG container metadata differs.",
+        "reviewed_draft_pixel_sha256": "bfcdb66e83965529d7ae52dfac7244b5cd4c601c93562fe28d5177c64b047b6b"
+      },
+      {
+        "page": 73,
+        "image_path": "tmp/week04_lecture/render_final/page-073.png",
+        "image_sha256": "60e6f145757a2f1086d3c8bf1217c5ea0364169c4fd2c70de7de46768abbea8a",
+        "pixel_sha256": "16bec8be3aae6c41f03121b3d122c5543213c584010ee0919839beb114df645f",
+        "reviewer": "/root/week4_lecture_rebuild",
+        "status": "passed",
+        "review_basis": "Direct individual full-page final-render inspection at 125 dpi."
+      },
+      {
+        "page": 74,
+        "image_path": "tmp/week04_lecture/render_final/page-074.png",
+        "image_sha256": "a6765b354e69f84b61bca93d5f134f8fbc742a47ae64dc19c19dc38e95b97b4c",
+        "pixel_sha256": "20140e0aa2392d8ac11653e30d3b798ca44101499e03f43fb2a943df895a88e8",
+        "reviewer": "/root/week4_lecture_rebuild",
+        "status": "passed",
+        "review_basis": "Exact decoded RGB pixel identity to the individually reviewed 125 dpi draft page; PNG container metadata differs.",
+        "reviewed_draft_pixel_sha256": "20140e0aa2392d8ac11653e30d3b798ca44101499e03f43fb2a943df895a88e8"
+      },
+      {
+        "page": 75,
+        "image_path": "tmp/week04_lecture/render_final/page-075.png",
+        "image_sha256": "67f5420daa8d4cfdd1907dffe97ab9561ae06e93bc88564da971cec0b9476e98",
+        "pixel_sha256": "1b11c172acf27b535f71d72c9d28c8e675c924ad01b0b9aa94c3c69fa76d4bc6",
+        "reviewer": "/root/week4_lecture_rebuild",
+        "status": "passed",
+        "review_basis": "Exact decoded RGB pixel identity to the individually reviewed 125 dpi draft page; PNG container metadata differs.",
+        "reviewed_draft_pixel_sha256": "1b11c172acf27b535f71d72c9d28c8e675c924ad01b0b9aa94c3c69fa76d4bc6"
+      },
+      {
+        "page": 76,
+        "image_path": "tmp/week04_lecture/render_final/page-076.png",
+        "image_sha256": "752193c40c86864516e5c5dc2ec5646233b4d546c582addef797fc47aba3645a",
+        "pixel_sha256": "b13fd55eb681cf179c96c19ae70692b4847f877b97af58b6c93636a39175accd",
+        "reviewer": "/root/week4_lecture_rebuild",
+        "status": "passed",
+        "review_basis": "Direct individual full-page final-render inspection at 125 dpi."
+      },
+      {
+        "page": 77,
+        "image_path": "tmp/week04_lecture/render_final/page-077.png",
+        "image_sha256": "7c6cb29af3d210fb9ed11a1f7391e8be65885876d07f4cb724f600b811572fee",
+        "pixel_sha256": "48db172dda750a24e4b79bd4dbde34355c6421c6a637daae5ec74242d9528d16",
+        "reviewer": "/root/week4_lecture_rebuild",
+        "status": "passed",
+        "review_basis": "Exact decoded RGB pixel identity to the individually reviewed 125 dpi draft page; PNG container metadata differs.",
+        "reviewed_draft_pixel_sha256": "48db172dda750a24e4b79bd4dbde34355c6421c6a637daae5ec74242d9528d16"
+      },
+      {
+        "page": 78,
+        "image_path": "tmp/week04_lecture/render_final/page-078.png",
+        "image_sha256": "5d384797c5358dbb6c071135866acf85ad76b104cae31cdeac35a7f704a1cfbd",
+        "pixel_sha256": "c28e1193488322e6db51dc319d5668c915922112f5bff495e33bae5bf48a0e99",
+        "reviewer": "/root/week4_lecture_rebuild",
+        "status": "passed",
+        "review_basis": "Exact decoded RGB pixel identity to the individually reviewed 125 dpi draft page; PNG container metadata differs.",
+        "reviewed_draft_pixel_sha256": "c28e1193488322e6db51dc319d5668c915922112f5bff495e33bae5bf48a0e99"
+      },
+      {
+        "page": 79,
+        "image_path": "tmp/week04_lecture/render_final/page-079.png",
+        "image_sha256": "f1cc7a9eb400310c012042bca1a14b5c709fcd7a59dd1b5286ff95ef47a27484",
+        "pixel_sha256": "a9091e3ff6b9d9a4e08b94a19be4f173e50c15d4bdcb66435458eb63ff69556c",
+        "reviewer": "/root/week4_lecture_rebuild",
+        "status": "passed",
+        "review_basis": "Exact decoded RGB pixel identity to the individually reviewed 125 dpi draft page; PNG container metadata differs.",
+        "reviewed_draft_pixel_sha256": "a9091e3ff6b9d9a4e08b94a19be4f173e50c15d4bdcb66435458eb63ff69556c"
+      },
+      {
+        "page": 80,
+        "image_path": "tmp/week04_lecture/render_final/page-080.png",
+        "image_sha256": "e97654ccc5befb26bd9d5c9091470d04be3357cf99d8fcfd3f810e73d6805577",
+        "pixel_sha256": "dda3df5adc7e905fb8fffc02f3b4ce1cb1a5db7dd0a1c66d8c6b601edbfe1001",
+        "reviewer": "/root/week4_lecture_rebuild",
+        "status": "passed",
+        "review_basis": "Exact decoded RGB pixel identity to the individually reviewed 125 dpi draft page; PNG container metadata differs.",
+        "reviewed_draft_pixel_sha256": "dda3df5adc7e905fb8fffc02f3b4ce1cb1a5db7dd0a1c66d8c6b601edbfe1001"
+      },
+      {
+        "page": 81,
+        "image_path": "tmp/week04_lecture/render_final/page-081.png",
+        "image_sha256": "fb1e840b82f20f7d095faf6996b8cfaf98d87d81d83a7d39aa795c40890ae778",
+        "pixel_sha256": "692ea5abb69c20b7c35fcb13a288221a92ffe20c2685a6c5e824980417f84797",
+        "reviewer": "/root/week4_lecture_rebuild",
+        "status": "passed",
+        "review_basis": "Exact decoded RGB pixel identity to the individually reviewed 125 dpi draft page; PNG container metadata differs.",
+        "reviewed_draft_pixel_sha256": "692ea5abb69c20b7c35fcb13a288221a92ffe20c2685a6c5e824980417f84797"
+      },
+      {
+        "page": 82,
+        "image_path": "tmp/week04_lecture/render_final/page-082.png",
+        "image_sha256": "c6c0a210947184678e0fc0343eb7643cc05b9c174cf422552c54b0611cbcc6ab",
+        "pixel_sha256": "c79f74520d240ab316e939e8c02d3cdf2a753e0b44774a8061b77b36d5a694c2",
+        "reviewer": "/root/week4_lecture_rebuild",
+        "status": "passed",
+        "review_basis": "Exact decoded RGB pixel identity to the individually reviewed 125 dpi draft page; PNG container metadata differs.",
+        "reviewed_draft_pixel_sha256": "c79f74520d240ab316e939e8c02d3cdf2a753e0b44774a8061b77b36d5a694c2"
+      },
+      {
+        "page": 83,
+        "image_path": "tmp/week04_lecture/render_final/page-083.png",
+        "image_sha256": "f92a889baf528ee91a4da7148bdebb7134c78da4c670bdc2e5558beaa96cca87",
+        "pixel_sha256": "2abdbdcc1da90bcfadf3c5e896e76e3548e91c079b264ce0d0d36cee0fb051eb",
+        "reviewer": "/root/week4_lecture_rebuild",
+        "status": "passed",
+        "review_basis": "Exact decoded RGB pixel identity to the individually reviewed 125 dpi draft page; PNG container metadata differs.",
+        "reviewed_draft_pixel_sha256": "2abdbdcc1da90bcfadf3c5e896e76e3548e91c079b264ce0d0d36cee0fb051eb"
+      },
+      {
+        "page": 84,
+        "image_path": "tmp/week04_lecture/render_final/page-084.png",
+        "image_sha256": "1aaec578c2e662c98438308653f1ec574c86d46bc4237bdcb5e24740bb9069ae",
+        "pixel_sha256": "8fbc089c17cd1381768d887e8338bdb175ba0644990ed29a8018061aa75c0bab",
+        "reviewer": "/root/week4_lecture_rebuild",
+        "status": "passed",
+        "review_basis": "Exact decoded RGB pixel identity to the individually reviewed 125 dpi draft page; PNG container metadata differs.",
+        "reviewed_draft_pixel_sha256": "8fbc089c17cd1381768d887e8338bdb175ba0644990ed29a8018061aa75c0bab"
+      },
+      {
+        "page": 85,
+        "image_path": "tmp/week04_lecture/render_final/page-085.png",
+        "image_sha256": "9f9a1f5a6402a4f722421ffcced5f7de77a3e5adca284800c12d997b6bb48456",
+        "pixel_sha256": "93038c4fb0d9867014bce7d05a051378c219429a9d383381e710cfd8379a469b",
+        "reviewer": "/root/week4_lecture_rebuild",
+        "status": "passed",
+        "review_basis": "Exact decoded RGB pixel identity to the individually reviewed 125 dpi draft page; PNG container metadata differs.",
+        "reviewed_draft_pixel_sha256": "93038c4fb0d9867014bce7d05a051378c219429a9d383381e710cfd8379a469b"
+      },
+      {
+        "page": 86,
+        "image_path": "tmp/week04_lecture/render_final/page-086.png",
+        "image_sha256": "724b0634f9082396d5c2521b52005877a2790b9731856c20bb8adb90d34d18fb",
+        "pixel_sha256": "1c74b04ea43e87a8863dd00628fdaf7d923dc1dac79012b8fd0956d8ad1bb638",
+        "reviewer": "/root",
+        "status": "passed",
+        "review_basis": "Exact decoded RGB pixel identity to the individually reviewed 125 dpi draft page; PNG container metadata differs.",
+        "reviewed_draft_pixel_sha256": "1c74b04ea43e87a8863dd00628fdaf7d923dc1dac79012b8fd0956d8ad1bb638"
+      },
+      {
+        "page": 87,
+        "image_path": "tmp/week04_lecture/render_final/page-087.png",
+        "image_sha256": "2fa98eddf344b61057662e4524b4ef83767a0d851b3a6ff952a0678b87748bff",
+        "pixel_sha256": "e9f8717e1b903bd8ea1664e8316301fa3671fa4a9b41762e0cc958f90e4ec6fd",
+        "reviewer": "/root",
+        "status": "passed",
+        "review_basis": "Exact decoded RGB pixel identity to the individually reviewed 125 dpi draft page; PNG container metadata differs.",
+        "reviewed_draft_pixel_sha256": "e9f8717e1b903bd8ea1664e8316301fa3671fa4a9b41762e0cc958f90e4ec6fd"
+      },
+      {
+        "page": 88,
+        "image_path": "tmp/week04_lecture/render_final/page-088.png",
+        "image_sha256": "bd037458392f58789e9f551356f6745d76b7d0edf46051392811ca538aeba4cd",
+        "pixel_sha256": "0fe2b611da3418b675d233046bde8936fe5a09b1aa96dcc4df75ec1289865fd5",
+        "reviewer": "/root",
+        "status": "passed",
+        "review_basis": "Exact decoded RGB pixel identity to the individually reviewed 125 dpi draft page; PNG container metadata differs.",
+        "reviewed_draft_pixel_sha256": "0fe2b611da3418b675d233046bde8936fe5a09b1aa96dcc4df75ec1289865fd5"
+      },
+      {
+        "page": 89,
+        "image_path": "tmp/week04_lecture/render_final/page-089.png",
+        "image_sha256": "5c303d4ee503e63b6884832e1b76c85b16fb704adf01fb12343e5beda0bf2d7c",
+        "pixel_sha256": "5db9ba6225aff7e52e436424795f84680719abbff7b09010811b32dbf130539e",
+        "reviewer": "/root",
+        "status": "passed",
+        "review_basis": "Exact decoded RGB pixel identity to the individually reviewed 125 dpi draft page; PNG container metadata differs.",
+        "reviewed_draft_pixel_sha256": "5db9ba6225aff7e52e436424795f84680719abbff7b09010811b32dbf130539e"
+      },
+      {
+        "page": 90,
+        "image_path": "tmp/week04_lecture/render_final/page-090.png",
+        "image_sha256": "1d1d6affb9f1ee103b3162ed17ace49069079af541e9eb28743b0dbe20997098",
+        "pixel_sha256": "ce099c0ddf35b744e36bd7f66f8416662af126046e21624ea932340aada5496d",
+        "reviewer": "/root",
+        "status": "passed",
+        "review_basis": "Direct individual full-page final-render inspection at 125 dpi."
+      },
+      {
+        "page": 91,
+        "image_path": "tmp/week04_lecture/render_final/page-091.png",
+        "image_sha256": "1cbe5ccbcc83287ddf03aba551665982a74b1c749a5eae39d904c92028d33101",
+        "pixel_sha256": "7708bca0272ac7f8bdb4ef70429c3bb6ed29432cd5e3b3806a75739089033f3c",
+        "reviewer": "/root",
+        "status": "passed",
+        "review_basis": "Exact decoded RGB pixel identity to the individually reviewed 125 dpi draft page; PNG container metadata differs.",
+        "reviewed_draft_pixel_sha256": "7708bca0272ac7f8bdb4ef70429c3bb6ed29432cd5e3b3806a75739089033f3c"
+      },
+      {
+        "page": 92,
+        "image_path": "tmp/week04_lecture/render_final/page-092.png",
+        "image_sha256": "224e9881872875fb612d383e8198b75b1c01173788720addd58abb8916407a8d",
+        "pixel_sha256": "7d224ea4f862993240d7bca431d7d18ab3b745862917bd808914c98fd1eb178e",
+        "reviewer": "/root",
+        "status": "passed",
+        "review_basis": "Exact decoded RGB pixel identity to the individually reviewed 125 dpi draft page; PNG container metadata differs.",
+        "reviewed_draft_pixel_sha256": "7d224ea4f862993240d7bca431d7d18ab3b745862917bd808914c98fd1eb178e"
+      },
+      {
+        "page": 93,
+        "image_path": "tmp/week04_lecture/render_final/page-093.png",
+        "image_sha256": "d5b12287b4c79098ed8d149621624ea17da485061a18e6897c5aa3f306bf961a",
+        "pixel_sha256": "815739d68fab8d13ec027c27372111de6abb1bc716e7f90b8bdccd65c5f001cc",
+        "reviewer": "/root",
+        "status": "passed",
+        "review_basis": "Exact decoded RGB pixel identity to the individually reviewed 125 dpi draft page; PNG container metadata differs.",
+        "reviewed_draft_pixel_sha256": "815739d68fab8d13ec027c27372111de6abb1bc716e7f90b8bdccd65c5f001cc"
+      },
+      {
+        "page": 94,
+        "image_path": "tmp/week04_lecture/render_final/page-094.png",
+        "image_sha256": "8ba6a3aebbd17bf2ffe8b98885efe281aad1d89c388dc46a7e7dd82f0e117e9d",
+        "pixel_sha256": "8c9f40116b8d36cf6340cb4342b05da167e280cd26f401c12243992b46530c66",
+        "reviewer": "/root",
+        "status": "passed",
+        "review_basis": "Exact decoded RGB pixel identity to the individually reviewed 125 dpi draft page; PNG container metadata differs.",
+        "reviewed_draft_pixel_sha256": "8c9f40116b8d36cf6340cb4342b05da167e280cd26f401c12243992b46530c66"
+      },
+      {
+        "page": 95,
+        "image_path": "tmp/week04_lecture/render_final/page-095.png",
+        "image_sha256": "47535d8870ea0daeb6860fa60b2d45b7269d85d400123760f7a0ad149b2e027c",
+        "pixel_sha256": "61c7c62a1c041f06acbce535093d98380c5c02b508340cba728dfdaca76be137",
+        "reviewer": "/root",
+        "status": "passed",
+        "review_basis": "Exact decoded RGB pixel identity to the individually reviewed 125 dpi draft page; PNG container metadata differs.",
+        "reviewed_draft_pixel_sha256": "61c7c62a1c041f06acbce535093d98380c5c02b508340cba728dfdaca76be137"
+      },
+      {
+        "page": 96,
+        "image_path": "tmp/week04_lecture/render_final/page-096.png",
+        "image_sha256": "c1f8b7a80732ba6dd3f9be43c6a94f92661d7c435efcec414d0181be32475d90",
+        "pixel_sha256": "ca7a34ecb12f21fa5fe4c4757581913840fb82626bc399b60aa4ef7aca6a9b01",
+        "reviewer": "/root",
+        "status": "passed",
+        "review_basis": "Exact decoded RGB pixel identity to the individually reviewed 125 dpi draft page; PNG container metadata differs.",
+        "reviewed_draft_pixel_sha256": "ca7a34ecb12f21fa5fe4c4757581913840fb82626bc399b60aa4ef7aca6a9b01"
+      },
+      {
+        "page": 97,
+        "image_path": "tmp/week04_lecture/render_final/page-097.png",
+        "image_sha256": "26033d344a41cd9f780cfe980fa648b35dafc0ba9d78538b6db22a626a4f84dc",
+        "pixel_sha256": "b72ee448360be71c492a21e8614b9cae48262226be57f6d527bda73b7b895298",
+        "reviewer": "/root",
+        "status": "passed",
+        "review_basis": "Exact decoded RGB pixel identity to the individually reviewed 125 dpi draft page; PNG container metadata differs.",
+        "reviewed_draft_pixel_sha256": "b72ee448360be71c492a21e8614b9cae48262226be57f6d527bda73b7b895298"
+      },
+      {
+        "page": 98,
+        "image_path": "tmp/week04_lecture/render_final/page-098.png",
+        "image_sha256": "5ba4bd988d7416a8f5e926a1e0c4506f9982e9cfb06097aa4bac3032cb3f0ba8",
+        "pixel_sha256": "97dce9d40e49d5d7b5a1b6f1f3d5e9d98496adf25895f4da859a4cfc6c26daca",
+        "reviewer": "/root",
+        "status": "passed",
+        "review_basis": "Exact decoded RGB pixel identity to the individually reviewed 125 dpi draft page; PNG container metadata differs.",
+        "reviewed_draft_pixel_sha256": "97dce9d40e49d5d7b5a1b6f1f3d5e9d98496adf25895f4da859a4cfc6c26daca"
+      },
+      {
+        "page": 99,
+        "image_path": "tmp/week04_lecture/render_final/page-099.png",
+        "image_sha256": "0e0f0b89a2245bb492a60d33e667ab8fec51fb894d4bfef1fc3e944dd52fe7bb",
+        "pixel_sha256": "2f18dc05f2d7361af6858dbb50fe3a8cfdfb43530e53262daafdcc455bbf93f9",
+        "reviewer": "/root",
+        "status": "passed",
+        "review_basis": "Exact decoded RGB pixel identity to the individually reviewed 125 dpi draft page; PNG container metadata differs.",
+        "reviewed_draft_pixel_sha256": "2f18dc05f2d7361af6858dbb50fe3a8cfdfb43530e53262daafdcc455bbf93f9"
+      },
+      {
+        "page": 100,
+        "image_path": "tmp/week04_lecture/render_final/page-100.png",
+        "image_sha256": "9dc4af22d3ce16ed36ac2107d0f9e097f25dffc80e34e4df74c1976fb5b68a18",
+        "pixel_sha256": "65daac5aabdd4928ca1bfea199badf1356ec31da5c269c93473fdb3ee469fe28",
+        "reviewer": "/root",
+        "status": "passed",
+        "review_basis": "Exact decoded RGB pixel identity to the individually reviewed 125 dpi draft page; PNG container metadata differs.",
+        "reviewed_draft_pixel_sha256": "65daac5aabdd4928ca1bfea199badf1356ec31da5c269c93473fdb3ee469fe28"
+      },
+      {
+        "page": 101,
+        "image_path": "tmp/week04_lecture/render_final/page-101.png",
+        "image_sha256": "d728814adf5341ba7370aaf21237311ec68bd17eb3eaf1616045b4657fd7d61f",
+        "pixel_sha256": "e003edaec8977fded4c25a1eba405faa4020166f2027104a084d8331f533ca6c",
+        "reviewer": "/root",
+        "status": "passed",
+        "review_basis": "Exact decoded RGB pixel identity to the individually reviewed 125 dpi draft page; PNG container metadata differs.",
+        "reviewed_draft_pixel_sha256": "e003edaec8977fded4c25a1eba405faa4020166f2027104a084d8331f533ca6c"
+      },
+      {
+        "page": 102,
+        "image_path": "tmp/week04_lecture/render_final/page-102.png",
+        "image_sha256": "55371563dcecf026151e9857261fc2c322733c817d35696254d4150afc976e4e",
+        "pixel_sha256": "a76077910ad3c9b6e17db0895ece60d3eaed4112feaf6dc6798e59ff195365ba",
+        "reviewer": "/root",
+        "status": "passed",
+        "review_basis": "Exact decoded RGB pixel identity to the individually reviewed 125 dpi draft page; PNG container metadata differs.",
+        "reviewed_draft_pixel_sha256": "a76077910ad3c9b6e17db0895ece60d3eaed4112feaf6dc6798e59ff195365ba"
+      },
+      {
+        "page": 103,
+        "image_path": "tmp/week04_lecture/render_final/page-103.png",
+        "image_sha256": "09e9113bee19c9a95619b3312b78307dcc6288127179b71ff8554fc2607893cb",
+        "pixel_sha256": "9db6b2817e4ce7bf08ca6a03228fac312c30a3ebf688fc06ab589a47e561d0fd",
+        "reviewer": "/root",
+        "status": "passed",
+        "review_basis": "Exact decoded RGB pixel identity to the individually reviewed 125 dpi draft page; PNG container metadata differs.",
+        "reviewed_draft_pixel_sha256": "9db6b2817e4ce7bf08ca6a03228fac312c30a3ebf688fc06ab589a47e561d0fd"
+      }
+    ]
+  },
+  "final_figure_receipt": "qa/week04_lecture_figures.json",
+  "evidence_presentation_substitutions": 7,
+  "evidence_presentation_changed_pages": [
+    50,
+    51,
+    56,
+    73,
+    76,
+    90
+  ]
+}

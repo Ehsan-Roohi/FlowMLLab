@@ -446,5 +446,7 @@ notebook = {
 OUTPUT.write_text(json.dumps(notebook, indent=1, ensure_ascii=False) + "\n", encoding="utf-8")
 from qa.notebook_review_updates import review_notebook_file
 review_notebook_file(OUTPUT)
+from qa.week04_output_audit import update as update_physical_outputs
+update_physical_outputs(keys=["lab3"])
 print(f"wrote {OUTPUT} with {len(cells)} cells")
 

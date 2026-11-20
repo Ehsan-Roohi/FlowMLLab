@@ -97,6 +97,80 @@ def family(path):
     return 'other'
 
 
+
+def verify_week04_replacement(legacy, evidence):
+    """Bind the deliberately rebuilt guide without claiming old-page identity.
+
+    Render caches are expendable, unlike the compact review record. Present
+    caches are checked byte for byte; absent caches do not erase a recorded
+    individual visual inspection or imply that it was repeated by this gate.
+    """
+    from pypdf import PdfReader
+    review_path = ROOT/'qa/week04_lecture_review.json'
+    review = read_json(review_path)
+    require(review.get('schema_version') == 1
+            and review.get('review_type') == 'week04_full_guide_replacement',
+            'Unsupported Week4 replacement review version')
+    require(review.get('status') == 'complete',
+            'Week4 replacement review is pending or incomplete')
+    require(review.get('pdf') == 'lectures/week04_cavity_surrogates_deeponet.pdf'
+            and review.get('source') == 'lectures/source/week04_lab_guide.py'
+            and review.get('evidence_source') == evidence['path'],
+            'Week4 replacement review names an unexpected artifact')
+    require(review.get('pre_revision') == dict(pages=legacy['total_pages'], sha256=legacy['sha256']),
+            'Week4 replacement is not bound to the reviewed historical PDF')
+    require((review.get('guide_pages'), review.get('retained_evidence_pages'), review.get('total_pages')) == (49,54,103),
+            'Week4 replacement requires 49 guide and 54 retained evidence pages')
+    require(review.get('evidence_source_sha256') == evidence['sha256'],
+            'Week4 scientific evidence source differs from the historical review')
+    pdf_item = dict(path=review['pdf'], sha256=review['pdf_sha256'])
+    source_item = dict(path=review['source'], sha256=review['source_sha256'])
+    evidence_item = dict(path=review['evidence_source'], sha256=review['evidence_source_sha256'])
+    pdf_path = checked(pdf_item)
+    checked(source_item); checked(evidence_item)
+    require(len(PdfReader(pdf_path).pages) == 103,
+            'Week4 replacement PDF page count differs from its review')
+    guide_map = review.get('page_map', [])
+    appendix_map = review.get('appendix_map', [])
+    require([row.get('page') for row in guide_map] == list(range(1,50))
+            and all(isinstance(row.get('title'),str) and row['title'].strip() for row in guide_map),
+            'Week4 guide page map is incomplete')
+    require([row.get('page') for row in appendix_map] == list(range(50,104))
+            and [row.get('id') for row in appendix_map] == [f'E{i:02d}' for i in range(1,55)]
+            and all(isinstance(row.get('title'),str) and row['title'].strip() for row in appendix_map),
+            'Week4 retained evidence page map is incomplete')
+    visual = review.get('visual_review', {})
+    require(visual.get('pdf_sha256') == review['pdf_sha256'],
+            'Week4 visual review is not bound to the current PDF')
+    require(isinstance(visual.get('dpi'), (int,float)) and visual['dpi'] >= 125,
+            'Week4 individual page review resolution is insufficient')
+    require(visual.get('out_of_bounds_text') == [],
+            'Week4 replacement has an unresolved or unchecked layout defect')
+    rows = visual.get('pages', [])
+    require(len(rows) == 103 and {row.get('page') for row in rows} == set(range(1,104)),
+            'Every Week4 replacement page requires an individual review')
+    require(all(isinstance(row.get('image_sha256'),str)
+                and re.fullmatch('[0-9a-f]{64}',row['image_sha256'])
+                and row.get('status') == 'passed'
+                and isinstance(row.get('reviewer'),str) and row['reviewer'].strip()
+                and isinstance(row.get('review_basis'),str) and row['review_basis'].strip()
+                for row in rows),
+            'Week4 replacement page lacks a passed rendered-review identity')
+    rendered_files_checked = 0
+    for row in rows:
+        if not row.get('image_path'): continue
+        image_path = (ROOT/row['image_path']).resolve()
+        require(image_path.is_relative_to(ROOT.resolve()) and image_path.suffix.lower() == '.png',
+                'Week4 page render leaves the checkout or is not a PNG')
+        if image_path.exists():
+            checked(dict(path=row['image_path'],sha256=row['image_sha256']))
+            rendered_files_checked += 1
+    return dict(pdf=dict(**pdf_item, pages=103, guide_pages=49, retained_evidence_pages=54,
+                         preserved_pages=0, individually_reviewed_pages=103,
+                         review_mode='fully_reviewed_replacement; no old-page identity claim',
+                         available_render_files_checked=rendered_files_checked),
+                review=entry(review_path), source=source_item, evidence=evidence_item)
+
 def verify_reviews():
     from pypdf import PdfReader
     from PIL import Image
@@ -127,11 +201,18 @@ def verify_reviews():
         science_manifests.append(item)
     lecture_sources = {name: dict(lecture[name]) for name in ('source','preparer')}
     for item in lecture_sources.values(): checked(item)
-    pdfs = {}; appended = 0
+    pdfs = {}; appended = 0; replacement_reviews = {}
     for name, original in PDFS.items():
         reviewed = lecture['pdfs'][name]; path = ROOT/'lectures'/(name+'.pdf')
-        require(sha(path) == reviewed['sha256'], 'PDF changed after individual visual review: '+name)
-        pages = len(PdfReader(path).pages)
+        replacement = None
+        if name == 'week04_cavity_surrogates_deeponet' and sha(path) != reviewed['sha256']:
+            replacement = verify_week04_replacement(reviewed, lecture_sources['source'])
+            # Validate the historical receipt on its own terms below. Its
+            # preserved-page assertion is not carried onto the rebuilt guide.
+            pages = reviewed['total_pages']
+        else:
+            require(sha(path) == reviewed['sha256'], 'PDF changed after individual visual review: '+name)
+            pages = len(PdfReader(path).pages)
         require(reviewed['original_pages'] == original and reviewed['total_pages'] == pages and pages > original,
                 'PDF page counts/preserved extent differ')
         require(not reviewed['old_page_text_changes'] and not reviewed['old_page_rgb72_changes']
@@ -141,7 +222,12 @@ def verify_reviews():
                 'Every appended PDF page requires an individual review')
         require(all(re.fullmatch('[0-9a-f]{64}', r['png_sha256']) and r.get('visual_review') for r in review_rows),
                 'Missing individual rendered-page review identity')
-        pdfs[name] = dict(**entry(path), pages=pages, preserved_pages=original, individually_reviewed_pages=pages-original)
+        if replacement is None:
+            pdfs[name] = dict(**entry(path), pages=pages, preserved_pages=original, individually_reviewed_pages=pages-original)
+        else:
+            pdfs[name] = replacement['pdf']
+            replacement_reviews[name] = replacement['review']
+            lecture_sources['week04_replacement_source'] = replacement['source']
         appended += pages-original
     require(lecture['preserved_pages'] == sum(PDFS.values()) == 52
             and lecture['individually_reviewed_added_pages'] == appended, 'Lecture review totals differ')
@@ -169,7 +255,8 @@ def verify_reviews():
     require({'ghia','d5','stratified'}.issubset(pdf_families),
             'Reviewed standalone figure PDFs for all three studies are required')
     return dict(studies=entry(study_path), lecture_review=entry(lecture_path), figure_review=entry(figure_path),
-                scientific_manifests=science_manifests, lecture_sources=lecture_sources, pdfs=pdfs, figure_pdfs=list(figure_pdfs.values()), images=list(images.values()),
+                scientific_manifests=science_manifests, lecture_sources=lecture_sources,
+                replacement_lecture_reviews=replacement_reviews, pdfs=pdfs, figure_pdfs=list(figure_pdfs.values()), images=list(images.values()),
                 image_hashes_by_family={key:sorted(value) for key,value in hashes.items()})
 
 
@@ -286,6 +373,7 @@ def validate(mode):
     finally:
         if runtime_parent.exists() and not any(runtime_parent.iterdir()): runtime_parent.rmdir()
     for name in ('studies','lecture_review','figure_review'): checked(reviews[name])
+    for item in reviews['replacement_lecture_reviews'].values(): checked(item)
     for item in reviews['scientific_manifests']: checked(item)
     for item in reviews['lecture_sources'].values(): checked(item)
     for item in reviews['pdfs'].values(): checked(item)

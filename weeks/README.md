@@ -12,6 +12,7 @@ Each page brings the topic image, lecture, notebooks and learning guide together
 | [Week 1.1](week01_1/README.md) | AI-assisted scientific software |
 | [Week 1.2](week01_2/README.md) | Pressure-velocity coupling: SIMPLE, PISO and PIMPLE |
 | [Week 1.3](week01_3/README.md) | Optimizers for Scientific Machine Learning with TensorFlow and Keras |
+| [Week 1.4](week01_4/README.md) | Spectral and discontinuous Galerkin methods on CPU |
 | [Week 2](week02/README.md) | Supervised learning and rarefaction |
 | [Week 2.1](week02_1/README.md) | Probabilistic uncertainty |
 | [Week 3](week03/README.md) | Kinetic theory and DSMC |

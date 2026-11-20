@@ -1,0 +1,26 @@
+{
+  "source": "results/week04_lab2/native_test_predictions.npz",
+  "source_sha256": "99df10a6c3f59fc4b545fe4eecb57c17141aaf92b2a484ffda45e8aaf6f6cf44",
+  "Re": 275,
+  "native_grid": [
+    65,
+    65
+  ],
+  "methods": [
+    "CFD",
+    "Interpolation",
+    "Coordinate_DNN",
+    "Boundary-aware_DNN"
+  ],
+  "display": "Native data; common contour levels; full linear vector-error scale; no smoothing",
+  "scalar_source": "results/week04_lab2/scalar_predictions.npz",
+  "scalar_source_sha256": "f2cd8f2df55d9f6f06fe0462c81649e4216fa841698bee9689ba3dcd845364dd",
+  "figure_sha256": {
+    "lab2_re275_fields.png": "147ce76d7e3471ea8bb8cc48c16259e9bcb85cf15b158026a40fe5fb5c6611a6",
+    "lab2_re275_fields.pdf": "f59a57d50c2ff887f4ce4d11e4025b996d761e7ada7b6b273a9ce088e4f2c327",
+    "lab2_re275_profiles.png": "3be3e48e2329b106f3624606d1336787923e3d7a5fb6f4393692d81da0da242f",
+    "lab2_re275_profiles.pdf": "a4babea571c1d23d46ecad194d57d81d4e3179063d6a61371c52667e47a83369",
+    "lab2_scalar_trends.png": "69b6749bab2302d922b17df6ae4fcb80a4f56c339b69dd82c37506304fc48fbf",
+    "lab2_scalar_trends.pdf": "aadcb0c67d21c2252eace9bfe4af6649425ee0cef182ac71b1a00f45014979f7"
+  }
+}

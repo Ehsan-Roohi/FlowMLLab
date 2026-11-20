@@ -1,0 +1,42 @@
+{
+  "schema_version": 1,
+  "scope": "Superseded generated lecture drafts only",
+  "checked_at_utc": "2026-11-20T23:18:19.5813169Z",
+  "final_pdf_sha256": "4f156163c0b861664d8a8a99d568d47db10d6f4d2479f2405972ea8f6f1f7772",
+  "removed": [
+    {
+      "path": "tmp/week04_lecture/render_core",
+      "file_count": 50,
+      "removed_file_bytes": 9014787,
+      "status": "deleted_and_absence_verified"
+    },
+    {
+      "path": "tmp/week04_lecture/render_evidence",
+      "file_count": 55,
+      "removed_file_bytes": 11355448,
+      "status": "deleted_and_absence_verified"
+    },
+    {
+      "path": "tmp/week04_lecture/guide.pdf",
+      "file_count": 1,
+      "removed_file_bytes": 1723008,
+      "status": "deleted_and_absence_verified"
+    },
+    {
+      "path": "tmp/week04_lecture/scalar_preview.npz",
+      "file_count": 1,
+      "removed_file_bytes": 23518,
+      "status": "deleted_and_absence_verified"
+    }
+  ],
+  "total_removed_file_bytes": 22116761,
+  "retained": [
+    "lectures/week04_cavity_surrogates_deeponet.pdf",
+    "tmp/week04_lecture/render_final",
+    "lectures/source/week04_lab_guide.py",
+    "lectures/source/cavity_expansion.json",
+    "results/week04_lab2",
+    "results/week04_lecture"
+  ],
+  "notes": "Scientific inputs, frozen models and numerical outputs were not removed. File lengths are apparent bytes, not a filesystem free-space claim."
+}

@@ -30,6 +30,7 @@ student_runs/
 *.part
 
 # Notebook downloads and generated student-side outputs
+notebooks/**/week01_4_output/
 data/week07_4_wakes/re*.npz
 notebooks/**/P*_results.csv
 notebooks/**/project_choice.json

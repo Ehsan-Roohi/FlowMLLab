@@ -6,7 +6,34 @@ Separate follow-on notebooks cover [all seven Ghia Reynolds numbers](../../noteb
 
 [Course home](../../README.md) · [All weeks](../README.md) · [← Week 3](../week03/README.md) · [Week 4.1 →](../week04_1/README.md)
 
-CFD datasets, field surrogates and operator learning.
+Learn how a cavity simulation becomes a qualified learning dataset, how different
+surrogates use that dataset, and how to test a prediction against both CFD and
+published measurements. Every lab has a different question: a good fit to two
+centreline profiles is not a verified two-dimensional flow field.
+
+## Lab-by-lab route
+
+Start with Labs 1–3. Lab 4 asks a separate correction-model question. Lab 5 is the
+bridge from reference data to numerical qualification; then use Lab 7 before
+the full-field neural study in Lab 8. Lab 6 is a parallel optimizer investigation.
+Return to Lab 9 after learning PINNs in Week 13 Part A.
+
+| Lab | Aim | What to inspect in the output |
+| --- | --- | --- |
+| 1 — CFD data production | Solve the cavity and decide whether a numerical field is suitable for learning. | Convergence history, physical fields, centreline comparisons and saved case metadata. |
+| 2 — Scalar and coordinate surrogates | Compare interpolation, polynomial regression and neural networks on complete unseen Reynolds-number cases. | Scalar predictions, training/validation histories, matched velocity fields, wall errors and signed profiles for every held-out case. |
+| 3 — POD-DeepONet | Separate spatial representation from the network that predicts its coefficients. | Training-only POD content, velocity and pressure predictions, interpolation controls and measured costs. |
+| 4 — Stokes-to-Navier–Stokes correction | Learn the missing inertial correction and test the complete reconstructed flow. | Stokes, corrected and CFD fields, residuals and complete-case errors; the 51-grid companion is a historical audit. |
+| 5 — All-Re Ghia validation | Distinguish reference coverage, CFD accuracy, centreline fitting and field prediction. | Our CFD against Ghia, original and screened sample scores, seven-Re availability and enlarged full-field corner diagnostics. |
+| 6 — Profile optimizer/depth study | Test training choices on a small, fully specified profile-regression task. | Signed profiles, seed spread, whole-case selection, optimization histories and failures as well as gains. |
+| 7 — High-Re CFD qualification | Assess whether high-Re CFD labels are converged enough for the intended comparison. | Native fields, grid/time sensitivity, residual histories, Ghia discrepancies and the limits of a steady solution. |
+| 8 — High-Re field POD-DeepONet | Predict full velocity fields and compare with interpolation using the same training cases. | Held-out fields, local and global errors, corner structures, vorticity and separately reconstructed pressure. |
+| 9 — Label-free PINN audit | Evaluate a neural PDE solution independently of its training loss. | Boundary and continuity identities, independent equation residuals, corner sampling, seeds and failed accuracy gates. |
+
+The [lecture](../../lectures/week04_cavity_surrogates_deeponet.pdf) follows these
+lab numbers and explains the variables, algorithms, experiments and interpretation.
+The [notebook index](../../notebooks/week04/README.md) distinguishes fresh CPU
+experiments from notebooks that inspect retained, verified research evidence.
 
 ![POD–DeepONet cavity fields, Ghia checks, blind errors and cost](../../results/pod_deeponet/pod_deeponet_ghia_validation.png)
 
@@ -19,6 +46,7 @@ CFD datasets, field surrogates and operator learning.
 | Lab 1: CFD data production | [Open notebook](../../notebooks/week04/W4_Lab1_CFD_Data_Production_Student.ipynb) | [Open in Colab](https://colab.research.google.com/github/Ehsan-Roohi/FlowMLLab/blob/main/notebooks/week04/W4_Lab1_CFD_Data_Production_Student.ipynb) |
 | Lab 2: scalar and field surrogates | [Open notebook](../../notebooks/week04/W4_Lab2_Scalar_and_Field_Surrogates_Student.ipynb) | [Open in Colab](https://colab.research.google.com/github/Ehsan-Roohi/FlowMLLab/blob/main/notebooks/week04/W4_Lab2_Scalar_and_Field_Surrogates_Student.ipynb) |
 | Lab 3: POD-DeepONet cavity | [Open notebook](../../notebooks/week04/W4_Lab3_DeepONet_Cavity_Student.ipynb) | [Open in Colab](https://colab.research.google.com/github/Ehsan-Roohi/FlowMLLab/blob/main/notebooks/week04/W4_Lab3_DeepONet_Cavity_Student.ipynb) |
+| Lab 4: Stokes-to-Navier–Stokes correction | [Open notebook](../../notebooks/week04/W4_Lab4_Stokes_to_Navier_Stokes.ipynb) | [Open in Colab](https://colab.research.google.com/github/Ehsan-Roohi/FlowMLLab/blob/main/notebooks/week04/W4_Lab4_Stokes_to_Navier_Stokes.ipynb) |
 | Lab 5: our CFD versus Ghia and seven-Re coverage | [Open notebook](../../notebooks/week04/W4_Lab5_All_Re_Ghia_Validation.ipynb) | [Open in Colab](https://colab.research.google.com/github/Ehsan-Roohi/FlowMLLab/blob/main/notebooks/week04/W4_Lab5_All_Re_Ghia_Validation.ipynb) |
 | Lab 6: profile surrogates, optimizers and depth | [Open notebook](../../notebooks/week04/W4_Lab6_Ghia_Profile_Optimizer_Depth.ipynb) | [Open in Colab](https://colab.research.google.com/github/Ehsan-Roohi/FlowMLLab/blob/main/notebooks/week04/W4_Lab6_Ghia_Profile_Optimizer_Depth.ipynb) |
 | Lab 7: new high-Re CFD and mesh/time checks | [Open notebook](../../notebooks/week04/W4_Lab7_High_Re_CFD_Ghia.ipynb) | [Open in Colab](https://colab.research.google.com/github/Ehsan-Roohi/FlowMLLab/blob/main/notebooks/week04/W4_Lab7_High_Re_CFD_Ghia.ipynb) |
@@ -87,3 +115,14 @@ independent residuals, seed sensitivity and actual corner-sampling coverage.
 The finite baseline failed its accuracy gates; the supervised field-model
 results remain separate. [All outcomes and physical figures](../../results/cavity_pinn_campaign/README.md).
 The existing Week 4 labs are preserved, and the lecture adds theory and results.
+
+## Corner structures and field accuracy
+
+Lab 5 now connects its reference audit to the frozen Lab 8 field model through
+a separate [upper-left-corner diagnostic](../../results/week04_corner_audit/README.md).
+The centreline MLP cannot predict a vortex map. For the field model, examine
+the local velocity error, native-grid vortex centre and signed streamfunction
+strength difference as well as the global norm. Identical contour levels and
+fixed off-centre profiles expose differences that automatic streamline seeding
+or a whole-field average can miss. This diagnostic does not refit or select a
+model on its held-out targets.

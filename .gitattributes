@@ -93,3 +93,26 @@ qa/run_week10_2_pinn.py -text
 # Preserve hash-bound Windows records, including their original CRLF bytes.
 results/week10_2_kinetic_shock/pinn_*.json -text -whitespace
 results/week10_2_kinetic_shock/pinn_*.csv -text -whitespace
+
+# Executed teaching artifacts retain their reviewed raw-byte identities.
+# These are narrow exceptions to LF normalization, not a change to source style.
+notebooks/week04/*.ipynb -text -whitespace
+notebooks/week01_4/*.ipynb -text -whitespace
+results/week04_*/** -text -whitespace
+results/week01_4_spectral_dg/** -text -whitespace
+flowmllab/cavity_lab2.py -text -whitespace
+flowmllab/cavity_corner_audit.py -text -whitespace
+flowmllab/week04_teaching_plots.py -text -whitespace
+flowmllab/high_order.py -text -whitespace
+flowmllab/high_order_cavity.py -text -whitespace
+lectures/source/week04_lab_guide.py -text -whitespace
+qa/week04_*.py -text -whitespace
+qa/week04_*.json -text -whitespace
+qa/week04_*.txt -text -whitespace
+qa/week04_*.sh -text -whitespace
+qa/build_week04_lab*.py -text -whitespace
+qa/week01_4_*.py -text -whitespace
+qa/week01_4_*.json -text -whitespace
+qa/build_week01_4_*.py -text -whitespace
+qa/execute_week01_4.py -text -whitespace
+qa/validate_week01_4.py -text -whitespace

@@ -23,7 +23,6 @@ def build_pdfs(build_dir):
     font_paths()  # reject silent font substitution before writing any PDF
     sources = {
         'week02_lecture': 'week02_supervised_learning_rarefaction',
-        'week04_lecture': 'week04_cavity_surrogates_deeponet',
         'weeks05_06_project_guide': 'week05_06_project_guide',
         'week02_1_probabilistic_uq_notes': 'week02_1_probabilistic_uq',
     }
@@ -52,6 +51,13 @@ def build_pdfs(build_dir):
     modal.make_pdf('week05')
     # Week7 shares only the typography renderer; no experiment is rerun.
     modal.make_pdf('week07')
+    # Week 4 now has an explicit nine-lab guide and an indexed evidence appendix.
+    # Its builder resets /FlowMLLabCavityBasePages to the current guide length;
+    # a later cavity-extension pass replaces, rather than duplicates, the appendix.
+    import week04_lecture_figures as week4_figures
+    import build_week04_lab_guide as week4_guide
+    week4_figures.build()
+    week4_guide.build()
 
 
 def main():

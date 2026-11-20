@@ -1,0 +1,13 @@
+{
+  "notebook": "notebooks\\week01_4\\W1_4_Spectral_DG_CPU.ipynb",
+  "executed_on": "2026-11-20",
+  "python": "3.12.14 (main, Aug 25 2026, 14:01:42) [MSC v.1944 64 bit (AMD64)]",
+  "kernel_executable": "D:\\ChatGPT Backup\\Projects\\FlowMLLab\\Teaching_Current\\repo\\tmp\\week01_4_runtime\\Scripts\\python.exe",
+  "elapsed_run_all_seconds": 127.40515010000126,
+  "code_cells": 18,
+  "markdown_cells": 19,
+  "error_outputs": 0,
+  "sha256": "5639ddd49ad8dcb6c5303a7d989932a4b5c58f9afcee25624a3dae0cf6c77a43",
+  "executed_code_sha256": "181a3ca3e2363c0d8e35a5e1ac786d85d496bf0584a77fe66d8911849fa671f5",
+  "claim": "Fresh local CPU execution; no hosted Colab execution claimed."
+}

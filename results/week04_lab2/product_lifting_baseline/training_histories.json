@@ -1,0 +1,1643 @@
+{
+  "Scalar DNN: seed 11": [
+    {
+      "stage": "initial",
+      "step": 0,
+      "seconds": 0.32620310000129393,
+      "training_mse": 1.1484136734302848,
+      "validation_mse": 0.6348743787812743
+    },
+    {
+      "stage": "Adam",
+      "step": 20,
+      "seconds": 1.8686884000017017,
+      "training_mse": 0.17490284544891027,
+      "validation_mse": 0.07536931059359259
+    },
+    {
+      "stage": "Adam",
+      "step": 40,
+      "seconds": 1.880799400001706,
+      "training_mse": 0.06506411503651682,
+      "validation_mse": 0.10512043334673261
+    },
+    {
+      "stage": "Adam",
+      "step": 60,
+      "seconds": 1.8941756000021996,
+      "training_mse": 0.04456563332561728,
+      "validation_mse": 0.052960625835560216
+    },
+    {
+      "stage": "Adam",
+      "step": 80,
+      "seconds": 1.9065078000021458,
+      "training_mse": 0.038639575807397984,
+      "validation_mse": 0.05774892094979012
+    },
+    {
+      "stage": "Adam",
+      "step": 100,
+      "seconds": 1.9225803000008455,
+      "training_mse": 0.032783727543238855,
+      "validation_mse": 0.05408494412277995
+    },
+    {
+      "stage": "Adam",
+      "step": 120,
+      "seconds": 1.9343162000004668,
+      "training_mse": 0.02657378246444446,
+      "validation_mse": 0.05092331051566105
+    },
+    {
+      "stage": "Adam",
+      "step": 140,
+      "seconds": 1.9490487000002759,
+      "training_mse": 0.02055838775514533,
+      "validation_mse": 0.04754566364626711
+    },
+    {
+      "stage": "Adam",
+      "step": 160,
+      "seconds": 1.9627920999992057,
+      "training_mse": 0.015532321513131732,
+      "validation_mse": 0.04554569012866866
+    },
+    {
+      "stage": "Adam",
+      "step": 180,
+      "seconds": 1.9788518999994267,
+      "training_mse": 0.011820201387749715,
+      "validation_mse": 0.044576106606045905
+    },
+    {
+      "stage": "Adam",
+      "step": 200,
+      "seconds": 1.9944653999991715,
+      "training_mse": 0.009237461886019796,
+      "validation_mse": 0.04463662366597535
+    },
+    {
+      "stage": "Adam",
+      "step": 220,
+      "seconds": 2.007597600000736,
+      "training_mse": 0.0073930383602009465,
+      "validation_mse": 0.045118917008790116
+    },
+    {
+      "stage": "Adam",
+      "step": 240,
+      "seconds": 2.023509099999501,
+      "training_mse": 0.005971911625993163,
+      "validation_mse": 0.045694108235964565
+    },
+    {
+      "stage": "Adam",
+      "step": 260,
+      "seconds": 2.0393843999991077,
+      "training_mse": 0.004806860422305341,
+      "validation_mse": 0.046263097510726804
+    },
+    {
+      "stage": "Adam",
+      "step": 280,
+      "seconds": 2.0585090999993554,
+      "training_mse": 0.0038257961349831946,
+      "validation_mse": 0.04682237497748398
+    },
+    {
+      "stage": "Adam",
+      "step": 300,
+      "seconds": 2.073550900000555,
+      "training_mse": 0.0030013614835630188,
+      "validation_mse": 0.04739220728662393
+    },
+    {
+      "stage": "Adam",
+      "step": 320,
+      "seconds": 2.0929912999999942,
+      "training_mse": 0.0023235175222864252,
+      "validation_mse": 0.047968011960898914
+    },
+    {
+      "stage": "Adam",
+      "step": 340,
+      "seconds": 2.109972400001425,
+      "training_mse": 0.00178531666608207,
+      "validation_mse": 0.04853588175250336
+    },
+    {
+      "stage": "Adam",
+      "step": 360,
+      "seconds": 2.1286404999991646,
+      "training_mse": 0.0013759665694747702,
+      "validation_mse": 0.04908355983349153
+    },
+    {
+      "stage": "Adam",
+      "step": 380,
+      "seconds": 2.150760900000023,
+      "training_mse": 0.001078897156396187,
+      "validation_mse": 0.049598579409956635
+    },
+    {
+      "stage": "Adam",
+      "step": 400,
+      "seconds": 2.1701114999996207,
+      "training_mse": 0.0008732229015540805,
+      "validation_mse": 0.050068073243267945
+    },
+    {
+      "stage": "Adam",
+      "step": 420,
+      "seconds": 2.188330400000268,
+      "training_mse": 0.0007367930997365239,
+      "validation_mse": 0.05048172876830618
+    },
+    {
+      "stage": "Adam",
+      "step": 440,
+      "seconds": 2.2065251000021817,
+      "training_mse": 0.0006492050177148664,
+      "validation_mse": 0.050834107608743295
+    },
+    {
+      "stage": "Adam",
+      "step": 460,
+      "seconds": 2.2250515000014275,
+      "training_mse": 0.000593778257383028,
+      "validation_mse": 0.05112523408725824
+    },
+    {
+      "stage": "Adam",
+      "step": 480,
+      "seconds": 2.239453099999082,
+      "training_mse": 0.0005582204255823538,
+      "validation_mse": 0.05135952657312436
+    },
+    {
+      "stage": "Adam",
+      "step": 500,
+      "seconds": 2.2579862999991747,
+      "training_mse": 0.0005342657964513106,
+      "validation_mse": 0.0515441535575247
+    },
+    {
+      "stage": "Adam",
+      "step": 520,
+      "seconds": 2.2760449000015797,
+      "training_mse": 0.0005167897219894228,
+      "validation_mse": 0.05168743909681322
+    },
+    {
+      "stage": "Adam",
+      "step": 540,
+      "seconds": 2.2935600000018894,
+      "training_mse": 0.0005028357827995252,
+      "validation_mse": 0.05179765566564232
+    },
+    {
+      "stage": "Adam",
+      "step": 560,
+      "seconds": 2.313628800002334,
+      "training_mse": 0.0004908034357176361,
+      "validation_mse": 0.05188227677122009
+    },
+    {
+      "stage": "Adam",
+      "step": 580,
+      "seconds": 2.3321447999987868,
+      "training_mse": 0.00047987213622799276,
+      "validation_mse": 0.051947622232501905
+    },
+    {
+      "stage": "Adam",
+      "step": 600,
+      "seconds": 2.350818999999319,
+      "training_mse": 0.00046963871516897415,
+      "validation_mse": 0.05199877166644598
+    },
+    {
+      "stage": "L-BFGS",
+      "step": 20,
+      "seconds": 2.4904987000008987,
+      "training_mse": 0.00031723225742746983,
+      "validation_mse": 0.0529140150752793
+    },
+    {
+      "stage": "L-BFGS",
+      "step": 40,
+      "seconds": 2.5772400999994716,
+      "training_mse": 0.00020765131001063673,
+      "validation_mse": 0.05406014371353866
+    },
+    {
+      "stage": "L-BFGS",
+      "step": 60,
+      "seconds": 2.673508600000787,
+      "training_mse": 0.00017469516762136155,
+      "validation_mse": 0.05467340893068104
+    },
+    {
+      "stage": "L-BFGS",
+      "step": 80,
+      "seconds": 2.760545600001933,
+      "training_mse": 0.00010067828785986777,
+      "validation_mse": 0.060730175633450977
+    },
+    {
+      "stage": "L-BFGS",
+      "step": 100,
+      "seconds": 2.837268300001597,
+      "training_mse": 4.2582668328596315e-05,
+      "validation_mse": 0.06318950238233047
+    },
+    {
+      "stage": "L-BFGS",
+      "step": 120,
+      "seconds": 2.927657399999589,
+      "training_mse": 1.818515014023637e-05,
+      "validation_mse": 0.06618338411829332
+    },
+    {
+      "stage": "L-BFGS",
+      "step": 140,
+      "seconds": 3.012856000001193,
+      "training_mse": 5.062621606181828e-06,
+      "validation_mse": 0.06622866348951854
+    },
+    {
+      "stage": "L-BFGS",
+      "step": 160,
+      "seconds": 3.0942448000023433,
+      "training_mse": 2.9528418409960392e-06,
+      "validation_mse": 0.06511119758673815
+    },
+    {
+      "stage": "L-BFGS",
+      "step": 180,
+      "seconds": 3.179597999998805,
+      "training_mse": 1.9467389300208835e-06,
+      "validation_mse": 0.06486625639725802
+    },
+    {
+      "stage": "L-BFGS",
+      "step": 200,
+      "seconds": 3.2732283000004827,
+      "training_mse": 1.4474692787599457e-06,
+      "validation_mse": 0.06485931462578276
+    },
+    {
+      "stage": "L-BFGS",
+      "step": 220,
+      "seconds": 3.35274439999921,
+      "training_mse": 5.871888838066185e-07,
+      "validation_mse": 0.06463956173692892
+    },
+    {
+      "stage": "L-BFGS",
+      "step": 240,
+      "seconds": 3.4373938999997335,
+      "training_mse": 4.452617745412504e-08,
+      "validation_mse": 0.06487397288267925
+    },
+    {
+      "stage": "L-BFGS",
+      "step": 250,
+      "seconds": 3.4809549000019615,
+      "training_mse": 5.514478208666489e-09,
+      "validation_mse": 0.06489861391844066
+    }
+  ],
+  "Scalar DNN: seed 22": [
+    {
+      "stage": "initial",
+      "step": 0,
+      "seconds": 0.09002309999777935,
+      "training_mse": 1.0278883267189631,
+      "validation_mse": 0.5720563034253454
+    },
+    {
+      "stage": "Adam",
+      "step": 20,
+      "seconds": 1.1446967999982007,
+      "training_mse": 0.1263161401258772,
+      "validation_mse": 0.05515059782481956
+    },
+    {
+      "stage": "Adam",
+      "step": 40,
+      "seconds": 1.1673875999986194,
+      "training_mse": 0.05939641145788729,
+      "validation_mse": 0.10585138485154422
+    },
+    {
+      "stage": "Adam",
+      "step": 60,
+      "seconds": 1.1912978000000294,
+      "training_mse": 0.04036851052565785,
+      "validation_mse": 0.0510015376898544
+    },
+    {
+      "stage": "Adam",
+      "step": 80,
+      "seconds": 1.2137632000012673,
+      "training_mse": 0.03353681437212031,
+      "validation_mse": 0.058541017632307984
+    },
+    {
+      "stage": "Adam",
+      "step": 100,
+      "seconds": 1.2339122999983374,
+      "training_mse": 0.027622711271250103,
+      "validation_mse": 0.05304136953963431
+    },
+    {
+      "stage": "Adam",
+      "step": 120,
+      "seconds": 1.255114899999171,
+      "training_mse": 0.02194558997111995,
+      "validation_mse": 0.051639933345964915
+    },
+    {
+      "stage": "Adam",
+      "step": 140,
+      "seconds": 1.2750130999993416,
+      "training_mse": 0.016790467429397972,
+      "validation_mse": 0.04924345895344882
+    },
+    {
+      "stage": "Adam",
+      "step": 160,
+      "seconds": 1.300176000000647,
+      "training_mse": 0.01248145067727036,
+      "validation_mse": 0.04839145623690624
+    },
+    {
+      "stage": "Adam",
+      "step": 180,
+      "seconds": 1.3220572999998694,
+      "training_mse": 0.009124865893489327,
+      "validation_mse": 0.04807045746037721
+    },
+    {
+      "stage": "Adam",
+      "step": 200,
+      "seconds": 1.3438963000007789,
+      "training_mse": 0.006636192517086785,
+      "validation_mse": 0.04839678410793618
+    },
+    {
+      "stage": "Adam",
+      "step": 220,
+      "seconds": 1.3655409999992116,
+      "training_mse": 0.004852327208386458,
+      "validation_mse": 0.04906600841572479
+    },
+    {
+      "stage": "Adam",
+      "step": 240,
+      "seconds": 1.386532000000443,
+      "training_mse": 0.003603357386012828,
+      "validation_mse": 0.04982443854296176
+    },
+    {
+      "stage": "Adam",
+      "step": 260,
+      "seconds": 1.4069611000013538,
+      "training_mse": 0.0027434461982416202,
+      "validation_mse": 0.050512112192406346
+    },
+    {
+      "stage": "Adam",
+      "step": 280,
+      "seconds": 1.428753100000904,
+      "training_mse": 0.002159033513723232,
+      "validation_mse": 0.051031867038131555
+    },
+    {
+      "stage": "Adam",
+      "step": 300,
+      "seconds": 1.4513459999980114,
+      "training_mse": 0.0017643801751586875,
+      "validation_mse": 0.05134683843282293
+    },
+    {
+      "stage": "Adam",
+      "step": 320,
+      "seconds": 1.4678332000003138,
+      "training_mse": 0.001495769896977079,
+      "validation_mse": 0.051478943434229395
+    },
+    {
+      "stage": "Adam",
+      "step": 340,
+      "seconds": 1.4853746999979194,
+      "training_mse": 0.0013078144041902124,
+      "validation_mse": 0.05148113121127423
+    },
+    {
+      "stage": "Adam",
+      "step": 360,
+      "seconds": 1.5014182000013534,
+      "training_mse": 0.0011700594317457414,
+      "validation_mse": 0.051403438762851326
+    },
+    {
+      "stage": "Adam",
+      "step": 380,
+      "seconds": 1.5199914000004355,
+      "training_mse": 0.0010635637926429192,
+      "validation_mse": 0.05128456704781706
+    },
+    {
+      "stage": "Adam",
+      "step": 400,
+      "seconds": 1.5387530000007246,
+      "training_mse": 0.000977470935437058,
+      "validation_mse": 0.051155633544495815
+    },
+    {
+      "stage": "Adam",
+      "step": 420,
+      "seconds": 1.5577948999998625,
+      "training_mse": 0.0009058664296425927,
+      "validation_mse": 0.051039533532634934
+    },
+    {
+      "stage": "Adam",
+      "step": 440,
+      "seconds": 1.5780716999979632,
+      "training_mse": 0.0008453677908078498,
+      "validation_mse": 0.050949383838790004
+    },
+    {
+      "stage": "Adam",
+      "step": 460,
+      "seconds": 1.5977612999995472,
+      "training_mse": 0.0007936899593573775,
+      "validation_mse": 0.05088956538479175
+    },
+    {
+      "stage": "Adam",
+      "step": 480,
+      "seconds": 1.6151301999998395,
+      "training_mse": 0.0007490621468879601,
+      "validation_mse": 0.05085839784051707
+    },
+    {
+      "stage": "Adam",
+      "step": 500,
+      "seconds": 1.6334655999999086,
+      "training_mse": 0.0007100857768866722,
+      "validation_mse": 0.05085144295843752
+    },
+    {
+      "stage": "Adam",
+      "step": 520,
+      "seconds": 1.649557000000641,
+      "training_mse": 0.0006756801619278701,
+      "validation_mse": 0.05086413097061777
+    },
+    {
+      "stage": "Adam",
+      "step": 540,
+      "seconds": 1.6678281999993487,
+      "training_mse": 0.0006450111500864819,
+      "validation_mse": 0.05089292926623392
+    },
+    {
+      "stage": "Adam",
+      "step": 560,
+      "seconds": 1.6844319999981963,
+      "training_mse": 0.0006174249131014643,
+      "validation_mse": 0.050935377555894
+    },
+    {
+      "stage": "Adam",
+      "step": 580,
+      "seconds": 1.703858400000172,
+      "training_mse": 0.0005924017028385124,
+      "validation_mse": 0.050989717847039095
+    },
+    {
+      "stage": "Adam",
+      "step": 600,
+      "seconds": 1.7255962999988697,
+      "training_mse": 0.0005695245726027,
+      "validation_mse": 0.051054597123887775
+    },
+    {
+      "stage": "L-BFGS",
+      "step": 20,
+      "seconds": 1.868919199998345,
+      "training_mse": 0.00024574505525501905,
+      "validation_mse": 0.05399030286572997
+    },
+    {
+      "stage": "L-BFGS",
+      "step": 40,
+      "seconds": 1.96221389999846,
+      "training_mse": 0.00012367663008293366,
+      "validation_mse": 0.05546007098514305
+    },
+    {
+      "stage": "L-BFGS",
+      "step": 60,
+      "seconds": 2.0444282999997085,
+      "training_mse": 5.582543997110176e-05,
+      "validation_mse": 0.058388757951739596
+    },
+    {
+      "stage": "L-BFGS",
+      "step": 80,
+      "seconds": 2.1141281999989587,
+      "training_mse": 2.5983702966717238e-05,
+      "validation_mse": 0.057708830698039885
+    },
+    {
+      "stage": "L-BFGS",
+      "step": 100,
+      "seconds": 2.217910600000323,
+      "training_mse": 6.191550546016817e-06,
+      "validation_mse": 0.058122456060904444
+    },
+    {
+      "stage": "L-BFGS",
+      "step": 120,
+      "seconds": 2.297613700000511,
+      "training_mse": 8.714784235969932e-07,
+      "validation_mse": 0.05749133421193509
+    },
+    {
+      "stage": "L-BFGS",
+      "step": 140,
+      "seconds": 2.3726453999988735,
+      "training_mse": 4.0531202789568447e-07,
+      "validation_mse": 0.057339829450219475
+    },
+    {
+      "stage": "L-BFGS",
+      "step": 160,
+      "seconds": 2.4529824999990524,
+      "training_mse": 7.404375959934435e-09,
+      "validation_mse": 0.05732056819359808
+    },
+    {
+      "stage": "L-BFGS",
+      "step": 180,
+      "seconds": 2.5231664999992063,
+      "training_mse": 4.076546880514984e-10,
+      "validation_mse": 0.05732017690725866
+    },
+    {
+      "stage": "L-BFGS",
+      "step": 198,
+      "seconds": 2.6114057000013418,
+      "training_mse": 1.1795235761446861e-12,
+      "validation_mse": 0.0573178599417512
+    }
+  ],
+  "Scalar DNN: seed 33": [
+    {
+      "stage": "initial",
+      "step": 0,
+      "seconds": 0.09985220000089612,
+      "training_mse": 1.1567499858361319,
+      "validation_mse": 0.640671657264179
+    },
+    {
+      "stage": "Adam",
+      "step": 20,
+      "seconds": 1.158776400003262,
+      "training_mse": 0.07003932739170876,
+      "validation_mse": 0.06114027134869896
+    },
+    {
+      "stage": "Adam",
+      "step": 40,
+      "seconds": 1.184258299999783,
+      "training_mse": 0.05784168283612493,
+      "validation_mse": 0.07848065295854616
+    },
+    {
+      "stage": "Adam",
+      "step": 60,
+      "seconds": 1.2033351999998558,
+      "training_mse": 0.048563149931887865,
+      "validation_mse": 0.052630982934052474
+    },
+    {
+      "stage": "Adam",
+      "step": 80,
+      "seconds": 1.2247747000001254,
+      "training_mse": 0.043195464718569956,
+      "validation_mse": 0.059445228452158626
+    },
+    {
+      "stage": "Adam",
+      "step": 100,
+      "seconds": 1.2424550000032468,
+      "training_mse": 0.038418855774177266,
+      "validation_mse": 0.05489145958261835
+    },
+    {
+      "stage": "Adam",
+      "step": 120,
+      "seconds": 1.2630599000003713,
+      "training_mse": 0.03344038309887661,
+      "validation_mse": 0.053684565395097306
+    },
+    {
+      "stage": "Adam",
+      "step": 140,
+      "seconds": 1.2838431000018318,
+      "training_mse": 0.028454405022266135,
+      "validation_mse": 0.05164456761384754
+    },
+    {
+      "stage": "Adam",
+      "step": 160,
+      "seconds": 1.3034427000020514,
+      "training_mse": 0.023828609877838462,
+      "validation_mse": 0.049571597906626665
+    },
+    {
+      "stage": "Adam",
+      "step": 180,
+      "seconds": 1.3227783000002091,
+      "training_mse": 0.019869920032629433,
+      "validation_mse": 0.04787855426113171
+    },
+    {
+      "stage": "Adam",
+      "step": 200,
+      "seconds": 1.3405684000026667,
+      "training_mse": 0.016701986547245293,
+      "validation_mse": 0.04655983268108436
+    },
+    {
+      "stage": "Adam",
+      "step": 220,
+      "seconds": 1.3600927000006777,
+      "training_mse": 0.014256212218914124,
+      "validation_mse": 0.045814426070145686
+    },
+    {
+      "stage": "Adam",
+      "step": 240,
+      "seconds": 1.3791753000004974,
+      "training_mse": 0.012266774280085418,
+      "validation_mse": 0.04575580419673092
+    },
+    {
+      "stage": "Adam",
+      "step": 260,
+      "seconds": 1.3981620000013208,
+      "training_mse": 0.010370853051741204,
+      "validation_mse": 0.04621633385256426
+    },
+    {
+      "stage": "Adam",
+      "step": 280,
+      "seconds": 1.416028900002857,
+      "training_mse": 0.008451233892752427,
+      "validation_mse": 0.04677017214603551
+    },
+    {
+      "stage": "Adam",
+      "step": 300,
+      "seconds": 1.4337324000007357,
+      "training_mse": 0.006600400610548642,
+      "validation_mse": 0.04735939753760129
+    },
+    {
+      "stage": "Adam",
+      "step": 320,
+      "seconds": 1.4520312000022386,
+      "training_mse": 0.004999768875526863,
+      "validation_mse": 0.04790019162924177
+    },
+    {
+      "stage": "Adam",
+      "step": 340,
+      "seconds": 1.4665580000000773,
+      "training_mse": 0.003767111976738095,
+      "validation_mse": 0.048290313049570106
+    },
+    {
+      "stage": "Adam",
+      "step": 360,
+      "seconds": 1.4839143000026525,
+      "training_mse": 0.002902800271288059,
+      "validation_mse": 0.04854393555911577
+    },
+    {
+      "stage": "Adam",
+      "step": 380,
+      "seconds": 1.5037423000030685,
+      "training_mse": 0.0023331167035666265,
+      "validation_mse": 0.04866405045417333
+    },
+    {
+      "stage": "Adam",
+      "step": 400,
+      "seconds": 1.5223031000023184,
+      "training_mse": 0.00196572708492246,
+      "validation_mse": 0.04869090974358475
+    },
+    {
+      "stage": "Adam",
+      "step": 420,
+      "seconds": 1.5382982000010088,
+      "training_mse": 0.0017229401519956713,
+      "validation_mse": 0.04865570219267643
+    },
+    {
+      "stage": "Adam",
+      "step": 440,
+      "seconds": 1.5580432000024302,
+      "training_mse": 0.001551859633856168,
+      "validation_mse": 0.04858902384581303
+    },
+    {
+      "stage": "Adam",
+      "step": 460,
+      "seconds": 1.5794286000018474,
+      "training_mse": 0.0014214146376581493,
+      "validation_mse": 0.048514437455779734
+    },
+    {
+      "stage": "Adam",
+      "step": 480,
+      "seconds": 1.6007014000024355,
+      "training_mse": 0.0013152464292777186,
+      "validation_mse": 0.04844803923187432
+    },
+    {
+      "stage": "Adam",
+      "step": 500,
+      "seconds": 1.6181250000008731,
+      "training_mse": 0.001225298668332726,
+      "validation_mse": 0.04839919797551143
+    },
+    {
+      "stage": "Adam",
+      "step": 520,
+      "seconds": 1.6376510000009148,
+      "training_mse": 0.0011475827100616892,
+      "validation_mse": 0.048371864916738005
+    },
+    {
+      "stage": "Adam",
+      "step": 540,
+      "seconds": 1.657628900000418,
+      "training_mse": 0.001079884925162875,
+      "validation_mse": 0.048366385561274206
+    },
+    {
+      "stage": "Adam",
+      "step": 560,
+      "seconds": 1.6732910000027914,
+      "training_mse": 0.001020715540556931,
+      "validation_mse": 0.048380985591307886
+    },
+    {
+      "stage": "Adam",
+      "step": 580,
+      "seconds": 1.6958507000017562,
+      "training_mse": 0.0009688976273390493,
+      "validation_mse": 0.048412888075818526
+    },
+    {
+      "stage": "Adam",
+      "step": 600,
+      "seconds": 1.7184722000019974,
+      "training_mse": 0.0009234286308568476,
+      "validation_mse": 0.04845902735688639
+    },
+    {
+      "stage": "L-BFGS",
+      "step": 20,
+      "seconds": 1.8441980000025069,
+      "training_mse": 0.0005935720273018166,
+      "validation_mse": 0.05011109306464223
+    },
+    {
+      "stage": "L-BFGS",
+      "step": 40,
+      "seconds": 1.9330344000009063,
+      "training_mse": 0.00038900801407076407,
+      "validation_mse": 0.051348636422070056
+    },
+    {
+      "stage": "L-BFGS",
+      "step": 60,
+      "seconds": 2.003945800002839,
+      "training_mse": 0.0003341418518915039,
+      "validation_mse": 0.05183287459540118
+    },
+    {
+      "stage": "L-BFGS",
+      "step": 80,
+      "seconds": 2.097466400002304,
+      "training_mse": 0.00023401050421801266,
+      "validation_mse": 0.054141260919119354
+    },
+    {
+      "stage": "L-BFGS",
+      "step": 100,
+      "seconds": 2.194116100003157,
+      "training_mse": 0.00015347672288465008,
+      "validation_mse": 0.05488110493560327
+    },
+    {
+      "stage": "L-BFGS",
+      "step": 120,
+      "seconds": 2.3030493000005663,
+      "training_mse": 0.00010433960573167973,
+      "validation_mse": 0.0549520831970173
+    },
+    {
+      "stage": "L-BFGS",
+      "step": 140,
+      "seconds": 2.3911399000025995,
+      "training_mse": 3.295818859164859e-05,
+      "validation_mse": 0.05487592105849226
+    },
+    {
+      "stage": "L-BFGS",
+      "step": 160,
+      "seconds": 2.474058200001309,
+      "training_mse": 1.0038388491176277e-05,
+      "validation_mse": 0.056581473141619563
+    },
+    {
+      "stage": "L-BFGS",
+      "step": 180,
+      "seconds": 2.575042600001325,
+      "training_mse": 1.1176034180046608e-06,
+      "validation_mse": 0.05696526333093594
+    },
+    {
+      "stage": "L-BFGS",
+      "step": 200,
+      "seconds": 2.646304900001269,
+      "training_mse": 9.66514844020928e-07,
+      "validation_mse": 0.05710850552148189
+    },
+    {
+      "stage": "L-BFGS",
+      "step": 220,
+      "seconds": 2.7008354000026884,
+      "training_mse": 4.944460912912471e-08,
+      "validation_mse": 0.05742946524407888
+    },
+    {
+      "stage": "L-BFGS",
+      "step": 240,
+      "seconds": 2.7578604000009364,
+      "training_mse": 6.851265759795897e-12,
+      "validation_mse": 0.057456717359638206
+    },
+    {
+      "stage": "L-BFGS",
+      "step": 243,
+      "seconds": 2.7731610000009823,
+      "training_mse": 3.2954174013026675e-12,
+      "validation_mse": 0.057456402827204905
+    }
+  ],
+  "Coordinate DNN": [
+    {
+      "stage": "initial",
+      "step": 0,
+      "seconds": 0.22495530000014696,
+      "training_mse": 0.06480355211577592,
+      "validation_mse": 0.055206541036177226
+    },
+    {
+      "stage": "Adam",
+      "step": 20,
+      "seconds": 2.3242269000002125,
+      "training_mse": 0.030118164019715975,
+      "validation_mse": 0.024479363850994224
+    },
+    {
+      "stage": "Adam",
+      "step": 40,
+      "seconds": 2.892504799998278,
+      "training_mse": 0.024299102780790876,
+      "validation_mse": 0.019517416342903538
+    },
+    {
+      "stage": "Adam",
+      "step": 60,
+      "seconds": 3.3832929999989574,
+      "training_mse": 0.016747559047866095,
+      "validation_mse": 0.013334301610177401
+    },
+    {
+      "stage": "Adam",
+      "step": 80,
+      "seconds": 3.9441104999968957,
+      "training_mse": 0.01194561188258971,
+      "validation_mse": 0.009759234824708543
+    },
+    {
+      "stage": "Adam",
+      "step": 100,
+      "seconds": 4.519680199999129,
+      "training_mse": 0.00971148051732839,
+      "validation_mse": 0.008019919804154075
+    },
+    {
+      "stage": "Adam",
+      "step": 120,
+      "seconds": 5.078043399997114,
+      "training_mse": 0.008535394883015971,
+      "validation_mse": 0.006989220361615877
+    },
+    {
+      "stage": "Adam",
+      "step": 140,
+      "seconds": 5.600612599999295,
+      "training_mse": 0.007859245093361325,
+      "validation_mse": 0.0064916162589966925
+    },
+    {
+      "stage": "Adam",
+      "step": 160,
+      "seconds": 6.121678699997574,
+      "training_mse": 0.007276661878140161,
+      "validation_mse": 0.006071875454083582
+    },
+    {
+      "stage": "Adam",
+      "step": 180,
+      "seconds": 6.611730399999942,
+      "training_mse": 0.0068683683538428835,
+      "validation_mse": 0.005742526681572037
+    },
+    {
+      "stage": "Adam",
+      "step": 200,
+      "seconds": 7.155604699997639,
+      "training_mse": 0.006412080580062982,
+      "validation_mse": 0.0053724799785308955
+    },
+    {
+      "stage": "Adam",
+      "step": 220,
+      "seconds": 7.677371499998117,
+      "training_mse": 0.006023991867400884,
+      "validation_mse": 0.0050334335398939485
+    },
+    {
+      "stage": "Adam",
+      "step": 240,
+      "seconds": 8.164962199996808,
+      "training_mse": 0.005614199931868866,
+      "validation_mse": 0.004657822804161588
+    },
+    {
+      "stage": "Adam",
+      "step": 260,
+      "seconds": 8.70006949999879,
+      "training_mse": 0.005269352556314019,
+      "validation_mse": 0.00432166398760094
+    },
+    {
+      "stage": "Adam",
+      "step": 280,
+      "seconds": 9.242785899998125,
+      "training_mse": 0.004850866911396718,
+      "validation_mse": 0.003951760841446514
+    },
+    {
+      "stage": "Adam",
+      "step": 300,
+      "seconds": 9.759170199999062,
+      "training_mse": 0.004474427301899706,
+      "validation_mse": 0.0035687406473836466
+    },
+    {
+      "stage": "Adam",
+      "step": 320,
+      "seconds": 10.261654299996735,
+      "training_mse": 0.004175049065750125,
+      "validation_mse": 0.0032803475973778645
+    },
+    {
+      "stage": "Adam",
+      "step": 340,
+      "seconds": 10.812585499999841,
+      "training_mse": 0.005309705538242038,
+      "validation_mse": 0.004533437573691677
+    },
+    {
+      "stage": "Adam",
+      "step": 360,
+      "seconds": 11.354403899997124,
+      "training_mse": 0.003936675054594744,
+      "validation_mse": 0.003064826768372625
+    },
+    {
+      "stage": "Adam",
+      "step": 380,
+      "seconds": 11.881426099997043,
+      "training_mse": 0.003612980024660501,
+      "validation_mse": 0.002739165060921654
+    },
+    {
+      "stage": "Adam",
+      "step": 400,
+      "seconds": 12.424687599999743,
+      "training_mse": 0.003467328082509946,
+      "validation_mse": 0.00260566496445915
+    },
+    {
+      "stage": "L-BFGS",
+      "step": 20,
+      "seconds": 13.133340899999894,
+      "training_mse": 0.003123603368271908,
+      "validation_mse": 0.002222424153974764
+    },
+    {
+      "stage": "L-BFGS",
+      "step": 40,
+      "seconds": 13.764459999998508,
+      "training_mse": 0.0028657703942106486,
+      "validation_mse": 0.002051312917986743
+    },
+    {
+      "stage": "L-BFGS",
+      "step": 60,
+      "seconds": 14.401170299999649,
+      "training_mse": 0.0025300378470029714,
+      "validation_mse": 0.0017924778245288619
+    },
+    {
+      "stage": "L-BFGS",
+      "step": 80,
+      "seconds": 15.147293199999694,
+      "training_mse": 0.002308673222127597,
+      "validation_mse": 0.0015816257936550138
+    },
+    {
+      "stage": "L-BFGS",
+      "step": 100,
+      "seconds": 15.826077300000179,
+      "training_mse": 0.0021629905812529954,
+      "validation_mse": 0.001420546803107966
+    },
+    {
+      "stage": "L-BFGS",
+      "step": 120,
+      "seconds": 16.522132599999168,
+      "training_mse": 0.00205017514246748,
+      "validation_mse": 0.001272859490668989
+    },
+    {
+      "stage": "L-BFGS",
+      "step": 140,
+      "seconds": 17.272150199998578,
+      "training_mse": 0.0019220089943437337,
+      "validation_mse": 0.0011833772985119842
+    },
+    {
+      "stage": "L-BFGS",
+      "step": 160,
+      "seconds": 17.91936530000021,
+      "training_mse": 0.001758425630454218,
+      "validation_mse": 0.0010748522940099553
+    },
+    {
+      "stage": "L-BFGS",
+      "step": 180,
+      "seconds": 18.558020399999805,
+      "training_mse": 0.0016219935404481324,
+      "validation_mse": 0.0009773200921359849
+    },
+    {
+      "stage": "L-BFGS",
+      "step": 200,
+      "seconds": 19.287767499998154,
+      "training_mse": 0.0015059810915697108,
+      "validation_mse": 0.0008938565839164721
+    },
+    {
+      "stage": "L-BFGS",
+      "step": 220,
+      "seconds": 19.921736199998122,
+      "training_mse": 0.0013575990982421617,
+      "validation_mse": 0.0008081621073871145
+    },
+    {
+      "stage": "L-BFGS",
+      "step": 240,
+      "seconds": 20.555455599998822,
+      "training_mse": 0.001253750510837793,
+      "validation_mse": 0.0007158462821346041
+    },
+    {
+      "stage": "L-BFGS",
+      "step": 260,
+      "seconds": 21.122949399999925,
+      "training_mse": 0.0011578050138535817,
+      "validation_mse": 0.0006469575076251424
+    },
+    {
+      "stage": "L-BFGS",
+      "step": 280,
+      "seconds": 21.663214199998038,
+      "training_mse": 0.0011015365418207794,
+      "validation_mse": 0.0006224088234721278
+    },
+    {
+      "stage": "L-BFGS",
+      "step": 300,
+      "seconds": 22.23487219999879,
+      "training_mse": 0.0010472884041526497,
+      "validation_mse": 0.0006082029021036023
+    },
+    {
+      "stage": "L-BFGS",
+      "step": 320,
+      "seconds": 22.791727299998456,
+      "training_mse": 0.0009681921005530665,
+      "validation_mse": 0.0005496308071179445
+    },
+    {
+      "stage": "L-BFGS",
+      "step": 340,
+      "seconds": 23.356851799999276,
+      "training_mse": 0.0009106365290925332,
+      "validation_mse": 0.0005075650011802231
+    },
+    {
+      "stage": "L-BFGS",
+      "step": 360,
+      "seconds": 23.84353479999845,
+      "training_mse": 0.000854208178531744,
+      "validation_mse": 0.0004642795461620982
+    },
+    {
+      "stage": "L-BFGS",
+      "step": 380,
+      "seconds": 24.36447749999934,
+      "training_mse": 0.0008213050006516464,
+      "validation_mse": 0.00044336214944874406
+    },
+    {
+      "stage": "L-BFGS",
+      "step": 400,
+      "seconds": 24.930400699999154,
+      "training_mse": 0.0007883648948852137,
+      "validation_mse": 0.0004120155406261585
+    },
+    {
+      "stage": "L-BFGS",
+      "step": 420,
+      "seconds": 25.521378399997047,
+      "training_mse": 0.0007591165448179707,
+      "validation_mse": 0.00039429244619946916
+    },
+    {
+      "stage": "L-BFGS",
+      "step": 440,
+      "seconds": 26.099816699999792,
+      "training_mse": 0.0007228225730777209,
+      "validation_mse": 0.00037566990378476445
+    },
+    {
+      "stage": "L-BFGS",
+      "step": 460,
+      "seconds": 26.63221219999832,
+      "training_mse": 0.000679543568411459,
+      "validation_mse": 0.00033875004537191214
+    },
+    {
+      "stage": "L-BFGS",
+      "step": 480,
+      "seconds": 27.11346649999905,
+      "training_mse": 0.0006396695038504429,
+      "validation_mse": 0.0003136102119192224
+    },
+    {
+      "stage": "L-BFGS",
+      "step": 500,
+      "seconds": 27.72735769999781,
+      "training_mse": 0.0006103713296602683,
+      "validation_mse": 0.0002959193132390494
+    },
+    {
+      "stage": "L-BFGS",
+      "step": 520,
+      "seconds": 28.37852109999949,
+      "training_mse": 0.0005743162796034937,
+      "validation_mse": 0.0002815053971773712
+    },
+    {
+      "stage": "L-BFGS",
+      "step": 540,
+      "seconds": 28.969876099999965,
+      "training_mse": 0.0005523420481895885,
+      "validation_mse": 0.0002642883162158318
+    },
+    {
+      "stage": "L-BFGS",
+      "step": 560,
+      "seconds": 29.52475979999872,
+      "training_mse": 0.0005315641623465886,
+      "validation_mse": 0.0002504824908764155
+    },
+    {
+      "stage": "L-BFGS",
+      "step": 580,
+      "seconds": 30.000178700000106,
+      "training_mse": 0.0005143464508914577,
+      "validation_mse": 0.00024609853327668647
+    },
+    {
+      "stage": "L-BFGS",
+      "step": 600,
+      "seconds": 30.47943099999975,
+      "training_mse": 0.0004954177994216179,
+      "validation_mse": 0.00024030705076134761
+    },
+    {
+      "stage": "L-BFGS",
+      "step": 600,
+      "seconds": 30.499601899999107,
+      "training_mse": 0.0004954177994216179,
+      "validation_mse": 0.00024030705076134761
+    }
+  ],
+  "Boundary-aware DNN": [
+    {
+      "stage": "initial",
+      "step": 0,
+      "seconds": 0.1698240999976406,
+      "training_mse": 0.08871357087380888,
+      "validation_mse": 0.08795646958894933
+    },
+    {
+      "stage": "Adam",
+      "step": 20,
+      "seconds": 1.5751577000010002,
+      "training_mse": 0.023798312918727686,
+      "validation_mse": 0.025159802039329233
+    },
+    {
+      "stage": "Adam",
+      "step": 40,
+      "seconds": 1.9638510000004317,
+      "training_mse": 0.022275992836367994,
+      "validation_mse": 0.02321459935845998
+    },
+    {
+      "stage": "Adam",
+      "step": 60,
+      "seconds": 2.3473014999981388,
+      "training_mse": 0.022009901357809326,
+      "validation_mse": 0.022684593971877397
+    },
+    {
+      "stage": "Adam",
+      "step": 80,
+      "seconds": 2.749690399999963,
+      "training_mse": 0.021834434853260212,
+      "validation_mse": 0.02255793855649998
+    },
+    {
+      "stage": "Adam",
+      "step": 100,
+      "seconds": 3.1492474999977276,
+      "training_mse": 0.02158268176703418,
+      "validation_mse": 0.022291734876175494
+    },
+    {
+      "stage": "Adam",
+      "step": 120,
+      "seconds": 3.5399004999999306,
+      "training_mse": 0.021038169850505717,
+      "validation_mse": 0.02166344507625787
+    },
+    {
+      "stage": "Adam",
+      "step": 140,
+      "seconds": 3.9354853999975603,
+      "training_mse": 0.020146326605213576,
+      "validation_mse": 0.02067416997930719
+    },
+    {
+      "stage": "Adam",
+      "step": 160,
+      "seconds": 4.321629199999734,
+      "training_mse": 0.019084967234854887,
+      "validation_mse": 0.019550120588809995
+    },
+    {
+      "stage": "Adam",
+      "step": 180,
+      "seconds": 4.721171099998173,
+      "training_mse": 0.01769033964113335,
+      "validation_mse": 0.01788069607598644
+    },
+    {
+      "stage": "Adam",
+      "step": 200,
+      "seconds": 5.109885099998792,
+      "training_mse": 0.016128401114251047,
+      "validation_mse": 0.01591604020901658
+    },
+    {
+      "stage": "Adam",
+      "step": 220,
+      "seconds": 5.4931512999974075,
+      "training_mse": 0.01430505131500876,
+      "validation_mse": 0.013671512329782956
+    },
+    {
+      "stage": "Adam",
+      "step": 240,
+      "seconds": 5.883027799998672,
+      "training_mse": 0.013072529478244294,
+      "validation_mse": 0.012109698387706267
+    },
+    {
+      "stage": "Adam",
+      "step": 260,
+      "seconds": 6.291997699998319,
+      "training_mse": 0.012173486711778994,
+      "validation_mse": 0.011094002618094628
+    },
+    {
+      "stage": "Adam",
+      "step": 280,
+      "seconds": 6.675293299998884,
+      "training_mse": 0.011397061564787824,
+      "validation_mse": 0.01021871921110158
+    },
+    {
+      "stage": "Adam",
+      "step": 300,
+      "seconds": 7.089106699997501,
+      "training_mse": 0.010709742041059147,
+      "validation_mse": 0.009443488606824197
+    },
+    {
+      "stage": "Adam",
+      "step": 320,
+      "seconds": 7.47406140000021,
+      "training_mse": 0.010092704346616877,
+      "validation_mse": 0.0087873174451887
+    },
+    {
+      "stage": "Adam",
+      "step": 340,
+      "seconds": 7.851334799997858,
+      "training_mse": 0.00951665423078886,
+      "validation_mse": 0.008121361597861865
+    },
+    {
+      "stage": "Adam",
+      "step": 360,
+      "seconds": 8.218714099999488,
+      "training_mse": 0.009020139672520222,
+      "validation_mse": 0.007585608337461897
+    },
+    {
+      "stage": "Adam",
+      "step": 380,
+      "seconds": 8.588813800000935,
+      "training_mse": 0.008556917818121394,
+      "validation_mse": 0.007099613448982468
+    },
+    {
+      "stage": "Adam",
+      "step": 400,
+      "seconds": 8.963855899997725,
+      "training_mse": 0.008261405023518562,
+      "validation_mse": 0.006743890786727157
+    },
+    {
+      "stage": "L-BFGS",
+      "step": 20,
+      "seconds": 9.582006299999193,
+      "training_mse": 0.006194363093895144,
+      "validation_mse": 0.004780448836849103
+    },
+    {
+      "stage": "L-BFGS",
+      "step": 40,
+      "seconds": 10.286084799998207,
+      "training_mse": 0.004704301630814766,
+      "validation_mse": 0.003507243108756307
+    },
+    {
+      "stage": "L-BFGS",
+      "step": 60,
+      "seconds": 10.901278900000761,
+      "training_mse": 0.003624606106172887,
+      "validation_mse": 0.0025020890420290143
+    },
+    {
+      "stage": "L-BFGS",
+      "step": 80,
+      "seconds": 11.40040229999795,
+      "training_mse": 0.0030339377246252053,
+      "validation_mse": 0.002075437565683457
+    },
+    {
+      "stage": "L-BFGS",
+      "step": 100,
+      "seconds": 11.862315200000012,
+      "training_mse": 0.0023808674753359018,
+      "validation_mse": 0.001642381248127351
+    },
+    {
+      "stage": "L-BFGS",
+      "step": 120,
+      "seconds": 12.342373600000428,
+      "training_mse": 0.0019421479035618085,
+      "validation_mse": 0.0013309998777251283
+    },
+    {
+      "stage": "L-BFGS",
+      "step": 140,
+      "seconds": 12.809343000000808,
+      "training_mse": 0.001649253351371141,
+      "validation_mse": 0.001110361899939976
+    },
+    {
+      "stage": "L-BFGS",
+      "step": 160,
+      "seconds": 13.353094699999929,
+      "training_mse": 0.0013876718171803016,
+      "validation_mse": 0.0008639960775262594
+    },
+    {
+      "stage": "L-BFGS",
+      "step": 180,
+      "seconds": 13.894870100000844,
+      "training_mse": 0.0012746728916472295,
+      "validation_mse": 0.0008294245247486809
+    },
+    {
+      "stage": "L-BFGS",
+      "step": 200,
+      "seconds": 14.41021869999895,
+      "training_mse": 0.0011690314639623987,
+      "validation_mse": 0.0007099844161645839
+    },
+    {
+      "stage": "L-BFGS",
+      "step": 220,
+      "seconds": 14.96599409999908,
+      "training_mse": 0.001077674237340209,
+      "validation_mse": 0.0006509970366906377
+    },
+    {
+      "stage": "L-BFGS",
+      "step": 240,
+      "seconds": 15.464404999998806,
+      "training_mse": 0.000969577089431214,
+      "validation_mse": 0.0006070160746597033
+    },
+    {
+      "stage": "L-BFGS",
+      "step": 260,
+      "seconds": 15.905335699997522,
+      "training_mse": 0.0008865300347392204,
+      "validation_mse": 0.0005660609926526957
+    },
+    {
+      "stage": "L-BFGS",
+      "step": 280,
+      "seconds": 16.385606499999994,
+      "training_mse": 0.0008195164938934377,
+      "validation_mse": 0.0005189923831620039
+    },
+    {
+      "stage": "L-BFGS",
+      "step": 300,
+      "seconds": 16.95434849999947,
+      "training_mse": 0.0007548027926475859,
+      "validation_mse": 0.00046459875613086103
+    },
+    {
+      "stage": "L-BFGS",
+      "step": 320,
+      "seconds": 17.439226899998175,
+      "training_mse": 0.0007211681845636355,
+      "validation_mse": 0.00042800888744416884
+    },
+    {
+      "stage": "L-BFGS",
+      "step": 340,
+      "seconds": 17.981564400000934,
+      "training_mse": 0.000692909857882843,
+      "validation_mse": 0.00039777095351495236
+    },
+    {
+      "stage": "L-BFGS",
+      "step": 360,
+      "seconds": 18.519126700000925,
+      "training_mse": 0.0006707111689099425,
+      "validation_mse": 0.00038199500116218986
+    },
+    {
+      "stage": "L-BFGS",
+      "step": 380,
+      "seconds": 19.016672899997502,
+      "training_mse": 0.0006495983036675027,
+      "validation_mse": 0.00038886410672223375
+    },
+    {
+      "stage": "L-BFGS",
+      "step": 400,
+      "seconds": 19.575332599997637,
+      "training_mse": 0.000612878598923882,
+      "validation_mse": 0.0003765263532551566
+    },
+    {
+      "stage": "L-BFGS",
+      "step": 420,
+      "seconds": 20.28487160000077,
+      "training_mse": 0.0005864907751219307,
+      "validation_mse": 0.0003671283104798095
+    },
+    {
+      "stage": "L-BFGS",
+      "step": 440,
+      "seconds": 21.006492399999843,
+      "training_mse": 0.0005444212305015976,
+      "validation_mse": 0.00033592520730857514
+    },
+    {
+      "stage": "L-BFGS",
+      "step": 460,
+      "seconds": 21.675949799999216,
+      "training_mse": 0.0005030266484678408,
+      "validation_mse": 0.00032175590140890467
+    },
+    {
+      "stage": "L-BFGS",
+      "step": 480,
+      "seconds": 22.327547500000946,
+      "training_mse": 0.0004658276083478581,
+      "validation_mse": 0.0002772206008987458
+    },
+    {
+      "stage": "L-BFGS",
+      "step": 500,
+      "seconds": 22.958964800000103,
+      "training_mse": 0.00044109926724296883,
+      "validation_mse": 0.00024988759676572957
+    },
+    {
+      "stage": "L-BFGS",
+      "step": 520,
+      "seconds": 23.406243699999322,
+      "training_mse": 0.0004226029451815528,
+      "validation_mse": 0.00025012146192887754
+    },
+    {
+      "stage": "L-BFGS",
+      "step": 540,
+      "seconds": 24.107954200000677,
+      "training_mse": 0.0004027033129417058,
+      "validation_mse": 0.0002294620249814778
+    },
+    {
+      "stage": "L-BFGS",
+      "step": 560,
+      "seconds": 24.779973199998494,
+      "training_mse": 0.00039258548487134743,
+      "validation_mse": 0.00023110803454453287
+    },
+    {
+      "stage": "L-BFGS",
+      "step": 580,
+      "seconds": 25.48960199999783,
+      "training_mse": 0.00038233402270760133,
+      "validation_mse": 0.0002242816437878173
+    },
+    {
+      "stage": "L-BFGS",
+      "step": 600,
+      "seconds": 26.202622299999348,
+      "training_mse": 0.0003687253805021507,
+      "validation_mse": 0.00022071293706290868
+    },
+    {
+      "stage": "L-BFGS",
+      "step": 600,
+      "seconds": 26.23218110000016,
+      "training_mse": 0.0003687253805021507,
+      "validation_mse": 0.00022071293706290868
+    }
+  ]
+}

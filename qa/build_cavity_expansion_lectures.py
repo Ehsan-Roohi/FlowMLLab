@@ -36,6 +36,9 @@ def build(targets=None):
     manifest=json.loads(manifest_path.read_text()) if manifest_path.exists() else {}
     for name,pages in content.items():
         if targets and name not in targets:continue
+        if name == 'week04_cavity_surrogates_deeponet':
+            from week04_evidence_presentation import format_pages
+            pages = format_pages(pages)
         path=ROOT/'lectures'/f'{name}.pdf';base=PdfReader(path)
         base_count=int(base.metadata.get('/FlowMLLabCavityBasePages',len(base.pages)))
         story=[]

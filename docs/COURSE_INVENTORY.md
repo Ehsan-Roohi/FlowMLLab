@@ -6,9 +6,9 @@ Course version **v1.15.0**. These counts describe the current checkout; they do 
 
 | Asset | Count |
 | --- | ---: |
-| Active lecture PDFs | 38 |
-| Pages in those PDFs | 683 |
-| Student notebooks, including historical companion | 63 |
+| Active lecture PDFs | 39 |
+| Pages in those PDFs | 746 |
+| Student notebooks, including historical companion | 64 |
 | Historical student audit companion (included above) | 1 |
 | Optional self-study notebooks (separate) | 1 |
 | Optional self-study PDFs (separate) | 1 |
@@ -28,6 +28,7 @@ Course version **v1.15.0**. These counts describe the current checkout; they do 
 | [week01_1_ai_assisted_scientific_software.pdf](../lectures/week01_1_ai_assisted_scientific_software.pdf) | 10 |
 | [week01_2_pressure_velocity.pdf](../lectures/week01_2_pressure_velocity.pdf) | 74 |
 | [week01_3_keras_optimizers.pdf](../lectures/week01_3_keras_optimizers.pdf) | 18 |
+| [week01_4_spectral_dg.pdf](../lectures/week01_4_spectral_dg.pdf) | 25 |
 | [week01_numerical_foundations.pdf](../lectures/week01_numerical_foundations.pdf) | 37 |
 | [week02_1_probabilistic_uq.pdf](../lectures/week02_1_probabilistic_uq.pdf) | 10 |
 | [week02_supervised_learning_rarefaction.pdf](../lectures/week02_supervised_learning_rarefaction.pdf) | 24 |
@@ -35,7 +36,7 @@ Course version **v1.15.0**. These counts describe the current checkout; they do 
 | [week04_2_grid51_validation.pdf](../lectures/week04_2_grid51_validation.pdf) | 4 |
 | [week04_2_pinn_cavity.pdf](../lectures/week04_2_pinn_cavity.pdf) | 12 |
 | [week04_2_stokes_to_navier_stokes.pdf](../lectures/week04_2_stokes_to_navier_stokes.pdf) | 11 |
-| [week04_cavity_surrogates_deeponet.pdf](../lectures/week04_cavity_surrogates_deeponet.pdf) | 65 |
+| [week04_cavity_surrogates_deeponet.pdf](../lectures/week04_cavity_surrogates_deeponet.pdf) | 103 |
 | [week05_06_project_guide.pdf](../lectures/week05_06_project_guide.pdf) | 59 |
 | [week05_modal_sensing.pdf](../lectures/week05_modal_sensing.pdf) | 5 |
 | [week07_1_hypersonic_rarefied_cylinder.pdf](../lectures/week07_1_hypersonic_rarefied_cylinder.pdf) | 17 |
@@ -75,6 +76,7 @@ The historical Week 15 audit remains available for provenance; use the complete 
 | [W1_1_AI_Assisted_Scientific_Software.ipynb](../notebooks/week01_1/W1_1_AI_Assisted_Scientific_Software.ipynb) | student |
 | [W1_2_Cavity_Pressure_Velocity.ipynb](../notebooks/week01_2/W1_2_Cavity_Pressure_Velocity.ipynb) | student |
 | [W1_3_Keras_Optimizers.ipynb](../notebooks/week01_3/W1_3_Keras_Optimizers.ipynb) | student |
+| [W1_4_Spectral_DG_CPU.ipynb](../notebooks/week01_4/W1_4_Spectral_DG_CPU.ipynb) | student |
 | [AI_in_Fluids_Week2_Colab_Expanded.ipynb](../notebooks/week02/AI_in_Fluids_Week2_Colab_Expanded.ipynb) | student |
 | [Probabilistic_UQ_CFD.ipynb](../notebooks/week02_1/Probabilistic_UQ_CFD.ipynb) | student |
 | [AI_in_Fluids_Week3_Lab1_Maxwellian_Noise_ML_Student.ipynb](../notebooks/week03/AI_in_Fluids_Week3_Lab1_Maxwellian_Noise_ML_Student.ipynb) | student |
@@ -143,10 +145,11 @@ Compute planning estimates are not measurements of this revision or classroom wo
 | [Week 1.1: AI-assisted scientific software](../weeks/week01_1/README.md) | Week 1 Python and cavity diagnostics; derivatives and array indexing. | Colab link is an entry point, not a guarantee of a fresh hosted Run All. [Setup](../notebooks/week01_1/README.md) |
 | [Week 1.2: Pressure-velocity coupling: SIMPLE, PISO and PIMPLE](../weeks/week01_2/README.md) | Week 1 cavity validation; continuity, momentum and finite differences. | Colab link is an entry point, not a guarantee of a fresh hosted Run All. [Setup](../notebooks/week01_2/README.md) |
 | [Week 1.3: Optimizers for Scientific Machine Learning with TensorFlow and Keras](../weeks/week01_3/README.md) | Week 1 Notebook 02 TensorFlow/Keras and Week 2 scaling, train/validation/test splits and baselines; then the matched optimizer experiments. | Runs locally on CPU with TensorFlow and SciPy. The Colab link is an entry point. [Setup](../notebooks/week01_3/README.md) |
+| [Week 1.4: Spectral and discontinuous Galerkin methods on CPU](../weeks/week01_4/README.md) | Week 1 cavity foundations and Week 1.2 pressure-velocity coupling; Week 1.3 optimizers is not required. | Fresh local Restart/Run All includes actual cavity CFD and Ghia comparisons; nine numerical tests passed. Hosted Colab execution not claimed. [Setup](../notebooks/week01_4/README.md) |
 | [Week 2: Supervised learning and rarefaction](../weeks/week02/README.md) | Week 1 NumPy, plotting and numerical-validation ideas. | Colab link is an entry point, not a guarantee of a fresh hosted Run All. [Setup](../START_HERE.md) |
 | [Week 2.1: Probabilistic uncertainty](../weeks/week02_1/README.md) | Week 2 scaling, regression and development/evaluation splits; elementary probability. Take scalar sections first; POD–GP fields require Week 4 POD. | Colab link is an entry point, not a guarantee of a fresh hosted Run All. [Setup](../notebooks/week02_1/README.md) |
 | [Week 3: Kinetic theory and DSMC](../weeks/week03/README.md) | Week 1 Python; molecular velocities, probability and conservation laws. | Colab link is an entry point, not a guarantee of a fresh hosted Run All. [Setup](../START_HERE.md) |
-| [Week 4: Cavity surrogates and DeepONet](../weeks/week04/README.md) | Week 1 cavity validation and Week 2 supervised learning. Labs 1–3 precede high-Re Labs 5/7/8; advanced Lab 9 follows Week 13 Part A PINNs. | Colab link is an entry point, not a guarantee of a fresh hosted Run All. [Setup](../START_HERE.md) |
+| [Week 4: Cavity surrogates and DeepONet](../weeks/week04/README.md) | Week 1 cavity validation and Week 2 supervised learning. Labs 1–3 precede high-Re Labs 5/7/8; advanced Lab 9 follows Week 13 Part A PINNs. | Colab link is an entry point, not a guarantee of a fresh hosted Run All. [Setup](../notebooks/week04/README.md) |
 | [Week 4.1: Classical reduced-order models](../weeks/week04_1/README.md) | Week 4 cavity data; matrix algebra, SVD and time integration. | Colab link is an entry point, not a guarantee of a fresh hosted Run All. [Setup](../START_HERE.md) |
 | [Week 4.2: Stokes-to-Navier-Stokes correction](../weeks/week04_2/README.md) | Week 4 field surrogates; Stokes/Navier–Stokes equations and POD. | Colab link is an entry point, not a guarantee of a fresh hosted Run All. [Setup](../START_HERE.md) |
 | [Week 5: Physics-guided projects](../weeks/week05/README.md) | Weeks 1–4; freeze a baseline, split, metric and failure threshold before P0. | Colab link is an entry point, not a guarantee of a fresh hosted Run All. [Setup](../notebooks/week05_06/README.md) |

@@ -1,0 +1,19 @@
+{
+  "verified_utc": "2026-11-20T22:41:54.3649185Z",
+  "removed": [
+    {
+      "path": "D:\\ChatGPT Backup\\Projects\\FlowMLLab\\Teaching_Current\\repo\\tmp\\week04_outputs\\W4_Lab3_DeepONet_Cavity_Student_failed.ipynb",
+      "bytes": 47127,
+      "sha256": "5ebc7a43f615de67d91abf7fb20b0b55d2201a88fce103034477eca124ac35a9",
+      "reason": "Superseded failed execution or completed one-time finalizer; successful current notebooks and QA source verified."
+    },
+    {
+      "path": "D:\\ChatGPT Backup\\Projects\\FlowMLLab\\Teaching_Current\\repo\\tmp\\week04_outputs\\finalize_sources.py",
+      "bytes": 6321,
+      "sha256": "14d283a42cedcf1026da60d1304511eb899c0cca8f93061843d12571f39d3390",
+      "reason": "Superseded failed execution or completed one-time finalizer; successful current notebooks and QA source verified."
+    }
+  ],
+  "removed_bytes": 53448,
+  "retained": "Current notebooks, scientific arrays/models/provenance, reusable Python runtime and active runtime caches."
+}

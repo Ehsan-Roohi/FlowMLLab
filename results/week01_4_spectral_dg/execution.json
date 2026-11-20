@@ -1,0 +1,2641 @@
+{
+  "unit": "1.4",
+  "problem_roles": [
+    "manufactured Dirichlet Poisson",
+    "periodic linear scalar transport",
+    "steady incompressible driven cavity"
+  ],
+  "python": "3.12.14",
+  "numpy": "2.2.6",
+  "scipy": "1.15.3",
+  "platform": "Windows-11-10.0.26200-SP0",
+  "processor": "Intel64 Family 6 Model 189 Stepping 1, GenuineIntel",
+  "controls": {
+    "degrees": [
+      8,
+      12,
+      16,
+      24,
+      32,
+      48
+    ],
+    "poisson_n": [
+      8,
+      12,
+      16,
+      24,
+      32
+    ],
+    "timing_repeats": 3,
+    "dg_cases": [
+      [
+        64,
+        0
+      ],
+      [
+        32,
+        1
+      ],
+      [
+        16,
+        3
+      ],
+      [
+        8,
+        7
+      ]
+    ],
+    "target": "localized",
+    "speed": 1.0,
+    "final_time": 0.35,
+    "cfl": 0.12,
+    "alpha": 1.0,
+    "flux_k": 24,
+    "flux_p": 3,
+    "cavity_reynolds": [
+      100,
+      400
+    ],
+    "cavity_degrees": [
+      16,
+      24,
+      32
+    ],
+    "cavity_tolerance": 1e-09,
+    "cavity_max_iterations": 25,
+    "cavity_lid": "standard"
+  },
+  "ghia_source_sha256": "9eeaf5780299d01061f0d93092756d19d25caf38ca4b47a2d333fd58d4c9153d",
+  "ghia_source_doi": "https://doi.org/10.1016/0021-9991(82)90058-4",
+  "time_difference_ratio": 8.00336322674824,
+  "elapsed_cells_seconds": 114.48386270000083,
+  "figures": [
+    "interpolation_smoothness",
+    "pressure_poisson_fields",
+    "poisson_accuracy_cost",
+    "spatial_representation_schematic",
+    "dg_transport_equal_dofs",
+    "dg_flux_pulse_energy",
+    "dg_refinement_time",
+    "cavity_fields_re100",
+    "cavity_fields_re400",
+    "cavity_ghia_profiles",
+    "cavity_convergence_continuity"
+  ],
+  "tables": {
+    "A": [
+      {
+        "target": "Smooth",
+        "N": 8,
+        "nodes": 9,
+        "max_error_2001_points": 0.1378549309567576
+      },
+      {
+        "target": "Corner",
+        "N": 8,
+        "nodes": 9,
+        "max_error_2001_points": 0.051967413194231815
+      },
+      {
+        "target": "Smooth",
+        "N": 12,
+        "nodes": 13,
+        "max_error_2001_points": 0.005221467518587097
+      },
+      {
+        "target": "Corner",
+        "N": 12,
+        "nodes": 13,
+        "max_error_2001_points": 0.02405229390675781
+      },
+      {
+        "target": "Smooth",
+        "N": 16,
+        "nodes": 17,
+        "max_error_2001_points": 4.929022992672394e-05
+      },
+      {
+        "target": "Corner",
+        "N": 16,
+        "nodes": 17,
+        "max_error_2001_points": 0.026422719624526348
+      },
+      {
+        "target": "Smooth",
+        "N": 24,
+        "nodes": 25,
+        "max_error_2001_points": 2.744711125046706e-10
+      },
+      {
+        "target": "Corner",
+        "N": 24,
+        "nodes": 25,
+        "max_error_2001_points": 0.011909759804512728
+      },
+      {
+        "target": "Smooth",
+        "N": 32,
+        "nodes": 33,
+        "max_error_2001_points": 9.992007221626409e-16
+      },
+      {
+        "target": "Corner",
+        "N": 32,
+        "nodes": 33,
+        "max_error_2001_points": 0.012761157971916183
+      },
+      {
+        "target": "Smooth",
+        "N": 48,
+        "nodes": 49,
+        "max_error_2001_points": 1.27675647831893e-15
+      },
+      {
+        "target": "Corner",
+        "N": 48,
+        "nodes": 49,
+        "max_error_2001_points": 0.005856845434719424
+      }
+    ],
+    "P": [
+      {
+        "method": "chebyshev",
+        "N": 8,
+        "unknowns": 49,
+        "relative_L2": 0.0004803514404166711,
+        "max_error": 0.000594832708031845,
+        "equation_residual_max": 6.394884621840902e-14,
+        "assembly_solve_median_s": 0.000527700000020559,
+        "assembly_solve_min_s": 0.0005251999991742196,
+        "assembly_solve_max_s": 0.0010325999992346624
+      },
+      {
+        "method": "chebyshev",
+        "N": 12,
+        "unknowns": 121,
+        "relative_L2": 1.7170074753319948e-07,
+        "max_error": 2.1159900887024463e-07,
+        "equation_residual_max": 5.719869022868806e-13,
+        "assembly_solve_median_s": 0.0005975999993097503,
+        "assembly_solve_min_s": 0.0005971999999019317,
+        "assembly_solve_max_s": 0.000647999999273452
+      },
+      {
+        "method": "chebyshev",
+        "N": 16,
+        "unknowns": 225,
+        "relative_L2": 1.852138671440736e-11,
+        "max_error": 2.270711396690217e-11,
+        "equation_residual_max": 8.810729923425242e-13,
+        "assembly_solve_median_s": 0.0007714999992458615,
+        "assembly_solve_min_s": 0.00047760000052221585,
+        "assembly_solve_max_s": 0.0008276000007754192
+      },
+      {
+        "method": "chebyshev",
+        "N": 24,
+        "unknowns": 529,
+        "relative_L2": 1.0806551864657126e-14,
+        "max_error": 1.5432100042289676e-14,
+        "equation_residual_max": 2.7000623958883807e-12,
+        "assembly_solve_median_s": 0.0009800000007089693,
+        "assembly_solve_min_s": 0.0007559000005130656,
+        "assembly_solve_max_s": 0.005585599999903934
+      },
+      {
+        "method": "chebyshev",
+        "N": 32,
+        "unknowns": 961,
+        "relative_L2": 3.0328136234979124e-14,
+        "max_error": 3.0531133177191805e-14,
+        "equation_residual_max": 1.4453771512989988e-11,
+        "assembly_solve_median_s": 0.0008737999996810686,
+        "assembly_solve_min_s": 0.0008495000001857989,
+        "assembly_solve_max_s": 0.0011503000005177455
+      },
+      {
+        "method": "finite_difference",
+        "N": 8,
+        "unknowns": 49,
+        "relative_L2": 0.03220753592880088,
+        "max_error": 0.04832285787942425,
+        "equation_residual_max": 5.684341886080802e-14,
+        "assembly_solve_median_s": 0.0036546999999700347,
+        "assembly_solve_min_s": 0.002794699999867589,
+        "assembly_solve_max_s": 0.00400420000005397
+      },
+      {
+        "method": "finite_difference",
+        "N": 12,
+        "unknowns": 121,
+        "relative_L2": 0.014149764349007195,
+        "max_error": 0.022488408577338692,
+        "equation_residual_max": 2.0605739337042905e-13,
+        "assembly_solve_median_s": 0.027115799999592127,
+        "assembly_solve_min_s": 0.012540400000943919,
+        "assembly_solve_max_s": 0.03897300000062387
+      },
+      {
+        "method": "finite_difference",
+        "N": 16,
+        "unknowns": 225,
+        "relative_L2": 0.007892220957075907,
+        "max_error": 0.012838131895822724,
+        "equation_residual_max": 3.197442310920451e-13,
+        "assembly_solve_median_s": 0.0034321000002819346,
+        "assembly_solve_min_s": 0.003005200000188779,
+        "assembly_solve_max_s": 0.006605499998840969
+      },
+      {
+        "method": "finite_difference",
+        "N": 24,
+        "unknowns": 529,
+        "relative_L2": 0.003505078451933655,
+        "max_error": 0.005674538228022108,
+        "equation_residual_max": 8.952838470577262e-13,
+        "assembly_solve_median_s": 0.00475679999908607,
+        "assembly_solve_min_s": 0.0037766000004921807,
+        "assembly_solve_max_s": 0.004765600000609993
+      },
+      {
+        "method": "finite_difference",
+        "N": 32,
+        "unknowns": 961,
+        "relative_L2": 0.0019594010132286473,
+        "max_error": 0.0032294773910145347,
+        "equation_residual_max": 1.3926637620897964e-12,
+        "assembly_solve_median_s": 0.008267000001069391,
+        "assembly_solve_min_s": 0.006128099999841652,
+        "assembly_solve_max_s": 0.011024100000213366
+      }
+    ],
+    "D": [
+      {
+        "K": 64,
+        "p": 0,
+        "alpha": 1.0,
+        "dofs": 64,
+        "dt": 0.0018716577540106951,
+        "rhs_calls": 561,
+        "seconds": 0.15099999999983993,
+        "relative_L2": 0.6289604294682767,
+        "max_error": 0.6357026370211148,
+        "mass_drift": -5.134781488891349e-16
+      },
+      {
+        "K": 32,
+        "p": 1,
+        "alpha": 1.0,
+        "dofs": 64,
+        "dt": 0.00125,
+        "rhs_calls": 840,
+        "seconds": 0.2809746000002633,
+        "relative_L2": 0.19889640605618059,
+        "max_error": 0.20889916691892352,
+        "mass_drift": -8.187894806610529e-16
+      },
+      {
+        "K": 16,
+        "p": 3,
+        "alpha": 1.0,
+        "dofs": 64,
+        "dt": 0.0010703363914373089,
+        "rhs_calls": 981,
+        "seconds": 0.30717209999966144,
+        "relative_L2": 0.035778032987307196,
+        "max_error": 0.039710309508444785,
+        "mass_drift": -8.604228440844963e-16
+      },
+      {
+        "K": 8,
+        "p": 7,
+        "alpha": 1.0,
+        "dofs": 64,
+        "dt": 0.001,
+        "rhs_calls": 1050,
+        "seconds": 0.13931769999908283,
+        "relative_L2": 0.00708540938202415,
+        "max_error": 0.008101315120262464,
+        "mass_drift": -1.0269562977782698e-15
+      }
+    ],
+    "F": [
+      {
+        "K": 24,
+        "p": 3,
+        "alpha": 0.0,
+        "dofs": 96,
+        "dt": 0.0007142857142857143,
+        "rhs_calls": 1470,
+        "seconds": 0.27797519999876386,
+        "relative_L2": 0.1830231973470302,
+        "max_error": 0.6096372714314755,
+        "mass_drift": -5.329070518200751e-15,
+        "minimum": -0.2710738283288301,
+        "maximum": 1.1437400510753786
+      },
+      {
+        "K": 24,
+        "p": 3,
+        "alpha": 1.0,
+        "dofs": 96,
+        "dt": 0.0007142857142857143,
+        "rhs_calls": 1470,
+        "seconds": 0.32918489999974554,
+        "relative_L2": 0.13585286192408463,
+        "max_error": 0.5251030113474845,
+        "mass_drift": -5.329070518200751e-15,
+        "minimum": -0.09755387485122988,
+        "maximum": 1.1310768745306818
+      }
+    ],
+    "T": [
+      {
+        "K": 8,
+        "p": 5,
+        "alpha": 1.0,
+        "dofs": 48,
+        "dt": 0.0013618677042801556,
+        "rhs_calls": 771,
+        "seconds": 0.1910727999984374,
+        "relative_L2": 3.2682859923852445e-05,
+        "max_error": 9.236662426115316e-05,
+        "mass_drift": -1.3877787807814457e-16,
+        "CFL": 0.12
+      },
+      {
+        "K": 8,
+        "p": 5,
+        "alpha": 1.0,
+        "dofs": 48,
+        "dt": 0.0006809338521400778,
+        "rhs_calls": 1542,
+        "seconds": 0.3778860000002169,
+        "relative_L2": 3.26472981540765e-05,
+        "max_error": 9.278643440913115e-05,
+        "mass_drift": -4.163336342344337e-17,
+        "CFL": 0.06
+      },
+      {
+        "K": 8,
+        "p": 5,
+        "alpha": 1.0,
+        "dofs": 48,
+        "dt": 0.0003407984420642648,
+        "rhs_calls": 3081,
+        "seconds": 0.146835600000486,
+        "relative_L2": 3.26464168979567e-05,
+        "max_error": 9.2837931330636e-05,
+        "mass_drift": 2.498001805406602e-16,
+        "CFL": 0.03
+      }
+    ],
+    "H": [
+      {
+        "K": 8,
+        "p": 2,
+        "alpha": 1.0,
+        "dofs": 24,
+        "dt": 0.0014957264957264956,
+        "rhs_calls": 702,
+        "seconds": 0.054976200000965036,
+        "relative_L2": 0.024018883355704672,
+        "max_error": 0.027519498070173898,
+        "mass_drift": 1.942890293094024e-16,
+        "observed_order": null
+      },
+      {
+        "K": 16,
+        "p": 2,
+        "alpha": 1.0,
+        "dofs": 48,
+        "dt": 0.0007494646680942183,
+        "rhs_calls": 1401,
+        "seconds": 0.08849709999958577,
+        "relative_L2": 0.0025818865225864457,
+        "max_error": 0.00540347057418622,
+        "mass_drift": 2.216109240560371e-16,
+        "observed_order": 3.217671582577338
+      },
+      {
+        "K": 32,
+        "p": 2,
+        "alpha": 1.0,
+        "dofs": 96,
+        "dt": 0.00037473233404710916,
+        "rhs_calls": 2802,
+        "seconds": 0.25695989999985613,
+        "relative_L2": 0.00031746870037263993,
+        "max_error": 0.0007168034538385104,
+        "mass_drift": 1.3444106938820255e-17,
+        "observed_order": 3.0237393266947663
+      }
+    ],
+    "C": [
+      {
+        "Re": 100,
+        "N": 16,
+        "velocity_nodes": 289,
+        "coupled_unknowns": 675,
+        "lid": "standard",
+        "converged": true,
+        "stop_reason": "converged discrete steady equations",
+        "Newton_iterations": 5,
+        "seconds": 0.19380549999914365,
+        "steady_residual_max": 9.986456106503283e-14,
+        "continuity_nodes_max": 5.995204332975845e-15,
+        "continuity_core_RMS": 0.0969228892968325,
+        "continuity_core_max": 1.5124305530656068,
+        "u_RMS_all": 0.0024866997035699295,
+        "u_relative_L2_all": 0.005442554033108047,
+        "u_RMS_screened": 0.0024866997035699295,
+        "u_relative_L2_screened": 0.005442554033108047,
+        "u_n_all": 17,
+        "u_n_screened": 17,
+        "v_RMS_all": 0.004741230695043305,
+        "v_relative_L2_all": 0.03554025843398921,
+        "v_RMS_screened": 0.004741230695043305,
+        "v_relative_L2_screened": 0.03554025843398921,
+        "v_n_all": 17,
+        "v_n_screened": 17
+      },
+      {
+        "Re": 100,
+        "N": 24,
+        "velocity_nodes": 625,
+        "coupled_unknowns": 1587,
+        "lid": "standard",
+        "converged": true,
+        "stop_reason": "converged discrete steady equations",
+        "Newton_iterations": 5,
+        "seconds": 1.238801900000908,
+        "steady_residual_max": 2.788880237858393e-13,
+        "continuity_nodes_max": 1.687538997430238e-14,
+        "continuity_core_RMS": 0.0538664814535234,
+        "continuity_core_max": 0.699838556354311,
+        "u_RMS_all": 0.0025052127673802793,
+        "u_relative_L2_all": 0.005483072938531792,
+        "u_RMS_screened": 0.0025052127673802793,
+        "u_relative_L2_screened": 0.005483072938531792,
+        "u_n_all": 17,
+        "u_n_screened": 17,
+        "v_RMS_all": 0.004777571449282618,
+        "v_relative_L2_all": 0.035812668675216555,
+        "v_RMS_screened": 0.004777571449282618,
+        "v_relative_L2_screened": 0.035812668675216555,
+        "v_n_all": 17,
+        "v_n_screened": 17
+      },
+      {
+        "Re": 100,
+        "N": 32,
+        "velocity_nodes": 1089,
+        "coupled_unknowns": 2883,
+        "lid": "standard",
+        "converged": true,
+        "stop_reason": "converged discrete steady equations",
+        "Newton_iterations": 5,
+        "seconds": 10.393779199999699,
+        "steady_residual_max": 6.678269048876473e-13,
+        "continuity_nodes_max": 2.353672812205332e-14,
+        "continuity_core_RMS": 0.041429389728460914,
+        "continuity_core_max": 0.5908587969460162,
+        "u_RMS_all": 0.002426262135852197,
+        "u_relative_L2_all": 0.005310276409291563,
+        "u_RMS_screened": 0.002426262135852197,
+        "u_relative_L2_screened": 0.005310276409291563,
+        "u_n_all": 17,
+        "u_n_screened": 17,
+        "v_RMS_all": 0.0047848194052296355,
+        "v_relative_L2_all": 0.0358669993425145,
+        "v_RMS_screened": 0.0047848194052296355,
+        "v_relative_L2_screened": 0.0358669993425145,
+        "v_n_all": 17,
+        "v_n_screened": 17
+      },
+      {
+        "Re": 400,
+        "N": 16,
+        "velocity_nodes": 289,
+        "coupled_unknowns": 675,
+        "lid": "standard",
+        "converged": true,
+        "stop_reason": "converged discrete steady equations",
+        "Newton_iterations": 7,
+        "seconds": 0.17545530000097642,
+        "steady_residual_max": 5.74487957205605e-11,
+        "continuity_nodes_max": 7.105427357601002e-15,
+        "continuity_core_RMS": 0.17581337675080638,
+        "continuity_core_max": 3.255695730726153,
+        "u_RMS_all": 0.017471246691429434,
+        "u_relative_L2_all": 0.04088223841667995,
+        "u_RMS_screened": 0.017471246691429434,
+        "u_relative_L2_screened": 0.04088223841667995,
+        "u_n_all": 17,
+        "u_n_screened": 17,
+        "v_RMS_all": 0.04151697987885639,
+        "v_relative_L2_all": 0.17381718113709357,
+        "v_RMS_screened": 0.009567456684071881,
+        "v_relative_L2_screened": 0.04004950437368797,
+        "v_n_all": 17,
+        "v_n_screened": 16
+      },
+      {
+        "Re": 400,
+        "N": 24,
+        "velocity_nodes": 625,
+        "coupled_unknowns": 1587,
+        "lid": "standard",
+        "converged": true,
+        "stop_reason": "converged discrete steady equations",
+        "Newton_iterations": 8,
+        "seconds": 3.2935938999999053,
+        "steady_residual_max": 4.829470157119431e-14,
+        "continuity_nodes_max": 2.842170943040401e-14,
+        "continuity_core_RMS": 0.04440919275962484,
+        "continuity_core_max": 0.5625017646855761,
+        "u_RMS_all": 0.0024557940326087207,
+        "u_relative_L2_all": 0.005746490729400569,
+        "u_RMS_screened": 0.0024557940326087207,
+        "u_relative_L2_screened": 0.005746490729400569,
+        "u_n_all": 17,
+        "u_n_screened": 17,
+        "v_RMS_all": 0.03724043330224973,
+        "v_relative_L2_all": 0.15591276532659235,
+        "v_RMS_screened": 0.003435324564772625,
+        "v_relative_L2_screened": 0.014380315555642948,
+        "v_n_all": 17,
+        "v_n_screened": 16
+      },
+      {
+        "Re": 400,
+        "N": 32,
+        "velocity_nodes": 1089,
+        "coupled_unknowns": 2883,
+        "lid": "standard",
+        "converged": true,
+        "stop_reason": "converged discrete steady equations",
+        "Newton_iterations": 8,
+        "seconds": 16.82956319999903,
+        "steady_residual_max": 1.5898393712632242e-13,
+        "continuity_nodes_max": 2.042810365310288e-14,
+        "continuity_core_RMS": 0.03830860472234176,
+        "continuity_core_max": 0.6205426973481983,
+        "u_RMS_all": 0.0013975063768002756,
+        "u_relative_L2_all": 0.003270126619710903,
+        "u_RMS_screened": 0.0013975063768002756,
+        "u_relative_L2_screened": 0.003270126619710903,
+        "u_n_all": 17,
+        "u_n_screened": 17,
+        "v_RMS_all": 0.036952302987283615,
+        "v_relative_L2_all": 0.15470646372918118,
+        "v_RMS_screened": 0.0031331336111470823,
+        "v_relative_L2_screened": 0.01311534009575257,
+        "v_n_all": 17,
+        "v_n_screened": 16
+      }
+    ],
+    "G": [
+      {
+        "Re": 100,
+        "N": 16,
+        "component": "u",
+        "coordinate": 1.0,
+        "CFD": 1.0,
+        "Ghia": 1.0,
+        "signed_error": 0.0,
+        "flagged": false
+      },
+      {
+        "Re": 100,
+        "N": 16,
+        "component": "u",
+        "coordinate": 0.9766,
+        "CFD": 0.8431844005981365,
+        "Ghia": 0.84123,
+        "signed_error": 0.001954400598136452,
+        "flagged": false
+      },
+      {
+        "Re": 100,
+        "N": 16,
+        "component": "u",
+        "coordinate": 0.9688,
+        "CFD": 0.7917605778966909,
+        "Ghia": 0.78871,
+        "signed_error": 0.0030505778966908315,
+        "flagged": false
+      },
+      {
+        "Re": 100,
+        "N": 16,
+        "component": "u",
+        "coordinate": 0.9609,
+        "CFD": 0.7405917842723423,
+        "Ghia": 0.73722,
+        "signed_error": 0.003371784272342304,
+        "flagged": false
+      },
+      {
+        "Re": 100,
+        "N": 16,
+        "component": "u",
+        "coordinate": 0.9531,
+        "CFD": 0.6913349135878902,
+        "Ghia": 0.68717,
+        "signed_error": 0.004164913587890284,
+        "flagged": false
+      },
+      {
+        "Re": 100,
+        "N": 16,
+        "component": "u",
+        "coordinate": 0.8516,
+        "CFD": 0.2371800122543796,
+        "Ghia": 0.23151,
+        "signed_error": 0.005670012254379603,
+        "flagged": false
+      },
+      {
+        "Re": 100,
+        "N": 16,
+        "component": "u",
+        "coordinate": 0.7344,
+        "CFD": 0.004436780861588807,
+        "Ghia": 0.00332,
+        "signed_error": 0.0011167808615888068,
+        "flagged": false
+      },
+      {
+        "Re": 100,
+        "N": 16,
+        "component": "u",
+        "coordinate": 0.6172,
+        "CFD": -0.13853963645460055,
+        "Ghia": -0.13641,
+        "signed_error": -0.002129636454600542,
+        "flagged": false
+      },
+      {
+        "Re": 100,
+        "N": 16,
+        "component": "u",
+        "coordinate": 0.5,
+        "CFD": -0.2092687906756861,
+        "Ghia": -0.20581,
+        "signed_error": -0.0034587906756861075,
+        "flagged": false
+      },
+      {
+        "Re": 100,
+        "N": 16,
+        "component": "u",
+        "coordinate": 0.4531,
+        "CFD": -0.21411067300122558,
+        "Ghia": -0.2109,
+        "signed_error": -0.0032106730012255724,
+        "flagged": false
+      },
+      {
+        "Re": 100,
+        "N": 16,
+        "component": "u",
+        "coordinate": 0.2813,
+        "CFD": -0.1579372762160642,
+        "Ghia": -0.15662,
+        "signed_error": -0.0013172762160642004,
+        "flagged": false
+      },
+      {
+        "Re": 100,
+        "N": 16,
+        "component": "u",
+        "coordinate": 0.1719,
+        "CFD": -0.10198610871005845,
+        "Ghia": -0.1015,
+        "signed_error": -0.0004861087100584416,
+        "flagged": false
+      },
+      {
+        "Re": 100,
+        "N": 16,
+        "component": "u",
+        "coordinate": 0.1016,
+        "CFD": -0.06454801400389751,
+        "Ghia": -0.06434,
+        "signed_error": -0.00020801400389751368,
+        "flagged": false
+      },
+      {
+        "Re": 100,
+        "N": 16,
+        "component": "u",
+        "coordinate": 0.0703,
+        "CFD": -0.046752511684723136,
+        "Ghia": -0.04775,
+        "signed_error": 0.0009974883152768649,
+        "flagged": false
+      },
+      {
+        "Re": 100,
+        "N": 16,
+        "component": "u",
+        "coordinate": 0.0625,
+        "CFD": -0.04210693476793728,
+        "Ghia": -0.04192,
+        "signed_error": -0.00018693476793728292,
+        "flagged": false
+      },
+      {
+        "Re": 100,
+        "N": 16,
+        "component": "u",
+        "coordinate": 0.0547,
+        "CFD": -0.03735270431497011,
+        "Ghia": -0.03717,
+        "signed_error": -0.0001827043149701113,
+        "flagged": false
+      },
+      {
+        "Re": 100,
+        "N": 16,
+        "component": "u",
+        "coordinate": 0.0,
+        "CFD": 0.0,
+        "Ghia": 0.0,
+        "signed_error": 0.0,
+        "flagged": false
+      },
+      {
+        "Re": 100,
+        "N": 16,
+        "component": "v",
+        "coordinate": 1.0,
+        "CFD": 0.0,
+        "Ghia": 0.0,
+        "signed_error": 0.0,
+        "flagged": false
+      },
+      {
+        "Re": 100,
+        "N": 16,
+        "component": "v",
+        "coordinate": 0.9688,
+        "CFD": -0.06003425321278771,
+        "Ghia": -0.05906,
+        "signed_error": -0.0009742532127877054,
+        "flagged": false
+      },
+      {
+        "Re": 100,
+        "N": 16,
+        "component": "v",
+        "coordinate": 0.9609,
+        "CFD": -0.07590149593211189,
+        "Ghia": -0.07391,
+        "signed_error": -0.0019914959321118836,
+        "flagged": false
+      },
+      {
+        "Re": 100,
+        "N": 16,
+        "component": "v",
+        "coordinate": 0.9531,
+        "CFD": -0.09152281079647356,
+        "Ghia": -0.08864,
+        "signed_error": -0.002882810796473567,
+        "flagged": false
+      },
+      {
+        "Re": 100,
+        "N": 16,
+        "component": "v",
+        "coordinate": 0.9453,
+        "CFD": -0.1069551277442576,
+        "Ghia": -0.10313,
+        "signed_error": -0.0038251277442575976,
+        "flagged": false
+      },
+      {
+        "Re": 100,
+        "N": 16,
+        "component": "v",
+        "coordinate": 0.9063,
+        "CFD": -0.17701001816108622,
+        "Ghia": -0.16914,
+        "signed_error": -0.007870018161086206,
+        "flagged": false
+      },
+      {
+        "Re": 100,
+        "N": 16,
+        "component": "v",
+        "coordinate": 0.8594,
+        "CFD": -0.2343573499473983,
+        "Ghia": -0.22445,
+        "signed_error": -0.00990734994739828,
+        "flagged": false
+      },
+      {
+        "Re": 100,
+        "N": 16,
+        "component": "v",
+        "coordinate": 0.8047,
+        "CFD": -0.25440471510677226,
+        "Ghia": -0.24533,
+        "signed_error": -0.009074715106772269,
+        "flagged": false
+      },
+      {
+        "Re": 100,
+        "N": 16,
+        "component": "v",
+        "coordinate": 0.5,
+        "CFD": 0.05749468671168125,
+        "Ghia": 0.05454,
+        "signed_error": 0.0029546867116812536,
+        "flagged": false
+      },
+      {
+        "Re": 100,
+        "N": 16,
+        "component": "v",
+        "coordinate": 0.2344,
+        "CFD": 0.18000592291326634,
+        "Ghia": 0.17527,
+        "signed_error": 0.004735922913266327,
+        "flagged": false
+      },
+      {
+        "Re": 100,
+        "N": 16,
+        "component": "v",
+        "coordinate": 0.2266,
+        "CFD": 0.1797828921101424,
+        "Ghia": 0.17507,
+        "signed_error": 0.0047128921101423915,
+        "flagged": false
+      },
+      {
+        "Re": 100,
+        "N": 16,
+        "component": "v",
+        "coordinate": 0.1563,
+        "CFD": 0.16499396143442202,
+        "Ghia": 0.16077,
+        "signed_error": 0.004223961434422024,
+        "flagged": false
+      },
+      {
+        "Re": 100,
+        "N": 16,
+        "component": "v",
+        "coordinate": 0.0938,
+        "CFD": 0.1268197700487101,
+        "Ghia": 0.12317,
+        "signed_error": 0.003649770048710088,
+        "flagged": false
+      },
+      {
+        "Re": 100,
+        "N": 16,
+        "component": "v",
+        "coordinate": 0.0781,
+        "CFD": 0.11214417659275536,
+        "Ghia": 0.1089,
+        "signed_error": 0.00324417659275536,
+        "flagged": false
+      },
+      {
+        "Re": 100,
+        "N": 16,
+        "component": "v",
+        "coordinate": 0.0703,
+        "CFD": 0.10393823282095888,
+        "Ghia": 0.10091,
+        "signed_error": 0.003028232820958876,
+        "flagged": false
+      },
+      {
+        "Re": 100,
+        "N": 16,
+        "component": "v",
+        "coordinate": 0.0625,
+        "CFD": 0.09509023131290573,
+        "Ghia": 0.09233,
+        "signed_error": 0.002760231312905731,
+        "flagged": false
+      },
+      {
+        "Re": 100,
+        "N": 16,
+        "component": "v",
+        "coordinate": 0.0,
+        "CFD": 0.0,
+        "Ghia": 0.0,
+        "signed_error": 0.0,
+        "flagged": false
+      },
+      {
+        "Re": 100,
+        "N": 24,
+        "component": "u",
+        "coordinate": 1.0,
+        "CFD": 1.0,
+        "Ghia": 1.0,
+        "signed_error": 0.0,
+        "flagged": false
+      },
+      {
+        "Re": 100,
+        "N": 24,
+        "component": "u",
+        "coordinate": 0.9766,
+        "CFD": 0.8441883481025718,
+        "Ghia": 0.84123,
+        "signed_error": 0.002958348102571784,
+        "flagged": false
+      },
+      {
+        "Re": 100,
+        "N": 24,
+        "component": "u",
+        "coordinate": 0.9688,
+        "CFD": 0.7923024211921516,
+        "Ghia": 0.78871,
+        "signed_error": 0.0035924211921515292,
+        "flagged": false
+      },
+      {
+        "Re": 100,
+        "N": 24,
+        "component": "u",
+        "coordinate": 0.9609,
+        "CFD": 0.7407235927605834,
+        "Ghia": 0.73722,
+        "signed_error": 0.0035035927605834294,
+        "flagged": false
+      },
+      {
+        "Re": 100,
+        "N": 24,
+        "component": "u",
+        "coordinate": 0.9531,
+        "CFD": 0.6912029989742816,
+        "Ghia": 0.68717,
+        "signed_error": 0.004032998974281665,
+        "flagged": false
+      },
+      {
+        "Re": 100,
+        "N": 24,
+        "component": "u",
+        "coordinate": 0.8516,
+        "CFD": 0.236596831434662,
+        "Ghia": 0.23151,
+        "signed_error": 0.005086831434662015,
+        "flagged": false
+      },
+      {
+        "Re": 100,
+        "N": 24,
+        "component": "u",
+        "coordinate": 0.7344,
+        "CFD": 0.004247515758416671,
+        "Ghia": 0.00332,
+        "signed_error": 0.0009275157584166709,
+        "flagged": false
+      },
+      {
+        "Re": 100,
+        "N": 24,
+        "component": "u",
+        "coordinate": 0.6172,
+        "CFD": -0.1387911469061108,
+        "Ghia": -0.13641,
+        "signed_error": -0.002381146906110798,
+        "flagged": false
+      },
+      {
+        "Re": 100,
+        "N": 24,
+        "component": "u",
+        "coordinate": 0.5,
+        "CFD": -0.20921349797689012,
+        "Ghia": -0.20581,
+        "signed_error": -0.0034034979768901297,
+        "flagged": false
+      },
+      {
+        "Re": 100,
+        "N": 24,
+        "component": "u",
+        "coordinate": 0.4531,
+        "CFD": -0.21404752415283437,
+        "Ghia": -0.2109,
+        "signed_error": -0.003147524152834369,
+        "flagged": false
+      },
+      {
+        "Re": 100,
+        "N": 24,
+        "component": "u",
+        "coordinate": 0.2813,
+        "CFD": -0.1577433011073059,
+        "Ghia": -0.15662,
+        "signed_error": -0.0011233011073058796,
+        "flagged": false
+      },
+      {
+        "Re": 100,
+        "N": 24,
+        "component": "u",
+        "coordinate": 0.1719,
+        "CFD": -0.10177997275551821,
+        "Ghia": -0.1015,
+        "signed_error": -0.0002799727555182069,
+        "flagged": false
+      },
+      {
+        "Re": 100,
+        "N": 24,
+        "component": "u",
+        "coordinate": 0.1016,
+        "CFD": -0.06445264592171185,
+        "Ghia": -0.06434,
+        "signed_error": -0.00011264592171185417,
+        "flagged": false
+      },
+      {
+        "Re": 100,
+        "N": 24,
+        "component": "u",
+        "coordinate": 0.0703,
+        "CFD": -0.04663822215307531,
+        "Ghia": -0.04775,
+        "signed_error": 0.0011117778469246914,
+        "flagged": false
+      },
+      {
+        "Re": 100,
+        "N": 24,
+        "component": "u",
+        "coordinate": 0.0625,
+        "CFD": -0.041991530766908494,
+        "Ghia": -0.04192,
+        "signed_error": -7.153076690849525e-05,
+        "flagged": false
+      },
+      {
+        "Re": 100,
+        "N": 24,
+        "component": "u",
+        "coordinate": 0.0547,
+        "CFD": -0.03724237366680904,
+        "Ghia": -0.03717,
+        "signed_error": -7.237366680903912e-05,
+        "flagged": false
+      },
+      {
+        "Re": 100,
+        "N": 24,
+        "component": "u",
+        "coordinate": 0.0,
+        "CFD": 0.0,
+        "Ghia": 0.0,
+        "signed_error": 0.0,
+        "flagged": false
+      },
+      {
+        "Re": 100,
+        "N": 24,
+        "component": "v",
+        "coordinate": 1.0,
+        "CFD": 0.0,
+        "Ghia": 0.0,
+        "signed_error": 0.0,
+        "flagged": false
+      },
+      {
+        "Re": 100,
+        "N": 24,
+        "component": "v",
+        "coordinate": 0.9688,
+        "CFD": -0.06170712924312041,
+        "Ghia": -0.05906,
+        "signed_error": -0.0026471292431204108,
+        "flagged": false
+      },
+      {
+        "Re": 100,
+        "N": 24,
+        "component": "v",
+        "coordinate": 0.9609,
+        "CFD": -0.07759674154300714,
+        "Ghia": -0.07391,
+        "signed_error": -0.0036867415430071326,
+        "flagged": false
+      },
+      {
+        "Re": 100,
+        "N": 24,
+        "component": "v",
+        "coordinate": 0.9531,
+        "CFD": -0.09310687828597486,
+        "Ghia": -0.08864,
+        "signed_error": -0.004466878285974862,
+        "flagged": false
+      },
+      {
+        "Re": 100,
+        "N": 24,
+        "component": "v",
+        "coordinate": 0.9453,
+        "CFD": -0.10834030659204769,
+        "Ghia": -0.10313,
+        "signed_error": -0.0052103065920476865,
+        "flagged": false
+      },
+      {
+        "Re": 100,
+        "N": 24,
+        "component": "v",
+        "coordinate": 0.9063,
+        "CFD": -0.1771487011095545,
+        "Ghia": -0.16914,
+        "signed_error": -0.008008701109554484,
+        "flagged": false
+      },
+      {
+        "Re": 100,
+        "N": 24,
+        "component": "v",
+        "coordinate": 0.8594,
+        "CFD": -0.23384473261998967,
+        "Ghia": -0.22445,
+        "signed_error": -0.00939473261998966,
+        "flagged": false
+      },
+      {
+        "Re": 100,
+        "N": 24,
+        "component": "v",
+        "coordinate": 0.8047,
+        "CFD": -0.2537556637173358,
+        "Ghia": -0.24533,
+        "signed_error": -0.00842566371733583,
+        "flagged": false
+      },
+      {
+        "Re": 100,
+        "N": 24,
+        "component": "v",
+        "coordinate": 0.5,
+        "CFD": 0.05754676576568769,
+        "Ghia": 0.05454,
+        "signed_error": 0.0030067657656876884,
+        "flagged": false
+      },
+      {
+        "Re": 100,
+        "N": 24,
+        "component": "v",
+        "coordinate": 0.2344,
+        "CFD": 0.1796719525779448,
+        "Ghia": 0.17527,
+        "signed_error": 0.00440195257794479,
+        "flagged": false
+      },
+      {
+        "Re": 100,
+        "N": 24,
+        "component": "v",
+        "coordinate": 0.2266,
+        "CFD": 0.17947149497885423,
+        "Ghia": 0.17507,
+        "signed_error": 0.004401494978854226,
+        "flagged": false
+      },
+      {
+        "Re": 100,
+        "N": 24,
+        "component": "v",
+        "coordinate": 0.1563,
+        "CFD": 0.16492028233387218,
+        "Ghia": 0.16077,
+        "signed_error": 0.004150282333872185,
+        "flagged": false
+      },
+      {
+        "Re": 100,
+        "N": 24,
+        "component": "v",
+        "coordinate": 0.0938,
+        "CFD": 0.12647618429615473,
+        "Ghia": 0.12317,
+        "signed_error": 0.0033061842961547294,
+        "flagged": false
+      },
+      {
+        "Re": 100,
+        "N": 24,
+        "component": "v",
+        "coordinate": 0.0781,
+        "CFD": 0.111747018342333,
+        "Ghia": 0.1089,
+        "signed_error": 0.002847018342333002,
+        "flagged": false
+      },
+      {
+        "Re": 100,
+        "N": 24,
+        "component": "v",
+        "coordinate": 0.0703,
+        "CFD": 0.10355464566144404,
+        "Ghia": 0.10091,
+        "signed_error": 0.0026446456614440395,
+        "flagged": false
+      },
+      {
+        "Re": 100,
+        "N": 24,
+        "component": "v",
+        "coordinate": 0.0625,
+        "CFD": 0.09475695462180511,
+        "Ghia": 0.09233,
+        "signed_error": 0.0024269546218051163,
+        "flagged": false
+      },
+      {
+        "Re": 100,
+        "N": 24,
+        "component": "v",
+        "coordinate": 0.0,
+        "CFD": 0.0,
+        "Ghia": 0.0,
+        "signed_error": 0.0,
+        "flagged": false
+      },
+      {
+        "Re": 100,
+        "N": 32,
+        "component": "u",
+        "coordinate": 1.0,
+        "CFD": 1.0,
+        "Ghia": 1.0,
+        "signed_error": 0.0,
+        "flagged": false
+      },
+      {
+        "Re": 100,
+        "N": 32,
+        "component": "u",
+        "coordinate": 0.9766,
+        "CFD": 0.8438845122551752,
+        "Ghia": 0.84123,
+        "signed_error": 0.002654512255175212,
+        "flagged": false
+      },
+      {
+        "Re": 100,
+        "N": 32,
+        "component": "u",
+        "coordinate": 0.9688,
+        "CFD": 0.7920467567690566,
+        "Ghia": 0.78871,
+        "signed_error": 0.003336756769056537,
+        "flagged": false
+      },
+      {
+        "Re": 100,
+        "N": 32,
+        "component": "u",
+        "coordinate": 0.9609,
+        "CFD": 0.7405526273402562,
+        "Ghia": 0.73722,
+        "signed_error": 0.003332627340256189,
+        "flagged": false
+      },
+      {
+        "Re": 100,
+        "N": 32,
+        "component": "u",
+        "coordinate": 0.9531,
+        "CFD": 0.6910852405323686,
+        "Ghia": 0.68717,
+        "signed_error": 0.003915240532368691,
+        "flagged": false
+      },
+      {
+        "Re": 100,
+        "N": 32,
+        "component": "u",
+        "coordinate": 0.8516,
+        "CFD": 0.23656144483630367,
+        "Ghia": 0.23151,
+        "signed_error": 0.005051444836303681,
+        "flagged": false
+      },
+      {
+        "Re": 100,
+        "N": 32,
+        "component": "u",
+        "coordinate": 0.7344,
+        "CFD": 0.00419940995363083,
+        "Ghia": 0.00332,
+        "signed_error": 0.00087940995363083,
+        "flagged": false
+      },
+      {
+        "Re": 100,
+        "N": 32,
+        "component": "u",
+        "coordinate": 0.6172,
+        "CFD": -0.1388044543893311,
+        "Ghia": -0.13641,
+        "signed_error": -0.0023944543893310855,
+        "flagged": false
+      },
+      {
+        "Re": 100,
+        "N": 32,
+        "component": "u",
+        "coordinate": 0.5,
+        "CFD": -0.2091732133821086,
+        "Ghia": -0.20581,
+        "signed_error": -0.0033632133821085985,
+        "flagged": false
+      },
+      {
+        "Re": 100,
+        "N": 32,
+        "component": "u",
+        "coordinate": 0.4531,
+        "CFD": -0.21400271752778663,
+        "Ghia": -0.2109,
+        "signed_error": -0.003102717527786625,
+        "flagged": false
+      },
+      {
+        "Re": 100,
+        "N": 32,
+        "component": "u",
+        "coordinate": 0.2813,
+        "CFD": -0.15769217909708647,
+        "Ghia": -0.15662,
+        "signed_error": -0.0010721790970864564,
+        "flagged": false
+      },
+      {
+        "Re": 100,
+        "N": 32,
+        "component": "u",
+        "coordinate": 0.1719,
+        "CFD": -0.10175089659834724,
+        "Ghia": -0.1015,
+        "signed_error": -0.0002508965983472333,
+        "flagged": false
+      },
+      {
+        "Re": 100,
+        "N": 32,
+        "component": "u",
+        "coordinate": 0.1016,
+        "CFD": -0.06443631099251683,
+        "Ghia": -0.06434,
+        "signed_error": -9.631099251683484e-05,
+        "flagged": false
+      },
+      {
+        "Re": 100,
+        "N": 32,
+        "component": "u",
+        "coordinate": 0.0703,
+        "CFD": -0.046623961561915415,
+        "Ghia": -0.04775,
+        "signed_error": 0.0011260384380845853,
+        "flagged": false
+      },
+      {
+        "Re": 100,
+        "N": 32,
+        "component": "u",
+        "coordinate": 0.0625,
+        "CFD": -0.04197860172511549,
+        "Ghia": -0.04192,
+        "signed_error": -5.860172511549383e-05,
+        "flagged": false
+      },
+      {
+        "Re": 100,
+        "N": 32,
+        "component": "u",
+        "coordinate": 0.0547,
+        "CFD": -0.03723084513755664,
+        "Ghia": -0.03717,
+        "signed_error": -6.0845137556636564e-05,
+        "flagged": false
+      },
+      {
+        "Re": 100,
+        "N": 32,
+        "component": "u",
+        "coordinate": 0.0,
+        "CFD": 0.0,
+        "Ghia": 0.0,
+        "signed_error": 0.0,
+        "flagged": false
+      },
+      {
+        "Re": 100,
+        "N": 32,
+        "component": "v",
+        "coordinate": 1.0,
+        "CFD": 0.0,
+        "Ghia": 0.0,
+        "signed_error": 0.0,
+        "flagged": false
+      },
+      {
+        "Re": 100,
+        "N": 32,
+        "component": "v",
+        "coordinate": 0.9688,
+        "CFD": -0.062031019185611984,
+        "Ghia": -0.05906,
+        "signed_error": -0.0029710191856119825,
+        "flagged": false
+      },
+      {
+        "Re": 100,
+        "N": 32,
+        "component": "v",
+        "coordinate": 0.9609,
+        "CFD": -0.07787120098197634,
+        "Ghia": -0.07391,
+        "signed_error": -0.003961200981976332,
+        "flagged": false
+      },
+      {
+        "Re": 100,
+        "N": 32,
+        "component": "v",
+        "coordinate": 0.9531,
+        "CFD": -0.09332616682149858,
+        "Ghia": -0.08864,
+        "signed_error": -0.004686166821498583,
+        "flagged": false
+      },
+      {
+        "Re": 100,
+        "N": 32,
+        "component": "v",
+        "coordinate": 0.9453,
+        "CFD": -0.1084978797506273,
+        "Ghia": -0.10313,
+        "signed_error": -0.005367879750627302,
+        "flagged": false
+      },
+      {
+        "Re": 100,
+        "N": 32,
+        "component": "v",
+        "coordinate": 0.9063,
+        "CFD": -0.1771139864140273,
+        "Ghia": -0.16914,
+        "signed_error": -0.007973986414027301,
+        "flagged": false
+      },
+      {
+        "Re": 100,
+        "N": 32,
+        "component": "v",
+        "coordinate": 0.8594,
+        "CFD": -0.23374075392047805,
+        "Ghia": -0.22445,
+        "signed_error": -0.00929075392047804,
+        "flagged": false
+      },
+      {
+        "Re": 100,
+        "N": 32,
+        "component": "v",
+        "coordinate": 0.8047,
+        "CFD": -0.2536060172943486,
+        "Ghia": -0.24533,
+        "signed_error": -0.008276017294348625,
+        "flagged": false
+      },
+      {
+        "Re": 100,
+        "N": 32,
+        "component": "v",
+        "coordinate": 0.5,
+        "CFD": 0.05754177660445257,
+        "Ghia": 0.05454,
+        "signed_error": 0.003001776604452569,
+        "flagged": false
+      },
+      {
+        "Re": 100,
+        "N": 32,
+        "component": "v",
+        "coordinate": 0.2344,
+        "CFD": 0.17959603946825756,
+        "Ghia": 0.17527,
+        "signed_error": 0.004326039468257548,
+        "flagged": false
+      },
+      {
+        "Re": 100,
+        "N": 32,
+        "component": "v",
+        "coordinate": 0.2266,
+        "CFD": 0.17939375064828558,
+        "Ghia": 0.17507,
+        "signed_error": 0.004323750648285579,
+        "flagged": false
+      },
+      {
+        "Re": 100,
+        "N": 32,
+        "component": "v",
+        "coordinate": 0.1563,
+        "CFD": 0.16485871943052455,
+        "Ghia": 0.16077,
+        "signed_error": 0.004088719430524551,
+        "flagged": false
+      },
+      {
+        "Re": 100,
+        "N": 32,
+        "component": "v",
+        "coordinate": 0.0938,
+        "CFD": 0.12645233358138352,
+        "Ghia": 0.12317,
+        "signed_error": 0.003282333581383523,
+        "flagged": false
+      },
+      {
+        "Re": 100,
+        "N": 32,
+        "component": "v",
+        "coordinate": 0.0781,
+        "CFD": 0.11176867576651116,
+        "Ghia": 0.1089,
+        "signed_error": 0.002868675766511161,
+        "flagged": false
+      },
+      {
+        "Re": 100,
+        "N": 32,
+        "component": "v",
+        "coordinate": 0.0703,
+        "CFD": 0.10359708262849847,
+        "Ghia": 0.10091,
+        "signed_error": 0.002687082628498469,
+        "flagged": false
+      },
+      {
+        "Re": 100,
+        "N": 32,
+        "component": "v",
+        "coordinate": 0.0625,
+        "CFD": 0.0948115116192857,
+        "Ghia": 0.09233,
+        "signed_error": 0.002481511619285698,
+        "flagged": false
+      },
+      {
+        "Re": 100,
+        "N": 32,
+        "component": "v",
+        "coordinate": 0.0,
+        "CFD": 0.0,
+        "Ghia": 0.0,
+        "signed_error": 0.0,
+        "flagged": false
+      },
+      {
+        "Re": 400,
+        "N": 16,
+        "component": "u",
+        "coordinate": 1.0,
+        "CFD": 1.0,
+        "Ghia": 1.0,
+        "signed_error": 0.0,
+        "flagged": false
+      },
+      {
+        "Re": 400,
+        "N": 16,
+        "component": "u",
+        "coordinate": 0.9766,
+        "CFD": 0.7055235972471282,
+        "Ghia": 0.75837,
+        "signed_error": -0.05284640275287178,
+        "flagged": false
+      },
+      {
+        "Re": 400,
+        "N": 16,
+        "component": "u",
+        "coordinate": 0.9688,
+        "CFD": 0.6473978612121197,
+        "Ghia": 0.68439,
+        "signed_error": -0.036992138787880324,
+        "flagged": false
+      },
+      {
+        "Re": 400,
+        "N": 16,
+        "component": "u",
+        "coordinate": 0.9609,
+        "CFD": 0.5986977030529315,
+        "Ghia": 0.61756,
+        "signed_error": -0.018862296947068535,
+        "flagged": false
+      },
+      {
+        "Re": 400,
+        "N": 16,
+        "component": "u",
+        "coordinate": 0.9531,
+        "CFD": 0.557655129448096,
+        "Ghia": 0.55892,
+        "signed_error": -0.0012648705519039405,
+        "flagged": false
+      },
+      {
+        "Re": 400,
+        "N": 16,
+        "component": "u",
+        "coordinate": 0.8516,
+        "CFD": 0.30277010623940165,
+        "Ghia": 0.29093,
+        "signed_error": 0.011840106239401627,
+        "flagged": false
+      },
+      {
+        "Re": 400,
+        "N": 16,
+        "component": "u",
+        "coordinate": 0.7344,
+        "CFD": 0.17121707890775864,
+        "Ghia": 0.16256,
+        "signed_error": 0.00865707890775863,
+        "flagged": false
+      },
+      {
+        "Re": 400,
+        "N": 16,
+        "component": "u",
+        "coordinate": 0.6172,
+        "CFD": 0.027159825031279373,
+        "Ghia": 0.02135,
+        "signed_error": 0.0058098250312793726,
+        "flagged": false
+      },
+      {
+        "Re": 400,
+        "N": 16,
+        "component": "u",
+        "coordinate": 0.5,
+        "CFD": -0.11229202636287695,
+        "Ghia": -0.11477,
+        "signed_error": 0.002477973637123043,
+        "flagged": false
+      },
+      {
+        "Re": 400,
+        "N": 16,
+        "component": "u",
+        "coordinate": 0.4531,
+        "CFD": -0.16908347495538653,
+        "Ghia": -0.17119,
+        "signed_error": 0.0021065250446134776,
+        "flagged": false
+      },
+      {
+        "Re": 400,
+        "N": 16,
+        "component": "u",
+        "coordinate": 0.2813,
+        "CFD": -0.3366986536280735,
+        "Ghia": -0.32726,
+        "signed_error": -0.009438653628073501,
+        "flagged": false
+      },
+      {
+        "Re": 400,
+        "N": 16,
+        "component": "u",
+        "coordinate": 0.1719,
+        "CFD": -0.25498824146874005,
+        "Ghia": -0.24299,
+        "signed_error": -0.01199824146874004,
+        "flagged": false
+      },
+      {
+        "Re": 400,
+        "N": 16,
+        "component": "u",
+        "coordinate": 0.1016,
+        "CFD": -0.1547256640554661,
+        "Ghia": -0.14612,
+        "signed_error": -0.008605664055466089,
+        "flagged": false
+      },
+      {
+        "Re": 400,
+        "N": 16,
+        "component": "u",
+        "coordinate": 0.0703,
+        "CFD": -0.10985686349048192,
+        "Ghia": -0.10338,
+        "signed_error": -0.006476863490481918,
+        "flagged": false
+      },
+      {
+        "Re": 400,
+        "N": 16,
+        "component": "u",
+        "coordinate": 0.0625,
+        "CFD": -0.09854322520937629,
+        "Ghia": -0.09266,
+        "signed_error": -0.005883225209376286,
+        "flagged": false
+      },
+      {
+        "Re": 400,
+        "N": 16,
+        "component": "u",
+        "coordinate": 0.0547,
+        "CFD": -0.08710199804824974,
+        "Ghia": -0.08186,
+        "signed_error": -0.005241998048249735,
+        "flagged": false
+      },
+      {
+        "Re": 400,
+        "N": 16,
+        "component": "u",
+        "coordinate": 0.0,
+        "CFD": 0.0,
+        "Ghia": 0.0,
+        "signed_error": 0.0,
+        "flagged": false
+      },
+      {
+        "Re": 400,
+        "N": 16,
+        "component": "v",
+        "coordinate": 1.0,
+        "CFD": 0.0,
+        "Ghia": 0.0,
+        "signed_error": 0.0,
+        "flagged": false
+      },
+      {
+        "Re": 400,
+        "N": 16,
+        "component": "v",
+        "coordinate": 0.9688,
+        "CFD": -0.13049201756028175,
+        "Ghia": -0.12146,
+        "signed_error": -0.009032017560281755,
+        "flagged": false
+      },
+      {
+        "Re": 400,
+        "N": 16,
+        "component": "v",
+        "coordinate": 0.9609,
+        "CFD": -0.16894126061088532,
+        "Ghia": -0.15663,
+        "signed_error": -0.012311260610885333,
+        "flagged": false
+      },
+      {
+        "Re": 400,
+        "N": 16,
+        "component": "v",
+        "coordinate": 0.9531,
+        "CFD": -0.20770531147499094,
+        "Ghia": -0.19254,
+        "signed_error": -0.01516531147499095,
+        "flagged": false
+      },
+      {
+        "Re": 400,
+        "N": 16,
+        "component": "v",
+        "coordinate": 0.9453,
+        "CFD": -0.24626084579247284,
+        "Ghia": -0.22847,
+        "signed_error": -0.017790845792472837,
+        "flagged": false
+      },
+      {
+        "Re": 400,
+        "N": 16,
+        "component": "v",
+        "coordinate": 0.9063,
+        "CFD": -0.4051161383191645,
+        "Ghia": -0.23827,
+        "signed_error": -0.16684613831916448,
+        "flagged": true
+      },
+      {
+        "Re": 400,
+        "N": 16,
+        "component": "v",
+        "coordinate": 0.8594,
+        "CFD": -0.4657227846134695,
+        "Ghia": -0.44993,
+        "signed_error": -0.0157927846134695,
+        "flagged": false
+      },
+      {
+        "Re": 400,
+        "N": 16,
+        "component": "v",
+        "coordinate": 0.8047,
+        "CFD": -0.3940819836428522,
+        "Ghia": -0.38598,
+        "signed_error": -0.008101983642852195,
+        "flagged": false
+      },
+      {
+        "Re": 400,
+        "N": 16,
+        "component": "v",
+        "coordinate": 0.5,
+        "CFD": 0.05360225772594744,
+        "Ghia": 0.05186,
+        "signed_error": 0.001742257725947438,
+        "flagged": false
+      },
+      {
+        "Re": 400,
+        "N": 16,
+        "component": "v",
+        "coordinate": 0.2344,
+        "CFD": 0.31103735310864644,
+        "Ghia": 0.30174,
+        "signed_error": 0.009297353108646433,
+        "flagged": false
+      },
+      {
+        "Re": 400,
+        "N": 16,
+        "component": "v",
+        "coordinate": 0.2266,
+        "CFD": 0.31130944639659147,
+        "Ghia": 0.30203,
+        "signed_error": 0.009279446396591451,
+        "flagged": false
+      },
+      {
+        "Re": 400,
+        "N": 16,
+        "component": "v",
+        "coordinate": 0.1563,
+        "CFD": 0.2918774080149448,
+        "Ghia": 0.28124,
+        "signed_error": 0.010637408014944782,
+        "flagged": false
+      },
+      {
+        "Re": 400,
+        "N": 16,
+        "component": "v",
+        "coordinate": 0.0938,
+        "CFD": 0.23617110058985102,
+        "Ghia": 0.22965,
+        "signed_error": 0.006521100589851031,
+        "flagged": false
+      },
+      {
+        "Re": 400,
+        "N": 16,
+        "component": "v",
+        "coordinate": 0.0781,
+        "CFD": 0.21360534269103534,
+        "Ghia": 0.2092,
+        "signed_error": 0.004405342691035347,
+        "flagged": false
+      },
+      {
+        "Re": 400,
+        "N": 16,
+        "component": "v",
+        "coordinate": 0.0703,
+        "CFD": 0.2006153664870658,
+        "Ghia": 0.19713,
+        "signed_error": 0.003485366487065794,
+        "flagged": false
+      },
+      {
+        "Re": 400,
+        "N": 16,
+        "component": "v",
+        "coordinate": 0.0625,
+        "CFD": 0.18625738974444592,
+        "Ghia": 0.1836,
+        "signed_error": 0.002657389744445904,
+        "flagged": false
+      },
+      {
+        "Re": 400,
+        "N": 16,
+        "component": "v",
+        "coordinate": 0.0,
+        "CFD": 0.0,
+        "Ghia": 0.0,
+        "signed_error": 0.0,
+        "flagged": false
+      },
+      {
+        "Re": 400,
+        "N": 24,
+        "component": "u",
+        "coordinate": 1.0,
+        "CFD": 1.0,
+        "Ghia": 1.0,
+        "signed_error": 0.0,
+        "flagged": false
+      },
+      {
+        "Re": 400,
+        "N": 24,
+        "component": "u",
+        "coordinate": 0.9766,
+        "CFD": 0.7613333586160685,
+        "Ghia": 0.75837,
+        "signed_error": 0.0029633586160685566,
+        "flagged": false
+      },
+      {
+        "Re": 400,
+        "N": 24,
+        "component": "u",
+        "coordinate": 0.9688,
+        "CFD": 0.6893781121098815,
+        "Ghia": 0.68439,
+        "signed_error": 0.004988112109881482,
+        "flagged": false
+      },
+      {
+        "Re": 400,
+        "N": 24,
+        "component": "u",
+        "coordinate": 0.9609,
+        "CFD": 0.6224530445470491,
+        "Ghia": 0.61756,
+        "signed_error": 0.004893044547049086,
+        "flagged": false
+      },
+      {
+        "Re": 400,
+        "N": 24,
+        "component": "u",
+        "coordinate": 0.9531,
+        "CFD": 0.5636708240399116,
+        "Ghia": 0.55892,
+        "signed_error": 0.004750824039911672,
+        "flagged": false
+      },
+      {
+        "Re": 400,
+        "N": 24,
+        "component": "u",
+        "coordinate": 0.8516,
+        "CFD": 0.2927455029901586,
+        "Ghia": 0.29093,
+        "signed_error": 0.0018155029901585906,
+        "flagged": false
+      },
+      {
+        "Re": 400,
+        "N": 24,
+        "component": "u",
+        "coordinate": 0.7344,
+        "CFD": 0.16306846032145328,
+        "Ghia": 0.16256,
+        "signed_error": 0.000508460321453269,
+        "flagged": false
+      },
+      {
+        "Re": 400,
+        "N": 24,
+        "component": "u",
+        "coordinate": 0.6172,
+        "CFD": 0.02155074593629674,
+        "Ghia": 0.02135,
+        "signed_error": 0.00020074593629674023,
+        "flagged": false
+      },
+      {
+        "Re": 400,
+        "N": 24,
+        "component": "u",
+        "coordinate": 0.5,
+        "CFD": -0.11433879456437182,
+        "Ghia": -0.11477,
+        "signed_error": 0.00043120543562817637,
+        "flagged": false
+      },
+      {
+        "Re": 400,
+        "N": 24,
+        "component": "u",
+        "coordinate": 0.4531,
+        "CFD": -0.1707729200722841,
+        "Ghia": -0.17119,
+        "signed_error": 0.00041707992771591873,
+        "flagged": false
+      },
+      {
+        "Re": 400,
+        "N": 24,
+        "component": "u",
+        "coordinate": 0.2813,
+        "CFD": -0.32938703700229277,
+        "Ghia": -0.32726,
+        "signed_error": -0.0021270370022927754,
+        "flagged": false
+      },
+      {
+        "Re": 400,
+        "N": 24,
+        "component": "u",
+        "coordinate": 0.1719,
+        "CFD": -0.24571381990893085,
+        "Ghia": -0.24299,
+        "signed_error": -0.0027238199089308357,
+        "flagged": false
+      },
+      {
+        "Re": 400,
+        "N": 24,
+        "component": "u",
+        "coordinate": 0.1016,
+        "CFD": -0.14778310245765128,
+        "Ghia": -0.14612,
+        "signed_error": -0.0016631024576512776,
+        "flagged": false
+      },
+      {
+        "Re": 400,
+        "N": 24,
+        "component": "u",
+        "coordinate": 0.0703,
+        "CFD": -0.10456176310740636,
+        "Ghia": -0.10338,
+        "signed_error": -0.001181763107406364,
+        "flagged": false
+      },
+      {
+        "Re": 400,
+        "N": 24,
+        "component": "u",
+        "coordinate": 0.0625,
+        "CFD": -0.09376869121189481,
+        "Ghia": -0.09266,
+        "signed_error": -0.0011086912118948022,
+        "flagged": false
+      },
+      {
+        "Re": 400,
+        "N": 24,
+        "component": "u",
+        "coordinate": 0.0547,
+        "CFD": -0.08288995914890704,
+        "Ghia": -0.08186,
+        "signed_error": -0.0010299591489070364,
+        "flagged": false
+      },
+      {
+        "Re": 400,
+        "N": 24,
+        "component": "u",
+        "coordinate": 0.0,
+        "CFD": 0.0,
+        "Ghia": 0.0,
+        "signed_error": 0.0,
+        "flagged": false
+      },
+      {
+        "Re": 400,
+        "N": 24,
+        "component": "v",
+        "coordinate": 1.0,
+        "CFD": 0.0,
+        "Ghia": 0.0,
+        "signed_error": 0.0,
+        "flagged": false
+      },
+      {
+        "Re": 400,
+        "N": 24,
+        "component": "v",
+        "coordinate": 0.9688,
+        "CFD": -0.1240055623282949,
+        "Ghia": -0.12146,
+        "signed_error": -0.0025455623282949064,
+        "flagged": false
+      },
+      {
+        "Re": 400,
+        "N": 24,
+        "component": "v",
+        "coordinate": 0.9609,
+        "CFD": -0.160904628919223,
+        "Ghia": -0.15663,
+        "signed_error": -0.004274628919223006,
+        "flagged": false
+      },
+      {
+        "Re": 400,
+        "N": 24,
+        "component": "v",
+        "coordinate": 0.9531,
+        "CFD": -0.1979750439019737,
+        "Ghia": -0.19254,
+        "signed_error": -0.0054350439019737184,
+        "flagged": false
+      },
+      {
+        "Re": 400,
+        "N": 24,
+        "component": "v",
+        "coordinate": 0.9453,
+        "CFD": -0.23491116504634973,
+        "Ghia": -0.22847,
+        "signed_error": -0.006441165046349728,
+        "flagged": false
+      },
+      {
+        "Re": 400,
+        "N": 24,
+        "component": "v",
+        "coordinate": 0.9063,
+        "CFD": -0.3912001296518217,
+        "Ghia": -0.23827,
+        "signed_error": -0.1529301296518217,
+        "flagged": true
+      },
+      {
+        "Re": 400,
+        "N": 24,
+        "component": "v",
+        "coordinate": 0.8594,
+        "CFD": -0.4551819080051383,
+        "Ghia": -0.44993,
+        "signed_error": -0.005251908005138306,
+        "flagged": false
+      },
+      {
+        "Re": 400,
+        "N": 24,
+        "component": "v",
+        "coordinate": 0.8047,
+        "CFD": -0.38666946115654316,
+        "Ghia": -0.38598,
+        "signed_error": -0.0006894611565431696,
+        "flagged": false
+      },
+      {
+        "Re": 400,
+        "N": 24,
+        "component": "v",
+        "coordinate": 0.5,
+        "CFD": 0.051701300214042775,
+        "Ghia": 0.05186,
+        "signed_error": -0.0001586997859572281,
+        "flagged": false
+      },
+      {
+        "Re": 400,
+        "N": 24,
+        "component": "v",
+        "coordinate": 0.2344,
+        "CFD": 0.3045237076167203,
+        "Ghia": 0.30174,
+        "signed_error": 0.00278370761672031,
+        "flagged": false
+      },
+      {
+        "Re": 400,
+        "N": 24,
+        "component": "v",
+        "coordinate": 0.2266,
+        "CFD": 0.30495016209027204,
+        "Ghia": 0.30203,
+        "signed_error": 0.002920162090272016,
+        "flagged": false
+      },
+      {
+        "Re": 400,
+        "N": 24,
+        "component": "v",
+        "coordinate": 0.1563,
+        "CFD": 0.28485681523962114,
+        "Ghia": 0.28124,
+        "signed_error": 0.0036168152396211517,
+        "flagged": false
+      },
+      {
+        "Re": 400,
+        "N": 24,
+        "component": "v",
+        "coordinate": 0.0938,
+        "CFD": 0.23306912928912893,
+        "Ghia": 0.22965,
+        "signed_error": 0.003419129289128936,
+        "flagged": false
+      },
+      {
+        "Re": 400,
+        "N": 24,
+        "component": "v",
+        "coordinate": 0.0781,
+        "CFD": 0.21215867074338413,
+        "Ghia": 0.2092,
+        "signed_error": 0.0029586707433841286,
+        "flagged": false
+      },
+      {
+        "Re": 400,
+        "N": 24,
+        "component": "v",
+        "coordinate": 0.0703,
+        "CFD": 0.19994626175586816,
+        "Ghia": 0.19713,
+        "signed_error": 0.00281626175586816,
+        "flagged": false
+      },
+      {
+        "Re": 400,
+        "N": 24,
+        "component": "v",
+        "coordinate": 0.0625,
+        "CFD": 0.18628818030643512,
+        "Ghia": 0.1836,
+        "signed_error": 0.0026881803064351117,
+        "flagged": false
+      },
+      {
+        "Re": 400,
+        "N": 24,
+        "component": "v",
+        "coordinate": 0.0,
+        "CFD": 0.0,
+        "Ghia": 0.0,
+        "signed_error": 0.0,
+        "flagged": false
+      },
+      {
+        "Re": 400,
+        "N": 32,
+        "component": "u",
+        "coordinate": 1.0,
+        "CFD": 1.0,
+        "Ghia": 1.0,
+        "signed_error": 0.0,
+        "flagged": false
+      },
+      {
+        "Re": 400,
+        "N": 32,
+        "component": "u",
+        "coordinate": 0.9766,
+        "CFD": 0.7607257528563032,
+        "Ghia": 0.75837,
+        "signed_error": 0.0023557528563031838,
+        "flagged": false
+      },
+      {
+        "Re": 400,
+        "N": 32,
+        "component": "u",
+        "coordinate": 0.9688,
+        "CFD": 0.6872105555774437,
+        "Ghia": 0.68439,
+        "signed_error": 0.002820555577443651,
+        "flagged": false
+      },
+      {
+        "Re": 400,
+        "N": 32,
+        "component": "u",
+        "coordinate": 0.9609,
+        "CFD": 0.6199685372279462,
+        "Ghia": 0.61756,
+        "signed_error": 0.002408537227946206,
+        "flagged": false
+      },
+      {
+        "Re": 400,
+        "N": 32,
+        "component": "u",
+        "coordinate": 0.9531,
+        "CFD": 0.5616912833275419,
+        "Ghia": 0.55892,
+        "signed_error": 0.0027712833275419513,
+        "flagged": false
+      },
+      {
+        "Re": 400,
+        "N": 32,
+        "component": "u",
+        "coordinate": 0.8516,
+        "CFD": 0.29217155735390926,
+        "Ghia": 0.29093,
+        "signed_error": 0.0012415573539092395,
+        "flagged": false
+      },
+      {
+        "Re": 400,
+        "N": 32,
+        "component": "u",
+        "coordinate": 0.7344,
+        "CFD": 0.1626977769114206,
+        "Ghia": 0.16256,
+        "signed_error": 0.00013777691142058401,
+        "flagged": false
+      },
+      {
+        "Re": 400,
+        "N": 32,
+        "component": "u",
+        "coordinate": 0.6172,
+        "CFD": 0.021174730225726534,
+        "Ghia": 0.02135,
+        "signed_error": -0.000175269774273467,
+        "flagged": false
+      },
+      {
+        "Re": 400,
+        "N": 32,
+        "component": "u",
+        "coordinate": 0.5,
+        "CFD": -0.1148654802371933,
+        "Ghia": -0.11477,
+        "signed_error": -9.548023719330168e-05,
+        "flagged": false
+      },
+      {
+        "Re": 400,
+        "N": 32,
+        "component": "u",
+        "coordinate": 0.4531,
+        "CFD": -0.17128488525845617,
+        "Ghia": -0.17119,
+        "signed_error": -9.488525845616214e-05,
+        "flagged": false
+      },
+      {
+        "Re": 400,
+        "N": 32,
+        "component": "u",
+        "coordinate": 0.2813,
+        "CFD": -0.32886733839018967,
+        "Ghia": -0.32726,
+        "signed_error": -0.001607338390189672,
+        "flagged": false
+      },
+      {
+        "Re": 400,
+        "N": 32,
+        "component": "u",
+        "coordinate": 0.1719,
+        "CFD": -0.24426846209844436,
+        "Ghia": -0.24299,
+        "signed_error": -0.001278462098444344,
+        "flagged": false
+      },
+      {
+        "Re": 400,
+        "N": 32,
+        "component": "u",
+        "coordinate": 0.1016,
+        "CFD": -0.14659526869394676,
+        "Ghia": -0.14612,
+        "signed_error": -0.0004752686939467621,
+        "flagged": false
+      },
+      {
+        "Re": 400,
+        "N": 32,
+        "component": "u",
+        "coordinate": 0.0703,
+        "CFD": -0.10361715819164638,
+        "Ghia": -0.10338,
+        "signed_error": -0.00023715819164638052,
+        "flagged": false
+      },
+      {
+        "Re": 400,
+        "N": 32,
+        "component": "u",
+        "coordinate": 0.0625,
+        "CFD": -0.09289114381118203,
+        "Ghia": -0.09266,
+        "signed_error": -0.00023114381118202743,
+        "flagged": false
+      },
+      {
+        "Re": 400,
+        "N": 32,
+        "component": "u",
+        "coordinate": 0.0547,
+        "CFD": -0.08208891251256824,
+        "Ghia": -0.08186,
+        "signed_error": -0.00022891251256823564,
+        "flagged": false
+      },
+      {
+        "Re": 400,
+        "N": 32,
+        "component": "u",
+        "coordinate": 0.0,
+        "CFD": 0.0,
+        "Ghia": 0.0,
+        "signed_error": 0.0,
+        "flagged": false
+      },
+      {
+        "Re": 400,
+        "N": 32,
+        "component": "v",
+        "coordinate": 1.0,
+        "CFD": 0.0,
+        "Ghia": 0.0,
+        "signed_error": 0.0,
+        "flagged": false
+      },
+      {
+        "Re": 400,
+        "N": 32,
+        "component": "v",
+        "coordinate": 0.9688,
+        "CFD": -0.12479961193010039,
+        "Ghia": -0.12146,
+        "signed_error": -0.003339611930100392,
+        "flagged": false
+      },
+      {
+        "Re": 400,
+        "N": 32,
+        "component": "v",
+        "coordinate": 0.9609,
+        "CFD": -0.1614342730431256,
+        "Ghia": -0.15663,
+        "signed_error": -0.004804273043125612,
+        "flagged": false
+      },
+      {
+        "Re": 400,
+        "N": 32,
+        "component": "v",
+        "coordinate": 0.9531,
+        "CFD": -0.19821774270014267,
+        "Ghia": -0.19254,
+        "signed_error": -0.0056777427001426795,
+        "flagged": false
+      },
+      {
+        "Re": 400,
+        "N": 32,
+        "component": "v",
+        "coordinate": 0.9453,
+        "CFD": -0.23484768130127195,
+        "Ghia": -0.22847,
+        "signed_error": -0.006377681301271948,
+        "flagged": false
+      },
+      {
+        "Re": 400,
+        "N": 32,
+        "component": "v",
+        "coordinate": 0.9063,
+        "CFD": -0.39011192903636127,
+        "Ghia": -0.23827,
+        "signed_error": -0.15184192903636126,
+        "flagged": true
+      },
+      {
+        "Re": 400,
+        "N": 32,
+        "component": "v",
+        "coordinate": 0.8594,
+        "CFD": -0.4541890773875624,
+        "Ghia": -0.44993,
+        "signed_error": -0.004259077387562427,
+        "flagged": false
+      },
+      {
+        "Re": 400,
+        "N": 32,
+        "component": "v",
+        "coordinate": 0.8047,
+        "CFD": -0.3858818141817447,
+        "Ghia": -0.38598,
+        "signed_error": 9.818581825526973e-05,
+        "flagged": false
+      },
+      {
+        "Re": 400,
+        "N": 32,
+        "component": "v",
+        "coordinate": 0.5,
+        "CFD": 0.05197146321951475,
+        "Ghia": 0.05186,
+        "signed_error": 0.0001114632195147458,
+        "flagged": false
+      },
+      {
+        "Re": 400,
+        "N": 32,
+        "component": "v",
+        "coordinate": 0.2344,
+        "CFD": 0.3036853277684628,
+        "Ghia": 0.30174,
+        "signed_error": 0.00194532776846279,
+        "flagged": false
+      },
+      {
+        "Re": 400,
+        "N": 32,
+        "component": "v",
+        "coordinate": 0.2266,
+        "CFD": 0.3040884471338556,
+        "Ghia": 0.30203,
+        "signed_error": 0.0020584471338555566,
+        "flagged": false
+      },
+      {
+        "Re": 400,
+        "N": 32,
+        "component": "v",
+        "coordinate": 0.1563,
+        "CFD": 0.2838642554509121,
+        "Ghia": 0.28124,
+        "signed_error": 0.002624255450912105,
+        "flagged": false
+      },
+      {
+        "Re": 400,
+        "N": 32,
+        "component": "v",
+        "coordinate": 0.0938,
+        "CFD": 0.2320233818142708,
+        "Ghia": 0.22965,
+        "signed_error": 0.0023733818142707974,
+        "flagged": false
+      },
+      {
+        "Re": 400,
+        "N": 32,
+        "component": "v",
+        "coordinate": 0.0781,
+        "CFD": 0.2112587156182415,
+        "Ghia": 0.2092,
+        "signed_error": 0.0020587156182415023,
+        "flagged": false
+      },
+      {
+        "Re": 400,
+        "N": 32,
+        "component": "v",
+        "coordinate": 0.0703,
+        "CFD": 0.19907218854241304,
+        "Ghia": 0.19713,
+        "signed_error": 0.0019421885424130425,
+        "flagged": false
+      },
+      {
+        "Re": 400,
+        "N": 32,
+        "component": "v",
+        "coordinate": 0.0625,
+        "CFD": 0.1853903680271081,
+        "Ghia": 0.1836,
+        "signed_error": 0.0017903680271080802,
+        "flagged": false
+      },
+      {
+        "Re": 400,
+        "N": 32,
+        "component": "v",
+        "coordinate": 0.0,
+        "CFD": 0.0,
+        "Ghia": 0.0,
+        "signed_error": 0.0,
+        "flagged": false
+      }
+    ]
+  }
+}

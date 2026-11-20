@@ -1,0 +1,40 @@
+{
+  "verified_utc": "2026-11-20T22:46:23.807487+00:00",
+  "change": "Reduced signed-error tick counts and added Reynolds labels to wall diagnostic panels.",
+  "training_rerun": false,
+  "model_arrays_weights_metrics_histories_unchanged": true,
+  "scientific_source_ast_unchanged": true,
+  "notebook_code_unchanged": true,
+  "training_helper_sha256": "c7056f12011b6d8291729cb514fc0c9bec0b35f256cba66eb25591b2bf8d9274",
+  "presentation_helper_sha256": "dd8047beec0b2a5fe2a4906b6e079abf2659a1be8b697c38c27414344326bc42",
+  "original_executed_notebook_sha256": "54158866a5754d0cac0e053ed109ad434f67578ba1b48270d69d44e9f54b7357",
+  "presented_notebook_sha256": "6f9f107de269954ee917aa26943db22138a1d9c39e24e02689c71a9ad1045406",
+  "executed_code_sha256": "b1e37b7aadffa74b064f186265df7c1505a22f2275c28d3ef5aa342358097a63",
+  "protected_scientific_artifacts": {
+    "native_test_predictions.npz": "99df10a6c3f59fc4b545fe4eecb57c17141aaf92b2a484ffda45e8aaf6f6cf44",
+    "scalar_predictions.npz": "f2cd8f2df55d9f6f06fe0462c81649e4216fa841698bee9689ba3dcd845364dd",
+    "frozen_weights.npz": "8a70a6dc6e20d84c8da438298184d4735e15679b59de3d5bf8617849b6e70e3c",
+    "frozen_models.json": "097232a9fc746d1cf3b85f7b7558c3bef7ae296554349909eb0b2200a08def47",
+    "field_metrics.csv": "346999c2fa7017fa1eaf3c160ad026051ece369b0fa7a8cb452979ef9c62fe8d",
+    "week4_scalar_results.csv": "a0f6db113916fad711f0d54da870c27f36959045cddcd272abeaa839948245c9",
+    "training_histories.json": "5f3b5a821f6505dd7ced5fbe858808b4dba00267ab810314f229bd49e2fb8245"
+  },
+  "revised_artifacts": {
+    "profiles_re175.png": "ee99970a192ef8c2ef7ab1eb3dde3716af6fe03168eb5d3b70b639c6d9c2c0b1",
+    "profiles_re175.pdf": "289c221b7096e49ca496ba26b96e216098e64b9929ce224e0b37b23ed5fbff8e",
+    "profiles_re275.png": "5f484813cf9cf185e2518ff5339d52b4ae2abcd1f6071c9f582cbf6546d39410",
+    "profiles_re275.pdf": "bb964b211cad704a3edc54d1986b19a63d4fb416e87da737200b28e0e000ac87",
+    "profiles_re375.png": "59454cfe15e50464b64888c2f46b1a84019a36b43fbd2a7d3b86880292771ca1",
+    "profiles_re375.pdf": "53044cf761df9c7ce53eb441ad03e7a8e4e7002c2fe3d5121e90e3aaf5bd02db",
+    "wall_diagnostics_re175.png": "996878be03a91bc442383e754cdd7e9484dc97e301771dc81873d00e6839a6b5",
+    "wall_diagnostics_re175.pdf": "b5b95fede6a4eb04500805fc4601297c354c0d3a25b83890f3f871d35b61b653",
+    "wall_diagnostics_re275.png": "afa52305cb4528d0038049a81c5531853ae8024029c0ca072488899e78966dfd",
+    "wall_diagnostics_re275.pdf": "0d3b8c32a345491d63f57cd457852006129058f3034b3e2aa99add482673e7f4",
+    "wall_diagnostics_re375.png": "a3565654bd38568bf855ee03fd3e8554b2be964e82970fbd3508e015225a27f3",
+    "wall_diagnostics_re375.pdf": "3dac276c39f338cd0ae8052b319dd07b391685b485e4c3ca8127bbe08bea02e4"
+  },
+  "replot_script_sha256": "708de839e44312b2c6a032fc69b6ffa6ff4f5dca71ab995d5acd91af474912de",
+  "claim": "Only six saved PNG/PDF plots and their inline images were regenerated from frozen native arrays. Run All timing is unchanged.",
+  "retained_training_helper_source": "results/week04_lab2/training_helper_source.py",
+  "reproduction_source_note": "The original training helper was byte-verified and retained separately so expendable transfer archives can be removed."
+}

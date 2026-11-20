@@ -1,0 +1,156 @@
+{
+  "data_sha256": "09b96b744ee4d18126d8dcc92feb60e128774a1b4d41bb3d8c90a63ccfbabc36",
+  "fit_Re": [
+    100.0,
+    150.0,
+    200.0,
+    250.0,
+    300.0,
+    400.0
+  ],
+  "validation_Re": [
+    225.0,
+    350.0
+  ],
+  "test_Re": [
+    175.0,
+    275.0,
+    375.0
+  ],
+  "rmin": 100.0,
+  "rmax": 400.0,
+  "target_mean": [
+    -0.10506778653014147,
+    0.5989583333333334,
+    0.671875
+  ],
+  "target_std": [
+    0.001998601966606973,
+    0.023292374765622806,
+    0.04510548978043952
+  ],
+  "scalar_models": [
+    {
+      "config": {
+        "widths": [
+          32,
+          32
+        ],
+        "activation": "tanh",
+        "adam_steps": 600,
+        "lbfgs_steps": 250,
+        "learning_rate": 0.002,
+        "record_every": 20,
+        "boundary_aware": false,
+        "seed": 11
+      },
+      "parameters": 1219,
+      "seconds": 3.4853756000011344,
+      "selected": {
+        "validation": 0.044576106606045905,
+        "stage": "Adam",
+        "step": 180
+      },
+      "lbfgs_message": "STOP: TOTAL NO. OF ITERATIONS REACHED LIMIT"
+    },
+    {
+      "config": {
+        "widths": [
+          32,
+          32
+        ],
+        "activation": "tanh",
+        "adam_steps": 600,
+        "lbfgs_steps": 250,
+        "learning_rate": 0.002,
+        "record_every": 20,
+        "boundary_aware": false,
+        "seed": 22
+      },
+      "parameters": 1219,
+      "seconds": 2.6143226999993203,
+      "selected": {
+        "validation": 0.04807045746037721,
+        "stage": "Adam",
+        "step": 180
+      },
+      "lbfgs_message": "CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH"
+    },
+    {
+      "config": {
+        "widths": [
+          32,
+          32
+        ],
+        "activation": "tanh",
+        "adam_steps": 600,
+        "lbfgs_steps": 250,
+        "learning_rate": 0.002,
+        "record_every": 20,
+        "boundary_aware": false,
+        "seed": 33
+      },
+      "parameters": 1219,
+      "seconds": 2.775436300002184,
+      "selected": {
+        "validation": 0.04575580419673092,
+        "stage": "Adam",
+        "step": 240
+      },
+      "lbfgs_message": "CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH"
+    }
+  ],
+  "field_models": {
+    "Coordinate DNN": {
+      "config": {
+        "widths": [
+          48,
+          48,
+          48
+        ],
+        "activation": "tanh",
+        "adam_steps": 400,
+        "lbfgs_steps": 600,
+        "learning_rate": 0.002,
+        "record_every": 20,
+        "boundary_aware": false,
+        "seed": 690
+      },
+      "parameters": 4994,
+      "seconds": 30.501132599998527,
+      "selected": {
+        "validation": 0.00024030705076134761,
+        "stage": "L-BFGS",
+        "step": 600
+      },
+      "lbfgs_message": "STOP: TOTAL NO. OF ITERATIONS REACHED LIMIT"
+    },
+    "Boundary-aware DNN": {
+      "config": {
+        "widths": [
+          48,
+          48,
+          48
+        ],
+        "activation": "tanh",
+        "adam_steps": 400,
+        "lbfgs_steps": 600,
+        "learning_rate": 0.002,
+        "record_every": 20,
+        "boundary_aware": true,
+        "seed": 690
+      },
+      "parameters": 4994,
+      "seconds": 26.23433540000042,
+      "selected": {
+        "validation": 0.00022071293706290868,
+        "stage": "L-BFGS",
+        "step": 600
+      },
+      "lbfgs_message": "STOP: TOTAL NO. OF ITERATIONS REACHED LIMIT"
+    }
+  },
+  "training_points": 7350,
+  "validation_points": 8450,
+  "test_labels_used_in_fitting_or_selection": false
+}

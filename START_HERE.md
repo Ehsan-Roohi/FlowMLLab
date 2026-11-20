@@ -76,7 +76,8 @@ number locates its files; it does not make every extension a beginner requiremen
    distinguish PDE residual, boundary constraints and field error.
 
 **Branches with their own prerequisites:** Week 1.1 software verification and
-Week 1.2 pressure–velocity coupling follow the Week 1 cavity exercise. Week 2.1
+Week 1.2 pressure–velocity coupling follow the Week 1 cavity exercise. [Week 1.4](weeks/week01_4/README.md)
+continues that numerical branch with spectral and DG methods on CPU; Week 1.3 is not a prerequisite. Week 2.1
 scalar uncertainty follows Week 2; its POD–GP fields follow Week 4. Week 3 starts
 kinetic/particle methods, while Week 8 starts compressible-flow relations before
 the rarefied and shock examples. [Week 10.2](weeks/week10_2/README.md) follows
@@ -173,10 +174,11 @@ cells; each week's README states it (75 to 90 minutes for Weeks 11 to 13).
 | [Week 1.1](weeks/week01_1/README.md) | CPU teaching exercises and retained evidence; full regeneration is separate. | Under 1 min for the numerical audit. |
 | [Week 1.2](weeks/week01_2/README.md) | CPU teaching exercises and retained evidence; full regeneration is separate. | Not measured for this revision; inspect the setup before a full solve. |
 | [Week 1.3](weeks/week01_3/README.md) | CPU teaching lab with generated analytic data. | See the notebook run settings and timings. |
+| [Week 1.4](weeks/week01_4/README.md) | Standalone CPU notebook with transparent NumPy/SciPy algorithms; no external CFD dependency. | Default scalar experiments plus six actual Re=100/400 cavity solves and plots take a few minutes in the retained local CPU run; study and refinement take longer. |
 | [Week 2](weeks/week02/README.md) | CPU teaching exercises and retained evidence; full regeneration is separate. | 20–45 min. |
 | [Week 2.1](weeks/week02_1/README.md) | CPU teaching exercises and retained evidence; full regeneration is separate. | Under 1 min for retained-evidence path. |
 | [Week 3](weeks/week03/README.md) | CPU teaching exercises and retained evidence; full regeneration is separate. | 20–40 min Maxwellian; 30–120 min mini-DSMC. |
-| [Week 4](weeks/week04/README.md) | CPU teaching exercises and retained evidence; full regeneration is separate. | 20–90 min per lab; training settings matter. |
+| [Week 4](weeks/week04/README.md) | Nine mapped labs: fresh CPU CFD/learning exercises and explicitly separated retained research evidence. | 20–90 min per lab; training settings matter. |
 | [Week 4.1](weeks/week04_1/README.md) | CPU teaching exercises and retained evidence; full regeneration is separate. | Under 5 min retained-evidence path; fresh validation about 1 min. |
 | [Week 4.2](weeks/week04_2/README.md) | CPU teaching exercises and retained evidence; full regeneration is separate. | Under 5 min retained-evidence path; full training not included. |
 | [Week 5](weeks/week05/README.md) | CPU teaching exercises and retained evidence; full regeneration is separate. | P0 about 20 min after Week 4; tracks 1–4 about 1–4 h including sweeps. |

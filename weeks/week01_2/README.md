@@ -4,6 +4,8 @@
 
 **Optional numerical branch:** complete the Week 1 cavity lab first. You can start Week 2 supervised learning without finishing this algorithm comparison.
 
+**Continue this numerical branch:** [Week 1.4: spectral and discontinuous Galerkin methods](../week01_4/README.md) adds a CPU notebook and lecture on Chebyshev Poisson, conservative DG transport and accuracy/cost experiments. Week 1.3 is a separate optimizer branch.
+
 <!-- cavity-seven-re -->
 Separate follow-on notebooks cover [all seven Ghia Reynolds numbers](../../notebooks/week04/W4_Lab5_All_Re_Ghia_Validation.ipynb) and [CPU profile-surrogate optimization and depth](../../notebooks/week04/W4_Lab6_Ghia_Profile_Optimizer_Depth.ipynb). Earlier notebook cells and outputs are preserved. [Benchmark data](../../references/ghia/README.md) · [Measured results](../../results/cavity_ghia_allre/README.md) · [Research ideas and sources](../../docs/CAVITY_RESEARCH_ROADMAP.md).
 <!-- /cavity-seven-re -->

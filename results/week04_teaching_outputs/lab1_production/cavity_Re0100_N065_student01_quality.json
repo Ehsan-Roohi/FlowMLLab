@@ -1,0 +1,29 @@
+{
+  "student_id": 1,
+  "split": "train",
+  "Re": 100,
+  "N": 65,
+  "dt": 0.001,
+  "steps": 8500,
+  "final_residual": 1.3540674896353903e-06,
+  "accepted": true,
+  "checks": {
+    "finite_fields": true,
+    "residual_below_limit": true,
+    "reasonable_speed": true,
+    "Ghia_Eu": true,
+    "Ghia_Ev": true
+  },
+  "metrics": {
+    "div_l2": 2.178692249040144e-16,
+    "div_linf": 3.552713678800501e-15,
+    "vortex_x": 0.609375,
+    "vortex_y": 0.734375,
+    "psi_min": -0.10231854748571349,
+    "speed_max": 1.0,
+    "ghia_Eu": 0.004471302567228937,
+    "ghia_Ev": 0.01532524919744962,
+    "ghia_Eu_published": 0.004471302567228937,
+    "ghia_Ev_published": 0.01532524919744962
+  }
+}

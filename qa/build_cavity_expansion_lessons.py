@@ -466,6 +466,9 @@ def main():
             metadata={'kernelspec':{'display_name':'Python 3','language':'python','name':'python3'},
                       'language_info':{'name':'python'},TAG:True})
         doc.cells[0].source += f'\n\n[Open in Colab](https://colab.research.google.com/github/Ehsan-Roohi/FlowMLLab/blob/main/notebooks/week04/{filename})'
+        if 'Lab5_' in filename:
+            from build_week04_lab5_corner_audit import add_cells
+            add_cells(doc)
         execute(doc,ROOT);nb.write(doc,ROOT/'notebooks/week04'/filename)
         print('Built separate lab',filename,flush=True)
     navigation=[md('## Optional continuation: all seven Ghia Reynolds numbers\n\nContinue with [Lab 5: seven-Re CFD coverage and qualification](../week04/W4_Lab5_All_Re_Ghia_Validation.ipynb). [Lab 6](../week04/W4_Lab6_Ghia_Profile_Optimizer_Depth.ipynb) fits Ghia centreline samples with matched optimizer/depth comparisons; [Lab 7](../week04/W4_Lab7_High_Re_CFD_Ghia.ipynb) qualifies our high-Re full fields before [Lab 8](../week04/W4_Lab8_High_Re_Field_DeepONet.ipynb) compares field predictions with interpolation. All seven Ghia Reynolds numbers have retained CFD, with mesh/steady limits reported in the corresponding study. [Profile evidence](../../results/cavity_ghia_allre/README.md) · [Field evidence](../../results/cavity_highre_ghia/README.md).')]
@@ -490,6 +493,8 @@ if __name__=='__main__':
             metadata={'kernelspec':{'display_name':'Python 3','language':'python','name':'python3'},
                       'language_info':{'name':'python'},TAG:True})
         doc.cells[0].source += f'\n\n[Open in Colab](https://colab.research.google.com/github/Ehsan-Roohi/FlowMLLab/blob/main/notebooks/week04/{filename})'
+        from build_week04_lab5_corner_audit import add_cells
+        add_cells(doc)
         execute(doc,ROOT)
         with (ROOT/'notebooks/week04'/filename).open('w',encoding='utf-8',newline='\n') as handle:
             nb.write(doc,handle)

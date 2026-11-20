@@ -1,0 +1,101 @@
+{
+  "status": "pass",
+  "notebooks": [
+    {
+      "notebook": "notebooks/week04/W4_1_Classical_ROM_Cavity.ipynb",
+      "sha256": "ee7213e68df8ba0b1bf48e5eb0e5426acdfdfc390b9892e55e8b13b8bd7c7c93",
+      "code_cells": 11,
+      "figures": 4,
+      "elapsed_seconds": 36.37716580000051,
+      "execution_scope": "Fresh local CPU Run All; retained evidence explicitly distinguished from new solves/fits; no hosted Colab execution claimed"
+    },
+    {
+      "notebook": "notebooks/week04/W4_Lab1_CFD_Data_Production_Student.ipynb",
+      "sha256": "4ad82dfb9b9fdf6430d17295338c009bb719936e008eb25017a4ffd25871a2e4",
+      "code_cells": 6,
+      "figures": 4,
+      "elapsed_seconds": 126.47454849999849,
+      "execution_scope": "Fresh local CPU Run All; retained evidence explicitly distinguished from new solves/fits; no hosted Colab execution claimed"
+    },
+    {
+      "notebook": "notebooks/week04/W4_Lab2_Scalar_and_Field_Surrogates_Student.ipynb",
+      "sha256": "6f9f107de269954ee917aa26943db22138a1d9c39e24e02689c71a9ad1045406",
+      "code_cells": 13,
+      "figures": 13,
+      "elapsed_seconds": 56.363205012000435,
+      "execution_scope": "Fresh complete CPU execution on the recorded host; hosted Colab execution not claimed. Only six saved PNG/PDF plots and their inline images were regenerated from frozen native arrays. Run All timing is unchanged."
+    },
+    {
+      "notebook": "notebooks/week04/W4_Lab3_DeepONet_Cavity_Student.ipynb",
+      "sha256": "cd6ed36f1e0f0c9740e5a885ced17e7beb4d43c1d302740620be5619d18b034f",
+      "code_cells": 10,
+      "figures": 12,
+      "elapsed_seconds": 395.0227692999979,
+      "execution_scope": "Fresh local CPU Run All; retained evidence explicitly distinguished from new solves/fits; no hosted Colab execution claimed"
+    },
+    {
+      "notebook": "notebooks/week04/W4_Lab4_Grid51_Validation.ipynb",
+      "sha256": "cde298950a54abe08fec79fc2aefef0fa1f410658f7827bba22592eec5e72f31",
+      "code_cells": 3,
+      "figures": 3,
+      "elapsed_seconds": 48.47338379999928,
+      "execution_scope": "Fresh local CPU Run All; retained evidence explicitly distinguished from new solves/fits; no hosted Colab execution claimed"
+    },
+    {
+      "notebook": "notebooks/week04/W4_Lab4_Stokes_to_Navier_Stokes.ipynb",
+      "sha256": "b6c95c20fe7c29d4c54197555484f334db16343842c93255736f55404fcf2604",
+      "code_cells": 15,
+      "figures": 24,
+      "elapsed_seconds": 1638.1110112999995,
+      "execution_scope": "Fresh local CPU Run All; retained evidence explicitly distinguished from new solves/fits; no hosted Colab execution claimed"
+    },
+    {
+      "notebook": "notebooks/week04/W4_Lab5_All_Re_Ghia_Validation.ipynb",
+      "sha256": "dd4b43bcf6f43ebcc048e97fed8f09482e6a48cd032fe98fe8c2a42ad54d8c11",
+      "code_cells": 7,
+      "figures": 10,
+      "elapsed_seconds": 57.0213963999995,
+      "execution_scope": "nbclient with a real Jupyter kernel"
+    },
+    {
+      "notebook": "notebooks/week04/W4_Lab6_Ghia_Profile_Optimizer_Depth.ipynb",
+      "sha256": "38b3e28e4c1f5a087141c57f04de6e525d26f93d1bf7c5158b3a1c2a8009e456",
+      "code_cells": 4,
+      "figures": 7,
+      "elapsed_seconds": 32.73434629999974,
+      "execution_scope": "Fresh local CPU Run All; retained evidence explicitly distinguished from new solves/fits; no hosted Colab execution claimed"
+    },
+    {
+      "notebook": "notebooks/week04/W4_Lab7_High_Re_CFD_Ghia.ipynb",
+      "sha256": "2fcbfb8f422808b653544808e930c11a5ce77bb7966f08ad542a31c9c5edd905",
+      "code_cells": 10,
+      "figures": 7,
+      "elapsed_seconds": 794.6704514000012,
+      "execution_scope": "Fresh local CPU Run All; retained evidence explicitly distinguished from new solves/fits; no hosted Colab execution claimed"
+    },
+    {
+      "notebook": "notebooks/week04/W4_Lab8_High_Re_Field_DeepONet.ipynb",
+      "sha256": "1a32bcb01712a7f5f8ef3a7b0193ba66e25d6fd06f10af7cb51d3689706f583d",
+      "code_cells": 9,
+      "figures": 10,
+      "elapsed_seconds": 694.7422219,
+      "execution_scope": "Fresh local CPU Run All; retained evidence explicitly distinguished from new solves/fits; no hosted Colab execution claimed"
+    },
+    {
+      "notebook": "notebooks/week04/W4_Lab9_Label_Free_Ghia_PINN_Audit.ipynb",
+      "sha256": "23aeff7c55e5215aa480300f33fc4d783d041c3725822342c5391364e595f13d",
+      "code_cells": 8,
+      "figures": 30,
+      "elapsed_seconds": 655.2139134999961,
+      "execution_scope": "Fresh local CPU Run All; retained evidence explicitly distinguished from new solves/fits; no hosted Colab execution claimed"
+    }
+  ],
+  "notebook_count": 11,
+  "total_inline_figures": 124,
+  "lecture_pages": 103,
+  "lecture_sha256": "4f156163c0b861664d8a8a99d568d47db10d6f4d2479f2405972ea8f6f1f7772",
+  "retained_evidence_pages": 54,
+  "corner_study_source_hashes_verified": 16,
+  "hosted_colab_execution_claimed": false,
+  "scope": "Complete CPU notebook executions on the hosts recorded in their receipts; retained research evidence is distinct from new fitting/CFD. Visual review is recorded separately."
+}

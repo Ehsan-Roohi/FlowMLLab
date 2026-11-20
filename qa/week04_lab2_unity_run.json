@@ -1,0 +1,16 @@
+{
+  "job_id": "2048425",
+  "partition": "cpu",
+  "allocated_cpus": "2",
+  "hostname": "cpu086",
+  "python": "3.12.3",
+  "start_utc": "2026-11-20T22:34:46Z",
+  "end_utc": "2026-11-20T22:35:53.902008+00:00",
+  "scratch_working_directory": "/scratch3/workspace/roohie_umass_edu-flowml-ghia-highre-20261115/week04-lab2-qa-20261120/repo",
+  "workspace_expiry": "2026-12-15 14:04:59",
+  "durable_destination": "D:\\ChatGPT Backup\\Projects\\FlowMLLab\\Teaching_Current\\repo",
+  "shared_environment_mutated": false,
+  "input_archive_sha256": "fd0f1f6cb9b31519de353b8ebe161d047fb30013c8f2e4df908c8e59de549376",
+  "job_script_sha256": "1fc2c94c373454ba2e4c0e2ad26f6f7d8e42f5bb0e3f4e5168a9ec67e043ca6b",
+  "capacity_note": "Shared filesystem availability is not personal quota; personal quota was unavailable."
+}

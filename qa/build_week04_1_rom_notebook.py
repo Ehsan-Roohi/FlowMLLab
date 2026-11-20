@@ -312,4 +312,6 @@ for index, cell in enumerate(notebook["cells"]):
 OUTPUT.write_text(json.dumps(notebook, indent=1, ensure_ascii=False), encoding="utf-8")
 from qa.notebook_review_updates import review_notebook_file
 review_notebook_file(OUTPUT)
+from qa.week04_output_audit import update as update_physical_outputs
+update_physical_outputs(keys=["rom"])
 print(OUTPUT)

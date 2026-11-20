@@ -1,0 +1,15 @@
+{
+  "verified_utc": "2026-11-20T22:39:30.594809+00:00",
+  "job_id": "2048425",
+  "slurm_state": "COMPLETED",
+  "slurm_exit_code": "0:0",
+  "slurm_elapsed": "00:01:08",
+  "return_archive_bytes": 10282791,
+  "return_archive_sha256": "013debcfbd03311f36e05e6ce1d59ae751579347aca7de8dd9d2c0620aa579e2",
+  "verified_returned_files": 39,
+  "input_archive_sha256": "fd0f1f6cb9b31519de353b8ebe161d047fb30013c8f2e4df908c8e59de549376",
+  "local_data_and_helper_match_executed_inputs": true,
+  "local_notebook_code_matches_executed_code": true,
+  "all_retained_copies_byte_verified": true,
+  "destination": "D:\\ChatGPT Backup\\Projects\\FlowMLLab\\Teaching_Current\\repo"
+}

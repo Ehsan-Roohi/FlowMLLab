@@ -1,0 +1,9 @@
+{
+  "tensorflow": "2.20.0",
+  "boundary_lifting": "corner",
+  "same_initial_trainable_weights_max_difference": 0.0,
+  "exact_boundary_max_error": 0.0,
+  "three_weight_central_difference_max_error": 4.5483214416996987e-11,
+  "step": 1e-06,
+  "passed": true
+}
