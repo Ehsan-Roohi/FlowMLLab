@@ -1,5 +1,5 @@
 {
-  "verified_utc": "2026-11-20T23:34:55.039832+00:00",
+  "verified_utc": "2026-11-20T23:49:10.219475+00:00",
   "status": "pass",
   "staged_files_checked": 255,
   "hash_bound_files_identical": 222,
@@ -118,7 +118,7 @@
     },
     {
       "path": "qa/validate_week01_4.py",
-      "sha256": "151ac4d9c8add4248eae2fb743a596c8f361696f37073e7799347a4d70193576"
+      "sha256": "dd0d35b9744728db6ae6326cd29cf86af43eb067aaa86d0d87f2dd2033bd9834"
     },
     {
       "path": "qa/week01_4_cavity_cells.py",
@@ -906,5 +906,17 @@
     "qa/prepare_cavity_solver_lesson.py",
     "qa/validate_course_release.py"
   ],
-  "scope": "Git index blobs byte-compared with the reviewed local artifacts before commit; no re-execution claimed."
+  "scope": "Initial staged-file check plus repeated byte comparison of all hash-bound Git artifacts after the validation-only repair. Original scientific execution and reviewed figure/PDF bytes remain unchanged.",
+  "validation_only_repair": {
+    "predecessor_commit": "4c2d8ff83523a8382c6e9d50e101112c4e6df525",
+    "files": [
+      "qa/validate_course_release.py",
+      "qa/validate_week01_4.py",
+      "tests/test_week01_4_source_provenance.py"
+    ],
+    "tests_passed": 10,
+    "test_seconds": 40.46,
+    "scientific_notebook_data_figure_pdf_changes": 0,
+    "reason": "Accept LF/CRLF encodings of identical original Ghia source content while rejecting numeric and embedded-sample changes."
+  }
 }

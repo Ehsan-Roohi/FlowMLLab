@@ -4,7 +4,7 @@ import ast, hashlib, json, subprocess
 import nbformat
 import numpy as np
 from pypdf import PdfReader
-from validate_course_release import validate_week01_4_standalone
+from validate_course_release import validate_week01_4_standalone, validate_week01_4_ghia_source
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -64,7 +64,9 @@ assert all(2.7 < r['observed_order'] < 3.6 for r in evidence['tables']['H'][1:])
 assert max(r['equation_residual_max'] for r in evidence['tables']['P']) < 1e-8
 assert len(evidence['tables']['C']) == 6
 assert len(evidence['tables']['G']) == 204
-assert evidence['ghia_source_sha256'] == sha(ROOT/'references/ghia/published_samples.csv')
+ghia_evidence_source = validate_week01_4_ghia_source(
+    (ROOT/'references/ghia/published_samples.csv').read_bytes(), evidence['ghia_source_sha256'])
+assert ghia_evidence_source['source_content_lf_sha256'] == standalone_contract['ghia_source']['source_content_lf_sha256']
 import sys
 sys.path.insert(0,str(ROOT))
 import numpy as np
@@ -109,6 +111,7 @@ result = {
     'pdf_pages':len(pdf.pages), 'protected_week01_2_files_changed':protected_changed,
     'preservation_scope':'The pre-existing Week 1.2 notebook and lecture only; other units are validated independently.',
     'standalone_contract':standalone_contract,
+    'retained_evidence_ghia_source':ghia_evidence_source,
     'entrypoint_revision':entrypoint_revision,
     'preserved_week01_2_sha256':preserved,
     'deliverables_sha256':{str(p.relative_to(ROOT)).replace('\\','/'):sha(p) for p in [notebook_path,pdf_path,evidence_path]},

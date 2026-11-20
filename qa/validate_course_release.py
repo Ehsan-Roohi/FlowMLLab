@@ -468,6 +468,50 @@ def validate_transformer_notebook(notebook: dict, week: int, label: str) -> None
     assert "qa/colab_transformer_bootstrap.py" in guide.read_text(encoding="utf-8"), label
 
 
+def validate_week01_4_ghia_source(source_bytes: bytes, execution_sha256: str,
+                                embedded_reference: dict | None = None) -> dict[str, object]:
+    """Verify the retained execution fingerprint across LF/CRLF checkouts only.
+
+    The notebook records the original execution bytes, not a newline-neutral
+    digest. Accept either complete newline representation of the same content;
+    do not strip whitespace, reformat numbers, or normalize anything else.
+    """
+    import csv
+    import io
+
+    canonical_lf = source_bytes.replace(b'\r\n', b'\n')
+    assert b'\r' not in canonical_lf, 'Ghia CSV must use LF or CRLF line endings'
+    representations = {'LF': canonical_lf, 'CRLF': canonical_lf.replace(b'\n', b'\r\n')}
+    assert source_bytes in representations.values(), 'Mixed Ghia CSV line endings are not accepted'
+    fingerprints = {ending: hashlib.sha256(payload).hexdigest()
+                    for ending, payload in representations.items()}
+    assert execution_sha256 in fingerprints.values(), 'Ghia CSV content differs from the execution fingerprint'
+    if embedded_reference is not None:
+        rows = list(csv.DictReader(io.StringIO(canonical_lf.decode('utf-8'))))
+        expected = {}
+        for reynolds in (100, 400):
+            samples = expected[reynolds] = {}
+            for component, coordinate in (('u', 'y'), ('v', 'x')):
+                selected = [row for row in rows if int(row['Re']) == reynolds
+                            and row['component'] == component]
+                assert len(selected) == 17, (reynolds, component)
+                samples[coordinate] = [float(row['coordinate']) for row in selected]
+                samples[component] = [float(row['value']) for row in selected]
+                samples[component + '_flagged'] = [row['flagged'].lower() == 'true' for row in selected]
+        assert embedded_reference == expected, 'Embedded Ghia samples differ from the source CSV'
+    return {
+        'execution_byte_sha256': execution_sha256,
+        'source_content_lf_sha256': fingerprints['LF'],
+        'checkout_byte_sha256': hashlib.sha256(source_bytes).hexdigest(),
+        'execution_line_ending': next(ending for ending, digest_value in fingerprints.items()
+                                      if digest_value == execution_sha256),
+        'checkout_line_ending': next(ending for ending, payload in representations.items()
+                                     if payload == source_bytes),
+        'accepted_source_representations': ['LF', 'CRLF'],
+        'embedded_samples_verified': embedded_reference is not None,
+    }
+
+
 def validate_week01_4_standalone(notebook: dict, label: str) -> dict[str, object]:
     """Narrow no-bootstrap contract for the embedded CPU spectral/DG lesson."""
     assert label == 'notebooks/week01_4/W1_4_Spectral_DG_CPU.ipynb', label
@@ -515,13 +559,16 @@ def validate_week01_4_standalone(notebook: dict, label: str) -> dict[str, object
     reference = ast.literal_eval(assignments['GHIA_REFERENCE'])
     assert set(reference) == {100, 400}, label
     assert all(len(reference[re][component]) == 17 for re in reference for component in ('x', 'y', 'u', 'v')), label
-    assert ast.literal_eval(assignments['GHIA_SOURCE_SHA256']) == digest(ROOT / 'references/ghia/published_samples.csv'), label
+    ghia_source = validate_week01_4_ghia_source(
+        (ROOT / 'references/ghia/published_samples.csv').read_bytes(),
+        ast.literal_eval(assignments['GHIA_SOURCE_SHA256']), reference)
     assert [c.get('execution_count') for c in code] == list(range(1, len(code) + 1)), label
     assert sum('image/png' in output.get('data', {}) for c in code for output in c.get('outputs', [])) == 11, label
     assert not any(output.get('output_type') == 'error' for c in code for output in c.get('outputs', [])), label
     assert all(c.get('id') for c in cells), label
     return {'embedded_tested_functions': len(expected), 'external_field_reads': False,
-            'repository_bootstrap_required': False, 'article_marker_required': False}
+            'repository_bootstrap_required': False, 'article_marker_required': False,
+            'ghia_source': ghia_source}
 
 
 def validate_notebooks() -> tuple[int, int]:
