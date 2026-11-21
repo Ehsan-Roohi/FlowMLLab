@@ -1,0 +1,3 @@
+training-label quality,RMSE vs hidden truth,negative predictions,monotonicity violations
+short averaging,0.026126508026167783,0,0
+long averaging,0.00998761702956011,0,50

@@ -1,4 +1,4 @@
-"""Build the two original companion notebooks and four-page lecture notes."""
+"""Build the modal companion notebooks and their current teaching guides."""
 from pathlib import Path
 import argparse
 import hashlib
@@ -159,8 +159,8 @@ display(Image(filename=str(scratch/'forecast_audit.png')))'''),md(COMMON),code(C
         path=ROOT/'notebooks/week07/W7_Lab2_Modal_Forecasting.ipynb'
         cells=[md('''# Week 7 companion - Modal forecasting of a real cylinder wake
 <!-- MIE690A article-aligned validation v4 -->
-**Development companion:** local Run All is tested; main-branch Colab becomes
-available only after merge. No new release or DOI is implied.
+Use the setup cell for the CPU teaching experiment. Retained research results
+and fresh classroom calculations are identified separately below.
 
 Compare projected DMD with a freshly trained nonlinear modal baseline, persistence,
 and POD representation floors. Prerequisites: POD, complex eigenvalues and Week 7
@@ -237,6 +237,9 @@ print('PASS: retained data and evidence unchanged.')'''))
     nbf.write(nb,path)
     from qa.notebook_review_updates import review_notebook_file
     review_notebook_file(path)
+    if kind == 'week05':
+        from qa.course_refresh_week05_sensing import build as refresh_sensing
+        refresh_sensing()
     print(path)
 
 
@@ -271,11 +274,21 @@ def make_pdf(kind):
     def footer(canvas,doc):
         canvas.setStrokeColor(colors.HexColor('#c7d5df'));canvas.line(42,38,553,38)
         canvas.setFont('TNR',8);canvas.setFillColor(colors.black)
-        canvas.drawString(42,25,'FlowMLLab | Original teaching companion | Development branch')
+        canvas.drawString(42,25,'FlowMLLab | Modal learning companion')
         canvas.drawRightString(553,25,str(doc.page))
     SimpleDocTemplate(str(out),pagesize=(595,842),rightMargin=42,leftMargin=42,topMargin=38,bottomMargin=52,
         title=name.replace('_',' '),author='Ehsan Roohi / FlowMLLab').build(story,onFirstPage=footer,onLaterPages=footer)
-    shutil.copy2(out,ROOT/'lectures'/out.name);print(out)
+    target = ROOT/'lectures'/out.name
+    shutil.copy2(out,target)
+    if kind == 'week05':
+        # Retained execution figures are inputs; this does not train a model.
+        import subprocess
+        subprocess.run([sys.executable, str(ROOT/'qa/course_refresh_early_lectures.py'),
+                        '--only', 'week5'], check=True, cwd=ROOT)
+    else:
+        from qa.build_course_middle_lectures import refresh_lecture
+        refresh_lecture(target)
+    print(target)
 
 
 if __name__=='__main__':

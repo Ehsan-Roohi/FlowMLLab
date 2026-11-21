@@ -326,7 +326,7 @@ def build_dsmc_wall_pressure_validation(
     axes[1].plot(xr, fine_error, "s-", color="#1D4ED8", ms=5.4, lw=2.0, label=r"$60^2$")
     axes[1].set(title="(b) Pointwise difference from published DSMC markers", xlabel=r"wall coordinate $s/L$", ylabel=r"$(p_{ours}-p_{published})/p_0$", xlim=(0, 4), ylim=(-0.021, 0.021), xticks=[0, 1, 2, 3, 4], xticklabels=["A", "B", "C", "D", "A"])
     axes[1].legend(loc="lower right", framealpha=0.97)
-    axes[1].text(0.04, 0.96, rf"$60^2$ relative $L_2$: {100*relative_l2:.3f}\%" "\n" rf"RMSE: {rmse:.4f} $p_0$" "\n" rf"max $|\Delta|$: {maximum:.4f} $p_0$" "\n" rf"$40^2\rightarrow60^2$ change: {100*grid_change:.3f}\%" "\n" r"50 particles/cell; 6000 field samples", transform=axes[1].transAxes, ha="left", va="top", fontsize=12.2, bbox={"boxstyle": "round,pad=0.45", "facecolor": "white", "edgecolor": "#64748B", "alpha": 0.97})
+    axes[1].text(0.04, 0.96, rf"$60^2$ relative $L_2$: {100*relative_l2:.3f}%" "\n" rf"RMSE: {rmse:.4f} $p_0$" "\n" rf"max $|\Delta|$: {maximum:.4f} $p_0$" "\n" rf"$40^2\rightarrow60^2$ change: {100*grid_change:.3f}%" "\n" r"50 particles/cell; 6000 field samples", transform=axes[1].transAxes, ha="left", va="top", fontsize=12.2, bbox={"boxstyle": "round,pad=0.45", "facecolor": "white", "edgecolor": "#64748B", "alpha": 0.97})
     for axis in axes:
         axis.grid(alpha=0.24)
         for boundary in (1, 2, 3):

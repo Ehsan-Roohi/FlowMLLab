@@ -10,6 +10,7 @@ from pypdf import PdfReader
 
 def main():
     patches=json.loads((ROOT/'qa/notebook_review_patches.json').read_text(encoding='utf-8'))
+    accepted=json.loads((ROOT/'qa/course_refresh_overlay_replacements.json').read_text(encoding='utf-8'))['cells']
     affected=[key for key,items in patches.items() if any(p.get('id','').startswith('oct20-') for p in items)]
     code_count=0
     for key in affected:
@@ -24,7 +25,17 @@ def main():
             if patch.get('kind')=='insert' and patch.get('id','').startswith('oct20-'):
                 cells=[c for c in n.cells if c.metadata.get('review_id')=='review-'+patch['id']]
                 assert len(cells)==1,(key,patch['id'])
-                assert cells[0].source.strip()==patch['replacement'].strip(),(key,patch['id'])
+                expected=patch['replacement'].strip()
+                current=cells[0].source.strip()
+                if current!=expected:
+                    # Exact reviewed replacements retain the original overlay provenance.
+                    change=accepted.get(key,{}).get(patch['id'])
+                    assert change is not None,(key,patch['id'],'unreviewed overlay change')
+                    assert change['cell_type']==cells[0].cell_type
+                    assert change['previous_source_sha256']==hashlib.sha256(expected.encode()).hexdigest()
+                    assert change['accepted_source_sha256']==hashlib.sha256(current.encode()).hexdigest()
+                    if cells[0].cell_type=='code':
+                        assert cells[0].execution_count is not None,(key,patch['id'],'repaired code not executed')
     # No optional training is run: reject dangerous destinations before fitting.
     from flowmllab.stokes_refined import run
     try:run('same_data',output_dir=ROOT/'results/forbidden-student-output')
@@ -44,7 +55,14 @@ def main():
         path=ROOT/'lectures'/f'{name}.pdf';reader=PdfReader(path)
         assert len(reader.pages)==record['pages']
         assert hashlib.sha256(path.read_bytes()).hexdigest()==record['sha256']
-        for page in reader.pages[record['base_pages']:]:
+        # Topic guides can precede retained protocol pages. Audit their explicit
+        # one-based positions instead of assuming every extension is an appendix.
+        numbers=record.get('teaching_page_numbers',list(range(record['base_pages']+1,len(reader.pages)+1)))
+        assert len(numbers)==record['teaching_pages'] and len(set(numbers))==len(numbers)
+        assert all(1<=number<=len(reader.pages) for number in numbers)
+        assert (ROOT/record['section']).is_file()
+        for number in numbers:
+            page=reader.pages[number-1]
             assert len(page.extract_text())>120
             fonts=page['/Resources']['/Font']
             assert any('TimesNewRoman' in str(f.get_object().get('/BaseFont','')) for f in fonts.values())
@@ -52,7 +70,7 @@ def main():
             'lecture_pdfs_checked':len(manifest),'portable_math':True,'overlay_cells_match':True,
             'stokes_output_guards':'passed without training','rayleigh_branch_roundtrips':'passed',
             'scope':'Structural checks and bounded regressions; full notebook execution is recorded separately.'}
-    (ROOT/'qa/feedback_structural_validation.json').write_text(json.dumps(result,indent=2)+'\n',encoding='utf-8')
+    (ROOT/'qa/feedback_structural_validation.json').write_text(json.dumps(result,indent=2)+'\n',encoding='utf-8',newline='\n')
     print(json.dumps(result,indent=2))
 
 if __name__=='__main__':main()

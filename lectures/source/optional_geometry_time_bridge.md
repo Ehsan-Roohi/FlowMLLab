@@ -147,7 +147,19 @@ Examples of appropriate conclusions are: “the evaluator does not consume futur
 
 FlowBench [2] is a possible research extension, not a dependency. Its current dataset card describes the removal of the 512 by128 FPO version because geometry was insufficiently resolved. A smaller spatial grid is therefore not an innocuous replacement for the paper's dataset. Public code, a published paper and a classroom adaptation must have separate versions and claims.
 
-The supplied LinkedIn URL could not be read during the preceding audit. No content, author claim or result from that post is used here. A social post is not substituted for the paper or its numerical evidence.
+Primary papers and versioned numerical artifacts provide the evidence for this module; social-media descriptions are not numerical validation.
+
+## Read the two diagnostic experiments
+
+**Aim:** explain the difference between a one-step map and a model that consumes its own predictions. The notebook's first new figure plots the same manufactured scalar state with observed, teacher-forced and autonomous histories. Each autonomous update drops the oldest state and appends the prediction. The teacher-forced control instead appends truth, so it answers a different question even when both curves start at the same value. Poisoning future truth must leave the autonomous prediction unchanged while its scored error changes.
+
+The second figure compares a manufactured periodic reference with a controlled amplitude/phase perturbation. Its lower panel retains the signed difference. A small phase shift can create a large pointwise error without changing amplitude. Fit the same declared time window for both signals, report amplitude ratio and circular phase error separately, and inspect the residual before interpreting a mixed-frequency signal with a single-harmonic fit. A constant prediction has undefined phase.
+
+These figures are diagnostics of the implemented contracts. The original four exercises remain: group ownership, boundary-strip weighting, autonomous feedback, and phase with missingness. Keep the geometry partition fixed when making windows; a longer history is not permission to move one geometry into both training and testing. Submit the requested adverse-case checks and the bounded claim ledger, not only the visually closest curve.
+
+![Observed, teacher-forced and autonomous histories for the same manufactured scalar update. Feedback changes the problem even when initialization and one-step map are identical.](../../results/late_course_teaching/weekbridge_feedback_phase_01.png)
+
+![A controlled amplitude/phase perturbation and its signed difference. The example isolates two distinct waveform errors without claiming CFD or paper reproduction.](../../results/late_course_teaching/weekbridge_feedback_phase_02.png)
 
 ## References and evidence limits
 

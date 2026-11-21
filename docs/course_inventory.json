@@ -10,7 +10,7 @@
   },
   "counts": {
     "active_lecture_pdfs": 39,
-    "lecture_pages": 746,
+    "lecture_pages": 796,
     "student_notebooks": 64,
     "historical_student_companions": 1,
     "optional_notebooks": 1,
@@ -47,11 +47,11 @@
     },
     {
       "path": "lectures/week02_supervised_learning_rarefaction.pdf",
-      "pages": 24
+      "pages": 26
     },
     {
       "path": "lectures/week03_kinetic_dsmc.pdf",
-      "pages": 37
+      "pages": 47
     },
     {
       "path": "lectures/week04_2_grid51_validation.pdf",
@@ -75,7 +75,7 @@
     },
     {
       "path": "lectures/week05_modal_sensing.pdf",
-      "pages": 5
+      "pages": 10
     },
     {
       "path": "lectures/week07_1_hypersonic_rarefied_cylinder.pdf",
@@ -83,15 +83,15 @@
     },
     {
       "path": "lectures/week07_2_cylinder_state_estimation.pdf",
-      "pages": 5
-    },
-    {
-      "path": "lectures/week07_3_masked_pretraining.pdf",
       "pages": 7
     },
     {
+      "path": "lectures/week07_3_masked_pretraining.pdf",
+      "pages": 9
+    },
+    {
       "path": "lectures/week07_4_diverse_wake_pretraining.pdf",
-      "pages": 5
+      "pages": 7
     },
     {
       "path": "lectures/week07_cylinder_lbm_neural_surrogate.pdf",
@@ -99,7 +99,7 @@
     },
     {
       "path": "lectures/week07_modal_forecasting.pdf",
-      "pages": 5
+      "pages": 7
     },
     {
       "path": "lectures/week08_gas_dynamics_sciml.pdf",
@@ -107,7 +107,7 @@
     },
     {
       "path": "lectures/week09_3_nozzle_data_alignment.pdf",
-      "pages": 3
+      "pages": 5
     },
     {
       "path": "lectures/week09_rarefied_deeponet_case_studies.pdf",
@@ -115,7 +115,7 @@
     },
     {
       "path": "lectures/week10_1_collision_map_audit.pdf",
-      "pages": 1
+      "pages": 6
     },
     {
       "path": "lectures/week10_2_bgk_shakhov_shock_pinn_dvm.pdf",
@@ -139,39 +139,39 @@
     },
     {
       "path": "lectures/week14_rans_pinn_nn.pdf",
-      "pages": 7
+      "pages": 11
     },
     {
       "path": "lectures/week15_geometry_generalization.pdf",
-      "pages": 36
+      "pages": 40
     },
     {
       "path": "lectures/week16_supersonic_shape_optimization.pdf",
-      "pages": 22
+      "pages": 24
     },
     {
       "path": "lectures/week17_cfd_transformer.pdf",
-      "pages": 5
+      "pages": 6
     },
     {
       "path": "lectures/week18_cfd_transformer.pdf",
-      "pages": 5
+      "pages": 6
     },
     {
       "path": "lectures/week19_cfd_transformer.pdf",
-      "pages": 5
+      "pages": 6
     },
     {
       "path": "lectures/week20_cfd_transformer.pdf",
-      "pages": 5
+      "pages": 7
     },
     {
       "path": "lectures/week21_cfd_transformer.pdf",
-      "pages": 5
+      "pages": 6
     },
     {
       "path": "lectures/week22_cfd_transformer.pdf",
-      "pages": 5
+      "pages": 7
     }
   ],
   "student_notebooks": [
@@ -704,7 +704,7 @@
       "setup": "notebooks/week10_1/README.md",
       "prerequisites": "Week 3 molecular collisions; numerical quadrature and Week 2 regression.",
       "mode": "CPU teaching exercises and retained evidence; full regeneration is separate.",
-      "compute_estimate": "Under 5 min CPU teaching path.",
+      "compute_estimate": "Plan for roughly 20–30 min on CPU; hardware-dependent.",
       "estimate_status": "Planning estimate carried from course guides, or explicitly unmeasured; not a timing measurement of this revision.",
       "execution_status": "Colab link is an entry point, not a guarantee of a fresh hosted Run All.",
       "keywords": "collision scattering Lennard Jones quadrature"
@@ -780,11 +780,11 @@
       "title": "Geometry-aware neural operators",
       "page": "weeks/week15/README.md",
       "setup": "notebooks/week15/README.md",
-      "prerequisites": "Weeks 4 and 9 operators, geometry splits and physical validation; follow archive setup.",
-      "mode": "CPU retained-evidence verification; no model fitting in the main classroom path.",
-      "compute_estimate": "About 5 min retained-field verification after archive download.",
+      "prerequisites": "Week 4 field surrogates and POD; training/validation/test splits. Start with the CPU lesson before the optional full research archive.",
+      "mode": "Train a compact geometry-conditioned POD operator on CPU; compare exact manufactured fields and inspect retained CFD research evidence.",
+      "compute_estimate": "Bounded classroom fit; hardware-dependent. Full research archive and training campaign are separate.",
       "estimate_status": "Planning estimate carried from course guides, or explicitly unmeasured; not a timing measurement of this revision.",
-      "execution_status": "Local checkout plus documented evidence archive; no hosted Run All claim.",
+      "execution_status": "Checkout/bootstrap supports the CPU lesson and bundled research figures; the full research audit needs its documented external archive. Hosted Colab acceptance is not yet claimed.",
       "keywords": "FNO DeepONet geometry SDF neural operators"
     },
     {
@@ -890,7 +890,7 @@
         "lecture_source": true,
         "lecture_pdf": true
       },
-      "lecture_pages": 6
+      "lecture_pages": 8
     }
   ]
 }

@@ -196,9 +196,9 @@ display(pd.DataFrame([{'method':name,'gap_relative_L2':relative_l2(p[hold],targe
                      for name,p in [('PCHIP',pp),('Adapted MLP',pm)]]))
 display(Image(filename=str(EVIDENCE/'gap.png')))
 '''),md('''
-## 5. Inspect the freshly executed solver evidence
+## 5. Inspect the retained solver executions
 
-These runs execute source-assembled pyCALC-RANS from the author's saved states.
+These runs executed source-assembled pyCALC-RANS from the author's saved states.
 They are **restarts**, not cold-start or mesh-independence studies. The complete
 NN solver uses the author's released pretrained checkpoints, not our new c_k fit.
 The PINN-corrected 5200 case uses the released spatial correction tables.
@@ -252,7 +252,10 @@ if 'nn5200' in summary['runs']:
     display(profiles[~profiles['case'].isin(['baseline fresh restart','pinn fresh restart'])])
     print('Identical baseline/PINN restart rows are omitted: they are consistency checks, not independent physical validation.')
 '''))
-from classroom_cells import inverse
+if __package__:
+    from .classroom_cells import inverse
+else:
+    from classroom_cells import inverse
 cells[2:2]=inverse()
 for i,c in enumerate(cells): c.id=f'w14-{i:02d}'
 nb=nbf.v4.new_notebook(cells=cells,metadata={'kernelspec':{'display_name':'Python 3','language':'python','name':'python3'},
@@ -260,6 +263,16 @@ nb=nbf.v4.new_notebook(cells=cells,metadata={'kernelspec':{'display_name':'Pytho
     'flowmllab':{'scope':'Attributed source reproduction and separately labeled teaching controls'}})
 out=ROOT/'notebooks/week14/W14_pyCALC_RANS_PINN_NN.ipynb'
 out.parent.mkdir(parents=True,exist_ok=True)
+# Apply the canonical teaching repair before optional execution, so fresh output
+# belongs to the same source that students receive.
+nbf.validate(nb)
+out.write_text(nbf.writes(nb),encoding='utf-8',newline='\n')
+if __package__:
+    from .notebook_review_updates import review_notebook_file
+else:
+    from notebook_review_updates import review_notebook_file
+review_notebook_file(out)
+nb=nbf.read(out,as_version=4)
 if '--execute' in sys.argv:
     from nbclient import NotebookClient
     from jupyter_client import KernelManager
@@ -267,5 +280,5 @@ if '--execute' in sys.argv:
     km.kernel_spec.argv=[sys.executable,'-m','ipykernel_launcher','-f','{connection_file}']
     NotebookClient(nb,km=km,timeout=1200,resources={'metadata':{'path':str(out.parent)}}).execute()
 nbf.validate(nb)
-nbf.write(nb,out)
+out.write_text(nbf.writes(nb),encoding='utf-8',newline='\n')
 print(out)

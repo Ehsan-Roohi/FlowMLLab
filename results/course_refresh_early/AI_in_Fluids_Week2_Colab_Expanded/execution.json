@@ -1,0 +1,53 @@
+{
+  "notebook": "notebooks/week02/AI_in_Fluids_Week2_Colab_Expanded.ipynb",
+  "utc": "2026-11-21T02:32:03.613920+00:00",
+  "elapsed_run_all_seconds": 165.29853049712256,
+  "host": "uri-cpu078",
+  "kernel": "/scratch3/workspace/roohie_umass_edu-flowml-ghia-highre-20261115/week04-lab2-qa-20261120/venv/bin/python",
+  "python": "3.12.3 (main, Aug 31 2026, 10:18:26) [GCC 13.3.0]",
+  "cpu_only": true,
+  "failure": null,
+  "code_cells": 26,
+  "executed_cells": 26,
+  "inline_figures": [
+    {
+      "path": "results/course_refresh_early/AI_in_Fluids_Week2_Colab_Expanded/cell_10_01.png",
+      "sha256": "389f1fd49ba16fe4cc01f5709091b4018a320ecc9fc9d80b119f9c99261af524"
+    },
+    {
+      "path": "results/course_refresh_early/AI_in_Fluids_Week2_Colab_Expanded/cell_12_00.png",
+      "sha256": "98be1c78db5eb8eb6f210330a071e8ebf83a0f74d7878dadf4ec046783f81b25"
+    },
+    {
+      "path": "results/course_refresh_early/AI_in_Fluids_Week2_Colab_Expanded/cell_17_00.png",
+      "sha256": "a7a0dda363b69597eb0c9f36fc7364db88784d74600209fceb7d9ddfad22aad7"
+    },
+    {
+      "path": "results/course_refresh_early/AI_in_Fluids_Week2_Colab_Expanded/cell_31_00.png",
+      "sha256": "50690c50cfbf25d3c14280e2ef69923c91a9b0145a240ebc5e7580f46cb158b1"
+    },
+    {
+      "path": "results/course_refresh_early/AI_in_Fluids_Week2_Colab_Expanded/cell_36_00.png",
+      "sha256": "027f9ecd4f870f1a49af1b63a79d7b2d918141309d5de97b9e46d3192543e4ea"
+    },
+    {
+      "path": "results/course_refresh_early/AI_in_Fluids_Week2_Colab_Expanded/cell_40_00.png",
+      "sha256": "7d9a37ea0ad368873200e5252fb570147692cdf57edb008e62d673429eab9049"
+    },
+    {
+      "path": "results/course_refresh_early/AI_in_Fluids_Week2_Colab_Expanded/cell_44_00.png",
+      "sha256": "cb47e43dcbb2a77a2297c4a4a6d33e52f5252759e6fe1c75c0b73f964ce665e5"
+    },
+    {
+      "path": "results/course_refresh_early/AI_in_Fluids_Week2_Colab_Expanded/cell_46_00.png",
+      "sha256": "d95b77e905b21e711f3224440ff696553c3670d1c915e2b959a0855c250f645b"
+    },
+    {
+      "path": "results/course_refresh_early/AI_in_Fluids_Week2_Colab_Expanded/cell_52_00.png",
+      "sha256": "79a51e3c0db9da519595bbe27672e1dc6f57000ec8d07047902975db78ba29fc"
+    }
+  ],
+  "notebook_sha256": "e3a3f53ad19e768a8100a8e3710561ac662d3227e631afc29f3b655e41b3b04e",
+  "code_sha256": "2700941886156af2aeaa088f5f26bd0115ba0e30354d40892a32427a0e13919a",
+  "claim": "Fresh default CPU Run All; no hosted Colab or optional GPU execution claimed."
+}

@@ -16,6 +16,9 @@ import pandas as pd
 
 
 ROOT = Path(__file__).resolve().parents[1]
+# Direct script/CLI execution must find repository-local QA helpers without PYTHONPATH.
+if str(ROOT) not in sys.path:
+    sys.path.insert(0, str(ROOT))
 EXPECTED_DATA_SHA256 = "09b96b744ee4d18126d8dcc92feb60e128774a1b4d41bb3d8c90a63ccfbabc36"
 
 
@@ -411,20 +414,15 @@ def validate_week16_bootstrap(cells: list[dict], label: str) -> None:
     """Week 16 ships its own sparse Colab bootstrap instead of the V1 marker."""
     setup = next(("".join(c.get("source", [])) for c in cells
                   if c.get("cell_type") == "code"), "")
-    # Validate the actual release contract instead of demanding an unrelated marker.
-    for fragment in (
-        'importlib.util.find_spec("google.colab")',
-        'if ROOT is None',
-        'Path("/content/FlowMLLab_week16")',
-        '"git","clone","--depth","1","--filter=blob:none","--sparse"',
-        'https://github.com/Ehsan-Roohi/FlowMLLab.git',
-        '"sparse-checkout","set"',
-        '"results/week16_lowboom","notebooks/week16","qa/week16"',
-        'check=True',
-        'ROOT = target',
-        'raise RuntimeError("Open this notebook from a clone of FlowMLLab.")',
-    ):
-        assert fragment in setup, f"missing Week 16 bootstrap contract {fragment!r}: {label}"
+    from qa.late_course_support import bootstrap_source
+    expected = '# Late-course checkout setup\n' + bootstrap_source(
+        'results/week16_lowboom',
+        ['flowmllab', 'qa/week16', 'notebooks/week16', 'results/week16_lowboom'], 'ROOT')
+    assert setup.startswith(expected), f"noncanonical guarded Week 16 setup: {label}"
+    for fragment in ("verify_identity(", "campaign['dataset_sha256']",
+                     "model_audit['checkpoint_sha256']"):
+        assert fragment in setup, f"missing Week 16 identity check {fragment!r}: {label}"
+
 
 
 def validate_transformer_notebook(notebook: dict, week: int, label: str) -> None:
@@ -435,11 +433,12 @@ def validate_transformer_notebook(notebook: dict, week: int, label: str) -> None
     code = ["".join(c.get("source", [])) for c in cells if c.get("cell_type") == "code"]
     markdown = ["".join(c.get("source", [])) for c in cells if c.get("cell_type") == "markdown"]
     assert code and "RUN_EXERCISES=False" in code, f"student exercise default missing: {label}"
+    from qa.late_course_support import bootstrap_source, TRANSFORMER_PATHS
+    expected_setup = bootstrap_source('flowmllab/transformer_course.py', TRANSFORMER_PATHS)
+    assert code[0].startswith(expected_setup), f"noncanonical guarded course setup: {label}"
     for fragment in (
-        "Path.cwd()", "Path.cwd().parents", "p/'flowmllab/transformer_course.py'",
-        "if ROOT is None:", "raise RuntimeError(", "docs/TRANSFORMER_COURSE.md",
-        "sys.path.insert(0,str(ROOT))", "lab.load_data(ROOT)",
-        "tempfile.TemporaryDirectory(", "RUN_OUTPUT=Path(workspace.name)",
+        "lab.load_data(ROOT)", 'ROOT/"student_runs/transformer_labs"',
+        "tempfile.TemporaryDirectory(", "dir=_student_parent", "RUN_OUTPUT=Path(workspace.name)",
         "task_status={i:None for i in range(1,5)}",
     ):
         assert fragment in code[0], f"missing portable setup contract {fragment!r}: {label}"
@@ -659,10 +658,10 @@ def validate_notebooks() -> tuple[int, int]:
                        for item in cell.get("outputs", [])), relative
         # Week 1.3 generates its data; Week 1.4 embeds tested CPU solvers.
         # The exact standalone contract above replaces a clone/article marker.
-        # Weeks 14 and 15 are documented full-checkout modules.  Week 15's
-        # evidence archives are release assets and cannot be bootstrapped by a
-        # fresh Colab clone alone. Weeks 17-22 have an exact portable contract
-        # checked above; their documented Colab upload/clone step is external.
+        # Week14 remains a full-checkout research companion. Week15 has a
+        # CPU teaching path with a self-contained sparse Colab setup; external
+        # research archives are optional. Weeks17-22 use the canonical guarded
+        # setup checked above; the portable ZIP remains an alternative.
         assert week14_lab or week15_local or optional_bridge or week01_2_lab or transformer_week is not None or colab_url in full_source, (
             f"missing direct Colab launcher: {path}"
         )
@@ -676,13 +675,14 @@ def validate_notebooks() -> tuple[int, int]:
         if week16_lab:
             validate_week16_bootstrap(cells, relative)
             code = [c for c in cells if c.get('cell_type') == 'code']
-            # The retained Week 16 artifact is an unexecuted student lesson,
-            # not the older executed audit notebook. Scientific evidence and
-            # dataset/checkpoint hashes remain gated by validate_week16_results.
-            assert len(code) == 17, f"unexpected Week 16 student cell count: {path}"
+            # The current student lesson retains a fresh bounded CPU execution.
+            # Independent CFD and dataset/checkpoint identity gates are unchanged.
+            assert len(code) == 19, f"unexpected Week 16 student cell count: {path}"
             assert any('cone=cone_exact(' in ''.join(c.get('source', [])) for c in code), path
-            assert all(c.get('execution_count') is None for c in code), path
-            assert all(not c.get('outputs', []) for c in code), path
+            assert all(c.get('execution_count') is not None for c in code), path
+            physical=next(c for c in code if c.get('id')=='late-w16-all-models-code')
+            assert any('image/png' in o.get('data', {}) for o in physical.get('outputs', [])), path
+            assert not any(o.get('output_type')=='error' for c in code for o in c.get('outputs', [])), path
             for fragment in (
                 'np.load(R / "clean_dataset_v801.npz", allow_pickle=False)',
                 '"clean_campaign_audit.json"', '"weakwall_design_audit.json"',
@@ -717,7 +717,14 @@ def validate_notebooks() -> tuple[int, int]:
             assert 'dataset.npz' in full_source and 'def diagnostics(' in full_source
         if week15_complete:
             code = [c for c in cells if c.get('cell_type') == 'code']
-            assert len(code) == 17
+            assert len(code) == 20
+            for ident in ('late-operator-controls','late-operator-fit','late-operator-test'):
+                actual=next(c for c in code if c.get('id')==ident)
+                assert actual.get('execution_count') is not None, (path,ident)
+                assert any('image/png' in o.get('data', {}) for o in actual.get('outputs', [])), (path,ident)
+            assert 'manufactured kinematic flow' in full_source
+            assert 'operator_lab.fit(OPERATOR_CONFIG)' in full_source
+            assert 'operator_lab.evaluate(operator_model)' in full_source
             assert not any(
                 output.get('output_type') == 'error'
                 for cell in code for output in cell.get('outputs', [])

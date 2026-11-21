@@ -1,0 +1,25 @@
+{
+  "notebook": "notebooks/week05_06/P5_Rarefied_Cavity.ipynb",
+  "utc": "2026-11-21T03:00:02.610953+00:00",
+  "elapsed_run_all_seconds": 134.39606683980674,
+  "host": "uri-cpu083",
+  "kernel": "/scratch3/workspace/roohie_umass_edu-flowml-ghia-highre-20261115/week04-lab2-qa-20261120/venv/bin/python",
+  "python": "3.12.3 (main, Aug 31 2026, 10:18:26) [GCC 13.3.0]",
+  "cpu_only": true,
+  "failure": null,
+  "code_cells": 8,
+  "executed_cells": 8,
+  "inline_figures": [
+    {
+      "path": "results/course_refresh_early/P5_Rarefied_Cavity/cell_20_00.png",
+      "sha256": "aeb10ce2a18b4bd60b671556c764f8a6b61de5a84e50515b4a1ae03e347a1bcc"
+    },
+    {
+      "path": "results/course_refresh_early/P5_Rarefied_Cavity/cell_20_01.png",
+      "sha256": "7ef50acc483dd9821eed93efa5015c344177b092e7aa2209c949ab2f1d4d732b"
+    }
+  ],
+  "notebook_sha256": "516f33a8a119f95a3dac05cf7b7476b6edcbbc5a84e80c0ec14bcab473154d4b",
+  "code_sha256": "3a570065c48be7117a86eee86f93c4bbbb8f7cd3bfa70dfde6f9624acf81b809",
+  "claim": "Fresh default CPU Run All; no hosted Colab or optional GPU execution claimed."
+}

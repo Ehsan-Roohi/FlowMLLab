@@ -1,0 +1,37 @@
+{
+  "original_executed_notebook_sha256": "2faf5f2a31d14a6316374288344809044fd2ac2f08c91f63c8c5792fc179fe68",
+  "original_presentation_notebook_sha256": "e5787db29e544498dfd72910be8d6602107724937c9efdf7cfc29edce3d1bb59",
+  "original_inline_png_sha256": "e6a4ba38a05bdaec6834273015e4e3da8a3e35a4af369089b6deca0be4bdca45",
+  "final_notebook_sha256": "9d0f844f0f96e88ffd15cf7a1ed6bcb7164d5b0e7bb74a8cbdcda9fd3c5d98c0",
+  "code_sha256": "011baca6dd6240633638e401b008d9268350c911093f9881444113871c087276",
+  "all_other_notebook_values_unchanged": true,
+  "metrics_before_and_after": {
+    "relative_l2": 0.007722916373203789,
+    "rmse_over_p0": 0.007800660763950902,
+    "max_abs_over_p0": 0.015575073240164938,
+    "grid_change_40_to_60": 0.008695591228402248,
+    "fine_run": "ref_n60_seed07",
+    "coarse_runs": [
+      "ref_n40_seed07",
+      "ref_n40_seed19",
+      "ref_n40_seed31"
+    ]
+  },
+  "metrics_equal": true,
+  "source_hashes_unchanged": {
+    "results/dsmc_validation/mohammadzadeh_fig3_dsmc_points.csv": "a6055a4334d8bb1c661b51a14950f1885d02aad1d685d98d04d70230c27e6b52",
+    "results/dsmc_validation/runs/ref_n40_seed07/wall_pressure.csv": "9abe70f604272d8e96ced710c49e1cf769e1b5c8ef5e15f5615137e76cc5d7a7",
+    "results/dsmc_validation/runs/ref_n40_seed19/wall_pressure.csv": "870ab7588b1bfff7501063d3c0084dad6b7dafdaf9769584e63090b8c45177b1",
+    "results/dsmc_validation/runs/ref_n40_seed31/wall_pressure.csv": "958bbe40916e289be90ab470b028d366003f82da88501e0e48c86191edec49af",
+    "results/dsmc_validation/runs/ref_n60_seed07/wall_pressure.csv": "0bf7d02fe89675f9a12d18debf97c43d9ec0cc7f87a5bacc1ea93a1237512516",
+    "results/dsmc_validation/runs/ref_n60_seed07/metadata.json": "3bede31985714e3c3aa6b2b46e78e924e17b6262e913c79e8ec0ec131da8bd7e"
+  },
+  "helper_before_sha256": "73f97ae93cc60ff107322b1b78e3e22b7ec2296cdd8d8ccd338e5ec55910b9e4",
+  "helper_after_sha256": "ce8881958bf5527319f532039b65db4123a392318e705e66e51a8f3ad6f9d9ec",
+  "script_sha256": "6297018f59c07ff374ca87483c57a68238706535383797d3a8a67f975865050a",
+  "outputs": {
+    "results/course_refresh_early/AI_in_Fluids_Week3_Lab2_Mini_DSMC_Cavity_Revised_Student/cell_03_00.png": "b664baee7915a9b3ea30ecf69ab9c850258643fd9b71603a52d6727e1c0f4e77",
+    "results/course_refresh_early/AI_in_Fluids_Week3_Lab2_Mini_DSMC_Cavity_Revised_Student/retained_wall_pressure_validation.pdf": "9baad5a765bdf1ba5e550859dd3c279486b7217e052968cfba44be57d2145982"
+  },
+  "claim": "Presentation-only replot from retained numerical arrays. The 624.05 s original Run All timing is unchanged; no solver or neural fit executed."
+}

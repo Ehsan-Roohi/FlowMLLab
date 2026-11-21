@@ -588,7 +588,7 @@ def get_pages(root):
            ['E30-E40','Lab 9: all 42 baseline outcomes, all seven Re, matched speed and vorticity.','{E30}-{E40}'],
            ['E41-E54','Lab 9: bounded sampling intervention, paired failures, profiles, fields and follow-up work.','{E41}-{E54}'],
         ],[1,3.1,.75]),
-        B('For the Stokes-correction branch use '+link('lectures/week04_2_pinn_cavity.pdf','the dedicated Week 4.2 lecture')+' and '+link('lectures/week04_2_grid51_validation.pdf','the 51-by-51 numerical addendum')+'. For the dynamical reduction branch use '+link('notebooks/week04/W4_1_Classical_ROM_Cavity.ipynb','the classical ROM notebook')+'. These companions supplement the nine-lab route without changing its original experiments.'),
+        B('For the Stokes-correction branch use '+link('lectures/week04_2_stokes_to_navier_stokes.pdf','the dedicated Week 4.2 lecture')+' and '+link('lectures/week04_2_grid51_validation.pdf','the 51-by-51 numerical addendum')+'. For the dynamical reduction branch use '+link('notebooks/week04/W4_1_Classical_ROM_Cavity.ipynb','the classical ROM notebook')+'. These companions supplement the nine-lab route without changing its original experiments.'),
         B('When citing a retained number, name its lab and evidence ID, distinguish raw from screened reference metrics and state whether it is an individual-seed error or an ensemble error. For a new local fit, use its newly executed outputs; the historical appendix remains a comparison record.'),
     ])
     # Reading-map ranges are derived from actual page declarations, not hand-kept offsets.

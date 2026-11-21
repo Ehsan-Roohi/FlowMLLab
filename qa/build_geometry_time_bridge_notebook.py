@@ -375,6 +375,9 @@ def main():
                           (True,ROOT/'instructor/optional_geometry_time_bridge/Geometry_Time_Bridge_Solutions.ipynb')]:
         notebook=make_notebook(solution)
         for index, item in enumerate(notebook['cells']): item['id']=f'bridge-{index:03d}'
+        import nbformat
+        from refresh_late_course import refresh_book
+        notebook=refresh_book(nbformat.from_dict(notebook),path.name)
         if args.execute:
             import nbformat
             from nbclient import NotebookClient
@@ -389,7 +392,7 @@ def main():
             NotebookClient(notebook,timeout=120,kernel_name='python3',config=config,resources={'metadata':{'path':str(ROOT)}}).execute()
             records.append(dict(path=str(path.relative_to(ROOT)),seconds=time.perf_counter()-started,code_cells=sum(c.cell_type=='code' for c in notebook.cells),reference_answers=solution))
         path.parent.mkdir(parents=True,exist_ok=True)
-        path.write_text(json.dumps(notebook,indent=1,ensure_ascii=False)+'\n',encoding='utf-8')
+        path.write_text(json.dumps(notebook,indent=1,ensure_ascii=False)+'\n',encoding='utf-8',newline='\n')
         if args.execute_local:
             started=time.perf_counter()
             subprocess.run([sys.executable,__file__,'--run-one-local',str(path)],cwd=ROOT,check=True)

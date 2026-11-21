@@ -1,0 +1,29 @@
+{
+  "notebook": "notebooks/week05_06/P3_POD_Study.ipynb",
+  "utc": "2026-11-21T02:43:14.354680+00:00",
+  "elapsed_run_all_seconds": 12.260024282615632,
+  "host": "uri-cpu083",
+  "kernel": "/scratch3/workspace/roohie_umass_edu-flowml-ghia-highre-20261115/week04-lab2-qa-20261120/venv/bin/python",
+  "python": "3.12.3 (main, Aug 31 2026, 10:18:26) [GCC 13.3.0]",
+  "cpu_only": true,
+  "failure": null,
+  "code_cells": 8,
+  "executed_cells": 8,
+  "inline_figures": [
+    {
+      "path": "results/course_refresh_early/P3_POD_Study/cell_08_00.png",
+      "sha256": "03a43cff940c7443289419d547f9dc1200a25a8afb781f6d84cc456a931b8bd0"
+    },
+    {
+      "path": "results/course_refresh_early/P3_POD_Study/cell_17_01.png",
+      "sha256": "e3c14546756e3a3ac6aec822e3e38d8e1a629a1af7372999deffa710eb3c1d21"
+    },
+    {
+      "path": "results/course_refresh_early/P3_POD_Study/cell_20_01.png",
+      "sha256": "7bbf0f8c446aca90f97d07784b227862ce6b4ba139bfb70a9ea5fab4b7658d06"
+    }
+  ],
+  "notebook_sha256": "4479add632363557eedfeed40b22c28f38f8d9c73152a4e90c14ec74edc29ccc",
+  "code_sha256": "1a40be2477a4d69d3a867bcf3b0b9aab6ce78d15b50108cfe34ba57bf76fac2a",
+  "claim": "Fresh default CPU Run All; no hosted Colab or optional GPU execution claimed."
+}

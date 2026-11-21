@@ -2,7 +2,9 @@
 
 # Week 16: supersonic shape optimization with verified CFD
 
-Start with `W16_Supersonic_Shape_Optimization.ipynb`. The notebook uses independently generated Gmsh/SU2 Euler data, compares POD-based learned models, and inspects fresh CFD evaluations of optimized shapes.
+Start with [the student notebook](W16_Supersonic_Shape_Optimization.ipynb) or [open it in Colab](https://colab.research.google.com/github/Ehsan-Roohi/FlowMLLab/blob/main/notebooks/week16/W16_Supersonic_Shape_Optimization.ipynb). The default CPU path uses retained Gmsh/SU2 Euler data, fits small POD-based ridge/GP/MLP surrogates, and inspects the independently evaluated retained design. It does not launch a new CFD calculation.
+
+The control cell exposes POD rank and MLP depth, width, seed and iteration budget. Compare all three methods on the same predeclared validation waveform and signed error before selecting a model. A new surrogate-optimal geometry remains a proposal: existing CFD files verify their own recorded geometry, not every new proposal.
 
 The computed quantity is the **near-field pressure signature**, not perceived ground loudness. The geometry is a fixed-volume body of revolution at zero incidence. All train/test shapes belong to the same two-parameter family. The extrapolation split extends one shape parameter beyond its training range.
 

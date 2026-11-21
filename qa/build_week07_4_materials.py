@@ -160,11 +160,17 @@ is not a significance test or a guarantee for each trajectory.
     nb = {"cells": cells, "metadata": {"kernelspec": {"display_name": "Python 3", "language": "python", "name": "python3"},
                                          "language_info": {"name": "python"}}, "nbformat": 4, "nbformat_minor": 5}
     NOTEBOOK.parent.mkdir(parents=True, exist_ok=True)
-    NOTEBOOK.write_text(json.dumps(nb, indent=1) + "\n", encoding="utf-8")
+    NOTEBOOK.write_text(json.dumps(nb, indent=1) + "\n", encoding="utf-8", newline="\n")
+    from qa.course_middle_notebook_updates import update_notebook_file
+    update_notebook_file(NOTEBOOK)
 
 
 def build_pdf() -> None:
     metrics = json.loads((RESULTS / "metrics.json").read_text())
+    from flowmllab.week07_4_plotting import plot_retained_lift_example
+    import matplotlib.pyplot as plt
+    lift_figure=ROOT/'results/course_middle_refresh/week07_4_retained_lift.png'
+    fig=plot_retained_lift_example(metrics,lift_figure);plt.close(fig)
     styles = getSampleStyleSheet()
     styles.add(ParagraphStyle(name="Title74", parent=styles["Title"], fontSize=24, leading=29,
                               textColor=colors.HexColor("#17324D"), alignment=TA_CENTER, spaceAfter=18))
@@ -178,6 +184,8 @@ def build_pdf() -> None:
     black_paragraph_styles(styles)
     # Explicit names also work in a fresh builder process (no cached aliases).
     for style in styles.byName.values():
+        if not hasattr(style, "fontName"):
+            continue
         style.fontName = {"Helvetica": "TNR", "Helvetica-Bold": "TNRB",
                           "Helvetica-Oblique": "TNRI", "Helvetica-BoldOblique": "TNRBI"}.get(style.fontName, style.fontName)
     story = [Spacer(1, .65*inch), Paragraph("Week 7.4", styles["Title74"]),
@@ -204,7 +212,7 @@ def build_pdf() -> None:
                              ("ROWBACKGROUNDS",(0,1),(-1,-1),[colors.white,colors.HexColor("#EEF3F7")]),("BOTTOMPADDING",(0,0),(-1,-1),7)]))
     story += [Paragraph("Lift NRMSE (%), mean across four unseen trajectories", styles["Body74"]), tab, Spacer(1,.2*inch),
               Paragraph("At k=32, pretrained 12.31% is below random-at-k=128 16.02%: better mean accuracy with one-quarter as many target labels. POD leads through k=32; pretrained passes it in the mean at k=64 and 128.", styles["Body74"]),
-              Image(str(RESULTS / "re115_lift_decoding.png"), width=6.7*inch, height=3.65*inch), PageBreak(),
+              Image(str(lift_figure), width=6.7*inch, height=3.65*inch), PageBreak(),
               Paragraph("Scope and reproducibility", styles["H174"]),
               Paragraph("Ridge selection uses 2761 development and 251 validation lift labels in addition to the reported target-label budget. Only one encoder initialization is retained; the three seeds are label draws. POD rank 32 is fixed, not rank-optimized. One run per Reynolds number confounds Reynolds and initial-condition variation. The test cases are now inspected retained evidence; future tuning needs fresh tests. Mean differences are not statistical significance claims.", styles["Body74"]),
               Paragraph("The retained success is representation transfer for an external force label, not a claim that transformers universally beat POD. The solver uses D=6 quick D2Q9-TRT trajectories and periodic transverse boundaries; the data are not grid-independent DNS. Re140 was rejected after the solver became non-physical. The histories do not support a validated Strouhal claim.", styles["Body74"]),
@@ -221,6 +229,8 @@ def build_pdf() -> None:
         canvas.drawString(47, 24, 'FlowMLLab / Ehsan Roohi / Week 7.4')
         canvas.drawRightString(565, 24, str(document.page))
     doc.build(story, onFirstPage=footer, onLaterPages=footer)
+    from qa.build_course_middle_lectures import refresh_lecture
+    refresh_lecture(PDF)
 
 
 if __name__ == "__main__":

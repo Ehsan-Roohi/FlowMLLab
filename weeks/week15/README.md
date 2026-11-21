@@ -1,6 +1,8 @@
 # Week 15 — Geometry-aware neural operators
 
-Original Transolver: [run/verify notebook](../../notebooks/week15/W15_Original_Transolver_Double_Step.ipynb) · [double-step test, weights and results](../../results/family_transolver/README.md) · [additional g011 test](../../results/step_transolver/README.md).
+Begin with the [CPU geometry-to-field laboratory](../../notebooks/week15/W15_Complete_Geometry_Generalization.ipynb) or [open it in Colab](https://colab.research.google.com/github/Ehsan-Roohi/FlowMLLab/blob/main/notebooks/week15/W15_Complete_Geometry_Generalization.ipynb). Train a small POD-DeepONet, change depth/optimizer/loss weights, and compare exact manufactured test fields with linear interpolation. Then examine the separate retained CFD study using the [setup and reading map](../../notebooks/week15/README.md).
+
+Original Transolver: [saved native-field comparison](../../notebooks/week15/W15_Original_Transolver_Double_Step.ipynb) · [double-step weights and results](../../results/family_transolver/README.md) · [additional g011 test](../../results/step_transolver/README.md).
 
 ## Compact neural networks
 
@@ -35,7 +37,7 @@ Study six enlarged geometry-aware models and the separate original-Transolver/Ge
 
 | Notebook | Read | Run / setup |
 | --- | --- | --- |
-| Geometry-aware neural operators (local checkout) | [Open notebook](../../notebooks/week15/W15_Complete_Geometry_Generalization.ipynb) | [Setup and reproduction guide](../../notebooks/week15/README.md) |
+| Geometry-aware neural operators and bounded CPU training | [Open notebook](../../notebooks/week15/W15_Complete_Geometry_Generalization.ipynb) | [Colab](https://colab.research.google.com/github/Ehsan-Roohi/FlowMLLab/blob/main/notebooks/week15/W15_Complete_Geometry_Generalization.ipynb) · [Setup and reproduction guide](../../notebooks/week15/README.md) |
 | Larger-network capacity analysis (no training) | [Open notebook](../../notebooks/week15/W15_Larger_Networks_Analysis.ipynb) | [Study, specifications and exercises](larger_networks.md) |
 | Historical geometry-operator audit (optional) | [Open notebook](../../notebooks/week15/W15_Geometry_Operators_Step_Audit.ipynb) | [Setup and reproduction guide](../../notebooks/week15/README.md) |
 
@@ -45,7 +47,7 @@ Study six enlarged geometry-aware models and the separate original-Transolver/Ge
 
 ## Suggested route
 
-Read the lecture, then work through the notebooks in the listed order. Read each notebook’s setup instructions before running its cells; use the figures and evidence below to interpret the results. Use the complete post-audit notebook with a local clone and its linked evidence archive. The historical notebook is retained for comparison.
+Read the lecture's local-CPU section, then run the main notebook's mechanism examples and trainable operator laboratory. Its four controlled experiments use a complete manufactured reference without an external archive. Next inspect the retained CFD figures and the three-seed Transolver companions. Full archive recomputation and the historical audit are separate extensions.
 
 ## Experiment and results
 
@@ -61,7 +63,7 @@ The notebook exposes the split, training choices and unresolved low-Reynolds-num
 
 [Complete executed notebook](../../notebooks/week15/W15_Complete_Geometry_Generalization.ipynb) ·
 [data and reproduction guide](../../notebooks/week15/README.md) ·
-[24-page lecture](../../lectures/week15_geometry_generalization.pdf) ·
+[Lecture](../../lectures/week15_geometry_generalization.pdf) ·
 [post-audit evidence summary](../../results/week15_postaudit/README.md).
 
 The frozen split contains 100 training, 8 validation and 19 retrospective

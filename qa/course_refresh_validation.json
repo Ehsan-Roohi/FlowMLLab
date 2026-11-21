@@ -1,0 +1,128 @@
+{
+  "schema": 1,
+  "utc": "2026-11-21T04:44:32.344742+00:00",
+  "status": "local_science_and_notebook_checks_passed",
+  "baseline_commit": "dd2f42df2c83636940962a8209aa575a99025c36",
+  "full_package_suite": {
+    "command": "python -m pytest -q tests qa",
+    "result": "396 passed, 30 skipped, 462 subtests passed; two initial failures subsequently resolved and retested",
+    "initial_log": "tmp/course_refresh/validation/pytest.log",
+    "initial_log_sha256": "05ba690efc3a16acadc6490922ef01c03888c44312f31ba2b0cc70d74f26c5e3",
+    "resolved_failures": [
+      {
+        "test": "test_public_evidence_cannot_escape_declared_repository",
+        "cause": "The isolated test base was mistakenly placed within the repository, so the fixture outside its own subdirectory was still inside the declared repository. The production path guard was correct.",
+        "resolution": "Reran the complete three-test file with a true external D: temporary directory: 3 passed."
+      },
+      {
+        "test": "qa/test_step_operator_audit.py::test_notebook_executed_without_errors",
+        "cause": "Historical Week15 setup source had been updated but not yet bound to a new execution.",
+        "resolution": "Fresh complete CPU kernel execution imported; focused run of this test file plus geometry-operator and early-course tests: 31 passed, 1 skipped, 7 subtests passed."
+      }
+    ]
+  },
+  "encoding_regression": {
+    "test": "tests/test_transformer_source_encoding.py",
+    "result": "2 passed (source encoding and PDF exponent preservation)",
+    "scope": "Real student/instructor producers retain Unicode under simulated CP1252 fallback; PDF Markdown handling preserves paired Python powers such as sum(error**2)/sum(truth**2)."
+  },
+  "core_smoke": {
+    "status": "pass",
+    "cases": 11,
+    "grid": [
+      65,
+      65
+    ],
+    "reynolds_range": [
+      100,
+      400
+    ],
+    "dataset_sha256": "09b96b744ee4d18126d8dcc92feb60e128774a1b4d41bb3d8c90a63ccfbabc36"
+  },
+  "release_qa": {
+    "status": "pass",
+    "report": "output/qa/release_qa_report.json",
+    "report_sha256": "294bb75d7f04b1725939bea99409e2799525fe3b4a475551a0ff63f20edbbdbc",
+    "gate_source_sha256": "00c9c61bf31f34c0d2d47e0dfd171a88ebea55d2b3f54b0c5ecac51712c93d72",
+    "notebooks": 65,
+    "code_cells_parsed": 764,
+    "lecture_pdfs": 40,
+    "limitations": [
+      "Pinned external Week9 upstream checkout/cache was not supplied; its upstream-source crosscheck is explicitly not_checked. Retained scientific identity and split gates passed.",
+      "No new hosted Colab, optional GPU or long research campaign execution is claimed."
+    ]
+  },
+  "structural_and_canonical_checks": {
+    "student_overlay": "21 notebooks, 218 code cells, 16 PDFs passed strict source/manifest/portable-math checks",
+    "source_scan": "qa/course_refresh_source_scan.json",
+    "transformer_curriculum": "All24 task titles/contracts agree across lesson JSON, both notebook editions, PDF source, PDFs and guide.",
+    "transformer_canonical_builder": "--check passed; canonical sources and retained evidence preserved.",
+    "learner_prose": "All65 student/optional notebook Markdown cells scanned; no student-feedback/reviewer-history prose found.",
+    "notebook_bar_calls": "All current student notebook sources scanned; no .bar/.barh calls found. Rendered figures receive separate visual checks.",
+    "inventory": "Final current counts/page labels and all382 local/indexed primary-document targets passed.",
+    "pdf_structure": "All40PDFs/804pages opened; no extracted text outside page bounds; images checked independently."
+  },
+  "independent_reviews": [
+    "qa/course_refresh_independent_review.json",
+    "qa/course_refresh_gate_review.json",
+    "qa/course_refresh_navigation_review.json"
+  ],
+  "publication_ci": "To be checked against the published commit; this file records local validation only.",
+  "git_text_serialization": {
+    "normalized_files": [
+      {
+        "path": "START_HERE.md",
+        "before_sha256": "ee9490166d992fb4cc732d98d8b6c7d522b0ee20507db99303fe341d37633077",
+        "after_sha256": "c18a96c6836878baccdc3b9baeb813287f5a6df7e87570c006576fb6aa438990",
+        "only_crlf_to_lf": true
+      },
+      {
+        "path": "docs/COURSE_INVENTORY.md",
+        "before_sha256": "e4c04c06fd8fe6245fadb89fe992b739af5cece5c30f6d0bffe3dc967f6c1032",
+        "after_sha256": "9b96f38b95b1a49e91a115509f69a05ecfb79f7af531871b623f9e044cd607c2",
+        "only_crlf_to_lf": true
+      },
+      {
+        "path": "docs/course_inventory.json",
+        "before_sha256": "b56a9db200ddf37880a3a425d2c110bc5837d041fedf52114759ab46cb03cdaa",
+        "after_sha256": "357f9dabf2ef21d5ff7fa7daf3e0e288cad7f18af5c726c5d150b9d7ba248c62",
+        "only_crlf_to_lf": true
+      },
+      {
+        "path": "docs/index.html",
+        "before_sha256": "8afcde4cbd5430026ce0791f8a2ba25901df3139f15346667bc485b4d121e1f5",
+        "after_sha256": "1e70af4fbfbba8445ef768c0ed17ac3758b4e873b425130ec51960eeaa3ffeae",
+        "only_crlf_to_lf": true
+      },
+      {
+        "path": "lectures/README.md",
+        "before_sha256": "9b0d8856252a55d5556b4c54e3220f4e388e39973dc09e7639d02182ef39f683",
+        "after_sha256": "702c2a3843f43c3c17bc3a8aad8bba49a699b1212743ff2fa8742712406582e3",
+        "only_crlf_to_lf": true
+      },
+      {
+        "path": "notebook_execution.json",
+        "before_sha256": "dbdcc83c2c8045ec0914b7e700df123e8ae44298bdef05288960844e2e9c7126",
+        "after_sha256": "9ce9f984ca7859925318f28ed017fc911628dfb215cd0806238bd90685e5cd10",
+        "only_crlf_to_lf": true
+      }
+    ],
+    "policy": "Explicit LF canonical writers and unchanged parsed ledger content; no scientific text normalization or -text exemptions added."
+  },
+  "publication_whitespace_bridges": [
+    {
+      "path": "qa/course_refresh_early_finalize.py",
+      "before_sha256": "4f154521ef62dc5dcf9f9b5ea3b4d9a3425302c2a762993171cf92ec114c1407",
+      "after_sha256": "864590b050cbb27044a4bcdc3512ad21b0cf5c4320d9cff2832f00ab36eb3502",
+      "identical_ast": true,
+      "change": "Trailing whitespace only, root Git publication preflight; numerical/execution code AST unchanged."
+    },
+    {
+      "path": "qa/execute_course_middle.py",
+      "before_sha256": "be37884a006ce84b5d374c4de8adacc98c6b92648963eb62f2ee034cc9d1ebf3",
+      "after_sha256": "f944fc196b545927cecb7b66c3a1fa88e6ce8f71394b1da1ff3487df5799ec35",
+      "identical_ast": true,
+      "change": "Trailing whitespace only, root Git publication preflight; numerical/execution code AST unchanged."
+    }
+  ]
+}

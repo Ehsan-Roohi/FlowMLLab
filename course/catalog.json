@@ -272,7 +272,7 @@
       "setup": "notebooks/week10_1/README.md",
       "prerequisites": "Week 3 molecular collisions; numerical quadrature and Week 2 regression.",
       "mode": "CPU teaching exercises and retained evidence; full regeneration is separate.",
-      "compute_estimate": "Under 5 min CPU teaching path.",
+      "compute_estimate": "Plan for roughly 20–30 min on CPU; hardware-dependent.",
       "estimate_status": "Planning estimate carried from course guides, or explicitly unmeasured; not a timing measurement of this revision.",
       "execution_status": "Colab link is an entry point, not a guarantee of a fresh hosted Run All.",
       "keywords": "collision scattering Lennard Jones quadrature"
@@ -348,11 +348,11 @@
       "title": "Geometry-aware neural operators",
       "page": "weeks/week15/README.md",
       "setup": "notebooks/week15/README.md",
-      "prerequisites": "Weeks 4 and 9 operators, geometry splits and physical validation; follow archive setup.",
-      "mode": "CPU retained-evidence verification; no model fitting in the main classroom path.",
-      "compute_estimate": "About 5 min retained-field verification after archive download.",
+      "prerequisites": "Week 4 field surrogates and POD; training/validation/test splits. Start with the CPU lesson before the optional full research archive.",
+      "mode": "Train a compact geometry-conditioned POD operator on CPU; compare exact manufactured fields and inspect retained CFD research evidence.",
+      "compute_estimate": "Bounded classroom fit; hardware-dependent. Full research archive and training campaign are separate.",
       "estimate_status": "Planning estimate carried from course guides, or explicitly unmeasured; not a timing measurement of this revision.",
-      "execution_status": "Local checkout plus documented evidence archive; no hosted Run All claim.",
+      "execution_status": "Checkout/bootstrap supports the CPU lesson and bundled research figures; the full research audit needs its documented external archive. Hosted Colab acceptance is not yet claimed.",
       "keywords": "FNO DeepONet geometry SDF neural operators"
     },
     {

@@ -1,0 +1,315 @@
+{
+  "15": {
+    "notebook": "notebooks/week15/W15_Complete_Geometry_Generalization.ipynb",
+    "notebook_sha256": "eb6b42e579a976008b866b06b1930e46a5a35dba57ae92c133a86c4998e0ee7a",
+    "figures": [
+      {
+        "path": "results/late_course_teaching/week15_geometry_01.png",
+        "sha256": "074e1c00438d6b7fd1f3948f0ad3c0a9605d2ec7acb025fe26f80c2f13d7ad9f",
+        "cell_id": "late-operator-controls",
+        "image_index": 1,
+        "code_sha256": "ecdf3a64352ad814428bedd1f3420cf1a570af919fdb48be8479b2b6ef955c00"
+      },
+      {
+        "path": "results/late_course_teaching/week15_history_01.png",
+        "sha256": "7972e199c5bfc6a5ed7917693486bfb90425a74d2f1bda98f0e28098c439b3ad",
+        "cell_id": "late-operator-fit",
+        "image_index": 1,
+        "code_sha256": "517cb12091dd911e90421ac8889f1731ef37f0645f0b3568744688dcc3e8807d"
+      },
+      {
+        "path": "results/late_course_teaching/week15_test_01.png",
+        "sha256": "7a6f7be03ed9fbc5c6eec2a31bd219060daf2d894b2596ca649a9ccae76a856e",
+        "cell_id": "late-operator-test",
+        "image_index": 1,
+        "code_sha256": "d22344e064e1079a27d573906edc5fe952f6d26e2fd350a9aa855aed4809bbf4"
+      },
+      {
+        "path": "results/late_course_teaching/week15_test_02.png",
+        "sha256": "f6a6624d0f0c0565f54cacb508d3bd8b0945dcd8e89cb8cc4ca9f118b8620810",
+        "cell_id": "late-operator-test",
+        "image_index": 2,
+        "code_sha256": "d22344e064e1079a27d573906edc5fe952f6d26e2fd350a9aa855aed4809bbf4"
+      },
+      {
+        "path": "results/late_course_teaching/week15_test_03.png",
+        "sha256": "01ffd009aef602c61e1de02ef819c1b0a4f2d05944083d617f09b315fba088a4",
+        "cell_id": "late-operator-test",
+        "image_index": 3,
+        "code_sha256": "d22344e064e1079a27d573906edc5fe952f6d26e2fd350a9aa855aed4809bbf4"
+      },
+      {
+        "path": "results/late_course_teaching/week15_test_04.png",
+        "sha256": "8fd0b1be6a2506e376ec2f485cc89ee97b5e4a1531cb489234ade17391f65cf0",
+        "cell_id": "late-operator-test",
+        "image_index": 4,
+        "code_sha256": "d22344e064e1079a27d573906edc5fe952f6d26e2fd350a9aa855aed4809bbf4"
+      }
+    ]
+  },
+  "bridge": {
+    "notebook": "notebooks/optional_geometry_time_bridge/Geometry_Time_Operator_Bridge.ipynb",
+    "notebook_sha256": "949ba2449e5aa4840f8a705d1c49c75db0563392524c76291a143e9b811c6ae6",
+    "figures": [
+      {
+        "path": "results/late_course_teaching/weekbridge_feedback_phase_01.png",
+        "sha256": "1c4a5edc2319255562f0ef1ad1eda879750301f601db3aa2c12f8378ef938d1d",
+        "cell_id": "late-bridge-feedback-plot-code",
+        "image_index": 1,
+        "code_sha256": "d5ba178d433c23da7ea06ae14fb50cd2a1ab07271dec061b4e06ea2f23ffd7c6"
+      },
+      {
+        "path": "results/late_course_teaching/weekbridge_feedback_phase_02.png",
+        "sha256": "954ee9c7b7e72422b4162062d4de2e6d3d73763aba8584eee41de8f98303d152",
+        "cell_id": "late-bridge-feedback-plot-code",
+        "image_index": 2,
+        "code_sha256": "d5ba178d433c23da7ea06ae14fb50cd2a1ab07271dec061b4e06ea2f23ffd7c6"
+      }
+    ]
+  },
+  "17": {
+    "notebook": "notebooks/week17/W17_CFD_Transformer.ipynb",
+    "notebook_sha256": "98e5890015a83bd3af87652c6018d17d9e07e273976be1dbbc967514bd2a5393",
+    "figures": [
+      {
+        "path": "results/late_course_teaching/week17_sensors_01.png",
+        "sha256": "6a7722afe12235a13588c94fdcaf7bcb4c847daf95fe2353f05113b14cddacb1",
+        "cell_id": "w17-11",
+        "image_index": 1,
+        "code_sha256": "dcb078d22631ad7cab2df257a42296ef4d6fdf4e2f6bf1c45b1e7a4576635572"
+      }
+    ]
+  },
+  "18": {
+    "notebook": "notebooks/week18/W18_CFD_Transformer.ipynb",
+    "notebook_sha256": "090056d7a4fdb5882b6876038a6badd0240acebf0dae5d86f66bd7c79e7db573",
+    "figures": [
+      {
+        "path": "results/late_course_teaching/week18_causal_response_01.png",
+        "sha256": "1de66eb36cbea88687514590bc9ba9f81462e246327347acc3b03a753a052221",
+        "cell_id": "w18-09",
+        "image_index": 1,
+        "code_sha256": "75a43892c7442f6cc308fa94890c2d8ee482326dd935a205e5624e7d699d6461"
+      }
+    ]
+  },
+  "19": {
+    "notebook": "notebooks/week19/W19_CFD_Transformer.ipynb",
+    "notebook_sha256": "1ee0bededcfd403b3b5fe80433d1451b41e613b76cd9b141b337320d2bca0079",
+    "figures": [
+      {
+        "path": "results/late_course_teaching/week19_reconstruction_01.png",
+        "sha256": "2330ec5d49f959645ddc40a6d75f476a9f8e856fe7c7db3bdfb74e5850599f56",
+        "cell_id": "w19-09",
+        "image_index": 1,
+        "code_sha256": "e8aa26b2d57322bd9ca5d752e9599abf6c595db5e06fdaab33bd02dbb1bfacbb"
+      },
+      {
+        "path": "results/late_course_teaching/week19_reconstruction_02.png",
+        "sha256": "3c477af039a00b107b2f4a52493f840d16fe9e83a04e26e7ede66c9cc1711e59",
+        "cell_id": "w19-09",
+        "image_index": 2,
+        "code_sha256": "e8aa26b2d57322bd9ca5d752e9599abf6c595db5e06fdaab33bd02dbb1bfacbb"
+      },
+      {
+        "path": "results/late_course_teaching/week19_reconstruction_03.png",
+        "sha256": "136e8342671c6d9306934bae04062fdd37ec351662f9cc1e0e806c2350581f01",
+        "cell_id": "w19-09",
+        "image_index": 3,
+        "code_sha256": "e8aa26b2d57322bd9ca5d752e9599abf6c595db5e06fdaab33bd02dbb1bfacbb"
+      },
+      {
+        "path": "results/late_course_teaching/week19_reconstruction_04.png",
+        "sha256": "a6ea31733c9a35009976cc22deffcd9b2f87c66fcca5ca5a582e98f4eac08357",
+        "cell_id": "w19-09",
+        "image_index": 4,
+        "code_sha256": "e8aa26b2d57322bd9ca5d752e9599abf6c595db5e06fdaab33bd02dbb1bfacbb"
+      }
+    ]
+  },
+  "16": {
+    "notebook": "notebooks/week16/W16_Supersonic_Shape_Optimization.ipynb",
+    "notebook_sha256": "f18a04fd5c3d9347255768a28b30e556aabc2a82669b235ae1392abbb198a497",
+    "figures": [
+      {
+        "path": "results/late_course_teaching/week16_validation_models_01.png",
+        "sha256": "a08171eaa543312657866deafce895ab13267dd25569ac4f1ace498ae8762b36",
+        "cell_id": "late-w16-all-models-code",
+        "image_index": 1,
+        "code_sha256": "2ecd038725ce89619072e54ee6aa095167b669f2512c046c4fa05127bf96558d"
+      }
+    ]
+  },
+  "20": {
+    "notebook": "notebooks/week20/W20_CFD_Transformer.ipynb",
+    "notebook_sha256": "41a2f4ea026661c1eb383e6f5a3330ee0b4665b815845a3f972b7f210982a168",
+    "figures": [
+      {
+        "path": "results/late_course_teaching/week20_classroom_fit_01.png",
+        "sha256": "2a9c057251923a67b8095cf26bf2f84086cfcac0ccbdbaee530b495a4f43137a",
+        "cell_id": "w20-09",
+        "image_index": 1,
+        "code_sha256": "9026b9b4519cf54190717873e7b17a9a2b3833786ca23a8019b376dcd1569833"
+      },
+      {
+        "path": "results/late_course_teaching/week20_classroom_fit_02.png",
+        "sha256": "46da4f57c83978bf25512725ab263200f492d581f2ae75b8d0633e32e002ba57",
+        "cell_id": "w20-09",
+        "image_index": 2,
+        "code_sha256": "9026b9b4519cf54190717873e7b17a9a2b3833786ca23a8019b376dcd1569833"
+      },
+      {
+        "path": "results/late_course_teaching/week20_retained_sensing_01.png",
+        "sha256": "0d3d5b370b4b83624dac9e1c80ef5b5c8165fb8c1c026c71336263a230efc1b2",
+        "cell_id": "w20-11",
+        "image_index": 1,
+        "code_sha256": "4fe5d2d482c51a0f4ac087c297e1344231f9a23045638a8fc3d9b3146de1576c"
+      },
+      {
+        "path": "results/late_course_teaching/week20_retained_sensing_02.png",
+        "sha256": "a0b208a92bbb73aaf9b565c2ab3bd92702711900ec7decefeb9617ad0872747c",
+        "cell_id": "w20-11",
+        "image_index": 2,
+        "code_sha256": "4fe5d2d482c51a0f4ac087c297e1344231f9a23045638a8fc3d9b3146de1576c"
+      },
+      {
+        "path": "results/late_course_teaching/week20_retained_sensing_03.png",
+        "sha256": "de63fe8083eb15d0e7a6fd7726ccfb289da4278aa05caf08428101afb1c81c81",
+        "cell_id": "w20-11",
+        "image_index": 3,
+        "code_sha256": "4fe5d2d482c51a0f4ac087c297e1344231f9a23045638a8fc3d9b3146de1576c"
+      },
+      {
+        "path": "results/late_course_teaching/week20_retained_sensing_04.png",
+        "sha256": "233dfc81e3783832bc2378eedbd2cc048d0519fe2fabfbc489850b9acae63023",
+        "cell_id": "w20-11",
+        "image_index": 4,
+        "code_sha256": "4fe5d2d482c51a0f4ac087c297e1344231f9a23045638a8fc3d9b3146de1576c"
+      },
+      {
+        "path": "results/late_course_teaching/week20_retained_sensing_05.png",
+        "sha256": "777cf00f389e91adb92425120b73acc7e26e0fe5b35f35e0e41a549dea55f978",
+        "cell_id": "w20-11",
+        "image_index": 5,
+        "code_sha256": "4fe5d2d482c51a0f4ac087c297e1344231f9a23045638a8fc3d9b3146de1576c"
+      }
+    ]
+  },
+  "21": {
+    "notebook": "notebooks/week21/W21_CFD_Transformer.ipynb",
+    "notebook_sha256": "06a5daea963fcd7c2b0137d5ab33ce0681277b6e683a323fbd5a95c38f3bd0d3",
+    "figures": [
+      {
+        "path": "results/late_course_teaching/week21_full_rollout_error_01.png",
+        "sha256": "7d2335cf2aeb812b13f12907e0e354c4e675fbbbbbe4976b6e247d2c6c676e50",
+        "cell_id": "w21-05",
+        "image_index": 1,
+        "code_sha256": "95315ad2dad93885b9a85f882bc2365d920546fc56df76b79c07e9c7df835123"
+      },
+      {
+        "path": "results/late_course_teaching/week21_rollout_01.png",
+        "sha256": "a7489d8642c7c36246dd0f74438cdba454173f43d9ad2f27c7013f62ca1a94ba",
+        "cell_id": "w21-09",
+        "image_index": 1,
+        "code_sha256": "32d84f407b544e305821faf93c2465da00d5432d9ed7d4870dd8212320b66070"
+      },
+      {
+        "path": "results/late_course_teaching/week21_rollout_02.png",
+        "sha256": "3e7ff634f8fe9fbe5ea5dd3b9926f4816ae4b484d184beafb5274b4c0e565a91",
+        "cell_id": "w21-09",
+        "image_index": 2,
+        "code_sha256": "32d84f407b544e305821faf93c2465da00d5432d9ed7d4870dd8212320b66070"
+      },
+      {
+        "path": "results/late_course_teaching/week21_rollout_03.png",
+        "sha256": "88f028f8c668a6e1c777141227d44f97569bd8a833bf3b4bc0b9ea578b721a02",
+        "cell_id": "w21-09",
+        "image_index": 3,
+        "code_sha256": "32d84f407b544e305821faf93c2465da00d5432d9ed7d4870dd8212320b66070"
+      },
+      {
+        "path": "results/late_course_teaching/week21_rollout_04.png",
+        "sha256": "25bf2514dbfdc6bad5ec02cf3ff7e00f9b41a7fa1763fc8ebca7ca7232f30b66",
+        "cell_id": "w21-09",
+        "image_index": 4,
+        "code_sha256": "32d84f407b544e305821faf93c2465da00d5432d9ed7d4870dd8212320b66070"
+      },
+      {
+        "path": "results/late_course_teaching/week21_rollout_05.png",
+        "sha256": "bcec34e10b62cd66f70dabdc6d79d1a33a6baccef9013955c3713bc40364d7d6",
+        "cell_id": "w21-09",
+        "image_index": 5,
+        "code_sha256": "32d84f407b544e305821faf93c2465da00d5432d9ed7d4870dd8212320b66070"
+      },
+      {
+        "path": "results/late_course_teaching/week21_rollout_06.png",
+        "sha256": "2a5991cad738df9cbf4483bf88136d48a5cc2fdfc8a80c0e54c89fa859c74d50",
+        "cell_id": "w21-09",
+        "image_index": 6,
+        "code_sha256": "32d84f407b544e305821faf93c2465da00d5432d9ed7d4870dd8212320b66070"
+      },
+      {
+        "path": "results/late_course_teaching/week21_rollout_07.png",
+        "sha256": "f2cbea662239c6426d623bd3e621bc527563932490b84a4e6bf8cd70344008a6",
+        "cell_id": "w21-09",
+        "image_index": 7,
+        "code_sha256": "32d84f407b544e305821faf93c2465da00d5432d9ed7d4870dd8212320b66070"
+      }
+    ]
+  },
+  "22": {
+    "notebook": "notebooks/week22/W22_CFD_Transformer.ipynb",
+    "notebook_sha256": "f0063ab4d84113cf45fefc22776c8e9cbd04651d45f3ff35ac1459421a7ae2f0",
+    "figures": [
+      {
+        "path": "results/late_course_teaching/week22_transfer_label_curves_01.png",
+        "sha256": "588eaaf9ff8cc27c72dcbbbdfdb0ae324b04d2188bc9eab051603f72ae56e46f",
+        "cell_id": "w22-07",
+        "image_index": 1,
+        "code_sha256": "a2483d952a6aef3aa70076612491bfbbd967fcc3b11316452787e0394aa398ea"
+      },
+      {
+        "path": "results/late_course_teaching/week22_transfer_01.png",
+        "sha256": "68c0e64925e646867fe8c6ac160015c436809ef367855355d17b165f541404bb",
+        "cell_id": "w22-09",
+        "image_index": 1,
+        "code_sha256": "8b5b58a5fba2dd3cf65e0843258e014575600d5d8aad2279f3bbb2fac0528b50"
+      },
+      {
+        "path": "results/late_course_teaching/week22_transfer_02.png",
+        "sha256": "004aacab593f5d9cf7bb5613f757a2584f7cfce152eef571754468f62672380d",
+        "cell_id": "w22-09",
+        "image_index": 2,
+        "code_sha256": "8b5b58a5fba2dd3cf65e0843258e014575600d5d8aad2279f3bbb2fac0528b50"
+      },
+      {
+        "path": "results/late_course_teaching/week22_transfer_03.png",
+        "sha256": "0178bed3cc539dcbd378d723d364906bc35954d28dba061c74463e52c88c1c24",
+        "cell_id": "w22-09",
+        "image_index": 3,
+        "code_sha256": "8b5b58a5fba2dd3cf65e0843258e014575600d5d8aad2279f3bbb2fac0528b50"
+      },
+      {
+        "path": "results/late_course_teaching/week22_transfer_04.png",
+        "sha256": "297d2607d07d5b41b85eb3bca88c7437b6da6ff0f80045feb0ad453cc28697df",
+        "cell_id": "w22-09",
+        "image_index": 4,
+        "code_sha256": "8b5b58a5fba2dd3cf65e0843258e014575600d5d8aad2279f3bbb2fac0528b50"
+      },
+      {
+        "path": "results/late_course_teaching/week22_transfer_05.png",
+        "sha256": "6a112099d5d6816457296f81cf5c6bcdd6eee4b9dacb2dfaf7e3ea8f8170594d",
+        "cell_id": "w22-09",
+        "image_index": 5,
+        "code_sha256": "8b5b58a5fba2dd3cf65e0843258e014575600d5d8aad2279f3bbb2fac0528b50"
+      },
+      {
+        "path": "results/late_course_teaching/week22_transfer_06.png",
+        "sha256": "01d464be75d6c14bbff783ef19cb6aa685dbef51657045b5b5cf328f94aa4feb",
+        "cell_id": "w22-09",
+        "image_index": 6,
+        "code_sha256": "8b5b58a5fba2dd3cf65e0843258e014575600d5d8aad2279f3bbb2fac0528b50"
+      }
+    ]
+  }
+}

@@ -1,0 +1,48 @@
+{
+  "notebook": "notebooks/week03/AI_in_Fluids_Week3_Lab2_Mini_DSMC_Cavity_Revised_Student.ipynb",
+  "utc": "2026-11-21T03:00:38.368810+00:00",
+  "elapsed_run_all_seconds": 624.0482166000002,
+  "host": "ECS-200417",
+  "kernel": "D:\\ChatGPT Backup\\Projects\\FlowMLLab\\Teaching_Current\\repo\\tmp\\week01_4_runtime\\Scripts\\python.exe",
+  "python": "3.12.14 (main, Aug 25 2026, 14:01:42) [MSC v.1944 64 bit (AMD64)]",
+  "cpu_only": true,
+  "failure": null,
+  "code_cells": 26,
+  "executed_cells": 26,
+  "inline_figures": [
+    {
+      "path": "results/course_refresh_early/AI_in_Fluids_Week3_Lab2_Mini_DSMC_Cavity_Revised_Student/cell_03_00.png",
+      "sha256": "b664baee7915a9b3ea30ecf69ab9c850258643fd9b71603a52d6727e1c0f4e77"
+    },
+    {
+      "path": "results/course_refresh_early/AI_in_Fluids_Week3_Lab2_Mini_DSMC_Cavity_Revised_Student/cell_08_00.png",
+      "sha256": "68752c324ee112b325496f082c62db6f28b00d8cfe28db899e45588ccc3d8501"
+    },
+    {
+      "path": "results/course_refresh_early/AI_in_Fluids_Week3_Lab2_Mini_DSMC_Cavity_Revised_Student/cell_29_00.png",
+      "sha256": "fc8d3567aeba7714e43f8269112e32e59477cdce32f3ba7122428bb1cf0dd4d0"
+    },
+    {
+      "path": "results/course_refresh_early/AI_in_Fluids_Week3_Lab2_Mini_DSMC_Cavity_Revised_Student/cell_29_01.png",
+      "sha256": "7c25c97ae9bb7ce6e7ad40073ac6e2beec7eda77e013158292aa3ff5577b1b09"
+    },
+    {
+      "path": "results/course_refresh_early/AI_in_Fluids_Week3_Lab2_Mini_DSMC_Cavity_Revised_Student/cell_33_01.png",
+      "sha256": "a746b5fa372b733decfbb79eda6980f87f9f05feef4d4064257ef1e385d07485"
+    }
+  ],
+  "notebook_sha256": "9d0f844f0f96e88ffd15cf7a1ed6bcb7164d5b0e7bb74a8cbdcda9fd3c5d98c0",
+  "code_sha256": "011baca6dd6240633638e401b008d9268350c911093f9881444113871c087276",
+  "claim": "Fresh default CPU Run All; no hosted Colab or optional GPU execution claimed.",
+  "execution_notebook_sha256": "2faf5f2a31d14a6316374288344809044fd2ac2f08c91f63c8c5792fc179fe68",
+  "post_execution_markdown_revision": {
+    "reason": "Correct zero-based matched-time exercise: start_new=2*start+1, with halved dt",
+    "code_cells_outputs_and_execution_metadata_unchanged": true,
+    "original_executed_notebook_sha256": "2faf5f2a31d14a6316374288344809044fd2ac2f08c91f63c8c5792fc179fe68"
+  },
+  "post_execution_presentation_revision": {
+    "reason": "Two literal percent signs corrected in retained wall-pressure comparison annotation; no data, code, metrics, other outputs or timing changed.",
+    "receipt": "qa/course_refresh_early_dsmc_presentation.json",
+    "no_simulation_or_training": true
+  }
+}

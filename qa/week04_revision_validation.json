@@ -43,11 +43,13 @@
     },
     {
       "notebook": "notebooks/week04/W4_Lab4_Stokes_to_Navier_Stokes.ipynb",
-      "sha256": "b6c95c20fe7c29d4c54197555484f334db16343842c93255736f55404fcf2604",
+      "sha256": "c7b2439cc8d38954fdd0829f68ed16ff3840eafd40aa157a28064ac99e8763b8",
       "code_cells": 15,
       "figures": 24,
       "elapsed_seconds": 1638.1110112999995,
-      "execution_scope": "Fresh local CPU Run All; retained evidence explicitly distinguished from new solves/fits; no hosted Colab execution claimed"
+      "execution_scope": "Fresh local CPU Run All; retained evidence explicitly distinguished from new solves/fits; no hosted Colab execution claimed",
+      "executed_notebook_sha256": "b6c95c20fe7c29d4c54197555484f334db16343842c93255736f55404fcf2604",
+      "post_execution_text_correction": "qa/course_refresh_week04_link.json#notebook_label_correction"
     },
     {
       "notebook": "notebooks/week04/W4_Lab5_All_Re_Ghia_Validation.ipynb",
@@ -93,9 +95,10 @@
   "notebook_count": 11,
   "total_inline_figures": 124,
   "lecture_pages": 103,
-  "lecture_sha256": "4f156163c0b861664d8a8a99d568d47db10d6f4d2479f2405972ea8f6f1f7772",
+  "lecture_sha256": "e498aeb5086966c57471210ebc891f6e202aeabbc513d6d28dfda4daef07f26d",
   "retained_evidence_pages": 54,
   "corner_study_source_hashes_verified": 16,
   "hosted_colab_execution_claimed": false,
-  "scope": "Complete CPU notebook executions on the hosts recorded in their receipts; retained research evidence is distinct from new fitting/CFD. Visual review is recorded separately."
+  "scope": "Complete CPU notebook executions on the hosts recorded in their receipts; retained research evidence is distinct from new fitting/CFD. Visual review is recorded separately.",
+  "lecture_link_maintenance": "qa/course_refresh_week04_link.json"
 }

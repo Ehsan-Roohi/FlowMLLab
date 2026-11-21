@@ -1,6 +1,10 @@
 # Week 15 — Geometry-aware neural operators
 
-Original Transolver: [run/verify notebook](../../notebooks/week15/W15_Original_Transolver_Double_Step.ipynb) · [double-step test, weights and results](../../results/family_transolver/README.md) · [additional g011 test](../../results/step_transolver/README.md).
+Start with the [complete student laboratory](W15_Complete_Geometry_Generalization.ipynb), [open it in Colab](https://colab.research.google.com/github/Ehsan-Roohi/FlowMLLab/blob/main/notebooks/week15/W15_Complete_Geometry_Generalization.ipynb), and read the [lecture](../../lectures/week15_geometry_generalization.pdf).
+
+The ordinary CPU route explains geometry encoding, trains a small POD-DeepONet on an exact manufactured flow, and compares two unseen geometries with linear interpolation. Change depth, width, optimizer, POD rank and loss weights in the control cell; use validation for decisions and keep signed spatial errors for the final cases. No GPU or external research archive is needed for this route. The setup cell obtains the required public files when run in Colab.
+
+The retained CFD research comparison is a separate part of the lesson. Its external-archive audits are clearly marked and are not counted as passes when the archive is absent. Original Transolver companions provide [native double-step field comparisons](W15_Original_Transolver_Double_Step.ipynb), [double-step weights and results](../../results/family_transolver/README.md), and [additional g011 field comparisons](W15_Original_Transolver_Step.ipynb). Their default path verifies saved fields and plots all three seeds; campaign retraining is optional research work.
 
 ## Larger-network extension
 
@@ -75,7 +79,7 @@ GitHub does not duplicate these large release assets; Zenodo is the canonical
 evidence host. The repository hashes let readers verify every downloaded file.
 
 [`W15_Geometry_Operators_Step_Audit.ipynb`](W15_Geometry_Operators_Step_Audit.ipynb)
-is the historical v1.6 audit notebook, retained unchanged as a separate record.
+is the historical v1.6 audit notebook. Its numerical evidence and protocol remain a separate historical record; the setup supports both a checkout and Colab.
 It includes:
 
 - the exact ordinary-DeepONet builder already present in

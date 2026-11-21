@@ -1,0 +1,397 @@
+{
+  "pages": [
+    {
+      "pdf": "lectures/week02_supervised_learning_rarefaction.pdf",
+      "pdf_sha256": "493a4dd0c63c26d019e5ee69b356fafec89918bb3830337367c516170bc48264",
+      "page": 25,
+      "render": "tmp/course_refresh_early/lecture_review/week02_supervised_learning_rarefaction_025.png",
+      "render_sha256": "cd62627d6ea318591ca2052d8aa5ababeaafd04c9eb13496c5eb8c22ab026640",
+      "review": "Readable individual-page visual inspection passed. Root independently reviewed the other final pages; Week3 page44 was rechecked by this worker after the root-requested matched-time correction."
+    },
+    {
+      "pdf": "lectures/week02_supervised_learning_rarefaction.pdf",
+      "pdf_sha256": "493a4dd0c63c26d019e5ee69b356fafec89918bb3830337367c516170bc48264",
+      "page": 26,
+      "render": "tmp/course_refresh_early/lecture_review/week02_supervised_learning_rarefaction_026.png",
+      "render_sha256": "c1f02a7b8eced0266d18fa66188e85c2b1b31819e6c2911044824ec77458950c",
+      "review": "Readable individual-page visual inspection passed. Root independently reviewed the other final pages; Week3 page44 was rechecked by this worker after the root-requested matched-time correction."
+    },
+    {
+      "pdf": "lectures/week03_kinetic_dsmc.pdf",
+      "pdf_sha256": "3a569f0907850ce7921a6e7a9152fbdf7dc46e35108cf10521fd8952ed6f29ae",
+      "page": 38,
+      "render": "tmp/course_refresh_early/lecture_review/week03_kinetic_dsmc_038.png",
+      "render_sha256": "9fa7cbf052877e94f1fdc1259af7a5d804fb8a3057a92d8261a2036a87a73536",
+      "review": "Readable individual-page visual inspection passed. Root independently reviewed the other final pages; Week3 page44 was rechecked by this worker after the root-requested matched-time correction."
+    },
+    {
+      "pdf": "lectures/week03_kinetic_dsmc.pdf",
+      "pdf_sha256": "3a569f0907850ce7921a6e7a9152fbdf7dc46e35108cf10521fd8952ed6f29ae",
+      "page": 39,
+      "render": "tmp/course_refresh_early/lecture_review/week03_kinetic_dsmc_039.png",
+      "render_sha256": "3bbd2318bb90898057f7cae6bd6a55d854de5a5344a200af048cebde518421ca",
+      "review": "Readable individual-page visual inspection passed. Root independently reviewed the other final pages; Week3 page44 was rechecked by this worker after the root-requested matched-time correction."
+    },
+    {
+      "pdf": "lectures/week03_kinetic_dsmc.pdf",
+      "pdf_sha256": "3a569f0907850ce7921a6e7a9152fbdf7dc46e35108cf10521fd8952ed6f29ae",
+      "page": 40,
+      "render": "tmp/course_refresh_early/lecture_review/week03_kinetic_dsmc_040.png",
+      "render_sha256": "a8193dbf83bb7bf52209d72bcc7c931c62d33dd02e3bdc1c8c42c95c73a79820",
+      "review": "Readable individual-page visual inspection passed. Root independently reviewed the other final pages; Week3 page44 was rechecked by this worker after the root-requested matched-time correction."
+    },
+    {
+      "pdf": "lectures/week03_kinetic_dsmc.pdf",
+      "pdf_sha256": "3a569f0907850ce7921a6e7a9152fbdf7dc46e35108cf10521fd8952ed6f29ae",
+      "page": 41,
+      "render": "tmp/course_refresh_early/lecture_review/week03_kinetic_dsmc_041.png",
+      "render_sha256": "f1c48bb99a344f2ad3494cd8c54958d81f38382b95ab9ba8e7d77cf2e2a483fe",
+      "review": "Readable individual-page visual inspection passed. Root independently reviewed the other final pages; Week3 page44 was rechecked by this worker after the root-requested matched-time correction."
+    },
+    {
+      "pdf": "lectures/week03_kinetic_dsmc.pdf",
+      "pdf_sha256": "3a569f0907850ce7921a6e7a9152fbdf7dc46e35108cf10521fd8952ed6f29ae",
+      "page": 42,
+      "render": "tmp/course_refresh_early/lecture_review/week03_kinetic_dsmc_042.png",
+      "render_sha256": "5d3a7f28f7cb2e0334bd064a2941cf5261e3c09a422dbc398e4c4259e3ccfcd0",
+      "review": "Readable individual-page visual inspection passed. Root independently reviewed the other final pages; Week3 page44 was rechecked by this worker after the root-requested matched-time correction."
+    },
+    {
+      "pdf": "lectures/week03_kinetic_dsmc.pdf",
+      "pdf_sha256": "3a569f0907850ce7921a6e7a9152fbdf7dc46e35108cf10521fd8952ed6f29ae",
+      "page": 43,
+      "render": "tmp/course_refresh_early/lecture_review/week03_kinetic_dsmc_043.png",
+      "render_sha256": "e2fde2d099912bfb39f14bb67c3908cb558ea7d024cfde3f702b46e37618c92b",
+      "review": "Readable individual-page visual inspection passed. Root independently reviewed the other final pages; Week3 page44 was rechecked by this worker after the root-requested matched-time correction."
+    },
+    {
+      "pdf": "lectures/week03_kinetic_dsmc.pdf",
+      "pdf_sha256": "3a569f0907850ce7921a6e7a9152fbdf7dc46e35108cf10521fd8952ed6f29ae",
+      "page": 44,
+      "render": "tmp/course_refresh_early/lecture_review/week03_kinetic_dsmc_044.png",
+      "render_sha256": "7a44eb0faa707b452c4c36acf93545462b2948efa7649c2d2063781bed3e7a07",
+      "review": "Readable individual-page visual inspection passed. Root independently reviewed the other final pages; Week3 page44 was rechecked by this worker after the root-requested matched-time correction."
+    },
+    {
+      "pdf": "lectures/week03_kinetic_dsmc.pdf",
+      "pdf_sha256": "3a569f0907850ce7921a6e7a9152fbdf7dc46e35108cf10521fd8952ed6f29ae",
+      "page": 45,
+      "render": "tmp/course_refresh_early/lecture_review/week03_kinetic_dsmc_045.png",
+      "render_sha256": "4512f99c0bdeeff63d4d57bf7c8bc559165f2b41209b7a1caf6a127527e65cc9",
+      "review": "Readable individual-page visual inspection passed. Root independently reviewed the other final pages; Week3 page44 was rechecked by this worker after the root-requested matched-time correction."
+    },
+    {
+      "pdf": "lectures/week03_kinetic_dsmc.pdf",
+      "pdf_sha256": "3a569f0907850ce7921a6e7a9152fbdf7dc46e35108cf10521fd8952ed6f29ae",
+      "page": 46,
+      "render": "tmp/course_refresh_early/lecture_review/week03_kinetic_dsmc_046.png",
+      "render_sha256": "59914250076601c898fe099e6d40cb18b5886c493d1a204da549d3c386a56aa7",
+      "review": "Readable individual-page visual inspection passed. Root independently reviewed the other final pages; Week3 page44 was rechecked by this worker after the root-requested matched-time correction."
+    },
+    {
+      "pdf": "lectures/week03_kinetic_dsmc.pdf",
+      "pdf_sha256": "3a569f0907850ce7921a6e7a9152fbdf7dc46e35108cf10521fd8952ed6f29ae",
+      "page": 47,
+      "render": "tmp/course_refresh_early/lecture_review/week03_kinetic_dsmc_047.png",
+      "render_sha256": "7cecb4a3779e2bd530d436f9051f177a20034b48ef865fb420cb4d2e0e414ba0",
+      "review": "Readable individual-page visual inspection passed. Root independently reviewed the other final pages; Week3 page44 was rechecked by this worker after the root-requested matched-time correction."
+    },
+    {
+      "pdf": "lectures/week05_modal_sensing.pdf",
+      "pdf_sha256": "5c7a4dab50ae1e8c0919d621aa0646945fef818adb2a8812f4f1dd5ef8d01ee4",
+      "page": 1,
+      "render": "tmp/course_refresh_early/lecture_review/week05_modal_sensing_001.png",
+      "render_sha256": "9f14a453c946b1cb910754651c4ffb8647149995d915e37ccbce6163112fe1df",
+      "review": "Readable individual-page visual inspection passed. Root independently reviewed the other final pages; Week3 page44 was rechecked by this worker after the root-requested matched-time correction."
+    },
+    {
+      "pdf": "lectures/week05_modal_sensing.pdf",
+      "pdf_sha256": "5c7a4dab50ae1e8c0919d621aa0646945fef818adb2a8812f4f1dd5ef8d01ee4",
+      "page": 2,
+      "render": "tmp/course_refresh_early/lecture_review/week05_modal_sensing_002.png",
+      "render_sha256": "87358be188d29f86db61f7ee4165de3bd26536c19c94b60f8e4e0dcfabf206f2",
+      "review": "Readable individual-page visual inspection passed. Root independently reviewed the other final pages; Week3 page44 was rechecked by this worker after the root-requested matched-time correction."
+    },
+    {
+      "pdf": "lectures/week05_modal_sensing.pdf",
+      "pdf_sha256": "5c7a4dab50ae1e8c0919d621aa0646945fef818adb2a8812f4f1dd5ef8d01ee4",
+      "page": 3,
+      "render": "tmp/course_refresh_early/lecture_review/week05_modal_sensing_003.png",
+      "render_sha256": "54bd47683d7987c387123033f0a000fbd063936f8a1a27708bae1c450794e018",
+      "review": "Readable individual-page visual inspection passed. Root independently reviewed the other final pages; Week3 page44 was rechecked by this worker after the root-requested matched-time correction."
+    },
+    {
+      "pdf": "lectures/week05_modal_sensing.pdf",
+      "pdf_sha256": "5c7a4dab50ae1e8c0919d621aa0646945fef818adb2a8812f4f1dd5ef8d01ee4",
+      "page": 4,
+      "render": "tmp/course_refresh_early/lecture_review/week05_modal_sensing_004.png",
+      "render_sha256": "9fc309765a845403cd5e49557d8943a5106b1b6173e6c83f15ddee30fb419735",
+      "review": "Readable individual-page visual inspection passed. Root independently reviewed the other final pages; Week3 page44 was rechecked by this worker after the root-requested matched-time correction."
+    },
+    {
+      "pdf": "lectures/week05_modal_sensing.pdf",
+      "pdf_sha256": "5c7a4dab50ae1e8c0919d621aa0646945fef818adb2a8812f4f1dd5ef8d01ee4",
+      "page": 5,
+      "render": "tmp/course_refresh_early/lecture_review/week05_modal_sensing_005.png",
+      "render_sha256": "ed9d6dab06d181a274147f559268f981c5eb561c9fdded1b1a84e7ccf90dee8b",
+      "review": "Readable individual-page visual inspection passed. Root independently reviewed the other final pages; Week3 page44 was rechecked by this worker after the root-requested matched-time correction."
+    },
+    {
+      "pdf": "lectures/week05_modal_sensing.pdf",
+      "pdf_sha256": "5c7a4dab50ae1e8c0919d621aa0646945fef818adb2a8812f4f1dd5ef8d01ee4",
+      "page": 6,
+      "render": "tmp/course_refresh_early/lecture_review/week05_modal_sensing_006.png",
+      "render_sha256": "b28cc09903f0aa1d610ff29dc5fc4c9f5e10d43097123c84c3b6d8000960a92a",
+      "review": "Readable individual-page visual inspection passed. Root independently reviewed the other final pages; Week3 page44 was rechecked by this worker after the root-requested matched-time correction."
+    },
+    {
+      "pdf": "lectures/week05_modal_sensing.pdf",
+      "pdf_sha256": "5c7a4dab50ae1e8c0919d621aa0646945fef818adb2a8812f4f1dd5ef8d01ee4",
+      "page": 7,
+      "render": "tmp/course_refresh_early/lecture_review/week05_modal_sensing_007.png",
+      "render_sha256": "3c60dee43b6e26f9f46330f67f08fa448a57cfd9337379f4f4361b97fc2324ed",
+      "review": "Readable individual-page visual inspection passed. Root independently reviewed the other final pages; Week3 page44 was rechecked by this worker after the root-requested matched-time correction."
+    },
+    {
+      "pdf": "lectures/week05_modal_sensing.pdf",
+      "pdf_sha256": "5c7a4dab50ae1e8c0919d621aa0646945fef818adb2a8812f4f1dd5ef8d01ee4",
+      "page": 8,
+      "render": "tmp/course_refresh_early/lecture_review/week05_modal_sensing_008.png",
+      "render_sha256": "b070661293164acb71b00611a412f28565ce73fbb818cdfdee791d4581881582",
+      "review": "Readable individual-page visual inspection passed. Root independently reviewed the other final pages; Week3 page44 was rechecked by this worker after the root-requested matched-time correction."
+    },
+    {
+      "pdf": "lectures/week05_modal_sensing.pdf",
+      "pdf_sha256": "5c7a4dab50ae1e8c0919d621aa0646945fef818adb2a8812f4f1dd5ef8d01ee4",
+      "page": 9,
+      "render": "tmp/course_refresh_early/lecture_review/week05_modal_sensing_009.png",
+      "render_sha256": "509ad8032ef8bbb1d1f6595bbbd3a0075f3e082c782d5600fb1218af993158dd",
+      "review": "Readable individual-page visual inspection passed. Root independently reviewed the other final pages; Week3 page44 was rechecked by this worker after the root-requested matched-time correction."
+    },
+    {
+      "pdf": "lectures/week05_modal_sensing.pdf",
+      "pdf_sha256": "5c7a4dab50ae1e8c0919d621aa0646945fef818adb2a8812f4f1dd5ef8d01ee4",
+      "page": 10,
+      "render": "tmp/course_refresh_early/lecture_review/week05_modal_sensing_010.png",
+      "render_sha256": "4800d5550923980da59b02c5c984f0257b3c826087585d18d4563bdd08fd18eb",
+      "review": "Readable individual-page visual inspection passed. Root independently reviewed the other final pages; Week3 page44 was rechecked by this worker after the root-requested matched-time correction."
+    }
+  ],
+  "notebook_figures": [
+    {
+      "path": "results/course_refresh_early/AI_in_Fluids_Week2_Colab_Expanded/cell_10_01.png",
+      "sha256": "389f1fd49ba16fe4cc01f5709091b4018a320ecc9fc9d80b119f9c99261af524",
+      "review": "Viewed at readable resolution; physics, full error ranges, labeling and layout checked.",
+      "scope": "CPU default output"
+    },
+    {
+      "path": "results/course_refresh_early/AI_in_Fluids_Week2_Colab_Expanded/cell_12_00.png",
+      "sha256": "98be1c78db5eb8eb6f210330a071e8ebf83a0f74d7878dadf4ec046783f81b25",
+      "review": "Viewed at readable resolution; physics, full error ranges, labeling and layout checked.",
+      "scope": "CPU default output"
+    },
+    {
+      "path": "results/course_refresh_early/AI_in_Fluids_Week2_Colab_Expanded/cell_17_00.png",
+      "sha256": "a7a0dda363b69597eb0c9f36fc7364db88784d74600209fceb7d9ddfad22aad7",
+      "review": "Viewed at readable resolution; physics, full error ranges, labeling and layout checked.",
+      "scope": "CPU default output"
+    },
+    {
+      "path": "results/course_refresh_early/AI_in_Fluids_Week2_Colab_Expanded/cell_31_00.png",
+      "sha256": "50690c50cfbf25d3c14280e2ef69923c91a9b0145a240ebc5e7580f46cb158b1",
+      "review": "Viewed at readable resolution; physics, full error ranges, labeling and layout checked.",
+      "scope": "CPU default output"
+    },
+    {
+      "path": "results/course_refresh_early/AI_in_Fluids_Week2_Colab_Expanded/cell_36_00.png",
+      "sha256": "027f9ecd4f870f1a49af1b63a79d7b2d918141309d5de97b9e46d3192543e4ea",
+      "review": "Viewed at readable resolution; physics, full error ranges, labeling and layout checked.",
+      "scope": "CPU default output"
+    },
+    {
+      "path": "results/course_refresh_early/AI_in_Fluids_Week2_Colab_Expanded/cell_40_00.png",
+      "sha256": "7d9a37ea0ad368873200e5252fb570147692cdf57edb008e62d673429eab9049",
+      "review": "Viewed at readable resolution; physics, full error ranges, labeling and layout checked.",
+      "scope": "CPU default output"
+    },
+    {
+      "path": "results/course_refresh_early/AI_in_Fluids_Week2_Colab_Expanded/cell_44_00.png",
+      "sha256": "cb47e43dcbb2a77a2297c4a4a6d33e52f5252759e6fe1c75c0b73f964ce665e5",
+      "review": "Viewed at readable resolution; physics, full error ranges, labeling and layout checked.",
+      "scope": "CPU default output"
+    },
+    {
+      "path": "results/course_refresh_early/AI_in_Fluids_Week2_Colab_Expanded/cell_46_00.png",
+      "sha256": "d95b77e905b21e711f3224440ff696553c3670d1c915e2b959a0855c250f645b",
+      "review": "Viewed at readable resolution; physics, full error ranges, labeling and layout checked.",
+      "scope": "CPU default output"
+    },
+    {
+      "path": "results/course_refresh_early/AI_in_Fluids_Week2_Colab_Expanded/cell_52_00.png",
+      "sha256": "79a51e3c0db9da519595bbe27672e1dc6f57000ec8d07047902975db78ba29fc",
+      "review": "Viewed at readable resolution; physics, full error ranges, labeling and layout checked.",
+      "scope": "CPU default output"
+    },
+    {
+      "path": "results/course_refresh_early/AI_in_Fluids_Week3_Lab1_Maxwellian_Noise_ML_Student/cell_08_00.png",
+      "sha256": "765099a2baaf7bb22885d4279de0f40fccdae6acd23f5acdd793b05d7a6a20ba",
+      "review": "Viewed at readable resolution; physics, full error ranges, labeling and layout checked.",
+      "scope": "CPU default output"
+    },
+    {
+      "path": "results/course_refresh_early/AI_in_Fluids_Week3_Lab1_Maxwellian_Noise_ML_Student/cell_18_00.png",
+      "sha256": "18dee93866782933951c330b50c59dbc1ac8943fcc84c5a63ee9fa7e833bebba",
+      "review": "Viewed at readable resolution; physics, full error ranges, labeling and layout checked.",
+      "scope": "CPU default output"
+    },
+    {
+      "path": "results/course_refresh_early/AI_in_Fluids_Week3_Lab1_Maxwellian_Noise_ML_Student/cell_24_00.png",
+      "sha256": "431b83d2ea8383b8aa78412332abcee61f1f747b45147bbe794fbb62e0bade9c",
+      "review": "Viewed at readable resolution; physics, full error ranges, labeling and layout checked.",
+      "scope": "CPU default output"
+    },
+    {
+      "path": "results/course_refresh_early/AI_in_Fluids_Week3_Lab1_Maxwellian_Noise_ML_Student/cell_26_00.png",
+      "sha256": "5fa0cfb0f7d43d0712725526ff453b58cc99aeacb9ec429cc0a50120af7224e5",
+      "review": "Viewed at readable resolution; physics, full error ranges, labeling and layout checked.",
+      "scope": "CPU default output"
+    },
+    {
+      "path": "results/course_refresh_early/AI_in_Fluids_Week3_Lab2_Mini_DSMC_Cavity_Revised_Student/cell_03_00.png",
+      "sha256": "b664baee7915a9b3ea30ecf69ab9c850258643fd9b71603a52d6727e1c0f4e77",
+      "review": "Viewed at readable resolution; physics, full error ranges, labeling and layout checked.",
+      "scope": "Retained validation replot only"
+    },
+    {
+      "path": "results/course_refresh_early/AI_in_Fluids_Week3_Lab2_Mini_DSMC_Cavity_Revised_Student/cell_08_00.png",
+      "sha256": "68752c324ee112b325496f082c62db6f28b00d8cfe28db899e45588ccc3d8501",
+      "review": "Viewed at readable resolution; physics, full error ranges, labeling and layout checked.",
+      "scope": "CPU default output"
+    },
+    {
+      "path": "results/course_refresh_early/AI_in_Fluids_Week3_Lab2_Mini_DSMC_Cavity_Revised_Student/cell_29_00.png",
+      "sha256": "fc8d3567aeba7714e43f8269112e32e59477cdce32f3ba7122428bb1cf0dd4d0",
+      "review": "Viewed at readable resolution; physics, full error ranges, labeling and layout checked.",
+      "scope": "CPU default output"
+    },
+    {
+      "path": "results/course_refresh_early/AI_in_Fluids_Week3_Lab2_Mini_DSMC_Cavity_Revised_Student/cell_29_01.png",
+      "sha256": "7c25c97ae9bb7ce6e7ad40073ac6e2beec7eda77e013158292aa3ff5577b1b09",
+      "review": "Viewed at readable resolution; physics, full error ranges, labeling and layout checked.",
+      "scope": "CPU default output"
+    },
+    {
+      "path": "results/course_refresh_early/AI_in_Fluids_Week3_Lab2_Mini_DSMC_Cavity_Revised_Student/cell_33_01.png",
+      "sha256": "a746b5fa372b733decfbb79eda6980f87f9f05feef4d4064257ef1e385d07485",
+      "review": "Viewed at readable resolution; physics, full error ranges, labeling and layout checked.",
+      "scope": "CPU default output"
+    },
+    {
+      "path": "results/course_refresh_early/P0_Project_Setup/cell_11_01.png",
+      "sha256": "8ed7c6b9e469a122d6188bd4f80396ee4ce428ebee675458767081668c3b8953",
+      "review": "Viewed at readable resolution; physics, full error ranges, labeling and layout checked.",
+      "scope": "CPU default output"
+    },
+    {
+      "path": "results/course_refresh_early/P1_Re_Generalization/cell_17_00.png",
+      "sha256": "b44c7b6d7b84fa29a797e81f012703c6e1bf74be01e6e19d4fa0c8b50bcaee9a",
+      "review": "Viewed at readable resolution; physics, full error ranges, labeling and layout checked.",
+      "scope": "CPU default output"
+    },
+    {
+      "path": "results/course_refresh_early/P2_Physics_Guided_DNN/cell_08_00.png",
+      "sha256": "b7b0aa080e5359cfd81d01deeb57b1b49e2befec97a25ae2631a0ab9d8792b32",
+      "review": "Viewed at readable resolution; physics, full error ranges, labeling and layout checked.",
+      "scope": "CPU default output"
+    },
+    {
+      "path": "results/course_refresh_early/P2_Physics_Guided_DNN/cell_16_02.png",
+      "sha256": "087b1ac70a637d20438e0ccf864f54a5de244c6621bbf2733368d64bdd7e4786",
+      "review": "Viewed at readable resolution; physics, full error ranges, labeling and layout checked.",
+      "scope": "CPU default output"
+    },
+    {
+      "path": "results/course_refresh_early/P2_Physics_Guided_DNN/cell_19_01.png",
+      "sha256": "5146b9a198115365ecb86fd275d248083386bec3532cd25ec0a35ba0ff927ec0",
+      "review": "Viewed at readable resolution; physics, full error ranges, labeling and layout checked.",
+      "scope": "CPU default output"
+    },
+    {
+      "path": "results/course_refresh_early/P3_POD_Study/cell_08_00.png",
+      "sha256": "03a43cff940c7443289419d547f9dc1200a25a8afb781f6d84cc456a931b8bd0",
+      "review": "Viewed at readable resolution; physics, full error ranges, labeling and layout checked.",
+      "scope": "CPU default output"
+    },
+    {
+      "path": "results/course_refresh_early/P3_POD_Study/cell_17_01.png",
+      "sha256": "e3c14546756e3a3ac6aec822e3e38d8e1a629a1af7372999deffa710eb3c1d21",
+      "review": "Viewed at readable resolution; physics, full error ranges, labeling and layout checked.",
+      "scope": "CPU default output"
+    },
+    {
+      "path": "results/course_refresh_early/P3_POD_Study/cell_20_01.png",
+      "sha256": "7bbf0f8c446aca90f97d07784b227862ce6b4ba139bfb70a9ea5fab4b7658d06",
+      "review": "Viewed at readable resolution; physics, full error ranges, labeling and layout checked.",
+      "scope": "CPU default output"
+    },
+    {
+      "path": "results/course_refresh_early/P4_Uncertainty_Study/cell_15_01.png",
+      "sha256": "2bdfef3e9754ab8956d5fe5ae545acf141910dc9739c9c81271f21e58c14c1de",
+      "review": "Viewed at readable resolution; physics, full error ranges, labeling and layout checked.",
+      "scope": "CPU default output"
+    },
+    {
+      "path": "results/course_refresh_early/P4_Uncertainty_Study/cell_17_00.png",
+      "sha256": "c89a15ddef01729bf9cb7bf785e5765f0bb83129fe0b98efa0a79d3fb6b705f1",
+      "review": "Viewed at readable resolution; physics, full error ranges, labeling and layout checked.",
+      "scope": "CPU default output"
+    },
+    {
+      "path": "results/course_refresh_early/P4_Uncertainty_Study/cell_17_01.png",
+      "sha256": "7364510d6bb2562f8f84ac28d41b204f073c255170a8fd204bd3b58fa3d832f8",
+      "review": "Viewed at readable resolution; physics, full error ranges, labeling and layout checked.",
+      "scope": "CPU default output"
+    },
+    {
+      "path": "results/course_refresh_early/P5_Rarefied_Cavity/cell_20_00.png",
+      "sha256": "36341006d668d63cd47065ca43b042f8c649a5bac498309bd429700f51006804",
+      "review": "Viewed at readable resolution; physics, full error ranges, labeling and layout checked.",
+      "scope": "CPU default output"
+    },
+    {
+      "path": "results/course_refresh_early/P5_Rarefied_Cavity/cell_20_01.png",
+      "sha256": "ec24296a93eff2caba56d7cffdd6f5fb0d9f27d6b34f1bd7f1fd472e4836fcaa",
+      "review": "Viewed at readable resolution; physics, full error ranges, labeling and layout checked.",
+      "scope": "CPU default output"
+    },
+    {
+      "path": "results/course_refresh_early/W5_Lab2_Sparse_Sensing_Dynamics/cell_07_01.png",
+      "sha256": "a8469f8c7ec456dbe5ad8a6abb44837d94560a0fb4667b11932f788db7869806",
+      "review": "Viewed at readable resolution; physics, full error ranges, labeling and layout checked.",
+      "scope": "CPU default output"
+    },
+    {
+      "path": "results/course_refresh_early/W5_Lab2_Sparse_Sensing_Dynamics/cell_12_03.png",
+      "sha256": "327e3a6d99fe0ec0ab6c33e36df7463401fa3b0e508a4dfb108a87692c606346",
+      "review": "Viewed at readable resolution; physics, full error ranges, labeling and layout checked.",
+      "scope": "CPU default output"
+    },
+    {
+      "path": "results/course_refresh_early/W5_Lab2_Sparse_Sensing_Dynamics/cell_12_04.png",
+      "sha256": "9ad1b1f7993fd5bf14fa0021b0b9d46d555192379c03706212b765f8992652a3",
+      "review": "Viewed at readable resolution; physics, full error ranges, labeling and layout checked.",
+      "scope": "CPU default output"
+    },
+    {
+      "path": "results/course_refresh_early/W5_Lab2_Sparse_Sensing_Dynamics/cell_12_05.png",
+      "sha256": "4eb4ac0ce22b12903cfd4544e65b321a7bcadc8232f49cec266df2a513124e4b",
+      "review": "Viewed at readable resolution; physics, full error ranges, labeling and layout checked.",
+      "scope": "CPU default output"
+    }
+  ],
+  "reviewers": [
+    "week4_lab2_repair",
+    "root (21 final lecture pages plus the prior page44; requested the matched-time correction)"
+  ],
+  "claim": "Contact sheets were not used as the sole review evidence."
+}

@@ -1,62 +1,146 @@
 [
   {
-    "notebook": "notebooks/week17/W17_CFD_Transformer.ipynb",
-    "seconds": 23.411493699997663,
-    "code_cells": 13
-  },
-  {
-    "notebook": "instructor/week17/W17_Solutions.ipynb",
-    "seconds": 27.264640599954873,
-    "code_cells": 13
-  },
-  {
-    "notebook": "notebooks/week18/W18_CFD_Transformer.ipynb",
-    "seconds": 22.00161619996652,
-    "code_cells": 13
-  },
-  {
-    "notebook": "instructor/week18/W18_Solutions.ipynb",
-    "seconds": 19.708992599975318,
-    "code_cells": 13
-  },
-  {
-    "notebook": "notebooks/week19/W19_CFD_Transformer.ipynb",
-    "seconds": 22.69734509999398,
-    "code_cells": 13
-  },
-  {
-    "notebook": "instructor/week19/W19_Solutions.ipynb",
-    "seconds": 23.609829999972135,
-    "code_cells": 13
-  },
-  {
-    "notebook": "notebooks/week20/W20_CFD_Transformer.ipynb",
-    "seconds": 21.297289500012994,
-    "code_cells": 13
-  },
-  {
-    "notebook": "instructor/week20/W20_Solutions.ipynb",
-    "seconds": 20.861068799975328,
-    "code_cells": 13
-  },
-  {
     "notebook": "notebooks/week21/W21_CFD_Transformer.ipynb",
-    "seconds": 17.60244029999012,
-    "code_cells": 13
-  },
-  {
-    "notebook": "instructor/week21/W21_Solutions.ipynb",
-    "seconds": 20.098960499977693,
-    "code_cells": 13
+    "method": "fresh Jupyter kernel",
+    "python": "3.12.3 (main, Aug 31 2026, 10:18:26) [GCC 13.3.0]",
+    "executable": "/scratch3/workspace/roohie_umass_edu-flowml-ghia-highre-20261115/pinn-venv/bin/python",
+    "seconds": 12.377381570171565,
+    "code_sha256": "67d8bf215c5d1c3c0c94b1c55ccdcffa52a7ea37ee29a98b8eac373694e5f032",
+    "notebook_sha256": "06a5daea963fcd7c2b0137d5ab33ce0681277b6e683a323fbd5a95c38f3bd0d3",
+    "code_cells": 14,
+    "image_outputs": 8,
+    "status": "passed"
   },
   {
     "notebook": "notebooks/week22/W22_CFD_Transformer.ipynb",
-    "seconds": 69.89609979995294,
-    "code_cells": 13
+    "method": "fresh Jupyter kernel",
+    "python": "3.12.3 (main, Aug 31 2026, 10:18:26) [GCC 13.3.0]",
+    "executable": "/scratch3/workspace/roohie_umass_edu-flowml-ghia-highre-20261115/pinn-venv/bin/python",
+    "seconds": 11.828770313877612,
+    "code_sha256": "49d20d9ad81a334d52364cf098f75a131c1952603bb2f5a0504dc793d5ea48cc",
+    "notebook_sha256": "f0063ab4d84113cf45fefc22776c8e9cbd04651d45f3ff35ac1459421a7ae2f0",
+    "code_cells": 14,
+    "image_outputs": 7,
+    "status": "passed"
+  },
+  {
+    "notebook": "instructor/week17/W17_Solutions.ipynb",
+    "method": "fresh Jupyter kernel",
+    "python": "3.12.3 (main, Aug 31 2026, 10:18:26) [GCC 13.3.0]",
+    "executable": "/scratch3/workspace/roohie_umass_edu-flowml-ghia-highre-20261115/pinn-venv/bin/python",
+    "seconds": 8.581673632375896,
+    "code_sha256": "598f5226524e99204f21f94f02974c7aa665d79081c1d28d3055adc305d5f57d",
+    "notebook_sha256": "9d7d21f97d2294b11b471650fa97f8ae5576f7bc5ca33ac1e0c32b9eaa98be31",
+    "code_cells": 15,
+    "image_outputs": 4,
+    "status": "passed"
+  },
+  {
+    "notebook": "instructor/week18/W18_Solutions.ipynb",
+    "method": "fresh Jupyter kernel",
+    "python": "3.12.3 (main, Aug 31 2026, 10:18:26) [GCC 13.3.0]",
+    "executable": "/scratch3/workspace/roohie_umass_edu-flowml-ghia-highre-20261115/pinn-venv/bin/python",
+    "seconds": 9.597340390086174,
+    "code_sha256": "eb1224cfce252fa2a6740f105b51e6cfcf090fe807c0552126b40de3c3e48700",
+    "notebook_sha256": "d90bffafdb1e8ebb7b0b742b6a3047853f3b6d5a3b03d4bf475971bfe90e3c7d",
+    "code_cells": 14,
+    "image_outputs": 2,
+    "status": "passed"
+  },
+  {
+    "notebook": "instructor/week19/W19_Solutions.ipynb",
+    "method": "fresh Jupyter kernel",
+    "python": "3.12.3 (main, Aug 31 2026, 10:18:26) [GCC 13.3.0]",
+    "executable": "/scratch3/workspace/roohie_umass_edu-flowml-ghia-highre-20261115/pinn-venv/bin/python",
+    "seconds": 9.944418914150447,
+    "code_sha256": "eeb7107c48d2a135be7a7f59966e537a5925ae83491441a64accd33545c37f83",
+    "notebook_sha256": "ed2e66190c48a7cabbf32cece9295b1449ad48dec82b887834dc8435dc076f15",
+    "code_cells": 14,
+    "image_outputs": 5,
+    "status": "passed"
+  },
+  {
+    "notebook": "instructor/week20/W20_Solutions.ipynb",
+    "method": "fresh Jupyter kernel",
+    "python": "3.12.3 (main, Aug 31 2026, 10:18:26) [GCC 13.3.0]",
+    "executable": "/scratch3/workspace/roohie_umass_edu-flowml-ghia-highre-20261115/pinn-venv/bin/python",
+    "seconds": 14.371098540723324,
+    "code_sha256": "032f21b0773a462e8997fbe21075c2e13a194db9ae5c5cd25b86f22dd381f983",
+    "notebook_sha256": "75338d8d13b372604b93c7ed8a9bcbe3dfac751f697cfceb86fb527160c18905",
+    "code_cells": 15,
+    "image_outputs": 8,
+    "status": "passed"
+  },
+  {
+    "notebook": "instructor/week21/W21_Solutions.ipynb",
+    "method": "fresh Jupyter kernel",
+    "python": "3.12.3 (main, Aug 31 2026, 10:18:26) [GCC 13.3.0]",
+    "executable": "/scratch3/workspace/roohie_umass_edu-flowml-ghia-highre-20261115/pinn-venv/bin/python",
+    "seconds": 14.798868536017835,
+    "code_sha256": "b999c58ad5dcc20290800ae2204480472240cb959304a65d17f24d4c30a6f8dc",
+    "notebook_sha256": "fd99c021f71951c7539f10cace40c049e35eac0926bf8446ccdc2571073c65d1",
+    "code_cells": 14,
+    "image_outputs": 8,
+    "status": "passed"
   },
   {
     "notebook": "instructor/week22/W22_Solutions.ipynb",
-    "seconds": 168.9229619000107,
-    "code_cells": 13
+    "method": "fresh Jupyter kernel",
+    "python": "3.12.3 (main, Aug 31 2026, 10:18:26) [GCC 13.3.0]",
+    "executable": "/scratch3/workspace/roohie_umass_edu-flowml-ghia-highre-20261115/pinn-venv/bin/python",
+    "seconds": 13.193293377291411,
+    "code_sha256": "6a5ad17a3860f3c3f5d6bfc82f77c5f98e6953036e5fbfe844d6a295735eee65",
+    "notebook_sha256": "16e5cba5dba247180d15b49025e7db717f41bcfd0394911ecb1b2e76f07ba391",
+    "code_cells": 14,
+    "image_outputs": 7,
+    "status": "passed"
+  },
+  {
+    "notebook": "notebooks/week17/W17_CFD_Transformer.ipynb",
+    "method": "fresh Jupyter kernel",
+    "python": "3.12.3 (main, Aug 31 2026, 10:18:26) [GCC 13.3.0]",
+    "executable": "/scratch3/workspace/roohie_umass_edu-flowml-ghia-highre-20261115/pinn-venv/bin/python",
+    "seconds": 9.35709703201428,
+    "code_sha256": "9af6cd2986992a49a89bdb2937501c57080938558f44c11106036648fb01aaff",
+    "notebook_sha256": "98e5890015a83bd3af87652c6018d17d9e07e273976be1dbbc967514bd2a5393",
+    "code_cells": 15,
+    "image_outputs": 4,
+    "status": "passed"
+  },
+  {
+    "notebook": "notebooks/week18/W18_CFD_Transformer.ipynb",
+    "method": "fresh Jupyter kernel",
+    "python": "3.12.3 (main, Aug 31 2026, 10:18:26) [GCC 13.3.0]",
+    "executable": "/scratch3/workspace/roohie_umass_edu-flowml-ghia-highre-20261115/pinn-venv/bin/python",
+    "seconds": 22.312575404008385,
+    "code_sha256": "fd64ab324f8ee5cfae202849bf471784d92368b2d2000971b81ba8dca440efc3",
+    "notebook_sha256": "090056d7a4fdb5882b6876038a6badd0240acebf0dae5d86f66bd7c79e7db573",
+    "code_cells": 14,
+    "image_outputs": 2,
+    "status": "passed"
+  },
+  {
+    "notebook": "notebooks/week19/W19_CFD_Transformer.ipynb",
+    "method": "fresh Jupyter kernel",
+    "python": "3.12.3 (main, Aug 31 2026, 10:18:26) [GCC 13.3.0]",
+    "executable": "/scratch3/workspace/roohie_umass_edu-flowml-ghia-highre-20261115/pinn-venv/bin/python",
+    "seconds": 10.169465807033703,
+    "code_sha256": "9507d28ade33acef7a16089f14c2d85f8759b3cd6ca77dbf1cae6c0c8a144303",
+    "notebook_sha256": "1ee0bededcfd403b3b5fe80433d1451b41e613b76cd9b141b337320d2bca0079",
+    "code_cells": 14,
+    "image_outputs": 5,
+    "status": "passed"
+  },
+  {
+    "notebook": "notebooks/week20/W20_CFD_Transformer.ipynb",
+    "method": "fresh Jupyter kernel",
+    "python": "3.12.3 (main, Aug 31 2026, 10:18:26) [GCC 13.3.0]",
+    "executable": "/scratch3/workspace/roohie_umass_edu-flowml-ghia-highre-20261115/pinn-venv/bin/python",
+    "seconds": 14.74490143591538,
+    "code_sha256": "63a1bbda3534f4be478e029001eecabc8fd60cfd5407f170dd9e174577152388",
+    "notebook_sha256": "41a2f4ea026661c1eb383e6f5a3330ee0b4665b815845a3f972b7f210982a168",
+    "code_cells": 15,
+    "image_outputs": 8,
+    "status": "passed"
   }
 ]

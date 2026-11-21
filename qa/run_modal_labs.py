@@ -25,14 +25,24 @@ def figures(out,cases,forecast,pred,sensors,examples):
     c=cases[110];truth=c['omega'];extent=[c['x'][0],c['x'][-1],c['y'][0],c['y'][-1]]
     chosen=forecast['selected_dmd'];sindy=forecast['selected_sindy']
     methods=[chosen,'MLP-r8']+([sindy] if sindy in pred else [])
-    fig,axes=plt.subplots(len(methods)+1,1,figsize=(11,2.4*(len(methods)+1)),layout='compressed')
-    vmax=float(np.max(abs(truth[-1])))
-    for ax,name,field in zip(axes,['LBM reference']+methods,[truth[-1]]+[pred[n][-1] for n in methods]):
-        im=ax.contourf(c['x'],c['y'],field,levels=np.linspace(-vmax,vmax,33),cmap='RdBu_r',extend='both')
-        ax.set_aspect('equal')
-        ax.set(title=name,ylabel='y/D',xlabel='x/D')
-    fig.colorbar(im,ax=axes.tolist(),label='Vorticity, omega D/U',shrink=.8)
-    fig.suptitle('Real LBM wake: final autonomous forecast (no test reset)')
+    from matplotlib.lines import Line2D
+    from matplotlib.patches import Patch
+    import matplotlib.patheffects as effects
+    vmax=max(float(np.max(abs(truth[-1]))),*(float(np.max(abs(pred[n][-1]))) for n in methods))
+    fill_levels=np.linspace(-vmax,vmax,33)
+    line_levels=np.linspace(-vmax,vmax,9)[1:-1]
+    styles=[('#101010','--'),('#ffffff','-.'),('#8e0078',':')]
+    fig,axes=plt.subplots(len(methods),1,figsize=(11,2.5*len(methods)+.6),layout='compressed',squeeze=False)
+    for ax,name,(color,pattern) in zip(axes[:,0],methods,styles):
+        im=ax.contourf(c['x'],c['y'],truth[-1],levels=fill_levels,cmap='turbo')
+        ax.contour(c['x'],c['y'],truth[-1],levels=line_levels,colors='black',linewidths=.45)
+        lines=ax.contour(c['x'],c['y'],pred[name][-1],levels=line_levels,colors=color,linestyles=pattern,linewidths=1.1)
+        lines.set_path_effects([effects.Stroke(linewidth=2.0,foreground='white' if color!='#ffffff' else 'black'),effects.Normal()])
+        handles=[Patch(facecolor=plt.get_cmap('turbo')(.55),label='LBM reference'),Line2D([0],[0],color=color,ls=pattern,label=name,path_effects=[effects.Stroke(linewidth=2,foreground='black' if color=='#ffffff' else 'white'),effects.Normal()])]
+        ax.legend(handles=handles,loc='lower center',bbox_to_anchor=(.5,1.01),ncol=2,frameon=False)
+        ax.set(aspect='equal',ylabel='y/D',xlabel='x/D')
+    fig.colorbar(im,ax=axes[:,0].tolist(),label=r'$\omega_z D/U_\infty$',shrink=.85)
+    fig.suptitle(f'Re = 110; final autonomous forecast, tU/D = {c["t"][-1]:.3f}; matched contour levels')
     fig.savefig(out/'forecast_fields.png');plt.close(fig)
     fig,axes=plt.subplots(1,2,figsize=(12,4),layout='constrained')
     for name in methods+['persistence','POD-r2-oracle']:
@@ -40,24 +50,27 @@ def figures(out,cases,forecast,pred,sensors,examples):
         axes[0].plot(c['t'][160:]-c['t'][159],100*error,label=name)
     axes[0].axvline(c['t'][210]-c['t'][159],color='.4',ls='--',label='Test begins')
     axes[0].set(xlabel='Forecast horizon tU/D',ylabel='Frame relative L2 (%)',title='Validation then untouched test continuation')
-    axes[0].legend(fontsize=8)
+    axes[0].legend(fontsize=8,loc='upper center',bbox_to_anchor=(.5,-.2),ncol=3,frameon=False)
     theta=np.linspace(0,2*np.pi,200);axes[1].plot(np.cos(theta),np.sin(theta),'--',color='.6')
     modes=forecast['methods'][chosen]['modes'];axes[1].scatter([m['real'] for m in modes],[m['imag'] for m in modes])
     axes[1].set(xlabel='Real(lambda)',ylabel='Imag(lambda)',title=chosen+' eigenvalues',aspect='equal')
     fig.savefig(out/'forecast_audit.png');plt.close(fig)
     c=cases[105];budget=sensors['selected_budget'];truth=c['v'];estimate=examples[budget];ids=np.array(sensors['positions'][f'QR-{budget}']);iy,ix=np.unravel_index(ids,truth.shape[1:])
-    vmax=float(np.max(abs(truth[-1])));err=abs(estimate[-1]-truth[-1])
-    fig,axes=plt.subplots(3,1,figsize=(11,7),layout='compressed')
-    for ax,name,field in zip(axes[:2],['Unseen-Re105 LBM reference',f'QR + D-optimal reconstruction: {budget} sensors'],[truth[-1],estimate[-1]]):
-        im=ax.contourf(c['x'],c['y'],field,levels=np.linspace(-vmax,vmax,33),cmap='RdBu_r',extend='both')
-        ax.set_aspect('equal')
-        ax.scatter(c['x'][ix],c['y'][iy],s=18,facecolors='none',edgecolors='black',linewidths=.7)
-        ax.set(title=name,ylabel='y/D',xlabel='x/D')
-    fig.colorbar(im,ax=axes[:2].tolist(),label='v/U')
-    im=axes[2].contourf(c['x'],c['y'],err,levels=np.linspace(0,max(float(err.max()),1e-12),25),cmap='magma')
-    axes[2].set_aspect('equal')
-    axes[2].set(title='Absolute reconstruction error (seed 10, declared example)',xlabel='x/D',ylabel='y/D')
-    fig.colorbar(im,ax=axes[2],label='Absolute error in v/U')
+    vmax=max(float(np.max(abs(truth[-1]))),float(np.max(abs(estimate[-1]))));err=abs(estimate[-1]-truth[-1])
+    fig,axes=plt.subplots(2,1,figsize=(11,6.0),layout='compressed')
+    levels=np.linspace(-vmax,vmax,9)[1:-1]
+    im=axes[0].contourf(c['x'],c['y'],truth[-1],levels=np.linspace(-vmax,vmax,33),cmap='turbo')
+    axes[0].contour(c['x'],c['y'],truth[-1],levels=levels,colors='black',linewidths=.45)
+    lines=axes[0].contour(c['x'],c['y'],estimate[-1],levels=levels,colors='white',linestyles='--',linewidths=1.1)
+    lines.set_path_effects([effects.Stroke(linewidth=2,foreground='black'),effects.Normal()])
+    axes[0].scatter(c['x'][ix],c['y'][iy],s=18,facecolors='none',edgecolors='black',linewidths=.7)
+    axes[0].set(aspect='equal',ylabel='y/D',xlabel='x/D')
+    axes[0].legend(handles=[Patch(facecolor=plt.get_cmap('turbo')(.55),label='LBM reference'),Line2D([0],[0],color='black',ls='--',label=f'QR + D-optimal ({budget} sensors)')],loc='lower center',bbox_to_anchor=(.5,1.01),ncol=2,frameon=False)
+    fig.colorbar(im,ax=axes[0],label='v/U')
+    im=axes[1].contourf(c['x'],c['y'],err,levels=np.linspace(0,max(float(err.max()),1e-12),25),cmap='turbo')
+    axes[1].set(aspect='equal',title='Absolute reconstruction error; seed 10',xlabel='x/D',ylabel='y/D')
+    fig.colorbar(im,ax=axes[1],label='Absolute error in v/U')
+    fig.suptitle('Re = 105; instantaneous reconstruction; matched physical contour levels')
     fig.savefig(out/'sensor_fields.png');plt.close(fig)
     fig,ax=plt.subplots(figsize=(7,4),layout='constrained')
     for method,color in [('QR','tab:blue'),('random','tab:orange')]:
@@ -68,7 +81,7 @@ def figures(out,cases,forecast,pred,sensors,examples):
         ax.plot([8,16,32],means,'o-',color=color,label=method+' (mean of 5 seeds)')
     oracle=next(r['relative_l2'] for r in sensors['records'] if r['split']=='test' and r['method']=='POD-oracle')
     ax.axhline(100*oracle,ls='--',color='black',label='Full-field POD oracle, not a sensor method')
-    ax.set(xlabel='Point velocity sensor count',ylabel='Relative L2 (%)',title='Re105 test; sensor budget selected on Re100',yscale='log',xticks=[8,16,32]);ax.legend(fontsize=8)
+    ax.set(xlabel='Point velocity sensor count',ylabel='Relative L2 (%)',title='Re105 test; sensor budget selected on Re100',yscale='log',xticks=[8,16,32]);ax.legend(fontsize=8,loc='upper center',bbox_to_anchor=(.5,-.18),frameon=False)
     fig.savefig(out/'sensor_audit.png');plt.close(fig)
 
 

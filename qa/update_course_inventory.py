@@ -197,7 +197,7 @@ def main() -> int:
         print('\n'.join(errors),file=sys.stderr);return 1
     stale=[p for p,body in out.items() if not p.exists() or p.read_text(encoding='utf-8')!=body]
     if args.write:
-        for path in stale:path.write_text(out[path],encoding='utf-8')
+        for path in stale:path.write_text(out[path],encoding='utf-8',newline='\n')
         print(f'Updated {len(stale)} generated files/blocks.')
     elif stale:
         print('Stale generated files: '+', '.join(str(p.relative_to(ROOT)) for p in stale),file=sys.stderr)

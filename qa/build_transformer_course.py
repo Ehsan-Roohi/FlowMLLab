@@ -31,32 +31,14 @@ class CourseKernelManager(KernelManager):
         command=super().format_kernel_cmd(extra_arguments)
         command[0]=sys.executable
         return command
-SETUP='''from pathlib import Path
-import sys, tempfile, json
-ROOT=next((p for p in [Path.cwd(),*Path.cwd().parents] if (p/'flowmllab/transformer_course.py').exists()),None)
-if ROOT is None:
-    raise RuntimeError('Extract the supplied course bundle and start Jupyter in its root; see docs/TRANSFORMER_COURSE.md for Colab upload setup.')
-sys.path.insert(0,str(ROOT))
-import numpy as np
-import pandas as pd
-import torch
-import matplotlib.pyplot as plt
-from IPython.display import display
-from flowmllab import transformer_course as lab
-lab.seed_all(17)
-cases,input_manifest=lab.load_data(ROOT)
-EVIDENCE=ROOT/'results/transformer_course_v3'
-# Any optional experiment must write into this disposable workspace.
-workspace=tempfile.TemporaryDirectory(prefix='flowmllab-student-')
-RUN_OUTPUT=Path(workspace.name)
-task_status={}
-print('Loaded checksummed simulated wake fields. No retained files will be rewritten.')
-'''
+SETUP='from pathlib import Path\nimport sys, os, subprocess, importlib.util\nROOT = next((p for p in [Path.cwd(), *Path.cwd().parents]\n                   if (p / \'flowmllab/transformer_course.py\').exists()), None)\ntry:\n    _in_colab = importlib.util.find_spec("google.colab") is not None\nexcept (ModuleNotFoundError, ValueError):\n    _in_colab = False\nif _in_colab:\n    _course_target = ROOT if ROOT is not None else Path("/content/FlowMLLab")\n    if not _course_target.exists():\n        subprocess.run(["git", "clone", "--depth", "1", "--filter=blob:none",\n                        "--sparse", "https://github.com/Ehsan-Roohi/FlowMLLab.git",\n                        str(_course_target)], check=True)\n    _course_complete = all((_course_target / p).exists() for p in [\'flowmllab/transformer_course.py\', \'flowmllab\', \'course/lessons\', \'data/modal_labs\', \'results/transformer_course_v3\', \'results/transformer_sensor_ablation\', \'notebooks/week07_3\', \'notebooks/week07_4\', \'docs\', \'flowmllab/late_teaching_plots.py\'])\n    if not _course_complete and (_course_target / ".git").exists():\n        _sparse = subprocess.run(["git", "-C", str(_course_target), "config", "--bool",\n                                  "core.sparseCheckout"], capture_output=True, text=True, check=False)\n        if _sparse.stdout.strip() != "true":\n            raise RuntimeError("This full checkout is missing required lesson files; use a complete course checkout or a new Colab runtime.")\n        # Add this lesson\'s dependencies; keep any previous sparse selection.\n        subprocess.run(["git", "-C", str(_course_target), "sparse-checkout",\n                        "add", *[\'flowmllab\', \'course/lessons\', \'data/modal_labs\', \'results/transformer_course_v3\', \'results/transformer_sensor_ablation\', \'notebooks/week07_3\', \'notebooks/week07_4\', \'docs\']], check=True)\n    elif not _course_complete:\n        raise RuntimeError("The extracted course folder is incomplete for this lesson. Use the complete portable bundle or a new Colab runtime.")\n    ROOT = _course_target\nif ROOT is None or not all((ROOT / p).exists() for p in [\'flowmllab/transformer_course.py\', \'flowmllab\', \'course/lessons\', \'data/modal_labs\', \'results/transformer_course_v3\', \'results/transformer_sensor_ablation\', \'notebooks/week07_3\', \'notebooks/week07_4\', \'docs\', \'flowmllab/late_teaching_plots.py\']):\n    raise RuntimeError("Open this notebook in a FlowMLLab checkout, or use its Open in Colab link and run this setup cell first.")\nROOT = ROOT.resolve()\nif str(ROOT) not in sys.path:\n    sys.path.insert(0, str(ROOT))\nprint("Course checkout:", ROOT)\n\nimport tempfile, json\nimport numpy as np\nimport pandas as pd\nimport torch\nimport matplotlib.pyplot as plt\nfrom IPython.display import display\nfrom flowmllab import transformer_course as lab\nlab.seed_all(17)\ncases,input_manifest=lab.load_data(ROOT)\nEVIDENCE=ROOT/"results/transformer_course_v3"\n_student_parent=ROOT/"student_runs/transformer_labs"\n_student_parent.mkdir(parents=True,exist_ok=True)\nworkspace=tempfile.TemporaryDirectory(prefix="classroom-",dir=_student_parent)\nRUN_OUTPUT=Path(workspace.name)\ntask_status={}\nprint("Loaded checksummed native wake fields. Optional student work stays in:",RUN_OUTPUT)\n'
 
 
 def notebook(spec,solutions=False):
     cells=[nbf.v4.new_markdown_cell(f'# Week {spec["week"]}: {spec["title"]}\n\n{spec["question"]}\n\n**Prerequisites:** {spec["prerequisites"]}\n\nAllow 120 minutes for the guided lab; estimate 3–5 hours total with reading and written analysis. This planning estimate has not been measured in a student pilot. '+('Instructor solution edition.' if solutions else 'Student edition: worked examples run immediately; set RUN_EXERCISES=True after completing the four functions. Incomplete tasks are reported, never counted as passes.')),
            nbf.v4.new_code_cell(SETUP+f'\ntask_status={{i:None for i in range(1,{len(spec["tasks"])+1})}}\n'),nbf.v4.new_code_cell('RUN_EXERCISES='+str(solutions))]
+    if spec.get('reading_map'):
+        cells.insert(1,nbf.v4.new_markdown_cell('## Laboratory route and reading map\n\n'+spec['reading_map']))
     for demo in spec['demos']:
         cells += [nbf.v4.new_markdown_cell('## '+demo['title']+'\n\n'+demo['prose']),nbf.v4.new_code_cell(demo['code'])]
     for i,task in enumerate(spec['tasks'],1):
@@ -85,6 +67,12 @@ def equation(text):
     return pic
 
 
+def paragraph_text(text):
+    """Remove inline Markdown delimiters without erasing Python exponentiation."""
+    escaped=html.escape(text).replace('`','')
+    return re.sub(r'(?<!\w)\*\*(?=\S)(.+?)(?<=\S)\*\*(?!\w)',r'\1',escaped)
+
+
 def render_pdf(source,destination,figure=None):
     if __package__:
         from .lecture_typography import register_legacy_reportlab_aliases, configure_matplotlib, black_paragraph_styles
@@ -100,15 +88,34 @@ def render_pdf(source,destination,figure=None):
     styles['Heading2'].textColor=colors.black;styles['Heading2'].spaceBefore=15;styles['Heading2'].spaceAfter=8
     for heading in ('Heading1','Heading2','Heading3'):styles[heading].keepWithNext=True
     story=[];lines=source.read_text(encoding='utf-8').splitlines();i=0
+    pending_figure_heading=[]
     def para(s,style='BodyCourse'):
-        s=html.escape(s).replace('**','').replace('`','')
+        s=paragraph_text(s)
         return Paragraph(s,styles[style])
     while i<len(lines):
         line=lines[i].strip()
         if not line:i+=1;continue
+        if line.startswith('<!--'):i+=1;continue
         if line.startswith('# '):story.append(para(line[2:],'Heading1'));story.append(Spacer(1,14));i+=1;continue
         if line.startswith('### '):story.append(para(line[4:],'Heading3'));i+=1;continue
-        if line.startswith('## '):story.append(para(line[3:],'Heading2'));i+=1;continue
+        if line.startswith('## '):
+            heading=para(line[3:],'Heading2')
+            following=next((s.strip() for s in lines[i+1:] if s.strip()),'')
+            if following.startswith('!['):pending_figure_heading=[heading]
+            else:story.append(heading)
+            i+=1;continue
+        if line.startswith('!['):
+            match=re.fullmatch(r'!\[(.*?)\]\(([^)]+)\)',line)
+            if match is None:raise ValueError(f"Unsupported figure syntax: {line}")
+            caption,relative=match.groups()
+            path=(source.parent/relative).resolve()
+            if not path.is_file():raise FileNotFoundError(path)
+            pic=Image(str(path))
+            factor=min(475/pic.imageWidth,360/pic.imageHeight)
+            pic.drawWidth=pic.imageWidth*factor;pic.drawHeight=pic.imageHeight*factor
+            story.append(KeepTogether([*pending_figure_heading,pic,Spacer(1,6),para(caption),Spacer(1,10)]))
+            pending_figure_heading=[]
+            i+=1;continue
         if line.startswith('$$'):
             story.append(KeepTogether([Spacer(1,6),equation(line.strip('$ ')),Spacer(1,10)]));i+=1;continue
         if line.startswith('|'):
@@ -120,13 +127,17 @@ def render_pdf(source,destination,figure=None):
             t=Table(table,colWidths=[475/len(table[0])]*len(table[0]),repeatRows=1,hAlign='LEFT')
             t.setStyle(TableStyle([('BACKGROUND',(0,0),(-1,0),colors.HexColor('#e2eef3')),('VALIGN',(0,0),(-1,-1),'TOP'),('GRID',(0,0),(-1,-1),.35,colors.HexColor('#b5c6d0')),('LEFTPADDING',(0,0),(-1,-1),7),('RIGHTPADDING',(0,0),(-1,-1),7),('TOPPADDING',(0,0),(-1,-1),7),('BOTTOMPADDING',(0,0),(-1,-1),7)]));story.extend([t,Spacer(1,12)]);continue
         text=[line];i+=1
-        while i<len(lines) and lines[i].strip() and not lines[i].startswith(('#','|','$$')):
+        while i<len(lines) and lines[i].strip() and not lines[i].startswith(('#','|','$$','![','<!--')):
             text.append(lines[i].strip());i+=1
         story.append(para(' '.join(text)))
     if figure and figure.exists():
-        pic=Image(str(figure));factor=min(475/pic.imageWidth,300/pic.imageHeight);pic.drawWidth=pic.imageWidth*factor;pic.drawHeight=pic.imageHeight*factor
+        max_height=570 if figure.name=='week22_transfer_lecture.png' else 300
+        pic=Image(str(figure));factor=min(475/pic.imageWidth,max_height/pic.imageHeight);pic.drawWidth=pic.imageWidth*factor;pic.drawHeight=pic.imageHeight*factor
+        evidence_caption=('Curves join seed means; whiskers span the full minimum-to-maximum seed range. Black curves show the declared source/target POD representation floors. Step-zero selection flags remain in the notebook table. These are retained protocol results, not new training.'
+            if figure.name=='week22_transfer_lecture.png' else
+            'This figure is generated from the retained protocol. Use the notebook to inspect all seeds and recompute the plotted quantities. The earlier lecture sections specify what the diagnostic can and cannot establish.')
         story.append(KeepTogether([para('Executed evidence and interpretation','Heading2'),pic,
-            para('This figure is generated from the retained protocol. Use the notebook to inspect all seeds and recompute the plotted quantities. The earlier lecture sections specify what the diagnostic can and cannot establish.')]))
+            para(evidence_caption)]))
     def page(canvas,doc):
         canvas.saveState();canvas.setStrokeColor(colors.HexColor('#0e6572'));canvas.line(48,799,547,799)
         canvas.setFont('Helvetica',8);canvas.setFillColor(colors.black);canvas.drawString(48,809,'FLOWMLLAB  /  TRANSFORMERS AND FLUID LEARNING')
@@ -150,9 +161,9 @@ def main(argv=None):
     protected=[*list((ROOT/'course/lessons').glob('*.json')),*list((ROOT/'lectures/source').glob('week*_transformer_course.md')),*list((ROOT/'results/transformer_course_v3').glob('*'))]
     before={str(p):hashlib.sha256(p.read_bytes()).hexdigest() for p in protected if p.is_file()}
     execution_log=args.output/'notebook_execution.json'
-    records=json.loads(execution_log.read_text()) if execution_log.exists() and args.weeks!=list(range(17,23)) else []
+    records=json.loads(execution_log.read_text(encoding='utf-8')) if execution_log.exists() and args.weeks!=list(range(17,23)) else []
     for week in args.weeks:
-        spec=json.loads((ROOT/f'course/lessons/week{week}.json').read_text())
+        spec=json.loads((ROOT/f'course/lessons/week{week}.json').read_text(encoding='utf-8'))
         for solutions in (False,True):
             relative=Path(f'instructor/week{week}/W{week}_Solutions.ipynb' if solutions else f'notebooks/week{week}/W{week}_CFD_Transformer.ipynb')
             nb=notebook(spec,solutions)
@@ -170,14 +181,27 @@ def main(argv=None):
                 records=[r for r in records if r['notebook']!=relative.as_posix()]
                 records.append({'notebook':relative.as_posix(),'seconds':seconds,'code_cells':sum(c.cell_type=='code' for c in nb.cells)})
                 print(relative,round(seconds,2),'s',flush=True)
-            destination=args.output/relative;destination.parent.mkdir(parents=True,exist_ok=True);nbf.write(nb,destination)
-            if args.execute:execution_log.write_text(json.dumps(records,indent=2)+'\n',encoding='utf-8')
+            destination=args.output/relative;destination.parent.mkdir(parents=True,exist_ok=True);destination.write_text(nbf.writes(nb),encoding='utf-8',newline='\n')
+            if args.execute:execution_log.write_text(json.dumps(records,indent=2)+'\n',encoding='utf-8',newline='\n')
         if not args.check and not args.notebooks_only:
-            render_pdf(ROOT/f'lectures/source/week{week}_transformer_course.md',args.output/f'lectures/week{week}_cfd_transformer.pdf',ROOT/f'results/transformer_course_v3/week{week}.png')
+            figure = ROOT/f'results/transformer_course_v3/week{week}.png'
+            # The physical demonstrations already cover the older 18/19 summaries.
+            # Keep historical evidence files; display the current full-range curves.
+            if week in (18, 19):
+                figure = None
+            elif week == 21:
+                figure = ROOT/'results/late_course_teaching/week21_full_rollout_error_01.png'
+            elif week == 22:
+                if __package__:
+                    from .plot_week22_lecture import build as build_transfer_lecture
+                else:
+                    from plot_week22_lecture import build as build_transfer_lecture
+                figure = build_transfer_lecture(ROOT)
+            render_pdf(ROOT/f'lectures/source/week{week}_transformer_course.md',args.output/f'lectures/week{week}_cfd_transformer.pdf',figure)
     after={str(p):hashlib.sha256(p.read_bytes()).hexdigest() for p in protected if p.is_file()}
     assert before==after,'Builder modified canonical source or retained evidence'
     if records:
-        (args.output/'notebook_execution.json').write_text(json.dumps(records,indent=2)+'\n',encoding='utf-8')
+        (args.output/'notebook_execution.json').write_text(json.dumps(records,indent=2)+'\n',encoding='utf-8',newline='\n')
     print('Canonical sources and retained evidence preserved.',flush=True)
 
 if __name__=='__main__':main()

@@ -13,6 +13,11 @@
       "title": "QR/D-optimal sensors under matched noise",
       "prose": "Fit the sensing basis on source training data, then freeze locations. Compare 16 selected sensors against a 16-sensor geometry lattice under the same noise realization. This diagnostic builds directly on Week 5.",
       "code": "qr_ids=lab.qr_sensors(representation,16)\ngy,gx=np.meshgrid(np.linspace(2,29,4,dtype=int),np.linspace(2,75,4,dtype=int),indexing='ij')\ngrid_ids=np.ravel_multi_index((gy.ravel(),gx.ravel()),field.shape)\nrng=np.random.default_rng(1903);noise=rng.normal(size=16)*.01*cases[90]['v'][:160].std()\nfor name,sensors in [('QR/D-opt',qr_ids),('lattice',grid_ids)]:\n    observed=field.ravel()[sensors]+noise\n    coefficient=np.linalg.lstsq(representation.modes[sensors],observed-representation.mean[sensors],rcond=None)[0]\n    reconstruction=coefficient@representation.modes.T+representation.mean\n    print(name,'condition',np.linalg.cond(representation.modes[sensors]),'relative error',np.linalg.norm(reconstruction-field.ravel())/np.linalg.norm(field))"
+    },
+    {
+      "title": "Inspect both sensor reconstructions in physical space",
+      "prose": "A printed condition number does not reveal the lost wake structures. Display the native source-POD projection and both noisy gappy reconstructions against the same CFD frame. All errors retain their signs and full extrema.",
+      "code": "from flowmllab.late_teaching_plots import field_profiles\nfield=cases[110][\"v\"][100]\nreconstructions={\"Source-POD projection\":reduced}\nfor name,sensors in [(\"QR/D-optimal\",qr_ids),(\"Lattice\",grid_ids)]:\n    observed=field.ravel()[sensors]+noise\n    coefficient=np.linalg.lstsq(representation.modes[sensors],\n        observed-representation.mean[sensors],rcond=None)[0]\n    reconstructions[name]=(coefficient@representation.modes.T+representation.mean).reshape(field.shape)\nfigures,diagnostics=field_profiles(cases[110][\"x\"],cases[110][\"y\"],field,reconstructions,\n    quantity=\"v/U\",case=f\"Native wake Re=110, frame100; tU/D={cases[110]['t'][100]:.3f}\",\n    cut_y=.5,output=RUN_OUTPUT,stem=\"week19_sensing\")\ndisplay(pd.DataFrame(diagnostics[\"metrics\"]))\nplt.show()\n"
     }
   ],
   "tasks": [
@@ -61,5 +66,6 @@
     "misconception": "Adding POD modes always improves a noisy sparse-sensor reconstruction.",
     "partial_credit": "An accurate numerical observation without its split, representation, or causal limitation earns at most half of interpretation points.",
     "human_validation": "Instructor marking and a timed student pilot are still required; automated checks establish interface/behavior only."
-  }
+  },
+  "reading_map": "| Notebook stage | Frozen information | Physical output |\n|---|---|---|\n| Patching | One Re110 v/U frame | Exact inverse reshaping; no representation loss from patching alone |\n| Source POD | Re90 training frames, rank eight | Reconstructed native field and its representation floor |\n| QR versus lattice | Sixteen sensor locations, one declared noise realization | Both reconstructed wakes, shared-scale signed errors and the same native-row profiles |\n| Tasks 1–4 | Your patch inversion, projection error and gappy solve | Identify representation error separately from observation/conditioning error |\n\nUse the same POD basis, target frame, sensor count and noise amplitude when comparing layouts. The two layouts observe different physical coordinates; the numerical noise vector is paired by sensor order and is only one realization. Repeat independently seeded noise realizations before making a statistical statement. Report the actual x/D,y/D positions and condition number. A lower residual at sensor locations need not mean a better field away from them."
 }

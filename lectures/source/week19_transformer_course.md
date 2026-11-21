@@ -66,6 +66,16 @@ Use the existing Week 5 modal laboratory and data contract for the course's esta
 
 Week 20 keeps this information contract visible while adding learned models. A Transformer is tested where a set representation has an identifiable structural use: observations can be missing, and coordinates must remain attached to their values.
 
+<!-- physical-laboratory:start -->
+
+## Read the physical diagnostic
+
+![Re=110, frame 100: native v/U reference and QR/D-optimal gappy reconstruction with signed error. The source POD basis was fitted to Re=90 training frames; the comparison uses the same declared observation-noise realization.](../../results/late_course_teaching/week19_reconstruction_02.png)
+
+![The same native-row profiles compare the source-POD representation control, QR/D-optimal reconstruction and lattice reconstruction. Use signed differences to separate missing representation from poorly conditioned sensing.](../../results/late_course_teaching/week19_reconstruction_04.png)
+
+<!-- physical-laboratory:end -->
+
 ## Printable laboratory worksheet
 
 ### Task 1: Invert patching
@@ -107,3 +117,14 @@ Misconception to reject: “Adding POD modes always improves a noisy sparse-sens
 
 
 Timing estimate: a 120-minute guided lab and roughly 3–5 hours including preparation and written analysis. This is an editorial estimate; a timed student pilot remains open.
+
+## Laboratory route: from inputs to physical conclusions
+
+| Notebook stage | Frozen information | Physical output |
+|---|---|---|
+| Patching | One Re110 v/U frame | Exact inverse reshaping; no representation loss from patching alone |
+| Source POD | Re90 training frames, rank eight | Reconstructed native field and its representation floor |
+| QR versus lattice | Sixteen sensor locations, one declared noise realization | Both reconstructed wakes, shared-scale signed errors and the same native-row profiles |
+| Tasks 1–4 | Your patch inversion, projection error and gappy solve | Identify representation error separately from observation/conditioning error |
+
+Use the same POD basis, target frame, sensor count and noise amplitude when comparing layouts. The two layouts observe different physical coordinates; the numerical noise vector is paired by sensor order and is only one realization. Repeat independently seeded noise realizations before making a statistical statement. Report the actual x/D,y/D positions and condition number. A lower residual at sensor locations need not mean a better field away from them.

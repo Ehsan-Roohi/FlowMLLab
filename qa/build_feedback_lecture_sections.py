@@ -14,7 +14,8 @@ from lecture_typography import register_reportlab
 TARGETS={
  'week01_1':['week01_1_ai_assisted_scientific_software'],
  'week02_1':['week02_1_probabilistic_uq'],
- 'week04_1':['week04_cavity_surrogates_deeponet'],
+ # The complete Week4 guide already integrates the ROM reading section.
+ # Its canonical builder is qa/build_week04_lab_guide.py.
  'week04_2':['week04_2_stokes_to_navier_stokes','week04_2_grid51_validation'],
  'week07':['week07_cylinder_lbm_neural_surrogate','week07_modal_forecasting'],
  'week07_1':['week07_1_hypersonic_rarefied_cylinder'],
@@ -44,6 +45,7 @@ def tex_body(md):
 
 def main():
     from reportlab.pdfgen import canvas
+    from qa.build_course_middle_lectures import refresh_lecture
     fonts=register_reportlab('FeedbackFooter')
     out=ROOT/'output/pdf/reading_audits';out.mkdir(parents=True,exist_ok=True)
     source=ROOT/'lectures/source/reading_audits';source.mkdir(parents=True,exist_ok=True)
@@ -86,9 +88,10 @@ would change if any one of those four changed, then check your prediction.
         appendix=PdfReader(out/f'{week}.pdf')
         for target in targets:
             path=ROOT/'lectures'/f'{target}.pdf'
-            writer=PdfWriter();base_count=0
+            writer=PdfWriter();base_count=0;base_metadata={}
             if path.exists():
                 base=PdfReader(path)
+                base_metadata=dict(base.metadata or {})
                 base_count=int(base.metadata.get('/FlowMLLabBasePages',len(base.pages)))
                 if base_count:writer.append(base,pages=(0,base_count),import_outline=True)
             for index,page in enumerate(appendix.pages):
@@ -102,6 +105,8 @@ would change if any one of those four changed, then check your prediction.
                 page.merge_page(PdfReader(overlay).pages[0])
                 writer.add_page(page)
             writer.add_outline_item('Reading the evidence and extending the experiment',base_count)
+            # Retain the topic-guide boundaries across repeated assembly.
+            writer.add_metadata(base_metadata)
             writer.add_metadata({'/Title':target.replace('_',' '),'/Author':'Ehsan Roohi',
                                  '/FlowMLLabBasePages':str(base_count),
                                  '/FlowMLLabTeachingSection':'reading_audits/'+week+'_section.tex'})
@@ -111,6 +116,15 @@ would change if any one of those four changed, then check your prediction.
             manifest[target]={'base_pages':base_count,'teaching_pages':len(appendix.pages),
                               'pages':base_count+len(appendix.pages),'section':f'lectures/source/reading_audits/{week}_section.tex',
                               'sha256':hashlib.sha256(path.read_bytes()).hexdigest()}
+            topic=refresh_lecture(path)
+            if topic:
+                manifest[target].update(base_pages=topic['retained_pages'],
+                    teaching_pages=topic['guide_pages'],pages=topic['pages'],sha256=topic['sha256'],
+                    teaching_page_numbers=list(range(1,topic['guide_pages']+1)),
+                    section='lectures/source/course_middle_guides.py',
+                    original_reading_section=f'lectures/source/reading_audits/{week}_section.tex',
+                    topic_guide=topic,reading_section_disposition=
+                    'Integrated into the topic-specific guide; generic appendix not duplicated.')
         print(week,'typeset and integrated',flush=True)
     (ROOT/'qa/feedback_lecture_manifest.json').write_text(json.dumps(manifest,indent=2)+'\n',encoding='utf-8')
 

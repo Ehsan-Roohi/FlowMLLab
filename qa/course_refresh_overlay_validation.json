@@ -1,0 +1,58 @@
+{
+  "scope": "Final shared overlays then topic repairs, replayed twice on isolated copies; no scientific code executed.",
+  "sources": {
+    "qa/notebook_review_updates.py": "ef8ed91536857efeb3e9d99e353c2c53eee5b087f7bea82fd8176836d1c4a9dc",
+    "qa/course_middle_notebook_updates.py": "22c5f208e8c151d7cdc3a59a20ebdff189c20e13efd572f20adb544230bb7203"
+  },
+  "results": [
+    {
+      "path": "notebooks/week07/W7_Lab2_Modal_Forecasting.ipynb",
+      "input_sha256": "3e90784a99f3869874e34fe618048f28c90e1168bdcc11326f9d3e7a4f2bc3d4",
+      "status": "pass",
+      "byte_idempotent": true,
+      "existing_code_and_outputs_unchanged": true
+    },
+    {
+      "path": "notebooks/week07_3/W7_3_Masked_Pretraining_Label_Efficiency.ipynb",
+      "input_sha256": "459165278888b6788ceaee304f49f1833f3c56a5851a2bf506ee998fdc53d460",
+      "status": "pass",
+      "byte_idempotent": true,
+      "existing_code_and_outputs_unchanged": true
+    },
+    {
+      "path": "notebooks/week07_4/W7_4_Diverse_Wake_Pretraining.ipynb",
+      "input_sha256": "3ef0c2fc6a02a6e50b7993ad728a3ae3fe84c5bf38a43dfbf861195d42b8c6c5",
+      "status": "pass",
+      "byte_idempotent": true,
+      "existing_code_and_outputs_unchanged": true
+    },
+    {
+      "path": "notebooks/week08/W8_Lab2_Gas_Dynamics_SciML_Evidence_Student.ipynb",
+      "input_sha256": "8d2629ae9a064973b1b87b346752d37b272ea6d62ac39f18d091c22edd14bdd5",
+      "status": "pass",
+      "byte_idempotent": true,
+      "existing_code_and_outputs_unchanged": true
+    },
+    {
+      "path": "notebooks/week09/W9_Lab3_Nozzle_Data_Alignment_Audit.ipynb",
+      "input_sha256": "69d5dafa80812b8fe29acb75de99f61bb5b524c27e2ded18a8d4f0fc3c6f3dca",
+      "status": "pass",
+      "byte_idempotent": true,
+      "existing_code_and_outputs_unchanged": true
+    },
+    {
+      "path": "notebooks/week10_1/W10_1_Collision_Map_Surrogate_Audit.ipynb",
+      "input_sha256": "fe859ef586bd6c8542f1f9f301585551f2e884bd031f7c19c53481b043be3dc6",
+      "status": "pass",
+      "byte_idempotent": true,
+      "existing_code_and_outputs_unchanged": true
+    },
+    {
+      "path": "notebooks/week14/W14_pyCALC_RANS_PINN_NN.ipynb",
+      "input_sha256": "78bbe17546ca239d216bd224d416a7a2549befde388d7b49890d4d2bdbf18949",
+      "status": "pass",
+      "byte_idempotent": true,
+      "existing_code_and_outputs_unchanged": true
+    }
+  ]
+}

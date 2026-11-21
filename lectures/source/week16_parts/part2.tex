@@ -51,9 +51,11 @@ The model is inviscid, so pressure drag is the relevant aerodynamic constraint. 
 \topic{7}{CFD workflow: Gmsh, SU2, extraction, and acceptance gates}
 The computational pipeline is
 \begin{equation}
- (a,b)\rightarrow \text{body profile}\rightarrow \text{Gmsh mesh}\rightarrow
- \text{SU2 Euler solve}\rightarrow \text{physical/numerical audit}\rightarrow
- \Cp(x,r/L)\text{ extraction}.
+ \begin{aligned}
+ (a,b)&\rightarrow \text{body profile}\rightarrow \text{Gmsh mesh}\\
+ &\rightarrow \text{SU2 Euler solve}\rightarrow \text{physical/numerical audit}\\
+ &\rightarrow \Cp(x,r/L)\text{ extraction}.
+ \end{aligned}
 \end{equation}
 Pressure signatures are extracted at $r/L=0.25$, $0.5$, and $0.75$; the primary design line is $r/L=0.5$.
 
@@ -67,7 +69,7 @@ For every clean label, acceptance requires finite positive pressure and density,
 \checkpoint{Why can a run have a very small algebraic residual and still be rejected physically?}
 
 \topic{8}{Independent verification with Taylor--Maccoll cone flow}
-Before trusting the teaching-body campaign, we ask whether the numerical method reproduces an independent supersonic solution. Axisymmetric conical flow provides a classical verification problem. An oblique shock turns the freestream toward the cone, and the post-shock flow between shock and surface is governed by the Taylor--Maccoll ordinary differential equations. The shock angle is adjusted until the polar velocity becomes tangent to the cone surface.
+Before trusting the teaching-body campaign, we ask whether the numerical method reproduces an independent supersonic solution. Axisymmetric conical flow provides a classical verification problem. An oblique shock turns the freestream toward the cone, and the post-shock flow between shock and surface is governed by the Taylor--Maccoll ordinary differential equations. The shock angle is adjusted until the flow velocity becomes tangent to the cone surface.
 With velocities normalized by maximum adiabatic speed, define $h=(\gamma-1)(1-v_r^2-v_\theta^2)/2$. The shooting system is
 \begin{align*}
 \frac{\dd v_r}{\dd\theta}&=v_\theta,\\

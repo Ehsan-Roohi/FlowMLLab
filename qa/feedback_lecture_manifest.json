@@ -13,13 +13,6 @@
     "section": "lectures/source/reading_audits/week02_1_section.tex",
     "sha256": "6b7ce96b5ff1ae6e89921716811fa70a100aa98d963ec8c5d3e7dbf79cd15a74"
   },
-  "week04_cavity_surrogates_deeponet": {
-    "base_pages": 10,
-    "teaching_pages": 1,
-    "pages": 11,
-    "section": "lectures/source/reading_audits/week04_1_section.tex",
-    "sha256": "b5ab7b7ea23a73cc59aad448739232e091ef043c843527645a31832a01545f57"
-  },
   "week04_2_stokes_to_navier_stokes": {
     "base_pages": 10,
     "teaching_pages": 1,
@@ -43,10 +36,24 @@
   },
   "week07_modal_forecasting": {
     "base_pages": 4,
-    "teaching_pages": 1,
-    "pages": 5,
-    "section": "lectures/source/reading_audits/week07_section.tex",
-    "sha256": "89eae3f64ab3b4ee47c3e78d155785c8283b781d2dd9be9d514c0bd098ae1c15"
+    "teaching_pages": 3,
+    "pages": 7,
+    "section": "lectures/source/course_middle_guides.py",
+    "sha256": "c7ddd8c8ee9b91f02ad0f985fb592190c4d369f6d7cda1da5de547e09b58e21e",
+    "original_reading_section": "lectures/source/reading_audits/week07_section.tex",
+    "teaching_page_numbers": [
+      1,
+      2,
+      3
+    ],
+    "reading_section_disposition": "Integrated into the topic-specific guide; generic appendix not duplicated.",
+    "topic_guide": {
+      "path": "lectures/week07_modal_forecasting.pdf",
+      "guide_pages": 3,
+      "retained_pages": 4,
+      "pages": 7,
+      "sha256": "c7ddd8c8ee9b91f02ad0f985fb592190c4d369f6d7cda1da5de547e09b58e21e"
+    }
   },
   "week07_1_hypersonic_rarefied_cylinder": {
     "base_pages": 16,
@@ -57,31 +64,73 @@
   },
   "week07_2_cylinder_state_estimation": {
     "base_pages": 4,
-    "teaching_pages": 1,
-    "pages": 5,
-    "section": "lectures/source/reading_audits/week07_2_section.tex",
-    "sha256": "93e37343f787147633ac0f83aa5abfac30353ca6e3474cfac8c05a6991c97722"
+    "teaching_pages": 3,
+    "pages": 7,
+    "section": "lectures/source/course_middle_guides.py",
+    "sha256": "4edfa844da8447b6b70e48191fe373ddc77dc3978080892cb3973ebe039d7941",
+    "original_reading_section": "lectures/source/reading_audits/week07_2_section.tex",
+    "teaching_page_numbers": [
+      1,
+      2,
+      3
+    ],
+    "reading_section_disposition": "Integrated into the topic-specific guide; generic appendix not duplicated.",
+    "topic_guide": {
+      "path": "lectures/week07_2_cylinder_state_estimation.pdf",
+      "guide_pages": 3,
+      "retained_pages": 4,
+      "pages": 7,
+      "sha256": "4edfa844da8447b6b70e48191fe373ddc77dc3978080892cb3973ebe039d7941"
+    }
   },
   "week07_3_masked_pretraining": {
     "base_pages": 6,
-    "teaching_pages": 1,
-    "pages": 7,
-    "section": "lectures/source/reading_audits/week07_3_section.tex",
-    "sha256": "66b4d2f7c750aacf0c631d51043475ec841cb58ace20b128b7b50f516b84909e"
+    "teaching_pages": 3,
+    "pages": 9,
+    "section": "lectures/source/course_middle_guides.py",
+    "sha256": "619149f35eff6953c7a10b9ce8efb58c38792df76af22aa548a70866168196bb",
+    "original_reading_section": "lectures/source/reading_audits/week07_3_section.tex",
+    "teaching_page_numbers": [
+      1,
+      2,
+      3
+    ],
+    "reading_section_disposition": "Integrated into the topic-specific guide; generic appendix not duplicated.",
+    "topic_guide": {
+      "path": "lectures/week07_3_masked_pretraining.pdf",
+      "guide_pages": 3,
+      "retained_pages": 6,
+      "pages": 9,
+      "sha256": "619149f35eff6953c7a10b9ce8efb58c38792df76af22aa548a70866168196bb"
+    }
   },
   "week07_4_diverse_wake_pretraining": {
     "base_pages": 4,
-    "teaching_pages": 1,
-    "pages": 5,
-    "section": "lectures/source/reading_audits/week07_4_section.tex",
-    "sha256": "d1e3fca7e6369e384e0b25af429995d26bf8441e53400ea783c4e240b55bdfe0"
+    "teaching_pages": 3,
+    "pages": 7,
+    "section": "lectures/source/course_middle_guides.py",
+    "sha256": "47cc5bf6f3a453e05867168fd83e92ef9b3c3a3eeda15841207fe82007cfc4e4",
+    "original_reading_section": "lectures/source/reading_audits/week07_4_section.tex",
+    "teaching_page_numbers": [
+      1,
+      2,
+      3
+    ],
+    "reading_section_disposition": "Integrated into the topic-specific guide; generic appendix not duplicated.",
+    "topic_guide": {
+      "path": "lectures/week07_4_diverse_wake_pretraining.pdf",
+      "guide_pages": 3,
+      "retained_pages": 4,
+      "pages": 7,
+      "sha256": "47cc5bf6f3a453e05867168fd83e92ef9b3c3a3eeda15841207fe82007cfc4e4"
+    }
   },
   "week08_gas_dynamics_sciml": {
     "base_pages": 12,
     "teaching_pages": 1,
     "pages": 13,
     "section": "lectures/source/reading_audits/week08_section.tex",
-    "sha256": "77df2c788cfc883a94733713986f443e1d480edd9c86e3bc3631421eb081e70c"
+    "sha256": "5ccef5a52d3e5f4855a4010759db6b45a5070231315f31ea4e104b58bb2b118e"
   },
   "week09_rarefied_deeponet_case_studies": {
     "base_pages": 18,
@@ -92,10 +141,24 @@
   },
   "week09_3_nozzle_data_alignment": {
     "base_pages": 2,
-    "teaching_pages": 1,
-    "pages": 3,
-    "section": "lectures/source/reading_audits/week09_section.tex",
-    "sha256": "c2caecee5c0d222e3b35a96ff84c6c31268a3047dec8bb064ff1695606dfd9f5"
+    "teaching_pages": 3,
+    "pages": 5,
+    "section": "lectures/source/course_middle_guides.py",
+    "sha256": "e954392fbe9ed4e6f9ec56f703c92b3d1f04b0772a9b7342cc5e4c83d41273fc",
+    "original_reading_section": "lectures/source/reading_audits/week09_section.tex",
+    "teaching_page_numbers": [
+      1,
+      2,
+      3
+    ],
+    "reading_section_disposition": "Integrated into the topic-specific guide; generic appendix not duplicated.",
+    "topic_guide": {
+      "path": "lectures/week09_3_nozzle_data_alignment.pdf",
+      "guide_pages": 3,
+      "retained_pages": 2,
+      "pages": 5,
+      "sha256": "e954392fbe9ed4e6f9ec56f703c92b3d1f04b0772a9b7342cc5e4c83d41273fc"
+    }
   },
   "week10_dsmc_data_driven_surrogates": {
     "base_pages": 13,
@@ -106,10 +169,27 @@
   },
   "week10_1_collision_map_audit": {
     "base_pages": 0,
-    "teaching_pages": 1,
-    "pages": 1,
-    "section": "lectures/source/reading_audits/week10_1_section.tex",
-    "sha256": "4f449637b4dfe2733141f011264d645526f065f13909b1fe5ba2c71512f2d945"
+    "teaching_pages": 6,
+    "pages": 6,
+    "section": "lectures/source/course_middle_guides.py",
+    "sha256": "c53e300a6940a4759cb68585b6212a8ac47f99f2cd46ff2d8400ae5df78a2ef5",
+    "original_reading_section": "lectures/source/reading_audits/week10_1_section.tex",
+    "teaching_page_numbers": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+    ],
+    "reading_section_disposition": "Integrated into the topic-specific guide; generic appendix not duplicated.",
+    "topic_guide": {
+      "path": "lectures/week10_1_collision_map_audit.pdf",
+      "guide_pages": 6,
+      "retained_pages": 0,
+      "pages": 6,
+      "sha256": "c53e300a6940a4759cb68585b6212a8ac47f99f2cd46ff2d8400ae5df78a2ef5"
+    }
   },
   "week11_shock_vortex_identification": {
     "base_pages": 16,

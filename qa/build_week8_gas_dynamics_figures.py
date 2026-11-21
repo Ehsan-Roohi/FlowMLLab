@@ -8,6 +8,8 @@ import json
 from pathlib import Path
 import sys
 
+import matplotlib
+matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
@@ -127,75 +129,30 @@ def build_physics_map() -> None:
 
 
 def build_evidence_overview() -> None:
-    primary = pd.read_csv(RESULTS / "primary_metrics.csv")
-    baselines = pd.read_csv(RESULTS / "baseline_comparison.csv")
-    edges = pd.read_csv(RESULTS / "range_generalization.csv")
-    dimensions = pd.read_csv(RESULTS / "high_dimensional_scaling.csv")
-    scattered = pd.read_csv(RESULTS / "scattered_baseline.csv")
-    application = json.loads((RESULTS / "application_audit_summary.json").read_text())
-
-    names = [name.replace(" inverse", "").replace(" implicit", "") for name in primary["problem"]]
-    y = np.arange(len(names))
-    fig, axes = plt.subplots(2, 2, figsize=(12.8, 8.2), constrained_layout=True)
-
-    axes[0, 0].barh(y, 100.0 * primary["rel_l2"], color=BLUE)
-    axes[0, 0].set_yticks(y, names)
-    axes[0, 0].invert_yaxis()
-    axes[0, 0].axvline(0.35, color=RED, ls="--", lw=1.3, label="declared 0.35% gate")
-    axes[0, 0].legend(frameon=False, fontsize=8)
-    _style_axis(axes[0, 0], "A  Blind error of branch-aware MLPs", "relative L2 error (%)", "problem")
-
-    pivot = baselines.pivot(index="problem", columns="model", values="rel_l2").loc[primary["problem"]]
-    height = 0.35
-    axes[0, 1].barh(y - height / 2, 100.0 * pivot["classical_interpolation"], height,
-                    color=GOLD, label="interpolation")
-    axes[0, 1].barh(y + height / 2, 100.0 * pivot["physics_guided_mlp"], height,
-                    color=TEAL, label="physics-guided MLP")
-    axes[0, 1].set_xscale("log")
-    axes[0, 1].set_yticks(y, names)
-    axes[0, 1].invert_yaxis()
-    axes[0, 1].legend(frameon=False, fontsize=8)
-    _style_axis(axes[0, 1], "B  Matched one-dimensional baseline", "relative L2 error (%) - log scale", "problem")
-
-    edge_order = edges.set_index("problem").loc[primary["problem"]]
-    width = 0.36
-    x = np.arange(len(names))
-    axes[1, 0].bar(x - width / 2, 100.0 * primary["rel_l2"], width, color=BLUE, label="random blind set")
-    axes[1, 0].bar(x + width / 2, 100.0 * edge_order["rel_l2"], width, color=RED, label="omitted edge bands")
-    axes[1, 0].set_xticks(x, names, rotation=18, ha="right")
-    axes[1, 0].legend(frameon=False, fontsize=8)
-    _style_axis(axes[1, 0], "C  Interior accuracy is not edge generalization", "problem", "relative L2 error (%)")
-
-    axes[1, 1].plot(dimensions["dimension"], 100.0 * dimensions["interpolation_rel_l2"],
-                    "o-", color=GOLD, lw=2.2, label="regular-grid interpolation")
-    axes[1, 1].plot(dimensions["dimension"], 100.0 * dimensions["mlp_rel_l2"],
-                    "o-", color=TEAL, lw=2.2, label="bounded MLP")
-    axes[1, 1].plot(scattered["dimension"], 100.0 * scattered["relative_l2"],
-                    "s--", color=BLUE, lw=2.0, label="scattered local RBF")
-    axes[1, 1].set_yscale("log")
-    axes[1, 1].set_xticks([2, 3, 4, 5])
-    axes[1, 1].legend(frameon=False, fontsize=8)
-    axes[1, 1].text(
-        0.03,
-        0.96,
-        f"100,000 states: {application['shock_tube_speedup']:.1f}x vs one Brent solve/state\n"
-        f"MLP relative L2: {100.0 * application['shock_tube_rel_l2']:.3f}%",
-        transform=axes[1, 1].transAxes,
-        va="top",
-        fontsize=8,
-        color=NAVY,
-        bbox={"facecolor": "white", "edgecolor": "#D9E2EC", "boxstyle": "round,pad=0.35"},
-    )
-    _style_axis(axes[1, 1], "D  Matched-budget dimensional scaling", "number of physical inputs", "relative L2 error (%) - log scale")
-
-    fig.suptitle(
-        "Week 8: retained evidence says when ML helps - and when it does not",
-        color=NAVY,
-        fontweight="bold",
-        fontsize=16,
-    )
-    fig.savefig(RESULTS / "week8_model_evidence.png", dpi=200, bbox_inches="tight")
-    fig.savefig(RESULTS / "week8_model_evidence.pdf", bbox_inches="tight")
+    """Current classroom branch profiles; research aggregates remain numerical tables."""
+    source=ROOT / "results/course_middle_refresh/week08_branch_predictions.npz"
+    if not source.is_file():
+        raise FileNotFoundError("Execute the Week 8 Lab 2 classroom fit with FLOWMLLAB_COURSE_REFRESH_EXPORT=1 before rebuilding this figure.")
+    with np.load(source, allow_pickle=False) as data:
+        q={k:data[k].copy() for k in data.files}
+    fig,axes=plt.subplots(2,2,figsize=(11.8,7.4),sharex="col")
+    for j,branch_id in enumerate((0,1)):
+        ids=np.flatnonzero(q["branch"]==branch_id)
+        ids=ids[np.argsort(q["input_ratio"][ids])]
+        x=q["input_ratio"][ids];truth=q["reference"][ids]
+        for key,label,color,style in (("single","single MLP",RED,"--"),("experts","branch expert",BLUE,"-.")):
+            pred=q[key][ids]
+            axes[0,j].plot(x,pred,style,color=color,lw=1.8,label=label)
+            axes[1,j].plot(x,pred-truth,style,color=color,lw=1.8,label=label)
+        axes[0,j].plot(x,truth,"k.",ms=4,label="exact Rayleigh")
+        axes[0,j].set(title=("Subsonic branch" if j==0 else "Supersonic branch"),ylabel="Mach number")
+        axes[1,j].axhline(0,color="0.5",lw=.8)
+        axes[1,j].set(xlabel=r"$T_0/T_0^*$",ylabel="predicted - exact Mach")
+        for ax in axes[:,j]:ax.grid(alpha=.2)
+    fig.legend(*axes[0,0].get_legend_handles_labels(),loc="upper center",bbox_to_anchor=(.5,1.01),ncol=3,frameon=False)
+    fig.tight_layout(rect=(0,0,1,.94))
+    fig.savefig(RESULTS / "week8_model_evidence.png",dpi=200,bbox_inches="tight")
+    fig.savefig(RESULTS / "week8_model_evidence.pdf",bbox_inches="tight")
     plt.close(fig)
 
 

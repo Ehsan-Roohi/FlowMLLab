@@ -130,7 +130,7 @@ For each result keep: source URL and archive hash; input hashes; software versio
 
 The supplied notebook is retained as a historical input and executed separately. The corrected teaching notebook does not overwrite it. Source code, retained author checkpoints, newly trained models and new solver outputs are separate categories.
 
-The instructor reported Davidson's permission in the shared conversation. That statement is not a general license to relicense or distribute the complete source archive. The external code stays in the local download area; cite Davidson for the solver and workflow, and Lee-Moser for DNS.
+The external source software retains its author's licensing and attribution requirements. See NOTICE.md before redistributing any source archive; cite Davidson for the solver and workflow, and Lee–Moser for DNS. The classroom adaptation does not relicense the external software.
 
 The corresponding 2026 journal paper is the principal research reading. The older ETMM15 paper is useful historical context, but should not be the only reference for the later PINN-NN pipeline.
 

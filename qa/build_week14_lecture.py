@@ -119,8 +119,14 @@ def main():
     SimpleDocTemplate(str(out),pagesize=A4,leftMargin=52,rightMargin=52,topMargin=45,bottomMargin=58,
         title='Learning Turbulence Closures without Losing the Physics',author='Ehsan Roohi').build(
             story,onFirstPage=footer,onLaterPages=footer,canvasmaker=invariant_canvas)
-    shutil.copy2(out,ROOT/'lectures'/out.name)
-    print(out)
+    target=ROOT/'lectures'/out.name
+    shutil.copy2(out,target)
+    if __package__:
+        from .build_course_middle_lectures import refresh_lecture
+    else:
+        from build_course_middle_lectures import refresh_lecture
+    refresh_lecture(target)
+    print(target)
 
 if __name__=="__main__":
     main()

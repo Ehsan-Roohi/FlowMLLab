@@ -39,9 +39,10 @@ Project Track 6 (Weeks 5 to 6, Fokker-Planck closure, CUDA GPU) assumes case-wis
 The [notebook guide](notebooks/README.md) provides Colab launch links where
 documented and setup links for exceptions. Most Colab bootstrap cells obtain the
 repository and package; this is not a promise that every module has passed a fresh
-hosted Run All. Week 14 has a separate environment, Week 15 needs the documented
-evidence archive, and Weeks 17–22 use the local/ZIP setup with interactive Colab
-acceptance still open.
+hosted Run All. Week 14 has a separate environment. Week 15 includes a bounded
+CPU operator-training exercise and bundled research figures; its external archive
+is needed only for the full research investigation. Weeks 17–22 provide CPU
+checkout/bootstrap routes, with interactive Colab acceptance still open.
 
 ### Learning order and optional branches
 
@@ -191,13 +192,13 @@ cells; each week's README states it (75 to 90 minutes for Weeks 11 to 13).
 | [Week 8](weeks/week08/README.md) | CPU teaching exercises and retained evidence; full regeneration is separate. | Under 7 min for two evidence-based labs; full model generation excluded. |
 | [Week 9](weeks/week09/README.md) | CPU teaching exercises and retained evidence; full regeneration is separate. | About 6–8 min for Labs 1–2; Lab 3 under 2 min. |
 | [Week 10](weeks/week10/README.md) | CPU teaching exercises and retained evidence; full regeneration is separate. | Under 2 min retained-data path. |
-| [Week 10.1](weeks/week10_1/README.md) | CPU teaching exercises and retained evidence; full regeneration is separate. | Under 5 min CPU teaching path. |
+| [Week 10.1](weeks/week10_1/README.md) | CPU teaching exercises and retained evidence; full regeneration is separate. | Plan for roughly 20–30 min on CPU; hardware-dependent. |
 | [Week 10.2](weeks/week10_2/README.md) | Fresh CPU moments, random-start BGK PINN training and independent DVM, plus retained research audits. | One bounded training run by default; the seven-model sweep is optional. See the measured execution receipt. |
 | [Week 11](weeks/week11/README.md) | CPU teaching exercises and retained evidence; full regeneration is separate. | 5–15 min per lab. |
 | [Week 12](weeks/week12/README.md) | CPU teaching exercises and retained evidence; full regeneration is separate. | About 2 min including compact training. |
 | [Week 13](weeks/week13/README.md) | CPU teaching exercises and retained evidence; full regeneration is separate. | About 3 min compact CPU lab; A100 research runs excluded. |
 | [Week 14](weeks/week14/README.md) | CPU teaching exercises and retained evidence; full regeneration is separate. | 5–10 min notebook; optional upstream solver runs take hours. |
-| [Week 15](weeks/week15/README.md) | CPU retained-evidence verification; no model fitting in the main classroom path. | About 5 min retained-field verification after archive download. |
+| [Week 15](weeks/week15/README.md) | Train a compact geometry-conditioned POD operator on CPU; compare exact manufactured fields and inspect retained CFD research evidence. | Bounded classroom fit; hardware-dependent. Full research archive and training campaign are separate. |
 | [Week 16](weeks/week16/README.md) | Data-based laptop notebook; Gmsh/SU2 only for new CFD. | Not measured for this revision; CFD campaign time excluded. |
 | [Week 17](weeks/week17/README.md) | CPU worked examples, exercises and evidence rescoring; fresh full-protocol fitting is separate. | Not measured for this revision. |
 | [Week 18](weeks/week18/README.md) | CPU worked examples, exercises and evidence rescoring; fresh full-protocol fitting is separate. | Not measured for this revision. |

@@ -62,6 +62,14 @@ Vaswani et al., Attention Is All You Need (2017), https://arxiv.org/abs/1706.037
 
 Next week changes the token axis from a spatial observation set to an ordered sequence. Permuting time is no longer a symmetry of the forecasting problem. Position information and the causal mask then serve distinct purposes, and the loss must expose the distinction.
 
+<!-- physical-laboratory:start -->
+
+## Read the physical diagnostic
+
+![Re=110, frame 100: native transverse velocity v/U with the sixteen observation locations used in the attention-mechanism demonstration. Coordinates are in cylinder diameters. The rectangular wake ROI boundary is not a wall.](../../results/late_course_teaching/week17_sensors_01.png)
+
+<!-- physical-laboratory:end -->
+
 ## Printable laboratory worksheet
 
 ### Task 1: Scaled attention
@@ -105,3 +113,14 @@ Task 1 and Task 3 accept both [N,d] and [B,N,d] Q/K tensors; values may have a d
 
 
 Timing estimate: a 120-minute guided lab and roughly 3–5 hours including preparation and written analysis. This is an editorial estimate; a timed student pilot remains open.
+
+## Laboratory route: from inputs to physical conclusions
+
+| Notebook stage | What enters the calculation | What to inspect |
+|---|---|---|
+| Random Q/K/V demonstration | Sixteen v/U observations and their x/D,y/D coordinates; random fixed projections | Weight rows sum to one; record tensor shapes and the temperature effect |
+| Geometry versus content kernels | The same coordinates and three flow frames | A changed sensor value changes content attention; moving a coordinate changes the physical input |
+| Retained trained heads | Saved Sensor-set weights and saved normalization, clean Re110 frames | Head differences are conditional weights, not causal influence |
+| Tasks 1–4 | Your stable softmax, permutation, temperature and masked-attention functions | Algebraic tests plus a controlled perturbation report |
+
+Start with the default 16 sensors. Keep observations, coordinates, projection seed and head width fixed when changing temperature. The source POD basis used to place sensors is fitted on Re90 frames 0–159. The displayed Re110 frame is an already inspected mechanism example, not a new held-out accuracy claim. A dot on the wake plot is an observation location; the rectangular ROI boundary is not a wall.

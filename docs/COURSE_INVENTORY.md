@@ -7,7 +7,7 @@ Course version **v1.15.0**. These counts describe the current checkout; they do 
 | Asset | Count |
 | --- | ---: |
 | Active lecture PDFs | 39 |
-| Pages in those PDFs | 746 |
+| Pages in those PDFs | 796 |
 | Student notebooks, including historical companion | 64 |
 | Historical student audit companion (included above) | 1 |
 | Optional self-study notebooks (separate) | 1 |
@@ -31,38 +31,38 @@ Course version **v1.15.0**. These counts describe the current checkout; they do 
 | [week01_4_spectral_dg.pdf](../lectures/week01_4_spectral_dg.pdf) | 25 |
 | [week01_numerical_foundations.pdf](../lectures/week01_numerical_foundations.pdf) | 37 |
 | [week02_1_probabilistic_uq.pdf](../lectures/week02_1_probabilistic_uq.pdf) | 10 |
-| [week02_supervised_learning_rarefaction.pdf](../lectures/week02_supervised_learning_rarefaction.pdf) | 24 |
-| [week03_kinetic_dsmc.pdf](../lectures/week03_kinetic_dsmc.pdf) | 37 |
+| [week02_supervised_learning_rarefaction.pdf](../lectures/week02_supervised_learning_rarefaction.pdf) | 26 |
+| [week03_kinetic_dsmc.pdf](../lectures/week03_kinetic_dsmc.pdf) | 47 |
 | [week04_2_grid51_validation.pdf](../lectures/week04_2_grid51_validation.pdf) | 4 |
 | [week04_2_pinn_cavity.pdf](../lectures/week04_2_pinn_cavity.pdf) | 12 |
 | [week04_2_stokes_to_navier_stokes.pdf](../lectures/week04_2_stokes_to_navier_stokes.pdf) | 11 |
 | [week04_cavity_surrogates_deeponet.pdf](../lectures/week04_cavity_surrogates_deeponet.pdf) | 103 |
 | [week05_06_project_guide.pdf](../lectures/week05_06_project_guide.pdf) | 59 |
-| [week05_modal_sensing.pdf](../lectures/week05_modal_sensing.pdf) | 5 |
+| [week05_modal_sensing.pdf](../lectures/week05_modal_sensing.pdf) | 10 |
 | [week07_1_hypersonic_rarefied_cylinder.pdf](../lectures/week07_1_hypersonic_rarefied_cylinder.pdf) | 17 |
-| [week07_2_cylinder_state_estimation.pdf](../lectures/week07_2_cylinder_state_estimation.pdf) | 5 |
-| [week07_3_masked_pretraining.pdf](../lectures/week07_3_masked_pretraining.pdf) | 7 |
-| [week07_4_diverse_wake_pretraining.pdf](../lectures/week07_4_diverse_wake_pretraining.pdf) | 5 |
+| [week07_2_cylinder_state_estimation.pdf](../lectures/week07_2_cylinder_state_estimation.pdf) | 7 |
+| [week07_3_masked_pretraining.pdf](../lectures/week07_3_masked_pretraining.pdf) | 9 |
+| [week07_4_diverse_wake_pretraining.pdf](../lectures/week07_4_diverse_wake_pretraining.pdf) | 7 |
 | [week07_cylinder_lbm_neural_surrogate.pdf](../lectures/week07_cylinder_lbm_neural_surrogate.pdf) | 19 |
-| [week07_modal_forecasting.pdf](../lectures/week07_modal_forecasting.pdf) | 5 |
+| [week07_modal_forecasting.pdf](../lectures/week07_modal_forecasting.pdf) | 7 |
 | [week08_gas_dynamics_sciml.pdf](../lectures/week08_gas_dynamics_sciml.pdf) | 13 |
-| [week09_3_nozzle_data_alignment.pdf](../lectures/week09_3_nozzle_data_alignment.pdf) | 3 |
+| [week09_3_nozzle_data_alignment.pdf](../lectures/week09_3_nozzle_data_alignment.pdf) | 5 |
 | [week09_rarefied_deeponet_case_studies.pdf](../lectures/week09_rarefied_deeponet_case_studies.pdf) | 19 |
-| [week10_1_collision_map_audit.pdf](../lectures/week10_1_collision_map_audit.pdf) | 1 |
+| [week10_1_collision_map_audit.pdf](../lectures/week10_1_collision_map_audit.pdf) | 6 |
 | [week10_2_bgk_shakhov_shock_pinn_dvm.pdf](../lectures/week10_2_bgk_shakhov_shock_pinn_dvm.pdf) | 27 |
 | [week10_dsmc_data_driven_surrogates.pdf](../lectures/week10_dsmc_data_driven_surrogates.pdf) | 14 |
 | [week11_shock_vortex_identification.pdf](../lectures/week11_shock_vortex_identification.pdf) | 17 |
 | [week12_dsmc_moment_reconstruction.pdf](../lectures/week12_dsmc_moment_reconstruction.pdf) | 13 |
 | [week13_rectangular_cavity_pinn.pdf](../lectures/week13_rectangular_cavity_pinn.pdf) | 36 |
-| [week14_rans_pinn_nn.pdf](../lectures/week14_rans_pinn_nn.pdf) | 7 |
-| [week15_geometry_generalization.pdf](../lectures/week15_geometry_generalization.pdf) | 36 |
-| [week16_supersonic_shape_optimization.pdf](../lectures/week16_supersonic_shape_optimization.pdf) | 22 |
-| [week17_cfd_transformer.pdf](../lectures/week17_cfd_transformer.pdf) | 5 |
-| [week18_cfd_transformer.pdf](../lectures/week18_cfd_transformer.pdf) | 5 |
-| [week19_cfd_transformer.pdf](../lectures/week19_cfd_transformer.pdf) | 5 |
-| [week20_cfd_transformer.pdf](../lectures/week20_cfd_transformer.pdf) | 5 |
-| [week21_cfd_transformer.pdf](../lectures/week21_cfd_transformer.pdf) | 5 |
-| [week22_cfd_transformer.pdf](../lectures/week22_cfd_transformer.pdf) | 5 |
+| [week14_rans_pinn_nn.pdf](../lectures/week14_rans_pinn_nn.pdf) | 11 |
+| [week15_geometry_generalization.pdf](../lectures/week15_geometry_generalization.pdf) | 40 |
+| [week16_supersonic_shape_optimization.pdf](../lectures/week16_supersonic_shape_optimization.pdf) | 24 |
+| [week17_cfd_transformer.pdf](../lectures/week17_cfd_transformer.pdf) | 6 |
+| [week18_cfd_transformer.pdf](../lectures/week18_cfd_transformer.pdf) | 6 |
+| [week19_cfd_transformer.pdf](../lectures/week19_cfd_transformer.pdf) | 6 |
+| [week20_cfd_transformer.pdf](../lectures/week20_cfd_transformer.pdf) | 7 |
+| [week21_cfd_transformer.pdf](../lectures/week21_cfd_transformer.pdf) | 6 |
+| [week22_cfd_transformer.pdf](../lectures/week22_cfd_transformer.pdf) | 7 |
 
 ## Student notebooks
 
@@ -168,7 +168,7 @@ Compute planning estimates are not measurements of this revision or classroom wo
 | [Week 12: DSMC moment reconstruction](../weeks/week12/README.md) | Weeks 3 and 10 DSMC sampling; Week 11 noisy derivatives helpful. | Colab link is an entry point, not a guarantee of a fresh hosted Run All. [Setup](../notebooks/week12/README.md) |
 | [Week 13: Rectangular-cavity PINN research audit](../weeks/week13/README.md) | Weeks 1–2 and 4: cavity equations, optimization and held-out validation; PINN foundations reading. | Colab link is an entry point, not a guarantee of a fresh hosted Run All. [Setup](../notebooks/week13/README.md) |
 | [Week 14: RANS, inverse PINN and neural turbulence closures](../weeks/week14/README.md) | Week 13 PINNs; RANS equations and turbulence closures; use the separate setup. | Separate environment; hosted Run All not verified. [Setup](../notebooks/week14/README.md) |
-| [Week 15: Geometry-aware neural operators](../weeks/week15/README.md) | Weeks 4 and 9 operators, geometry splits and physical validation; follow archive setup. | Local checkout plus documented evidence archive; no hosted Run All claim. [Setup](../notebooks/week15/README.md) |
+| [Week 15: Geometry-aware neural operators](../weeks/week15/README.md) | Week 4 field surrogates and POD; training/validation/test splits. Start with the CPU lesson before the optional full research archive. | Checkout/bootstrap supports the CPU lesson and bundled research figures; the full research audit needs its documented external archive. Hosted Colab acceptance is not yet claimed. [Setup](../notebooks/week15/README.md) |
 | [Week 16: Supersonic shape optimization](../weeks/week16/README.md) | Week 8 compressible flow and Week 15 geometry validation; CFD tools only for regeneration. | Colab link is an entry point, not a guarantee of a fresh hosted Run All. [Setup](../notebooks/week16/README.md) |
 | [Week 17: Attention as a learned kernel](../weeks/week17/README.md) | Weeks 7.3, 7.4 and 15; matrix products, derivatives, POD and development/evaluation roles. | Local/ZIP setup documented; interactive Colab and representative student-workload acceptance remain open. [Setup](../notebooks/week17/README.md) |
 | [Week 18: Language modeling and causal decoding](../weeks/week18/README.md) | Week 17 Q/K/V and tensor shapes; likelihood, cross-entropy and causal masks. | Local/ZIP setup documented; interactive Colab and representative student-workload acceptance remain open. [Setup](../notebooks/week18/README.md) |

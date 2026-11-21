@@ -1,0 +1,33 @@
+{
+  "notebook": "notebooks/week05_06/W5_Lab2_Sparse_Sensing_Dynamics.ipynb",
+  "utc": "2026-11-21T02:42:35.225709+00:00",
+  "elapsed_run_all_seconds": 437.61189070000546,
+  "host": "ECS-200417",
+  "kernel": "D:\\ChatGPT Backup\\Projects\\FlowMLLab\\Teaching_Current\\repo\\tmp\\week01_4_runtime\\Scripts\\python.exe",
+  "python": "3.12.14 (main, Aug 25 2026, 14:01:42) [MSC v.1944 64 bit (AMD64)]",
+  "cpu_only": true,
+  "failure": null,
+  "code_cells": 9,
+  "executed_cells": 9,
+  "inline_figures": [
+    {
+      "path": "results/course_refresh_early/W5_Lab2_Sparse_Sensing_Dynamics/cell_07_01.png",
+      "sha256": "a8469f8c7ec456dbe5ad8a6abb44837d94560a0fb4667b11932f788db7869806"
+    },
+    {
+      "path": "results/course_refresh_early/W5_Lab2_Sparse_Sensing_Dynamics/cell_12_03.png",
+      "sha256": "327e3a6d99fe0ec0ab6c33e36df7463401fa3b0e508a4dfb108a87692c606346"
+    },
+    {
+      "path": "results/course_refresh_early/W5_Lab2_Sparse_Sensing_Dynamics/cell_12_04.png",
+      "sha256": "9ad1b1f7993fd5bf14fa0021b0b9d46d555192379c03706212b765f8992652a3"
+    },
+    {
+      "path": "results/course_refresh_early/W5_Lab2_Sparse_Sensing_Dynamics/cell_12_05.png",
+      "sha256": "4eb4ac0ce22b12903cfd4544e65b321a7bcadc8232f49cec266df2a513124e4b"
+    }
+  ],
+  "notebook_sha256": "cbe39278f9a943bd3ae813fae36d03da0175091377697f98226528cbbb80b1ea",
+  "code_sha256": "546b7747832bd61750f52099d4aeea70ae7494480def33feb73254afdcfa8fcf",
+  "claim": "Fresh default CPU Run All; no hosted Colab or optional GPU execution claimed."
+}

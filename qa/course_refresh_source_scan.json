@@ -1,0 +1,320 @@
+{
+  "utc": "2026-11-21T04:37:29.481629+00:00",
+  "status": "pass",
+  "scope": "All65 student/optional notebooks, seven instructor editions and six canonical lesson JSON files; parsed cell text, not image base64; saved-error outputs checked.",
+  "files": [
+    {
+      "path": "instructor/optional_geometry_time_bridge/Geometry_Time_Bridge_Solutions.ipynb",
+      "sha256": "6bf23240bd0bf27c7742c1b6ed7b0d35169276e9feb37a05b6b8e5cb9f0388d7"
+    },
+    {
+      "path": "instructor/week17/W17_Solutions.ipynb",
+      "sha256": "9d7d21f97d2294b11b471650fa97f8ae5576f7bc5ca33ac1e0c32b9eaa98be31"
+    },
+    {
+      "path": "instructor/week18/W18_Solutions.ipynb",
+      "sha256": "d90bffafdb1e8ebb7b0b742b6a3047853f3b6d5a3b03d4bf475971bfe90e3c7d"
+    },
+    {
+      "path": "instructor/week19/W19_Solutions.ipynb",
+      "sha256": "ed2e66190c48a7cabbf32cece9295b1449ad48dec82b887834dc8435dc076f15"
+    },
+    {
+      "path": "instructor/week20/W20_Solutions.ipynb",
+      "sha256": "75338d8d13b372604b93c7ed8a9bcbe3dfac751f697cfceb86fb527160c18905"
+    },
+    {
+      "path": "instructor/week21/W21_Solutions.ipynb",
+      "sha256": "fd99c021f71951c7539f10cace40c049e35eac0926bf8446ccdc2571073c65d1"
+    },
+    {
+      "path": "instructor/week22/W22_Solutions.ipynb",
+      "sha256": "16e5cba5dba247180d15b49025e7db717f41bcfd0394911ecb1b2e76f07ba391"
+    },
+    {
+      "path": "notebooks/optional_geometry_time_bridge/Geometry_Time_Operator_Bridge.ipynb",
+      "sha256": "949ba2449e5aa4840f8a705d1c49c75db0563392524c76291a143e9b811c6ae6"
+    },
+    {
+      "path": "notebooks/week01/01_python_for_cfd_ai_fluids.ipynb",
+      "sha256": "e6bc248aba4dc94dd87054d6fc00f4fdfa3d7a593d8c8b11cd28c0554bdc00fa"
+    },
+    {
+      "path": "notebooks/week01/02_tensorflow_for_ai_fluids.ipynb",
+      "sha256": "b9eb18f8a77b8da0e73859e1c5220bb7117b65041fa6d94e078349233a448bca"
+    },
+    {
+      "path": "notebooks/week01/03_cavity_ghia.ipynb",
+      "sha256": "35fed5500f78605bc003101681833249d5249d601fe47dbd810d2f8b706ed0be"
+    },
+    {
+      "path": "notebooks/week01_1/W1_1_AI_Assisted_Scientific_Software.ipynb",
+      "sha256": "06628727383e65e4d3e6898bee436f10529e7009365d73158e643e3e29347a7a"
+    },
+    {
+      "path": "notebooks/week01_2/W1_2_Cavity_Pressure_Velocity.ipynb",
+      "sha256": "d4bd771bc423ba4932bd2d8c04153de191e0664e4a89762bcee5f604780f726e"
+    },
+    {
+      "path": "notebooks/week01_3/W1_3_Keras_Optimizers.ipynb",
+      "sha256": "c770a31c3f96a515aba3894bc1c828444ef6424b0cfbfec4d2377dad8fc28280"
+    },
+    {
+      "path": "notebooks/week01_4/W1_4_Spectral_DG_CPU.ipynb",
+      "sha256": "22d369172ae90eba1359ab0032e64738c41d03697e9da25b967738eaa490511d"
+    },
+    {
+      "path": "notebooks/week02/AI_in_Fluids_Week2_Colab_Expanded.ipynb",
+      "sha256": "e3a3f53ad19e768a8100a8e3710561ac662d3227e631afc29f3b655e41b3b04e"
+    },
+    {
+      "path": "notebooks/week02_1/Probabilistic_UQ_CFD.ipynb",
+      "sha256": "dba69e24666f8097df3ef192520d334ee114ffc11e213a364d3c9da405f8eef4"
+    },
+    {
+      "path": "notebooks/week03/AI_in_Fluids_Week3_Lab1_Maxwellian_Noise_ML_Student.ipynb",
+      "sha256": "7ca723042cc6ae2d9a82af7d63431291a081abc77ebadd600e71d4d58841d557"
+    },
+    {
+      "path": "notebooks/week03/AI_in_Fluids_Week3_Lab2_Mini_DSMC_Cavity_Revised_Student.ipynb",
+      "sha256": "9d0f844f0f96e88ffd15cf7a1ed6bcb7164d5b0e7bb74a8cbdcda9fd3c5d98c0"
+    },
+    {
+      "path": "notebooks/week04/W4_1_Classical_ROM_Cavity.ipynb",
+      "sha256": "ee7213e68df8ba0b1bf48e5eb0e5426acdfdfc390b9892e55e8b13b8bd7c7c93"
+    },
+    {
+      "path": "notebooks/week04/W4_Lab1_CFD_Data_Production_Student.ipynb",
+      "sha256": "4ad82dfb9b9fdf6430d17295338c009bb719936e008eb25017a4ffd25871a2e4"
+    },
+    {
+      "path": "notebooks/week04/W4_Lab2_Scalar_and_Field_Surrogates_Student.ipynb",
+      "sha256": "6f9f107de269954ee917aa26943db22138a1d9c39e24e02689c71a9ad1045406"
+    },
+    {
+      "path": "notebooks/week04/W4_Lab3_DeepONet_Cavity_Student.ipynb",
+      "sha256": "cd6ed36f1e0f0c9740e5a885ced17e7beb4d43c1d302740620be5619d18b034f"
+    },
+    {
+      "path": "notebooks/week04/W4_Lab4_Grid51_Validation.ipynb",
+      "sha256": "cde298950a54abe08fec79fc2aefef0fa1f410658f7827bba22592eec5e72f31"
+    },
+    {
+      "path": "notebooks/week04/W4_Lab4_Stokes_to_Navier_Stokes.ipynb",
+      "sha256": "c7b2439cc8d38954fdd0829f68ed16ff3840eafd40aa157a28064ac99e8763b8"
+    },
+    {
+      "path": "notebooks/week04/W4_Lab5_All_Re_Ghia_Validation.ipynb",
+      "sha256": "dd4b43bcf6f43ebcc048e97fed8f09482e6a48cd032fe98fe8c2a42ad54d8c11"
+    },
+    {
+      "path": "notebooks/week04/W4_Lab6_Ghia_Profile_Optimizer_Depth.ipynb",
+      "sha256": "38b3e28e4c1f5a087141c57f04de6e525d26f93d1bf7c5158b3a1c2a8009e456"
+    },
+    {
+      "path": "notebooks/week04/W4_Lab7_High_Re_CFD_Ghia.ipynb",
+      "sha256": "2fcbfb8f422808b653544808e930c11a5ce77bb7966f08ad542a31c9c5edd905"
+    },
+    {
+      "path": "notebooks/week04/W4_Lab8_High_Re_Field_DeepONet.ipynb",
+      "sha256": "1a32bcb01712a7f5f8ef3a7b0193ba66e25d6fd06f10af7cb51d3689706f583d"
+    },
+    {
+      "path": "notebooks/week04/W4_Lab9_Label_Free_Ghia_PINN_Audit.ipynb",
+      "sha256": "23aeff7c55e5215aa480300f33fc4d783d041c3725822342c5391364e595f13d"
+    },
+    {
+      "path": "notebooks/week05_06/P0_Project_Setup.ipynb",
+      "sha256": "2bc0a685f05cad4153a42f785a159bc6be76b855937eaa54b0036ecba66be559"
+    },
+    {
+      "path": "notebooks/week05_06/P1_Re_Generalization.ipynb",
+      "sha256": "fd33e8e39a1896f5fe1c937a357e24045ac4122deac738cd091455310f72982d"
+    },
+    {
+      "path": "notebooks/week05_06/P2_Physics_Guided_DNN.ipynb",
+      "sha256": "3add1c3e51783b4f61e0b42e73e752b1782b640d409c4dc61b654caebc210415"
+    },
+    {
+      "path": "notebooks/week05_06/P3_POD_Study.ipynb",
+      "sha256": "4479add632363557eedfeed40b22c28f38f8d9c73152a4e90c14ec74edc29ccc"
+    },
+    {
+      "path": "notebooks/week05_06/P4_Uncertainty_Study.ipynb",
+      "sha256": "ffc8234ecfbaf94c154fdde9ac1d4b89cc413a9bd94d9cb44150cb2624973cd4"
+    },
+    {
+      "path": "notebooks/week05_06/P5_Rarefied_Cavity.ipynb",
+      "sha256": "91c8a08c2626e12083a65ab021d2ace69dfb9ca0fd743c599b53783ce4f78111"
+    },
+    {
+      "path": "notebooks/week05_06/P6_FP_Cavity_Closure.ipynb",
+      "sha256": "884ecee06a1584db3082f4fcf47ece22513a90b6178a4db2932c639a6218844a"
+    },
+    {
+      "path": "notebooks/week05_06/W5_Lab2_Sparse_Sensing_Dynamics.ipynb",
+      "sha256": "cbe39278f9a943bd3ae813fae36d03da0175091377697f98226528cbbb80b1ea"
+    },
+    {
+      "path": "notebooks/week07/W7_Lab2_Modal_Forecasting.ipynb",
+      "sha256": "3e90784a99f3869874e34fe618048f28c90e1168bdcc11326f9d3e7a4f2bc3d4"
+    },
+    {
+      "path": "notebooks/week07/W7_Lattice_Boltzmann_Cylinder_Student.ipynb",
+      "sha256": "ace3fa3dabeb91c852cc3abb8043e8e62aea087d5addc1b181a9c43fb8a775d3"
+    },
+    {
+      "path": "notebooks/week07_1/W7_1_Hypersonic_Rarefied_Cylinder_DeepONet.ipynb",
+      "sha256": "65a70870e037319321b13e34e51a12880e4e72b57eb46a4250542235d4687eb3"
+    },
+    {
+      "path": "notebooks/week07_2/W7_2_Cylinder_Wake_State_Estimation.ipynb",
+      "sha256": "796d0f1bcc9a2a07aecee496204e4698e9e0b5ba3a033fe1bc2834e89f2b7fd3"
+    },
+    {
+      "path": "notebooks/week07_3/W7_3_Masked_Pretraining_Label_Efficiency.ipynb",
+      "sha256": "459165278888b6788ceaee304f49f1833f3c56a5851a2bf506ee998fdc53d460"
+    },
+    {
+      "path": "notebooks/week07_4/W7_4_Diverse_Wake_Pretraining.ipynb",
+      "sha256": "3ef0c2fc6a02a6e50b7993ad728a3ae3fe84c5bf38a43dfbf861195d42b8c6c5"
+    },
+    {
+      "path": "notebooks/week08/W8_Lab1_Exact_Gas_Dynamics_Student.ipynb",
+      "sha256": "10b1ee83f83da747aa09e9357b85b4aaf8dec55e0934f16867edfb1ddea97eba"
+    },
+    {
+      "path": "notebooks/week08/W8_Lab2_Gas_Dynamics_SciML_Evidence_Student.ipynb",
+      "sha256": "8d2629ae9a064973b1b87b346752d37b272ea6d62ac39f18d091c22edd14bdd5"
+    },
+    {
+      "path": "notebooks/week09/W9_Lab1_Microstep_Zonal_DeepONet_Student.ipynb",
+      "sha256": "61385ac842262bf07487b7384b84db1b8c96ec33d6ffc97ec1732077afa41fff"
+    },
+    {
+      "path": "notebooks/week09/W9_Lab2_Shock_Aligned_Nozzle_DeepONet_Student.ipynb",
+      "sha256": "ad453fe06374f5bb9e9ed972408361cd1c9d3c808773805e57e8ff2560e400db"
+    },
+    {
+      "path": "notebooks/week09/W9_Lab3_Nozzle_Data_Alignment_Audit.ipynb",
+      "sha256": "69d5dafa80812b8fe29acb75de99f61bb5b524c27e2ded18a8d4f0fc3c6f3dca"
+    },
+    {
+      "path": "notebooks/week10/W10_DSMC_Data_Driven_Surrogates_Student.ipynb",
+      "sha256": "f7b03bbd877cbe8e5c681319e12ce0a835cbe8fb76d9fdf612274ddf050409ca"
+    },
+    {
+      "path": "notebooks/week10_1/W10_1_Collision_Map_Surrogate_Audit.ipynb",
+      "sha256": "fe859ef586bd6c8542f1f9f301585551f2e884bd031f7c19c53481b043be3dc6"
+    },
+    {
+      "path": "notebooks/week10_2/W10_2_BGK_Shakhov_Shock_PINN_DVM.ipynb",
+      "sha256": "68b2446c532fc37cec12ca90f385454c17bdbc7e657c24be1ed9a8aa57fd3604"
+    },
+    {
+      "path": "notebooks/week11/W11_Cavitation_Cloud_Detection.ipynb",
+      "sha256": "f2998e04dbc7e9b9684e02089730330b007df1fcdebcb0fdcfd09fdd8a598c96"
+    },
+    {
+      "path": "notebooks/week11/W11_Lab2_Reconstruction_and_Identification.ipynb",
+      "sha256": "ba56709517cc7ae760fe581d619d8a4b3dc2f2509f677397eb402b6d8a99ac0f"
+    },
+    {
+      "path": "notebooks/week11/W11_Shock_Vortex_Identification.ipynb",
+      "sha256": "b9c0d84a685714d88142d09c4436212d8ae2eb7f08530049d484482cf671ba36"
+    },
+    {
+      "path": "notebooks/week12/W12_DSMC_Moment_Reconstruction.ipynb",
+      "sha256": "cefe445a18aeebea7aba1593cf2554c96264d37eaed7d38146ae4d25a656b760"
+    },
+    {
+      "path": "notebooks/week13/W13_D5_Controlled_Optimizer_Study.ipynb",
+      "sha256": "52d99a41657948eb256f808a5b962f08a0557aa5a04dbc2aa96f94006b9801a3"
+    },
+    {
+      "path": "notebooks/week13/W13_Deep_Cavity_D5_Regional_Accuracy.ipynb",
+      "sha256": "c72fab0e4104d322b9b3976018794988349ace58c98f03399e7debb19535731c"
+    },
+    {
+      "path": "notebooks/week13/W13_Rectangular_Cavity_PINN_Research.ipynb",
+      "sha256": "cab16d379a1a4b487e53214cecfee87ed8232679a3a3f36ca9955f9860a73de0"
+    },
+    {
+      "path": "notebooks/week14/W14_pyCALC_RANS_PINN_NN.ipynb",
+      "sha256": "78bbe17546ca239d216bd224d416a7a2549befde388d7b49890d4d2bdbf18949"
+    },
+    {
+      "path": "notebooks/week15/W15_Complete_Geometry_Generalization.ipynb",
+      "sha256": "eb6b42e579a976008b866b06b1930e46a5a35dba57ae92c133a86c4998e0ee7a"
+    },
+    {
+      "path": "notebooks/week15/W15_Geometry_Operators_Step_Audit.ipynb",
+      "sha256": "3ad222cf0e4705ba7fb1d2adad88416911f6e3f5174fdce1f0e99c413f6c4a8a"
+    },
+    {
+      "path": "notebooks/week15/W15_Larger_Networks_Analysis.ipynb",
+      "sha256": "7b166804fca599d36ddcf48f9a4470683424c01c15a84b97f21b9f5147d7564e"
+    },
+    {
+      "path": "notebooks/week15/W15_Original_Transolver_Double_Step.ipynb",
+      "sha256": "c986c1d870904cc4cdd092e6ae29f338b6181a356325eae99164ccb089109818"
+    },
+    {
+      "path": "notebooks/week15/W15_Original_Transolver_Step.ipynb",
+      "sha256": "a77336f1fbab5a40f00f033c6b5106d3f1a031087263ec9a5aa6e97a16fd22c5"
+    },
+    {
+      "path": "notebooks/week16/W16_Supersonic_Shape_Optimization.ipynb",
+      "sha256": "f18a04fd5c3d9347255768a28b30e556aabc2a82669b235ae1392abbb198a497"
+    },
+    {
+      "path": "notebooks/week17/W17_CFD_Transformer.ipynb",
+      "sha256": "98e5890015a83bd3af87652c6018d17d9e07e273976be1dbbc967514bd2a5393"
+    },
+    {
+      "path": "notebooks/week18/W18_CFD_Transformer.ipynb",
+      "sha256": "090056d7a4fdb5882b6876038a6badd0240acebf0dae5d86f66bd7c79e7db573"
+    },
+    {
+      "path": "notebooks/week19/W19_CFD_Transformer.ipynb",
+      "sha256": "1ee0bededcfd403b3b5fe80433d1451b41e613b76cd9b141b337320d2bca0079"
+    },
+    {
+      "path": "notebooks/week20/W20_CFD_Transformer.ipynb",
+      "sha256": "41a2f4ea026661c1eb383e6f5a3330ee0b4665b815845a3f972b7f210982a168"
+    },
+    {
+      "path": "notebooks/week21/W21_CFD_Transformer.ipynb",
+      "sha256": "06a5daea963fcd7c2b0137d5ab33ce0681277b6e683a323fbd5a95c38f3bd0d3"
+    },
+    {
+      "path": "notebooks/week22/W22_CFD_Transformer.ipynb",
+      "sha256": "f0063ab4d84113cf45fefc22776c8e9cbd04651d45f3ff35ac1459421a7ae2f0"
+    },
+    {
+      "path": "course/lessons/week17.json",
+      "sha256": "6d97c238312fd40b1e052a01051e9185758ee16fe397db4a46140a0a7a7d6c8a"
+    },
+    {
+      "path": "course/lessons/week18.json",
+      "sha256": "a5db1b2d45319057feb3b1802ac582620432487419118efb8615429d015fa842"
+    },
+    {
+      "path": "course/lessons/week19.json",
+      "sha256": "a56fea6b61ccfc2530fb0c0b50bb98a551c839b58da30c80b75219e5dcac4188"
+    },
+    {
+      "path": "course/lessons/week20.json",
+      "sha256": "5e8a70264e9fbc35f4a38243a688b63e7b63572626481106e1dfde25ae1bd587"
+    },
+    {
+      "path": "course/lessons/week21.json",
+      "sha256": "d619983526b0392de3f79990fcd438940647cc2a011f2fbb080c59f79ea23436"
+    },
+    {
+      "path": "course/lessons/week22.json",
+      "sha256": "7e15332ab12b92cf32914b3764caad0317d3ff774872a3a44f371d777a510f2a"
+    }
+  ],
+  "findings": []
+}

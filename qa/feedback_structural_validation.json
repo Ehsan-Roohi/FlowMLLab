@@ -1,7 +1,7 @@
 {
   "affected_notebooks": 21,
-  "code_cells_syntax_checked": 212,
-  "lecture_pdfs_checked": 17,
+  "code_cells_syntax_checked": 218,
+  "lecture_pdfs_checked": 16,
   "portable_math": true,
   "overlay_cells_match": true,
   "stokes_output_guards": "passed without training",

@@ -1,0 +1,21 @@
+{
+  "notebook": "notebooks/week05_06/P1_Re_Generalization.ipynb",
+  "utc": "2026-11-21T02:37:06.901796+00:00",
+  "elapsed_run_all_seconds": 468.6234333431348,
+  "host": "uri-cpu083",
+  "kernel": "/scratch3/workspace/roohie_umass_edu-flowml-ghia-highre-20261115/week04-lab2-qa-20261120/venv/bin/python",
+  "python": "3.12.3 (main, Aug 31 2026, 10:18:26) [GCC 13.3.0]",
+  "cpu_only": true,
+  "failure": null,
+  "code_cells": 7,
+  "executed_cells": 7,
+  "inline_figures": [
+    {
+      "path": "results/course_refresh_early/P1_Re_Generalization/cell_17_00.png",
+      "sha256": "b44c7b6d7b84fa29a797e81f012703c6e1bf74be01e6e19d4fa0c8b50bcaee9a"
+    }
+  ],
+  "notebook_sha256": "fd33e8e39a1896f5fe1c937a357e24045ac4122deac738cd091455310f72982d",
+  "code_sha256": "ecc3e6d19af0f924364f93f26c3d3c2b2799beb1c525d70d683d030f835462d7",
+  "claim": "Fresh default CPU Run All; no hosted Colab or optional GPU execution claimed."
+}

@@ -16,6 +16,7 @@ OUT=ROOT/'revision_work/geometry_time_pdf'
 PREAMBLE=r'''\documentclass[11pt,a4paper]{article}
 \usepackage[a4paper,margin=22mm,headheight=14pt]{geometry}
 \usepackage{amsmath,amssymb,longtable,booktabs,array,calc,graphicx}
+\setkeys{Gin}{width=\linewidth,keepaspectratio}
 \usepackage{xcolor,hyperref,xurl,fancyhdr,enumitem,titlesec}
 \input{lectures/source/lecture_typography.tex}
 % This short lecture has inline identifiers, not aligned source listings.
@@ -50,6 +51,11 @@ def main():
     font_paths()  # fail if fontconfig resolves a substitute
     OUT.mkdir(parents=True,exist_ok=True)
     markdown=SOURCE.read_text(encoding='utf-8').split('\n',1)[1]
+    def image_path(match):
+        path=(SOURCE.parent/match.group(2)).resolve()
+        if not path.is_file():raise FileNotFoundError(path)
+        return match.group(1)+path.relative_to(ROOT).as_posix()+match.group(3)
+    markdown=re.sub(r'(!\[[^\]]*\]\()([^)]+)(\))',image_path,markdown)
     markdown=re.sub(r'(?<![<(])(https://[^\s>]+)',r'<\1>',markdown)
     converted=subprocess.run(['pandoc','--from=markdown','--to=latex','--shift-heading-level-by=-1'],
                              input=markdown,text=True,capture_output=True,check=True).stdout

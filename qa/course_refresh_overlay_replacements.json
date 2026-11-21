@@ -1,0 +1,31 @@
+{
+  "schema": 1,
+  "baseline_commit": "dd2f42df2c83636940962a8209aa575a99025c36",
+  "cells": {
+    "notebooks/week09/W9_Lab3_Nozzle_Data_Alignment_Audit.ipynb": {
+      "oct20-reading-guide": {
+        "cell_type": "markdown",
+        "previous_source_sha256": "499ee27cb283dcf3d0b98a00eac17b1168e093d4d6cf31eb415d7a5085ba9849",
+        "accepted_source_sha256": "38aa2585884ad6ead525165f1dc63719bf661b25c37c2ccda7bd5c44d87e4abb",
+        "reason": "Replace unrelated neural-training description with the actual analytical nozzle sensor/query pairing experiment.",
+        "builder": "qa/course_middle_notebook_updates.py"
+      },
+      "oct20-environment": {
+        "cell_type": "markdown",
+        "previous_source_sha256": "1e29ef55062aabc6742daeeece582c2dcb0a8e1ae404b0e1d423908750fba3e5",
+        "accepted_source_sha256": "08c8a1ef21a6be1df80fb46d7622481f8b42c79031d5a424996ec9cb7e3edede",
+        "reason": "State actual NumPy/SciPy CPU requirements and separate the optional later neural extension.",
+        "builder": "qa/course_middle_notebook_updates.py"
+      }
+    },
+    "notebooks/week10_1/W10_1_Collision_Map_Surrogate_Audit.ipynb": {
+      "oct20-audit-14": {
+        "cell_type": "code",
+        "previous_source_sha256": "b394ed73f6f03a089b9a9747969ac02c23c5b9034f1d6afa6f4e1a4824cd2037",
+        "accepted_source_sha256": "a82ab66706fa1d921e5c7c98cf1b77bac091d557bc88a3b3085b2fbf847fd487",
+        "reason": "Expose full error extrema and move legends outside; preserve the scattering calculation and discussion.",
+        "builder": "qa/course_middle_notebook_updates.py"
+      }
+    }
+  }
+}

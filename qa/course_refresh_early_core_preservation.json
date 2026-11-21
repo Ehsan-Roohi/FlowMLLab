@@ -1,0 +1,271 @@
+{
+  "scope": "Direct byte-hash identification of original Git PDFs, then exact rendered-pixel and geometry comparison with the final core pages.",
+  "artifacts": [
+    {
+      "path": "lectures/week02_supervised_learning_rarefaction.pdf",
+      "original_commit": "dd2f42d",
+      "original_pdf_sha256": "141b4f39328c065118ac152da8a164080a63603b27d0693d0fbcdf112ae50233",
+      "final_pdf_sha256": "493a4dd0c63c26d019e5ee69b356fafec89918bb3830337367c516170bc48264",
+      "pixel_scale": 0.75,
+      "alpha": false,
+      "all_pages_exactly_equal": true,
+      "pages": [
+        {
+          "page": 1,
+          "original_and_final_pixel_sha256": "67f67b6f36c0784e12859d4d5d9fd73aaf1bf5b63bd701bdcbe2c8b0eab30d2e"
+        },
+        {
+          "page": 2,
+          "original_and_final_pixel_sha256": "1720e365f2679f89f2454ad5478b7b2f9d258c09c956252e760d8619810d85a9"
+        },
+        {
+          "page": 3,
+          "original_and_final_pixel_sha256": "5d1a6bd9c5e58f331bc0c997d9ae99a90ceedeaa6904c80e70a0367ad865d9b0"
+        },
+        {
+          "page": 4,
+          "original_and_final_pixel_sha256": "449885fddc0e7128c55742480abeaa52ca6c30aeba911d38e1e5a9b112168a86"
+        },
+        {
+          "page": 5,
+          "original_and_final_pixel_sha256": "66e76e9f78ff816baa9ae72efbf7ffb43ca1f789e04fda5ff5f4fd9ca289a3ef"
+        },
+        {
+          "page": 6,
+          "original_and_final_pixel_sha256": "8e7dc51716d98af98e449a5fb88330e7c24560bde980e9be93ac41f7b8d1c4e4"
+        },
+        {
+          "page": 7,
+          "original_and_final_pixel_sha256": "d9cc6103bd78386a441790e19fb55cc44016e29c8e65522924de2fc338ba29ee"
+        },
+        {
+          "page": 8,
+          "original_and_final_pixel_sha256": "9671a827833d23ed6181a9b2ae2cc498c6fde9001f952201c1ad2daaad552173"
+        },
+        {
+          "page": 9,
+          "original_and_final_pixel_sha256": "dc7b2fb8d33d56d31591a6ae47ef29be4cdc2ef2923eca718669d58958bccc8d"
+        },
+        {
+          "page": 10,
+          "original_and_final_pixel_sha256": "4f36198c261d11f500fd17a560570610fd185db7b648024328877d4ec716a8ba"
+        },
+        {
+          "page": 11,
+          "original_and_final_pixel_sha256": "885c1cc9b9c5690e6edb4a6b4b888221c7e5e88cb7b2a599bcc7b0e5f4ae27a3"
+        },
+        {
+          "page": 12,
+          "original_and_final_pixel_sha256": "caca76f4aa55aef8a1ee1823cff7fcf1dc7b05ed68a9b2a1325020121cbf5487"
+        },
+        {
+          "page": 13,
+          "original_and_final_pixel_sha256": "a18c30f24eeb434f758828c356c408a69b52b11a8166da94a4753348b17c406f"
+        },
+        {
+          "page": 14,
+          "original_and_final_pixel_sha256": "a403bfc940a7326f7b2469a2d3f6cdbe9e7a2238e9c3b7084035b4a167d4ce10"
+        },
+        {
+          "page": 15,
+          "original_and_final_pixel_sha256": "dd559405e2a7523d9b9bd59117be61e26b441d838ec0d24d9e0a79f25e280f4e"
+        },
+        {
+          "page": 16,
+          "original_and_final_pixel_sha256": "116f429ec074810fc5e7e4af713e1a57417ec845e8116dcdbdc17dc4be16fd26"
+        },
+        {
+          "page": 17,
+          "original_and_final_pixel_sha256": "70e0b63d12ae18cadaf5df1341943aad649695d7d979f0b1505a9eaacfc87260"
+        },
+        {
+          "page": 18,
+          "original_and_final_pixel_sha256": "b4ea808a97de46e9864fdd8f613941b2815b3f223ee4a85213b96e16afdfa995"
+        },
+        {
+          "page": 19,
+          "original_and_final_pixel_sha256": "c4d99613d005ffba727e2c387457bad39a7b13fadb76825a8aaa02d2668b77e4"
+        },
+        {
+          "page": 20,
+          "original_and_final_pixel_sha256": "702f3fc33a4ef7c9676f1c51218a74bd468a75407f4db8fe4a20f5c54e3aaf92"
+        },
+        {
+          "page": 21,
+          "original_and_final_pixel_sha256": "040f7d12d2faea5c2db244f3031ee1e8485429fdb8b00e446682775c81ae341b"
+        },
+        {
+          "page": 22,
+          "original_and_final_pixel_sha256": "12a64a629f6c30956340c705c0510b962ef3c9083a127bafd2fdbaea70a22197"
+        },
+        {
+          "page": 23,
+          "original_and_final_pixel_sha256": "48601a117e7e40929f999f4a66a6f1b64ef752a875e65d667455c4200e0788ab"
+        },
+        {
+          "page": 24,
+          "original_and_final_pixel_sha256": "88d2e126efb2e8c89ae2bbfd61cf4f04c10e3f984b8153ebe755bf570a753007"
+        }
+      ]
+    },
+    {
+      "path": "lectures/week03_kinetic_dsmc.pdf",
+      "original_commit": "dd2f42d",
+      "original_pdf_sha256": "b7e19d9abcd6c30adb9a5fbdad4079c773befe6c2047f9d2049cbb251f2517c5",
+      "final_pdf_sha256": "3a569f0907850ce7921a6e7a9152fbdf7dc46e35108cf10521fd8952ed6f29ae",
+      "pixel_scale": 0.75,
+      "alpha": false,
+      "all_pages_exactly_equal": true,
+      "pages": [
+        {
+          "page": 1,
+          "original_and_final_pixel_sha256": "672da4257465377b11c1da1f8f9ad8eaf32c38a4c04c72ee9d6351a2e075ccdf"
+        },
+        {
+          "page": 2,
+          "original_and_final_pixel_sha256": "3b66b84713d993412debb8cf25adf2c63698ad9d4a3689ab1a5160709de227a0"
+        },
+        {
+          "page": 3,
+          "original_and_final_pixel_sha256": "75c79e7e914f556e7ef4ac20d7c0b01cfce29632965b9e80cceaae303cbad3f7"
+        },
+        {
+          "page": 4,
+          "original_and_final_pixel_sha256": "0868c107b458e80b8af6a524b3e9e3aaaec84b65a53a7711ff98151ad01dcd31"
+        },
+        {
+          "page": 5,
+          "original_and_final_pixel_sha256": "c685ced1fc9a9d320d1e26c0d76caa75b19162d751f8b438ea7a1d6e899a064f"
+        },
+        {
+          "page": 6,
+          "original_and_final_pixel_sha256": "4454e21c92f26a8a673d433ee8d06a0a6a61bbccbb2017407a1960dd0d7c660b"
+        },
+        {
+          "page": 7,
+          "original_and_final_pixel_sha256": "e29005f5883e88ce78663e75e1d18acccd01b6c04c66e30b8d1ca3ee43325ba3"
+        },
+        {
+          "page": 8,
+          "original_and_final_pixel_sha256": "2c00a7df5789cef91832d2a8b6d1a92b7f7744540259c96e2cef1142245fe19c"
+        },
+        {
+          "page": 9,
+          "original_and_final_pixel_sha256": "2afc139b54ee7ce10d5ca584f63d82c99bf3378066d7a63deef33ce083b2f1eb"
+        },
+        {
+          "page": 10,
+          "original_and_final_pixel_sha256": "eebcb3d0c860789139a670eb39624bf371e678864ac62b1096c25b89efd3ecf0"
+        },
+        {
+          "page": 11,
+          "original_and_final_pixel_sha256": "1e80365e5b986cb33e7bba14ffc1a32de1715e2a82aa2a132b6ccd26a40a068a"
+        },
+        {
+          "page": 12,
+          "original_and_final_pixel_sha256": "040d5242d05c626e48e7aec4474f24de60691a68d6584e42f81f1cdfac928c2e"
+        },
+        {
+          "page": 13,
+          "original_and_final_pixel_sha256": "f8fe611ee6ef74f0700c0e5b54b31766f31194bba594789903265515b2ad11b8"
+        },
+        {
+          "page": 14,
+          "original_and_final_pixel_sha256": "4d22b6a65a770931f485fb4f788df87886f665681f1cbee3a2cf790717ae242e"
+        },
+        {
+          "page": 15,
+          "original_and_final_pixel_sha256": "0cda987509abdf62edec2760344ed259e443236a8c346c21923d4ec0a7e4af18"
+        },
+        {
+          "page": 16,
+          "original_and_final_pixel_sha256": "1e83b51c10df1e1ae9ef09c743796f3133dfe075689edfefc5917f97f21cb627"
+        },
+        {
+          "page": 17,
+          "original_and_final_pixel_sha256": "866c17ea7415af40e8d3c8e5901f3b478787e9e51b2c2222f45111bfe5057e45"
+        },
+        {
+          "page": 18,
+          "original_and_final_pixel_sha256": "c6ed9ca17e77790899d9cf4ee2d26b6872d26b0593e23ecd9de4051dd2c24471"
+        },
+        {
+          "page": 19,
+          "original_and_final_pixel_sha256": "f7053b4356c9ea99583c2620e27150ad5f959e53f55d9aab38ab76bd6e03afa1"
+        },
+        {
+          "page": 20,
+          "original_and_final_pixel_sha256": "3718a985ff5a068ecca022b275d80f62571c5e6333ef738ab97cf8499c96b6d4"
+        },
+        {
+          "page": 21,
+          "original_and_final_pixel_sha256": "901d0a17b30859344a1a6e9796577960e3b11ee93ad04b88dbf29a6a41020a68"
+        },
+        {
+          "page": 22,
+          "original_and_final_pixel_sha256": "a6f973f8c9ecbb1e155d86d86bc7c9f91c22aa66541810b2320ebc2919342739"
+        },
+        {
+          "page": 23,
+          "original_and_final_pixel_sha256": "4d23509086b4180617e3105fd9887613965ce296a98f75abad723e6b05553116"
+        },
+        {
+          "page": 24,
+          "original_and_final_pixel_sha256": "ee55c1c8b0ca3f5f19e5f4464ef9e5f14e61cb02ec804f28c9128237cbeabf3b"
+        },
+        {
+          "page": 25,
+          "original_and_final_pixel_sha256": "090bc79e6f3329726d2ba218f95e8ba666253da0d36428c9f0e9d9217242b4a7"
+        },
+        {
+          "page": 26,
+          "original_and_final_pixel_sha256": "b7e99af58b6ca9feaf3863ca6c421763f205cb6b1e6219cfd07a2dc8c3ad85e3"
+        },
+        {
+          "page": 27,
+          "original_and_final_pixel_sha256": "835ae527d4e879f623ae4ce9de58f9427d422696e51922bef49629ff7a2e43aa"
+        },
+        {
+          "page": 28,
+          "original_and_final_pixel_sha256": "25db6a76d42f787266b47d99d67ebba09baf9ee15ee29ed67586a5bf3a263a7d"
+        },
+        {
+          "page": 29,
+          "original_and_final_pixel_sha256": "a5b09780ed0e7aa9a49f6a6b83d72e34f8d366ad4b3b5b6e8e36ba461ad93e09"
+        },
+        {
+          "page": 30,
+          "original_and_final_pixel_sha256": "f970576812d6db1dd42ebc08857ce0069174693aab367797eda8bf69552d49ab"
+        },
+        {
+          "page": 31,
+          "original_and_final_pixel_sha256": "afb88cc8776740ea0aeef788c368c6c46afa02675d6ef5e0c4ba7eca2362786f"
+        },
+        {
+          "page": 32,
+          "original_and_final_pixel_sha256": "b7617431ac9da737e4daf1306cc07bd0493486a1361053f542a55abb34c42998"
+        },
+        {
+          "page": 33,
+          "original_and_final_pixel_sha256": "10c908729cd9b066854a95d5e282cd40288c82560f0842773ba88c4062272399"
+        },
+        {
+          "page": 34,
+          "original_and_final_pixel_sha256": "e929e35625e48b47627ddfd1efe37da59ebac313f9c49d2467cf46864dd7c435"
+        },
+        {
+          "page": 35,
+          "original_and_final_pixel_sha256": "f5bfba792f9b4dfae3d4e2b502933d676738d8fc947edf4605d016ae851efc07"
+        },
+        {
+          "page": 36,
+          "original_and_final_pixel_sha256": "0a89a7c41cd520a106be182c5fb65bb76c926133333a50d453d72274872dfc6d"
+        },
+        {
+          "page": 37,
+          "original_and_final_pixel_sha256": "1165cc3ecd2236ab1d32da78a8d1c34838633f41f1f4221249fb3f2cbe5a7a14"
+        }
+      ]
+    }
+  ]
+}

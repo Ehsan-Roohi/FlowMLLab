@@ -38,6 +38,7 @@ def main() -> None:
             "-V",
             "fontsize=10pt",
             "--include-in-header",str(ROOT/"lectures/source/lecture_typography.tex"),
+            "--include-in-header",str(ROOT/"lectures/source/week15_float_rules.tex"),
             "-V",
             "colorlinks=true",
             "-V",

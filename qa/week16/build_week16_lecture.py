@@ -1,6 +1,6 @@
 """Build the Week 16 educational LaTeX lecture from retained numerical evidence.
 
-This generator intentionally uses line/scatter plots rather than bar charts. The PDF
+This generator reconstructs physics profiles from the retained evidence. The PDF
 is compiled with XeLaTeX; genuine Times New Roman is required; specialized operators use Latin Modern Math.
 """
 from pathlib import Path
@@ -86,7 +86,7 @@ def build_figures():
     ax.set_aspect("equal")
     ax.set_xlabel("x/L")
     ax.set_ylabel("r/L")
-    ax.legend(ncol=3)
+    ax.legend(ncol=3,loc="lower center",bbox_to_anchor=(.5,1.45),frameon=False)
     ax.set_title("Fixed-volume two-parameter body family")
     fig.tight_layout()
     fig.savefig(ASSETS / "geometry_family.png", dpi=220)
@@ -102,7 +102,7 @@ def build_figures():
     ax.set_xlabel("a")
     ax.set_ylabel("b")
     ax.set_title("Frozen geometry split")
-    ax.legend()
+    ax.legend(loc="lower center",bbox_to_anchor=(.5,1.14),ncol=3,frameon=False)
     ax.grid(alpha=0.2)
     fig.tight_layout()
     fig.savefig(ASSETS / "split_map.png", dpi=220)
@@ -117,7 +117,7 @@ def build_figures():
     ax.set_xlabel("x/L")
     ax.set_ylabel("Cp")
     ax.set_title("Representative near-field CFD signatures")
-    ax.legend()
+    ax.legend(loc="lower center",bbox_to_anchor=(.5,1.14),ncol=3,frameon=False)
     ax.grid(alpha=0.2)
     fig.tight_layout()
     fig.savefig(ASSETS / "waveforms_by_split.png", dpi=220)
@@ -148,7 +148,7 @@ def build_figures():
     ax.set_xlabel("x/L")
     ax.set_ylabel("POD mode amplitude")
     ax.set_title("First three pressure-signature POD modes")
-    ax.legend()
+    ax.legend(loc="lower center",bbox_to_anchor=(.5,1.14),ncol=3,frameon=False)
     ax.grid(alpha=0.2)
     fig.tight_layout()
     fig.savefig(ASSETS / "pod_modes.png", dpi=220)
@@ -184,7 +184,7 @@ def build_figures():
     ax.set_xticks(list(xx), splits)
     ax.set_ylabel("relative error [%]")
     ax.set_title("Clean retained model: interpolation vs extrapolation")
-    ax.legend()
+    ax.legend(loc="lower center",bbox_to_anchor=(.5,1.14),ncol=3,frameon=False)
     ax.grid(alpha=0.25)
     fig.tight_layout()
     fig.savefig(ASSETS / "model_metrics_lines.png", dpi=220)
@@ -197,7 +197,7 @@ def build_figures():
     ax.set_xlabel("finer-mesh test case")
     ax.set_ylabel("waveform relative L2 error [%]")
     ax.set_title("Finer-CFD audit: individual waveform errors")
-    ax.legend()
+    ax.legend(loc="lower center",bbox_to_anchor=(.5,1.14),ncol=3,frameon=False)
     ax.grid(alpha=0.25)
     fig.tight_layout()
     fig.savefig(ASSETS / "finer_case_errors.png", dpi=220)

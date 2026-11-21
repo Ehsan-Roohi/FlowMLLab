@@ -68,6 +68,16 @@ Submit a label-accounting table, compute table, three-target comparison, field/s
 
 Herde et al., Poseidon: Efficient Foundation Models for PDEs (2024), https://arxiv.org/abs/2405.19101, is a research reading for comparing scope, pretraining distributions and downstream evidence. Wu et al., Transolver (2024), https://arxiv.org/abs/2402.02366, supports an architectural comparison with Week 15. Neither published model is reproduced by this course experiment. Students should explain what additional datasets, controls and resource accounting would be required before making a comparable claim.
 
+<!-- physical-laboratory:start -->
+
+## Read the physical diagnostic
+
+![Target Re=110, 84 target labels, seed 17, frame 240: a retained transfer-arm field comparison on the native CFD grid. Keep source exposure, target labels and computational work distinct.](../../results/late_course_teaching/week22_transfer_02.png)
+
+![Same-case signed native-row profiles for all five retained transfer controls. The target-POD control changes representation information; matched additional steps change computational work. Neither can be collapsed into a single pretrained-versus-scratch score.](../../results/late_course_teaching/week22_transfer_06.png)
+
+<!-- physical-laboratory:end -->
+
 ## Printable laboratory worksheet
 
 ### Task 1: Audit information budgets
@@ -114,3 +124,14 @@ Interpretation (25 points): 10 for source-information accounting, including sour
 
 
 Timing estimate: a 120-minute guided lab and roughly 3–5 hours including preparation and written analysis. This is an editorial estimate; a timed student pilot remains open.
+
+## Laboratory route: from inputs to physical conclusions
+
+| Notebook stage | Information/cost contract | Physical output |
+|---|---|---|
+| Label accounting | Training, validation and observed initialization frames | Union of all target labels, including overlaps only once |
+| Retained budget sweep | Same target, label count and seed across arms | Full-field and in-subspace error; retain step-zero and budget-boundary flags |
+| Matched native comparison | TARGET_RE, LABELS, SEED and FRAME fixed before plotting | All five arms against the same CFD frame and signed native-row profile |
+| Tasks 1–4 | Label union, total updates, floor ratio and paired gains | Preserve negative gains; identify unmatched or untrained controls |
+
+The default physical comparison uses Re110, 84 target labels, seed17 and frame240. Change one control at a time. Pretrained versus matched-steps is not perfectly matched in source information or validation-horizon coverage; target-POD-MLP also changes the basis. Equal update caps are not equal wall time or FLOPs. The retained cases are already inspected, and plotting them does not create a new blind transfer test.

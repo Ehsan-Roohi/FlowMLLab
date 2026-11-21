@@ -9,8 +9,8 @@
   "retained_evidence_pages": 54,
   "total_pages": 103,
   "source": "lectures/source/week04_lab_guide.py",
-  "source_sha256": "d72fb3183464f405ea63a92c9da11a4313d3bd8d640456e424536c96ad951d9b",
-  "pdf_sha256": "4f156163c0b861664d8a8a99d568d47db10d6f4d2479f2405972ea8f6f1f7772",
+  "source_sha256": "0293f6958e6b06fdca26939e9201ac6b18ba5f5c8c8b767045097b6f0e5ac0b7",
+  "pdf_sha256": "e498aeb5086966c57471210ebc891f6e202aeabbc513d6d28dfda4daef07f26d",
   "evidence_source": "lectures/source/cavity_expansion.json",
   "evidence_source_sha256": "0d48d45a928cf80bdd863f75e491553f168e92394121a73867d43966f3cbea98",
   "preservation": "Original teaching core expanded and reorganized; all 54 scientific evidence pages regenerated from unchanged scientific JSON with documented typography-only substitutions. Classical ROM reading guide integrated into the new core.",
@@ -539,13 +539,13 @@
   "review_type": "week04_full_guide_replacement",
   "reviewed_at_utc": "2026-11-20T23:15:17.749863+00:00",
   "builder_sources": {
-    "lectures/source/week04_lab_guide.py": "d72fb3183464f405ea63a92c9da11a4313d3bd8d640456e424536c96ad951d9b",
+    "lectures/source/week04_lab_guide.py": "0293f6958e6b06fdca26939e9201ac6b18ba5f5c8c8b767045097b6f0e5ac0b7",
     "qa/week04_lecture_figures.py": "7f8e84341dac4d70ee0f497959652f109e5ad29973b7238d37284909f47da035",
     "qa/build_week04_lab_guide.py": "f00a63fad6ca6ecd3d04a18abe845618316ddd034bf1ae7e2261a1e8b2919e99",
     "qa/week04_evidence_presentation.py": "c7907bc68342882ff61296eec22c5f4538f16f054f3b1fd3d842269df38bed1b"
   },
   "visual_review": {
-    "pdf_sha256": "4f156163c0b861664d8a8a99d568d47db10d6f4d2479f2405972ea8f6f1f7772",
+    "pdf_sha256": "e498aeb5086966c57471210ebc891f6e202aeabbc513d6d28dfda4daef07f26d",
     "dpi": 125,
     "out_of_bounds_text": [],
     "placeholder_glyphs": [],
@@ -1622,7 +1622,14 @@
         "review_basis": "Exact decoded RGB pixel identity to the individually reviewed 125 dpi draft page; PNG container metadata differs.",
         "reviewed_draft_pixel_sha256": "9db6b2817e4ce7bf08ca6a03228fac312c30a3ebf688fc06ab589a47e561d0fd"
       }
-    ]
+    ],
+    "link_only_identity_check": {
+      "checked_utc": "2026-11-21T02:18:22.233203+00:00",
+      "pages": 103,
+      "all_decoded_rgb_pixels_identical": true,
+      "method": "Rendered the actual corrected PDF with PyMuPDF at125dpi; every decoded RGB hash equals its already individually reviewed page. Only a URI and source identity metadata changed.",
+      "proof": "qa/course_refresh_week04_link.json"
+    }
   },
   "final_figure_receipt": "qa/week04_lecture_figures.json",
   "evidence_presentation_substitutions": 7,

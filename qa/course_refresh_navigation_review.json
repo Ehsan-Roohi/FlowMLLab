@@ -1,0 +1,102 @@
+{
+  "schema_version": 1,
+  "status": "passed",
+  "reviewer": "/root/week4_lecture_rebuild",
+  "completed_utc": "2026-11-21T04:43:04.637192+00:00",
+  "scope": "Independent navigation/source review and real package-form Week 14 builds in an isolated shadow. Live notebooks, PDFs and scientific evidence were not changed.",
+  "navigation_sha256": {
+    "README.md": "39df4fa5e3b483ec2e570fd4389fee8ce2f306c57d0e64dd432e26f5daf721d1",
+    "notebooks/README.md": "6eff4413eef68196b0ee6e3d2e35e26c30bc66f153165a521d2f563b73080704",
+    "START_HERE.md": "0194d4efaad40253ca2e5e4b039a5342481d601e2bd1c5e0d222bfdacb93ad9c",
+    "COURSE_MAP.md": "956244a7d5ad3ec4a5ae77f436395e830093db57f68dc7f5908bed1fe26db8bb",
+    "lectures/README.md": "defde4a6a112dd1d4b3b3bdec66b76087a4133a3bd6449962a5af56605dfed1a",
+    "docs/TRANSFORMER_COURSE.md": "48ae01ccd4453c3d3e8c94f5c39bc485829991b7a519edaa09e895bf27e2d187",
+    "course/catalog.json": "1e6ee6fafc121d70e7674727d01fcd560adfd1621cb07f378dffe50dbed83de8"
+  },
+  "links": {
+    "initial_review_checked": 702,
+    "final_checked": 704,
+    "by_document": {
+      "README.md": 360,
+      "notebooks/README.md": 90,
+      "START_HERE.md": 64,
+      "COURSE_MAP.md": 71,
+      "lectures/README.md": 117,
+      "docs/TRANSFORMER_COURSE.md": 2
+    },
+    "missing_local_or_repository_targets": [],
+    "suspect_markdown_anchors": [],
+    "catalog_page_setup_targets": 70,
+    "missing_catalog_targets": [],
+    "method": "Resolve relative links and GitHub/Colab main paths against the current checkout; check Markdown heading/explicit anchors. External URL reachability and hosted Colab were not exercised."
+  },
+  "preservation": {
+    "removed_navigation_headings": {
+      "README.md": [],
+      "notebooks/README.md": [],
+      "START_HERE.md": [],
+      "COURSE_MAP.md": [],
+      "lectures/README.md": [],
+      "docs/TRANSFORMER_COURSE.md": []
+    },
+    "removed_catalog_module_ids": []
+  },
+  "resolved_findings": [
+    {
+      "id": "week16_editable_source",
+      "status": "resolved",
+      "finding": "Legacy Markdown was linked as the editable current PDF source.",
+      "verified_resolution": "The Week 16 lecture row now links the actual TeX source, CPU lab part and builder; its topic describes the CPU fit separately from retained Gmsh/SU2 evidence."
+    },
+    {
+      "id": "week10_1_runtime",
+      "status": "resolved",
+      "finding": "Under-five-minute planning estimate conflicted with the recorded current 1264.36-second local CPU default.",
+      "verified_resolution": "Plan for roughly 20\u201330 min on CPU; hardware-dependent.",
+      "recorded_execution_source": "qa/course_refresh_middle.json"
+    },
+    {
+      "id": "week14_package_imports",
+      "status": "resolved",
+      "finding": "New builder hooks did not resolve in package-form invocation.",
+      "verified_resolution": "Both real python -m qa.build_week14_notebook and python -m qa.build_week14_lecture returned zero in the isolated shadow. All eight generated code cells and all Markdown match the verified notebook; all eleven PDF pages are pixel-identical at 125 dpi."
+    }
+  ],
+  "progression_findings": [
+    "All original navigation headings and catalog module IDs remain.",
+    "Week 13 foundations precede advanced Week 4 Lab 9; Ghia profile regression is distinguished from full-field models.",
+    "Week 15 fresh manufactured CPU operator training is distinguished from retained OpenFOAM research and optional archive audits.",
+    "Hosted Colab acceptance remains explicitly qualified; no new hosted execution is claimed."
+  ],
+  "shared_builder_review": {
+    "overlay_receipt": "qa/course_refresh_overlay_validation.json",
+    "assembly_receipt": "qa/course_refresh_pdf_assembly.json",
+    "week14_receipt": "qa/course_refresh_week14_builder.json",
+    "week14_receipt_sha256": "9600c8f0545e7fb4a97c86d5778206f589d8e201f1f9c47ba620ee5a335c303a",
+    "live_files_unchanged": true,
+    "scientific_execution_performed": false,
+    "course_refresh_overlay_validation_sha256": "a4847c589d48b8f9a0c47ceaf16ab3fadaec842fb462a18e8ba26597f84bf0af",
+    "course_refresh_pdf_assembly_sha256": "522b99fcadb441a3e82068d7c69519f70f9b2107a87d7c52f321dde23b4879c1"
+  },
+  "limits": [
+    "Inventory/page labels were excluded because they are regenerated after final PDFs.",
+    "PDF build verification used pixel identity against previously individually reviewed pages; it is not a new whole-course visual or scientific execution claim."
+  ],
+  "cleanup": {
+    "completed_utc": "2026-11-21T04:44:16.100093+00:00",
+    "removed_paths": [
+      "tmp/course_refresh/navigation_review/shadow"
+    ],
+    "removed_files": 24,
+    "removed_bytes": 3357147,
+    "absence_verified": true,
+    "retained_proofs": [
+      "qa/course_refresh_week14_builder.json",
+      "tmp/course_refresh/navigation_review/package_builder_proof.json",
+      "tmp/course_refresh/navigation_review/review.py",
+      "tmp/course_refresh/navigation_review/qa_build_week14_notebook.log",
+      "tmp/course_refresh/navigation_review/qa_build_week14_lecture.log"
+    ],
+    "basis": "Both isolated builders exited successfully; proof records verified and all protected live hashes rechecked before deletion. Only copied shadow sources, data and generated outputs were removed."
+  }
+}

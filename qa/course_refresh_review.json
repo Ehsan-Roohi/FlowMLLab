@@ -1,0 +1,1694 @@
+{
+  "schema": 1,
+  "baseline_commit": "dd2f42df2c83636940962a8209aa575a99025c36",
+  "started_utc": "2026-11-21T02:13:08.313948+00:00",
+  "scope": "All65 student/historical/optional notebooks and40 current lecture PDFs across numbered Weeks1–22 and the optional geometry-time bridge. Seven instructor editions also executed and verified separately.",
+  "status": "complete",
+  "requirements": [
+    "Preserve useful existing content and exercises",
+    "Map each active notebook to lecture explanations, algorithms, variables, controlled experiments and physical outputs",
+    "Separate default CPU exercises from retained research evidence and optional regeneration",
+    "Review changes in their editable source and rendered output",
+    "Report actual execution coverage and substantive limitations"
+  ],
+  "assets": [
+    {
+      "path": "lectures/optional_geometry_time_bridge.pdf",
+      "kind": "lecture",
+      "baseline_git_blob": "5e2c01cfd0dc430e7b4c15095bc7cc2fb184ec6b",
+      "review_status": "review_complete",
+      "sha256": "ec5a932517617d1f441f16a0314181cec56f3a9c06805e287b0bd5013e782e87",
+      "changed_from_baseline": true,
+      "review_evidence": "qa/course_refresh_late.json",
+      "reason": "Manufactured teacher-forced/autonomous and amplitude/phase diagnostics support the preserved four contract exercises.",
+      "pages": 8
+    },
+    {
+      "path": "lectures/week01_02_tensorflow_keras.pdf",
+      "kind": "lecture",
+      "baseline_git_blob": "f61b9cfd270393199eadce2df02ea9fa22a7cc5f",
+      "review_status": "review_complete",
+      "sha256": "f08169658565734f820ca3057958019cf86323f302972371e54b115137ea78ed",
+      "changed_from_baseline": false,
+      "review_evidence": "qa/course_refresh_early_final.json",
+      "reason": "Existing worked coverage is substantial and no concrete teaching defect found; preserved byte-for-byte.",
+      "pages": 21
+    },
+    {
+      "path": "lectures/week01_1_ai_assisted_scientific_software.pdf",
+      "kind": "lecture",
+      "baseline_git_blob": "dcf3ac4b71469e0b3b862d697ffe2ffc769ab26d",
+      "review_status": "review_complete",
+      "sha256": "ef782866f10222b68c1fe130ec9cc879aac13cb2f843f28b9615283de96bc745",
+      "changed_from_baseline": false,
+      "review_evidence": "qa/course_refresh_early_final.json",
+      "reason": "Existing worked coverage is substantial and no concrete teaching defect found; preserved byte-for-byte.",
+      "pages": 10
+    },
+    {
+      "path": "lectures/week01_2_pressure_velocity.pdf",
+      "kind": "lecture",
+      "baseline_git_blob": "59d01474f90c25337c9fd44d46bfbc06e6ba2884",
+      "review_status": "review_complete",
+      "sha256": "949f5857f74c038d27fe831231f51c3a61999f039897ae377628a0fd1b51de54",
+      "changed_from_baseline": false,
+      "review_evidence": "qa/course_refresh_early_final.json",
+      "reason": "Existing worked coverage is substantial and no concrete teaching defect found; preserved byte-for-byte.",
+      "pages": 74
+    },
+    {
+      "path": "lectures/week01_3_keras_optimizers.pdf",
+      "kind": "lecture",
+      "baseline_git_blob": "f6dd92ecd0b592046c5c1e1229a3691d4ee635fb",
+      "review_status": "review_complete",
+      "sha256": "3b7eb2940eb3031ac5d3fd733f6754692e34be93893beb3afcaa687d1735040d",
+      "changed_from_baseline": false,
+      "review_evidence": "qa/course_refresh_early_final.json",
+      "reason": "Existing worked coverage is substantial and no concrete teaching defect found; preserved byte-for-byte.",
+      "pages": 18
+    },
+    {
+      "path": "lectures/week01_4_spectral_dg.pdf",
+      "kind": "lecture",
+      "baseline_git_blob": "6c274bd69f590d5e41cac33fd53285b624dc7ae5",
+      "review_status": "review_complete",
+      "sha256": "ffa4598e7e423a7ac890be40fa1ba4036740fc1e07a9ff5e9fae5aeddf58684a",
+      "changed_from_baseline": false,
+      "review_evidence": "qa/course_refresh_early_final.json",
+      "reason": "Existing worked coverage is substantial and no concrete teaching defect found; preserved byte-for-byte.",
+      "pages": 25
+    },
+    {
+      "path": "lectures/week01_numerical_foundations.pdf",
+      "kind": "lecture",
+      "baseline_git_blob": "25f62a6b1a8dee413b5c64c3cd9cd3a51e77b647",
+      "review_status": "review_complete",
+      "sha256": "feb9e0a788949fc62fd3a429afcc3fe06521966220364b9041668c962f751b82",
+      "changed_from_baseline": false,
+      "review_evidence": "qa/course_refresh_early_final.json",
+      "reason": "Existing worked coverage is substantial and no concrete teaching defect found; preserved byte-for-byte.",
+      "pages": 37
+    },
+    {
+      "path": "lectures/week02_1_probabilistic_uq.pdf",
+      "kind": "lecture",
+      "baseline_git_blob": "928c12185c41e580645e1e51cc1be296bf78be83",
+      "review_status": "review_complete",
+      "sha256": "6b7ce96b5ff1ae6e89921716811fa70a100aa98d963ec8c5d3e7dbf79cd15a74",
+      "changed_from_baseline": false,
+      "review_evidence": "qa/course_refresh_early_final.json",
+      "reason": "Existing worked coverage is substantial and no concrete teaching defect found; preserved byte-for-byte.",
+      "pages": 10
+    },
+    {
+      "path": "lectures/week02_supervised_learning_rarefaction.pdf",
+      "kind": "lecture",
+      "baseline_git_blob": "21b4bd1ac2ceeb5834d05666a01a2e48dcfc1d68",
+      "review_status": "review_complete",
+      "sha256": "493a4dd0c63c26d019e5ee69b356fafec89918bb3830337367c516170bc48264",
+      "changed_from_baseline": true,
+      "review_evidence": "qa/course_refresh_early_final.json",
+      "reason": "Preserved original core plus topic-specific worked laboratory pages",
+      "pages": 26
+    },
+    {
+      "path": "lectures/week03_kinetic_dsmc.pdf",
+      "kind": "lecture",
+      "baseline_git_blob": "ebb1bb3a16a0f0b0209cbf318e240b348bb9d8fa",
+      "review_status": "review_complete",
+      "sha256": "3a569f0907850ce7921a6e7a9152fbdf7dc46e35108cf10521fd8952ed6f29ae",
+      "changed_from_baseline": true,
+      "review_evidence": "qa/course_refresh_early_final.json",
+      "reason": "Preserved original core plus topic-specific worked laboratory pages",
+      "pages": 47
+    },
+    {
+      "path": "lectures/week04_2_grid51_validation.pdf",
+      "kind": "lecture",
+      "baseline_git_blob": "10be66f92e0bb5111ab0359014e28b7b01b2c477",
+      "review_status": "source_and_alignment_audited_preserved",
+      "sha256": "b1c4f823d86a118c5c8ff2c0c2caebbd5afcc051b956eb922ff228b8fb6b2669",
+      "changed_from_baseline": false,
+      "reason": "Four-page matched184-case grid51 comparison, fixed neural architecture and clear distinction between CFD-grid and surrogate change; no mesh-independence claim. Stale three-page notebook link label corrected separately.",
+      "review_evidence": "Independent middle-worker source alignment plus retained scoped Week4 audit/figure evidence; no claim of a fresh full visual rerender or new research execution.",
+      "pages": 4
+    },
+    {
+      "path": "lectures/week04_2_pinn_cavity.pdf",
+      "kind": "lecture",
+      "baseline_git_blob": "92abeb812ac313081c3885bc1d404ce053aa4c51",
+      "review_status": "source_and_alignment_audited_preserved",
+      "sha256": "9d23b7f0c63162eef3a3dc374798fb3366840b085ea6aa5ade08e0296b85f1f6",
+      "changed_from_baseline": false,
+      "reason": "Week13PartA prerequisite retains nondimensional equations, autodiff, loss, lifting, pressure gauge, corner regularization, preflight and independent validation; near-matchedRe100 is not promoted as new high-Re evidence.",
+      "review_evidence": "Independent middle-worker source alignment plus retained scoped Week4 audit/figure evidence; no claim of a fresh full visual rerender or new research execution.",
+      "pages": 12
+    },
+    {
+      "path": "lectures/week04_2_stokes_to_navier_stokes.pdf",
+      "kind": "lecture",
+      "baseline_git_blob": "44176d41d567e9e023a21d0fa996231829531ad6",
+      "review_status": "source_and_alignment_audited_preserved",
+      "sha256": "50267d517573dbacba11e4865f1a58b9c94554bc43ca029e1d845d700f7aed88",
+      "changed_from_baseline": false,
+      "reason": "Aligned to Lab4 physical Stokes/Re/lid controls, rank24, derivative-aware loss, pressure and complete-case validation. Notebook extends the retained foundation with seven-method/native-grid outputs. Prior solver_audit.json and execution evidence retained.",
+      "review_evidence": "Independent middle-worker source alignment plus retained scoped Week4 audit/figure evidence; no claim of a fresh full visual rerender or new research execution.",
+      "pages": 11
+    },
+    {
+      "path": "lectures/week04_cavity_surrogates_deeponet.pdf",
+      "kind": "lecture",
+      "baseline_git_blob": "3a4aecce7705d9719c02edaefb37741e6603ffa4",
+      "review_status": "retained_reviewed_guide_with_verified_link_correction",
+      "sha256": "e498aeb5086966c57471210ebc891f6e202aeabbc513d6d28dfda4daef07f26d",
+      "changed_from_baseline": true,
+      "review_evidence": "qa/course_refresh_week04_link.json",
+      "reason": "Corrected one Lab4 lecture hyperlink; all103 decoded page images identical to the independently reviewed guide.",
+      "pages": 103
+    },
+    {
+      "path": "lectures/week05_06_project_guide.pdf",
+      "kind": "lecture",
+      "baseline_git_blob": "6743ec3c91f0f5f3365c3dad0188578f15b4a49e",
+      "review_status": "review_complete",
+      "sha256": "7502434b497055aac41b6491f945a6c0c3a0dfb5607de1968ea55b692884894e",
+      "changed_from_baseline": false,
+      "review_evidence": "qa/course_refresh_early_final.json",
+      "reason": "Existing worked coverage is substantial and no concrete teaching defect found; preserved byte-for-byte.",
+      "pages": 59
+    },
+    {
+      "path": "lectures/week05_modal_sensing.pdf",
+      "kind": "lecture",
+      "baseline_git_blob": "4c6e7dbd103e0c68094b3fb8d24d475f2ccf2429",
+      "review_status": "review_complete",
+      "sha256": "5c7a4dab50ae1e8c0919d621aa0646945fef818adb2a8812f4f1dd5ef8d01ee4",
+      "changed_from_baseline": true,
+      "review_evidence": "qa/course_refresh_early_final.json",
+      "reason": "Reorganized and expanded POD/sensing derivation, conditioning, actual figures and experiments",
+      "pages": 10
+    },
+    {
+      "path": "lectures/week07_1_hypersonic_rarefied_cylinder.pdf",
+      "kind": "lecture",
+      "baseline_git_blob": "e10384166771c18dbf291d5e0bc340379cbfaede",
+      "review_status": "review_complete",
+      "sha256": "1c29fcb7f2f2a0a01425a446ca53d454029d8eba801837b55b7627e5ac0880ac",
+      "changed_from_baseline": false,
+      "review_evidence": "qa/course_refresh_middle.json",
+      "reason": "Existing detailed algorithm, physical interpretation, controls and exercises remain consistent with the associated notebook(s); no fresh optional training or whole-PDF visual review is claimed.",
+      "pages": 17
+    },
+    {
+      "path": "lectures/week07_2_cylinder_state_estimation.pdf",
+      "kind": "lecture",
+      "baseline_git_blob": "b729f216f6ad5ab749f689c0e7f8f831094a35ba",
+      "review_status": "review_complete",
+      "sha256": "4edfa844da8447b6b70e48191fe373ddc77dc3978080892cb3973ebe039d7941",
+      "changed_from_baseline": true,
+      "review_evidence": "qa/course_refresh_middle.json",
+      "reason": "Three-page centered Kalman guide, covariance example and causal experiments precede four retained pages.",
+      "pages": 7
+    },
+    {
+      "path": "lectures/week07_3_masked_pretraining.pdf",
+      "kind": "lecture",
+      "baseline_git_blob": "3f4c2d260bd28632166d012fb16f2dc178c1ee90",
+      "review_status": "review_complete",
+      "sha256": "619149f35eff6953c7a10b9ce8efb58c38792df76af22aa548a70866168196bb",
+      "changed_from_baseline": true,
+      "review_evidence": "qa/course_refresh_middle.json",
+      "reason": "Three-page patch/loss/fair-work teaching guide precedes six retained full-protocol pages; default quick CPU run is separate.",
+      "pages": 9
+    },
+    {
+      "path": "lectures/week07_4_diverse_wake_pretraining.pdf",
+      "kind": "lecture",
+      "baseline_git_blob": "91f36599b4b2a6510b3454c1b1fd9c4542aaf195",
+      "review_status": "review_complete",
+      "sha256": "47cc5bf6f3a453e05867168fd83e92ef9b3c3a3eeda15841207fe82007cfc4e4",
+      "changed_from_baseline": true,
+      "review_evidence": "qa/course_refresh_middle.json",
+      "reason": "Three-page representation/lift guide precedes four retained pages; original lift arrays replotted with external legend.",
+      "pages": 7
+    },
+    {
+      "path": "lectures/week07_cylinder_lbm_neural_surrogate.pdf",
+      "kind": "lecture",
+      "baseline_git_blob": "a8d866378612c56e80fc53a58c3a51556e744351",
+      "review_status": "review_complete",
+      "sha256": "3dcdbf8a75410921f96470fbc0b4650eee4ce77d06b094739e7c2e5c24fc0f63",
+      "changed_from_baseline": false,
+      "review_evidence": "qa/course_refresh_middle.json",
+      "reason": "Existing detailed algorithm, physical interpretation, controls and exercises remain consistent with the associated notebook(s); no fresh optional training or whole-PDF visual review is claimed.",
+      "pages": 19
+    },
+    {
+      "path": "lectures/week07_modal_forecasting.pdf",
+      "kind": "lecture",
+      "baseline_git_blob": "a58c1ce55cd69a5057d7d9d36b1c97e9cef27216",
+      "review_status": "review_complete",
+      "sha256": "c7ddd8c8ee9b91f02ad0f985fb592190c4d369f6d7cda1da5de547e09b58e21e",
+      "changed_from_baseline": true,
+      "review_evidence": "qa/course_refresh_middle.json",
+      "reason": "Three-page algorithm and controlled CPU-study guide precedes the four retained protocol pages; stale development footer removed.",
+      "pages": 7
+    },
+    {
+      "path": "lectures/week08_gas_dynamics_sciml.pdf",
+      "kind": "lecture",
+      "baseline_git_blob": "37f71358901959cf1a89f890f2919ad2a1b29cd5",
+      "review_status": "review_complete",
+      "sha256": "5ccef5a52d3e5f4855a4010759db6b45a5070231315f31ea4e104b58bb2b118e",
+      "changed_from_baseline": true,
+      "review_evidence": "qa/course_refresh_middle.json",
+      "reason": "Current branch-specific Mach profiles and signed errors replace aggregate bars; editable TeX and physical schematic aligned.",
+      "pages": 13
+    },
+    {
+      "path": "lectures/week09_3_nozzle_data_alignment.pdf",
+      "kind": "lecture",
+      "baseline_git_blob": "e1b4016665a3a630f8f00a9e49e9daafc0369aaf",
+      "review_status": "review_complete",
+      "sha256": "e954392fbe9ed4e6f9ec56f703c92b3d1f04b0772a9b7342cc5e4c83d41273fc",
+      "changed_from_baseline": true,
+      "review_evidence": "qa/course_refresh_middle.json",
+      "reason": "Three-page nozzle pairing and analytical checks guide precedes two retained contract pages; wrong-topic material removed.",
+      "pages": 5
+    },
+    {
+      "path": "lectures/week09_rarefied_deeponet_case_studies.pdf",
+      "kind": "lecture",
+      "baseline_git_blob": "ea951f67b41fa61349c0150f6e5d694815f61eb2",
+      "review_status": "review_complete",
+      "sha256": "4ddc955720689bf1fae9ef0c654fc8a1aef83f6e2ae705e605fff864ab37693e",
+      "changed_from_baseline": false,
+      "review_evidence": "qa/course_refresh_middle.json",
+      "reason": "Existing detailed algorithm, physical interpretation, controls and exercises remain consistent with the associated notebook(s); no fresh optional training or whole-PDF visual review is claimed.",
+      "pages": 19
+    },
+    {
+      "path": "lectures/week10_1_collision_map_audit.pdf",
+      "kind": "lecture",
+      "baseline_git_blob": "f01e9f768fea79a9888b3ab2a1877c7739c0dcbd",
+      "review_status": "review_complete",
+      "sha256": "c53e300a6940a4759cb68585b6212a8ac47f99f2cd46ff2d8400ae5df78a2ef5",
+      "changed_from_baseline": true,
+      "review_evidence": "qa/course_refresh_middle.json",
+      "reason": "Six-page scattering, quadrature, neural-map, transport-moment and tail-sensitivity guide replaces the generic one-page introduction.",
+      "pages": 6
+    },
+    {
+      "path": "lectures/week10_2_bgk_shakhov_shock_pinn_dvm.pdf",
+      "kind": "lecture",
+      "baseline_git_blob": "df44eb36e46c3f25c4d4127b887d9966d1f3b9e6",
+      "review_status": "review_complete",
+      "sha256": "92682e0a50092fc3f67c41a418a2ac531b56fbccc3890da69c8ecd7f1a7e5092",
+      "changed_from_baseline": false,
+      "review_evidence": "qa/course_refresh_middle.json",
+      "reason": "Existing detailed algorithm, physical interpretation, controls and exercises remain consistent with the associated notebook(s); no fresh optional training or whole-PDF visual review is claimed.",
+      "pages": 27
+    },
+    {
+      "path": "lectures/week10_dsmc_data_driven_surrogates.pdf",
+      "kind": "lecture",
+      "baseline_git_blob": "37d269216d68f8bd89e042eb22045cf39b4a8228",
+      "review_status": "review_complete",
+      "sha256": "8d725f8326e1e58761035d039d4e04ab2bcc6d7ac78f8a922ad4c814cb783040",
+      "changed_from_baseline": false,
+      "review_evidence": "qa/course_refresh_middle.json",
+      "reason": "Existing detailed algorithm, physical interpretation, controls and exercises remain consistent with the associated notebook(s); no fresh optional training or whole-PDF visual review is claimed.",
+      "pages": 14
+    },
+    {
+      "path": "lectures/week11_shock_vortex_identification.pdf",
+      "kind": "lecture",
+      "baseline_git_blob": "172e3bca076747fa272684cfb331795ea97d1b91",
+      "review_status": "review_complete",
+      "sha256": "8d7199ac86e7f159f3c86232214b68a23af3cfe32a37f3c4e61badd957ea7111",
+      "changed_from_baseline": false,
+      "review_evidence": "qa/course_refresh_middle.json",
+      "reason": "Existing detailed algorithm, physical interpretation, controls and exercises remain consistent with the associated notebook(s); no fresh optional training or whole-PDF visual review is claimed.",
+      "pages": 17
+    },
+    {
+      "path": "lectures/week12_dsmc_moment_reconstruction.pdf",
+      "kind": "lecture",
+      "baseline_git_blob": "549f1911da7a780c15441c12bfc50226dfe2a394",
+      "review_status": "review_complete",
+      "sha256": "067a36e35e666dab71cecc8292b4f58571af346e4a2632c3c60d1b97468f874c",
+      "changed_from_baseline": false,
+      "review_evidence": "qa/course_refresh_middle.json",
+      "reason": "Existing detailed algorithm, physical interpretation, controls and exercises remain consistent with the associated notebook(s); no fresh optional training or whole-PDF visual review is claimed.",
+      "pages": 13
+    },
+    {
+      "path": "lectures/week13_rectangular_cavity_pinn.pdf",
+      "kind": "lecture",
+      "baseline_git_blob": "6f1916a41e5e47d97ddbb4e46f398eec99583197",
+      "review_status": "review_complete",
+      "sha256": "ac372bedd03fd51185de39b279f0659445aa107ad5e3f5f59c836ef3a4e429ad",
+      "changed_from_baseline": false,
+      "review_evidence": "qa/course_refresh_middle.json",
+      "reason": "Existing detailed algorithm, physical interpretation, controls and exercises remain consistent with the associated notebook(s); no fresh optional training or whole-PDF visual review is claimed.",
+      "pages": 36
+    },
+    {
+      "path": "lectures/week14_rans_pinn_nn.pdf",
+      "kind": "lecture",
+      "baseline_git_blob": "406f0cc68271ce81df4cce49d08822eb80e83889",
+      "review_status": "review_complete",
+      "sha256": "63ccd7cbe0f6893effacd83f0ae81126356ab676af17b51ef21fbfec1afb7d36",
+      "changed_from_baseline": true,
+      "review_evidence": "qa/course_refresh_middle.json",
+      "reason": "Four-page inverse/closure/solver guide precedes seven retained evidence pages; current gap predictions displayed and source attribution stated neutrally.",
+      "pages": 11
+    },
+    {
+      "path": "lectures/week15_geometry_generalization.pdf",
+      "kind": "lecture",
+      "baseline_git_blob": "d004cba6a7b4d24c6003265050c6f9c596da4895",
+      "review_status": "review_complete",
+      "sha256": "7ed9f163e91b32a09fcec141693e90338b3c03a9c0daf820d935aa1487a7922d",
+      "changed_from_baseline": true,
+      "review_evidence": "qa/course_refresh_late.json",
+      "reason": "Complete manufactured CPU operator training with depth/width/optimizer/loss controls, validation-only selection and exact held-out spatial errors; retained CFD companions and optional archives remain separate.",
+      "pages": 40
+    },
+    {
+      "path": "lectures/week16_supersonic_shape_optimization.pdf",
+      "kind": "lecture",
+      "baseline_git_blob": "6708d228a27d75801c98dfaadbc76ab9b0e37f3b",
+      "review_status": "review_complete",
+      "sha256": "cf6c66b3cbe411df6ef7545d230adbb553d5a3097d178476177eb3dfc9c3d473",
+      "changed_from_baseline": true,
+      "review_evidence": "qa/course_refresh_late.json",
+      "reason": "Exposed CPU POD/MLP controls and same-case pressure/signed-error plots for ridge, GP and MLP; stored checkpoint and retained CFD design verification remain distinct from fresh fits/proposals.",
+      "pages": 24
+    },
+    {
+      "path": "lectures/week17_cfd_transformer.pdf",
+      "kind": "lecture",
+      "baseline_git_blob": "57c8eaec22d4e09afacc8c06e0faa62940aa8cda",
+      "review_status": "review_complete",
+      "sha256": "e6d67a9a1157cde3e1858e67fda60f156dc3cef407965baac0e5d14027f5eed6",
+      "changed_from_baseline": true,
+      "review_evidence": "qa/course_refresh_late.json",
+      "reason": "Attention input/output and observation locations are mapped to the native Re110 velocity field; learned attention evidence remains distinct from the random mechanism demonstration.",
+      "pages": 6
+    },
+    {
+      "path": "lectures/week18_cfd_transformer.pdf",
+      "kind": "lecture",
+      "baseline_git_blob": "16a1dd4b62f505def0672c7e4eb9b97a29af8cda",
+      "review_status": "review_complete",
+      "sha256": "4505a9ee76f58d5a9c61bc311e540eed4b35da5ebdc54377c616e653985afb3f",
+      "changed_from_baseline": true,
+      "review_evidence": "qa/course_refresh_late.json",
+      "reason": "Real small CPU character-model fit and causal prefix experiment; every task has an explicit likelihood/masking interface and a visible diagnostic.",
+      "pages": 6
+    },
+    {
+      "path": "lectures/week19_cfd_transformer.pdf",
+      "kind": "lecture",
+      "baseline_git_blob": "4a4863bb68508f2a796a66ef65c86d8371662bc4",
+      "review_status": "review_complete",
+      "sha256": "32167dc706f35ba4cb48ccb7ae48e0c6200de51166d8e12e1393b90be057a344",
+      "changed_from_baseline": true,
+      "review_evidence": "qa/course_refresh_late.json",
+      "reason": "Matched native CFD/source-POD/QR/lattice reconstructions, complete signed errors and common-row profiles complement tokenization/cost exercises.",
+      "pages": 6
+    },
+    {
+      "path": "lectures/week20_cfd_transformer.pdf",
+      "kind": "lecture",
+      "baseline_git_blob": "7b26359498d58af7d325a6dec83345f2ca89e11e",
+      "review_status": "review_complete",
+      "sha256": "da8bc6528d7150ec9090177e30c1b1dac7353e62a47ca873adc5cb7db12df5e3",
+      "changed_from_baseline": true,
+      "review_evidence": "qa/course_refresh_late.json",
+      "reason": "Fresh bounded sensor-set fit is distinguished from retained full-protocol sparse-sensing predictions; all four methods share native field/profile diagnostics.",
+      "pages": 7
+    },
+    {
+      "path": "lectures/week21_cfd_transformer.pdf",
+      "kind": "lecture",
+      "baseline_git_blob": "f3c6ced03fca73915ef6a76ac67524be6c01e8f6",
+      "review_status": "review_complete",
+      "sha256": "ed7039cf90be8e7819bf3c326f39c6999a3fe5592ea0af7fc437d6e86d008e30",
+      "changed_from_baseline": true,
+      "review_evidence": "qa/course_refresh_late.json",
+      "reason": "Autonomous retained predictions use a single observed initialization; all methods, oracle floor, full-range errors, native vorticity and fixed-probe time histories are visible.",
+      "pages": 6
+    },
+    {
+      "path": "lectures/week22_cfd_transformer.pdf",
+      "kind": "lecture",
+      "baseline_git_blob": "7876ebdead116da882a62a5e332584c3e5856363",
+      "review_status": "review_complete",
+      "sha256": "98d0197111e0307b489cfede847bc7f76dba9af17a8835368484c6683e83bba7",
+      "changed_from_baseline": true,
+      "review_evidence": "qa/course_refresh_late.json",
+      "reason": "All five transfer controls have native same-case fields and signed profiles; target labels, source information, seed ranges, POD floors and compute remain separate.",
+      "pages": 7
+    },
+    {
+      "path": "notebooks/optional_geometry_time_bridge/Geometry_Time_Operator_Bridge.ipynb",
+      "kind": "notebook",
+      "baseline_git_blob": "92b94fefd3ff9e78c5cd73ba3b5866a870e7ffa3",
+      "review_status": "review_complete",
+      "sha256": "949ba2449e5aa4840f8a705d1c49c75db0563392524c76291a143e9b811c6ae6",
+      "changed_from_baseline": true,
+      "review_evidence": "qa/course_refresh_late.json",
+      "reason": "Manufactured teacher-forced/autonomous and amplitude/phase diagnostics support the preserved four contract exercises.",
+      "execution": {
+        "method": "fresh Jupyter kernel",
+        "python": "3.12.3 (main, Aug 31 2026, 10:18:26) [GCC 13.3.0]",
+        "executable": "/scratch3/workspace/roohie_umass_edu-flowml-ghia-highre-20261115/pinn-venv/bin/python",
+        "seconds": 4.897934508044273,
+        "code_cells": 16,
+        "image_outputs": 3,
+        "status": "passed"
+      }
+    },
+    {
+      "path": "notebooks/week01/01_python_for_cfd_ai_fluids.ipynb",
+      "kind": "notebook",
+      "baseline_git_blob": "f9a5690f2b18b465fc5739bdd5f44c1ad319d2fe",
+      "review_status": "review_complete",
+      "sha256": "e6bc248aba4dc94dd87054d6fc00f4fdfa3d7a593d8c8b11cd28c0554bdc00fa",
+      "changed_from_baseline": false,
+      "review_evidence": "qa/course_refresh_early_final.json",
+      "reason": "Substantial worked equations, controls, CPU outputs and engineering exercises; no identified teaching defect.",
+      "execution": {
+        "scope": "No new run; retained verified evidence"
+      }
+    },
+    {
+      "path": "notebooks/week01/02_tensorflow_for_ai_fluids.ipynb",
+      "kind": "notebook",
+      "baseline_git_blob": "1f844d055d00c003febe80ffe00e2279031ce624",
+      "review_status": "review_complete",
+      "sha256": "b9eb18f8a77b8da0e73859e1c5220bb7117b65041fa6d94e078349233a448bca",
+      "changed_from_baseline": false,
+      "review_evidence": "qa/course_refresh_early_final.json",
+      "reason": "Substantial worked equations, controls, CPU outputs and engineering exercises; no identified teaching defect.",
+      "execution": {
+        "scope": "No new run; retained verified evidence"
+      }
+    },
+    {
+      "path": "notebooks/week01/03_cavity_ghia.ipynb",
+      "kind": "notebook",
+      "baseline_git_blob": "162d137a6b0b2ff39007416b0f6e0180ab81c81d",
+      "review_status": "review_complete",
+      "sha256": "35fed5500f78605bc003101681833249d5249d601fe47dbd810d2f8b706ed0be",
+      "changed_from_baseline": false,
+      "review_evidence": "qa/course_refresh_early_final.json",
+      "reason": "Substantial worked equations, controls, CPU outputs and engineering exercises; no identified teaching defect.",
+      "execution": {
+        "scope": "No new run; retained verified evidence"
+      }
+    },
+    {
+      "path": "notebooks/week01_1/W1_1_AI_Assisted_Scientific_Software.ipynb",
+      "kind": "notebook",
+      "baseline_git_blob": "044d6fbad5bae910f00f76d74f94509aa24fd74e",
+      "review_status": "review_complete",
+      "sha256": "06628727383e65e4d3e6898bee436f10529e7009365d73158e643e3e29347a7a",
+      "changed_from_baseline": false,
+      "review_evidence": "qa/course_refresh_early_final.json",
+      "reason": "Manufactured verification, adversarial axis test and physical gates already explicit.",
+      "execution": {
+        "scope": "No new run; retained verified evidence"
+      }
+    },
+    {
+      "path": "notebooks/week01_2/W1_2_Cavity_Pressure_Velocity.ipynb",
+      "kind": "notebook",
+      "baseline_git_blob": "00431ed5417344bdcb01e1a909a6e70ec5a2e3b2",
+      "review_status": "review_complete",
+      "sha256": "d4bd771bc423ba4932bd2d8c04153de191e0664e4a89762bcee5f604780f726e",
+      "changed_from_baseline": false,
+      "review_evidence": "qa/course_refresh_early_final.json",
+      "reason": "74-page worked SIMPLE/PISO/PIMPLE model with exact experiment tables and retained CFD.",
+      "execution": {
+        "scope": "No new run; retained verified evidence"
+      }
+    },
+    {
+      "path": "notebooks/week01_3/W1_3_Keras_Optimizers.ipynb",
+      "kind": "notebook",
+      "baseline_git_blob": "554c3d9b299247779194bb69443a589661e2455c",
+      "review_status": "review_complete",
+      "sha256": "c770a31c3f96a515aba3894bc1c828444ef6424b0cfbfec4d2377dad8fc28280",
+      "changed_from_baseline": false,
+      "review_evidence": "qa/course_refresh_early_final.json",
+      "reason": "Four function profiles, optimizer equations/controls, physical signed errors and concrete experiments already present.",
+      "execution": {
+        "scope": "No new run; retained verified evidence"
+      }
+    },
+    {
+      "path": "notebooks/week01_4/W1_4_Spectral_DG_CPU.ipynb",
+      "kind": "notebook",
+      "baseline_git_blob": "4572c81ce3cd0866aad164f7b2dc7451e84dd3a0",
+      "review_status": "review_complete",
+      "sha256": "22d369172ae90eba1359ab0032e64738c41d03697e9da25b967738eaa490511d",
+      "changed_from_baseline": false,
+      "review_evidence": "qa/course_refresh_early_final.json",
+      "reason": "Fresh verified standalone CPU path, 18 exact solver functions, actual cavity and Ghia evidence; immutable execution provenance.",
+      "execution": {
+        "scope": "No new run; retained verified evidence"
+      }
+    },
+    {
+      "path": "notebooks/week02/AI_in_Fluids_Week2_Colab_Expanded.ipynb",
+      "kind": "notebook",
+      "baseline_git_blob": "bf622b904d997b4b865845cf3fbe3df375c7b30c",
+      "review_status": "review_complete",
+      "sha256": "e3a3f53ad19e768a8100a8e3710561ac662d3227e631afc29f3b655e41b3b04e",
+      "changed_from_baseline": true,
+      "review_evidence": "qa/course_refresh_early_final.json",
+      "reason": "Network depth/activation controls now construct the actual graph; parameter counts, label targets, CPU figures and engineering experiments explained.",
+      "execution": {
+        "receipt": "results/course_refresh_early/AI_in_Fluids_Week2_Colab_Expanded/execution.json",
+        "receipt_sha256": "5409a132af0d538584987440ac1673f37648ea0bccf0fc2e009132691227a659",
+        "elapsed_run_all_seconds": 165.29853049712256,
+        "host": "uri-cpu078",
+        "cpu_only": true,
+        "executed_code_cells": 26,
+        "figure_count": 9,
+        "original_execution_sha256": "e3a3f53ad19e768a8100a8e3710561ac662d3227e631afc29f3b655e41b3b04e",
+        "post_execution_changes": {}
+      }
+    },
+    {
+      "path": "notebooks/week02_1/Probabilistic_UQ_CFD.ipynb",
+      "kind": "notebook",
+      "baseline_git_blob": "ffac29a619c28d4842c6cfa2b27abb02bec2b42b",
+      "review_status": "review_complete",
+      "sha256": "dba69e24666f8097df3ef192520d334ee114ffc11e213a364d3c9da405f8eef4",
+      "changed_from_baseline": false,
+      "review_evidence": "qa/course_refresh_early_final.json",
+      "reason": "Exact Bayes and GP bridges, calibration/selection/public-assessment distinction and proper scoring already explicit.",
+      "execution": {
+        "scope": "No new run; retained verified evidence"
+      }
+    },
+    {
+      "path": "notebooks/week03/AI_in_Fluids_Week3_Lab1_Maxwellian_Noise_ML_Student.ipynb",
+      "kind": "notebook",
+      "baseline_git_blob": "ef4fc01a3f6487bd9a68d1e6480e1f37673f113c",
+      "review_status": "review_complete",
+      "sha256": "7ca723042cc6ae2d9a82af7d63431291a081abc77ebadd600e71d4d58841d557",
+      "changed_from_baseline": true,
+      "review_evidence": "qa/course_refresh_early_final.json",
+      "reason": "Dimensional moment definitions, finite-N bias, paired unbiased comparison, nondimensional error diagnostics, exposed neural controls and concrete experiments.",
+      "execution": {
+        "receipt": "results/course_refresh_early/AI_in_Fluids_Week3_Lab1_Maxwellian_Noise_ML_Student/execution.json",
+        "receipt_sha256": "f331589eb06e0b3a672e7fffd1df00a337df0ef161abbb2cbef0b8c2ed4ef019",
+        "elapsed_run_all_seconds": 198.43912030000502,
+        "host": "ECS-200417",
+        "cpu_only": true,
+        "executed_code_cells": 11,
+        "figure_count": 4,
+        "original_execution_sha256": "d1852e1debf2c25b6161ea24969814d0d4f683d2bb72bc47e4af8527348a8692",
+        "post_execution_changes": {}
+      }
+    },
+    {
+      "path": "notebooks/week03/AI_in_Fluids_Week3_Lab2_Mini_DSMC_Cavity_Revised_Student.ipynb",
+      "kind": "notebook",
+      "baseline_git_blob": "65b04e74fb1d63dd18c818ef771ee0d376bb6632",
+      "review_status": "review_complete",
+      "sha256": "9d0f844f0f96e88ffd15cf7a1ed6bcb7164d5b0e7bb74a8cbdcda9fd3c5d98c0",
+      "changed_from_baseline": true,
+      "review_evidence": "qa/course_refresh_early_final.json",
+      "reason": "Collision invariants, actual physical sampling windows, native fields/profiles and full errors; matched-time exercise corrected without changing simulations.",
+      "execution": {
+        "receipt": "results/course_refresh_early/AI_in_Fluids_Week3_Lab2_Mini_DSMC_Cavity_Revised_Student/execution.json",
+        "receipt_sha256": "f7730597fbd476521ca14b35b7497fbaee1ada351f71356271db25b5ea9941bc",
+        "elapsed_run_all_seconds": 624.0482166000002,
+        "host": "ECS-200417",
+        "cpu_only": true,
+        "executed_code_cells": 26,
+        "figure_count": 5,
+        "original_execution_sha256": "2faf5f2a31d14a6316374288344809044fd2ac2f08c91f63c8c5792fc179fe68",
+        "post_execution_changes": {
+          "post_execution_markdown_revision": {
+            "reason": "Correct zero-based matched-time exercise: start_new=2*start+1, with halved dt",
+            "code_cells_outputs_and_execution_metadata_unchanged": true,
+            "original_executed_notebook_sha256": "2faf5f2a31d14a6316374288344809044fd2ac2f08c91f63c8c5792fc179fe68"
+          },
+          "post_execution_presentation_revision": {
+            "reason": "Two literal percent signs corrected in retained wall-pressure comparison annotation; no data, code, metrics, other outputs or timing changed.",
+            "receipt": "qa/course_refresh_early_dsmc_presentation.json",
+            "no_simulation_or_training": true
+          }
+        }
+      }
+    },
+    {
+      "path": "notebooks/week04/W4_1_Classical_ROM_Cavity.ipynb",
+      "kind": "notebook",
+      "baseline_git_blob": "0ba08a6d94b1e409137d22bceee950d284380f83",
+      "review_status": "retained_verified_week04_route",
+      "sha256": "ee7213e68df8ba0b1bf48e5eb0e5426acdfdfc390b9892e55e8b13b8bd7c7c93",
+      "changed_from_baseline": false,
+      "review_evidence": "qa/week04_revision_validation.json",
+      "reason": "Current Week4 substantive lab guide and prior CPU execution retained; no new scientific run in this review.",
+      "execution": {
+        "scope": "Prior complete CPU execution reused, not counted as a fresh run of this phase",
+        "code_cells": 11,
+        "figures": 4,
+        "current_sha256": "ee7213e68df8ba0b1bf48e5eb0e5426acdfdfc390b9892e55e8b13b8bd7c7c93"
+      }
+    },
+    {
+      "path": "notebooks/week04/W4_Lab1_CFD_Data_Production_Student.ipynb",
+      "kind": "notebook",
+      "baseline_git_blob": "1f67fb36c392143e2fee5bbfc7152e7b905638e5",
+      "review_status": "retained_verified_week04_route",
+      "sha256": "4ad82dfb9b9fdf6430d17295338c009bb719936e008eb25017a4ffd25871a2e4",
+      "changed_from_baseline": false,
+      "review_evidence": "qa/week04_revision_validation.json",
+      "reason": "Current Week4 substantive lab guide and prior CPU execution retained; no new scientific run in this review.",
+      "execution": {
+        "scope": "Prior complete CPU execution reused, not counted as a fresh run of this phase",
+        "code_cells": 6,
+        "figures": 4,
+        "current_sha256": "4ad82dfb9b9fdf6430d17295338c009bb719936e008eb25017a4ffd25871a2e4"
+      }
+    },
+    {
+      "path": "notebooks/week04/W4_Lab2_Scalar_and_Field_Surrogates_Student.ipynb",
+      "kind": "notebook",
+      "baseline_git_blob": "36c0649e102e252c2ce9b122e21e69b713e29ca2",
+      "review_status": "retained_verified_week04_route",
+      "sha256": "6f9f107de269954ee917aa26943db22138a1d9c39e24e02689c71a9ad1045406",
+      "changed_from_baseline": false,
+      "review_evidence": "qa/week04_revision_validation.json",
+      "reason": "Current Week4 substantive lab guide and prior CPU execution retained; no new scientific run in this review.",
+      "execution": {
+        "scope": "Prior complete CPU execution reused, not counted as a fresh run of this phase",
+        "code_cells": 13,
+        "figures": 13,
+        "current_sha256": "6f9f107de269954ee917aa26943db22138a1d9c39e24e02689c71a9ad1045406"
+      }
+    },
+    {
+      "path": "notebooks/week04/W4_Lab3_DeepONet_Cavity_Student.ipynb",
+      "kind": "notebook",
+      "baseline_git_blob": "1b0d0905aec0e580efede83c0cccf1b4cddbfac5",
+      "review_status": "retained_verified_week04_route",
+      "sha256": "cd6ed36f1e0f0c9740e5a885ced17e7beb4d43c1d302740620be5619d18b034f",
+      "changed_from_baseline": false,
+      "review_evidence": "qa/week04_revision_validation.json",
+      "reason": "Current Week4 substantive lab guide and prior CPU execution retained; no new scientific run in this review.",
+      "execution": {
+        "scope": "Prior complete CPU execution reused, not counted as a fresh run of this phase",
+        "code_cells": 10,
+        "figures": 12,
+        "current_sha256": "cd6ed36f1e0f0c9740e5a885ced17e7beb4d43c1d302740620be5619d18b034f"
+      }
+    },
+    {
+      "path": "notebooks/week04/W4_Lab4_Grid51_Validation.ipynb",
+      "kind": "notebook",
+      "baseline_git_blob": "840336ac153b17da62fcfc7f469a2c253b37461b",
+      "review_status": "retained_verified_week04_route",
+      "sha256": "cde298950a54abe08fec79fc2aefef0fa1f410658f7827bba22592eec5e72f31",
+      "changed_from_baseline": false,
+      "review_evidence": "qa/week04_revision_validation.json",
+      "reason": "Current Week4 substantive lab guide and prior CPU execution retained; no new scientific run in this review.",
+      "execution": {
+        "scope": "Prior complete CPU execution reused, not counted as a fresh run of this phase",
+        "code_cells": 3,
+        "figures": 3,
+        "current_sha256": "cde298950a54abe08fec79fc2aefef0fa1f410658f7827bba22592eec5e72f31"
+      }
+    },
+    {
+      "path": "notebooks/week04/W4_Lab4_Stokes_to_Navier_Stokes.ipynb",
+      "kind": "notebook",
+      "baseline_git_blob": "a0b932916e0e49c38a3c740e83dd0a494adabb15",
+      "review_status": "retained_verified_week04_route",
+      "sha256": "c7b2439cc8d38954fdd0829f68ed16ff3840eafd40aa157a28064ac99e8763b8",
+      "changed_from_baseline": true,
+      "review_evidence": "qa/week04_revision_validation.json",
+      "reason": "Current Week4 substantive lab guide and prior CPU execution retained; no new scientific run in this review.",
+      "execution": {
+        "scope": "Prior complete CPU execution reused, not counted as a fresh run of this phase",
+        "code_cells": 15,
+        "figures": 24,
+        "current_sha256": "c7b2439cc8d38954fdd0829f68ed16ff3840eafd40aa157a28064ac99e8763b8"
+      },
+      "text_only_identity_bridge": "qa/course_refresh_week04_link.json"
+    },
+    {
+      "path": "notebooks/week04/W4_Lab5_All_Re_Ghia_Validation.ipynb",
+      "kind": "notebook",
+      "baseline_git_blob": "c881c4d7cedbe1dff19f866a1e1bb8784adff125",
+      "review_status": "retained_verified_week04_route",
+      "sha256": "dd4b43bcf6f43ebcc048e97fed8f09482e6a48cd032fe98fe8c2a42ad54d8c11",
+      "changed_from_baseline": false,
+      "review_evidence": "qa/week04_revision_validation.json",
+      "reason": "Current Week4 substantive lab guide and prior CPU execution retained; no new scientific run in this review.",
+      "execution": {
+        "scope": "Prior complete CPU execution reused, not counted as a fresh run of this phase",
+        "code_cells": 7,
+        "figures": 10,
+        "current_sha256": "dd4b43bcf6f43ebcc048e97fed8f09482e6a48cd032fe98fe8c2a42ad54d8c11"
+      }
+    },
+    {
+      "path": "notebooks/week04/W4_Lab6_Ghia_Profile_Optimizer_Depth.ipynb",
+      "kind": "notebook",
+      "baseline_git_blob": "295da1879e81b5ce86c0c0082dca3eb4f64536f1",
+      "review_status": "retained_verified_week04_route",
+      "sha256": "38b3e28e4c1f5a087141c57f04de6e525d26f93d1bf7c5158b3a1c2a8009e456",
+      "changed_from_baseline": false,
+      "review_evidence": "qa/week04_revision_validation.json",
+      "reason": "Current Week4 substantive lab guide and prior CPU execution retained; no new scientific run in this review.",
+      "execution": {
+        "scope": "Prior complete CPU execution reused, not counted as a fresh run of this phase",
+        "code_cells": 4,
+        "figures": 7,
+        "current_sha256": "38b3e28e4c1f5a087141c57f04de6e525d26f93d1bf7c5158b3a1c2a8009e456"
+      }
+    },
+    {
+      "path": "notebooks/week04/W4_Lab7_High_Re_CFD_Ghia.ipynb",
+      "kind": "notebook",
+      "baseline_git_blob": "f8c7af97aa6a0f966a6e31fc13bdb1d0b2467309",
+      "review_status": "retained_verified_week04_route",
+      "sha256": "2fcbfb8f422808b653544808e930c11a5ce77bb7966f08ad542a31c9c5edd905",
+      "changed_from_baseline": false,
+      "review_evidence": "qa/week04_revision_validation.json",
+      "reason": "Current Week4 substantive lab guide and prior CPU execution retained; no new scientific run in this review.",
+      "execution": {
+        "scope": "Prior complete CPU execution reused, not counted as a fresh run of this phase",
+        "code_cells": 10,
+        "figures": 7,
+        "current_sha256": "2fcbfb8f422808b653544808e930c11a5ce77bb7966f08ad542a31c9c5edd905"
+      }
+    },
+    {
+      "path": "notebooks/week04/W4_Lab8_High_Re_Field_DeepONet.ipynb",
+      "kind": "notebook",
+      "baseline_git_blob": "9708f831e10aa9fb9166176418db207f44fd191b",
+      "review_status": "retained_verified_week04_route",
+      "sha256": "1a32bcb01712a7f5f8ef3a7b0193ba66e25d6fd06f10af7cb51d3689706f583d",
+      "changed_from_baseline": false,
+      "review_evidence": "qa/week04_revision_validation.json",
+      "reason": "Current Week4 substantive lab guide and prior CPU execution retained; no new scientific run in this review.",
+      "execution": {
+        "scope": "Prior complete CPU execution reused, not counted as a fresh run of this phase",
+        "code_cells": 9,
+        "figures": 10,
+        "current_sha256": "1a32bcb01712a7f5f8ef3a7b0193ba66e25d6fd06f10af7cb51d3689706f583d"
+      }
+    },
+    {
+      "path": "notebooks/week04/W4_Lab9_Label_Free_Ghia_PINN_Audit.ipynb",
+      "kind": "notebook",
+      "baseline_git_blob": "2f1c6cb2979082492cb6e1b72dbd141c08c88539",
+      "review_status": "retained_verified_week04_route",
+      "sha256": "23aeff7c55e5215aa480300f33fc4d783d041c3725822342c5391364e595f13d",
+      "changed_from_baseline": false,
+      "review_evidence": "qa/week04_revision_validation.json",
+      "reason": "Current Week4 substantive lab guide and prior CPU execution retained; no new scientific run in this review.",
+      "execution": {
+        "scope": "Prior complete CPU execution reused, not counted as a fresh run of this phase",
+        "code_cells": 8,
+        "figures": 30,
+        "current_sha256": "23aeff7c55e5215aa480300f33fc4d783d041c3725822342c5391364e595f13d"
+      }
+    },
+    {
+      "path": "notebooks/week05_06/P0_Project_Setup.ipynb",
+      "kind": "notebook",
+      "baseline_git_blob": "7cd4ff05ae6b29af5b41a4fbebd379d6e24fe26d",
+      "review_status": "review_complete",
+      "sha256": "2bc0a685f05cad4153a42f785a159bc6be76b855937eaa54b0036ecba66be559",
+      "changed_from_baseline": true,
+      "review_evidence": "qa/course_refresh_early_final.json",
+      "reason": "Retained project controls/exercises; shared helper now displays physical CFD/model fields, pressure gauges, profiles and full errors; actual CPU output retained.",
+      "execution": {
+        "receipt": "results/course_refresh_early/P0_Project_Setup/execution.json",
+        "receipt_sha256": "1b4187c00b2727ceed1dc4198b8a41d2ef7d8b07406672e76cad2ae2a6db46ca",
+        "elapsed_run_all_seconds": 198.794650799995,
+        "host": "ECS-200417",
+        "cpu_only": true,
+        "executed_code_cells": 5,
+        "figure_count": 1,
+        "original_execution_sha256": "de905322c4f3916265de2bc65c1996707e9f4dc57f824011befe1c5fbd35d2fb",
+        "post_execution_changes": {}
+      }
+    },
+    {
+      "path": "notebooks/week05_06/P1_Re_Generalization.ipynb",
+      "kind": "notebook",
+      "baseline_git_blob": "90cf05108db4d2207d70a24d397b07c3f3512185",
+      "review_status": "review_complete",
+      "sha256": "fd33e8e39a1896f5fe1c937a357e24045ac4122deac738cd091455310f72982d",
+      "changed_from_baseline": true,
+      "review_evidence": "qa/course_refresh_early_final.json",
+      "reason": "Retained project controls/splits; actual default CPU fit and physical comparison including unfavorable corner errors retained.",
+      "execution": {
+        "receipt": "results/course_refresh_early/P1_Re_Generalization/execution.json",
+        "receipt_sha256": "1e5465f3ca7fe3053cb7ce5fbb9618723ab04b8b01f4909e72247d2b2b520e10",
+        "elapsed_run_all_seconds": 468.6234333431348,
+        "host": "uri-cpu083",
+        "cpu_only": true,
+        "executed_code_cells": 7,
+        "figure_count": 1,
+        "original_execution_sha256": "fd33e8e39a1896f5fe1c937a357e24045ac4122deac738cd091455310f72982d",
+        "post_execution_changes": {}
+      }
+    },
+    {
+      "path": "notebooks/week05_06/P2_Physics_Guided_DNN.ipynb",
+      "kind": "notebook",
+      "baseline_git_blob": "461e0d1092824fca4f3f4c7568cd1f100723b0d0",
+      "review_status": "review_complete",
+      "sha256": "3add1c3e51783b4f61e0b42e73e752b1782b640d409c4dc61b654caebc210415",
+      "changed_from_baseline": true,
+      "review_evidence": "qa/course_refresh_early_final.json",
+      "reason": "Retained physics tradeoff and validation selection; physical pressure/velocity outputs added through helper; outline histogram and external legend.",
+      "execution": {
+        "receipt": "results/course_refresh_early/P2_Physics_Guided_DNN/execution.json",
+        "receipt_sha256": "485f300a18a4692b2ffba964d9ea857c9d53646bd1138ba92994fca67fc3515c",
+        "elapsed_run_all_seconds": 383.1372034419328,
+        "host": "uri-cpu078",
+        "cpu_only": true,
+        "executed_code_cells": 7,
+        "figure_count": 3,
+        "original_execution_sha256": "3add1c3e51783b4f61e0b42e73e752b1782b640d409c4dc61b654caebc210415",
+        "post_execution_changes": {}
+      }
+    },
+    {
+      "path": "notebooks/week05_06/P3_POD_Study.ipynb",
+      "kind": "notebook",
+      "baseline_git_blob": "6f6bcfe2e01fc7a2bd73d7a76ed562dba42f3a87",
+      "review_status": "review_complete",
+      "sha256": "4479add632363557eedfeed40b22c28f38f8d9c73152a4e90c14ec74edc29ccc",
+      "changed_from_baseline": true,
+      "review_evidence": "qa/course_refresh_early_final.json",
+      "reason": "Low-rank reconstruction compared with full-field POD oracle using physical fields/profiles; original rank study preserved.",
+      "execution": {
+        "receipt": "results/course_refresh_early/P3_POD_Study/execution.json",
+        "receipt_sha256": "c073ac46c693a9993612f824696c142c42c531c3a873c0c307b4040b7afcacca",
+        "elapsed_run_all_seconds": 12.260024282615632,
+        "host": "uri-cpu083",
+        "cpu_only": true,
+        "executed_code_cells": 8,
+        "figure_count": 3,
+        "original_execution_sha256": "4479add632363557eedfeed40b22c28f38f8d9c73152a4e90c14ec74edc29ccc",
+        "post_execution_changes": {}
+      }
+    },
+    {
+      "path": "notebooks/week05_06/P4_Uncertainty_Study.ipynb",
+      "kind": "notebook",
+      "baseline_git_blob": "890c8aa57779f21e1fbf1a6ec6aafab91607dbf7",
+      "review_status": "review_complete",
+      "sha256": "ffc8234ecfbaf94c154fdde9ac1d4b89cc413a9bd94d9cb44150cb2624973cd4",
+      "changed_from_baseline": true,
+      "review_evidence": "qa/course_refresh_early_final.json",
+      "reason": "Physical ensemble mean/error/spread/profiles, honest one-sample-SD band, all seeds preserved; fit timing excludes later evaluation.",
+      "execution": {
+        "receipt": "results/course_refresh_early/P4_Uncertainty_Study/execution.json",
+        "receipt_sha256": "3718e1ed8702b3b31feaedc6b688d65850eb2aa5b2ef00af32d88d444e1c03cd",
+        "elapsed_run_all_seconds": 554.3551526330411,
+        "host": "uri-cpu084",
+        "cpu_only": true,
+        "executed_code_cells": 6,
+        "figure_count": 3,
+        "original_execution_sha256": "0f6bc6ed306d6f8b7e53193887cecc756b63aea4c8d8bbd6034ba1544c5b143b",
+        "post_execution_changes": {
+          "post_execution_markdown_revision": {
+            "reason": "Add missing space in \"a 95%\"; all code, output and timing retained.",
+            "code_outputs_execution_metadata_equal": true,
+            "before_notebook_sha256": "0f6bc6ed306d6f8b7e53193887cecc756b63aea4c8d8bbd6034ba1544c5b143b"
+          }
+        }
+      }
+    },
+    {
+      "path": "notebooks/week05_06/P5_Rarefied_Cavity.ipynb",
+      "kind": "notebook",
+      "baseline_git_blob": "784a6220dfe816181777e270deb83249d858fc1c",
+      "review_status": "review_complete",
+      "sha256": "91c8a08c2626e12083a65ab021d2ace69dfb9ca0fd743c599b53783ce4f78111",
+      "changed_from_baseline": true,
+      "review_evidence": "qa/course_refresh_early_final.json",
+      "reason": "Complete CPU Track5A default, native speed/streamlines/errors and signed temperature profiles; coarse noisy reference and poor neural behavior remain visible.",
+      "execution": {
+        "receipt": "results/course_refresh_early/P5_Rarefied_Cavity/execution.json",
+        "receipt_sha256": "77481fbeff72d9e25888299d682ddbc691807ef3c0ac9acf6c2326d98f1249af",
+        "elapsed_run_all_seconds": 27.69669646769762,
+        "host": "uri-cpu084",
+        "cpu_only": true,
+        "executed_code_cells": 8,
+        "figure_count": 2,
+        "original_execution_sha256": "91c8a08c2626e12083a65ab021d2ace69dfb9ca0fd743c599b53783ce4f78111",
+        "post_execution_changes": {},
+        "cold_generation_seconds": 134.39606683980674,
+        "final_run_used_existing_configuration_matched_cache": true
+      }
+    },
+    {
+      "path": "notebooks/week05_06/P6_FP_Cavity_Closure.ipynb",
+      "kind": "notebook",
+      "baseline_git_blob": "39241241688863aaec48811c896a722f234060d5",
+      "review_status": "review_complete",
+      "sha256": "884ecee06a1584db3082f4fcf47ece22513a90b6178a4db2932c639a6218844a",
+      "changed_from_baseline": true,
+      "review_evidence": "qa/course_refresh_early_final.json",
+      "reason": "GPU research extension retained; only two histogram styles and legend placement changed. Static verification only; no GPU training claimed.",
+      "execution": {
+        "scope": "Static compile/schema verification only; optional GPU project not run"
+      }
+    },
+    {
+      "path": "notebooks/week05_06/W5_Lab2_Sparse_Sensing_Dynamics.ipynb",
+      "kind": "notebook",
+      "baseline_git_blob": "085379573ee74b6340054392521bb342559f6d4d",
+      "review_status": "review_complete",
+      "sha256": "cbe39278f9a943bd3ae813fae36d03da0175091377697f98226528cbbb80b1ea",
+      "changed_from_baseline": true,
+      "review_evidence": "qa/course_refresh_early_final.json",
+      "reason": "POD/sensor derivation and real rank/budget/noise/seed controls; train90/110, validation100, assessment105; conditioning and physical diagnostics; explicit optional dynamics bridge.",
+      "execution": {
+        "receipt": "results/course_refresh_early/W5_Lab2_Sparse_Sensing_Dynamics/execution.json",
+        "receipt_sha256": "6f13c36da3084a9d5148aced68f86a4211a2df4827599837eaba8eda01e42532",
+        "elapsed_run_all_seconds": 437.61189070000546,
+        "host": "ECS-200417",
+        "cpu_only": true,
+        "executed_code_cells": 9,
+        "figure_count": 4,
+        "original_execution_sha256": "cbe39278f9a943bd3ae813fae36d03da0175091377697f98226528cbbb80b1ea",
+        "post_execution_changes": {}
+      }
+    },
+    {
+      "path": "notebooks/week07/W7_Lab2_Modal_Forecasting.ipynb",
+      "kind": "notebook",
+      "baseline_git_blob": "5e4509e51cfd48fa9d327f17d5b5bea40a25fafb",
+      "review_status": "review_complete",
+      "sha256": "3e90784a99f3869874e34fe618048f28c90e1168bdcc11326f9d3e7a4f2bc3d4",
+      "changed_from_baseline": true,
+      "review_evidence": "qa/course_refresh_middle.json",
+      "reason": "Expanded: explicit rank/horizon controls make a separate validation-only DMD study; split/row-state equations, POD oracle and richer MLP history explained.",
+      "execution": {
+        "path": "notebooks/week07/W7_Lab2_Modal_Forecasting.ipynb",
+        "source_sha256": "1274a30583317079ac7f4ab4d9359e5ccc4cc9217be82bc078f8bafd76d2569a",
+        "python": "/scratch3/workspace/roohie_umass_edu-flowml-ghia-highre-20261115/pinn-venv/bin/python",
+        "mode": "default CPU Run All",
+        "started_utc": "2026-11-21T03:35:20Z",
+        "status": "passed",
+        "cell_errors": 0,
+        "figures": 3,
+        "notebook_sha256": "3e90784a99f3869874e34fe618048f28c90e1168bdcc11326f9d3e7a4f2bc3d4",
+        "elapsed_s": 9.539968735072762
+      }
+    },
+    {
+      "path": "notebooks/week07/W7_Lattice_Boltzmann_Cylinder_Student.ipynb",
+      "kind": "notebook",
+      "baseline_git_blob": "05bd6e1db068f68227607279757c38966c215e40",
+      "review_status": "review_complete",
+      "sha256": "ace3fa3dabeb91c852cc3abb8043e8e62aea087d5addc1b181a9c43fb8a775d3",
+      "changed_from_baseline": false,
+      "review_evidence": "qa/course_refresh_middle.json",
+      "reason": "Preserved: D2Q9/TRT update, boundary rules, relaxation/Mach constraints, CFD qualification and grid controls already explained; the default distinguishes retained data and live continuation."
+    },
+    {
+      "path": "notebooks/week07_1/W7_1_Hypersonic_Rarefied_Cylinder_DeepONet.ipynb",
+      "kind": "notebook",
+      "baseline_git_blob": "48ab12121ed2e6b71f4f09a996a337397cb76eea",
+      "review_status": "review_complete",
+      "sha256": "65a70870e037319321b13e34e51a12880e4e72b57eb46a4250542235d4687eb3",
+      "changed_from_baseline": false,
+      "review_evidence": "qa/course_refresh_middle.json",
+      "reason": "Preserved: CPU coordinate-MLP baseline and branch/trunk anatomy, case-level splits, local errors and article/teaching distinction are present."
+    },
+    {
+      "path": "notebooks/week07_2/W7_2_Cylinder_Wake_State_Estimation.ipynb",
+      "kind": "notebook",
+      "baseline_git_blob": "47678cef543d5c8723fa9931f19170b1f101c585",
+      "review_status": "review_complete",
+      "sha256": "796d0f1bcc9a2a07aecee496204e4698e9e0b5ba3a033fe1bc2834e89f2b7fd3",
+      "changed_from_baseline": false,
+      "review_evidence": "qa/course_refresh_middle.json",
+      "reason": "Notebook preserved; lecture expanded: explicit Kalman state/observation variables, centered measurements, numerical update, causality and failed interval-coverage interpretation."
+    },
+    {
+      "path": "notebooks/week07_3/W7_3_Masked_Pretraining_Label_Efficiency.ipynb",
+      "kind": "notebook",
+      "baseline_git_blob": "1b75993cd8fb72ceb0de0db9e57337cecc8fe43c",
+      "review_status": "review_complete",
+      "sha256": "459165278888b6788ceaee304f49f1833f3c56a5851a2bf506ee998fdc53d460",
+      "changed_from_baseline": true,
+      "review_evidence": "qa/course_refresh_middle.json",
+      "reason": "Expanded: actual masked-token/loss denominator, ridge/probe/fine-tune differences and fair work accounting; bounded QUICK CPU default now explicit.",
+      "execution": {
+        "path": "notebooks/week07_3/W7_3_Masked_Pretraining_Label_Efficiency.ipynb",
+        "source_sha256": "f9fb1705b5d6a46445628127868598ddd1d2659db16adda2c15dffd7a672abf8",
+        "python": "/scratch3/workspace/roohie_umass_edu-flowml-ghia-highre-20261115/pinn-venv/bin/python",
+        "mode": "default CPU Run All",
+        "started_utc": "2026-11-21T03:07:57Z",
+        "status": "passed",
+        "cell_errors": 0,
+        "figures": 4,
+        "notebook_sha256": "459165278888b6788ceaee304f49f1833f3c56a5851a2bf506ee998fdc53d460",
+        "elapsed_s": 136.130037171999
+      }
+    },
+    {
+      "path": "notebooks/week07_4/W7_4_Diverse_Wake_Pretraining.ipynb",
+      "kind": "notebook",
+      "baseline_git_blob": "1b9ed2e2d9854b6bcb6ccbf72e7bc5a0a8e80f09",
+      "review_status": "review_complete",
+      "sha256": "3ef0c2fc6a02a6e50b7993ad728a3ae3fe84c5bf38a43dfbf861195d42b8c6c5",
+      "changed_from_baseline": true,
+      "review_evidence": "qa/course_refresh_middle.json",
+      "reason": "Expanded: current-field lift decoding distinguished from forecasting; fresh validation-only POD-ridge experiment exposes rank, label budget and penalty.",
+      "execution": {
+        "path": "notebooks/week07_4/W7_4_Diverse_Wake_Pretraining.ipynb",
+        "source_sha256": "519457fd2c725665410bc1d08360eddea6d2e5fd9e9a826d6bcb8a35916ad161",
+        "python": "/scratch3/workspace/roohie_umass_edu-flowml-ghia-highre-20261115/pinn-venv/bin/python",
+        "mode": "default CPU Run All",
+        "started_utc": "2026-11-21T03:23:43Z",
+        "status": "passed",
+        "cell_errors": 0,
+        "figures": 4,
+        "notebook_sha256": "3ef0c2fc6a02a6e50b7993ad728a3ae3fe84c5bf38a43dfbf861195d42b8c6c5",
+        "elapsed_s": 4.488942335010506
+      }
+    },
+    {
+      "path": "notebooks/week08/W8_Lab1_Exact_Gas_Dynamics_Student.ipynb",
+      "kind": "notebook",
+      "baseline_git_blob": "ce65056c2ae85bb453cba7c23aadf9c9a0244bba",
+      "review_status": "review_complete",
+      "sha256": "10b1ee83f83da747aa09e9357b85b4aaf8dec55e0934f16867edfb1ddea97eba",
+      "changed_from_baseline": false,
+      "review_evidence": "qa/course_refresh_middle.json",
+      "reason": "Preserved: exact forward/inverse gas relations, branch brackets, sonic limits and independent forward-substitution checks already give concrete numerical tasks."
+    },
+    {
+      "path": "notebooks/week08/W8_Lab2_Gas_Dynamics_SciML_Evidence_Student.ipynb",
+      "kind": "notebook",
+      "baseline_git_blob": "bc803835c69e80ac692a5dbf377f3158313f91ab",
+      "review_status": "review_complete",
+      "sha256": "8d2629ae9a064973b1b87b346752d37b272ea6d62ac39f18d091c22edd14bdd5",
+      "changed_from_baseline": true,
+      "review_evidence": "qa/course_refresh_middle.json",
+      "reason": "Repaired: three aggregate bar displays removed while numerical tables remain; add physical Rayleigh branch predictions and signed Mach errors from current fits.",
+      "execution": {
+        "path": "notebooks/week08/W8_Lab2_Gas_Dynamics_SciML_Evidence_Student.ipynb",
+        "source_sha256": "28d014bed531df2b8740e66bc2f2c6f59354aee58bad04c8dbfabb55c4cc25cf",
+        "python": "D:\\ChatGPT Backup\\Projects\\FlowMLLab\\Teaching_Current\\repo\\tmp\\week01_4_runtime\\Scripts\\python.exe",
+        "mode": "default CPU Run All",
+        "started_utc": "2026-11-21T02:24:33Z",
+        "status": "passed",
+        "cell_errors": 0,
+        "figures": 3,
+        "notebook_sha256": "074da010adadeab1e332fe1f66b60dfd79a7e5017b02837f3ce218931a04591d",
+        "elapsed_s": 150.92179699999542
+      }
+    },
+    {
+      "path": "notebooks/week09/W9_Lab1_Microstep_Zonal_DeepONet_Student.ipynb",
+      "kind": "notebook",
+      "baseline_git_blob": "dadc537dca3b7eefc76e1084ca67594ed65f8f0d",
+      "review_status": "review_complete",
+      "sha256": "61385ac842262bf07487b7384b84db1b8c96ec33d6ffc97ec1732077afa41fff",
+      "changed_from_baseline": false,
+      "review_evidence": "qa/course_refresh_middle.json",
+      "reason": "Preserved: geometry holdout, regional weighting with a global guardrail, distinction between coordinate MLP and strict operator, and fresh/retained metric provenance are explicit."
+    },
+    {
+      "path": "notebooks/week09/W9_Lab2_Shock_Aligned_Nozzle_DeepONet_Student.ipynb",
+      "kind": "notebook",
+      "baseline_git_blob": "50f4b4f13fc643f310cddd7d35afebe9e327c0ce",
+      "review_status": "review_complete",
+      "sha256": "ad453fe06374f5bb9e9ed972408361cd1c9d3c808773805e57e8ff2560e400db",
+      "changed_from_baseline": false,
+      "review_evidence": "qa/course_refresh_middle.json",
+      "reason": "Preserved: target-assisted registration versus deployable locator, six-field interpolation/learning, station ties and complete-case split are explained."
+    },
+    {
+      "path": "notebooks/week09/W9_Lab3_Nozzle_Data_Alignment_Audit.ipynb",
+      "kind": "notebook",
+      "baseline_git_blob": "214d7b3ca550446874ed2d02e09cf268e57c9e0f",
+      "review_status": "review_complete",
+      "sha256": "69d5dafa80812b8fe29acb75de99f61bb5b524c27e2ded18a8d4f0fc3c6f3dca",
+      "changed_from_baseline": true,
+      "review_evidence": "qa/course_refresh_middle.json",
+      "reason": "Repaired: incorrect generic zonal-loss and coordinate-MLP intro replaced by actual smooth-nozzle equations, fixed sensors/query pairing and no-training CPU scope.",
+      "execution": {
+        "path": "notebooks/week09/W9_Lab3_Nozzle_Data_Alignment_Audit.ipynb",
+        "source_sha256": "b67e2da2ee5f4cc41107bac25f7a27597f295f62f4f1d3c4b2eed97f162289ad",
+        "python": "/scratch3/workspace/roohie_umass_edu-flowml-ghia-highre-20261115/pinn-venv/bin/python",
+        "mode": "default CPU Run All",
+        "started_utc": "2026-11-21T03:35:22Z",
+        "status": "passed",
+        "cell_errors": 0,
+        "figures": 1,
+        "notebook_sha256": "69d5dafa80812b8fe29acb75de99f61bb5b524c27e2ded18a8d4f0fc3c6f3dca",
+        "elapsed_s": 5.023539666086435
+      }
+    },
+    {
+      "path": "notebooks/week10/W10_DSMC_Data_Driven_Surrogates_Student.ipynb",
+      "kind": "notebook",
+      "baseline_git_blob": "b983eeaeb86a22be44aca0dc38e7703c27833dfc",
+      "review_status": "review_complete",
+      "sha256": "f7b03bbd877cbe8e5c681319e12ce0a835cbe8fb76d9fdf612274ddf050409ca",
+      "changed_from_baseline": false,
+      "review_evidence": "qa/course_refresh_middle.json",
+      "reason": "Preserved: log-Knudsen interpolation weights, component normalization, internal relaxation versus monatomic shock context, and extrapolation limits already explicit."
+    },
+    {
+      "path": "notebooks/week10_1/W10_1_Collision_Map_Surrogate_Audit.ipynb",
+      "kind": "notebook",
+      "baseline_git_blob": "f4b9bbaaa2a6d3d44d68e421a1ec1e857aeb1a1a",
+      "review_status": "review_complete",
+      "sha256": "fe859ef586bd6c8542f1f9f301585551f2e884bd031f7c19c53481b043be3dc6",
+      "changed_from_baseline": true,
+      "review_evidence": "qa/course_refresh_middle.json",
+      "reason": "Repaired: clipped signed error maps now retain full extrema; added raw/clipped prediction range and physical unseen-energy profiles. One-page lecture replaced with scattering/quadrature/ML/transport/tail teaching.",
+      "execution": {
+        "path": "notebooks/week10_1/W10_1_Collision_Map_Surrogate_Audit.ipynb",
+        "source_sha256": "7abf4ecd7274bbca61f278b152bdf2ef737dd57ffd058139b255be5fabc64188",
+        "python": "D:\\ChatGPT Backup\\Projects\\FlowMLLab\\Teaching_Current\\repo\\tmp\\week01_4_runtime\\Scripts\\python.exe",
+        "mode": "default CPU Run All",
+        "started_utc": "2026-11-21T02:27:05Z",
+        "status": "passed",
+        "cell_errors": 0,
+        "figures": 4,
+        "notebook_sha256": "29c94aeba0f3356f0a14141c8e45a697e99a5c185866fcfe0f223dd682ffaf62",
+        "elapsed_s": 1264.356645400003
+      }
+    },
+    {
+      "path": "notebooks/week10_2/W10_2_BGK_Shakhov_Shock_PINN_DVM.ipynb",
+      "kind": "notebook",
+      "baseline_git_blob": "fb056d784ca4cc82ecb5a5112632806b420f5710",
+      "review_status": "review_complete",
+      "sha256": "68b2446c532fc37cec12ca90f385454c17bdbc7e657c24be1ed9a8aa57fd3604",
+      "changed_from_baseline": false,
+      "review_evidence": "qa/course_refresh_middle.json",
+      "reason": "Preserved: 27-page matched theory/lab guide defines reduced moments, collision laws, jump states, actual short CPU PINN and separate controlled studies."
+    },
+    {
+      "path": "notebooks/week11/W11_Cavitation_Cloud_Detection.ipynb",
+      "kind": "notebook",
+      "baseline_git_blob": "93a6f29344c7d2d4658232c5bfd016b49dd9dac9",
+      "review_status": "review_complete",
+      "sha256": "f2998e04dbc7e9b9684e02089730330b007df1fcdebcb0fdcfd09fdd8a598c96",
+      "changed_from_baseline": false,
+      "review_evidence": "qa/course_refresh_middle.json",
+      "reason": "Preserved: seven real cases, alpha/pressure criteria, matched connectivity/U-Net comparisons, wall predictions and held-out noise/adaptation contracts are present."
+    },
+    {
+      "path": "notebooks/week11/W11_Lab2_Reconstruction_and_Identification.ipynb",
+      "kind": "notebook",
+      "baseline_git_blob": "8ae10832234c99b8e2e1c3dc8db4da21bcad7e3d",
+      "review_status": "review_complete",
+      "sha256": "ba56709517cc7ae760fe581d619d8a4b3dc2f2509f677397eb402b6d8a99ac0f",
+      "changed_from_baseline": false,
+      "review_evidence": "qa/course_refresh_middle.json",
+      "reason": "Preserved: frozen reconstruction replay, training-only divergence thresholds, validation sensitivity and physical structure-versus-field distinction are explicit."
+    },
+    {
+      "path": "notebooks/week11/W11_Shock_Vortex_Identification.ipynb",
+      "kind": "notebook",
+      "baseline_git_blob": "f8a9c31690b56c48a10d5fb132c2fb3a8d927a39",
+      "review_status": "review_complete",
+      "sha256": "b9c0d84a685714d88142d09c4436212d8ae2eb7f08530049d484482cf671ba36",
+      "changed_from_baseline": false,
+      "review_evidence": "qa/course_refresh_middle.json",
+      "reason": "Preserved: analytic manufactured controls, derivative features, recomputed-noise tests, shear/expansion negatives and frozen research forward passes distinguish learning from classification claims."
+    },
+    {
+      "path": "notebooks/week12/W12_DSMC_Moment_Reconstruction.ipynb",
+      "kind": "notebook",
+      "baseline_git_blob": "bc8f0e9207319437a17c0359ecc888ecbeb5f33a",
+      "review_status": "review_complete",
+      "sha256": "cefe445a18aeebea7aba1593cf2554c96264d37eaed7d38146ae4d25a656b760",
+      "changed_from_baseline": false,
+      "review_evidence": "qa/course_refresh_middle.json",
+      "reason": "Preserved: aggregate raw moments before centralization, independent stochastic samples, Noise2Noise identity and physical gradient/DC/wall checks already explained."
+    },
+    {
+      "path": "notebooks/week13/W13_D5_Controlled_Optimizer_Study.ipynb",
+      "kind": "notebook",
+      "baseline_git_blob": "a5d675c99e9d9aab2719f638b622d2883d822dcf",
+      "review_status": "review_complete",
+      "sha256": "52d99a41657948eb256f808a5b962f08a0557aa5a04dbc2aa96f94006b9801a3",
+      "changed_from_baseline": false,
+      "review_evidence": "qa/course_refresh_middle.json",
+      "reason": "Preserved: matched-work optimizer comparisons retain failed arms, independent seeds and frozen endpoints rather than manufacturing a winner."
+    },
+    {
+      "path": "notebooks/week13/W13_Deep_Cavity_D5_Regional_Accuracy.ipynb",
+      "kind": "notebook",
+      "baseline_git_blob": "ee6a12d2725497ae98e4f388cb9b40d1859b602c",
+      "review_status": "review_complete",
+      "sha256": "c72fab0e4104d322b9b3976018794988349ace58c98f03399e7debb19535731c",
+      "changed_from_baseline": false,
+      "review_evidence": "qa/course_refresh_middle.json",
+      "reason": "Preserved: deep-cavity regional signed fields/profiles, scales, gates and all-Re interpretation explicitly teach local versus global accuracy."
+    },
+    {
+      "path": "notebooks/week13/W13_Rectangular_Cavity_PINN_Research.ipynb",
+      "kind": "notebook",
+      "baseline_git_blob": "3b4794a8c73a045a404bbfeee5815bb56c8753c1",
+      "review_status": "review_complete",
+      "sha256": "cab16d379a1a4b487e53214cecfee87ed8232679a3a3f36ca9955f9860a73de0",
+      "changed_from_baseline": false,
+      "review_evidence": "qa/course_refresh_middle.json",
+      "reason": "Preserved: substantial from-scratch double-precision CPU PINN, derivative checks, reference-vs-label-free distinction, optimizer work and regional flow qualification already aligned with lecture."
+    },
+    {
+      "path": "notebooks/week14/W14_pyCALC_RANS_PINN_NN.ipynb",
+      "kind": "notebook",
+      "baseline_git_blob": "b908953d6defc9c119fd1bc7f29acebb8d0f0e6a",
+      "review_status": "review_complete",
+      "sha256": "78bbe17546ca239d216bd224d416a7a2549befde388d7b49890d4d2bdbf18949",
+      "changed_from_baseline": true,
+      "review_evidence": "qa/course_refresh_middle.json",
+      "reason": "Repaired: fresh gap MLP/PCHIP computation now plots its own arrays instead of an archived image; inverse/closure/solver stages and conditioning exercises expanded.",
+      "execution": {
+        "path": "notebooks/week14/W14_pyCALC_RANS_PINN_NN.ipynb",
+        "source_sha256": "4379405ab11ed394d1164427a5e8d10587bd3ef955a5e3158550e585c9590224",
+        "python": "/scratch3/workspace/roohie_umass_edu-flowml-ghia-highre-20261115/pinn-venv/bin/python",
+        "mode": "default CPU Run All",
+        "started_utc": "2026-11-21T03:08:28Z",
+        "status": "passed",
+        "cell_errors": 0,
+        "figures": 7,
+        "notebook_sha256": "f0f5897d85e8639ab716be0705ce14d098e62d6f03210fe6bdc235a564be9f42",
+        "elapsed_s": 37.2859815210104
+      }
+    },
+    {
+      "path": "notebooks/week15/W15_Complete_Geometry_Generalization.ipynb",
+      "kind": "notebook",
+      "baseline_git_blob": "c29232f243e6039925585e861e102e7e9f2b13b0",
+      "review_status": "review_complete",
+      "sha256": "eb6b42e579a976008b866b06b1930e46a5a35dba57ae92c133a86c4998e0ee7a",
+      "changed_from_baseline": true,
+      "review_evidence": "qa/course_refresh_late.json",
+      "reason": "Complete manufactured CPU operator training with depth/width/optimizer/loss controls, validation-only selection and exact held-out spatial errors; retained CFD companions and optional archives remain separate.",
+      "execution": {
+        "method": "fresh Jupyter kernel",
+        "python": "3.12.3 (main, Aug 31 2026, 10:18:26) [GCC 13.3.0]",
+        "executable": "/scratch3/workspace/roohie_umass_edu-flowml-ghia-highre-20261115/pinn-venv/bin/python",
+        "seconds": 8.632245608139783,
+        "code_cells": 20,
+        "image_outputs": 14,
+        "status": "passed"
+      }
+    },
+    {
+      "path": "notebooks/week15/W15_Geometry_Operators_Step_Audit.ipynb",
+      "kind": "notebook",
+      "baseline_git_blob": "dfbf01aa0539eaf632636c0f678d21b9bc4d910c",
+      "review_status": "review_complete",
+      "sha256": "3ad222cf0e4705ba7fb1d2adad88416911f6e3f5174fdce1f0e99c413f6c4a8a",
+      "changed_from_baseline": true,
+      "review_evidence": "qa/course_refresh_late.json",
+      "reason": "Complete manufactured CPU operator training with depth/width/optimizer/loss controls, validation-only selection and exact held-out spatial errors; retained CFD companions and optional archives remain separate.",
+      "execution": {
+        "method": "fresh Jupyter kernel",
+        "python": "3.12.3 (main, Aug 31 2026, 10:18:26) [GCC 13.3.0]",
+        "executable": "/scratch3/workspace/roohie_umass_edu-flowml-ghia-highre-20261115/pinn-venv/bin/python",
+        "seconds": 11.945593563999864,
+        "code_cells": 13,
+        "image_outputs": 12,
+        "status": "passed"
+      }
+    },
+    {
+      "path": "notebooks/week15/W15_Larger_Networks_Analysis.ipynb",
+      "kind": "notebook",
+      "baseline_git_blob": "b8f6fa7380a8bc045d2f1e14ded575d3bafd80a6",
+      "review_status": "review_complete",
+      "sha256": "7b166804fca599d36ddcf48f9a4470683424c01c15a84b97f21b9f5147d7564e",
+      "changed_from_baseline": true,
+      "review_evidence": "qa/course_refresh_late.json",
+      "reason": "Complete manufactured CPU operator training with depth/width/optimizer/loss controls, validation-only selection and exact held-out spatial errors; retained CFD companions and optional archives remain separate.",
+      "execution": {
+        "method": "fresh Jupyter kernel",
+        "python": "3.12.3 (main, Aug 31 2026, 10:18:26) [GCC 13.3.0]",
+        "executable": "/scratch3/workspace/roohie_umass_edu-flowml-ghia-highre-20261115/pinn-venv/bin/python",
+        "seconds": 1.2304477139841765,
+        "code_cells": 8,
+        "image_outputs": 4,
+        "status": "passed"
+      }
+    },
+    {
+      "path": "notebooks/week15/W15_Original_Transolver_Double_Step.ipynb",
+      "kind": "notebook",
+      "baseline_git_blob": "7d04be4a2522b865b50e75445f4d4e353e93901e",
+      "review_status": "review_complete",
+      "sha256": "c986c1d870904cc4cdd092e6ae29f338b6181a356325eae99164ccb089109818",
+      "changed_from_baseline": true,
+      "review_evidence": "qa/course_refresh_late.json",
+      "reason": "Complete manufactured CPU operator training with depth/width/optimizer/loss controls, validation-only selection and exact held-out spatial errors; retained CFD companions and optional archives remain separate.",
+      "execution": {
+        "method": "fresh Jupyter kernel",
+        "python": "3.12.3 (main, Aug 31 2026, 10:18:26) [GCC 13.3.0]",
+        "executable": "/scratch3/workspace/roohie_umass_edu-flowml-ghia-highre-20261115/pinn-venv/bin/python",
+        "seconds": 6.658458118094131,
+        "code_cells": 5,
+        "image_outputs": 4,
+        "status": "passed"
+      }
+    },
+    {
+      "path": "notebooks/week15/W15_Original_Transolver_Step.ipynb",
+      "kind": "notebook",
+      "baseline_git_blob": "38b98aaf4a443465b2647ac9eac1849a55684de5",
+      "review_status": "review_complete",
+      "sha256": "a77336f1fbab5a40f00f033c6b5106d3f1a031087263ec9a5aa6e97a16fd22c5",
+      "changed_from_baseline": true,
+      "review_evidence": "qa/course_refresh_late.json",
+      "reason": "Complete manufactured CPU operator training with depth/width/optimizer/loss controls, validation-only selection and exact held-out spatial errors; retained CFD companions and optional archives remain separate.",
+      "execution": {
+        "method": "fresh Jupyter kernel",
+        "python": "3.12.3 (main, Aug 31 2026, 10:18:26) [GCC 13.3.0]",
+        "executable": "/scratch3/workspace/roohie_umass_edu-flowml-ghia-highre-20261115/pinn-venv/bin/python",
+        "seconds": 5.601437879027799,
+        "code_cells": 4,
+        "image_outputs": 7,
+        "status": "passed"
+      }
+    },
+    {
+      "path": "notebooks/week16/W16_Supersonic_Shape_Optimization.ipynb",
+      "kind": "notebook",
+      "baseline_git_blob": "9823f5a8cf3d477bf01fda875836297baf6ae3e5",
+      "review_status": "review_complete",
+      "sha256": "f18a04fd5c3d9347255768a28b30e556aabc2a82669b235ae1392abbb198a497",
+      "changed_from_baseline": true,
+      "review_evidence": "qa/course_refresh_late.json",
+      "reason": "Exposed CPU POD/MLP controls and same-case pressure/signed-error plots for ridge, GP and MLP; stored checkpoint and retained CFD design verification remain distinct from fresh fits/proposals.",
+      "execution": {
+        "method": "fresh Jupyter kernel",
+        "python": "3.12.3 (main, Aug 31 2026, 10:18:26) [GCC 13.3.0]",
+        "executable": "/scratch3/workspace/roohie_umass_edu-flowml-ghia-highre-20261115/pinn-venv/bin/python",
+        "seconds": 7.944128320086747,
+        "code_cells": 19,
+        "image_outputs": 11,
+        "status": "passed"
+      }
+    },
+    {
+      "path": "notebooks/week17/W17_CFD_Transformer.ipynb",
+      "kind": "notebook",
+      "baseline_git_blob": "8a9bf84c62cbc3ccc9f2d1d800fc1c56f8fe7528",
+      "review_status": "review_complete",
+      "sha256": "98e5890015a83bd3af87652c6018d17d9e07e273976be1dbbc967514bd2a5393",
+      "changed_from_baseline": true,
+      "review_evidence": "qa/course_refresh_late.json",
+      "reason": "Attention input/output and observation locations are mapped to the native Re110 velocity field; learned attention evidence remains distinct from the random mechanism demonstration.",
+      "execution": {
+        "method": "fresh Jupyter kernel",
+        "python": "3.12.3 (main, Aug 31 2026, 10:18:26) [GCC 13.3.0]",
+        "executable": "/scratch3/workspace/roohie_umass_edu-flowml-ghia-highre-20261115/pinn-venv/bin/python",
+        "seconds": 9.35709703201428,
+        "code_cells": 15,
+        "image_outputs": 4,
+        "status": "passed"
+      }
+    },
+    {
+      "path": "notebooks/week18/W18_CFD_Transformer.ipynb",
+      "kind": "notebook",
+      "baseline_git_blob": "0103813dfacdc8c600d3b70c7da6036459e49252",
+      "review_status": "review_complete",
+      "sha256": "090056d7a4fdb5882b6876038a6badd0240acebf0dae5d86f66bd7c79e7db573",
+      "changed_from_baseline": true,
+      "review_evidence": "qa/course_refresh_late.json",
+      "reason": "Real small CPU character-model fit and causal prefix experiment; every task has an explicit likelihood/masking interface and a visible diagnostic.",
+      "execution": {
+        "method": "fresh Jupyter kernel",
+        "python": "3.12.3 (main, Aug 31 2026, 10:18:26) [GCC 13.3.0]",
+        "executable": "/scratch3/workspace/roohie_umass_edu-flowml-ghia-highre-20261115/pinn-venv/bin/python",
+        "seconds": 22.312575404008385,
+        "code_cells": 14,
+        "image_outputs": 2,
+        "status": "passed"
+      }
+    },
+    {
+      "path": "notebooks/week19/W19_CFD_Transformer.ipynb",
+      "kind": "notebook",
+      "baseline_git_blob": "226c1e498c4955ab09ade14b11d4d54746c981d8",
+      "review_status": "review_complete",
+      "sha256": "1ee0bededcfd403b3b5fe80433d1451b41e613b76cd9b141b337320d2bca0079",
+      "changed_from_baseline": true,
+      "review_evidence": "qa/course_refresh_late.json",
+      "reason": "Matched native CFD/source-POD/QR/lattice reconstructions, complete signed errors and common-row profiles complement tokenization/cost exercises.",
+      "execution": {
+        "method": "fresh Jupyter kernel",
+        "python": "3.12.3 (main, Aug 31 2026, 10:18:26) [GCC 13.3.0]",
+        "executable": "/scratch3/workspace/roohie_umass_edu-flowml-ghia-highre-20261115/pinn-venv/bin/python",
+        "seconds": 10.169465807033703,
+        "code_cells": 14,
+        "image_outputs": 5,
+        "status": "passed"
+      }
+    },
+    {
+      "path": "notebooks/week20/W20_CFD_Transformer.ipynb",
+      "kind": "notebook",
+      "baseline_git_blob": "efe0f327d6456377522888681458f12a614de379",
+      "review_status": "review_complete",
+      "sha256": "41a2f4ea026661c1eb383e6f5a3330ee0b4665b815845a3f972b7f210982a168",
+      "changed_from_baseline": true,
+      "review_evidence": "qa/course_refresh_late.json",
+      "reason": "Fresh bounded sensor-set fit is distinguished from retained full-protocol sparse-sensing predictions; all four methods share native field/profile diagnostics.",
+      "execution": {
+        "method": "fresh Jupyter kernel",
+        "python": "3.12.3 (main, Aug 31 2026, 10:18:26) [GCC 13.3.0]",
+        "executable": "/scratch3/workspace/roohie_umass_edu-flowml-ghia-highre-20261115/pinn-venv/bin/python",
+        "seconds": 14.74490143591538,
+        "code_cells": 15,
+        "image_outputs": 8,
+        "status": "passed"
+      }
+    },
+    {
+      "path": "notebooks/week21/W21_CFD_Transformer.ipynb",
+      "kind": "notebook",
+      "baseline_git_blob": "1b2f300b77c050a17b94258f501ac91b5345fc77",
+      "review_status": "review_complete",
+      "sha256": "06a5daea963fcd7c2b0137d5ab33ce0681277b6e683a323fbd5a95c38f3bd0d3",
+      "changed_from_baseline": true,
+      "review_evidence": "qa/course_refresh_late.json",
+      "reason": "Autonomous retained predictions use a single observed initialization; all methods, oracle floor, full-range errors, native vorticity and fixed-probe time histories are visible.",
+      "execution": {
+        "method": "fresh Jupyter kernel",
+        "python": "3.12.3 (main, Aug 31 2026, 10:18:26) [GCC 13.3.0]",
+        "executable": "/scratch3/workspace/roohie_umass_edu-flowml-ghia-highre-20261115/pinn-venv/bin/python",
+        "seconds": 12.377381570171565,
+        "code_cells": 14,
+        "image_outputs": 8,
+        "status": "passed"
+      }
+    },
+    {
+      "path": "notebooks/week22/W22_CFD_Transformer.ipynb",
+      "kind": "notebook",
+      "baseline_git_blob": "d2697239a9028c5b88193cb040249e9856410ad6",
+      "review_status": "review_complete",
+      "sha256": "f0063ab4d84113cf45fefc22776c8e9cbd04651d45f3ff35ac1459421a7ae2f0",
+      "changed_from_baseline": true,
+      "review_evidence": "qa/course_refresh_late.json",
+      "reason": "All five transfer controls have native same-case fields and signed profiles; target labels, source information, seed ranges, POD floors and compute remain separate.",
+      "execution": {
+        "method": "fresh Jupyter kernel",
+        "python": "3.12.3 (main, Aug 31 2026, 10:18:26) [GCC 13.3.0]",
+        "executable": "/scratch3/workspace/roohie_umass_edu-flowml-ghia-highre-20261115/pinn-venv/bin/python",
+        "seconds": 11.828770313877612,
+        "code_cells": 14,
+        "image_outputs": 7,
+        "status": "passed"
+      }
+    }
+  ],
+  "reviews": {
+    "early": "qa/course_refresh_early.json",
+    "middle": "qa/course_refresh_middle.json",
+    "late": "qa/course_refresh_late.json"
+  },
+  "completed_utc": "2026-11-21T05:10:08.872852+00:00",
+  "summary": {
+    "student_and_optional_notebooks_reviewed": 65,
+    "lecture_pdfs_reviewed": 40,
+    "lecture_pages": 804,
+    "notebooks_changed": 32,
+    "lecture_pdfs_changed": 21,
+    "fresh_student_cpu_defaults": 30,
+    "fresh_instructor_cpu_defaults": 7,
+    "prior_week04_execution_routes_retained": 11,
+    "optional_gpu_default_static_review_only": 1,
+    "hosted_colab_run_claimed": false
+  },
+  "instructor_editions": [
+    {
+      "path": "instructor/optional_geometry_time_bridge/Geometry_Time_Bridge_Solutions.ipynb",
+      "sha256": "6bf23240bd0bf27c7742c1b6ed7b0d35169276e9feb37a05b6b8e5cb9f0388d7",
+      "execution": {
+        "method": "fresh Jupyter kernel",
+        "python": "3.12.3 (main, Aug 31 2026, 10:18:26) [GCC 13.3.0]",
+        "executable": "/scratch3/workspace/roohie_umass_edu-flowml-ghia-highre-20261115/pinn-venv/bin/python",
+        "seconds": 4.918014127295464,
+        "code_cells": 16,
+        "image_outputs": 3,
+        "status": "passed"
+      }
+    },
+    {
+      "path": "instructor/week17/W17_Solutions.ipynb",
+      "sha256": "9d7d21f97d2294b11b471650fa97f8ae5576f7bc5ca33ac1e0c32b9eaa98be31",
+      "execution": {
+        "method": "fresh Jupyter kernel",
+        "python": "3.12.3 (main, Aug 31 2026, 10:18:26) [GCC 13.3.0]",
+        "executable": "/scratch3/workspace/roohie_umass_edu-flowml-ghia-highre-20261115/pinn-venv/bin/python",
+        "seconds": 8.581673632375896,
+        "code_cells": 15,
+        "image_outputs": 4,
+        "status": "passed"
+      }
+    },
+    {
+      "path": "instructor/week18/W18_Solutions.ipynb",
+      "sha256": "d90bffafdb1e8ebb7b0b742b6a3047853f3b6d5a3b03d4bf475971bfe90e3c7d",
+      "execution": {
+        "method": "fresh Jupyter kernel",
+        "python": "3.12.3 (main, Aug 31 2026, 10:18:26) [GCC 13.3.0]",
+        "executable": "/scratch3/workspace/roohie_umass_edu-flowml-ghia-highre-20261115/pinn-venv/bin/python",
+        "seconds": 9.597340390086174,
+        "code_cells": 14,
+        "image_outputs": 2,
+        "status": "passed"
+      }
+    },
+    {
+      "path": "instructor/week19/W19_Solutions.ipynb",
+      "sha256": "ed2e66190c48a7cabbf32cece9295b1449ad48dec82b887834dc8435dc076f15",
+      "execution": {
+        "method": "fresh Jupyter kernel",
+        "python": "3.12.3 (main, Aug 31 2026, 10:18:26) [GCC 13.3.0]",
+        "executable": "/scratch3/workspace/roohie_umass_edu-flowml-ghia-highre-20261115/pinn-venv/bin/python",
+        "seconds": 9.944418914150447,
+        "code_cells": 14,
+        "image_outputs": 5,
+        "status": "passed"
+      }
+    },
+    {
+      "path": "instructor/week20/W20_Solutions.ipynb",
+      "sha256": "75338d8d13b372604b93c7ed8a9bcbe3dfac751f697cfceb86fb527160c18905",
+      "execution": {
+        "method": "fresh Jupyter kernel",
+        "python": "3.12.3 (main, Aug 31 2026, 10:18:26) [GCC 13.3.0]",
+        "executable": "/scratch3/workspace/roohie_umass_edu-flowml-ghia-highre-20261115/pinn-venv/bin/python",
+        "seconds": 14.371098540723324,
+        "code_cells": 15,
+        "image_outputs": 8,
+        "status": "passed"
+      }
+    },
+    {
+      "path": "instructor/week21/W21_Solutions.ipynb",
+      "sha256": "fd99c021f71951c7539f10cace40c049e35eac0926bf8446ccdc2571073c65d1",
+      "execution": {
+        "method": "fresh Jupyter kernel",
+        "python": "3.12.3 (main, Aug 31 2026, 10:18:26) [GCC 13.3.0]",
+        "executable": "/scratch3/workspace/roohie_umass_edu-flowml-ghia-highre-20261115/pinn-venv/bin/python",
+        "seconds": 14.798868536017835,
+        "code_cells": 14,
+        "image_outputs": 8,
+        "status": "passed"
+      }
+    },
+    {
+      "path": "instructor/week22/W22_Solutions.ipynb",
+      "sha256": "16e5cba5dba247180d15b49025e7db717f41bcfd0394911ecb1b2e76f07ba391",
+      "execution": {
+        "method": "fresh Jupyter kernel",
+        "python": "3.12.3 (main, Aug 31 2026, 10:18:26) [GCC 13.3.0]",
+        "executable": "/scratch3/workspace/roohie_umass_edu-flowml-ghia-highre-20261115/pinn-venv/bin/python",
+        "seconds": 13.193293377291411,
+        "code_cells": 14,
+        "image_outputs": 7,
+        "status": "passed"
+      }
+    }
+  ],
+  "receipts": [
+    {
+      "path": "qa/course_refresh_early_final.json",
+      "sha256": "03fff7013998d6a8f250b4c773343c3fcff1846c741b95aa77fda216ab88207e"
+    },
+    {
+      "path": "qa/course_refresh_middle.json",
+      "sha256": "16e5aad8390c0b7dcb7030e0bcf040beed0071159b65aea4cf15d2adfaf9bc12"
+    },
+    {
+      "path": "qa/course_refresh_late.json",
+      "sha256": "d2dc6b2826fb38faad1cc40b5062d718cc8c2d96497985eb839292412d2c454a"
+    },
+    {
+      "path": "qa/course_refresh_independent_review.json",
+      "sha256": "d42981318a15681b000d1dce46b8e10251d4af83216c7e1f0d8fde76b0577158"
+    },
+    {
+      "path": "qa/course_refresh_gate_review.json",
+      "sha256": "aebbf8cafc9053c976d507751f3b0aa470017f261b01a6fbff4c06e2664bf42d"
+    },
+    {
+      "path": "qa/course_refresh_navigation_review.json",
+      "sha256": "d5828f0ff71cdd8fd9ae27a74e7bc47db024c69631734fc17cd6bdb14f70a04b"
+    },
+    {
+      "path": "qa/course_refresh_validation.json",
+      "sha256": "8f5b4a4c1b248982248be83befbe759f971a43422f05ad4a7163cb899b304938"
+    },
+    {
+      "path": "qa/course_refresh_week04_link.json",
+      "sha256": "d3a1984804542d6dd106a2b9779304522e2bdc1cee1a1447f91ac28af4dc8b22"
+    },
+    {
+      "path": "qa/course_refresh_week15_math_review.json",
+      "sha256": "925ad0b5739cdd26043e95ac1dbe12ed320d6b91c3aec46499dcc9c48245a406"
+    },
+    {
+      "path": "qa/course_refresh_pdf_structure.json",
+      "sha256": "50bcdfb6058ae1de9b460140a56155245264b1dc1e4df148ced85c01ea3c3547"
+    },
+    {
+      "path": "qa/course_refresh_source_scan.json",
+      "sha256": "bbf6f8bc656aee71abc25de9766c3b6b5a81ce3b3b8ef49d00b9bef75986e02e"
+    }
+  ],
+  "coverage_limits": [
+    "Thirty student defaults and seven instructor editions were freshly CPU-executed in this phase. Unchanged notebooks received source/alignment review; prior Week4 executions are explicitly reused. No all-course hosted Colab or optional GPU/research sweep is claimed.",
+    "Changed lecture pages were individually inspected or inherited only through exact verified pixel identity. Historical unchanged PDFs received alignment review with preserved prior evidence, not a claim that root freshly viewed every page.",
+    "P5 remains a coarse noisy teaching model with poor learned velocity in places; full physical errors expose this. Week15 new CPU reference is manufactured kinematics, separate from retained CFD. No new CFD campaign, metric relaxation or hidden favorable model selection.",
+    "Current Week16 maintenance route is the maintained notebook, scoped teaching updater and fresh execution. The legacy build_materials notebook generator emits unexecuted notebooks and is not a completed release-validation route by itself."
+  ],
+  "publication_scope": "Publish reviewed material on main; this curriculum maintenance does not create a new tagged release or Zenodo record."
+}

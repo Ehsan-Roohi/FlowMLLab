@@ -1,0 +1,23 @@
+{
+  "notebook": "notebooks/week05_06/P0_Project_Setup.ipynb",
+  "utc": "2026-11-21T02:33:19.072892+00:00",
+  "elapsed_run_all_seconds": 198.794650799995,
+  "host": "ECS-200417",
+  "kernel": "D:\\ChatGPT Backup\\Projects\\FlowMLLab\\Teaching_Current\\repo\\tmp\\week01_4_runtime\\Scripts\\python.exe",
+  "python": "3.12.14 (main, Aug 25 2026, 14:01:42) [MSC v.1944 64 bit (AMD64)]",
+  "cpu_only": true,
+  "failure": null,
+  "code_cells": 5,
+  "executed_cells": 5,
+  "inline_figures": [
+    {
+      "path": "results/course_refresh_early/P0_Project_Setup/cell_11_01.png",
+      "sha256": "8ed7c6b9e469a122d6188bd4f80396ee4ce428ebee675458767081668c3b8953"
+    }
+  ],
+  "notebook_sha256": "2bc0a685f05cad4153a42f785a159bc6be76b855937eaa54b0036ecba66be559",
+  "code_sha256": "e11657f9766780845f2d98bc967a66887eafcb68f93f0d7243aaf40985fead48",
+  "claim": "Fresh default CPU Run All; no hosted Colab or optional GPU execution claimed.",
+  "execution_notebook_sha256": "de905322c4f3916265de2bc65c1996707e9f4dc57f824011befe1c5fbd35d2fb",
+  "serialization_note": "Post-execution LF-only JSON serialization; parsed cells, outputs, execution counts and metadata identical. No rerun claimed."
+}

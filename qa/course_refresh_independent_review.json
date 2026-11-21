@@ -1,0 +1,570 @@
+{
+  "schema": 1,
+  "checked_utc": "2026-11-21T04:59:45.630828+00:00",
+  "scope": "Independent selected-page and new-figure review, in addition to the authoring workers full scoped visual reviews; not a claim that every historical page was rendered afresh by root.",
+  "lecture_pages": [
+    {
+      "pdf": "lectures/week02_supervised_learning_rarefaction.pdf",
+      "page": 25,
+      "render_path": "tmp/course_refresh_early/lecture_review/week02_supervised_learning_rarefaction_025.png",
+      "image_sha256": "cd62627d6ea318591ca2052d8aa5ababeaafd04c9eb13496c5eb8c22ab026640",
+      "reviewer": "root independent of authoring worker",
+      "status": "pass",
+      "checks": "Read individually: scientific interpretation, formulas, experiment controls, labels, legends, margins and readable figures."
+    },
+    {
+      "pdf": "lectures/week02_supervised_learning_rarefaction.pdf",
+      "page": 26,
+      "render_path": "tmp/course_refresh_early/lecture_review/week02_supervised_learning_rarefaction_026.png",
+      "image_sha256": "c1f02a7b8eced0266d18fa66188e85c2b1b31819e6c2911044824ec77458950c",
+      "reviewer": "root independent of authoring worker",
+      "status": "pass",
+      "checks": "Read individually: scientific interpretation, formulas, experiment controls, labels, legends, margins and readable figures."
+    },
+    {
+      "pdf": "lectures/week03_kinetic_dsmc.pdf",
+      "page": 38,
+      "render_path": "tmp/course_refresh_early/lecture_review/week03_kinetic_dsmc_038.png",
+      "image_sha256": "9fa7cbf052877e94f1fdc1259af7a5d804fb8a3057a92d8261a2036a87a73536",
+      "reviewer": "root independent of authoring worker",
+      "status": "pass",
+      "checks": "Read individually: scientific interpretation, formulas, experiment controls, labels, legends, margins and readable figures."
+    },
+    {
+      "pdf": "lectures/week03_kinetic_dsmc.pdf",
+      "page": 39,
+      "render_path": "tmp/course_refresh_early/lecture_review/week03_kinetic_dsmc_039.png",
+      "image_sha256": "3bbd2318bb90898057f7cae6bd6a55d854de5a5344a200af048cebde518421ca",
+      "reviewer": "root independent of authoring worker",
+      "status": "pass",
+      "checks": "Read individually: scientific interpretation, formulas, experiment controls, labels, legends, margins and readable figures."
+    },
+    {
+      "pdf": "lectures/week03_kinetic_dsmc.pdf",
+      "page": 40,
+      "render_path": "tmp/course_refresh_early/lecture_review/week03_kinetic_dsmc_040.png",
+      "image_sha256": "a8193dbf83bb7bf52209d72bcc7c931c62d33dd02e3bdc1c8c42c95c73a79820",
+      "reviewer": "root independent of authoring worker",
+      "status": "pass",
+      "checks": "Read individually: scientific interpretation, formulas, experiment controls, labels, legends, margins and readable figures."
+    },
+    {
+      "pdf": "lectures/week03_kinetic_dsmc.pdf",
+      "page": 41,
+      "render_path": "tmp/course_refresh_early/lecture_review/week03_kinetic_dsmc_041.png",
+      "image_sha256": "f1c48bb99a344f2ad3494cd8c54958d81f38382b95ab9ba8e7d77cf2e2a483fe",
+      "reviewer": "root independent of authoring worker",
+      "status": "pass",
+      "checks": "Read individually: scientific interpretation, formulas, experiment controls, labels, legends, margins and readable figures."
+    },
+    {
+      "pdf": "lectures/week03_kinetic_dsmc.pdf",
+      "page": 42,
+      "render_path": "tmp/course_refresh_early/lecture_review/week03_kinetic_dsmc_042.png",
+      "image_sha256": "5d3a7f28f7cb2e0334bd064a2941cf5261e3c09a422dbc398e4c4259e3ccfcd0",
+      "reviewer": "root independent of authoring worker",
+      "status": "pass",
+      "checks": "Read individually: scientific interpretation, formulas, experiment controls, labels, legends, margins and readable figures."
+    },
+    {
+      "pdf": "lectures/week03_kinetic_dsmc.pdf",
+      "page": 43,
+      "render_path": "tmp/course_refresh_early/lecture_review/week03_kinetic_dsmc_043.png",
+      "image_sha256": "e2fde2d099912bfb39f14bb67c3908cb558ea7d024cfde3f702b46e37618c92b",
+      "reviewer": "root independent of authoring worker",
+      "status": "pass",
+      "checks": "Read individually: scientific interpretation, formulas, experiment controls, labels, legends, margins and readable figures."
+    },
+    {
+      "pdf": "lectures/week03_kinetic_dsmc.pdf",
+      "page": 45,
+      "render_path": "tmp/course_refresh_early/lecture_review/week03_kinetic_dsmc_045.png",
+      "image_sha256": "4512f99c0bdeeff63d4d57bf7c8bc559165f2b41209b7a1caf6a127527e65cc9",
+      "reviewer": "root independent of authoring worker",
+      "status": "pass",
+      "checks": "Read individually: scientific interpretation, formulas, experiment controls, labels, legends, margins and readable figures."
+    },
+    {
+      "pdf": "lectures/week03_kinetic_dsmc.pdf",
+      "page": 46,
+      "render_path": "tmp/course_refresh_early/lecture_review/week03_kinetic_dsmc_046.png",
+      "image_sha256": "59914250076601c898fe099e6d40cb18b5886c493d1a204da549d3c386a56aa7",
+      "reviewer": "root independent of authoring worker",
+      "status": "pass",
+      "checks": "Read individually: scientific interpretation, formulas, experiment controls, labels, legends, margins and readable figures."
+    },
+    {
+      "pdf": "lectures/week03_kinetic_dsmc.pdf",
+      "page": 47,
+      "render_path": "tmp/course_refresh_early/lecture_review/week03_kinetic_dsmc_047.png",
+      "image_sha256": "7cecb4a3779e2bd530d436f9051f177a20034b48ef865fb420cb4d2e0e414ba0",
+      "reviewer": "root independent of authoring worker",
+      "status": "pass",
+      "checks": "Read individually: scientific interpretation, formulas, experiment controls, labels, legends, margins and readable figures."
+    },
+    {
+      "pdf": "lectures/week05_modal_sensing.pdf",
+      "page": 1,
+      "render_path": "tmp/course_refresh_early/lecture_review/week05_modal_sensing_001.png",
+      "image_sha256": "9f14a453c946b1cb910754651c4ffb8647149995d915e37ccbce6163112fe1df",
+      "reviewer": "root independent of authoring worker",
+      "status": "pass",
+      "checks": "Read individually: scientific interpretation, formulas, experiment controls, labels, legends, margins and readable figures."
+    },
+    {
+      "pdf": "lectures/week05_modal_sensing.pdf",
+      "page": 2,
+      "render_path": "tmp/course_refresh_early/lecture_review/week05_modal_sensing_002.png",
+      "image_sha256": "87358be188d29f86db61f7ee4165de3bd26536c19c94b60f8e4e0dcfabf206f2",
+      "reviewer": "root independent of authoring worker",
+      "status": "pass",
+      "checks": "Read individually: scientific interpretation, formulas, experiment controls, labels, legends, margins and readable figures."
+    },
+    {
+      "pdf": "lectures/week05_modal_sensing.pdf",
+      "page": 3,
+      "render_path": "tmp/course_refresh_early/lecture_review/week05_modal_sensing_003.png",
+      "image_sha256": "54bd47683d7987c387123033f0a000fbd063936f8a1a27708bae1c450794e018",
+      "reviewer": "root independent of authoring worker",
+      "status": "pass",
+      "checks": "Read individually: scientific interpretation, formulas, experiment controls, labels, legends, margins and readable figures."
+    },
+    {
+      "pdf": "lectures/week05_modal_sensing.pdf",
+      "page": 4,
+      "render_path": "tmp/course_refresh_early/lecture_review/week05_modal_sensing_004.png",
+      "image_sha256": "9fc309765a845403cd5e49557d8943a5106b1b6173e6c83f15ddee30fb419735",
+      "reviewer": "root independent of authoring worker",
+      "status": "pass",
+      "checks": "Read individually: scientific interpretation, formulas, experiment controls, labels, legends, margins and readable figures."
+    },
+    {
+      "pdf": "lectures/week05_modal_sensing.pdf",
+      "page": 5,
+      "render_path": "tmp/course_refresh_early/lecture_review/week05_modal_sensing_005.png",
+      "image_sha256": "ed9d6dab06d181a274147f559268f981c5eb561c9fdded1b1a84e7ccf90dee8b",
+      "reviewer": "root independent of authoring worker",
+      "status": "pass",
+      "checks": "Read individually: scientific interpretation, formulas, experiment controls, labels, legends, margins and readable figures."
+    },
+    {
+      "pdf": "lectures/week05_modal_sensing.pdf",
+      "page": 6,
+      "render_path": "tmp/course_refresh_early/lecture_review/week05_modal_sensing_006.png",
+      "image_sha256": "b28cc09903f0aa1d610ff29dc5fc4c9f5e10d43097123c84c3b6d8000960a92a",
+      "reviewer": "root independent of authoring worker",
+      "status": "pass",
+      "checks": "Read individually: scientific interpretation, formulas, experiment controls, labels, legends, margins and readable figures."
+    },
+    {
+      "pdf": "lectures/week05_modal_sensing.pdf",
+      "page": 7,
+      "render_path": "tmp/course_refresh_early/lecture_review/week05_modal_sensing_007.png",
+      "image_sha256": "3c60dee43b6e26f9f46330f67f08fa448a57cfd9337379f4f4361b97fc2324ed",
+      "reviewer": "root independent of authoring worker",
+      "status": "pass",
+      "checks": "Read individually: scientific interpretation, formulas, experiment controls, labels, legends, margins and readable figures."
+    },
+    {
+      "pdf": "lectures/week05_modal_sensing.pdf",
+      "page": 8,
+      "render_path": "tmp/course_refresh_early/lecture_review/week05_modal_sensing_008.png",
+      "image_sha256": "b070661293164acb71b00611a412f28565ce73fbb818cdfdee791d4581881582",
+      "reviewer": "root independent of authoring worker",
+      "status": "pass",
+      "checks": "Read individually: scientific interpretation, formulas, experiment controls, labels, legends, margins and readable figures."
+    },
+    {
+      "pdf": "lectures/week05_modal_sensing.pdf",
+      "page": 9,
+      "render_path": "tmp/course_refresh_early/lecture_review/week05_modal_sensing_009.png",
+      "image_sha256": "509ad8032ef8bbb1d1f6595bbbd3a0075f3e082c782d5600fb1218af993158dd",
+      "reviewer": "root independent of authoring worker",
+      "status": "pass",
+      "checks": "Read individually: scientific interpretation, formulas, experiment controls, labels, legends, margins and readable figures."
+    },
+    {
+      "pdf": "lectures/week05_modal_sensing.pdf",
+      "page": 10,
+      "render_path": "tmp/course_refresh_early/lecture_review/week05_modal_sensing_010.png",
+      "image_sha256": "4800d5550923980da59b02c5c984f0257b3c826087585d18d4563bdd08fd18eb",
+      "reviewer": "root independent of authoring worker",
+      "status": "pass",
+      "checks": "Read individually: scientific interpretation, formulas, experiment controls, labels, legends, margins and readable figures."
+    },
+    {
+      "pdf": "lectures/week07_2_cylinder_state_estimation.pdf",
+      "page": 1,
+      "render_path": "tmp/course_middle/render/week07_2_cylinder_state_estimation/page-001.png",
+      "image_sha256": "aa2fed7b1733b8a98ecbec7065bd27d43418500712802cd5b4d3ca1e6582bfdf",
+      "reviewer": "root independent of authoring worker",
+      "status": "pass",
+      "checks": "Read individually: all variables/equations, numerical example, information and selection rules, engineering experiments, legibility."
+    },
+    {
+      "pdf": "lectures/week07_2_cylinder_state_estimation.pdf",
+      "page": 2,
+      "render_path": "tmp/course_middle/render/week07_2_cylinder_state_estimation/page-002.png",
+      "image_sha256": "cdb2675818800be4f6e7fc5757a1ec3ddaa67e41086cf01c75518e8a64eaf10d",
+      "reviewer": "root independent of authoring worker",
+      "status": "pass",
+      "checks": "Read individually: all variables/equations, numerical example, information and selection rules, engineering experiments, legibility."
+    },
+    {
+      "pdf": "lectures/week07_2_cylinder_state_estimation.pdf",
+      "page": 3,
+      "render_path": "tmp/course_middle/render/week07_2_cylinder_state_estimation/page-003.png",
+      "image_sha256": "4504ce8adf2d1ba78fa97b4767c0de2a3f500211433311642b74e3860e7b4ee7",
+      "reviewer": "root independent of authoring worker",
+      "status": "pass",
+      "checks": "Read individually: all variables/equations, numerical example, information and selection rules, engineering experiments, legibility."
+    },
+    {
+      "pdf": "lectures/week07_3_masked_pretraining.pdf",
+      "page": 1,
+      "render_path": "tmp/course_middle/render/week07_3_masked_pretraining/page-001.png",
+      "image_sha256": "54539fb16c6c6db5d8fbfa8bd54b9769b07cd9d3b45132b48631e1b39b5f021d",
+      "reviewer": "root independent of authoring worker",
+      "status": "pass",
+      "checks": "Read individually: all variables/equations, numerical example, information and selection rules, engineering experiments, legibility."
+    },
+    {
+      "pdf": "lectures/week07_3_masked_pretraining.pdf",
+      "page": 2,
+      "render_path": "tmp/course_middle/render/week07_3_masked_pretraining/page-002.png",
+      "image_sha256": "2e69dabd884928d81f1a47cb3a5acd963030c1976929a304a33c4c412c129939",
+      "reviewer": "root independent of authoring worker",
+      "status": "pass",
+      "checks": "Read individually: all variables/equations, numerical example, information and selection rules, engineering experiments, legibility."
+    },
+    {
+      "pdf": "lectures/week07_3_masked_pretraining.pdf",
+      "page": 3,
+      "render_path": "tmp/course_middle/render/week07_3_masked_pretraining/page-003.png",
+      "image_sha256": "5c10290153a998808bc181bd43383bd60fc2e8e5f63dfe985fcb9e6f9666fd14",
+      "reviewer": "root independent of authoring worker",
+      "status": "pass",
+      "checks": "Read individually: all variables/equations, numerical example, information and selection rules, engineering experiments, legibility."
+    },
+    {
+      "pdf": "lectures/week03_kinetic_dsmc.pdf",
+      "page": 44,
+      "render_path": "tmp/course_refresh_early/lecture_review/week03_kinetic_dsmc_044.png",
+      "image_sha256": "7a44eb0faa707b452c4c36acf93545462b2948efa7649c2d2063781bed3e7a07",
+      "reviewer": "root independent of authoring worker",
+      "status": "pass",
+      "checks": "Corrected exact zero-based post-move sample-time mapping independently inspected; every matched time protected by the new array-equality regression."
+    },
+    {
+      "pdf": "lectures/week15_geometry_generalization.pdf",
+      "pdf_sha256": "7ed9f163e91b32a09fcec141693e90338b3c03a9c0daf820d935aa1487a7922d",
+      "page": 1,
+      "render_path": "tmp/course_refresh_late/pdf_review/week15_geometry_generalization/page-001.png",
+      "image_sha256": "099799980173a547253845e424c168eee0d2d380dd1d0fc139abd1c67a635423",
+      "reviewer": "root independent of authoring worker",
+      "status": "pass",
+      "checks": "Read individually at readable size: manufactured kinematic reference and research distinction, dimensionless geometry parameter, controls and optimizer budget, validation-only selection, full physical fields and signed profiles, legible math/table/captions and external legends.",
+      "previous_pdf_sha256": "6411baad847c6cd2dc103bec26b9d1a052ce8d8ab3076cdee2918500585b9682",
+      "identity_verification": "Current125dpiPNG is byte-identical to the independently viewed page; decoded pixel SHA recorded in author render manifest.",
+      "pixel_sha256": "cba32cf1b164c89e248ae5c7c11ebe8fd5266be03b73dc5e51022df6452c2cc9"
+    },
+    {
+      "pdf": "lectures/week15_geometry_generalization.pdf",
+      "pdf_sha256": "7ed9f163e91b32a09fcec141693e90338b3c03a9c0daf820d935aa1487a7922d",
+      "page": 2,
+      "render_path": "tmp/course_refresh_late/pdf_review/week15_geometry_generalization/page-002.png",
+      "image_sha256": "cf851a341009d46d4d787b967646440184992690cb683e3e79f7a136e5455552",
+      "reviewer": "root independent of authoring worker",
+      "status": "pass",
+      "checks": "Read individually at readable size: manufactured kinematic reference and research distinction, dimensionless geometry parameter, controls and optimizer budget, validation-only selection, full physical fields and signed profiles, legible math/table/captions and external legends.",
+      "previous_pdf_sha256": "6411baad847c6cd2dc103bec26b9d1a052ce8d8ab3076cdee2918500585b9682",
+      "identity_verification": "Current125dpiPNG is byte-identical to the independently viewed page; decoded pixel SHA recorded in author render manifest.",
+      "pixel_sha256": "dd43ed4e9735c68e3e7ca83f44f9119f929e3fad5a0844369a2bb6b3b664a5fd"
+    },
+    {
+      "pdf": "lectures/week15_geometry_generalization.pdf",
+      "pdf_sha256": "7ed9f163e91b32a09fcec141693e90338b3c03a9c0daf820d935aa1487a7922d",
+      "page": 3,
+      "render_path": "tmp/course_refresh_late/pdf_review/week15_geometry_generalization/page-003.png",
+      "image_sha256": "d40d182acf487dff2678dd84b62ba8a9d815612ede2b4e81954cf54789693b0d",
+      "reviewer": "root independent of authoring worker",
+      "status": "pass",
+      "checks": "Read individually at readable size: manufactured kinematic reference and research distinction, dimensionless geometry parameter, controls and optimizer budget, validation-only selection, full physical fields and signed profiles, legible math/table/captions and external legends.",
+      "previous_pdf_sha256": "6411baad847c6cd2dc103bec26b9d1a052ce8d8ab3076cdee2918500585b9682",
+      "identity_verification": "Current125dpiPNG is byte-identical to the independently viewed page; decoded pixel SHA recorded in author render manifest.",
+      "pixel_sha256": "bc078786573f75aae828101a7de2c3b26a79c38afb26c7d29f63624824fadfe2"
+    },
+    {
+      "pdf": "lectures/week15_geometry_generalization.pdf",
+      "pdf_sha256": "7ed9f163e91b32a09fcec141693e90338b3c03a9c0daf820d935aa1487a7922d",
+      "page": 4,
+      "render_path": "tmp/course_refresh_late/pdf_review/week15_geometry_generalization/page-004.png",
+      "image_sha256": "c8c0695eaf0880ce1cb4e8ea7d469a77240bf909097b3e441fb2a7725ba610f2",
+      "reviewer": "root independent of authoring worker",
+      "status": "pass",
+      "checks": "Read individually at readable size: manufactured kinematic reference and research distinction, dimensionless geometry parameter, controls and optimizer budget, validation-only selection, full physical fields and signed profiles, legible math/table/captions and external legends.",
+      "previous_pdf_sha256": "6411baad847c6cd2dc103bec26b9d1a052ce8d8ab3076cdee2918500585b9682",
+      "identity_verification": "Current125dpiPNG is byte-identical to the independently viewed page; decoded pixel SHA recorded in author render manifest.",
+      "pixel_sha256": "cce94b2f86546d862a055a8d7915f7829f7327aaaae1e9d9155e1f55f25481bd"
+    },
+    {
+      "pdf": "lectures/week15_geometry_generalization.pdf",
+      "pdf_sha256": "7ed9f163e91b32a09fcec141693e90338b3c03a9c0daf820d935aa1487a7922d",
+      "page": 5,
+      "render_path": "tmp/course_refresh_late/pdf_review/week15_geometry_generalization/page-005.png",
+      "image_sha256": "f68f2a9d9b2d4bb03792491c5b1713ad002e9a213a463b101a927d1df41eea79",
+      "reviewer": "root independent of authoring worker",
+      "status": "pass",
+      "checks": "Read individually at readable size: manufactured kinematic reference and research distinction, dimensionless geometry parameter, controls and optimizer budget, validation-only selection, full physical fields and signed profiles, legible math/table/captions and external legends.",
+      "previous_pdf_sha256": "6411baad847c6cd2dc103bec26b9d1a052ce8d8ab3076cdee2918500585b9682",
+      "identity_verification": "Current125dpiPNG is byte-identical to the independently viewed page; decoded pixel SHA recorded in author render manifest.",
+      "pixel_sha256": "e0c96746bdd8acdd6f26233688b1e156f8385184cc732d24873c4f117c45250c"
+    },
+    {
+      "pdf": "lectures/week21_cfd_transformer.pdf",
+      "pdf_sha256": "ed7039cf90be8e7819bf3c326f39c6999a3fe5592ea0af7fc437d6e86d008e30",
+      "page": 1,
+      "render_path": "tmp/course_refresh_late/pdf_review/week21_cfd_transformer/page-001.png",
+      "image_sha256": "e59da297c58ae671300c4aa2dacb6dfa52d327bd62d78be1f8b1b1cfd07489e8",
+      "reviewer": "root independent of authoring worker",
+      "status": "pass",
+      "checks": "Individual readable review: autonomous timing/splits and no-reset boundary, model/reference distinction, complete equations and limits, native vorticity/signed difference, lab-stage table, full-range trajectory errors, legends outside data, corrected Unicode frame-range labels.",
+      "identity_bridge": {
+        "pdf": "lectures/week21_cfd_transformer.pdf",
+        "page": 1,
+        "previous_pdf_sha256": "7a1cec98d6a37a907676d797eb96405eb7b07547aafef806399e881c9250ad69",
+        "current_pdf_sha256": "ed7039cf90be8e7819bf3c326f39c6999a3fe5592ea0af7fc437d6e86d008e30",
+        "previous_image_sha256": "e59da297c58ae671300c4aa2dacb6dfa52d327bd62d78be1f8b1b1cfd07489e8",
+        "current_image_sha256": "e59da297c58ae671300c4aa2dacb6dfa52d327bd62d78be1f8b1b1cfd07489e8",
+        "pixel_sha256": "921637474aa6eb406ccebebe1ce9ddd827e469b57e36c76d88d11124df26d5ac",
+        "status": "identical decoded pixels"
+      }
+    },
+    {
+      "pdf": "lectures/week21_cfd_transformer.pdf",
+      "pdf_sha256": "ed7039cf90be8e7819bf3c326f39c6999a3fe5592ea0af7fc437d6e86d008e30",
+      "page": 3,
+      "render_path": "tmp/course_refresh_late/pdf_review/week21_cfd_transformer/page-003.png",
+      "image_sha256": "396d54b533860f0186c853cd0bcf749d8324cf11e8d0a5bb82d9477f93c74acc",
+      "reviewer": "root independent of authoring worker",
+      "status": "pass",
+      "checks": "Individual readable review: autonomous timing/splits and no-reset boundary, model/reference distinction, complete equations and limits, native vorticity/signed difference, lab-stage table, full-range trajectory errors, legends outside data, corrected Unicode frame-range labels.",
+      "identity_bridge": {
+        "pdf": "lectures/week21_cfd_transformer.pdf",
+        "page": 3,
+        "previous_pdf_sha256": "7a1cec98d6a37a907676d797eb96405eb7b07547aafef806399e881c9250ad69",
+        "current_pdf_sha256": "ed7039cf90be8e7819bf3c326f39c6999a3fe5592ea0af7fc437d6e86d008e30",
+        "previous_image_sha256": "396d54b533860f0186c853cd0bcf749d8324cf11e8d0a5bb82d9477f93c74acc",
+        "current_image_sha256": "396d54b533860f0186c853cd0bcf749d8324cf11e8d0a5bb82d9477f93c74acc",
+        "pixel_sha256": "1236786c37f9d1b23966e575b0420112eb5338cd04b7942bdaf1960f49383907",
+        "status": "identical decoded pixels"
+      }
+    },
+    {
+      "pdf": "lectures/week21_cfd_transformer.pdf",
+      "pdf_sha256": "ed7039cf90be8e7819bf3c326f39c6999a3fe5592ea0af7fc437d6e86d008e30",
+      "page": 6,
+      "render_path": "tmp/course_refresh_late/pdf_review/week21_cfd_transformer/page-006.png",
+      "image_sha256": "52fcd9f30ebc137c1f87d46c6e6dccc18310f4c09c0ccf8143713192af3c3a89",
+      "reviewer": "root independent of authoring worker",
+      "status": "pass",
+      "checks": "Individual readable review: autonomous timing/splits and no-reset boundary, model/reference distinction, complete equations and limits, native vorticity/signed difference, lab-stage table, full-range trajectory errors, legends outside data, corrected Unicode frame-range labels.",
+      "identity_bridge": {
+        "pdf": "lectures/week21_cfd_transformer.pdf",
+        "page": 6,
+        "previous_pdf_sha256": "7a1cec98d6a37a907676d797eb96405eb7b07547aafef806399e881c9250ad69",
+        "current_pdf_sha256": "ed7039cf90be8e7819bf3c326f39c6999a3fe5592ea0af7fc437d6e86d008e30",
+        "previous_image_sha256": "52fcd9f30ebc137c1f87d46c6e6dccc18310f4c09c0ccf8143713192af3c3a89",
+        "current_image_sha256": "52fcd9f30ebc137c1f87d46c6e6dccc18310f4c09c0ccf8143713192af3c3a89",
+        "pixel_sha256": "80a6f9d19b60297820ae880d3b151b657dc179f425ba29d9cc1195af944a4d03",
+        "status": "identical decoded pixels"
+      }
+    },
+    {
+      "pdf": "lectures/week15_geometry_generalization.pdf",
+      "pdf_sha256": "7ed9f163e91b32a09fcec141693e90338b3c03a9c0daf820d935aa1487a7922d",
+      "page": 30,
+      "render_path": "tmp/course_refresh_late/pdf_review/week15_geometry_generalization/page-030.png",
+      "image_sha256": "1a8d6739e55c7a424a8e4acf78ea502dcda904525ff7fb44464dc1ca2fb13bd5",
+      "pixel_sha256": "8fb3bba8c35c8daadf2838c5e145548db6a702f0ac8e27f4f882f2850b32b265",
+      "reviewer": "root independent of authoring worker",
+      "status": "pass",
+      "checks": "Individually reviewed, then currentPNG verifiedbyteidentical; readable retained native fields, explicit full-scale/crop limitation and exact companion labels, margins/captions, split/metric interpretation, preserved engineering tasks and updated CPU learning route."
+    },
+    {
+      "pdf": "lectures/week15_geometry_generalization.pdf",
+      "pdf_sha256": "7ed9f163e91b32a09fcec141693e90338b3c03a9c0daf820d935aa1487a7922d",
+      "page": 31,
+      "render_path": "tmp/course_refresh_late/pdf_review/week15_geometry_generalization/page-031.png",
+      "image_sha256": "5989d70c0bc6dec36a9256d31b5694a4439bc36931d6639aa38a8797d505db9e",
+      "pixel_sha256": "dbd4c47b11e059974dd5ea739cf88d44221c8ab195c20006916bd3d45827f7df",
+      "reviewer": "root independent of authoring worker",
+      "status": "pass",
+      "checks": "Individually reviewed, then currentPNG verifiedbyteidentical; readable retained native fields, explicit full-scale/crop limitation and exact companion labels, margins/captions, split/metric interpretation, preserved engineering tasks and updated CPU learning route."
+    },
+    {
+      "pdf": "lectures/week15_geometry_generalization.pdf",
+      "pdf_sha256": "7ed9f163e91b32a09fcec141693e90338b3c03a9c0daf820d935aa1487a7922d",
+      "page": 32,
+      "render_path": "tmp/course_refresh_late/pdf_review/week15_geometry_generalization/page-032.png",
+      "image_sha256": "eb7264710a1ad8722e994b70cbcf59b98d79618ec2317950f0f5787f0015dd55",
+      "pixel_sha256": "55aa5eddf1d62a75a50b41637624241affc7d769fe71d9904901585e0525cd36",
+      "reviewer": "root independent of authoring worker",
+      "status": "pass",
+      "checks": "Individually reviewed, then currentPNG verifiedbyteidentical; readable retained native fields, explicit full-scale/crop limitation and exact companion labels, margins/captions, split/metric interpretation, preserved engineering tasks and updated CPU learning route."
+    },
+    {
+      "pdf": "lectures/week15_geometry_generalization.pdf",
+      "pdf_sha256": "7ed9f163e91b32a09fcec141693e90338b3c03a9c0daf820d935aa1487a7922d",
+      "page": 33,
+      "render_path": "tmp/course_refresh_late/pdf_review/week15_geometry_generalization/page-033.png",
+      "image_sha256": "115a359bb644bab76220185904b0ce0c080a785eb31aefc20e0bde07fa74afb2",
+      "pixel_sha256": "28cb972ecb3a1ec67a7161a3047f0050d9f7c8a7f014ae4f1a16ab42d93b028c",
+      "reviewer": "root independent of authoring worker",
+      "status": "pass",
+      "checks": "Individually reviewed, then currentPNG verifiedbyteidentical; readable retained native fields, explicit full-scale/crop limitation and exact companion labels, margins/captions, split/metric interpretation, preserved engineering tasks and updated CPU learning route."
+    },
+    {
+      "pdf": "lectures/week15_geometry_generalization.pdf",
+      "pdf_sha256": "7ed9f163e91b32a09fcec141693e90338b3c03a9c0daf820d935aa1487a7922d",
+      "page": 34,
+      "render_path": "tmp/course_refresh_late/pdf_review/week15_geometry_generalization/page-034.png",
+      "image_sha256": "e2cd76b7cbdd808640722be7ef5c523f65d4a68471d84e055b074e303ad87d79",
+      "pixel_sha256": "11d98e40136e97a964c21575d46a02209f514f869e14b8d81b7f2194f52ab57e",
+      "reviewer": "root independent of authoring worker",
+      "status": "pass",
+      "checks": "Individually reviewed, then currentPNG verifiedbyteidentical; readable retained native fields, explicit full-scale/crop limitation and exact companion labels, margins/captions, split/metric interpretation, preserved engineering tasks and updated CPU learning route."
+    },
+    {
+      "pdf": "lectures/week15_geometry_generalization.pdf",
+      "pdf_sha256": "7ed9f163e91b32a09fcec141693e90338b3c03a9c0daf820d935aa1487a7922d",
+      "page": 35,
+      "render_path": "tmp/course_refresh_late/pdf_review/week15_geometry_generalization/page-035.png",
+      "image_sha256": "b6cc08e0781a1fcfcd41c30f8fda6b76aa9463947ac4f682d544f27e4c9ce483",
+      "pixel_sha256": "9312e6385433407d4c04186bd3e5a0f66b2a86e5d4ea9f925fecefff5a3be498",
+      "reviewer": "root independent of authoring worker",
+      "status": "pass",
+      "checks": "Individually reviewed, then currentPNG verifiedbyteidentical; readable retained native fields, explicit full-scale/crop limitation and exact companion labels, margins/captions, split/metric interpretation, preserved engineering tasks and updated CPU learning route."
+    },
+    {
+      "pdf": "lectures/week15_geometry_generalization.pdf",
+      "pdf_sha256": "7ed9f163e91b32a09fcec141693e90338b3c03a9c0daf820d935aa1487a7922d",
+      "page": 36,
+      "render_path": "tmp/course_refresh_late/pdf_review/week15_geometry_generalization/page-036.png",
+      "image_sha256": "7a56173d7e814c5b558bd2ab1bda5e058e9e1d2b7a4e6667c9bc298cfd7a30d5",
+      "pixel_sha256": "366bb5ef49e9486eebeed42a5961a8dac98bbdd6e14b11ce493edd9140ace0c2",
+      "reviewer": "root independent of authoring worker",
+      "status": "pass",
+      "checks": "Individually reviewed, then currentPNG verifiedbyteidentical; readable retained native fields, explicit full-scale/crop limitation and exact companion labels, margins/captions, split/metric interpretation, preserved engineering tasks and updated CPU learning route."
+    },
+    {
+      "pdf": "lectures/week15_geometry_generalization.pdf",
+      "pdf_sha256": "7ed9f163e91b32a09fcec141693e90338b3c03a9c0daf820d935aa1487a7922d",
+      "page": 37,
+      "render_path": "tmp/course_refresh_late/pdf_review/week15_geometry_generalization/page-037.png",
+      "image_sha256": "77e32b2cf999ac986accfe313e7295b5bf44d362752b7f9fa80fffeafc86d7a7",
+      "pixel_sha256": "6101382f7df1b14619e4fb2792eb8474e0ca489850c2a794ea1aa8ed601b3373",
+      "reviewer": "root independent of authoring worker",
+      "status": "pass",
+      "checks": "Direct final review after bar/table and route correction; readable retained native fields, explicit full-scale/crop limitation and exact companion labels, margins/captions, split/metric interpretation, preserved engineering tasks and updated CPU learning route."
+    },
+    {
+      "pdf": "lectures/week15_geometry_generalization.pdf",
+      "pdf_sha256": "7ed9f163e91b32a09fcec141693e90338b3c03a9c0daf820d935aa1487a7922d",
+      "page": 38,
+      "render_path": "tmp/course_refresh_late/pdf_review/week15_geometry_generalization/page-038.png",
+      "image_sha256": "68889a0d6501cad8afe252b79e24cef21cb764bd5975f89a9f5f9d08db68afdb",
+      "pixel_sha256": "9aff5f76525d8f677de6d0de44143aa8f8d3401395951d17bdd234d2208da226",
+      "reviewer": "root independent of authoring worker",
+      "status": "pass",
+      "checks": "Direct final review after bar/table and route correction; readable retained native fields, explicit full-scale/crop limitation and exact companion labels, margins/captions, split/metric interpretation, preserved engineering tasks and updated CPU learning route."
+    },
+    {
+      "pdf": "lectures/week15_geometry_generalization.pdf",
+      "pdf_sha256": "7ed9f163e91b32a09fcec141693e90338b3c03a9c0daf820d935aa1487a7922d",
+      "page": 39,
+      "render_path": "tmp/course_refresh_late/pdf_review/week15_geometry_generalization/page-039.png",
+      "image_sha256": "f46e20208920add18f398c2870c76a67752db23a4b5f203975137b0e0380419d",
+      "pixel_sha256": "fffcc6e8602016730fc0adc5673e4cb0c74c82f55280f8b1303b1a078ee43303",
+      "reviewer": "root independent of authoring worker",
+      "status": "pass",
+      "checks": "Direct final review after bar/table and route correction; readable retained native fields, explicit full-scale/crop limitation and exact companion labels, margins/captions, split/metric interpretation, preserved engineering tasks and updated CPU learning route."
+    },
+    {
+      "pdf": "lectures/week15_geometry_generalization.pdf",
+      "pdf_sha256": "7ed9f163e91b32a09fcec141693e90338b3c03a9c0daf820d935aa1487a7922d",
+      "page": 40,
+      "render_path": "tmp/course_refresh_late/pdf_review/week15_geometry_generalization/page-040.png",
+      "image_sha256": "cd830d05b4dc1d2e9afeabbf91923df791ffcb59919439dfcb73389d26aec7c3",
+      "pixel_sha256": "7d44d0cd6d5740e531afbd86278277de89b337f5099aafd35b206a6176f6a25e",
+      "reviewer": "root independent of authoring worker",
+      "status": "pass",
+      "checks": "Direct final review after bar/table and route correction; readable retained native fields, explicit full-scale/crop limitation and exact companion labels, margins/captions, split/metric interpretation, preserved engineering tasks and updated CPU learning route."
+    }
+  ],
+  "week15_operator_figures": [
+    {
+      "path": "results/late_course_teaching/week15_geometry_01.png",
+      "sha256": "074e1c00438d6b7fd1f3948f0ad3c0a9605d2ec7acb025fe26f80c2f13d7ad9f",
+      "status": "pass",
+      "reviewer": "root",
+      "checks": "Final figure inspected directly or in the individually reviewed final PDF pages3-5. Exact manufactured reference labelled; dimensionless a; common full error limits per case; signed spatial profiles; nondimensional axes; external legends; no clipped extrema."
+    },
+    {
+      "path": "results/late_course_teaching/week15_history_01.png",
+      "sha256": "7972e199c5bfc6a5ed7917693486bfb90425a74d2f1bda98f0e28098c439b3ad",
+      "status": "pass",
+      "reviewer": "root",
+      "checks": "Final figure inspected directly or in the individually reviewed final PDF pages3-5. Exact manufactured reference labelled; dimensionless a; common full error limits per case; signed spatial profiles; nondimensional axes; external legends; no clipped extrema."
+    },
+    {
+      "path": "results/late_course_teaching/week15_test_01.png",
+      "sha256": "7a6f7be03ed9fbc5c6eec2a31bd219060daf2d894b2596ca649a9ccae76a856e",
+      "status": "pass",
+      "reviewer": "root",
+      "checks": "Final figure inspected directly or in the individually reviewed final PDF pages3-5. Exact manufactured reference labelled; dimensionless a; common full error limits per case; signed spatial profiles; nondimensional axes; external legends; no clipped extrema."
+    },
+    {
+      "path": "results/late_course_teaching/week15_test_02.png",
+      "sha256": "f6a6624d0f0c0565f54cacb508d3bd8b0945dcd8e89cb8cc4ca9f118b8620810",
+      "status": "pass",
+      "reviewer": "root",
+      "checks": "Final figure inspected directly or in the individually reviewed final PDF pages3-5. Exact manufactured reference labelled; dimensionless a; common full error limits per case; signed spatial profiles; nondimensional axes; external legends; no clipped extrema."
+    },
+    {
+      "path": "results/late_course_teaching/week15_test_03.png",
+      "sha256": "01ffd009aef602c61e1de02ef819c1b0a4f2d05944083d617f09b315fba088a4",
+      "status": "pass",
+      "reviewer": "root",
+      "checks": "Final figure inspected directly or in the individually reviewed final PDF pages3-5. Exact manufactured reference labelled; dimensionless a; common full error limits per case; signed spatial profiles; nondimensional axes; external legends; no clipped extrema."
+    },
+    {
+      "path": "results/late_course_teaching/week15_test_04.png",
+      "sha256": "8fd0b1be6a2506e376ec2f485cc89ee97b5e4a1531cb489234ade17391f65cf0",
+      "status": "pass",
+      "reviewer": "root",
+      "checks": "Final figure inspected directly or in the individually reviewed final PDF pages3-5. Exact manufactured reference labelled; dimensionless a; common full error limits per case; signed spatial profiles; nondimensional axes; external legends; no clipped extrema."
+    }
+  ],
+  "resolved_findings": [
+    "Corrected enlarged equation rasters in Week7 guides",
+    "Merged unnecessarily sparse Week5 theory pages and typeset numerical matrix example",
+    "Week3 exact matched sampling after time-step halving: start_new=2*start+1; default simulation and recorded outputs unchanged.",
+    "Week15 dimensional label a/L corrected to dimensionless a; final caption describes both velocity components and their signed errors without claiming either is uniformly weak.",
+    "Week15 gallery floats constrained so each Reynolds-number heading stays with its own cases.",
+    "Windows CP1252-default decoding in the canonical transformer notebook producer corrected to explicit UTF-8 and verified by real-generation regression; final Week21/22 displayed labels inspected.",
+    "Legacy appended bar charts replaced/removed from late lectures without deleting scientific data; the replacement full-range trajectory and transfer curves preserve poor performance and seed spread.",
+    "Week15 retained ladder bar image removed from display while its scientific original remains preserved; exact retained correlation values appear in a compact table.",
+    "Week15 final classroom route now includes the trainable manufactured-kinematic CPU experiment, validation-only checkpoint selection and exact held-out fields, separated from mechanism demonstrations and retained CFD."
+  ],
+  "pending_findings": [],
+  "late_additional_figures": [
+    {
+      "path": "results/late_course_teaching/week22_transfer_label_curves_01.png",
+      "sha256": "588eaaf9ff8cc27c72dcbbbdfdb0ae324b04d2188bc9eab051603f72ae56e46f",
+      "status": "pass",
+      "reviewer": "root",
+      "checks": "Three Reynolds numbers labelled, full observed label counts and signed seed ranges preserved, representation floors distinguished, legend above panels and min–max text correctly decoded."
+    }
+  ]
+}

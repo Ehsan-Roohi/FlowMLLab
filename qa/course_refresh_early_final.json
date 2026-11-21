@@ -1,0 +1,1591 @@
+{
+  "utc": "2026-11-21T04:01:34.382610+00:00",
+  "baseline_commit": "dd2f42d",
+  "status": "Complete scoped repair; publication is owned by root",
+  "scope": {
+    "notebooks": 19,
+    "pdfs": 11,
+    "fresh_cpu_defaults": 10,
+    "preserved_notebooks": 8,
+    "static_only_optional_gpu_notebooks": 1,
+    "updated_pdfs": 3,
+    "retained_pdf_core_pages": 61,
+    "reviewed_final_lecture_pages": 22,
+    "inline_cpu_figures": 35
+  },
+  "notebooks": [
+    {
+      "path": "notebooks/week01/01_python_for_cfd_ai_fluids.ipynb",
+      "initial_sha256": "e6bc248aba4dc94dd87054d6fc00f4fdfa3d7a593d8c8b11cd28c0554bdc00fa",
+      "sha256": "e6bc248aba4dc94dd87054d6fc00f4fdfa3d7a593d8c8b11cd28c0554bdc00fa",
+      "bytes": 480831,
+      "changed": false,
+      "lecture": "lectures/week01_numerical_foundations.pdf",
+      "action_reason": "Substantial worked equations, controls, CPU outputs and engineering exercises; no identified teaching defect.",
+      "execution": {
+        "scope": "No new run; retained verified evidence"
+      },
+      "review_status": "content_audited_and_preserved_byte_for_byte"
+    },
+    {
+      "path": "notebooks/week01/02_tensorflow_for_ai_fluids.ipynb",
+      "initial_sha256": "b9eb18f8a77b8da0e73859e1c5220bb7117b65041fa6d94e078349233a448bca",
+      "sha256": "b9eb18f8a77b8da0e73859e1c5220bb7117b65041fa6d94e078349233a448bca",
+      "bytes": 572168,
+      "changed": false,
+      "lecture": "lectures/week01_02_tensorflow_keras.pdf",
+      "action_reason": "Substantial worked equations, controls, CPU outputs and engineering exercises; no identified teaching defect.",
+      "execution": {
+        "scope": "No new run; retained verified evidence"
+      },
+      "review_status": "content_audited_and_preserved_byte_for_byte"
+    },
+    {
+      "path": "notebooks/week01/03_cavity_ghia.ipynb",
+      "initial_sha256": "35fed5500f78605bc003101681833249d5249d601fe47dbd810d2f8b706ed0be",
+      "sha256": "35fed5500f78605bc003101681833249d5249d601fe47dbd810d2f8b706ed0be",
+      "bytes": 3906666,
+      "changed": false,
+      "lecture": "lectures/week01_numerical_foundations.pdf",
+      "action_reason": "Substantial worked equations, controls, CPU outputs and engineering exercises; no identified teaching defect.",
+      "execution": {
+        "scope": "No new run; retained verified evidence"
+      },
+      "review_status": "content_audited_and_preserved_byte_for_byte"
+    },
+    {
+      "path": "notebooks/week01_1/W1_1_AI_Assisted_Scientific_Software.ipynb",
+      "initial_sha256": "06628727383e65e4d3e6898bee436f10529e7009365d73158e643e3e29347a7a",
+      "sha256": "06628727383e65e4d3e6898bee436f10529e7009365d73158e643e3e29347a7a",
+      "bytes": 184833,
+      "changed": false,
+      "lecture": "lectures/week01_1_ai_assisted_scientific_software.pdf",
+      "action_reason": "Manufactured verification, adversarial axis test and physical gates already explicit.",
+      "execution": {
+        "scope": "No new run; retained verified evidence"
+      },
+      "review_status": "content_audited_and_preserved_byte_for_byte"
+    },
+    {
+      "path": "notebooks/week01_2/W1_2_Cavity_Pressure_Velocity.ipynb",
+      "initial_sha256": "d4bd771bc423ba4932bd2d8c04153de191e0664e4a89762bcee5f604780f726e",
+      "sha256": "d4bd771bc423ba4932bd2d8c04153de191e0664e4a89762bcee5f604780f726e",
+      "bytes": 278594,
+      "changed": false,
+      "lecture": "lectures/week01_2_pressure_velocity.pdf",
+      "action_reason": "74-page worked SIMPLE/PISO/PIMPLE model with exact experiment tables and retained CFD.",
+      "execution": {
+        "scope": "No new run; retained verified evidence"
+      },
+      "review_status": "content_audited_and_preserved_byte_for_byte"
+    },
+    {
+      "path": "notebooks/week01_3/W1_3_Keras_Optimizers.ipynb",
+      "initial_sha256": "c770a31c3f96a515aba3894bc1c828444ef6424b0cfbfec4d2377dad8fc28280",
+      "sha256": "c770a31c3f96a515aba3894bc1c828444ef6424b0cfbfec4d2377dad8fc28280",
+      "bytes": 1226243,
+      "changed": false,
+      "lecture": "lectures/week01_3_keras_optimizers.pdf",
+      "action_reason": "Four function profiles, optimizer equations/controls, physical signed errors and concrete experiments already present.",
+      "execution": {
+        "scope": "No new run; retained verified evidence"
+      },
+      "review_status": "content_audited_and_preserved_byte_for_byte"
+    },
+    {
+      "path": "notebooks/week01_4/W1_4_Spectral_DG_CPU.ipynb",
+      "initial_sha256": "22d369172ae90eba1359ab0032e64738c41d03697e9da25b967738eaa490511d",
+      "sha256": "22d369172ae90eba1359ab0032e64738c41d03697e9da25b967738eaa490511d",
+      "bytes": 1466938,
+      "changed": false,
+      "lecture": "lectures/week01_4_spectral_dg.pdf",
+      "action_reason": "Fresh verified standalone CPU path, 18 exact solver functions, actual cavity and Ghia evidence; immutable execution provenance.",
+      "execution": {
+        "scope": "No new run; retained verified evidence"
+      },
+      "review_status": "content_audited_and_preserved_byte_for_byte"
+    },
+    {
+      "path": "notebooks/week02/AI_in_Fluids_Week2_Colab_Expanded.ipynb",
+      "initial_sha256": "646ae77316bef4ccce7f502d214319978619ce294bbed3d6c7238c3cd3ee3977",
+      "sha256": "e3a3f53ad19e768a8100a8e3710561ac662d3227e631afc29f3b655e41b3b04e",
+      "bytes": 927431,
+      "changed": true,
+      "lecture": "lectures/week02_supervised_learning_rarefaction.pdf",
+      "action_reason": "Network depth/activation controls now construct the actual graph; parameter counts, label targets, CPU figures and engineering experiments explained.",
+      "execution": {
+        "receipt": "results/course_refresh_early/AI_in_Fluids_Week2_Colab_Expanded/execution.json",
+        "receipt_sha256": "5409a132af0d538584987440ac1673f37648ea0bccf0fc2e009132691227a659",
+        "elapsed_run_all_seconds": 165.29853049712256,
+        "host": "uri-cpu078",
+        "cpu_only": true,
+        "executed_code_cells": 26,
+        "figure_count": 9,
+        "original_execution_sha256": "e3a3f53ad19e768a8100a8e3710561ac662d3227e631afc29f3b655e41b3b04e",
+        "post_execution_changes": {}
+      },
+      "review_status": "fresh_cpu_executed_and_physical_figures_reviewed"
+    },
+    {
+      "path": "notebooks/week02_1/Probabilistic_UQ_CFD.ipynb",
+      "initial_sha256": "dba69e24666f8097df3ef192520d334ee114ffc11e213a364d3c9da405f8eef4",
+      "sha256": "dba69e24666f8097df3ef192520d334ee114ffc11e213a364d3c9da405f8eef4",
+      "bytes": 95189,
+      "changed": false,
+      "lecture": "lectures/week02_1_probabilistic_uq.pdf",
+      "action_reason": "Exact Bayes and GP bridges, calibration/selection/public-assessment distinction and proper scoring already explicit.",
+      "execution": {
+        "scope": "No new run; retained verified evidence"
+      },
+      "review_status": "content_audited_and_preserved_byte_for_byte"
+    },
+    {
+      "path": "notebooks/week03/AI_in_Fluids_Week3_Lab1_Maxwellian_Noise_ML_Student.ipynb",
+      "initial_sha256": "8bbab8b3916ba718f9384a30e3de660203ba7619434d657240eb3a52166f14e3",
+      "sha256": "7ca723042cc6ae2d9a82af7d63431291a081abc77ebadd600e71d4d58841d557",
+      "bytes": 360384,
+      "changed": true,
+      "lecture": "lectures/week03_kinetic_dsmc.pdf",
+      "action_reason": "Dimensional moment definitions, finite-N bias, paired unbiased comparison, nondimensional error diagnostics, exposed neural controls and concrete experiments.",
+      "execution": {
+        "receipt": "results/course_refresh_early/AI_in_Fluids_Week3_Lab1_Maxwellian_Noise_ML_Student/execution.json",
+        "receipt_sha256": "f331589eb06e0b3a672e7fffd1df00a337df0ef161abbb2cbef0b8c2ed4ef019",
+        "elapsed_run_all_seconds": 198.43912030000502,
+        "host": "ECS-200417",
+        "cpu_only": true,
+        "executed_code_cells": 11,
+        "figure_count": 4,
+        "original_execution_sha256": "d1852e1debf2c25b6161ea24969814d0d4f683d2bb72bc47e4af8527348a8692",
+        "post_execution_changes": {}
+      },
+      "review_status": "fresh_cpu_executed_and_physical_figures_reviewed"
+    },
+    {
+      "path": "notebooks/week03/AI_in_Fluids_Week3_Lab2_Mini_DSMC_Cavity_Revised_Student.ipynb",
+      "initial_sha256": "39bd1e406c430f03c5ba78ee71dbdc8ae4b96543c601a7b455d1281a5c7ffdd0",
+      "sha256": "9d0f844f0f96e88ffd15cf7a1ed6bcb7164d5b0e7bb74a8cbdcda9fd3c5d98c0",
+      "bytes": 1584589,
+      "changed": true,
+      "lecture": "lectures/week03_kinetic_dsmc.pdf",
+      "action_reason": "Collision invariants, actual physical sampling windows, native fields/profiles and full errors; matched-time exercise corrected without changing simulations.",
+      "execution": {
+        "receipt": "results/course_refresh_early/AI_in_Fluids_Week3_Lab2_Mini_DSMC_Cavity_Revised_Student/execution.json",
+        "receipt_sha256": "f7730597fbd476521ca14b35b7497fbaee1ada351f71356271db25b5ea9941bc",
+        "elapsed_run_all_seconds": 624.0482166000002,
+        "host": "ECS-200417",
+        "cpu_only": true,
+        "executed_code_cells": 26,
+        "figure_count": 5,
+        "original_execution_sha256": "2faf5f2a31d14a6316374288344809044fd2ac2f08c91f63c8c5792fc179fe68",
+        "post_execution_changes": {
+          "post_execution_markdown_revision": {
+            "reason": "Correct zero-based matched-time exercise: start_new=2*start+1, with halved dt",
+            "code_cells_outputs_and_execution_metadata_unchanged": true,
+            "original_executed_notebook_sha256": "2faf5f2a31d14a6316374288344809044fd2ac2f08c91f63c8c5792fc179fe68"
+          },
+          "post_execution_presentation_revision": {
+            "reason": "Two literal percent signs corrected in retained wall-pressure comparison annotation; no data, code, metrics, other outputs or timing changed.",
+            "receipt": "qa/course_refresh_early_dsmc_presentation.json",
+            "no_simulation_or_training": true
+          }
+        }
+      },
+      "review_status": "fresh_cpu_executed_and_physical_figures_reviewed"
+    },
+    {
+      "path": "notebooks/week05_06/P0_Project_Setup.ipynb",
+      "initial_sha256": "608cc05af413ab0db9b90fb5d880d554cfa6e05d465381e8847178d590216529",
+      "sha256": "2bc0a685f05cad4153a42f785a159bc6be76b855937eaa54b0036ecba66be559",
+      "bytes": 309053,
+      "changed": true,
+      "lecture": "lectures/week05_06_project_guide.pdf",
+      "action_reason": "Retained project controls/exercises; shared helper now displays physical CFD/model fields, pressure gauges, profiles and full errors; actual CPU output retained.",
+      "execution": {
+        "receipt": "results/course_refresh_early/P0_Project_Setup/execution.json",
+        "receipt_sha256": "1b4187c00b2727ceed1dc4198b8a41d2ef7d8b07406672e76cad2ae2a6db46ca",
+        "elapsed_run_all_seconds": 198.794650799995,
+        "host": "ECS-200417",
+        "cpu_only": true,
+        "executed_code_cells": 5,
+        "figure_count": 1,
+        "original_execution_sha256": "de905322c4f3916265de2bc65c1996707e9f4dc57f824011befe1c5fbd35d2fb",
+        "post_execution_changes": {}
+      },
+      "review_status": "fresh_cpu_executed_and_physical_figures_reviewed"
+    },
+    {
+      "path": "notebooks/week05_06/P1_Re_Generalization.ipynb",
+      "initial_sha256": "925ceb9f4a7069a47b4e556adbbdaa471aa3b8f4c50d8c77ececa7b67223f1e3",
+      "sha256": "fd33e8e39a1896f5fe1c937a357e24045ac4122deac738cd091455310f72982d",
+      "bytes": 635556,
+      "changed": true,
+      "lecture": "lectures/week05_06_project_guide.pdf",
+      "action_reason": "Retained project controls/splits; actual default CPU fit and physical comparison including unfavorable corner errors retained.",
+      "execution": {
+        "receipt": "results/course_refresh_early/P1_Re_Generalization/execution.json",
+        "receipt_sha256": "1e5465f3ca7fe3053cb7ce5fbb9618723ab04b8b01f4909e72247d2b2b520e10",
+        "elapsed_run_all_seconds": 468.6234333431348,
+        "host": "uri-cpu083",
+        "cpu_only": true,
+        "executed_code_cells": 7,
+        "figure_count": 1,
+        "original_execution_sha256": "fd33e8e39a1896f5fe1c937a357e24045ac4122deac738cd091455310f72982d",
+        "post_execution_changes": {}
+      },
+      "review_status": "fresh_cpu_executed_and_physical_figures_reviewed"
+    },
+    {
+      "path": "notebooks/week05_06/P2_Physics_Guided_DNN.ipynb",
+      "initial_sha256": "3ad5aa8081f782433487dcbbedac4d0c6fe7760d07d1069fb29b9a0eacc0829c",
+      "sha256": "3add1c3e51783b4f61e0b42e73e752b1782b640d409c4dc61b654caebc210415",
+      "bytes": 716597,
+      "changed": true,
+      "lecture": "lectures/week05_06_project_guide.pdf",
+      "action_reason": "Retained physics tradeoff and validation selection; physical pressure/velocity outputs added through helper; outline histogram and external legend.",
+      "execution": {
+        "receipt": "results/course_refresh_early/P2_Physics_Guided_DNN/execution.json",
+        "receipt_sha256": "485f300a18a4692b2ffba964d9ea857c9d53646bd1138ba92994fca67fc3515c",
+        "elapsed_run_all_seconds": 383.1372034419328,
+        "host": "uri-cpu078",
+        "cpu_only": true,
+        "executed_code_cells": 7,
+        "figure_count": 3,
+        "original_execution_sha256": "3add1c3e51783b4f61e0b42e73e752b1782b640d409c4dc61b654caebc210415",
+        "post_execution_changes": {}
+      },
+      "review_status": "fresh_cpu_executed_and_physical_figures_reviewed"
+    },
+    {
+      "path": "notebooks/week05_06/P3_POD_Study.ipynb",
+      "initial_sha256": "bbea66778fb4e3cd298a5c32b6e8ec40cc8393466ed981e0503a9892ebd774e8",
+      "sha256": "4479add632363557eedfeed40b22c28f38f8d9c73152a4e90c14ec74edc29ccc",
+      "bytes": 1380299,
+      "changed": true,
+      "lecture": "lectures/week05_06_project_guide.pdf",
+      "action_reason": "Low-rank reconstruction compared with full-field POD oracle using physical fields/profiles; original rank study preserved.",
+      "execution": {
+        "receipt": "results/course_refresh_early/P3_POD_Study/execution.json",
+        "receipt_sha256": "c073ac46c693a9993612f824696c142c42c531c3a873c0c307b4040b7afcacca",
+        "elapsed_run_all_seconds": 12.260024282615632,
+        "host": "uri-cpu083",
+        "cpu_only": true,
+        "executed_code_cells": 8,
+        "figure_count": 3,
+        "original_execution_sha256": "4479add632363557eedfeed40b22c28f38f8d9c73152a4e90c14ec74edc29ccc",
+        "post_execution_changes": {}
+      },
+      "review_status": "fresh_cpu_executed_and_physical_figures_reviewed"
+    },
+    {
+      "path": "notebooks/week05_06/P4_Uncertainty_Study.ipynb",
+      "initial_sha256": "86252c7b16bb68690645cd81ac680c4569e6e3629a1dca6710f6b81315f10c96",
+      "sha256": "ffc8234ecfbaf94c154fdde9ac1d4b89cc413a9bd94d9cb44150cb2624973cd4",
+      "bytes": 493506,
+      "changed": true,
+      "lecture": "lectures/week05_06_project_guide.pdf",
+      "action_reason": "Physical ensemble mean/error/spread/profiles, honest one-sample-SD band, all seeds preserved; fit timing excludes later evaluation.",
+      "execution": {
+        "receipt": "results/course_refresh_early/P4_Uncertainty_Study/execution.json",
+        "receipt_sha256": "3718e1ed8702b3b31feaedc6b688d65850eb2aa5b2ef00af32d88d444e1c03cd",
+        "elapsed_run_all_seconds": 554.3551526330411,
+        "host": "uri-cpu084",
+        "cpu_only": true,
+        "executed_code_cells": 6,
+        "figure_count": 3,
+        "original_execution_sha256": "0f6bc6ed306d6f8b7e53193887cecc756b63aea4c8d8bbd6034ba1544c5b143b",
+        "post_execution_changes": {
+          "post_execution_markdown_revision": {
+            "reason": "Add missing space in \"a 95%\"; all code, output and timing retained.",
+            "code_outputs_execution_metadata_equal": true,
+            "before_notebook_sha256": "0f6bc6ed306d6f8b7e53193887cecc756b63aea4c8d8bbd6034ba1544c5b143b"
+          }
+        }
+      },
+      "review_status": "fresh_cpu_executed_and_physical_figures_reviewed"
+    },
+    {
+      "path": "notebooks/week05_06/P5_Rarefied_Cavity.ipynb",
+      "initial_sha256": "9c096ce625af1eb27792d39a3982332bb55486b7d3f4fc744955071107a466fb",
+      "sha256": "91c8a08c2626e12083a65ab021d2ace69dfb9ca0fd743c599b53783ce4f78111",
+      "bytes": 791980,
+      "changed": true,
+      "lecture": "lectures/week05_06_project_guide.pdf",
+      "action_reason": "Complete CPU Track5A default, native speed/streamlines/errors and signed temperature profiles; coarse noisy reference and poor neural behavior remain visible.",
+      "execution": {
+        "receipt": "results/course_refresh_early/P5_Rarefied_Cavity/execution.json",
+        "receipt_sha256": "77481fbeff72d9e25888299d682ddbc691807ef3c0ac9acf6c2326d98f1249af",
+        "elapsed_run_all_seconds": 27.69669646769762,
+        "host": "uri-cpu084",
+        "cpu_only": true,
+        "executed_code_cells": 8,
+        "figure_count": 2,
+        "original_execution_sha256": "91c8a08c2626e12083a65ab021d2ace69dfb9ca0fd743c599b53783ce4f78111",
+        "post_execution_changes": {},
+        "cold_generation_seconds": 134.39606683980674,
+        "final_run_used_existing_configuration_matched_cache": true
+      },
+      "review_status": "fresh_cpu_executed_and_physical_figures_reviewed"
+    },
+    {
+      "path": "notebooks/week05_06/P6_FP_Cavity_Closure.ipynb",
+      "initial_sha256": "e99998d8a11eb5ad2e330bbb6c3275d6f3199478ab7c68f0364df12e4988f343",
+      "sha256": "884ecee06a1584db3082f4fcf47ece22513a90b6178a4db2932c639a6218844a",
+      "bytes": 42491,
+      "changed": true,
+      "lecture": "lectures/week05_06_project_guide.pdf",
+      "action_reason": "GPU research extension retained; only two histogram styles and legend placement changed. Static verification only; no GPU training claimed.",
+      "execution": {
+        "scope": "Static compile/schema verification only; optional GPU project not run"
+      },
+      "review_status": "static_review_and_compile_only_optional_gpu_path"
+    },
+    {
+      "path": "notebooks/week05_06/W5_Lab2_Sparse_Sensing_Dynamics.ipynb",
+      "initial_sha256": "4351817bed05d3e427694fb11b3988594334266ab6a605cf79644fb83afa22bf",
+      "sha256": "cbe39278f9a943bd3ae813fae36d03da0175091377697f98226528cbbb80b1ea",
+      "bytes": 491607,
+      "changed": true,
+      "lecture": "lectures/week05_modal_sensing.pdf",
+      "action_reason": "POD/sensor derivation and real rank/budget/noise/seed controls; train90/110, validation100, assessment105; conditioning and physical diagnostics; explicit optional dynamics bridge.",
+      "execution": {
+        "receipt": "results/course_refresh_early/W5_Lab2_Sparse_Sensing_Dynamics/execution.json",
+        "receipt_sha256": "6f13c36da3084a9d5148aced68f86a4211a2df4827599837eaba8eda01e42532",
+        "elapsed_run_all_seconds": 437.61189070000546,
+        "host": "ECS-200417",
+        "cpu_only": true,
+        "executed_code_cells": 9,
+        "figure_count": 4,
+        "original_execution_sha256": "cbe39278f9a943bd3ae813fae36d03da0175091377697f98226528cbbb80b1ea",
+        "post_execution_changes": {}
+      },
+      "review_status": "fresh_cpu_executed_and_physical_figures_reviewed"
+    }
+  ],
+  "lectures": [
+    {
+      "path": "lectures/week01_numerical_foundations.pdf",
+      "initial_sha256": "feb9e0a788949fc62fd3a429afcc3fe06521966220364b9041668c962f751b82",
+      "sha256": "feb9e0a788949fc62fd3a429afcc3fe06521966220364b9041668c962f751b82",
+      "bytes": 577875,
+      "changed": false,
+      "retained_original_source": "lectures/source/week01_numerical_foundations.tex",
+      "reason": "Existing worked coverage is substantial and no concrete teaching defect found; preserved byte-for-byte.",
+      "review_status": "content_audited_and_preserved_byte_for_byte_no_new_render_claim"
+    },
+    {
+      "path": "lectures/week01_02_tensorflow_keras.pdf",
+      "initial_sha256": "f08169658565734f820ca3057958019cf86323f302972371e54b115137ea78ed",
+      "sha256": "f08169658565734f820ca3057958019cf86323f302972371e54b115137ea78ed",
+      "bytes": 663941,
+      "changed": false,
+      "retained_original_source": "lectures/source/week01_tensorflow/build_guide.py",
+      "reason": "Existing worked coverage is substantial and no concrete teaching defect found; preserved byte-for-byte.",
+      "review_status": "content_audited_and_preserved_byte_for_byte_no_new_render_claim"
+    },
+    {
+      "path": "lectures/week01_1_ai_assisted_scientific_software.pdf",
+      "initial_sha256": "ef782866f10222b68c1fe130ec9cc879aac13cb2f843f28b9615283de96bc745",
+      "sha256": "ef782866f10222b68c1fe130ec9cc879aac13cb2f843f28b9615283de96bc745",
+      "bytes": 628904,
+      "changed": false,
+      "retained_original_source": "qa/build_week01_1_materials.py",
+      "reason": "Existing worked coverage is substantial and no concrete teaching defect found; preserved byte-for-byte.",
+      "review_status": "content_audited_and_preserved_byte_for_byte_no_new_render_claim"
+    },
+    {
+      "path": "lectures/week01_2_pressure_velocity.pdf",
+      "initial_sha256": "949f5857f74c038d27fe831231f51c3a61999f039897ae377628a0fd1b51de54",
+      "sha256": "949f5857f74c038d27fe831231f51c3a61999f039897ae377628a0fd1b51de54",
+      "bytes": 2213369,
+      "changed": false,
+      "retained_original_source": "qa/build_week01_2.py",
+      "reason": "Existing worked coverage is substantial and no concrete teaching defect found; preserved byte-for-byte.",
+      "review_status": "content_audited_and_preserved_byte_for_byte_no_new_render_claim"
+    },
+    {
+      "path": "lectures/week01_3_keras_optimizers.pdf",
+      "initial_sha256": "3b7eb2940eb3031ac5d3fd733f6754692e34be93893beb3afcaa687d1735040d",
+      "sha256": "3b7eb2940eb3031ac5d3fd733f6754692e34be93893beb3afcaa687d1735040d",
+      "bytes": 1111479,
+      "changed": false,
+      "retained_original_source": "lectures/source/build_week01_3_keras_optimizers.py",
+      "reason": "Existing worked coverage is substantial and no concrete teaching defect found; preserved byte-for-byte.",
+      "review_status": "content_audited_and_preserved_byte_for_byte_no_new_render_claim"
+    },
+    {
+      "path": "lectures/week01_4_spectral_dg.pdf",
+      "initial_sha256": "ffa4598e7e423a7ac890be40fa1ba4036740fc1e07a9ff5e9fae5aeddf58684a",
+      "sha256": "ffa4598e7e423a7ac890be40fa1ba4036740fc1e07a9ff5e9fae5aeddf58684a",
+      "bytes": 2387271,
+      "changed": false,
+      "retained_original_source": "qa/build_week01_4_lecture.py",
+      "reason": "Existing worked coverage is substantial and no concrete teaching defect found; preserved byte-for-byte.",
+      "review_status": "content_audited_and_preserved_byte_for_byte_no_new_render_claim"
+    },
+    {
+      "path": "lectures/week02_supervised_learning_rarefaction.pdf",
+      "initial_sha256": "141b4f39328c065118ac152da8a164080a63603b27d0693d0fbcdf112ae50233",
+      "sha256": "493a4dd0c63c26d019e5ee69b356fafec89918bb3830337367c516170bc48264",
+      "bytes": 365759,
+      "changed": true,
+      "retained_original_source": "lectures/source/week02_lecture.tex",
+      "source": "qa/course_refresh_early_lectures.py",
+      "page_count": 26,
+      "reason": "Preserved original core plus topic-specific worked laboratory pages",
+      "protected_core_pages": 24,
+      "protected_core_pixel_sha256": [
+        "67f67b6f36c0784e12859d4d5d9fd73aaf1bf5b63bd701bdcbe2c8b0eab30d2e",
+        "1720e365f2679f89f2454ad5478b7b2f9d258c09c956252e760d8619810d85a9",
+        "5d1a6bd9c5e58f331bc0c997d9ae99a90ceedeaa6904c80e70a0367ad865d9b0",
+        "449885fddc0e7128c55742480abeaa52ca6c30aeba911d38e1e5a9b112168a86",
+        "66e76e9f78ff816baa9ae72efbf7ffb43ca1f789e04fda5ff5f4fd9ca289a3ef",
+        "8e7dc51716d98af98e449a5fb88330e7c24560bde980e9be93ac41f7b8d1c4e4",
+        "d9cc6103bd78386a441790e19fb55cc44016e29c8e65522924de2fc338ba29ee",
+        "9671a827833d23ed6181a9b2ae2cc498c6fde9001f952201c1ad2daaad552173",
+        "dc7b2fb8d33d56d31591a6ae47ef29be4cdc2ef2923eca718669d58958bccc8d",
+        "4f36198c261d11f500fd17a560570610fd185db7b648024328877d4ec716a8ba",
+        "885c1cc9b9c5690e6edb4a6b4b888221c7e5e88cb7b2a599bcc7b0e5f4ae27a3",
+        "caca76f4aa55aef8a1ee1823cff7fcf1dc7b05ed68a9b2a1325020121cbf5487",
+        "a18c30f24eeb434f758828c356c408a69b52b11a8166da94a4753348b17c406f",
+        "a403bfc940a7326f7b2469a2d3f6cdbe9e7a2238e9c3b7084035b4a167d4ce10",
+        "dd559405e2a7523d9b9bd59117be61e26b441d838ec0d24d9e0a79f25e280f4e",
+        "116f429ec074810fc5e7e4af713e1a57417ec845e8116dcdbdc17dc4be16fd26",
+        "70e0b63d12ae18cadaf5df1341943aad649695d7d979f0b1505a9eaacfc87260",
+        "b4ea808a97de46e9864fdd8f613941b2815b3f223ee4a85213b96e16afdfa995",
+        "c4d99613d005ffba727e2c387457bad39a7b13fadb76825a8aaa02d2668b77e4",
+        "702f3fc33a4ef7c9676f1c51218a74bd468a75407f4db8fe4a20f5c54e3aaf92",
+        "040f7d12d2faea5c2db244f3031ee1e8485429fdb8b00e446682775c81ae341b",
+        "12a64a629f6c30956340c705c0510b962ef3c9083a127bafd2fdbaea70a22197",
+        "48601a117e7e40929f999f4a66a6f1b64ef752a875e65d667455c4200e0788ab",
+        "88d2e126efb2e8c89ae2bbfd61cf4f04c10e3f984b8153ebe755bf570a753007"
+      ],
+      "review_status": "updated_and_all_changed_pages_visually_reviewed"
+    },
+    {
+      "path": "lectures/week02_1_probabilistic_uq.pdf",
+      "initial_sha256": "6b7ce96b5ff1ae6e89921716811fa70a100aa98d963ec8c5d3e7dbf79cd15a74",
+      "sha256": "6b7ce96b5ff1ae6e89921716811fa70a100aa98d963ec8c5d3e7dbf79cd15a74",
+      "bytes": 549373,
+      "changed": false,
+      "retained_original_source": "lectures/source/week02_1_probabilistic_uq_notes.tex",
+      "reason": "Existing worked coverage is substantial and no concrete teaching defect found; preserved byte-for-byte.",
+      "review_status": "content_audited_and_preserved_byte_for_byte_no_new_render_claim"
+    },
+    {
+      "path": "lectures/week03_kinetic_dsmc.pdf",
+      "initial_sha256": "b7e19d9abcd6c30adb9a5fbdad4079c773befe6c2047f9d2049cbb251f2517c5",
+      "sha256": "3a569f0907850ce7921a6e7a9152fbdf7dc46e35108cf10521fd8952ed6f29ae",
+      "bytes": 3166555,
+      "changed": true,
+      "retained_original_source": "lectures/source/week03_lecture.pptx",
+      "source": "qa/course_refresh_early_lectures.py",
+      "page_count": 47,
+      "reason": "Preserved original core plus topic-specific worked laboratory pages",
+      "protected_core_pages": 37,
+      "protected_core_pixel_sha256": [
+        "672da4257465377b11c1da1f8f9ad8eaf32c38a4c04c72ee9d6351a2e075ccdf",
+        "3b66b84713d993412debb8cf25adf2c63698ad9d4a3689ab1a5160709de227a0",
+        "75c79e7e914f556e7ef4ac20d7c0b01cfce29632965b9e80cceaae303cbad3f7",
+        "0868c107b458e80b8af6a524b3e9e3aaaec84b65a53a7711ff98151ad01dcd31",
+        "c685ced1fc9a9d320d1e26c0d76caa75b19162d751f8b438ea7a1d6e899a064f",
+        "4454e21c92f26a8a673d433ee8d06a0a6a61bbccbb2017407a1960dd0d7c660b",
+        "e29005f5883e88ce78663e75e1d18acccd01b6c04c66e30b8d1ca3ee43325ba3",
+        "2c00a7df5789cef91832d2a8b6d1a92b7f7744540259c96e2cef1142245fe19c",
+        "2afc139b54ee7ce10d5ca584f63d82c99bf3378066d7a63deef33ce083b2f1eb",
+        "eebcb3d0c860789139a670eb39624bf371e678864ac62b1096c25b89efd3ecf0",
+        "1e80365e5b986cb33e7bba14ffc1a32de1715e2a82aa2a132b6ccd26a40a068a",
+        "040d5242d05c626e48e7aec4474f24de60691a68d6584e42f81f1cdfac928c2e",
+        "f8fe611ee6ef74f0700c0e5b54b31766f31194bba594789903265515b2ad11b8",
+        "4d22b6a65a770931f485fb4f788df87886f665681f1cbee3a2cf790717ae242e",
+        "0cda987509abdf62edec2760344ed259e443236a8c346c21923d4ec0a7e4af18",
+        "1e83b51c10df1e1ae9ef09c743796f3133dfe075689edfefc5917f97f21cb627",
+        "866c17ea7415af40e8d3c8e5901f3b478787e9e51b2c2222f45111bfe5057e45",
+        "c6ed9ca17e77790899d9cf4ee2d26b6872d26b0593e23ecd9de4051dd2c24471",
+        "f7053b4356c9ea99583c2620e27150ad5f959e53f55d9aab38ab76bd6e03afa1",
+        "3718a985ff5a068ecca022b275d80f62571c5e6333ef738ab97cf8499c96b6d4",
+        "901d0a17b30859344a1a6e9796577960e3b11ee93ad04b88dbf29a6a41020a68",
+        "a6f973f8c9ecbb1e155d86d86bc7c9f91c22aa66541810b2320ebc2919342739",
+        "4d23509086b4180617e3105fd9887613965ce296a98f75abad723e6b05553116",
+        "ee55c1c8b0ca3f5f19e5f4464ef9e5f14e61cb02ec804f28c9128237cbeabf3b",
+        "090bc79e6f3329726d2ba218f95e8ba666253da0d36428c9f0e9d9217242b4a7",
+        "b7e99af58b6ca9feaf3863ca6c421763f205cb6b1e6219cfd07a2dc8c3ad85e3",
+        "835ae527d4e879f623ae4ce9de58f9427d422696e51922bef49629ff7a2e43aa",
+        "25db6a76d42f787266b47d99d67ebba09baf9ee15ee29ed67586a5bf3a263a7d",
+        "a5b09780ed0e7aa9a49f6a6b83d72e34f8d366ad4b3b5b6e8e36ba461ad93e09",
+        "f970576812d6db1dd42ebc08857ce0069174693aab367797eda8bf69552d49ab",
+        "afb88cc8776740ea0aeef788c368c6c46afa02675d6ef5e0c4ba7eca2362786f",
+        "b7617431ac9da737e4daf1306cc07bd0493486a1361053f542a55abb34c42998",
+        "10c908729cd9b066854a95d5e282cd40288c82560f0842773ba88c4062272399",
+        "e929e35625e48b47627ddfd1efe37da59ebac313f9c49d2467cf46864dd7c435",
+        "f5bfba792f9b4dfae3d4e2b502933d676738d8fc947edf4605d016ae851efc07",
+        "0a89a7c41cd520a106be182c5fb65bb76c926133333a50d453d72274872dfc6d",
+        "1165cc3ecd2236ab1d32da78a8d1c34838633f41f1f4221249fb3f2cbe5a7a14"
+      ],
+      "review_status": "updated_and_all_changed_pages_visually_reviewed"
+    },
+    {
+      "path": "lectures/week05_06_project_guide.pdf",
+      "initial_sha256": "7502434b497055aac41b6491f945a6c0c3a0dfb5607de1968ea55b692884894e",
+      "sha256": "7502434b497055aac41b6491f945a6c0c3a0dfb5607de1968ea55b692884894e",
+      "bytes": 347328,
+      "changed": false,
+      "retained_original_source": "lectures/source/weeks05_06_project_guide.tex",
+      "reason": "Existing worked coverage is substantial and no concrete teaching defect found; preserved byte-for-byte.",
+      "review_status": "content_audited_and_preserved_byte_for_byte_no_new_render_claim"
+    },
+    {
+      "path": "lectures/week05_modal_sensing.pdf",
+      "initial_sha256": "3d920efcc60795ad6784d377421a986fadd3546b0ef73182cf2b75e6217bb98f",
+      "sha256": "5c7a4dab50ae1e8c0919d621aa0646945fef818adb2a8812f4f1dd5ef8d01ee4",
+      "bytes": 952456,
+      "changed": true,
+      "retained_original_source": "lectures/source/week05_modal_sensing.md",
+      "source": "qa/course_refresh_early_lectures.py",
+      "page_count": 10,
+      "reason": "Reorganized and expanded POD/sensing derivation, conditioning, actual figures and experiments",
+      "review_status": "updated_and_all_changed_pages_visually_reviewed"
+    }
+  ],
+  "source_files": {
+    "qa/course_refresh_early_notebooks.py": {
+      "sha256": "c3e55e38beadeb91de00b49f9e00cd9ce57244c704c887e9e006ffd738eb50f0",
+      "bytes": 21036
+    },
+    "qa/course_refresh_week05_sensing.py": {
+      "sha256": "00a2b67d15235b36a29be6515fc7d0ffd7e0670b072909bec115e047ccee8d39",
+      "bytes": 11066
+    },
+    "qa/course_refresh_projects.py": {
+      "sha256": "d08fdde079cbfae77a9727ad89952d1ebf663a8ea4020198a6741eb1700889a5",
+      "bytes": 7486
+    },
+    "qa/course_refresh_early_lectures.py": {
+      "sha256": "0268f424a34e2f1813e41a1a6aa127f5888108b95102afda3e73fab2979a42b3",
+      "bytes": 29829
+    },
+    "qa/course_refresh_early_execute.py": {
+      "sha256": "c5b9bdb7c5673af1f3efe60199779952a791684bc027edbb91fcfeb5b9dd06b3",
+      "bytes": 3315
+    },
+    "qa/course_refresh_early_dsmc_presentation.py": {
+      "sha256": "6297018f59c07ff374ca87483c57a68238706535383797d3a8a67f975865050a",
+      "bytes": 4329
+    },
+    "qa/course_refresh_early_finalize.py": {
+      "sha256": "864590b050cbb27044a4bcdc3512ad21b0cf5c4320d9cff2832f00ab36eb3502",
+      "bytes": 16183
+    },
+    "flowmllab/early_sensing.py": {
+      "sha256": "fb50f839c19f3cc23d168507c03effab137572348f4c83f8db73f4745e2916cf",
+      "bytes": 7759
+    },
+    "common/w5_common.py": {
+      "sha256": "c1e27423c4559371dfaf71b5ede8f35fe8e60afb8d5a185c6f1495c36c2c0856",
+      "bytes": 17375
+    },
+    "common/w5_kinetic_figures.py": {
+      "sha256": "6ae8e0798d45acc8635be7906264fd90ed14605348f8df0c0d58652135891a4c",
+      "bytes": 2934
+    },
+    "common/article_validation.py": {
+      "sha256": "ce8881958bf5527319f532039b65db4123a392318e705e66e51a8f3ad6f9d9ec",
+      "bytes": 20456
+    },
+    "tests/test_course_refresh_early.py": {
+      "sha256": "cea837481c01ab4466d6f9f3ad5d09fd62455c1f67e5fec975be318114e3e06e",
+      "bytes": 3883
+    }
+  },
+  "retained_compact_scientific_outputs": {
+    "results/course_refresh_early/AI_in_Fluids_Week3_Lab1_Maxwellian_Noise_ML_Student/week3_lab1_ml_noise_checks.csv": {
+      "sha256": "22f36229e358d0cda4c2fd8f10319b88e2311d535d50cb9f27c7e73a3332fdd8",
+      "bytes": 170
+    },
+    "results/course_refresh_early/AI_in_Fluids_Week3_Lab1_Maxwellian_Noise_ML_Student/week3_lab1_sampling_noise.csv": {
+      "sha256": "29baa8fe43b31d105224168630096d5cb65210b689eb3047b9e9f048d0901cd6",
+      "bytes": 1019
+    },
+    "results/course_refresh_early/AI_in_Fluids_Week3_Lab2_Mini_DSMC_Cavity_Revised_Student/week3_mini_cavity_dataset.csv": {
+      "sha256": "7fd75a1678b48fdb554c36c31a18370c166d7b6a28e6f7da0deafbd5966a2d77",
+      "bytes": 59538
+    },
+    "results/course_refresh_early/W5_Lab2_Sparse_Sensing_Dynamics/sensor_metrics.json": {
+      "sha256": "2ee19f35ad2a922a06061feda9e16c53eb16a56d68b806c91fbf862ff0826522",
+      "bytes": 36554
+    },
+    "results/course_refresh_early/P1_Re_Generalization/P1_results.csv": {
+      "sha256": "f01ae4985542120663e658d8b5c325e4324e300a3d210135c8d536b97fbbe345",
+      "bytes": 3277
+    },
+    "results/course_refresh_early/P2_Physics_Guided_DNN/P2_results.csv": {
+      "sha256": "7caadcc1497859d660fdc61a7678d0f8ec0ea3c4a816011182f5cd669cb88a51",
+      "bytes": 2582
+    },
+    "results/course_refresh_early/P3_POD_Study/P3_results.csv": {
+      "sha256": "d59d3347f33a9b8169f0a21d07536b7963b7b33d16f3322aff58694fbe34c31c",
+      "bytes": 2695
+    },
+    "results/course_refresh_early/P4_Uncertainty_Study/P4_seed_results.csv": {
+      "sha256": "1dea191e13c5557f20c3fe3444ea163abe77889866d5f4488f90e985e6b7d5c3",
+      "bytes": 6166
+    },
+    "results/course_refresh_early/P5_Rarefied_Cavity/P5_5A_4271d26e52f783fb.npz": {
+      "sha256": "fc07712260c168ac44e96bf336f8ce6f9e4714fa2ab89c65fb81c2a9cd0fa65c",
+      "bytes": 67748
+    },
+    "results/course_refresh_early/P5_Rarefied_Cavity/P5_results.csv": {
+      "sha256": "17956273e6ff11d23bb54f0bb22bf9d08170385bb5910ae39a30b57d800d21a9",
+      "bytes": 1728
+    }
+  },
+  "visual_review": "qa/course_refresh_early_visual_review.json",
+  "original_pdf_page_preservation_proof": {
+    "path": "qa/course_refresh_early_core_preservation.json",
+    "sha256": "1b22ea1492b82f2ad1a315e89d543ce06e03c4e0b3e1f7c922d5a180098e6d00",
+    "exact_baseline_comparison_pages": 61
+  },
+  "checks": {
+    "schema_and_python_compile_cells": 260,
+    "inline_images_match_receipts_and_notebooks": 35,
+    "focused_tests": {
+      "record": "results/course_refresh_early/unity/focused_tests.xml",
+      "sha256": "f980f0c0198854421fa353fbbd255a84823f6fc89c972551fae2e45051c8704b",
+      "passed": 8,
+      "environment": "Unity TF2.20.0 CPU"
+    },
+    "matched_time_test": {
+      "name": "test_halved_timestep_matches_every_post_move_sample_time",
+      "passed": true,
+      "test_source_sha256": "cea837481c01ab4466d6f9f3ad5d09fd62455c1f67e5fec975be318114e3e06e",
+      "scope": "Both retained sampling configurations; exact halved-step times and rejection of old doubled-start mapping"
+    },
+    "old_preserved_notebook_and_pdf_hashes": true
+  },
+  "execution_environment": "results/course_refresh_early/unity/environment.txt",
+  "workspace_staging": "provenance.workspace_and_input_staging",
+  "return_receipts": "provenance.return_transfers",
+  "reproduction_order": [
+    "Build an unmarked notebook from its original source, then run qa/course_refresh_early_notebooks.py for Week2/3; qa/course_refresh_week05_sensing.py for W5; qa/course_refresh_projects.py for P2-P6. These patchers preserve existing exercises.",
+    "Run the explicit CPU notebook paths with qa/course_refresh_early_execute.py in a documented compatible environment; preserve source data and split definitions. Optional P6 GPU and dynamics variants are excluded from default verification.",
+    "Normalize generated textual JSON to LF with parsed-value equality before publication; preserve original execution-byte fingerprints for serialization-only updates.",
+    "Run qa/course_refresh_early_lectures.py after the original core lecture builders and after notebook output export. This retains Week2 pages1-24 and Week3 pages1-37 and verifies their pixel hashes.",
+    "If refreshing the retained DSMC comparison after the percent fix, qa/course_refresh_early_dsmc_presentation.py rerenders only that one cell from unchanged inputs and records exact metric equality.",
+    "Run qa/course_refresh_early_finalize.py to verify current assets and refresh this compact receipt."
+  ],
+  "builder_contract_limit": "Marker guards avoid duplicate additions; they are not a generic guarantee against a different old in-place builder overwriting individual marked cells. Clean regeneration must run the original builder followed by the scoped repair scripts. Root owns canonical modal Week5 builder hooks.",
+  "scientific_limits": [
+    "P5 uses a coarse 12x12, six-particles-per-cell teaching model and noisy native data. Velocity structure is not learned accurately; averaging two seeds is not convergence. Cold data generation134.40s and final cached RunAll27.70s are distinct measurements.",
+    "P0-P4 coordinate networks retain unfavorable corner errors and wall inconsistencies; physical profiles and full errors show them rather than guaranteeing improvement.",
+    "Week3 quick/better runs differ in grid, particles, physical windows and seed. They are diagnostic comparisons, not isolated grid refinement.",
+    "W5 uses previously inspected coarse LBM fields with a strict local train/validation/assessment split. Noise seeds are artificial measurement/layout realizations, not independent CFD simulations.",
+    "No optional GPU training, broad research sweep, hosted Colab run or optional W5 dynamics execution is claimed."
+  ],
+  "excluded_root_baseline": "All11notebooks under notebooks/week04, including W4_1 ROM, retain root-owned independent verification; they are not counted as newly executed here.",
+  "lecture_build": {
+    "builder": "qa/course_refresh_early_lectures.py",
+    "scope": "Teaching only; no CFD or training performed by this builder",
+    "artifacts": [
+      {
+        "path": "lectures/week02_supervised_learning_rarefaction.pdf",
+        "protected_core_pages": 24,
+        "protected_render_sha256": [
+          "67f67b6f36c0784e12859d4d5d9fd73aaf1bf5b63bd701bdcbe2c8b0eab30d2e",
+          "1720e365f2679f89f2454ad5478b7b2f9d258c09c956252e760d8619810d85a9",
+          "5d1a6bd9c5e58f331bc0c997d9ae99a90ceedeaa6904c80e70a0367ad865d9b0",
+          "449885fddc0e7128c55742480abeaa52ca6c30aeba911d38e1e5a9b112168a86",
+          "66e76e9f78ff816baa9ae72efbf7ffb43ca1f789e04fda5ff5f4fd9ca289a3ef",
+          "8e7dc51716d98af98e449a5fb88330e7c24560bde980e9be93ac41f7b8d1c4e4",
+          "d9cc6103bd78386a441790e19fb55cc44016e29c8e65522924de2fc338ba29ee",
+          "9671a827833d23ed6181a9b2ae2cc498c6fde9001f952201c1ad2daaad552173",
+          "dc7b2fb8d33d56d31591a6ae47ef29be4cdc2ef2923eca718669d58958bccc8d",
+          "4f36198c261d11f500fd17a560570610fd185db7b648024328877d4ec716a8ba",
+          "885c1cc9b9c5690e6edb4a6b4b888221c7e5e88cb7b2a599bcc7b0e5f4ae27a3",
+          "caca76f4aa55aef8a1ee1823cff7fcf1dc7b05ed68a9b2a1325020121cbf5487",
+          "a18c30f24eeb434f758828c356c408a69b52b11a8166da94a4753348b17c406f",
+          "a403bfc940a7326f7b2469a2d3f6cdbe9e7a2238e9c3b7084035b4a167d4ce10",
+          "dd559405e2a7523d9b9bd59117be61e26b441d838ec0d24d9e0a79f25e280f4e",
+          "116f429ec074810fc5e7e4af713e1a57417ec845e8116dcdbdc17dc4be16fd26",
+          "70e0b63d12ae18cadaf5df1341943aad649695d7d979f0b1505a9eaacfc87260",
+          "b4ea808a97de46e9864fdd8f613941b2815b3f223ee4a85213b96e16afdfa995",
+          "c4d99613d005ffba727e2c387457bad39a7b13fadb76825a8aaa02d2668b77e4",
+          "702f3fc33a4ef7c9676f1c51218a74bd468a75407f4db8fe4a20f5c54e3aaf92",
+          "040f7d12d2faea5c2db244f3031ee1e8485429fdb8b00e446682775c81ae341b",
+          "12a64a629f6c30956340c705c0510b962ef3c9083a127bafd2fdbaea70a22197",
+          "48601a117e7e40929f999f4a66a6f1b64ef752a875e65d667455c4200e0788ab",
+          "88d2e126efb2e8c89ae2bbfd61cf4f04c10e3f984b8153ebe755bf570a753007"
+        ],
+        "changed_pages": [
+          25,
+          26
+        ],
+        "page_count": 26,
+        "sha256": "493a4dd0c63c26d019e5ee69b356fafec89918bb3830337367c516170bc48264"
+      },
+      {
+        "path": "lectures/week03_kinetic_dsmc.pdf",
+        "protected_core_pages": 37,
+        "protected_render_sha256": [
+          "672da4257465377b11c1da1f8f9ad8eaf32c38a4c04c72ee9d6351a2e075ccdf",
+          "3b66b84713d993412debb8cf25adf2c63698ad9d4a3689ab1a5160709de227a0",
+          "75c79e7e914f556e7ef4ac20d7c0b01cfce29632965b9e80cceaae303cbad3f7",
+          "0868c107b458e80b8af6a524b3e9e3aaaec84b65a53a7711ff98151ad01dcd31",
+          "c685ced1fc9a9d320d1e26c0d76caa75b19162d751f8b438ea7a1d6e899a064f",
+          "4454e21c92f26a8a673d433ee8d06a0a6a61bbccbb2017407a1960dd0d7c660b",
+          "e29005f5883e88ce78663e75e1d18acccd01b6c04c66e30b8d1ca3ee43325ba3",
+          "2c00a7df5789cef91832d2a8b6d1a92b7f7744540259c96e2cef1142245fe19c",
+          "2afc139b54ee7ce10d5ca584f63d82c99bf3378066d7a63deef33ce083b2f1eb",
+          "eebcb3d0c860789139a670eb39624bf371e678864ac62b1096c25b89efd3ecf0",
+          "1e80365e5b986cb33e7bba14ffc1a32de1715e2a82aa2a132b6ccd26a40a068a",
+          "040d5242d05c626e48e7aec4474f24de60691a68d6584e42f81f1cdfac928c2e",
+          "f8fe611ee6ef74f0700c0e5b54b31766f31194bba594789903265515b2ad11b8",
+          "4d22b6a65a770931f485fb4f788df87886f665681f1cbee3a2cf790717ae242e",
+          "0cda987509abdf62edec2760344ed259e443236a8c346c21923d4ec0a7e4af18",
+          "1e83b51c10df1e1ae9ef09c743796f3133dfe075689edfefc5917f97f21cb627",
+          "866c17ea7415af40e8d3c8e5901f3b478787e9e51b2c2222f45111bfe5057e45",
+          "c6ed9ca17e77790899d9cf4ee2d26b6872d26b0593e23ecd9de4051dd2c24471",
+          "f7053b4356c9ea99583c2620e27150ad5f959e53f55d9aab38ab76bd6e03afa1",
+          "3718a985ff5a068ecca022b275d80f62571c5e6333ef738ab97cf8499c96b6d4",
+          "901d0a17b30859344a1a6e9796577960e3b11ee93ad04b88dbf29a6a41020a68",
+          "a6f973f8c9ecbb1e155d86d86bc7c9f91c22aa66541810b2320ebc2919342739",
+          "4d23509086b4180617e3105fd9887613965ce296a98f75abad723e6b05553116",
+          "ee55c1c8b0ca3f5f19e5f4464ef9e5f14e61cb02ec804f28c9128237cbeabf3b",
+          "090bc79e6f3329726d2ba218f95e8ba666253da0d36428c9f0e9d9217242b4a7",
+          "b7e99af58b6ca9feaf3863ca6c421763f205cb6b1e6219cfd07a2dc8c3ad85e3",
+          "835ae527d4e879f623ae4ce9de58f9427d422696e51922bef49629ff7a2e43aa",
+          "25db6a76d42f787266b47d99d67ebba09baf9ee15ee29ed67586a5bf3a263a7d",
+          "a5b09780ed0e7aa9a49f6a6b83d72e34f8d366ad4b3b5b6e8e36ba461ad93e09",
+          "f970576812d6db1dd42ebc08857ce0069174693aab367797eda8bf69552d49ab",
+          "afb88cc8776740ea0aeef788c368c6c46afa02675d6ef5e0c4ba7eca2362786f",
+          "b7617431ac9da737e4daf1306cc07bd0493486a1361053f542a55abb34c42998",
+          "10c908729cd9b066854a95d5e282cd40288c82560f0842773ba88c4062272399",
+          "e929e35625e48b47627ddfd1efe37da59ebac313f9c49d2467cf46864dd7c435",
+          "f5bfba792f9b4dfae3d4e2b502933d676738d8fc947edf4605d016ae851efc07",
+          "0a89a7c41cd520a106be182c5fb65bb76c926133333a50d453d72274872dfc6d",
+          "1165cc3ecd2236ab1d32da78a8d1c34838633f41f1f4221249fb3f2cbe5a7a14"
+        ],
+        "changed_pages": [
+          38,
+          39,
+          40,
+          41,
+          42,
+          43,
+          44,
+          45,
+          46,
+          47
+        ],
+        "page_count": 47,
+        "sha256": "3a569f0907850ce7921a6e7a9152fbdf7dc46e35108cf10521fd8952ed6f29ae"
+      },
+      {
+        "path": "lectures/week05_modal_sensing.pdf",
+        "changed_pages": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10
+        ],
+        "page_count": 10,
+        "sha256": "5c7a4dab50ae1e8c0919d621aa0646945fef818adb2a8812f4f1dd5ef8d01ee4"
+      }
+    ],
+    "builder_sha256": "0268f424a34e2f1813e41a1a6aa127f5888108b95102afda3e73fab2979a42b3",
+    "original_render_builder_sha256": "af6f602e28f12b82ec7ee80b7ac589a797dfd458585329db09e08a16f3dc33d2",
+    "post_build_source_amendment": {
+      "scope": "Receipt loading fallback to consolidated final record only; all page-content/rendering function ASTs unchanged. No PDF rebuilt.",
+      "previous_builder_sha256": "af6f602e28f12b82ec7ee80b7ac589a797dfd458585329db09e08a16f3dc33d2"
+    }
+  },
+  "provenance": {
+    "workspace_and_input_staging": {
+      "workspace": "/scratch3/workspace/roohie_umass_edu-flowml-ghia-highre-20261115",
+      "expiry": "2026-12-15 14:04:59",
+      "run_directory": "course-early-cpu-qa-20261121",
+      "shared_scratch_available": "71TiB; not personalquota",
+      "personal_quota": "unavailable: quota -s returned no data",
+      "files": {
+        "flowmllab/__init__.py": {
+          "bytes": 1511,
+          "sha256": "f098e66825597a9d0ff78b50481bcee55b99154173003868007ab1839649b4f8"
+        },
+        "flowmllab/aescte_dsmc.py": {
+          "bytes": 13443,
+          "sha256": "226ee20c4f49a870dcb5b055eec650c9658372b5418b874587826e8f43096678"
+        },
+        "flowmllab/cavitation_detection.py": {
+          "bytes": 10555,
+          "sha256": "285de8c895d271658057e65b853a7125e7d3772f0ac0d6be039393569b85e7ef"
+        },
+        "flowmllab/cavitation_methods.py": {
+          "bytes": 9757,
+          "sha256": "53791da6ac198f286760bb24fe8953e20c4bd81373d1947ee84f29f07366943b"
+        },
+        "flowmllab/cavity_comparison_plots.py": {
+          "bytes": 3383,
+          "sha256": "959fd72facec0dd0928f1ad52c138702b47b222e8a585a79ef2bc62239717390"
+        },
+        "flowmllab/cavity_diversity.py": {
+          "bytes": 21315,
+          "sha256": "db0f7a70a7af4d7e7de06c692f4f23fd1033af707c9bd0a1532d576522109b26"
+        },
+        "flowmllab/cavity_rom.py": {
+          "bytes": 26944,
+          "sha256": "f4b7d67f2f1c17b456b4944caedbdfebe33d17d6a51ca576f97e13aa30f218ef"
+        },
+        "flowmllab/cavity_visuals.py": {
+          "bytes": 1743,
+          "sha256": "48295cb10931791ea86172db939548ed948de512225214f86b2667bc94121798"
+        },
+        "flowmllab/cli.py": {
+          "bytes": 5118,
+          "sha256": "a18901f18eca49f54b6d6318b58b035cb7f331ac3c57c074791f463067a74e6b"
+        },
+        "flowmllab/core.py": {
+          "bytes": 8126,
+          "sha256": "98a9746d87dd5a21169900029c5e5f2c61463fd040c9b456d071a845223f2072"
+        },
+        "flowmllab/cylinder_cnn.py": {
+          "bytes": 14060,
+          "sha256": "dc4d64036c57b0257fe8c68d3141296d36ab7796c8d2237739771eb44fc9605f"
+        },
+        "flowmllab/cylinder_lbm.py": {
+          "bytes": 44510,
+          "sha256": "8f5fb055b4ca30e75757d8a7811936e72fa0b72c0904fe1c11e8ba877fd6f394"
+        },
+        "flowmllab/cylinder_ml.py": {
+          "bytes": 16131,
+          "sha256": "81bcf8992e77352e455958378a6dacbe8597e2a6aace94fc5dc3fae6e2c3581b"
+        },
+        "flowmllab/cylinder_phase.py": {
+          "bytes": 4920,
+          "sha256": "008803ccc6f503bbf756c603dcfa4596a44a0e85d0c4058de38571a75ca58adb"
+        },
+        "flowmllab/demo.py": {
+          "bytes": 6780,
+          "sha256": "5cd0db4affd3dacfbaf924d1f8b56d3f6794341e371887f40da95790eec4c0a3"
+        },
+        "flowmllab/diverse_wake_pretraining.py": {
+          "bytes": 4270,
+          "sha256": "315dc40311c18b91c235017eb246b6a0dd129adfd2de5c736a7d1580d32dfb1b"
+        },
+        "flowmllab/feature_reconstruction.py": {
+          "bytes": 6765,
+          "sha256": "73811b9726c096fd18b860371e35299ef85ea3a919e4a8bfe57fa99e927a1446"
+        },
+        "flowmllab/field_metrics.py": {
+          "bytes": 3191,
+          "sha256": "45645027ca2fb0357feab0667b5b2d3244aeaaf3203c9cc869ab2dcda3530e8c"
+        },
+        "flowmllab/fusion_bundle.py": {
+          "bytes": 2687,
+          "sha256": "ffddbc5785bb7229a2295c47f24b3ec4d64d69e201f2227f8d457827e6b853bf"
+        },
+        "flowmllab/gas_dynamics.py": {
+          "bytes": 20309,
+          "sha256": "b955ec1b6554bedacb5cdc88bbf7e278805fab489e97ad3556e6dee50c6a6e6e"
+        },
+        "flowmllab/geometry_time_bridge.py": {
+          "bytes": 8694,
+          "sha256": "9362f34ac24a4a0b49b7c5acfc607dbb8c51025658d0ccc601e099b0cd139452"
+        },
+        "flowmllab/hypersonic_cylinder.py": {
+          "bytes": 20811,
+          "sha256": "8c0b7ea07764f4c7670a17130041b445332506c279375017b4778c24eaee45e9"
+        },
+        "flowmllab/mahdavi_deeponet.py": {
+          "bytes": 74179,
+          "sha256": "6099f8540a7cd40ec6e8f0962ac4127b39b446d1743abc0c7a322ee6d6622af5"
+        },
+        "flowmllab/masked_pretraining.py": {
+          "bytes": 24386,
+          "sha256": "684ac106d4e561b7a459d76ab46c66a749d9dee6b8eca128ce7ffcbbcc4cf813"
+        },
+        "flowmllab/modal_experiments.py": {
+          "bytes": 9191,
+          "sha256": "cfc66acadf18d4ebb500e511448109d3926efe493348378dc82860c7074222aa"
+        },
+        "flowmllab/modal_tools.py": {
+          "bytes": 5591,
+          "sha256": "4bfc6cf5aecbd1cd558ec0bc99397ba31c9ab204c5fc9fd895744a3ad40b3e44"
+        },
+        "flowmllab/noise2noise.py": {
+          "bytes": 9814,
+          "sha256": "07f65c0119dbfbf87f7be6c2b272687e5a91c609413269d2d5b7188dbda8fb20"
+        },
+        "flowmllab/nozzle_transport.py": {
+          "bytes": 11505,
+          "sha256": "3ea854f10f54bff23879a0ce0060a437f8cc2939e87a9ab8d35bdceab43553e4"
+        },
+        "flowmllab/pressure_velocity.py": {
+          "bytes": 13053,
+          "sha256": "d502568afece2262dbb759c1e315e384cf9c88ac46e98992ee7950a77a0aba5d"
+        },
+        "flowmllab/pressure_velocity_experiment_plots.py": {
+          "bytes": 4491,
+          "sha256": "715947edeac1d7c45f0d517f95d32fdbaba21ede214ab3c8491d31907ae77714"
+        },
+        "flowmllab/pressure_velocity_experiments.py": {
+          "bytes": 3275,
+          "sha256": "d52015b86d23621ddec0b453403b85ffae5eb348edc3915c274f91310371181b"
+        },
+        "flowmllab/pressure_velocity_lab.py": {
+          "bytes": 12857,
+          "sha256": "2223acfb53e59a41d2f40c2e011d44f157fce636a868dce7eab5f607e12989ab"
+        },
+        "flowmllab/probabilistic_uq.py": {
+          "bytes": 21415,
+          "sha256": "bb71980d55ef6cfc5f614e7980e7165053f451711f109bec2a1ee86ae14c472a"
+        },
+        "flowmllab/rans_closure.py": {
+          "bytes": 2316,
+          "sha256": "7b1bc8b120b78331c529a31a1d68cdd2aec9abae9e85e685d7923f9068864e2c"
+        },
+        "flowmllab/scattering_lab.py": {
+          "bytes": 8911,
+          "sha256": "01014dc3172842ce315e76bffc7ea476fb0f00bf1cfa7927c22d747bf42b0c7f"
+        },
+        "flowmllab/scientific_software.py": {
+          "bytes": 13260,
+          "sha256": "da69d3043935989cc9c749723a9c80e9cea754648cba1bd055605afc371387b0"
+        },
+        "flowmllab/state_estimation.py": {
+          "bytes": 4437,
+          "sha256": "93f50444a31ed4feeae5aa5f4929c40f7cd998fd6dd7993d356f323a88e48376"
+        },
+        "flowmllab/step_geom_deeponet.py": {
+          "bytes": 26488,
+          "sha256": "4d6efb0d57007c7e3d35a092bd84259ea7725a91097a54c2db5d263696577bd1"
+        },
+        "flowmllab/stokes_correction.py": {
+          "bytes": 8697,
+          "sha256": "cb5f658174379989fe5f9c8f983961f02885ac5549b12b4f7c15d87d5faf83a1"
+        },
+        "flowmllab/stokes_refined.py": {
+          "bytes": 10436,
+          "sha256": "9d1fd078a50885109ed0b684460d66ce90b5f4f14f0a445ccc100a18c4484792"
+        },
+        "flowmllab/streamfunction_experiments.py": {
+          "bytes": 1713,
+          "sha256": "9a2e39481447d722257e6a37643fedbdaf1880325b63e00f99bd5375d84d2ff1"
+        },
+        "flowmllab/transformer_course.py": {
+          "bytes": 31079,
+          "sha256": "c901fad341380e0a75c4ae38d69991996847d5bcf7b74c72239550ec75630e2d"
+        },
+        "flowmllab/ghia.py": {
+          "bytes": 5453,
+          "sha256": "49f3141ea0840c0d1a204dba2ca7b1c358cdad9924f083340099f72251d8b680"
+        },
+        "flowmllab/ghia_surrogate.py": {
+          "bytes": 7436,
+          "sha256": "b4069ad478c6f3b1ef4033ba62d0ae2ed9e183a6f8646cc2dc3c4a2d8f46abd7"
+        },
+        "flowmllab/deep_cavity_audit.py": {
+          "bytes": 3457,
+          "sha256": "72da1cf327f9afd30de58853749a0cf27d38ecf4df3a5b66aea472cb40bda035"
+        },
+        "flowmllab/cavity_course.py": {
+          "bytes": 3639,
+          "sha256": "1d088b3875e511d99842593489df7a6c82ecfccbe15ba2005dd98d9463ccfa1a"
+        },
+        "flowmllab/cavity_validation.py": {
+          "bytes": 9433,
+          "sha256": "5e793c7631a3f5a7c1c90036f508d1c60d697a02436384913dcf4ae6e18f293a"
+        },
+        "flowmllab/cavity_steady.py": {
+          "bytes": 7808,
+          "sha256": "a06c580ec90e04dcd997882590711759ba478b75500bb46a4b848cc9b6cd6039"
+        },
+        "flowmllab/cavity_highre.py": {
+          "bytes": 12760,
+          "sha256": "1b7965a854e6e865f10b7f53be30f7324490a49fd65645c16c21c652abeb2ede"
+        },
+        "flowmllab/cavity_field_operator.py": {
+          "bytes": 7028,
+          "sha256": "291b5db656de7165daaeab547d5abf291bb4ca1a3829b11af21dd6ac419577be"
+        },
+        "flowmllab/cavity_field_evidence.py": {
+          "bytes": 7092,
+          "sha256": "520184abc75d0330d918d7360230aa9fc91e0f5348979eb4a5e14a744ffdf836"
+        },
+        "flowmllab/cavity_comparison.py": {
+          "bytes": 23442,
+          "sha256": "b7afc9b80591d2edb3fef52edd71fab99042292e32c3846abefa507131945e7a"
+        },
+        "flowmllab/cavity_krylov.py": {
+          "bytes": 7283,
+          "sha256": "9ab6905069f7b8d35a9e70034ace07f114394b13cb10ea9c7d05ba574a5ca5b0"
+        },
+        "flowmllab/cavity_pinn_campaign.py": {
+          "bytes": 19959,
+          "sha256": "181456f8813044088d86988e61300d33850dcb3141bf9721fd544e28a1085d14"
+        },
+        "flowmllab/deep_cavity_training.py": {
+          "bytes": 16580,
+          "sha256": "2a2280c9b3a9720b882dc814ee5e859daa7bb53b070ccbb81aba75e37a19c15e"
+        },
+        "flowmllab/cavity_pinn_stratified.py": {
+          "bytes": 24876,
+          "sha256": "e1eeab53d6e284b8e90ba50ca7200299ad7b62db42450a2c6110a65edb2678b3"
+        },
+        "flowmllab/kinetic_shock.py": {
+          "bytes": 24082,
+          "sha256": "8b0400f3b60050630a87d4ce1ce212a01116ff39693937ec0f1d690cec359fe2"
+        },
+        "flowmllab/kinetic_dvm.py": {
+          "bytes": 8392,
+          "sha256": "7f72c591c47dd40bb6f51a5f236729502dd15dddc6df8ebdcafbf70faa47bce9"
+        },
+        "flowmllab/kinetic_pinn.py": {
+          "bytes": 25535,
+          "sha256": "033572551ec3218f9721ffe1c7296c3e84db1c50c5d2228fc25c95b9141e4f2c"
+        },
+        "flowmllab/pressure_velocity_studies.py": {
+          "bytes": 9473,
+          "sha256": "1cc81f95e7598fbfdd7eb78fa13d876d61c5ba8e3f2a8b81a2e508ee8279803a"
+        },
+        "flowmllab/pressure_velocity_visuals.py": {
+          "bytes": 6404,
+          "sha256": "655d12653926d8e5f36db4dab5cd77f604571c7e60ba1f1b704632fe3b3664a5"
+        },
+        "flowmllab/high_order.py": {
+          "bytes": 9503,
+          "sha256": "b46ab38664d12b3471b34453a839d34e036b8ffb6ca57da0aba3da40ce614b07"
+        },
+        "flowmllab/high_order_cavity.py": {
+          "bytes": 8091,
+          "sha256": "7d5a04508e96f2e30512dd4a0035087a5a0b4b9fe406aebea668c21f541cc1e1"
+        },
+        "flowmllab/week04_teaching_plots.py": {
+          "bytes": 22546,
+          "sha256": "7b0f6438bd414d648477164998e2058825cd8e7428f6219e21c1138c101c4518"
+        },
+        "flowmllab/cavity_lab2.py": {
+          "bytes": 21507,
+          "sha256": "dd8047beec0b2a5fe2a4906b6e079abf2659a1be8b697c38c27414344326bc42"
+        },
+        "flowmllab/cavity_corner_audit.py": {
+          "bytes": 11752,
+          "sha256": "8da882472ffd167b664aad220034ff59dabbd625e62eeee35da8cb3ddfc10631"
+        },
+        "flowmllab/late_teaching_plots.py": {
+          "bytes": 5482,
+          "sha256": "855b3baaa1a1753b551d8b0c046179de77c82bec3010f3c48b1fe99fc49bc1b9"
+        },
+        "flowmllab/early_sensing.py": {
+          "bytes": 7759,
+          "sha256": "fb50f839c19f3cc23d168507c03effab137572348f4c83f8db73f4745e2916cf"
+        },
+        "common/w4utils.py": {
+          "bytes": 22707,
+          "sha256": "fe78c31370cea8b464c07391865dfa688f426081a048fcd392025d8f5162a450"
+        },
+        "common/w5_common.py": {
+          "bytes": 17375,
+          "sha256": "c1e27423c4559371dfaf71b5ede8f35fe8e60afb8d5a185c6f1495c36c2c0856"
+        },
+        "common/student_experiment_protocols.py": {
+          "bytes": 5704,
+          "sha256": "9014dfc0d4ec59a68225ba0a4ff3341eae7cea72f807a9ac53be45f6c46dca2f"
+        },
+        "data/cavity_data.npz": {
+          "bytes": 1713379,
+          "sha256": "09b96b744ee4d18126d8dcc92feb60e128774a1b4d41bb3d8c90a63ccfbabc36"
+        },
+        "qa/course_refresh_early_execute.py": {
+          "bytes": 3315,
+          "sha256": "c5b9bdb7c5673af1f3efe60199779952a791684bc027edbb91fcfeb5b9dd06b3"
+        },
+        "qa/course_refresh_early_unity.sh": {
+          "bytes": 1062,
+          "sha256": "a6f621b5ce1f05283cd0e7929cface75d43f16cf1ec85aa42478ceba03e20345"
+        },
+        "notebooks/week02/AI_in_Fluids_Week2_Colab_Expanded.ipynb": {
+          "bytes": 248508,
+          "sha256": "775f2d72173a4040c24da41a91ddf8b42e49c83d8ddff53719362088e74b9658"
+        },
+        "notebooks/week05_06/P1_Re_Generalization.ipynb": {
+          "bytes": 23109,
+          "sha256": "925ceb9f4a7069a47b4e556adbbdaa471aa3b8f4c50d8c77ececa7b67223f1e3"
+        },
+        "notebooks/week05_06/P2_Physics_Guided_DNN.ipynb": {
+          "bytes": 29571,
+          "sha256": "3ad5aa8081f782433487dcbbedac4d0c6fe7760d07d1069fb29b9a0eacc0829c"
+        },
+        "notebooks/week05_06/P3_POD_Study.ipynb": {
+          "bytes": 32228,
+          "sha256": "bbea66778fb4e3cd298a5c32b6e8ec40cc8393466ed981e0503a9892ebd774e8"
+        },
+        "notebooks/week05_06/P4_Uncertainty_Study.ipynb": {
+          "bytes": 22898,
+          "sha256": "86252c7b16bb68690645cd81ac680c4569e6e3629a1dca6710f6b81315f10c96"
+        }
+      }
+    },
+    "followup_staging": {
+      "reason": "Executed default exposed missing physical ensemble/low-rank diagnostics; no algorithm/budget change. Initial array completed before follow-up.",
+      "files": {
+        "notebooks/week05_06/P3_POD_Study.ipynb": "a17fbc4707a385173cd54ee566cf26adef6102ae2870667be1c8a2d6c5d19744",
+        "notebooks/week05_06/P4_Uncertainty_Study.ipynb": "1ac7bc68673e2fe025d7efa308759ba27e81f86bc1ebd3bdccbe02b46d385cac",
+        "tests/test_course_refresh_early.py": "5ccba98a33b73a088226c0ef118f0a9384c620cbe4236d49ec63470768be3e13",
+        "flowmllab/early_sensing.py": "fb50f839c19f3cc23d168507c03effab137572348f4c83f8db73f4745e2916cf"
+      },
+      "archive_sha256": "5632a562bcde3f66463f6181ea6802e2abaf8bf9bfd5ea977248555a9d2b049b"
+    },
+    "kinetic_staging": {
+      "files": {
+        "notebooks/week05_06/P5_Rarefied_Cavity.ipynb": "2ca67239ca0f4289c6e9660e6af42e5fda1b12a6c3e43c5888734ad408d13e61",
+        "common/mini_dsmc.py": "88f5635e67a54d80b0a0f7a3887aed38d116ba036e39aadc1ff51cb38027ad62",
+        "common/w5_kinetic_figures.py": "4470eb9c5ca276b3fe53ecc0f2c26fed87df5921bfeb594a4cc43b57a116be12"
+      },
+      "archive_sha256": "b041aaf1457f97185aef88421abd0c97288486e12f75d50b91703e989a4b477d",
+      "scope": "Existing default5A; no model, physics, split or numerical budget changes"
+    },
+    "serialization_proofs": [
+      {
+        "path": "results/course_refresh_early/W5_Lab2_Sparse_Sensing_Dynamics/sensor_metrics.json",
+        "old_sha256": "92778f391408b6a6256d2e268d4883ce0b94715819215ad39b680b9173d4fab2",
+        "final_sha256": "2ee19f35ad2a922a06061feda9e16c53eb16a56d68b806c91fbf862ff0826522",
+        "change": "CRLF to LF only; parsed numerical JSON equal"
+      }
+    ],
+    "return_transfers": {
+      "initial_teaching_outputs": {
+        "artifacts": {
+          "notebooks/week02/AI_in_Fluids_Week2_Colab_Expanded.ipynb": {
+            "sha256": "e3a3f53ad19e768a8100a8e3710561ac662d3227e631afc29f3b655e41b3b04e",
+            "bytes": 927431
+          },
+          "results/course_refresh_early/AI_in_Fluids_Week2_Colab_Expanded/cell_36_00.png": {
+            "sha256": "027f9ecd4f870f1a49af1b63a79d7b2d918141309d5de97b9e46d3192543e4ea",
+            "bytes": 30027
+          },
+          "results/course_refresh_early/AI_in_Fluids_Week2_Colab_Expanded/cell_17_00.png": {
+            "sha256": "a7a0dda363b69597eb0c9f36fc7364db88784d74600209fceb7d9ddfad22aad7",
+            "bytes": 121686
+          },
+          "results/course_refresh_early/AI_in_Fluids_Week2_Colab_Expanded/cell_12_00.png": {
+            "sha256": "98be1c78db5eb8eb6f210330a071e8ebf83a0f74d7878dadf4ec046783f81b25",
+            "bytes": 31561
+          },
+          "results/course_refresh_early/AI_in_Fluids_Week2_Colab_Expanded/cell_52_00.png": {
+            "sha256": "79a51e3c0db9da519595bbe27672e1dc6f57000ec8d07047902975db78ba29fc",
+            "bytes": 155640
+          },
+          "results/course_refresh_early/AI_in_Fluids_Week2_Colab_Expanded/cell_44_00.png": {
+            "sha256": "cb47e43dcbb2a77a2297c4a4a6d33e52f5252759e6fe1c75c0b73f964ce665e5",
+            "bytes": 37281
+          },
+          "results/course_refresh_early/AI_in_Fluids_Week2_Colab_Expanded/cell_46_00.png": {
+            "sha256": "d95b77e905b21e711f3224440ff696553c3670d1c915e2b959a0855c250f645b",
+            "bytes": 74360
+          },
+          "results/course_refresh_early/AI_in_Fluids_Week2_Colab_Expanded/execution.json": {
+            "sha256": "5409a132af0d538584987440ac1673f37648ea0bccf0fc2e009132691227a659",
+            "bytes": 2474
+          },
+          "results/course_refresh_early/AI_in_Fluids_Week2_Colab_Expanded/cell_31_00.png": {
+            "sha256": "50690c50cfbf25d3c14280e2ef69923c91a9b0145a240ebc5e7580f46cb158b1",
+            "bytes": 63988
+          },
+          "results/course_refresh_early/AI_in_Fluids_Week2_Colab_Expanded/cell_40_00.png": {
+            "sha256": "7d9a37ea0ad368873200e5252fb570147692cdf57edb008e62d673429eab9049",
+            "bytes": 54292
+          },
+          "results/course_refresh_early/AI_in_Fluids_Week2_Colab_Expanded/cell_10_01.png": {
+            "sha256": "389f1fd49ba16fe4cc01f5709091b4018a320ecc9fc9d80b119f9c99261af524",
+            "bytes": 73399
+          },
+          "notebooks/week05_06/P1_Re_Generalization.ipynb": {
+            "sha256": "fd33e8e39a1896f5fe1c937a357e24045ac4122deac738cd091455310f72982d",
+            "bytes": 635556
+          },
+          "results/course_refresh_early/P1_Re_Generalization/cell_17_00.png": {
+            "sha256": "b44c7b6d7b84fa29a797e81f012703c6e1bf74be01e6e19d4fa0c8b50bcaee9a",
+            "bytes": 446092
+          },
+          "results/course_refresh_early/P1_Re_Generalization/execution.json": {
+            "sha256": "1e5465f3ca7fe3053cb7ce5fbb9618723ab04b8b01f4909e72247d2b2b520e10",
+            "bytes": 920
+          },
+          "student_runs/course_refresh_early/P1_Re_Generalization/P1_results.csv": {
+            "sha256": "f01ae4985542120663e658d8b5c325e4324e300a3d210135c8d536b97fbbe345",
+            "bytes": 3277
+          },
+          "notebooks/week05_06/P2_Physics_Guided_DNN.ipynb": {
+            "sha256": "5ff98b43df087c5ad97b9282e54e21e52e84e29b8af0f2dd5c5b6b01f6ad0635",
+            "bytes": 714349
+          },
+          "results/course_refresh_early/P2_Physics_Guided_DNN/cell_08_00.png": {
+            "sha256": "2c566c1a292cc365e79533c478fa7c5a4e3474a42b67797f553e811354f6a37c",
+            "bytes": 10629
+          },
+          "results/course_refresh_early/P2_Physics_Guided_DNN/cell_16_02.png": {
+            "sha256": "cf9ae6add0863038c6d1cc442ffd05b45467ef2cbe33e95457d16c3743c26e34",
+            "bytes": 23949
+          },
+          "results/course_refresh_early/P2_Physics_Guided_DNN/cell_19_01.png": {
+            "sha256": "5146b9a198115365ecb86fd275d248083386bec3532cd25ec0a35ba0ff927ec0",
+            "bytes": 467355
+          },
+          "results/course_refresh_early/P2_Physics_Guided_DNN/execution.json": {
+            "sha256": "78a62fed376a26c2e3e57cb371190c6b4e410976fcacd0135232fb8850612321",
+            "bytes": 1279
+          },
+          "student_runs/course_refresh_early/P2_Physics_Guided_DNN/P2_results.csv": {
+            "sha256": "7caadcc1497859d660fdc61a7678d0f8ec0ea3c4a816011182f5cd669cb88a51",
+            "bytes": 2582
+          },
+          "notebooks/week05_06/P3_POD_Study.ipynb": {
+            "sha256": "4479add632363557eedfeed40b22c28f38f8d9c73152a4e90c14ec74edc29ccc",
+            "bytes": 1380299
+          },
+          "results/course_refresh_early/P3_POD_Study/execution.json": {
+            "sha256": "c073ac46c693a9993612f824696c142c42c531c3a873c0c307b4040b7afcacca",
+            "bytes": 1245
+          },
+          "results/course_refresh_early/P3_POD_Study/cell_17_01.png": {
+            "sha256": "e3c14546756e3a3ac6aec822e3e38d8e1a629a1af7372999deffa710eb3c1d21",
+            "bytes": 480328
+          },
+          "results/course_refresh_early/P3_POD_Study/cell_20_01.png": {
+            "sha256": "7bbf0f8c446aca90f97d07784b227862ce6b4ba139bfb70a9ea5fab4b7658d06",
+            "bytes": 488690
+          },
+          "results/course_refresh_early/P3_POD_Study/cell_08_00.png": {
+            "sha256": "03a43cff940c7443289419d547f9dc1200a25a8afb781f6d84cc456a931b8bd0",
+            "bytes": 25706
+          },
+          "student_runs/course_refresh_early/P3_POD_Study/P3_results.csv": {
+            "sha256": "d59d3347f33a9b8169f0a21d07536b7963b7b33d16f3322aff58694fbe34c31c",
+            "bytes": 2695
+          },
+          "notebooks/week05_06/P4_Uncertainty_Study.ipynb": {
+            "sha256": "0f6bc6ed306d6f8b7e53193887cecc756b63aea4c8d8bbd6034ba1544c5b143b",
+            "bytes": 493548
+          },
+          "results/course_refresh_early/P4_Uncertainty_Study/execution.json": {
+            "sha256": "32a745e1b85e01e9292630f872d0027dd81e7338ca4b9e102ebc386669d90b84",
+            "bytes": 1276
+          },
+          "results/course_refresh_early/P4_Uncertainty_Study/cell_17_00.png": {
+            "sha256": "c89a15ddef01729bf9cb7bf785e5765f0bb83129fe0b98efa0a79d3fb6b705f1",
+            "bytes": 232042
+          },
+          "results/course_refresh_early/P4_Uncertainty_Study/cell_17_01.png": {
+            "sha256": "7364510d6bb2562f8f84ac28d41b204f073c255170a8fd204bd3b58fa3d832f8",
+            "bytes": 50877
+          },
+          "results/course_refresh_early/P4_Uncertainty_Study/cell_15_01.png": {
+            "sha256": "2bdfef3e9754ab8956d5fe5ae545acf141910dc9739c9c81271f21e58c14c1de",
+            "bytes": 49666
+          },
+          "student_runs/course_refresh_early/P4_Uncertainty_Study/P4_seed_results.csv": {
+            "sha256": "1dea191e13c5557f20c3fe3444ea163abe77889866d5f4488f90e985e6b7d5c3",
+            "bytes": 6166
+          },
+          "results/course_refresh_early/unity/focused_tests.xml": {
+            "sha256": "f980f0c0198854421fa353fbbd255a84823f6fc89c972551fae2e45051c8704b",
+            "bytes": 1279
+          },
+          "results/course_refresh_early/unity/focused_tests.out": {
+            "sha256": "41c9a30fcf143e7b756fd288c30ad9f1c6adbd81beb4c3cf60d3703f2f6be382",
+            "bytes": 98
+          },
+          "results/course_refresh_early/unity/focused_tests.err": {
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "bytes": 0
+          },
+          "results/course_refresh_early/unity/environment.txt": {
+            "sha256": "d44c6440c343c7951d030999a24ce5371a7af2f32667794503b4fd34dba957cf",
+            "bytes": 1545
+          }
+        },
+        "initial_array": 2058725,
+        "final_plot_array": 2059301,
+        "focused_test_job": 2059738,
+        "source_workspace": "/scratch3/workspace/roohie_umass_edu-flowml-ghia-highre-20261115/course-early-cpu-qa-20261121"
+      },
+      "initial_kinetic_outputs": {
+        "job": 2060042,
+        "source_workspace": "/scratch3/workspace/roohie_umass_edu-flowml-ghia-highre-20261115/course-early-cpu-qa-20261121/kinetic_project_default/repo",
+        "artifacts": {
+          "notebooks/week05_06/P5_Rarefied_Cavity.ipynb": {
+            "sha256": "516f33a8a119f95a3dac05cf7b7476b6edcbbc5a84e80c0ec14bcab473154d4b",
+            "bytes": 892813
+          },
+          "results/course_refresh_early/P5_Rarefied_Cavity/execution.json": {
+            "sha256": "c684f4d7fc4266e92201732e7ecd582e3cfc22414f7df8a1eb1d3c5f94847943",
+            "bytes": 1093
+          },
+          "results/course_refresh_early/P5_Rarefied_Cavity/cell_20_01.png": {
+            "sha256": "7ef50acc483dd9821eed93efa5015c344177b092e7aa2209c949ab2f1d4d732b",
+            "bytes": 309790
+          },
+          "results/course_refresh_early/P5_Rarefied_Cavity/cell_20_00.png": {
+            "sha256": "aeb10ce2a18b4bd60b671556c764f8a6b61de5a84e50515b4a1ae03e347a1bcc",
+            "bytes": 309463
+          },
+          "student_runs/course_refresh_early/P5_Rarefied_Cavity/P5_5A_4271d26e52f783fb.npz": {
+            "sha256": "fc07712260c168ac44e96bf336f8ce6f9e4714fa2ab89c65fb81c2a9cd0fa65c",
+            "bytes": 67748
+          },
+          "student_runs/course_refresh_early/P5_Rarefied_Cavity/P5_results.csv": {
+            "sha256": "17956273e6ff11d23bb54f0bb22bf9d08170385bb5910ae39a30b57d800d21a9",
+            "bytes": 1728
+          }
+        }
+      },
+      "final_P2_P5_outputs": {
+        "utc": "2026-11-21T03:20:51.037434+00:00",
+        "archive_sha256": "fb3a8e802d62914adc139cdaeb5eeed6785297f8945b0f8c09b404464dce4a8d",
+        "files": {
+          "notebooks/week05_06/P2_Physics_Guided_DNN.ipynb": {
+            "sha256": "3add1c3e51783b4f61e0b42e73e752b1782b640d409c4dc61b654caebc210415",
+            "bytes": 716597
+          },
+          "results/course_refresh_early/P2_Physics_Guided_DNN/cell_16_02.png": {
+            "sha256": "087b1ac70a637d20438e0ccf864f54a5de244c6621bbf2733368d64bdd7e4786",
+            "bytes": 24626
+          },
+          "results/course_refresh_early/P2_Physics_Guided_DNN/cell_08_00.png": {
+            "sha256": "b7b0aa080e5359cfd81d01deeb57b1b49e2befec97a25ae2631a0ab9d8792b32",
+            "bytes": 11530
+          },
+          "results/course_refresh_early/P2_Physics_Guided_DNN/execution.json": {
+            "sha256": "485f300a18a4692b2ffba964d9ea857c9d53646bd1138ba92994fca67fc3515c",
+            "bytes": 1280
+          },
+          "results/course_refresh_early/P2_Physics_Guided_DNN/cell_19_01.png": {
+            "sha256": "5146b9a198115365ecb86fd275d248083386bec3532cd25ec0a35ba0ff927ec0",
+            "bytes": 467355
+          },
+          "student_runs/course_refresh_early/P2_Physics_Guided_DNN/P2_results.csv": {
+            "sha256": "7caadcc1497859d660fdc61a7678d0f8ec0ea3c4a816011182f5cd669cb88a51",
+            "bytes": 2582
+          },
+          "notebooks/week05_06/P5_Rarefied_Cavity.ipynb": {
+            "sha256": "91c8a08c2626e12083a65ab021d2ace69dfb9ca0fd743c599b53783ce4f78111",
+            "bytes": 791980
+          },
+          "results/course_refresh_early/P5_Rarefied_Cavity/execution.json": {
+            "sha256": "77481fbeff72d9e25888299d682ddbc691807ef3c0ac9acf6c2326d98f1249af",
+            "bytes": 1092
+          },
+          "results/course_refresh_early/P5_Rarefied_Cavity/cell_20_01.png": {
+            "sha256": "ec24296a93eff2caba56d7cffdd6f5fb0d9f27d6b34f1bd7f1fd472e4836fcaa",
+            "bytes": 273200
+          },
+          "results/course_refresh_early/P5_Rarefied_Cavity/cell_20_00.png": {
+            "sha256": "36341006d668d63cd47065ca43b042f8c649a5bac498309bd429700f51006804",
+            "bytes": 270410
+          },
+          "student_runs/course_refresh_early/P5_Rarefied_Cavity/P5_5A_4271d26e52f783fb.npz": {
+            "sha256": "fc07712260c168ac44e96bf336f8ce6f9e4714fa2ab89c65fb81c2a9cd0fa65c",
+            "bytes": 67748
+          },
+          "student_runs/course_refresh_early/P5_Rarefied_Cavity/P5_results.csv": {
+            "sha256": "17956273e6ff11d23bb54f0bb22bf9d08170385bb5910ae39a30b57d800d21a9",
+            "bytes": 1728
+          },
+          "results/course_refresh_early/P5_Rarefied_Cavity/initial_cold_execution.json": {
+            "sha256": "c684f4d7fc4266e92201732e7ecd582e3cfc22414f7df8a1eb1d3c5f94847943",
+            "bytes": 1093
+          }
+        },
+        "verification": "13 payload files byte-verified before and after canonical copy; all notebook code and markdown cells matched staged local source (nbformat string/list representation normalized). Final Linux notebook bytes are LF.",
+        "jobs": {
+          "2060536": "final P2 default CPU Run All",
+          "2060949": "final P5 CPU Run All using byte-identical existing configuration-matched raw cache"
+        },
+        "p5_cold_execution": "results/course_refresh_early/P5_Rarefied_Cavity/initial_cold_execution.json"
+      }
+    },
+    "prior_closed_execution_events": [
+      {
+        "notebook": "notebooks/week02/AI_in_Fluids_Week2_Colab_Expanded.ipynb",
+        "utc": "2026-11-21T02:32:03.613920+00:00",
+        "elapsed_run_all_seconds": 165.29853049712256,
+        "host": "uri-cpu078",
+        "kernel": "/scratch3/workspace/roohie_umass_edu-flowml-ghia-highre-20261115/week04-lab2-qa-20261120/venv/bin/python",
+        "python": "3.12.3 (main, Aug 31 2026, 10:18:26) [GCC 13.3.0]",
+        "cpu_only": true,
+        "failure": null,
+        "code_sha256": "2700941886156af2aeaa088f5f26bd0115ba0e30354d40892a32427a0e13919a",
+        "notebook_sha256": "e3a3f53ad19e768a8100a8e3710561ac662d3227e631afc29f3b655e41b3b04e"
+      },
+      {
+        "notebook": "notebooks/week05_06/P1_Re_Generalization.ipynb",
+        "utc": "2026-11-21T02:37:06.901796+00:00",
+        "elapsed_run_all_seconds": 468.6234333431348,
+        "host": "uri-cpu083",
+        "kernel": "/scratch3/workspace/roohie_umass_edu-flowml-ghia-highre-20261115/week04-lab2-qa-20261120/venv/bin/python",
+        "python": "3.12.3 (main, Aug 31 2026, 10:18:26) [GCC 13.3.0]",
+        "cpu_only": true,
+        "failure": null,
+        "code_sha256": "ecc3e6d19af0f924364f93f26c3d3c2b2799beb1c525d70d683d030f835462d7",
+        "notebook_sha256": "fd33e8e39a1896f5fe1c937a357e24045ac4122deac738cd091455310f72982d"
+      },
+      {
+        "notebook": "notebooks/week05_06/P2_Physics_Guided_DNN.ipynb",
+        "utc": "2026-11-21T02:35:16.177784+00:00",
+        "elapsed_run_all_seconds": 357.896523907315,
+        "host": "uri-cpu084",
+        "kernel": "/scratch3/workspace/roohie_umass_edu-flowml-ghia-highre-20261115/week04-lab2-qa-20261120/venv/bin/python",
+        "python": "3.12.3 (main, Aug 31 2026, 10:18:26) [GCC 13.3.0]",
+        "cpu_only": true,
+        "failure": null,
+        "code_sha256": "b0782b609e8a90db205963eeb28209727794d50e59abfc9a06abdb3aa481cd5b",
+        "notebook_sha256": "5ff98b43df087c5ad97b9282e54e21e52e84e29b8af0f2dd5c5b6b01f6ad0635"
+      },
+      {
+        "notebook": "notebooks/week05_06/P3_POD_Study.ipynb",
+        "utc": "2026-11-21T02:43:14.354680+00:00",
+        "elapsed_run_all_seconds": 12.260024282615632,
+        "host": "uri-cpu083",
+        "kernel": "/scratch3/workspace/roohie_umass_edu-flowml-ghia-highre-20261115/week04-lab2-qa-20261120/venv/bin/python",
+        "python": "3.12.3 (main, Aug 31 2026, 10:18:26) [GCC 13.3.0]",
+        "cpu_only": true,
+        "failure": null,
+        "code_sha256": "1a40be2477a4d69d3a867bcf3b0b9aab6ce78d15b50108cfe34ba57bf76fac2a",
+        "notebook_sha256": "4479add632363557eedfeed40b22c28f38f8d9c73152a4e90c14ec74edc29ccc"
+      },
+      {
+        "notebook": "notebooks/week05_06/P4_Uncertainty_Study.ipynb",
+        "utc": "2026-11-21T02:52:15.167113+00:00",
+        "elapsed_run_all_seconds": 554.3551526330411,
+        "host": "uri-cpu084",
+        "kernel": "/scratch3/workspace/roohie_umass_edu-flowml-ghia-highre-20261115/week04-lab2-qa-20261120/venv/bin/python",
+        "python": "3.12.3 (main, Aug 31 2026, 10:18:26) [GCC 13.3.0]",
+        "cpu_only": true,
+        "failure": null,
+        "code_sha256": "0941c4884c86d014edeb651ffdd2ab7487238f5a1db4863498cf33c1767b3ecb",
+        "notebook_sha256": "0f6bc6ed306d6f8b7e53193887cecc756b63aea4c8d8bbd6034ba1544c5b143b"
+      },
+      {
+        "notebook": "notebooks/week05_06/P5_Rarefied_Cavity.ipynb",
+        "utc": "2026-11-21T03:00:02.610953+00:00",
+        "elapsed_run_all_seconds": 134.39606683980674,
+        "host": "uri-cpu083",
+        "kernel": "/scratch3/workspace/roohie_umass_edu-flowml-ghia-highre-20261115/week04-lab2-qa-20261120/venv/bin/python",
+        "python": "3.12.3 (main, Aug 31 2026, 10:18:26) [GCC 13.3.0]",
+        "cpu_only": true,
+        "failure": null,
+        "code_sha256": "3a570065c48be7117a86eee86f93c4bbbb8f7cd3bfa70dfde6f9624acf81b809",
+        "notebook_sha256": "516f33a8a119f95a3dac05cf7b7476b6edcbbc5a84e80c0ec14bcab473154d4b"
+      },
+      {
+        "notebook": "notebooks/week05_06/P2_Physics_Guided_DNN.ipynb",
+        "utc": "2026-11-21T03:13:11.611313+00:00",
+        "elapsed_run_all_seconds": 383.1372034419328,
+        "host": "uri-cpu078",
+        "kernel": "/scratch3/workspace/roohie_umass_edu-flowml-ghia-highre-20261115/week04-lab2-qa-20261120/venv/bin/python",
+        "python": "3.12.3 (main, Aug 31 2026, 10:18:26) [GCC 13.3.0]",
+        "cpu_only": true,
+        "failure": null,
+        "code_sha256": "dd776091f33f934d8b7452f73911a8931167f085c540cb2e7a684181dc0ca5d8",
+        "notebook_sha256": "3add1c3e51783b4f61e0b42e73e752b1782b640d409c4dc61b654caebc210415"
+      },
+      {
+        "notebook": "notebooks/week05_06/P5_Rarefied_Cavity.ipynb",
+        "utc": "2026-11-21T03:14:39.487608+00:00",
+        "elapsed_run_all_seconds": 27.69669646769762,
+        "host": "uri-cpu084",
+        "kernel": "/scratch3/workspace/roohie_umass_edu-flowml-ghia-highre-20261115/week04-lab2-qa-20261120/venv/bin/python",
+        "python": "3.12.3 (main, Aug 31 2026, 10:18:26) [GCC 13.3.0]",
+        "cpu_only": true,
+        "failure": null,
+        "code_sha256": "3a570065c48be7117a86eee86f93c4bbbb8f7cd3bfa70dfde6f9624acf81b809",
+        "notebook_sha256": "91c8a08c2626e12083a65ab021d2ace69dfb9ca0fd743c599b53783ce4f78111"
+      }
+    ],
+    "historical_numeric_tables": [],
+    "output_table_serialization": [
+      {
+        "source": "student_runs/course_refresh_early/AI_in_Fluids_Week3_Lab1_Maxwellian_Noise_ML_Student/week3_lab1_ml_noise_checks.csv",
+        "source_sha256": "8567dabf637e36534eee9ef9bed0ddadec1460a8da1ced2c187b80f3626d7660",
+        "retained": "results/course_refresh_early/AI_in_Fluids_Week3_Lab1_Maxwellian_Noise_ML_Student/week3_lab1_ml_noise_checks.csv",
+        "final_sha256": "22f36229e358d0cda4c2fd8f10319b88e2311d535d50cb9f27c7e73a3332fdd8",
+        "csv_cells_exactly_equal": true
+      },
+      {
+        "source": "student_runs/course_refresh_early/AI_in_Fluids_Week3_Lab1_Maxwellian_Noise_ML_Student/week3_lab1_sampling_noise.csv",
+        "source_sha256": "65e3ea292bc460d2ebfee953d084cf2f47b9d8c149f28f17197dea3f40270681",
+        "retained": "results/course_refresh_early/AI_in_Fluids_Week3_Lab1_Maxwellian_Noise_ML_Student/week3_lab1_sampling_noise.csv",
+        "final_sha256": "29baa8fe43b31d105224168630096d5cb65210b689eb3047b9e9f048d0901cd6",
+        "csv_cells_exactly_equal": true
+      },
+      {
+        "source": "student_runs/course_refresh_early/AI_in_Fluids_Week3_Lab2_Mini_DSMC_Cavity_Revised_Student/week3_mini_cavity_dataset.csv",
+        "source_sha256": "9ec4c12f387cd82b83d1e8047a952941008bbb247e0b66cfbfaa11766499ba3b",
+        "retained": "results/course_refresh_early/AI_in_Fluids_Week3_Lab2_Mini_DSMC_Cavity_Revised_Student/week3_mini_cavity_dataset.csv",
+        "final_sha256": "7fd75a1678b48fdb554c36c31a18370c166d7b6a28e6f7da0deafbd5966a2d77",
+        "csv_cells_exactly_equal": true
+      },
+      {
+        "source": "student_runs/course_refresh_early/P1_Re_Generalization/P1_results.csv",
+        "source_sha256": "f01ae4985542120663e658d8b5c325e4324e300a3d210135c8d536b97fbbe345",
+        "retained": "results/course_refresh_early/P1_Re_Generalization/P1_results.csv",
+        "final_sha256": "f01ae4985542120663e658d8b5c325e4324e300a3d210135c8d536b97fbbe345",
+        "csv_cells_exactly_equal": true
+      },
+      {
+        "source": "student_runs/course_refresh_early/P2_Physics_Guided_DNN/P2_results.csv",
+        "source_sha256": "7caadcc1497859d660fdc61a7678d0f8ec0ea3c4a816011182f5cd669cb88a51",
+        "retained": "results/course_refresh_early/P2_Physics_Guided_DNN/P2_results.csv",
+        "final_sha256": "7caadcc1497859d660fdc61a7678d0f8ec0ea3c4a816011182f5cd669cb88a51",
+        "csv_cells_exactly_equal": true
+      },
+      {
+        "source": "student_runs/course_refresh_early/P3_POD_Study/P3_results.csv",
+        "source_sha256": "d59d3347f33a9b8169f0a21d07536b7963b7b33d16f3322aff58694fbe34c31c",
+        "retained": "results/course_refresh_early/P3_POD_Study/P3_results.csv",
+        "final_sha256": "d59d3347f33a9b8169f0a21d07536b7963b7b33d16f3322aff58694fbe34c31c",
+        "csv_cells_exactly_equal": true
+      },
+      {
+        "source": "student_runs/course_refresh_early/P4_Uncertainty_Study/P4_seed_results.csv",
+        "source_sha256": "1dea191e13c5557f20c3fe3444ea163abe77889866d5f4488f90e985e6b7d5c3",
+        "retained": "results/course_refresh_early/P4_Uncertainty_Study/P4_seed_results.csv",
+        "final_sha256": "1dea191e13c5557f20c3fe3444ea163abe77889866d5f4488f90e985e6b7d5c3",
+        "csv_cells_exactly_equal": true
+      },
+      {
+        "source": "student_runs/course_refresh_early/P5_Rarefied_Cavity/P5_results.csv",
+        "source_sha256": "17956273e6ff11d23bb54f0bb22bf9d08170385bb5910ae39a30b57d800d21a9",
+        "retained": "results/course_refresh_early/P5_Rarefied_Cavity/P5_results.csv",
+        "final_sha256": "17956273e6ff11d23bb54f0bb22bf9d08170385bb5910ae39a30b57d800d21a9",
+        "csv_cells_exactly_equal": true
+      }
+    ]
+  },
+  "consolidated_receipt_sources": {
+    "course_refresh_early.json": "b620bf1352e3bb00bd5ea4ca7e1f08b308430d6c01e40af321a9239af8387d8f",
+    "course_refresh_early_lectures.json": "027e00bbc648e47d475aefdb39b77ce5126f137940b83acab011feeb775225f8",
+    "course_refresh_early_visual_pending.json": "b81efbbf1601d796302c75781962b3486bcd9b2b58d36b474c79131a7fa61ab5",
+    "course_refresh_early_transfer_history.json": "8bf6459aceaa51b42ce4e5a690feb46989af33501bb479ef0743365d45bb7d88",
+    "course_refresh_early_remote_cleanup.json": "48cc6ccaee15aea6ee2053b64dcb80465ba3977356db42293e687aa4f1a6b479",
+    "course_refresh_early_staging.json": "710b439bb35d49f503ddf2ec19c0123d37fe6cda4f2ac78822e912e8d519cb2a",
+    "course_refresh_early_followup.json": "ed09d1be6cd3567541384b20372e75bdc43621faef269d5d95e4e6561b7fe7de",
+    "course_refresh_early_p5_staging.json": "333ad0398a31651c819ab4f8f32e13f2c70df0122e823f72049ebb4400f4060a",
+    "course_refresh_early_serialization.json": "224288419841ed5b0724691dca3816fc04d3904541632911b617f7e2151818db",
+    "course_refresh_early_unity_return.json": "8f0242f2db94b17edd21553d156c9b3b6990ed75f1157ee45d7db4834d66ed5f",
+    "course_refresh_early_p5_return.json": "69452e10deae365e06f104bc12cb1e40b6817f05a70ae9497c1218b1f0cd6a94",
+    "course_refresh_early_final_return.json": "5f7478da65533fc1391014091425c9c9d08f113b1e9076e1364241274d39598a"
+  },
+  "cleanup": "qa/course_refresh_early_cleanup.json",
+  "publication_source_whitespace": {
+    "path": "qa/course_refresh_early_finalize.py",
+    "before_sha256": "4f154521ef62dc5dcf9f9b5ea3b4d9a3425302c2a762993171cf92ec114c1407",
+    "after_sha256": "864590b050cbb27044a4bcdc3512ad21b0cf5c4320d9cff2832f00ab36eb3502",
+    "identical_ast": true,
+    "change": "Trailing whitespace only, root Git publication preflight; numerical/execution code AST unchanged."
+  }
+}

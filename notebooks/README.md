@@ -7,9 +7,10 @@
 Most notebooks below open directly from GitHub in Google Colab and bootstrap
 their documented dependencies. Exceptions are labelled explicitly: P6 needs
 CUDA, Week 14 uses a separate environment whose hosted Run All remains
-unverified, and Week 15 runs from a local clone plus its linked Zenodo evidence
-archive. Weeks 17–22 use their documented CPU local/ZIP setup; their
-interactive Colab acceptance is still open. Read each module's setup page before launching it.
+unverified. Week 15 starts with a bounded CPU operator-training lesson and
+bundled research figures; its external evidence archive is needed only for the
+full research investigation. Weeks 17–22 provide CPU checkout/bootstrap routes;
+interactive hosted-Colab acceptance is still open. Read each module's setup page before launching it.
 
 ## Notebook entry points, in course order
 
@@ -74,7 +75,7 @@ self-study notebooks separate.
 | Week 13 | D/W=5 regional accuracy with author CFD/PINN fields | [Open in Colab](https://colab.research.google.com/github/Ehsan-Roohi/FlowMLLab/blob/main/notebooks/week13/W13_Deep_Cavity_D5_Regional_Accuracy.ipynb) |
 | Week 13 | D/W=5 controlled optimizer comparison | [Open in Colab](https://colab.research.google.com/github/Ehsan-Roohi/FlowMLLab/blob/main/notebooks/week13/W13_D5_Controlled_Optimizer_Study.ipynb) |
 | Week 14 | RANS, inverse PINN and neural closures (local checkout) | [Notebook](week14/W14_pyCALC_RANS_PINN_NN.ipynb) and [setup](week14/README.md) |
-| Week 15 | Geometry-aware neural operators (local checkout) | [Complete post-audit notebook](week15/W15_Complete_Geometry_Generalization.ipynb), [historical audit notebook](week15/W15_Geometry_Operators_Step_Audit.ipynb), and [OpenFOAM/evidence guide](week15/README.md) |
+| Week 15 | CPU operator training and geometry-aware research evidence | [Open in Colab](https://colab.research.google.com/github/Ehsan-Roohi/FlowMLLab/blob/main/notebooks/week15/W15_Complete_Geometry_Generalization.ipynb) · [Read the complete lab](week15/W15_Complete_Geometry_Generalization.ipynb) · [Setup and research archive](week15/README.md) · [Historical audit](week15/W15_Geometry_Operators_Step_Audit.ipynb) |
 | Week 15 | Original Transolver: central-obstacle channel (local checkout) | [Notebook](week15/W15_Original_Transolver_Step.ipynb) |
 | Week 15 | Original Transolver: double-step channel (local checkout) | [Notebook](week15/W15_Original_Transolver_Double_Step.ipynb) |
 | Week 15 | Larger networks and held-out geometry analysis (local checkout) | [Notebook](week15/W15_Larger_Networks_Analysis.ipynb) |
@@ -105,9 +106,10 @@ self-study notebooks separate.
 - `week12/`: additive-moment algebra, prior-plus-observation reconstruction on a synthetic analog, a fresh Noise2Noise-style fit on real DSMC cavity observations, and an audit of the archived research reconstruction.
 - `week13/`: streamfunction PINNs for square and deep cavities: a small CPU training exercise, the retained Re=1000, D/W=2.2 field beside Nektar++ CFD, and the four-case A100 residual audit.
 - `week14/`: Davidson-based RANS closure module (separate environment; see its README).
-- `week15/`: geometry-aware operator audit on 130 OpenFOAM step-flow fields,
-  historical and equal-budget neural-operator comparisons, a validation-only
-  learning-rate sweep, and a retrospective double-step test (see its README for data).
+- `week15/`: train a compact geometry-conditioned POD operator on exact manufactured
+  fields using CPU, then inspect the geometry-aware operator audit on 130 OpenFOAM
+  step-flow fields, historical and equal-budget comparisons, validation-only
+  learning-rate selection and a retrospective double-step test.
 
 The Week-9 evidence contract is intentionally asymmetric. Lab 1 uses real
 micro-step DSMC fields under a specific author publication permission, and its

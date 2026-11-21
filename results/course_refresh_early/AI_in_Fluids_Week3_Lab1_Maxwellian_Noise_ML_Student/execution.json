@@ -1,0 +1,35 @@
+{
+  "notebook": "notebooks/week03/AI_in_Fluids_Week3_Lab1_Maxwellian_Noise_ML_Student.ipynb",
+  "utc": "2026-11-21T02:22:06.501929+00:00",
+  "elapsed_run_all_seconds": 198.43912030000502,
+  "host": "ECS-200417",
+  "kernel": "D:\\ChatGPT Backup\\Projects\\FlowMLLab\\Teaching_Current\\repo\\tmp\\week01_4_runtime\\Scripts\\python.exe",
+  "python": "3.12.14 (main, Aug 25 2026, 14:01:42) [MSC v.1944 64 bit (AMD64)]",
+  "cpu_only": true,
+  "failure": null,
+  "code_cells": 11,
+  "executed_cells": 11,
+  "inline_figures": [
+    {
+      "path": "results/course_refresh_early/AI_in_Fluids_Week3_Lab1_Maxwellian_Noise_ML_Student/cell_08_00.png",
+      "sha256": "765099a2baaf7bb22885d4279de0f40fccdae6acd23f5acdd793b05d7a6a20ba"
+    },
+    {
+      "path": "results/course_refresh_early/AI_in_Fluids_Week3_Lab1_Maxwellian_Noise_ML_Student/cell_18_00.png",
+      "sha256": "18dee93866782933951c330b50c59dbc1ac8943fcc84c5a63ee9fa7e833bebba"
+    },
+    {
+      "path": "results/course_refresh_early/AI_in_Fluids_Week3_Lab1_Maxwellian_Noise_ML_Student/cell_24_00.png",
+      "sha256": "431b83d2ea8383b8aa78412332abcee61f1f747b45147bbe794fbb62e0bade9c"
+    },
+    {
+      "path": "results/course_refresh_early/AI_in_Fluids_Week3_Lab1_Maxwellian_Noise_ML_Student/cell_26_00.png",
+      "sha256": "5fa0cfb0f7d43d0712725526ff453b58cc99aeacb9ec429cc0a50120af7224e5"
+    }
+  ],
+  "notebook_sha256": "7ca723042cc6ae2d9a82af7d63431291a081abc77ebadd600e71d4d58841d557",
+  "code_sha256": "b695a4f8fc6e2eae52bd2fd9f7b369020289955eb731b4a78d548ac9fca1bb25",
+  "claim": "Fresh default CPU Run All; no hosted Colab or optional GPU execution claimed.",
+  "execution_notebook_sha256": "d1852e1debf2c25b6161ea24969814d0d4f683d2bb72bc47e4af8527348a8692",
+  "serialization_note": "Post-execution LF-only JSON serialization; parsed cells, outputs, execution counts and metadata identical. No rerun claimed."
+}

@@ -1,0 +1,8 @@
+% Keep each geometry/Reynolds-number gallery with its preceding explanation.
+\usepackage{placeins}
+\let\FlowMLSection\section
+\renewcommand{\section}{\FloatBarrier\FlowMLSection}
+\let\FlowMLSubsection\subsection
+\renewcommand{\subsection}{\FloatBarrier\FlowMLSubsection}
+\let\FlowMLSubsubsection\subsubsection
+\renewcommand{\subsubsection}{\FloatBarrier\FlowMLSubsubsection}

@@ -2,7 +2,7 @@
 
 ## Why a language-model lesson belongs in this course
 
-The aim is to teach the connection requested for the LLM extension: a model represents context and learns a conditional distribution or a conditional state transition. A fluid Transformer is not automatically a language model, and calling a sequence model causal does not explain how language-model training works. This required laboratory trains a small character model and then transfers the masking and shifted-target reasoning to continuous POD tokens.
+The aim is to teach the connection between sequence learning and fluid prediction: a model represents context and learns a conditional distribution or a conditional state transition. A fluid Transformer is not automatically a language model, and calling a sequence model causal does not explain how language-model training works. This required laboratory trains a small character model and then transfers the masking and shifted-target reasoning to continuous POD tokens.
 
 The language corpus consists of actual FlowMLLab documentation: the modal-data contract, results guide and Week 7.3 notes. A separate Week 7.4 document supplies validation text. Vocabulary comes only from training documents, and unseen validation characters map to an explicit unknown token. This document split is stronger than withholding positions from repeated templates, but shared course vocabulary and short context still limit general-language claims. Corpus paths and hashes are printed in the notebook.
 
@@ -72,6 +72,14 @@ Submit shifted-window tests, a hand-checked cross-entropy example, the masked/un
 
 Primary architecture reference: Vaswani et al. (2017), https://arxiv.org/abs/1706.03762. Implementation reading: Raschka, https://github.com/rasbt/LLMs-from-scratch. The corpus is attributed to the existing FlowMLLab documentation; the experiments are original and no published large model is reproduced here.
 
+<!-- physical-laboratory:start -->
+
+## Read the physical diagnostic
+
+![The same randomly initialized POD decoder before and after a future-input perturbation. Earlier causal outputs must remain unchanged; unmasked outputs can change. This tests information access, not trained forecast accuracy.](../../results/late_course_teaching/week18_causal_response_01.png)
+
+<!-- physical-laboratory:end -->
+
 ## Printable laboratory worksheet
 
 ### Task 1: Shift targets
@@ -115,3 +123,14 @@ The language-model validation metric sums next-token cross-entropy over every he
 
 
 Timing estimate: a 120-minute guided lab and roughly 3–5 hours including preparation and written analysis. This is an editorial estimate; a timed student pilot remains open.
+
+## Laboratory route: from inputs to physical conclusions
+
+| Notebook stage | Input/output | Required observation |
+|---|---|---|
+| Character-model fit | Integer context IDs to logits at every position | Training loss and whole-validation-document NLL; vocabulary excludes validation-only characters |
+| POD prefix perturbation | Four continuous rank-eight state vectors to four shifted targets | Earlier masked outputs stay fixed when future inputs change |
+| Tasks 1–2 | Stride-one windows and log-softmax likelihood | Check one batch and a hand-computed NLL before using perplexity |
+| Tasks 3–4 | Prefix invariance and per-position likelihood | A final-position success must not conceal errors at earlier positions |
+
+Change LM_STEPS, MODEL_WIDTH, CONTEXT or SAMPLE_TEMPERATURE one at a time. Width must remain divisible by four attention heads. Temperature changes sampling rather than fitted weights. The 160-update default is a small CPU teaching fit; generated prose is unvalidated. The POD masked/unmasked curves in the physical diagnostic come from the same randomly initialized decoder and the same perturbed input, so the experiment isolates information access rather than comparing trained forecast accuracy.

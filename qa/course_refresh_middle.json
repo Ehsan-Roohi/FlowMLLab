@@ -1,0 +1,2083 @@
+{
+  "schema_version": 1,
+  "scope": "Weeks 7–14 including incremental units",
+  "status": "complete",
+  "notebooks": [
+    {
+      "path": "notebooks/week07/W7_Lab2_Modal_Forecasting.ipynb",
+      "sha256_before": "e7dcafda91cc14128addd4925a9b6e98bbcbbe2193f22517ff0ccea9b4d17920",
+      "cells_before": 16,
+      "status": "repaired_and_cpu_executed",
+      "lecture": "lectures/week07_modal_forecasting.pdf",
+      "source_audit": "Expanded: explicit rank/horizon controls make a separate validation-only DMD study; split/row-state equations, POD oracle and richer MLP history explained.",
+      "outputs_and_execution_scope": "New current physical vorticity-probe and signed discrepancy; default CPU fits executed separately from retained research.",
+      "preservation": "Existing worthwhile exercises, numerical evidence and checkpoints retained.",
+      "runtime_validation": "Default CPU Run All passed; optional heavyweight research paths not rerun.",
+      "sha256_after": "3e90784a99f3869874e34fe618048f28c90e1168bdcc11326f9d3e7a4f2bc3d4",
+      "cells_after": 18,
+      "execution": {
+        "path": "notebooks/week07/W7_Lab2_Modal_Forecasting.ipynb",
+        "source_sha256": "1274a30583317079ac7f4ab4d9359e5ccc4cc9217be82bc078f8bafd76d2569a",
+        "python": "/scratch3/workspace/roohie_umass_edu-flowml-ghia-highre-20261115/pinn-venv/bin/python",
+        "mode": "default CPU Run All",
+        "started_utc": "2026-11-21T03:35:20Z",
+        "status": "passed",
+        "cell_errors": 0,
+        "figures": 3,
+        "notebook_sha256": "3e90784a99f3869874e34fe618048f28c90e1168bdcc11326f9d3e7a4f2bc3d4",
+        "elapsed_s": 9.539968735072762
+      }
+    },
+    {
+      "path": "notebooks/week07/W7_Lattice_Boltzmann_Cylinder_Student.ipynb",
+      "sha256_before": "ace3fa3dabeb91c852cc3abb8043e8e62aea087d5addc1b181a9c43fb8a775d3",
+      "cells_before": 46,
+      "status": "preserved_after_source_audit",
+      "lecture": "lectures/week07_cylinder_lbm_neural_surrogate.pdf",
+      "source_audit": "Preserved: D2Q9/TRT update, boundary rules, relaxation/Mach constraints, CFD qualification and grid controls already explained; the default distinguishes retained data and live continuation.",
+      "outputs_and_execution_scope": "Existing physical wake fields, force history, grid/phase diagnostics and CPU continuation; no fresh execution claimed.",
+      "preservation": "Existing worthwhile exercises, numerical evidence and checkpoints retained.",
+      "runtime_validation": "Source and existing evidence audited; not newly executed in this refresh.",
+      "sha256_after": "ace3fa3dabeb91c852cc3abb8043e8e62aea087d5addc1b181a9c43fb8a775d3",
+      "cells_after": 46
+    },
+    {
+      "path": "notebooks/week07_1/W7_1_Hypersonic_Rarefied_Cylinder_DeepONet.ipynb",
+      "sha256_before": "65a70870e037319321b13e34e51a12880e4e72b57eb46a4250542235d4687eb3",
+      "cells_before": 22,
+      "status": "preserved_after_source_audit",
+      "lecture": "lectures/week07_1_hypersonic_rarefied_cylinder.pdf",
+      "source_audit": "Preserved: CPU coordinate-MLP baseline and branch/trunk anatomy, case-level splits, local errors and article/teaching distinction are present.",
+      "outputs_and_execution_scope": "Physical profiles and error localization; optional full neural run remains optional and is not claimed executed.",
+      "preservation": "Existing worthwhile exercises, numerical evidence and checkpoints retained.",
+      "runtime_validation": "Source and existing evidence audited; not newly executed in this refresh.",
+      "sha256_after": "65a70870e037319321b13e34e51a12880e4e72b57eb46a4250542235d4687eb3",
+      "cells_after": 22
+    },
+    {
+      "path": "notebooks/week07_2/W7_2_Cylinder_Wake_State_Estimation.ipynb",
+      "sha256_before": "796d0f1bcc9a2a07aecee496204e4698e9e0b5ba3a033fe1bc2834e89f2b7fd3",
+      "cells_before": 18,
+      "status": "preserved_after_source_audit",
+      "lecture": "lectures/week07_2_cylinder_state_estimation.pdf",
+      "source_audit": "Notebook preserved; lecture expanded: explicit Kalman state/observation variables, centered measurements, numerical update, causality and failed interval-coverage interpretation.",
+      "outputs_and_execution_scope": "Existing exact low-rank and scalar controls, fresh CPU filter path, shared-scale fields and noise-seed tables; no new notebook execution claimed.",
+      "preservation": "Existing worthwhile exercises, numerical evidence and checkpoints retained.",
+      "runtime_validation": "Source and existing evidence audited; not newly executed in this refresh.",
+      "sha256_after": "796d0f1bcc9a2a07aecee496204e4698e9e0b5ba3a033fe1bc2834e89f2b7fd3",
+      "cells_after": 18
+    },
+    {
+      "path": "notebooks/week07_3/W7_3_Masked_Pretraining_Label_Efficiency.ipynb",
+      "sha256_before": "c3830151cca596766159b86db10fa7fb4fbafbd314a07fef741224648fb74038",
+      "cells_before": 22,
+      "status": "repaired_and_cpu_executed",
+      "lecture": "lectures/week07_3_masked_pretraining.pdf",
+      "source_audit": "Expanded: actual masked-token/loss denominator, ridge/probe/fine-tune differences and fair work accounting; bounded QUICK CPU default now explicit.",
+      "outputs_and_execution_scope": "Fresh quick training plus unchanged full-protocol results; tests differ by masks/labels rather than pretending independent CFD trajectories.",
+      "preservation": "Existing worthwhile exercises, numerical evidence and checkpoints retained.",
+      "runtime_validation": "Default CPU Run All passed; optional heavyweight research paths not rerun.",
+      "sha256_after": "459165278888b6788ceaee304f49f1833f3c56a5851a2bf506ee998fdc53d460",
+      "cells_after": 23,
+      "execution": {
+        "path": "notebooks/week07_3/W7_3_Masked_Pretraining_Label_Efficiency.ipynb",
+        "source_sha256": "f9fb1705b5d6a46445628127868598ddd1d2659db16adda2c15dffd7a672abf8",
+        "python": "/scratch3/workspace/roohie_umass_edu-flowml-ghia-highre-20261115/pinn-venv/bin/python",
+        "mode": "default CPU Run All",
+        "started_utc": "2026-11-21T03:07:57Z",
+        "status": "passed",
+        "cell_errors": 0,
+        "figures": 4,
+        "notebook_sha256": "459165278888b6788ceaee304f49f1833f3c56a5851a2bf506ee998fdc53d460",
+        "elapsed_s": 136.130037171999
+      }
+    },
+    {
+      "path": "notebooks/week07_4/W7_4_Diverse_Wake_Pretraining.ipynb",
+      "sha256_before": "fb34f30c213f712c9adf8b154e836daf31bc21b5a088dfc03ce154129b6d3713",
+      "cells_before": 15,
+      "status": "repaired_and_cpu_executed",
+      "lecture": "lectures/week07_4_diverse_wake_pretraining.pdf",
+      "source_audit": "Expanded: current-field lift decoding distinguished from forecasting; fresh validation-only POD-ridge experiment exposes rank, label budget and penalty.",
+      "outputs_and_execution_scope": "New lift and signed-error time histories; retained neural pretraining stays separately identified and RUN_FULL stays optional.",
+      "preservation": "Existing worthwhile exercises, numerical evidence and checkpoints retained.",
+      "runtime_validation": "Default CPU Run All passed; optional heavyweight research paths not rerun.",
+      "sha256_after": "3ef0c2fc6a02a6e50b7993ad728a3ae3fe84c5bf38a43dfbf861195d42b8c6c5",
+      "cells_after": 17,
+      "execution": {
+        "path": "notebooks/week07_4/W7_4_Diverse_Wake_Pretraining.ipynb",
+        "source_sha256": "519457fd2c725665410bc1d08360eddea6d2e5fd9e9a826d6bcb8a35916ad161",
+        "python": "/scratch3/workspace/roohie_umass_edu-flowml-ghia-highre-20261115/pinn-venv/bin/python",
+        "mode": "default CPU Run All",
+        "started_utc": "2026-11-21T03:23:43Z",
+        "status": "passed",
+        "cell_errors": 0,
+        "figures": 4,
+        "notebook_sha256": "3ef0c2fc6a02a6e50b7993ad728a3ae3fe84c5bf38a43dfbf861195d42b8c6c5",
+        "elapsed_s": 4.488942335010506
+      }
+    },
+    {
+      "path": "notebooks/week08/W8_Lab1_Exact_Gas_Dynamics_Student.ipynb",
+      "sha256_before": "10b1ee83f83da747aa09e9357b85b4aaf8dec55e0934f16867edfb1ddea97eba",
+      "cells_before": 22,
+      "status": "preserved_after_source_audit",
+      "lecture": "lectures/week08_gas_dynamics_sciml.pdf",
+      "source_audit": "Preserved: exact forward/inverse gas relations, branch brackets, sonic limits and independent forward-substitution checks already give concrete numerical tasks.",
+      "outputs_and_execution_scope": "Existing physical exact-map plots and nine-chapter links retained; no fresh notebook execution claimed.",
+      "preservation": "Existing worthwhile exercises, numerical evidence and checkpoints retained.",
+      "runtime_validation": "Source and existing evidence audited; not newly executed in this refresh.",
+      "sha256_after": "10b1ee83f83da747aa09e9357b85b4aaf8dec55e0934f16867edfb1ddea97eba",
+      "cells_after": 22
+    },
+    {
+      "path": "notebooks/week08/W8_Lab2_Gas_Dynamics_SciML_Evidence_Student.ipynb",
+      "sha256_before": "e2fad6b92edf570c9f0e6e43b8bf0ece32d7b9f164822695e870fc3a9d0a4b30",
+      "cells_before": 26,
+      "status": "repaired_and_cpu_executed",
+      "lecture": "lectures/week08_gas_dynamics_sciml.pdf",
+      "source_audit": "Repaired: three aggregate bar displays removed while numerical tables remain; add physical Rayleigh branch predictions and signed Mach errors from current fits.",
+      "outputs_and_execution_scope": "Matched branch/information explanations and width/interpolation/edge-band exercises; static lecture figure now uses the actual current classroom predictions.",
+      "preservation": "Existing worthwhile exercises, numerical evidence and checkpoints retained.",
+      "runtime_validation": "Default CPU Run All passed; optional heavyweight research paths not rerun.",
+      "sha256_after": "8d2629ae9a064973b1b87b346752d37b272ea6d62ac39f18d091c22edd14bdd5",
+      "cells_after": 28,
+      "execution": {
+        "path": "notebooks/week08/W8_Lab2_Gas_Dynamics_SciML_Evidence_Student.ipynb",
+        "source_sha256": "28d014bed531df2b8740e66bc2f2c6f59354aee58bad04c8dbfabb55c4cc25cf",
+        "python": "D:\\ChatGPT Backup\\Projects\\FlowMLLab\\Teaching_Current\\repo\\tmp\\week01_4_runtime\\Scripts\\python.exe",
+        "mode": "default CPU Run All",
+        "started_utc": "2026-11-21T02:24:33Z",
+        "status": "passed",
+        "cell_errors": 0,
+        "figures": 3,
+        "notebook_sha256": "074da010adadeab1e332fe1f66b60dfd79a7e5017b02837f3ce218931a04591d",
+        "elapsed_s": 150.92179699999542
+      }
+    },
+    {
+      "path": "notebooks/week09/W9_Lab1_Microstep_Zonal_DeepONet_Student.ipynb",
+      "sha256_before": "61385ac842262bf07487b7384b84db1b8c96ec33d6ffc97ec1732077afa41fff",
+      "cells_before": 30,
+      "status": "preserved_after_source_audit",
+      "lecture": "lectures/week09_rarefied_deeponet_case_studies.pdf",
+      "source_audit": "Preserved: geometry holdout, regional weighting with a global guardrail, distinction between coordinate MLP and strict operator, and fresh/retained metric provenance are explicit.",
+      "outputs_and_execution_scope": "Existing full and reverse-flow field/profile comparisons and maximum-error location remain; no new execution claimed.",
+      "preservation": "Existing worthwhile exercises, numerical evidence and checkpoints retained.",
+      "runtime_validation": "Source and existing evidence audited; not newly executed in this refresh.",
+      "sha256_after": "61385ac842262bf07487b7384b84db1b8c96ec33d6ffc97ec1732077afa41fff",
+      "cells_after": 30
+    },
+    {
+      "path": "notebooks/week09/W9_Lab2_Shock_Aligned_Nozzle_DeepONet_Student.ipynb",
+      "sha256_before": "ad453fe06374f5bb9e9ed972408361cd1c9d3c808773805e57e8ff2560e400db",
+      "cells_before": 36,
+      "status": "preserved_after_source_audit",
+      "lecture": "lectures/week09_rarefied_deeponet_case_studies.pdf",
+      "source_audit": "Preserved: target-assisted registration versus deployable locator, six-field interpolation/learning, station ties and complete-case split are explained.",
+      "outputs_and_execution_scope": "Existing physical shock profiles and signed/matched field-error diagnostics retained; optional training claims unchanged.",
+      "preservation": "Existing worthwhile exercises, numerical evidence and checkpoints retained.",
+      "runtime_validation": "Source and existing evidence audited; not newly executed in this refresh.",
+      "sha256_after": "ad453fe06374f5bb9e9ed972408361cd1c9d3c808773805e57e8ff2560e400db",
+      "cells_after": 36
+    },
+    {
+      "path": "notebooks/week09/W9_Lab3_Nozzle_Data_Alignment_Audit.ipynb",
+      "sha256_before": "501617cb7193472151c3f3970c3a58f08ff90aaf8e0843b99194095b03698de4",
+      "cells_before": 11,
+      "status": "repaired_and_cpu_executed",
+      "lecture": "lectures/week09_3_nozzle_data_alignment.pdf",
+      "source_audit": "Repaired: incorrect generic zonal-loss and coordinate-MLP intro replaced by actual smooth-nozzle equations, fixed sensors/query pairing and no-training CPU scope.",
+      "outputs_and_execution_scope": "New Mach/pressure profiles and common-scale signed location error; numerical sensor-count/throat/shuffling/stagnation-state exercises.",
+      "preservation": "Existing worthwhile exercises, numerical evidence and checkpoints retained.",
+      "runtime_validation": "Default CPU Run All passed; optional heavyweight research paths not rerun.",
+      "sha256_after": "69d5dafa80812b8fe29acb75de99f61bb5b524c27e2ded18a8d4f0fc3c6f3dca",
+      "cells_after": 13,
+      "execution": {
+        "path": "notebooks/week09/W9_Lab3_Nozzle_Data_Alignment_Audit.ipynb",
+        "source_sha256": "b67e2da2ee5f4cc41107bac25f7a27597f295f62f4f1d3c4b2eed97f162289ad",
+        "python": "/scratch3/workspace/roohie_umass_edu-flowml-ghia-highre-20261115/pinn-venv/bin/python",
+        "mode": "default CPU Run All",
+        "started_utc": "2026-11-21T03:35:22Z",
+        "status": "passed",
+        "cell_errors": 0,
+        "figures": 1,
+        "notebook_sha256": "69d5dafa80812b8fe29acb75de99f61bb5b524c27e2ded18a8d4f0fc3c6f3dca",
+        "elapsed_s": 5.023539666086435
+      }
+    },
+    {
+      "path": "notebooks/week10/W10_DSMC_Data_Driven_Surrogates_Student.ipynb",
+      "sha256_before": "f7b03bbd877cbe8e5c681319e12ce0a835cbe8fb76d9fdf612274ddf050409ca",
+      "cells_before": 30,
+      "status": "preserved_after_source_audit",
+      "lecture": "lectures/week10_dsmc_data_driven_surrogates.pdf",
+      "source_audit": "Preserved: log-Knudsen interpolation weights, component normalization, internal relaxation versus monatomic shock context, and extrapolation limits already explicit.",
+      "outputs_and_execution_scope": "Existing actual source-backed physical profiles and overshoot/window diagnostics retained; no fresh execution claimed.",
+      "preservation": "Existing worthwhile exercises, numerical evidence and checkpoints retained.",
+      "runtime_validation": "Source and existing evidence audited; not newly executed in this refresh.",
+      "sha256_after": "f7b03bbd877cbe8e5c681319e12ce0a835cbe8fb76d9fdf612274ddf050409ca",
+      "cells_after": 30
+    },
+    {
+      "path": "notebooks/week10_1/W10_1_Collision_Map_Surrogate_Audit.ipynb",
+      "sha256_before": "ecef28d4fbe530c07ebb62a2c9b9aa8f14daf27aca96f789d56d1a330e1323fa",
+      "cells_before": 21,
+      "status": "repaired_and_cpu_executed",
+      "lecture": "lectures/week10_1_collision_map_audit.pdf",
+      "source_audit": "Repaired: clipped signed error maps now retain full extrema; added raw/clipped prediction range and physical unseen-energy profiles. One-page lecture replaced with scattering/quadrature/ML/transport/tail teaching.",
+      "outputs_and_execution_scope": "Concrete impact resolution, cutoff, width, clipping and Gamma-tail experiments; no learned DSMC deployment or accepted-collision claim.",
+      "preservation": "Existing worthwhile exercises, numerical evidence and checkpoints retained.",
+      "runtime_validation": "Default CPU Run All passed; optional heavyweight research paths not rerun.",
+      "sha256_after": "fe859ef586bd6c8542f1f9f301585551f2e884bd031f7c19c53481b043be3dc6",
+      "cells_after": 23,
+      "execution": {
+        "path": "notebooks/week10_1/W10_1_Collision_Map_Surrogate_Audit.ipynb",
+        "source_sha256": "7abf4ecd7274bbca61f278b152bdf2ef737dd57ffd058139b255be5fabc64188",
+        "python": "D:\\ChatGPT Backup\\Projects\\FlowMLLab\\Teaching_Current\\repo\\tmp\\week01_4_runtime\\Scripts\\python.exe",
+        "mode": "default CPU Run All",
+        "started_utc": "2026-11-21T02:27:05Z",
+        "status": "passed",
+        "cell_errors": 0,
+        "figures": 4,
+        "notebook_sha256": "29c94aeba0f3356f0a14141c8e45a697e99a5c185866fcfe0f223dd682ffaf62",
+        "elapsed_s": 1264.356645400003
+      }
+    },
+    {
+      "path": "notebooks/week10_2/W10_2_BGK_Shakhov_Shock_PINN_DVM.ipynb",
+      "sha256_before": "68b2446c532fc37cec12ca90f385454c17bdbc7e657c24be1ed9a8aa57fd3604",
+      "cells_before": 39,
+      "status": "preserved_after_source_audit",
+      "lecture": "lectures/week10_2_bgk_shakhov_shock_pinn_dvm.pdf",
+      "source_audit": "Preserved: 27-page matched theory/lab guide defines reduced moments, collision laws, jump states, actual short CPU PINN and separate controlled studies.",
+      "outputs_and_execution_scope": "Existing DVM/reference physical profiles, multiple seeds and tables A–J remain; no new physics, training campaign or optional-heavy execution claimed.",
+      "preservation": "Existing worthwhile exercises, numerical evidence and checkpoints retained.",
+      "runtime_validation": "Source and existing evidence audited; not newly executed in this refresh.",
+      "sha256_after": "68b2446c532fc37cec12ca90f385454c17bdbc7e657c24be1ed9a8aa57fd3604",
+      "cells_after": 39
+    },
+    {
+      "path": "notebooks/week11/W11_Cavitation_Cloud_Detection.ipynb",
+      "sha256_before": "f2998e04dbc7e9b9684e02089730330b007df1fcdebcb0fdcfd09fdd8a598c96",
+      "cells_before": 29,
+      "status": "preserved_after_source_audit",
+      "lecture": "lectures/week11_shock_vortex_identification.pdf",
+      "source_audit": "Preserved: seven real cases, alpha/pressure criteria, matched connectivity/U-Net comparisons, wall predictions and held-out noise/adaptation contracts are present.",
+      "outputs_and_execution_scope": "Existing Case24 disagreement and solid-wall counts retained; optional adaptation remains disabled by default.",
+      "preservation": "Existing worthwhile exercises, numerical evidence and checkpoints retained.",
+      "runtime_validation": "Source and existing evidence audited; not newly executed in this refresh.",
+      "sha256_after": "f2998e04dbc7e9b9684e02089730330b007df1fcdebcb0fdcfd09fdd8a598c96",
+      "cells_after": 29
+    },
+    {
+      "path": "notebooks/week11/W11_Lab2_Reconstruction_and_Identification.ipynb",
+      "sha256_before": "ba56709517cc7ae760fe581d619d8a4b3dc2f2509f677397eb402b6d8a99ac0f",
+      "cells_before": 21,
+      "status": "preserved_after_source_audit",
+      "lecture": "lectures/week11_shock_vortex_identification.pdf",
+      "source_audit": "Preserved: frozen reconstruction replay, training-only divergence thresholds, validation sensitivity and physical structure-versus-field distinction are explicit.",
+      "outputs_and_execution_scope": "Existing current replay and divergence/structure masks retained; optional small training not claimed executed.",
+      "preservation": "Existing worthwhile exercises, numerical evidence and checkpoints retained.",
+      "runtime_validation": "Source and existing evidence audited; not newly executed in this refresh.",
+      "sha256_after": "ba56709517cc7ae760fe581d619d8a4b3dc2f2509f677397eb402b6d8a99ac0f",
+      "cells_after": 21
+    },
+    {
+      "path": "notebooks/week11/W11_Shock_Vortex_Identification.ipynb",
+      "sha256_before": "b9c0d84a685714d88142d09c4436212d8ae2eb7f08530049d484482cf671ba36",
+      "cells_before": 28,
+      "status": "preserved_after_source_audit",
+      "lecture": "lectures/week11_shock_vortex_identification.pdf",
+      "source_audit": "Preserved: analytic manufactured controls, derivative features, recomputed-noise tests, shear/expansion negatives and frozen research forward passes distinguish learning from classification claims.",
+      "outputs_and_execution_scope": "Existing physical masks and negative-control diagnostics; no fresh execution claimed.",
+      "preservation": "Existing worthwhile exercises, numerical evidence and checkpoints retained.",
+      "runtime_validation": "Source and existing evidence audited; not newly executed in this refresh.",
+      "sha256_after": "b9c0d84a685714d88142d09c4436212d8ae2eb7f08530049d484482cf671ba36",
+      "cells_after": 28
+    },
+    {
+      "path": "notebooks/week12/W12_DSMC_Moment_Reconstruction.ipynb",
+      "sha256_before": "cefe445a18aeebea7aba1593cf2554c96264d37eaed7d38146ae4d25a656b760",
+      "cells_before": 27,
+      "status": "preserved_after_source_audit",
+      "lecture": "lectures/week12_dsmc_moment_reconstruction.pdf",
+      "source_audit": "Preserved: aggregate raw moments before centralization, independent stochastic samples, Noise2Noise identity and physical gradient/DC/wall checks already explained.",
+      "outputs_and_execution_scope": "Existing source-backed moment profiles and reconstruction diagnostics; no fresh notebook execution claimed.",
+      "preservation": "Existing worthwhile exercises, numerical evidence and checkpoints retained.",
+      "runtime_validation": "Source and existing evidence audited; not newly executed in this refresh.",
+      "sha256_after": "cefe445a18aeebea7aba1593cf2554c96264d37eaed7d38146ae4d25a656b760",
+      "cells_after": 27
+    },
+    {
+      "path": "notebooks/week13/W13_D5_Controlled_Optimizer_Study.ipynb",
+      "sha256_before": "52d99a41657948eb256f808a5b962f08a0557aa5a04dbc2aa96f94006b9801a3",
+      "cells_before": 16,
+      "status": "preserved_after_source_audit",
+      "lecture": "lectures/week13_rectangular_cavity_pinn.pdf",
+      "source_audit": "Preserved: matched-work optimizer comparisons retain failed arms, independent seeds and frozen endpoints rather than manufacturing a winner.",
+      "outputs_and_execution_scope": "Existing eighteen physical figures, CPU replay and study limits retained; no new fits or checkpoint edits.",
+      "preservation": "Existing worthwhile exercises, numerical evidence and checkpoints retained.",
+      "runtime_validation": "Source and existing evidence audited; not newly executed in this refresh.",
+      "sha256_after": "52d99a41657948eb256f808a5b962f08a0557aa5a04dbc2aa96f94006b9801a3",
+      "cells_after": 16
+    },
+    {
+      "path": "notebooks/week13/W13_Deep_Cavity_D5_Regional_Accuracy.ipynb",
+      "sha256_before": "c72fab0e4104d322b9b3976018794988349ace58c98f03399e7debb19535731c",
+      "cells_before": 12,
+      "status": "preserved_after_source_audit",
+      "lecture": "lectures/week13_rectangular_cavity_pinn.pdf",
+      "source_audit": "Preserved: deep-cavity regional signed fields/profiles, scales, gates and all-Re interpretation explicitly teach local versus global accuracy.",
+      "outputs_and_execution_scope": "Existing nine physical figures and numerical exercises retained; no fresh execution claimed.",
+      "preservation": "Existing worthwhile exercises, numerical evidence and checkpoints retained.",
+      "runtime_validation": "Source and existing evidence audited; not newly executed in this refresh.",
+      "sha256_after": "c72fab0e4104d322b9b3976018794988349ace58c98f03399e7debb19535731c",
+      "cells_after": 12
+    },
+    {
+      "path": "notebooks/week13/W13_Rectangular_Cavity_PINN_Research.ipynb",
+      "sha256_before": "cab16d379a1a4b487e53214cecfee87ed8232679a3a3f36ca9955f9860a73de0",
+      "cells_before": 32,
+      "status": "preserved_after_source_audit",
+      "lecture": "lectures/week13_rectangular_cavity_pinn.pdf",
+      "source_audit": "Preserved: substantial from-scratch double-precision CPU PINN, derivative checks, reference-vs-label-free distinction, optimizer work and regional flow qualification already aligned with lecture.",
+      "outputs_and_execution_scope": "Retained scientific manifests/checkpoint identities left untouched; optional expensive research not rerun.",
+      "preservation": "Existing worthwhile exercises, numerical evidence and checkpoints retained.",
+      "runtime_validation": "Source and existing evidence audited; not newly executed in this refresh.",
+      "sha256_after": "cab16d379a1a4b487e53214cecfee87ed8232679a3a3f36ca9955f9860a73de0",
+      "cells_after": 32
+    },
+    {
+      "path": "notebooks/week14/W14_pyCALC_RANS_PINN_NN.ipynb",
+      "sha256_before": "ee66fcfa325d4f10842cdd6db6ce00d593f1738ee1862dba02c2a49c8eb7d73f",
+      "cells_before": 17,
+      "status": "repaired_and_cpu_executed",
+      "lecture": "lectures/week14_rans_pinn_nn.pdf",
+      "source_audit": "Repaired: fresh gap MLP/PCHIP computation now plots its own arrays instead of an archived image; inverse/closure/solver stages and conditioning exercises expanded.",
+      "outputs_and_execution_scope": "Physical wall-normal coefficient and signed-error profiles; source-faithful versus adapted protocol and retained expensive restarts remain explicit.",
+      "preservation": "Existing worthwhile exercises, numerical evidence and checkpoints retained.",
+      "runtime_validation": "Default CPU Run All passed; optional heavyweight research paths not rerun.",
+      "sha256_after": "78bbe17546ca239d216bd224d416a7a2549befde388d7b49890d4d2bdbf18949",
+      "cells_after": 18,
+      "execution": {
+        "path": "notebooks/week14/W14_pyCALC_RANS_PINN_NN.ipynb",
+        "source_sha256": "4379405ab11ed394d1164427a5e8d10587bd3ef955a5e3158550e585c9590224",
+        "python": "/scratch3/workspace/roohie_umass_edu-flowml-ghia-highre-20261115/pinn-venv/bin/python",
+        "mode": "default CPU Run All",
+        "started_utc": "2026-11-21T03:08:28Z",
+        "status": "passed",
+        "cell_errors": 0,
+        "figures": 7,
+        "notebook_sha256": "f0f5897d85e8639ab716be0705ce14d098e62d6f03210fe6bdc235a564be9f42",
+        "elapsed_s": 37.2859815210104
+      }
+    }
+  ],
+  "lectures": [
+    {
+      "path": "lectures/week07_1_hypersonic_rarefied_cylinder.pdf",
+      "sha256_before": "1c29fcb7f2f2a0a01425a446ca53d454029d8eba801837b55b7627e5ac0880ac",
+      "pages_before": 17,
+      "sha256_after": "1c29fcb7f2f2a0a01425a446ca53d454029d8eba801837b55b7627e5ac0880ac",
+      "pages_after": 17,
+      "status": "preserved_after_alignment_audit",
+      "educational_alignment": "Existing detailed algorithm, physical interpretation, controls and exercises remain consistent with the associated notebook(s); no fresh optional training or whole-PDF visual review is claimed."
+    },
+    {
+      "path": "lectures/week07_2_cylinder_state_estimation.pdf",
+      "sha256_before": "93e37343f787147633ac0f83aa5abfac30353ca6e3474cfac8c05a6991c97722",
+      "pages_before": 5,
+      "sha256_after": "4edfa844da8447b6b70e48191fe373ddc77dc3978080892cb3973ebe039d7941",
+      "pages_after": 7,
+      "status": "repaired_and_individually_render_reviewed",
+      "educational_alignment": "Three-page centered Kalman guide, covariance example and causal experiments precede four retained pages."
+    },
+    {
+      "path": "lectures/week07_3_masked_pretraining.pdf",
+      "sha256_before": "66b4d2f7c750aacf0c631d51043475ec841cb58ace20b128b7b50f516b84909e",
+      "pages_before": 7,
+      "sha256_after": "619149f35eff6953c7a10b9ce8efb58c38792df76af22aa548a70866168196bb",
+      "pages_after": 9,
+      "status": "repaired_and_individually_render_reviewed",
+      "educational_alignment": "Three-page patch/loss/fair-work teaching guide precedes six retained full-protocol pages; default quick CPU run is separate."
+    },
+    {
+      "path": "lectures/week07_4_diverse_wake_pretraining.pdf",
+      "sha256_before": "d1e3fca7e6369e384e0b25af429995d26bf8441e53400ea783c4e240b55bdfe0",
+      "pages_before": 5,
+      "sha256_after": "47cc5bf6f3a453e05867168fd83e92ef9b3c3a3eeda15841207fe82007cfc4e4",
+      "pages_after": 7,
+      "status": "repaired_and_individually_render_reviewed",
+      "educational_alignment": "Three-page representation/lift guide precedes four retained pages; original lift arrays replotted with external legend."
+    },
+    {
+      "path": "lectures/week07_cylinder_lbm_neural_surrogate.pdf",
+      "sha256_before": "3dcdbf8a75410921f96470fbc0b4650eee4ce77d06b094739e7c2e5c24fc0f63",
+      "pages_before": 19,
+      "sha256_after": "3dcdbf8a75410921f96470fbc0b4650eee4ce77d06b094739e7c2e5c24fc0f63",
+      "pages_after": 19,
+      "status": "preserved_after_alignment_audit",
+      "educational_alignment": "Existing detailed algorithm, physical interpretation, controls and exercises remain consistent with the associated notebook(s); no fresh optional training or whole-PDF visual review is claimed."
+    },
+    {
+      "path": "lectures/week07_modal_forecasting.pdf",
+      "sha256_before": "89eae3f64ab3b4ee47c3e78d155785c8283b781d2dd9be9d514c0bd098ae1c15",
+      "pages_before": 5,
+      "sha256_after": "c7ddd8c8ee9b91f02ad0f985fb592190c4d369f6d7cda1da5de547e09b58e21e",
+      "pages_after": 7,
+      "status": "repaired_and_individually_render_reviewed",
+      "educational_alignment": "Three-page algorithm and controlled CPU-study guide precedes the four retained protocol pages; stale development footer removed."
+    },
+    {
+      "path": "lectures/week08_gas_dynamics_sciml.pdf",
+      "sha256_before": "77df2c788cfc883a94733713986f443e1d480edd9c86e3bc3631421eb081e70c",
+      "pages_before": 13,
+      "sha256_after": "5ccef5a52d3e5f4855a4010759db6b45a5070231315f31ea4e104b58bb2b118e",
+      "pages_after": 13,
+      "status": "repaired_and_individually_render_reviewed",
+      "educational_alignment": "Current branch-specific Mach profiles and signed errors replace aggregate bars; editable TeX and physical schematic aligned."
+    },
+    {
+      "path": "lectures/week09_3_nozzle_data_alignment.pdf",
+      "sha256_before": "c2caecee5c0d222e3b35a96ff84c6c31268a3047dec8bb064ff1695606dfd9f5",
+      "pages_before": 3,
+      "sha256_after": "e954392fbe9ed4e6f9ec56f703c92b3d1f04b0772a9b7342cc5e4c83d41273fc",
+      "pages_after": 5,
+      "status": "repaired_and_individually_render_reviewed",
+      "educational_alignment": "Three-page nozzle pairing and analytical checks guide precedes two retained contract pages; wrong-topic material removed."
+    },
+    {
+      "path": "lectures/week09_rarefied_deeponet_case_studies.pdf",
+      "sha256_before": "4ddc955720689bf1fae9ef0c654fc8a1aef83f6e2ae705e605fff864ab37693e",
+      "pages_before": 19,
+      "sha256_after": "4ddc955720689bf1fae9ef0c654fc8a1aef83f6e2ae705e605fff864ab37693e",
+      "pages_after": 19,
+      "status": "preserved_after_alignment_audit",
+      "educational_alignment": "Existing detailed algorithm, physical interpretation, controls and exercises remain consistent with the associated notebook(s); no fresh optional training or whole-PDF visual review is claimed."
+    },
+    {
+      "path": "lectures/week10_1_collision_map_audit.pdf",
+      "sha256_before": "4f449637b4dfe2733141f011264d645526f065f13909b1fe5ba2c71512f2d945",
+      "pages_before": 1,
+      "sha256_after": "c53e300a6940a4759cb68585b6212a8ac47f99f2cd46ff2d8400ae5df78a2ef5",
+      "pages_after": 6,
+      "status": "repaired_and_individually_render_reviewed",
+      "educational_alignment": "Six-page scattering, quadrature, neural-map, transport-moment and tail-sensitivity guide replaces the generic one-page introduction."
+    },
+    {
+      "path": "lectures/week10_2_bgk_shakhov_shock_pinn_dvm.pdf",
+      "sha256_before": "92682e0a50092fc3f67c41a418a2ac531b56fbccc3890da69c8ecd7f1a7e5092",
+      "pages_before": 27,
+      "sha256_after": "92682e0a50092fc3f67c41a418a2ac531b56fbccc3890da69c8ecd7f1a7e5092",
+      "pages_after": 27,
+      "status": "preserved_after_alignment_audit",
+      "educational_alignment": "Existing detailed algorithm, physical interpretation, controls and exercises remain consistent with the associated notebook(s); no fresh optional training or whole-PDF visual review is claimed."
+    },
+    {
+      "path": "lectures/week10_dsmc_data_driven_surrogates.pdf",
+      "sha256_before": "8d725f8326e1e58761035d039d4e04ab2bcc6d7ac78f8a922ad4c814cb783040",
+      "pages_before": 14,
+      "sha256_after": "8d725f8326e1e58761035d039d4e04ab2bcc6d7ac78f8a922ad4c814cb783040",
+      "pages_after": 14,
+      "status": "preserved_after_alignment_audit",
+      "educational_alignment": "Existing detailed algorithm, physical interpretation, controls and exercises remain consistent with the associated notebook(s); no fresh optional training or whole-PDF visual review is claimed."
+    },
+    {
+      "path": "lectures/week11_shock_vortex_identification.pdf",
+      "sha256_before": "8d7199ac86e7f159f3c86232214b68a23af3cfe32a37f3c4e61badd957ea7111",
+      "pages_before": 17,
+      "sha256_after": "8d7199ac86e7f159f3c86232214b68a23af3cfe32a37f3c4e61badd957ea7111",
+      "pages_after": 17,
+      "status": "preserved_after_alignment_audit",
+      "educational_alignment": "Existing detailed algorithm, physical interpretation, controls and exercises remain consistent with the associated notebook(s); no fresh optional training or whole-PDF visual review is claimed."
+    },
+    {
+      "path": "lectures/week12_dsmc_moment_reconstruction.pdf",
+      "sha256_before": "067a36e35e666dab71cecc8292b4f58571af346e4a2632c3c60d1b97468f874c",
+      "pages_before": 13,
+      "sha256_after": "067a36e35e666dab71cecc8292b4f58571af346e4a2632c3c60d1b97468f874c",
+      "pages_after": 13,
+      "status": "preserved_after_alignment_audit",
+      "educational_alignment": "Existing detailed algorithm, physical interpretation, controls and exercises remain consistent with the associated notebook(s); no fresh optional training or whole-PDF visual review is claimed."
+    },
+    {
+      "path": "lectures/week13_rectangular_cavity_pinn.pdf",
+      "sha256_before": "ac372bedd03fd51185de39b279f0659445aa107ad5e3f5f59c836ef3a4e429ad",
+      "pages_before": 36,
+      "sha256_after": "ac372bedd03fd51185de39b279f0659445aa107ad5e3f5f59c836ef3a4e429ad",
+      "pages_after": 36,
+      "status": "preserved_after_alignment_audit",
+      "educational_alignment": "Existing detailed algorithm, physical interpretation, controls and exercises remain consistent with the associated notebook(s); no fresh optional training or whole-PDF visual review is claimed."
+    },
+    {
+      "path": "lectures/week14_rans_pinn_nn.pdf",
+      "sha256_before": "9e252648a980c9ab06ad5ffde1542fa13d25e1071fe2ca4f9284b3f12ac99e19",
+      "pages_before": 7,
+      "sha256_after": "63ccd7cbe0f6893effacd83f0ae81126356ab676af17b51ef21fbfec1afb7d36",
+      "pages_after": 11,
+      "status": "repaired_and_individually_render_reviewed",
+      "educational_alignment": "Four-page inverse/closure/solver guide precedes seven retained evidence pages; current gap predictions displayed and source attribution stated neutrally."
+    }
+  ],
+  "priority_findings": [
+    "Wrong topic introduction in nozzle pairing audit",
+    "Fresh closure calculations displayed stale archived plot",
+    "Scattering signed errors clipped below actual extrema",
+    "Week 8 aggregate bars replaced by physical current predictions",
+    "Short companion PDFs lacked sufficient algorithm and controlled-experiment teaching",
+    "Masked-pretraining full protocol was the default instead of the bounded CPU classroom path"
+  ],
+  "completed_utc": "2026-11-21T03:55:04Z",
+  "baseline_commit": "dd2f42d",
+  "reviewer": "/root/week4_lecture_rebuild",
+  "execution_presentation_proofs": {
+    "line_endings": [
+      {
+        "path": "notebooks/week08/W8_Lab2_Gas_Dynamics_SciML_Evidence_Student.ipynb",
+        "before_sha256": "074da010adadeab1e332fe1f66b60dfd79a7e5017b02837f3ce218931a04591d",
+        "after_sha256": "8d2629ae9a064973b1b87b346752d37b272ea6d62ac39f18d091c22edd14bdd5",
+        "change": "CRLF to LF only; parsed notebook code, outputs and metadata identical"
+      },
+      {
+        "path": "notebooks/week10_1/W10_1_Collision_Map_Surrogate_Audit.ipynb",
+        "before_sha256": "29c94aeba0f3356f0a14141c8e45a697e99a5c185866fcfe0f223dd682ffaf62",
+        "after_sha256": "01af2ef087c7a5b0bd71e04d178bab0462bf601b4d42ce9b84715e6d659ec936",
+        "change": "CRLF to LF only; parsed notebook code, outputs and metadata identical"
+      }
+    ],
+    "week10_raw_literal": {
+      "path": "notebooks\\week10_1\\W10_1_Collision_Map_Surrogate_Audit.ipynb",
+      "before_sha256": "01af2ef087c7a5b0bd71e04d178bab0462bf601b4d42ce9b84715e6d659ec936",
+      "after_sha256": "0b33514f7c6f15deb0287f6ec4c4ac846a6c3e45575cd4292531b3969d9b0750",
+      "changes": [
+        {
+          "cell": 22,
+          "source_before_sha256": "450c310e6f6d389bad27797936d3580f460b6d336a0fb38e9365e591439ceff4",
+          "source_after_sha256": "ba8f466bdcec09aac3bbce46c757c30bc87640ea3d164c11bf8e24acfba32419",
+          "ast_identical": true,
+          "outputs_preserved": true
+        }
+      ]
+    },
+    "week10_markdown_encoding": {
+      "path": "notebooks/week10_1/W10_1_Collision_Map_Surrogate_Audit.ipynb",
+      "before_sha256": "0b33514f7c6f15deb0287f6ec4c4ac846a6c3e45575cd4292531b3969d9b0750",
+      "after_sha256": "fe859ef586bd6c8542f1f9f301585551f2e884bd031f7c19c53481b043be3dc6",
+      "changes": [
+        {
+          "cell": 1,
+          "change": "Restore UTF-8 en dash in the NumPy version range",
+          "source_before_sha256": "f3f9adc01abd6f96114e827cd3cc57ae31a869b858755a045d5bb7a44c35a0ab",
+          "source_after_sha256": "10ffb5de07c3b17c9d6b5afbe6f9ad224d7e63620f0ce9fa71d1f0bbc8c2a854"
+        }
+      ],
+      "all_code_outputs_execution_counts_and_metadata_identical": true
+    },
+    "markdown_wording_repairs": [
+      {
+        "path": "notebooks/week14/W14_pyCALC_RANS_PINN_NN.ipynb",
+        "executed_sha256": "f0f5897d85e8639ab716be0705ce14d098e62d6f03210fe6bdc235a564be9f42",
+        "current_sha256": "78bbe17546ca239d216bd224d416a7a2549befde388d7b49890d4d2bdbf18949",
+        "changes": [
+          {
+            "cell": 13,
+            "change": "Clarify that solver executions are retained evidence, with past-tense wording",
+            "source_before_sha256": "71ce915b34237c652385639e31aec8136cc8d92657faf4c535b7b87907c7d499",
+            "source_after_sha256": "0b468fd71aa9181d8889725799c73129c28dffb3d9618b8ab85a76e84c754640"
+          }
+        ],
+        "all_code_outputs_execution_counts_and_metadata_identical": true,
+        "code_cells_sha256": "f8daa1562589686159d450c46f6340584a5b65e2856a8ce7cc8fe1c7f77c99b4"
+      }
+    ]
+  },
+  "notebook_figure_review": [
+    {
+      "notebook": "notebooks/week07/W7_Lab2_Modal_Forecasting.ipynb",
+      "cell": 8,
+      "image_path": "tmp/course_middle/notebook_figures/W7_Lab2_Modal_Forecasting/figure-01.png",
+      "image_sha256": "efb832bc7979d1299f21601931526c8377d38a57b836d9369aacc042d90befdb",
+      "reviewer": "/root/week4_lecture_rebuild",
+      "status": "passed",
+      "review_basis": "Individual full-size inspection; no bar charts, clipped extrema or legends over curves in the current displayed figures."
+    },
+    {
+      "notebook": "notebooks/week07/W7_Lab2_Modal_Forecasting.ipynb",
+      "cell": 8,
+      "image_path": "tmp/course_middle/notebook_figures/W7_Lab2_Modal_Forecasting/figure-02.png",
+      "image_sha256": "05da48eea6afcf807f91911cf67998d0a3297ea5a52fc7374c950d4416f1d575",
+      "reviewer": "/root/week4_lecture_rebuild",
+      "status": "passed",
+      "review_basis": "Individual full-size inspection; no bar charts, clipped extrema or legends over curves in the current displayed figures."
+    },
+    {
+      "notebook": "notebooks/week07/W7_Lab2_Modal_Forecasting.ipynb",
+      "cell": 16,
+      "image_path": "tmp/course_middle/notebook_figures/W7_Lab2_Modal_Forecasting/figure-03.png",
+      "image_sha256": "0f57c1204d43a71957f23adf817925149a228bbdaaf79534c396a42582089328",
+      "reviewer": "/root/week4_lecture_rebuild",
+      "status": "passed",
+      "review_basis": "Individual full-size inspection; no bar charts, clipped extrema or legends over curves in the current displayed figures."
+    },
+    {
+      "notebook": "notebooks/week07_3/W7_3_Masked_Pretraining_Label_Efficiency.ipynb",
+      "cell": 6,
+      "image_path": "tmp/course_middle/notebook_figures/W7_3_Masked_Pretraining_Label_Efficiency/figure-01.png",
+      "image_sha256": "0ddcd0246eb92789fa42b65c26576a34bed5598e80dc66ef40adef179a04484a",
+      "reviewer": "/root/week4_lecture_rebuild",
+      "status": "passed",
+      "review_basis": "Individual full-size inspection; no bar charts, clipped extrema or legends over curves in the current displayed figures."
+    },
+    {
+      "notebook": "notebooks/week07_3/W7_3_Masked_Pretraining_Label_Efficiency.ipynb",
+      "cell": 10,
+      "image_path": "tmp/course_middle/notebook_figures/W7_3_Masked_Pretraining_Label_Efficiency/figure-02.png",
+      "image_sha256": "e91aa2f3991e59f81b2d75b07462860666bcb4cb12b2f5f16cb56f7a456b6b00",
+      "reviewer": "/root/week4_lecture_rebuild",
+      "status": "passed",
+      "review_basis": "Individual full-size inspection; no bar charts, clipped extrema or legends over curves in the current displayed figures."
+    },
+    {
+      "notebook": "notebooks/week07_3/W7_3_Masked_Pretraining_Label_Efficiency.ipynb",
+      "cell": 12,
+      "image_path": "tmp/course_middle/notebook_figures/W7_3_Masked_Pretraining_Label_Efficiency/figure-03.png",
+      "image_sha256": "cb296727747e8d1abfca7e3bb0d560788465a3209e8ea1ba503b5361f7ae6852",
+      "reviewer": "/root/week4_lecture_rebuild",
+      "status": "passed",
+      "review_basis": "Individual full-size inspection; no bar charts, clipped extrema or legends over curves in the current displayed figures."
+    },
+    {
+      "notebook": "notebooks/week07_3/W7_3_Masked_Pretraining_Label_Efficiency.ipynb",
+      "cell": 16,
+      "image_path": "tmp/course_middle/notebook_figures/W7_3_Masked_Pretraining_Label_Efficiency/figure-04.png",
+      "image_sha256": "86024abcf9922c4eeaa7c2371315933b9facae775d613a48b2f816632f464649",
+      "reviewer": "/root/week4_lecture_rebuild",
+      "status": "passed",
+      "review_basis": "Individual full-size inspection; no bar charts, clipped extrema or legends over curves in the current displayed figures."
+    },
+    {
+      "notebook": "notebooks/week07_4/W7_4_Diverse_Wake_Pretraining.ipynb",
+      "cell": 9,
+      "image_path": "tmp/course_middle/notebook_figures/W7_4_Diverse_Wake_Pretraining/figure-01.png",
+      "image_sha256": "91e8dda6ecdb03450b3be2a24d98c12df6884dc945967c53908cd9554b005f91",
+      "reviewer": "/root/week4_lecture_rebuild",
+      "status": "passed",
+      "review_basis": "Individual full-size inspection; no bar charts, clipped extrema or legends over curves in the current displayed figures."
+    },
+    {
+      "notebook": "notebooks/week07_4/W7_4_Diverse_Wake_Pretraining.ipynb",
+      "cell": 11,
+      "image_path": "tmp/course_middle/notebook_figures/W7_4_Diverse_Wake_Pretraining/figure-02.png",
+      "image_sha256": "567e34a3cb999d7df231d01b68bbd1d6bc4d91fd985045295200f17d606c3ea8",
+      "reviewer": "/root/week4_lecture_rebuild",
+      "status": "passed",
+      "review_basis": "Individual full-size inspection; no bar charts, clipped extrema or legends over curves in the current displayed figures."
+    },
+    {
+      "notebook": "notebooks/week07_4/W7_4_Diverse_Wake_Pretraining.ipynb",
+      "cell": 13,
+      "image_path": "tmp/course_middle/notebook_figures/W7_4_Diverse_Wake_Pretraining/figure-03.png",
+      "image_sha256": "0f588f2e5d6d99595e17192d1ae91b04694d5179100fe8473d3091cde63e2b70",
+      "reviewer": "/root/week4_lecture_rebuild",
+      "status": "passed",
+      "review_basis": "Individual full-size inspection; no bar charts, clipped extrema or legends over curves in the current displayed figures."
+    },
+    {
+      "notebook": "notebooks/week07_4/W7_4_Diverse_Wake_Pretraining.ipynb",
+      "cell": 16,
+      "image_path": "tmp/course_middle/notebook_figures/W7_4_Diverse_Wake_Pretraining/figure-04.png",
+      "image_sha256": "efe2c68833190679254c8e841b23cff6e662a205903f0406a7bc65f047c838b7",
+      "reviewer": "/root/week4_lecture_rebuild",
+      "status": "passed",
+      "review_basis": "Individual full-size inspection; no bar charts, clipped extrema or legends over curves in the current displayed figures."
+    },
+    {
+      "notebook": "notebooks/week08/W8_Lab2_Gas_Dynamics_SciML_Evidence_Student.ipynb",
+      "cell": 8,
+      "image_path": "tmp/course_middle/notebook_figures/W8_Lab2_Gas_Dynamics_SciML_Evidence_Student/figure-01.png",
+      "image_sha256": "1ddd0fb3a2d737940fcf53bf4b4ef13f2e796665de1b63aabd0d130d6a00576f",
+      "reviewer": "/root/week4_lecture_rebuild",
+      "status": "passed",
+      "review_basis": "Individual full-size inspection; no bar charts, clipped extrema or legends over curves in the current displayed figures."
+    },
+    {
+      "notebook": "notebooks/week08/W8_Lab2_Gas_Dynamics_SciML_Evidence_Student.ipynb",
+      "cell": 19,
+      "image_path": "tmp/course_middle/notebook_figures/W8_Lab2_Gas_Dynamics_SciML_Evidence_Student/figure-02.png",
+      "image_sha256": "bb9990740e7989872f23d1b87d092fbab4c91f77c3ec087435d2503984ade364",
+      "reviewer": "/root/week4_lecture_rebuild",
+      "status": "passed",
+      "review_basis": "Individual full-size inspection; no bar charts, clipped extrema or legends over curves in the current displayed figures."
+    },
+    {
+      "notebook": "notebooks/week08/W8_Lab2_Gas_Dynamics_SciML_Evidence_Student.ipynb",
+      "cell": 27,
+      "image_path": "tmp/course_middle/notebook_figures/W8_Lab2_Gas_Dynamics_SciML_Evidence_Student/figure-03.png",
+      "image_sha256": "a34cb9ff7c59fba7e3ac4418d771c8599bfcf0b9220ee12b33ef44ffa730455b",
+      "reviewer": "/root/week4_lecture_rebuild",
+      "status": "passed",
+      "review_basis": "Individual full-size inspection; no bar charts, clipped extrema or legends over curves in the current displayed figures."
+    },
+    {
+      "notebook": "notebooks/week09/W9_Lab3_Nozzle_Data_Alignment_Audit.ipynb",
+      "cell": 11,
+      "image_path": "tmp/course_middle/notebook_figures/W9_Lab3_Nozzle_Data_Alignment_Audit/figure-01.png",
+      "image_sha256": "04fb94c17991c1f5cea332722d6ee036ae1fa223091a767cfaf2be02cf4bb22f",
+      "reviewer": "/root/week4_lecture_rebuild",
+      "status": "passed",
+      "review_basis": "Individual full-size inspection; no bar charts, clipped extrema or legends over curves in the current displayed figures."
+    },
+    {
+      "notebook": "notebooks/week10_1/W10_1_Collision_Map_Surrogate_Audit.ipynb",
+      "cell": 7,
+      "image_path": "tmp/course_middle/notebook_figures/W10_1_Collision_Map_Surrogate_Audit/figure-01.png",
+      "image_sha256": "5a64516aa18c7f9fce61fd000d4aea464b2abbec8a4c451ed697016fc4503e95",
+      "reviewer": "/root/week4_lecture_rebuild",
+      "status": "passed",
+      "review_basis": "Individual full-size inspection; no bar charts, clipped extrema or legends over curves in the current displayed figures."
+    },
+    {
+      "notebook": "notebooks/week10_1/W10_1_Collision_Map_Surrogate_Audit.ipynb",
+      "cell": 11,
+      "image_path": "tmp/course_middle/notebook_figures/W10_1_Collision_Map_Surrogate_Audit/figure-02.png",
+      "image_sha256": "f54b144c880c6e757e53c9fb2f8b96721177d8d2ebd1608196b90cd0fa7fa136",
+      "reviewer": "/root/week4_lecture_rebuild",
+      "status": "passed",
+      "review_basis": "Individual full-size inspection; no bar charts, clipped extrema or legends over curves in the current displayed figures."
+    },
+    {
+      "notebook": "notebooks/week10_1/W10_1_Collision_Map_Surrogate_Audit.ipynb",
+      "cell": 16,
+      "image_path": "tmp/course_middle/notebook_figures/W10_1_Collision_Map_Surrogate_Audit/figure-03.png",
+      "image_sha256": "3291b8598873bfa88d18fbb9c3fe7a73c72f409175f13e8b5d4700f76dc65b19",
+      "reviewer": "/root/week4_lecture_rebuild",
+      "status": "passed",
+      "review_basis": "Individual full-size inspection; no bar charts, clipped extrema or legends over curves in the current displayed figures."
+    },
+    {
+      "notebook": "notebooks/week10_1/W10_1_Collision_Map_Surrogate_Audit.ipynb",
+      "cell": 22,
+      "image_path": "tmp/course_middle/notebook_figures/W10_1_Collision_Map_Surrogate_Audit/figure-04.png",
+      "image_sha256": "a21e2698d103f5d3759887e8d375a5de05a70ec7de3936512312f1b4db5613e8",
+      "reviewer": "/root/week4_lecture_rebuild",
+      "status": "passed",
+      "review_basis": "Individual full-size inspection; no bar charts, clipped extrema or legends over curves in the current displayed figures."
+    },
+    {
+      "notebook": "notebooks/week14/W14_pyCALC_RANS_PINN_NN.ipynb",
+      "cell": 3,
+      "image_path": "tmp/course_middle/notebook_figures/W14_pyCALC_RANS_PINN_NN/figure-01.png",
+      "image_sha256": "cf8fe646c9c6790708bb2d42287e9a93d6dd2fbf6b36d5baa2666948d0c8b3e9",
+      "reviewer": "/root/week4_lecture_rebuild",
+      "status": "passed",
+      "review_basis": "Individual full-size inspection; no bar charts, clipped extrema or legends over curves in the current displayed figures."
+    },
+    {
+      "notebook": "notebooks/week14/W14_pyCALC_RANS_PINN_NN.ipynb",
+      "cell": 6,
+      "image_path": "tmp/course_middle/notebook_figures/W14_pyCALC_RANS_PINN_NN/figure-02.png",
+      "image_sha256": "ff9fd6bce51ce7962347a9d0d726463b9a87dc5bd54e1dcdce58149209b94010",
+      "reviewer": "/root/week4_lecture_rebuild",
+      "status": "passed",
+      "review_basis": "Individual full-size inspection; no bar charts, clipped extrema or legends over curves in the current displayed figures."
+    },
+    {
+      "notebook": "notebooks/week14/W14_pyCALC_RANS_PINN_NN.ipynb",
+      "cell": 8,
+      "image_path": "tmp/course_middle/notebook_figures/W14_pyCALC_RANS_PINN_NN/figure-03.png",
+      "image_sha256": "3283ea6ac79c4745c91c70d4ba88becf2273b82254cc7d3d1d81a983025211c4",
+      "reviewer": "/root/week4_lecture_rebuild",
+      "status": "passed",
+      "review_basis": "Individual full-size inspection; no bar charts, clipped extrema or legends over curves in the current displayed figures."
+    },
+    {
+      "notebook": "notebooks/week14/W14_pyCALC_RANS_PINN_NN.ipynb",
+      "cell": 10,
+      "image_path": "tmp/course_middle/notebook_figures/W14_pyCALC_RANS_PINN_NN/figure-04.png",
+      "image_sha256": "60d648ee98b40975f31eafee6d46f3a7a79b0e246456cf92d106989ed7fe12ff",
+      "reviewer": "/root/week4_lecture_rebuild",
+      "status": "passed",
+      "review_basis": "Individual full-size inspection; no bar charts, clipped extrema or legends over curves in the current displayed figures."
+    },
+    {
+      "notebook": "notebooks/week14/W14_pyCALC_RANS_PINN_NN.ipynb",
+      "cell": 12,
+      "image_path": "tmp/course_middle/notebook_figures/W14_pyCALC_RANS_PINN_NN/figure-05.png",
+      "image_sha256": "692aa051960a7e826c1e1df4d3a564e121db3faccdf7faf1a4526367b64b7f4f",
+      "reviewer": "/root/week4_lecture_rebuild",
+      "status": "passed",
+      "review_basis": "Individual full-size inspection; no bar charts, clipped extrema or legends over curves in the current displayed figures."
+    },
+    {
+      "notebook": "notebooks/week14/W14_pyCALC_RANS_PINN_NN.ipynb",
+      "cell": 14,
+      "image_path": "tmp/course_middle/notebook_figures/W14_pyCALC_RANS_PINN_NN/figure-06.png",
+      "image_sha256": "0f6db0d8f835525b3269611c50162d44e8e69c4c027206b496aabf5fe1ff5afa",
+      "reviewer": "/root/week4_lecture_rebuild",
+      "status": "passed",
+      "review_basis": "Individual full-size inspection; no bar charts, clipped extrema or legends over curves in the current displayed figures."
+    },
+    {
+      "notebook": "notebooks/week14/W14_pyCALC_RANS_PINN_NN.ipynb",
+      "cell": 16,
+      "image_path": "tmp/course_middle/notebook_figures/W14_pyCALC_RANS_PINN_NN/figure-07.png",
+      "image_sha256": "56ada2042eff4b79e85ec000be378b58e330c513e339f78ba92a556e518a5fcc",
+      "reviewer": "/root/week4_lecture_rebuild",
+      "status": "passed",
+      "review_basis": "Individual full-size inspection; no bar charts, clipped extrema or legends over curves in the current displayed figures."
+    }
+  ],
+  "visual_review": {
+    "dpi": 125,
+    "individual_page_review": true,
+    "contact_sheet_only": false,
+    "pdfs": [
+      {
+        "path": "lectures/week07_2_cylinder_state_estimation.pdf",
+        "pdf_sha256": "4edfa844da8447b6b70e48191fe373ddc77dc3978080892cb3973ebe039d7941",
+        "dpi": 125,
+        "pages": [
+          {
+            "page": 1,
+            "image_path": "tmp/course_middle/render/week07_2_cylinder_state_estimation/page-001.png",
+            "image_sha256": "aa2fed7b1733b8a98ecbec7065bd27d43418500712802cd5b4d3ca1e6582bfdf",
+            "pixel_sha256": "358d8427119c79a69dd00f036952b60075aaf22e6c8a918c69d8c2a1a441ecf4",
+            "width": 1034,
+            "height": 1462,
+            "reviewer": "/root",
+            "status": "passed",
+            "review_basis": "Individual full-page inspection at 125 dpi; final decoded pixels identical to the reviewed pre-final render",
+            "inherited_from_pdf_sha256": "96f4a1b26cbdf9325b941a66b3171f57e0bd574273d852c075cbc5e278eb20fe"
+          },
+          {
+            "page": 2,
+            "image_path": "tmp/course_middle/render/week07_2_cylinder_state_estimation/page-002.png",
+            "image_sha256": "cdb2675818800be4f6e7fc5757a1ec3ddaa67e41086cf01c75518e8a64eaf10d",
+            "pixel_sha256": "6e5609916eff43ccff0962124b18fc9e4f220f39eb3ba4ad6b63fdd197462be9",
+            "width": 1034,
+            "height": 1462,
+            "reviewer": "/root",
+            "status": "passed",
+            "review_basis": "Individual full-page inspection at 125 dpi; final decoded pixels identical to the reviewed pre-final render",
+            "inherited_from_pdf_sha256": "96f4a1b26cbdf9325b941a66b3171f57e0bd574273d852c075cbc5e278eb20fe"
+          },
+          {
+            "page": 3,
+            "image_path": "tmp/course_middle/render/week07_2_cylinder_state_estimation/page-003.png",
+            "image_sha256": "4504ce8adf2d1ba78fa97b4767c0de2a3f500211433311642b74e3860e7b4ee7",
+            "pixel_sha256": "1cda60f74da63f7b02acbaf482abb0449102d36c27924dd7c55cec0048222cda",
+            "width": 1034,
+            "height": 1462,
+            "reviewer": "/root",
+            "status": "passed",
+            "review_basis": "Individual full-page inspection at 125 dpi; final decoded pixels identical to the reviewed pre-final render",
+            "inherited_from_pdf_sha256": "96f4a1b26cbdf9325b941a66b3171f57e0bd574273d852c075cbc5e278eb20fe"
+          },
+          {
+            "page": 4,
+            "image_path": "tmp/course_middle/render/week07_2_cylinder_state_estimation/page-004.png",
+            "image_sha256": "6b25c644f13de7bc038cc7af9f9e377f09239293bf791f4695f208e086dbdeae",
+            "pixel_sha256": "cc462a18f05c862f6f8a7dd73c61b4829eae3230691473043290b7ce14ad6287",
+            "width": 1033,
+            "height": 1462,
+            "reviewer": "/root/week4_lecture_rebuild",
+            "status": "passed",
+            "review_basis": "Individual full-page inspection at 125 dpi; final decoded pixels identical to the reviewed pre-final render",
+            "inherited_from_pdf_sha256": "96f4a1b26cbdf9325b941a66b3171f57e0bd574273d852c075cbc5e278eb20fe"
+          },
+          {
+            "page": 5,
+            "image_path": "tmp/course_middle/render/week07_2_cylinder_state_estimation/page-005.png",
+            "image_sha256": "6bb72ddb01a8cde57b89e29fdf1fbdebd66cfc54f88b04676995a01912794af6",
+            "pixel_sha256": "c516a16df19d55c0ce818a08b0e4c5c4a40296dd8bcf203f65ed5e9272f6e1d0",
+            "width": 1033,
+            "height": 1462,
+            "reviewer": "/root/week4_lecture_rebuild",
+            "status": "passed",
+            "review_basis": "Individual full-page inspection at 125 dpi; final decoded pixels identical to the reviewed pre-final render",
+            "inherited_from_pdf_sha256": "96f4a1b26cbdf9325b941a66b3171f57e0bd574273d852c075cbc5e278eb20fe"
+          },
+          {
+            "page": 6,
+            "image_path": "tmp/course_middle/render/week07_2_cylinder_state_estimation/page-006.png",
+            "image_sha256": "0fc7b44b99a79e5305536b10e63d8976bd34f17a10ede983e2f94bd909e4b214",
+            "pixel_sha256": "7c093ebeb64f3f9b4f7d4378523abe58bf13ce42830582010e8c8bdffa9f6c1c",
+            "width": 1033,
+            "height": 1462,
+            "reviewer": "/root/week4_lecture_rebuild",
+            "status": "passed",
+            "review_basis": "Individual full-page inspection at 125 dpi; final decoded pixels identical to the reviewed pre-final render",
+            "inherited_from_pdf_sha256": "96f4a1b26cbdf9325b941a66b3171f57e0bd574273d852c075cbc5e278eb20fe"
+          },
+          {
+            "page": 7,
+            "image_path": "tmp/course_middle/render/week07_2_cylinder_state_estimation/page-007.png",
+            "image_sha256": "c323a92e9f9f24905335a17aeb58d1da269e5034e69b7362ac2050b137663e73",
+            "pixel_sha256": "1be74b5a6869c7911f146690088cf851f3611549ecc5d8def9403a83b8391f3b",
+            "width": 1033,
+            "height": 1462,
+            "reviewer": "/root/week4_lecture_rebuild",
+            "status": "passed",
+            "review_basis": "Individual full-page inspection at 125 dpi; final decoded pixels identical to the reviewed pre-final render",
+            "inherited_from_pdf_sha256": "96f4a1b26cbdf9325b941a66b3171f57e0bd574273d852c075cbc5e278eb20fe"
+          }
+        ],
+        "out_of_bounds_text": [],
+        "glyph_candidates": []
+      },
+      {
+        "path": "lectures/week07_3_masked_pretraining.pdf",
+        "pdf_sha256": "619149f35eff6953c7a10b9ce8efb58c38792df76af22aa548a70866168196bb",
+        "dpi": 125,
+        "pages": [
+          {
+            "page": 1,
+            "image_path": "tmp/course_middle/render/week07_3_masked_pretraining/page-001.png",
+            "image_sha256": "54539fb16c6c6db5d8fbfa8bd54b9769b07cd9d3b45132b48631e1b39b5f021d",
+            "pixel_sha256": "ec47be25569dd0a0e06e709735974f1c0745d304debcfcd72f5918c43056f9f7",
+            "width": 1034,
+            "height": 1462,
+            "reviewer": "/root",
+            "status": "passed",
+            "review_basis": "Individual full-page inspection at 125 dpi; final decoded pixels identical to the reviewed pre-final render",
+            "inherited_from_pdf_sha256": "e375cf283affb8967627142cc0287c6897013427e155100bf24d8e963d9d5b35"
+          },
+          {
+            "page": 2,
+            "image_path": "tmp/course_middle/render/week07_3_masked_pretraining/page-002.png",
+            "image_sha256": "2e69dabd884928d81f1a47cb3a5acd963030c1976929a304a33c4c412c129939",
+            "pixel_sha256": "0ec5890ee2e406be3d7893537c8c70d20eedd7f4f82fa80648f9fb048d9738e1",
+            "width": 1034,
+            "height": 1462,
+            "reviewer": "/root",
+            "status": "passed",
+            "review_basis": "Individual full-page inspection at 125 dpi; final decoded pixels identical to the reviewed pre-final render",
+            "inherited_from_pdf_sha256": "e375cf283affb8967627142cc0287c6897013427e155100bf24d8e963d9d5b35"
+          },
+          {
+            "page": 3,
+            "image_path": "tmp/course_middle/render/week07_3_masked_pretraining/page-003.png",
+            "image_sha256": "5c10290153a998808bc181bd43383bd60fc2e8e5f63dfe985fcb9e6f9666fd14",
+            "pixel_sha256": "620cf0357a9d9f6f4130e538ce27509e8888285464a3e21eb4eb9402cd488b5b",
+            "width": 1034,
+            "height": 1462,
+            "reviewer": "/root",
+            "status": "passed",
+            "review_basis": "Individual full-page inspection at 125 dpi; final decoded pixels identical to the reviewed pre-final render",
+            "inherited_from_pdf_sha256": "e375cf283affb8967627142cc0287c6897013427e155100bf24d8e963d9d5b35"
+          },
+          {
+            "page": 4,
+            "image_path": "tmp/course_middle/render/week07_3_masked_pretraining/page-004.png",
+            "image_sha256": "34a82e30f40eb26847d83313f6297a9c1bd3bcf737446c34a6d8156425f9c7c3",
+            "pixel_sha256": "c024a32ecbef29771aa59e0e1ab7f7a30e4e79cded90e3efa3a722691718725f",
+            "width": 1033,
+            "height": 1462,
+            "reviewer": "/root/week4_lecture_rebuild",
+            "status": "passed",
+            "review_basis": "Individual full-page inspection at 125 dpi; final decoded pixels identical to the reviewed pre-final render",
+            "inherited_from_pdf_sha256": "e375cf283affb8967627142cc0287c6897013427e155100bf24d8e963d9d5b35"
+          },
+          {
+            "page": 5,
+            "image_path": "tmp/course_middle/render/week07_3_masked_pretraining/page-005.png",
+            "image_sha256": "9044ad4a710598cf3760a403fa80a11af71191d114d1f607a1bf8a810d587035",
+            "pixel_sha256": "4cdd49a0a71a91ba63003a4d55080e0561155cc7c1d76c885675e127e0612f91",
+            "width": 1033,
+            "height": 1462,
+            "reviewer": "/root/week4_lecture_rebuild",
+            "status": "passed",
+            "review_basis": "Individual full-page inspection at 125 dpi; final decoded pixels identical to the reviewed pre-final render",
+            "inherited_from_pdf_sha256": "e375cf283affb8967627142cc0287c6897013427e155100bf24d8e963d9d5b35"
+          },
+          {
+            "page": 6,
+            "image_path": "tmp/course_middle/render/week07_3_masked_pretraining/page-006.png",
+            "image_sha256": "6c219bbc3705914df5dc817d6ff873129f6470c52e829c2221a6807f2e434d78",
+            "pixel_sha256": "e0b07d1bbb0fd6bbb82af49b2eebd8c732dca9aa5bfd814025577fb04af23de7",
+            "width": 1033,
+            "height": 1462,
+            "reviewer": "/root/week4_lecture_rebuild",
+            "status": "passed",
+            "review_basis": "Individual full-page inspection at 125 dpi; final decoded pixels identical to the reviewed pre-final render",
+            "inherited_from_pdf_sha256": "e375cf283affb8967627142cc0287c6897013427e155100bf24d8e963d9d5b35"
+          },
+          {
+            "page": 7,
+            "image_path": "tmp/course_middle/render/week07_3_masked_pretraining/page-007.png",
+            "image_sha256": "4db81d88dcbaa3fa6aba551630b91a846fb12122235cd93cc8654bba54a7dfce",
+            "pixel_sha256": "91315d52796586e3416224a9eac33b4525926fdec6b22978bd7049df772eedcd",
+            "width": 1033,
+            "height": 1462,
+            "reviewer": "/root/week4_lecture_rebuild",
+            "status": "passed",
+            "review_basis": "Individual full-page inspection at 125 dpi; final decoded pixels identical to the reviewed pre-final render",
+            "inherited_from_pdf_sha256": "e375cf283affb8967627142cc0287c6897013427e155100bf24d8e963d9d5b35"
+          },
+          {
+            "page": 8,
+            "image_path": "tmp/course_middle/render/week07_3_masked_pretraining/page-008.png",
+            "image_sha256": "5a81073c60b3fe89d094d440fa0520c256cd8dac892c5978eb5223e079b33c39",
+            "pixel_sha256": "fae751b2badeedd467c9ac2825fe901bcbaf9e7070a15e94210656f697b6df79",
+            "width": 1033,
+            "height": 1462,
+            "reviewer": "/root/week4_lecture_rebuild",
+            "status": "passed",
+            "review_basis": "Individual full-page inspection at 125 dpi; final decoded pixels identical to the reviewed pre-final render",
+            "inherited_from_pdf_sha256": "e375cf283affb8967627142cc0287c6897013427e155100bf24d8e963d9d5b35"
+          },
+          {
+            "page": 9,
+            "image_path": "tmp/course_middle/render/week07_3_masked_pretraining/page-009.png",
+            "image_sha256": "5eacd0cd2c05807617d93380ad81983c27a8cf7c3f62e4c82dc7c9214641bd8c",
+            "pixel_sha256": "3d14d8daf9fb7157d28c4592ba34aa492098d292680f1715b390ede8ac0cd7db",
+            "width": 1033,
+            "height": 1462,
+            "reviewer": "/root/week4_lecture_rebuild",
+            "status": "passed",
+            "review_basis": "Individual full-page inspection at 125 dpi; final decoded pixels identical to the reviewed pre-final render",
+            "inherited_from_pdf_sha256": "e375cf283affb8967627142cc0287c6897013427e155100bf24d8e963d9d5b35"
+          }
+        ],
+        "out_of_bounds_text": [],
+        "glyph_candidates": []
+      },
+      {
+        "path": "lectures/week07_4_diverse_wake_pretraining.pdf",
+        "pdf_sha256": "47cc5bf6f3a453e05867168fd83e92ef9b3c3a3eeda15841207fe82007cfc4e4",
+        "dpi": 125,
+        "pages": [
+          {
+            "page": 1,
+            "image_path": "tmp/course_middle/render/week07_4_diverse_wake_pretraining/page-001.png",
+            "image_sha256": "66e0a5a3f8201adbf2c57893bb2a9c79ab0bce41f5ce327a92d2395cc43520c8",
+            "pixel_sha256": "6b9eb6c818728b05d9f65c9dfadcd6d6fc3efe43e93f14a6f33c106610c3af2e",
+            "width": 1034,
+            "height": 1462,
+            "reviewer": "/root/week4_lecture_rebuild",
+            "status": "passed",
+            "review_basis": "Individual full-page inspection at 125 dpi; final decoded pixels identical to the reviewed pre-final render",
+            "inherited_from_pdf_sha256": "193c8088d0f7d842eb4c67a50b0b2745e5fa9260deb92574d5feef04ffdcdf8a"
+          },
+          {
+            "page": 2,
+            "image_path": "tmp/course_middle/render/week07_4_diverse_wake_pretraining/page-002.png",
+            "image_sha256": "457b4ac68ac920c50977009ba256790801d803559b628ebbe021f3f9c1082078",
+            "pixel_sha256": "7556dddb8196b877a7d910bf7647e9d798258c660b81b787d93450a4bf6a7599",
+            "width": 1034,
+            "height": 1462,
+            "reviewer": "/root/week4_lecture_rebuild",
+            "status": "passed",
+            "review_basis": "Individual full-page inspection at 125 dpi; final decoded pixels identical to the reviewed pre-final render",
+            "inherited_from_pdf_sha256": "193c8088d0f7d842eb4c67a50b0b2745e5fa9260deb92574d5feef04ffdcdf8a"
+          },
+          {
+            "page": 3,
+            "image_path": "tmp/course_middle/render/week07_4_diverse_wake_pretraining/page-003.png",
+            "image_sha256": "914dc421c35e72b00f750886d27fc3175441f9b644086194e63ba1501dd4e8bb",
+            "pixel_sha256": "028874d5b512e4f87f06e1afc125f54466e5e3dd4f24e1af74e3beee90e3ab44",
+            "width": 1034,
+            "height": 1462,
+            "reviewer": "/root/week4_lecture_rebuild",
+            "status": "passed",
+            "review_basis": "Individual full-page inspection at 125 dpi; final decoded pixels identical to the reviewed pre-final render",
+            "inherited_from_pdf_sha256": "193c8088d0f7d842eb4c67a50b0b2745e5fa9260deb92574d5feef04ffdcdf8a"
+          },
+          {
+            "page": 4,
+            "image_path": "tmp/course_middle/render/week07_4_diverse_wake_pretraining/page-004.png",
+            "image_sha256": "43cc918a69f0cb9e85ca9d8d85d968781f5fd23bb81523b6a9fff8c0cceef6db",
+            "pixel_sha256": "598d12b2e1f8ea93a832e0c3f60b1951607a78011e2483cefd17ead99f13e04d",
+            "width": 1063,
+            "height": 1375,
+            "reviewer": "/root/week4_lecture_rebuild",
+            "status": "passed",
+            "review_basis": "Individual full-page inspection at 125 dpi; final decoded pixels identical to the reviewed pre-final render",
+            "inherited_from_pdf_sha256": "193c8088d0f7d842eb4c67a50b0b2745e5fa9260deb92574d5feef04ffdcdf8a"
+          },
+          {
+            "page": 5,
+            "image_path": "tmp/course_middle/render/week07_4_diverse_wake_pretraining/page-005.png",
+            "image_sha256": "16ca66c9e72dc96e35301a0d509004685118be0b4f49195f3a26372cdfcaa3f5",
+            "pixel_sha256": "8c0442cf71ae1b43a1d06935ac1f22f51ab53f651ea23e8a1277949a6ae9290e",
+            "width": 1063,
+            "height": 1375,
+            "reviewer": "/root/week4_lecture_rebuild",
+            "status": "passed",
+            "review_basis": "Individual full-page inspection at 125 dpi; final decoded pixels identical to the reviewed pre-final render",
+            "inherited_from_pdf_sha256": "193c8088d0f7d842eb4c67a50b0b2745e5fa9260deb92574d5feef04ffdcdf8a"
+          },
+          {
+            "page": 6,
+            "image_path": "tmp/course_middle/render/week07_4_diverse_wake_pretraining/page-006.png",
+            "image_sha256": "227f69198846b78abec2c67d8f32a663db3a1ad8ec6de5c0d630ded5f9165c20",
+            "pixel_sha256": "29c7db16907c546af454e010ab9b2fe1b45b7fdb1a0590e4416db54249578d1d",
+            "width": 1063,
+            "height": 1375,
+            "reviewer": "/root/week4_lecture_rebuild",
+            "status": "passed",
+            "review_basis": "Individual full-page inspection at 125 dpi; final decoded pixels identical to the reviewed pre-final render",
+            "inherited_from_pdf_sha256": "193c8088d0f7d842eb4c67a50b0b2745e5fa9260deb92574d5feef04ffdcdf8a"
+          },
+          {
+            "page": 7,
+            "image_path": "tmp/course_middle/render/week07_4_diverse_wake_pretraining/page-007.png",
+            "image_sha256": "c813f82947807ea26333aae6b1654362b97106c6846b8aa2fcc49eb43ae3965e",
+            "pixel_sha256": "5dfd74c8cf45abc8b11803f3adfccfe1434854a242e8b826a1a40eee99283625",
+            "width": 1063,
+            "height": 1375,
+            "reviewer": "/root/week4_lecture_rebuild",
+            "status": "passed",
+            "review_basis": "Individual full-page inspection at 125 dpi; final decoded pixels identical to the reviewed pre-final render",
+            "inherited_from_pdf_sha256": "193c8088d0f7d842eb4c67a50b0b2745e5fa9260deb92574d5feef04ffdcdf8a"
+          }
+        ],
+        "out_of_bounds_text": [],
+        "glyph_candidates": []
+      },
+      {
+        "path": "lectures/week07_modal_forecasting.pdf",
+        "pdf_sha256": "c7ddd8c8ee9b91f02ad0f985fb592190c4d369f6d7cda1da5de547e09b58e21e",
+        "dpi": 125,
+        "pages": [
+          {
+            "page": 1,
+            "image_path": "tmp/course_middle/render/week07_modal_forecasting/page-001.png",
+            "image_sha256": "364f1680afd6ab081535a86f1bbc7e358a337fbd4ca51b0e5087bcdedf07642d",
+            "pixel_sha256": "25d87a03b58b88dc6783a8957aa1574751b2490cb1c83330cddf4af5813ce873",
+            "width": 1034,
+            "height": 1462,
+            "reviewer": "/root/week4_lecture_rebuild",
+            "status": "passed",
+            "review_basis": "Individual full-page inspection at 125 dpi; final decoded pixels identical to the reviewed pre-final render",
+            "inherited_from_pdf_sha256": "1a5f6334c6a014e2833a355e20d8dbc6119e6452f6bade7f953b7025fbcea7d0"
+          },
+          {
+            "page": 2,
+            "image_path": "tmp/course_middle/render/week07_modal_forecasting/page-002.png",
+            "image_sha256": "c637ca28b198bf4fad72c9d9dfebf26e25a17f6c5bd22b18b77afe9e2798b480",
+            "pixel_sha256": "785accd17dff59b7c61d74ded4b2d53fc1611c96f83a9947daf17b9216a0047e",
+            "width": 1034,
+            "height": 1462,
+            "reviewer": "/root/week4_lecture_rebuild",
+            "status": "passed",
+            "review_basis": "Individual full-page inspection at 125 dpi; final decoded pixels identical to the reviewed pre-final render",
+            "inherited_from_pdf_sha256": "1a5f6334c6a014e2833a355e20d8dbc6119e6452f6bade7f953b7025fbcea7d0"
+          },
+          {
+            "page": 3,
+            "image_path": "tmp/course_middle/render/week07_modal_forecasting/page-003.png",
+            "image_sha256": "4399a2ec4cf8fa0ed09bc7fd2794c7bddb75e141119ebf006785d01e9849a808",
+            "pixel_sha256": "0a3ef3219f74406b6d8f0d0deae3007be3767bd06b94ce775c8d6a831e7351d8",
+            "width": 1034,
+            "height": 1462,
+            "reviewer": "/root/week4_lecture_rebuild",
+            "status": "passed",
+            "review_basis": "Individual full-page inspection at 125 dpi; final decoded pixels identical to the reviewed pre-final render",
+            "inherited_from_pdf_sha256": "1a5f6334c6a014e2833a355e20d8dbc6119e6452f6bade7f953b7025fbcea7d0"
+          },
+          {
+            "page": 4,
+            "image_path": "tmp/course_middle/render/week07_modal_forecasting/page-004.png",
+            "image_sha256": "a17efbe8fb7ca28f207c6bc33d62f3f85d0d55873064a4a8740428f3f87eed27",
+            "pixel_sha256": "bcf504080d4a394d873f075aa92b003a64e46d712f169d7970ab49ae6d41c0ce",
+            "width": 1033,
+            "height": 1462,
+            "reviewer": "/root/week4_lecture_rebuild",
+            "status": "passed",
+            "review_basis": "Individual full-page inspection at 125 dpi; final decoded pixels identical to the reviewed pre-final render",
+            "inherited_from_pdf_sha256": "1a5f6334c6a014e2833a355e20d8dbc6119e6452f6bade7f953b7025fbcea7d0"
+          },
+          {
+            "page": 5,
+            "image_path": "tmp/course_middle/render/week07_modal_forecasting/page-005.png",
+            "image_sha256": "fac5ddd0b2dfcffd59ae72505b6d5fc887fab512315bb78d56c51e0e881e88e1",
+            "pixel_sha256": "3d297aa1df0f030cc099f0d1a6e4de7fe43c84943e114c409f68d83cdca1f438",
+            "width": 1033,
+            "height": 1462,
+            "reviewer": "/root/week4_lecture_rebuild",
+            "status": "passed",
+            "review_basis": "Individual full-page inspection at 125 dpi; final decoded pixels identical to the reviewed pre-final render",
+            "inherited_from_pdf_sha256": "1a5f6334c6a014e2833a355e20d8dbc6119e6452f6bade7f953b7025fbcea7d0"
+          },
+          {
+            "page": 6,
+            "image_path": "tmp/course_middle/render/week07_modal_forecasting/page-006.png",
+            "image_sha256": "cff8e2fe84dcb13c1d27662151a533359e8919e877272fab83f0a000751ee7ae",
+            "pixel_sha256": "d787a23c0576ab19898feb5f6765686d658336d8b5b3779cb249bfd582a50db4",
+            "width": 1033,
+            "height": 1462,
+            "reviewer": "/root/week4_lecture_rebuild",
+            "status": "passed",
+            "review_basis": "Individual full-page inspection at 125 dpi; final decoded pixels identical to the reviewed pre-final render",
+            "inherited_from_pdf_sha256": "1a5f6334c6a014e2833a355e20d8dbc6119e6452f6bade7f953b7025fbcea7d0"
+          },
+          {
+            "page": 7,
+            "image_path": "tmp/course_middle/render/week07_modal_forecasting/page-007.png",
+            "image_sha256": "0f338261577af65e007cd902a95e0bbe72c6ab8733c0b64a4a37c3efc7d813d6",
+            "pixel_sha256": "82b91e31b35d03d5b6044379d784517a7b558baa8b58ab6e401f30e07a4e00c5",
+            "width": 1033,
+            "height": 1462,
+            "reviewer": "/root/week4_lecture_rebuild",
+            "status": "passed",
+            "review_basis": "Individual full-page inspection at 125 dpi; final decoded pixels identical to the reviewed pre-final render",
+            "inherited_from_pdf_sha256": "1a5f6334c6a014e2833a355e20d8dbc6119e6452f6bade7f953b7025fbcea7d0"
+          }
+        ],
+        "out_of_bounds_text": [],
+        "glyph_candidates": []
+      },
+      {
+        "path": "lectures/week08_gas_dynamics_sciml.pdf",
+        "pdf_sha256": "5ccef5a52d3e5f4855a4010759db6b45a5070231315f31ea4e104b58bb2b118e",
+        "dpi": 125,
+        "pages": [
+          {
+            "page": 1,
+            "image_path": "tmp/course_middle/render/week08_gas_dynamics_sciml/page-001.png",
+            "image_sha256": "04a2477456e1e6cad371f48e8285d82649140f11775899df004618b9e85d27f8",
+            "pixel_sha256": "5106ca7a33164beccd0459fed238ac1ae448f54d434a54f15ac89dd133d3b757",
+            "width": 1063,
+            "height": 1375,
+            "reviewer": "/root/week4_lecture_rebuild",
+            "status": "passed",
+            "review_basis": "Individual full-page inspection at 125 dpi"
+          },
+          {
+            "page": 2,
+            "image_path": "tmp/course_middle/render/week08_gas_dynamics_sciml/page-002.png",
+            "image_sha256": "c1692494e412cb1d3b33b34baf7c7437886ffd1909adf9e90f7437e0bdd18649",
+            "pixel_sha256": "937be76226c70829a172da549d13adbe08d7dc5dadd7124671affe95bb9ac060",
+            "width": 1063,
+            "height": 1375,
+            "reviewer": "/root/week4_lecture_rebuild",
+            "status": "passed",
+            "review_basis": "Individual full-page inspection at 125 dpi"
+          },
+          {
+            "page": 3,
+            "image_path": "tmp/course_middle/render/week08_gas_dynamics_sciml/page-003.png",
+            "image_sha256": "fa2bb6fafd9c7feee92034f6e3ad4f21fa39cb510ba1b3e20f94051e0c476dd7",
+            "pixel_sha256": "1e2465a0b77bbd08a280a2e6db6e9cc0685eab43099ecc55926e42a110434904",
+            "width": 1063,
+            "height": 1375,
+            "reviewer": "/root/week4_lecture_rebuild",
+            "status": "passed",
+            "review_basis": "Individual full-page inspection at 125 dpi"
+          },
+          {
+            "page": 4,
+            "image_path": "tmp/course_middle/render/week08_gas_dynamics_sciml/page-004.png",
+            "image_sha256": "31d28aa163b2f78cb8fe6dae3f98d093b2cddf83551ea16fb9b7bd4952b1c06e",
+            "pixel_sha256": "5ce262b97101b242e1ae33eec923e7867b4a011edb6cab33cf92990071d13d02",
+            "width": 1063,
+            "height": 1375,
+            "reviewer": "/root/week4_lecture_rebuild",
+            "status": "passed",
+            "review_basis": "Individual full-page inspection at 125 dpi"
+          },
+          {
+            "page": 5,
+            "image_path": "tmp/course_middle/render/week08_gas_dynamics_sciml/page-005.png",
+            "image_sha256": "1c121c775291fd9b142a79136b6e73da35e442dc660079f2d7b4f6992f305e0c",
+            "pixel_sha256": "3bf16c42423d9ca629a6cfc68adb72e998c459fde257141e5214d297fd49f4d7",
+            "width": 1063,
+            "height": 1375,
+            "reviewer": "/root/week4_lecture_rebuild",
+            "status": "passed",
+            "review_basis": "Individual full-page inspection at 125 dpi"
+          },
+          {
+            "page": 6,
+            "image_path": "tmp/course_middle/render/week08_gas_dynamics_sciml/page-006.png",
+            "image_sha256": "16319e9019cf5635ad6198e7f941abc9f088c0069d42ea84c5b055c9aafc47d0",
+            "pixel_sha256": "7ba58c5c6e7aaac49c1c5bc17ace42794b4400f28dec4d0f2a2d11029fd06c9a",
+            "width": 1063,
+            "height": 1375,
+            "reviewer": "/root/week4_lecture_rebuild",
+            "status": "passed",
+            "review_basis": "Individual full-page inspection at 125 dpi"
+          },
+          {
+            "page": 7,
+            "image_path": "tmp/course_middle/render/week08_gas_dynamics_sciml/page-007.png",
+            "image_sha256": "5e913eb00654394074c3e2a22aab3f9287a185c3e33fba3f8cf7c0757f470697",
+            "pixel_sha256": "bb69bf70d81c4ed5d958c911ed82e47d53c5cf78d32ee24c2549fdfbc6ba6b0b",
+            "width": 1063,
+            "height": 1375,
+            "reviewer": "/root/week4_lecture_rebuild",
+            "status": "passed",
+            "review_basis": "Individual full-page inspection at 125 dpi"
+          },
+          {
+            "page": 8,
+            "image_path": "tmp/course_middle/render/week08_gas_dynamics_sciml/page-008.png",
+            "image_sha256": "3eee2d22c92c7e73ae214e80879b36ccd2b57d899aba5db2d1ce8adf5051764b",
+            "pixel_sha256": "52e6a9d2a21d407e1ce6ab24611a2e5291d4d7a4e49149778aca03eb0729ecdc",
+            "width": 1063,
+            "height": 1375,
+            "reviewer": "/root/week4_lecture_rebuild",
+            "status": "passed",
+            "review_basis": "Individual full-page inspection at 125 dpi"
+          },
+          {
+            "page": 9,
+            "image_path": "tmp/course_middle/render/week08_gas_dynamics_sciml/page-009.png",
+            "image_sha256": "50237bd9d8c2951a2f6d6925778652b445f798d9facb4f6d356c6f8adde8d726",
+            "pixel_sha256": "976ec953cf2bfc93748914b1a82ff5c1876a3072c79469cfaae3f179516a238b",
+            "width": 1063,
+            "height": 1375,
+            "reviewer": "/root/week4_lecture_rebuild",
+            "status": "passed",
+            "review_basis": "Individual full-page inspection at 125 dpi"
+          },
+          {
+            "page": 10,
+            "image_path": "tmp/course_middle/render/week08_gas_dynamics_sciml/page-010.png",
+            "image_sha256": "01878b9460ab1d3843626b15b08fdf3c4521117dbf9e9457bbb46269e9f0dfef",
+            "pixel_sha256": "511675fa86f46cc8c9cdcf7babb4e6da46a87b5b1a7f1df127595945d445be8d",
+            "width": 1063,
+            "height": 1375,
+            "reviewer": "/root/week4_lecture_rebuild",
+            "status": "passed",
+            "review_basis": "Individual full-page inspection at 125 dpi"
+          },
+          {
+            "page": 11,
+            "image_path": "tmp/course_middle/render/week08_gas_dynamics_sciml/page-011.png",
+            "image_sha256": "7e01db9a3365075d499d9d17eec5546760c1c424f927be66c6560e249cca8e0d",
+            "pixel_sha256": "3bfc1080a71359c3b9401f391dcc27d3c8fb50a967c8ff6bfbacf005f9c8f203",
+            "width": 1063,
+            "height": 1375,
+            "reviewer": "/root/week4_lecture_rebuild",
+            "status": "passed",
+            "review_basis": "Individual full-page inspection at 125 dpi"
+          },
+          {
+            "page": 12,
+            "image_path": "tmp/course_middle/render/week08_gas_dynamics_sciml/page-012.png",
+            "image_sha256": "0dcb7e8179d16821117fea0effe17f9448bf4ec7added6b7d8cf25ea6634bb9c",
+            "pixel_sha256": "5532bcf33e0fd291272971d059aff6bc424e6eff6165ef386cdeb33b28f256b0",
+            "width": 1063,
+            "height": 1375,
+            "reviewer": "/root/week4_lecture_rebuild",
+            "status": "passed",
+            "review_basis": "Individual full-page inspection at 125 dpi"
+          },
+          {
+            "page": 13,
+            "image_path": "tmp/course_middle/render/week08_gas_dynamics_sciml/page-013.png",
+            "image_sha256": "2c6846f7f7dd61c14640f06117a44e6629dec51ed8a2ed34f1c285e598b9f58f",
+            "pixel_sha256": "13d478363d68bf7a34ee9a25e6bf89ba338d3ca7e5ddd4fff7295b2d9683fb8f",
+            "width": 1034,
+            "height": 1462,
+            "reviewer": "/root/week4_lecture_rebuild",
+            "status": "passed",
+            "review_basis": "Individual full-page inspection at 125 dpi"
+          }
+        ],
+        "out_of_bounds_text": [],
+        "glyph_candidates": []
+      },
+      {
+        "path": "lectures/week09_3_nozzle_data_alignment.pdf",
+        "pdf_sha256": "e954392fbe9ed4e6f9ec56f703c92b3d1f04b0772a9b7342cc5e4c83d41273fc",
+        "dpi": 125,
+        "pages": [
+          {
+            "page": 1,
+            "image_path": "tmp/course_middle/render/week09_3_nozzle_data_alignment/page-001.png",
+            "image_sha256": "cb62137d21090501d0ba7a05e9aebdefdeed350ec2a2d60f2c309fe6eba7ae59",
+            "pixel_sha256": "8a999498db45879b288d6d8994e5a3bf082a271c23321af3cc24ac61a70cbbe9",
+            "width": 1034,
+            "height": 1462,
+            "reviewer": "/root/week4_lecture_rebuild",
+            "status": "passed",
+            "review_basis": "Individual full-page inspection at 125 dpi; final decoded pixels identical to the reviewed pre-final render",
+            "inherited_from_pdf_sha256": "17ed73618f277bf556c4ca10fa8637b21ae124bb91c432916d4b2293fa22dffd"
+          },
+          {
+            "page": 2,
+            "image_path": "tmp/course_middle/render/week09_3_nozzle_data_alignment/page-002.png",
+            "image_sha256": "fcf0d7bdb1f8cded2fadf4d9bbc91e0e1ff120fc19ea98274a199fd9ec85b3a2",
+            "pixel_sha256": "f228303b4a1ce893ef571fece38292f4292b62c8eb4fe204190490090387c0f6",
+            "width": 1034,
+            "height": 1462,
+            "reviewer": "/root/week4_lecture_rebuild",
+            "status": "passed",
+            "review_basis": "Individual full-page inspection at 125 dpi; final decoded pixels identical to the reviewed pre-final render",
+            "inherited_from_pdf_sha256": "17ed73618f277bf556c4ca10fa8637b21ae124bb91c432916d4b2293fa22dffd"
+          },
+          {
+            "page": 3,
+            "image_path": "tmp/course_middle/render/week09_3_nozzle_data_alignment/page-003.png",
+            "image_sha256": "e949cd06d4c44db61e219ac6a45453f92d3bc0f5715e1590b4a40275d13446c2",
+            "pixel_sha256": "c6f4654e2a29d9f4d6af1ae858a8c9b6c97e45abfc6a33cf77329c85421f1ff9",
+            "width": 1034,
+            "height": 1462,
+            "reviewer": "/root/week4_lecture_rebuild",
+            "status": "passed",
+            "review_basis": "Individual full-page inspection at 125 dpi"
+          },
+          {
+            "page": 4,
+            "image_path": "tmp/course_middle/render/week09_3_nozzle_data_alignment/page-004.png",
+            "image_sha256": "262af595a882e8100d081d1f21277a0370684728b588f018a6fcbc3777e8c47f",
+            "pixel_sha256": "cbfa0e8ee45aa1e5e4a7ea624069e2ec529a94b2a9730bd1f4eae837d191bd51",
+            "width": 1063,
+            "height": 1375,
+            "reviewer": "/root/week4_lecture_rebuild",
+            "status": "passed",
+            "review_basis": "Individual full-page inspection at 125 dpi; final decoded pixels identical to the reviewed pre-final render",
+            "inherited_from_pdf_sha256": "17ed73618f277bf556c4ca10fa8637b21ae124bb91c432916d4b2293fa22dffd"
+          },
+          {
+            "page": 5,
+            "image_path": "tmp/course_middle/render/week09_3_nozzle_data_alignment/page-005.png",
+            "image_sha256": "5fb281252f890f0e21bbe443c14a5935a34d9dc6d0ac999a2a1ed8995bb038d2",
+            "pixel_sha256": "cf5b3e09f50071677c458b890db660fe4debe81397c3c90b58beaec5ed5df28f",
+            "width": 1063,
+            "height": 1375,
+            "reviewer": "/root/week4_lecture_rebuild",
+            "status": "passed",
+            "review_basis": "Individual full-page inspection at 125 dpi; final decoded pixels identical to the reviewed pre-final render",
+            "inherited_from_pdf_sha256": "17ed73618f277bf556c4ca10fa8637b21ae124bb91c432916d4b2293fa22dffd"
+          }
+        ],
+        "out_of_bounds_text": [],
+        "glyph_candidates": []
+      },
+      {
+        "path": "lectures/week10_1_collision_map_audit.pdf",
+        "pdf_sha256": "c53e300a6940a4759cb68585b6212a8ac47f99f2cd46ff2d8400ae5df78a2ef5",
+        "dpi": 125,
+        "pages": [
+          {
+            "page": 1,
+            "image_path": "tmp/course_middle/render/week10_1_collision_map_audit/page-001.png",
+            "image_sha256": "494d9031b8eaca4fe72ef2f5430eedd7ec658a550108f8f58bd43c0d1559f4c5",
+            "pixel_sha256": "5636501e7957391d28444a2ada6e1e1498aed958937918ebd0f08d7cf23686da",
+            "width": 1034,
+            "height": 1462,
+            "reviewer": "/root/week4_lecture_rebuild",
+            "status": "passed",
+            "review_basis": "Individual full-page inspection at 125 dpi; final decoded pixels identical to the reviewed pre-final render",
+            "inherited_from_pdf_sha256": "b35b13ce984bd97a4f2cfb2621918ce2141431bfdc812045abcf981c0377ef4a"
+          },
+          {
+            "page": 2,
+            "image_path": "tmp/course_middle/render/week10_1_collision_map_audit/page-002.png",
+            "image_sha256": "699d0c0beec6252d045389dc9cfdceea56845a18aa8572c7b70c1a77e92499df",
+            "pixel_sha256": "7362b6ec31b95cded5411a49443af996085d1afee1f2c096148a5f94da9cf02f",
+            "width": 1034,
+            "height": 1462,
+            "reviewer": "/root/week4_lecture_rebuild",
+            "status": "passed",
+            "review_basis": "Individual full-page inspection at 125 dpi; final decoded pixels identical to the reviewed pre-final render",
+            "inherited_from_pdf_sha256": "b35b13ce984bd97a4f2cfb2621918ce2141431bfdc812045abcf981c0377ef4a"
+          },
+          {
+            "page": 3,
+            "image_path": "tmp/course_middle/render/week10_1_collision_map_audit/page-003.png",
+            "image_sha256": "52dd9ae08346e2dcc2aa201eb5cf5d7b4101a4b3f32edad285e89f8392136beb",
+            "pixel_sha256": "5f99f458553e877ca0d62f865130ce592f8dbb5dbfe86f7bfa5f9c36ec11254e",
+            "width": 1034,
+            "height": 1462,
+            "reviewer": "/root/week4_lecture_rebuild",
+            "status": "passed",
+            "review_basis": "Individual full-page inspection at 125 dpi; final decoded pixels identical to the reviewed pre-final render",
+            "inherited_from_pdf_sha256": "b35b13ce984bd97a4f2cfb2621918ce2141431bfdc812045abcf981c0377ef4a"
+          },
+          {
+            "page": 4,
+            "image_path": "tmp/course_middle/render/week10_1_collision_map_audit/page-004.png",
+            "image_sha256": "3edbf2eb37c5b1d838a25262311d5787eda6ddd1ee2d2582156f70355e65a878",
+            "pixel_sha256": "8cb31c08d7c2b75778a6b9470e17206cdb1bf95e689535835c968e99c6a4c998",
+            "width": 1034,
+            "height": 1462,
+            "reviewer": "/root/week4_lecture_rebuild",
+            "status": "passed",
+            "review_basis": "Individual full-page inspection at 125 dpi; final decoded pixels identical to the reviewed pre-final render",
+            "inherited_from_pdf_sha256": "b35b13ce984bd97a4f2cfb2621918ce2141431bfdc812045abcf981c0377ef4a"
+          },
+          {
+            "page": 5,
+            "image_path": "tmp/course_middle/render/week10_1_collision_map_audit/page-005.png",
+            "image_sha256": "7f722207a9ed9d82e97d43aa9971202d148541a5f2eaa121642d265f0bbf68f5",
+            "pixel_sha256": "2bc50229e2c060c90bd744d38bb7265a6d4f834040a889e95f5f896c6cc9dce8",
+            "width": 1034,
+            "height": 1462,
+            "reviewer": "/root/week4_lecture_rebuild",
+            "status": "passed",
+            "review_basis": "Individual full-page inspection at 125 dpi; final decoded pixels identical to the reviewed pre-final render",
+            "inherited_from_pdf_sha256": "b35b13ce984bd97a4f2cfb2621918ce2141431bfdc812045abcf981c0377ef4a"
+          },
+          {
+            "page": 6,
+            "image_path": "tmp/course_middle/render/week10_1_collision_map_audit/page-006.png",
+            "image_sha256": "4b6eb3b923aa0a1dcd63221e1eaed23a719c26e4d1a0a523d1e3a57a4b9625e7",
+            "pixel_sha256": "187164b0534681253f3e32ca9b0cf7b51831a96da93e2b837e57d894d1349e90",
+            "width": 1034,
+            "height": 1462,
+            "reviewer": "/root/week4_lecture_rebuild",
+            "status": "passed",
+            "review_basis": "Individual full-page inspection at 125 dpi; final decoded pixels identical to the reviewed pre-final render",
+            "inherited_from_pdf_sha256": "b35b13ce984bd97a4f2cfb2621918ce2141431bfdc812045abcf981c0377ef4a"
+          }
+        ],
+        "out_of_bounds_text": [],
+        "glyph_candidates": []
+      },
+      {
+        "path": "lectures/week14_rans_pinn_nn.pdf",
+        "pdf_sha256": "63ccd7cbe0f6893effacd83f0ae81126356ab676af17b51ef21fbfec1afb7d36",
+        "dpi": 125,
+        "pages": [
+          {
+            "page": 1,
+            "image_path": "tmp/course_middle/render/week14_rans_pinn_nn/page-001.png",
+            "image_sha256": "0b372d3429795842d207cc4076d7958e10fbe0d093e0a6a9a36e868906bb51c7",
+            "pixel_sha256": "b5ee3282d063d3ed92af85d545d2fd4b03faa540dda76c77a29ee7162730a489",
+            "width": 1034,
+            "height": 1462,
+            "reviewer": "/root/week4_lecture_rebuild",
+            "status": "passed",
+            "review_basis": "Individual full-page inspection at 125 dpi"
+          },
+          {
+            "page": 2,
+            "image_path": "tmp/course_middle/render/week14_rans_pinn_nn/page-002.png",
+            "image_sha256": "9a95fa915a6ecf11442fd9724cdaae63fe22e443ca737e5e1fcefae7394bd3d3",
+            "pixel_sha256": "84012b149baad6216f5152f0285cd8eba0918da65656780549f35b303f234621",
+            "width": 1034,
+            "height": 1462,
+            "reviewer": "/root/week4_lecture_rebuild",
+            "status": "passed",
+            "review_basis": "Individual full-page inspection at 125 dpi; final decoded pixels identical to the reviewed pre-final render",
+            "inherited_from_pdf_sha256": "f036eed06b7241d5f2f2f6c75e43c8ce6a598c9875e9cffd3eacddbf99698954"
+          },
+          {
+            "page": 3,
+            "image_path": "tmp/course_middle/render/week14_rans_pinn_nn/page-003.png",
+            "image_sha256": "6e23def682c281e4b6b411cf4fb1b91b422766982b4e9792908b4ccbcfef28c0",
+            "pixel_sha256": "402b0a25a208a970cb9ecc0cdf9bdbd8b11d3b940b344fbd52bc327680ef1296",
+            "width": 1034,
+            "height": 1462,
+            "reviewer": "/root/week4_lecture_rebuild",
+            "status": "passed",
+            "review_basis": "Individual full-page inspection at 125 dpi; final decoded pixels identical to the reviewed pre-final render",
+            "inherited_from_pdf_sha256": "f036eed06b7241d5f2f2f6c75e43c8ce6a598c9875e9cffd3eacddbf99698954"
+          },
+          {
+            "page": 4,
+            "image_path": "tmp/course_middle/render/week14_rans_pinn_nn/page-004.png",
+            "image_sha256": "0826e83b1612482b7b05e8601e27a28b339e2706165f5a93a420bf082642bbde",
+            "pixel_sha256": "ee06cf2350493f56d823cfcfd3ab3647d4b208df2f9d8c1408d362a692565f22",
+            "width": 1034,
+            "height": 1462,
+            "reviewer": "/root/week4_lecture_rebuild",
+            "status": "passed",
+            "review_basis": "Individual full-page inspection at 125 dpi; final decoded pixels identical to the reviewed pre-final render",
+            "inherited_from_pdf_sha256": "f036eed06b7241d5f2f2f6c75e43c8ce6a598c9875e9cffd3eacddbf99698954"
+          },
+          {
+            "page": 5,
+            "image_path": "tmp/course_middle/render/week14_rans_pinn_nn/page-005.png",
+            "image_sha256": "2091f27896c151dff5debba8a80efc7a0a6d2d715678586f82cb7c84df57ac51",
+            "pixel_sha256": "f518c26e57b6f151b336e53e095369b62d989b65673c822a72fa8dff52be7db2",
+            "width": 1034,
+            "height": 1462,
+            "reviewer": "/root/week4_lecture_rebuild",
+            "status": "passed",
+            "review_basis": "Individual full-page inspection at 125 dpi; final decoded pixels identical to the reviewed pre-final render",
+            "inherited_from_pdf_sha256": "f036eed06b7241d5f2f2f6c75e43c8ce6a598c9875e9cffd3eacddbf99698954"
+          },
+          {
+            "page": 6,
+            "image_path": "tmp/course_middle/render/week14_rans_pinn_nn/page-006.png",
+            "image_sha256": "5e6a120175d40e870b0332d734add83097db04ccbfa3f7081639e46de2e37efd",
+            "pixel_sha256": "6009d16861d073348108c6e8a095757a30bea6b6b37d3f4a824421ec7caa3077",
+            "width": 1034,
+            "height": 1462,
+            "reviewer": "/root/week4_lecture_rebuild",
+            "status": "passed",
+            "review_basis": "Individual full-page inspection at 125 dpi; final decoded pixels identical to the reviewed pre-final render",
+            "inherited_from_pdf_sha256": "f036eed06b7241d5f2f2f6c75e43c8ce6a598c9875e9cffd3eacddbf99698954"
+          },
+          {
+            "page": 7,
+            "image_path": "tmp/course_middle/render/week14_rans_pinn_nn/page-007.png",
+            "image_sha256": "cf5be791ef4e6ab8ca1e4679eb5974cc3d3192d865e50e5c8dd14ea2734ead8c",
+            "pixel_sha256": "f9eccdb885e438cb28b9f0b5dbca3e63bd410e01cfddd5772c800c45b7ba5088",
+            "width": 1034,
+            "height": 1462,
+            "reviewer": "/root/week4_lecture_rebuild",
+            "status": "passed",
+            "review_basis": "Individual full-page inspection at 125 dpi; final decoded pixels identical to the reviewed pre-final render",
+            "inherited_from_pdf_sha256": "f036eed06b7241d5f2f2f6c75e43c8ce6a598c9875e9cffd3eacddbf99698954"
+          },
+          {
+            "page": 8,
+            "image_path": "tmp/course_middle/render/week14_rans_pinn_nn/page-008.png",
+            "image_sha256": "6ddae2a50f5d2962d84606de1b41a8b207b78cada411fc922621f8a2c964c6bd",
+            "pixel_sha256": "e90d84aea6dbd3ffd35be3bf82cc3ab82a1d1f14e9726ec1dde797ea79fc01c9",
+            "width": 1034,
+            "height": 1462,
+            "reviewer": "/root/week4_lecture_rebuild",
+            "status": "passed",
+            "review_basis": "Individual full-page inspection at 125 dpi; final decoded pixels identical to the reviewed pre-final render",
+            "inherited_from_pdf_sha256": "f036eed06b7241d5f2f2f6c75e43c8ce6a598c9875e9cffd3eacddbf99698954"
+          },
+          {
+            "page": 9,
+            "image_path": "tmp/course_middle/render/week14_rans_pinn_nn/page-009.png",
+            "image_sha256": "cd6703d3c33397509803c4e04822a8de5466c2528e5a60a92df07af05db03b4b",
+            "pixel_sha256": "c9785988f81c392b6abe2449f275c94bc4d8cc79d22b243de6617213f8280e8d",
+            "width": 1034,
+            "height": 1462,
+            "reviewer": "/root/week4_lecture_rebuild",
+            "status": "passed",
+            "review_basis": "Individual full-page inspection at 125 dpi; final decoded pixels identical to the reviewed pre-final render",
+            "inherited_from_pdf_sha256": "f036eed06b7241d5f2f2f6c75e43c8ce6a598c9875e9cffd3eacddbf99698954"
+          },
+          {
+            "page": 10,
+            "image_path": "tmp/course_middle/render/week14_rans_pinn_nn/page-010.png",
+            "image_sha256": "f6212df9bd54be0fa960e6bef0b3b5a6099e56a9afe66308e5b86022a8ea9812",
+            "pixel_sha256": "51db9e966c262de45a9ed189bd34c33ba007c81c49b4fc76fb6625e6b6052e9f",
+            "width": 1034,
+            "height": 1462,
+            "reviewer": "/root/week4_lecture_rebuild",
+            "status": "passed",
+            "review_basis": "Individual full-page inspection at 125 dpi; final decoded pixels identical to the reviewed pre-final render",
+            "inherited_from_pdf_sha256": "f036eed06b7241d5f2f2f6c75e43c8ce6a598c9875e9cffd3eacddbf99698954"
+          },
+          {
+            "page": 11,
+            "image_path": "tmp/course_middle/render/week14_rans_pinn_nn/page-011.png",
+            "image_sha256": "45e65c90d834729fa98313346e1520650b266f9153f694149c8d400909cdac63",
+            "pixel_sha256": "78a565d85b5dc3fc07c093e25aacb370ea41146986c29b82169d64dea61accef",
+            "width": 1034,
+            "height": 1462,
+            "reviewer": "/root/week4_lecture_rebuild",
+            "status": "passed",
+            "review_basis": "Individual full-page inspection at 125 dpi; final decoded pixels identical to the reviewed pre-final render",
+            "inherited_from_pdf_sha256": "f036eed06b7241d5f2f2f6c75e43c8ce6a598c9875e9cffd3eacddbf99698954"
+          }
+        ],
+        "out_of_bounds_text": [],
+        "glyph_candidates": []
+      }
+    ],
+    "reviewed_pages": 65
+  },
+  "unchanged_pdf_spot_check": {
+    "path": "lectures/week07_cylinder_lbm_neural_surrogate.pdf",
+    "page": 5,
+    "render_dpi": 125,
+    "image_sha256": "59c98cc55acca7f941c4768d7dcc628307f42509eed99aee307a7d283f052810",
+    "status": "passed",
+    "finding": "The extraction null-character candidate is not a visible missing glyph; equation and page visually intact."
+  },
+  "source_hashes": {
+    "qa/course_middle_notebook_updates.py": "22c5f208e8c151d7cdc3a59a20ebdff189c20e13efd572f20adb544230bb7203",
+    "lectures/source/course_middle_guides.py": "2232729dad26d2a753bfa0a3a6e8a6b432143be575725e64ecbd9c19c4e3dccf",
+    "qa/build_course_middle_lectures.py": "51a7476a4d581e0936cde60e2598e7a360b55f04d04e3f254d274c2146ed4968",
+    "qa/execute_course_middle.py": "f944fc196b545927cecb7b66c3a1fa88e6ce8f71394b1da1ff3487df5799ec35",
+    "qa/render_course_middle.py": "5a582989869fa47a366cef9bd15353b897b372ceac6a33c04e40e963d9d858ff",
+    "qa/run_modal_labs.py": "9ab08690d70ffa8a873252e71b511b252dab99bc62367128f9b75d65eaf71b80",
+    "flowmllab/week07_4_plotting.py": "56d0af081385ced592be86e73d1b768bf1d2b4b1b0145245472f85b7356a16d2",
+    "qa/build_week07_4_materials.py": "90ffe866c3d9b5ca88944325901e8055dfb89ee62cdc914de80af13cf138d5f1",
+    "qa/build_week8_gas_dynamics_figures.py": "4c43225a813fbe624e13fa08b8f8ba7cd8dabe7525fb3d49dc7a40d492776818",
+    "lectures/source/week08_gas_dynamics_sciml.tex": "543673ceec30c77831520e96c9c05a80b4112362b8c180a24cda2008cc74d0d9",
+    "lectures/source/week14_rans_pinn_nn.md": "ba74ce885316ce86b3dcf3e40741ca14bd6223adbf4bf8537a2305c492edcc9a",
+    "qa/build_week14_notebook.py": "d4a5df8685b7260e3f8c9895f05d99150bd6379b9d6424cad79ee0f455f256db"
+  },
+  "shared_modal_preservation": {
+    "file": "qa/run_modal_labs.py",
+    "changed_responsibility": "figures only",
+    "all_non_plot_module_ast_unchanged": true,
+    "non_plot_ast_sha256": "7e24e462bd38335fb02fd45c9c80615994263d42a8b9729c2b60fc14e31861d8",
+    "no_training_or_model_selection_change": true
+  },
+  "frozen_science_preserved": {
+    "flowmllab/modal_experiments.py": "cfc66acadf18d4ebb500e511448109d3926efe493348378dc82860c7074222aa",
+    "flowmllab/modal_tools.py": "4bfc6cf5aecbd1cd558ec0bc99397ba31c9ab204c5fc9fd895744a3ad40b3e44",
+    "flowmllab/field_metrics.py": "45645027ca2fb0357feab0667b5b2d3244aeaaf3203c9cc869ab2dcda3530e8c",
+    "data/modal_labs/manifest.json": "ddf3bf5dcc86b3dcdf858b0ce8bc2994c334956a13c77e339a49dc57759913df",
+    "results/modal_labs/metrics.json": "8edb9bb3ea66419f7473c04ffd3c1c7f5b4b03c427dacf698caec73228acf360",
+    "results/modal_labs/plan.json": "aa35e785a4d39f1a2d38289fa3e61c6be72d9ad02dc6acccfea592b352d8e860",
+    "results/week07_4_diverse_pretraining/metrics.json": "f58af42ba767386f22bfb79018d1fe63b38d89cb6c84ca10f58c2cbd163ac82e",
+    "results/gas_dynamics_week8/baseline_comparison.csv": "da6670fa918fb47975977a5d98dfd66c436a309dad4e9ce17982c81905a8fe01",
+    "results/gas_dynamics_week8/high_dimensional_scaling.csv": "84d9bc2de8b4faf01975cda11841340ad90db0cb0f6201026eebc96e1b1c6a26",
+    "results/gas_dynamics_week8/physical_diagnostics.csv": "4b1b3dee28130ab8ee874eb0a901e3c6a06ab9b395faa25e6b69f7bfd5ff38b0",
+    "results/gas_dynamics_week8/primary_metrics.csv": "6dfcccee418a5a7ae4b6de91fb5e6658db861ce832c7861e25899a7c475047d2",
+    "results/gas_dynamics_week8/range_generalization.csv": "79978475023269d4dab598f9bc9108742323ebd7ee6844b0a91d0705791692c2",
+    "results/gas_dynamics_week8/scattered_baseline.csv": "068b1c0b3af64a87d7c94caf914a4e026d9841e3c5ed292f5a15c84a76fd89f8"
+  },
+  "week07_4_retained_display": {
+    "input": "results/week07_4_diverse_pretraining/metrics.json",
+    "input_sha256": "f58af42ba767386f22bfb79018d1fe63b38d89cb6c84ca10f58c2cbd163ac82e",
+    "array_keys": [
+      "example.time",
+      "example.truth",
+      "example.pretrained_encoder",
+      "example.random_encoder",
+      "example.pod32"
+    ],
+    "operation": "Read and plot the original time/value arrays only; distinct line styles and external legend. No fitting, filtering, resampling or model selection."
+  },
+  "default_cpu_summary": {
+    "notebooks_executed": 7,
+    "inline_figures_reviewed": 26,
+    "cell_errors": 0,
+    "slurm_jobs": [
+      "2060760_0",
+      "2060760_1",
+      "2060760_2",
+      "2061236_0",
+      "2061236_1",
+      "2061663_0",
+      "2061663_1"
+    ],
+    "workspace": "/scratch3/workspace/roohie_umass_edu-flowml-ghia-highre-20261115",
+    "workspace_expiry": "2026-12-15T14:04:59",
+    "shared_filesystem_free_space_is_not_personal_quota": true,
+    "unity_runtime": {
+      "python": "pinn-venv/bin/python with read-only week04-lab2-qa-20261120 site packages",
+      "torch": "2.5.1+cu118 on CPU",
+      "numpy": "2.2.6",
+      "scipy": "1.15.3",
+      "sklearn": "1.6.1",
+      "nbclient": "0.11.0",
+      "cuda_visible_devices": ""
+    },
+    "limitations": "Full MAE pretraining, large RANS restarts, long PINN studies and other optional heavyweight research paths were preserved, not rerun. The 15 unchanged notebooks received source/alignment review, not new Run All."
+  },
+  "verification": {
+    "updater_second_replay_no_change": true,
+    "seven_changed_notebooks_compile_without_syntax_warnings": true,
+    "replacement_glyphs_in_changed_notebook_source": 0,
+    "original_data_model_checkpoint_and_research_metric_files_not_changed": true,
+    "utf8_mojibake_scan_of_updater_guides_builders_and_changed_notebook_source": "passed",
+    "modified_code_asts_compile_without_syntax_warnings": true,
+    "no_op_updater_second_replay": "passed"
+  },
+  "new_guide_pages": 25,
+  "result_artifacts": {
+    "results/course_middle_refresh/week09_pairing_profiles.png": "f619904f0c1212c1b22eb4cd5d5445bbdf886b1e23ea12dd93dbe2089ba4485c",
+    "results/course_middle_refresh/week08_branch_profiles.png": "6180fb8e029fa8a6ba96236771f0275c3ce02ce6b3e6d34245a654b7483277ed",
+    "results/course_middle_refresh/week08_branch_predictions.npz": "630505b8840599a3405d89615c04e4baad85b7a53df6f5b956894af31246f591",
+    "results/course_middle_refresh/week10_collision_profiles.png": "32b4b3b1547ee58390268f79af9774caf35ffa43d65c28f49e29f2fa605c7a62",
+    "results/course_middle_refresh/week07_dmd_probe.png": "a7429fe4a4abaa28d295d66fac5695d935b94fc11fface780a91acd22b897dfe",
+    "results/course_middle_refresh/week14_gap_profiles.png": "c16f4b3933ebe89d48d120899afd00f378a0b3badd0fa3642b3ea48432473bb2",
+    "results/course_middle_refresh/week14_gap_predictions.npz": "b4cb5652bbd0cd788a730d4cb9dc59e63492f0e1e82f8100a16cc6f2b93ed2c9",
+    "results/course_middle_refresh/week07_lift_control.png": "cbe762f5a0c488ce39af02072915e7c7e9d5a8304510d77cf72a24e20614d213",
+    "results/course_middle_refresh/week07_masked_quick_metrics.json": "0746209de6b70ebb92b854339b6271eac62829f62c890f30342a7f8e4accab8e",
+    "results/course_middle_refresh/week07_4_retained_lift.png": "e29cd18d192d0600b529d85c6467e0a831a600203cf66779b3e76dc887458a5d",
+    "results/course_middle_refresh/README.md": "9a4da7013543f2c6bc7334bbad03410c94d855791da4ed3de22a9ab342446269"
+  },
+  "transfer_verification": {
+    "unity_input_manifest.json": {
+      "manifest_sha256": "64c82b14d49654da5826e1e012a1264bb4c12cc7c8b693940c39014739ab0937",
+      "files": {
+        "flowmllab/__init__.py": "f098e66825597a9d0ff78b50481bcee55b99154173003868007ab1839649b4f8",
+        "flowmllab/aescte_dsmc.py": "226ee20c4f49a870dcb5b055eec650c9658372b5418b874587826e8f43096678",
+        "flowmllab/cavitation_detection.py": "285de8c895d271658057e65b853a7125e7d3772f0ac0d6be039393569b85e7ef",
+        "flowmllab/cavitation_methods.py": "53791da6ac198f286760bb24fe8953e20c4bd81373d1947ee84f29f07366943b",
+        "flowmllab/cavity_comparison_plots.py": "959fd72facec0dd0928f1ad52c138702b47b222e8a585a79ef2bc62239717390",
+        "flowmllab/cavity_diversity.py": "db0f7a70a7af4d7e7de06c692f4f23fd1033af707c9bd0a1532d576522109b26",
+        "flowmllab/cavity_rom.py": "f4b7d67f2f1c17b456b4944caedbdfebe33d17d6a51ca576f97e13aa30f218ef",
+        "flowmllab/cavity_visuals.py": "48295cb10931791ea86172db939548ed948de512225214f86b2667bc94121798",
+        "flowmllab/cli.py": "a18901f18eca49f54b6d6318b58b035cb7f331ac3c57c074791f463067a74e6b",
+        "flowmllab/core.py": "98a9746d87dd5a21169900029c5e5f2c61463fd040c9b456d071a845223f2072",
+        "flowmllab/cylinder_cnn.py": "dc4d64036c57b0257fe8c68d3141296d36ab7796c8d2237739771eb44fc9605f",
+        "flowmllab/cylinder_lbm.py": "8f5fb055b4ca30e75757d8a7811936e72fa0b72c0904fe1c11e8ba877fd6f394",
+        "flowmllab/cylinder_ml.py": "81bcf8992e77352e455958378a6dacbe8597e2a6aace94fc5dc3fae6e2c3581b",
+        "flowmllab/cylinder_phase.py": "008803ccc6f503bbf756c603dcfa4596a44a0e85d0c4058de38571a75ca58adb",
+        "flowmllab/demo.py": "5cd0db4affd3dacfbaf924d1f8b56d3f6794341e371887f40da95790eec4c0a3",
+        "flowmllab/diverse_wake_pretraining.py": "315dc40311c18b91c235017eb246b6a0dd129adfd2de5c736a7d1580d32dfb1b",
+        "flowmllab/feature_reconstruction.py": "73811b9726c096fd18b860371e35299ef85ea3a919e4a8bfe57fa99e927a1446",
+        "flowmllab/field_metrics.py": "45645027ca2fb0357feab0667b5b2d3244aeaaf3203c9cc869ab2dcda3530e8c",
+        "flowmllab/fusion_bundle.py": "ffddbc5785bb7229a2295c47f24b3ec4d64d69e201f2227f8d457827e6b853bf",
+        "flowmllab/gas_dynamics.py": "b955ec1b6554bedacb5cdc88bbf7e278805fab489e97ad3556e6dee50c6a6e6e",
+        "flowmllab/geometry_time_bridge.py": "9362f34ac24a4a0b49b7c5acfc607dbb8c51025658d0ccc601e099b0cd139452",
+        "flowmllab/hypersonic_cylinder.py": "8c0b7ea07764f4c7670a17130041b445332506c279375017b4778c24eaee45e9",
+        "flowmllab/mahdavi_deeponet.py": "6099f8540a7cd40ec6e8f0962ac4127b39b446d1743abc0c7a322ee6d6622af5",
+        "flowmllab/masked_pretraining.py": "684ac106d4e561b7a459d76ab46c66a749d9dee6b8eca128ce7ffcbbcc4cf813",
+        "flowmllab/modal_experiments.py": "cfc66acadf18d4ebb500e511448109d3926efe493348378dc82860c7074222aa",
+        "flowmllab/modal_tools.py": "4bfc6cf5aecbd1cd558ec0bc99397ba31c9ab204c5fc9fd895744a3ad40b3e44",
+        "flowmllab/noise2noise.py": "07f65c0119dbfbf87f7be6c2b272687e5a91c609413269d2d5b7188dbda8fb20",
+        "flowmllab/nozzle_transport.py": "3ea854f10f54bff23879a0ce0060a437f8cc2939e87a9ab8d35bdceab43553e4",
+        "flowmllab/pressure_velocity.py": "d502568afece2262dbb759c1e315e384cf9c88ac46e98992ee7950a77a0aba5d",
+        "flowmllab/pressure_velocity_experiment_plots.py": "715947edeac1d7c45f0d517f95d32fdbaba21ede214ab3c8491d31907ae77714",
+        "flowmllab/pressure_velocity_experiments.py": "d52015b86d23621ddec0b453403b85ffae5eb348edc3915c274f91310371181b",
+        "flowmllab/pressure_velocity_lab.py": "2223acfb53e59a41d2f40c2e011d44f157fce636a868dce7eab5f607e12989ab",
+        "flowmllab/probabilistic_uq.py": "bb71980d55ef6cfc5f614e7980e7165053f451711f109bec2a1ee86ae14c472a",
+        "flowmllab/rans_closure.py": "7b1bc8b120b78331c529a31a1d68cdd2aec9abae9e85e685d7923f9068864e2c",
+        "flowmllab/scattering_lab.py": "01014dc3172842ce315e76bffc7ea476fb0f00bf1cfa7927c22d747bf42b0c7f",
+        "flowmllab/scientific_software.py": "da69d3043935989cc9c749723a9c80e9cea754648cba1bd055605afc371387b0",
+        "flowmllab/state_estimation.py": "93f50444a31ed4feeae5aa5f4929c40f7cd998fd6dd7993d356f323a88e48376",
+        "flowmllab/step_geom_deeponet.py": "4d6efb0d57007c7e3d35a092bd84259ea7725a91097a54c2db5d263696577bd1",
+        "flowmllab/stokes_correction.py": "cb5f658174379989fe5f9c8f983961f02885ac5549b12b4f7c15d87d5faf83a1",
+        "flowmllab/stokes_refined.py": "9d1fd078a50885109ed0b684460d66ce90b5f4f14f0a445ccc100a18c4484792",
+        "flowmllab/streamfunction_experiments.py": "9a2e39481447d722257e6a37643fedbdaf1880325b63e00f99bd5375d84d2ff1",
+        "flowmllab/transformer_course.py": "c901fad341380e0a75c4ae38d69991996847d5bcf7b74c72239550ec75630e2d",
+        "flowmllab/ghia.py": "49f3141ea0840c0d1a204dba2ca7b1c358cdad9924f083340099f72251d8b680",
+        "flowmllab/ghia_surrogate.py": "b4069ad478c6f3b1ef4033ba62d0ae2ed9e183a6f8646cc2dc3c4a2d8f46abd7",
+        "flowmllab/deep_cavity_audit.py": "72da1cf327f9afd30de58853749a0cf27d38ecf4df3a5b66aea472cb40bda035",
+        "flowmllab/cavity_course.py": "1d088b3875e511d99842593489df7a6c82ecfccbe15ba2005dd98d9463ccfa1a",
+        "flowmllab/cavity_validation.py": "5e793c7631a3f5a7c1c90036f508d1c60d697a02436384913dcf4ae6e18f293a",
+        "flowmllab/cavity_steady.py": "a06c580ec90e04dcd997882590711759ba478b75500bb46a4b848cc9b6cd6039",
+        "flowmllab/cavity_highre.py": "1b7965a854e6e865f10b7f53be30f7324490a49fd65645c16c21c652abeb2ede",
+        "flowmllab/cavity_field_operator.py": "291b5db656de7165daaeab547d5abf291bb4ca1a3829b11af21dd6ac419577be",
+        "flowmllab/cavity_field_evidence.py": "520184abc75d0330d918d7360230aa9fc91e0f5348979eb4a5e14a744ffdf836",
+        "flowmllab/cavity_comparison.py": "b7afc9b80591d2edb3fef52edd71fab99042292e32c3846abefa507131945e7a",
+        "flowmllab/cavity_krylov.py": "9ab6905069f7b8d35a9e70034ace07f114394b13cb10ea9c7d05ba574a5ca5b0",
+        "flowmllab/cavity_pinn_campaign.py": "181456f8813044088d86988e61300d33850dcb3141bf9721fd544e28a1085d14",
+        "flowmllab/deep_cavity_training.py": "2a2280c9b3a9720b882dc814ee5e859daa7bb53b070ccbb81aba75e37a19c15e",
+        "flowmllab/cavity_pinn_stratified.py": "e1eeab53d6e284b8e90ba50ca7200299ad7b62db42450a2c6110a65edb2678b3",
+        "flowmllab/kinetic_shock.py": "8b0400f3b60050630a87d4ce1ce212a01116ff39693937ec0f1d690cec359fe2",
+        "flowmllab/kinetic_dvm.py": "7f72c591c47dd40bb6f51a5f236729502dd15dddc6df8ebdcafbf70faa47bce9",
+        "flowmllab/kinetic_pinn.py": "033572551ec3218f9721ffe1c7296c3e84db1c50c5d2228fc25c95b9141e4f2c",
+        "flowmllab/pressure_velocity_studies.py": "1cc81f95e7598fbfdd7eb78fa13d876d61c5ba8e3f2a8b81a2e508ee8279803a",
+        "flowmllab/pressure_velocity_visuals.py": "655d12653926d8e5f36db4dab5cd77f604571c7e60ba1f1b704632fe3b3664a5",
+        "flowmllab/high_order.py": "b46ab38664d12b3471b34453a839d34e036b8ffb6ca57da0aba3da40ce614b07",
+        "flowmllab/high_order_cavity.py": "7d5a04508e96f2e30512dd4a0035087a5a0b4b9fe406aebea668c21f541cc1e1",
+        "flowmllab/week04_teaching_plots.py": "7b0f6438bd414d648477164998e2058825cd8e7428f6219e21c1138c101c4518",
+        "flowmllab/cavity_lab2.py": "dd8047beec0b2a5fe2a4906b6e079abf2659a1be8b697c38c27414344326bc42",
+        "flowmllab/cavity_corner_audit.py": "8da882472ffd167b664aad220034ff59dabbd625e62eeee35da8cb3ddfc10631",
+        "flowmllab/late_teaching_plots.py": "dbf7168ea0bafc6674003bea2618cc2068f880772aa8f57a90953f907c63a8e6",
+        "flowmllab/early_sensing.py": "fb50f839c19f3cc23d168507c03effab137572348f4c83f8db73f4745e2916cf",
+        "flowmllab/geometry_operator_lesson.py": "ee5e6a9e9975bfad03716bdff79c141adaa48b4a4f77ab426406ef36e9af14f0",
+        "qa/execute_course_middle.py": "be37884a006ce84b5d374c4de8adacc98c6b92648963eb62f2ee034cc9d1ebf3",
+        "qa/course_middle_notebook_updates.py": "f40a7612bc9dfbbc1c20fd44db81394278e01d6b7e5f899cf820ab04d7dd3e2d",
+        "data/modal_labs/README.md": "f14f4d43254aa647eb2ebdab9f2ebe042a49b35f16bfa60dd2448e3d0a5d695b",
+        "data/modal_labs/manifest.json": "ddf3bf5dcc86b3dcdf858b0ce8bc2994c334956a13c77e339a49dc57759913df",
+        "data/modal_labs/re090.npz": "ced6cdb9fbf2017a93b2ed836b971dfc156c9ef5d28c83a4592d5c6295f98723",
+        "data/modal_labs/re100.npz": "1f822cf0a8db62658eca3af6fbefed6664eada5c253a7c67cb1ef0885024e048",
+        "data/modal_labs/re105.npz": "c31ed83e13ea3c668a4ac8243d553321171f713a110b05069238223d822d8b80",
+        "data/modal_labs/re110.npz": "da8f7c821f23334c84b8dcef6493277673c4fa6c66d5a18228a8774f51b2dd77",
+        "data/week07_4_wakes/README.md": "a8aa4de8941a434b82f8b720519c4934c8445f52d72051e9bac4ed5709057b72",
+        "data/week07_4_wakes/manifest.json": "6112733b797762bffd3a44b7c22322fae58c4396c244096dbb036ad1b807b303",
+        "results/week07_3_pretraining/README.md": "e88a506046d632078586ff2b48e070262170620571d5e561172544f7a9e2cde7",
+        "results/week07_3_pretraining/label_efficiency.png": "83b05f97dade4777f6e7363e209eeabbc8ce0c1c802ba57ed754fbdde4465a66",
+        "results/week07_3_pretraining/masking_example.png": "22031bb5724bcfb91f0076df9ff1c980362057a52a2f6701f1282ec8c8910a97",
+        "results/week07_3_pretraining/metrics.json": "6f41e5eefa5b125f00177a12afe3e08fbe85c2acb65fa3d3286f0340beca022d",
+        "results/week07_3_pretraining/pretraining_loss.png": "83f77c0b918ad741f49098493e58c681bd1674a5f1def5fa9008d85421161c96",
+        "results/week07_3_pretraining/zero_shot_fields.png": "708313c2008fc663b625eaac95e7858fafc4a8558802e9d769f22e1f99ec455d",
+        "results/week07_4_diverse_pretraining/README.md": "e826282deff2956b05b156ddf6e8d06613338b9ae0c620a9f59e7a07a596555b",
+        "results/week07_4_diverse_pretraining/homepage_week07_4.png": "82f4d0a588009d1d75278dbae828da3a3d2e8264509e74c4ae4cf02affe4eaec",
+        "results/week07_4_diverse_pretraining/label_efficiency.png": "567e34a3cb999d7df231d01b68bbd1d6bc4d91fd985045295200f17d606c3ea8",
+        "results/week07_4_diverse_pretraining/metrics.json": "f58af42ba767386f22bfb79018d1fe63b38d89cb6c84ca10f58c2cbd163ac82e",
+        "results/week07_4_diverse_pretraining/pretraining_loss.png": "91e8dda6ecdb03450b3be2a24d98c12df6884dc945967c53908cd9554b005f91",
+        "results/week07_4_diverse_pretraining/re115_lift_decoding.png": "bd4c4b8bb1d31350ad19974e59623d327b0f53fc73c84730c89748e147dd15f6",
+        "results/week14_validation/README.md": "f74af1120f1284260a4d8634ca5f0a6d99324f9d26a9faf98ffdd59c80053167",
+        "results/week14_validation/balance.json": "030299d7c202dd15e47c09b3e35ca52ddd3c3946d1b3154ed6d6e9b2f2b5cc1f",
+        "results/week14_validation/baseline.json": "4bc5e867e648a68bd4fc5ee9c41aad8ba316cc3aa02baba9959777666fd74bf3",
+        "results/week14_validation/baseline.npz": "80c8a2ae988f0966f4a8bf76fcb4f8a83b2f90d8671c386ed71a370f46c05810",
+        "results/week14_validation/coefficients.png": "3283ea6ac79c4745c91c70d4ba88becf2273b82254cc7d3d1d81a983025211c4",
+        "results/week14_validation/convergence.png": "0f6db0d8f835525b3269611c50162d44e8e69c4c027206b496aabf5fe1ff5afa",
+        "results/week14_validation/equations.png": "b16d6df1f093840a1b211c86eb43fb88188a0540deca986c4b77270f5f5033c4",
+        "results/week14_validation/gap.png": "f7279e21da42a063cc1ecb681a25684e72f06367ea3665520b3ab20ab00a7820",
+        "results/week14_validation/inverse.json": "160b56f56a1ff21a5a9643e15105099858d34f32f59b7c5e54247074e5118dda",
+        "results/week14_validation/inverse.npz": "405c18636f528c98302e9bc84928d3c099b62deaf543d4d99f83a025c6d22d91",
+        "results/week14_validation/inverse.png": "56ada2042eff4b79e85ec000be378b58e330c513e339f78ba92a556e518a5fcc",
+        "results/week14_validation/manifest.json": "a0f223b14d5a003723d8ab7b5acc75ae1aa5a1b660be260a0c3dc6d2a1817c63",
+        "results/week14_validation/nn10000.json": "273b253a40cda48ef0a8b5ef4e9ab64ea603ba6a71b2c84946d028e0e0b05f88",
+        "results/week14_validation/nn10000.npz": "ce65276882c7b2196f9bedc4bc5576d242a8034aa7c8a7c9b15c4b1efd46562e",
+        "results/week14_validation/nn5200.json": "762b7acf6157f2716a181423ce1dbb1004dc0da09cb73ff7c700c4e10c4e5fa3",
+        "results/week14_validation/nn5200.npz": "b3e8becb4dc9ae20ae15e1cd513eea0a5944eee10384c69c3ae1ffb5819ea846",
+        "results/week14_validation/pinn.json": "cc48b6c0a7d3eccf4a054fc80a6dba330be268a46ede362b711b6af6507e2407",
+        "results/week14_validation/pinn.npz": "eaf85580e83f58cb260f4ec8b5c7201a877a15a933fc209cb42b07eefbac8cfb",
+        "results/week14_validation/pinn_equation.png": "ba79cdab87d2d6849eb1915e373d860b6c019bdb86a84db14a7afa1999993aa2",
+        "results/week14_validation/pipeline.png": "10b93beec9609469d65b7731161930a69469d1845c2a21d691e9fc7b65dde6f8",
+        "results/week14_validation/profiles.png": "ffb957e954eb888dfb6e5af7c7ac011f4c8ffe93dcfa8d5942977d13ac220d75",
+        "results/week14_validation/profiles_legend_below.png": "ff9fd6bce51ce7962347a9d0d726463b9a87dc5bd54e1dcdce58149209b94010",
+        "results/week14_validation/summary.json": "39d118022110e446a3ac568b77274ec4e8366f4c962ee4c1398b840b323fb04c",
+        "results/week14_validation/teaching_data.npz": "ffebcf9f6fc1d58abc82c8a6a511d179556724c314005ac474d07d39913ccc40",
+        "results/week14_validation/train_ck.json": "93ae76ef7cad0f9a8143d46537bd57ce4f45be19e0eb94fdd0f2022068a220b9",
+        "results/week14_validation/train_ck.npz": "fd53a6ccff85165a738c1b1f3a5f2c8a4f21404ff99f6a2c30aaf9ace33f0f88",
+        "results/week14_validation/training.png": "29de05b2a795ae9b85dc3dc1e5e9d3cbf3a0c1c3c671c39d5dcf5079b1c1e757",
+        "notebooks/week07_3/W7_3_Masked_Pretraining_Label_Efficiency.ipynb": "f9fb1705b5d6a46445628127868598ddd1d2659db16adda2c15dffd7a672abf8",
+        "notebooks/week07_4/W7_4_Diverse_Wake_Pretraining.ipynb": "745363e84b851a217cc2609be1c02b2899a1c1c54ff4be85c0376f71c7bd9efb",
+        "notebooks/week14/W14_pyCALC_RANS_PINN_NN.ipynb": "4379405ab11ed394d1164427a5e8d10587bd3ef955a5e3158550e585c9590224"
+      }
+    },
+    "unity_return_manifest.json": {
+      "manifest_sha256": "954b101d2c396200910ec09ef6afacd1d91faaf283b1ae832b3e7c61ddf14427",
+      "files": {
+        "verified_unchanged_input_files": 118,
+        "changed_notebooks": [
+          "notebooks/week07_3/W7_3_Masked_Pretraining_Label_Efficiency.ipynb",
+          "notebooks/week07_4/W7_4_Diverse_Wake_Pretraining.ipynb",
+          "notebooks/week14/W14_pyCALC_RANS_PINN_NN.ipynb"
+        ],
+        "files": {
+          "notebooks/week07_3/W7_3_Masked_Pretraining_Label_Efficiency.ipynb": "459165278888b6788ceaee304f49f1833f3c56a5851a2bf506ee998fdc53d460",
+          "notebooks/week07_4/W7_4_Diverse_Wake_Pretraining.ipynb": "3fa9b8c978fe991c6c657bc9f91bdf4b3576c7df12ef239405894c21f4438c74",
+          "notebooks/week14/W14_pyCALC_RANS_PINN_NN.ipynb": "f0f5897d85e8639ab716be0705ce14d098e62d6f03210fe6bdc235a564be9f42",
+          "tmp/course_middle/job-0/W7_3_Masked_Pretraining_Label_Efficiency_execution.json": "e3a998e9f516efb224bd8e6e6d0f4cf55e3b6cc8749f640dc74fbd9174d0ae25",
+          "tmp/course_middle/job-2/W14_pyCALC_RANS_PINN_NN_execution.json": "9ec98123b2d945005c160a08ad253397d6b096bbdbe98a0582ee4351c7468a80",
+          "tmp/course_middle/job-1/W7_4_Diverse_Wake_Pretraining_execution.json": "2d3a721740272031db35830cb7e6cdf915a33eb72b77fc684a33009eb67961b0",
+          "results/course_middle_refresh/week14_gap_profiles.png": "c16f4b3933ebe89d48d120899afd00f378a0b3badd0fa3642b3ea48432473bb2",
+          "results/course_middle_refresh/week14_gap_predictions.npz": "b4cb5652bbd0cd788a730d4cb9dc59e63492f0e1e82f8100a16cc6f2b93ed2c9",
+          "results/course_middle_refresh/week07_lift_control.png": "cbe762f5a0c488ce39af02072915e7c7e9d5a8304510d77cf72a24e20614d213",
+          "job-2060760_2.log": "debc6c2de72b57c9d165d499ec913c109a660c5665aee6d0933e9085d5e1d771",
+          "job-2060760_1.log": "225faed26bfb9a0863778be90f1527d5fd97c983e40170b65650b15739cf3e06",
+          "job-2060760_0.log": "7997399feadece33596591a3b68376a600d9dbd58438ba133e7953b975744da7",
+          "run.sbatch": "55a64a2a4efa16a4736b6677a6b8ab969deefa25f83e130e2ca8f70b16a9ad9b",
+          "tmp/course_middle/job-0/tmpdir/flowmllab-week73-lhg08149/label_efficiency.png": "c5e6f4117e0eb1a0b58ef43378e782805fbdfee59f09950290d9af95e9f33ac1",
+          "tmp/course_middle/job-0/tmpdir/flowmllab-week73-lhg08149/zero_shot_fields.png": "80681a30c1da13c083732aa63f3294bd38d9094c2c8ae39ea1452b7abadbe965",
+          "tmp/course_middle/job-0/tmpdir/flowmllab-week73-lhg08149/pretraining_loss.png": "881109a9b0fc9bf1fa935bfe2072cc1c47be9b945a59b8d78b90e45f197e5ce2",
+          "tmp/course_middle/job-0/tmpdir/flowmllab-week73-lhg08149/masking_example.png": "8704e9119df5343ffc2940140736deaeb186eb1bf50ff25d66ef94c85922224e",
+          "tmp/course_middle/job-0/tmpdir/flowmllab-week73-lhg08149/metrics.json": "0746209de6b70ebb92b854339b6271eac62829f62c890f30342a7f8e4accab8e"
+        }
+      }
+    },
+    "unity_plot_input_manifest.json": {
+      "manifest_sha256": "f60c7d9525d872ead50f63042ca5c58b4a41e5dc957f8af67b1ed1a09923eaaa",
+      "files": {
+        "qa/run_modal_labs.py": "711ebe3357a00c6c0244fc35a81a6aecbdf572f5dfa50532b57b4b307f33027a",
+        "qa/course_middle_notebook_updates.py": "97d2895714e6c006f5946a9ae75589000b2220412da070d6aba484e02d016ba7",
+        "qa/execute_course_middle.py": "be37884a006ce84b5d374c4de8adacc98c6b92648963eb62f2ee034cc9d1ebf3",
+        "flowmllab/week07_4_plotting.py": "56d0af081385ced592be86e73d1b768bf1d2b4b1b0145245472f85b7356a16d2",
+        "notebooks/week07/W7_Lab2_Modal_Forecasting.ipynb": "5ce9ddfa4efdb837ade9052c079eb0ce432dacb537d6c126aa04cb5425ed2dca",
+        "notebooks/week07_4/W7_4_Diverse_Wake_Pretraining.ipynb": "519457fd2c725665410bc1d08360eddea6d2e5fd9e9a826d6bcb8a35916ad161",
+        "results/modal_labs/README.md": "e5ff77db05699cdc8b4a7ba6b192a72cf78d474702519d9dbe58d2607f29462a",
+        "results/modal_labs/forecast_audit.png": "1d18ceafad8e04b31a36a44acb79e031705728598666fb66f5ddaefd9cf7a768",
+        "results/modal_labs/forecast_fields.png": "abb4bf9644fede1fda325f3879a5eb4e4c3d75ec8c411b98c5e6b3078d406233",
+        "results/modal_labs/metrics.json": "8edb9bb3ea66419f7473c04ffd3c1c7f5b4b03c427dacf698caec73228acf360",
+        "results/modal_labs/plan.json": "aa35e785a4d39f1a2d38289fa3e61c6be72d9ad02dc6acccfea592b352d8e860",
+        "results/modal_labs/sensor_audit.png": "81c1484791c447fb2ff2dbbbb46f531fb232dc09c458b49db949a40ab94b268d",
+        "results/modal_labs/sensor_fields.png": "1e37fb09a23532b4c0d43bebfe55c85c24e7933ed3a64140e28ff236418e16b9",
+        "results/modal_labs/verification.json": "443328ce0bfbb4645c7801b0ba33a6a6dfccc0c8bf1afa60cf97a8332832cb82"
+      }
+    },
+    "final_input_manifest.json": {
+      "manifest_sha256": "788c0c08ba3052931fc7088561698aad3bcb53ec8be0647132e2d4b8bee94c35",
+      "files": {
+        "qa/run_modal_labs.py": "9ab08690d70ffa8a873252e71b511b252dab99bc62367128f9b75d65eaf71b80",
+        "qa/course_middle_notebook_updates.py": "3a8b8f37d56d68ce539c173a82ae7cead0b89455b7ba6ca707ca0977562ead9d",
+        "qa/execute_course_middle.py": "be37884a006ce84b5d374c4de8adacc98c6b92648963eb62f2ee034cc9d1ebf3",
+        "notebooks/week07/W7_Lab2_Modal_Forecasting.ipynb": "1274a30583317079ac7f4ab4d9359e5ccc4cc9217be82bc078f8bafd76d2569a",
+        "notebooks/week09/W9_Lab3_Nozzle_Data_Alignment_Audit.ipynb": "b67e2da2ee5f4cc41107bac25f7a27597f295f62f4f1d3c4b2eed97f162289ad",
+        "common/deeponet_data_audit.py": "382d399473954c4e361830f1891b2ace4614165297080e6c7a52982de4a0ce6d"
+      }
+    },
+    "plot_return_manifest.json": {
+      "manifest_sha256": "951410ef039679958a022dffeff9f37b022b214de63e4e2365b872b78369d261",
+      "files": {
+        "notebooks/week07/W7_Lab2_Modal_Forecasting.ipynb": "4779b228990851e296c77de6a7a405a86a6c5405744fb59e57bffd80b3100324",
+        "notebooks/week07_3/W7_3_Masked_Pretraining_Label_Efficiency.ipynb": "459165278888b6788ceaee304f49f1833f3c56a5851a2bf506ee998fdc53d460",
+        "notebooks/week07_4/W7_4_Diverse_Wake_Pretraining.ipynb": "3ef0c2fc6a02a6e50b7993ad728a3ae3fe84c5bf38a43dfbf861195d42b8c6c5",
+        "notebooks/week14/W14_pyCALC_RANS_PINN_NN.ipynb": "f0f5897d85e8639ab716be0705ce14d098e62d6f03210fe6bdc235a564be9f42",
+        "run_plots.sbatch": "4c7e1c286b18d38a7371081aeda9c53dd1f875eb6114006ef58348d11548197c",
+        "tmp/course_middle/plot-job-0/W7_Lab2_Modal_Forecasting_execution.json": "2b88012c43ab7aa7d899fc343518519e2bc6303f37c0401766c008856cf3637c",
+        "tmp/course_middle/plot-job-1/W7_4_Diverse_Wake_Pretraining_execution.json": "8214ebbdc9cc54209ac161cdd8f5778d5f4437339dd5076518abe479679d7ac5",
+        "plot-job-2061236_0.log": "3907809e9e3fcadc62e6c94601ae2f33eb67a2b32cea218793e1b941c8d853ba",
+        "plot-job-2061236_1.log": "491495727fb2732ea323d798bfdb82a37caab547ccde6a518c20042244ea2157",
+        "results/course_middle_refresh/week07_dmd_probe.png": "a7429fe4a4abaa28d295d66fac5695d935b94fc11fface780a91acd22b897dfe",
+        "results/course_middle_refresh/week07_lift_control.png": "cbe762f5a0c488ce39af02072915e7c7e9d5a8304510d77cf72a24e20614d213",
+        "tmp/course_middle/plot-job-0/tmpdir/flowmllab-modal-kiehw8p4/forecast_audit.png": "05da48eea6afcf807f91911cf67998d0a3297ea5a52fc7374c950d4416f1d575",
+        "tmp/course_middle/plot-job-0/tmpdir/flowmllab-modal-kiehw8p4/forecast_fields.png": "16ccb6082ee1b75218dacb2cd59aea61aba8515924cdcbbf48fcc1b03ad286e0",
+        "tmp/course_middle/plot-job-0/tmpdir/flowmllab-modal-kiehw8p4/sensor_audit.png": "a57d314419662d0304e373838a6702efdab14afddc66d92d40e83692b6e23c98",
+        "tmp/course_middle/plot-job-0/tmpdir/flowmllab-modal-kiehw8p4/sensor_fields.png": "74c7c1c1a50390e8fd16d65010613a09cccd6912d775a74b6da273c558ae2230"
+      }
+    },
+    "final_return_manifest.json": {
+      "manifest_sha256": "7808eed1afd1eaa6a3f1077631c638ce2d377e12c01ebcf2da3eedd27cf87308",
+      "files": {
+        "notebooks/week07/W7_Lab2_Modal_Forecasting.ipynb": "3e90784a99f3869874e34fe618048f28c90e1168bdcc11326f9d3e7a4f2bc3d4",
+        "notebooks/week09/W9_Lab3_Nozzle_Data_Alignment_Audit.ipynb": "69d5dafa80812b8fe29acb75de99f61bb5b524c27e2ded18a8d4f0fc3c6f3dca",
+        "run_final.sbatch": "22a0a1a0c0452812d7d8b3cfcfe341d0ae373ebce088a4378be7f8a4c2bafc09",
+        "tmp/course_middle/final-job-0/W7_Lab2_Modal_Forecasting_execution.json": "af91bd2149bf41ff23408f5c931d8e11aaaffb76bcebc9a37ca934e12b130053",
+        "tmp/course_middle/final-job-1/W9_Lab3_Nozzle_Data_Alignment_Audit_execution.json": "5dee36c222534ee8af54cf3f68df43874319585e617867bd8fca6091e4e21ee6",
+        "final-job-2061663_0.log": "64d4d54da6af9e59ea6d88db49165123975bccf53d8fcff3c38969372b8c107d",
+        "final-job-2061663_1.log": "26f53294c6366c7b6128e2ad877d0f32f5e8f53cd5f97811d6dc91be892919e1",
+        "results/course_middle_refresh/week07_dmd_probe.png": "a7429fe4a4abaa28d295d66fac5695d935b94fc11fface780a91acd22b897dfe",
+        "results/course_middle_refresh/week09_pairing_profiles.png": "f619904f0c1212c1b22eb4cd5d5445bbdf886b1e23ea12dd93dbe2089ba4485c",
+        "tmp/course_middle/final-job-0/tmpdir/flowmllab-modal-1o44iiht/forecast_audit.png": "05da48eea6afcf807f91911cf67998d0a3297ea5a52fc7374c950d4416f1d575",
+        "tmp/course_middle/final-job-0/tmpdir/flowmllab-modal-1o44iiht/forecast_fields.png": "efb832bc7979d1299f21601931526c8377d38a57b836d9369aacc042d90befdb",
+        "tmp/course_middle/final-job-0/tmpdir/flowmllab-modal-1o44iiht/sensor_audit.png": "a57d314419662d0304e373838a6702efdab14afddc66d92d40e83692b6e23c98",
+        "tmp/course_middle/final-job-0/tmpdir/flowmllab-modal-1o44iiht/sensor_fields.png": "7b1360c491cbeacb82b06bde75cfba9a0793fbdefc0f8636c95a232aea2fed50"
+      }
+    }
+  },
+  "cleanup": {
+    "status": "verified",
+    "reason": "Disposable local transfer archives; verified current source, scientific inputs, returned outputs and compact manifests retained. Final render caches retained for publication review.",
+    "deleted_paths": [
+      {
+        "path": "D:\\ChatGPT Backup\\Projects\\FlowMLLab\\Teaching_Current\\repo\\tmp\\course_middle\\unity_input.tar.gz",
+        "bytes": 33087750,
+        "sha256": "23eacad64b6216e1c4c01be81155a0646f06871405dcd672d5b67287ee329f11"
+      },
+      {
+        "path": "D:\\ChatGPT Backup\\Projects\\FlowMLLab\\Teaching_Current\\repo\\tmp\\course_middle\\unity_return.tar.gz",
+        "bytes": 1769580,
+        "sha256": "81b353abbb07b5c05eaa3a9c112ca2f11932069f7e96659d0002064860a11ed3"
+      },
+      {
+        "path": "D:\\ChatGPT Backup\\Projects\\FlowMLLab\\Teaching_Current\\repo\\tmp\\course_middle\\unity_plot_input.tar.gz",
+        "bytes": 1421178,
+        "sha256": "6b0cc5e4b7d7a6e6e812d40b670fdca07a07e73b104eb0197293292c9b56167a"
+      },
+      {
+        "path": "D:\\ChatGPT Backup\\Projects\\FlowMLLab\\Teaching_Current\\repo\\tmp\\course_middle\\unity_plot_return.tar.gz",
+        "bytes": 3674146,
+        "sha256": "fbb0ff979d9227605aac810b4d1390ae89d41a577ba38ca3d44f178b780a8409"
+      },
+      {
+        "path": "D:\\ChatGPT Backup\\Projects\\FlowMLLab\\Teaching_Current\\repo\\tmp\\course_middle\\final_input.tar.gz",
+        "bytes": 527421,
+        "sha256": "c08718feac1e70e50d8ccc0b5ed87bafbe17c04430e913c3b353064c36ae925b"
+      },
+      {
+        "path": "D:\\ChatGPT Backup\\Projects\\FlowMLLab\\Teaching_Current\\repo\\tmp\\course_middle\\unity_final_return.tar.gz",
+        "bytes": 2805175,
+        "sha256": "602fe32deec92143311fc0131784758aeb9984ad13a7f3abd8f14f3294ac81a1"
+      }
+    ],
+    "deleted_bytes": 43285250
+  },
+  "auxiliary_figure_review": [
+    {
+      "image_path": "tmp/course_middle/final_return_verified/tmp/course_middle/final-job-0/tmpdir/flowmllab-modal-1o44iiht/sensor_fields.png",
+      "image_sha256": "7b1360c491cbeacb82b06bde75cfba9a0793fbdefc0f8636c95a232aea2fed50",
+      "reviewer": "/root/week4_lecture_rebuild",
+      "status": "passed",
+      "review_basis": "Individual full-size inspection; matched physical contour levels/full error extrema and external legend verified.",
+      "science": "Same original sensor experiment; plotting-only helper change."
+    },
+    {
+      "image_path": "tmp/course_middle/final_return_verified/tmp/course_middle/final-job-0/tmpdir/flowmllab-modal-1o44iiht/sensor_audit.png",
+      "image_sha256": "a57d314419662d0304e373838a6702efdab14afddc66d92d40e83692b6e23c98",
+      "reviewer": "/root/week4_lecture_rebuild",
+      "status": "passed",
+      "review_basis": "Individual full-size inspection; matched physical contour levels/full error extrema and external legend verified.",
+      "science": "Same original sensor experiment; plotting-only helper change."
+    }
+  ],
+  "summary": {
+    "scoped_notebooks": 22,
+    "scoped_lectures": 16,
+    "changed_default_notebooks_executed": 7,
+    "preserved_notebooks_source_reviewed": 15,
+    "changed_lectures": 8,
+    "changed_lecture_pages_individually_reviewed": 65,
+    "new_guide_pages": 25,
+    "net_additional_lecture_pages": 19,
+    "inline_notebook_figures_reviewed": 26,
+    "additional_modal_sensor_figures_reviewed": 2
+  },
+  "publication_source_whitespace": {
+    "path": "qa/execute_course_middle.py",
+    "before_sha256": "be37884a006ce84b5d374c4de8adacc98c6b92648963eb62f2ee034cc9d1ebf3",
+    "after_sha256": "f944fc196b545927cecb7b66c3a1fa88e6ce8f71394b1da1ff3487df5799ec35",
+    "identical_ast": true,
+    "change": "Trailing whitespace only, root Git publication preflight; numerical/execution code AST unchanged."
+  }
+}

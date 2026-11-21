@@ -1,0 +1,68 @@
+{
+  "scope": "Isolated copies: preserve metadata across simulated appendix assembly, then apply actual topic builder twice. No solver/model execution.",
+  "status": "pass",
+  "source_sha256": {
+    "qa/build_course_middle_lectures.py": "51a7476a4d581e0936cde60e2598e7a360b55f04d04e3f254d274c2146ed4968",
+    "qa/build_feedback_lecture_sections.py": "4c698fb1f745f9fc24f4b175fa5ff39db50f09a2933a058b8916e4fc9e908265",
+    "lectures/source/course_middle_guides.py": "2232729dad26d2a753bfa0a3a6e8a6b432143be575725e64ecbd9c19c4e3dccf"
+  },
+  "input_copy_sha256": {
+    "lectures/source/course_middle_guides.py": "2232729dad26d2a753bfa0a3a6e8a6b432143be575725e64ecbd9c19c4e3dccf",
+    "results/course_middle_refresh/week07_dmd_probe.png": "a7429fe4a4abaa28d295d66fac5695d935b94fc11fface780a91acd22b897dfe",
+    "results/course_middle_refresh/week07_lift_control.png": "cbe762f5a0c488ce39af02072915e7c7e9d5a8304510d77cf72a24e20614d213",
+    "results/course_middle_refresh/week09_pairing_profiles.png": "f619904f0c1212c1b22eb4cd5d5445bbdf886b1e23ea12dd93dbe2089ba4485c",
+    "results/course_middle_refresh/week10_collision_profiles.png": "32b4b3b1547ee58390268f79af9774caf35ffa43d65c28f49e29f2fa605c7a62",
+    "results/course_middle_refresh/week14_gap_profiles.png": "c16f4b3933ebe89d48d120899afd00f378a0b3badd0fa3642b3ea48432473bb2"
+  },
+  "results": [
+    {
+      "path": "lectures/week07_modal_forecasting.pdf",
+      "status": "pass",
+      "pages": 7,
+      "input_sha256": "c7ddd8c8ee9b91f02ad0f985fb592190c4d369f6d7cda1da5de547e09b58e21e",
+      "repeated_assembly_pixel_identical": true
+    },
+    {
+      "path": "lectures/week07_2_cylinder_state_estimation.pdf",
+      "status": "pass",
+      "pages": 7,
+      "input_sha256": "4edfa844da8447b6b70e48191fe373ddc77dc3978080892cb3973ebe039d7941",
+      "repeated_assembly_pixel_identical": true
+    },
+    {
+      "path": "lectures/week07_3_masked_pretraining.pdf",
+      "status": "pass",
+      "pages": 9,
+      "input_sha256": "619149f35eff6953c7a10b9ce8efb58c38792df76af22aa548a70866168196bb",
+      "repeated_assembly_pixel_identical": true
+    },
+    {
+      "path": "lectures/week07_4_diverse_wake_pretraining.pdf",
+      "status": "pass",
+      "pages": 7,
+      "input_sha256": "47cc5bf6f3a453e05867168fd83e92ef9b3c3a3eeda15841207fe82007cfc4e4",
+      "repeated_assembly_pixel_identical": true
+    },
+    {
+      "path": "lectures/week09_3_nozzle_data_alignment.pdf",
+      "status": "pass",
+      "pages": 5,
+      "input_sha256": "e954392fbe9ed4e6f9ec56f703c92b3d1f04b0772a9b7342cc5e4c83d41273fc",
+      "repeated_assembly_pixel_identical": true
+    },
+    {
+      "path": "lectures/week10_1_collision_map_audit.pdf",
+      "status": "pass",
+      "pages": 6,
+      "input_sha256": "c53e300a6940a4759cb68585b6212a8ac47f99f2cd46ff2d8400ae5df78a2ef5",
+      "repeated_assembly_pixel_identical": true
+    },
+    {
+      "path": "lectures/week14_rans_pinn_nn.pdf",
+      "status": "pass",
+      "pages": 11,
+      "input_sha256": "63ccd7cbe0f6893effacd83f0ae81126356ab676af17b51ef21fbfec1afb7d36",
+      "repeated_assembly_pixel_identical": true
+    }
+  ]
+}

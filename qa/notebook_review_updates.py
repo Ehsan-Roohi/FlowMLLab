@@ -66,7 +66,14 @@ def review_notebook_file(path):
             cell['id'] = hashlib.sha256(f'{key}:{index}:{source(cell)}'.encode()).hexdigest()[:12]
     nb.setdefault('metadata', {})['review_note'] = 'Source contains reviewed teaching overlays. Saved outputs must be interpreted with their execution provenance; a source rebuild is not a scientific run.'
     normalize_notebook(nb)
-    path.write_text(json.dumps(nb, indent=1, ensure_ascii=False)+'\n', encoding='utf-8')
+    path.write_text(json.dumps(nb, indent=1, ensure_ascii=False)+'\n', encoding='utf-8', newline='\n')
+    # Topic-specific teaching repairs run last so historical overlays cannot
+    # restore an obsolete introduction or discard the current physical plots.
+    try:
+        from .course_middle_notebook_updates import update_notebook_file
+    except ImportError:
+        from course_middle_notebook_updates import update_notebook_file
+    update_notebook_file(path)
 
 
 if __name__ == '__main__':

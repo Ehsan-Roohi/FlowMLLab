@@ -1,0 +1,570 @@
+{
+  "utc": "2026-11-21T05:04:45.116176+00:00",
+  "status": "pass",
+  "scope": "All40 current PDFs; openability, actual page counts and extracted-text page bounds only. Images excluded from text extraction. This structural check supplements, not replaces, individual visual reviews.",
+  "pdf_count": 40,
+  "pages": 804,
+  "pdfs": [
+    {
+      "path": "lectures/optional_geometry_time_bridge.pdf",
+      "sha256": "ec5a932517617d1f441f16a0314181cec56f3a9c06805e287b0bd5013e782e87",
+      "pages": 8,
+      "text_fonts": {
+        "TimesNewRomanPSMT": 16563,
+        "TimesNewRomanPS-BoldMT": 1416,
+        "CMEX10": 8,
+        "TimesNewRomanPS-ItalicMT": 170,
+        "CMR9": 22,
+        "CMR10": 146,
+        "CMMI9": 1,
+        "CMMI10": 24,
+        "CMSY10": 5
+      },
+      "off_page_text": []
+    },
+    {
+      "path": "lectures/week01_02_tensorflow_keras.pdf",
+      "sha256": "f08169658565734f820ca3057958019cf86323f302972371e54b115137ea78ed",
+      "pages": 21,
+      "text_fonts": {
+        "TimesNewRomanPSMT": 35874,
+        "TimesNewRomanPS-BoldMT": 2014
+      },
+      "off_page_text": []
+    },
+    {
+      "path": "lectures/week01_1_ai_assisted_scientific_software.pdf",
+      "sha256": "ef782866f10222b68c1fe130ec9cc879aac13cb2f843f28b9615283de96bc745",
+      "pages": 10,
+      "text_fonts": {
+        "TimesNewRomanPSMT": 25101,
+        "TimesNewRomanPS-BoldMT": 826,
+        "Courier": 118
+      },
+      "off_page_text": []
+    },
+    {
+      "path": "lectures/week01_2_pressure_velocity.pdf",
+      "sha256": "949f5857f74c038d27fe831231f51c3a61999f039897ae377628a0fd1b51de54",
+      "pages": 74,
+      "text_fonts": {
+        "TimesNewRomanPSMT": 93905,
+        "TimesNewRomanPS-BoldMT": 5911,
+        "TimesNewRomanPS-ItalicMT": 4385,
+        "CMR10": 3375,
+        "CMMI10": 238,
+        "CMR9": 440,
+        "CMEX10": 192,
+        "CMSY10": 159,
+        "STIXGeneral-Italic": 329,
+        "TimesNewRomanPS-BoldItal": 26,
+        "CMMI9": 43,
+        "STIXGeneral-BoldItalic": 4,
+        "STIXGeneral-Regular": 398,
+        "STIXSizeOneSym-Regular": 1,
+        "CMSY9": 204,
+        "CMBX10": 4,
+        "Consolas": 100,
+        "CMR8": 55,
+        "CMR12": 39,
+        "DejaVuSerif": 694,
+        "STIXGeneral-Bold": 3,
+        "CMSY8": 1
+      },
+      "off_page_text": []
+    },
+    {
+      "path": "lectures/week01_3_keras_optimizers.pdf",
+      "sha256": "3b7eb2940eb3031ac5d3fd733f6754692e34be93893beb3afcaa687d1735040d",
+      "pages": 18,
+      "text_fonts": {
+        "TimesNewRomanPSMT": 22868,
+        "TimesNewRomanPS-BoldMT": 1437,
+        "TimesNewRomanPS-ItalicMT": 543
+      },
+      "off_page_text": []
+    },
+    {
+      "path": "lectures/week01_4_spectral_dg.pdf",
+      "sha256": "ffa4598e7e423a7ac890be40fa1ba4036740fc1e07a9ff5e9fae5aeddf58684a",
+      "pages": 25,
+      "text_fonts": {
+        "TimesNewRomanPSMT": 37654,
+        "TimesNewRomanPS-BoldMT": 2343,
+        "TimesNewRomanPS-ItalicMT": 191
+      },
+      "off_page_text": []
+    },
+    {
+      "path": "lectures/week01_numerical_foundations.pdf",
+      "sha256": "feb9e0a788949fc62fd3a429afcc3fe06521966220364b9041668c962f751b82",
+      "pages": 37,
+      "text_fonts": {
+        "TimesNewRomanPSMT": 47830,
+        "TimesNewRomanPS-BoldMT": 4657,
+        "CMMI10": 944,
+        "CMSY10": 140,
+        "CMR9": 446,
+        "CMR10": 2487,
+        "Consolas": 2567,
+        "TimesNewRomanPS-ItalicMT": 3115,
+        "TimesNewRomanPS-BoldItal": 50,
+        "CMEX10": 282,
+        "CMR7": 2,
+        "CMSY9": 39,
+        "DejaVuSerif": 76,
+        "Consolas-Bold": 161,
+        "CMMI9": 5,
+        "CMR8": 4,
+        "CMBX10": 1
+      },
+      "off_page_text": []
+    },
+    {
+      "path": "lectures/week02_1_probabilistic_uq.pdf",
+      "sha256": "6b7ce96b5ff1ae6e89921716811fa70a100aa98d963ec8c5d3e7dbf79cd15a74",
+      "pages": 10,
+      "text_fonts": {
+        "TimesNewRomanPS-BoldMT": 1580,
+        "TimesNewRomanPSMT": 15783,
+        "DejaVuSansMono": 71,
+        "CMEX10": 15,
+        "TimesNewRomanPS-ItalicMT": 217,
+        "CMR10": 425,
+        "CMMI10": 74,
+        "CMMI9": 4,
+        "CMSY10": 27,
+        "CMR9": 45,
+        "CMMIB10": 4,
+        "CMSY9": 32
+      },
+      "off_page_text": []
+    },
+    {
+      "path": "lectures/week02_supervised_learning_rarefaction.pdf",
+      "sha256": "493a4dd0c63c26d019e5ee69b356fafec89918bb3830337367c516170bc48264",
+      "pages": 26,
+      "text_fonts": {
+        "TimesNewRomanPS-BoldMT": 3065,
+        "TimesNewRomanPSMT": 38712,
+        "CMR10": 1099,
+        "TimesNewRomanPS-ItalicMT": 1425,
+        "CMSY10": 97,
+        "CMEX10": 101,
+        "TimesNewRomanPS-BoldItal": 103,
+        "CMR9": 343,
+        "MSBM10": 2,
+        "CMMIB9": 9,
+        "CMMIB10": 39,
+        "CMMI10": 337,
+        "CMSY9": 38,
+        "CMR8": 19,
+        "CMMI9": 43,
+        "CMR7": 1,
+        "Consolas": 419,
+        "Consolas-Bold": 7
+      },
+      "off_page_text": []
+    },
+    {
+      "path": "lectures/week03_kinetic_dsmc.pdf",
+      "sha256": "3a569f0907850ce7921a6e7a9152fbdf7dc46e35108cf10521fd8952ed6f29ae",
+      "pages": 47,
+      "text_fonts": {
+        "TimesNewRomanPS-BoldMT": 9209,
+        "TimesNewRomanPSMT": 19411
+      },
+      "off_page_text": []
+    },
+    {
+      "path": "lectures/week04_2_grid51_validation.pdf",
+      "sha256": "b1c4f823d86a118c5c8ff2c0c2caebbd5afcc051b956eb922ff228b8fb6b2669",
+      "pages": 4,
+      "text_fonts": {
+        "TimesNewRomanPS-BoldMT": 247,
+        "TimesNewRomanPSMT": 2422
+      },
+      "off_page_text": []
+    },
+    {
+      "path": "lectures/week04_2_pinn_cavity.pdf",
+      "sha256": "9d23b7f0c63162eef3a3dc374798fb3366840b085ea6aa5ade08e0296b85f1f6",
+      "pages": 12,
+      "text_fonts": {
+        "TimesNewRomanPSMT": 33502,
+        "TimesNewRomanPS-BoldMT": 686
+      },
+      "off_page_text": []
+    },
+    {
+      "path": "lectures/week04_2_stokes_to_navier_stokes.pdf",
+      "sha256": "50267d517573dbacba11e4865f1a58b9c94554bc43ca029e1d845d700f7aed88",
+      "pages": 11,
+      "text_fonts": {
+        "TimesNewRomanPS-BoldMT": 1273,
+        "TimesNewRomanPSMT": 7595,
+        "TimesNewRomanPS-BoldItal": 18,
+        "TimesNewRomanPS-ItalicMT": 1821
+      },
+      "off_page_text": []
+    },
+    {
+      "path": "lectures/week04_cavity_surrogates_deeponet.pdf",
+      "sha256": "e498aeb5086966c57471210ebc891f6e202aeabbc513d6d28dfda4daef07f26d",
+      "pages": 103,
+      "text_fonts": {
+        "TimesNewRomanPSMT": 155735,
+        "TimesNewRomanPS-BoldMT": 8633,
+        "TimesNewRomanPS-ItalicMT": 5
+      },
+      "off_page_text": []
+    },
+    {
+      "path": "lectures/week05_06_project_guide.pdf",
+      "sha256": "7502434b497055aac41b6491f945a6c0c3a0dfb5607de1968ea55b692884894e",
+      "pages": 59,
+      "text_fonts": {
+        "TimesNewRomanPS-BoldMT": 12270,
+        "TimesNewRomanPSMT": 100251,
+        "TimesNewRomanPS-ItalicMT": 1670,
+        "CMR10": 810,
+        "CMSY10": 116,
+        "DejaVuSansMono": 2301,
+        "CMMI10": 191,
+        "CMR9": 199,
+        "CMEX10": 100,
+        "CMMI9": 5,
+        "CMR7": 1,
+        "CMSY7": 1,
+        "CMSY9": 5,
+        "DejaVuSansMono-Bold": 20,
+        "MSBM10": 5,
+        "CMBX10": 2,
+        "CMMIB10": 5,
+        "TimesNewRomanPS-BoldItal": 4,
+        "MSAM10": 11
+      },
+      "off_page_text": []
+    },
+    {
+      "path": "lectures/week05_modal_sensing.pdf",
+      "sha256": "5c7a4dab50ae1e8c0919d621aa0646945fef818adb2a8812f4f1dd5ef8d01ee4",
+      "pages": 10,
+      "text_fonts": {
+        "TimesNewRomanPSMT": 13715,
+        "TimesNewRomanPS-BoldMT": 699,
+        "TimesNewRomanPS-ItalicMT": 9
+      },
+      "off_page_text": []
+    },
+    {
+      "path": "lectures/week07_1_hypersonic_rarefied_cylinder.pdf",
+      "sha256": "1c29fcb7f2f2a0a01425a446ca53d454029d8eba801837b55b7627e5ac0880ac",
+      "pages": 17,
+      "text_fonts": {
+        "TimesNewRomanPS-BoldMT": 2244,
+        "TimesNewRomanPSMT": 6685
+      },
+      "off_page_text": []
+    },
+    {
+      "path": "lectures/week07_2_cylinder_state_estimation.pdf",
+      "sha256": "4edfa844da8447b6b70e48191fe373ddc77dc3978080892cb3973ebe039d7941",
+      "pages": 7,
+      "text_fonts": {
+        "TimesNewRomanPSMT": 12989,
+        "TimesNewRomanPS-BoldMT": 558,
+        "TimesNewRomanPS-ItalicMT": 201
+      },
+      "off_page_text": []
+    },
+    {
+      "path": "lectures/week07_3_masked_pretraining.pdf",
+      "sha256": "619149f35eff6953c7a10b9ce8efb58c38792df76af22aa548a70866168196bb",
+      "pages": 9,
+      "text_fonts": {
+        "TimesNewRomanPSMT": 22360,
+        "TimesNewRomanPS-BoldMT": 970,
+        "Courier": 398
+      },
+      "off_page_text": []
+    },
+    {
+      "path": "lectures/week07_4_diverse_wake_pretraining.pdf",
+      "sha256": "47cc5bf6f3a453e05867168fd83e92ef9b3c3a3eeda15841207fe82007cfc4e4",
+      "pages": 7,
+      "text_fonts": {
+        "TimesNewRomanPSMT": 8019,
+        "TimesNewRomanPS-BoldMT": 399
+      },
+      "off_page_text": []
+    },
+    {
+      "path": "lectures/week07_cylinder_lbm_neural_surrogate.pdf",
+      "sha256": "3dcdbf8a75410921f96470fbc0b4650eee4ce77d06b094739e7c2e5c24fc0f63",
+      "pages": 19,
+      "text_fonts": {
+        "TimesNewRomanPS-BoldMT": 1645,
+        "TimesNewRomanPSMT": 28120,
+        "TimesNewRomanPS-ItalicMT": 958,
+        "CMR10": 725,
+        "CMSY9": 37,
+        "CMMI10": 108,
+        "CMSY10": 32,
+        "CMR9": 96,
+        "TimesNewRomanPS-BoldItal": 60,
+        "CMEX10": 41,
+        "CMMI9": 10,
+        "DejaVuSansMono": 30,
+        "CMR7": 3
+      },
+      "off_page_text": []
+    },
+    {
+      "path": "lectures/week07_modal_forecasting.pdf",
+      "sha256": "c7ddd8c8ee9b91f02ad0f985fb592190c4d369f6d7cda1da5de547e09b58e21e",
+      "pages": 7,
+      "text_fonts": {
+        "TimesNewRomanPSMT": 11196,
+        "TimesNewRomanPS-BoldMT": 638
+      },
+      "off_page_text": []
+    },
+    {
+      "path": "lectures/week08_gas_dynamics_sciml.pdf",
+      "sha256": "5ccef5a52d3e5f4855a4010759db6b45a5070231315f31ea4e104b58bb2b118e",
+      "pages": 13,
+      "text_fonts": {
+        "TimesNewRomanPS-BoldMT": 1670,
+        "TimesNewRomanPSMT": 18893,
+        "CMMI10": 64,
+        "CMR10": 342,
+        "TimesNewRomanPS-ItalicMT": 566,
+        "Consolas": 390,
+        "CMEX10": 18,
+        "TimesNewRomanPS-BoldItal": 7,
+        "CMSY10": 29,
+        "CMR9": 67,
+        "CMMI9": 2,
+        "CMSY9": 18,
+        "DejaVuSans": 637,
+        "DejaVuSans-Oblique": 23,
+        "DejaVuSans-Bold": 232,
+        "CMMI7": 2,
+        "CMR7": 6,
+        "MSBM10": 1
+      },
+      "off_page_text": []
+    },
+    {
+      "path": "lectures/week09_3_nozzle_data_alignment.pdf",
+      "sha256": "e954392fbe9ed4e6f9ec56f703c92b3d1f04b0772a9b7342cc5e4c83d41273fc",
+      "pages": 5,
+      "text_fonts": {
+        "TimesNewRomanPSMT": 6880,
+        "TimesNewRomanPS-BoldMT": 337,
+        "TimesNewRomanPS-ItalicMT": 83,
+        "CMR10": 26,
+        "CMMI10": 17,
+        "CMR9": 10,
+        "CMSY10": 3
+      },
+      "off_page_text": []
+    },
+    {
+      "path": "lectures/week09_rarefied_deeponet_case_studies.pdf",
+      "sha256": "4ddc955720689bf1fae9ef0c654fc8a1aef83f6e2ae705e605fff864ab37693e",
+      "pages": 19,
+      "text_fonts": {
+        "TimesNewRomanPS-BoldMT": 1685,
+        "TimesNewRomanPSMT": 20260,
+        "CMR10": 170,
+        "TimesNewRomanPS-ItalicMT": 246,
+        "CMMI10": 45,
+        "TimesNewRomanPS-BoldItal": 6,
+        "CMEX10": 9,
+        "CMR9": 16,
+        "CMSY10": 20,
+        "CMR7": 1,
+        "CMSY9": 5,
+        "DejaVuSansMono": 88
+      },
+      "off_page_text": []
+    },
+    {
+      "path": "lectures/week10_1_collision_map_audit.pdf",
+      "sha256": "c53e300a6940a4759cb68585b6212a8ac47f99f2cd46ff2d8400ae5df78a2ef5",
+      "pages": 6,
+      "text_fonts": {
+        "TimesNewRomanPSMT": 9340,
+        "TimesNewRomanPS-BoldMT": 357
+      },
+      "off_page_text": []
+    },
+    {
+      "path": "lectures/week10_2_bgk_shakhov_shock_pinn_dvm.pdf",
+      "sha256": "92682e0a50092fc3f67c41a418a2ac531b56fbccc3890da69c8ecd7f1a7e5092",
+      "pages": 27,
+      "text_fonts": {
+        "TimesNewRomanPSMT": 37174,
+        "TimesNewRomanPS-BoldMT": 2651,
+        "TimesNewRomanPS-ItalicMT": 2509
+      },
+      "off_page_text": []
+    },
+    {
+      "path": "lectures/week10_dsmc_data_driven_surrogates.pdf",
+      "sha256": "8d725f8326e1e58761035d039d4e04ab2bcc6d7ac78f8a922ad4c814cb783040",
+      "pages": 14,
+      "text_fonts": {
+        "TimesNewRomanPS-BoldMT": 1132,
+        "TimesNewRomanPSMT": 11063,
+        "TimesNewRomanPS-ItalicMT": 221,
+        "CMR10": 156,
+        "CMMI10": 14,
+        "TimesNewRomanPS-BoldItal": 5,
+        "CMR9": 32,
+        "CMSY10": 15,
+        "CMSY9": 4,
+        "CMEX10": 12,
+        "DejaVuSansMono": 131
+      },
+      "off_page_text": []
+    },
+    {
+      "path": "lectures/week11_shock_vortex_identification.pdf",
+      "sha256": "8d7199ac86e7f159f3c86232214b68a23af3cfe32a37f3c4e61badd957ea7111",
+      "pages": 17,
+      "text_fonts": {
+        "TimesNewRomanPSMT": 33111,
+        "TimesNewRomanPS-BoldMT": 952,
+        "TimesNewRomanPS-ItalicMT": 6
+      },
+      "off_page_text": []
+    },
+    {
+      "path": "lectures/week12_dsmc_moment_reconstruction.pdf",
+      "sha256": "067a36e35e666dab71cecc8292b4f58571af346e4a2632c3c60d1b97468f874c",
+      "pages": 13,
+      "text_fonts": {
+        "TimesNewRomanPSMT": 18218,
+        "TimesNewRomanPS-BoldMT": 510
+      },
+      "off_page_text": []
+    },
+    {
+      "path": "lectures/week13_rectangular_cavity_pinn.pdf",
+      "sha256": "ac372bedd03fd51185de39b279f0659445aa107ad5e3f5f59c836ef3a4e429ad",
+      "pages": 36,
+      "text_fonts": {
+        "TimesNewRomanPSMT": 52360,
+        "TimesNewRomanPS-BoldMT": 2436
+      },
+      "off_page_text": []
+    },
+    {
+      "path": "lectures/week14_rans_pinn_nn.pdf",
+      "sha256": "63ccd7cbe0f6893effacd83f0ae81126356ab676af17b51ef21fbfec1afb7d36",
+      "pages": 11,
+      "text_fonts": {
+        "TimesNewRomanPSMT": 24225,
+        "TimesNewRomanPS-BoldMT": 899
+      },
+      "off_page_text": []
+    },
+    {
+      "path": "lectures/week15_geometry_generalization.pdf",
+      "sha256": "7ed9f163e91b32a09fcec141693e90338b3c03a9c0daf820d935aa1487a7922d",
+      "pages": 40,
+      "text_fonts": {
+        "TimesNewRomanPS-BoldMT": 4102,
+        "TimesNewRomanPSMT": 45771,
+        "TimesNewRomanPS-ItalicMT": 273,
+        "LatinModernMath-Regular": 558,
+        "DejaVuSansMono": 326
+      },
+      "off_page_text": []
+    },
+    {
+      "path": "lectures/week16_supersonic_shape_optimization.pdf",
+      "sha256": "cf6c66b3cbe411df6ef7545d230adbb553d5a3097d178476177eb3dfc9c3d473",
+      "pages": 24,
+      "text_fonts": {
+        "TimesNewRomanPSMT": 25144,
+        "TimesNewRomanPS-BoldMT": 2652,
+        "TimesNewRomanPS-ItalicMT": 562,
+        "LatinModernMath-Regular": 580,
+        "TimesNewRomanPS-BoldItal": 5
+      },
+      "off_page_text": []
+    },
+    {
+      "path": "lectures/week17_cfd_transformer.pdf",
+      "sha256": "e6d67a9a1157cde3e1858e67fda60f156dc3cef407965baac0e5d14027f5eed6",
+      "pages": 6,
+      "text_fonts": {
+        "TimesNewRomanPSMT": 13205,
+        "TimesNewRomanPS-BoldMT": 490,
+        "TimesNewRomanPS-BoldItal": 119
+      },
+      "off_page_text": []
+    },
+    {
+      "path": "lectures/week18_cfd_transformer.pdf",
+      "sha256": "4505a9ee76f58d5a9c61bc311e540eed4b35da5ebdc54377c616e653985afb3f",
+      "pages": 6,
+      "text_fonts": {
+        "TimesNewRomanPSMT": 12764,
+        "TimesNewRomanPS-BoldMT": 531,
+        "TimesNewRomanPS-BoldItal": 133
+      },
+      "off_page_text": []
+    },
+    {
+      "path": "lectures/week19_cfd_transformer.pdf",
+      "sha256": "32167dc706f35ba4cb48ccb7ae48e0c6200de51166d8e12e1393b90be057a344",
+      "pages": 6,
+      "text_fonts": {
+        "TimesNewRomanPSMT": 12401,
+        "TimesNewRomanPS-BoldMT": 495,
+        "TimesNewRomanPS-BoldItal": 123
+      },
+      "off_page_text": []
+    },
+    {
+      "path": "lectures/week20_cfd_transformer.pdf",
+      "sha256": "da8bc6528d7150ec9090177e30c1b1dac7353e62a47ca873adc5cb7db12df5e3",
+      "pages": 7,
+      "text_fonts": {
+        "TimesNewRomanPSMT": 12947,
+        "TimesNewRomanPS-BoldMT": 541,
+        "TimesNewRomanPS-BoldItal": 153
+      },
+      "off_page_text": []
+    },
+    {
+      "path": "lectures/week21_cfd_transformer.pdf",
+      "sha256": "ed7039cf90be8e7819bf3c326f39c6999a3fe5592ea0af7fc437d6e86d008e30",
+      "pages": 6,
+      "text_fonts": {
+        "TimesNewRomanPSMT": 12478,
+        "TimesNewRomanPS-BoldMT": 514,
+        "TimesNewRomanPS-BoldItal": 152
+      },
+      "off_page_text": []
+    },
+    {
+      "path": "lectures/week22_cfd_transformer.pdf",
+      "sha256": "98d0197111e0307b489cfede847bc7f76dba9af17a8835368484c6683e83bba7",
+      "pages": 7,
+      "text_fonts": {
+        "TimesNewRomanPSMT": 14312,
+        "TimesNewRomanPS-BoldMT": 540,
+        "TimesNewRomanPS-BoldItal": 157
+      },
+      "off_page_text": []
+    }
+  ],
+  "final_hash_recheck_utc": "2026-11-21T05:11:02.145528+00:00",
+  "resurveyed_after_final_caption_change": []
+}

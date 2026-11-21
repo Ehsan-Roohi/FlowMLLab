@@ -116,3 +116,8 @@ qa/week01_4_*.json -text -whitespace
 qa/build_week01_4_*.py -text -whitespace
 qa/execute_week01_4.py -text -whitespace
 qa/validate_week01_4.py -text -whitespace
+
+# Portable Unix audit runner and exact compact runtime receipts.
+qa/course_refresh_early_unity.sh text eol=lf
+results/course_refresh_early/unity/environment.txt text eol=lf
+results/course_refresh_early/unity/focused_tests.out text eol=lf

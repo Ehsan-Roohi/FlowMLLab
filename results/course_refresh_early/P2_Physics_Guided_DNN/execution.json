@@ -1,0 +1,29 @@
+{
+  "notebook": "notebooks/week05_06/P2_Physics_Guided_DNN.ipynb",
+  "utc": "2026-11-21T03:13:11.611313+00:00",
+  "elapsed_run_all_seconds": 383.1372034419328,
+  "host": "uri-cpu078",
+  "kernel": "/scratch3/workspace/roohie_umass_edu-flowml-ghia-highre-20261115/week04-lab2-qa-20261120/venv/bin/python",
+  "python": "3.12.3 (main, Aug 31 2026, 10:18:26) [GCC 13.3.0]",
+  "cpu_only": true,
+  "failure": null,
+  "code_cells": 7,
+  "executed_cells": 7,
+  "inline_figures": [
+    {
+      "path": "results/course_refresh_early/P2_Physics_Guided_DNN/cell_08_00.png",
+      "sha256": "b7b0aa080e5359cfd81d01deeb57b1b49e2befec97a25ae2631a0ab9d8792b32"
+    },
+    {
+      "path": "results/course_refresh_early/P2_Physics_Guided_DNN/cell_16_02.png",
+      "sha256": "087b1ac70a637d20438e0ccf864f54a5de244c6621bbf2733368d64bdd7e4786"
+    },
+    {
+      "path": "results/course_refresh_early/P2_Physics_Guided_DNN/cell_19_01.png",
+      "sha256": "5146b9a198115365ecb86fd275d248083386bec3532cd25ec0a35ba0ff927ec0"
+    }
+  ],
+  "notebook_sha256": "3add1c3e51783b4f61e0b42e73e752b1782b640d409c4dc61b654caebc210415",
+  "code_sha256": "dd776091f33f934d8b7452f73911a8931167f085c540cb2e7a684181dc0ca5d8",
+  "claim": "Fresh default CPU Run All; no hosted Colab or optional GPU execution claimed."
+}

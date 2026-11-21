@@ -1,0 +1,728 @@
+{
+  "status": "passed_requested_independent_review",
+  "reviewer": "independent early-course worker /root/week4_lab2_repair",
+  "utc": "2026-11-21T05:03:46.537175+00:00",
+  "baseline_commit": "dd2f42df2c83636940962a8209aa575a99025c36",
+  "scope": "Read-only independent source/setup review and specified lecture page inspection. No new CFD, neural training or retained reference changes.",
+  "reviewed_source_sha256": {
+    "qa/validate_course_release.py": "00c9c61bf31f34c0d2d47e0dfd171a88ebea55d2b3f54b0c5ecac51712c93d72",
+    "qa/build_feedback_lecture_sections.py": "4c698fb1f745f9fc24f4b175fa5ff39db50f09a2933a058b8916e4fc9e908265",
+    "qa/validate_student_feedback.py": "1919155f94d767db953a9479414b66b5219734d524c6644095b6d8efb111263a"
+  },
+  "supporting_source_sha256": {
+    "qa/late_course_support.py": "ad9fb330c219cdfca9ab220975350357a2c442bb82b916d52295ebafe9f47224",
+    "tests/test_geometry_operator_lesson.py": "df1d82c93c5eef3acf7f98839e5ca9e80d8cac7b43b363ebb7839735cbff07b0"
+  },
+  "scientific_identity_and_split_gates": {
+    "validate_week16_results": {
+      "unchanged_ast": true,
+      "ast_sha256": "b85e16ea78c2e997687aa48b9b2d02cea970b529743efcd4585d5b542bb9b685"
+    },
+    "validate_week9_mahdavi_deeponet_results": {
+      "unchanged_ast": true,
+      "ast_sha256": "5f770fc36e7c1ffd19b36a3c8e66b7878cff7f02eaea8f1e01f045b17f366801"
+    },
+    "validate_pod_deeponet_results": {
+      "unchanged_ast": true,
+      "ast_sha256": "e75f1cb77dddc5631f272b7f9292b4dd08b70899fd1599ef78b4b12c97b34136"
+    },
+    "validate_cavity_rom_results": {
+      "unchanged_ast": true,
+      "ast_sha256": "2c271d7d9af62a0a4c207d94743ffbce4c81da8fb2d35af9a7953d73b193adee"
+    }
+  },
+  "source_review": {
+    "week15": "CPU lesson explicitly labels manufactured kinematic flow; executed fields add evidence. Existing retained reference checks and validation/test assertions remain.",
+    "week16": "Canonical setup retains dataset/model identity. The new executed student-output requirement does not replace the unchanged 44-case split, model checkpoint, convergence, physical-design and reference audit gates.",
+    "transformers": "Exact canonical setup, four task prompts/starters/checks and honest NOT SUBMITTED status remain required.",
+    "overlays": "Explicit previous/current source SHA and cell type are required for each reviewed replacement; changed code must be executed and no saved errors are admitted. Existing Stokes output guards and Rayleigh roundtrip checks remain.",
+    "lecture_assembly": "Topic guides are reapplied after generic assembly. Metadata preserves retained-page boundaries; exact PDF SHA, explicit unique one-based positions, counts, source existence, text and Times New Roman are checked."
+  },
+  "isolated_setup_verification": {
+    "interpreter": "tmp/week01_4_runtime/Scripts/python.exe -I",
+    "PYTHONPATH_required": false,
+    "week16_setup": "passed",
+    "transformer_weeks": [
+      17,
+      18,
+      19,
+      20,
+      21,
+      22
+    ],
+    "exact_setup_and_task_contracts": "passed",
+    "tests_run": 4,
+    "test_seconds": 3.565,
+    "tests": [
+      "test_colab_existing_sparse_checkout_adds_new_lesson_dependencies",
+      "test_colab_complete_portable_bundle_needs_no_git",
+      "test_colab_incomplete_non_git_folder_is_rejected_without_mutation",
+      "test_older_full_checkout_requires_actual_plotting_module"
+    ],
+    "result": "passed; setup fixtures only, no numerical model imported or run",
+    "tested_helper_sha256": "8caf5b713e33519f3bfd94ad39eb98bd22749a91dc28a94fc8cf139c402dc3e8",
+    "post_test_amendment": "Only a dependency entry for the separate retained step-audit lesson was added. Removing that exact entry reconstructs the tested SHA. All seven checked notebook prefixes and four tested bootstrap inputs produce byte-identical source under both helper versions."
+  },
+  "resolved_findings": [
+    {
+      "finding": "Direct CLI import needed repository-local qa helpers without PYTHONPATH",
+      "resolution": "Root insertion precedes helper import; isolated -I passed."
+    },
+    {
+      "finding": "Complete portable bundle was rejected in Colab",
+      "resolution": "Required complete files admit non-Git bundles without Git mutation; tested."
+    },
+    {
+      "finding": "Full checkout incorrectly received sparse-checkout add",
+      "resolution": "Complete full checkout requires no mutation; incomplete sparse checkout requires core.sparseCheckout=true; missing actual helper modules are checked."
+    },
+    {
+      "finding": "Six topic-guide manifest PDF hashes were stale",
+      "resolution": "Final manifest now matches all six actual hashes, counts, explicit page positions, text and fonts."
+    },
+    {
+      "finding": "Week19 appended a redundant historical bar chart",
+      "resolution": "Final PDF omits that display; data, cost formulas/table and physical figures preserved."
+    },
+    {
+      "finding": "Week16 cone sentence incorrectly described the polar component as becoming tangent",
+      "resolution": "Final page10 correctly says flow velocity; equation/data unchanged; 23 other pages exactly unchanged."
+    },
+    {
+      "finding": "Week22 appendix legend was unreadably small",
+      "resolution": "Final lecture-only portrait layout and precise caption passed individual page review; pages1-6 decoded pixels unchanged."
+    },
+    {
+      "finding": "Transformer notebook source had Windows default-encoding mojibake",
+      "resolution": "Explicit UTF-8 plus real-generator CP1252 regression and independent exact source equality for all12 editions."
+    }
+  ],
+  "lecture_manifest_sha256": "445ac74ad422a12f2d62e93a44d9ea3918c23e9ac64c04e4a4e5be77fabb068c",
+  "explicit_front_guides": [
+    {
+      "path": "lectures/week07_modal_forecasting.pdf",
+      "sha256": "c7ddd8c8ee9b91f02ad0f985fb592190c4d369f6d7cda1da5de547e09b58e21e",
+      "pages": 7,
+      "teaching_page_numbers": [
+        1,
+        2,
+        3
+      ],
+      "text_font_and_boundary_checks": "passed"
+    },
+    {
+      "path": "lectures/week07_2_cylinder_state_estimation.pdf",
+      "sha256": "4edfa844da8447b6b70e48191fe373ddc77dc3978080892cb3973ebe039d7941",
+      "pages": 7,
+      "teaching_page_numbers": [
+        1,
+        2,
+        3
+      ],
+      "text_font_and_boundary_checks": "passed"
+    },
+    {
+      "path": "lectures/week07_3_masked_pretraining.pdf",
+      "sha256": "619149f35eff6953c7a10b9ce8efb58c38792df76af22aa548a70866168196bb",
+      "pages": 9,
+      "teaching_page_numbers": [
+        1,
+        2,
+        3
+      ],
+      "text_font_and_boundary_checks": "passed"
+    },
+    {
+      "path": "lectures/week07_4_diverse_wake_pretraining.pdf",
+      "sha256": "47cc5bf6f3a453e05867168fd83e92ef9b3c3a3eeda15841207fe82007cfc4e4",
+      "pages": 7,
+      "teaching_page_numbers": [
+        1,
+        2,
+        3
+      ],
+      "text_font_and_boundary_checks": "passed"
+    },
+    {
+      "path": "lectures/week09_3_nozzle_data_alignment.pdf",
+      "sha256": "e954392fbe9ed4e6f9ec56f703c92b3d1f04b0772a9b7342cc5e4c83d41273fc",
+      "pages": 5,
+      "teaching_page_numbers": [
+        1,
+        2,
+        3
+      ],
+      "text_font_and_boundary_checks": "passed"
+    },
+    {
+      "path": "lectures/week10_1_collision_map_audit.pdf",
+      "sha256": "c53e300a6940a4759cb68585b6212a8ac47f99f2cd46ff2d8400ae5df78a2ef5",
+      "pages": 6,
+      "teaching_page_numbers": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "text_font_and_boundary_checks": "passed"
+    }
+  ],
+  "independent_pdf_review": [
+    {
+      "path": "lectures/week16_supersonic_shape_optimization.pdf",
+      "sha256": "cf6c66b3cbe411df6ef7545d230adbb553d5a3097d178476177eb3dfc9c3d473",
+      "prior_pdf_sha256": "cbb778ebf1be8722a0b0ef2f85ed13fc1005d0ac93c58e3dfae7aa71c0d50a3a",
+      "changed_pages": [
+        10
+      ],
+      "pages": [
+        {
+          "page": 1,
+          "review_render": "tmp/course_refresh_late/pdf_review/week16_supersonic_shape_optimization/page-001.png",
+          "render_sha256": "08161a9727c50276c92aea522174faa181f1a69f84434294360b88352ac1aea7",
+          "pixel_sha256": "6bae288c08a74d4e0f33bc7c6b994f03147bea9fc1cc602e0bb86f653a4654a1",
+          "previous_render_sha256": "08161a9727c50276c92aea522174faa181f1a69f84434294360b88352ac1aea7",
+          "same_render_as_prior_review": true,
+          "status": "passed_individual_readable_visual_review"
+        },
+        {
+          "page": 2,
+          "review_render": "tmp/course_refresh_late/pdf_review/week16_supersonic_shape_optimization/page-002.png",
+          "render_sha256": "30dc708749f22be96ad739ae58036d1f5b205a16cae1996971ce06841cf27d1a",
+          "pixel_sha256": "fa8700dd3b400d8c988fbc599fb8012e4655c9be8d923b47c1cc6fefc2cbd7ab",
+          "previous_render_sha256": "30dc708749f22be96ad739ae58036d1f5b205a16cae1996971ce06841cf27d1a",
+          "same_render_as_prior_review": true,
+          "status": "passed_individual_readable_visual_review"
+        },
+        {
+          "page": 3,
+          "review_render": "tmp/course_refresh_late/pdf_review/week16_supersonic_shape_optimization/page-003.png",
+          "render_sha256": "bc66c26d5ae28b140f8ad149dc94d5f8ee5897df1197840cb8e503ea65bd556f",
+          "pixel_sha256": "ee287a02826be3d26bd0b278e900d0b245baa805f955c2151f027b039bbf6096",
+          "previous_render_sha256": "bc66c26d5ae28b140f8ad149dc94d5f8ee5897df1197840cb8e503ea65bd556f",
+          "same_render_as_prior_review": true,
+          "status": "passed_individual_readable_visual_review"
+        },
+        {
+          "page": 4,
+          "review_render": "tmp/course_refresh_late/pdf_review/week16_supersonic_shape_optimization/page-004.png",
+          "render_sha256": "0517b4790d374e237a2005d960728facb8054f72612d8510e1296853a03e01e9",
+          "pixel_sha256": "c39452e521eac39fcbe8b2e6550b1eb2db3347266f91c9586a5f25422d74eaa4",
+          "previous_render_sha256": "0517b4790d374e237a2005d960728facb8054f72612d8510e1296853a03e01e9",
+          "same_render_as_prior_review": true,
+          "status": "passed_individual_readable_visual_review"
+        },
+        {
+          "page": 5,
+          "review_render": "tmp/course_refresh_late/pdf_review/week16_supersonic_shape_optimization/page-005.png",
+          "render_sha256": "169c465ddc5488a2ab41286923623c9ca210c5f474de233e9dc55202b9705e4f",
+          "pixel_sha256": "607e3967d9714e000c7ef23ed3a120902bf408ed6f3b532190cfb931409c2e14",
+          "previous_render_sha256": "169c465ddc5488a2ab41286923623c9ca210c5f474de233e9dc55202b9705e4f",
+          "same_render_as_prior_review": true,
+          "status": "passed_individual_readable_visual_review"
+        },
+        {
+          "page": 6,
+          "review_render": "tmp/course_refresh_late/pdf_review/week16_supersonic_shape_optimization/page-006.png",
+          "render_sha256": "294f3e2fa821886cb62c6f013429fed02e6f583c34c7a3e532f04f14302bf7f2",
+          "pixel_sha256": "54a7930163571adbabdfb1896871402e8fb1748e72f7c2368296fa8e49c7d55e",
+          "previous_render_sha256": "294f3e2fa821886cb62c6f013429fed02e6f583c34c7a3e532f04f14302bf7f2",
+          "same_render_as_prior_review": true,
+          "status": "passed_individual_readable_visual_review"
+        },
+        {
+          "page": 7,
+          "review_render": "tmp/course_refresh_late/pdf_review/week16_supersonic_shape_optimization/page-007.png",
+          "render_sha256": "fa5ab557bacd9f5fcb8ccf5487d8a3ceb85cf8d130917b9ff6e8a809d3652331",
+          "pixel_sha256": "f380d5e60182e34b307950238079f3b8251bf7cc705683f71e5b2b7c4cff1dff",
+          "previous_render_sha256": "fa5ab557bacd9f5fcb8ccf5487d8a3ceb85cf8d130917b9ff6e8a809d3652331",
+          "same_render_as_prior_review": true,
+          "status": "passed_individual_readable_visual_review"
+        },
+        {
+          "page": 8,
+          "review_render": "tmp/course_refresh_late/pdf_review/week16_supersonic_shape_optimization/page-008.png",
+          "render_sha256": "bdf28c461be731e4eb53a35683e03a658886c2b48a054ff580efb906df2ecfd2",
+          "pixel_sha256": "f28a6d44c981e38bc6f7d265442886e539fae7303a366a6ada9cfffed7cc7ba6",
+          "previous_render_sha256": "bdf28c461be731e4eb53a35683e03a658886c2b48a054ff580efb906df2ecfd2",
+          "same_render_as_prior_review": true,
+          "status": "passed_individual_readable_visual_review"
+        },
+        {
+          "page": 9,
+          "review_render": "tmp/course_refresh_late/pdf_review/week16_supersonic_shape_optimization/page-009.png",
+          "render_sha256": "d8deb3f52d84f4e5a31a66f781152bcae5d2e463d4e54142ade242d05ba391f2",
+          "pixel_sha256": "5b899e8368dd909e0f4bdf4b94281e337544b66488c6cac1f6cfb3a638ab6185",
+          "previous_render_sha256": "d8deb3f52d84f4e5a31a66f781152bcae5d2e463d4e54142ade242d05ba391f2",
+          "same_render_as_prior_review": true,
+          "status": "passed_individual_readable_visual_review"
+        },
+        {
+          "page": 10,
+          "review_render": "tmp/course_refresh_late/pdf_review/week16_supersonic_shape_optimization/page-010.png",
+          "render_sha256": "7b17d0a76543bae88161663e0f1e37fcbb7ec346368d561d56cbb676a0ce1a35",
+          "pixel_sha256": "001cea92b64b215d27a6086d36a68dbb066875552a52757a32d9bc7ac4a6525a",
+          "previous_render_sha256": "1f4f4c44ded218210ca3dfc03d16faf5934c8b28157982f8607c368c385df774",
+          "same_render_as_prior_review": false,
+          "status": "passed_individual_readable_visual_review"
+        },
+        {
+          "page": 11,
+          "review_render": "tmp/course_refresh_late/pdf_review/week16_supersonic_shape_optimization/page-011.png",
+          "render_sha256": "63026b5d97300fd6871ef954626b193bf38e18b354b231092f3b7ef8fb3f279b",
+          "pixel_sha256": "f0a195567ef1cf67a3933b491e6aa9953462b2682ed31d8bf3275519656de22d",
+          "previous_render_sha256": "63026b5d97300fd6871ef954626b193bf38e18b354b231092f3b7ef8fb3f279b",
+          "same_render_as_prior_review": true,
+          "status": "passed_individual_readable_visual_review"
+        },
+        {
+          "page": 12,
+          "review_render": "tmp/course_refresh_late/pdf_review/week16_supersonic_shape_optimization/page-012.png",
+          "render_sha256": "b192ff5d3082b637a1c7793736d8b23c6ce03570f24957646117c177d060108e",
+          "pixel_sha256": "6183cb3ec96beac6a86882e99f416ccc7e78cdcc442a4195637ba219185ec34d",
+          "previous_render_sha256": "b192ff5d3082b637a1c7793736d8b23c6ce03570f24957646117c177d060108e",
+          "same_render_as_prior_review": true,
+          "status": "passed_individual_readable_visual_review"
+        },
+        {
+          "page": 13,
+          "review_render": "tmp/course_refresh_late/pdf_review/week16_supersonic_shape_optimization/page-013.png",
+          "render_sha256": "59f67dc98d506f98345823705147f042bd4042f2d12a0ca86fad86d942343a42",
+          "pixel_sha256": "826c6c590ec95a1bd1c337589243df7ae30edea4a6802a5a763666246a4c0a3f",
+          "previous_render_sha256": "59f67dc98d506f98345823705147f042bd4042f2d12a0ca86fad86d942343a42",
+          "same_render_as_prior_review": true,
+          "status": "passed_individual_readable_visual_review"
+        },
+        {
+          "page": 14,
+          "review_render": "tmp/course_refresh_late/pdf_review/week16_supersonic_shape_optimization/page-014.png",
+          "render_sha256": "a077a68c3f37426a02d49a694e8d850124c841640a097803e3f75cdbbe328eaf",
+          "pixel_sha256": "d1dcf97ab44e08f6c0a13df328ad0ef03d63c96111adebebf968be16530e83ea",
+          "previous_render_sha256": "a077a68c3f37426a02d49a694e8d850124c841640a097803e3f75cdbbe328eaf",
+          "same_render_as_prior_review": true,
+          "status": "passed_individual_readable_visual_review"
+        },
+        {
+          "page": 15,
+          "review_render": "tmp/course_refresh_late/pdf_review/week16_supersonic_shape_optimization/page-015.png",
+          "render_sha256": "0a6b33c2d2bc1276f0cc2c32c1ab632ded13eb8d0e11c280efea55949a9f6b99",
+          "pixel_sha256": "39599c8e33408abfabd2a1cbfbade06e7049e5df46e031b75a7680ceb9535a03",
+          "previous_render_sha256": "0a6b33c2d2bc1276f0cc2c32c1ab632ded13eb8d0e11c280efea55949a9f6b99",
+          "same_render_as_prior_review": true,
+          "status": "passed_individual_readable_visual_review"
+        },
+        {
+          "page": 16,
+          "review_render": "tmp/course_refresh_late/pdf_review/week16_supersonic_shape_optimization/page-016.png",
+          "render_sha256": "94c057d4a3434a2b9f30bb6c7f0c175c82fe98e3de8b21b041dd7a5db9c6a252",
+          "pixel_sha256": "036542dd49e9b739721d70315a6418212f317b8f5dcde5e5bde5d4f6fe8cf5ba",
+          "previous_render_sha256": "94c057d4a3434a2b9f30bb6c7f0c175c82fe98e3de8b21b041dd7a5db9c6a252",
+          "same_render_as_prior_review": true,
+          "status": "passed_individual_readable_visual_review"
+        },
+        {
+          "page": 17,
+          "review_render": "tmp/course_refresh_late/pdf_review/week16_supersonic_shape_optimization/page-017.png",
+          "render_sha256": "1cfa4bca8748d8a82192f926b3807c0a6196815dbafee939b1d2d47f62b9b496",
+          "pixel_sha256": "4e83f544f5c5f459f3277e31bf093831cb4641754d30633f29c2df47a4b26b4a",
+          "previous_render_sha256": "1cfa4bca8748d8a82192f926b3807c0a6196815dbafee939b1d2d47f62b9b496",
+          "same_render_as_prior_review": true,
+          "status": "passed_individual_readable_visual_review"
+        },
+        {
+          "page": 18,
+          "review_render": "tmp/course_refresh_late/pdf_review/week16_supersonic_shape_optimization/page-018.png",
+          "render_sha256": "9993d7f44559b8c19b9f6b862b5be1c45e10d3c11baffcb171bf367e7056e9bb",
+          "pixel_sha256": "cfe53d9607f7e96501bc608bced2135f7c2f182c1e2c81d361a8eb8f4241ab67",
+          "previous_render_sha256": "9993d7f44559b8c19b9f6b862b5be1c45e10d3c11baffcb171bf367e7056e9bb",
+          "same_render_as_prior_review": true,
+          "status": "passed_individual_readable_visual_review"
+        },
+        {
+          "page": 19,
+          "review_render": "tmp/course_refresh_late/pdf_review/week16_supersonic_shape_optimization/page-019.png",
+          "render_sha256": "ae010ae7f96b581abf69950d45f2743a6f72a45086441418698b59ab0b4e65d0",
+          "pixel_sha256": "029c4163389b0aa286b8d1fc36cd8ff61e4a3484610db54bdae29ab3490d408a",
+          "previous_render_sha256": "ae010ae7f96b581abf69950d45f2743a6f72a45086441418698b59ab0b4e65d0",
+          "same_render_as_prior_review": true,
+          "status": "passed_individual_readable_visual_review"
+        },
+        {
+          "page": 20,
+          "review_render": "tmp/course_refresh_late/pdf_review/week16_supersonic_shape_optimization/page-020.png",
+          "render_sha256": "87fba2ab46f9d3e4286036809586273015edb3486cca694dd745cf73e88fa665",
+          "pixel_sha256": "8142335192dd7c7f414490523d51da73e905ddbc080ecd46e7a5a81bd3e74247",
+          "previous_render_sha256": "87fba2ab46f9d3e4286036809586273015edb3486cca694dd745cf73e88fa665",
+          "same_render_as_prior_review": true,
+          "status": "passed_individual_readable_visual_review"
+        },
+        {
+          "page": 21,
+          "review_render": "tmp/course_refresh_late/pdf_review/week16_supersonic_shape_optimization/page-021.png",
+          "render_sha256": "c1ba39900169da292189c107b5cf9c68d270c0163cca63db5c0f19bf177fd25d",
+          "pixel_sha256": "b6b453526ebe2a3569e00f30f531737325493f6ecb196592aae2e34d3d24543c",
+          "previous_render_sha256": "c1ba39900169da292189c107b5cf9c68d270c0163cca63db5c0f19bf177fd25d",
+          "same_render_as_prior_review": true,
+          "status": "passed_individual_readable_visual_review"
+        },
+        {
+          "page": 22,
+          "review_render": "tmp/course_refresh_late/pdf_review/week16_supersonic_shape_optimization/page-022.png",
+          "render_sha256": "73ad99797a07944c1c20ebc118cb350f0b911c2ac5a0795ff1aeca2e3f4d81ff",
+          "pixel_sha256": "7c6aece3814d6d0b3b11e9e03d1a9d2d3a47a046c0ed9f08e89cd899d7c64a10",
+          "previous_render_sha256": "73ad99797a07944c1c20ebc118cb350f0b911c2ac5a0795ff1aeca2e3f4d81ff",
+          "same_render_as_prior_review": true,
+          "status": "passed_individual_readable_visual_review"
+        },
+        {
+          "page": 23,
+          "review_render": "tmp/course_refresh_late/pdf_review/week16_supersonic_shape_optimization/page-023.png",
+          "render_sha256": "75efc0d09afa53e06f9d6703a6ffe30588b48da9ac3949cef58e75b5f7bd0fad",
+          "pixel_sha256": "a8a437aba42de9e1e928861e7c45ad845ae47be2a88739423e4d51d2f9774dee",
+          "previous_render_sha256": "75efc0d09afa53e06f9d6703a6ffe30588b48da9ac3949cef58e75b5f7bd0fad",
+          "same_render_as_prior_review": true,
+          "status": "passed_individual_readable_visual_review"
+        },
+        {
+          "page": 24,
+          "review_render": "tmp/course_refresh_late/pdf_review/week16_supersonic_shape_optimization/page-024.png",
+          "render_sha256": "6c27f7072580eae28bb003a96e9092cbee5f1b717d72013c8d232254ae44c137",
+          "pixel_sha256": "e98dc7bbee4729642e9584894f1ed48e0283647b85e1f890f248fcc9e4935a9b",
+          "previous_render_sha256": "6c27f7072580eae28bb003a96e9092cbee5f1b717d72013c8d232254ae44c137",
+          "same_render_as_prior_review": true,
+          "status": "passed_individual_readable_visual_review"
+        }
+      ],
+      "pages_reviewed": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24
+      ],
+      "render_dpi": 125,
+      "result": "Passed all 24 individually inspected readable pages: aims, pressure normalization, governing model, fixed-volume family, independent cone verification, frozen 44-case split, training-only POD/scaling, surrogate controls and signed comparisons. No bars or clipping; legends do not obscure curves. Failed NASA reproduction and absent ground-noise prediction remain explicit.",
+      "wording_amendment": "Page 10 correctly states that flow velocity becomes tangent to the cone surface; its polar component vanishes. The equation/data are unchanged. Final page 10 was re-inspected; the other 23 PNGs exactly match the independent prior review hashes."
+    },
+    {
+      "path": "lectures/week19_cfd_transformer.pdf",
+      "sha256": "32167dc706f35ba4cb48ccb7ae48e0c6200de51166d8e12e1393b90be057a344",
+      "pages_reviewed": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "render_dpi": 125,
+      "pages": [
+        {
+          "page": 1,
+          "review_render": "tmp/course_refresh_late/pdf_review/week19_cfd_transformer/page-001.png",
+          "render_sha256": "fd39b265daf17351fd359aa19f738b64fe90536a060b6298483647bee7046a28",
+          "pixel_sha256": "b11926f157b72440853fa86e392625ab32241113bb443572143e0557d517b329",
+          "status": "passed_individual_readable_visual_review",
+          "review": "Aim, token dimensions, 2496/104/one-state counts and quadratic attention storage formula are clear."
+        },
+        {
+          "page": 2,
+          "review_render": "tmp/course_refresh_late/pdf_review/week19_cfd_transformer/page-002.png",
+          "render_sha256": "7f8b07951e2107a76fdf4b52679aff7a0aa37d253c52c710d2c1adfad53751ef",
+          "pixel_sha256": "a91b6e1a3016fd410abc71cafaf3b917ac8f79be90e8b89f77422f349a1f3f3a",
+          "status": "passed_individual_readable_visual_review",
+          "review": "Training-only POD, representation floor, conditioned least squares and QR/D-optimal selection explained with rendered equations."
+        },
+        {
+          "page": 3,
+          "review_render": "tmp/course_refresh_late/pdf_review/week19_cfd_transformer/page-003.png",
+          "render_sha256": "ff864e7167aa15c65daf1e8f622fcab7f478f3128523a31deac653e3252bf869",
+          "pixel_sha256": "9c9ec7626513a33ad90e761aa7d336c2ae51077dc53f9247e7127c4fd566e262",
+          "status": "passed_individual_readable_visual_review",
+          "review": "Noisy observation convention, engineering deliverables and limits of a single realization are explicit."
+        },
+        {
+          "page": 4,
+          "review_render": "tmp/course_refresh_late/pdf_review/week19_cfd_transformer/page-004.png",
+          "render_sha256": "b9ff7d0b667995a71deaa038f1f79d5c4ccd48961eb22918c665d6c41e070d1f",
+          "pixel_sha256": "563fb212364a6a8e467fa44ff0c92f1b76d933e18337004aff624f9d3506512e",
+          "status": "passed_individual_readable_visual_review",
+          "review": "Native Re110 field and signed error use matched contours; native profiles expose QR/lattice disagreement, with outside legends."
+        },
+        {
+          "page": 5,
+          "review_render": "tmp/course_refresh_late/pdf_review/week19_cfd_transformer/page-005.png",
+          "render_sha256": "6c88cc62a5f12e513f219400c67e7876f0aaf4f36f0467869357dc4b9427bdfb",
+          "pixel_sha256": "9169f21fe0709d72a41bdf7b99f43d4aed99816f7545b66b05ed8ee4c5463a47",
+          "status": "passed_individual_readable_visual_review",
+          "review": "All four exercises have precise input/output contracts, validation separation and submission criteria."
+        },
+        {
+          "page": 6,
+          "review_render": "tmp/course_refresh_late/pdf_review/week19_cfd_transformer/page-006.png",
+          "render_sha256": "b72bcd829a6b35896e6b46af3224949ca3f08e4fa40768267bf553ac06ccfa96",
+          "pixel_sha256": "0d7e9237520d9753ace3158386e66c7832aafd0b20b7fa2b42c0e2dba891ac84",
+          "status": "passed_individual_readable_visual_review",
+          "review": "Route table and interpretation are readable; the redundant old bar-chart image has been removed, preserving its data and the numerical cost explanation."
+        }
+      ],
+      "result": "Passed all six final pages after removing the redundant bar-chart appendix; physical results, formulas, tasks and retained scientific data preserved."
+    },
+    {
+      "path": "lectures/week22_cfd_transformer.pdf",
+      "sha256": "98d0197111e0307b489cfede847bc7f76dba9af17a8835368484c6683e83bba7",
+      "pages_reviewed": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "render_dpi": 125,
+      "pages": [
+        {
+          "page": 1,
+          "review_render": "tmp/course_refresh_late/pdf_review/week22_cfd_transformer/page-001.png",
+          "render_sha256": "0706bfe518b40f6d5336cb328f5e7750b732511d2d07ff5a0d75da8d7bad73f3",
+          "pixel_sha256": "94c1cbe31cdac3b37aaafc117493c61b1da4e948bacb7929d5d2bfe8d03ca3c4",
+          "status": "passed_individual_readable_visual_review",
+          "review": "Transfer aim, retained-case scope and all target-label budgets including initialization are explicit.",
+          "prior_pixel_sha256": "94c1cbe31cdac3b37aaafc117493c61b1da4e948bacb7929d5d2bfe8d03ca3c4",
+          "same_pixels_as_prior_review": true
+        },
+        {
+          "page": 2,
+          "review_render": "tmp/course_refresh_late/pdf_review/week22_cfd_transformer/page-002.png",
+          "render_sha256": "48413db28f60afcd4fad0ca2af98d5006d73502545dc7c329c3f2652ff9665ab",
+          "pixel_sha256": "0b7f1d6461faf0c71c68a17c3c8fa4162e9796ef9c1ce4eed8fc98d92e3c5323",
+          "status": "passed_individual_readable_visual_review",
+          "review": "Compute matching, source-cost accounting and squared representation-floor ratio are explained with meaningful limitations.",
+          "prior_pixel_sha256": "0b7f1d6461faf0c71c68a17c3c8fa4162e9796ef9c1ce4eed8fc98d92e3c5323",
+          "same_pixels_as_prior_review": true
+        },
+        {
+          "page": 3,
+          "review_render": "tmp/course_refresh_late/pdf_review/week22_cfd_transformer/page-003.png",
+          "render_sha256": "d9352716616083ed2a3c92dd8b0d3e5f92df31c31e5e3e196c8ddf6a23b6b93a",
+          "pixel_sha256": "ccda5d0a5c1747e622e2c8a44729830fc86abf05e76446e3b650fb4ab9878a4c",
+          "status": "passed_individual_readable_visual_review",
+          "review": "Transfer claim, reproducibility and capstone requirements distinguish retained evidence from a blind research test.",
+          "prior_pixel_sha256": "ccda5d0a5c1747e622e2c8a44729830fc86abf05e76446e3b650fb4ab9878a4c",
+          "same_pixels_as_prior_review": true
+        },
+        {
+          "page": 4,
+          "review_render": "tmp/course_refresh_late/pdf_review/week22_cfd_transformer/page-004.png",
+          "render_sha256": "1b7a2ae4c9c231387fca1e982d28a1d36446682caa26b66198d892385561b6cc",
+          "pixel_sha256": "ec97dde0d29ff6191152bc66adddd5d2d002bc0b5295c8f11481b06352bd2049",
+          "status": "passed_individual_readable_visual_review",
+          "review": "Re110,84-label,seed17,frame240 field/profile comparisons preserve signed errors and show all five control arms without covered curves.",
+          "prior_pixel_sha256": "ec97dde0d29ff6191152bc66adddd5d2d002bc0b5295c8f11481b06352bd2049",
+          "same_pixels_as_prior_review": true
+        },
+        {
+          "page": 5,
+          "review_render": "tmp/course_refresh_late/pdf_review/week22_cfd_transformer/page-005.png",
+          "render_sha256": "3baa93131fafd70ed96eb764487402558ca62e8f9b78652b078ed494801ba021",
+          "pixel_sha256": "776b1d843b056aaed5cd9a92935c7c1894f841ee8064325c411860ba7bee454c",
+          "status": "passed_individual_readable_visual_review",
+          "review": "Four precise exercises include visibly correct Python ** powers, union accounting, strict floor threshold and negative-gain retention.",
+          "prior_pixel_sha256": "776b1d843b056aaed5cd9a92935c7c1894f841ee8064325c411860ba7bee454c",
+          "same_pixels_as_prior_review": true
+        },
+        {
+          "page": 6,
+          "review_render": "tmp/course_refresh_late/pdf_review/week22_cfd_transformer/page-006.png",
+          "render_sha256": "781602ec49b277b7451c02f5dd6be6e431118cf6d60c53456dacb85e77f46d15",
+          "pixel_sha256": "5067dfb6ef3b5719c5b67319a90505b3aaedff106a9c93aff42de863b2c80c1a",
+          "status": "passed_individual_readable_visual_review",
+          "review": "Assessment and laboratory route define controls, source information and interpretation limits.",
+          "prior_pixel_sha256": "5067dfb6ef3b5719c5b67319a90505b3aaedff106a9c93aff42de863b2c80c1a",
+          "same_pixels_as_prior_review": true
+        },
+        {
+          "page": 7,
+          "review_render": "tmp/course_refresh_late/pdf_review/week22_cfd_transformer/page-007.png",
+          "render_sha256": "a6aa43a690acca7ea8de0b32f9eacb3694aa5819e14fa2b9ac50d7ed70840102",
+          "pixel_sha256": "559adc069dd8d8604af044ee15b90181bd6e6cf24a0cef3fada594607fa7ae0e",
+          "status": "passed_individual_readable_visual_review",
+          "review": "Portrait three-row/two-column summary has readable external legend, complete seed ranges, explicit source/target POD floors and an accurate caption; no bars or clipped curves.",
+          "prior_pixel_sha256": "c009f94588f07f5e94a4034f2bd4e7287db8af858ef46cdf97c6238d48ebea2c",
+          "same_pixels_as_prior_review": false
+        }
+      ],
+      "result": "Passed all seven pages, with final page7 individually re-inspected after the lecture-only portrait presentation repair.",
+      "presentation_amendment": {
+        "prior_pdf_sha256": "b2d3e90aadda384924014e892b7e286b627b42b6f85d6ebf0486d94eea8df334",
+        "changed_pages": [
+          7
+        ],
+        "unchanged_reviewed_pages": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6
+        ],
+        "scientific_data_change": false,
+        "note": "Only the lecture summary layout/legend/caption changed. Data means, full min-to-max seed ranges and representation floors remain from the retained protocol."
+      }
+    }
+  ],
+  "limits": [
+    "Independent source/setup and selected-page review only; full release gates and actual numerical execution are recorded separately.",
+    "Current final PDF coverage here is Week16 pages1-24, Week19 pages1-6 and Week22 pages1-7. The earlier Week15 five-page review is retained as historical; parent owns its final PDF coverage."
+  ],
+  "historical_pdf_review": [
+    {
+      "path": "lectures/week15_geometry_generalization.pdf",
+      "sha256": "7275e2c30a0073d3a7830599d5a4fd1c58307b7b4abbf99d378ce7caba8fe162",
+      "pages_reviewed": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "render_dpi": 125,
+      "renders": [
+        {
+          "page": 1,
+          "review_render": "tmp/course_refresh_late/pdf_review/week15_geometry_generalization/page-001.png",
+          "render_sha256": "f775eda82285db2250ab676469e756c10c19b41bec4dd4e00c9b08a98a955873"
+        },
+        {
+          "page": 2,
+          "review_render": "tmp/course_refresh_late/pdf_review/week15_geometry_generalization/page-002.png",
+          "render_sha256": "c0022ad8def4a197524b9b66c50f41af70524fd83b7dcb9ad73c936216d3aece"
+        },
+        {
+          "page": 3,
+          "review_render": "tmp/course_refresh_late/pdf_review/week15_geometry_generalization/page-003.png",
+          "render_sha256": "ef48948bd20acc1deee7ce390b6b1392b15297e70c2b1bb63d3e5b776f49a491"
+        },
+        {
+          "page": 4,
+          "review_render": "tmp/course_refresh_late/pdf_review/week15_geometry_generalization/page-004.png",
+          "render_sha256": "a1fd194701d394fe3886cabac1b22690c6345c6934437b68475c07aac05162c8"
+        },
+        {
+          "page": 5,
+          "review_render": "tmp/course_refresh_late/pdf_review/week15_geometry_generalization/page-005.png",
+          "render_sha256": "05c8f24ebff28a5eb4a6bdcc5e572e931bc0a1a897bb56f7f00cce8e5e071074"
+        }
+      ],
+      "result": "Passed: clear aim, analytic reference and variables, split, branch/trunk model, 748-parameter count, optimizer budgets, controls, concrete exercises and physical contour/profile comparisons. No clipping.",
+      "nonblocking_editorial_note": "A period or paragraph break could separate the LIFT-inspired proxy scope sentence and Evidence rule on page 1. Author informed.",
+      "current_coverage_note": "This five-page review is tied only to its recorded earlier PDF/render hashes. Current Week15 pages are covered by the parent final review and its verified decoded-pixel bridge; no unproved direct identity from this earlier edition is claimed."
+    }
+  ],
+  "encoding_review": {
+    "producer_defect": "The notebook generator read canonical UTF-8 JSON with the Windows default encoding; the checker repeated the implicit read.",
+    "correction": "Explicit UTF-8 reads in generator and curriculum checker; exact canonical source comparison passes in all 12 editions.",
+    "reviewed_sources": {
+      "qa/build_transformer_course.py": "c86ee0c260219b128b86b510c4bad8c7a05c6c875c6fec5dc292599bd865daeb",
+      "qa/verify_transformer_curriculum.py": "baf74868ccfdb1a5867e5f404f475cd0e4091f8220afff8bbd2a245d9ac2b78c",
+      "tests/test_transformer_source_encoding.py": "1dbad83fd6f6fe7d1ae0bd7e320942c738f2cc448d04fba9eb3854d77b0e57a2"
+    },
+    "review_scope": "Notebook producer, explicit UTF-8 reads, focused CP1252 fallback regression, and lecture presentation dispatch; no numerical kernels rerun.",
+    "independent_exact_source_check": [
+      {
+        "path": "notebooks/week17/W17_CFD_Transformer.ipynb",
+        "sha256": "98e5890015a83bd3af87652c6018d17d9e07e273976be1dbbc967514bd2a5393",
+        "all_cell_sources_equal_canonical_UTF8": true
+      },
+      {
+        "path": "instructor/week17/W17_Solutions.ipynb",
+        "sha256": "9d7d21f97d2294b11b471650fa97f8ae5576f7bc5ca33ac1e0c32b9eaa98be31",
+        "all_cell_sources_equal_canonical_UTF8": true
+      },
+      {
+        "path": "notebooks/week18/W18_CFD_Transformer.ipynb",
+        "sha256": "090056d7a4fdb5882b6876038a6badd0240acebf0dae5d86f66bd7c79e7db573",
+        "all_cell_sources_equal_canonical_UTF8": true
+      },
+      {
+        "path": "instructor/week18/W18_Solutions.ipynb",
+        "sha256": "d90bffafdb1e8ebb7b0b742b6a3047853f3b6d5a3b03d4bf475971bfe90e3c7d",
+        "all_cell_sources_equal_canonical_UTF8": true
+      },
+      {
+        "path": "notebooks/week19/W19_CFD_Transformer.ipynb",
+        "sha256": "1ee0bededcfd403b3b5fe80433d1451b41e613b76cd9b141b337320d2bca0079",
+        "all_cell_sources_equal_canonical_UTF8": true
+      },
+      {
+        "path": "instructor/week19/W19_Solutions.ipynb",
+        "sha256": "ed2e66190c48a7cabbf32cece9295b1449ad48dec82b887834dc8435dc076f15",
+        "all_cell_sources_equal_canonical_UTF8": true
+      },
+      {
+        "path": "notebooks/week20/W20_CFD_Transformer.ipynb",
+        "sha256": "41a2f4ea026661c1eb383e6f5a3330ee0b4665b815845a3f972b7f210982a168",
+        "all_cell_sources_equal_canonical_UTF8": true
+      },
+      {
+        "path": "instructor/week20/W20_Solutions.ipynb",
+        "sha256": "75338d8d13b372604b93c7ed8a9bcbe3dfac751f697cfceb86fb527160c18905",
+        "all_cell_sources_equal_canonical_UTF8": true
+      },
+      {
+        "path": "notebooks/week21/W21_CFD_Transformer.ipynb",
+        "sha256": "06a5daea963fcd7c2b0137d5ab33ce0681277b6e683a323fbd5a95c38f3bd0d3",
+        "all_cell_sources_equal_canonical_UTF8": true
+      },
+      {
+        "path": "instructor/week21/W21_Solutions.ipynb",
+        "sha256": "fd99c021f71951c7539f10cace40c049e35eac0926bf8446ccdc2571073c65d1",
+        "all_cell_sources_equal_canonical_UTF8": true
+      },
+      {
+        "path": "notebooks/week22/W22_CFD_Transformer.ipynb",
+        "sha256": "f0063ab4d84113cf45fefc22776c8e9cbd04651d45f3ff35ac1459421a7ae2f0",
+        "all_cell_sources_equal_canonical_UTF8": true
+      },
+      {
+        "path": "instructor/week22/W22_Solutions.ipynb",
+        "sha256": "16e5cba5dba247180d15b49025e7db717f41bcfd0394911ecb1b2e76f07ba391",
+        "all_cell_sources_equal_canonical_UTF8": true
+      }
+    ],
+    "CP1252_regression": {
+      "test": "test_both_editions_preserve_unicode_with_cp1252_default",
+      "author_reported_status": "passed",
+      "author_reported_seconds": 2.424,
+      "independent_review": "Test source inspected: mocks unspecified reads to CP1252, invokes real generator with non-ASCII canonical content, checks both editions exactly."
+    },
+    "parent_complete_parsed_source_scan": {
+      "path": "qa/course_refresh_source_scan.json",
+      "sha256": "bbf6f8bc656aee71abc25de9766c3b6b5a81ce3b3b8ef49d00b9bef75986e02e",
+      "status": "passed"
+    }
+  },
+  "current_final_pdf_pages_individually_reviewed": 37
+}

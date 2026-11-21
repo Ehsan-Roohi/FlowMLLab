@@ -1,0 +1,33 @@
+{
+  "status": "pass",
+  "reference_function_ast_sha256": "0e9ff64cfe98d50c1ffdef7cdb35ea5861853e52597b457c10b7f30c5669d7b5",
+  "method": "Independent finite differences of psi=3eta²−2eta³ at fixed physical coordinates, exact zero-wall check and known quadratic trapezoidal flux error. This is a kinematic reference, not a Navier–Stokes CFD solve.",
+  "checks": [
+    {
+      "geometry_a": 0.0,
+      "physical_coordinate_streamfunction_derivative_error_max": 1.3923395769666058e-10,
+      "wall_velocity_max": 0.0,
+      "trapezoidal_flux": 0.998263888888889,
+      "exact_flux": 1.0,
+      "finite_grid_quadrature_error": 0.0017361111111110494
+    },
+    {
+      "geometry_a": 0.32,
+      "physical_coordinate_streamfunction_derivative_error_max": 1.945612837506161e-10,
+      "wall_velocity_max": 0.0,
+      "trapezoidal_flux": 0.998263888888889,
+      "exact_flux": 1.0,
+      "finite_grid_quadrature_error": 0.0017361111111110494
+    },
+    {
+      "geometry_a": 0.52,
+      "physical_coordinate_streamfunction_derivative_error_max": 2.667037701797881e-10,
+      "wall_velocity_max": 0.0,
+      "trapezoidal_flux": 0.998263888888889,
+      "exact_flux": 1.0,
+      "finite_grid_quadrature_error": 0.0017361111111110494
+    }
+  ],
+  "reviewer": "/root",
+  "new_neural_training_run": false
+}

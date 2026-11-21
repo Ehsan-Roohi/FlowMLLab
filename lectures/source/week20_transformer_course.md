@@ -63,6 +63,18 @@ Report every seed and condition; show validation curves; distinguish model size,
 
 Course background: the Week 4/5 POD-DeepONet and modal-sensing laboratories. Architecture context: Lu et al., Learning nonlinear operators via DeepONet, https://doi.org/10.1038/s42256-021-00302-5; Wu et al., Transolver (2024), https://arxiv.org/abs/2402.02366. The latter is a research comparison for discussion, not an architecture claimed reproduced by this compact POD-decoder experiment.
 
+<!-- physical-laboratory:start -->
+
+## Read the physical diagnostic
+
+![Re=100 validation frame 120 after the fresh 120-update classroom fit. It is a validation diagnostic of this short fit, separate from the retained 1,200-update protocol.](../../results/late_course_teaching/week20_classroom_fit_01.png)
+
+![Re=105, frame 120, seed 17, fixed half-sensor condition: retained Sensor-set prediction and matched native CFD. Missing-sensor policies differ between systems and must be stated when comparing them.](../../results/late_course_teaching/week20_retained_sensing_01.png)
+
+![Same-case signed native-row profiles for all four estimators. Retain each loss as well as each gain; a useful set interface does not guarantee a lower reconstruction error than a classical estimator.](../../results/late_course_teaching/week20_retained_sensing_05.png)
+
+<!-- physical-laboratory:end -->
+
 ## Printable laboratory worksheet
 
 ### Task 1: Consistent sensor-token dropout
@@ -104,3 +116,14 @@ Misconception to reject: “A model that reaches its update ceiling is necessari
 
 
 Timing estimate: a 120-minute guided lab and roughly 3–5 hours including preparation and written analysis. This is an editorial estimate; a timed student pilot remains open.
+
+## Laboratory route: from inputs to physical conclusions
+
+| Notebook stage | Development data | Evaluation/output |
+|---|---|---|
+| 120-update teaching fit | Re90/Re110 training; Re100 validation | Validation curve and a fresh Re100 validation-field prediction |
+| Retained all/half-sensor comparison | Original frozen source basis and checkpoints | Same Re105 frame for Sensor-set, POD-DeepONet, ridge-imputation and gappy POD |
+| Tasks 1–3 | Dropout consistency, parameter count and budget diagnosis | Distinguish missing values from missing sensor tokens |
+| Task 4 | Validation history and checkpoint states | Select without reading test metrics; report boundary and step-zero choices |
+
+The fresh validation picture is not a replay of the published 1,200-update results. The retained Re105 comparison is retrospective and uses the full saved protocol. Set FRAME and CONDITION before inspecting the field. Under drop-half, fixed-input methods use their documented imputation while variable-set and gappy methods receive available observations. Describe this as a system comparison, with the paired same-model augmentation study kept separate.

@@ -216,30 +216,83 @@ def results_frame(rows):
 
 
 def plot_case_evidence(data, re_value, predictions, title=None):
-    """Plot truth, predictions, velocity error, and centerlines."""
+    """Native fields, matched contour levels, complete error range and physical profiles.
+
+    This renderer does not alter predictions or scientific metrics. Pressure is
+    compared after removing each field's own mean, as in the dataset convention.
+    """
     import matplotlib.pyplot as plt
-    idx = int(np.where(data["Re"].astype(float)==float(re_value))[0][0])
-    x,y = data["x"],data["y"]
-    Xg,Yg = np.meshgrid(x,y)
-    tu,tv,tp = data["u"][idx],data["v"][idx],data["p"][idx]
-    n = len(predictions)
-    fig, axes = plt.subplots(n+1, 4, figsize=(15, 3.6*(n+1)))
-    axes = np.atleast_2d(axes)
-    axes[0,0].streamplot(Xg,Yg,tu,tv,density=1.0)
-    axes[0,0].set_title("CFD streamlines")
-    im=axes[0,1].contourf(Xg,Yg,tp,28); fig.colorbar(im,ax=axes[0,1]); axes[0,1].set_title("CFD pressure")
-    mid=len(x)//2
-    axes[0,2].plot(tu[:,mid],y,label="u"); axes[0,2].plot(tv[mid,:],x,label="v"); axes[0,2].legend(); axes[0,2].set_title("CFD centerlines")
-    axes[0,3].axis("off")
-    for row,(name,(u,v,p)) in enumerate(predictions.items(),start=1):
-        axes[row,0].streamplot(Xg,Yg,u,v,density=1.0); axes[row,0].set_title(f"{name}: streamlines")
-        err=np.hypot(u-tu,v-tv); im=axes[row,1].contourf(Xg,Yg,err,28); fig.colorbar(im,ax=axes[row,1]); axes[row,1].set_title(f"{name}: vector error")
-        axes[row,2].plot(tu[:,mid],y,"k",label="CFD u"); axes[row,2].plot(u[:,mid],y,"r--",label="model u"); axes[row,2].legend(fontsize=8)
-        axes[row,3].plot(x,tv[mid,:],"k",label="CFD v"); axes[row,3].plot(x,v[mid,:],"r--",label="model v"); axes[row,3].legend(fontsize=8)
-    for ax in axes.ravel():
-        if ax.has_data(): ax.grid(alpha=.2)
-    if title: fig.suptitle(title)
-    fig.tight_layout(); return fig
+    from matplotlib.lines import Line2D
+    from matplotlib.patches import Patch
+    idx = int(np.where(data["Re"].astype(float) == float(re_value))[0][0])
+    x, y = np.asarray(data["x"]), np.asarray(data["y"])
+    tu, tv = np.asarray(data["u"][idx]), np.asarray(data["v"][idx])
+    tp = np.asarray(data["p"][idx]); tp = tp - tp.mean()
+    if not predictions:
+        raise ValueError("At least one prediction is needed for a comparison")
+    prepared = []
+    for name, fields in predictions.items():
+        u, v, p = (np.asarray(f, dtype=float) for f in fields)
+        if any(f.shape != tu.shape or not np.isfinite(f).all() for f in (u, v, p)):
+            raise ValueError("Prediction fields must be finite and match the native CFD grid")
+        prepared.append((str(name), u, v, p-p.mean(), np.hypot(u-tu, v-tv)))
+    pressure_min = min(float(tp.min()), *(float(row[3].min()) for row in prepared))
+    pressure_max = max(float(tp.max()), *(float(row[3].max()) for row in prepared))
+    pressure_levels = np.linspace(pressure_min, max(pressure_max, pressure_min+1e-12), 25)
+    line_levels = pressure_levels[3:-3:3]
+    maximum_error = max(float(row[4].max()) for row in prepared)
+    error_levels = np.linspace(0, max(maximum_error, 1e-12), 25)
+    speed = np.hypot(tu, tv)
+    speed_levels = np.linspace(float(speed.min()), max(float(speed.max()), float(speed.min())+1e-12), 25)
+    fig, axes = plt.subplots(2*len(prepared), 3, figsize=(12.8, 7.4*len(prepared)), squeeze=False,
+                             layout="constrained")
+    def center_vertical(field):
+        return np.array([np.interp(.5, x, row) for row in field])
+    def center_horizontal(field):
+        return np.array([np.interp(.5, y, field[:, j]) for j in range(len(x))])
+    for k, (name, u, v, p, error) in enumerate(prepared):
+        upper, lower = axes[2*k], axes[2*k+1]
+        im = upper[0].contourf(x, y, speed, levels=speed_levels, cmap="turbo")
+        for uu, vv, color, style in ((tu, tv, "black", "solid"), (u, v, "magenta", "dashed")):
+            lines = upper[0].streamplot(x, y, uu, vv, color=color, density=1.1,
+                                       linewidth=.65, arrowsize=.6)
+            lines.lines.set_linestyle(style)
+        upper[0].set_title(name + ": flow structure")
+        upper[0].legend(handles=[Patch(facecolor=plt.get_cmap("turbo")(.5), label="CFD"),
+            Line2D([], [], color="black", label="CFD streamlines"),
+            Line2D([], [], color="magenta", ls="--", label=name)],
+            loc="upper center", bbox_to_anchor=(.5, -.20), fontsize=8)
+        fig.colorbar(im, ax=upper[0], label="CFD speed / U_lid", shrink=.78)
+        im = upper[1].contourf(x, y, tp, levels=pressure_levels, cmap="turbo")
+        upper[1].contour(x, y, tp, levels=line_levels, colors="black", linewidths=.7)
+        upper[1].contour(x, y, p, levels=line_levels, colors="magenta", linestyles="dashed", linewidths=1)
+        upper[1].set_title("Pressure: identical physical contour levels")
+        upper[1].legend(handles=[Line2D([],[], color="black",label="CFD"),
+            Line2D([],[],color="magenta",ls="--",label=name)],
+            loc="upper center",bbox_to_anchor=(.5,-.20),fontsize=8)
+        fig.colorbar(im, ax=upper[1], label="Mean-zero p / (rho U_lid^2)", shrink=.78)
+        im = upper[2].contourf(x, y, error, levels=error_levels, cmap="turbo")
+        upper[2].set_title("Velocity-vector error; full linear range")
+        fig.colorbar(im, ax=upper[2], label="|prediction - CFD| / U_lid", shrink=.78)
+        for ax in upper:
+            ax.set(xlabel="x/L", ylabel="y/L", aspect="equal", xlim=(0,1), ylim=(0,1))
+        lower[0].plot(center_vertical(tu), y, color="black", label="CFD")
+        lower[0].plot(center_vertical(u), y, color="magenta", ls="--", label=name)
+        lower[0].set(xlabel="u / U_lid", ylabel="y/L", title="Vertical centerline: x/L = 0.5")
+        lower[1].plot(x, center_horizontal(tv), color="black", label="CFD")
+        lower[1].plot(x, center_horizontal(v), color="magenta", ls="--", label=name)
+        lower[1].set(xlabel="x/L", ylabel="v / U_lid", title="Horizontal centerline: y/L = 0.5")
+        lower[2].plot(y, center_vertical(tp), color="black", label="CFD, vertical")
+        lower[2].plot(y, center_vertical(p), color="magenta", ls="--", label=name+", vertical")
+        lower[2].plot(x, center_horizontal(tp), color="tab:blue", label="CFD, horizontal")
+        lower[2].plot(x, center_horizontal(p), color="tab:orange", ls=":", label=name+", horizontal")
+        lower[2].set(xlabel="Centerline position / L", ylabel="Mean-zero p / (rho U_lid^2)",
+                     title="Pressure profiles: one gauge for every field")
+        for ax in lower:
+            ax.grid(alpha=.2)
+            ax.legend(loc="upper center", bbox_to_anchor=(.5,-.20), fontsize=8)
+    fig.suptitle((title+" | " if title else "")+f"Re = {float(re_value):g}; native {len(x)} x {len(y)} grid")
+    return fig
 
 
 # ------------------------------- POD helpers -------------------------------

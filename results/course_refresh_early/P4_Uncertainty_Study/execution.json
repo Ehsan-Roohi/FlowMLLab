@@ -1,0 +1,35 @@
+{
+  "notebook": "notebooks/week05_06/P4_Uncertainty_Study.ipynb",
+  "utc": "2026-11-21T02:52:15.167113+00:00",
+  "elapsed_run_all_seconds": 554.3551526330411,
+  "host": "uri-cpu084",
+  "kernel": "/scratch3/workspace/roohie_umass_edu-flowml-ghia-highre-20261115/week04-lab2-qa-20261120/venv/bin/python",
+  "python": "3.12.3 (main, Aug 31 2026, 10:18:26) [GCC 13.3.0]",
+  "cpu_only": true,
+  "failure": null,
+  "code_cells": 6,
+  "executed_cells": 6,
+  "inline_figures": [
+    {
+      "path": "results/course_refresh_early/P4_Uncertainty_Study/cell_15_01.png",
+      "sha256": "2bdfef3e9754ab8956d5fe5ae545acf141910dc9739c9c81271f21e58c14c1de"
+    },
+    {
+      "path": "results/course_refresh_early/P4_Uncertainty_Study/cell_17_00.png",
+      "sha256": "c89a15ddef01729bf9cb7bf785e5765f0bb83129fe0b98efa0a79d3fb6b705f1"
+    },
+    {
+      "path": "results/course_refresh_early/P4_Uncertainty_Study/cell_17_01.png",
+      "sha256": "7364510d6bb2562f8f84ac28d41b204f073c255170a8fd204bd3b58fa3d832f8"
+    }
+  ],
+  "notebook_sha256": "ffc8234ecfbaf94c154fdde9ac1d4b89cc413a9bd94d9cb44150cb2624973cd4",
+  "code_sha256": "0941c4884c86d014edeb651ffdd2ab7487238f5a1db4863498cf33c1767b3ecb",
+  "claim": "Fresh default CPU Run All; no hosted Colab or optional GPU execution claimed.",
+  "execution_notebook_sha256": "0f6bc6ed306d6f8b7e53193887cecc756b63aea4c8d8bbd6034ba1544c5b143b",
+  "post_execution_markdown_revision": {
+    "reason": "Add missing space in \"a 95%\"; all code, output and timing retained.",
+    "code_outputs_execution_metadata_equal": true,
+    "before_notebook_sha256": "0f6bc6ed306d6f8b7e53193887cecc756b63aea4c8d8bbd6034ba1544c5b143b"
+  }
+}

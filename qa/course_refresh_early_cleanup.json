@@ -1,0 +1,128 @@
+{
+  "actual_bytes": 9468754.0,
+  "utc": "2026-11-21T03:32:06.8609223Z",
+  "actual_deleted": [
+    {
+      "path": "D:\\ChatGPT Backup\\Projects\\FlowMLLab\\Teaching_Current\\repo\\tmp\\course_refresh_early\\verified_teaching_return.tar.gz",
+      "bytes": 5789078,
+      "sha256": "c415d300e5825eba53d8fdcd4837052105d3e7d2fecb9e5f37edf0e4ba14cf42",
+      "reason": "Closed transfer container; final notebooks/images verified by finalizer. Unique raw NPZ is byte-identical and retained; superseded execution receipts and differing numerical CSV tables retained compactly."
+    },
+    {
+      "path": "D:\\ChatGPT Backup\\Projects\\FlowMLLab\\Teaching_Current\\repo\\tmp\\course_refresh_early\\p5_verified_return.tar.gz",
+      "bytes": 1305392,
+      "sha256": "621b7abf14cefc403e26b35ad6328efb65b747e072633761fc585f3a84fe682e",
+      "reason": "Closed transfer container; final notebooks/images verified by finalizer. Unique raw NPZ is byte-identical and retained; superseded execution receipts and differing numerical CSV tables retained compactly."
+    },
+    {
+      "path": "D:\\ChatGPT Backup\\Projects\\FlowMLLab\\Teaching_Current\\repo\\tmp\\course_refresh_early\\final_p2_p5_return.tar.gz",
+      "bytes": 2149918,
+      "sha256": "fb3a8e802d62914adc139cdaeb5eeed6785297f8945b0f8c09b404464dce4a8d",
+      "reason": "Closed transfer container; final notebooks/images verified by finalizer. Unique raw NPZ is byte-identical and retained; superseded execution receipts and differing numerical CSV tables retained compactly."
+    },
+    {
+      "path": "D:\\ChatGPT Backup\\Projects\\FlowMLLab\\Teaching_Current\\repo\\tmp\\course_refresh_early\\lecture_review\\week05_modal_sensing_011.png",
+      "bytes": 80202,
+      "sha256": "56de7d89d09cae57250f7c8c10b5b9d33b92c710699d6cf4c95be308090ca4b9",
+      "reason": "Superseded12-page layout render; final10-page PDF and every final page independently reviewed."
+    },
+    {
+      "path": "D:\\ChatGPT Backup\\Projects\\FlowMLLab\\Teaching_Current\\repo\\tmp\\course_refresh_early\\lecture_review\\week05_modal_sensing_012.png",
+      "bytes": 144164,
+      "sha256": "0f423ae1f9567b71acbaae576f237ac3e80d0a672b200ada8ea95cb5d6728705",
+      "reason": "Superseded12-page layout render; final10-page PDF and every final page independently reviewed."
+    }
+  ],
+  "retained": [
+    "Canonical19notebooks and11PDFs, source helpers/patchers, allrawP5NPZ, final35images, final22page renders, exact input staging archives and compact execution/history receipts."
+  ],
+  "scientific_state_removed": false,
+  "source_staging_retained": true,
+  "remote_cleanup": {
+    "utc": "2026-11-20T22:32:51.258303-05:00",
+    "actual_deleted": [
+      {
+        "path": "/scratch3/workspace/roohie_umass_edu-flowml-ghia-highre-20261115/course-early-cpu-qa-20261121/verified_teaching_return.tar.gz",
+        "bytes": 5789078,
+        "sha256": "c415d300e5825eba53d8fdcd4837052105d3e7d2fecb9e5f37edf0e4ba14cf42"
+      },
+      {
+        "path": "/scratch3/workspace/roohie_umass_edu-flowml-ghia-highre-20261115/course-early-cpu-qa-20261121/p5_verified_return.tar.gz",
+        "bytes": 1305392,
+        "sha256": "621b7abf14cefc403e26b35ad6328efb65b747e072633761fc585f3a84fe682e"
+      },
+      {
+        "path": "/scratch3/workspace/roohie_umass_edu-flowml-ghia-highre-20261115/course-early-cpu-qa-20261121/final_p2_p5_return.tar.gz",
+        "bytes": 2149918,
+        "sha256": "fb3a8e802d62914adc139cdaeb5eeed6785297f8945b0f8c09b404464dce4a8d"
+      }
+    ],
+    "actual_bytes": 9244388,
+    "all_six_scoped_jobs_closed": true,
+    "retained": "All source input staging, completed run repositories, raw scientific samples, final notebook/results, shared runtime and other chat state untouched."
+  },
+  "total_verified_removed_bytes": 18784705.0,
+  "consolidated_qa_receipts_removed": [
+    {
+      "path": "D:\\ChatGPT Backup\\Projects\\FlowMLLab\\Teaching_Current\\repo\\qa\\course_refresh_early.json",
+      "bytes": 15944,
+      "sha256": "b620bf1352e3bb00bd5ea4ca7e1f08b308430d6c01e40af321a9239af8387d8f"
+    },
+    {
+      "path": "D:\\ChatGPT Backup\\Projects\\FlowMLLab\\Teaching_Current\\repo\\qa\\course_refresh_early_lectures.json",
+      "bytes": 6298,
+      "sha256": "027e00bbc648e47d475aefdb39b77ce5126f137940b83acab011feeb775225f8"
+    },
+    {
+      "path": "D:\\ChatGPT Backup\\Projects\\FlowMLLab\\Teaching_Current\\repo\\qa\\course_refresh_early_visual_pending.json",
+      "bytes": 7372,
+      "sha256": "b81efbbf1601d796302c75781962b3486bcd9b2b58d36b474c79131a7fa61ab5"
+    },
+    {
+      "path": "D:\\ChatGPT Backup\\Projects\\FlowMLLab\\Teaching_Current\\repo\\qa\\course_refresh_early_transfer_history.json",
+      "bytes": 15568,
+      "sha256": "8bf6459aceaa51b42ce4e5a690feb46989af33501bb479ef0743365d45bb7d88"
+    },
+    {
+      "path": "D:\\ChatGPT Backup\\Projects\\FlowMLLab\\Teaching_Current\\repo\\qa\\course_refresh_early_remote_cleanup.json",
+      "bytes": 1082,
+      "sha256": "48cc6ccaee15aea6ee2053b64dcb80465ba3977356db42293e687aa4f1a6b479"
+    },
+    {
+      "path": "D:\\ChatGPT Backup\\Projects\\FlowMLLab\\Teaching_Current\\repo\\qa\\course_refresh_early_staging.json",
+      "bytes": 12269,
+      "sha256": "710b439bb35d49f503ddf2ec19c0123d37fe6cda4f2ac78822e912e8d519cb2a"
+    },
+    {
+      "path": "D:\\ChatGPT Backup\\Projects\\FlowMLLab\\Teaching_Current\\repo\\qa\\course_refresh_early_followup.json",
+      "bytes": 714,
+      "sha256": "ed09d1be6cd3567541384b20372e75bdc43621faef269d5d95e4e6561b7fe7de"
+    },
+    {
+      "path": "D:\\ChatGPT Backup\\Projects\\FlowMLLab\\Teaching_Current\\repo\\qa\\course_refresh_early_p5_staging.json",
+      "bytes": 514,
+      "sha256": "333ad0398a31651c819ab4f8f32e13f2c70df0122e823f72049ebb4400f4060a"
+    },
+    {
+      "path": "D:\\ChatGPT Backup\\Projects\\FlowMLLab\\Teaching_Current\\repo\\qa\\course_refresh_early_serialization.json",
+      "bytes": 343,
+      "sha256": "224288419841ed5b0724691dca3816fc04d3904541632911b617f7e2151818db"
+    },
+    {
+      "path": "D:\\ChatGPT Backup\\Projects\\FlowMLLab\\Teaching_Current\\repo\\qa\\course_refresh_early_unity_return.json",
+      "bytes": 7092,
+      "sha256": "8f0242f2db94b17edd21553d156c9b3b6990ed75f1157ee45d7db4834d66ed5f"
+    },
+    {
+      "path": "D:\\ChatGPT Backup\\Projects\\FlowMLLab\\Teaching_Current\\repo\\qa\\course_refresh_early_p5_return.json",
+      "bytes": 1299,
+      "sha256": "69452e10deae365e06f104bc12cb1e40b6817f05a70ae9497c1218b1f0cd6a94"
+    },
+    {
+      "path": "D:\\ChatGPT Backup\\Projects\\FlowMLLab\\Teaching_Current\\repo\\qa\\course_refresh_early_final_return.json",
+      "bytes": 3068,
+      "sha256": "5f7478da65533fc1391014091425c9c9d08f113b1e9076e1364241274d39598a"
+    }
+  ],
+  "consolidated_qa_receipt_bytes": 71563.0
+}

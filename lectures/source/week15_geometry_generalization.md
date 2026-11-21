@@ -1,10 +1,10 @@
 # FlowMLLab Week 15 - Neural Operators Under Geometry and Topology Change
 
-**A long-form, evidence-first lecture for Ehsan Roohi's FlowMLLab**
+**Neural operators: mechanisms, a CPU training laboratory and retained CFD comparisons**
 
-**Release date:** 19 September 2026
+**Teaching edition:** 20 November 2026; retained research protocols keep their original identities.
 
-**Scope:** ordinary DeepONet, Geom-DeepONet, Geo-FNO, SMART, GeoTransolver, DoMINO, a PhysicsX-inspired proxy, and a UniversalAGI/LIFT-inspired proxy
+**Scope:** ordinary DeepONet, Geom-DeepONet, Geo-FNO, SMART, GeoTransolver, DoMINO, a PhysicsX-inspired proxy, and a UniversalAGI/LIFT-inspired proxy.
 **Evidence rule:** no new CFD, no double-step geometry in training or validation, and no claim that the historically inspected double-step set is prospectively blind
 
 ---
@@ -18,7 +18,7 @@ This lecture is deliberately longer than a conventional slide deck. It is intend
 3. an honest comparison of historical baselines, public author implementations, and transparent company-inspired proxies;
 4. a failure-analysis case study showing why a plausible velocity contour is not sufficient evidence of a correct separated flow.
 
-The accompanying notebook is the executable companion. The lecture explains what each calculation means; the notebook rechecks the split, hashes, stored arrays, metrics, learning-rate decisions, Reynolds-number trends, and figure provenance. Neither document runs new CFD.
+The main notebook begins with mechanism demonstrations and a complete small CPU operator-training experiment. Its exact manufactured reference is separate from the retained CFD research results. Accessible comparison tables and figures follow; archive-dependent split, metric and checkpoint audits are optional and clearly labeled. Neither route runs new CFD.
 
 The most important reading discipline is to keep four different questions separate:
 
@@ -30,6 +30,79 @@ The most important reading discipline is to keep four different questions separa
 A model may succeed at the first question and fail at the other three.
 
 ---
+
+<!-- local-operator-lab:start -->
+
+## CPU operator laboratory: from geometry to a learned field
+
+**Aim.** Train a small operator model, vary its capacity and optimization, and judge its spatial errors on geometries excluded from fitting and checkpoint selection. This section runs without the external research archive.
+
+The reference is a **manufactured kinematic flow**, not CFD and not a new result for the double-step research study. Length is scaled by the channel length $L$, velocity by a common $U_0$, and streamfunction by $U_0L$. The formulas below use these dimensionless variables; the plots display the corresponding ratios explicitly. A smooth wall is
+$b_a(x)=a\sin^2(\pi x)$, with $0\le x\le1$ and $b_a(x)\le y\le1$.
+Use the mapped coordinate $\eta=(y-b_a)/(1-b_a)$ and the exact streamfunction
+$\psi=\eta^2(3-2\eta)$. The velocity is
+
+$$u=\frac{6\eta(1-\eta)}{1-b_a},\qquad
+v=u\,b'_a(x)(1-\eta).$$
+
+Here $a$ is the maximum wall elevation divided by $L$, $x,y$ are nondimensional physical coordinates, $\eta$ is a common wall-normal coordinate, and $u=\partial\psi/\partial y$, $v=-\partial\psi/\partial x$. This construction enforces incompressibility and zero wall velocity, but we have not solved a momentum equation or validated a CFD discretization.
+
+**The actual model.** Training fields provide the mean and a rank-$r$ POD trunk on the mapped $(x,\eta)$ nodes. A tanh branch MLP takes only $a$ and predicts the modal coefficients:
+$\widehat{\mathbf u}(a,x,\eta)=\overline{\mathbf u}(x,\eta)+\sum_{k=1}^{r}c_k(a)\,\boldsymbol\phi_k(x,\eta)$.
+The trunk is learned from training snapshots and then held fixed; this is a POD-DeepONet, not a jointly optimized free-trunk network. Known geometry maps the prediction back to physical $y$.
+
+| Item | Fixed default | What a controlled change tests |
+|---|---|---|
+| Training geometries | 0, .08, .16, .24, .40, .48, .56 | Available shape information; do not silently add validation/test shapes |
+| Validation geometries | .12, .36 | Checkpoint selection only |
+| Test geometries | .32, .52 | New instances within this manufactured family, not new topology |
+| POD rank | 4 | Representation floor before branch fitting |
+| Branch | 2 hidden layers, width 24, tanh | Capacity at fixed input data and optimizer |
+| Optimization | 500 full-batch Adam updates, then at most 100 L-BFGS iterations | Optimization at a fixed architecture; iterations and objective evaluations are different costs |
+| Loss weights | v weight 1, near-wall-band weight 1 | Redistribution of errors; report unweighted physical diagnostics as well |
+
+The training objective is the weighted mean squared velocity error over training geometries and mapped nodes. The near-wall band is $\eta<0.15$ or $\eta>0.85$; increasing its weight emphasizes adjacent fluid points, while the velocity-component weight emphasizes $v$. The validation score is a separately reported unweighted discrete relative norm. Their curves have different units. All discrete scores use the same mapped nodes, not a claim of mesh-independent continuous error.
+
+
+### Follow one run before changing a control
+
+1. Inspect the seven training walls and verify that both validation and test geometry sets are disjoint from them.
+2. Fit the training-only POD trunk. Its mean, modes and coefficient scaling must not read validation or test fields.
+3. Initialize the branch with the declared seed. Adam and L-BFGS optimize only the weighted training objective.
+4. At declared updates, evaluate the validation geometries and save the lowest-validation-error state. Record the selected update, elapsed time and objective evaluations, including a possible step-zero selection.
+5. Freeze that state, then create the two exact test references. Compare with linear interpolation between adjacent training geometries and with the POD projection of the test field. The latter uses reference data and is a representation diagnostic, not a deployable predictor.
+6. Inspect the native mapped-grid speed/error panels and signed u/v profiles at a declared physical x column. Keep losses and improvements visible for both test geometries.
+
+### Four numerical investigations
+
+**Capacity:** keep rank, training geometry, optimizer, seed and loss weights fixed; compare depth 1, 2 and 4 at a declared width. Report parameter counts and objective evaluations as well as error. A deeper network does not automatically have a matched computational budget.
+
+**Optimization:** freeze the architecture and compare Adam, L-BFGS and Adam followed by L-BFGS. Report updates, line-search evaluations, elapsed time, selected validation update and both test errors. An L-BFGS iteration may evaluate the objective more than once.
+
+**Loss weighting:** compare v weights 1 and 10, then near-wall weights 1 and 5 in separate experiments. Keep the unweighted validation criterion fixed. Plot signed u and v discrepancies: an improved weak component or near-wall region can accompany deterioration elsewhere.
+
+**Representation and generalization:** compare ranks 2 and 4 using training-only bases. Report the exact test projection error separately from branch-prediction error and the linear baseline. Once test figures have guided development, call subsequent comparisons retrospective and reserve a new manufactured geometry before making a new final-test claim.
+
+Submit the configuration, geometry partition, loss histories, per-case error table, native field/profile comparisons and one supported recommendation. This exercise teaches learning and evaluation mechanics. The retained double-step galleries address a different geometry/topology problem and must not be merged into its score table.
+
+
+
+### Read the executed manufactured example
+
+The fixed default has 748 trainable branch parameters. Validation selected update 589 in the recorded CPU run; L-BFGS reached its 100-iteration ceiling, so this is a budgeted result, not a convergence certificate. At a=0.32 and 0.52, relative discrete test errors were about 0.110% and 0.124%, versus 1.039% and 0.461% for linear interpolation. These exact-reference teaching cases do not establish accuracy on the retained CFD geometries. Your changed configuration may improve or lose to either baseline.
+
+![Training and validation histories use different error definitions and scales; the dotted line marks validation-only checkpoint selection.](../../results/late_course_teaching/week15_history_01.png)
+
+![Manufactured test geometry a=0.32. The exact speed field and common-level predictions are followed by full-range vector errors; both methods use the same mapped nodes and reference.](../../results/late_course_teaching/week15_test_01.png)
+
+![At a=0.32, the signed velocity-profile differences reveal the error even when the overlaid profiles almost coincide. The physical column x/L=0.375 was fixed before evaluation.](../../results/late_course_teaching/week15_test_02.png)
+
+![The second withheld manufactured geometry, a=0.52, uses the same frozen model and declared comparison. Color ranges are shared between the two errors within this case; each case retains its own full range.](../../results/late_course_teaching/week15_test_03.png)
+
+![The second test geometry's signed profiles. Both velocity components and their signed errors should be inspected before changing their training weights.](../../results/late_course_teaching/week15_test_04.png)
+
+
+<!-- local-operator-lab:end -->
 
 ## 1. The scientific question
 
@@ -662,7 +735,7 @@ These figures answer the original teaching question with seven flow rows: CFD, t
 
 ### Re=25: the hardest missing-coverage regime
 
-![Core comparison at Re=25](../../results/week15_postaudit/core_g051_Re25.png)
+![Core comparison at Re=25](../../results/week15_postaudit/core_g051_Re25.png){height=7.2in}
 
 [Open the full-resolution original, including the shared speed color scale](../../results/week15_postaudit/core_g051_Re25.png). The following enlarged panels retain the original axes, speed colors and streamline coordinates. They remove the repeated training-geometry strip only; they are lossless display crops, not new predictions. Read the common color scale in the complete figure above; any legend segment visible in a detail is a crop of that same scale, not a rescaled colorbar.
 
@@ -675,7 +748,7 @@ These figures answer the original teaching question with seven flow rows: CFD, t
 
 ### Re=50
 
-![Core comparison at Re=50](../../results/week15_postaudit/core_g049_Re50.png)
+![Core comparison at Re=50](../../results/week15_postaudit/core_g049_Re50.png){height=7.2in}
 
 [Open the full-resolution original, including the shared speed color scale](../../results/week15_postaudit/core_g049_Re50.png). The following enlarged panels retain the original axes, speed colors and streamline coordinates. They remove the repeated training-geometry strip only; they are lossless display crops, not new predictions. Read the common color scale in the complete figure above; any legend segment visible in a detail is a crop of that same scale, not a rescaled colorbar.
 
@@ -688,7 +761,7 @@ These figures answer the original teaching question with seven flow rows: CFD, t
 
 ### Re=100
 
-![Core comparison at Re=100](../../results/week15_postaudit/core_g049_Re100.png)
+![Core comparison at Re=100](../../results/week15_postaudit/core_g049_Re100.png){height=7.2in}
 
 [Open the full-resolution original, including the shared speed color scale](../../results/week15_postaudit/core_g049_Re100.png). The following enlarged panels retain the original axes, speed colors and streamline coordinates. They remove the repeated training-geometry strip only; they are lossless display crops, not new predictions. Read the common color scale in the complete figure above; any legend segment visible in a detail is a crop of that same scale, not a rescaled colorbar.
 
@@ -707,7 +780,7 @@ These pages keep CFD and the three tuned models, then add GeoTransolver and the 
 
 ### Re=25
 
-![Extended comparison at Re=25](../../results/week15_postaudit/extended_g051_Re25.png)
+![Extended comparison at Re=25](../../results/week15_postaudit/extended_g051_Re25.png){height=7.2in}
 
 [Open the full-resolution original, including the shared speed color scale](../../results/week15_postaudit/extended_g051_Re25.png). The following enlarged panels retain the original axes, speed colors and streamline coordinates. They remove the repeated training-geometry strip only; they are lossless display crops, not new predictions. Read the common color scale in the complete figure above; any legend segment visible in a detail is a crop of that same scale, not a rescaled colorbar.
 
@@ -720,7 +793,7 @@ These pages keep CFD and the three tuned models, then add GeoTransolver and the 
 
 ### Re=50
 
-![Extended comparison at Re=50](../../results/week15_postaudit/extended_g049_Re50.png)
+![Extended comparison at Re=50](../../results/week15_postaudit/extended_g049_Re50.png){height=7.2in}
 
 [Open the full-resolution original, including the shared speed color scale](../../results/week15_postaudit/extended_g049_Re50.png). The following enlarged panels retain the original axes, speed colors and streamline coordinates. They remove the repeated training-geometry strip only; they are lossless display crops, not new predictions. Read the common color scale in the complete figure above; any legend segment visible in a detail is a crop of that same scale, not a rescaled colorbar.
 
@@ -733,7 +806,7 @@ These pages keep CFD and the three tuned models, then add GeoTransolver and the 
 
 ### Re=100
 
-![Extended comparison at Re=100](../../results/week15_postaudit/extended_g049_Re100.png)
+![Extended comparison at Re=100](../../results/week15_postaudit/extended_g049_Re100.png){height=7.2in}
 
 [Open the full-resolution original, including the shared speed color scale](../../results/week15_postaudit/extended_g049_Re100.png). The following enlarged panels retain the original axes, speed colors and streamline coordinates. They remove the repeated training-geometry strip only; they are lossless display crops, not new predictions. Read the common color scale in the complete figure above; any legend segment visible in a detail is a crop of that same scale, not a rescaled colorbar.
 
@@ -802,12 +875,12 @@ Unsafe statements are:
 
 ## 26. Training, validation, and test ladder
 
-![Train-validation-test velocity ladder](../../results/week15_postaudit/Train_Validation_Test_Ladder.png)
-
 At 3,840 updates, validation velocity error was negatively rank-correlated with test velocity error. That behavior was a symptom of severe undertraining. At 19,200 updates the independently recomputed Spearman correlation is positive:
 
-- all 18 matched runs: $\rho=0.5645$, $p=0.0147$;
-- 12 author-code runs: $\rho=0.8462$, $p=0.000521$.
+| Retained 19,200-update comparison | Runs | Spearman $\rho$ | $p$ |
+|---|---:|---:|---:|
+| All matched models | 18 | 0.5645 | 0.0147 |
+| Author-code models | 12 | 0.8462 | 0.000521 |
 
 The two high-frequency proxies remain exceptions: they can fit training fields well while transferring poorly.
 
@@ -1002,4 +1075,8 @@ The lecture and notebook are new versioned artifacts. Original Week 15 files and
 
 ## Self-contained classroom route
 
-Allow 60–90 minutes for the complete notebook's manufactured two-step geometry/SDF example, explicit branch–trunk contraction, Fourier mode filter, and query-set-dependence counterexample, followed by the local retained tables and figures. These small arrays teach the operators; they are not new CFD or new evidence of generalization. An optional extension loads the full external LR archive and reconstructs all 342 prediction fields. Missing archive cells report SKIPPED and do not interrupt the core or count as passed checks. For the worked contraction, [1,0.2,0.5] dotted with [1,0.8,0.3] gives 1.31. Explain why this pointwise output is invariant to adding unrelated queries, and why a query-mean-normalized trunk need not be.
+Begin with the manufactured two-step geometry/SDF example, explicit branch–trunk contraction, Fourier mode filter, and query-set-dependence counterexample. These small mechanism demonstrations explain the operators. For the worked contraction, [1,0.2,0.5] dotted with [1,0.8,0.3] gives 1.31. Explain why this pointwise output is invariant to adding unrelated queries, and why a query-mean-normalized trunk need not be.
+
+Then run the complete manufactured-kinematic CPU operator experiment: fit the training-only POD trunk and trainable branch MLP, select the checkpoint using validation geometries only, and compare the two withheld geometries against their exact velocity fields. Change one depth, optimizer, or loss-weight control at a time, inspecting both field errors and signed profiles. This establishes performance on the declared analytic teaching problem, not on the retained CFD geometries.
+
+Finish with the accessible retained CFD tables and native figures, keeping their original protocols separate from the fresh teaching fit. The optional external LR archive supports reconstruction and audit of all 342 retained prediction fields. Without that archive, the notebook explains the unavailable audit route once; it does not count unexecuted archive checks as passed. Allow 60–90 minutes for the initial guided reading and default run, and additional time for the four controlled experiments.

@@ -188,7 +188,7 @@ print('PASS: 130 finite sampled OpenFOAM fields; 51 masks; split counts 106/21/3
 md(r"""
 ### Split map and representative fields
 
-The split map below is deliberately **not a bar chart**. Each square is one accepted
+Each square in the split map below is one accepted
 OpenFOAM case; rows are geometry identities and columns are Reynolds numbers. The
 field panels use one Re=50 case from each split and plot the actual sampled OpenFOAM
 speed and stored pressure target. No predicted field or synthetic replacement is used.
@@ -788,5 +788,7 @@ print('Audit complete. Outputs:', OUT.relative_to(ARCHIVE.parents[2]).as_posix()
 nb = nbf.v4.new_notebook(cells=cells, metadata={'kernelspec':{'display_name':'Python 3','language':'python','name':'python3'}})
 dest = ROOT/'notebooks/week15/W15_Geometry_Operators_Step_Audit.ipynb'
 dest.parent.mkdir(parents=True,exist_ok=True)
-nbf.write(nb,dest)
+from refresh_late_course import refresh_book
+nb=refresh_book(nb,dest.name)
+dest.write_text(nbf.writes(nb),encoding='utf-8',newline='\n')
 print(dest)

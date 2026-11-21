@@ -62,6 +62,18 @@ Submit a horizon plot, the model-comparison table, a probe-fit table and one bou
 
 Schmid, Dynamic mode decomposition of numerical and experimental data (2010), https://doi.org/10.1017/S0022112010001217, provides the primary DMD reference. Compare the existing Week 7 modal experiment and the new matched-information results before making an architecture claim. The causal training mechanism is derived in Week 18; this week evaluates its deployment behavior.
 
+<!-- physical-laboratory:start -->
+
+## Read the physical diagnostic
+
+![Re=110, frame 240, seed 17: native vorticity D/U and the retained autonomous Transformer prediction. Only frames 156–159 initialized the trajectory; it was not reset at the validation/test boundary.](../../results/late_course_teaching/week21_rollout_01.png)
+
+![Same native-row comparison for Transformer, history MLP, DMD and persistence. The POD oracle uses the exact target field and indicates representation error; it is not a deployable forecast.](../../results/late_course_teaching/week21_rollout_06.png)
+
+![Signed vorticity at the fixed native probe nearest x/D=4, y/D=0.5 over the complete autonomous trajectory. Phase drift and amplitude error can differ even when a single snapshot looks plausible.](../../results/late_course_teaching/week21_rollout_07.png)
+
+<!-- physical-laboratory:end -->
+
 ## Printable laboratory worksheet
 
 ### Task 1: Autonomous state update
@@ -105,3 +117,14 @@ The core trajectory plot includes frames 160–280 (121 predictions), with a bou
 
 
 Timing estimate: a 120-minute guided lab and roughly 3–5 hours including preparation and written analysis. This is an editorial estimate; a timed student pilot remains open.
+
+## Laboratory route: from inputs to physical conclusions
+
+| Notebook stage | Time information | Diagnostic |
+|---|---|---|
+| Primary rollout | Observed frames 156–159 only; predict 160–280 | No reset at frame 210; show error over the complete trajectory |
+| Native snapshot | One predeclared predicted frame | CFD, Transformer, history-MLP, DMD and persistence; POD oracle is a representation control |
+| Fixed physical probe | Nearest native location to x/D=4,y/D=0.5 | Signed vorticity versus physical time, then frequency/amplitude/phase fit |
+| Tasks 1–4 | History update, orthogonal decomposition, frequency fit, rollout audit | Keep truth for scoring only after each autonomous prediction |
+
+FRAME=240 is a reproducible interior test snapshot, not the easiest frame selected after inspection. Change it to inspect temporal drift without selecting a different checkpoint. The POD oracle uses the target field for projection and is not a deployable forecaster. A small representation floor does not guarantee stable feedback dynamics. Fit phase over the declared full 121-frame window; a constant signal has no identifiable phase.

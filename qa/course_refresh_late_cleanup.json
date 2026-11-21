@@ -1,0 +1,143 @@
+{
+  "status": "verified_deleted",
+  "utc": "2026-11-21T05:05:42.737993+00:00",
+  "scope": "Only this worker's closed superseded transfer payloads, duplicate imports, obsolete execution figures and old lecture build copies.",
+  "admission": "All 20 final notebook bytes match fresh-kernel receipts. Current PDFs, final figure exports, native science, source, provenance, all runtimes and current render set retained. No live process uses the removed paths.",
+  "removed": [
+    {
+      "path": "tmp/course_refresh_late/completed_outputs.tar.gz",
+      "files": 1,
+      "bytes": 20287368
+    },
+    {
+      "path": "tmp/course_refresh_late/cpu_payload.tar.gz",
+      "files": 1,
+      "bytes": 103814625
+    },
+    {
+      "path": "tmp/course_refresh_late/corpus_inputs.tar.gz",
+      "files": 1,
+      "bytes": 19035
+    },
+    {
+      "path": "tmp/course_refresh_late/final_inputs.tar.gz",
+      "files": 1,
+      "bytes": 100926826
+    },
+    {
+      "path": "tmp/course_refresh_late/historical_final_inputs.tar.gz",
+      "files": 1,
+      "bytes": 2127871
+    },
+    {
+      "path": "tmp/course_refresh_late/lecture_payload.tar.gz",
+      "files": 1,
+      "bytes": 13770712
+    },
+    {
+      "path": "tmp/course_refresh_late/ordinary_inputs.tar.gz",
+      "files": 1,
+      "bytes": 13881165
+    },
+    {
+      "path": "tmp/course_refresh_late/unicode_inputs.tar.gz",
+      "files": 1,
+      "bytes": 38019
+    },
+    {
+      "path": "tmp/course_refresh_late/week16_pdf_inputs.tar.gz",
+      "files": 1,
+      "bytes": 11292359
+    },
+    {
+      "path": "tmp/course_refresh_late/week16_pdf_outputs.tar.gz",
+      "files": 1,
+      "bytes": 2065057
+    },
+    {
+      "path": "tmp/course_refresh_late/final_pdf_inputs.tar.gz",
+      "files": 1,
+      "bytes": 658968
+    },
+    {
+      "path": "tmp/course_refresh_late/final_pdfs.tar.gz",
+      "files": 1,
+      "bytes": 15191624
+    },
+    {
+      "path": "tmp/course_refresh_late/received",
+      "files": 66,
+      "bytes": 22361412
+    },
+    {
+      "path": "tmp/course_refresh_late/received_final",
+      "files": 169,
+      "bytes": 48958681
+    },
+    {
+      "path": "tmp/course_refresh_late/received_final_pdfs",
+      "files": 6,
+      "bytes": 15806847
+    },
+    {
+      "path": "tmp/course_refresh_late/received_w16",
+      "files": 11,
+      "bytes": 2265621
+    },
+    {
+      "path": "tmp/course_refresh_late/figures",
+      "files": 88,
+      "bytes": 17365682
+    },
+    {
+      "path": "tmp/course_refresh_late/unity_figures",
+      "files": 47,
+      "bytes": 3279469
+    },
+    {
+      "path": "tmp/course_refresh_late/lecture_build",
+      "files": 6,
+      "bytes": 2808160
+    },
+    {
+      "path": "tmp/course_refresh_late/final_checked_outputs.tar.gz",
+      "files": 1,
+      "bytes": 39953584
+    },
+    {
+      "path": "tmp/course_refresh_late/pdf_review/week15_geometry_generalization/page-041.png",
+      "files": 1,
+      "bytes": 227811
+    },
+    {
+      "path": "tmp/course_refresh_late/pdf_review/week15_geometry_generalization/page-042.png",
+      "files": 1,
+      "bytes": 148773
+    },
+    {
+      "path": "tmp/course_refresh_late/pdf_review/week15_geometry_generalization/page-043.png",
+      "files": 1,
+      "bytes": 193867
+    },
+    {
+      "path": "tmp/course_refresh_late/pdf_review/week15_geometry_generalization/page-044.png",
+      "files": 1,
+      "bytes": 219947
+    },
+    {
+      "path": "tmp/course_refresh_late/pdf_review/week15_geometry_generalization/page-045.png",
+      "files": 1,
+      "bytes": 228420
+    }
+  ],
+  "actual_removed_bytes": 437891903,
+  "actual_removed_files": 411,
+  "retained": [
+    "tmp/course_refresh_late/final_figures",
+    "tmp/course_refresh_late/pdf_review",
+    "tmp/course_refresh_late/final_execution.json",
+    "results/late_course_teaching",
+    "lectures",
+    "all original data/results/checkpoints"
+  ]
+}

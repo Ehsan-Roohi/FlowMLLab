@@ -8,13 +8,15 @@ causality discussion is useful preparation. Allow **150–180 minutes of study**
 (an estimate, not measured student workload).
 
 The notebook uses manufactured circles, rectangles and oscillating arrays.
-It does not run CFD, train a network, download data or reproduce the paper.
+It does not run CFD, train a network or reproduce the paper. In Colab, the setup downloads the small public source dependencies; the manufactured arrays are generated locally.
 The four tasks cover group splits, boundary-strip metrics, autonomous feedback
 and circular phase with undefined values. Each is worth 25 points: 15 for
 numerical behavior and 10 for interpretation. Tasks remain NOT SUBMITTED until
 you implement them and enable `RUN_EXERCISES`.
 
 ## Run locally
+
+[Open in Colab](https://colab.research.google.com/github/Ehsan-Roohi/FlowMLLab/blob/main/notebooks/optional_geometry_time_bridge/Geometry_Time_Operator_Bridge.ipynb). Run setup first, then the worked examples. The feedback plot compares autonomous and teacher-forced trajectories; the periodic-signal plot separates amplitude, phase and signed error. Complete the original four exercises after inspecting both.
 
 Use Python 3.10–3.13 in a full repository checkout or extracted ZIP. In the
 repository root, install the package and notebook dependencies:

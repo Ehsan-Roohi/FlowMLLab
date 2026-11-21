@@ -13,8 +13,8 @@ def verify():
     guide=(ROOT/'docs/TRANSFORMER_COURSE.md').read_text(encoding='utf-8')
     checked=0
     for week in range(17,23):
-        spec=json.loads((ROOT/f'course/lessons/week{week}.json').read_text())
-        source=(ROOT/f'lectures/source/week{week}_transformer_course.md').read_text()
+        spec=json.loads((ROOT/f'course/lessons/week{week}.json').read_text(encoding='utf-8'))
+        source=(ROOT/f'lectures/source/week{week}_transformer_course.md').read_text(encoding='utf-8')
         assert 'Independent review corrections and integrated investigation' not in source
         pdf=normalized(' '.join(page.extract_text() for page in PdfReader(ROOT/f'lectures/week{week}_cfd_transformer.pdf').pages))
         for index,task in enumerate(spec['tasks'],1):

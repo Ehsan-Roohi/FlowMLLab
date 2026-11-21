@@ -1,0 +1,37 @@
+{
+  "utc": "2026-11-21T04:35:41.8023760Z",
+  "scope": "Closed root-owned disposable isolated QA and test directories only",
+  "writers": "All associated execution sessions completed before removal; no scientific data, figures, source or recovery checkpoints removed",
+  "retained_proof": [
+    "qa/course_refresh_overlay_validation.json",
+    "qa/course_refresh_pdf_assembly.json",
+    "qa/course_refresh_week14_builder.json",
+    "tmp/course_refresh/validation/pytest.log"
+  ],
+  "removed": [
+    {
+      "path": "D:\\ChatGPT Backup\\Projects\\FlowMLLab\\Teaching_Current\\repo\\tmp\\course_refresh\\overlay_check",
+      "bytes": 3802433,
+      "files": 7,
+      "removed": true
+    },
+    {
+      "path": "D:\\ChatGPT Backup\\Projects\\FlowMLLab\\Teaching_Current\\repo\\tmp\\course_refresh\\assembly_check",
+      "bytes": 6871698,
+      "files": 20,
+      "removed": true
+    },
+    {
+      "path": "D:\\ChatGPT Backup\\Projects\\FlowMLLab\\Teaching_Current\\repo\\tmp\\course_refresh\\week14_builder_check",
+      "bytes": 26422,
+      "files": 1,
+      "removed": true
+    },
+    {
+      "path": "D:\\ChatGPT Backup\\Projects\\FlowMLLab\\Teaching_Current\\course_refresh_test_tmp",
+      "bytes": 565,
+      "files": 2,
+      "removed": true
+    }
+  ]
+}

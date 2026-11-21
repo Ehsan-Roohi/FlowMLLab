@@ -1,0 +1,155 @@
+{
+  "status": "pass",
+  "scope": "Canonical Week 14 notebook and lecture builders in isolated roots; package-form regeneration verified without notebook execution or scientific reruns.",
+  "source_sha256": "52f23a6d2594ccf1ab620fb8477ca2e423e695b7e6cba1470e074a9c8f978214",
+  "code_cells": 8,
+  "regenerated_code_identical_to_verified_notebook": true,
+  "executed_notebook_sha256": "78bbe17546ca239d216bd224d416a7a2549befde388d7b49890d4d2bdbf18949",
+  "earlier_direct_script_proof": {
+    "status": "pass",
+    "scope": "Canonical Week14 builder on an isolated root without --execute; no solver/model rerun.",
+    "source_sha256": "d4a5df8685b7260e3f8c9895f05d99150bd6379b9d6424cad79ee0f455f256db",
+    "code_cells": 8,
+    "regenerated_code_identical_to_verified_notebook": true,
+    "executed_notebook_sha256": "78bbe17546ca239d216bd224d416a7a2549befde388d7b49890d4d2bdbf18949"
+  },
+  "package_form_validation": {
+    "completed_utc": "2026-11-21T04:41:56.795706+00:00",
+    "reviewer": "/root/week4_lecture_rebuild",
+    "source_sha256": {
+      "qa/build_week14_notebook.py": "52f23a6d2594ccf1ab620fb8477ca2e423e695b7e6cba1470e074a9c8f978214",
+      "qa/build_week14_lecture.py": "dab04eaf94e0d6f502de7dbd1dfe50a3c91678476e78ef3a6a126457e7bf90a1",
+      "qa/classroom_cells.py": "8516245ef5813d52a157f3905fd36f3ed61d679355e0f2a6998b5b955124f30b",
+      "qa/notebook_review_updates.py": "ef8ed91536857efeb3e9d99e353c2c53eee5b087f7bea82fd8176836d1c4a9dc",
+      "qa/notebook_review_patches.json": "dd7380fff557fb7aa01ca96267d1a4789ead4b83bd5e22e724475352adc82516",
+      "qa/notebook_math.py": "2491cc7cb73fcecd131cfff19b32181883985da17a083d9bb9c462e3193c40fe",
+      "qa/course_middle_notebook_updates.py": "22c5f208e8c151d7cdc3a59a20ebdff189c20e13efd572f20adb544230bb7203",
+      "qa/build_course_middle_lectures.py": "51a7476a4d581e0936cde60e2598e7a360b55f04d04e3f254d274c2146ed4968",
+      "qa/lecture_typography.py": "7dadadcff3802a39bf1cdca61107f09307b494316690b4fd861f94f26fd6d9de",
+      "lectures/source/week14_rans_pinn_nn.md": "ba74ce885316ce86b3dcf3e40741ca14bd6223adbf4bf8537a2305c492edcc9a",
+      "lectures/source/course_middle_guides.py": "2232729dad26d2a753bfa0a3a6e8a6b432143be575725e64ecbd9c19c4e3dccf",
+      "results/course_middle_refresh/week14_gap_profiles.png": "c16f4b3933ebe89d48d120899afd00f378a0b3badd0fa3642b3ea48432473bb2",
+      "results/week14_validation/summary.json": "39d118022110e446a3ac568b77274ec4e8366f4c962ee4c1398b840b323fb04c",
+      "results/week14_validation/profiles_legend_below.png": "ff9fd6bce51ce7962347a9d0d726463b9a87dc5bd54e1dcdce58149209b94010",
+      "results/week14_validation/pipeline.png": "10b93beec9609469d65b7731161930a69469d1845c2a21d691e9fc7b65dde6f8",
+      "results/week14_validation/coefficients.png": "3283ea6ac79c4745c91c70d4ba88becf2273b82254cc7d3d1d81a983025211c4",
+      "results/week14_validation/training.png": "29de05b2a795ae9b85dc3dc1e5e9d3cbf3a0c1c3c671c39d5dcf5079b1c1e757",
+      "results/week14_validation/gap.png": "f7279e21da42a063cc1ecb681a25684e72f06367ea3665520b3ab20ab00a7820",
+      "results/week14_validation/convergence.png": "0f6db0d8f835525b3269611c50162d44e8e69c4c027206b496aabf5fe1ff5afa",
+      "results/week14_validation/inverse.png": "56ada2042eff4b79e85ec000be378b58e330c513e339f78ba92a556e518a5fcc"
+    },
+    "runs": [
+      {
+        "command": [
+          "D:\\ChatGPT Backup\\Projects\\FlowMLLab\\Teaching_Current\\repo\\tmp\\week01_4_runtime\\Scripts\\python.exe",
+          "-m",
+          "qa.build_week14_notebook"
+        ],
+        "cwd": "tmp/course_refresh/navigation_review/shadow",
+        "returncode": 0,
+        "seconds": 4.328,
+        "log": "tmp/course_refresh/navigation_review/qa_build_week14_notebook.log",
+        "log_sha256": "53ec18f54ddcbf5d89d0b1cb6efad94dd30923b407723b2cb2b0da1e8c8f0cb3"
+      },
+      {
+        "command": [
+          "D:\\ChatGPT Backup\\Projects\\FlowMLLab\\Teaching_Current\\repo\\tmp\\week01_4_runtime\\Scripts\\python.exe",
+          "-m",
+          "qa.build_week14_lecture"
+        ],
+        "cwd": "tmp/course_refresh/navigation_review/shadow",
+        "returncode": 0,
+        "seconds": 83.406,
+        "log": "tmp/course_refresh/navigation_review/qa_build_week14_lecture.log",
+        "log_sha256": "835b814c274a41d2e6b29e3e455cd1b9f16b6c7e8ed25ff9512089043d1726b5"
+      }
+    ],
+    "notebook": {
+      "code_cells": 8,
+      "regenerated_code_identical_to_verified_notebook": true,
+      "markdown_identical": true,
+      "regenerated_sha256": "be88d30b42c0197640ac5745ee37f8241fc2b824bf526397b63a7e9e43c09d54",
+      "executed_notebook_sha256": "78bbe17546ca239d216bd224d416a7a2549befde388d7b49890d4d2bdbf18949",
+      "fresh_notebook_execution": false
+    },
+    "lecture": {
+      "pages": 11,
+      "dpi": 125,
+      "current_pdf_sha256": "63ccd7cbe0f6893effacd83f0ae81126356ab676af17b51ef21fbfec1afb7d36",
+      "generated_pdf_sha256": "63ccd7cbe0f6893effacd83f0ae81126356ab676af17b51ef21fbfec1afb7d36",
+      "all_pages_pixel_identical": true,
+      "page_comparison": [
+        {
+          "page": 1,
+          "live_pixel_sha256": "b5ee3282d063d3ed92af85d545d2fd4b03faa540dda76c77a29ee7162730a489",
+          "generated_pixel_sha256": "b5ee3282d063d3ed92af85d545d2fd4b03faa540dda76c77a29ee7162730a489",
+          "pixel_identical": true
+        },
+        {
+          "page": 2,
+          "live_pixel_sha256": "84012b149baad6216f5152f0285cd8eba0918da65656780549f35b303f234621",
+          "generated_pixel_sha256": "84012b149baad6216f5152f0285cd8eba0918da65656780549f35b303f234621",
+          "pixel_identical": true
+        },
+        {
+          "page": 3,
+          "live_pixel_sha256": "402b0a25a208a970cb9ecc0cdf9bdbd8b11d3b940b344fbd52bc327680ef1296",
+          "generated_pixel_sha256": "402b0a25a208a970cb9ecc0cdf9bdbd8b11d3b940b344fbd52bc327680ef1296",
+          "pixel_identical": true
+        },
+        {
+          "page": 4,
+          "live_pixel_sha256": "ee06cf2350493f56d823cfcfd3ab3647d4b208df2f9d8c1408d362a692565f22",
+          "generated_pixel_sha256": "ee06cf2350493f56d823cfcfd3ab3647d4b208df2f9d8c1408d362a692565f22",
+          "pixel_identical": true
+        },
+        {
+          "page": 5,
+          "live_pixel_sha256": "f518c26e57b6f151b336e53e095369b62d989b65673c822a72fa8dff52be7db2",
+          "generated_pixel_sha256": "f518c26e57b6f151b336e53e095369b62d989b65673c822a72fa8dff52be7db2",
+          "pixel_identical": true
+        },
+        {
+          "page": 6,
+          "live_pixel_sha256": "6009d16861d073348108c6e8a095757a30bea6b6b37d3f4a824421ec7caa3077",
+          "generated_pixel_sha256": "6009d16861d073348108c6e8a095757a30bea6b6b37d3f4a824421ec7caa3077",
+          "pixel_identical": true
+        },
+        {
+          "page": 7,
+          "live_pixel_sha256": "f9eccdb885e438cb28b9f0b5dbca3e63bd410e01cfddd5772c800c45b7ba5088",
+          "generated_pixel_sha256": "f9eccdb885e438cb28b9f0b5dbca3e63bd410e01cfddd5772c800c45b7ba5088",
+          "pixel_identical": true
+        },
+        {
+          "page": 8,
+          "live_pixel_sha256": "e90d84aea6dbd3ffd35be3bf82cc3ab82a1d1f14e9726ec1dde797ea79fc01c9",
+          "generated_pixel_sha256": "e90d84aea6dbd3ffd35be3bf82cc3ab82a1d1f14e9726ec1dde797ea79fc01c9",
+          "pixel_identical": true
+        },
+        {
+          "page": 9,
+          "live_pixel_sha256": "c9785988f81c392b6abe2449f275c94bc4d8cc79d22b243de6617213f8280e8d",
+          "generated_pixel_sha256": "c9785988f81c392b6abe2449f275c94bc4d8cc79d22b243de6617213f8280e8d",
+          "pixel_identical": true
+        },
+        {
+          "page": 10,
+          "live_pixel_sha256": "51db9e966c262de45a9ed189bd34c33ba007c81c49b4fc76fb6625e6b6052e9f",
+          "generated_pixel_sha256": "51db9e966c262de45a9ed189bd34c33ba007c81c49b4fc76fb6625e6b6052e9f",
+          "pixel_identical": true
+        },
+        {
+          "page": 11,
+          "live_pixel_sha256": "78a565d85b5dc3fc07c093e25aacb370ea41146986c29b82169d64dea61accef",
+          "generated_pixel_sha256": "78a565d85b5dc3fc07c093e25aacb370ea41146986c29b82169d64dea61accef",
+          "pixel_identical": true
+        }
+      ],
+      "visual_review_basis": "Pixel equivalence to previously individually reviewed current pages; this build test is not a fresh visual review."
+    },
+    "live_files_unchanged": true
+  },
+  "isolated_test_script": "tmp/course_refresh/navigation_review/review.py",
+  "isolated_test_script_sha256": "0ce0f6af849d6c7acba6b9d89e6af5d341a37dda3bd361c3f5c756156f294a23"
+}

@@ -124,17 +124,21 @@ and `qa/transformer_validation.json` for measured outcomes and any remaining lim
 ## Checkout, review bundle and Colab
 
 The course is part of [FlowMLLab main](https://github.com/Ehsan-Roohi/FlowMLLab/tree/main).
-Record the checkout commit before running a lesson. For a fresh Colab session,
-clone the repository, check out the revision you intend to study, change to its
-root and install the Transformer extra before opening the chosen notebook.
-The reviewed lessons are included in public `main`. Use the current checkout
-or a recorded release revision together with its matching evidence files.
+Record the checkout commit before running a lesson. The notebook's setup cell
+can obtain the public repository and its lesson dependencies in Colab, including
+when another lesson has already created a sparse checkout. Start from the links
+in the [notebook guide](../notebooks/README.md) and run setup before later cells.
+For a fixed historical revision, clone and check out that revision explicitly,
+install its Transformer extra, and use its matching evidence files.
+
+The setup logic and fresh local kernels are checked separately from the hosted
+interface. An interactive Colab session is not yet claimed tested.
 Alternatively, upload a **complete portable course bundle** and extract under
 `/content/course`. A changed-files review ZIP is not a complete runtime bundle:
 apply its files to its documented base checkout first. No access token is needed
 for public repository files.
 `qa/colab_transformer_bootstrap.py` checks archive paths before extraction.
-This upload path is documented; an interactive Colab session is not claimed tested.
+The portable upload route remains available as an alternative to repository setup.
 
 
 ## Post review correction status on 6 October 2026
