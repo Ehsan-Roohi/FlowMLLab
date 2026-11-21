@@ -67,3 +67,7 @@ python qa/append_cavity_startup_lecture.py
 Rebuilding the teaching documents requires the repository test extras, PyMuPDF (`python -m pip install -e ".[test]" "PyMuPDF>=1.24,<2"`) and Times New Roman via `FLOWMLLAB_TNR_DIR`. The `all` action regenerates notebook source; `execute` then runs that notebook in a fresh CPU kernel and renews its execution receipt. The append command preserves and verifies all 74 existing lecture pages.
 
 The solve command refuses to overwrite existing scientific evidence. Use a new directory for a new configuration. FFmpeg is needed only for MP4 export. The published observation times correspond to actual solution steps; neither steady SIMPLE iterations nor interpolated steady solutions are used as a physical clock.
+
+## Continue startup and test stationarity
+
+The [stationarity guide](../../docs/CAVITY_STARTUP_STATIONARITY.md) explains how to continue verified native fields beyond tU/L = 10, inspect three complete physical windows, and separately test a candidate with tighter PIMPLE coupling. It includes CPU commands and five student investigations using matched-time profiles and signed probe histories. The distinctions between startup, a fixed-grid candidate, coupling confirmation and mesh/time-step accuracy remain explicit; a high-Re case is not required to become steady.

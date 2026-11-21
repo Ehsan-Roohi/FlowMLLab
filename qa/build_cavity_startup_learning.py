@@ -16,6 +16,25 @@ os.environ.setdefault("MPLCONFIGDIR", str(ROOT / "tmp/cavity_startup/matplotlib"
 RESULTS = ROOT / "results/cavity_startup"
 MEDIA = RESULTS / "media"
 REYNOLDS = [100, 400, 1000, 3200, 5000, 7500, 10000]
+STATIONARITY_NOTEBOOK_SECTION = textwrap.dedent("""
+    ## 9. Continue startup and test stationarity
+
+    The movies stop at t⋆ = tU/L = 10; that is a startup observation time, not evidence
+    that the flow has become steady. The [stationarity guide](https://github.com/Ehsan-Roohi/FlowMLLab/blob/main/docs/CAVITY_STARTUP_STATIONARITY.md)
+    gives optional CPU commands to resume verified native fields to absolute times
+    25, 50 and 100, with complete checkpoints and three full physical-window tests.
+    These longer runs are optional and are not started by **Run all**.
+
+    The guide adds five investigations: matched-time profiles; window means versus
+    instantaneous fields; timestep and mesh sensitivity; a separate tighter-coupling
+    confirmation; and interpretation of fixed corner probes, which are not tracked
+    vortex centers. Keep a fixed-grid stationarity candidate, a 6/4-correction
+    confirmation, and timestep/mesh accuracy as separate conclusions. A high-Re case
+    may remain unresolved or unsteady; no result here requires every case to settle.
+    """).strip()
+STATIONARITY_README_PARAGRAPH = (
+    "The [stationarity guide](../../docs/CAVITY_STARTUP_STATIONARITY.md) explains how to continue verified native fields beyond tU/L = 10, inspect three complete physical windows, and separately test a candidate with tighter PIMPLE coupling. It includes CPU commands and five student investigations using matched-time profiles and signed probe histories. The distinctions between startup, a fixed-grid candidate, coupling confirmation and mesh/time-step accuracy remain explicit; a high-Re case is not required to become steady."
+)
 
 
 def presentation():
@@ -353,6 +372,7 @@ def build_notebook():
     [DOI](https://doi.org/10.1016/0021-9991(82)90058-4), is the steady benchmark source.
     The preceding Week1.2 lecture derives the shared MAC pressure-correction algorithm.
     """)]
+    cells.append(md(STATIONARITY_NOTEBOOK_SECTION))
     notebook = nbf.v4.new_notebook(cells=cells, metadata={
         "kernelspec": {"display_name": "Python 3", "language": "python", "name": "python3"},
         "language_info": {"name": "python", "version": "3.12"},
@@ -632,7 +652,8 @@ def build_readme():
         "python qa/build_cavity_startup_learning.py execute",
         "python qa/append_cavity_startup_lecture.py", "```", "",
         "Rebuilding the teaching documents requires the repository test extras, PyMuPDF (`python -m pip install -e \".[test]\" \"PyMuPDF>=1.24,<2\"`) and Times New Roman via `FLOWMLLAB_TNR_DIR`. The `all` action regenerates notebook source; `execute` then runs that notebook in a fresh CPU kernel and renews its execution receipt. The append command preserves and verifies all 74 existing lecture pages.", "",
-        "The solve command refuses to overwrite existing scientific evidence. Use a new directory for a new configuration. FFmpeg is needed only for MP4 export. The published observation times correspond to actual solution steps; neither steady SIMPLE iterations nor interpolated steady solutions are used as a physical clock.", ""]
+        "The solve command refuses to overwrite existing scientific evidence. Use a new directory for a new configuration. FFmpeg is needed only for MP4 export. The published observation times correspond to actual solution steps; neither steady SIMPLE iterations nor interpolated steady solutions are used as a physical clock.", "",
+        "## Continue startup and test stationarity", "", STATIONARITY_README_PARAGRAPH, ""]
     path = RESULTS / "README.md"
     path.write_text("\n".join(lines), encoding="utf-8", newline="\n")
     return path

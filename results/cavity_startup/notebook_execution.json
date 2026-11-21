@@ -1,15 +1,15 @@
 {
   "schema": 1,
-  "executed_utc": "2026-11-21T19:45:14.971492+00:00",
+  "executed_utc": "2026-11-21T22:39:21.682405+00:00",
   "notebook": "notebooks/week01_2/W1_2_Cavity_Startup_Movies.ipynb",
-  "notebook_sha256": "11f5ac5cbae7ea308db2771db7515aee19b2ce4d6232e56fb6966398c6a40b48",
-  "cell_source_sha256": "395496c4a7963f0d434884c4d0d601679d17917a65080a0637edce53bc302665",
+  "notebook_sha256": "d64507ecd029bd83292bb9d0c48ef0215e075bde40798c7d914be2f2817a6b35",
+  "cell_source_sha256": "dbeb0a7b6d47b0711986a61ec754930c26238ef06326e0f187c8e315d60fbdb7",
   "code_cells": 7,
   "executed_code_cells": 7,
   "figure_outputs": 5,
   "video_players": 3,
   "error_outputs": 0,
-  "runtime_seconds": 36.853588700003456,
+  "runtime_seconds": 56.55934539998998,
   "kernel_python": "D:\\ChatGPT Backup\\Projects\\FlowMLLab\\Teaching_Current\\repo\\tmp\\week01_4_runtime\\Scripts\\python.exe",
   "fresh_default": {
     "Re": 100,
@@ -38,7 +38,7 @@
   "source_sha256": {
     "flowmllab/cavity_startup.py": "6251c65b120f4c656357bdf2ae93550d974168718b057d0df4b623e4ab74beaf",
     "qa/build_cavity_startup.py": "ccfba250458e3aef26049708c545320128731e9c789739d1af63f2c96c3666a3",
-    "qa/build_cavity_startup_learning.py": "430a6f2cf849a44bb59ade3c9241b188db88b1a52dcf0173783c59e54857d9c5"
+    "qa/build_cavity_startup_learning.py": "75c444f1be7f42a70e448bed183fd333b781660c3030c5f420f695c548a2b0d3"
   },
   "scope": "Fresh local CPU kernel; default cells executed. Hosted Colab was not separately claimed."
 }
