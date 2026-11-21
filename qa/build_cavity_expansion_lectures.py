@@ -87,12 +87,19 @@ def build(targets=None):
         appendix=PdfReader(stream)
         if len(appendix.pages)!=len(pages):raise RuntimeError(f'{name}: overflow {len(appendix.pages)} != {len(pages)}')
         writer=PdfWriter();writer.append(base,pages=(0,base_count),import_outline=True);writer.append(appendix)
+        # Preserve the separately authored startup companion on direct rebuilds.
+        startup_start=(base.metadata or {}).get('/FlowMLLabStartupBasePages')
+        startup_pages=0
+        if startup_start is not None:
+            if int(startup_start)!=base_count+len(pages):raise RuntimeError('Startup appendix offset changed; inspect lecture assembly')
+            startup_pages=len(base.pages)-int(startup_start)
+            writer.append(base,pages=(int(startup_start),len(base.pages)),import_outline=False)
         metadata={str(k):str(v) for k,v in dict(base.metadata or {}).items()}
         metadata.update({'/FlowMLLabCavityBasePages':str(base_count),'/FlowMLLabCavitySourceSHA256':hashlib.sha256(source.read_bytes()).hexdigest(),
                          '/FlowMLLabCavityExtensionPages':str(len(pages))})
         writer.add_metadata(metadata)
         output=io.BytesIO();writer.write(output);path.write_bytes(output.getvalue())
-        check=PdfReader(path);assert len(check.pages)==base_count+len(pages)
+        check=PdfReader(path);assert len(check.pages)==base_count+len(pages)+startup_pages
         manifest[name]={'base_pages_preserved':base_count,'new_pages':len(pages),
                         'total_pages':len(check.pages),'sha256':hashlib.sha256(path.read_bytes()).hexdigest()}
         print(name,manifest[name],flush=True)

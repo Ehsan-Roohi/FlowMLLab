@@ -1,0 +1,68 @@
+{
+  "utc": "2026-11-21T19:28:09.9890638Z",
+  "scope": "Only owned superseded smoke-test outputs, pytest scratch and early layout renders; retained final media/native trajectories/source/final page review",
+  "removed": [
+    {
+      "path": "tmp/cavity_startup/smoke",
+      "bytes": 1006508
+    },
+    {
+      "path": "tmp/cavity_startup/pytest",
+      "bytes": 9161
+    },
+    {
+      "path": "tmp/cavity_startup/pytest2",
+      "bytes": 9155
+    },
+    {
+      "path": "tmp/cavity_startup/pytest_final",
+      "bytes": 9184
+    },
+    {
+      "path": "tmp/cavity_startup/single_layout.png",
+      "bytes": 62421
+    },
+    {
+      "path": "tmp/cavity_startup/seven_layout.png",
+      "bytes": 565866
+    },
+    {
+      "path": "tmp/cavity_startup/pdf_review/page-1.png",
+      "bytes": 177249
+    },
+    {
+      "path": "tmp/cavity_startup/pdf_review/page-2.png",
+      "bytes": 219746
+    },
+    {
+      "path": "tmp/cavity_startup/pdf_review/page-3.png",
+      "bytes": 225024
+    },
+    {
+      "path": "tmp/cavity_startup/pdf_review/page-4.png",
+      "bytes": 375737
+    },
+    {
+      "path": "tmp/cavity_startup/pdf_review/page-5.png",
+      "bytes": 415708
+    },
+    {
+      "path": "tmp/cavity_startup/pdf_review/page-6.png",
+      "bytes": 388715
+    },
+    {
+      "path": "tmp/cavity_startup/pdf_review/page-7.png",
+      "bytes": 163719
+    },
+    {
+      "path": "tmp/cavity_startup/pdf_review/page-8.png",
+      "bytes": 168862
+    },
+    {
+      "path": "tmp/cavity_startup/pdf_review/page-9.png",
+      "bytes": 213413
+    }
+  ],
+  "total_bytes": 4010468,
+  "verified_absent": true
+}

@@ -1,0 +1,54 @@
+{
+  "array_job": "2080615",
+  "workspace": "/scratch3/workspace/roohie_umass_edu-teaching-teno-cavity-20261121/cavity-startup-v1/refinement",
+  "exit_states": {
+    "2080615_0": [
+      "COMPLETED",
+      "0:0"
+    ],
+    "2080615_1": [
+      "COMPLETED",
+      "0:0"
+    ],
+    "2080615_2": [
+      "COMPLETED",
+      "0:0"
+    ],
+    "2080615_3": [
+      "COMPLETED",
+      "0:0"
+    ],
+    "2080615_4": [
+      "COMPLETED",
+      "0:0"
+    ],
+    "2080615_5": [
+      "COMPLETED",
+      "0:0"
+    ],
+    "2080615_6": [
+      "COMPLETED",
+      "0:0"
+    ],
+    "2080615_7": [
+      "COMPLETED",
+      "0:0"
+    ],
+    "2080615_8": [
+      "COMPLETED",
+      "0:0"
+    ],
+    "2080615_9": [
+      "COMPLETED",
+      "0:0"
+    ],
+    "2080615_10": [
+      "COMPLETED",
+      "0:0"
+    ],
+    "2080615_11": [
+      "COMPLETED",
+      "0:0"
+    ]
+  }
+}

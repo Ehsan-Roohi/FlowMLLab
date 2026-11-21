@@ -1,0 +1,42 @@
+{
+  "config": {
+    "method": "pimple",
+    "cells": 128,
+    "reynolds": 3200,
+    "convection": "central",
+    "dt": 0.01,
+    "velocity_relaxation": 0.7,
+    "pressure_relaxation": 0.3,
+    "pressure_correctors": 2,
+    "outer_correctors": 3,
+    "tolerance": 1e-07,
+    "max_iterations": 1105,
+    "check_every": 10,
+    "end_time": 10.0
+  },
+  "frames": 101,
+  "actual_steps": 1000,
+  "end_time": 10.0,
+  "runtime_seconds": 839.0247249909444,
+  "max_divergence_linf": 6.7722633056988e-12,
+  "max_time_step_momentum_defect_linf": 0.002704472088527865,
+  "last_steady_momentum_defect_linf": 0.1258452606573488,
+  "max_pressure_mean_abs": 2.6020852139652106e-18,
+  "max_cfl": 2.0284062416845066,
+  "qualification": "2D finite-time teaching trajectory; not a steady Ghia or 3D stability validation",
+  "trajectory": "re3200.npz",
+  "trajectory_sha256": "31ec6b1b023976d1cf7b214fed884879ed62444cabb3c86e308168a173a345a5",
+  "source_sha256": {
+    "flowmllab/pressure_velocity.py": "d502568afece2262dbb759c1e315e384cf9c88ac46e98992ee7950a77a0aba5d",
+    "flowmllab/pressure_velocity_experiments.py": "d52015b86d23621ddec0b453403b85ffae5eb348edc3915c274f91310371181b",
+    "flowmllab/cavity_startup.py": "db1f6fec90fe636acd0857241ca41029358588488db961ccf3af3e6a26f7d788",
+    "qa/build_cavity_startup.py": "fd4ddba565b610b1891f6e19ee9811b63127ed7701e1d2c198d159d79467c0a3"
+  },
+  "environment": {
+    "python": "3.12.3",
+    "numpy": "2.2.6",
+    "platform": "Linux-6.8.0-149-generic-x86_64-with-glibc2.39"
+  },
+  "initial_condition": "fluid at rest; impulsively started unit lid at t*=0",
+  "pressure_gauge": "cell-area mean pressure is zero at each time"
+}

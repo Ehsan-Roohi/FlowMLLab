@@ -51,6 +51,13 @@ def check(site):
     assert 'https://doi.org/10.1016/j.aitf.2026.100064' in page
     assert 'https://github.com/Ehsan-Roohi/FlowMLLab' in page
     assert (site/'build.json').is_file()
+    movie_receipt = ROOT/'results/cavity_startup/media/movies.json'
+    if movie_receipt.is_file():
+        movie_manifest = json.loads(movie_receipt.read_text(encoding='utf-8'))
+        assert (site/'cavity-startup/index.html').is_file()
+        assert (site/'cavity-startup/movies.json').read_bytes() == movie_receipt.read_bytes()
+        for entry in movie_manifest['fields'].values():
+            assert hashlib.sha256((site/'cavity-startup'/entry['movie']).read_bytes()).hexdigest() == entry['movie_sha256']
     print(f'PASS: {len(inv["modules"])} units; 7 matched cases; {total} native field images; exact CFD/Ghia profiles; frozen split and source hashes.')
 
 if __name__=='__main__':check(Path(sys.argv[1]))

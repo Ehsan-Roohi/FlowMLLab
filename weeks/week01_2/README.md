@@ -66,3 +66,17 @@ one method, measure its time, then decide whether to refine. Do not launch every
 128-cell case at once. Cached figures below require no new CFD solve. Fresh runs
 are opt-in; there is no guaranteed completion time on a student's computer.
 
+
+## Follow the flow from rest
+
+The [cavity startup companion](../../notebooks/week01_2/W1_2_Cavity_Startup_Movies.ipynb)
+records physical-time PIMPLE solutions, then compares instantaneous streamlines,
+signed vorticity and zero-mean pressure at the same times and fixed field scales.
+The reference set uses Re = 100, 400, 1000, 3200, 5000, 7500 and 10000; the
+notebook starts with a small CPU example before offering larger runs.
+
+[Watch the videos](https://ehsan-roohi.github.io/FlowMLLab/cavity-startup/) ·
+[Inspect fields, run settings and sensitivity](../../results/cavity_startup/README.md).
+These are finite-time two-dimensional startup trajectories, not a claim of
+steady convergence, grid independence or agreement with Ghia. Students compare
+mesh, time-step and coupling sensitivity before interpreting small vortices.

@@ -121,3 +121,8 @@ qa/validate_week01_4.py -text -whitespace
 qa/course_refresh_early_unity.sh text eol=lf
 results/course_refresh_early/unity/environment.txt text eol=lf
 results/course_refresh_early/unity/focused_tests.out text eol=lf
+
+# Physical-time trajectories and movie receipts retain their raw SHA256 identities.
+results/cavity_startup/** -text -whitespace
+*.mp4 binary
+*.tar.gz binary

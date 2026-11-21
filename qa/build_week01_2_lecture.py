@@ -5,7 +5,7 @@ from pathlib import Path
 import os,shutil,subprocess,sys
 ROOT=Path(__file__).resolve().parents[1]
 BASE_LECTURE_PAGES=72
-LECTURE_PAGES=74
+BASE_WITH_GHIA_PAGES=74
 
 def build():
     from pypdf import PdfReader
@@ -30,16 +30,22 @@ def build():
     pages=len(PdfReader(target).pages)
     if pages!=BASE_LECTURE_PAGES:raise RuntimeError(f'Expected {BASE_LECTURE_PAGES} base pages, found {pages}; inspect layout before publishing.')
     published=ROOT/'lectures'/target.name
-    previous=published.read_bytes() if published.exists() else None
+    protected=(published, ROOT/'qa/cavity_lecture_manifest.json', ROOT/'qa/cavity_startup_lecture.json')
+    previous={p:p.read_bytes() if p.exists() else None for p in protected}
     # The existing two-page seven-Re extension is authored separately. Rebuild
     # it after the base lecture rather than silently dropping it on recompiles.
     try:
         shutil.copy2(target,published)
         append_extensions(targets={'week01_2_pressure_velocity'})
         final_pages=len(PdfReader(published).pages)
-        if final_pages!=LECTURE_PAGES:raise RuntimeError(f'Expected {LECTURE_PAGES} total pages, found {final_pages}')
+        if final_pages!=BASE_WITH_GHIA_PAGES:raise RuntimeError(f'Expected {BASE_WITH_GHIA_PAGES} preserved pages before startup, found {final_pages}')
+        from qa.append_cavity_startup_lecture import build as append_startup
+        final_pages=append_startup()['total_pages']
     except Exception:
-        if previous is not None:published.write_bytes(previous)
+        for path, payload in previous.items():
+            if payload is None:
+                if path.exists():path.unlink()
+            else:path.write_bytes(payload)
         raise
     return final_pages
 

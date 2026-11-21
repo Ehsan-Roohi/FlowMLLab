@@ -273,3 +273,18 @@ python qa/validate_week01_2_figure_guide.py
 The figure validator executes the inexpensive interpolation examples and retained-result tables. Fresh CFD solves remain opt-in.
 
 The teaching sequence starts with the cavity physics, then defines control volumes and contrasts finite volume with finite differences before integration. Momentum notation proceeds from one scalar row and its known source to vectors and operators. Pressure correction, relaxation and residual checks precede SIMPLE; the PISO and PIMPLE sections define their changing fields and fixed data before the loop equations. Video links are blue in the lecture PDF.
+
+## Physical-time movie companion
+
+Open [W1_2_Cavity_Startup_Movies.ipynb](W1_2_Cavity_Startup_Movies.ipynb) after
+the pressure-correction lesson. It adds a small fresh CPU solve, native-field
+checks, matched-time movies and concrete sensitivity exercises. The existing
+pressure-velocity notebook and its exercises remain the prerequisite.
+
+The seven retained Reynolds numbers are 100, 400, 1000, 3200, 5000, 7500 and
+10000. Every trajectory starts from rest with an impulsively started unit-speed
+lid and stationary other walls. Saved pressure comes from the transient MAC
+solve and has zero area mean; a steady pressure-recovery equation is not used.
+Black curves are instantaneous streamlines, not particle paths. Read the
+[run and sensitivity record](../../results/cavity_startup/README.md) before
+interpreting secondary cells or comparing these fields with steady benchmarks.

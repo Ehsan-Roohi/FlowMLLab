@@ -1,0 +1,14 @@
+{
+  "trajectory_directory": "fine128",
+  "qualification": "Finite-time 2D startup on 128 x 128 MAC cells, dt*=0.01, t*=0..10. Re >= 3200 remains strongly mesh-sensitive: matched 64-to-128 velocity differences are 17-70% at t*=10. These are provisional finite-grid teaching trajectories, not mesh-independent predictions, steady Ghia validation, or 3D turbulence evidence.",
+  "reynolds": [
+    100,
+    400,
+    1000,
+    3200,
+    5000,
+    7500,
+    10000
+  ],
+  "selection_basis": "Same solver/physics/time schedule for all seven Reynolds numbers; finer common mesh selected after large 32-to-64 differences. No parameter tuning to match the illustrative video."
+}

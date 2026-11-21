@@ -8,8 +8,9 @@
   "week01_2_pressure_velocity": {
     "base_pages_preserved": 72,
     "new_pages": 2,
-    "total_pages": 74,
-    "sha256": "949f5857f74c038d27fe831231f51c3a61999f039897ae377628a0fd1b51de54"
+    "total_pages": 85,
+    "sha256": "49f53787428078483c52b13faca1b590f25f96be9095b298acadc0d9d1c8c08d",
+    "startup_appendix_pages": 11
   },
   "week04_cavity_surrogates_deeponet": {
     "base_pages_preserved": 49,

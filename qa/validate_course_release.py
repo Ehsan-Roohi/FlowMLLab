@@ -570,6 +570,82 @@ def validate_week01_4_standalone(notebook: dict, label: str) -> dict[str, object
             'ghia_source': ghia_source}
 
 
+def validate_cavity_startup_notebook(notebook, relative):
+    """Admit the separate CPU physical-time lesson using its own evidence contract."""
+    from qa.build_cavity_startup import load_cases
+    source='\n'.join(''.join(c.get('source',[])) for c in notebook['cells'])
+    code=[c for c in notebook['cells'] if c.get('cell_type')=='code']
+    metadata=notebook.get('metadata',{}).get('flowmllab',{})
+    assert metadata.get('lesson')=='week01_2_startup_companion',relative
+    assert metadata.get('requires_gpu') is False,relative
+    for fragment in ('FLOWMLLAB_CAVITY_STARTUP_BOOTSTRAP_V1','https://github.com/Ehsan-Roohi/FlowMLLab.git',
+                     'flowmllab.cavity_startup','simulate_startup(config','load_cases(',
+                     'case_summary(', 'presentation.json','sensitivity.json','RUN_FRESH = True',
+                     'finite-time','zero area mean','instantaneous'):
+        assert fragment in source,(relative,fragment)
+    assert code and all(c.get('execution_count') is not None for c in code),relative
+    assert not any(o.get('output_type')=='error' for c in code for o in c.get('outputs',[])),relative
+    assert sum('image/png' in o.get('data',{}) for c in code for o in c.get('outputs',[]))>=3,relative
+    folder=ROOT/'results/cavity_startup'
+    execution=json.loads((folder/'notebook_execution.json').read_text())
+    assert execution['notebook']==relative
+    assert hashlib.sha256((ROOT/relative).read_bytes()).hexdigest()==execution['notebook_sha256']
+    cell_source=[{'cell_type':c['cell_type'],'source':''.join(c.get('source',[]))} for c in notebook['cells']]
+    assert hashlib.sha256(json.dumps(cell_source,sort_keys=True).encode()).hexdigest()==execution['cell_source_sha256']
+    assert execution['code_cells']==execution['executed_code_cells']==len(code)
+    assert execution['error_outputs']==0 and execution['figure_outputs']>=5 and execution['video_players']==3
+    assert hashlib.sha256((folder/'media/movies.json').read_bytes()).hexdigest()==execution['movie_manifest_sha256']
+    for filename, expected in execution['source_sha256'].items():
+        assert hashlib.sha256((ROOT/filename).read_bytes()).hexdigest()==expected,filename
+    choice=json.loads((folder/'presentation.json').read_text())
+    assert execution['presentation']==choice
+    path=(folder/choice['trajectory_directory']).resolve()
+    assert path.is_relative_to(folder.resolve()),relative
+    cases=load_cases(path,[100,400,1000,3200,5000,7500,10000])
+    assert all(len(c['times'])==101 and c['times'][-1]==10 for c in cases)
+    manifest=json.loads((folder/'simulation_source_manifest.json').read_text())
+    assert hashlib.sha256((folder/'simulation_source.tar.gz').read_bytes()).hexdigest()==manifest['archive_sha256']
+    for reynolds in (100,400,1000,3200,5000,7500,10000):
+        receipt=json.loads((path/f're{reynolds}.json').read_text())
+        assert all(manifest[name]==value for name,value in receipt['source_sha256'].items())
+    movies=json.loads((folder/'media/movies.json').read_text())
+    assert set(movies['fields'])=={'speed','omega','p'}
+    for entry in movies['fields'].values():
+        assert Path(entry['movie']).name==entry['movie']
+        assert hashlib.sha256((folder/'media'/entry['movie']).read_bytes()).hexdigest()==entry['movie_sha256']
+        assert np.array_equal(entry['displayed_physical_times'],cases[0]['times'])
+    # Recompute the reported sensitivity from hash-admitted native trajectories.
+    # Stored JSON alone cannot establish that the teaching numbers remain valid.
+    from flowmllab.cavity_startup import compare_trajectories
+    comparisons=json.loads((folder/'sensitivity.json').read_text())['comparisons']
+    pairs={}
+    for reynolds in (1000,7500):
+        base=load_cases(folder/'base',[reynolds])[0]
+        for variant in ('mesh32','dt_half','correctors'):
+            other=load_cases(folder/variant,[reynolds])[0]
+            pairs[f'Re{reynolds}_{variant}']=(other,base) if variant=='mesh32' else (base,other)
+    for fine in cases:
+        reynolds=int(fine['config']['reynolds'])
+        coarse=load_cases(folder/('dt_half' if reynolds in (1000,7500) else 'matched64'),[reynolds])[0]
+        for setting in ('dt','convection','method','outer_correctors','pressure_correctors'):
+            assert coarse['config'][setting]==fine['config'][setting]
+        pairs[f'Re{reynolds}_grid64_128']=(coarse,fine)
+    assert set(pairs)==set(comparisons) and len(pairs)==13
+    for label,(candidate,reference) in pairs.items():
+        actual=compare_trajectories(candidate,reference); stored=comparisons[label]
+        assert actual['candidate']==stored['candidate'] and actual['reference']==stored['reference'],label
+        assert len(actual['frames'])==len(stored['frames'])==101,label
+        for a,b in zip(actual['frames'],stored['frames']):
+            assert set(a)==set(b),label
+            for key,value in a.items():
+                if value is None:assert b[key] is None,(label,key)
+                else:np.testing.assert_allclose(value,b[key],rtol=1e-10,atol=1e-12,err_msg=label+' '+key)
+    report=json.loads((ROOT/'qa/cavity_startup_lecture.json').read_text())
+    assert report['base_pages_preserved']==report['original_pages_rendered_identically']==74
+    assert len(report['preserved_render_sha256'])==74
+    assert hashlib.sha256((ROOT/'lectures/week01_2_pressure_velocity.pdf').read_bytes()).hexdigest()==report['sha256']
+
+
 def validate_notebooks() -> tuple[int, int]:
     count = 0
     code_cells = 0
@@ -589,6 +665,9 @@ def validate_notebooks() -> tuple[int, int]:
             validate_transformer_notebook(notebook, transformer_week, relative)
         week16_lab = relative == 'notebooks/week16/W16_Supersonic_Shape_Optimization.ipynb'
         week01_2_lab = relative == 'notebooks/week01_2/W1_2_Cavity_Pressure_Velocity.ipynb'
+        startup_lab = relative == 'notebooks/week01_2/W1_2_Cavity_Startup_Movies.ipynb'
+        if startup_lab:
+            validate_cavity_startup_notebook(notebook,relative)
         if week01_2_lab:
             assert 'flowmllab/pressure_velocity.py' in full_source and 'https://github.com/Ehsan-Roohi/FlowMLLab.git' in full_source, path
             assert 'subprocess.run' in full_source and 'pip' in full_source, path
@@ -665,7 +744,7 @@ def validate_notebooks() -> tuple[int, int]:
         assert week14_lab or week15_local or optional_bridge or week01_2_lab or transformer_week is not None or colab_url in full_source, (
             f"missing direct Colab launcher: {path}"
         )
-        assert week14_lab or week15_local or week16_lab or optional_bridge or week01_2_lab or week01_3_lab or week01_4_lab or cavity_followon or transformer_week is not None or "FLOWMLLAB_COLAB_BOOTSTRAP_V1" in full_source, (
+        assert week14_lab or week15_local or week16_lab or optional_bridge or week01_2_lab or startup_lab or week01_3_lab or week01_4_lab or cavity_followon or transformer_week is not None or "FLOWMLLAB_COLAB_BOOTSTRAP_V1" in full_source, (
             f"missing Colab repository bootstrap: {path}"
         )
         reconstruction_lab = relative == 'notebooks/week11/W11_Lab2_Reconstruction_and_Identification.ipynb'
@@ -731,7 +810,7 @@ def validate_notebooks() -> tuple[int, int]:
             )
             assert 'no double-step motif is used in training or validation' in full_source
             assert 'Selection reads no double-step arrays.' in full_source
-        assert week14_lab or week15_local or reconstruction_lab or week16_lab or optional_bridge or week01_2_lab or week01_3_lab or week01_4_lab or cavity_followon or kinetic_shock_lab or transformer_week is not None or any(
+        assert week14_lab or week15_local or reconstruction_lab or week16_lab or optional_bridge or week01_2_lab or startup_lab or week01_3_lab or week01_4_lab or cavity_followon or kinetic_shock_lab or transformer_week is not None or any(
             marker in full_source
             for marker in (
                 "MIE690A article-aligned validation v3",

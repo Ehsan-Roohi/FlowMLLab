@@ -10,8 +10,8 @@
   },
   "counts": {
     "active_lecture_pdfs": 39,
-    "lecture_pages": 796,
-    "student_notebooks": 64,
+    "lecture_pages": 807,
+    "student_notebooks": 65,
     "historical_student_companions": 1,
     "optional_notebooks": 1,
     "optional_pdfs": 1
@@ -27,7 +27,7 @@
     },
     {
       "path": "lectures/week01_2_pressure_velocity.pdf",
-      "pages": 74
+      "pages": 85
     },
     {
       "path": "lectures/week01_3_keras_optimizers.pdf",
@@ -193,6 +193,10 @@
     },
     {
       "path": "notebooks/week01_2/W1_2_Cavity_Pressure_Velocity.ipynb",
+      "role": "student"
+    },
+    {
+      "path": "notebooks/week01_2/W1_2_Cavity_Startup_Movies.ipynb",
       "role": "student"
     },
     {
@@ -467,8 +471,12 @@
       "compute_estimate": "Not measured for this revision; inspect the setup before a full solve.",
       "estimate_status": "Planning estimate carried from course guides, or explicitly unmeasured; not a timing measurement of this revision.",
       "execution_status": "Colab link is an entry point, not a guarantee of a fresh hosted Run All.",
-      "keywords": "",
+      "keywords": "SIMPLE PISO PIMPLE MAC finite volume cavity startup movies streamlines pressure vorticity physical time mesh sensitivity",
       "followups": [
+        {
+          "title": "Cavity startup movies: physical time and numerical sensitivity",
+          "page": "notebooks/week01_2/W1_2_Cavity_Startup_Movies.ipynb"
+        },
         {
           "title": "Continue with spectral and DG methods on CPU",
           "page": "weeks/week01_4/README.md"

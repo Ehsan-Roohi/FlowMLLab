@@ -7,8 +7,8 @@ Course version **v1.15.0**. These counts describe the current checkout; they do 
 | Asset | Count |
 | --- | ---: |
 | Active lecture PDFs | 39 |
-| Pages in those PDFs | 796 |
-| Student notebooks, including historical companion | 64 |
+| Pages in those PDFs | 807 |
+| Student notebooks, including historical companion | 65 |
 | Historical student audit companion (included above) | 1 |
 | Optional self-study notebooks (separate) | 1 |
 | Optional self-study PDFs (separate) | 1 |
@@ -26,7 +26,7 @@ Course version **v1.15.0**. These counts describe the current checkout; they do 
 | --- | ---: |
 | [week01_02_tensorflow_keras.pdf](../lectures/week01_02_tensorflow_keras.pdf) | 21 |
 | [week01_1_ai_assisted_scientific_software.pdf](../lectures/week01_1_ai_assisted_scientific_software.pdf) | 10 |
-| [week01_2_pressure_velocity.pdf](../lectures/week01_2_pressure_velocity.pdf) | 74 |
+| [week01_2_pressure_velocity.pdf](../lectures/week01_2_pressure_velocity.pdf) | 85 |
 | [week01_3_keras_optimizers.pdf](../lectures/week01_3_keras_optimizers.pdf) | 18 |
 | [week01_4_spectral_dg.pdf](../lectures/week01_4_spectral_dg.pdf) | 25 |
 | [week01_numerical_foundations.pdf](../lectures/week01_numerical_foundations.pdf) | 37 |
@@ -75,6 +75,7 @@ The historical Week 15 audit remains available for provenance; use the complete 
 | [03_cavity_ghia.ipynb](../notebooks/week01/03_cavity_ghia.ipynb) | student |
 | [W1_1_AI_Assisted_Scientific_Software.ipynb](../notebooks/week01_1/W1_1_AI_Assisted_Scientific_Software.ipynb) | student |
 | [W1_2_Cavity_Pressure_Velocity.ipynb](../notebooks/week01_2/W1_2_Cavity_Pressure_Velocity.ipynb) | student |
+| [W1_2_Cavity_Startup_Movies.ipynb](../notebooks/week01_2/W1_2_Cavity_Startup_Movies.ipynb) | student |
 | [W1_3_Keras_Optimizers.ipynb](../notebooks/week01_3/W1_3_Keras_Optimizers.ipynb) | student |
 | [W1_4_Spectral_DG_CPU.ipynb](../notebooks/week01_4/W1_4_Spectral_DG_CPU.ipynb) | student |
 | [AI_in_Fluids_Week2_Colab_Expanded.ipynb](../notebooks/week02/AI_in_Fluids_Week2_Colab_Expanded.ipynb) | student |

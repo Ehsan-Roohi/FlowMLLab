@@ -150,6 +150,10 @@ then use the retained **Re=400 and 1000** experiments to separate mesh error,
 coupling convergence and measured solver work on 32 and 64 cells per side.
 Then use the [CPU experiments](results/week01_2_literature/README.md) to distinguish
 pressure-solver tolerance, mass conservation and startup time-step accuracy.
+The [cavity startup movie lab](notebooks/week01_2/W1_2_Cavity_Startup_Movies.ipynb) follows
+streamlines, signed vorticity and pressure from rest at Re = 100, 400, 1000,
+3200, 5000, 7500 and 10000. [Watch the matched-time videos](https://ehsan-roohi.github.io/FlowMLLab/cavity-startup/);
+these finite-time trajectories are separate from steady Ghia validation.
 
 ### Week 1.3 — Optimizers for scientific machine learning
 

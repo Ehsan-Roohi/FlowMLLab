@@ -1,0 +1,44 @@
+{
+  "schema": 1,
+  "executed_utc": "2026-11-21T19:45:14.971492+00:00",
+  "notebook": "notebooks/week01_2/W1_2_Cavity_Startup_Movies.ipynb",
+  "notebook_sha256": "11f5ac5cbae7ea308db2771db7515aee19b2ce4d6232e56fb6966398c6a40b48",
+  "cell_source_sha256": "395496c4a7963f0d434884c4d0d601679d17917a65080a0637edce53bc302665",
+  "code_cells": 7,
+  "executed_code_cells": 7,
+  "figure_outputs": 5,
+  "video_players": 3,
+  "error_outputs": 0,
+  "runtime_seconds": 36.853588700003456,
+  "kernel_python": "D:\\ChatGPT Backup\\Projects\\FlowMLLab\\Teaching_Current\\repo\\tmp\\week01_4_runtime\\Scripts\\python.exe",
+  "fresh_default": {
+    "Re": 100,
+    "cells": 16,
+    "dt": 0.02,
+    "end_time": 0.2,
+    "method": "pimple",
+    "outer_correctors": 3,
+    "pressure_correctors": 2
+  },
+  "presentation": {
+    "trajectory_directory": "fine128",
+    "qualification": "Finite-time 2D startup on 128 x 128 MAC cells, dt*=0.01, t*=0..10. Re >= 3200 remains strongly mesh-sensitive: matched 64-to-128 velocity differences are 17-70% at t*=10. These are provisional finite-grid teaching trajectories, not mesh-independent predictions, steady Ghia validation, or 3D turbulence evidence.",
+    "reynolds": [
+      100,
+      400,
+      1000,
+      3200,
+      5000,
+      7500,
+      10000
+    ],
+    "selection_basis": "Same solver/physics/time schedule for all seven Reynolds numbers; finer common mesh selected after large 32-to-64 differences. No parameter tuning to match the illustrative video."
+  },
+  "movie_manifest_sha256": "4dcced46c22f9f9fa891143ac72569e48312152bc9619cdfa0e13f8f3e1f042a",
+  "source_sha256": {
+    "flowmllab/cavity_startup.py": "6251c65b120f4c656357bdf2ae93550d974168718b057d0df4b623e4ab74beaf",
+    "qa/build_cavity_startup.py": "ccfba250458e3aef26049708c545320128731e9c789739d1af63f2c96c3666a3",
+    "qa/build_cavity_startup_learning.py": "430a6f2cf849a44bb59ade3c9241b188db88b1a52dcf0173783c59e54857d9c5"
+  },
+  "scope": "Fresh local CPU kernel; default cells executed. Hosted Colab was not separately claimed."
+}

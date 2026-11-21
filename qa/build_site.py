@@ -51,6 +51,24 @@ def build(out):
     commit=subprocess.check_output(['git','rev-parse','HEAD'],cwd=ROOT,text=True).strip()
     (out/'build.json').write_text(json.dumps(dict(commit=commit,version=inv['course_version'],units=len(inv['modules'])))+'\n')
     export(out/'assets/cavity')
+    # Export only the reviewed movies and their receipt, never native CFD arrays.
+    movie_root = ROOT/'results/cavity_startup/media'
+    movie_receipt = movie_root/'movies.json'
+    if movie_receipt.is_file():
+        import hashlib
+        movie_manifest = json.loads(movie_receipt.read_text(encoding='utf-8'))
+        target = out/'cavity-startup'
+        target.mkdir(parents=True, exist_ok=True)
+        for entry in movie_manifest['fields'].values():
+            name = entry['movie']
+            if Path(name).name != name:
+                raise ValueError('Movie receipt must use a plain filename')
+            payload = movie_root/name
+            if hashlib.sha256(payload.read_bytes()).hexdigest() != entry['movie_sha256']:
+                raise ValueError('Movie hash mismatch: '+name)
+            shutil.copy2(payload, target/name)
+        shutil.copy2(movie_receipt, target/'movies.json')
+        shutil.copy2(movie_root/'index.html', target/'index.html')
     audit=LinkAudit();audit.feed(source)
     if len(audit.ids)!=len(set(audit.ids)):raise ValueError('Duplicate HTML IDs')
     for link in audit.links:
