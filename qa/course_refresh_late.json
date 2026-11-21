@@ -1891,7 +1891,7 @@
       "review_status": "passed",
       "reason": "Exposed CPU POD/MLP controls and same-case pressure/signed-error plots for ridge, GP and MLP; stored checkpoint and retained CFD design verification remain distinct from fresh fits/proposals.",
       "editable_sources": {
-        "qa/week16/build_week16_lecture.py": "06c9361e2b1c3e77d345239c5f82bb67a360a8be5a7486b16e8f27fd224227a3",
+        "qa/week16/build_week16_lecture.py": "129927fb435f6e630a8c6f382ba4d3f67b5182354a6810901b8b637294272db9",
         "lectures/source/week16_supersonic_shape_optimization.tex": "ca3e515ecf25e3f6dcf74366286bb2095ae9a759f9465b86272dba82a771afc0",
         "lectures/source/week16_parts/part1.tex": "d7fe47a0e249354d4d7c8bfcf46cc6836461cdf5678320d6655e1ac38d7afc2e",
         "lectures/source/week16_parts/part2.tex": "36d6ad148d74111fd15d995f68b61c185cf951765cd0e8f2906b5eb65886a15d",
@@ -2815,7 +2815,7 @@
     "qa/build_geometry_time_bridge_notebook.py": "e6cc37edfce24e2f5b61fd67343f72a280f61cff5612fc7db3f74e3742e9ae90",
     "qa/build_week15_geometry_lecture.py": "3b4aba32304efaf049ced5ffbe111048f5e626ca01557c0896e90ea0c8cb0251",
     "qa/build_geometry_time_bridge_lecture.py": "10d8907714add01bbd79bc289252b7758b22d4e7af0540cec3379b5ae27c4e41",
-    "qa/week16/build_week16_lecture.py": "06c9361e2b1c3e77d345239c5f82bb67a360a8be5a7486b16e8f27fd224227a3",
+    "qa/week16/build_week16_lecture.py": "129927fb435f6e630a8c6f382ba4d3f67b5182354a6810901b8b637294272db9",
     "qa/plot_week22_lecture.py": "c61e298d8f19f40186bade97fcff2c0c91a211daec104f7d112e7977d8820309",
     "tests/test_geometry_operator_lesson.py": "df1d82c93c5eef3acf7f98839e5ca9e80d8cac7b43b363ebb7839735cbff07b0",
     "tests/test_transformer_source_encoding.py": "1dbad83fd6f6fe7d1ae0bd7e320942c738f2cc448d04fba9eb3854d77b0e57a2",
@@ -3509,7 +3509,7 @@
   "rebuild": {
     "canonical_notebooks": "Existing notebook builders call the idempotent late updater. qa/build_transformer_course.py reads UTF-8 canonical lesson JSON for both editions.",
     "figure_exports": "qa/export_late_teaching_figures.py extracts actual executed notebook PNG bytes; the lecture-only Week22 portrait uses qa/plot_week22_lecture.py with exact retained rows.",
-    "lecture_sources": "qa/refresh_late_lecture.py updates editable sources; Week15 uses qa/build_week15_geometry_lecture.py, Week16 qa/week16/build_week16_lecture.py (TeX is canonical), transformer weeks qa/build_transformer_course.py --pdf-only, bridge qa/build_geometry_time_bridge_lecture.py."
+    "lecture_sources": "qa/refresh_late_lecture.py updates editable sources; Week15 uses qa/build_week15_geometry_lecture.py, Week16 qa/week16/build_week16_lecture.py (TeX is canonical), transformer weeks qa/build_transformer_course.py --pdf-only, bridge qa/build_geometry_time_bridge_lecture.py. Week16 now validates into --output-dir (default build/week16-lecture) and never automatically replaces the reviewed publication PDF."
   },
   "cleanup": {
     "status": "verified_deleted",
@@ -3662,5 +3662,14 @@
     "canonical_builder_before_sha256": "c86ee0c260219b128b86b510c4bad8c7a05c6c875c6fec5dc292599bd865daeb",
     "canonical_builder_after_sha256": "c2c8470f5329969e62a53b6aa8acf9e8eb1d030e4fe1c8699355753cef3ed2b0",
     "change": "Only both execution-ledger write_text calls gain explicit LF newline; no generated notebook source or numerical/figure/PDF content changed."
+  },
+  "publication_build_bridge": {
+    "previous_builder_sha256": "06c9361e2b1c3e77d345239c5f82bb67a360a8be5a7486b16e8f27fd224227a3",
+    "current_builder_sha256": "129927fb435f6e630a8c6f382ba4d3f67b5182354a6810901b8b637294272db9",
+    "reviewed_pdf_sha256_unchanged": "cf6c66b3cbe411df6ef7545d230adbb553d5a3097d178476177eb3dfc9c3d473",
+    "change": "Default is now isolated compile-only validation using byte-verified copies of reviewed TeX and figures; optional retained-data regeneration is isolated. No published PDF, TeX, figure, numerical input or scientific plotting formula changed.",
+    "author_receipt": "qa/course_refresh_week16_ci.json",
+    "independent_receipt": "qa/course_refresh_week16_ci_review.json",
+    "original_compilation_provenance": "The published PDF was compiled and visually reviewed before this routing-only maintenance patch; the previous builder hash remains recorded above."
   }
 }

@@ -1,0 +1,222 @@
+{
+  "status": "passed_scoped_source_and_figure_validation",
+  "utc": "2026-11-21T05:33:32.353862+00:00",
+  "baseline_commit": "8ac62e2",
+  "scope": "Isolated compile-only default and explicitly requested isolated figure regeneration. No reviewed publication PDF, figure, numerical evidence or notebook changed.",
+  "finding": "Original 8ac62e2 producer already contained waveform plots and training-only SVD. CI failed first on rejected Times New Roman substitution; no numeric repair was required.",
+  "source_sha256": {
+    "qa/week16/build_week16_lecture.py": "129927fb435f6e630a8c6f382ba4d3f67b5182354a6810901b8b637294272db9",
+    "tests/test_week16_lecture_build.py": "b71aec55ca828931642957d55fcc0cd9bee071d9889e9c5ca2f8297a076462dc"
+  },
+  "original_builder_sha256": "06c9361e2b1c3e77d345239c5f82bb67a360a8be5a7486b16e8f27fd224227a3",
+  "unchanged_scientific_body": {
+    "status": "exact AST identity",
+    "normalized_AST_sha256": "827d244f6e1a794a1d968906ab2b8353beb06555d96beae41522158f481c2af8",
+    "normalizations": "Exclude new local isolated ASSETS assignment and explicit UTF-8 read keywords; all numerical calculations, data selection, plot calls and styles unchanged."
+  },
+  "interface": {
+    "default": "python qa/week16/build_week16_lecture.py --output-dir DIR",
+    "default_output": "build/week16-lecture",
+    "mode": "compile-only from exact copied reviewed inputs",
+    "optional": "--rebuild-figures regenerates only the isolated staged figures, then compiles there",
+    "output_layout": [
+      "source/<original relative input paths>",
+      "tex/<XeLaTeX auxiliaries and candidate PDF>",
+      "week16_supersonic_shape_optimization.pdf",
+      "build_receipt.json"
+    ],
+    "safety": "Publication paths and checkout ancestors rejected; resolved containment and symlink/hardlink checks prevent reused outputs from aliasing outside files."
+  },
+  "focused_tests": {
+    "command": "python -m unittest discover -s tests -p test_week16_lecture_build.py -v",
+    "passed": 6,
+    "seconds": 19.427,
+    "hardlink_scope": "Local Lexar rejects native hardlinks; explicit link-count metadata fallback exercised admission here. Linux CI can exercise a real hardlink.",
+    "compile_scope": "Unit tests verify exact invocation and routing using a mocked XeLaTeX process and a valid 24-page PDF fixture; this is not a real local TeX build."
+  },
+  "protected_inputs_equal_published_HEAD": {
+    "lectures/source/week16_parts/part1.tex": "d7fe47a0e249354d4d7c8bfcf46cc6836461cdf5678320d6655e1ac38d7afc2e",
+    "lectures/source/week16_parts/part2.tex": "36d6ad148d74111fd15d995f68b61c185cf951765cd0e8f2906b5eb65886a15d",
+    "lectures/source/week16_parts/part3.tex": "94c28b8ac14d0e0e0bf2aa2f979603ab54bcb5d125f16736e64b8a018ca87ffa",
+    "lectures/source/week16_parts/part4.tex": "9f7b2cc42263a30c66e00b37071e3be2f3a40f8175ffb7c01551209bccc0a380",
+    "lectures/source/week16_parts/part5.tex": "50b5514c27e89292cd6862689d872c58c7d017c30316d73124998b287880a215",
+    "lectures/source/week16_parts/part6_cpu_lab.tex": "231f7cc0eaded6b652cf1b4b941265df134e0e034cae072e9334217c55db7a0d",
+    "lectures/source/week16_supersonic_shape_optimization.tex": "ca3e515ecf25e3f6dcf74366286bb2095ae9a759f9465b86272dba82a771afc0",
+    "lectures/source/week16_tex_assets/cone_refinement.png": "0dd18ad3066daf11b02973972a0663d4ebf893282a94151ee123688f0fdf8592",
+    "lectures/source/week16_tex_assets/finer_case_errors.png": "c7b9d5cd59f89d3864638f1528f26e35b42bcd73b6199c31bf959b27b96556c4",
+    "lectures/source/week16_tex_assets/geometry_family.png": "c77faf2c8b720b6b06c68b759c7b8e03413e85f29e1de89bd366aadc6d5610b0",
+    "lectures/source/week16_tex_assets/mach_cone.png": "d979ebe3b84f357bbcbd9efc91083bec428e528afa8df74403f49d0b2f022c1c",
+    "lectures/source/week16_tex_assets/model_metrics_lines.png": "1ea4824f9c45064a40d371a65864a3f7f6bd34dc706c2c0cc2a6c1e991dcb882",
+    "lectures/source/week16_tex_assets/n_wave.png": "726f9a4d69ff7abeb06968dbec83f87ca94102a17fa688015c4cc0efcc8db639",
+    "lectures/source/week16_tex_assets/pod_energy.png": "5b91d12f617ffd3908b3b7e7e9d5a08f07f741cba02416ef052e30eeffe73b26",
+    "lectures/source/week16_tex_assets/pod_modes.png": "07101a618a79e62ea82936b08aab6bba1ec0b9145b6a88803e3a1c4ff8ac4ca1",
+    "lectures/source/week16_tex_assets/split_map.png": "a7f3110fceba055bf5c6eb53373dba6f70b4ef7e1ac827e697ca5353e523fdd1",
+    "lectures/source/week16_tex_assets/waveforms_by_split.png": "a1fcf512fbfc36422bb7b9709b6eb6313e334d9429d0de4d1861b27498761e60",
+    "results/late_course_teaching/week16_validation_models_01.png": "a08171eaa543312657866deafce895ab13267dd25569ac4f1ace498ae8762b36",
+    "results/week16_lowboom/reference/clean_cfd_fields.png": "fcbafb5b5e2349873ec602fdfc1ccc0743ff5cdf97c6edcecc949f19167e57a4",
+    "results/week16_lowboom/reference/seeb_comparison.png": "2c8d7410e15108b5e12b16c2cf3c6dc5a85afafc8b6fc7cf868cd77e823e1eda",
+    "results/week16_lowboom/reference/weakwall_design_validation.png": "31657892c1eb4d1a98c48a5043ed6598f0a52f7b245da3d81076f27d227a3b6e",
+    "lectures/week16_supersonic_shape_optimization.pdf": "cf6c66b3cbe411df6ef7545d230adbb553d5a3097d178476177eb3dfc9c3d473",
+    "results/week16_lowboom/reference/clean_dataset_v801.npz": "03790fc0b8e2034aed66b3e7ec3ffbdd3a08306b487705b54bb839bfa869e58b",
+    "results/week16_lowboom/reference/cone_refinement_v801.json": "d827842cc20933c5769f77f0d852147c68e13a8b86066ac4e59a4d71eafcdcc8",
+    "results/week16_lowboom/reference/clean_model_audit_v801.json": "e4b5b609edfbd500d9a364e701efd0703ae6fadcde3e9c3c3352a0e50563a685"
+  },
+  "staging": {
+    "inputs": 21,
+    "directory": "tmp/week16_ci_validation/compile_only_staging/source",
+    "all_copies_byte_verified": true
+  },
+  "retained_numeric_validation": {
+    "waveform_shape": [
+      44,
+      561
+    ],
+    "coordinate_sha256": "9d22483c9bfc9cbe882947d53746b44b5a2b8a6972391b4f9e358b4893a3d533",
+    "split_counts": {
+      "train": 24,
+      "validation": 6,
+      "test": 8,
+      "extrapolation": 6
+    },
+    "selected_representative_indices": {
+      "train": 12,
+      "validation": 27,
+      "test": 34,
+      "extrapolation": 41
+    },
+    "representative_waveform_sha256": {
+      "train": "ab765e6c3a573454c815a60e016605b498e07bfdc6c8e753b5b9f603bc447171",
+      "validation": "05e35fcf99920db16ccad0a7f569c2eb1bed2e05e19db0f4cb7cb8e80b9be086",
+      "test": "b5d444d91c07fa72a6737d5bf86a4c7db055acc243ad3868a7ee5028e3b12f38",
+      "extrapolation": "4939041941cde6951b8a3e01ee87d98c1e9dc07ff899adb20ffee15b6d177d4f"
+    },
+    "POD_fit_scope": "24 training waveforms only; training mean subtracted",
+    "POD_rank12_energy": 0.9999836739841619,
+    "POD_first_three_mode_sha256": "f3c600724867dbf286aafa5151939d353a7860f827b44301185fe81df66fb058",
+    "POD_energy_sha256": "a532d8958969c1b76db16f14ee255466f5ef635ba6210c29475d770b2de09af4"
+  },
+  "regenerated_figures": [
+    {
+      "path": "tmp/week16_ci_validation/regenerated_figures/cone_refinement.png",
+      "sha256": "4c4dc7a7dd3de86111d4e8b4a347957b04edf568e96af482078b4c2b33b17cfd",
+      "pixels_sha256": "2f41b300ac16f4f955122079633c342f469317e10905fd93966c584e464da5e0",
+      "size": [
+        1430,
+        880
+      ],
+      "published_asset_sha256": "0dd18ad3066daf11b02973972a0663d4ebf893282a94151ee123688f0fdf8592",
+      "pixel_identical_to_publication": true,
+      "visual_review": "Individually viewed at original PNG resolution; correct visible waveforms/modes/geometry/splits and full plotted data ranges; existing schematic layout preserved."
+    },
+    {
+      "path": "tmp/week16_ci_validation/regenerated_figures/finer_case_errors.png",
+      "sha256": "caab2f64697bc498383af19158825aa5661503f2476e388f5bb287632913c837",
+      "pixels_sha256": "e530a0e865d9f1a96f2193deb6929e85efdb38b837f0952f90dd0b61a4dd1070",
+      "size": [
+        1672,
+        836
+      ],
+      "published_asset_sha256": "c7b9d5cd59f89d3864638f1528f26e35b42bcd73b6199c31bf959b27b96556c4",
+      "pixel_identical_to_publication": true,
+      "visual_review": "Individually viewed at original PNG resolution; correct visible waveforms/modes/geometry/splits and full plotted data ranges; existing schematic layout preserved."
+    },
+    {
+      "path": "tmp/week16_ci_validation/regenerated_figures/geometry_family.png",
+      "sha256": "d63e39dd1aefec06cfdc81491238bbffc12e03d9c4b226fa3d0de0e62ad765be",
+      "pixels_sha256": "52ad299c08c661c82874a845801b04ceb8cc37eda595ec510cbf164a3fc49b6d",
+      "size": [
+        1760,
+        704
+      ],
+      "published_asset_sha256": "c77faf2c8b720b6b06c68b759c7b8e03413e85f29e1de89bd366aadc6d5610b0",
+      "pixel_identical_to_publication": true,
+      "visual_review": "Individually viewed at original PNG resolution; correct visible waveforms/modes/geometry/splits and full plotted data ranges; existing schematic layout preserved."
+    },
+    {
+      "path": "tmp/week16_ci_validation/regenerated_figures/mach_cone.png",
+      "sha256": "7cbbb856698d527f86abc01cd85a361a4fa06c25f9d77049cdf13cecb5e913e7",
+      "pixels_sha256": "8efc928ea7e706a6e661474aeb71c09fd0e232d90cc550753243922a21b3cec1",
+      "size": [
+        878,
+        747
+      ],
+      "published_asset_sha256": "d979ebe3b84f357bbcbd9efc91083bec428e528afa8df74403f49d0b2f022c1c",
+      "pixel_identical_to_publication": true,
+      "visual_review": "Individually viewed at original PNG resolution; correct visible waveforms/modes/geometry/splits and full plotted data ranges; existing schematic layout preserved."
+    },
+    {
+      "path": "tmp/week16_ci_validation/regenerated_figures/model_metrics_lines.png",
+      "sha256": "93bcdba759f6af251c5bd2d72ccb7fe6fce67663ec41fb769749ed87fceb3d81",
+      "pixels_sha256": "6cd60958aca372d7ac778954aa0da93d0579f15ba36ea27fbccbd9d6b0c60dd7",
+      "size": [
+        1672,
+        924
+      ],
+      "published_asset_sha256": "1ea4824f9c45064a40d371a65864a3f7f6bd34dc706c2c0cc2a6c1e991dcb882",
+      "pixel_identical_to_publication": true,
+      "visual_review": "Individually viewed at original PNG resolution; correct visible waveforms/modes/geometry/splits and full plotted data ranges; existing schematic layout preserved."
+    },
+    {
+      "path": "tmp/week16_ci_validation/regenerated_figures/n_wave.png",
+      "sha256": "85937845713019155c05b63390d97b59e6ebf72d66f6cfe1d44fde82114a789c",
+      "pixels_sha256": "02ab38647ba3216c21a015aa65da2fc30bf90382e956ed0f2bf39b05432e97fb",
+      "size": [
+        1650,
+        704
+      ],
+      "published_asset_sha256": "726f9a4d69ff7abeb06968dbec83f87ca94102a17fa688015c4cc0efcc8db639",
+      "pixel_identical_to_publication": true,
+      "visual_review": "Individually viewed at original PNG resolution; correct visible waveforms/modes/geometry/splits and full plotted data ranges; existing schematic layout preserved."
+    },
+    {
+      "path": "tmp/week16_ci_validation/regenerated_figures/pod_energy.png",
+      "sha256": "456abda726ccca7d2c51053d20e5571274e51a082a2deec5c76c622321a5af32",
+      "pixels_sha256": "e524468bfdf883a8850c4d3b22c8a69c0a3d213d0057323b583342c2b6eb22ce",
+      "size": [
+        1540,
+        770
+      ],
+      "published_asset_sha256": "5b91d12f617ffd3908b3b7e7e9d5a08f07f741cba02416ef052e30eeffe73b26",
+      "pixel_identical_to_publication": true,
+      "visual_review": "Individually viewed at original PNG resolution; correct visible waveforms/modes/geometry/splits and full plotted data ranges; existing schematic layout preserved."
+    },
+    {
+      "path": "tmp/week16_ci_validation/regenerated_figures/pod_modes.png",
+      "sha256": "1ef779630cc8edbb328b5977916ac7ca488519b7365a8229fab22b47796cd9a1",
+      "pixels_sha256": "0c13878a8b29c86df8820086b55661ee10a12e697a10830a457d40f00b919cb3",
+      "size": [
+        1760,
+        880
+      ],
+      "published_asset_sha256": "07101a618a79e62ea82936b08aab6bba1ec0b9145b6a88803e3a1c4ff8ac4ca1",
+      "pixel_identical_to_publication": true,
+      "visual_review": "Individually viewed at original PNG resolution; correct visible waveforms/modes/geometry/splits and full plotted data ranges; existing schematic layout preserved."
+    },
+    {
+      "path": "tmp/week16_ci_validation/regenerated_figures/split_map.png",
+      "sha256": "690c43cfbf04373389ecb4264ba72bd290ec4431c5e32cfb45a4e30ed67ef5ee",
+      "pixels_sha256": "55effa7650c29ee15dfd25da15866ccd992d04da0a85ee7510daaed2ba26d6b7",
+      "size": [
+        1320,
+        990
+      ],
+      "published_asset_sha256": "a7f3110fceba055bf5c6eb53373dba6f70b4ef7e1ac827e697ca5353e523fdd1",
+      "pixel_identical_to_publication": true,
+      "visual_review": "Individually viewed at original PNG resolution; correct visible waveforms/modes/geometry/splits and full plotted data ranges; existing schematic layout preserved."
+    },
+    {
+      "path": "tmp/week16_ci_validation/regenerated_figures/waveforms_by_split.png",
+      "sha256": "d5b041debd3890dea00ade0276e0ec447dfb63f33011d285cf9f874fabe274f3",
+      "pixels_sha256": "214eb06c70c39c608d221d670dfb79cd6d837ef79908b63b97dc067a7f8109e2",
+      "size": [
+        1760,
+        880
+      ],
+      "published_asset_sha256": "a1fcf512fbfc36422bb7b9709b6eb6313e334d9429d0de4d1861b27498761e60",
+      "pixel_identical_to_publication": true,
+      "visual_review": "Individually viewed at original PNG resolution; correct visible waveforms/modes/geometry/splits and full plotted data ranges; existing schematic layout preserved."
+    }
+  ],
+  "actual_tex_compile": "Not executed locally; exact-head CI is responsible for real XeLaTeX compilation with genuine installed Times New Roman. No new toolchain was installed.",
+  "publication_policy": "Generated candidates remain build artifacts. Publishing a regenerated PDF requires separate review; this script has no publication-write mode."
+}

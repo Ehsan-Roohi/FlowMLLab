@@ -15,6 +15,7 @@ on:
       - "lectures/source/week08_gas_dynamics_sciml.tex"
       - "qa/build_week8_gas_dynamics_figures.py"
       - "qa/run_week8_scattered_baseline.py"
+      - "tests/test_week8_scattered_baseline.py"
       - "results/gas_dynamics_week8/*.csv"
       - "results/gas_dynamics_week8/*.json"
 
@@ -55,9 +56,13 @@ jobs:
           fc-cache -f "$font_dir"
           python qa/lecture_typography.py
 
-      - name: Rebuild deterministic numerical figures
+      - name: Verify numerical reproduction and rebuild figures
         run: |
-          python qa/run_week8_scattered_baseline.py
+          # Preserve the frozen CSV byte-for-byte. Only the two recomputed error
+          # norms admit documented BLAS/LAPACK roundoff; metadata stays exact.
+          python qa/run_week8_scattered_baseline.py \
+            --output "$RUNNER_TEMP/week8-scattered/scattered_baseline.csv" \
+            --compare-to results/gas_dynamics_week8/scattered_baseline.csv
           python qa/build_week8_gas_dynamics_figures.py
 
       # Published notebooks are canonical; legacy generators omit later additions.

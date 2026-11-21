@@ -1649,7 +1649,7 @@
     },
     {
       "path": "qa/course_refresh_late.json",
-      "sha256": "d2dc6b2826fb38faad1cc40b5062d718cc8c2d96497985eb839292412d2c454a"
+      "sha256": "ee742226c8ce6434dbdc61814ccf1f02c3c5c8cb023f2888ee76ad9c1829d061"
     },
     {
       "path": "qa/course_refresh_independent_review.json",
@@ -1665,7 +1665,7 @@
     },
     {
       "path": "qa/course_refresh_validation.json",
-      "sha256": "8f5b4a4c1b248982248be83befbe759f971a43422f05ad4a7163cb899b304938"
+      "sha256": "5a9ba7f7c7b4f954f3896c3df14015d32d22cfb3b4bc196f083d933fdf3e3ccf"
     },
     {
       "path": "qa/course_refresh_week04_link.json",
@@ -1682,6 +1682,18 @@
     {
       "path": "qa/course_refresh_source_scan.json",
       "sha256": "bbf6f8bc656aee71abc25de9766c3b6b5a81ce3b3b8ef49d00b9bef75986e02e"
+    },
+    {
+      "path": "qa/course_refresh_week08_ci.json",
+      "sha256": "04e22d97f3239b14b10f30f0fdf159cacfbf50b7f33412e5fcd10995921e2cfb"
+    },
+    {
+      "path": "qa/course_refresh_week16_ci.json",
+      "sha256": "64bc8e15832d5e0a953dc61607ef73bc1ec44198b708b126965eb520fa5184d4"
+    },
+    {
+      "path": "qa/course_refresh_week16_ci_review.json",
+      "sha256": "f8ce68a1a7648ba8b9f6d659895f4143bc05513c343aba240b11299a6578a577"
     }
   ],
   "coverage_limits": [

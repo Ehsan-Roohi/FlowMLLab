@@ -67,7 +67,38 @@
     "qa/course_refresh_gate_review.json",
     "qa/course_refresh_navigation_review.json"
   ],
-  "publication_ci": "To be checked against the published commit; this file records local validation only.",
+  "publication_ci": {
+    "first_published_commit": "8ac62e2b52caf23b155ce7546c43d77c1ac57dad",
+    "main_ci": "Four Python versions 3.10-3.13 passed; Python3.12 logs report410 passed and23 skipped, plus scientific smoke and full release QA.",
+    "main_ci_url": "https://github.com/Ehsan-Roohi/FlowMLLab/actions/runs/44870266710",
+    "other_successful_runs": {
+      "Transformer course verification": 44870266645,
+      "Rebuild Week7": 44870266657,
+      "Rebuild Week9": 44870266653,
+      "Reproduce teaching notebook HTML": 44870266794,
+      "Week15 retained evidence": 44870266741,
+      "Modal teaching companions": 44870266676,
+      "Publish interactive course site": 44870266728
+    },
+    "post_publication_repairs": [
+      {
+        "scope": "Week8 reproducibility workflow",
+        "failed_run": 44870266635,
+        "repair": "Frozen CSV preserved; isolated replay validates exact metadata and fixed tight arithmetic-roundoff bounds on two error norms. Existing physics acceptance gates unchanged.",
+        "tests": "49 passed, plus real four-case fixed-budget CPU replay.",
+        "receipt": "qa/course_refresh_week08_ci.json"
+      },
+      {
+        "scope": "Week16 lecture workflow",
+        "failed_run": 44870266781,
+        "repair": "Install checksum-verified TimesNewRoman; isolate compilation and optional figure rebuild; reject linked-file/unsafe output paths; active workflow has read-only repository permissions and no automatic publication overwrite.",
+        "tests": "Six focused tests independently passed;25 protected inputs exact; scientific plotting body unchanged.",
+        "receipt": "qa/course_refresh_week16_ci.json",
+        "independent_receipt": "qa/course_refresh_week16_ci_review.json"
+      }
+    ],
+    "final_head_verification": "Recorded after the follow-up push in ignored tmp/course_refresh/publication_status.json to avoid self-referential commit/CI updates."
+  },
   "git_text_serialization": {
     "normalized_files": [
       {

@@ -1,0 +1,181 @@
+{
+  "status": "passed_independent_scoped_source_and_focused_tests",
+  "reviewed_utc": "2026-11-21T05:33:12.939597+00:00",
+  "reviewer": "week4_lab2_repair",
+  "scope": "Active Week16 lecture CI workflow, isolated builder, and focused regression tests. No scientific execution or publication change.",
+  "published_baseline_commit": "8ac62e2b52caf23b155ce7546c43d77c1ac57dad",
+  "reviewed_sources": {
+    ".github/workflows/week16-lecture.yml": "b5c2dd93855c339693cd81884598a4eda4da873bfb794080baa45c8edc0616a6",
+    "qa/week16/build_week16_lecture.py": "129927fb435f6e630a8c6f382ba4d3f67b5182354a6810901b8b637294272db9",
+    "tests/test_week16_lecture_build.py": "b71aec55ca828931642957d55fcc0cd9bee071d9889e9c5ca2f8297a076462dc"
+  },
+  "findings_resolved": [
+    "The active workflow installs checksum-verified genuine Times New Roman and rejects font fallback.",
+    "Default build stages current TeX/image dependencies and compiles only inside the isolated output tree. Explicit retained-data figure regeneration uses the isolated stage.",
+    "Publication paths and checkout ancestors are rejected; linked output leaves/trees are rejected before XeLaTeX, including reused-directory PDF aliases.",
+    "Active workflow has read-only repository contents permissions, uploads the isolated PDF as an artifact, and contains no commit/push step.",
+    "Image dependency paths are included in the active workflow triggers."
+  ],
+  "independent_tests": {
+    "command": "tmp/week01_4_runtime/Scripts/python.exe -m unittest discover -s tests -p test_week16_lecture_build.py -v",
+    "tests_passed": 6,
+    "tests_failed": 0,
+    "reported_test_seconds": 17.864,
+    "coverage": [
+      "Default compile-only does not regenerate figures",
+      "Explicit regeneration writes the isolated stage",
+      "Publication paths, ancestors and escapes rejected",
+      "Two XeLaTeX calls use isolated cwd/output routing",
+      "Reused output alias rejected before subprocess; original PDF preserved",
+      "Exact representative retained waveforms and training-only POD energy/mode curves"
+    ],
+    "hardlink_fixture_note": "This Lexar filesystem rejected native os.link with WinError 1. The final test uses documented link-count metadata here; Linux CI attempts a real hardlink. A pre-fallback test run passed five tests and failed only on unsupported native link creation, then the stable suite passed all six.",
+    "compiler_note": "XeLaTeX was mocked for routing tests with a valid 24-page fixture PDF. This review does not claim a fresh real XeLaTeX build; the exact-head CI performs it.",
+    "local_writes": "Only D: temporary test fixtures/font cache and this compact receipt; no scientific or published artifacts were rewritten."
+  },
+  "scientific_plotting_ast": {
+    "unchanged_against_published": true,
+    "normalizations": [
+      "Output parameter and local destination binding",
+      "Explicit UTF-8 JSON decoding only"
+    ]
+  },
+  "canonical_preservation": {
+    "all_exact_published_raw_bytes": true,
+    "tex_and_image_dependencies": 21,
+    "optional_numeric_inputs": 3,
+    "canonical_pdfs": 1,
+    "protected_files": [
+      {
+        "path": "lectures/source/week16_parts/part1.tex",
+        "sha256": "d7fe47a0e249354d4d7c8bfcf46cc6836461cdf5678320d6655e1ac38d7afc2e",
+        "bytes": 8199
+      },
+      {
+        "path": "lectures/source/week16_parts/part2.tex",
+        "sha256": "36d6ad148d74111fd15d995f68b61c185cf951765cd0e8f2906b5eb65886a15d",
+        "bytes": 7219
+      },
+      {
+        "path": "lectures/source/week16_parts/part3.tex",
+        "sha256": "94c28b8ac14d0e0e0bf2aa2f979603ab54bcb5d125f16736e64b8a018ca87ffa",
+        "bytes": 7217
+      },
+      {
+        "path": "lectures/source/week16_parts/part4.tex",
+        "sha256": "9f7b2cc42263a30c66e00b37071e3be2f3a40f8175ffb7c01551209bccc0a380",
+        "bytes": 5755
+      },
+      {
+        "path": "lectures/source/week16_parts/part5.tex",
+        "sha256": "50b5514c27e89292cd6862689d872c58c7d017c30316d73124998b287880a215",
+        "bytes": 1428
+      },
+      {
+        "path": "lectures/source/week16_parts/part6_cpu_lab.tex",
+        "sha256": "231f7cc0eaded6b652cf1b4b941265df134e0e034cae072e9334217c55db7a0d",
+        "bytes": 3907
+      },
+      {
+        "path": "lectures/source/week16_supersonic_shape_optimization.tex",
+        "sha256": "ca3e515ecf25e3f6dcf74366286bb2095ae9a759f9465b86272dba82a771afc0",
+        "bytes": 2059
+      },
+      {
+        "path": "lectures/source/week16_tex_assets/cone_refinement.png",
+        "sha256": "0dd18ad3066daf11b02973972a0663d4ebf893282a94151ee123688f0fdf8592",
+        "bytes": 68066
+      },
+      {
+        "path": "lectures/source/week16_tex_assets/finer_case_errors.png",
+        "sha256": "c7b9d5cd59f89d3864638f1528f26e35b42bcd73b6199c31bf959b27b96556c4",
+        "bytes": 85938
+      },
+      {
+        "path": "lectures/source/week16_tex_assets/geometry_family.png",
+        "sha256": "c77faf2c8b720b6b06c68b759c7b8e03413e85f29e1de89bd366aadc6d5610b0",
+        "bytes": 86017
+      },
+      {
+        "path": "lectures/source/week16_tex_assets/mach_cone.png",
+        "sha256": "d979ebe3b84f357bbcbd9efc91083bec428e528afa8df74403f49d0b2f022c1c",
+        "bytes": 32869
+      },
+      {
+        "path": "lectures/source/week16_tex_assets/model_metrics_lines.png",
+        "sha256": "1ea4824f9c45064a40d371a65864a3f7f6bd34dc706c2c0cc2a6c1e991dcb882",
+        "bytes": 93385
+      },
+      {
+        "path": "lectures/source/week16_tex_assets/n_wave.png",
+        "sha256": "726f9a4d69ff7abeb06968dbec83f87ca94102a17fa688015c4cc0efcc8db639",
+        "bytes": 75697
+      },
+      {
+        "path": "lectures/source/week16_tex_assets/pod_energy.png",
+        "sha256": "5b91d12f617ffd3908b3b7e7e9d5a08f07f741cba02416ef052e30eeffe73b26",
+        "bytes": 54424
+      },
+      {
+        "path": "lectures/source/week16_tex_assets/pod_modes.png",
+        "sha256": "07101a618a79e62ea82936b08aab6bba1ec0b9145b6a88803e3a1c4ff8ac4ca1",
+        "bytes": 112675
+      },
+      {
+        "path": "lectures/source/week16_tex_assets/split_map.png",
+        "sha256": "a7f3110fceba055bf5c6eb53373dba6f70b4ef7e1ac827e697ca5353e523fdd1",
+        "bytes": 59700
+      },
+      {
+        "path": "lectures/source/week16_tex_assets/waveforms_by_split.png",
+        "sha256": "a1fcf512fbfc36422bb7b9709b6eb6313e334d9429d0de4d1861b27498761e60",
+        "bytes": 119592
+      },
+      {
+        "path": "results/late_course_teaching/week16_validation_models_01.png",
+        "sha256": "a08171eaa543312657866deafce895ab13267dd25569ac4f1ace498ae8762b36",
+        "bytes": 71674
+      },
+      {
+        "path": "results/week16_lowboom/reference/clean_cfd_fields.png",
+        "sha256": "fcbafb5b5e2349873ec602fdfc1ccc0743ff5cdf97c6edcecc949f19167e57a4",
+        "bytes": 233681
+      },
+      {
+        "path": "results/week16_lowboom/reference/seeb_comparison.png",
+        "sha256": "2c8d7410e15108b5e12b16c2cf3c6dc5a85afafc8b6fc7cf868cd77e823e1eda",
+        "bytes": 181538
+      },
+      {
+        "path": "results/week16_lowboom/reference/weakwall_design_validation.png",
+        "sha256": "31657892c1eb4d1a98c48a5043ed6598f0a52f7b245da3d81076f27d227a3b6e",
+        "bytes": 230128
+      },
+      {
+        "path": "results/week16_lowboom/reference/clean_dataset_v801.npz",
+        "sha256": "03790fc0b8e2034aed66b3e7ec3ffbdd3a08306b487705b54bb839bfa869e58b",
+        "bytes": 170590
+      },
+      {
+        "path": "results/week16_lowboom/reference/cone_refinement_v801.json",
+        "sha256": "d827842cc20933c5769f77f0d852147c68e13a8b86066ac4e59a4d71eafcdcc8",
+        "bytes": 8481
+      },
+      {
+        "path": "results/week16_lowboom/reference/clean_model_audit_v801.json",
+        "sha256": "e4b5b609edfbd500d9a364e701efd0703ae6fadcde3e9c3c3352a0e50563a685",
+        "bytes": 8589
+      },
+      {
+        "path": "lectures/week16_supersonic_shape_optimization.pdf",
+        "sha256": "cf6c66b3cbe411df6ef7545d230adbb553d5a3097d178476177eb3dfc9c3d473",
+        "bytes": 1477377
+      }
+    ]
+  },
+  "limitations": [
+    "The repaired exact-head Linux CI still needs to perform the real font installation and XeLaTeX compilation.",
+    "Dormant .github/workflows/week16-lecture-build.yml remains unchanged: its only trigger is the absent lectures/source/week16_source_parts/READY and it has no workflow_dispatch. This review does not claim all historical repository workflows were changed."
+  ],
+  "unresolved_blocking_source_findings": []
+}

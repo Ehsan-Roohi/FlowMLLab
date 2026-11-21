@@ -5,6 +5,7 @@ from __future__ import annotations
 
 import argparse
 import csv
+import math
 from pathlib import Path
 import sys
 
@@ -16,6 +17,75 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 
 from flowmllab.gas_dynamics import shock_tube_pressure_ratio_general  # noqa: E402
+
+
+# Reproduction tolerance only: platform LAPACK/BLAS changes can affect the last
+# digits of the fitted RBF error norms. At the retained errors (1e-4 to 3e-2),
+# this admits only about 2e-14 to 3e-12 absolute drift. It does not replace or
+# relax any physical-accuracy gate in validate_week8_evidence.
+REPRODUCTION_RTOL = 1.0e-10
+REPRODUCTION_ATOL = 1.0e-14
+METRIC_COLUMNS = ("relative_l2", "relative_linf")
+BASELINE_COLUMNS = (
+    "dimension", "physical_inputs", "training_states", "blind_test_states",
+    "training_seed", "blind_seed", "method", "neighbors", "smoothing",
+    *METRIC_COLUMNS, "same_random_training_budget_as_mlp",
+)
+
+
+def _baseline_rows(path: Path) -> list[dict[str, str]]:
+    with Path(path).open(newline="", encoding="utf-8") as stream:
+        records = list(csv.reader(stream))
+    if not records or tuple(records[0]) != BASELINE_COLUMNS:
+        raise ValueError(f"Baseline schema mismatch: {path}")
+    if len(records) != 5:
+        raise ValueError(f"Baseline row count mismatch: {path}; expected four cases")
+    if any(len(row) != len(BASELINE_COLUMNS) for row in records[1:]):
+        raise ValueError(f"Baseline row width mismatch: {path}")
+    rows = [dict(zip(BASELINE_COLUMNS, row, strict=True)) for row in records[1:]]
+    if [row["dimension"] for row in rows] != ["2", "3", "4", "5"]:
+        raise ValueError(f"Baseline case order mismatch: {path}")
+    return rows
+
+
+def compare_baseline(generated: Path, reference: Path) -> dict[str, object]:
+    """Compare replay errors within roundoff; all other CSV values are exact.
+
+    Neither file is modified. Header/order, every case and every metadata value
+    (including seeds, budgets, inputs and RBF settings) must match exactly. Only
+    the two finite, nonnegative error norms admit the fixed reproduction bound
+    abs(new - reference) <= atol + rtol * abs(reference).
+    """
+    expected = _baseline_rows(reference)
+    actual = _baseline_rows(generated)
+    maximum_delta = dict.fromkeys(METRIC_COLUMNS, 0.0)
+    for row_number, (wanted, found) in enumerate(zip(expected, actual, strict=True), 1):
+        for column in BASELINE_COLUMNS:
+            if column not in METRIC_COLUMNS:
+                if found[column] != wanted[column]:
+                    raise ValueError(f"Baseline metadata mismatch: row {row_number}, {column}")
+                continue
+            try:
+                old, new = float(wanted[column]), float(found[column])
+            except ValueError as exc:
+                raise ValueError(f"Non-numeric baseline metric: row {row_number}, {column}") from exc
+            if not (math.isfinite(old) and math.isfinite(new) and old >= 0 and new >= 0):
+                raise ValueError(f"Non-finite or negative baseline metric: row {row_number}, {column}")
+            delta = abs(new - old)
+            allowed = REPRODUCTION_ATOL + REPRODUCTION_RTOL * abs(old)
+            if delta > allowed:
+                raise ValueError(
+                    f"Baseline metric drift: row {row_number}, {column}; "
+                    f"difference {delta:.17g} exceeds roundoff bound {allowed:.17g}"
+                )
+            maximum_delta[column] = max(maximum_delta[column], delta)
+    return {
+        "status": "pass", "rows": len(actual),
+        "rtol": REPRODUCTION_RTOL, "atol": REPRODUCTION_ATOL,
+        "numeric_columns": list(METRIC_COLUMNS),
+        "exact_metadata_columns": [c for c in BASELINE_COLUMNS if c not in METRIC_COLUMNS],
+        "maximum_absolute_delta": maximum_delta,
+    }
 
 
 RANGES = {
@@ -114,14 +184,31 @@ def run(output: Path) -> list[dict[str, object]]:
     return rows
 
 
-def main() -> None:
+def main(argv: list[str] | None = None) -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument(
         "--output", type=Path,
         default=ROOT / "results/gas_dynamics_week8/scattered_baseline.csv",
     )
-    args = parser.parse_args()
+    parser.add_argument(
+        "--compare-to", type=Path,
+        help="Check an isolated regeneration against this untouched frozen CSV.",
+    )
+    args = parser.parse_args(argv)
+    if args.compare_to is not None and (
+        args.output.resolve() == args.compare_to.resolve()
+        or (args.output.exists() and args.compare_to.exists()
+            and args.output.samefile(args.compare_to))
+    ):
+        parser.error("--output must be separate from the --compare-to reference")
     rows = run(args.output)
+    if args.compare_to is not None:
+        report = compare_baseline(args.output, args.compare_to)
+        print(
+            "PASS: exact case metadata; metric reproduction within "
+            f"rtol={REPRODUCTION_RTOL:g}, atol={REPRODUCTION_ATOL:g}. "
+            f"Maximum absolute differences: {report['maximum_absolute_delta']}"
+        )
     for row in rows:
         print(
             f"d={row['dimension']}: RBF relative L2 = "

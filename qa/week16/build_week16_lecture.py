@@ -1,13 +1,19 @@
-"""Build the Week 16 educational LaTeX lecture from retained numerical evidence.
+"""Validate a Week 16 lecture build without replacing reviewed publication files.
 
-This generator reconstructs physics profiles from the retained evidence. The PDF
-is compiled with XeLaTeX; genuine Times New Roman is required; specialized operators use Latin Modern Math.
+The default compiles isolated copies of the reviewed TeX and figures. Explicit
+--rebuild-figures reconstructs retained-data figures only in the isolated tree.
+XeLaTeX and genuine Times New Roman are required; no font fallback is accepted.
 """
 from pathlib import Path
+import argparse
+import hashlib
 import json
+import re
 import subprocess
 import shutil
 import numpy as np
+import matplotlib
+matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 
 import sys
@@ -20,7 +26,82 @@ TEX = ROOT / "lectures/source/week16_supersonic_shape_optimization.tex"
 PDF = ROOT / "lectures/week16_supersonic_shape_optimization.pdf"
 
 
-def build_figures():
+def isolated_directory(path):
+    """Reject publication paths and checkout ancestors before any output write."""
+    path = Path(path).expanduser().resolve()
+    root = ROOT.resolve()
+    if path == root or root.is_relative_to(path):
+        raise ValueError("Output directory cannot be the checkout or its ancestor")
+    if path.is_relative_to(root) and path.relative_to(root).parts[0] not in {"build", "tmp"}:
+        raise ValueError("Inside the checkout, outputs belong only under build/ or tmp/")
+    return path
+
+
+def file_hash(path):
+    return hashlib.sha256(Path(path).read_bytes()).hexdigest()
+
+
+def contained_output(output_dir, relative):
+    output_dir = isolated_directory(output_dir)
+    candidate = output_dir / relative
+    if candidate.is_symlink() or (candidate.is_file() and candidate.stat().st_nlink > 1):
+        raise ValueError(f"Output file must not alias another file: {relative}")
+    path = candidate.resolve()
+    if not path.is_relative_to(output_dir):
+        raise ValueError(f"Output path escapes the isolated directory: {relative}")
+    return path
+
+
+def validate_isolated_tree(output_dir):
+    """A reused build must not expose external files through links to TeX."""
+    for path in output_dir.rglob("*"):
+        if path.is_symlink() or (path.is_file() and path.stat().st_nlink > 1):
+            raise ValueError(f"Linked file is not allowed in the isolated build tree: {path}")
+
+
+def lecture_dependencies():
+    """Collect this lecture's local TeX and image inputs, preserving their paths."""
+    root = ROOT.resolve()
+    found = set()
+    pending = [TEX]
+    while pending:
+        source = pending.pop().resolve()
+        if not source.is_relative_to(root) or not source.is_file():
+            raise ValueError(f"Invalid lecture input: {source}")
+        if source in found:
+            continue
+        found.add(source)
+        text = source.read_text(encoding="utf-8")
+        for name in re.findall(r"\\input\{([^}]+)\}", text):
+            path = root / name
+            if not path.suffix:
+                path = path.with_suffix(".tex")
+            pending.append(path)
+        for name in re.findall(r"\\includegraphics(?:\[[^]]*\])?\{([^}]+)\}", text):
+            candidates = [root / name, ASSETS / name, R / name]
+            image = next((p.resolve() for p in candidates if p.is_file()), None)
+            if image is None or not image.is_relative_to(root):
+                raise ValueError(f"Missing or external lecture figure: {name}")
+            found.add(image)
+    return sorted(found)
+
+
+def stage_sources(output_dir):
+    output_dir = isolated_directory(output_dir)
+    stage = contained_output(output_dir, "source")
+    dependencies = lecture_dependencies()
+    for source in dependencies:
+        destination = contained_output(output_dir, Path("source") / source.relative_to(ROOT.resolve()))
+        destination.parent.mkdir(parents=True, exist_ok=True)
+        shutil.copyfile(source, destination)
+        if file_hash(source) != file_hash(destination):
+            raise RuntimeError(f"Staged source mismatch: {source}")
+    return stage, dependencies
+
+
+def build_figures(output_assets):
+    # A local output path deliberately shadows the read-only publication folder.
+    ASSETS = isolated_directory(output_assets)
     configure_matplotlib()
     ASSETS.mkdir(parents=True, exist_ok=True)
     data = np.load(R / "clean_dataset_v801.npz", allow_pickle=False)
@@ -155,7 +236,7 @@ def build_figures():
     plt.close(fig)
 
     # Taylor-Maccoll refinement.
-    cone = json.loads((R / "cone_refinement_v801.json").read_text())
+    cone = json.loads((R / "cone_refinement_v801.json").read_text(encoding="utf-8"))
     cells = [row["mesh"]["cells"] for row in cone["levels"]]
     errors = [100 * row["analytical_comparison"]["relative_error"] for row in cone["levels"]]
     fig, ax = plt.subplots(figsize=(6.5, 4))
@@ -170,7 +251,7 @@ def build_figures():
     plt.close(fig)
 
     # Clean retained model: lines, no bars.
-    audit = json.loads((R / "clean_model_audit_v801.json").read_text())
+    audit = json.loads((R / "clean_model_audit_v801.json").read_text(encoding="utf-8"))
     splits = ["train", "validation", "test", "extrapolation"]
     xx = range(len(splits))
     fig, ax = plt.subplots(figsize=(7.6, 4.2))
@@ -204,33 +285,77 @@ def build_figures():
     plt.close(fig)
 
 
-def compile_pdf():
+def compile_pdf(output_dir, source_tree):
+    output_dir = isolated_directory(output_dir)
+    source_tree = Path(source_tree).resolve()
+    if not source_tree.is_relative_to(output_dir):
+        raise ValueError("Compilation source tree must be inside the isolated output directory")
+    validate_isolated_tree(output_dir)
     configure_matplotlib()
-    # A failed TeX run can leave a truncated auxiliary file. Rebuild it from source.
+    xelatex = shutil.which("xelatex")
+    if not xelatex:
+        raise RuntimeError("Week 16 lecture validation requires XeLaTeX")
+    tex_output = contained_output(output_dir, "tex")
+    tex_output.mkdir(parents=True, exist_ok=True)
+    stem = TEX.stem
+    # Only this isolated build's disposable auxiliaries may be replaced.
     for suffix in (".aux", ".out", ".toc"):
-        (ROOT/"lectures"/("week16_supersonic_shape_optimization"+suffix)).unlink(missing_ok=True)
+        (tex_output / (stem + suffix)).unlink(missing_ok=True)
     for _ in range(2):
         subprocess.run([
-            "xelatex", "-interaction=nonstopmode", "-halt-on-error",
-            "-output-directory=lectures", str(TEX)
-        ], cwd=ROOT, check=True)
+            xelatex, "-interaction=nonstopmode", "-halt-on-error",
+            f"-output-directory={tex_output}", str(TEX.relative_to(ROOT))
+        ], cwd=source_tree, check=True)
 
-    if not PDF.is_file():
+    compiled = tex_output / (stem + ".pdf")
+    if not compiled.is_file():
         raise RuntimeError("Week 16 lecture PDF was not generated.")
 
     # PDF must be a full lecture, not the old short handout.
     from pypdf import PdfReader
-    pages = len(PdfReader(str(PDF)).pages)
+    pages = len(PdfReader(str(compiled)).pages)
     if pages < 20:
         raise RuntimeError(f"Week 16 lecture unexpectedly short: {pages} pages")
 
-    for suffix in [".aux", ".log", ".out", ".toc"]:
-        p = ROOT / "lectures" / ("week16_supersonic_shape_optimization" + suffix)
-        p.unlink(missing_ok=True)
+    destination = contained_output(output_dir, PDF.name)
+    shutil.copyfile(compiled, destination)
+    print(f"Validated isolated {destination} ({pages} pages)")
+    return destination
 
-    print(f"Built {PDF} ({pages} pages)")
+
+def main(argv=None):
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--output-dir", type=Path, default=ROOT / "build/week16-lecture",
+                        help="Isolated build directory; publication paths are rejected")
+    parser.add_argument("--rebuild-figures", action="store_true",
+                        help="Regenerate retained-data figures only in the isolated source tree")
+    args = parser.parse_args(argv)
+    output_dir = isolated_directory(args.output_dir)
+    dependencies = lecture_dependencies()
+    numerical_inputs = [R / "clean_dataset_v801.npz", R / "cone_refinement_v801.json",
+                        R / "clean_model_audit_v801.json"]
+    protected = {p: file_hash(p) for p in [*dependencies, PDF, *numerical_inputs]}
+    stage, _ = stage_sources(output_dir)
+    if args.rebuild_figures:
+        build_figures(stage / ASSETS.relative_to(ROOT))
+    pdf = compile_pdf(output_dir, stage)
+    for path, expected in protected.items():
+        if file_hash(path) != expected:
+            raise RuntimeError(f"Reviewed input was modified: {path}")
+    receipt = {
+        "mode": "isolated retained-data figure regeneration" if args.rebuild_figures else "compile-only with reviewed figures",
+        "builder_sha256": file_hash(Path(__file__)),
+        "reviewed_inputs_unchanged": True,
+        "reviewed_inputs": {p.relative_to(ROOT).as_posix(): value for p, value in protected.items()},
+        "staged_inputs": {p.relative_to(ROOT).as_posix(): file_hash(stage / p.relative_to(ROOT)) for p in dependencies},
+        "generated_pdf": pdf.name,
+        "generated_pdf_sha256": file_hash(pdf),
+        "publication_policy": "Build output is for validation/review only; no publication file is replaced.",
+    }
+    contained_output(output_dir, "build_receipt.json").write_text(
+        json.dumps(receipt, indent=2) + "\n", encoding="utf-8", newline="\n")
+    return receipt
 
 
 if __name__ == "__main__":
-    build_figures()
-    compile_pdf()
+    main()

@@ -1,0 +1,110 @@
+{
+  "schema_version": 1,
+  "status": "passed",
+  "completed_utc": "2026-11-21T05:29:39.955990+00:00",
+  "reviewer": "/root/week4_lecture_rebuild",
+  "base_commit": "8ac62e2b52caf23b155ce7546c43d77c1ac57dad",
+  "trigger": {
+    "workflow": "Rebuild Week 8 materials",
+    "failed_run": 44870266635,
+    "failed_job": 136742986486,
+    "failure": "Exact git diff detected last-digit SciPy/BLAS changes because the replay overwrote the frozen scattered baseline."
+  },
+  "scope": "Regenerate the same four-dimension, fixed-seed, fixed-budget RBF baseline into RUNNER_TEMP and compare with frozen evidence. No scientific algorithm or physical acceptance gate changes.",
+  "changed_files": {
+    ".github/workflows/week8-materials.yml": "b21c4198cb4126f63ebc1aeee7bdf0eaf204e879e602b4389d12e118f541e083",
+    "qa/run_week8_scattered_baseline.py": "72889451f794e1eb83dfc3a7eb1bd60986965efff95946bd0c62e3693c053d12",
+    "tests/test_week8_scattered_baseline.py": "8619e9dfbdc33d1e77a5b63ea45d93d95801c05ccf76c41f9eed47065f74a05d"
+  },
+  "comparison_contract": {
+    "exact": "Ordered twelve-column schema; four ordered dimension cases; all ten metadata columns including physical input labels, train/test counts, train/test seeds, method, neighbors, smoothing and matched-budget flag.",
+    "numeric_columns": [
+      "relative_l2",
+      "relative_linf"
+    ],
+    "finite_nonnegative_required": true,
+    "formula": "abs(generated - frozen) <= 1e-14 + 1e-10 * abs(frozen)",
+    "rtol": 1e-10,
+    "atol": 1e-14,
+    "rationale": "At the retained 1e-4 to 3e-2 errors, the absolute allowance is only about 2e-14 to 3e-12. This permits insignificant arithmetic ordering differences while retaining the separate frozen scientific accuracy and method-ordering gates. Tolerances are fixed in source, not CLI-adjustable."
+  },
+  "focused_tests": {
+    "passed": 49,
+    "new_comparison_cases": 42,
+    "existing_physics_cases": 7,
+    "elapsed_s": 21.56300000000192,
+    "log_sha256": "972e7a75e7b7e74e4e0ae32e489badf09e7f5cb41dcf9040ba172a99c3e1d468",
+    "coverage": [
+      "Observed CI last-digit replay succeeds without file writes",
+      "Exact label, both seed, both budget and RBF metadata mismatch rejection",
+      "NaN/Inf/negative/non-numeric metrics rejected in either CSV",
+      "Just-outside-bound and substantive metric drift rejected",
+      "Missing/extra/reordered cases and altered schema/row width rejected",
+      "CLI refuses to overwrite the reference"
+    ],
+    "initial_setup_retry": "Initial invocation had 42 fixture setup errors because the custom basetemp parent was absent; no test bodies failed. Created the D-drive parent before this complete rerun."
+  },
+  "actual_cpu_reproduction": {
+    "status": "passed",
+    "elapsed_s": 37.81199999999808,
+    "python": "3.12.14",
+    "numpy": "2.2.6",
+    "scipy": "1.15.3",
+    "generated_file": "tmp/course_refresh/week08_ci/scattered_baseline.csv",
+    "generated_sha256": "2d4a7e04197ee93727ef4cb7195ccfb19f49fbb5752844817d810ab1d0aebaec",
+    "comparison": {
+      "status": "pass",
+      "rows": 4,
+      "rtol": 1e-10,
+      "atol": 1e-14,
+      "numeric_columns": [
+        "relative_l2",
+        "relative_linf"
+      ],
+      "exact_metadata_columns": [
+        "dimension",
+        "physical_inputs",
+        "training_states",
+        "blind_test_states",
+        "training_seed",
+        "blind_seed",
+        "method",
+        "neighbors",
+        "smoothing",
+        "same_random_training_budget_as_mlp"
+      ],
+      "maximum_absolute_delta": {
+        "relative_l2": 8.500145032286355e-17,
+        "relative_linf": 1.5445544149228496e-15
+      }
+    },
+    "log_sha256": "17aa90608681f0c5dc8a874bb8b4441cd6064a44d0c623c6094b9f0eeb98176f"
+  },
+  "preservation": {
+    "frozen_csv_sha256_before": "068b1c0b3af64a87d7c94caf914a4e026d9841e3c5ed292f5a15c84a76fd89f8",
+    "frozen_csv_sha256_after": "068b1c0b3af64a87d7c94caf914a4e026d9841e3c5ed292f5a15c84a76fd89f8",
+    "frozen_csv_and_physics_validator_git_diff_exit_code": 0,
+    "scientific_functions": {
+      "specification": {
+        "unchanged": true,
+        "ast_sha256": "86407208917c3e28673f3a4e9fcfdc85492b061e42848737047882e8369112b3"
+      },
+      "sample": {
+        "unchanged": true,
+        "ast_sha256": "bad82655dacd18ee70563ae74fe250e71e724d5520c672a5910dba95b754651f"
+      },
+      "exact": {
+        "unchanged": true,
+        "ast_sha256": "06447c79be29ee21410d63552bd48c698d4be6061e05e3c2093398e366f41814"
+      },
+      "run": {
+        "unchanged": true,
+        "ast_sha256": "c0c17780ee1d2127d306dd784bbcf67ea7447c01e24d21d34d6ad6abe3c5048c"
+      }
+    },
+    "physical_validator_sha256": "b955ec1b6554bedacb5cdc88bbf7e278805fab489e97ad3556e6dee50c6a6e6e",
+    "exact_workflow_git_diff_gate_retained": true
+  },
+  "diff_check": "passed",
+  "limits": "Local focused tests and complete fixed-budget RBF replay passed; the new GitHub workflow run has not yet been executed on this commit."
+}
