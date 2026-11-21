@@ -75,7 +75,8 @@ signed vorticity and zero-mean pressure at the same times and fixed field scales
 The reference set uses Re = 100, 400, 1000, 3200, 5000, 7500 and 10000; the
 notebook starts with a small CPU example before offering larger runs.
 
-[Watch the videos](https://ehsan-roohi.github.io/FlowMLLab/cavity-startup/) ·
+[Longer startup, t⋆ = 0–100](https://ehsan-roohi.github.io/FlowMLLab/cavity-continuation/) ·
+[Original 0–10 movies](https://ehsan-roohi.github.io/FlowMLLab/cavity-startup/) ·
 [Inspect fields, run settings and sensitivity](../../results/cavity_startup/README.md).
 These are finite-time two-dimensional startup trajectories, not a claim of
 steady convergence, grid independence or agreement with Ghia. Students compare

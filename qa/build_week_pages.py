@@ -20,6 +20,18 @@ def slug(week):
 def links(text):
     return re.findall(r'\[([^\]]+)\]\(([^)]+)\)', text)
 
+def cavity_movie_followup():
+    """Keep the original lesson and distinct longer preview in weekly rebuilds."""
+    return ('## Physical-time cavity movies\n\n'
+            'The [original CPU notebook](../../notebooks/week01_2/W1_2_Cavity_Startup_Movies.ipynb) '
+            'keeps its startup data and exercises. '
+            '[Watch the longer startup, t⋆ = 0–100](https://ehsan-roohi.github.io/FlowMLLab/cavity-continuation/) '
+            '· [Original 0–10 movies](https://ehsan-roohi.github.io/FlowMLLab/cavity-startup/) '
+            '· [Stationarity guide](../../docs/CAVITY_STARTUP_STATIONARITY.md).\n\n'
+            'The seven Reynolds numbers share physical frame times and fixed field scales. '
+            'A common endpoint does not mean every case is steady; coupling, timestep and mesh '
+            'accuracy require separate evidence.')
+
 def rebase(text, prefix='../../'):
     def replace(m):
         url = m[1]
@@ -126,6 +138,8 @@ def main():
         if week == '4.1':
             sequence += ' The Week 4 lecture is the shared companion; this notebook contains the additional ROM theory.'
         parts.extend(['## Suggested route', sequence, '## Experiment and results', rebase(body.strip()), '---', navigation])
+        if week == '1.2':
+            parts.insert(-2, cavity_movie_followup())
         dest = ROOT / 'weeks' / folder / 'README.md'
         dest.parent.mkdir(parents=True, exist_ok=True)
         dest.write_text('\n\n'.join(parts) + '\n')

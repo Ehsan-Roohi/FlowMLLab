@@ -8,6 +8,7 @@ from PIL import Image
 ROOT=Path(__file__).resolve().parents[1]
 sys.path.insert(0,str(ROOT))
 from flowmllab import ghia
+from qa.build_cavity_continuation_viewer import BUNDLE as CONTINUATION_BUNDLE, check_bundle
 
 def check(site):
     site=Path(site);data=site/'assets/cavity'
@@ -50,6 +51,8 @@ def check(site):
     assert page.count('<article class="module"')==len(inv['modules'])
     assert 'https://doi.org/10.1016/j.aitf.2026.100064' in page
     assert 'https://github.com/Ehsan-Roohi/FlowMLLab' in page
+    assert ' · Weeks 1–22</p>' in page
+    assert 'Â·' not in page and 'â€“' not in page
     assert (site/'build.json').is_file()
     movie_receipt = ROOT/'results/cavity_startup/media/movies.json'
     if movie_receipt.is_file():
@@ -58,6 +61,14 @@ def check(site):
         assert (site/'cavity-startup/movies.json').read_bytes() == movie_receipt.read_bytes()
         for entry in movie_manifest['fields'].values():
             assert hashlib.sha256((site/'cavity-startup'/entry['movie']).read_bytes()).hexdigest() == entry['movie_sha256']
+    if (CONTINUATION_BUNDLE/'media/preview_manifest.json').is_file():
+        assert '<a href="cavity-continuation/" target="_blank" rel="noopener noreferrer">' in page
+        source_preview = check_bundle(CONTINUATION_BUNDLE)
+        deployed_preview = check_bundle(site/'cavity-continuation', require_readme=False)
+        assert source_preview == deployed_preview
+        for name in ('movies.json', 'preview_manifest.json'):
+            assert (site/'cavity-continuation/media'/name).read_bytes() == (CONTINUATION_BUNDLE/'media'/name).read_bytes()
+        print('PASS: separate continuation route; 3 verified video/poster pairs; 201 common physical times from 0 to 100.')
     print(f'PASS: {len(inv["modules"])} units; 7 matched cases; {total} native field images; exact CFD/Ghia profiles; frozen split and source hashes.')
 
 if __name__=='__main__':check(Path(sys.argv[1]))

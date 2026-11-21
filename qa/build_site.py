@@ -13,6 +13,7 @@ ROOT=Path(__file__).resolve().parents[1]
 sys.path.insert(0,str(ROOT/'qa'))
 import update_course_inventory as inventory
 from build_cavity_explorer import export
+from build_cavity_continuation_viewer import BUNDLE as CONTINUATION_BUNDLE, export as export_continuation
 
 class LinkAudit(HTMLParser):
     def __init__(self):
@@ -34,9 +35,16 @@ def build(out):
     shutil.copytree(ROOT/'docs',out,dirs_exist_ok=True,ignore=shutil.ignore_patterns('__pycache__','.DS_Store'))
     inv=inventory.inventory()
     source=(ROOT/'docs/index.html').read_text(encoding='utf-8')
-    source=inventory.replace_block(source,'course-modules',inventory.site_modules(inv))
+    modules=inventory.site_modules(inv)
+    if (CONTINUATION_BUNDLE/'media/preview_manifest.json').is_file():
+        cards=modules.split('</article>')
+        matches=[i for i,card in enumerate(cards) if '<span class="eyebrow">Week 1.2</span>' in card]
+        if len(matches)!=1:raise ValueError('Expected exactly one Week 1.2 card for continuation preview')
+        cards[matches[0]]+='<p><a href="cavity-continuation/">Longer cavity startup movies: physical time 0–100</a></p>'
+        modules='</article>'.join(cards)
+    source=inventory.replace_block(source,'course-modules',modules)
     c=inv['counts']
-    source=inventory.replace_block(source,'course-summary',f'<p class="release">Current course version v{inv["course_version"]} Â· Weeks 1â€“22</p>\n<p>{c["student_notebooks"]} student notebooks, including {c["historical_student_companions"]} historical companion Â· {c["active_lecture_pdfs"]} active lecture PDFs Â· {c["lecture_pages"]} pages. Optional supplements are separate.</p>')
+    source=inventory.replace_block(source,'course-summary',f'<p class="release">Current course version v{inv["course_version"]} · Weeks 1–22</p>\n<p>{c["student_notebooks"]} student notebooks, including {c["historical_student_companions"]} historical companion · {c["active_lecture_pdfs"]} active lecture PDFs · {c["lecture_pages"]} pages. Optional supplements are separate.</p>')
     source=source.replace('<!-- site-version -->',html.escape(inv['course_version']))
     def link(match):
         prefix,url,suffix=match.groups()
@@ -69,6 +77,10 @@ def build(out):
             shutil.copy2(payload, target/name)
         shutil.copy2(movie_receipt, target/'movies.json')
         shutil.copy2(movie_root/'index.html', target/'index.html')
+    # The longer preview has its own native-time schema and route. Never
+    # replace the 0..10 assets used by the original notebook and lecture.
+    if (CONTINUATION_BUNDLE/'media/preview_manifest.json').is_file():
+        export_continuation(out)
     audit=LinkAudit();audit.feed(source)
     if len(audit.ids)!=len(set(audit.ids)):raise ValueError('Duplicate HTML IDs')
     for link in audit.links:

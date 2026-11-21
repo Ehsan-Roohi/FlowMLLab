@@ -2,6 +2,8 @@
 
 The [Week 1.2 startup movies](../results/cavity_startup/README.md) end at dimensionless physical time t⋆ = tU/L = 10. They show how circulation develops after an impulsive lid start; they do not establish a steady solution. A vortex can look almost stationary while its strength, pressure field or surrounding flow continues to change.
 
+The separate [longer continuation preview, t⋆ = 0–100](https://ehsan-roohi.github.io/FlowMLLab/cavity-continuation/), extends the same native trajectories while preserving the original 0–10 lesson. Its common movie endpoint does not imply that all seven flows have become steady.
+
 This guide explains how to continue those native solutions and test temporal stationarity. It specifies a workflow, not a claim that a particular Reynolds number has passed. Use each run's current receipts and completed-window records for its actual outcome.
 
 ## The physical problem and the evidence required

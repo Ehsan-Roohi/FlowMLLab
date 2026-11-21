@@ -152,8 +152,9 @@ Then use the [CPU experiments](results/week01_2_literature/README.md) to disting
 pressure-solver tolerance, mass conservation and startup time-step accuracy.
 The [cavity startup movie lab](notebooks/week01_2/W1_2_Cavity_Startup_Movies.ipynb) follows
 streamlines, signed vorticity and pressure from rest at Re = 100, 400, 1000,
-3200, 5000, 7500 and 10000. [Watch the matched-time videos](https://ehsan-roohi.github.io/FlowMLLab/cavity-startup/);
-these finite-time trajectories are separate from steady Ghia validation.
+3200, 5000, 7500 and 10000. [Watch the longer startup, t⋆ = 0–100](https://ehsan-roohi.github.io/FlowMLLab/cavity-continuation/)
+· [Original 0–10 movies](https://ehsan-roohi.github.io/FlowMLLab/cavity-startup/).
+These finite-time trajectories are separate from steady Ghia validation; a common movie endpoint does not mean that every case is steady.
 
 ### Week 1.3 — Optimizers for scientific machine learning
 
