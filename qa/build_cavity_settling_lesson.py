@@ -54,6 +54,8 @@ def notebook():
     md(r"""
     # Week 1.2 companion — When has a cavity flow settled?
 
+    [Open this notebook in Google Colab](https://colab.research.google.com/github/Ehsan-Roohi/FlowMLLab/blob/main/notebooks/week01_2/W1_2_Cavity_Stationarity_and_Resolution.ipynb)
+
     **Aim.** Use real saved CFD results to distinguish a finished run, a temporally
     stationary numerical solution, and a solution that is accurate with respect
     to grid spacing and time step. Inspect the physical flow before summarising numbers.

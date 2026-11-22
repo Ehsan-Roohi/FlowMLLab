@@ -646,6 +646,26 @@ def validate_cavity_startup_notebook(notebook, relative):
     assert hashlib.sha256((ROOT/'lectures/week01_2_pressure_velocity.pdf').read_bytes()).hexdigest()==report['sha256']
 
 
+def validate_cavity_settling_notebook(notebook, relative):
+    """Check the saved-data companion's sparse setup and actual execution."""
+    code = [cell for cell in notebook['cells'] if cell['cell_type'] == 'code']
+    setup = ''.join(code[0]['source'])
+    for fragment in ('https://github.com/Ehsan-Roohi/FlowMLLab.git',
+                     'sparse-checkout', 'results/cavity_settling',
+                     'Path.cwd().parents', 'subprocess.run', 'check=True',
+                     'sys.path.insert'):
+        assert fragment in setup, (relative, fragment)
+    assert all(cell.get('execution_count') is not None for cell in code), relative
+    outputs = [output for cell in code for output in cell.get('outputs', [])]
+    assert not any(output.get('output_type') == 'error' for output in outputs), relative
+    receipt = json.loads((ROOT/'results/cavity_settling/notebook_execution.json').read_text())
+    assert len(code) == receipt['code_cells'] == 11, relative
+    assert sum('image/png' in output.get('data', {}) for output in outputs) == receipt['figure_outputs'] == 8, relative
+    assert hashlib.sha256((ROOT/relative).read_bytes()).hexdigest() == receipt['notebook_sha256'], relative
+    cell_source = [{'cell_type':cell['cell_type'], 'source':''.join(cell['source'])} for cell in notebook['cells']]
+    assert hashlib.sha256(json.dumps(cell_source, sort_keys=True).encode()).hexdigest() == receipt['cell_source_sha256'], relative
+
+
 def validate_notebooks() -> tuple[int, int]:
     count = 0
     code_cells = 0
@@ -668,6 +688,9 @@ def validate_notebooks() -> tuple[int, int]:
         startup_lab = relative == 'notebooks/week01_2/W1_2_Cavity_Startup_Movies.ipynb'
         if startup_lab:
             validate_cavity_startup_notebook(notebook,relative)
+        settling_lab = relative == 'notebooks/week01_2/W1_2_Cavity_Stationarity_and_Resolution.ipynb'
+        if settling_lab:
+            validate_cavity_settling_notebook(notebook, relative)
         if week01_2_lab:
             assert 'flowmllab/pressure_velocity.py' in full_source and 'https://github.com/Ehsan-Roohi/FlowMLLab.git' in full_source, path
             assert 'subprocess.run' in full_source and 'pip' in full_source, path
@@ -744,7 +767,7 @@ def validate_notebooks() -> tuple[int, int]:
         assert week14_lab or week15_local or optional_bridge or week01_2_lab or transformer_week is not None or colab_url in full_source, (
             f"missing direct Colab launcher: {path}"
         )
-        assert week14_lab or week15_local or week16_lab or optional_bridge or week01_2_lab or startup_lab or week01_3_lab or week01_4_lab or cavity_followon or transformer_week is not None or "FLOWMLLAB_COLAB_BOOTSTRAP_V1" in full_source, (
+        assert week14_lab or week15_local or week16_lab or optional_bridge or week01_2_lab or startup_lab or settling_lab or week01_3_lab or week01_4_lab or cavity_followon or transformer_week is not None or "FLOWMLLAB_COLAB_BOOTSTRAP_V1" in full_source, (
             f"missing Colab repository bootstrap: {path}"
         )
         reconstruction_lab = relative == 'notebooks/week11/W11_Lab2_Reconstruction_and_Identification.ipynb'
@@ -810,7 +833,9 @@ def validate_notebooks() -> tuple[int, int]:
             )
             assert 'no double-step motif is used in training or validation' in full_source
             assert 'Selection reads no double-step arrays.' in full_source
-        assert week14_lab or week15_local or reconstruction_lab or week16_lab or optional_bridge or week01_2_lab or startup_lab or week01_3_lab or week01_4_lab or cavity_followon or kinetic_shock_lab or transformer_week is not None or any(
+        # The new continuation companion has its own data/execution contract;
+        # it is not one of the historical article-aligned notebooks.
+        assert week14_lab or week15_local or reconstruction_lab or week16_lab or optional_bridge or week01_2_lab or startup_lab or settling_lab or week01_3_lab or week01_4_lab or cavity_followon or kinetic_shock_lab or transformer_week is not None or any(
             marker in full_source
             for marker in (
                 "MIE690A article-aligned validation v3",

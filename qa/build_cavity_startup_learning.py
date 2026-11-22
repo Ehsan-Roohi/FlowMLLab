@@ -31,10 +31,6 @@ STATIONARITY_NOTEBOOK_SECTION = textwrap.dedent("""
     vortex centers. Keep a fixed-grid stationarity candidate, a 6/4-correction
     confirmation, and timestep/mesh accuracy as separate conclusions. A high-Re case
     may remain unresolved or unsteady; no result here requires every case to settle.
-
-    The [final-results CPU companion](https://github.com/Ehsan-Roohi/FlowMLLab/blob/main/notebooks/week01_2/W1_2_Cavity_Stationarity_and_Resolution.ipynb)
-    now contains all seven outcomes, three confirmations and 16 matched-time controls,
-    with native physical fields and five specific student investigations.
     """).strip()
 STATIONARITY_README_PARAGRAPH = (
     "The [stationarity guide](../../docs/CAVITY_STARTUP_STATIONARITY.md) explains how to continue verified native fields beyond tU/L = 10, inspect three complete physical windows, and separately test a candidate with tighter PIMPLE coupling. It includes CPU commands and five student investigations using matched-time profiles and signed probe histories. The distinctions between startup, a fixed-grid candidate, coupling confirmation and mesh/time-step accuracy remain explicit; a high-Re case is not required to become steady."
