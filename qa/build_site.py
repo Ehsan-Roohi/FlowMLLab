@@ -41,6 +41,8 @@ def build(out):
         matches=[i for i,card in enumerate(cards) if '<span class="eyebrow">Week 1.2</span>' in card]
         if len(matches)!=1:raise ValueError('Expected exactly one Week 1.2 card for continuation preview')
         cards[matches[0]]+='<p><a href="cavity-continuation/">Longer cavity startup movies: physical time 0–100</a></p>'
+        if (ROOT/'results/cavity_settling/index.html').is_file():
+            cards[matches[0]]+='<p><a href="cavity-settling/">Final cavity results: stationarity and numerical sensitivity</a> · CPU notebook and all seven outcomes.</p>'
         modules='</article>'.join(cards)
     source=inventory.replace_block(source,'course-modules',modules)
     c=inv['counts']
@@ -81,6 +83,25 @@ def build(out):
     # replace the 0..10 assets used by the original notebook and lecture.
     if (CONTINUATION_BUNDLE/'media/preview_manifest.json').is_file():
         export_continuation(out)
+    # Publish reviewed result figures, without importing notebook runtimes or
+    # copying native fields/checkpoints into the browser artifact.
+    settling = ROOT/'results/cavity_settling'
+    if (settling/'index.html').is_file():
+        import hashlib
+        identities=json.loads((settling/'manifest.json').read_text())['files']
+        lesson=json.loads((settling/'lesson_figures/manifest.json').read_text())['files']
+        admitted=[(name, item['sha256']) for name,item in identities.items() if name.startswith('figures/')]
+        admitted += [(item['file'],item['sha256']) for item in lesson]
+        target=out/'cavity-settling';target.mkdir(parents=True,exist_ok=True)
+        shutil.copy2(settling/'index.html',target/'index.html')
+        for name,expected in admitted:
+            source_file=(settling/name).resolve();destination=(target/name).resolve()
+            if not source_file.is_relative_to(settling.resolve()) or not destination.is_relative_to(target.resolve()):
+                raise ValueError('Cavity result figure escapes its bundle')
+            if hashlib.sha256(source_file.read_bytes()).hexdigest()!=expected:
+                raise ValueError('Cavity figure hash mismatch: '+name)
+            destination.parent.mkdir(parents=True,exist_ok=True)
+            shutil.copy2(source_file,destination)
     audit=LinkAudit();audit.feed(source)
     if len(audit.ids)!=len(set(audit.ids)):raise ValueError('Duplicate HTML IDs')
     for link in audit.links:

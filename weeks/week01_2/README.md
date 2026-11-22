@@ -81,3 +81,13 @@ notebook starts with a small CPU example before offering larger runs.
 These are finite-time two-dimensional startup trajectories, not a claim of
 steady convergence, grid independence or agreement with Ghia. Students compare
 mesh, time-step and coupling sensitivity before interpreting small vortices.
+
+## Test stationarity and numerical resolution
+
+The [final-results CPU companion](../../notebooks/week01_2/W1_2_Cavity_Stationarity_and_Resolution.ipynb)
+uses the closed campaign to test every full-window gate and inspect all 16
+matched-time numerical controls. Re = 100, 400 and 1000 pass fixed-grid temporal
+confirmation; Re = 3200, 5000, 7500 and 10000 remain unresolved at their endpoints.
+[All results, native fields and physical profiles](../../results/cavity_settling/README.md).
+The five investigations separate stationarity, coupling, timestep and spatial
+accuracy. Run all uses retained data on CPU and starts no long CFD solve.

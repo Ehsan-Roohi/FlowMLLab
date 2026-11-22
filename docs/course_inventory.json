@@ -11,7 +11,7 @@
   "counts": {
     "active_lecture_pdfs": 39,
     "lecture_pages": 807,
-    "student_notebooks": 65,
+    "student_notebooks": 66,
     "historical_student_companions": 1,
     "optional_notebooks": 1,
     "optional_pdfs": 1
@@ -197,6 +197,10 @@
     },
     {
       "path": "notebooks/week01_2/W1_2_Cavity_Startup_Movies.ipynb",
+      "role": "student"
+    },
+    {
+      "path": "notebooks/week01_2/W1_2_Cavity_Stationarity_and_Resolution.ipynb",
       "role": "student"
     },
     {

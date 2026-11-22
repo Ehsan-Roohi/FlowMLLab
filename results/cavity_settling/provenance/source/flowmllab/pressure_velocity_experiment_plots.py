@@ -1,0 +1,74 @@
+"""Physical fields and matched diagnostics for experimental cavity runs."""
+import numpy as np
+from .pressure_velocity_visuals import experiment_field_figures
+from .pressure_velocity import centerlines,GHIA_X,GHIA_Y
+from .pressure_velocity_experiments import REFERENCE, benchmark_valid_mask
+
+def comparison_figures(rows):
+    if any(r["config"]["method"] == "streamfunction-vorticity" for r in rows):
+        from .cavity_comparison_plots import all_formulation_figures
+        return all_formulation_figures(rows)
+    import matplotlib.pyplot as plt
+    from matplotlib import font_manager
+    from pathlib import Path
+    for name in ['times.ttf','timesbd.ttf','timesi.ttf']:
+        path=Path('C:/Windows/Fonts')/name
+        if path.exists():font_manager.fontManager.addfont(str(path))
+    plt.rcParams.update({'font.family':'serif','font.serif':['Times New Roman','DejaVu Serif'],
+        'font.size':11,'mathtext.fontset':'stix','axes.spines.top':False,'axes.spines.right':False})
+    reynolds=sorted({int(r['config']['reynolds']) for r in rows})
+    colors={'simple':'#205b8f','piso':'#bc5826','pimple':'#298259'}
+    output={}
+    fig,axes=plt.subplots(len(reynolds),2,figsize=(10,4.3*len(reynolds)),squeeze=False,layout='constrained')
+    for i,re in enumerate(reynolds):
+        for r in rows:
+            cfg=r['config']
+            if cfg['reynolds']!=re:continue
+            y,u,x,v=centerlines(r)
+            label=f"{cfg['method'].upper()}, N={cfg['cells']}, {cfg['convection']}"
+            style=':' if cfg['convection']=='upwind' else ('-' if cfg['cells']==32 else '--')
+            if not r['converged']:label+=' (not converged)'
+            for ax,a,b in [(axes[i,0],u,y),(axes[i,1],x,v)]:
+                ax.plot(a,b,style,color=colors[cfg['method']],lw=1.5,label=label)
+        axes[i,0].plot(REFERENCE[re]['u'],GHIA_Y,'ko',ms=4,label='Ghia (1982)')
+        # Keep the published Re=400 x/L=0.9063 value for provenance, but
+        # explicitly flag it: the tabulated v value is a known anomaly and
+        # must not be interpreted as a validated data point.
+        ref_x = np.asarray(GHIA_X)
+        ref_v = np.asarray(REFERENCE[re]['v'])
+        valid_v = benchmark_valid_mask(re, 'v', ref_x)
+        axes[i,1].plot(ref_x[valid_v], ref_v[valid_v], 'ko', ms=4,
+                       label='Ghia (1982; qualified)')
+        if np.any(~valid_v):
+            axes[i,1].plot(ref_x[~valid_v], ref_v[~valid_v], 'rx',
+                           ms=8, mew=1.8,
+                           label='Published anomalous point (excluded from error)')
+        axes[i,1].legend(fontsize=8, loc='best')
+        axes[i,0].set(xlabel=r'$u/U$',ylabel=r'$y/L$',title=f'Re={re}: vertical centerline')
+        axes[i,1].set(xlabel=r'$x/L$',ylabel=r'$v/U$',title=f'Re={re}: horizontal centerline')
+        axes[i,0].legend(fontsize=8,loc='best')
+    fig.suptitle('Higher-Re cavity: convergence does not remove mesh error')
+    output['centerlines']=fig
+    fig,axes=plt.subplots(len(reynolds),2,figsize=(10,3.5*len(reynolds)),squeeze=False,layout='constrained')
+    for i,re in enumerate(reynolds):
+        for r in rows:
+            cfg=r['config']
+            if cfg['reynolds']!=re:continue
+            h=r['history'];cost=1 if cfg['method']=='simple' else cfg['pressure_correctors']*(cfg['outer_correctors'] if cfg['method']=='pimple' else 1)
+            label=f"{cfg['method'].upper()}, N={cfg['cells']}, {cfg['convection']}"
+            for ax,j in [(axes[i,0],3),(axes[i,1],4)]:
+                ax.semilogy(h[:,0]*cost,np.maximum(h[:,j],1e-17),':' if cfg['convection']=='upwind' else ('-' if cfg['cells']==32 else '--'),color=colors[cfg['method']],label=label)
+                ax.set_xlabel('Cumulative pressure solves')
+        axes[i,0].axhline(1e-6,color='black',ls=':',lw=1)
+        axes[i,0].set(ylabel='Steady momentum defect, Linf',title=f'Re={re}')
+        axes[i,1].set(ylabel='Cell divergence, Linf',title=f'Re={re}: mass conservation')
+        axes[i,0].legend(fontsize=8)
+    fig.suptitle('Coupling work and equation convergence (different meshes solve different equations)')
+    output['convergence']=fig
+    selected=[]
+    for re in reynolds:
+        group=[r for r in rows if r['config']['reynolds']==re]
+        central=[r for r in group if r['config']['convection']=='central']
+        selected.append(max(central or group,key=lambda r:(r['config']['cells'],r['config']['method']=='simple')))
+    output.update(experiment_field_figures(selected))
+    return output

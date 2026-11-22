@@ -1,0 +1,54 @@
+"""Interactive four-formulation plots with distinct native residual axes."""
+import numpy as np
+from .pressure_velocity import centerlines,GHIA_Y,GHIA_X
+from .pressure_velocity_experiments import REFERENCE, benchmark_valid_mask
+from .pressure_velocity_visuals import experiment_field_figures
+
+def all_formulation_figures(rows):
+    import matplotlib.pyplot as plt
+    colors={'simple':'#1748b7','piso':'#e23028','pimple':'#009f59','streamfunction-vorticity':'#703ac4'}
+    re_values=sorted({int(r['config']['reynolds']) for r in rows})
+    output={}
+    fig,axes=plt.subplots(len(re_values),2,figsize=(10,4*len(re_values)),squeeze=False,layout='constrained')
+    for i,re in enumerate(re_values):
+        for r in rows:
+            c=r['config'];m=c['method']
+            if c['reynolds']!=re:continue
+            y,u,x,v=centerlines(r);label=m+(' [NOT STEADY]' if not r['converged'] else '')
+            axes[i,0].plot(u,y,color=colors[m],label=label)
+            axes[i,1].plot(x,v,color=colors[m])
+        axes[i,0].plot(REFERENCE[re]['u'],GHIA_Y,'ko',ms=3,label='Ghia reference')
+        ref_x=np.asarray(GHIA_X)
+        ref_v=np.asarray(REFERENCE[re]['v'])
+        valid=benchmark_valid_mask(re,'v',ref_x)
+        axes[i,1].plot(ref_x[valid],ref_v[valid],'ko',ms=3,label='Ghia reference (qualified)')
+        if np.any(~valid):
+            axes[i,1].plot(ref_x[~valid],ref_v[~valid],'rx',ms=8,mew=1.7,
+                           label='Published anomalous point (excluded from error)')
+            axes[i,1].legend(fontsize=8)
+        axes[i,0].set(xlabel='u / U',ylabel='y / L',title=f'Re={re}: vertical centerline')
+        axes[i,1].set(xlabel='x / L',ylabel='v / U',title=f'Re={re}: horizontal centerline')
+        axes[i,0].legend(fontsize=8)
+    output['centerlines']=fig
+    fig,axes=plt.subplots(len(re_values),3,figsize=(13,3.6*len(re_values)),squeeze=False,layout='constrained')
+    for i,re in enumerate(re_values):
+        group=[r for r in rows if r['config']['reynolds']==re]
+        for r in group:
+            m=r['config']['method']
+            if m=='streamfunction-vorticity':
+                axes[i,1].semilogy(r['residual_steps'],r['history_rate'],color=colors[m],label='FD relative update / dt')
+            else:axes[i,0].semilogy(r['history'][:,0],r['history'][:,3],color=colors[m],label=m.upper())
+        axes[i,0].set(xlabel='FV coupling iterations',ylabel='Momentum defect, Linf',title=f'Re={re}: FV equations')
+        axes[i,1].set(xlabel='FD explicit steps',ylabel='Relative vorticity update / dt',title=f'Re={re}: independent FD')
+        for ax in axes[i,:2]:
+            if ax.lines:ax.legend(fontsize=8)
+        values=[r['runtime_seconds'] for r in group]
+        axes[i,2].bar(range(len(group)),values,color=[colors[r['config']['method']] for r in group])
+        axes[i,2].set_xticks(range(len(group)),[r['config']['method'].replace('streamfunction-vorticity','psi-omega') for r in group],rotation=25,ha='right')
+        axes[i,2].set(ylabel='Solver-call wall time (s)',title='All computed methods')
+        axes[i,2].margins(y=.2)
+        for j,value in enumerate(values):axes[i,2].text(j,value,f'{value:.2f}s',ha='center',va='bottom',fontsize=9)
+    fig.suptitle('Separate native convergence measures; timings depend on settings and host')
+    output['convergence']=fig
+    output.update(experiment_field_figures(rows))
+    return output

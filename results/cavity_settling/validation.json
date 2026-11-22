@@ -1,0 +1,77 @@
+{
+  "checked_utc": "2026-11-22T10:12:05.192686+00:00",
+  "scientific_files_verified": 248,
+  "native_frames_verified": 38,
+  "matched_control_recomputations": [
+    {
+      "id": "time_Re1000_0.01_vs_0.005",
+      "maximum_absolute_difference": 0.0
+    },
+    {
+      "id": "time_Re1000_0.005_vs_0.0025",
+      "maximum_absolute_difference": 0.0
+    },
+    {
+      "id": "time_Re1000_0.01_vs_0.0025",
+      "maximum_absolute_difference": 0.0
+    },
+    {
+      "id": "time_Re7500_0.01_vs_0.005",
+      "maximum_absolute_difference": 0.0
+    },
+    {
+      "id": "time_Re7500_0.005_vs_0.0025",
+      "maximum_absolute_difference": 0.0
+    },
+    {
+      "id": "time_Re7500_0.01_vs_0.0025",
+      "maximum_absolute_difference": 0.0
+    },
+    {
+      "id": "time_Re10000_0.01_vs_0.005",
+      "maximum_absolute_difference": 0.0
+    },
+    {
+      "id": "time_Re10000_0.005_vs_0.0025",
+      "maximum_absolute_difference": 0.0
+    },
+    {
+      "id": "time_Re10000_0.01_vs_0.0025",
+      "maximum_absolute_difference": 0.0
+    },
+    {
+      "id": "grid_Re3200_128_vs_256",
+      "maximum_absolute_difference": 0.0
+    },
+    {
+      "id": "grid_Re5000_128_vs_256",
+      "maximum_absolute_difference": 0.0
+    },
+    {
+      "id": "grid_Re7500_128_vs_256",
+      "maximum_absolute_difference": 0.0
+    },
+    {
+      "id": "grid_Re10000_128_vs_256",
+      "maximum_absolute_difference": 0.0
+    },
+    {
+      "id": "coupling_Re1000_3x2_vs_6x4",
+      "maximum_absolute_difference": 0.0
+    },
+    {
+      "id": "coupling_Re7500_3x2_vs_6x4",
+      "maximum_absolute_difference": 0.0
+    },
+    {
+      "id": "coupling_Re10000_3x2_vs_6x4",
+      "maximum_absolute_difference": 0.0
+    }
+  ],
+  "rejected_invalid_inputs": [
+    "unavailable exact time",
+    "configuration mismatch"
+  ],
+  "notebook_receipt_verified": true,
+  "scientific_analysis_sha256": "317748d8323f0eb4ba19aa04b41567c121a916fded0050870600e7d38a1f4802"
+}

@@ -1,0 +1,3147 @@
+{
+  "comparison_meaning": "Numerical comparator, not truth; same actual time and native spatial coverage",
+  "data_policy": "No new CFD solve, smoothing, pressure re-gauging, nearest-time substitution or fabricated missing curve",
+  "figures": [
+    {
+      "admission": "verified_checkpoint",
+      "case_id": "continue_re100_n128_dt0p01_o3p2",
+      "diagnostic_display_stride": 1,
+      "files": [
+        {
+          "bytes": 351218,
+          "name": "history_continue_re100_n128_dt0p01_o3p2.png",
+          "sha256": "f818b96f4119dc287810c777197fa5712de7593cdd34af62a42e1772dc94e167"
+        },
+        {
+          "bytes": 42370,
+          "name": "history_continue_re100_n128_dt0p01_o3p2.pdf",
+          "sha256": "03358e8864f58c13744aa5a3dc89388ee1d49b3667c3edc16ce100c727e57185"
+        }
+      ],
+      "kind": "history",
+      "momentum_scale": {
+        "linthresh": 1e-10,
+        "type": "symlog"
+      },
+      "probe_positions": {
+        "central": [
+          0.50390625,
+          0.50390625
+        ],
+        "upper_left": [
+          0.05078125,
+          0.94921875
+        ]
+      },
+      "qualification": "Frozen windows identify fixed-grid temporal stationarity candidates only; time, coupling and mesh confirmation remain separate. No steady Ghia, 3D stability or turbulence qualification is inferred.",
+      "series": {
+        "central_omega": [
+          {
+            "end_time": 10.0,
+            "max": 8.903553394556951e-09,
+            "min": -1.1982350352543962,
+            "samples": 101,
+            "source": "native frame",
+            "start_time": 0.0
+          },
+          {
+            "end_time": 100.0,
+            "max": -1.1986062300120084,
+            "min": -1.2121545669828109,
+            "samples": 1800,
+            "source": "actual-step diagnostic",
+            "start_time": 10.05
+          }
+        ],
+        "central_u": [
+          {
+            "end_time": 10.0,
+            "max": 0.0,
+            "min": -0.20922289433982677,
+            "samples": 101,
+            "source": "native frame",
+            "start_time": 0.0
+          },
+          {
+            "end_time": 100.0,
+            "max": -0.20922747781116968,
+            "min": -0.20939200641779193,
+            "samples": 1800,
+            "source": "actual-step diagnostic",
+            "start_time": 10.05
+          }
+        ],
+        "central_v": [
+          {
+            "end_time": 10.0,
+            "max": 0.0572378820228762,
+            "min": 0.0,
+            "samples": 101,
+            "source": "native frame",
+            "start_time": 0.0
+          },
+          {
+            "end_time": 100.0,
+            "max": 0.05553341002610843,
+            "min": 0.05535978012100645,
+            "samples": 1800,
+            "source": "actual-step diagnostic",
+            "start_time": 10.05
+          }
+        ],
+        "kinetic_energy": [
+          {
+            "end_time": 0.0,
+            "max": 0.0,
+            "min": 0.0,
+            "samples": 1,
+            "source": "native frame",
+            "start_time": 0.0
+          },
+          {
+            "end_time": 100.0,
+            "max": 0.03430425430700946,
+            "min": 0.0019105368926911539,
+            "samples": 2800,
+            "source": "actual-step diagnostic",
+            "start_time": 0.01
+          }
+        ],
+        "psi_max": [
+          {
+            "end_time": 10.0,
+            "max": 1.2867136023371639e-05,
+            "min": 0.0,
+            "samples": 101,
+            "source": "native frame",
+            "start_time": 0.0
+          },
+          {
+            "end_time": 100.0,
+            "max": 1.3173124816974907e-05,
+            "min": 1.287528165935089e-05,
+            "samples": 1800,
+            "source": "actual-step diagnostic",
+            "start_time": 10.05
+          }
+        ],
+        "psi_min": [
+          {
+            "end_time": 10.0,
+            "max": 0.0,
+            "min": -0.1032544539047546,
+            "samples": 101,
+            "source": "native frame",
+            "start_time": 0.0
+          },
+          {
+            "end_time": 100.0,
+            "max": -0.10325926946121321,
+            "min": -0.10343501277336661,
+            "samples": 1800,
+            "source": "actual-step diagnostic",
+            "start_time": 10.05
+          }
+        ],
+        "steady_momentum_defect_linf": [
+          {
+            "end_time": 100.0,
+            "max": 62.919115605806894,
+            "min": 2.3003821070233244e-13,
+            "samples": 2800,
+            "source": "actual-step diagnostic",
+            "start_time": 0.01
+          }
+        ],
+        "time_step_momentum_defect_linf": [
+          {
+            "end_time": 100.0,
+            "max": 0.13276175720224614,
+            "min": 2.2737367544323206e-13,
+            "samples": 2800,
+            "source": "actual-step diagnostic",
+            "start_time": 0.01
+          }
+        ],
+        "upper_left_omega": [
+          {
+            "end_time": 10.0,
+            "max": 0.0,
+            "min": -5.910918475014172,
+            "samples": 101,
+            "source": "native frame",
+            "start_time": 0.0
+          },
+          {
+            "end_time": 100.0,
+            "max": -5.098232670887537,
+            "min": -5.0983531597477825,
+            "samples": 1800,
+            "source": "actual-step diagnostic",
+            "start_time": 10.05
+          }
+        ],
+        "upper_left_u": [
+          {
+            "end_time": 10.0,
+            "max": 0.0,
+            "min": -0.09391513801191004,
+            "samples": 101,
+            "source": "native frame",
+            "start_time": 0.0
+          },
+          {
+            "end_time": 100.0,
+            "max": -0.07465167765896406,
+            "min": -0.07468369181993931,
+            "samples": 1800,
+            "source": "actual-step diagnostic",
+            "start_time": 10.05
+          }
+        ],
+        "upper_left_v": [
+          {
+            "end_time": 10.0,
+            "max": 0.2790805891457356,
+            "min": 0.0,
+            "samples": 101,
+            "source": "native frame",
+            "start_time": 0.0
+          },
+          {
+            "end_time": 100.0,
+            "max": 0.27398202448541925,
+            "min": 0.27394952253816957,
+            "samples": 1800,
+            "source": "actual-step diagnostic",
+            "start_time": 10.05
+          }
+        ]
+      },
+      "style_check": {
+        "figure_text_within_bounds": true,
+        "legends_outside_data_axes": true
+      }
+    },
+    {
+      "admission": "verified_checkpoint",
+      "case_id": "continue_re400_n128_dt0p01_o3p2",
+      "diagnostic_display_stride": 1,
+      "files": [
+        {
+          "bytes": 371826,
+          "name": "history_continue_re400_n128_dt0p01_o3p2.png",
+          "sha256": "31607530ed0bdaf73ed55a1c6576b5e9e293f2e79059dfd9305387aa74aaa5d9"
+        },
+        {
+          "bytes": 44585,
+          "name": "history_continue_re400_n128_dt0p01_o3p2.pdf",
+          "sha256": "dfa29c97a7df540fd2368e3d47dc4bd15ae288b605f21834dcfcdd781427459f"
+        }
+      ],
+      "kind": "history",
+      "momentum_scale": {
+        "linthresh": 1e-10,
+        "type": "symlog"
+      },
+      "probe_positions": {
+        "central": [
+          0.50390625,
+          0.50390625
+        ],
+        "upper_left": [
+          0.05078125,
+          0.94921875
+        ]
+      },
+      "qualification": "Frozen windows identify fixed-grid temporal stationarity candidates only; time, coupling and mesh confirmation remain separate. No steady Ghia, 3D stability or turbulence qualification is inferred.",
+      "series": {
+        "central_omega": [
+          {
+            "end_time": 10.0,
+            "max": 0.05138451020624579,
+            "min": -2.6734515431491443,
+            "samples": 101,
+            "source": "native frame",
+            "start_time": 0.0
+          },
+          {
+            "end_time": 140.0,
+            "max": -2.4091948303135196,
+            "min": -2.652303961448636,
+            "samples": 2600,
+            "source": "actual-step diagnostic",
+            "start_time": 10.05
+          }
+        ],
+        "central_u": [
+          {
+            "end_time": 10.0,
+            "max": 0.0,
+            "min": -0.21124471736187678,
+            "samples": 101,
+            "source": "native frame",
+            "start_time": 0.0
+          },
+          {
+            "end_time": 140.0,
+            "max": -0.11078466006339548,
+            "min": -0.15534952437700772,
+            "samples": 2600,
+            "source": "actual-step diagnostic",
+            "start_time": 10.05
+          }
+        ],
+        "central_v": [
+          {
+            "end_time": 10.0,
+            "max": 0.14592064526404747,
+            "min": -3.9907701560536074e-05,
+            "samples": 101,
+            "source": "native frame",
+            "start_time": 0.0
+          },
+          {
+            "end_time": 140.0,
+            "max": 0.08672113433263068,
+            "min": 0.04784169892846357,
+            "samples": 2600,
+            "source": "actual-step diagnostic",
+            "start_time": 10.05
+          }
+        ],
+        "kinetic_energy": [
+          {
+            "end_time": 0.0,
+            "max": 0.0,
+            "min": 0.0,
+            "samples": 1,
+            "source": "native frame",
+            "start_time": 0.0
+          },
+          {
+            "end_time": 140.0,
+            "max": 0.04038695428470907,
+            "min": 0.0005799103755925934,
+            "samples": 3600,
+            "source": "actual-step diagnostic",
+            "start_time": 0.01
+          }
+        ],
+        "psi_max": [
+          {
+            "end_time": 10.0,
+            "max": 0.00047381219590863865,
+            "min": 0.0,
+            "samples": 101,
+            "source": "native frame",
+            "start_time": 0.0
+          },
+          {
+            "end_time": 140.0,
+            "max": 0.0006507551559532411,
+            "min": 0.00047631895865606777,
+            "samples": 2600,
+            "source": "actual-step diagnostic",
+            "start_time": 10.05
+          }
+        ],
+        "psi_min": [
+          {
+            "end_time": 10.0,
+            "max": 0.0,
+            "min": -0.10566801984858534,
+            "samples": 101,
+            "source": "native frame",
+            "start_time": 0.0
+          },
+          {
+            "end_time": 140.0,
+            "max": -0.10575887670374969,
+            "min": -0.11348614802158545,
+            "samples": 2600,
+            "source": "actual-step diagnostic",
+            "start_time": 10.05
+          }
+        ],
+        "steady_momentum_defect_linf": [
+          {
+            "end_time": 140.0,
+            "max": 37.94285862819909,
+            "min": 8.526512829121202e-14,
+            "samples": 3600,
+            "source": "actual-step diagnostic",
+            "start_time": 0.01
+          }
+        ],
+        "time_step_momentum_defect_linf": [
+          {
+            "end_time": 140.0,
+            "max": 0.009561834018825266,
+            "min": 1.0023535820802287e-13,
+            "samples": 3600,
+            "source": "actual-step diagnostic",
+            "start_time": 0.01
+          }
+        ],
+        "upper_left_omega": [
+          {
+            "end_time": 10.0,
+            "max": 0.0,
+            "min": -2.1244380703137935,
+            "samples": 101,
+            "source": "native frame",
+            "start_time": 0.0
+          },
+          {
+            "end_time": 140.0,
+            "max": -1.2998395732432542,
+            "min": -1.3483400145878957,
+            "samples": 2600,
+            "source": "actual-step diagnostic",
+            "start_time": 10.05
+          }
+        ],
+        "upper_left_u": [
+          {
+            "end_time": 10.0,
+            "max": 0.0,
+            "min": -0.0934831960480744,
+            "samples": 101,
+            "source": "native frame",
+            "start_time": 0.0
+          },
+          {
+            "end_time": 140.0,
+            "max": -0.09218675451364633,
+            "min": -0.09656110384829267,
+            "samples": 2600,
+            "source": "actual-step diagnostic",
+            "start_time": 10.05
+          }
+        ],
+        "upper_left_v": [
+          {
+            "end_time": 10.0,
+            "max": 0.19670324529301192,
+            "min": 0.0,
+            "samples": 101,
+            "source": "native frame",
+            "start_time": 0.0
+          },
+          {
+            "end_time": 140.0,
+            "max": 0.18574163617962974,
+            "min": 0.18179131781816116,
+            "samples": 2600,
+            "source": "actual-step diagnostic",
+            "start_time": 10.05
+          }
+        ]
+      },
+      "style_check": {
+        "figure_text_within_bounds": true,
+        "legends_outside_data_axes": true
+      }
+    },
+    {
+      "admission": "verified_checkpoint",
+      "case_id": "continue_re1000_n128_dt0p01_o3p2",
+      "diagnostic_display_stride": 1,
+      "files": [
+        {
+          "bytes": 366152,
+          "name": "history_continue_re1000_n128_dt0p01_o3p2.png",
+          "sha256": "01bab041ca4bc88b0f256832272bd3ce7a4029152a77e51fd088bc3cc83ed613"
+        },
+        {
+          "bytes": 44370,
+          "name": "history_continue_re1000_n128_dt0p01_o3p2.pdf",
+          "sha256": "1ec1db0d43c2a48c378abf765003d8108faf4c67fc11dde9903c137d8e3dfbfa"
+        }
+      ],
+      "kind": "history",
+      "momentum_scale": {
+        "linthresh": 1e-10,
+        "type": "symlog"
+      },
+      "probe_positions": {
+        "central": [
+          0.50390625,
+          0.50390625
+        ],
+        "upper_left": [
+          0.05078125,
+          0.94921875
+        ]
+      },
+      "qualification": "Frozen windows identify fixed-grid temporal stationarity candidates only; time, coupling and mesh confirmation remain separate. No steady Ghia, 3D stability or turbulence qualification is inferred.",
+      "series": {
+        "central_omega": [
+          {
+            "end_time": 10.0,
+            "max": 0.756433747324289,
+            "min": -2.687995549609507,
+            "samples": 101,
+            "source": "native frame",
+            "start_time": 0.0
+          },
+          {
+            "end_time": 240.0,
+            "max": -2.027886505635441,
+            "min": -2.430432565989694,
+            "samples": 4600,
+            "source": "actual-step diagnostic",
+            "start_time": 10.05
+          }
+        ],
+        "central_u": [
+          {
+            "end_time": 10.0,
+            "max": 0.0,
+            "min": -0.2047314142855785,
+            "samples": 101,
+            "source": "native frame",
+            "start_time": 0.0
+          },
+          {
+            "end_time": 240.0,
+            "max": -0.057788402307872175,
+            "min": -0.13174259264078034,
+            "samples": 4600,
+            "source": "actual-step diagnostic",
+            "start_time": 10.05
+          }
+        ],
+        "central_v": [
+          {
+            "end_time": 10.0,
+            "max": 0.19410910073577853,
+            "min": -3.802529433018738e-05,
+            "samples": 101,
+            "source": "native frame",
+            "start_time": 0.0
+          },
+          {
+            "end_time": 240.0,
+            "max": 0.10095392839592006,
+            "min": 0.02198448020081438,
+            "samples": 4600,
+            "source": "actual-step diagnostic",
+            "start_time": 10.05
+          }
+        ],
+        "kinetic_energy": [
+          {
+            "end_time": 0.0,
+            "max": 0.0,
+            "min": 0.0,
+            "samples": 1,
+            "source": "native frame",
+            "start_time": 0.0
+          },
+          {
+            "end_time": 240.0,
+            "max": 0.043414893336426216,
+            "min": 0.0001863065453768036,
+            "samples": 5600,
+            "source": "actual-step diagnostic",
+            "start_time": 0.01
+          }
+        ],
+        "psi_max": [
+          {
+            "end_time": 10.0,
+            "max": 0.0006799239041683927,
+            "min": 0.0,
+            "samples": 101,
+            "source": "native frame",
+            "start_time": 0.0
+          },
+          {
+            "end_time": 240.0,
+            "max": 0.001768878511010145,
+            "min": 0.0006883602869616047,
+            "samples": 4600,
+            "source": "actual-step diagnostic",
+            "start_time": 10.05
+          }
+        ],
+        "psi_min": [
+          {
+            "end_time": 10.0,
+            "max": 0.0,
+            "min": -0.09914936480149258,
+            "samples": 101,
+            "source": "native frame",
+            "start_time": 0.0
+          },
+          {
+            "end_time": 240.0,
+            "max": -0.09928344249627503,
+            "min": -0.11751412990862278,
+            "samples": 4600,
+            "source": "actual-step diagnostic",
+            "start_time": 10.05
+          }
+        ],
+        "steady_momentum_defect_linf": [
+          {
+            "end_time": 240.0,
+            "max": 21.9633492598595,
+            "min": 1.7223733550508769e-10,
+            "samples": 5600,
+            "source": "actual-step diagnostic",
+            "start_time": 0.01
+          }
+        ],
+        "time_step_momentum_defect_linf": [
+          {
+            "end_time": 240.0,
+            "max": 0.006727118770839979,
+            "min": 5.684341886080802e-14,
+            "samples": 5600,
+            "source": "actual-step diagnostic",
+            "start_time": 0.01
+          }
+        ],
+        "upper_left_omega": [
+          {
+            "end_time": 10.0,
+            "max": 0.4596206857566565,
+            "min": -0.3644126251772244,
+            "samples": 101,
+            "source": "native frame",
+            "start_time": 0.0
+          },
+          {
+            "end_time": 240.0,
+            "max": 0.8986664758846947,
+            "min": 0.4610047663279957,
+            "samples": 4600,
+            "source": "actual-step diagnostic",
+            "start_time": 10.05
+          }
+        ],
+        "upper_left_u": [
+          {
+            "end_time": 10.0,
+            "max": 0.0,
+            "min": -0.06789899353984066,
+            "samples": 101,
+            "source": "native frame",
+            "start_time": 0.0
+          },
+          {
+            "end_time": 240.0,
+            "max": -0.06796970682648798,
+            "min": -0.09005187268505178,
+            "samples": 4600,
+            "source": "actual-step diagnostic",
+            "start_time": 10.05
+          }
+        ],
+        "upper_left_v": [
+          {
+            "end_time": 10.0,
+            "max": 0.13248242163632107,
+            "min": 0.0,
+            "samples": 101,
+            "source": "native frame",
+            "start_time": 0.0
+          },
+          {
+            "end_time": 240.0,
+            "max": 0.12571327119050546,
+            "min": 0.10742463114268269,
+            "samples": 4600,
+            "source": "actual-step diagnostic",
+            "start_time": 10.05
+          }
+        ]
+      },
+      "style_check": {
+        "figure_text_within_bounds": true,
+        "legends_outside_data_axes": true
+      }
+    },
+    {
+      "admission": "verified_checkpoint",
+      "case_id": "continue_re3200_n128_dt0p01_o3p2",
+      "diagnostic_display_stride": 1,
+      "files": [
+        {
+          "bytes": 409026,
+          "name": "history_continue_re3200_n128_dt0p01_o3p2.png",
+          "sha256": "34662e1e47c94dc4156a6428652903607a29a26bc8ad5a52e4a3e7a6991b5e6e"
+        },
+        {
+          "bytes": 61045,
+          "name": "history_continue_re3200_n128_dt0p01_o3p2.pdf",
+          "sha256": "289084afa5045ae5af7038b72c87153b9dc3fb5c16c5a1b38f293eed4c016471"
+        }
+      ],
+      "kind": "history",
+      "momentum_scale": {
+        "linthresh": 1e-10,
+        "type": "symlog"
+      },
+      "probe_positions": {
+        "central": [
+          0.50390625,
+          0.50390625
+        ],
+        "upper_left": [
+          0.05078125,
+          0.94921875
+        ]
+      },
+      "qualification": "Frozen windows identify fixed-grid temporal stationarity candidates only; time, coupling and mesh confirmation remain separate. No steady Ghia, 3D stability or turbulence qualification is inferred.",
+      "series": {
+        "central_omega": [
+          {
+            "end_time": 10.0,
+            "max": 2.01453117159601,
+            "min": -2.3839670894814784,
+            "samples": 101,
+            "source": "native frame",
+            "start_time": 0.0
+          },
+          {
+            "end_time": 260.0,
+            "max": -1.7288876143107235,
+            "min": -3.2128157889739852,
+            "samples": 5000,
+            "source": "actual-step diagnostic",
+            "start_time": 10.05
+          }
+        ],
+        "central_u": [
+          {
+            "end_time": 10.0,
+            "max": 0.0,
+            "min": -0.17127875761776662,
+            "samples": 101,
+            "source": "native frame",
+            "start_time": 0.0
+          },
+          {
+            "end_time": 260.0,
+            "max": -0.02519436441457381,
+            "min": -0.12703623666441213,
+            "samples": 5000,
+            "source": "actual-step diagnostic",
+            "start_time": 10.05
+          }
+        ],
+        "central_v": [
+          {
+            "end_time": 10.0,
+            "max": 0.22120026877202717,
+            "min": -2.6954017473509378e-05,
+            "samples": 101,
+            "source": "native frame",
+            "start_time": 0.0
+          },
+          {
+            "end_time": 260.0,
+            "max": 0.1817232577593117,
+            "min": 0.00373567597592496,
+            "samples": 5000,
+            "source": "actual-step diagnostic",
+            "start_time": 10.05
+          }
+        ],
+        "kinetic_energy": [
+          {
+            "end_time": 0.0,
+            "max": 0.0,
+            "min": 0.0,
+            "samples": 1,
+            "source": "native frame",
+            "start_time": 0.0
+          },
+          {
+            "end_time": 260.0,
+            "max": 0.04342305831280219,
+            "min": 2.923250915537182e-05,
+            "samples": 6000,
+            "source": "actual-step diagnostic",
+            "start_time": 0.01
+          }
+        ],
+        "psi_max": [
+          {
+            "end_time": 10.0,
+            "max": 0.00021848764243252543,
+            "min": 0.0,
+            "samples": 101,
+            "source": "native frame",
+            "start_time": 0.0
+          },
+          {
+            "end_time": 260.0,
+            "max": 0.0030144656159592966,
+            "min": 0.000223453098495627,
+            "samples": 5000,
+            "source": "actual-step diagnostic",
+            "start_time": 10.05
+          }
+        ],
+        "psi_min": [
+          {
+            "end_time": 10.0,
+            "max": 0.0,
+            "min": -0.08358591823599107,
+            "samples": 101,
+            "source": "native frame",
+            "start_time": 0.0
+          },
+          {
+            "end_time": 260.0,
+            "max": -0.08372894922707255,
+            "min": -0.11699106038734816,
+            "samples": 5000,
+            "source": "actual-step diagnostic",
+            "start_time": 10.05
+          }
+        ],
+        "steady_momentum_defect_linf": [
+          {
+            "end_time": 260.0,
+            "max": 8.760938135689178,
+            "min": 8.76671987160016e-06,
+            "samples": 6000,
+            "source": "actual-step diagnostic",
+            "start_time": 0.01
+          }
+        ],
+        "time_step_momentum_defect_linf": [
+          {
+            "end_time": 260.0,
+            "max": 0.002704472088527865,
+            "min": 5.754507981237111e-10,
+            "samples": 6000,
+            "source": "actual-step diagnostic",
+            "start_time": 0.01
+          }
+        ],
+        "upper_left_omega": [
+          {
+            "end_time": 10.0,
+            "max": 0.46625413895944723,
+            "min": -0.0025466579120581034,
+            "samples": 101,
+            "source": "native frame",
+            "start_time": 0.0
+          },
+          {
+            "end_time": 260.0,
+            "max": 2.7231215895430774,
+            "min": 0.4683343164141791,
+            "samples": 5000,
+            "source": "actual-step diagnostic",
+            "start_time": 10.05
+          }
+        ],
+        "upper_left_u": [
+          {
+            "end_time": 10.0,
+            "max": 0.0,
+            "min": -0.03355790844568114,
+            "samples": 101,
+            "source": "native frame",
+            "start_time": 0.0
+          },
+          {
+            "end_time": 260.0,
+            "max": -0.030999680926203504,
+            "min": -0.07449184231235419,
+            "samples": 5000,
+            "source": "actual-step diagnostic",
+            "start_time": 10.05
+          }
+        ],
+        "upper_left_v": [
+          {
+            "end_time": 10.0,
+            "max": 0.07202835868138902,
+            "min": 0.0,
+            "samples": 101,
+            "source": "native frame",
+            "start_time": 0.0
+          },
+          {
+            "end_time": 260.0,
+            "max": 0.07170541956912685,
+            "min": 0.026967332379407384,
+            "samples": 5000,
+            "source": "actual-step diagnostic",
+            "start_time": 10.05
+          }
+        ]
+      },
+      "style_check": {
+        "figure_text_within_bounds": true,
+        "legends_outside_data_axes": true
+      }
+    },
+    {
+      "admission": "verified_checkpoint",
+      "case_id": "continue_re5000_n128_dt0p01_o3p2",
+      "diagnostic_display_stride": 1,
+      "files": [
+        {
+          "bytes": 461116,
+          "name": "history_continue_re5000_n128_dt0p01_o3p2.png",
+          "sha256": "5ad722a83ab621a6467ca80aea8fe3eb5ac31078b14bf51c3ca1ea980945245e"
+        },
+        {
+          "bytes": 73580,
+          "name": "history_continue_re5000_n128_dt0p01_o3p2.pdf",
+          "sha256": "e87a2f9e90ad5cfa3ba8bd819e432d87e42d9c0bf8140417a9ab1c0b49e6d5e0"
+        }
+      ],
+      "kind": "history",
+      "momentum_scale": {
+        "linthresh": 1e-10,
+        "type": "symlog"
+      },
+      "probe_positions": {
+        "central": [
+          0.50390625,
+          0.50390625
+        ],
+        "upper_left": [
+          0.05078125,
+          0.94921875
+        ]
+      },
+      "qualification": "Frozen windows identify fixed-grid temporal stationarity candidates only; time, coupling and mesh confirmation remain separate. No steady Ghia, 3D stability or turbulence qualification is inferred.",
+      "series": {
+        "central_omega": [
+          {
+            "end_time": 10.0,
+            "max": 2.70077541049746,
+            "min": -2.4566569103954325,
+            "samples": 101,
+            "source": "native frame",
+            "start_time": 0.0
+          },
+          {
+            "end_time": 250.0,
+            "max": -0.9411600589642068,
+            "min": -3.9995706711727075,
+            "samples": 4800,
+            "source": "actual-step diagnostic",
+            "start_time": 10.05
+          }
+        ],
+        "central_u": [
+          {
+            "end_time": 10.0,
+            "max": 0.0,
+            "min": -0.13373555012925598,
+            "samples": 101,
+            "source": "native frame",
+            "start_time": 0.0
+          },
+          {
+            "end_time": 250.0,
+            "max": 0.05324984108872356,
+            "min": -0.11427824342468612,
+            "samples": 4800,
+            "source": "actual-step diagnostic",
+            "start_time": 10.05
+          }
+        ],
+        "central_v": [
+          {
+            "end_time": 10.0,
+            "max": 0.22431319542277128,
+            "min": -2.2256604154268556e-05,
+            "samples": 101,
+            "source": "native frame",
+            "start_time": 0.0
+          },
+          {
+            "end_time": 250.0,
+            "max": 0.1782845718359794,
+            "min": -0.0551156658025604,
+            "samples": 4800,
+            "source": "actual-step diagnostic",
+            "start_time": 10.05
+          }
+        ],
+        "kinetic_energy": [
+          {
+            "end_time": 0.0,
+            "max": 0.0,
+            "min": 0.0,
+            "samples": 1,
+            "source": "native frame",
+            "start_time": 0.0
+          },
+          {
+            "end_time": 250.0,
+            "max": 0.04142659308055188,
+            "min": 1.315602364766038e-05,
+            "samples": 5800,
+            "source": "actual-step diagnostic",
+            "start_time": 0.01
+          }
+        ],
+        "psi_max": [
+          {
+            "end_time": 10.0,
+            "max": 0.00018650154534589306,
+            "min": 0.0,
+            "samples": 101,
+            "source": "native frame",
+            "start_time": 0.0
+          },
+          {
+            "end_time": 250.0,
+            "max": 0.0040415999942186856,
+            "min": 5.3358431266297643e-05,
+            "samples": 4800,
+            "source": "actual-step diagnostic",
+            "start_time": 10.05
+          }
+        ],
+        "psi_min": [
+          {
+            "end_time": 10.0,
+            "max": 0.0,
+            "min": -0.07551359423057367,
+            "samples": 101,
+            "source": "native frame",
+            "start_time": 0.0
+          },
+          {
+            "end_time": 250.0,
+            "max": -0.07563313760025818,
+            "min": -0.11332002387902367,
+            "samples": 4800,
+            "source": "actual-step diagnostic",
+            "start_time": 10.05
+          }
+        ],
+        "steady_momentum_defect_linf": [
+          {
+            "end_time": 250.0,
+            "max": 5.8812016748295965,
+            "min": 7.511588190611818e-05,
+            "samples": 5800,
+            "source": "actual-step diagnostic",
+            "start_time": 0.01
+          }
+        ],
+        "time_step_momentum_defect_linf": [
+          {
+            "end_time": 250.0,
+            "max": 0.0026041394284845865,
+            "min": 2.3664838977310865e-09,
+            "samples": 5800,
+            "source": "actual-step diagnostic",
+            "start_time": 0.01
+          }
+        ],
+        "upper_left_omega": [
+          {
+            "end_time": 10.0,
+            "max": 0.30896636657344967,
+            "min": -0.0002274536265347571,
+            "samples": 101,
+            "source": "native frame",
+            "start_time": 0.0
+          },
+          {
+            "end_time": 250.0,
+            "max": 3.373719859076002,
+            "min": 0.31087498876535724,
+            "samples": 4800,
+            "source": "actual-step diagnostic",
+            "start_time": 10.05
+          }
+        ],
+        "upper_left_u": [
+          {
+            "end_time": 10.0,
+            "max": 0.0,
+            "min": -0.02635743729544912,
+            "samples": 101,
+            "source": "native frame",
+            "start_time": 0.0
+          },
+          {
+            "end_time": 250.0,
+            "max": -0.022026745632598183,
+            "min": -0.06945470622960484,
+            "samples": 4800,
+            "source": "actual-step diagnostic",
+            "start_time": 10.05
+          }
+        ],
+        "upper_left_v": [
+          {
+            "end_time": 10.0,
+            "max": 0.057433674457436495,
+            "min": 0.0,
+            "samples": 101,
+            "source": "native frame",
+            "start_time": 0.0
+          },
+          {
+            "end_time": 250.0,
+            "max": 0.0577598768307505,
+            "min": 0.0059286449466667175,
+            "samples": 4800,
+            "source": "actual-step diagnostic",
+            "start_time": 10.05
+          }
+        ]
+      },
+      "style_check": {
+        "figure_text_within_bounds": true,
+        "legends_outside_data_axes": true
+      }
+    },
+    {
+      "admission": "verified_checkpoint",
+      "case_id": "continue_re7500_n128_dt0p01_o3p2",
+      "diagnostic_display_stride": 1,
+      "files": [
+        {
+          "bytes": 501114,
+          "name": "history_continue_re7500_n128_dt0p01_o3p2.png",
+          "sha256": "31d66f29f2ea9294cc5c92fa556753479f2fd0804371f9b018d7271c6942b9cb"
+        },
+        {
+          "bytes": 80847,
+          "name": "history_continue_re7500_n128_dt0p01_o3p2.pdf",
+          "sha256": "0f21999a02c3823039d5eb08153fcd3b8cc70c2bc7470937779ab7b361aeaf58"
+        }
+      ],
+      "kind": "history",
+      "momentum_scale": {
+        "linthresh": 1e-10,
+        "type": "symlog"
+      },
+      "probe_positions": {
+        "central": [
+          0.50390625,
+          0.50390625
+        ],
+        "upper_left": [
+          0.05078125,
+          0.94921875
+        ]
+      },
+      "qualification": "Frozen windows identify fixed-grid temporal stationarity candidates only; time, coupling and mesh confirmation remain separate. No steady Ghia, 3D stability or turbulence qualification is inferred.",
+      "series": {
+        "central_omega": [
+          {
+            "end_time": 10.0,
+            "max": 1.4169107038831257,
+            "min": -1.9401894277435852,
+            "samples": 101,
+            "source": "native frame",
+            "start_time": 0.0
+          },
+          {
+            "end_time": 200.0,
+            "max": 0.03511128384159479,
+            "min": -3.161358008421822,
+            "samples": 3800,
+            "source": "actual-step diagnostic",
+            "start_time": 10.05
+          }
+        ],
+        "central_u": [
+          {
+            "end_time": 10.0,
+            "max": 0.0,
+            "min": -0.05484925942566731,
+            "samples": 101,
+            "source": "native frame",
+            "start_time": 0.0
+          },
+          {
+            "end_time": 200.0,
+            "max": 0.06472277689736408,
+            "min": -0.10251624546324425,
+            "samples": 3800,
+            "source": "actual-step diagnostic",
+            "start_time": 10.05
+          }
+        ],
+        "central_v": [
+          {
+            "end_time": 10.0,
+            "max": 0.17525542661987306,
+            "min": -1.79167482765691e-05,
+            "samples": 101,
+            "source": "native frame",
+            "start_time": 0.0
+          },
+          {
+            "end_time": 200.0,
+            "max": 0.153883287994179,
+            "min": -0.05247233382244146,
+            "samples": 3800,
+            "source": "actual-step diagnostic",
+            "start_time": 10.05
+          }
+        ],
+        "kinetic_energy": [
+          {
+            "end_time": 0.0,
+            "max": 0.0,
+            "min": 0.0,
+            "samples": 1,
+            "source": "native frame",
+            "start_time": 0.0
+          },
+          {
+            "end_time": 200.0,
+            "max": 0.03552512046480785,
+            "min": 6.200841458202296e-06,
+            "samples": 4800,
+            "source": "actual-step diagnostic",
+            "start_time": 0.01
+          }
+        ],
+        "psi_max": [
+          {
+            "end_time": 10.0,
+            "max": 0.00033261349453997575,
+            "min": 0.0,
+            "samples": 101,
+            "source": "native frame",
+            "start_time": 0.0
+          },
+          {
+            "end_time": 200.0,
+            "max": 0.009963798650470453,
+            "min": 4.423544863740858e-17,
+            "samples": 3800,
+            "source": "actual-step diagnostic",
+            "start_time": 10.05
+          }
+        ],
+        "psi_min": [
+          {
+            "end_time": 10.0,
+            "max": 0.0,
+            "min": -0.06513819030872944,
+            "samples": 101,
+            "source": "native frame",
+            "start_time": 0.0
+          },
+          {
+            "end_time": 200.0,
+            "max": -0.06522175320523091,
+            "min": -0.09988583993099416,
+            "samples": 3800,
+            "source": "actual-step diagnostic",
+            "start_time": 10.05
+          }
+        ],
+        "steady_momentum_defect_linf": [
+          {
+            "end_time": 200.0,
+            "max": 4.038814192310527,
+            "min": 0.0003116170628154613,
+            "samples": 4800,
+            "source": "actual-step diagnostic",
+            "start_time": 0.01
+          }
+        ],
+        "time_step_momentum_defect_linf": [
+          {
+            "end_time": 200.0,
+            "max": 0.002255044040779808,
+            "min": 6.6531598008623405e-09,
+            "samples": 4800,
+            "source": "actual-step diagnostic",
+            "start_time": 0.01
+          }
+        ],
+        "upper_left_omega": [
+          {
+            "end_time": 10.0,
+            "max": 0.1958260139200727,
+            "min": -2.406774565177905e-05,
+            "samples": 101,
+            "source": "native frame",
+            "start_time": 0.0
+          },
+          {
+            "end_time": 200.0,
+            "max": 3.9402576479423796,
+            "min": 0.19751801275640601,
+            "samples": 3800,
+            "source": "actual-step diagnostic",
+            "start_time": 10.05
+          }
+        ],
+        "upper_left_u": [
+          {
+            "end_time": 10.0,
+            "max": 0.0,
+            "min": -0.021273718255008296,
+            "samples": 101,
+            "source": "native frame",
+            "start_time": 0.0
+          },
+          {
+            "end_time": 200.0,
+            "max": -0.014853576235371424,
+            "min": -0.06659021259953586,
+            "samples": 3800,
+            "source": "actual-step diagnostic",
+            "start_time": 10.05
+          }
+        ],
+        "upper_left_v": [
+          {
+            "end_time": 10.0,
+            "max": 0.046753505486484076,
+            "min": 0.0,
+            "samples": 101,
+            "source": "native frame",
+            "start_time": 0.0
+          },
+          {
+            "end_time": 200.0,
+            "max": 0.04943705724644604,
+            "min": -0.010110837319007308,
+            "samples": 3800,
+            "source": "actual-step diagnostic",
+            "start_time": 10.05
+          }
+        ]
+      },
+      "style_check": {
+        "figure_text_within_bounds": true,
+        "legends_outside_data_axes": true
+      }
+    },
+    {
+      "admission": "verified_checkpoint",
+      "case_id": "continue_re10000_n128_dt0p01_o3p2",
+      "diagnostic_display_stride": 1,
+      "files": [
+        {
+          "bytes": 531957,
+          "name": "history_continue_re10000_n128_dt0p01_o3p2.png",
+          "sha256": "797b8d414dc6d62e3e84184e02efadc87c98870ddacb6baf53d5348de8750050"
+        },
+        {
+          "bytes": 95087,
+          "name": "history_continue_re10000_n128_dt0p01_o3p2.pdf",
+          "sha256": "cd75a95bc7f3189f328a337fa8f53d92b656b2a9f50b54ed44d32931f21cd39b"
+        }
+      ],
+      "kind": "history",
+      "momentum_scale": {
+        "linthresh": 1e-10,
+        "type": "symlog"
+      },
+      "probe_positions": {
+        "central": [
+          0.50390625,
+          0.50390625
+        ],
+        "upper_left": [
+          0.05078125,
+          0.94921875
+        ]
+      },
+      "qualification": "Frozen windows identify fixed-grid temporal stationarity candidates only; time, coupling and mesh confirmation remain separate. No steady Ghia, 3D stability or turbulence qualification is inferred.",
+      "series": {
+        "central_omega": [
+          {
+            "end_time": 10.0,
+            "max": 1.0554507329313185,
+            "min": -1.7369461424721067e-10,
+            "samples": 101,
+            "source": "native frame",
+            "start_time": 0.0
+          },
+          {
+            "end_time": 200.0,
+            "max": 0.2152093654772309,
+            "min": -2.105883656104098,
+            "samples": 3800,
+            "source": "actual-step diagnostic",
+            "start_time": 10.05
+          }
+        ],
+        "central_u": [
+          {
+            "end_time": 10.0,
+            "max": 0.0,
+            "min": -0.05712040694680856,
+            "samples": 101,
+            "source": "native frame",
+            "start_time": 0.0
+          },
+          {
+            "end_time": 200.0,
+            "max": 0.10221166307294774,
+            "min": -0.12924433364120586,
+            "samples": 3800,
+            "source": "actual-step diagnostic",
+            "start_time": 10.05
+          }
+        ],
+        "central_v": [
+          {
+            "end_time": 10.0,
+            "max": 0.11958187496477932,
+            "min": -1.4963569911196578e-05,
+            "samples": 101,
+            "source": "native frame",
+            "start_time": 0.0
+          },
+          {
+            "end_time": 200.0,
+            "max": 0.13793650073840213,
+            "min": -0.1101801636638299,
+            "samples": 3800,
+            "source": "actual-step diagnostic",
+            "start_time": 10.05
+          }
+        ],
+        "kinetic_energy": [
+          {
+            "end_time": 0.0,
+            "max": 0.0,
+            "min": 0.0,
+            "samples": 1,
+            "source": "native frame",
+            "start_time": 0.0
+          },
+          {
+            "end_time": 200.0,
+            "max": 0.03153449290372765,
+            "min": 3.595115527327215e-06,
+            "samples": 4800,
+            "source": "actual-step diagnostic",
+            "start_time": 0.01
+          }
+        ],
+        "psi_max": [
+          {
+            "end_time": 10.0,
+            "max": 0.0005723925542712799,
+            "min": 0.0,
+            "samples": 101,
+            "source": "native frame",
+            "start_time": 0.0
+          },
+          {
+            "end_time": 200.0,
+            "max": 0.008673043682249557,
+            "min": 0.0002697054932989968,
+            "samples": 3800,
+            "source": "actual-step diagnostic",
+            "start_time": 10.05
+          }
+        ],
+        "psi_min": [
+          {
+            "end_time": 10.0,
+            "max": 0.0,
+            "min": -0.056456087300716044,
+            "samples": 101,
+            "source": "native frame",
+            "start_time": 0.0
+          },
+          {
+            "end_time": 200.0,
+            "max": -0.05619860236320761,
+            "min": -0.09059912176379178,
+            "samples": 3800,
+            "source": "actual-step diagnostic",
+            "start_time": 10.05
+          }
+        ],
+        "steady_momentum_defect_linf": [
+          {
+            "end_time": 200.0,
+            "max": 3.0756232455279786,
+            "min": 0.0012661186039575334,
+            "samples": 4800,
+            "source": "actual-step diagnostic",
+            "start_time": 0.01
+          }
+        ],
+        "time_step_momentum_defect_linf": [
+          {
+            "end_time": 200.0,
+            "max": 0.0019188724171605998,
+            "min": 3.539654613859966e-08,
+            "samples": 4800,
+            "source": "actual-step diagnostic",
+            "start_time": 0.01
+          }
+        ],
+        "upper_left_omega": [
+          {
+            "end_time": 10.0,
+            "max": 0.12212203313702163,
+            "min": -5.4598920702364495e-06,
+            "samples": 101,
+            "source": "native frame",
+            "start_time": 0.0
+          },
+          {
+            "end_time": 200.0,
+            "max": 4.080510383664345,
+            "min": 0.1230836109006922,
+            "samples": 3800,
+            "source": "actual-step diagnostic",
+            "start_time": 10.05
+          }
+        ],
+        "upper_left_u": [
+          {
+            "end_time": 10.0,
+            "max": 0.0,
+            "min": -0.018157164713385757,
+            "samples": 101,
+            "source": "native frame",
+            "start_time": 0.0
+          },
+          {
+            "end_time": 200.0,
+            "max": -0.011823377296111728,
+            "min": -0.05428160736837925,
+            "samples": 3800,
+            "source": "actual-step diagnostic",
+            "start_time": 10.05
+          }
+        ],
+        "upper_left_v": [
+          {
+            "end_time": 10.0,
+            "max": 0.03908442530768282,
+            "min": 0.0,
+            "samples": 101,
+            "source": "native frame",
+            "start_time": 0.0
+          },
+          {
+            "end_time": 200.0,
+            "max": 0.0456279680512052,
+            "min": -0.0144034334075476,
+            "samples": 3800,
+            "source": "actual-step diagnostic",
+            "start_time": 10.05
+          }
+        ]
+      },
+      "style_check": {
+        "figure_text_within_bounds": true,
+        "legends_outside_data_axes": true
+      }
+    },
+    {
+      "candidate_id": "continue_re1000_n128_dt0p01_o3p2",
+      "comparison_id": "time_Re1000_0.01_vs_0.005",
+      "comparison_kind": "time",
+      "files": [
+        {
+          "bytes": 269390,
+          "name": "profiles_time_Re1000_0.01_vs_0.005_t10.png",
+          "sha256": "44024fba31a5d04700fce96c29c3fa438105066c2632d89a21b87c4798d5555e"
+        },
+        {
+          "bytes": 35191,
+          "name": "profiles_time_Re1000_0.01_vs_0.005_t10.pdf",
+          "sha256": "80f0364046cfb579c3de13f6764950b15e247adc0ad4f868ebf059499ff43138"
+        }
+      ],
+      "kind": "profiles",
+      "meaning": "Matched numerical comparator, not truth",
+      "profiles": {
+        "horizontal_p": {
+          "candidate": {
+            "coordinate_max": 0.99609375,
+            "coordinate_min": 0.00390625,
+            "finite_samples": 128,
+            "samples": 128,
+            "value_max": 0.014474030825827596,
+            "value_min": -0.06338349794029244
+          },
+          "comparator": {
+            "coordinate_max": 0.99609375,
+            "coordinate_min": 0.00390625,
+            "finite_samples": 128,
+            "samples": 128,
+            "value_max": 0.01450374689757675,
+            "value_min": -0.06352707018216765
+          }
+        },
+        "horizontal_v": {
+          "candidate": {
+            "coordinate_max": 0.99609375,
+            "coordinate_min": 0.00390625,
+            "finite_samples": 128,
+            "samples": 128,
+            "value_max": 0.27010842916462774,
+            "value_min": -0.4274760686592409
+          },
+          "comparator": {
+            "coordinate_max": 0.99609375,
+            "coordinate_min": 0.00390625,
+            "finite_samples": 128,
+            "samples": 128,
+            "value_max": 0.27032690251467006,
+            "value_min": -0.4274749093047971
+          }
+        },
+        "vertical_p": {
+          "candidate": {
+            "coordinate_max": 0.99609375,
+            "coordinate_min": 0.00390625,
+            "finite_samples": 128,
+            "samples": 128,
+            "value_max": 0.023615297734047858,
+            "value_min": -0.06564672630161071
+          },
+          "comparator": {
+            "coordinate_max": 0.99609375,
+            "coordinate_min": 0.00390625,
+            "finite_samples": 128,
+            "samples": 128,
+            "value_max": 0.02362930522874049,
+            "value_min": -0.06580944050067537
+          }
+        },
+        "vertical_u": {
+          "candidate": {
+            "coordinate_max": 0.99609375,
+            "coordinate_min": 0.00390625,
+            "finite_samples": 128,
+            "samples": 128,
+            "value_max": 0.9277621507286073,
+            "value_min": -0.312666049118712
+          },
+          "comparator": {
+            "coordinate_max": 0.99609375,
+            "coordinate_min": 0.00390625,
+            "finite_samples": 128,
+            "samples": 128,
+            "value_max": 0.9277699854347768,
+            "value_min": -0.31284659590823205
+          }
+        }
+      },
+      "reference_id": "time_control_re1000_n128_dt0p005_o3p2",
+      "style_check": {
+        "figure_text_within_bounds": true,
+        "legends_outside_data_axes": true
+      },
+      "time": 10.0
+    },
+    {
+      "candidate_id": "time_control_re1000_n128_dt0p005_o3p2",
+      "comparison_id": "time_Re1000_0.005_vs_0.0025",
+      "comparison_kind": "time",
+      "files": [
+        {
+          "bytes": 269584,
+          "name": "profiles_time_Re1000_0.005_vs_0.0025_t10.png",
+          "sha256": "555a649cbc580cfe3208c3ed7957698766299731757b9bf11302c73edb63fbe2"
+        },
+        {
+          "bytes": 35067,
+          "name": "profiles_time_Re1000_0.005_vs_0.0025_t10.pdf",
+          "sha256": "668155b5fb594bfb2de9b650c8773ca891df82349706c1666c777db041e87b3b"
+        }
+      ],
+      "kind": "profiles",
+      "meaning": "Matched numerical comparator, not truth",
+      "profiles": {
+        "horizontal_p": {
+          "candidate": {
+            "coordinate_max": 0.99609375,
+            "coordinate_min": 0.00390625,
+            "finite_samples": 128,
+            "samples": 128,
+            "value_max": 0.01450374689757675,
+            "value_min": -0.06352707018216765
+          },
+          "comparator": {
+            "coordinate_max": 0.99609375,
+            "coordinate_min": 0.00390625,
+            "finite_samples": 128,
+            "samples": 128,
+            "value_max": 0.01451871953541588,
+            "value_min": -0.06359939961823127
+          }
+        },
+        "horizontal_v": {
+          "candidate": {
+            "coordinate_max": 0.99609375,
+            "coordinate_min": 0.00390625,
+            "finite_samples": 128,
+            "samples": 128,
+            "value_max": 0.27032690251467006,
+            "value_min": -0.4274749093047971
+          },
+          "comparator": {
+            "coordinate_max": 0.99609375,
+            "coordinate_min": 0.00390625,
+            "finite_samples": 128,
+            "samples": 128,
+            "value_max": 0.27043639106851214,
+            "value_min": -0.42747397919845886
+          }
+        },
+        "vertical_p": {
+          "candidate": {
+            "coordinate_max": 0.99609375,
+            "coordinate_min": 0.00390625,
+            "finite_samples": 128,
+            "samples": 128,
+            "value_max": 0.02362930522874049,
+            "value_min": -0.06580944050067537
+          },
+          "comparator": {
+            "coordinate_max": 0.99609375,
+            "coordinate_min": 0.00390625,
+            "finite_samples": 128,
+            "samples": 128,
+            "value_max": 0.02363633630356253,
+            "value_min": -0.06589152478438592
+          }
+        },
+        "vertical_u": {
+          "candidate": {
+            "coordinate_max": 0.99609375,
+            "coordinate_min": 0.00390625,
+            "finite_samples": 128,
+            "samples": 128,
+            "value_max": 0.9277699854347768,
+            "value_min": -0.31284659590823205
+          },
+          "comparator": {
+            "coordinate_max": 0.99609375,
+            "coordinate_min": 0.00390625,
+            "finite_samples": 128,
+            "samples": 128,
+            "value_max": 0.9277739505290341,
+            "value_min": -0.3129364576148441
+          }
+        }
+      },
+      "reference_id": "time_control_re1000_n128_dt0p0025_o3p2",
+      "style_check": {
+        "figure_text_within_bounds": true,
+        "legends_outside_data_axes": true
+      },
+      "time": 10.0
+    },
+    {
+      "candidate_id": "continue_re1000_n128_dt0p01_o3p2",
+      "comparison_id": "time_Re1000_0.01_vs_0.0025",
+      "comparison_kind": "time",
+      "files": [
+        {
+          "bytes": 270422,
+          "name": "profiles_time_Re1000_0.01_vs_0.0025_t10.png",
+          "sha256": "278ab65adf0f9516841e76712c944f180fe7b230e217f2ffd55852305d6c41cc"
+        },
+        {
+          "bytes": 35214,
+          "name": "profiles_time_Re1000_0.01_vs_0.0025_t10.pdf",
+          "sha256": "4812a1a8489fdfd9d1234569301e4b8876707ff2c6a4be4563f033cc39e3d391"
+        }
+      ],
+      "kind": "profiles",
+      "meaning": "Matched numerical comparator, not truth",
+      "profiles": {
+        "horizontal_p": {
+          "candidate": {
+            "coordinate_max": 0.99609375,
+            "coordinate_min": 0.00390625,
+            "finite_samples": 128,
+            "samples": 128,
+            "value_max": 0.014474030825827596,
+            "value_min": -0.06338349794029244
+          },
+          "comparator": {
+            "coordinate_max": 0.99609375,
+            "coordinate_min": 0.00390625,
+            "finite_samples": 128,
+            "samples": 128,
+            "value_max": 0.01451871953541588,
+            "value_min": -0.06359939961823127
+          }
+        },
+        "horizontal_v": {
+          "candidate": {
+            "coordinate_max": 0.99609375,
+            "coordinate_min": 0.00390625,
+            "finite_samples": 128,
+            "samples": 128,
+            "value_max": 0.27010842916462774,
+            "value_min": -0.4274760686592409
+          },
+          "comparator": {
+            "coordinate_max": 0.99609375,
+            "coordinate_min": 0.00390625,
+            "finite_samples": 128,
+            "samples": 128,
+            "value_max": 0.27043639106851214,
+            "value_min": -0.42747397919845886
+          }
+        },
+        "vertical_p": {
+          "candidate": {
+            "coordinate_max": 0.99609375,
+            "coordinate_min": 0.00390625,
+            "finite_samples": 128,
+            "samples": 128,
+            "value_max": 0.023615297734047858,
+            "value_min": -0.06564672630161071
+          },
+          "comparator": {
+            "coordinate_max": 0.99609375,
+            "coordinate_min": 0.00390625,
+            "finite_samples": 128,
+            "samples": 128,
+            "value_max": 0.02363633630356253,
+            "value_min": -0.06589152478438592
+          }
+        },
+        "vertical_u": {
+          "candidate": {
+            "coordinate_max": 0.99609375,
+            "coordinate_min": 0.00390625,
+            "finite_samples": 128,
+            "samples": 128,
+            "value_max": 0.9277621507286073,
+            "value_min": -0.312666049118712
+          },
+          "comparator": {
+            "coordinate_max": 0.99609375,
+            "coordinate_min": 0.00390625,
+            "finite_samples": 128,
+            "samples": 128,
+            "value_max": 0.9277739505290341,
+            "value_min": -0.3129364576148441
+          }
+        }
+      },
+      "reference_id": "time_control_re1000_n128_dt0p0025_o3p2",
+      "style_check": {
+        "figure_text_within_bounds": true,
+        "legends_outside_data_axes": true
+      },
+      "time": 10.0
+    },
+    {
+      "candidate_id": "continue_re7500_n128_dt0p01_o3p2",
+      "comparison_id": "time_Re7500_0.01_vs_0.005",
+      "comparison_kind": "time",
+      "files": [
+        {
+          "bytes": 283000,
+          "name": "profiles_time_Re7500_0.01_vs_0.005_t10.png",
+          "sha256": "37c0d4a6d9c31911a6321ae5e98791a09128480bd82a42e254bec4540f6b0c75"
+        },
+        {
+          "bytes": 35880,
+          "name": "profiles_time_Re7500_0.01_vs_0.005_t10.pdf",
+          "sha256": "69330da73d35e225a98492bdf8864775f217839ad2be86c21aa2abc8aaa4a96b"
+        }
+      ],
+      "kind": "profiles",
+      "meaning": "Matched numerical comparator, not truth",
+      "profiles": {
+        "horizontal_p": {
+          "candidate": {
+            "coordinate_max": 0.99609375,
+            "coordinate_min": 0.00390625,
+            "finite_samples": 128,
+            "samples": 128,
+            "value_max": 0.006210760861661143,
+            "value_min": -0.028809382756093686
+          },
+          "comparator": {
+            "coordinate_max": 0.99609375,
+            "coordinate_min": 0.00390625,
+            "finite_samples": 128,
+            "samples": 128,
+            "value_max": 0.006280388502202501,
+            "value_min": -0.026818273557715044
+          }
+        },
+        "horizontal_v": {
+          "candidate": {
+            "coordinate_max": 0.99609375,
+            "coordinate_min": 0.00390625,
+            "finite_samples": 128,
+            "samples": 128,
+            "value_max": 0.16697799062322777,
+            "value_min": -0.37196311828987794
+          },
+          "comparator": {
+            "coordinate_max": 0.99609375,
+            "coordinate_min": 0.00390625,
+            "finite_samples": 128,
+            "samples": 128,
+            "value_max": 0.1580616243794572,
+            "value_min": -0.37289643848199105
+          }
+        },
+        "vertical_p": {
+          "candidate": {
+            "coordinate_max": 0.99609375,
+            "coordinate_min": 0.00390625,
+            "finite_samples": 128,
+            "samples": 128,
+            "value_max": 0.011072978942860183,
+            "value_min": -0.009628348373556247
+          },
+          "comparator": {
+            "coordinate_max": 0.99609375,
+            "coordinate_min": 0.00390625,
+            "finite_samples": 128,
+            "samples": 128,
+            "value_max": 0.010456177950983022,
+            "value_min": -0.009101841115301941
+          }
+        },
+        "vertical_u": {
+          "candidate": {
+            "coordinate_max": 0.99609375,
+            "coordinate_min": 0.00390625,
+            "finite_samples": 128,
+            "samples": 128,
+            "value_max": 0.7729231844161063,
+            "value_min": -0.19923636448062781
+          },
+          "comparator": {
+            "coordinate_max": 0.99609375,
+            "coordinate_min": 0.00390625,
+            "finite_samples": 128,
+            "samples": 128,
+            "value_max": 0.7732607714065607,
+            "value_min": -0.21618138965998746
+          }
+        }
+      },
+      "reference_id": "time_control_re7500_n128_dt0p005_o3p2",
+      "style_check": {
+        "figure_text_within_bounds": true,
+        "legends_outside_data_axes": true
+      },
+      "time": 10.0
+    },
+    {
+      "candidate_id": "time_control_re7500_n128_dt0p005_o3p2",
+      "comparison_id": "time_Re7500_0.005_vs_0.0025",
+      "comparison_kind": "time",
+      "files": [
+        {
+          "bytes": 288235,
+          "name": "profiles_time_Re7500_0.005_vs_0.0025_t10.png",
+          "sha256": "f9bc86549eb5a574451be56e084a4297c86d22e6350bd50550c6fc322148dffb"
+        },
+        {
+          "bytes": 35947,
+          "name": "profiles_time_Re7500_0.005_vs_0.0025_t10.pdf",
+          "sha256": "85d84ad7756e02e453e3a31563e3b6dbcb47c98aed575f747953389547725354"
+        }
+      ],
+      "kind": "profiles",
+      "meaning": "Matched numerical comparator, not truth",
+      "profiles": {
+        "horizontal_p": {
+          "candidate": {
+            "coordinate_max": 0.99609375,
+            "coordinate_min": 0.00390625,
+            "finite_samples": 128,
+            "samples": 128,
+            "value_max": 0.006280388502202501,
+            "value_min": -0.026818273557715044
+          },
+          "comparator": {
+            "coordinate_max": 0.99609375,
+            "coordinate_min": 0.00390625,
+            "finite_samples": 128,
+            "samples": 128,
+            "value_max": 0.006290376794574708,
+            "value_min": -0.02568011803431103
+          }
+        },
+        "horizontal_v": {
+          "candidate": {
+            "coordinate_max": 0.99609375,
+            "coordinate_min": 0.00390625,
+            "finite_samples": 128,
+            "samples": 128,
+            "value_max": 0.1580616243794572,
+            "value_min": -0.37289643848199105
+          },
+          "comparator": {
+            "coordinate_max": 0.99609375,
+            "coordinate_min": 0.00390625,
+            "finite_samples": 128,
+            "samples": 128,
+            "value_max": 0.15335126501967608,
+            "value_min": -0.3733441493606703
+          }
+        },
+        "vertical_p": {
+          "candidate": {
+            "coordinate_max": 0.99609375,
+            "coordinate_min": 0.00390625,
+            "finite_samples": 128,
+            "samples": 128,
+            "value_max": 0.010456177950983022,
+            "value_min": -0.009101841115301941
+          },
+          "comparator": {
+            "coordinate_max": 0.99609375,
+            "coordinate_min": 0.00390625,
+            "finite_samples": 128,
+            "samples": 128,
+            "value_max": 0.010119371062956727,
+            "value_min": -0.008824632899527013
+          }
+        },
+        "vertical_u": {
+          "candidate": {
+            "coordinate_max": 0.99609375,
+            "coordinate_min": 0.00390625,
+            "finite_samples": 128,
+            "samples": 128,
+            "value_max": 0.7732607714065607,
+            "value_min": -0.21618138965998746
+          },
+          "comparator": {
+            "coordinate_max": 0.99609375,
+            "coordinate_min": 0.00390625,
+            "finite_samples": 128,
+            "samples": 128,
+            "value_max": 0.773424221905842,
+            "value_min": -0.22317115020449607
+          }
+        }
+      },
+      "reference_id": "time_control_re7500_n128_dt0p0025_o3p2",
+      "style_check": {
+        "figure_text_within_bounds": true,
+        "legends_outside_data_axes": true
+      },
+      "time": 10.0
+    },
+    {
+      "candidate_id": "continue_re7500_n128_dt0p01_o3p2",
+      "comparison_id": "time_Re7500_0.01_vs_0.0025",
+      "comparison_kind": "time",
+      "files": [
+        {
+          "bytes": 287905,
+          "name": "profiles_time_Re7500_0.01_vs_0.0025_t10.png",
+          "sha256": "21b16cfef538a658bde1e5b285d08d9949d294da06826a0afbbfd384139c688f"
+        },
+        {
+          "bytes": 35901,
+          "name": "profiles_time_Re7500_0.01_vs_0.0025_t10.pdf",
+          "sha256": "1238e363988500e29b0e8787f696ad5c4ca8a5e4477846cba36be7c870e3179d"
+        }
+      ],
+      "kind": "profiles",
+      "meaning": "Matched numerical comparator, not truth",
+      "profiles": {
+        "horizontal_p": {
+          "candidate": {
+            "coordinate_max": 0.99609375,
+            "coordinate_min": 0.00390625,
+            "finite_samples": 128,
+            "samples": 128,
+            "value_max": 0.006210760861661143,
+            "value_min": -0.028809382756093686
+          },
+          "comparator": {
+            "coordinate_max": 0.99609375,
+            "coordinate_min": 0.00390625,
+            "finite_samples": 128,
+            "samples": 128,
+            "value_max": 0.006290376794574708,
+            "value_min": -0.02568011803431103
+          }
+        },
+        "horizontal_v": {
+          "candidate": {
+            "coordinate_max": 0.99609375,
+            "coordinate_min": 0.00390625,
+            "finite_samples": 128,
+            "samples": 128,
+            "value_max": 0.16697799062322777,
+            "value_min": -0.37196311828987794
+          },
+          "comparator": {
+            "coordinate_max": 0.99609375,
+            "coordinate_min": 0.00390625,
+            "finite_samples": 128,
+            "samples": 128,
+            "value_max": 0.15335126501967608,
+            "value_min": -0.3733441493606703
+          }
+        },
+        "vertical_p": {
+          "candidate": {
+            "coordinate_max": 0.99609375,
+            "coordinate_min": 0.00390625,
+            "finite_samples": 128,
+            "samples": 128,
+            "value_max": 0.011072978942860183,
+            "value_min": -0.009628348373556247
+          },
+          "comparator": {
+            "coordinate_max": 0.99609375,
+            "coordinate_min": 0.00390625,
+            "finite_samples": 128,
+            "samples": 128,
+            "value_max": 0.010119371062956727,
+            "value_min": -0.008824632899527013
+          }
+        },
+        "vertical_u": {
+          "candidate": {
+            "coordinate_max": 0.99609375,
+            "coordinate_min": 0.00390625,
+            "finite_samples": 128,
+            "samples": 128,
+            "value_max": 0.7729231844161063,
+            "value_min": -0.19923636448062781
+          },
+          "comparator": {
+            "coordinate_max": 0.99609375,
+            "coordinate_min": 0.00390625,
+            "finite_samples": 128,
+            "samples": 128,
+            "value_max": 0.773424221905842,
+            "value_min": -0.22317115020449607
+          }
+        }
+      },
+      "reference_id": "time_control_re7500_n128_dt0p0025_o3p2",
+      "style_check": {
+        "figure_text_within_bounds": true,
+        "legends_outside_data_axes": true
+      },
+      "time": 10.0
+    },
+    {
+      "candidate_id": "continue_re10000_n128_dt0p01_o3p2",
+      "comparison_id": "time_Re10000_0.01_vs_0.005",
+      "comparison_kind": "time",
+      "files": [
+        {
+          "bytes": 272947,
+          "name": "profiles_time_Re10000_0.01_vs_0.005_t10.png",
+          "sha256": "6e3625abcda2f87f208126ba95040d897b8b12cf92e3dbeff6cd48e194ea36df"
+        },
+        {
+          "bytes": 35362,
+          "name": "profiles_time_Re10000_0.01_vs_0.005_t10.pdf",
+          "sha256": "ae5e4f61ba8f5a78bf6ff2a8e6f7d034e7b109242059be9652b5d108a6b8f969"
+        }
+      ],
+      "kind": "profiles",
+      "meaning": "Matched numerical comparator, not truth",
+      "profiles": {
+        "horizontal_p": {
+          "candidate": {
+            "coordinate_max": 0.99609375,
+            "coordinate_min": 0.00390625,
+            "finite_samples": 128,
+            "samples": 128,
+            "value_max": 0.005003329161631028,
+            "value_min": -0.018114514531689163
+          },
+          "comparator": {
+            "coordinate_max": 0.99609375,
+            "coordinate_min": 0.00390625,
+            "finite_samples": 128,
+            "samples": 128,
+            "value_max": 0.005032743638937273,
+            "value_min": -0.017048600622042387
+          }
+        },
+        "horizontal_v": {
+          "candidate": {
+            "coordinate_max": 0.99609375,
+            "coordinate_min": 0.00390625,
+            "finite_samples": 128,
+            "samples": 128,
+            "value_max": 0.1501923903192015,
+            "value_min": -0.36046917482669943
+          },
+          "comparator": {
+            "coordinate_max": 0.99609375,
+            "coordinate_min": 0.00390625,
+            "finite_samples": 128,
+            "samples": 128,
+            "value_max": 0.14640078764939662,
+            "value_min": -0.3611866170973998
+          }
+        },
+        "vertical_p": {
+          "candidate": {
+            "coordinate_max": 0.99609375,
+            "coordinate_min": 0.00390625,
+            "finite_samples": 128,
+            "samples": 128,
+            "value_max": 0.011569908358924259,
+            "value_min": -0.010572694191106296
+          },
+          "comparator": {
+            "coordinate_max": 0.99609375,
+            "coordinate_min": 0.00390625,
+            "finite_samples": 128,
+            "samples": 128,
+            "value_max": 0.01182423486123298,
+            "value_min": -0.01201806089099343
+          }
+        },
+        "vertical_u": {
+          "candidate": {
+            "coordinate_max": 0.99609375,
+            "coordinate_min": 0.00390625,
+            "finite_samples": 128,
+            "samples": 128,
+            "value_max": 0.729969188064602,
+            "value_min": -0.0999677717239366
+          },
+          "comparator": {
+            "coordinate_max": 0.99609375,
+            "coordinate_min": 0.00390625,
+            "finite_samples": 128,
+            "samples": 128,
+            "value_max": 0.7295785546975427,
+            "value_min": -0.10238580337602043
+          }
+        }
+      },
+      "reference_id": "time_control_re10000_n128_dt0p005_o3p2",
+      "style_check": {
+        "figure_text_within_bounds": true,
+        "legends_outside_data_axes": true
+      },
+      "time": 10.0
+    },
+    {
+      "candidate_id": "time_control_re10000_n128_dt0p005_o3p2",
+      "comparison_id": "time_Re10000_0.005_vs_0.0025",
+      "comparison_kind": "time",
+      "files": [
+        {
+          "bytes": 267628,
+          "name": "profiles_time_Re10000_0.005_vs_0.0025_t10.png",
+          "sha256": "7dc65a6c63bf7fd0c31425d82da59c2a19eaf6a6d43d30828d17caa95ea35453"
+        },
+        {
+          "bytes": 35287,
+          "name": "profiles_time_Re10000_0.005_vs_0.0025_t10.pdf",
+          "sha256": "d68debc6a6e56599892b7b9ee0800ef1d95e771302e1c48af0aaf816ecd789ae"
+        }
+      ],
+      "kind": "profiles",
+      "meaning": "Matched numerical comparator, not truth",
+      "profiles": {
+        "horizontal_p": {
+          "candidate": {
+            "coordinate_max": 0.99609375,
+            "coordinate_min": 0.00390625,
+            "finite_samples": 128,
+            "samples": 128,
+            "value_max": 0.005032743638937273,
+            "value_min": -0.017048600622042387
+          },
+          "comparator": {
+            "coordinate_max": 0.99609375,
+            "coordinate_min": 0.00390625,
+            "finite_samples": 128,
+            "samples": 128,
+            "value_max": 0.005028000169889291,
+            "value_min": -0.016669307235469617
+          }
+        },
+        "horizontal_v": {
+          "candidate": {
+            "coordinate_max": 0.99609375,
+            "coordinate_min": 0.00390625,
+            "finite_samples": 128,
+            "samples": 128,
+            "value_max": 0.14640078764939662,
+            "value_min": -0.3611866170973998
+          },
+          "comparator": {
+            "coordinate_max": 0.99609375,
+            "coordinate_min": 0.00390625,
+            "finite_samples": 128,
+            "samples": 128,
+            "value_max": 0.14481666572050486,
+            "value_min": -0.36165547098297335
+          }
+        },
+        "vertical_p": {
+          "candidate": {
+            "coordinate_max": 0.99609375,
+            "coordinate_min": 0.00390625,
+            "finite_samples": 128,
+            "samples": 128,
+            "value_max": 0.01182423486123298,
+            "value_min": -0.01201806089099343
+          },
+          "comparator": {
+            "coordinate_max": 0.99609375,
+            "coordinate_min": 0.00390625,
+            "finite_samples": 128,
+            "samples": 128,
+            "value_max": 0.011935720120997619,
+            "value_min": -0.012929162666244949
+          }
+        },
+        "vertical_u": {
+          "candidate": {
+            "coordinate_max": 0.99609375,
+            "coordinate_min": 0.00390625,
+            "finite_samples": 128,
+            "samples": 128,
+            "value_max": 0.7295785546975427,
+            "value_min": -0.10238580337602043
+          },
+          "comparator": {
+            "coordinate_max": 0.99609375,
+            "coordinate_min": 0.00390625,
+            "finite_samples": 128,
+            "samples": 128,
+            "value_max": 0.7291479781987713,
+            "value_min": -0.10335112089025941
+          }
+        }
+      },
+      "reference_id": "time_control_re10000_n128_dt0p0025_o3p2",
+      "style_check": {
+        "figure_text_within_bounds": true,
+        "legends_outside_data_axes": true
+      },
+      "time": 10.0
+    },
+    {
+      "candidate_id": "continue_re10000_n128_dt0p01_o3p2",
+      "comparison_id": "time_Re10000_0.01_vs_0.0025",
+      "comparison_kind": "time",
+      "files": [
+        {
+          "bytes": 275445,
+          "name": "profiles_time_Re10000_0.01_vs_0.0025_t10.png",
+          "sha256": "ed53e85252e2ddc6ec683eb446939af9b3cd9906dc0a2c40ee90337654bb0e08"
+        },
+        {
+          "bytes": 35539,
+          "name": "profiles_time_Re10000_0.01_vs_0.0025_t10.pdf",
+          "sha256": "538e3aaa4495b97c981996735af5ab1c1122e64e9c47f8bbd28da8d3586151f5"
+        }
+      ],
+      "kind": "profiles",
+      "meaning": "Matched numerical comparator, not truth",
+      "profiles": {
+        "horizontal_p": {
+          "candidate": {
+            "coordinate_max": 0.99609375,
+            "coordinate_min": 0.00390625,
+            "finite_samples": 128,
+            "samples": 128,
+            "value_max": 0.005003329161631028,
+            "value_min": -0.018114514531689163
+          },
+          "comparator": {
+            "coordinate_max": 0.99609375,
+            "coordinate_min": 0.00390625,
+            "finite_samples": 128,
+            "samples": 128,
+            "value_max": 0.005028000169889291,
+            "value_min": -0.016669307235469617
+          }
+        },
+        "horizontal_v": {
+          "candidate": {
+            "coordinate_max": 0.99609375,
+            "coordinate_min": 0.00390625,
+            "finite_samples": 128,
+            "samples": 128,
+            "value_max": 0.1501923903192015,
+            "value_min": -0.36046917482669943
+          },
+          "comparator": {
+            "coordinate_max": 0.99609375,
+            "coordinate_min": 0.00390625,
+            "finite_samples": 128,
+            "samples": 128,
+            "value_max": 0.14481666572050486,
+            "value_min": -0.36165547098297335
+          }
+        },
+        "vertical_p": {
+          "candidate": {
+            "coordinate_max": 0.99609375,
+            "coordinate_min": 0.00390625,
+            "finite_samples": 128,
+            "samples": 128,
+            "value_max": 0.011569908358924259,
+            "value_min": -0.010572694191106296
+          },
+          "comparator": {
+            "coordinate_max": 0.99609375,
+            "coordinate_min": 0.00390625,
+            "finite_samples": 128,
+            "samples": 128,
+            "value_max": 0.011935720120997619,
+            "value_min": -0.012929162666244949
+          }
+        },
+        "vertical_u": {
+          "candidate": {
+            "coordinate_max": 0.99609375,
+            "coordinate_min": 0.00390625,
+            "finite_samples": 128,
+            "samples": 128,
+            "value_max": 0.729969188064602,
+            "value_min": -0.0999677717239366
+          },
+          "comparator": {
+            "coordinate_max": 0.99609375,
+            "coordinate_min": 0.00390625,
+            "finite_samples": 128,
+            "samples": 128,
+            "value_max": 0.7291479781987713,
+            "value_min": -0.10335112089025941
+          }
+        }
+      },
+      "reference_id": "time_control_re10000_n128_dt0p0025_o3p2",
+      "style_check": {
+        "figure_text_within_bounds": true,
+        "legends_outside_data_axes": true
+      },
+      "time": 10.0
+    },
+    {
+      "candidate_id": "matched_grid_time_re3200_n128_dt0p0025_o3p2",
+      "comparison_id": "grid_Re3200_128_vs_256",
+      "comparison_kind": "grid",
+      "files": [
+        {
+          "bytes": 286969,
+          "name": "profiles_grid_Re3200_128_vs_256_t10.png",
+          "sha256": "199742f8627b08fb0f4661194599f9e3f96da8c4ba7877e02b1bbae9564a1ddb"
+        },
+        {
+          "bytes": 37824,
+          "name": "profiles_grid_Re3200_128_vs_256_t10.pdf",
+          "sha256": "9a35570c5760d5c3ee63417f026493e87374649863feceec13688e1f36657e45"
+        }
+      ],
+      "kind": "profiles",
+      "meaning": "Matched numerical comparator, not truth",
+      "profiles": {
+        "horizontal_p": {
+          "candidate": {
+            "coordinate_max": 0.99609375,
+            "coordinate_min": 0.00390625,
+            "finite_samples": 128,
+            "samples": 128,
+            "value_max": 0.009691503555987966,
+            "value_min": -0.06043733675127958
+          },
+          "comparator": {
+            "coordinate_max": 0.998046875,
+            "coordinate_min": 0.001953125,
+            "finite_samples": 256,
+            "samples": 256,
+            "value_max": 0.010481628972687054,
+            "value_min": -0.0679490962232755
+          }
+        },
+        "horizontal_v": {
+          "candidate": {
+            "coordinate_max": 0.99609375,
+            "coordinate_min": 0.00390625,
+            "finite_samples": 128,
+            "samples": 128,
+            "value_max": 0.24889077559182304,
+            "value_min": -0.3934144638583741
+          },
+          "comparator": {
+            "coordinate_max": 0.998046875,
+            "coordinate_min": 0.001953125,
+            "finite_samples": 256,
+            "samples": 256,
+            "value_max": 0.2597777583808273,
+            "value_min": -0.41001599321685694
+          }
+        },
+        "vertical_p": {
+          "candidate": {
+            "coordinate_max": 0.99609375,
+            "coordinate_min": 0.00390625,
+            "finite_samples": 128,
+            "samples": 128,
+            "value_max": 0.014898926131243134,
+            "value_min": -0.04311594068402196
+          },
+          "comparator": {
+            "coordinate_max": 0.998046875,
+            "coordinate_min": 0.001953125,
+            "finite_samples": 256,
+            "samples": 256,
+            "value_max": 0.01582580827987167,
+            "value_min": -0.04729589486391457
+          }
+        },
+        "vertical_u": {
+          "candidate": {
+            "coordinate_max": 0.99609375,
+            "coordinate_min": 0.00390625,
+            "finite_samples": 128,
+            "samples": 128,
+            "value_max": 0.8577418268608639,
+            "value_min": -0.25434935722110297
+          },
+          "comparator": {
+            "coordinate_max": 0.998046875,
+            "coordinate_min": 0.001953125,
+            "finite_samples": 256,
+            "samples": 256,
+            "value_max": 0.9311015447859823,
+            "value_min": -0.266322274650372
+          }
+        }
+      },
+      "reference_id": "grid_control_re3200_n256_dt0p0025_o3p2",
+      "style_check": {
+        "figure_text_within_bounds": true,
+        "legends_outside_data_axes": true
+      },
+      "time": 10.0
+    },
+    {
+      "candidate_id": "matched_grid_time_re5000_n128_dt0p0025_o3p2",
+      "comparison_id": "grid_Re5000_128_vs_256",
+      "comparison_kind": "grid",
+      "files": [
+        {
+          "bytes": 282676,
+          "name": "profiles_grid_Re5000_128_vs_256_t10.png",
+          "sha256": "2623145cfcbd2e5735259c6f1d1e33de3260bf91186c049ba715a1303b7ee3ef"
+        },
+        {
+          "bytes": 37274,
+          "name": "profiles_grid_Re5000_128_vs_256_t10.pdf",
+          "sha256": "8c0b97adec5cbb62056a84111d57dfe2ab56c814a42cda5baec54e53a324d655"
+        }
+      ],
+      "kind": "profiles",
+      "meaning": "Matched numerical comparator, not truth",
+      "profiles": {
+        "horizontal_p": {
+          "candidate": {
+            "coordinate_max": 0.99609375,
+            "coordinate_min": 0.00390625,
+            "finite_samples": 128,
+            "samples": 128,
+            "value_max": 0.008545830814861221,
+            "value_min": -0.050916662847027686
+          },
+          "comparator": {
+            "coordinate_max": 0.998046875,
+            "coordinate_min": 0.001953125,
+            "finite_samples": 256,
+            "samples": 256,
+            "value_max": 0.009723614978912602,
+            "value_min": -0.06157379169809632
+          }
+        },
+        "horizontal_v": {
+          "candidate": {
+            "coordinate_max": 0.99609375,
+            "coordinate_min": 0.00390625,
+            "finite_samples": 128,
+            "samples": 128,
+            "value_max": 0.2198786489101024,
+            "value_min": -0.3795896145457054
+          },
+          "comparator": {
+            "coordinate_max": 0.998046875,
+            "coordinate_min": 0.001953125,
+            "finite_samples": 256,
+            "samples": 256,
+            "value_max": 0.24285426478623273,
+            "value_min": -0.4008895750005384
+          }
+        },
+        "vertical_p": {
+          "candidate": {
+            "coordinate_max": 0.99609375,
+            "coordinate_min": 0.00390625,
+            "finite_samples": 128,
+            "samples": 128,
+            "value_max": 0.01164942753945582,
+            "value_min": -0.024676111534130046
+          },
+          "comparator": {
+            "coordinate_max": 0.998046875,
+            "coordinate_min": 0.001953125,
+            "finite_samples": 256,
+            "samples": 256,
+            "value_max": 0.013099661807868746,
+            "value_min": -0.030004079601619292
+          }
+        },
+        "vertical_u": {
+          "candidate": {
+            "coordinate_max": 0.99609375,
+            "coordinate_min": 0.00390625,
+            "finite_samples": 128,
+            "samples": 128,
+            "value_max": 0.8177244450513308,
+            "value_min": -0.227158099666623
+          },
+          "comparator": {
+            "coordinate_max": 0.998046875,
+            "coordinate_min": 0.001953125,
+            "finite_samples": 256,
+            "samples": 256,
+            "value_max": 0.912383936487597,
+            "value_min": -0.2271490971450332
+          }
+        }
+      },
+      "reference_id": "grid_control_re5000_n256_dt0p0025_o3p2",
+      "style_check": {
+        "figure_text_within_bounds": true,
+        "legends_outside_data_axes": true
+      },
+      "time": 10.0
+    },
+    {
+      "candidate_id": "time_control_re7500_n128_dt0p0025_o3p2",
+      "comparison_id": "grid_Re7500_128_vs_256",
+      "comparison_kind": "grid",
+      "files": [
+        {
+          "bytes": 284745,
+          "name": "profiles_grid_Re7500_128_vs_256_t10.png",
+          "sha256": "b968a71e8d4c8be252fed1a82680d7f4a0653d0bce25a6751fa37de0087818a2"
+        },
+        {
+          "bytes": 37178,
+          "name": "profiles_grid_Re7500_128_vs_256_t10.pdf",
+          "sha256": "ca177fcbbbaa10e307d6f91f80f4b4bbe29ce2193b1700e33f9531bafa508eb3"
+        }
+      ],
+      "kind": "profiles",
+      "meaning": "Matched numerical comparator, not truth",
+      "profiles": {
+        "horizontal_p": {
+          "candidate": {
+            "coordinate_max": 0.99609375,
+            "coordinate_min": 0.00390625,
+            "finite_samples": 128,
+            "samples": 128,
+            "value_max": 0.006290376794574708,
+            "value_min": -0.02568011803431103
+          },
+          "comparator": {
+            "coordinate_max": 0.998046875,
+            "coordinate_min": 0.001953125,
+            "finite_samples": 256,
+            "samples": 256,
+            "value_max": 0.010490530684918288,
+            "value_min": -0.05177169912360459
+          }
+        },
+        "horizontal_v": {
+          "candidate": {
+            "coordinate_max": 0.99609375,
+            "coordinate_min": 0.00390625,
+            "finite_samples": 128,
+            "samples": 128,
+            "value_max": 0.15335126501967608,
+            "value_min": -0.3733441493606703
+          },
+          "comparator": {
+            "coordinate_max": 0.998046875,
+            "coordinate_min": 0.001953125,
+            "finite_samples": 256,
+            "samples": 256,
+            "value_max": 0.1974950753780393,
+            "value_min": -0.385340394155932
+          }
+        },
+        "vertical_p": {
+          "candidate": {
+            "coordinate_max": 0.99609375,
+            "coordinate_min": 0.00390625,
+            "finite_samples": 128,
+            "samples": 128,
+            "value_max": 0.010119371062956727,
+            "value_min": -0.008824632899527013
+          },
+          "comparator": {
+            "coordinate_max": 0.998046875,
+            "coordinate_min": 0.001953125,
+            "finite_samples": 256,
+            "samples": 256,
+            "value_max": 0.009186518431126684,
+            "value_min": -0.013696872860360266
+          }
+        },
+        "vertical_u": {
+          "candidate": {
+            "coordinate_max": 0.99609375,
+            "coordinate_min": 0.00390625,
+            "finite_samples": 128,
+            "samples": 128,
+            "value_max": 0.773424221905842,
+            "value_min": -0.22317115020449607
+          },
+          "comparator": {
+            "coordinate_max": 0.998046875,
+            "coordinate_min": 0.001953125,
+            "finite_samples": 256,
+            "samples": 256,
+            "value_max": 0.8921886644808976,
+            "value_min": -0.2850073269946853
+          }
+        }
+      },
+      "reference_id": "grid_control_re7500_n256_dt0p0025_o3p2",
+      "style_check": {
+        "figure_text_within_bounds": true,
+        "legends_outside_data_axes": true
+      },
+      "time": 10.0
+    },
+    {
+      "candidate_id": "time_control_re10000_n128_dt0p0025_o3p2",
+      "comparison_id": "grid_Re10000_128_vs_256",
+      "comparison_kind": "grid",
+      "files": [
+        {
+          "bytes": 295144,
+          "name": "profiles_grid_Re10000_128_vs_256_t10.png",
+          "sha256": "e1a92477e49b38d53760992331795f8aca618cfeb80b519db38c57d165e7e261"
+        },
+        {
+          "bytes": 37041,
+          "name": "profiles_grid_Re10000_128_vs_256_t10.pdf",
+          "sha256": "fb9ebe8df57eba8b1b3512b6eb9cfb6fd22b93bdbc1492841ef8b3788996c5c2"
+        }
+      ],
+      "kind": "profiles",
+      "meaning": "Matched numerical comparator, not truth",
+      "profiles": {
+        "horizontal_p": {
+          "candidate": {
+            "coordinate_max": 0.99609375,
+            "coordinate_min": 0.00390625,
+            "finite_samples": 128,
+            "samples": 128,
+            "value_max": 0.005028000169889291,
+            "value_min": -0.016669307235469617
+          },
+          "comparator": {
+            "coordinate_max": 0.998046875,
+            "coordinate_min": 0.001953125,
+            "finite_samples": 256,
+            "samples": 256,
+            "value_max": 0.006237933179649749,
+            "value_min": -0.030859506564006302
+          }
+        },
+        "horizontal_v": {
+          "candidate": {
+            "coordinate_max": 0.99609375,
+            "coordinate_min": 0.00390625,
+            "finite_samples": 128,
+            "samples": 128,
+            "value_max": 0.14481666572050486,
+            "value_min": -0.36165547098297335
+          },
+          "comparator": {
+            "coordinate_max": 0.998046875,
+            "coordinate_min": 0.001953125,
+            "finite_samples": 256,
+            "samples": 256,
+            "value_max": 0.09665923423484536,
+            "value_min": -0.38354113522198724
+          }
+        },
+        "vertical_p": {
+          "candidate": {
+            "coordinate_max": 0.99609375,
+            "coordinate_min": 0.00390625,
+            "finite_samples": 128,
+            "samples": 128,
+            "value_max": 0.011935720120997619,
+            "value_min": -0.012929162666244949
+          },
+          "comparator": {
+            "coordinate_max": 0.998046875,
+            "coordinate_min": 0.001953125,
+            "finite_samples": 256,
+            "samples": 256,
+            "value_max": 0.007748292192246655,
+            "value_min": -0.010630740001346393
+          }
+        },
+        "vertical_u": {
+          "candidate": {
+            "coordinate_max": 0.99609375,
+            "coordinate_min": 0.00390625,
+            "finite_samples": 128,
+            "samples": 128,
+            "value_max": 0.7291479781987713,
+            "value_min": -0.10335112089025941
+          },
+          "comparator": {
+            "coordinate_max": 0.998046875,
+            "coordinate_min": 0.001953125,
+            "finite_samples": 256,
+            "samples": 256,
+            "value_max": 0.8732084358167956,
+            "value_min": -0.30010923458104366
+          }
+        }
+      },
+      "reference_id": "grid_control_re10000_n256_dt0p0025_o3p2",
+      "style_check": {
+        "figure_text_within_bounds": true,
+        "legends_outside_data_axes": true
+      },
+      "time": 10.0
+    },
+    {
+      "candidate_id": "continue_re1000_n128_dt0p01_o3p2",
+      "comparison_id": "coupling_Re1000_3x2_vs_6x4",
+      "comparison_kind": "coupling",
+      "files": [
+        {
+          "bytes": 269261,
+          "name": "profiles_coupling_Re1000_3x2_vs_6x4_t10.png",
+          "sha256": "1f7bbcee28d1a6fc8b8e4b412b12645bb7d8640dfc89d59d3f1e17772bdf2cdd"
+        },
+        {
+          "bytes": 34932,
+          "name": "profiles_coupling_Re1000_3x2_vs_6x4_t10.pdf",
+          "sha256": "6696e569094123d392893ecccf61fde7dbac27bdad836d5654677be9d722f98c"
+        }
+      ],
+      "kind": "profiles",
+      "meaning": "Matched numerical comparator, not truth",
+      "profiles": {
+        "horizontal_p": {
+          "candidate": {
+            "coordinate_max": 0.99609375,
+            "coordinate_min": 0.00390625,
+            "finite_samples": 128,
+            "samples": 128,
+            "value_max": 0.014474030825827596,
+            "value_min": -0.06338349794029244
+          },
+          "comparator": {
+            "coordinate_max": 0.99609375,
+            "coordinate_min": 0.00390625,
+            "finite_samples": 128,
+            "samples": 128,
+            "value_max": 0.014474002397031097,
+            "value_min": -0.06338334724544274
+          }
+        },
+        "horizontal_v": {
+          "candidate": {
+            "coordinate_max": 0.99609375,
+            "coordinate_min": 0.00390625,
+            "finite_samples": 128,
+            "samples": 128,
+            "value_max": 0.27010842916462774,
+            "value_min": -0.4274760686592409
+          },
+          "comparator": {
+            "coordinate_max": 0.99609375,
+            "coordinate_min": 0.00390625,
+            "finite_samples": 128,
+            "samples": 128,
+            "value_max": 0.27010833896858477,
+            "value_min": -0.427476192181413
+          }
+        },
+        "vertical_p": {
+          "candidate": {
+            "coordinate_max": 0.99609375,
+            "coordinate_min": 0.00390625,
+            "finite_samples": 128,
+            "samples": 128,
+            "value_max": 0.023615297734047858,
+            "value_min": -0.06564672630161071
+          },
+          "comparator": {
+            "coordinate_max": 0.99609375,
+            "coordinate_min": 0.00390625,
+            "finite_samples": 128,
+            "samples": 128,
+            "value_max": 0.023615301798491403,
+            "value_min": -0.06564656957678454
+          }
+        },
+        "vertical_u": {
+          "candidate": {
+            "coordinate_max": 0.99609375,
+            "coordinate_min": 0.00390625,
+            "finite_samples": 128,
+            "samples": 128,
+            "value_max": 0.9277621507286073,
+            "value_min": -0.312666049118712
+          },
+          "comparator": {
+            "coordinate_max": 0.99609375,
+            "coordinate_min": 0.00390625,
+            "finite_samples": 128,
+            "samples": 128,
+            "value_max": 0.9277621495146333,
+            "value_min": -0.31266591924949744
+          }
+        }
+      },
+      "reference_id": "coupling_control_re1000_n128_dt0p01_o6p4",
+      "style_check": {
+        "figure_text_within_bounds": true,
+        "legends_outside_data_axes": true
+      },
+      "time": 10.0
+    },
+    {
+      "candidate_id": "continue_re7500_n128_dt0p01_o3p2",
+      "comparison_id": "coupling_Re7500_3x2_vs_6x4",
+      "comparison_kind": "coupling",
+      "files": [
+        {
+          "bytes": 269377,
+          "name": "profiles_coupling_Re7500_3x2_vs_6x4_t10.png",
+          "sha256": "653f5eda68b69be66a7b35f1a024480dd4b58a71e6c403c0e76433231ee6d045"
+        },
+        {
+          "bytes": 35442,
+          "name": "profiles_coupling_Re7500_3x2_vs_6x4_t10.pdf",
+          "sha256": "138927549b00777b5d0f46ad05a2368ff1b21f8147f9edfc742dc41fa75a57a7"
+        }
+      ],
+      "kind": "profiles",
+      "meaning": "Matched numerical comparator, not truth",
+      "profiles": {
+        "horizontal_p": {
+          "candidate": {
+            "coordinate_max": 0.99609375,
+            "coordinate_min": 0.00390625,
+            "finite_samples": 128,
+            "samples": 128,
+            "value_max": 0.006210760861661143,
+            "value_min": -0.028809382756093686
+          },
+          "comparator": {
+            "coordinate_max": 0.99609375,
+            "coordinate_min": 0.00390625,
+            "finite_samples": 128,
+            "samples": 128,
+            "value_max": 0.0062093424625382886,
+            "value_min": -0.02881722450312452
+          }
+        },
+        "horizontal_v": {
+          "candidate": {
+            "coordinate_max": 0.99609375,
+            "coordinate_min": 0.00390625,
+            "finite_samples": 128,
+            "samples": 128,
+            "value_max": 0.16697799062322777,
+            "value_min": -0.37196311828987794
+          },
+          "comparator": {
+            "coordinate_max": 0.99609375,
+            "coordinate_min": 0.00390625,
+            "finite_samples": 128,
+            "samples": 128,
+            "value_max": 0.16703292774136574,
+            "value_min": -0.3719559783047384
+          }
+        },
+        "vertical_p": {
+          "candidate": {
+            "coordinate_max": 0.99609375,
+            "coordinate_min": 0.00390625,
+            "finite_samples": 128,
+            "samples": 128,
+            "value_max": 0.011072978942860183,
+            "value_min": -0.009628348373556247
+          },
+          "comparator": {
+            "coordinate_max": 0.99609375,
+            "coordinate_min": 0.00390625,
+            "finite_samples": 128,
+            "samples": 128,
+            "value_max": 0.011084664057908212,
+            "value_min": -0.009628224730445464
+          }
+        },
+        "vertical_u": {
+          "candidate": {
+            "coordinate_max": 0.99609375,
+            "coordinate_min": 0.00390625,
+            "finite_samples": 128,
+            "samples": 128,
+            "value_max": 0.7729231844161063,
+            "value_min": -0.19923636448062781
+          },
+          "comparator": {
+            "coordinate_max": 0.99609375,
+            "coordinate_min": 0.00390625,
+            "finite_samples": 128,
+            "samples": 128,
+            "value_max": 0.7729185286807136,
+            "value_min": -0.19901981583016226
+          }
+        }
+      },
+      "reference_id": "coupling_control_re7500_n128_dt0p01_o6p4",
+      "style_check": {
+        "figure_text_within_bounds": true,
+        "legends_outside_data_axes": true
+      },
+      "time": 10.0
+    },
+    {
+      "candidate_id": "continue_re10000_n128_dt0p01_o3p2",
+      "comparison_id": "coupling_Re10000_3x2_vs_6x4",
+      "comparison_kind": "coupling",
+      "files": [
+        {
+          "bytes": 262065,
+          "name": "profiles_coupling_Re10000_3x2_vs_6x4_t10.png",
+          "sha256": "0d35145aaaa4737a6159aa7e2e79da243e43f82c33700106277284abbff783c8"
+        },
+        {
+          "bytes": 34981,
+          "name": "profiles_coupling_Re10000_3x2_vs_6x4_t10.pdf",
+          "sha256": "8efc947a415da63609481b2525da77d5c01e2163fade0299818fdd96c114668b"
+        }
+      ],
+      "kind": "profiles",
+      "meaning": "Matched numerical comparator, not truth",
+      "profiles": {
+        "horizontal_p": {
+          "candidate": {
+            "coordinate_max": 0.99609375,
+            "coordinate_min": 0.00390625,
+            "finite_samples": 128,
+            "samples": 128,
+            "value_max": 0.005003329161631028,
+            "value_min": -0.018114514531689163
+          },
+          "comparator": {
+            "coordinate_max": 0.99609375,
+            "coordinate_min": 0.00390625,
+            "finite_samples": 128,
+            "samples": 128,
+            "value_max": 0.005002979179103838,
+            "value_min": -0.01811660146050301
+          }
+        },
+        "horizontal_v": {
+          "candidate": {
+            "coordinate_max": 0.99609375,
+            "coordinate_min": 0.00390625,
+            "finite_samples": 128,
+            "samples": 128,
+            "value_max": 0.1501923903192015,
+            "value_min": -0.36046917482669943
+          },
+          "comparator": {
+            "coordinate_max": 0.99609375,
+            "coordinate_min": 0.00390625,
+            "finite_samples": 128,
+            "samples": 128,
+            "value_max": 0.1502411149192308,
+            "value_min": -0.36046265357589646
+          }
+        },
+        "vertical_p": {
+          "candidate": {
+            "coordinate_max": 0.99609375,
+            "coordinate_min": 0.00390625,
+            "finite_samples": 128,
+            "samples": 128,
+            "value_max": 0.011569908358924259,
+            "value_min": -0.010572694191106296
+          },
+          "comparator": {
+            "coordinate_max": 0.99609375,
+            "coordinate_min": 0.00390625,
+            "finite_samples": 128,
+            "samples": 128,
+            "value_max": 0.011565825787687913,
+            "value_min": -0.010564717459461042
+          }
+        },
+        "vertical_u": {
+          "candidate": {
+            "coordinate_max": 0.99609375,
+            "coordinate_min": 0.00390625,
+            "finite_samples": 128,
+            "samples": 128,
+            "value_max": 0.729969188064602,
+            "value_min": -0.0999677717239366
+          },
+          "comparator": {
+            "coordinate_max": 0.99609375,
+            "coordinate_min": 0.00390625,
+            "finite_samples": 128,
+            "samples": 128,
+            "value_max": 0.7299708221018308,
+            "value_min": -0.09984415737831258
+          }
+        }
+      },
+      "reference_id": "coupling_control_re10000_n128_dt0p01_o6p4",
+      "style_check": {
+        "figure_text_within_bounds": true,
+        "legends_outside_data_axes": true
+      },
+      "time": 10.0
+    }
+  ],
+  "input": {
+    "canonical_json_sha256": "8575bb981d04f65b93942a3e72fae57a4e0d0daf3cf23c7e2b3e627f5e1f4adb",
+    "path": "/scratch3/workspace/roohie_umass_edu-teaching-teno-cavity-20261121/cavity-settling-v1/qa/resolution_after_current.json",
+    "sha256": "317748d8323f0eb4ba19aa04b41567c121a916fded0050870600e7d38a1f4802"
+  },
+  "renderer_sha256": "f60a17ee40965fd81768eb0cc653244fa85268fb7fd0a916d6c920158163f696",
+  "schema": "flowmllab.cavity.settling.plots.v1",
+  "skipped": [],
+  "test_fixture": false,
+  "visual_review": "Automated bounds checks and file read-back passed; inspect rendered PNG/PDF pages before scientific publication"
+}

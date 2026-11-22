@@ -1,0 +1,156 @@
+{
+  "schema": 1,
+  "source_analysis_sha256": "317748d8323f0eb4ba19aa04b41567c121a916fded0050870600e7d38a1f4802",
+  "files": [
+    {
+      "file": "lesson_figures/matched_t100_speed.png",
+      "bytes": 1106738,
+      "sha256": "101506df81dbe5c50de2f0831b6685bfc7f0f0f48652f7c4a004f9dd99ada3b9"
+    },
+    {
+      "file": "lesson_figures/matched_t100_speed.pdf",
+      "bytes": 2053152,
+      "sha256": "5b823829c178380ffdfd11845acf13cfb1ea432b47ffee3cd711153d63ea7b76"
+    },
+    {
+      "file": "lesson_figures/endpoints_speed.png",
+      "bytes": 1115404,
+      "sha256": "2953370aac00298e67d06b47b0b52da1aa4267ba88742a7f7d375c7bb4b9c649"
+    },
+    {
+      "file": "lesson_figures/endpoints_speed.pdf",
+      "bytes": 2041785,
+      "sha256": "8c83651e1314ba80c50cd7921ba17cab4b38b65dbd7af57b48c4daa22a4b6952"
+    },
+    {
+      "file": "lesson_figures/endpoints_p.png",
+      "bytes": 275710,
+      "sha256": "20b29f4710d4d511abd742b1a4c1118858a75b4efff98d4b35aec82ba0664c6c"
+    },
+    {
+      "file": "lesson_figures/endpoints_p.pdf",
+      "bytes": 754921,
+      "sha256": "686cff0a5293d2c67a96b37e70a0ad8dcf94a8ab0a75e8d94f6acad2f7aca6ba"
+    },
+    {
+      "file": "lesson_figures/endpoints_omega.png",
+      "bytes": 338395,
+      "sha256": "c613b2d53a99ddbe5b1a7e8fd29a1f09701419686fcd8f7e45c26294386819a6"
+    },
+    {
+      "file": "lesson_figures/endpoints_omega.pdf",
+      "bytes": 1505754,
+      "sha256": "d36e61533f01ecb8d4d1066a98168a26e61bcb966b0cac129e603f7b2dd640da"
+    },
+    {
+      "file": "lesson_figures/grid_re3200.png",
+      "bytes": 468796,
+      "sha256": "caf2403ca9bb4a81297f6ebf7ecd53c56171c50b1c8300135c78d9abc4741c51"
+    },
+    {
+      "file": "lesson_figures/grid_re3200.pdf",
+      "bytes": 706408,
+      "sha256": "5a3c61bd693c8c4c98a0de2aeef5fd86d2319288795939d7c597ea320836f6b1"
+    },
+    {
+      "file": "lesson_figures/grid_re5000.png",
+      "bytes": 448910,
+      "sha256": "6d8b3e43493e9fa01a70c1a090ace96e2694a930312a8029de1c7fec17cb59d5"
+    },
+    {
+      "file": "lesson_figures/grid_re5000.pdf",
+      "bytes": 655855,
+      "sha256": "f940a0fa69a51517549b56bd778fa82d299258d34774db48a022a16d7075a371"
+    },
+    {
+      "file": "lesson_figures/grid_re7500.png",
+      "bytes": 474287,
+      "sha256": "c6ff754906c73f5b3cd853ea5ff4ddf02d5e447da37232a037b7a2acb4461a5d"
+    },
+    {
+      "file": "lesson_figures/grid_re7500.pdf",
+      "bytes": 654758,
+      "sha256": "b35fad2c52984cac9ff2bc186eb097c18dc4bed840043e4661814c97d8a1ed89"
+    },
+    {
+      "file": "lesson_figures/grid_re10000.png",
+      "bytes": 479384,
+      "sha256": "8170aaa53a025ff47260fc0923484faa8c6ffeca40a117dc9d844aabd6a4d6dc"
+    },
+    {
+      "file": "lesson_figures/grid_re10000.pdf",
+      "bytes": 724845,
+      "sha256": "d08518160aec527042cb2ee70200099e3520e9bedd3121aac23e2d341bd665cc"
+    },
+    {
+      "file": "lesson_figures/late_profiles_re100.png",
+      "bytes": 194581,
+      "sha256": "c15777f95040511faf1abc3a852611487ceaff21eac817441c4383b265ac51a5"
+    },
+    {
+      "file": "lesson_figures/late_profiles_re100.pdf",
+      "bytes": 27617,
+      "sha256": "2ecc39f38a07beef0410fae450b71978d476b78e098b9e371608e737c6beeb81"
+    },
+    {
+      "file": "lesson_figures/late_profiles_re400.png",
+      "bytes": 194404,
+      "sha256": "713eda4aba891f4334696be5b4ad6424fc6cb6c31c651ce700a83617c69e0c50"
+    },
+    {
+      "file": "lesson_figures/late_profiles_re400.pdf",
+      "bytes": 28046,
+      "sha256": "9354621c609009a619beff512c6935303daee05e87f21569bb94cf99af629c19"
+    },
+    {
+      "file": "lesson_figures/late_profiles_re1000.png",
+      "bytes": 191941,
+      "sha256": "bd0470c739b6f2343d3b56e3a658990fcc8d5f914d1d46c979fdd58027f49206"
+    },
+    {
+      "file": "lesson_figures/late_profiles_re1000.pdf",
+      "bytes": 29021,
+      "sha256": "d483a3938834e05942e835c7b8448cdda948e2c516e00ac73074d35d425ec005"
+    },
+    {
+      "file": "lesson_figures/late_profiles_re3200.png",
+      "bytes": 203318,
+      "sha256": "bc5a1ec359ae0d8e37fcb31a33aa789d4f9f99b6ecb4f0f7096a3f01e6c496b4"
+    },
+    {
+      "file": "lesson_figures/late_profiles_re3200.pdf",
+      "bytes": 29086,
+      "sha256": "c286fd4d0e24804fa27aa171e6caf2e6090a15a618d5d47a3c2f53bfd942d037"
+    },
+    {
+      "file": "lesson_figures/late_profiles_re5000.png",
+      "bytes": 218060,
+      "sha256": "a1d3ec79970d6fd5f11982a40065de6324b676211746ec0b3e15167ee6d541d8"
+    },
+    {
+      "file": "lesson_figures/late_profiles_re5000.pdf",
+      "bytes": 29692,
+      "sha256": "ad1d89f27720562e16f53c361f7d304f4fac150c342e347827eac491a3af4e94"
+    },
+    {
+      "file": "lesson_figures/late_profiles_re7500.png",
+      "bytes": 220487,
+      "sha256": "da5c9b5e0e8d01457897371a0ab2e38bb3f716cfb554b1f97140804b4392deea"
+    },
+    {
+      "file": "lesson_figures/late_profiles_re7500.pdf",
+      "bytes": 30322,
+      "sha256": "31eadc86450a499e98b1f27d4726addefabf4e1a40c8fa43c7231af706b6d751"
+    },
+    {
+      "file": "lesson_figures/late_profiles_re10000.png",
+      "bytes": 213875,
+      "sha256": "f062fb0da6b658465143ea45e16e423a83e4a0b9ddf03fa4d96f77ff505e4d37"
+    },
+    {
+      "file": "lesson_figures/late_profiles_re10000.pdf",
+      "bytes": 29704,
+      "sha256": "412aa143f9f0725d6938edbc2ac146a87f66a03bbbb81e0da1b53f4bbfa47d4e"
+    }
+  ]
+}

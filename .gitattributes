@@ -124,5 +124,7 @@ results/course_refresh_early/unity/focused_tests.out text eol=lf
 
 # Physical-time trajectories and movie receipts retain their raw SHA256 identities.
 results/cavity_startup/** -text -whitespace
+results/cavity_settling/** -text -whitespace
+notebooks/week01_2/W1_2_Cavity_Stationarity_and_Resolution.ipynb -text -whitespace
 *.mp4 binary
 *.tar.gz binary

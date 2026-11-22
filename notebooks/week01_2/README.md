@@ -288,3 +288,14 @@ solve and has zero area mean; a steady pressure-recovery equation is not used.
 Black curves are instantaneous streamlines, not particle paths. Read the
 [run and sensitivity record](../../results/cavity_startup/README.md) before
 interpreting secondary cells or comparing these fields with steady benchmarks.
+
+## Stationarity and resolution companion
+
+[W1_2_Cavity_Stationarity_and_Resolution.ipynb](W1_2_Cavity_Stationarity_and_Resolution.ipynb)
+loads the closed campaign on CPU: all seven long baselines, three separate
+tighter-coupling confirmations and 16 matched-time numerical controls. Students
+inspect native speed/streamlines, signed pressure and vorticity, audit every
+window gate, and compare physical profiles before making an accuracy claim.
+Five specific investigations and submission requirements close the notebook.
+Run all reads stored data and generates figures; it starts no long CFD solve.
+[Complete results and limitations](../../results/cavity_settling/README.md).

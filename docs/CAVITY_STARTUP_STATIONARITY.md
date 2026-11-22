@@ -1,5 +1,13 @@
 # When has cavity startup settled?
 
+**Closed-campaign results:** the [CPU companion notebook](../notebooks/week01_2/W1_2_Cavity_Stationarity_and_Resolution.ipynb)
+and [complete evidence](../results/cavity_settling/README.md) now contain all seven
+baseline outcomes, three tighter-coupling confirmations and 16 matched-time
+controls. Re = 100, 400 and 1000 pass fixed-grid temporal confirmation. The four
+higher-Re endpoints remain unresolved; the early mesh controls do not establish
+late-time grid independence. The workflow and frozen definitions below remain
+available for understanding and reproducing those decisions.
+
 The [Week 1.2 startup movies](../results/cavity_startup/README.md) end at dimensionless physical time t⋆ = tU/L = 10. They show how circulation develops after an impulsive lid start; they do not establish a steady solution. A vortex can look almost stationary while its strength, pressure field or surrounding flow continues to change.
 
 The separate [longer continuation preview, t⋆ = 0–100](https://ehsan-roohi.github.io/FlowMLLab/cavity-continuation/), extends the same native trajectories while preserving the original 0–10 lesson. Its common movie endpoint does not imply that all seven flows have become steady.

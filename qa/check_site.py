@@ -69,6 +69,29 @@ def check(site):
         for name in ('movies.json', 'preview_manifest.json'):
             assert (site/'cavity-continuation/media'/name).read_bytes() == (CONTINUATION_BUNDLE/'media'/name).read_bytes()
         print('PASS: separate continuation route; 3 verified video/poster pairs; 201 common physical times from 0 to 100.')
+    final_results = ROOT/'results/cavity_settling'
+    if (final_results/'index.html').is_file():
+        assert '<a href="cavity-settling/" target="_blank" rel="noopener noreferrer">' in page
+        target=site/'cavity-settling'
+        assert (target/'index.html').read_bytes()==(final_results/'index.html').read_bytes()
+        identities=json.loads((final_results/'manifest.json').read_text())['files']
+        figures=[(name,item['sha256']) for name,item in identities.items() if name.startswith('figures/')]
+        figures += [(item['file'],item['sha256']) for item in json.loads((final_results/'lesson_figures/manifest.json').read_text())['files']]
+        for name,expected in figures:
+            assert hashlib.sha256((target/name).read_bytes()).hexdigest()==expected,name
+        from html.parser import HTMLParser
+        from urllib.parse import urlsplit,unquote
+        class Assets(HTMLParser):
+            def handle_starttag(self,tag,attrs):
+                item=dict(attrs);url=item.get('href',item.get('src',''))
+                parsed=urlsplit(url)
+                if parsed.path and not parsed.scheme and not parsed.netloc:
+                    assert (target/unquote(parsed.path)).exists(),url
+                if tag=='img':assert item.get('alt')
+        Assets().feed((target/'index.html').read_text(encoding='utf-8'))
+        assert len(figures)==76
+        assert not (target/'data').exists()
+        print('PASS: final-results route; 38 physical figures in PNG/PDF; all seven outcomes and CPU companion.')
     print(f'PASS: {len(inv["modules"])} units; 7 matched cases; {total} native field images; exact CFD/Ghia profiles; frozen split and source hashes.')
 
 if __name__=='__main__':check(Path(sys.argv[1]))

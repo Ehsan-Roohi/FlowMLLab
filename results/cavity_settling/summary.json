@@ -1,0 +1,246 @@
+{
+  "schema": 1,
+  "source_analysis_sha256": "317748d8323f0eb4ba19aa04b41567c121a916fded0050870600e7d38a1f4802",
+  "stationarity": [
+    {
+      "Re": 100,
+      "baseline_end_time": 100.0,
+      "last_window_start": 80.0,
+      "last_window_end": 100.0,
+      "failed_gates": 0,
+      "consecutive_passes": 3,
+      "confirmation_end_time": 120.0,
+      "fixed_grid_confirmed": true,
+      "conclusion": "Fixed-grid temporal stationarity confirmed"
+    },
+    {
+      "Re": 400,
+      "baseline_end_time": 140.0,
+      "last_window_start": 120.0,
+      "last_window_end": 140.0,
+      "failed_gates": 0,
+      "consecutive_passes": 3,
+      "confirmation_end_time": 160.0,
+      "fixed_grid_confirmed": true,
+      "conclusion": "Fixed-grid temporal stationarity confirmed"
+    },
+    {
+      "Re": 1000,
+      "baseline_end_time": 240.0,
+      "last_window_start": 220.0,
+      "last_window_end": 240.0,
+      "failed_gates": 0,
+      "consecutive_passes": 3,
+      "confirmation_end_time": 260.0,
+      "fixed_grid_confirmed": true,
+      "conclusion": "Fixed-grid temporal stationarity confirmed"
+    },
+    {
+      "Re": 3200,
+      "baseline_end_time": 260.0,
+      "last_window_start": 240.0,
+      "last_window_end": 260.0,
+      "failed_gates": 12,
+      "consecutive_passes": 0,
+      "confirmation_end_time": null,
+      "fixed_grid_confirmed": false,
+      "conclusion": "Unresolved at the recorded endpoint"
+    },
+    {
+      "Re": 5000,
+      "baseline_end_time": 250.0,
+      "last_window_start": 200.0,
+      "last_window_end": 250.0,
+      "failed_gates": 12,
+      "consecutive_passes": 0,
+      "confirmation_end_time": null,
+      "fixed_grid_confirmed": false,
+      "conclusion": "Unresolved at the recorded endpoint"
+    },
+    {
+      "Re": 7500,
+      "baseline_end_time": 200.0,
+      "last_window_start": 150.0,
+      "last_window_end": 200.0,
+      "failed_gates": 13,
+      "consecutive_passes": 0,
+      "confirmation_end_time": null,
+      "fixed_grid_confirmed": false,
+      "conclusion": "Unresolved at the recorded endpoint"
+    },
+    {
+      "Re": 10000,
+      "baseline_end_time": 200.0,
+      "last_window_start": 150.0,
+      "last_window_end": 200.0,
+      "failed_gates": 13,
+      "consecutive_passes": 0,
+      "confirmation_end_time": null,
+      "fixed_grid_confirmed": false,
+      "conclusion": "Unresolved at the recorded endpoint"
+    }
+  ],
+  "matched_controls": [
+    {
+      "id": "time_Re1000_0.01_vs_0.005",
+      "kind": "time",
+      "Re": 1000,
+      "time": 10.0,
+      "candidate_id": "continue_re1000_n128_dt0p01_o3p2",
+      "reference_id": "time_control_re1000_n128_dt0p005_o3p2",
+      "velocity_relative_l2": 0.001201065151919189,
+      "pressure_rms_difference": 6.210054414609775e-05
+    },
+    {
+      "id": "time_Re1000_0.005_vs_0.0025",
+      "kind": "time",
+      "Re": 1000,
+      "time": 10.0,
+      "candidate_id": "time_control_re1000_n128_dt0p005_o3p2",
+      "reference_id": "time_control_re1000_n128_dt0p0025_o3p2",
+      "velocity_relative_l2": 0.0006055224843720205,
+      "pressure_rms_difference": 3.131784641822148e-05
+    },
+    {
+      "id": "time_Re1000_0.01_vs_0.0025",
+      "kind": "time",
+      "Re": 1000,
+      "time": 10.0,
+      "candidate_id": "continue_re1000_n128_dt0p01_o3p2",
+      "reference_id": "time_control_re1000_n128_dt0p0025_o3p2",
+      "velocity_relative_l2": 0.0018063814788786515,
+      "pressure_rms_difference": 9.341835410247962e-05
+    },
+    {
+      "id": "time_Re7500_0.01_vs_0.005",
+      "kind": "time",
+      "Re": 7500,
+      "time": 10.0,
+      "candidate_id": "continue_re7500_n128_dt0p01_o3p2",
+      "reference_id": "time_control_re7500_n128_dt0p005_o3p2",
+      "velocity_relative_l2": 0.03994422899892565,
+      "pressure_rms_difference": 0.0007460860118041485
+    },
+    {
+      "id": "time_Re7500_0.005_vs_0.0025",
+      "kind": "time",
+      "Re": 7500,
+      "time": 10.0,
+      "candidate_id": "time_control_re7500_n128_dt0p005_o3p2",
+      "reference_id": "time_control_re7500_n128_dt0p0025_o3p2",
+      "velocity_relative_l2": 0.021426771816844898,
+      "pressure_rms_difference": 0.00041564657061548004
+    },
+    {
+      "id": "time_Re7500_0.01_vs_0.0025",
+      "kind": "time",
+      "Re": 7500,
+      "time": 10.0,
+      "candidate_id": "continue_re7500_n128_dt0p01_o3p2",
+      "reference_id": "time_control_re7500_n128_dt0p0025_o3p2",
+      "velocity_relative_l2": 0.06076845922810397,
+      "pressure_rms_difference": 0.0011568412050384127
+    },
+    {
+      "id": "time_Re10000_0.01_vs_0.005",
+      "kind": "time",
+      "Re": 10000,
+      "time": 10.0,
+      "candidate_id": "continue_re10000_n128_dt0p01_o3p2",
+      "reference_id": "time_control_re10000_n128_dt0p005_o3p2",
+      "velocity_relative_l2": 0.036193051409561854,
+      "pressure_rms_difference": 0.0006032024495922157
+    },
+    {
+      "id": "time_Re10000_0.005_vs_0.0025",
+      "kind": "time",
+      "Re": 10000,
+      "time": 10.0,
+      "candidate_id": "time_control_re10000_n128_dt0p005_o3p2",
+      "reference_id": "time_control_re10000_n128_dt0p0025_o3p2",
+      "velocity_relative_l2": 0.01967839930174261,
+      "pressure_rms_difference": 0.0002810477134462269
+    },
+    {
+      "id": "time_Re10000_0.01_vs_0.0025",
+      "kind": "time",
+      "Re": 10000,
+      "time": 10.0,
+      "candidate_id": "continue_re10000_n128_dt0p01_o3p2",
+      "reference_id": "time_control_re10000_n128_dt0p0025_o3p2",
+      "velocity_relative_l2": 0.054895927860142364,
+      "pressure_rms_difference": 0.0008732674792869348
+    },
+    {
+      "id": "grid_Re3200_128_vs_256",
+      "kind": "grid",
+      "Re": 3200,
+      "time": 10.0,
+      "candidate_id": "matched_grid_time_re3200_n128_dt0p0025_o3p2",
+      "reference_id": "grid_control_re3200_n256_dt0p0025_o3p2",
+      "velocity_relative_l2": 0.042331698424327914,
+      "pressure_rms_difference": 0.0019246897454188395
+    },
+    {
+      "id": "grid_Re5000_128_vs_256",
+      "kind": "grid",
+      "Re": 5000,
+      "time": 10.0,
+      "candidate_id": "matched_grid_time_re5000_n128_dt0p0025_o3p2",
+      "reference_id": "grid_control_re5000_n256_dt0p0025_o3p2",
+      "velocity_relative_l2": 0.0776839116878907,
+      "pressure_rms_difference": 0.0029683243441319903
+    },
+    {
+      "id": "grid_Re7500_128_vs_256",
+      "kind": "grid",
+      "Re": 7500,
+      "time": 10.0,
+      "candidate_id": "time_control_re7500_n128_dt0p0025_o3p2",
+      "reference_id": "grid_control_re7500_n256_dt0p0025_o3p2",
+      "velocity_relative_l2": 0.31998832388273046,
+      "pressure_rms_difference": 0.00702553572798908
+    },
+    {
+      "id": "grid_Re10000_128_vs_256",
+      "kind": "grid",
+      "Re": 10000,
+      "time": 10.0,
+      "candidate_id": "time_control_re10000_n128_dt0p0025_o3p2",
+      "reference_id": "grid_control_re10000_n256_dt0p0025_o3p2",
+      "velocity_relative_l2": 0.5531213226461853,
+      "pressure_rms_difference": 0.008933544416355722
+    },
+    {
+      "id": "coupling_Re1000_3x2_vs_6x4",
+      "kind": "coupling",
+      "Re": 1000,
+      "time": 10.0,
+      "candidate_id": "continue_re1000_n128_dt0p01_o3p2",
+      "reference_id": "coupling_control_re1000_n128_dt0p01_o6p4",
+      "velocity_relative_l2": 2.1627766879842786e-06,
+      "pressure_rms_difference": 8.419337823905247e-08
+    },
+    {
+      "id": "coupling_Re7500_3x2_vs_6x4",
+      "kind": "coupling",
+      "Re": 7500,
+      "time": 10.0,
+      "candidate_id": "continue_re7500_n128_dt0p01_o3p2",
+      "reference_id": "coupling_control_re7500_n128_dt0p01_o6p4",
+      "velocity_relative_l2": 0.0003703233326221328,
+      "pressure_rms_difference": 5.1568611240586805e-06
+    },
+    {
+      "id": "coupling_Re10000_3x2_vs_6x4",
+      "kind": "coupling",
+      "Re": 10000,
+      "time": 10.0,
+      "candidate_id": "continue_re10000_n128_dt0p01_o3p2",
+      "reference_id": "coupling_control_re10000_n128_dt0p01_o6p4",
+      "velocity_relative_l2": 0.0005081298056637726,
+      "pressure_rms_difference": 5.785048152093594e-06
+    }
+  ],
+  "limitation": "Fixed-grid temporal confirmation is not late-time mesh convergence or Ghia validation."
+}

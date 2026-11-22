@@ -1,0 +1,12 @@
+{
+  "executed_utc": "2026-11-22T10:09:02.233906+00:00",
+  "notebook": "notebooks/week01_2/W1_2_Cavity_Stationarity_and_Resolution.ipynb",
+  "cell_source_sha256": "6ffaf83ee8f138cf507c1261c4925a96e1f6cc319474ca9443b18330541fd6b5",
+  "notebook_sha256": "7ce7cad170cd524115a7570325e9f8d010ac868a829b54bbcd2413f4101dea79",
+  "code_cells": 11,
+  "figure_outputs": 8,
+  "error_outputs": 0,
+  "runtime_seconds": 28.900380599981872,
+  "python": "3.12.14",
+  "mode": "Fresh CPU kernel; saved-data loading and plotting; no CFD solves"
+}

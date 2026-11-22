@@ -1,0 +1,165 @@
+{
+  "reviewed_utc": "2026-11-22T10:16:53.535984+00:00",
+  "method": "Each of 38 PDF pages rendered with Poppler at 120 dpi and visually inspected individually.",
+  "checks": [
+    "Readable axes, units and conditions",
+    "Legends outside data axes",
+    "Actual times and differing endpoints identified",
+    "Signed pressure/vorticity and physical-profile disagreement retained",
+    "No visible clipping or overlap identified in reviewed pages"
+  ],
+  "files": [
+    {
+      "file": "figures/history_continue_re10000_n128_dt0p01_o3p2.pdf",
+      "sha256": "cd75a95bc7f3189f328a337fa8f53d92b656b2a9f50b54ed44d32931f21cd39b"
+    },
+    {
+      "file": "figures/history_continue_re1000_n128_dt0p01_o3p2.pdf",
+      "sha256": "1ec1db0d43c2a48c378abf765003d8108faf4c67fc11dde9903c137d8e3dfbfa"
+    },
+    {
+      "file": "figures/history_continue_re100_n128_dt0p01_o3p2.pdf",
+      "sha256": "03358e8864f58c13744aa5a3dc89388ee1d49b3667c3edc16ce100c727e57185"
+    },
+    {
+      "file": "figures/history_continue_re3200_n128_dt0p01_o3p2.pdf",
+      "sha256": "289084afa5045ae5af7038b72c87153b9dc3fb5c16c5a1b38f293eed4c016471"
+    },
+    {
+      "file": "figures/history_continue_re400_n128_dt0p01_o3p2.pdf",
+      "sha256": "dfa29c97a7df540fd2368e3d47dc4bd15ae288b605f21834dcfcdd781427459f"
+    },
+    {
+      "file": "figures/history_continue_re5000_n128_dt0p01_o3p2.pdf",
+      "sha256": "e87a2f9e90ad5cfa3ba8bd819e432d87e42d9c0bf8140417a9ab1c0b49e6d5e0"
+    },
+    {
+      "file": "figures/history_continue_re7500_n128_dt0p01_o3p2.pdf",
+      "sha256": "0f21999a02c3823039d5eb08153fcd3b8cc70c2bc7470937779ab7b361aeaf58"
+    },
+    {
+      "file": "figures/profiles_coupling_Re10000_3x2_vs_6x4_t10.pdf",
+      "sha256": "8efc947a415da63609481b2525da77d5c01e2163fade0299818fdd96c114668b"
+    },
+    {
+      "file": "figures/profiles_coupling_Re1000_3x2_vs_6x4_t10.pdf",
+      "sha256": "6696e569094123d392893ecccf61fde7dbac27bdad836d5654677be9d722f98c"
+    },
+    {
+      "file": "figures/profiles_coupling_Re7500_3x2_vs_6x4_t10.pdf",
+      "sha256": "138927549b00777b5d0f46ad05a2368ff1b21f8147f9edfc742dc41fa75a57a7"
+    },
+    {
+      "file": "figures/profiles_grid_Re10000_128_vs_256_t10.pdf",
+      "sha256": "fb9ebe8df57eba8b1b3512b6eb9cfb6fd22b93bdbc1492841ef8b3788996c5c2"
+    },
+    {
+      "file": "figures/profiles_grid_Re3200_128_vs_256_t10.pdf",
+      "sha256": "9a35570c5760d5c3ee63417f026493e87374649863feceec13688e1f36657e45"
+    },
+    {
+      "file": "figures/profiles_grid_Re5000_128_vs_256_t10.pdf",
+      "sha256": "8c0b97adec5cbb62056a84111d57dfe2ab56c814a42cda5baec54e53a324d655"
+    },
+    {
+      "file": "figures/profiles_grid_Re7500_128_vs_256_t10.pdf",
+      "sha256": "ca177fcbbbaa10e307d6f91f80f4b4bbe29ce2193b1700e33f9531bafa508eb3"
+    },
+    {
+      "file": "figures/profiles_time_Re10000_0.005_vs_0.0025_t10.pdf",
+      "sha256": "d68debc6a6e56599892b7b9ee0800ef1d95e771302e1c48af0aaf816ecd789ae"
+    },
+    {
+      "file": "figures/profiles_time_Re10000_0.01_vs_0.0025_t10.pdf",
+      "sha256": "538e3aaa4495b97c981996735af5ab1c1122e64e9c47f8bbd28da8d3586151f5"
+    },
+    {
+      "file": "figures/profiles_time_Re10000_0.01_vs_0.005_t10.pdf",
+      "sha256": "ae5e4f61ba8f5a78bf6ff2a8e6f7d034e7b109242059be9652b5d108a6b8f969"
+    },
+    {
+      "file": "figures/profiles_time_Re1000_0.005_vs_0.0025_t10.pdf",
+      "sha256": "668155b5fb594bfb2de9b650c8773ca891df82349706c1666c777db041e87b3b"
+    },
+    {
+      "file": "figures/profiles_time_Re1000_0.01_vs_0.0025_t10.pdf",
+      "sha256": "4812a1a8489fdfd9d1234569301e4b8876707ff2c6a4be4563f033cc39e3d391"
+    },
+    {
+      "file": "figures/profiles_time_Re1000_0.01_vs_0.005_t10.pdf",
+      "sha256": "80f0364046cfb579c3de13f6764950b15e247adc0ad4f868ebf059499ff43138"
+    },
+    {
+      "file": "figures/profiles_time_Re7500_0.005_vs_0.0025_t10.pdf",
+      "sha256": "85d84ad7756e02e453e3a31563e3b6dbcb47c98aed575f747953389547725354"
+    },
+    {
+      "file": "figures/profiles_time_Re7500_0.01_vs_0.0025_t10.pdf",
+      "sha256": "1238e363988500e29b0e8787f696ad5c4ca8a5e4477846cba36be7c870e3179d"
+    },
+    {
+      "file": "figures/profiles_time_Re7500_0.01_vs_0.005_t10.pdf",
+      "sha256": "69330da73d35e225a98492bdf8864775f217839ad2be86c21aa2abc8aaa4a96b"
+    },
+    {
+      "file": "lesson_figures/endpoints_omega.pdf",
+      "sha256": "d36e61533f01ecb8d4d1066a98168a26e61bcb966b0cac129e603f7b2dd640da"
+    },
+    {
+      "file": "lesson_figures/endpoints_p.pdf",
+      "sha256": "686cff0a5293d2c67a96b37e70a0ad8dcf94a8ab0a75e8d94f6acad2f7aca6ba"
+    },
+    {
+      "file": "lesson_figures/endpoints_speed.pdf",
+      "sha256": "8c83651e1314ba80c50cd7921ba17cab4b38b65dbd7af57b48c4daa22a4b6952"
+    },
+    {
+      "file": "lesson_figures/grid_re10000.pdf",
+      "sha256": "d08518160aec527042cb2ee70200099e3520e9bedd3121aac23e2d341bd665cc"
+    },
+    {
+      "file": "lesson_figures/grid_re3200.pdf",
+      "sha256": "5a3c61bd693c8c4c98a0de2aeef5fd86d2319288795939d7c597ea320836f6b1"
+    },
+    {
+      "file": "lesson_figures/grid_re5000.pdf",
+      "sha256": "f940a0fa69a51517549b56bd778fa82d299258d34774db48a022a16d7075a371"
+    },
+    {
+      "file": "lesson_figures/grid_re7500.pdf",
+      "sha256": "b35fad2c52984cac9ff2bc186eb097c18dc4bed840043e4661814c97d8a1ed89"
+    },
+    {
+      "file": "lesson_figures/late_profiles_re100.pdf",
+      "sha256": "2ecc39f38a07beef0410fae450b71978d476b78e098b9e371608e737c6beeb81"
+    },
+    {
+      "file": "lesson_figures/late_profiles_re1000.pdf",
+      "sha256": "d483a3938834e05942e835c7b8448cdda948e2c516e00ac73074d35d425ec005"
+    },
+    {
+      "file": "lesson_figures/late_profiles_re10000.pdf",
+      "sha256": "412aa143f9f0725d6938edbc2ac146a87f66a03bbbb81e0da1b53f4bbfa47d4e"
+    },
+    {
+      "file": "lesson_figures/late_profiles_re3200.pdf",
+      "sha256": "c286fd4d0e24804fa27aa171e6caf2e6090a15a618d5d47a3c2f53bfd942d037"
+    },
+    {
+      "file": "lesson_figures/late_profiles_re400.pdf",
+      "sha256": "9354621c609009a619beff512c6935303daee05e87f21569bb94cf99af629c19"
+    },
+    {
+      "file": "lesson_figures/late_profiles_re5000.pdf",
+      "sha256": "ad1d89f27720562e16f53c361f7d304f4fac150c342e347827eac491a3af4e94"
+    },
+    {
+      "file": "lesson_figures/late_profiles_re7500.pdf",
+      "sha256": "31eadc86450a499e98b1f27d4726addefabf4e1a40c8fa43c7231af706b6d751"
+    },
+    {
+      "file": "lesson_figures/matched_t100_speed.pdf",
+      "sha256": "5b823829c178380ffdfd11845acf13cfb1ea432b47ffee3cd711153d63ea7b76"
+    }
+  ]
+}

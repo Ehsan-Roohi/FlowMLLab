@@ -155,6 +155,10 @@ streamlines, signed vorticity and pressure from rest at Re = 100, 400, 1000,
 3200, 5000, 7500 and 10000. [Watch the longer startup, t⋆ = 0–100](https://ehsan-roohi.github.io/FlowMLLab/cavity-continuation/)
 · [Original 0–10 movies](https://ehsan-roohi.github.io/FlowMLLab/cavity-startup/).
 These finite-time trajectories are separate from steady Ghia validation; a common movie endpoint does not mean that every case is steady.
+The [final-results CPU companion](notebooks/week01_2/W1_2_Cavity_Stationarity_and_Resolution.ipynb)
+tests full-window stationarity and separates it from grid and timestep sensitivity.
+[All seven outcomes and physical comparisons](results/cavity_settling/README.md):
+Re = 100, 400 and 1000 pass fixed-grid temporal confirmation; the higher-Re endpoints remain unresolved.
 
 ### Week 1.3 — Optimizers for scientific machine learning
 

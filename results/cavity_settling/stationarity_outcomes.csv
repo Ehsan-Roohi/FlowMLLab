@@ -1,0 +1,8 @@
+Re,baseline_end_time,last_window_start,last_window_end,failed_gates,consecutive_passes,confirmation_end_time,fixed_grid_confirmed,conclusion
+100,100.0,80.0,100.0,0,3,120.0,True,Fixed-grid temporal stationarity confirmed
+400,140.0,120.0,140.0,0,3,160.0,True,Fixed-grid temporal stationarity confirmed
+1000,240.0,220.0,240.0,0,3,260.0,True,Fixed-grid temporal stationarity confirmed
+3200,260.0,240.0,260.0,12,0,,False,Unresolved at the recorded endpoint
+5000,250.0,200.0,250.0,12,0,,False,Unresolved at the recorded endpoint
+7500,200.0,150.0,200.0,13,0,,False,Unresolved at the recorded endpoint
+10000,200.0,150.0,200.0,13,0,,False,Unresolved at the recorded endpoint

@@ -30,7 +30,11 @@ def cavity_movie_followup():
             '· [Stationarity guide](../../docs/CAVITY_STARTUP_STATIONARITY.md).\n\n'
             'The seven Reynolds numbers share physical frame times and fixed field scales. '
             'A common endpoint does not mean every case is steady; coupling, timestep and mesh '
-            'accuracy require separate evidence.')
+            'accuracy require separate evidence.\n\n'
+            'The [final-results CPU companion](../../notebooks/week01_2/W1_2_Cavity_Stationarity_and_Resolution.ipynb) '
+            'adds all seven outcomes, three tighter-coupling confirmations and 16 matched-time controls. '
+            '[Complete results and limitations](../../results/cavity_settling/README.md). '
+            'Five student investigations separate stationarity from numerical accuracy; Run all starts no long CFD solve.')
 
 def rebase(text, prefix='../../'):
     def replace(m):
